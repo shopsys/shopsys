@@ -60,7 +60,9 @@ class OrderCityFilter implements AdvancedSearchFilterInterface
             }
             $dqlOperator = $this->getContainsDqlOperator($ruleData->operator);
             $parameterName = 'city_' . $index;
-            $queryBuilder->andWhere('NORMALIZE(o.deliveryCity) ' . $dqlOperator . ' NORMALIZE(:' . $parameterName . ') OR NORMALIZE(o.city) ' . $dqlOperator . ' NORMALIZE(:' . $parameterName . ')');
+            $queryBuilder->andWhere(
+                'NORMALIZE(o.deliveryCity) ' . $dqlOperator . ' NORMALIZE(:' . $parameterName . ') OR NORMALIZE(o.city) ' . $dqlOperator . ' NORMALIZE(:' . $parameterName . ')'
+            );
             $queryBuilder->setParameter($parameterName, $searchValue);
         }
     }

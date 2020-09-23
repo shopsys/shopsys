@@ -105,7 +105,9 @@ class MailController extends AdminBaseController
         $mailTemplate = $this->mailTemplateFacade->getById($id);
         $mailTemplateData = $this->mailTemplateDataFactory->createFromMailTemplate($mailTemplate);
 
-        $mailTemplateVariables = $this->mailTemplateConfiguration->getMailTemplateVariablesBySlug($mailTemplate->getName());
+        $mailTemplateVariables = $this->mailTemplateConfiguration->getMailTemplateVariablesBySlug(
+            $mailTemplate->getName()
+        );
 
         $form = $this->createForm(
             MailTemplateFormType::class,
@@ -137,7 +139,9 @@ class MailController extends AdminBaseController
             $this->addErrorFlash(t('Please check the correctness of all data filled.'));
         }
 
-        $this->breadcrumbOverrider->overrideLastItem(t('Editing email template - %name%', ['%name%' => $mailTemplateVariables->getReadableName()]));
+        $this->breadcrumbOverrider->overrideLastItem(
+            t('Editing email template - %name%', ['%name%' => $mailTemplateVariables->getReadableName()])
+        );
 
         return $this->render('@ShopsysFramework/Admin/Content/Mail/edit.html.twig', [
             'form' => $form->createView(),

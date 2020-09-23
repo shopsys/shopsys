@@ -14,7 +14,6 @@ class PromoCode
 {
     /**
      * @var int
-     *
      * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
@@ -23,14 +22,12 @@ class PromoCode
 
     /**
      * @var string
-     *
      * @ORM\Column(type="text", unique=true)
      */
     protected $code;
 
     /**
      * @var string
-     *
      * @ORM\Column(type="decimal", precision=20, scale=4)
      */
     protected $percent;

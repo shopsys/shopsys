@@ -71,7 +71,11 @@ class ProductVisibilityExtension extends AbstractExtension
     public function isVisibleForDefaultPricingGroupOnDomain(Product $product, $domainId)
     {
         $pricingGroup = $this->pricingGroupSettingFacade->getDefaultPricingGroupByDomainId($domainId);
-        $productVisibility = $this->productVisibilityRepository->getProductVisibility($product, $pricingGroup, $domainId);
+        $productVisibility = $this->productVisibilityRepository->getProductVisibility(
+            $product,
+            $pricingGroup,
+            $domainId
+        );
 
         return $productVisibility->isVisible();
     }

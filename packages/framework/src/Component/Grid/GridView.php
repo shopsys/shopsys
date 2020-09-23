@@ -2,6 +2,7 @@
 
 namespace Shopsys\FrameworkBundle\Component\Grid;
 
+use InvalidArgumentException;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -88,7 +89,7 @@ class GridView
      * @param string $name
      * @param array $parameters
      * @param bool $echo
-     * @return string|null|void
+     * @return string|null
      */
     public function renderBlock($name, array $parameters = [], $echo = true)
     {
@@ -107,14 +108,15 @@ class GridView
 
                 if ($echo) {
                     echo $template->renderBlock($name, $templateParameters);
-                    return;
-                } else {
-                    return $template->renderBlock($name, $templateParameters);
+                    return null;
                 }
+                return $template->renderBlock($name, $templateParameters);
             }
         }
 
-        throw new \InvalidArgumentException(sprintf('Block "%s" doesn\'t exist in grid template "%s".', $name, $this->theme));
+        throw new InvalidArgumentException(
+            sprintf('Block "%s" doesn\'t exist in grid template "%s".', $name, $this->theme)
+        );
     }
 
     /**
@@ -248,7 +250,7 @@ class GridView
      */
     protected function getTemplates()
     {
-        if (empty($this->templates)) {
+        if ($this->templates === null || count($this->templates) === 0) {
             $this->templates = [];
             if (is_array($this->theme)) {
                 foreach ($this->theme as $theme) {

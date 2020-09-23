@@ -11,13 +11,13 @@ use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Component\Grid\Ordering\OrderableEntityInterface;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Localization\AbstractTranslatableEntity;
+use Shopsys\FrameworkBundle\Model\Payment\Exception\PaymentPriceNotFoundException;
 use Shopsys\FrameworkBundle\Model\Payment\Payment;
 use Shopsys\FrameworkBundle\Model\Transport\Exception\TransportDomainNotFoundException;
 
 /**
  * @ORM\Table(name="transports")
  * @ORM\Entity
- *
  * @method \Shopsys\FrameworkBundle\Model\Transport\TransportTranslation translation(?string $locale = null)
  */
 class Transport extends AbstractTranslatableEntity implements OrderableEntityInterface
@@ -26,7 +26,6 @@ class Transport extends AbstractTranslatableEntity implements OrderableEntityInt
 
     /**
      * @var int
-     *
      * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
@@ -35,42 +34,36 @@ class Transport extends AbstractTranslatableEntity implements OrderableEntityInt
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Transport\TransportTranslation[]|\Doctrine\Common\Collections\Collection
-     *
      * @Prezent\Translations(targetEntity="Shopsys\FrameworkBundle\Model\Transport\TransportTranslation")
      */
     protected $translations;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Transport\TransportDomain[]|\Doctrine\Common\Collections\Collection
-     *
      * @ORM\OneToMany(targetEntity="Shopsys\FrameworkBundle\Model\Transport\TransportDomain", mappedBy="transport", cascade={"persist"}, fetch="EXTRA_LAZY")
      */
     protected $domains;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Transport\TransportPrice[]|\Doctrine\Common\Collections\Collection
-     *
      * @ORM\OneToMany(targetEntity="Shopsys\FrameworkBundle\Model\Transport\TransportPrice", mappedBy="transport", cascade={"persist"})
      */
     protected $prices;
 
     /**
      * @var bool
-     *
      * @ORM\Column(type="boolean")
      */
     protected $hidden;
 
     /**
      * @var bool
-     *
      * @ORM\Column(type="boolean")
      */
     protected $deleted;
 
     /**
      * @var int|null
-     *
      * @Gedmo\SortablePosition
      * @ORM\Column(type="integer", nullable=false)
      */
@@ -84,7 +77,6 @@ class Transport extends AbstractTranslatableEntity implements OrderableEntityInt
 
     /**
      * @var string
-     *
      * @ORM\Column(type="guid", unique=true)
      */
     protected $uuid;
@@ -376,7 +368,7 @@ class Transport extends AbstractTranslatableEntity implements OrderableEntityInt
         }
 
         $message = 'Transport price with domain ID ' . $domainId . ' and payment ID ' . $this->getId() . 'not found.';
-        throw new \Shopsys\FrameworkBundle\Model\Payment\Exception\PaymentPriceNotFoundException($message);
+        throw new PaymentPriceNotFoundException($message);
     }
 
     /**

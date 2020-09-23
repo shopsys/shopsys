@@ -8,6 +8,7 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Country\CountryFacade;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
+use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
 class CountryValidator extends ConstraintValidator
 {
@@ -40,7 +41,7 @@ class CountryValidator extends ConstraintValidator
     public function validate($value, Constraint $constraint): void
     {
         if (!$constraint instanceof Country) {
-            throw new \Symfony\Component\Validator\Exception\UnexpectedTypeException($constraint, Country::class);
+            throw new UnexpectedTypeException($constraint, Country::class);
         }
 
         if ($value === null || $value === '') {
@@ -57,12 +58,14 @@ class CountryValidator extends ConstraintValidator
             $availableCountryCodes[] = $countryOnDomain->getCode();
         }
 
-        if (!in_array($country, $availableCountryCodes, true)) {
-            $this->context->buildViolation($constraint->message)
-                ->setParameter('{{ country_code }}', $country)
-                ->setParameter('{{ available_country_codes }}', implode(', ', $availableCountryCodes))
-                ->setCode(Country::INVALID_COUNTRY_ERROR)
-                ->addViolation();
+        if (in_array($country, $availableCountryCodes, true)) {
+            return;
         }
+
+        $this->context->buildViolation($constraint->message)
+            ->setParameter('{{ country_code }}', $country)
+            ->setParameter('{{ available_country_codes }}', implode(', ', $availableCountryCodes))
+            ->setCode(Country::INVALID_COUNTRY_ERROR)
+            ->addViolation();
     }
 }

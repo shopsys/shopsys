@@ -70,9 +70,8 @@ class CachedBestsellingProductFacade
             $this->saveToCache($bestsellingProducts, $cacheId);
 
             return $bestsellingProducts;
-        } else {
-            return $this->getSortedProducts($domainId, $pricingGroup, $sortedProductsIds);
         }
+        return $this->getSortedProducts($domainId, $pricingGroup, $sortedProductsIds);
     }
 
     /**

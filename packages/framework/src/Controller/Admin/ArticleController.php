@@ -12,6 +12,7 @@ use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
 use Shopsys\FrameworkBundle\Model\Article\Article;
 use Shopsys\FrameworkBundle\Model\Article\ArticleDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Article\ArticleFacade;
+use Shopsys\FrameworkBundle\Model\Article\Exception\ArticleNotFoundException;
 use Shopsys\FrameworkBundle\Model\Cookies\CookiesFacade;
 use Shopsys\FrameworkBundle\Model\LegalConditions\LegalConditionsFacade;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -140,7 +141,9 @@ class ArticleController extends AdminBaseController
         $gridTop = $this->getGrid(Article::PLACEMENT_TOP_MENU);
         $gridFooter = $this->getGrid(Article::PLACEMENT_FOOTER);
         $gridNone = $this->getGrid(Article::PLACEMENT_NONE);
-        $articlesCountOnSelectedDomain = $this->articleFacade->getAllArticlesCountByDomainId($this->adminDomainTabsFacade->getSelectedDomainId());
+        $articlesCountOnSelectedDomain = $this->articleFacade->getAllArticlesCountByDomainId(
+            $this->adminDomainTabsFacade->getSelectedDomainId()
+        );
 
         return $this->render('@ShopsysFramework/Admin/Content/Article/list.html.twig', [
             'gridViewTop' => $gridTop->createView(),
@@ -205,7 +208,7 @@ class ArticleController extends AdminBaseController
                     'name' => $fullName,
                 ]
             );
-        } catch (\Shopsys\FrameworkBundle\Model\Article\Exception\ArticleNotFoundException $ex) {
+        } catch (ArticleNotFoundException $ex) {
             $this->addErrorFlash(t('Selected article doesn\'t exist.'));
         }
 

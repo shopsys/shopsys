@@ -5,6 +5,7 @@ namespace Shopsys\FrameworkBundle\Form\Constraints;
 use ArrayAccess;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
+use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 use Traversable;
 
 class NotInArrayValidator extends ConstraintValidator
@@ -16,13 +17,17 @@ class NotInArrayValidator extends ConstraintValidator
     public function validate($value, Constraint $constraint)
     {
         if (!$constraint instanceof NotInArray) {
-            throw new \Symfony\Component\Validator\Exception\UnexpectedTypeException($constraint, NotInArray::class);
+            throw new UnexpectedTypeException($constraint, NotInArray::class);
         }
 
-        if (!is_array($constraint->array)
-            && !($constraint->array instanceof Traversable && $constraint->array instanceof ArrayAccess)
+        if (
+            !is_array($constraint->array)
+            && !(
+                $constraint->array instanceof Traversable
+                && $constraint->array instanceof ArrayAccess
+            )
         ) {
-            throw new \Symfony\Component\Validator\Exception\UnexpectedTypeException(
+            throw new UnexpectedTypeException(
                 $constraint->array,
                 'array or Traversable and ArrayAccess'
             );

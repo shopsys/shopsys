@@ -15,6 +15,9 @@ class NotMoneyTypeException extends UnexpectedTypeException
     {
         parent::__construct($value, Money::class);
 
-        $this->message .= sprintf(' - maybe you want to use "%s" as a model data transformer.', NumericToMoneyTransformer::class);
+        $this->message .= sprintf(
+            ' - maybe you want to use "%s" as a model data transformer.',
+            NumericToMoneyTransformer::class
+        );
     }
 }

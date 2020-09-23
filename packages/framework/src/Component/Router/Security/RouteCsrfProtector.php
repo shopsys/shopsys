@@ -7,6 +7,7 @@ use ReflectionMethod;
 use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\Security\Csrf\CsrfToken;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
@@ -57,7 +58,7 @@ class RouteCsrfProtector implements EventSubscriberInterface
             $routeName = $request->get('_route');
 
             if ($csrfToken === null || !$this->isCsrfTokenValid($routeName, $csrfToken)) {
-                throw new \Symfony\Component\HttpKernel\Exception\BadRequestHttpException('Csrf token is invalid');
+                throw new BadRequestHttpException('Csrf token is invalid');
             }
         }
     }
@@ -102,7 +103,7 @@ class RouteCsrfProtector implements EventSubscriberInterface
             return false;
         }
 
-        list($controller, $action) = $event->getController();
+        [$controller, $action] = $event->getController();
         $method = new ReflectionMethod($controller, $action);
         $annotation = $this->annotationReader->getMethodAnnotation($method, CsrfProtection::class);
 

@@ -6,6 +6,7 @@ use BadMethodCallException;
 use DateTime;
 use DateTimeImmutable;
 use DateTimeZone;
+use Shopsys\FrameworkBundle\Command\Exception\CronCommandException;
 use Shopsys\FrameworkBundle\Component\Cron\Config\CronModuleConfig;
 use Shopsys\FrameworkBundle\Component\Cron\CronFacade;
 use Shopsys\FrameworkBundle\Component\Cron\MutexFactory;
@@ -67,12 +68,22 @@ class CronCommand extends Command
     public function setParameterBag(ParameterBagInterface $parameterBag): void
     {
         if ($this->parameterBag !== null && $this->parameterBag !== $parameterBag) {
-            throw new BadMethodCallException(sprintf('Method "%s" has been already called and cannot be called multiple times.', __METHOD__));
+            throw new BadMethodCallException(
+                sprintf('Method "%s" has been already called and cannot be called multiple times.', __METHOD__)
+            );
         }
-        if ($this->parameterBag === null) {
-            @trigger_error(sprintf('The %s() method is deprecated and will be removed in the next major. Use the constructor injection instead.', __METHOD__), E_USER_DEPRECATED);
-            $this->parameterBag = $parameterBag;
+        if ($this->parameterBag !== null) {
+            return;
         }
+
+        @trigger_error(
+            sprintf(
+                'The %s() method is deprecated and will be removed in the next major. Use the constructor injection instead.',
+                __METHOD__
+            ),
+            E_USER_DEPRECATED
+        );
+        $this->parameterBag = $parameterBag;
     }
 
     protected function configure()
@@ -81,7 +92,12 @@ class CronCommand extends Command
             ->setDescription('Runs background jobs. Should be executed periodically by system CRON every 5 minutes.')
             ->addOption(self::OPTION_LIST, null, InputOption::VALUE_NONE, 'List all Service commands')
             ->addOption(self::OPTION_MODULE, null, InputOption::VALUE_OPTIONAL, 'Service ID')
-            ->addOption(self::OPTION_INSTANCE_NAME, null, InputOption::VALUE_REQUIRED, 'specific cron instance identifier');
+            ->addOption(
+                self::OPTION_INSTANCE_NAME,
+                null,
+                InputOption::VALUE_REQUIRED,
+                'specific cron instance identifier'
+            );
     }
 
     /**
@@ -136,14 +152,22 @@ class CronCommand extends Command
      */
     private function getCronCommands(array $cronModuleConfigs, bool $includeInstance = false): array
     {
-        uasort($cronModuleConfigs, function (CronModuleConfig $cronModuleConfigA, CronModuleConfig $cronModuleConfigB) {
-            return $cronModuleConfigA->getServiceId() > $cronModuleConfigB->getServiceId();
-        });
+        uasort(
+            $cronModuleConfigs,
+            function (CronModuleConfig $cronModuleConfigA, CronModuleConfig $cronModuleConfigB) {
+                return $cronModuleConfigA->getServiceId() > $cronModuleConfigB->getServiceId();
+            }
+        );
 
         $commands = [];
 
         foreach ($cronModuleConfigs as $cronModuleConfig) {
-            $command = sprintf('php bin/console %s --%s="%s"', $this->getName(), self::OPTION_MODULE, $cronModuleConfig->getServiceId());
+            $command = sprintf(
+                'php bin/console %s --%s="%s"',
+                $this->getName(),
+                self::OPTION_MODULE,
+                $cronModuleConfig->getServiceId()
+            );
 
             if ($includeInstance) {
                 $command .= sprintf(' --%s=%s', self::OPTION_INSTANCE_NAME, $cronModuleConfig->getInstanceName());
@@ -170,18 +194,18 @@ class CronCommand extends Command
         }
 
         $mutex = $mutexFactory->getPrefixedCronMutex($instanceName);
-        if ($mutex->acquireLock(0)) {
-            if ($runAllModules) {
-                $cronFacade->runScheduledModulesForInstance($instanceName);
-            } else {
-                $cronFacade->runModuleByServiceId($requestedModuleServiceId);
-            }
-            $mutex->releaseLock();
-        } else {
-            throw new \Shopsys\FrameworkBundle\Command\Exception\CronCommandException(
+        if (!$mutex->acquireLock(0)) {
+            throw new CronCommandException(
                 'Cron is locked. Another cron module is already running.'
             );
         }
+
+        if ($runAllModules) {
+            $cronFacade->runScheduledModulesForInstance($instanceName);
+        } else {
+            $cronFacade->runModuleByServiceId($requestedModuleServiceId);
+        }
+        $mutex->releaseLock();
     }
 
     /**
@@ -205,7 +229,13 @@ class CronCommand extends Command
     {
         $instanceNames = $this->cronFacade->getInstanceNames();
 
-        $defaultInstanceName = in_array(CronModuleConfig::DEFAULT_INSTANCE_NAME, $instanceNames, true) ? CronModuleConfig::DEFAULT_INSTANCE_NAME : reset($instanceNames);
+        $defaultInstanceName = in_array(
+            CronModuleConfig::DEFAULT_INSTANCE_NAME,
+            $instanceNames,
+            true
+        ) ? CronModuleConfig::DEFAULT_INSTANCE_NAME : reset(
+            $instanceNames
+        );
 
         if (count($instanceNames) === 1) {
             return $defaultInstanceName;
@@ -218,13 +248,11 @@ class CronCommand extends Command
 
         $io = new SymfonyStyle($input, $output);
 
-        $chosenInstanceName = $io->choice(
+        return $io->choice(
             'There is more than one cron instance. Which instance do you want to use?',
             $instanceNameChoices,
             $defaultInstanceName
         );
-
-        return $chosenInstanceName;
     }
 
     /**

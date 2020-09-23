@@ -162,7 +162,7 @@ class ScriptFacade
      */
     public function isGoogleAnalyticsActivated($domainId)
     {
-        return !empty($this->setting->getForDomain(Script::GOOGLE_ANALYTICS_TRACKING_ID_SETTING_NAME, $domainId));
+        return $this->setting->getForDomain(Script::GOOGLE_ANALYTICS_TRACKING_ID_SETTING_NAME, $domainId) !== null;
     }
 
     /**

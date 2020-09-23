@@ -63,9 +63,8 @@ class ElFinderPostInstallCommand extends Command
         if ($this->filesystem->exists($webDir . '/css')) {
             $symfonyStyleIo->success('elFinder assets successfully installed');
             return CommandResultCodes::RESULT_OK;
-        } else {
-            $symfonyStyleIo->error('elFinder post-install failed');
-            return CommandResultCodes::RESULT_FAIL;
         }
+        $symfonyStyleIo->error('elFinder post-install failed');
+        return CommandResultCodes::RESULT_FAIL;
     }
 }

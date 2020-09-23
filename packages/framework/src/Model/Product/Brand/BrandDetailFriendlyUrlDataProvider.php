@@ -45,7 +45,12 @@ class BrandDetailFriendlyUrlDataProvider implements FriendlyUrlDataProviderInter
             ->select('b.id, b.name')
             ->distinct()
             ->from(Brand::class, 'b')
-            ->leftJoin(FriendlyUrl::class, 'f', Join::WITH, 'b.id = f.entityId AND f.routeName = :routeName AND f.domainId = :domainId')
+            ->leftJoin(
+                FriendlyUrl::class,
+                'f',
+                Join::WITH,
+                'b.id = f.entityId AND f.routeName = :routeName AND f.domainId = :domainId'
+            )
             ->setParameter('routeName', static::ROUTE_NAME)
             ->setParameter('domainId', $domainConfig->getId())
             ->where('f.entityId IS NULL');

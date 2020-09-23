@@ -4,6 +4,7 @@ namespace Shopsys\FrameworkBundle\Model\Security\Filesystem;
 
 use FM\ElfinderBundle\Configuration\ElFinderConfigurationReader;
 use Shopsys\FrameworkBundle\Component\Filesystem\FilepathComparator;
+use Shopsys\FrameworkBundle\Model\Security\Filesystem\Exception\InstanceNotInjectedException;
 
 class FilemanagerAccess
 {
@@ -83,7 +84,7 @@ class FilemanagerAccess
     public static function isPathAccessibleStatic($attr, $path, $data, $volume)
     {
         if (self::$self === null) {
-            throw new \Shopsys\FrameworkBundle\Model\Security\Filesystem\Exception\InstanceNotInjectedException();
+            throw new InstanceNotInjectedException();
         }
 
         return self::$self->isPathAccessible($attr, $path, $data, $volume);

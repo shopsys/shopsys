@@ -105,7 +105,9 @@ class MailTemplateVariables
     public function addVariable(string $variable, string $label, int $context = self::CONTEXT_BOTH, int $required = self::REQUIRED_NOWHERE): self
     {
         if (array_key_exists($variable, $this->variables)) {
-            throw new InvalidMailTemplateVariablesConfigurationException(sprintf('Variable "%s" is already registered.', $variable));
+            throw new InvalidMailTemplateVariablesConfigurationException(
+                sprintf('Variable "%s" is already registered.', $variable)
+            );
         }
 
         $this->variables[$variable] = $label;
@@ -133,7 +135,9 @@ class MailTemplateVariables
                 $this->subjectVariables[] = $variable;
                 break;
             default:
-                throw new InvalidMailTemplateVariablesConfigurationException('Variable can be used only in body or subject');
+                throw new InvalidMailTemplateVariablesConfigurationException(
+                    'Variable can be used only in body or subject'
+                );
         }
     }
 
@@ -149,7 +153,9 @@ class MailTemplateVariables
                 break;
             case self::REQUIRED_BOTH:
                 if ($context !== self::CONTEXT_BOTH) {
-                    throw new InvalidMailTemplateVariablesConfigurationException('Variable have to be in body and subject to make it required in both');
+                    throw new InvalidMailTemplateVariablesConfigurationException(
+                        'Variable have to be in body and subject to make it required in both'
+                    );
                 }
 
                 $this->requiredBodyVariables[] = $variable;
@@ -157,19 +163,25 @@ class MailTemplateVariables
                 break;
             case self::REQUIRED_BODY:
                 if ($context === self::CONTEXT_SUBJECT) {
-                    throw new InvalidMailTemplateVariablesConfigurationException('Variable have to be present in body to make it required there');
+                    throw new InvalidMailTemplateVariablesConfigurationException(
+                        'Variable have to be present in body to make it required there'
+                    );
                 }
 
                 $this->requiredBodyVariables[] = $variable;
                 break;
             case self::REQUIRED_SUBJECT:
                 if ($context === self::CONTEXT_BODY) {
-                    throw new InvalidMailTemplateVariablesConfigurationException('Variable have to be present in subject to make it required there');
+                    throw new InvalidMailTemplateVariablesConfigurationException(
+                        'Variable have to be present in subject to make it required there'
+                    );
                 }
                 $this->requiredSubjectVariables[] = $variable;
                 break;
             default:
-                throw new InvalidMailTemplateVariablesConfigurationException('Variable can be required only in body, subject or nowhere');
+                throw new InvalidMailTemplateVariablesConfigurationException(
+                    'Variable can be required only in body, subject or nowhere'
+                );
         }
     }
 

@@ -14,14 +14,12 @@ use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
  *         @ORM\UniqueConstraint(name="product_domain", columns={"product_id", "domain_id"})
  *     }
  * )
- *
  * @ORM\Entity
  */
 class ProductDomain
 {
     /**
      * @var int
-     *
      * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
@@ -30,7 +28,6 @@ class ProductDomain
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\Product
-     *
      * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Product\Product", inversedBy="domains")
      * @ORM\JoinColumn(nullable=false, name="product_id", referencedColumnName="id", onDelete="CASCADE")
      */
@@ -38,21 +35,18 @@ class ProductDomain
 
     /**
      * @var int
-     *
      * @ORM\Column(type="integer")
      */
     protected $domainId;
 
     /**
      * @var string|null
-     *
      * @ORM\Column(type="text", nullable=true)
      */
     protected $seoTitle;
 
     /**
      * @var string|null
-     *
      * @ORM\Column(type="text", nullable=true)
      */
     protected $seoMetaDescription;
@@ -71,28 +65,24 @@ class ProductDomain
 
     /**
      * @var string
-     *
      * @ORM\Column(type="tsvector", nullable=false)
      */
     protected $descriptionTsvector;
 
     /**
      * @var string
-     *
      * @ORM\Column(type="tsvector", nullable=false)
      */
     protected $fulltextTsvector;
 
     /**
      * @var string|null
-     *
      * @ORM\Column(type="text", nullable=true)
      */
     protected $seoH1;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat
-     *
      * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat")
      * @ORM\JoinColumn(nullable=false)
      */

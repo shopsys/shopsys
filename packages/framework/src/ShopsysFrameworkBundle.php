@@ -41,10 +41,12 @@ class ShopsysFrameworkBundle extends Bundle
         $container->registerForAutoconfiguration(AbstractIndex::class)->addTag('elasticsearch.index');
 
         $environment = $container->getParameter('kernel.environment');
-        if ($environment === EnvironmentType::DEVELOPMENT) {
-            $container->addCompilerPass(new RegisterProjectFrameworkClassExtensionsCompilerPass());
-            $container->addResource(new DirectoryResource($container->getParameter('kernel.root_dir') . '/Component'));
-            $container->addResource(new DirectoryResource($container->getParameter('kernel.root_dir') . '/Model'));
+        if ($environment !== EnvironmentType::DEVELOPMENT) {
+            return;
         }
+
+        $container->addCompilerPass(new RegisterProjectFrameworkClassExtensionsCompilerPass());
+        $container->addResource(new DirectoryResource($container->getParameter('kernel.root_dir') . '/Component'));
+        $container->addResource(new DirectoryResource($container->getParameter('kernel.root_dir') . '/Model'));
     }
 }

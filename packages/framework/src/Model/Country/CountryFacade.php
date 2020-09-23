@@ -116,7 +116,10 @@ class CountryFacade
      */
     public function getAllEnabledOnCurrentDomain(): array
     {
-        return $this->countryRepository->getAllEnabledByDomainIdWithLocale($this->domain->getId(), $this->domain->getLocale());
+        return $this->countryRepository->getAllEnabledByDomainIdWithLocale(
+            $this->domain->getId(),
+            $this->domain->getLocale()
+        );
     }
 
     /**

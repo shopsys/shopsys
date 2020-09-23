@@ -74,7 +74,10 @@ class Configuration extends DoctrineConfiguration
                 if (array_key_exists($skippedMigrationClass, $foundMigrationVersionsByClass)) {
                     unset($foundMigrationVersionsByClass[$skippedMigrationClass]);
                 } else {
-                    $message = sprintf('WARNING: Migration version "%s" marked as skipped in migration lock file was not found!', $skippedMigrationClass);
+                    $message = sprintf(
+                        'WARNING: Migration version "%s" marked as skipped in migration lock file was not found!',
+                        $skippedMigrationClass
+                    );
                     $this->outputWriter->write($message);
                 }
             }
@@ -85,7 +88,10 @@ class Configuration extends DoctrineConfiguration
                     $this->migrationVersions[$installedMigrationVersion->getVersion()] = $installedMigrationVersion;
                     unset($migrationVersion);
                 } else {
-                    $message = sprintf('WARNING: Migration version "%s" marked as installed in migration lock file was not found!', $installedMigrationClass);
+                    $message = sprintf(
+                        'WARNING: Migration version "%s" marked as installed in migration lock file was not found!',
+                        $installedMigrationClass
+                    );
                     $this->outputWriter->write($message);
                 }
             }
@@ -104,7 +110,6 @@ class Configuration extends DoctrineConfiguration
      *
      * @param string $direction the direction we are migrating (DOWN is not allowed)
      * @param string $to the version to migrate to (partial migrations are not allowed)
-     *
      * @throws \Shopsys\MigrationBundle\Component\Doctrine\Migrations\Exception\MethodIsNotAllowedException
      * @return \Doctrine\DBAL\Migrations\Version[] $migrations the array of migrations we can execute
      */

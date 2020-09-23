@@ -88,7 +88,10 @@ class HeurekaProductCrudExtension implements PluginCrudExtensionInterface
                 $heurekaProductDomainsData[] = $heurekaProductDomainData;
             }
         }
-        $this->heurekaProductDomainFacade->saveHeurekaProductDomainsForProductId($productId, $heurekaProductDomainsData);
+        $this->heurekaProductDomainFacade->saveHeurekaProductDomainsForProductId(
+            $productId,
+            $heurekaProductDomainsData
+        );
     }
 
     /**

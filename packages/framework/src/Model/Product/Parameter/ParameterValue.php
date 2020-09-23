@@ -12,7 +12,6 @@ class ParameterValue
 {
     /**
      * @var int
-     *
      * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
@@ -21,14 +20,12 @@ class ParameterValue
 
     /**
      * @var string
-     *
      * @ORM\Column(type="string", length=100)
      */
     protected $text;
 
     /**
      * @var string
-     *
      * @ORM\Column(type="string")
      */
     protected $locale;

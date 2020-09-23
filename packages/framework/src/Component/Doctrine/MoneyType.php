@@ -5,6 +5,7 @@ namespace Shopsys\FrameworkBundle\Component\Doctrine;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Types\ConversionException;
 use Doctrine\DBAL\Types\Type;
+use Exception;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 
 class MoneyType extends Type
@@ -52,7 +53,7 @@ class MoneyType extends Type
 
         try {
             return Money::create($value);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             throw ConversionException::conversionFailedFormat($value, $this->getName(), 'numeric', $e);
         }
     }

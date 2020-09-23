@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller\Front;
 
+use Exception;
 use League\Flysystem\FilesystemInterface;
 use Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig;
 use Shopsys\FrameworkBundle\Component\Image\Exception\ImageException;
@@ -45,7 +46,12 @@ class ImageController extends FrontBaseController
         }
 
         try {
-            $imageFilepath = $this->imageGeneratorFacade->generateImageAndGetFilepath($entityName, $imageId, $type, $sizeName);
+            $imageFilepath = $this->imageGeneratorFacade->generateImageAndGetFilepath(
+                $entityName,
+                $imageId,
+                $type,
+                $sizeName
+            );
         } catch (ImageException $e) {
             $message = sprintf(
                 'Generate image for entity "%s" (type=%s, size=%s, imageId=%s) failed',
@@ -74,7 +80,13 @@ class ImageController extends FrontBaseController
         }
 
         try {
-            $imageFilepath = $this->imageGeneratorFacade->generateAdditionalImageAndGetFilepath($entityName, $imageId, $additionalIndex, $type, $sizeName);
+            $imageFilepath = $this->imageGeneratorFacade->generateAdditionalImageAndGetFilepath(
+                $entityName,
+                $imageId,
+                $additionalIndex,
+                $type,
+                $sizeName
+            );
         } catch (ImageException $e) {
             $message = sprintf(
                 'Generate image for entity "%s" (type=%s, size=%s, imageId=%s, additionalIndex=%s) failed',
@@ -109,7 +121,7 @@ class ImageController extends FrontBaseController
             };
 
             return new StreamedResponse($callback, 200, $headers);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $message = 'Response with file "' . $imageFilepath . '" failed.';
             throw $this->createNotFoundException($message, $e);
         }

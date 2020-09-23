@@ -102,7 +102,12 @@ class PlaceOrderFacade
 
         $customerUser = $this->currentCustomerUser->findCurrentCustomerUser();
 
-        $orderPreview = $this->createOrderPreview($quantifiedProducts, $orderData->transport, $orderData->payment, $customerUser);
+        $orderPreview = $this->createOrderPreview(
+            $quantifiedProducts,
+            $orderData->transport,
+            $orderData->payment,
+            $customerUser
+        );
 
         $order = $this->orderFacade->createOrder($orderData, $orderPreview, $customerUser);
         $this->orderProductFacade->subtractOrderProductsFromStock($order->getProductItems());

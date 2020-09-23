@@ -20,6 +20,7 @@ class ProductImageUrlNotLoadedException extends Exception implements ProductColl
             $product->getId(),
             $domainConfig->getName()
         );
+
         parent::__construct($message, 0, $previous);
     }
 }

@@ -118,12 +118,14 @@ class HeurekaCategoryFacade
     {
         $heurekaCategory = $this->heurekaCategoryRepository->findByCategoryId($categoryId);
 
-        if ($heurekaCategory !== null) {
-            $category = $this->categoryRepository->getById($categoryId);
-            $heurekaCategory->removeCategory($category);
-
-            $this->em->flush();
+        if ($heurekaCategory === null) {
+            return;
         }
+
+        $category = $this->categoryRepository->getById($categoryId);
+        $heurekaCategory->removeCategory($category);
+
+        $this->em->flush();
     }
 
     /**

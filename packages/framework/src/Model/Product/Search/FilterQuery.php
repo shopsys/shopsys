@@ -7,30 +7,45 @@ namespace Shopsys\FrameworkBundle\Model\Product\Search;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingConfig;
+use stdClass;
 
 class FilterQuery
 {
     protected const MAXIMUM_REASONABLE_AGGREGATION_BUCKET_COUNT = 100;
 
-    /** @var array */
+    /**
+     * @var array
+     */
     protected $filters = [];
 
-    /** @var string */
+    /**
+     * @var string
+     */
     protected $indexName;
 
-    /** @var array */
+    /**
+     * @var array
+     */
     protected $sorting = [];
 
-    /** @var int */
+    /**
+     * @var int
+     */
     protected $limit = 1000;
 
-    /** @var int */
+    /**
+     * @var int
+     */
     protected $page = 1;
 
-    /** @var array */
+    /**
+     * @var array
+     */
     protected $match;
 
-    /** @var int|null */
+    /**
+     * @var int|null
+     */
     protected $from;
 
     /**
@@ -149,7 +164,7 @@ class FilterQuery
                     'query' => [
                         'bool' => [
                             'must' => [
-                                'match_all' => new \stdClass(),
+                                'match_all' => new stdClass(),
                             ],
                             'filter' => [
                                 [
@@ -196,7 +211,7 @@ class FilterQuery
                 'query' => [
                     'bool' => [
                         'must' => [
-                            'match_all' => new \stdClass(),
+                            'match_all' => new stdClass(),
                         ],
                         'filter' => [
                             [
@@ -315,7 +330,7 @@ class FilterQuery
                 'query' => [
                     'bool' => [
                         'must' => [
-                            'match_all' => new \stdClass(),
+                            'match_all' => new stdClass(),
                         ],
                         'filter' => [
                             [
@@ -413,7 +428,7 @@ class FilterQuery
      */
     public function getQuery(): array
     {
-        $query = [
+        return [
             'index' => $this->indexName,
             'body' => [
                 'from' => $this->from !== null ? $this->from : $this->countFrom($this->page, $this->limit),
@@ -427,8 +442,6 @@ class FilterQuery
                 ],
             ],
         ];
-
-        return $query;
     }
 
     /**
@@ -437,7 +450,7 @@ class FilterQuery
     protected function matchAll(): array
     {
         return [
-            'match_all' => new \stdClass(),
+            'match_all' => new stdClass(),
         ];
     }
 

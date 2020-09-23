@@ -245,7 +245,11 @@ class ProductExportRepository
      */
     protected function extractDetailUrl(int $domainId, Product $product): string
     {
-        $friendlyUrl = $this->friendlyUrlRepository->getMainFriendlyUrl($domainId, 'front_product_detail', $product->getId());
+        $friendlyUrl = $this->friendlyUrlRepository->getMainFriendlyUrl(
+            $domainId,
+            'front_product_detail',
+            $product->getId()
+        );
 
         return $this->friendlyUrlFacade->getAbsoluteUrlByFriendlyUrl($friendlyUrl);
     }
@@ -312,16 +316,21 @@ class ProductExportRepository
     protected function extractParameters(string $locale, Product $product): array
     {
         $parameters = [];
-        $productParameterValues = $this->parameterRepository->getProductParameterValuesByProductSortedByName($product, $locale);
+        $productParameterValues = $this->parameterRepository->getProductParameterValuesByProductSortedByName(
+            $product,
+            $locale
+        );
         foreach ($productParameterValues as $productParameterValue) {
             $parameter = $productParameterValue->getParameter();
             $parameterValue = $productParameterValue->getValue();
-            if ($parameter->getName($locale) !== null && $parameterValue->getLocale() === $locale) {
-                $parameters[] = [
-                    'parameter_id' => $parameter->getId(),
-                    'parameter_value_id' => $parameterValue->getId(),
-                ];
+            if ($parameter->getName($locale) === null || $parameterValue->getLocale() !== $locale) {
+                continue;
             }
+
+            $parameters[] = [
+                'parameter_id' => $parameter->getId(),
+                'parameter_value_id' => $parameterValue->getId(),
+            ];
         }
 
         return $parameters;
@@ -365,7 +374,10 @@ class ProductExportRepository
     {
         $visibility = [];
 
-        foreach ($this->productVisibilityRepository->findProductVisibilitiesByDomainIdAndProduct($domainId, $product) as $productVisibility) {
+        foreach ($this->productVisibilityRepository->findProductVisibilitiesByDomainIdAndProduct(
+            $domainId,
+            $product
+        ) as $productVisibility) {
             $visibility[] = [
                 'pricing_group_id' => $productVisibility->getPricingGroup()->getId(),
                 'visible' => $productVisibility->isVisible(),

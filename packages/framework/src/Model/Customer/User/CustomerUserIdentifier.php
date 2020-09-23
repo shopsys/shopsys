@@ -2,6 +2,8 @@
 
 namespace Shopsys\FrameworkBundle\Model\Customer\User;
 
+use Shopsys\FrameworkBundle\Model\Customer\Exception\EmptyCustomerUserIdentifierException;
+
 class CustomerUserIdentifier
 {
     /**
@@ -22,7 +24,7 @@ class CustomerUserIdentifier
     {
         if ($cartIdentifier === '' && $customerUser === null) {
             $message = 'Can not be created empty CustomerUserIdentifier';
-            throw new \Shopsys\FrameworkBundle\Model\Customer\Exception\EmptyCustomerUserIdentifierException($message);
+            throw new EmptyCustomerUserIdentifierException($message);
         }
 
         $this->customerUser = $customerUser;

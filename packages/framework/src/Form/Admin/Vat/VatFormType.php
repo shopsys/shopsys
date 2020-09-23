@@ -26,7 +26,9 @@ class VatFormType extends AbstractType
                 'required' => false,
                 'constraints' => [
                     new Constraints\NotBlank(['message' => 'Please enter VAT name']),
-                    new Constraints\Length(['max' => 50, 'maxMessage' => 'VAT name cannot be longer than {{ limit }} characters']),
+                    new Constraints\Length(
+                        ['max' => 50, 'maxMessage' => 'VAT name cannot be longer than {{ limit }} characters']
+                    ),
                 ],
             ])
             ->add('percent', NumberType::class, [

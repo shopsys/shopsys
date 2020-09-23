@@ -41,7 +41,11 @@ class AutomaticBestsellingProductRepository
         DateTime $ordersCreatedAtLimit,
         $maxResults
     ) {
-        $queryBuilder = $this->productRepository->getOfferedInCategoryQueryBuilder($domainId, $pricingGroup, $category);
+        $queryBuilder = $this->productRepository->getOfferedInCategoryQueryBuilder(
+            $domainId,
+            $pricingGroup,
+            $category
+        );
 
         $queryBuilder
             ->addSelect('COUNT(op) AS HIDDEN orderCount')

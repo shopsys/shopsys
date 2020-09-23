@@ -16,7 +16,6 @@ class IndexDefinitionTest extends TestCase
      * @param string $indexPrefix
      * @param int $domainId
      * @param string $expectedResult
-     *
      * @dataProvider indexDefinitionParametersForIndexAlias
      */
     public function testGetIndexAlias(

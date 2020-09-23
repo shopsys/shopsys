@@ -3,6 +3,8 @@
 namespace Shopsys\FrameworkBundle\Component\Setting;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Shopsys\FrameworkBundle\Component\Setting\Exception\InvalidArgumentException;
+use Shopsys\FrameworkBundle\Component\Setting\Exception\SettingValueNotFoundException;
 
 class Setting
 {
@@ -63,7 +65,7 @@ class Setting
         }
 
         $message = 'Common setting value with name "' . $key . '" not found.';
-        throw new \Shopsys\FrameworkBundle\Component\Setting\Exception\SettingValueNotFoundException($message);
+        throw new SettingValueNotFoundException($message);
     }
 
     /**
@@ -82,7 +84,7 @@ class Setting
         }
 
         $message = 'Setting value with name "' . $key . '" for domain with ID "' . $domainId . '" not found.';
-        throw new \Shopsys\FrameworkBundle\Component\Setting\Exception\SettingValueNotFoundException($message);
+        throw new SettingValueNotFoundException($message);
     }
 
     /**
@@ -93,15 +95,15 @@ class Setting
     {
         $this->loadDomainValues(SettingValue::DOMAIN_ID_COMMON);
 
-        if (array_key_exists($key, $this->values[SettingValue::DOMAIN_ID_COMMON])) {
-            $settingValue = $this->values[SettingValue::DOMAIN_ID_COMMON][$key];
-            $settingValue->edit($value);
-
-            $this->em->flush($settingValue);
-        } else {
+        if (!array_key_exists($key, $this->values[SettingValue::DOMAIN_ID_COMMON])) {
             $message = 'Common setting value with name "' . $key . '" not found.';
-            throw new \Shopsys\FrameworkBundle\Component\Setting\Exception\SettingValueNotFoundException($message);
+            throw new SettingValueNotFoundException($message);
         }
+
+        $settingValue = $this->values[SettingValue::DOMAIN_ID_COMMON][$key];
+        $settingValue->edit($value);
+
+        $this->em->flush($settingValue);
     }
 
     /**
@@ -113,15 +115,15 @@ class Setting
     {
         $this->loadDomainValues($domainId);
 
-        if (array_key_exists($key, $this->values[$domainId])) {
-            $settingValue = $this->values[$domainId][$key];
-            $settingValue->edit($value);
-
-            $this->em->flush($settingValue);
-        } else {
+        if (!array_key_exists($key, $this->values[$domainId])) {
             $message = 'Setting value with name "' . $key . '" for domain ID "' . $domainId . '" not found.';
-            throw new \Shopsys\FrameworkBundle\Component\Setting\Exception\SettingValueNotFoundException($message);
+            throw new SettingValueNotFoundException($message);
         }
+
+        $settingValue = $this->values[$domainId][$key];
+        $settingValue->edit($value);
+
+        $this->em->flush($settingValue);
     }
 
     /**
@@ -131,14 +133,16 @@ class Setting
     {
         if ($domainId === null) {
             $message = 'Cannot load setting value for null domain ID';
-            throw new \Shopsys\FrameworkBundle\Component\Setting\Exception\InvalidArgumentException($message);
+            throw new InvalidArgumentException($message);
         }
 
-        if (!array_key_exists($domainId, $this->values)) {
-            $this->values[$domainId] = [];
-            foreach ($this->settingValueRepository->getAllByDomainId($domainId) as $settingValue) {
-                $this->values[$domainId][$settingValue->getName()] = $settingValue;
-            }
+        if (array_key_exists($domainId, $this->values)) {
+            return;
+        }
+
+        $this->values[$domainId] = [];
+        foreach ($this->settingValueRepository->getAllByDomainId($domainId) as $settingValue) {
+            $this->values[$domainId][$settingValue->getName()] = $settingValue;
         }
     }
 

@@ -4,6 +4,7 @@ namespace Shopsys\FrameworkBundle\Model\Order\Status;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Model\Order\Order;
+use Shopsys\FrameworkBundle\Model\Order\Status\Exception\OrderStatusNotFoundException;
 
 class OrderStatusRepository
 {
@@ -47,7 +48,7 @@ class OrderStatusRepository
 
         if ($orderStatus === null) {
             $message = 'Order status with ID ' . $orderStatusId . ' not found.';
-            throw new \Shopsys\FrameworkBundle\Model\Order\Status\Exception\OrderStatusNotFoundException($message);
+            throw new OrderStatusNotFoundException($message);
         }
 
         return $orderStatus;
@@ -62,7 +63,7 @@ class OrderStatusRepository
 
         if ($orderStatus === null) {
             $message = 'Default order status not found.';
-            throw new \Shopsys\FrameworkBundle\Model\Order\Status\Exception\OrderStatusNotFoundException($message);
+            throw new OrderStatusNotFoundException($message);
         }
 
         return $orderStatus;

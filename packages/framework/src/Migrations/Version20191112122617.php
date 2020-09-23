@@ -17,7 +17,9 @@ class Version20191112122617 extends AbstractMigration
     public function up(Schema $schema): void
     {
         $this->sql('ALTER TABLE payment_domains ADD vat_id INT NOT NULL DEFAULT 1');
-        $this->sql('ALTER TABLE payment_domains ADD CONSTRAINT FK_9532B177B5B63A6B FOREIGN KEY (vat_id) REFERENCES vats (id) NOT DEFERRABLE INITIALLY IMMEDIATE');
+        $this->sql(
+            'ALTER TABLE payment_domains ADD CONSTRAINT FK_9532B177B5B63A6B FOREIGN KEY (vat_id) REFERENCES vats (id) NOT DEFERRABLE INITIALLY IMMEDIATE'
+        );
         $this->sql('CREATE INDEX IDX_9532B177B5B63A6B ON payment_domains (vat_id)');
         $this->sql('ALTER TABLE payment_domains ALTER vat_id DROP DEFAULT');
 
@@ -26,7 +28,9 @@ class Version20191112122617 extends AbstractMigration
         $this->sql('ALTER TABLE payment_prices ALTER domain_id DROP DEFAULT');
 
         $this->sql('ALTER TABLE transport_domains ADD vat_id INT NOT NULL DEFAULT 1');
-        $this->sql('ALTER TABLE transport_domains ADD CONSTRAINT FK_18AC7F6CB5B63A6B FOREIGN KEY (vat_id) REFERENCES vats (id) NOT DEFERRABLE INITIALLY IMMEDIATE');
+        $this->sql(
+            'ALTER TABLE transport_domains ADD CONSTRAINT FK_18AC7F6CB5B63A6B FOREIGN KEY (vat_id) REFERENCES vats (id) NOT DEFERRABLE INITIALLY IMMEDIATE'
+        );
         $this->sql('ALTER TABLE transport_domains ALTER vat_id DROP DEFAULT');
 
         $this->sql('ALTER TABLE transport_prices DROP CONSTRAINT transport_prices_pkey');
@@ -62,16 +66,22 @@ class Version20191112122617 extends AbstractMigration
         $payments = $this->sql('SELECT id, vat_id FROM payments')->fetchAll();
 
         foreach ($payments as $payment) {
-            $paymentDomains = $this->sql('SELECT id, domain_id FROM payment_domains where payment_id = :paymentId', ['paymentId' => $payment['id']])->fetchAll();
+            $paymentDomains = $this->sql(
+                'SELECT id, domain_id FROM payment_domains where payment_id = :paymentId',
+                ['paymentId' => $payment['id']]
+            )->fetchAll();
 
             foreach ($paymentDomains as $paymentDomain) {
                 $vatId = $payment['vat_id'];
                 if ($paymentDomain['domain_id'] > 1) {
                     $vatId = $this
-                        ->sql('SELECT id FROM vats where tmp_original_id = :tmpOriginalId and domain_id = :domainId', [
-                            'tmpOriginalId' => $payment['vat_id'],
-                            'domainId' => $paymentDomain['domain_id'],
-                        ])
+                        ->sql(
+                            'SELECT id FROM vats where tmp_original_id = :tmpOriginalId and domain_id = :domainId',
+                            [
+                                'tmpOriginalId' => $payment['vat_id'],
+                                'domainId' => $paymentDomain['domain_id'],
+                            ]
+                        )
                         ->fetchColumn(0);
                 }
 
@@ -93,9 +103,12 @@ class Version20191112122617 extends AbstractMigration
                 ['domainId' => $domainId]
             )->fetchColumn(0);
 
-            $paymentPricesByCurrency = $this->sql('SELECT payment_id, price, domain_id FROM payment_prices WHERE currency_id = :currencyId', [
-                'currencyId' => $defaultCurrencyForDomain,
-            ])->fetchAll();
+            $paymentPricesByCurrency = $this->sql(
+                'SELECT payment_id, price, domain_id FROM payment_prices WHERE currency_id = :currencyId',
+                [
+                    'currencyId' => $defaultCurrencyForDomain,
+                ]
+            )->fetchAll();
 
             foreach ($paymentPricesByCurrency as $paymentPrice) {
                 if ($paymentPrice['domain_id'] === 0) {
@@ -132,16 +145,22 @@ class Version20191112122617 extends AbstractMigration
         $transports = $this->sql('SELECT id, vat_id FROM transports')->fetchAll();
 
         foreach ($transports as $transport) {
-            $transportDomains = $this->sql('SELECT id, domain_id FROM transport_domains where transport_id = :transportId', ['transportId' => $transport['id']])->fetchAll();
+            $transportDomains = $this->sql(
+                'SELECT id, domain_id FROM transport_domains where transport_id = :transportId',
+                ['transportId' => $transport['id']]
+            )->fetchAll();
 
             foreach ($transportDomains as $transportDomain) {
                 $vatId = $transport['vat_id'];
                 if ($transportDomain['domain_id'] > 1) {
                     $vatId = $this
-                        ->sql('SELECT id FROM vats where tmp_original_id = :tmpOriginalId and domain_id = :domainId', [
-                            'tmpOriginalId' => $transport['vat_id'],
-                            'domainId' => $transportDomain['domain_id'],
-                        ])
+                        ->sql(
+                            'SELECT id FROM vats where tmp_original_id = :tmpOriginalId and domain_id = :domainId',
+                            [
+                                'tmpOriginalId' => $transport['vat_id'],
+                                'domainId' => $transportDomain['domain_id'],
+                            ]
+                        )
                         ->fetchColumn(0);
                 }
 
@@ -163,9 +182,12 @@ class Version20191112122617 extends AbstractMigration
                 ['domainId' => $domainId]
             )->fetchColumn(0);
 
-            $transportPricesByCurrency = $this->sql('SELECT transport_id, price, domain_id FROM transport_prices WHERE currency_id = :currencyId', [
-                'currencyId' => $defaultCurrencyForDomain,
-            ])->fetchAll();
+            $transportPricesByCurrency = $this->sql(
+                'SELECT transport_id, price, domain_id FROM transport_prices WHERE currency_id = :currencyId',
+                [
+                    'currencyId' => $defaultCurrencyForDomain,
+                ]
+            )->fetchAll();
 
             foreach ($transportPricesByCurrency as $transportPrice) {
                 if ($transportPrice['domain_id'] === 0) {

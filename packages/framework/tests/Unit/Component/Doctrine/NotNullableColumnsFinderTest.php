@@ -5,6 +5,7 @@ namespace Tests\FrameworkBundle\Unit\Component\Doctrine;
 use Doctrine\Common\Persistence\Mapping\ClassMetadata;
 use Doctrine\ORM\Mapping\ClassMetadataInfo;
 use PHPUnit\Framework\TestCase;
+use Shopsys\FrameworkBundle\Component\Doctrine\Exception\UnexpectedTypeException;
 use Shopsys\FrameworkBundle\Component\Doctrine\NotNullableColumnsFinder;
 
 class NotNullableColumnsFinderTest extends TestCase
@@ -21,10 +22,7 @@ class NotNullableColumnsFinderTest extends TestCase
         $classMetadataInfoMock
             ->method('isNullable')
             ->willReturnCallback(function ($fieldName) {
-                if ($fieldName === 'nullableField') {
-                    return true;
-                }
-                return false;
+                return $fieldName === 'nullableField';
             });
         $classMetadataInfoMock
             ->method('getColumnName')
@@ -46,7 +44,9 @@ class NotNullableColumnsFinderTest extends TestCase
         ];
 
         $notNullableColumnsFinder = new NotNullableColumnsFinder();
-        $actualResult = $notNullableColumnsFinder->getAllNotNullableColumnNamesIndexedByTableName([$classMetadataInfoMock]);
+        $actualResult = $notNullableColumnsFinder->getAllNotNullableColumnNamesIndexedByTableName(
+            [$classMetadataInfoMock]
+        );
 
         $this->assertSame($expectedResult, $actualResult);
     }
@@ -78,7 +78,7 @@ class NotNullableColumnsFinderTest extends TestCase
     public function testGetAllNotNullableColumnNamesIndexedByTableNameException()
     {
         $classMetadataMock = $this->createMock(ClassMetadata::class);
-        $this->expectException(\Shopsys\FrameworkBundle\Component\Doctrine\Exception\UnexpectedTypeException::class);
+        $this->expectException(UnexpectedTypeException::class);
 
         $notNullableColumnsFinder = new NotNullableColumnsFinder();
         $notNullableColumnsFinder->getAllNotNullableColumnNamesIndexedByTableName([$classMetadataMock]);

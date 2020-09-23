@@ -49,7 +49,11 @@ class ListedProductViewFactoryTest extends TestCase
 
         $productMock = $this->createProductMock($id, $productName, $shortDescription, $availabilityName, $flags);
 
-        $listedProductView = $listedProductViewFactory->createFromProduct($productMock, $imageView, $productActionView);
+        $listedProductView = $listedProductViewFactory->createFromProduct(
+            $productMock,
+            $imageView,
+            $productActionView
+        );
 
         $expected = new ListedProductView(
             $id,

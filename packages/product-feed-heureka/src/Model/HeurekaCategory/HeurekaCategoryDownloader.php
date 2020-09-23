@@ -2,6 +2,7 @@
 
 namespace Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory;
 
+use Exception;
 use SimpleXMLElement;
 
 class HeurekaCategoryDownloader
@@ -45,8 +46,8 @@ class HeurekaCategoryDownloader
     {
         try {
             return new SimpleXMLElement($this->heurekaCategoryFeedUrl, LIBXML_NOERROR | LIBXML_NOWARNING, true);
-        } catch (\Exception $e) {
-            throw new \Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory\HeurekaCategoryDownloadFailedException($e);
+        } catch (Exception $e) {
+            throw new HeurekaCategoryDownloadFailedException($e);
         }
     }
 

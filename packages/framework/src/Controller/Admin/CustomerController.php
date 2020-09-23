@@ -16,6 +16,7 @@ use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData;
 use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormType;
 use Shopsys\FrameworkBundle\Model\Administrator\AdministratorGridFacade;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
+use Shopsys\FrameworkBundle\Model\Customer\Exception\CustomerUserNotFoundException;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
@@ -159,7 +160,9 @@ class CustomerController extends AdminBaseController
             $this->addErrorFlashTwig(t('Please check the correctness of all data filled.'));
         }
 
-        $this->breadcrumbOverrider->overrideLastItem(t('Editing customer - %name%', ['%name%' => $customerUser->getFullName()]));
+        $this->breadcrumbOverrider->overrideLastItem(
+            t('Editing customer - %name%', ['%name%' => $customerUser->getFullName()])
+        );
 
         $orders = $this->orderFacade->getCustomerUserOrderList($customerUser);
 
@@ -279,7 +282,7 @@ class CustomerController extends AdminBaseController
                     'name' => $fullName,
                 ]
             );
-        } catch (\Shopsys\FrameworkBundle\Model\Customer\Exception\CustomerUserNotFoundException $ex) {
+        } catch (CustomerUserNotFoundException $ex) {
             $this->addErrorFlash(t('Selected customer doesn\'t exist.'));
         }
 
@@ -300,7 +303,6 @@ class CustomerController extends AdminBaseController
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
-     *
      * @return string
      */
     protected function getSsoLoginAsCustomerUserUrl(CustomerUser $customerUser)
@@ -315,7 +317,7 @@ class CustomerController extends AdminBaseController
         );
 
         $mainAdminDomainRouter = $this->domainRouterFactory->getRouter(Domain::MAIN_ADMIN_DOMAIN_ID);
-        $ssoLoginAsUserUrl = $mainAdminDomainRouter->generate(
+        return $mainAdminDomainRouter->generate(
             'admin_login_sso',
             [
                 LoginController::ORIGINAL_DOMAIN_ID_PARAMETER_NAME => $customerUser->getDomainId(),
@@ -323,7 +325,5 @@ class CustomerController extends AdminBaseController
             ],
             UrlGeneratorInterface::ABSOLUTE_URL
         );
-
-        return $ssoLoginAsUserUrl;
     }
 }

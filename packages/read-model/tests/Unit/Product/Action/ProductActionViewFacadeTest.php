@@ -28,7 +28,11 @@ class ProductActionViewFacadeTest extends TestCase
             3 => 'http://http://webserver:8080/product/3',
         ]);
 
-        $productActionViewFacade = new ProductActionViewFacade($productCollectionFacade, $domain, $productActionViewFactory);
+        $productActionViewFacade = new ProductActionViewFacade(
+            $productCollectionFacade,
+            $domain,
+            $productActionViewFactory
+        );
 
         $productActionViews = $productActionViewFacade->getForProducts([
             $this->createProductMock(1),

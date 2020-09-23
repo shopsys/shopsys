@@ -21,6 +21,7 @@ final class EnableMergingReleaseWorker extends AbstractShopsysReleaseWorker
 
     /**
      * Higher first
+     *
      * @return int
      */
     public function getPriority(): int
@@ -33,7 +34,12 @@ final class EnableMergingReleaseWorker extends AbstractShopsysReleaseWorker
      */
     public function work(Version $version): void
     {
-        $this->symfonyStyle->note(sprintf('Enable merging to "%s" - let your colleagues know in "team_ssfw_devs" Slack channel, and erase the red cross from the "merge" column on the whiteboard in the office.', $this->initialBranchName));
+        $this->symfonyStyle->note(
+            sprintf(
+                'Enable merging to "%s" - let your colleagues know in "team_ssfw_devs" Slack channel, and erase the red cross from the "merge" column on the whiteboard in the office.',
+                $this->initialBranchName
+            )
+        );
         $this->confirm(sprintf('Confirm merging to "%s" is enabled.', $this->initialBranchName));
     }
 

@@ -5,6 +5,7 @@ namespace Shopsys\FrameworkBundle\Command;
 use DirectoryIterator;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
+use Shopsys\FrameworkBundle\Command\Exception\TranslationReplaceSourceCommandException;
 use Shopsys\FrameworkBundle\Component\Translation\TranslationSourceReplacement;
 use SplFileInfo;
 use Symfony\Component\Console\Command\Command;
@@ -28,11 +29,27 @@ class TranslationReplaceSourceCommand extends Command
     protected function configure()
     {
         $this
-            ->setDescription('Replace translation sources to translated texts in target locale. To be used after translation:extract.')
-            ->setHelp('Translation messages from whole project should be extracted first as this tool depends on dumped references.')
-            ->addArgument(self::ARG_TRANSLATIONS_DIR, InputArgument::REQUIRED, 'Directory of extracted translations in .po format')
-            ->addArgument(self::ARG_SOURCE_CODE_DIR, InputArgument::REQUIRED, 'Directory searched for replacements in source code')
-            ->addArgument(self::ARG_TARGET_LOCALE, InputArgument::REQUIRED, 'Locale of translations to replace original sources')
+            ->setDescription(
+                'Replace translation sources to translated texts in target locale. To be used after translation:extract.'
+            )
+            ->setHelp(
+                'Translation messages from whole project should be extracted first as this tool depends on dumped references.'
+            )
+            ->addArgument(
+                self::ARG_TRANSLATIONS_DIR,
+                InputArgument::REQUIRED,
+                'Directory of extracted translations in .po format'
+            )
+            ->addArgument(
+                self::ARG_SOURCE_CODE_DIR,
+                InputArgument::REQUIRED,
+                'Directory searched for replacements in source code'
+            )
+            ->addArgument(
+                self::ARG_TARGET_LOCALE,
+                InputArgument::REQUIRED,
+                'Locale of translations to replace original sources'
+            )
             ->addUsage('./src/Resources/translations ./src en');
     }
 
@@ -126,8 +143,11 @@ class TranslationReplaceSourceCommand extends Command
                 $item['comments'][] = substr($line, 3);
             } elseif (substr($line, 0, 7) === 'msgid "') {
                 if (count($item['ids']) > 0) {
-                    throw new \Shopsys\FrameworkBundle\Command\Exception\TranslationReplaceSourceCommandException(
-                        sprintf('Parse error: Message ID "%s" must be separated from previous IDs by an empty line.', substr($line, 7, -1))
+                    throw new TranslationReplaceSourceCommandException(
+                        sprintf(
+                            'Parse error: Message ID "%s" must be separated from previous IDs by an empty line.',
+                            substr($line, 7, -1)
+                        )
                     );
                 }
                 $item['ids']['singular'] = substr($line, 7, -1);
@@ -196,7 +216,7 @@ class TranslationReplaceSourceCommand extends Command
                     $sourceFileReferences
                 );
             }
-        } elseif (!empty($item['ids']['singular'])) {
+        } elseif (array_key_exists('singular', $item['ids']) && count($item['ids']['singular']) > 0) {
             $translationSourceReplacements[] = new TranslationSourceReplacement(
                 stripcslashes($item['ids']['singular']),
                 stripcslashes($item['translated']),
@@ -331,18 +351,22 @@ class TranslationReplaceSourceCommand extends Command
      */
     private function sortBySourceLengthDesc($replacements)
     {
-        usort($replacements, function (TranslationSourceReplacement $replacementLeft, TranslationSourceReplacement $replacementRight) {
-            $lengthLeft = strlen($replacementLeft->getOldSource());
-            $lengthRight = strlen($replacementRight->getOldSource());
+        usort(
+            $replacements,
+            function (TranslationSourceReplacement $replacementLeft, TranslationSourceReplacement $replacementRight) {
+                $lengthLeft = strlen($replacementLeft->getOldSource());
+                $lengthRight = strlen($replacementRight->getOldSource());
 
-            if ($lengthLeft === $lengthRight) {
-                return 0;
-            } elseif ($lengthLeft < $lengthRight) {
-                return 1;
-            } else {
+                if ($lengthLeft === $lengthRight) {
+                    return 0;
+                }
+
+                if ($lengthLeft < $lengthRight) {
+                    return 1;
+                }
                 return -1;
             }
-        });
+        );
 
         return $replacements;
     }
@@ -372,7 +396,10 @@ class TranslationReplaceSourceCommand extends Command
     private function replaceAllInFiles(array $replacements, array $searchedPathNames, OutputInterface $output)
     {
         if (file_exists(self::FILE_NAME_REPLACEMENT_ERRORS)) {
-            rename(self::FILE_NAME_REPLACEMENT_ERRORS, sprintf('%s.%d.bak', self::FILE_NAME_REPLACEMENT_ERRORS, time()));
+            rename(
+                self::FILE_NAME_REPLACEMENT_ERRORS,
+                sprintf('%s.%d.bak', self::FILE_NAME_REPLACEMENT_ERRORS, time())
+            );
         }
 
         $totalCount = 0;
@@ -386,7 +413,14 @@ class TranslationReplaceSourceCommand extends Command
                 if ($realCount === $expectedCount || !$isExpectedCountExact && $realCount > $expectedCount) {
                     $successfulCount++;
                 } else {
-                    $this->logReplacementError($sourceFilePath, $replacement, $realCount, $expectedCount, $isExpectedCountExact, $output);
+                    $this->logReplacementError(
+                        $sourceFilePath,
+                        $replacement,
+                        $realCount,
+                        $expectedCount,
+                        $isExpectedCountExact,
+                        $output
+                    );
                 }
                 $totalCount++;
             }
@@ -396,12 +430,18 @@ class TranslationReplaceSourceCommand extends Command
             $output->writeln('<fg=cyan>Nothing to replace.</fg=cyan>');
         } else {
             $output->writeln('');
-            $output->writeln(sprintf('Replacement success rate: <fg=cyan>%.2f%%</fg=cyan>', 100 * $successfulCount / $totalCount));
+            $output->writeln(
+                sprintf('Replacement success rate: <fg=cyan>%.2f%%</fg=cyan>', 100 * $successfulCount / $totalCount)
+            );
         }
 
-        if ($successfulCount < $totalCount) {
-            $output->writeln(sprintf('Error report logged in <fg=cyan>%s</fg=cyan>', self::FILE_NAME_REPLACEMENT_ERRORS));
+        if ($successfulCount >= $totalCount) {
+            return;
         }
+
+        $output->writeln(
+            sprintf('Error report logged in <fg=cyan>%s</fg=cyan>', self::FILE_NAME_REPLACEMENT_ERRORS)
+        );
     }
 
     /**
@@ -518,7 +558,11 @@ class TranslationReplaceSourceCommand extends Command
     ) {
         if ($realCount === null) {
             $output->writeln(
-                sprintf('No file "<fg=red>%s</fg=red>" found for source "<fg=red>%s</fg=red>"!', $filePath, $replacement->getOldSource())
+                sprintf(
+                    'No file "<fg=red>%s</fg=red>" found for source "<fg=red>%s</fg=red>"!',
+                    $filePath,
+                    $replacement->getOldSource()
+                )
             );
         } elseif ($realCount === 0) {
             $message = $isExpectedCountExact

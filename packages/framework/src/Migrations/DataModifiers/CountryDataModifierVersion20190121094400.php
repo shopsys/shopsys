@@ -84,7 +84,7 @@ class CountryDataModifierVersion20190121094400
      */
     public function getNewId(int $oldId): int
     {
-        if (empty($this->tmpIds)) {
+        if (count($this->tmpIds) === 0) {
             $this->loadIdPairs();
         }
 

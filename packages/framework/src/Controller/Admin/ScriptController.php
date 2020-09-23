@@ -7,6 +7,7 @@ use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSource;
 use Shopsys\FrameworkBundle\Form\Admin\Script\GoogleAnalyticsScriptFormType;
 use Shopsys\FrameworkBundle\Form\Admin\Script\ScriptFormType;
+use Shopsys\FrameworkBundle\Model\Script\Exception\ScriptNotFoundException;
 use Shopsys\FrameworkBundle\Model\Script\Script;
 use Shopsys\FrameworkBundle\Model\Script\ScriptDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Script\ScriptFacade;
@@ -160,7 +161,7 @@ class ScriptController extends AdminBaseController
                     'name' => $script->getName(),
                 ]
             );
-        } catch (\Shopsys\FrameworkBundle\Model\Script\Exception\ScriptNotFoundException $ex) {
+        } catch (ScriptNotFoundException $ex) {
             $this->addErrorFlash(t('Selected script doesn\'t exist.'));
         }
 

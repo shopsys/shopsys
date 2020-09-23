@@ -91,14 +91,22 @@ class FlagFilterChoiceRepositoryTest extends TransactionFunctionalTestCase
     protected function getChoicesForCategoryReference(string $categoryReferenceName): array
     {
         /** @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup */
-        $pricingGroup = $this->getReferenceForDomain(PricingGroupDataFixture::PRICING_GROUP_ORDINARY, Domain::FIRST_DOMAIN_ID);
+        $pricingGroup = $this->getReferenceForDomain(
+            PricingGroupDataFixture::PRICING_GROUP_ORDINARY,
+            Domain::FIRST_DOMAIN_ID
+        );
 
         /** @var \App\Model\Category\Category $category */
         $category = $this->getReference($categoryReferenceName);
 
         $domainConfig1 = $this->domain->getDomainConfigById(Domain::FIRST_DOMAIN_ID);
 
-        return $this->flagFilterChoiceRepository->getFlagFilterChoicesInCategory($domainConfig1->getId(), $pricingGroup, $domainConfig1->getLocale(), $category);
+        return $this->flagFilterChoiceRepository->getFlagFilterChoicesInCategory(
+            $domainConfig1->getId(),
+            $pricingGroup,
+            $domainConfig1->getLocale(),
+            $category
+        );
     }
 
     /**
@@ -108,10 +116,18 @@ class FlagFilterChoiceRepositoryTest extends TransactionFunctionalTestCase
     protected function getChoicesForSearchText(string $searchText): array
     {
         /** @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup */
-        $pricingGroup = $this->getReferenceForDomain(PricingGroupDataFixture::PRICING_GROUP_ORDINARY, Domain::FIRST_DOMAIN_ID);
+        $pricingGroup = $this->getReferenceForDomain(
+            PricingGroupDataFixture::PRICING_GROUP_ORDINARY,
+            Domain::FIRST_DOMAIN_ID
+        );
 
         $domainConfig1 = $this->domain->getDomainConfigById(Domain::FIRST_DOMAIN_ID);
 
-        return $this->flagFilterChoiceRepository->getFlagFilterChoicesForSearch($domainConfig1->getId(), $pricingGroup, $domainConfig1->getLocale(), $searchText);
+        return $this->flagFilterChoiceRepository->getFlagFilterChoicesForSearch(
+            $domainConfig1->getId(),
+            $pricingGroup,
+            $domainConfig1->getLocale(),
+            $searchText
+        );
     }
 }

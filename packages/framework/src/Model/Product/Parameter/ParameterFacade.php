@@ -131,7 +131,6 @@ class ParameterFacade
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter $parameter
      * @param string $eventType
-     *
      * @see \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterEvent class
      */
     protected function dispatchParameterEvent(Parameter $parameter, string $eventType): void

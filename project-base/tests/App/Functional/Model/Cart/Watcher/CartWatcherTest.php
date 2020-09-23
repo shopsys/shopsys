@@ -67,7 +67,10 @@ class CartWatcherTest extends TransactionFunctionalTestCase
         $modifiedItems1 = $this->cartWatcher->getModifiedPriceItemsAndUpdatePrices($cart);
         $this->assertEmpty($modifiedItems1);
 
-        $pricingGroup = $this->getReferenceForDomain(PricingGroupDataFixture::PRICING_GROUP_ORDINARY, Domain::FIRST_DOMAIN_ID);
+        $pricingGroup = $this->getReferenceForDomain(
+            PricingGroupDataFixture::PRICING_GROUP_ORDINARY,
+            Domain::FIRST_DOMAIN_ID
+        );
 
         $this->manualInputPriceFacade->refresh($product, $pricingGroup, Money::create(10));
 
@@ -87,7 +90,10 @@ class CartWatcherTest extends TransactionFunctionalTestCase
             ->setMethods(null)
             ->getMock();
 
-        $expectedPricingGroup = $this->getReferenceForDomain(PricingGroupDataFixture::PRICING_GROUP_ORDINARY, Domain::FIRST_DOMAIN_ID);
+        $expectedPricingGroup = $this->getReferenceForDomain(
+            PricingGroupDataFixture::PRICING_GROUP_ORDINARY,
+            Domain::FIRST_DOMAIN_ID
+        );
         $currentCustomerUserMock = $this->getMockBuilder(CurrentCustomerUser::class)
             ->disableOriginalConstructor()
             ->setMethods(['getPricingGroup'])
@@ -123,7 +129,10 @@ class CartWatcherTest extends TransactionFunctionalTestCase
             ->method('getProduct')
             ->willReturn($product);
 
-        $expectedPricingGroup = $this->getReferenceForDomain(PricingGroupDataFixture::PRICING_GROUP_ORDINARY, Domain::FIRST_DOMAIN_ID);
+        $expectedPricingGroup = $this->getReferenceForDomain(
+            PricingGroupDataFixture::PRICING_GROUP_ORDINARY,
+            Domain::FIRST_DOMAIN_ID
+        );
         $currentCustomerUserMock = $this->getMockBuilder(CurrentCustomerUser::class)
             ->disableOriginalConstructor()
             ->setMethods(['getPricingGroup'])
@@ -151,7 +160,11 @@ class CartWatcherTest extends TransactionFunctionalTestCase
             ->method('getProductVisibility')
             ->willReturn($productVisibilityMock);
 
-        $cartWatcher = new CartWatcher($this->productPriceCalculationForCustomerUser, $productVisibilityRepositoryMock, $this->domain);
+        $cartWatcher = new CartWatcher(
+            $this->productPriceCalculationForCustomerUser,
+            $productVisibilityRepositoryMock,
+            $this->domain
+        );
 
         $cart = new Cart($customerUserIdentifier->getCartIdentifier());
         $cart->addItem($cartItemMock);

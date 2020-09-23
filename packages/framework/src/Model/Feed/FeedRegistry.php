@@ -3,6 +3,9 @@
 namespace Shopsys\FrameworkBundle\Model\Feed;
 
 use Shopsys\FrameworkBundle\Component\Utils\Utils;
+use Shopsys\FrameworkBundle\Model\Feed\Exception\FeedNameNotUniqueException;
+use Shopsys\FrameworkBundle\Model\Feed\Exception\FeedNotFoundException;
+use Shopsys\FrameworkBundle\Model\Feed\Exception\UnknownFeedTypeException;
 
 class FeedRegistry
 {
@@ -81,7 +84,7 @@ class FeedRegistry
     public function getFeedByName(string $name): FeedInterface
     {
         if (!array_key_exists($name, $this->feedsByName)) {
-            throw new \Shopsys\FrameworkBundle\Model\Feed\Exception\FeedNotFoundException($name);
+            throw new FeedNotFoundException($name);
         }
 
         return $this->feedsByName[$name];
@@ -93,7 +96,7 @@ class FeedRegistry
     protected function assertTypeIsKnown(string $type): void
     {
         if (!in_array($type, $this->knownTypes, true)) {
-            throw new \Shopsys\FrameworkBundle\Model\Feed\Exception\UnknownFeedTypeException($type, $this->knownTypes);
+            throw new UnknownFeedTypeException($type, $this->knownTypes);
         }
     }
 
@@ -103,7 +106,7 @@ class FeedRegistry
     protected function assertNameIsUnique(string $name): void
     {
         if (array_key_exists($name, $this->feedsByName)) {
-            throw new \Shopsys\FrameworkBundle\Model\Feed\Exception\FeedNameNotUniqueException($name);
+            throw new FeedNameNotUniqueException($name);
         }
     }
 }

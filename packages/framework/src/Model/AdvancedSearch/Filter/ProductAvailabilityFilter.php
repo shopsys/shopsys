@@ -78,18 +78,25 @@ class ProductAvailabilityFilter implements AdvancedSearchFilterInterface
             if ($ruleData->operator === self::OPERATOR_IS) {
                 $tableAlias = 'a' . $index;
                 $availabilityParameter = 'availability' . $index;
-                $queryBuilder->join('p.calculatedAvailability', $tableAlias, Join::WITH, $tableAlias . '.id = :' . $availabilityParameter);
+                $queryBuilder->join(
+                    'p.calculatedAvailability',
+                    $tableAlias,
+                    Join::WITH,
+                    $tableAlias . '.id = :' . $availabilityParameter
+                );
                 $queryBuilder->setParameter($availabilityParameter, $ruleData->value);
             } elseif ($ruleData->operator === self::OPERATOR_IS_NOT) {
                 $isNotAvailabilities[] = $ruleData->value;
             }
         }
 
-        if (count($isNotAvailabilities) > 0) {
-            $subQuery = 'SELECT availability_p.id FROM ' . Product::class . ' availability_p
-                JOIN availability_p.calculatedAvailability _a WITH _a.id IN (:isNotAvailabilities)';
-            $queryBuilder->andWhere('p.id NOT IN (' . $subQuery . ')');
-            $queryBuilder->setParameter('isNotAvailabilities', $isNotAvailabilities);
+        if (count($isNotAvailabilities) === 0) {
+            return;
         }
+
+        $subQuery = 'SELECT availability_p.id FROM ' . Product::class . ' availability_p
+            JOIN availability_p.calculatedAvailability _a WITH _a.id IN (:isNotAvailabilities)';
+        $queryBuilder->andWhere('p.id NOT IN (' . $subQuery . ')');
+        $queryBuilder->setParameter('isNotAvailabilities', $isNotAvailabilities);
     }
 }

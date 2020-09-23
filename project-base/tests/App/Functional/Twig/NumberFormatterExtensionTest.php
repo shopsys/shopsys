@@ -58,7 +58,11 @@ class NumberFormatterExtensionTest extends FunctionalTestCase
         $localizationMock->expects($this->any())->method('getLocale')
             ->willReturn($locale);
 
-        $numberFormatterExtension = new NumberFormatterExtension($localizationMock, new NumberFormatRepository(), $this->administrationFacade);
+        $numberFormatterExtension = new NumberFormatterExtension(
+            $localizationMock,
+            new NumberFormatRepository(),
+            $this->administrationFacade
+        );
 
         $this->assertSame($result, $numberFormatterExtension->formatNumber($input, $locale));
     }

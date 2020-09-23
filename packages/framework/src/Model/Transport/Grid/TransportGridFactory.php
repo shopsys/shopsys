@@ -101,7 +101,9 @@ class TransportGridFactory implements GridFactoryInterface
      */
     protected function getDisplayPrice(Transport $transport)
     {
-        $transportBasePricesIndexedByDomainId = $this->transportFacade->getIndependentBasePricesIndexedByDomainId($transport);
+        $transportBasePricesIndexedByDomainId = $this->transportFacade->getIndependentBasePricesIndexedByDomainId(
+            $transport
+        );
         $domainId = $this->adminDomainTabsFacade->getSelectedDomainId();
         return $transportBasePricesIndexedByDomainId[$domainId]->getPriceWithVat();
     }

@@ -148,7 +148,7 @@ class AggregationResultToProductFilterCountDataTransformer
     public function translateParameterValuesPlusNumbers(array $aggregationResult): array
     {
         $parametersBuckets = $aggregationResult['aggregations']['parameters']['filtered_for_parameter']['by_parameters']['buckets'];
-        if (empty($parametersBuckets)) {
+        if (count($parametersBuckets) === 0) {
             return [];
         }
         $thePossibleBucket = $parametersBuckets[0];

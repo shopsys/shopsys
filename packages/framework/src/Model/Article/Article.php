@@ -21,7 +21,6 @@ class Article implements OrderableEntityInterface
 
     /**
      * @var int
-     *
      * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
@@ -30,14 +29,12 @@ class Article implements OrderableEntityInterface
 
     /**
      * @var string
-     *
      * @ORM\Column(type="guid", unique=true)
      */
     protected $uuid;
 
     /**
      * @var int
-     *
      * @Gedmo\SortableGroup
      * @ORM\Column(type="integer")
      */
@@ -45,7 +42,6 @@ class Article implements OrderableEntityInterface
 
     /**
      * @var int
-     *
      * @Gedmo\SortablePosition
      * @ORM\Column(type="integer")
      */
@@ -53,42 +49,36 @@ class Article implements OrderableEntityInterface
 
     /**
      * @var string
-     *
      * @ORM\Column(type="text")
      */
     protected $name;
 
     /**
      * @var string|null
-     *
      * @ORM\Column(type="text", nullable=true)
      */
     protected $text;
 
     /**
      * @var string|null
-     *
      * @ORM\Column(type="text", nullable=true)
      */
     protected $seoTitle;
 
     /**
      * @var string|null
-     *
      * @ORM\Column(type="text", nullable=true)
      */
     protected $seoMetaDescription;
 
     /**
      * @var string|null
-     *
      * @ORM\Column(type="text", nullable=true)
      */
     protected $seoH1;
 
     /**
      * @var string
-     *
      * @Gedmo\SortableGroup
      * @ORM\Column(type="text")
      */
@@ -96,7 +86,6 @@ class Article implements OrderableEntityInterface
 
     /**
      * @var bool
-     *
      * @ORM\Column(type="boolean")
      */
     protected $hidden;
@@ -223,7 +212,7 @@ class Article implements OrderableEntityInterface
     }
 
     /**
-     * @return bool $visible
+     * @return bool
      */
     public function isHidden()
     {

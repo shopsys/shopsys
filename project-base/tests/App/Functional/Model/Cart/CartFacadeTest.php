@@ -228,7 +228,6 @@ class CartFacadeTest extends TransactionFunctionalTestCase
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifier $customerUserIdentifier
-     *
      * @return \Shopsys\FrameworkBundle\Model\Cart\CartFacade
      */
     private function createCartFacade(CustomerUserIdentifier $customerUserIdentifier)
@@ -252,12 +251,13 @@ class CartFacadeTest extends TransactionFunctionalTestCase
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifier $customerUserIdentifier
-     *
      * @return \Shopsys\FrameworkBundle\Model\Cart\Cart
      */
     private function getCartByCustomerUserIdentifier(CustomerUserIdentifier $customerUserIdentifier)
     {
-        return $this->cartFacadeFromContainer->getCartByCustomerUserIdentifierCreateIfNotExists($customerUserIdentifier);
+        return $this->cartFacadeFromContainer->getCartByCustomerUserIdentifierCreateIfNotExists(
+            $customerUserIdentifier
+        );
     }
 
     /**
@@ -276,14 +276,13 @@ class CartFacadeTest extends TransactionFunctionalTestCase
             unset($actual[$key]);
         }
 
-        if (!empty($actual)) {
+        if (count($actual) > 0) {
             $this->fail('Actual array contains extra elements: ' . var_export($actual, true));
         }
     }
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifier $customerUserIdentifier
-     *
      * @return \PHPUnit\Framework\MockObject\MockObject
      */
     private function getCustomerUserIdentifierFactoryMock(CustomerUserIdentifier $customerUserIdentifier)

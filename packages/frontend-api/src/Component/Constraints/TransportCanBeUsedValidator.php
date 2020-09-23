@@ -11,6 +11,7 @@ use Shopsys\FrameworkBundle\Model\Transport\TransportFacade;
 use Shopsys\FrameworkBundle\Model\Transport\TransportPriceCalculation;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
+use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
 class TransportCanBeUsedValidator extends ConstraintValidator
 {
@@ -59,7 +60,10 @@ class TransportCanBeUsedValidator extends ConstraintValidator
     public function validate($value, Constraint $constraint): void
     {
         if (!$constraint instanceof TransportCanBeUsed) {
-            throw new \Symfony\Component\Validator\Exception\UnexpectedTypeException($constraint, TransportCanBeUsed::class);
+            throw new UnexpectedTypeException(
+                $constraint,
+                TransportCanBeUsed::class
+            );
         }
         // Field types and content is assured by GraphQL type definition
         $uuid = $value['uuid'];
@@ -73,7 +77,11 @@ class TransportCanBeUsedValidator extends ConstraintValidator
                 throw new TransportNotFoundException('Transport is disabled on domain');
             }
         } catch (TransportNotFoundException $exception) {
-            $this->addViolationWithCodeToContext($constraint->transportNotFoundMessage, TransportCanBeUsed::TRANSPORT_NOT_FOUND_ERROR, $uuid);
+            $this->addViolationWithCodeToContext(
+                $constraint->transportNotFoundMessage,
+                TransportCanBeUsed::TRANSPORT_NOT_FOUND_ERROR,
+                $uuid
+            );
             return;
         }
 
@@ -83,12 +91,18 @@ class TransportCanBeUsedValidator extends ConstraintValidator
             $this->domain->getId()
         );
 
-        if (!$transportPrice->getPriceWithoutVat()->equals($priceWithoutVat) ||
-            !$transportPrice->getPriceWithVat()->equals($priceWithVat) ||
-            !$transportPrice->getVatAmount()->equals($vatAmount)
+        if ($transportPrice->getPriceWithoutVat()->equals($priceWithoutVat) &&
+            $transportPrice->getPriceWithVat()->equals($priceWithVat) &&
+            $transportPrice->getVatAmount()->equals($vatAmount)
         ) {
-            $this->addViolationWithCodeToContext($constraint->pricesDoesNotMatchMessage, TransportCanBeUsed::PRICES_DOES_NOT_MATCH_ERROR, $uuid);
+            return;
         }
+
+        $this->addViolationWithCodeToContext(
+            $constraint->pricesDoesNotMatchMessage,
+            TransportCanBeUsed::PRICES_DOES_NOT_MATCH_ERROR,
+            $uuid
+        );
     }
 
     /**

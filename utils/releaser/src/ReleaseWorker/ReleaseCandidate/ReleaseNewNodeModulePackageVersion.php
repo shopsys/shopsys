@@ -16,7 +16,10 @@ class ReleaseNewNodeModulePackageVersion extends AbstractShopsysReleaseWorker
      */
     public function getDescription(Version $version): string
     {
-        return sprintf('[Manually] Release and set new node module package version to "%s"', $version->getVersionString());
+        return sprintf(
+            '[Manually] Release and set new node module package version to "%s"',
+            $version->getVersionString()
+        );
     }
 
     /**

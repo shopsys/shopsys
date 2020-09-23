@@ -3,6 +3,9 @@
 namespace Shopsys\FrameworkBundle\Component\Domain\Multidomain\Twig;
 
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\Domain\Exception\NoDomainSelectedException;
+use Shopsys\FrameworkBundle\Component\Domain\Multidomain\Twig\Exception\MissingDependencyException;
+use Twig\Error\LoaderError;
 use Twig\Loader\FilesystemLoader as BaseFilesystemLoader;
 
 class FilesystemLoader extends BaseFilesystemLoader
@@ -51,7 +54,7 @@ class FilesystemLoader extends BaseFilesystemLoader
     {
         if (!($this->domain instanceof Domain)) {
             $message = sprintf('Template loader needs an instance of %s class', Domain::class);
-            throw new \Shopsys\FrameworkBundle\Component\Domain\Multidomain\Twig\Exception\MissingDependencyException($message);
+            throw new MissingDependencyException($message);
         }
     }
 
@@ -64,17 +67,24 @@ class FilesystemLoader extends BaseFilesystemLoader
         try {
             $designId = $this->domain->getDesignId();
             if ($designId !== null) {
-                $multidesignTemplateName = preg_replace('/^(.*)(\.[^\.]*\.twig)$/', '$1.' . $designId . '$2', $templateName);
+                $multidesignTemplateName = preg_replace(
+                    '/^(.*)(\.[^\.]*\.twig)$/',
+                    '$1.' . $designId . '$2',
+                    $templateName
+                );
                 try {
                     return parent::findTemplate($multidesignTemplateName);
-                } catch (\Twig\Error\LoaderError $loaderException) {
+                } catch (LoaderError $loaderException) {
                     if (strpos($loaderException->getMessage(), 'Unable to find template') !== 0) {
-                        $message = sprintf('Unexpected exception when trying to load multidesign template `%s`', $multidesignTemplateName);
-                        throw new \Twig\Error\LoaderError($message, -1, null, $loaderException);
+                        $message = sprintf(
+                            'Unexpected exception when trying to load multidesign template `%s`',
+                            $multidesignTemplateName
+                        );
+                        throw new LoaderError($message, -1, null, $loaderException);
                     }
                 }
             }
-        } catch (\Shopsys\FrameworkBundle\Component\Domain\Exception\NoDomainSelectedException $ex) {
+        } catch (NoDomainSelectedException $ex) {
             return null;
         }
 

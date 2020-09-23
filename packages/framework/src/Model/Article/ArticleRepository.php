@@ -4,6 +4,7 @@ namespace Shopsys\FrameworkBundle\Model\Article;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
+use Shopsys\FrameworkBundle\Model\Article\Exception\ArticleNotFoundException;
 
 class ArticleRepository
 {
@@ -90,7 +91,10 @@ class ArticleRepository
      */
     public function getVisibleArticlesForPlacement($domainId, $placement)
     {
-        $queryBuilder = $this->getVisibleArticlesByDomainIdAndPlacementSortedByPositionQueryBuilder($domainId, $placement);
+        $queryBuilder = $this->getVisibleArticlesByDomainIdAndPlacementSortedByPositionQueryBuilder(
+            $domainId,
+            $placement
+        );
 
         return $queryBuilder->getQuery()->execute();
     }
@@ -104,7 +108,7 @@ class ArticleRepository
         $article = $this->getArticleRepository()->find($articleId);
         if ($article === null) {
             $message = 'Article with ID ' . $articleId . ' not found';
-            throw new \Shopsys\FrameworkBundle\Model\Article\Exception\ArticleNotFoundException($message);
+            throw new ArticleNotFoundException($message);
         }
         return $article;
     }
@@ -122,7 +126,7 @@ class ArticleRepository
 
         if ($article === null) {
             $message = 'Article with ID ' . $articleId . ' not found';
-            throw new \Shopsys\FrameworkBundle\Model\Article\Exception\ArticleNotFoundException($message);
+            throw new ArticleNotFoundException($message);
         }
         return $article;
     }
@@ -158,9 +162,8 @@ class ArticleRepository
         int $domainId,
         string $placement
     ): QueryBuilder {
-        $queryBuilder = $this->getVisibleArticlesByDomainIdQueryBuilder($domainId)
+        return $this->getVisibleArticlesByDomainIdQueryBuilder($domainId)
             ->andWhere('a.placement = :placement')->setParameter('placement', $placement)
             ->orderBy('a.position, a.id');
-        return $queryBuilder;
     }
 }

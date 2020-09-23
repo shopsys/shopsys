@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace Tests\FrameworkBundle\Unit\Component\Money;
 
+use DomainException;
 use Iterator;
 use Litipk\BigNumbers\DecimalConstants;
 use PHPUnit\Framework\TestCase;
+use Shopsys\FrameworkBundle\Component\Money\Exception\MoneyException;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 
 final class MoneyTest extends TestCase
@@ -55,7 +57,7 @@ final class MoneyTest extends TestCase
      */
     public function testInvalidValuesInCreate($value): void
     {
-        $this->expectException(\Shopsys\FrameworkBundle\Component\Money\Exception\MoneyException::class);
+        $this->expectException(MoneyException::class);
 
         Money::create($value);
     }
@@ -93,7 +95,7 @@ final class MoneyTest extends TestCase
      */
     public function testInvalidValuesInCreateFromFloat(float $float, int $scale): void
     {
-        $this->expectException(\Shopsys\FrameworkBundle\Component\Money\Exception\MoneyException::class);
+        $this->expectException(MoneyException::class);
 
         Money::createFromFloat($float, $scale);
     }
@@ -291,7 +293,7 @@ final class MoneyTest extends TestCase
     {
         $money = Money::create(1);
 
-        $this->expectException(\Shopsys\FrameworkBundle\Component\Money\Exception\MoneyException::class);
+        $this->expectException(MoneyException::class);
 
         $money->multiply($multiplier);
     }
@@ -362,7 +364,7 @@ final class MoneyTest extends TestCase
     {
         $money = Money::create(1);
 
-        $this->expectException(\Shopsys\FrameworkBundle\Component\Money\Exception\MoneyException::class);
+        $this->expectException(MoneyException::class);
 
         $money->divide($divisor, 0);
     }
@@ -383,7 +385,7 @@ final class MoneyTest extends TestCase
     {
         $money = Money::create(1);
 
-        $this->expectException(\DomainException::class);
+        $this->expectException(DomainException::class);
 
         $money->divide($divisor, 0);
     }

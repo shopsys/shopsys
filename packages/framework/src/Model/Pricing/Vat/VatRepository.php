@@ -5,6 +5,7 @@ namespace Shopsys\FrameworkBundle\Model\Pricing\Vat;
 use Doctrine\ORM\AbstractQuery;
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentDomain;
+use Shopsys\FrameworkBundle\Model\Pricing\Vat\Exception\VatNotFoundException;
 use Shopsys\FrameworkBundle\Model\Product\ProductDomain;
 use Shopsys\FrameworkBundle\Model\Transport\TransportDomain;
 
@@ -70,7 +71,7 @@ class VatRepository
         $vat = $this->findById($vatId);
 
         if ($vat === null) {
-            throw new \Shopsys\FrameworkBundle\Model\Pricing\Vat\Exception\VatNotFoundException('Vat with ID ' . $vatId . ' not found.');
+            throw new VatNotFoundException('Vat with ID ' . $vatId . ' not found.');
         }
 
         return $vat;

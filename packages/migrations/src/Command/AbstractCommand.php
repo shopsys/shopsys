@@ -62,7 +62,12 @@ abstract class AbstractCommand extends Command
             }
         );
 
-        $this->migrationsConfiguration = new Configuration($this->migrationsLock, $this->em->getConnection(), $outputWriter, $this->migrationsFinder);
+        $this->migrationsConfiguration = new Configuration(
+            $this->migrationsLock,
+            $this->em->getConnection(),
+            $outputWriter,
+            $this->migrationsFinder
+        );
         $configurationHelper = new ConfigurationHelper($this->em->getConnection(), $this->migrationsConfiguration);
         $this->getApplication()->getHelperSet()->set($configurationHelper, 'configuration');
     }

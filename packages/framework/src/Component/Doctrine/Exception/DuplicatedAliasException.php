@@ -27,6 +27,7 @@ class DuplicatedAliasException extends LogicException
             $alias,
             $aliasedClass
         );
+
         parent::__construct(
             $message,
             0,

@@ -19,12 +19,11 @@ class BestsellingProductCombinator
             $automaticProducts,
             $manualProductsIndexedByPosition
         );
-        $combinedProducts = $this->getCombinedProducts(
+        return $this->getCombinedProducts(
             $manualProductsIndexedByPosition,
             $automaticProductsExcludingManual,
             $maxResults
         );
-        return $combinedProducts;
     }
 
     /**

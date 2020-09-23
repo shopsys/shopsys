@@ -7,6 +7,8 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
 use Shopsys\FrameworkBundle\Form\Admin\Pricing\Currency\CurrencySettingsFormType;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
+use Shopsys\FrameworkBundle\Model\Pricing\Currency\Exception\CurrencyNotFoundException;
+use Shopsys\FrameworkBundle\Model\Pricing\Currency\Exception\DeletingNotAllowedToDeleteCurrencyException;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Grid\CurrencyInlineEdit;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -78,7 +80,7 @@ class CurrencyController extends AdminBaseController
             );
 
             return $this->confirmDeleteResponseFactory->createDeleteResponse($message, 'admin_currency_delete', $id);
-        } catch (\Shopsys\FrameworkBundle\Model\Pricing\Currency\Exception\CurrencyNotFoundException $ex) {
+        } catch (CurrencyNotFoundException $ex) {
             return new Response(t('Selected currency doesn\'t exist.'));
         }
     }
@@ -100,11 +102,11 @@ class CurrencyController extends AdminBaseController
                     'name' => $fullName,
                 ]
             );
-        } catch (\Shopsys\FrameworkBundle\Model\Pricing\Currency\Exception\DeletingNotAllowedToDeleteCurrencyException $ex) {
+        } catch (DeletingNotAllowedToDeleteCurrencyException $ex) {
             $this->addErrorFlash(
                 t('This currency can\'t be deleted, it is set as default or is saved with order.')
             );
-        } catch (\Shopsys\FrameworkBundle\Model\Pricing\Currency\Exception\CurrencyNotFoundException $ex) {
+        } catch (CurrencyNotFoundException $ex) {
             $this->addErrorFlash(t('Selected currency doesn\'t exist.'));
         }
 

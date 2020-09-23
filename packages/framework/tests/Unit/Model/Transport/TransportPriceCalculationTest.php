@@ -91,7 +91,13 @@ class TransportPriceCalculationTest extends TestCase
         ];
         $transport = new Transport($transportData);
         $transport->setPrice($inputPrice, Domain::FIRST_DOMAIN_ID);
-        $transport->addPrice((new TransportPriceFactory(new EntityNameResolver([])))->create($transport, $inputPrice, Domain::FIRST_DOMAIN_ID));
+        $transport->addPrice(
+            (new TransportPriceFactory(new EntityNameResolver([])))->create(
+                $transport,
+                $inputPrice,
+                Domain::FIRST_DOMAIN_ID
+            )
+        );
 
         $price = $transportPriceCalculation->calculateIndependentPrice($transport, $currency, Domain::FIRST_DOMAIN_ID);
 

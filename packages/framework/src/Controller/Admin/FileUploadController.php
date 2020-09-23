@@ -2,6 +2,7 @@
 
 namespace Shopsys\FrameworkBundle\Controller\Admin;
 
+use Shopsys\FrameworkBundle\Component\FileUpload\Exception\FileUploadException;
 use Shopsys\FrameworkBundle\Component\FileUpload\FileUpload;
 use Shopsys\FrameworkBundle\Twig\FileThumbnail\FileThumbnailExtension;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -51,7 +52,9 @@ class FileUploadController extends AdminBaseController
         if ($file instanceof UploadedFile) {
             try {
                 $temporaryFilename = $this->fileUpload->upload($file);
-                $fileThumbnailInfo = $this->fileThumbnailExtension->getFileThumbnailInfoByTemporaryFilename($temporaryFilename);
+                $fileThumbnailInfo = $this->fileThumbnailExtension->getFileThumbnailInfoByTemporaryFilename(
+                    $temporaryFilename
+                );
 
                 $actionResult = [
                     'status' => 'success',
@@ -61,7 +64,7 @@ class FileUploadController extends AdminBaseController
                 ];
                 $actionResult['status'] = 'success';
                 $actionResult['filename'] = $temporaryFilename;
-            } catch (\Shopsys\FrameworkBundle\Component\FileUpload\Exception\FileUploadException $ex) {
+            } catch (FileUploadException $ex) {
                 $actionResult['status'] = 'error';
                 $actionResult['code'] = $ex->getCode();
                 $actionResult['message'] = $ex->getMessage();

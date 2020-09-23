@@ -10,6 +10,10 @@ use Shopsys\FrameworkBundle\Model\Administrator\Activity\AdministratorActivityFa
 use Shopsys\FrameworkBundle\Model\Administrator\Administrator;
 use Shopsys\FrameworkBundle\Model\Administrator\AdministratorDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Administrator\AdministratorFacade;
+use Shopsys\FrameworkBundle\Model\Administrator\Exception\AdministratorNotFoundException;
+use Shopsys\FrameworkBundle\Model\Administrator\Exception\DeletingLastAdministratorException;
+use Shopsys\FrameworkBundle\Model\Administrator\Exception\DeletingSelfException;
+use Shopsys\FrameworkBundle\Model\Administrator\Exception\DuplicateUserNameException;
 use Shopsys\FrameworkBundle\Model\Administrator\Security\AdministratorRolesChangedFacade;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
 use Symfony\Component\HttpFoundation\Request;
@@ -146,7 +150,7 @@ class AdministratorController extends AdminBaseController
                     ]
                 );
                 return $this->redirectToRoute('admin_administrator_list');
-            } catch (\Shopsys\FrameworkBundle\Model\Administrator\Exception\DuplicateUserNameException $ex) {
+            } catch (DuplicateUserNameException $ex) {
                 $this->addErrorFlashTwig(
                     t('Login name <strong>{{ name }}</strong> is already used'),
                     [
@@ -160,7 +164,9 @@ class AdministratorController extends AdminBaseController
             $this->addErrorFlash(t('Please check the correctness of all data filled.'));
         }
 
-        $this->breadcrumbOverrider->overrideLastItem(t('Editing administrator - %name%', ['%name%' => $administrator->getRealName()]));
+        $this->breadcrumbOverrider->overrideLastItem(
+            t('Editing administrator - %name%', ['%name%' => $administrator->getRealName()])
+        );
 
         $lastAdminActivities = $this->administratorActivityFacade->getLastAdministratorActivities(
             $administrator,
@@ -213,7 +219,7 @@ class AdministratorController extends AdminBaseController
                     ]
                 );
                 return $this->redirectToRoute('admin_administrator_list');
-            } catch (\Shopsys\FrameworkBundle\Model\Administrator\Exception\DuplicateUserNameException $ex) {
+            } catch (DuplicateUserNameException $ex) {
                 $this->addErrorFlashTwig(
                     t('Login name <strong>{{ name }}</strong> is already used'),
                     [
@@ -249,16 +255,16 @@ class AdministratorController extends AdminBaseController
                     'name' => $realName,
                 ]
             );
-        } catch (\Shopsys\FrameworkBundle\Model\Administrator\Exception\DeletingSelfException $ex) {
+        } catch (DeletingSelfException $ex) {
             $this->addErrorFlash(t('You can\'t delete yourself.'));
-        } catch (\Shopsys\FrameworkBundle\Model\Administrator\Exception\DeletingLastAdministratorException $ex) {
+        } catch (DeletingLastAdministratorException $ex) {
             $this->addErrorFlashTwig(
                 t('Administrator <strong>{{ name }}</strong> is the only one and can\'t be deleted.'),
                 [
                     'name' => $this->administratorFacade->getById($id)->getRealName(),
                 ]
             );
-        } catch (\Shopsys\FrameworkBundle\Model\Administrator\Exception\AdministratorNotFoundException $ex) {
+        } catch (AdministratorNotFoundException $ex) {
             $this->addErrorFlash(t('Selected administrated doesn\'t exist.'));
         }
 

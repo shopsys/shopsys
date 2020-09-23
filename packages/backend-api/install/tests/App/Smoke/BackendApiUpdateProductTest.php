@@ -124,7 +124,10 @@ class BackendApiUpdateProductTest extends OauthTestCase
         $this->assertSame(400, $response->getStatusCode());
 
         $message = json_decode($response->getContent(), true)['message'];
-        $this->assertSame('cannot update/delete variant/main variant, this functionality is not supported yet', $message);
+        $this->assertSame(
+            'cannot update/delete variant/main variant, this functionality is not supported yet',
+            $message
+        );
     }
 
     public function testCannotUpdateMainVariant(): void
@@ -137,7 +140,10 @@ class BackendApiUpdateProductTest extends OauthTestCase
         $this->assertSame(400, $response->getStatusCode());
 
         $message = json_decode($response->getContent(), true)['message'];
-        $this->assertSame('cannot update/delete variant/main variant, this functionality is not supported yet', $message);
+        $this->assertSame(
+            'cannot update/delete variant/main variant, this functionality is not supported yet',
+            $message
+        );
     }
 
     /**

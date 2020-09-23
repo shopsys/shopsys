@@ -35,7 +35,10 @@ class ZboziProductRepository
         $queryBuilder = $this->productRepository->getAllVisibleQueryBuilder($domainConfig->getId(), $pricingGroup)
             ->addSelect('b')->leftJoin('p.brand', 'b')
             ->leftJoin(ZboziProductDomain::class, 'zpd', Join::WITH, 'zpd.product = p AND zpd.domainId = :domainId')
-            ->andWhere('p.variantType != :variantTypeMain')->setParameter('variantTypeMain', Product::VARIANT_TYPE_MAIN)
+            ->andWhere('p.variantType != :variantTypeMain')->setParameter(
+                'variantTypeMain',
+                Product::VARIANT_TYPE_MAIN
+            )
             ->andWhere('p.calculatedSellingDenied = FALSE')
             ->andWhere('zpd IS NULL OR zpd.show = TRUE')
             ->orderBy('p.id', 'asc')

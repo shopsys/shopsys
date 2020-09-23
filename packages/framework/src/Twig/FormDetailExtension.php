@@ -41,8 +41,8 @@ class FormDetailExtension extends AbstractExtension
     {
         if ($object === null) {
             return '';
-        } else {
-            return '<div class="form-line">
+        }
+        return '<div class="form-line">
                         <label class="form-line__label">ID:</label>
                         <div class="form-line__side">
                             <div class="form-line__item">
@@ -55,7 +55,6 @@ class FormDetailExtension extends AbstractExtension
                             </div>
                         </div>
                     </div>';
-        }
     }
 
     /**

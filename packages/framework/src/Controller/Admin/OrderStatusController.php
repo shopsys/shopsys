@@ -4,6 +4,8 @@ namespace Shopsys\FrameworkBundle\Controller\Admin;
 
 use Shopsys\FrameworkBundle\Component\ConfirmDelete\ConfirmDeleteResponseFactory;
 use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
+use Shopsys\FrameworkBundle\Model\Order\Status\Exception\OrderStatusDeletionForbiddenException;
+use Shopsys\FrameworkBundle\Model\Order\Status\Exception\OrderStatusNotFoundException;
 use Shopsys\FrameworkBundle\Model\Order\Status\Grid\OrderStatusInlineEdit;
 use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusFacade;
 use Symfony\Component\HttpFoundation\Request;
@@ -85,14 +87,14 @@ class OrderStatusController extends AdminBaseController
                     ]
                 );
             }
-        } catch (\Shopsys\FrameworkBundle\Model\Order\Status\Exception\OrderStatusDeletionForbiddenException $e) {
+        } catch (OrderStatusDeletionForbiddenException $e) {
             $this->addErrorFlashTwig(
                 t('Status of orders <strong>{{ name }}</strong> reserved and can\'t be deleted'),
                 [
                     'name' => $e->getOrderStatus()->getName(),
                 ]
             );
-        } catch (\Shopsys\FrameworkBundle\Model\Order\Status\Exception\OrderStatusNotFoundException $ex) {
+        } catch (OrderStatusNotFoundException $ex) {
             $this->addErrorFlash(t('Selected order status doesn\'t exist.'));
         }
 
@@ -121,15 +123,18 @@ class OrderStatusController extends AdminBaseController
                     $id,
                     $this->orderStatusFacade->getAllExceptId($id)
                 );
-            } else {
-                $message = t(
-                    'Do you really want to remove status of orders "%name%" permanently? It is not used anywhere.',
-                    ['%name%' => $orderStatus->getName()]
-                );
-
-                return $this->confirmDeleteResponseFactory->createDeleteResponse($message, 'admin_orderstatus_delete', $id);
             }
-        } catch (\Shopsys\FrameworkBundle\Model\Order\Status\Exception\OrderStatusNotFoundException $ex) {
+            $message = t(
+                'Do you really want to remove status of orders "%name%" permanently? It is not used anywhere.',
+                ['%name%' => $orderStatus->getName()]
+            );
+
+            return $this->confirmDeleteResponseFactory->createDeleteResponse(
+                $message,
+                'admin_orderstatus_delete',
+                $id
+            );
+        } catch (OrderStatusNotFoundException $ex) {
             return new Response(t('Selected order status doesn\'t exist.'));
         }
     }

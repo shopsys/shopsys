@@ -36,6 +36,7 @@ class ParameterInlineEdit extends AbstractGridInlineEdit
         ParameterDataFactoryInterface $parameterDataFactory
     ) {
         parent::__construct($parameterGridFactory);
+
         $this->parameterFacade = $parameterFacade;
         $this->formFactory = $formFactory;
         $this->parameterDataFactory = $parameterDataFactory;

@@ -3,6 +3,7 @@
 namespace Shopsys\FrameworkBundle\Model\Slider;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Shopsys\FrameworkBundle\Model\Slider\Exception\SliderItemNotFoundException;
 
 class SliderItemRepository
 {
@@ -37,7 +38,7 @@ class SliderItemRepository
         $sliderItem = $this->getSliderItemRepository()->find($sliderItemId);
         if ($sliderItem === null) {
             $message = 'Slider item with ID ' . $sliderItemId . ' not found.';
-            throw new \Shopsys\FrameworkBundle\Model\Slider\Exception\SliderItemNotFoundException($message);
+            throw new SliderItemNotFoundException($message);
         }
         return $sliderItem;
     }

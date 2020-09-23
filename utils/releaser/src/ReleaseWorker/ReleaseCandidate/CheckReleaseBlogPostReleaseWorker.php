@@ -21,6 +21,7 @@ final class CheckReleaseBlogPostReleaseWorker extends AbstractShopsysReleaseWork
 
     /**
      * Higher first
+     *
      * @return int
      */
     public function getPriority(): int

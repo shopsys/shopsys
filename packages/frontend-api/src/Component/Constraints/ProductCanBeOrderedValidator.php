@@ -13,6 +13,7 @@ use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
 use Shopsys\FrontendApiBundle\Model\Product\ProductFacade as FrontendApiProductFacade;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
+use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
 class ProductCanBeOrderedValidator extends ConstraintValidator
 {
@@ -70,23 +71,28 @@ class ProductCanBeOrderedValidator extends ConstraintValidator
      */
     public function setFrontendApiProductFacade(FrontendApiProductFacade $frontendApiProductFacade): void
     {
-        if ($this->frontendApiProductFacade !== null && $this->frontendApiProductFacade !== $frontendApiProductFacade) {
+        if (
+            $this->frontendApiProductFacade !== null
+            && $this->frontendApiProductFacade !== $frontendApiProductFacade
+        ) {
             throw new BadMethodCallException(sprintf(
                 'Method "%s" has been already called and cannot be called multiple times.',
                 __METHOD__
             ));
         }
-        if ($this->frontendApiProductFacade === null) {
-            @trigger_error(
-                sprintf(
-                    'The %s() method is deprecated and will be removed in the next major. Use the constructor injection instead.',
-                    __METHOD__
-                ),
-                E_USER_DEPRECATED
-            );
-
-            $this->frontendApiProductFacade = $frontendApiProductFacade;
+        if ($this->frontendApiProductFacade !== null) {
+            return;
         }
+
+        @trigger_error(
+            sprintf(
+                'The %s() method is deprecated and will be removed in the next major. Use the constructor injection instead.',
+                __METHOD__
+            ),
+            E_USER_DEPRECATED
+        );
+
+        $this->frontendApiProductFacade = $frontendApiProductFacade;
     }
 
     /**
@@ -96,7 +102,7 @@ class ProductCanBeOrderedValidator extends ConstraintValidator
     public function validate($value, Constraint $constraint): void
     {
         if (!$constraint instanceof ProductCanBeOrdered) {
-            throw new \Symfony\Component\Validator\Exception\UnexpectedTypeException($constraint, ProductCanBeOrdered::class);
+            throw new UnexpectedTypeException($constraint, ProductCanBeOrdered::class);
         }
 
         // Field types and content is assured by GraphQL type definition
@@ -112,23 +118,37 @@ class ProductCanBeOrderedValidator extends ConstraintValidator
                 $this->currentCustomerUser->getPricingGroup()
             );
         } catch (ProductNotFoundException $exception) {
-            $this->addViolationWithCodeToContext($constraint->productNotFoundMessage, ProductCanBeOrdered::PRODUCT_NOT_FOUND_ERROR, $uuid);
+            $this->addViolationWithCodeToContext(
+                $constraint->productNotFoundMessage,
+                ProductCanBeOrdered::PRODUCT_NOT_FOUND_ERROR,
+                $uuid
+            );
             return;
         }
 
         $sellingPrice = $this->productCachedAttributesFacade->getProductSellingPrice($productEntity);
 
         if ($sellingPrice === null) {
-            $this->addViolationWithCodeToContext($constraint->noSellingPriceMessage, ProductCanBeOrdered::NO_SELLING_PRICE_ERROR, $uuid);
+            $this->addViolationWithCodeToContext(
+                $constraint->noSellingPriceMessage,
+                ProductCanBeOrdered::NO_SELLING_PRICE_ERROR,
+                $uuid
+            );
             return;
         }
 
-        if (!$sellingPrice->getPriceWithoutVat()->equals($priceWithoutVat) ||
-            !$sellingPrice->getPriceWithVat()->equals($priceWithVat) ||
-            !$sellingPrice->getVatAmount()->equals($vatAmount)
+        if ($sellingPrice->getPriceWithoutVat()->equals($priceWithoutVat) &&
+            $sellingPrice->getPriceWithVat()->equals($priceWithVat) &&
+            $sellingPrice->getVatAmount()->equals($vatAmount)
         ) {
-            $this->addViolationWithCodeToContext($constraint->pricesDoesNotMatchMessage, ProductCanBeOrdered::PRICES_DOES_NOT_MATCH_ERROR, $uuid);
+            return;
         }
+
+        $this->addViolationWithCodeToContext(
+            $constraint->pricesDoesNotMatchMessage,
+            ProductCanBeOrdered::PRICES_DOES_NOT_MATCH_ERROR,
+            $uuid
+        );
     }
 
     /**

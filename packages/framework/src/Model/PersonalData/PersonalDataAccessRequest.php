@@ -16,7 +16,6 @@ class PersonalDataAccessRequest
 
     /**
      * @var int
-     *
      * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
@@ -25,28 +24,24 @@ class PersonalDataAccessRequest
 
     /**
      * @var string
-     *
      * @ORM\Column(type="string")
      */
     protected $email;
 
     /**
      * @var \DateTime
-     *
      * @ORM\Column(type="datetime")
      */
     protected $createdAt;
 
     /**
      * @var string
-     *
      * @ORM\Column(type="string", unique=true)
      */
     protected $hash;
 
     /**
      * @var int
-     *
      * @ORM\Column(type="integer")
      */
     protected $domainId;

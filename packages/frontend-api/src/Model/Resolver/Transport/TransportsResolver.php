@@ -36,7 +36,7 @@ class TransportsResolver implements ResolverInterface, AliasedInterface
      */
     public function resolve(): array
     {
-        return $transports = $this->transportFacade->getVisibleOnCurrentDomain($this->paymentFacade->getVisibleOnCurrentDomain());
+        return $this->transportFacade->getVisibleOnCurrentDomain($this->paymentFacade->getVisibleOnCurrentDomain());
     }
 
     /**

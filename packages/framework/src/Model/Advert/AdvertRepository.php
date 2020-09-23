@@ -3,6 +3,7 @@
 namespace Shopsys\FrameworkBundle\Model\Advert;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Shopsys\FrameworkBundle\Model\Advert\Exception\AdvertNotFoundException;
 
 class AdvertRepository
 {
@@ -68,7 +69,7 @@ class AdvertRepository
         }
 
         return $this->getAdvertByPositionQueryBuilder($positionName, $domainId)
-            ->setFirstResult(rand(0, $count - 1))
+            ->setFirstResult(random_int(0, $count - 1))
             ->setMaxResults(1)
             ->getQuery()->getSingleResult();
     }
@@ -82,7 +83,7 @@ class AdvertRepository
         $advert = $this->getAdvertRepository()->find($advertId);
         if ($advert === null) {
             $message = 'Advert with ID ' . $advertId . ' not found';
-            throw new \Shopsys\FrameworkBundle\Model\Advert\Exception\AdvertNotFoundException($message);
+            throw new AdvertNotFoundException($message);
         }
         return $advert;
     }

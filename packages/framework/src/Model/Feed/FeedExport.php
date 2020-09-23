@@ -113,7 +113,10 @@ class FeedExport
     public function wakeUp(): void
     {
         if ($this->filesystem->has($this->getTemporaryFilepath())) {
-            $this->mountManager->move('main://' . $this->getTemporaryFilepath(), 'local://' . TransformString::removeDriveLetterFromPath($this->getTemporaryLocalFilepath()));
+            $this->mountManager->move(
+                'main://' . $this->getTemporaryFilepath(),
+                'local://' . TransformString::removeDriveLetterFromPath($this->getTemporaryLocalFilepath())
+            );
         } else {
             $this->localFilesystem->touch($this->getTemporaryLocalFilepath());
         }
@@ -121,7 +124,10 @@ class FeedExport
 
     public function sleep(): void
     {
-        $this->mountManager->move('local://' . TransformString::removeDriveLetterFromPath($this->getTemporaryLocalFilepath()), 'main://' . $this->getTemporaryFilepath());
+        $this->mountManager->move(
+            'local://' . TransformString::removeDriveLetterFromPath($this->getTemporaryLocalFilepath()),
+            'main://' . $this->getTemporaryFilepath()
+        );
     }
 
     public function generateBatch(): void
@@ -189,7 +195,10 @@ class FeedExport
             $this->filesystem->delete($this->feedFilepath);
         }
 
-        $this->mountManager->move('local://' . TransformString::removeDriveLetterFromPath($this->getTemporaryLocalFilepath()), 'main://' . $this->feedFilepath);
+        $this->mountManager->move(
+            'local://' . TransformString::removeDriveLetterFromPath($this->getTemporaryLocalFilepath()),
+            'main://' . $this->feedFilepath
+        );
 
         $this->finished = true;
     }

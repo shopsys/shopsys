@@ -3,6 +3,7 @@
 namespace Shopsys\FrameworkBundle\Model\Category;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Exception;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
@@ -138,15 +139,17 @@ class CategoryVisibilityRepository
             return;
         }
 
-        if ($this->categoryVisibilityRecalculationScheduler->isRecalculationScheduled()) {
-            try {
-                $this->em->beginTransaction();
-                $this->refreshCategoriesVisibility();
-                $this->em->commit();
-            } catch (\Exception $ex) {
-                $this->em->rollback();
-                throw $ex;
-            }
+        if (!$this->categoryVisibilityRecalculationScheduler->isRecalculationScheduled()) {
+            return;
+        }
+
+        try {
+            $this->em->beginTransaction();
+            $this->refreshCategoriesVisibility();
+            $this->em->commit();
+        } catch (Exception $ex) {
+            $this->em->rollback();
+            throw $ex;
         }
     }
 }

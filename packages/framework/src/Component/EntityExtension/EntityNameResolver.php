@@ -2,6 +2,8 @@
 
 namespace Shopsys\FrameworkBundle\Component\EntityExtension;
 
+use ReflectionObject;
+
 class EntityNameResolver
 {
     /**
@@ -34,9 +36,13 @@ class EntityNameResolver
     {
         if (is_string($subject)) {
             return $this->resolveInString($subject);
-        } elseif (is_array($subject)) {
+        }
+
+        if (is_array($subject)) {
             return $this->resolveInArray($subject);
-        } elseif (is_object($subject)) {
+        }
+
+        if (is_object($subject)) {
             $this->resolveInObjectProperties($subject);
         }
 
@@ -75,7 +81,7 @@ class EntityNameResolver
      */
     protected function resolveInObjectProperties($object): void
     {
-        $reflection = new \ReflectionObject($object);
+        $reflection = new ReflectionObject($object);
         foreach ($reflection->getProperties() as $property) {
             $property->setAccessible(true);
             $value = $property->getValue($object);

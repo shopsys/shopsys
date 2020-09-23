@@ -4,6 +4,7 @@ namespace Shopsys\FrameworkBundle\Component\Image\Config;
 
 use BadMethodCallException;
 use Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver;
+use Shopsys\FrameworkBundle\Component\Image\Config\Exception\ImageEntityConfigNotFoundException;
 use Shopsys\FrameworkBundle\Component\Image\Image;
 
 class ImageConfig
@@ -62,22 +63,24 @@ class ImageConfig
                 __METHOD__
             ));
         }
-        if ($this->entityNameResolver === null) {
-            @trigger_error(
-                sprintf(
-                    'The %s() method is deprecated and will be removed in the next major. Use the constructor injection instead.',
-                    __METHOD__
-                ),
-                E_USER_DEPRECATED
-            );
-
-            $this->entityNameResolver = $entityNameResolver;
-            $this->setUpImageEntityConfigsByClass($this->imageEntityConfigsByClass);
+        if ($this->entityNameResolver !== null) {
+            return;
         }
+
+        @trigger_error(
+            sprintf(
+                'The %s() method is deprecated and will be removed in the next major. Use the constructor injection instead.',
+                __METHOD__
+            ),
+            E_USER_DEPRECATED
+        );
+
+        $this->entityNameResolver = $entityNameResolver;
+        $this->setUpImageEntityConfigsByClass($this->imageEntityConfigsByClass);
     }
 
     /**
-     * @param Object $entity
+     * @param object $entity
      * @return string
      */
     public function getEntityName($entity)
@@ -87,7 +90,7 @@ class ImageConfig
     }
 
     /**
-     * @param Object $entity
+     * @param object $entity
      * @param string|null $type
      * @param string|null $sizeName
      * @return \Shopsys\FrameworkBundle\Component\Image\Config\ImageSizeConfig
@@ -132,7 +135,7 @@ class ImageConfig
     }
 
     /**
-     * @param Object|null $entity
+     * @param object|null $entity
      * @return \Shopsys\FrameworkBundle\Component\Image\Config\ImageEntityConfig
      */
     public function getImageEntityConfig($entity)
@@ -143,7 +146,7 @@ class ImageConfig
             }
         }
 
-        throw new \Shopsys\FrameworkBundle\Component\Image\Config\Exception\ImageEntityConfigNotFoundException(
+        throw new ImageEntityConfigNotFoundException(
             $entity ? get_class($entity) : null
         );
     }
@@ -154,7 +157,7 @@ class ImageConfig
      */
     public function hasImageConfig($entity)
     {
-        foreach ($this->imageEntityConfigsByClass as $className => $entityConfig) {
+        foreach (array_keys($this->imageEntityConfigsByClass) as $className) {
             if ($entity instanceof $className) {
                 return true;
             }
@@ -174,7 +177,7 @@ class ImageConfig
             }
         }
 
-        throw new \Shopsys\FrameworkBundle\Component\Image\Config\Exception\ImageEntityConfigNotFoundException($entityName);
+        throw new ImageEntityConfigNotFoundException($entityName);
     }
 
     /**
@@ -196,6 +199,6 @@ class ImageConfig
             return $this->imageEntityConfigsByClass[$normalizedClass];
         }
 
-        throw new \Shopsys\FrameworkBundle\Component\Image\Config\Exception\ImageEntityConfigNotFoundException($class);
+        throw new ImageEntityConfigNotFoundException($class);
     }
 }

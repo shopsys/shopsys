@@ -3,6 +3,7 @@
 namespace Shopsys\FrameworkBundle\Component\Cron;
 
 use DateTimeInterface;
+use Shopsys\FrameworkBundle\Component\Cron\Config\Exception\InvalidTimeFormatException;
 
 class CronTimeResolver
 {
@@ -30,9 +31,11 @@ class CronTimeResolver
         $timeValues = explode(',', $timeString);
         $matches = null;
         foreach ($timeValues as $timeValue) {
-            if ($timeValue === '*'
+            if (
+                $timeValue === '*'
                 || $timeValue === str_pad((string)$value, strlen($timeValue), '0', STR_PAD_LEFT)
-                || preg_match('@^\*/(\d+)$@', $timeValue, $matches) && $value % $matches[1] === 0 // syntax */[int]
+                || preg_match('@^\*/(\d+)$@', $timeValue, $matches)
+                && $value % $matches[1] === 0 // syntax */[int]
             ) {
                 return true;
             }
@@ -58,10 +61,15 @@ class CronTimeResolver
                 $timeNumber = $timeValue;
             }
 
-            if ($timeNumber !== '*'
-                && !(is_numeric($timeNumber) && $timeNumber <= $maxValue && $timeNumber % $divisibleBy === 0)
+            if (
+                $timeNumber !== '*'
+                && !(
+                    is_numeric($timeNumber)
+                    && $timeNumber <= $maxValue
+                    && $timeNumber % $divisibleBy === 0
+                )
             ) {
-                throw new \Shopsys\FrameworkBundle\Component\Cron\Config\Exception\InvalidTimeFormatException($timeValue, $maxValue, $divisibleBy);
+                throw new InvalidTimeFormatException($timeValue, $maxValue, $divisibleBy);
             }
         }
     }

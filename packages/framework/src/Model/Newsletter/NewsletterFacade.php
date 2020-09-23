@@ -45,7 +45,11 @@ class NewsletterFacade
     public function addSubscribedEmail($email, $domainId)
     {
         if (!$this->newsletterRepository->existsSubscribedEmail($email, $domainId)) {
-            $newsletterSubscriber = $this->newsletterSubscriberFactory->create($email, new DateTimeImmutable(), $domainId);
+            $newsletterSubscriber = $this->newsletterSubscriberFactory->create(
+                $email,
+                new DateTimeImmutable(),
+                $domainId
+            );
             $this->em->persist($newsletterSubscriber);
             $this->em->flush($newsletterSubscriber);
         }

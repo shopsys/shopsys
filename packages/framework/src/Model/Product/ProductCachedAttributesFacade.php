@@ -4,6 +4,7 @@ namespace Shopsys\FrameworkBundle\Model\Product;
 
 use Shopsys\FrameworkBundle\Model\Localization\Localization;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository;
+use Shopsys\FrameworkBundle\Model\Product\Pricing\Exception\MainVariantPriceCalculationException;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser;
 
 class ProductCachedAttributesFacade
@@ -59,7 +60,7 @@ class ProductCachedAttributesFacade
         }
         try {
             $productPrice = $this->productPriceCalculationForCustomerUser->calculatePriceForCurrentUser($product);
-        } catch (\Shopsys\FrameworkBundle\Model\Product\Pricing\Exception\MainVariantPriceCalculationException $ex) {
+        } catch (MainVariantPriceCalculationException $ex) {
             $productPrice = null;
         }
         $this->sellingPricesByProductId[$product->getId()] = $productPrice;
@@ -78,7 +79,10 @@ class ProductCachedAttributesFacade
         }
         $locale = $this->localization->getLocale();
 
-        $productParameterValues = $this->parameterRepository->getProductParameterValuesByProductSortedByName($product, $locale);
+        $productParameterValues = $this->parameterRepository->getProductParameterValuesByProductSortedByName(
+            $product,
+            $locale
+        );
         foreach ($productParameterValues as $index => $productParameterValue) {
             $parameter = $productParameterValue->getParameter();
             if ($parameter->getName() === null

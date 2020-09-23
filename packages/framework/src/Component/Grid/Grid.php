@@ -2,6 +2,8 @@
 
 namespace Shopsys\FrameworkBundle\Component\Grid;
 
+use Shopsys\FrameworkBundle\Component\Grid\Exception\DuplicateColumnIdException;
+use Shopsys\FrameworkBundle\Component\Grid\Exception\EmptyGridIdException;
 use Shopsys\FrameworkBundle\Component\Grid\InlineEdit\GridInlineEditInterface;
 use Shopsys\FrameworkBundle\Component\Router\Security\RouteCsrfProtector;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -170,9 +172,9 @@ class Grid
         RouteCsrfProtector $routeCsrfProtector,
         Environment $twig
     ) {
-        if (empty($id)) {
+        if ($id === '') {
             $message = 'Grid id cannot be empty.';
-            throw new \Shopsys\FrameworkBundle\Component\Grid\Exception\EmptyGridIdException($message);
+            throw new EmptyGridIdException($message);
         }
 
         $this->id = $id;
@@ -204,7 +206,7 @@ class Grid
     public function addColumn($id, $sourceColumnName, $title, $sortable = false)
     {
         if (array_key_exists($id, $this->columnsById)) {
-            throw new \Shopsys\FrameworkBundle\Component\Grid\Exception\DuplicateColumnIdException(
+            throw new DuplicateColumnIdException(
                 'Duplicate column id "' . $id . '" in grid "' . $this->id . '"'
             );
         }
@@ -250,7 +252,13 @@ class Grid
      */
     public function addEditActionColumn($route, array $bindingRouteParams = [], array $additionalRouteParams = [])
     {
-        return $this->addActionColumn(ActionColumn::TYPE_EDIT, t('Edit'), $route, $bindingRouteParams, $additionalRouteParams);
+        return $this->addActionColumn(
+            ActionColumn::TYPE_EDIT,
+            t('Edit'),
+            $route,
+            $bindingRouteParams,
+            $additionalRouteParams
+        );
     }
 
     /**
@@ -261,7 +269,13 @@ class Grid
      */
     public function addDeleteActionColumn($route, array $bindingRouteParams = [], array $additionalRouteParams = [])
     {
-        return $this->addActionColumn(ActionColumn::TYPE_DELETE, t('Delete'), $route, $bindingRouteParams, $additionalRouteParams);
+        return $this->addActionColumn(
+            ActionColumn::TYPE_DELETE,
+            t('Delete'),
+            $route,
+            $bindingRouteParams,
+            $additionalRouteParams
+        );
     }
 
     /**
@@ -347,7 +361,7 @@ class Grid
     public function createViewWithoutRows()
     {
         $this->rows = [];
-        $gridView = new GridView(
+        return new GridView(
             $this,
             $this->requestStack,
             $this->router,
@@ -355,8 +369,6 @@ class Grid
             $this->viewTheme,
             $this->viewTemplateParameters
         );
-
-        return $gridView;
     }
 
     public function enablePaging()
@@ -593,11 +605,13 @@ class Grid
             }
         }
         $requestData = $this->requestStack->getMasterRequest()->request->get(self::GET_PARAMETER, []);
-        if (array_key_exists($this->id, $requestData)) {
-            $gridRequestData = $requestData[$this->id];
-            if (array_key_exists('selectedRowIds', $gridRequestData) && is_array($gridRequestData['selectedRowIds'])) {
-                $this->selectedRowIds = array_map('json_decode', $gridRequestData['selectedRowIds']);
-            }
+        if (!array_key_exists($this->id, $requestData)) {
+            return;
+        }
+
+        $gridRequestData = $requestData[$this->id];
+        if (array_key_exists('selectedRowIds', $gridRequestData) && is_array($gridRequestData['selectedRowIds'])) {
+            $this->selectedRowIds = array_map('json_decode', $gridRequestData['selectedRowIds']);
         }
     }
 
@@ -709,16 +723,19 @@ class Grid
 
         if (count($sourceColumnNameParts) === 1) {
             return $row[$sourceColumnNameParts[0]];
-        } elseif (count($sourceColumnNameParts) === 2) {
+        }
+
+        if (count($sourceColumnNameParts) === 2) {
             if (array_key_exists($sourceColumnNameParts[0], $row)
                 && array_key_exists($sourceColumnNameParts[1], $row[$sourceColumnNameParts[0]])
             ) {
                 return $row[$sourceColumnNameParts[0]][$sourceColumnNameParts[1]];
-            } elseif (array_key_exists($sourceColumnNameParts[1], $row)) {
-                return $row[$sourceColumnNameParts[1]];
-            } else {
-                return $row[$sourceColumnName];
             }
+
+            if (array_key_exists($sourceColumnNameParts[1], $row)) {
+                return $row[$sourceColumnNameParts[1]];
+            }
+            return $row[$sourceColumnName];
         }
 
         return $row[$sourceColumnName];

@@ -45,60 +45,90 @@ class HeurekaProductDataFixture implements PluginDataFixtureInterface
         $heurekaProductDomainData->domainId = static::DOMAIN_ID_FIRST;
         $heurekaProductDomainData->cpc = Money::create(12);
 
-        $this->heurekaProductDomainFacade->saveHeurekaProductDomain(static::PRODUCT_ID_FIRST, $heurekaProductDomainData);
+        $this->heurekaProductDomainFacade->saveHeurekaProductDomain(
+            static::PRODUCT_ID_FIRST,
+            $heurekaProductDomainData
+        );
 
         $heurekaProductDomainData = $this->heurekaProductDomainDataFactory->create();
         $heurekaProductDomainData->domainId = static::DOMAIN_ID_SECOND;
         $heurekaProductDomainData->cpc = Money::create(5);
 
-        $this->heurekaProductDomainFacade->saveHeurekaProductDomain(static::PRODUCT_ID_FIRST, $heurekaProductDomainData);
+        $this->heurekaProductDomainFacade->saveHeurekaProductDomain(
+            static::PRODUCT_ID_FIRST,
+            $heurekaProductDomainData
+        );
 
         $heurekaProductDomainData = $this->heurekaProductDomainDataFactory->create();
         $heurekaProductDomainData->domainId = static::DOMAIN_ID_FIRST;
         $heurekaProductDomainData->cpc = Money::create(3);
 
-        $this->heurekaProductDomainFacade->saveHeurekaProductDomain(static::PRODUCT_ID_SECOND, $heurekaProductDomainData);
+        $this->heurekaProductDomainFacade->saveHeurekaProductDomain(
+            static::PRODUCT_ID_SECOND,
+            $heurekaProductDomainData
+        );
 
         $heurekaProductDomainData = $this->heurekaProductDomainDataFactory->create();
         $heurekaProductDomainData->domainId = static::DOMAIN_ID_SECOND;
         $heurekaProductDomainData->cpc = Money::create(2);
 
-        $this->heurekaProductDomainFacade->saveHeurekaProductDomain(static::PRODUCT_ID_SECOND, $heurekaProductDomainData);
+        $this->heurekaProductDomainFacade->saveHeurekaProductDomain(
+            static::PRODUCT_ID_SECOND,
+            $heurekaProductDomainData
+        );
 
         $heurekaProductDomainData = $this->heurekaProductDomainDataFactory->create();
         $heurekaProductDomainData->domainId = static::DOMAIN_ID_FIRST;
         $heurekaProductDomainData->cpc = Money::create(1);
 
-        $this->heurekaProductDomainFacade->saveHeurekaProductDomain(static::PRODUCT_ID_THIRD, $heurekaProductDomainData);
+        $this->heurekaProductDomainFacade->saveHeurekaProductDomain(
+            static::PRODUCT_ID_THIRD,
+            $heurekaProductDomainData
+        );
 
         $heurekaProductDomainData = $this->heurekaProductDomainDataFactory->create();
         $heurekaProductDomainData->domainId = static::DOMAIN_ID_SECOND;
         $heurekaProductDomainData->cpc = Money::create(1);
 
-        $this->heurekaProductDomainFacade->saveHeurekaProductDomain(static::PRODUCT_ID_THIRD, $heurekaProductDomainData);
+        $this->heurekaProductDomainFacade->saveHeurekaProductDomain(
+            static::PRODUCT_ID_THIRD,
+            $heurekaProductDomainData
+        );
 
         $heurekaProductDomainData = $this->heurekaProductDomainDataFactory->create();
         $heurekaProductDomainData->domainId = static::DOMAIN_ID_FIRST;
         $heurekaProductDomainData->cpc = Money::create(5);
 
-        $this->heurekaProductDomainFacade->saveHeurekaProductDomain(static::PRODUCT_ID_FOURTH, $heurekaProductDomainData);
+        $this->heurekaProductDomainFacade->saveHeurekaProductDomain(
+            static::PRODUCT_ID_FOURTH,
+            $heurekaProductDomainData
+        );
 
         $heurekaProductDomainData = $this->heurekaProductDomainDataFactory->create();
         $heurekaProductDomainData->domainId = static::DOMAIN_ID_SECOND;
         $heurekaProductDomainData->cpc = Money::create(8);
 
-        $this->heurekaProductDomainFacade->saveHeurekaProductDomain(static::PRODUCT_ID_FOURTH, $heurekaProductDomainData);
+        $this->heurekaProductDomainFacade->saveHeurekaProductDomain(
+            static::PRODUCT_ID_FOURTH,
+            $heurekaProductDomainData
+        );
 
         $heurekaProductDomainData = $this->heurekaProductDomainDataFactory->create();
         $heurekaProductDomainData->domainId = static::DOMAIN_ID_FIRST;
         $heurekaProductDomainData->cpc = Money::create(10);
 
-        $this->heurekaProductDomainFacade->saveHeurekaProductDomain(static::PRODUCT_ID_FIFTH, $heurekaProductDomainData);
+        $this->heurekaProductDomainFacade->saveHeurekaProductDomain(
+            static::PRODUCT_ID_FIFTH,
+            $heurekaProductDomainData
+        );
 
         $heurekaProductDomainData = $this->heurekaProductDomainDataFactory->create();
         $heurekaProductDomainData->domainId = static::DOMAIN_ID_SECOND;
         $heurekaProductDomainData->cpc = Money::create(5);
 
-        $this->heurekaProductDomainFacade->saveHeurekaProductDomain(static::PRODUCT_ID_FIFTH, $heurekaProductDomainData);
+        $this->heurekaProductDomainFacade->saveHeurekaProductDomain(
+            static::PRODUCT_ID_FIFTH,
+            $heurekaProductDomainData
+        );
     }
 }

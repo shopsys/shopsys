@@ -69,7 +69,11 @@ class AdminRadiobutton
         $script = sprintf('return $(".%s").is("input:checked + *")', $imageElementClass);
         $checked = (bool)$this->tester->executeJS($script);
 
-        $message = sprintf('Admin radiobutton "%s" should have value "%s" checked but it\'s unchecked.', $this->cssSelector, $radioValue);
+        $message = sprintf(
+            'Admin radiobutton "%s" should have value "%s" checked but it\'s unchecked.',
+            $this->cssSelector,
+            $radioValue
+        );
         Assert::assertTrue($checked, $message);
     }
 
@@ -81,11 +85,16 @@ class AdminRadiobutton
      */
     protected function getImageElementClassByValue(string $radioValue): string
     {
-        $imageElementClass = 'js-radio-image-' . rand();
+        $imageElementClass = 'js-radio-image-' . random_int(0, getrandmax());
 
         $selector = json_encode($this->cssSelector);
         $valueSelector = json_encode(sprintf('input[value="%s"]', $radioValue));
-        $script = sprintf('$(%s).filterAllNodes(%s).next(".css-radio__image").addClass("%s")', $selector, $valueSelector, $imageElementClass);
+        $script = sprintf(
+            '$(%s).filterAllNodes(%s).next(".css-radio__image").addClass("%s")',
+            $selector,
+            $valueSelector,
+            $imageElementClass
+        );
         $this->tester->executeJS($script);
 
         return $imageElementClass;

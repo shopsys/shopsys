@@ -168,7 +168,6 @@ class BrandFacade
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Brand\Brand $brand
      * @param string $eventType
-     *
      * @see \Shopsys\FrameworkBundle\Model\Product\Brand\BrandEvent class
      */
     protected function dispatchBrandEvent(Brand $brand, string $eventType): void

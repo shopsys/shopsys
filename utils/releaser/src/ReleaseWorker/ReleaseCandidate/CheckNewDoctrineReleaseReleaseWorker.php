@@ -51,6 +51,7 @@ final class CheckNewDoctrineReleaseReleaseWorker extends AbstractShopsysReleaseW
 
     /**
      * Higher first
+     *
      * @return int
      */
     public function getPriority(): int

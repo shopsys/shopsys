@@ -88,7 +88,11 @@ class PricingGroupSettingFacade
      */
     public function setDefaultPricingGroupForSelectedDomain(PricingGroup $pricingGroup)
     {
-        $this->setting->setForDomain(Setting::DEFAULT_PRICING_GROUP, $pricingGroup->getId(), $this->adminDomainTabsFacade->getSelectedDomainId());
+        $this->setting->setForDomain(
+            Setting::DEFAULT_PRICING_GROUP,
+            $pricingGroup->getId(),
+            $this->adminDomainTabsFacade->getSelectedDomainId()
+        );
     }
 
     /**

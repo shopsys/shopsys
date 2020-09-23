@@ -72,8 +72,13 @@ class AdministratorLoginFacade
     public function generateMultidomainLoginTokenWithExpiration(Administrator $administrator)
     {
         $multidomainLoginToken = $this->hashGenerator->generateHash(static::MULTIDOMAIN_LOGIN_TOKEN_LENGTH);
-        $multidomainLoginTokenExpirationDateTime = new DateTime('+' . static::MULTIDOMAIN_LOGIN_TOKEN_VALID_SECONDS . 'seconds');
-        $administrator->setMultidomainLoginTokenWithExpiration($multidomainLoginToken, $multidomainLoginTokenExpirationDateTime);
+        $multidomainLoginTokenExpirationDateTime = new DateTime(
+            '+' . static::MULTIDOMAIN_LOGIN_TOKEN_VALID_SECONDS . 'seconds'
+        );
+        $administrator->setMultidomainLoginTokenWithExpiration(
+            $multidomainLoginToken,
+            $multidomainLoginTokenExpirationDateTime
+        );
         $this->em->flush();
 
         return $multidomainLoginToken;
@@ -99,12 +104,14 @@ class AdministratorLoginFacade
     public function invalidateCurrentAdministratorLoginToken()
     {
         $token = $this->tokenStorage->getToken();
-        if ($token !== null) {
-            /** @var \Shopsys\FrameworkBundle\Model\Administrator\Administrator $currentAdministrator */
-            $currentAdministrator = $token->getUser();
-            $currentAdministrator->setLoginToken('');
-
-            $this->em->flush($currentAdministrator);
+        if ($token === null) {
+            return;
         }
+
+        /** @var \Shopsys\FrameworkBundle\Model\Administrator\Administrator $currentAdministrator */
+        $currentAdministrator = $token->getUser();
+        $currentAdministrator->setLoginToken('');
+
+        $this->em->flush($currentAdministrator);
     }
 }

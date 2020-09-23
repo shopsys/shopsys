@@ -3,6 +3,7 @@
 namespace Shopsys\FrameworkBundle\Component\Doctrine;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Shopsys\FrameworkBundle\Component\Doctrine\Exception\DefaultSchemaImportException;
 
 class DatabaseSchemaFacade
 {
@@ -48,16 +49,16 @@ class DatabaseSchemaFacade
     {
         $connection = $this->em->getConnection();
         $handle = fopen($this->defaultSchemaFilepath, 'r');
-        if ($handle) {
-            $line = fgets($handle);
-            while ($line !== false) {
-                $connection->query($line);
-                $line = fgets($handle);
-            }
-            fclose($handle);
-        } else {
+        if (!$handle) {
             $message = 'Failed to open file ' . $this->defaultSchemaFilepath . ' with default database schema.';
-            throw new \Shopsys\FrameworkBundle\Component\Doctrine\Exception\DefaultSchemaImportException($message);
+            throw new DefaultSchemaImportException($message);
         }
+
+        $line = fgets($handle);
+        while ($line !== false) {
+            $connection->query($line);
+            $line = fgets($handle);
+        }
+        fclose($handle);
     }
 }

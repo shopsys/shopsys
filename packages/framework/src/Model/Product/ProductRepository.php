@@ -15,6 +15,8 @@ use Shopsys\FrameworkBundle\Model\Localization\Localization;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Product\Availability\Availability;
 use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
+use Shopsys\FrameworkBundle\Model\Product\Exception\InvalidOrderingModeException;
+use Shopsys\FrameworkBundle\Model\Product\Exception\ProductNotFoundException;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterRepository;
 use Shopsys\FrameworkBundle\Model\Product\Flag\Flag;
@@ -272,7 +274,12 @@ class ProductRepository
      */
     protected function filterByCategory(QueryBuilder $queryBuilder, Category $category, $domainId)
     {
-        $queryBuilder->join('p.productCategoryDomains', 'pcd', Join::WITH, 'pcd.category = :category AND pcd.domainId = :domainId');
+        $queryBuilder->join(
+            'p.productCategoryDomains',
+            'pcd',
+            Join::WITH,
+            'pcd.category = :category AND pcd.domainId = :domainId'
+        );
         $queryBuilder->setParameter('category', $category);
         $queryBuilder->setParameter('domainId', $domainId);
     }
@@ -565,7 +572,7 @@ class ProductRepository
 
             default:
                 $message = 'Product list ordering mode "' . $orderingModeId . '" is not supported.';
-                throw new \Shopsys\FrameworkBundle\Model\Product\Exception\InvalidOrderingModeException($message);
+                throw new InvalidOrderingModeException($message);
         }
 
         $queryBuilder->addOrderBy('p.id', 'asc');
@@ -580,7 +587,7 @@ class ProductRepository
         $product = $this->findById($id);
 
         if ($product === null) {
-            throw new \Shopsys\FrameworkBundle\Model\Product\Exception\ProductNotFoundException('Product with ID ' . $id . ' does not exist.');
+            throw new ProductNotFoundException('Product with ID ' . $id . ' does not exist.');
         }
 
         return $product;
@@ -610,7 +617,7 @@ class ProductRepository
         $product = $qb->getQuery()->getOneOrNullResult();
 
         if ($product === null) {
-            throw new \Shopsys\FrameworkBundle\Model\Product\Exception\ProductNotFoundException();
+            throw new ProductNotFoundException();
         }
 
         return $product;
@@ -631,7 +638,7 @@ class ProductRepository
         $product = $qb->getQuery()->getOneOrNullResult();
 
         if ($product === null) {
-            throw new \Shopsys\FrameworkBundle\Model\Product\Exception\ProductNotFoundException();
+            throw new ProductNotFoundException();
         }
 
         return $product;
@@ -661,7 +668,7 @@ class ProductRepository
         $product = $qb->getQuery()->getOneOrNullResult();
 
         if ($product === null) {
-            throw new \Shopsys\FrameworkBundle\Model\Product\Exception\ProductNotFoundException(sprintf('Product with ID "%s" does not exist.', $uuid));
+            throw new ProductNotFoundException(sprintf('Product with ID "%s" does not exist.', $uuid));
         }
 
         return $product;
@@ -770,7 +777,10 @@ class ProductRepository
             ->from(Product::class, 'p')
             ->andWhere('p.calculatedVisibility = TRUE')
             ->andWhere('p.calculatedSellingDenied = FALSE')
-            ->andWhere('p.variantType = :variantTypeVariant')->setParameter('variantTypeVariant', Product::VARIANT_TYPE_VARIANT)
+            ->andWhere('p.variantType = :variantTypeVariant')->setParameter(
+                'variantTypeVariant',
+                Product::VARIANT_TYPE_VARIANT
+            )
             ->andWhere('p.mainVariant = :mainVariant')->setParameter('mainVariant', $mainVariant);
 
         return $queryBuilder->getQuery()->execute();
@@ -834,7 +844,7 @@ class ProductRepository
         $product = $queryBuilder->getQuery()->getOneOrNullResult();
 
         if ($product === null) {
-            throw new \Shopsys\FrameworkBundle\Model\Product\Exception\ProductNotFoundException(
+            throw new ProductNotFoundException(
                 'Product with catnum ' . $productCatnum . ' does not exist.'
             );
         }
@@ -851,7 +861,7 @@ class ProductRepository
         $product = $this->getProductRepository()->findOneBy(['uuid' => $uuid]);
 
         if ($product === null) {
-            throw new \Shopsys\FrameworkBundle\Model\Product\Exception\ProductNotFoundException('Product with UUID ' . $uuid . ' does not exist.');
+            throw new ProductNotFoundException('Product with UUID ' . $uuid . ' does not exist.');
         }
 
         return $product;

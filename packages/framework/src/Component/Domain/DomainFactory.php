@@ -34,7 +34,10 @@ class DomainFactory
      */
     public function create($domainsConfigFilepath, $domainsUrlsConfigFilepath)
     {
-        $domainConfigs = $this->domainsConfigLoader->loadDomainConfigsFromYaml($domainsConfigFilepath, $domainsUrlsConfigFilepath);
+        $domainConfigs = $this->domainsConfigLoader->loadDomainConfigsFromYaml(
+            $domainsConfigFilepath,
+            $domainsUrlsConfigFilepath
+        );
         $domain = new Domain($domainConfigs, $this->setting);
 
         $domainId = getenv('DOMAIN');

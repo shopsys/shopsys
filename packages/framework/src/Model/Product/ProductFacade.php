@@ -24,6 +24,7 @@ use Shopsys\FrameworkBundle\Model\Product\Flag\Flag;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueFactoryInterface;
+use Shopsys\FrameworkBundle\Model\Product\Pricing\Exception\MainVariantPriceCalculationException;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductManualInputPriceFacade;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculation;
@@ -268,7 +269,10 @@ class ProductFacade
     {
         // Persist of ProductCategoryDomain requires known primary key of Product
         // @see https://github.com/doctrine/doctrine2/issues/4869
-        $productCategoryDomains = $this->productCategoryDomainFactory->createMultiple($product, $productData->categoriesByDomainId);
+        $productCategoryDomains = $this->productCategoryDomainFactory->createMultiple(
+            $product,
+            $productData->categoriesByDomainId
+        );
         $product->setProductCategoryDomains($productCategoryDomains);
         $this->em->flush($product);
 
@@ -297,7 +301,10 @@ class ProductFacade
         $product = $this->productRepository->getById($productId);
         $originalNames = $product->getNames();
 
-        $productCategoryDomains = $this->productCategoryDomainFactory->createMultiple($product, $productData->categoriesByDomainId);
+        $productCategoryDomains = $this->productCategoryDomainFactory->createMultiple(
+            $product,
+            $productData->categoriesByDomainId
+        );
         $product->edit($productCategoryDomains, $productData);
         $this->productPriceRecalculationScheduler->scheduleProductForImmediateRecalculation($product);
 
@@ -336,9 +343,13 @@ class ProductFacade
         $productDeleteResult = $product->getProductDeleteResult();
         $productsForRecalculations = $productDeleteResult->getProductsForRecalculations();
         foreach ($productsForRecalculations as $productForRecalculations) {
-            $this->productPriceRecalculationScheduler->scheduleProductForImmediateRecalculation($productForRecalculations);
+            $this->productPriceRecalculationScheduler->scheduleProductForImmediateRecalculation(
+                $productForRecalculations
+            );
             $productForRecalculations->markForVisibilityRecalculation();
-            $this->productAvailabilityRecalculationScheduler->scheduleProductForImmediateRecalculation($productForRecalculations);
+            $this->productAvailabilityRecalculationScheduler->scheduleProductForImmediateRecalculation(
+                $productForRecalculations
+            );
             $this->productExportScheduler->scheduleRowIdForImmediateExport($productForRecalculations->getId());
         }
 
@@ -412,7 +423,7 @@ class ProductFacade
         foreach ($this->pricingGroupRepository->getPricingGroupsByDomainId($domainId) as $pricingGroup) {
             try {
                 $sellingPrice = $this->productPriceCalculation->calculatePrice($product, $domainId, $pricingGroup);
-            } catch (\Shopsys\FrameworkBundle\Model\Product\Pricing\Exception\MainVariantPriceCalculationException $e) {
+            } catch (MainVariantPriceCalculationException $e) {
                 $sellingPrice = new ProductPrice(Price::zero(), false);
             }
             $productSellingPrices[$pricingGroup->getId()] = new ProductSellingPrice($pricingGroup, $sellingPrice);
@@ -428,7 +439,11 @@ class ProductFacade
     protected function refreshProductManualInputPrices(Product $product, array $manualInputPrices)
     {
         foreach ($this->pricingGroupRepository->getAll() as $pricingGroup) {
-            $this->productManualInputPriceFacade->refresh($product, $pricingGroup, $manualInputPrices[$pricingGroup->getId()]);
+            $this->productManualInputPriceFacade->refresh(
+                $product,
+                $pricingGroup,
+                $manualInputPrices[$pricingGroup->getId()]
+            );
         }
     }
 
@@ -584,7 +599,7 @@ class ProductFacade
     protected function createFriendlyUrlsWhenRenamed(Product $product, array $originalNames): void
     {
         $changedNames = $this->getChangedNamesByLocale($product, $originalNames);
-        if (empty($changedNames)) {
+        if (count($changedNames) === 0) {
             return;
         }
 

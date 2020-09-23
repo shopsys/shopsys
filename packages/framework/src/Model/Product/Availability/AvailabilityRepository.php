@@ -6,6 +6,7 @@ use Doctrine\ORM\AbstractQuery;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query;
 use Shopsys\FrameworkBundle\Component\Doctrine\SortableNullsWalker;
+use Shopsys\FrameworkBundle\Model\Product\Availability\Exception\AvailabilityNotFoundException;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 
 class AvailabilityRepository
@@ -50,7 +51,7 @@ class AvailabilityRepository
 
         if ($availability === null) {
             $message = 'Availability with ID ' . $availabilityId . ' not found.';
-            throw new \Shopsys\FrameworkBundle\Model\Product\Availability\Exception\AvailabilityNotFoundException($message);
+            throw new AvailabilityNotFoundException($message);
         }
 
         return $availability;

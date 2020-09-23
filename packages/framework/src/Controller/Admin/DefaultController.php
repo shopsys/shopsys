@@ -119,11 +119,17 @@ class DefaultController extends AdminBaseController
     public function dashboardAction(): Response
     {
         $registeredInLastTwoWeeks = $this->statisticsFacade->getCustomersRegistrationsCountByDayInLastTwoWeeks();
-        $registeredInLastTwoWeeksDates = $this->statisticsProcessingFacade->getDateTimesFormattedToLocaleFormat($registeredInLastTwoWeeks);
+        $registeredInLastTwoWeeksDates = $this->statisticsProcessingFacade->getDateTimesFormattedToLocaleFormat(
+            $registeredInLastTwoWeeks
+        );
         $registeredInLastTwoWeeksCounts = $this->statisticsProcessingFacade->getCounts($registeredInLastTwoWeeks);
         $newOrdersCountByDayInLastTwoWeeks = $this->statisticsFacade->getNewOrdersCountByDayInLastTwoWeeks();
-        $newOrdersInLastTwoWeeksDates = $this->statisticsProcessingFacade->getDateTimesFormattedToLocaleFormat($newOrdersCountByDayInLastTwoWeeks);
-        $newOrdersInLastTwoWeeksCounts = $this->statisticsProcessingFacade->getCounts($newOrdersCountByDayInLastTwoWeeks);
+        $newOrdersInLastTwoWeeksDates = $this->statisticsProcessingFacade->getDateTimesFormattedToLocaleFormat(
+            $newOrdersCountByDayInLastTwoWeeks
+        );
+        $newOrdersInLastTwoWeeksCounts = $this->statisticsProcessingFacade->getCounts(
+            $newOrdersCountByDayInLastTwoWeeks
+        );
 
         $quickProductSearchData = new QuickSearchFormData();
         $quickProductSearchForm = $this->createForm(QuickSearchFormType::class, $quickProductSearchData, [
@@ -138,7 +144,9 @@ class DefaultController extends AdminBaseController
 
         $ordersTrend = $this->getTrendDifference($previousCountOfOrders, $currentCountOfOrders);
 
-        $currentCountOfNewCustomers = $this->statisticsFacade->getNewCustomersCount(static::PREVIOUS_DAYS_TO_LOAD_STATISTICS_FOR);
+        $currentCountOfNewCustomers = $this->statisticsFacade->getNewCustomersCount(
+            static::PREVIOUS_DAYS_TO_LOAD_STATISTICS_FOR
+        );
         $previousCountOfNewCustomers = $this->statisticsFacade->getNewCustomersCount(
             static::PREVIOUS_DAYS_TO_LOAD_STATISTICS_FOR * 2,
             static::PREVIOUS_DAYS_TO_LOAD_STATISTICS_FOR
@@ -186,7 +194,7 @@ class DefaultController extends AdminBaseController
             );
         }
 
-        if (empty($this->unitFacade->getAll())) {
+        if (count($this->unitFacade->getAll()) === 0) {
             $this->addErrorFlashTwig(
                 t('<a href="{{ url }}">There are no units, you need to create some.</a>'),
                 [
@@ -204,7 +212,7 @@ class DefaultController extends AdminBaseController
             );
         }
 
-        if (empty($this->availabilityFacade->getAll())) {
+        if (count($this->availabilityFacade->getAll()) === 0) {
             $this->addErrorFlashTwig(
                 t('<a href="{{ url }}">There are no availabilities, you need to create some.</a>'),
                 [
@@ -285,7 +293,10 @@ class DefaultController extends AdminBaseController
                 'name' => $cronConfig->getReadableName() ?? $cronModule->getServiceId(),
                 'lastStartedAt' => $cronModule->getLastStartedAt(),
                 'lastFinishedAt' => $cronModule->getLastFinishedAt(),
-                'lastDuration' => is_int($cronModule->getLastDuration()) ? date('i:s', $cronModule->getLastDuration()) : '',
+                'lastDuration' => is_int($cronModule->getLastDuration()) ? date(
+                    'i:s',
+                    $cronModule->getLastDuration()
+                ) : '',
                 'status' => $cronModule->getStatus(),
                 'enabled' => $cronModule->isEnabled(),
                 'readableFrequency' => $cronConfig->getReadableFrequency(),
@@ -302,11 +313,15 @@ class DefaultController extends AdminBaseController
         $cronListGrid->addColumn('readableFrequency', 'readableFrequency', t('Frequency'), false);
         $cronListGrid->addColumn('lastStartedAt', 'lastStartedAt', t('Last started at'), false);
         $cronListGrid->addColumn('lastFinishedAt', 'lastFinishedAt', t('Last finished at'), false);
-        $cronListGrid->addColumn('lastDuration', 'lastDuration', t('Last duration (mm:ss)'), false)->setClassAttribute('table-col table-col-10');
+        $cronListGrid->addColumn('lastDuration', 'lastDuration', t('Last duration (mm:ss)'), false)->setClassAttribute(
+            'table-col table-col-10'
+        );
         $cronListGrid->addColumn('status', 'status', t('Status'), false)->setClassAttribute('table-col table-col-10');
 
         if ($this->isGranted(Roles::ROLE_SUPER_ADMIN)) {
-            $cronListGrid->addColumn('actions', 'actions', t('Modifications'))->setClassAttribute('table-grid__cell--actions column--superadmin');
+            $cronListGrid->addColumn('actions', 'actions', t('Modifications'))->setClassAttribute(
+                'table-grid__cell--actions column--superadmin'
+            );
         }
 
         $cronListGrid->setTheme('@ShopsysFramework/Admin/Content/Default/cronListGrid.html.twig');

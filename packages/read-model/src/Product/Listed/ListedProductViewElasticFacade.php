@@ -183,7 +183,13 @@ class ListedProductViewElasticFacade implements ListedProductViewFacadeInterface
      */
     public function getFilteredPaginatedInCategory(int $categoryId, ProductFilterData $filterData, string $orderingModeId, int $page, int $limit): PaginationResult
     {
-        $paginationResult = $this->productOnCurrentDomainFacade->getPaginatedProductsInCategory($filterData, $orderingModeId, $page, $limit, $categoryId);
+        $paginationResult = $this->productOnCurrentDomainFacade->getPaginatedProductsInCategory(
+            $filterData,
+            $orderingModeId,
+            $page,
+            $limit,
+            $categoryId
+        );
 
         return $this->createPaginationResultWithArray($paginationResult);
     }
@@ -198,7 +204,13 @@ class ListedProductViewElasticFacade implements ListedProductViewFacadeInterface
      */
     public function getFilteredPaginatedForSearch(string $searchText, ProductFilterData $filterData, string $orderingModeId, int $page, int $limit): PaginationResult
     {
-        $paginationResult = $this->productOnCurrentDomainFacade->getPaginatedProductsForSearch($searchText, $filterData, $orderingModeId, $page, $limit);
+        $paginationResult = $this->productOnCurrentDomainFacade->getPaginatedProductsForSearch(
+            $searchText,
+            $filterData,
+            $orderingModeId,
+            $page,
+            $limit
+        );
 
         return $this->createPaginationResultWithArray($paginationResult);
     }
@@ -212,7 +224,12 @@ class ListedProductViewElasticFacade implements ListedProductViewFacadeInterface
      */
     public function getPaginatedForBrand(int $brandId, string $orderingModeId, int $page, int $limit): PaginationResult
     {
-        $paginationResult = $this->productOnCurrentDomainFacade->getPaginatedProductsForBrand($orderingModeId, $page, $limit, $brandId);
+        $paginationResult = $this->productOnCurrentDomainFacade->getPaginatedProductsForBrand(
+            $orderingModeId,
+            $page,
+            $limit,
+            $brandId
+        );
 
         return $this->createPaginationResultWithArray($paginationResult);
     }
@@ -237,7 +254,10 @@ class ListedProductViewElasticFacade implements ListedProductViewFacadeInterface
      */
     protected function createFromArray(array $productsArray): array
     {
-        $imageViews = $this->imageViewFacade->getMainImagesByEntityIds(Product::class, array_column($productsArray, 'id'));
+        $imageViews = $this->imageViewFacade->getMainImagesByEntityIds(
+            Product::class,
+            array_column($productsArray, 'id')
+        );
 
         $listedProductViews = [];
         foreach ($productsArray as $productArray) {
@@ -290,12 +310,25 @@ class ListedProductViewElasticFacade implements ListedProductViewFacadeInterface
      */
     public function setProductActionViewFactory(ProductActionViewFactory $productActionViewFactory): void
     {
-        if ($this->productActionViewFactory !== null && $this->productActionViewFactory !== $productActionViewFactory) {
-            throw new BadMethodCallException(sprintf('Method "%s" has been already called and cannot be called multiple times.', __METHOD__));
+        if (
+            $this->productActionViewFactory !== null
+            && $this->productActionViewFactory !== $productActionViewFactory
+        ) {
+            throw new BadMethodCallException(
+                sprintf('Method "%s" has been already called and cannot be called multiple times.', __METHOD__)
+            );
         }
-        if ($this->productActionViewFactory === null) {
-            @trigger_error(sprintf('The %s() method is deprecated and will be removed in the next major. Use the constructor injection instead.', __METHOD__), E_USER_DEPRECATED);
-            $this->productActionViewFactory = $productActionViewFactory;
+        if ($this->productActionViewFactory !== null) {
+            return;
         }
+
+        @trigger_error(
+            sprintf(
+                'The %s() method is deprecated and will be removed in the next major. Use the constructor injection instead.',
+                __METHOD__
+            ),
+            E_USER_DEPRECATED
+        );
+        $this->productActionViewFactory = $productActionViewFactory;
     }
 }

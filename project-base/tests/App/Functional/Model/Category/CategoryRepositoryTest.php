@@ -67,7 +67,10 @@ class CategoryRepositoryTest extends TransactionFunctionalTestCase
 
         $this->categoryVisibilityRepository->refreshCategoriesVisibility();
 
-        $categoriesWithVisibleChildren = $this->categoryRepository->getCategoriesWithVisibleChildren([$parentCategory], self::FIRST_DOMAIN_ID);
+        $categoriesWithVisibleChildren = $this->categoryRepository->getCategoriesWithVisibleChildren(
+            [$parentCategory],
+            self::FIRST_DOMAIN_ID
+        );
         $this->assertCount(0, $categoriesWithVisibleChildren);
     }
 
@@ -91,7 +94,10 @@ class CategoryRepositoryTest extends TransactionFunctionalTestCase
 
         $this->categoryVisibilityRepository->refreshCategoriesVisibility();
 
-        $categoriesWithVisibleChildren = $this->categoryRepository->getCategoriesWithVisibleChildren([$parentCategory], self::FIRST_DOMAIN_ID);
+        $categoriesWithVisibleChildren = $this->categoryRepository->getCategoriesWithVisibleChildren(
+            [$parentCategory],
+            self::FIRST_DOMAIN_ID
+        );
         $this->assertCount(1, $categoriesWithVisibleChildren);
     }
 }

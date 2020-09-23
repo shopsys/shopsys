@@ -23,8 +23,26 @@ class OrderTest extends TestCase
         $paymentPrice = Price::zero();
 
         $order = new Order($orderData, 'orderNumber', 'urlHash', null);
-        $orderProduct = new OrderItem($order, 'productName', $paymentPrice, '0', 1, OrderItem::TYPE_PRODUCT, null, null);
-        $orderPayment = new OrderItem($order, 'paymentName', $paymentPrice, '0', 1, OrderItem::TYPE_PAYMENT, null, null);
+        $orderProduct = new OrderItem(
+            $order,
+            'productName',
+            $paymentPrice,
+            '0',
+            1,
+            OrderItem::TYPE_PRODUCT,
+            null,
+            null
+        );
+        $orderPayment = new OrderItem(
+            $order,
+            'paymentName',
+            $paymentPrice,
+            '0',
+            1,
+            OrderItem::TYPE_PAYMENT,
+            null,
+            null
+        );
         $orderPayment->setPayment($payment);
         $order->addItem($orderProduct);
         $order->addItem($orderPayment);
@@ -42,8 +60,26 @@ class OrderTest extends TestCase
         $orderData = new OrderData();
 
         $order = new Order($orderData, 'orderNumber', 'urlHash', null);
-        $productItem = new OrderItem($order, 'productName', $paymentItemPrice, '0', 1, OrderItem::TYPE_PRODUCT, null, null);
-        $paymentItem = new OrderItem($order, 'paymentName', $paymentItemPrice, '0', 1, OrderItem::TYPE_PAYMENT, null, null);
+        $productItem = new OrderItem(
+            $order,
+            'productName',
+            $paymentItemPrice,
+            '0',
+            1,
+            OrderItem::TYPE_PRODUCT,
+            null,
+            null
+        );
+        $paymentItem = new OrderItem(
+            $order,
+            'paymentName',
+            $paymentItemPrice,
+            '0',
+            1,
+            OrderItem::TYPE_PAYMENT,
+            null,
+            null
+        );
         $paymentItem->setPayment($payment);
         $order->addItem($productItem);
         $order->addItem($paymentItem);
@@ -149,14 +185,16 @@ class OrderTest extends TestCase
     {
         $diffInSeconds = $expected->getTimestamp() - $actual->getTimestamp();
 
-        if (abs($diffInSeconds) > $deltaInSeconds) {
-            $message = sprintf(
-                'Failed asserting that %s is close to %s (delta: %d seconds)',
-                $expected->format(DateTime::ISO8601),
-                $actual->format(DateTime::ISO8601),
-                $deltaInSeconds
-            );
-            $this->fail($message);
+        if (abs($diffInSeconds) <= $deltaInSeconds) {
+            return;
         }
+
+        $message = sprintf(
+            'Failed asserting that %s is close to %s (delta: %d seconds)',
+            $expected->format(DateTime::ISO8601),
+            $actual->format(DateTime::ISO8601),
+            $deltaInSeconds
+        );
+        $this->fail($message);
     }
 }

@@ -3,7 +3,9 @@
 namespace Shopsys\FrameworkBundle\Form\Transformers;
 
 use Shopsys\FrameworkBundle\Model\Category\CategoryRepository;
+use Shopsys\FrameworkBundle\Model\Category\Exception\CategoryNotFoundException;
 use Symfony\Component\Form\DataTransformerInterface;
+use Symfony\Component\Form\Exception\TransformationFailedException;
 
 class CategoriesIdsToCategoriesTransformer implements DataTransformerInterface
 {
@@ -49,8 +51,8 @@ class CategoriesIdsToCategoriesTransformer implements DataTransformerInterface
             foreach ($categoriesIds as $categoryId) {
                 try {
                     $categories[] = $this->categoryRepository->getById($categoryId);
-                } catch (\Shopsys\FrameworkBundle\Model\Category\Exception\CategoryNotFoundException $e) {
-                    throw new \Symfony\Component\Form\Exception\TransformationFailedException('Category not found', 0, $e);
+                } catch (CategoryNotFoundException $e) {
+                    throw new TransformationFailedException('Category not found', 0, $e);
                 }
             }
         }

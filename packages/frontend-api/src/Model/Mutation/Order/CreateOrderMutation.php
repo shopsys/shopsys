@@ -9,6 +9,7 @@ use Overblog\GraphQLBundle\Definition\Argument;
 use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
 use Overblog\GraphQLBundle\Definition\Resolver\MutationInterface;
 use Overblog\GraphQLBundle\Validator\InputValidator;
+use Shopsys\FrameworkBundle\Model\Mail\Exception\MailException;
 use Shopsys\FrameworkBundle\Model\Order\Mail\OrderMailFacade;
 use Shopsys\FrameworkBundle\Model\Order\Order;
 use Shopsys\FrontendApiBundle\Model\Order\OrderDataFactory;
@@ -66,7 +67,7 @@ class CreateOrderMutation implements MutationInterface, AliasedInterface
 
         try {
             $this->sendEmail($order);
-        } catch (\Shopsys\FrameworkBundle\Model\Mail\Exception\MailException $e) {
+        } catch (MailException $e) {
             throw new UserError('Unable to send some emails, please contact us for order verification.');
         }
 
@@ -88,7 +89,10 @@ class CreateOrderMutation implements MutationInterface, AliasedInterface
      */
     protected function sendEmail(Order $order)
     {
-        $mailTemplate = $this->orderMailFacade->getMailTemplateByStatusAndDomainId($order->getStatus(), $order->getDomainId());
+        $mailTemplate = $this->orderMailFacade->getMailTemplateByStatusAndDomainId(
+            $order->getStatus(),
+            $order->getDomainId()
+        );
         if ($mailTemplate->isSendMail()) {
             $this->orderMailFacade->sendEmail($order);
         }

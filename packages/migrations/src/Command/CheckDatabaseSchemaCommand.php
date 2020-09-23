@@ -48,19 +48,18 @@ class CheckDatabaseSchemaCommand extends AbstractCommand
         $filteredSchemaDiffSqlCommands = $this->databaseSchemaFacade->getFilteredSchemaDiffSqlCommands();
         if (count($filteredSchemaDiffSqlCommands) === 0) {
             $output->writeln('<info>Database schema is satisfying ORM.</info>');
-        } else {
-            $output->writeln('<error>Database schema is not satisfying ORM!</error>');
-            $output->writeln('<error>Following SQL commands should fix the problem (revise them before!):</error>');
-            $output->writeln('');
-            foreach ($filteredSchemaDiffSqlCommands as $sqlCommand) {
-                $output->writeln('<fg=red>' . $sqlCommand . ';</fg=red>');
-            }
-            $output->writeln('<info>TIP: you can use shopsys:migrations:generate</info>');
-            $output->writeln('');
-
-            return self::RETURN_CODE_ERROR;
+            return self::RETURN_CODE_OK;
         }
 
-        return self::RETURN_CODE_OK;
+        $output->writeln('<error>Database schema is not satisfying ORM!</error>');
+        $output->writeln('<error>Following SQL commands should fix the problem (revise them before!):</error>');
+        $output->writeln('');
+        foreach ($filteredSchemaDiffSqlCommands as $sqlCommand) {
+            $output->writeln('<fg=red>' . $sqlCommand . ';</fg=red>');
+        }
+        $output->writeln('<info>TIP: you can use shopsys:migrations:generate</info>');
+        $output->writeln('');
+
+        return self::RETURN_CODE_ERROR;
     }
 }

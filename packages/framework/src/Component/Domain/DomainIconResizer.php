@@ -2,7 +2,9 @@
 
 namespace Shopsys\FrameworkBundle\Component\Domain;
 
+use Exception;
 use League\Flysystem\FilesystemInterface;
+use Shopsys\FrameworkBundle\Component\FileUpload\Exception\MoveToFolderFailedException;
 use Shopsys\FrameworkBundle\Component\Image\Processing\ImageProcessor;
 use Symfony\Bridge\Monolog\Logger;
 
@@ -61,9 +63,9 @@ class DomainIconResizer
 
         try {
             $this->filesystem->put($targetFilePath, $resizedImage);
-        } catch (\Exception $ex) {
+        } catch (Exception $ex) {
             $message = 'Move file from temporary directory to domain directory failed';
-            $moveToFolderFailedException = new \Shopsys\FrameworkBundle\Component\FileUpload\Exception\MoveToFolderFailedException(
+            $moveToFolderFailedException = new MoveToFolderFailedException(
                 $message,
                 $ex
             );

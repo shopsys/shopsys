@@ -19,7 +19,6 @@ class AvailabilityTranslation extends AbstractTranslation
 
     /**
      * @var string
-     *
      * @ORM\Column(type="string", length=100)
      */
     protected $name;

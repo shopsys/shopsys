@@ -39,14 +39,11 @@ class CustomerUserIdentifierFactory
             $cartIdentifier = $this->session->getId();
         }
 
-        $customerUserIdentifier = new CustomerUserIdentifier($cartIdentifier, $this->currentCustomerUser->findCurrentCustomerUser());
-
-        return $customerUserIdentifier;
+        return new CustomerUserIdentifier($cartIdentifier, $this->currentCustomerUser->findCurrentCustomerUser());
     }
 
     /**
      * @param string $cartIdentifier
-     *
      * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifier
      */
     public function getOnlyWithCartIdentifier($cartIdentifier)

@@ -25,7 +25,12 @@ class ProductAdvancedSearchPage extends AbstractPage
         $this->tester->waitForAjax();
         $this->tester->fillFieldByCss('.js-advanced-search-rule-value input', $value);
 
-        $this->tester->clickByTranslationAdmin('Search [verb]', 'messages', [], WebDriverBy::cssSelector('#js-advanced-search-rules-box'));
+        $this->tester->clickByTranslationAdmin(
+            'Search [verb]',
+            'messages',
+            [],
+            WebDriverBy::cssSelector('#js-advanced-search-rules-box')
+        );
     }
 
     /**

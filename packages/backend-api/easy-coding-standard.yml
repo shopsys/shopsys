@@ -21,3 +21,4 @@ parameters:
             - '*/tests/*'
         ObjectCalisthenics\Sniffs\Files\FunctionLengthSniff:
             - '*/src/Controller/**/*Validator.php'
+            - '*/install/tests/App/Smoke/BackendApiCreateProductTest.php'

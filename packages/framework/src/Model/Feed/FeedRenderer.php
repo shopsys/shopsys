@@ -3,6 +3,7 @@
 namespace Shopsys\FrameworkBundle\Model\Feed;
 
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
+use Shopsys\FrameworkBundle\Model\Feed\Exception\TemplateBlockNotFoundException;
 use Twig\Environment;
 use Twig\TemplateWrapper;
 
@@ -64,7 +65,7 @@ class FeedRenderer
     protected function getRenderedBlock(string $name, array $parameters): string
     {
         if (!$this->template->hasBlock($name)) {
-            throw new \Shopsys\FrameworkBundle\Model\Feed\Exception\TemplateBlockNotFoundException($name, $this->template->getTemplateName());
+            throw new TemplateBlockNotFoundException($name, $this->template->getTemplateName());
         }
 
         $templateParameters = $this->twig->mergeGlobals($parameters);

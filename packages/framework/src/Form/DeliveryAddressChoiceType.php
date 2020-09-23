@@ -63,7 +63,7 @@ class DeliveryAddressChoiceType extends AbstractType
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getParent()
     {

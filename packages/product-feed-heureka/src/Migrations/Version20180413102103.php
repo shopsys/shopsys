@@ -17,11 +17,13 @@ class Version20180413102103 extends AbstractMigration
             'SELECT COUNT(*) > 0 FROM information_schema.tables WHERE table_name=\'plugin_data_values\''
         )->fetchColumn();
 
-        if ($oldTableExists) {
-            $this->migrateProducts();
-            $this->migrateHeurekaCategories();
-            $this->migrateHeurekaCategoryToCategoryLinks();
+        if (!$oldTableExists) {
+            return;
         }
+
+        $this->migrateProducts();
+        $this->migrateHeurekaCategories();
+        $this->migrateHeurekaCategoryToCategoryLinks();
     }
 
     /**
@@ -92,16 +94,18 @@ class Version20180413102103 extends AbstractMigration
         )->fetchAll(PDO::FETCH_ASSOC);
         foreach ($rows as $row) {
             $jsonData = json_decode($row['json_value'], true);
-            if (array_key_exists('heureka_category', $jsonData)) {
-                $this->sql(
-                    'INSERT INTO heureka_category_categories (heureka_category_id, category_id)
-                        VALUES (:heureka_category_id, :category_id)',
-                    [
-                        'heureka_category_id' => $jsonData['heureka_category'],
-                        'category_id' => $row['key'],
-                    ]
-                );
+            if (!array_key_exists('heureka_category', $jsonData)) {
+                continue;
             }
+
+            $this->sql(
+                'INSERT INTO heureka_category_categories (heureka_category_id, category_id)
+                    VALUES (:heureka_category_id, :category_id)',
+                [
+                    'heureka_category_id' => $jsonData['heureka_category'],
+                    'category_id' => $row['key'],
+                ]
+            );
         }
     }
 }

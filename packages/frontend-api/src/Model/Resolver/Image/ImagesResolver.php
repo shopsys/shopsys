@@ -8,6 +8,8 @@ use BadMethodCallException;
 use Overblog\GraphQLBundle\Definition\Resolver\ResolverInterface;
 use Overblog\GraphQLBundle\Error\UserError;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\Image\Config\Exception\ImageSizeNotFoundException;
+use Shopsys\FrameworkBundle\Component\Image\Config\Exception\ImageTypeNotFoundException;
 use Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig;
 use Shopsys\FrameworkBundle\Component\Image\Config\ImageEntityConfig;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
@@ -75,17 +77,19 @@ class ImagesResolver implements ResolverInterface
                 __METHOD__
             ));
         }
-        if ($this->frontendApiImageFacade === null) {
-            @trigger_error(
-                sprintf(
-                    'The %s() method is deprecated and will be removed in the next major. Use the constructor injection instead.',
-                    __METHOD__
-                ),
-                E_USER_DEPRECATED
-            );
-
-            $this->frontendApiImageFacade = $frontendApiImageFacade;
+        if ($this->frontendApiImageFacade !== null) {
+            return;
         }
+
+        @trigger_error(
+            sprintf(
+                'The %s() method is deprecated and will be removed in the next major. Use the constructor injection instead.',
+                __METHOD__
+            ),
+            E_USER_DEPRECATED
+        );
+
+        $this->frontendApiImageFacade = $frontendApiImageFacade;
     }
 
     /**
@@ -176,9 +180,9 @@ class ImagesResolver implements ResolverInterface
                     $sizeConfigs = [$imageConfig->getSizeConfigByType($type, $size)];
                 }
             }
-        } catch (\Shopsys\FrameworkBundle\Component\Image\Config\Exception\ImageSizeNotFoundException $e) {
+        } catch (ImageSizeNotFoundException $e) {
             throw new UserError(sprintf('Image size %s not found for %s', $size, $entityName));
-        } catch (\Shopsys\FrameworkBundle\Component\Image\Config\Exception\ImageTypeNotFoundException $e) {
+        } catch (ImageTypeNotFoundException $e) {
             throw new UserError(sprintf('Image type %s not found for %s', $type, $entityName));
         }
 
@@ -202,7 +206,12 @@ class ImagesResolver implements ResolverInterface
                     'width' => $sizeConfig->getWidth(),
                     'height' => $sizeConfig->getHeight(),
                     'size' => $sizeConfig->getName() === null ? ImageConfig::DEFAULT_SIZE_NAME : $sizeConfig->getName(),
-                    'url' => $this->imageFacade->getImageUrl($this->domain->getCurrentDomainConfig(), $image, $sizeConfig->getName(), $image->getType()),
+                    'url' => $this->imageFacade->getImageUrl(
+                        $this->domain->getCurrentDomainConfig(),
+                        $image,
+                        $sizeConfig->getName(),
+                        $image->getType()
+                    ),
                 ];
             }
         }

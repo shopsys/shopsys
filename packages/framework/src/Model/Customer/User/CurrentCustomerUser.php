@@ -46,9 +46,8 @@ class CurrentCustomerUser
         $customerUser = $this->findCurrentCustomerUser();
         if ($customerUser === null) {
             return $this->pricingGroupSettingFacade->getDefaultPricingGroupByCurrentDomain();
-        } else {
-            return $customerUser->getPricingGroup();
         }
+        return $customerUser->getPricingGroup();
     }
 
     /**
@@ -64,7 +63,10 @@ class CurrentCustomerUser
 
         $user = $token->getUser();
 
-        if (class_exists('\Shopsys\FrontendApiBundle\Model\User\FrontendApiUser') && $user instanceof FrontendApiUser) {
+        if (
+            class_exists('\Shopsys\FrontendApiBundle\Model\User\FrontendApiUser')
+            && $user instanceof FrontendApiUser
+        ) {
             return $this->customerUserFacade->getByUuid($user->getUuid());
         }
 

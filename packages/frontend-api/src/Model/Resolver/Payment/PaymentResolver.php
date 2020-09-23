@@ -9,6 +9,7 @@ use Overblog\GraphQLBundle\Definition\Resolver\ResolverInterface;
 use Overblog\GraphQLBundle\Error\UserError;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Model\Payment\Exception\PaymentNotFoundException;
 use Shopsys\FrameworkBundle\Model\Payment\Payment;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentFacade;
 
@@ -46,7 +47,7 @@ class PaymentResolver implements ResolverInterface, AliasedInterface
 
         try {
             return $this->paymentFacade->getByUuid($uuid);
-        } catch (\Shopsys\FrameworkBundle\Model\Payment\Exception\PaymentNotFoundException $paymentNotFoundException) {
+        } catch (PaymentNotFoundException $paymentNotFoundException) {
             throw new UserError($paymentNotFoundException->getMessage());
         }
     }

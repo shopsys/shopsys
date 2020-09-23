@@ -210,15 +210,17 @@ class ProductController extends FrontBaseController
             'category' => $category,
             'filterForm' => $filterForm->createView(),
             'filterFormSubmitted' => $filterForm->isSubmitted(),
-            'visibleChildren' => $this->categoryFacade->getAllVisibleChildrenByCategoryAndDomainId($category, $this->domain->getId()),
+            'visibleChildren' => $this->categoryFacade->getAllVisibleChildrenByCategoryAndDomainId(
+                $category,
+                $this->domain->getId()
+            ),
             'priceRange' => $productFilterConfig->getPriceRange(),
         ];
 
         if ($request->isXmlHttpRequest()) {
             return $this->render('Front/Content/Product/ajaxList.html.twig', $viewParameters);
-        } else {
-            return $this->render('Front/Content/Product/list.html.twig', $viewParameters);
         }
+        return $this->render('Front/Content/Product/list.html.twig', $viewParameters);
     }
 
     /**
@@ -253,9 +255,8 @@ class ProductController extends FrontBaseController
 
         if ($request->isXmlHttpRequest()) {
             return $this->render('Front/Content/Product/ajaxListByBrand.html.twig', $viewParameters);
-        } else {
-            return $this->render('Front/Content/Product/listByBrand.html.twig', $viewParameters);
         }
+        return $this->render('Front/Content/Product/listByBrand.html.twig', $viewParameters);
     }
 
     /**
@@ -312,10 +313,9 @@ class ProductController extends FrontBaseController
 
         if ($request->isXmlHttpRequest()) {
             return $this->render('Front/Content/Product/ajaxSearch.html.twig', $viewParameters);
-        } else {
-            $viewParameters['foundCategories'] = $this->searchCategories($searchText);
-            return $this->render('Front/Content/Product/search.html.twig', $viewParameters);
         }
+        $viewParameters['foundCategories'] = $this->searchCategories($searchText);
+        return $this->render('Front/Content/Product/search.html.twig', $viewParameters);
     }
 
     /**

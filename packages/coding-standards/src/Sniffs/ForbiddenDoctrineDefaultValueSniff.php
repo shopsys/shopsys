@@ -7,6 +7,8 @@ namespace Shopsys\CodingStandards\Sniffs;
 use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Sniffs\Sniff;
 use SlevomatCodingStandard\Helpers\TokenHelper;
+use const T_CLASS;
+use const T_DOC_COMMENT_OPEN_TAG;
 
 class ForbiddenDoctrineDefaultValueSniff implements Sniff
 {
@@ -15,7 +17,7 @@ class ForbiddenDoctrineDefaultValueSniff implements Sniff
      */
     public function register(): array
     {
-        return [\T_CLASS];
+        return [T_CLASS];
     }
 
     /**
@@ -63,7 +65,7 @@ class ForbiddenDoctrineDefaultValueSniff implements Sniff
 
         return TokenHelper::findNextAll(
             $file,
-            [\T_DOC_COMMENT_OPEN_TAG],
+            [T_DOC_COMMENT_OPEN_TAG],
             $classToken['scope_opener'],
             $classToken['scope_closer']
         );

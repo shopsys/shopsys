@@ -78,25 +78,25 @@ class EntityNameResolverTest extends TestCase
         unset($resolveDataProvider['not replacing in DQL']);
 
         return $resolveDataProvider + [
-                'replacing in DQL' => [
-                    'map' => ['Shopsys\FrameworkBundle\Model\Entity' => 'App\Model\MyEntity'],
-                    'value' => 'SELECT * FROM Shopsys\FrameworkBundle\Model\Entity',
-                    'expected' => 'SELECT * FROM App\Model\MyEntity',
+            'replacing in DQL' => [
+                'map' => ['Shopsys\FrameworkBundle\Model\Entity' => 'App\Model\MyEntity'],
+                'value' => 'SELECT * FROM Shopsys\FrameworkBundle\Model\Entity',
+                'expected' => 'SELECT * FROM App\Model\MyEntity',
+            ],
+            'replacing multiple occurrences of the same entity name' => [
+                'map' => ['Shopsys\FrameworkBundle\Model\Entity' => 'App\Model\MyEntity'],
+                'value' => 'SELECT * FROM Shopsys\FrameworkBundle\Model\Entity JOIN Shopsys\FrameworkBundle\Model\Entity',
+                'expected' => 'SELECT * FROM App\Model\MyEntity JOIN App\Model\MyEntity',
+            ],
+            'replacing multiple entity names' => [
+                'map' => [
+                    'Shopsys\FrameworkBundle\Model\Entity' => 'App\Model\MyEntity',
+                    'Shopsys\FrameworkBundle\Model\OtherEntity' => 'App\Model\MyOtherEntity',
                 ],
-                'replacing multiple occurrences of the same entity name' => [
-                    'map' => ['Shopsys\FrameworkBundle\Model\Entity' => 'App\Model\MyEntity'],
-                    'value' => 'SELECT * FROM Shopsys\FrameworkBundle\Model\Entity JOIN Shopsys\FrameworkBundle\Model\Entity',
-                    'expected' => 'SELECT * FROM App\Model\MyEntity JOIN App\Model\MyEntity',
-                ],
-                'replacing multiple entity names' => [
-                    'map' => [
-                        'Shopsys\FrameworkBundle\Model\Entity' => 'App\Model\MyEntity',
-                        'Shopsys\FrameworkBundle\Model\OtherEntity' => 'App\Model\MyOtherEntity',
-                    ],
-                    'value' => 'SELECT * FROM Shopsys\FrameworkBundle\Model\Entity JOIN Shopsys\FrameworkBundle\Model\OtherEntity',
-                    'expected' => 'SELECT * FROM App\Model\MyEntity JOIN App\Model\MyOtherEntity',
-                ],
-            ];
+                'value' => 'SELECT * FROM Shopsys\FrameworkBundle\Model\Entity JOIN Shopsys\FrameworkBundle\Model\OtherEntity',
+                'expected' => 'SELECT * FROM App\Model\MyEntity JOIN App\Model\MyOtherEntity',
+            ],
+        ];
     }
 
     /**

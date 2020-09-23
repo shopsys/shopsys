@@ -3,6 +3,7 @@
 namespace Shopsys\FrameworkBundle\Component\DataFixture;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Shopsys\FrameworkBundle\Component\DataFixture\Exception\PersistentReferenceNotFoundException;
 
 class PersistentReferenceRepository
 {
@@ -44,7 +45,7 @@ class PersistentReferenceRepository
     {
         $reference = $this->findByReferenceName($referenceName);
         if ($reference === null) {
-            throw new \Shopsys\FrameworkBundle\Component\DataFixture\Exception\PersistentReferenceNotFoundException($referenceName);
+            throw new PersistentReferenceNotFoundException($referenceName);
         }
         return $reference;
     }

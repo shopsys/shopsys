@@ -3,6 +3,8 @@
 namespace Shopsys\FrameworkBundle\Model\Heureka;
 
 use Exception;
+use Heureka\ShopCertification;
+use Shopsys\FrameworkBundle\Model\Heureka\Exception\LocaleNotSupportedException;
 use Shopsys\FrameworkBundle\Model\Order\Order;
 use Symfony\Bridge\Monolog\Logger;
 
@@ -54,9 +56,9 @@ class HeurekaFacade
         try {
             $heurekaShopCertification = $this->heurekaShopCertificationFactory->create($order);
             $heurekaShopCertification->logOrder();
-        } catch (\Shopsys\FrameworkBundle\Model\Heureka\Exception\LocaleNotSupportedException $ex) {
+        } catch (LocaleNotSupportedException $ex) {
             $this->logError($ex, $order);
-        } catch (\Heureka\ShopCertification\Exception $ex) {
+        } catch (ShopCertification\Exception $ex) {
             $this->logError($ex, $order);
         }
     }
@@ -103,7 +105,9 @@ class HeurekaFacade
      */
     protected function logError(Exception $ex, Order $order)
     {
-        $message = 'Sending order (ID = "' . $order->getId() . '") to Heureka failed - ' . get_class($ex) . ': ' . $ex->getMessage();
+        $message = 'Sending order (ID = "' . $order->getId() . '") to Heureka failed - ' . get_class(
+            $ex
+        ) . ': ' . $ex->getMessage();
         $this->logger->error($message, ['exceptionFullInfo' => (string)$ex]);
     }
 }

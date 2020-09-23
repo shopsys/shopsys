@@ -60,7 +60,9 @@ class OrderLastNameFilter implements AdvancedSearchFilterInterface
             }
             $dqlOperator = $this->getContainsDqlOperator($ruleData->operator);
             $parameterName = 'lastName_' . $index;
-            $queryBuilder->andWhere('NORMALIZE(o.lastName) ' . $dqlOperator . ' NORMALIZE(:' . $parameterName . ') OR NORMALIZE(o.deliveryLastName) ' . $dqlOperator . ' NORMALIZE(:' . $parameterName . ')');
+            $queryBuilder->andWhere(
+                'NORMALIZE(o.lastName) ' . $dqlOperator . ' NORMALIZE(:' . $parameterName . ') OR NORMALIZE(o.deliveryLastName) ' . $dqlOperator . ' NORMALIZE(:' . $parameterName . ')'
+            );
             $queryBuilder->setParameter($parameterName, $searchValue);
         }
     }

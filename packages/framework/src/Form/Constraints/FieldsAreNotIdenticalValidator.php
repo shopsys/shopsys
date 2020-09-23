@@ -5,6 +5,7 @@ namespace Shopsys\FrameworkBundle\Form\Constraints;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
+use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
 class FieldsAreNotIdenticalValidator extends ConstraintValidator
 {
@@ -15,7 +16,7 @@ class FieldsAreNotIdenticalValidator extends ConstraintValidator
     public function validate($values, Constraint $constraint)
     {
         if (!$constraint instanceof FieldsAreNotIdentical) {
-            throw new \Symfony\Component\Validator\Exception\UnexpectedTypeException($constraint, FieldsAreNotIdentical::class);
+            throw new UnexpectedTypeException($constraint, FieldsAreNotIdentical::class);
         }
 
         $propertyAccessor = PropertyAccess::createPropertyAccessor();

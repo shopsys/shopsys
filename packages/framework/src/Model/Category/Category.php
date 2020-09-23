@@ -14,14 +14,12 @@ use Shopsys\FrameworkBundle\Model\Localization\AbstractTranslatableEntity;
  * @Gedmo\Tree(type="nested")
  * @ORM\Table(name="categories")
  * @ORM\Entity
- *
  * @method \Shopsys\FrameworkBundle\Model\Category\CategoryTranslation translation(?string $locale = null)
  */
 class Category extends AbstractTranslatableEntity
 {
     /**
      * @var int
-     *
      * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
@@ -30,21 +28,18 @@ class Category extends AbstractTranslatableEntity
 
     /**
      * @var string
-     *
      * @ORM\Column(type="guid", unique=true)
      */
     protected $uuid;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Category\CategoryTranslation[]|\Doctrine\Common\Collections\Collection
-     *
      * @Prezent\Translations(targetEntity="Shopsys\FrameworkBundle\Model\Category\CategoryTranslation")
      */
     protected $translations;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Category\Category|null
-     *
      * @Gedmo\TreeParent
      * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Category\Category", inversedBy="children")
      * @ORM\JoinColumn(nullable=true, name="parent_id", referencedColumnName="id")
@@ -53,7 +48,6 @@ class Category extends AbstractTranslatableEntity
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Category\Category[]|\Doctrine\Common\Collections\Collection
-     *
      * @ORM\OneToMany(targetEntity="Shopsys\FrameworkBundle\Model\Category\Category", mappedBy="parent")
      * @ORM\OrderBy({"lft" = "ASC"})
      */
@@ -61,7 +55,6 @@ class Category extends AbstractTranslatableEntity
 
     /**
      * @var int
-     *
      * @Gedmo\TreeLevel
      * @ORM\Column(type="integer")
      */
@@ -69,7 +62,6 @@ class Category extends AbstractTranslatableEntity
 
     /**
      * @var int
-     *
      * @Gedmo\TreeLeft
      * @ORM\Column(type="integer")
      */
@@ -77,7 +69,6 @@ class Category extends AbstractTranslatableEntity
 
     /**
      * @var int
-     *
      * @Gedmo\TreeRight
      * @ORM\Column(type="integer")
      */
@@ -85,7 +76,6 @@ class Category extends AbstractTranslatableEntity
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Category\CategoryDomain[]|\Doctrine\Common\Collections\Collection
-     *
      * @ORM\OneToMany(targetEntity="Shopsys\FrameworkBundle\Model\Category\CategoryDomain", mappedBy="category", cascade={"persist"}, fetch="EXTRA_LAZY")
      */
     protected $domains;

@@ -10,7 +10,7 @@ use Symplify\EasyCodingStandardTester\Testing\AbstractCheckerTestCase;
 /**
  * @covers \Shopsys\CodingStandards\CsFixer\Phpdoc\MissingParamAnnotationsFixer
  */
-final class MissingParamAnnotationsFixer extends AbstractCheckerTestCase
+final class MissingParamAnnotationsFixerTest extends AbstractCheckerTestCase
 {
     /**
      * @dataProvider provideWrongToFixedFiles()

@@ -28,10 +28,10 @@ class MailTemplateVariablesTest extends TestCase
 
         $this->assertEquals(
             [
-            '{variable1}' => 'Variable 1',
-            '{variable2}' => 'Variable 2',
-            '{variable3}' => 'Variable 3',
-        ],
+                '{variable1}' => 'Variable 1',
+                '{variable2}' => 'Variable 2',
+                '{variable3}' => 'Variable 3',
+            ],
             $mailTemplateConfiguration->getLabeledVariables()
         );
     }
@@ -50,43 +50,103 @@ class MailTemplateVariablesTest extends TestCase
     {
         $mailTemplateConfiguration = new MailTemplateVariables('Template');
 
-        $mailTemplateConfiguration->addVariable('{variable1}', 'Variable', MailTemplateVariables::CONTEXT_SUBJECT, MailTemplateVariables::REQUIRED_SUBJECT);
+        $mailTemplateConfiguration->addVariable(
+            '{variable1}',
+            'Variable',
+            MailTemplateVariables::CONTEXT_SUBJECT,
+            MailTemplateVariables::REQUIRED_SUBJECT
+        );
 
         $this->assertEquals(['{variable1}'], $mailTemplateConfiguration->getRequiredSubjectVariables());
         $this->assertEquals([], $mailTemplateConfiguration->getRequiredBodyVariables());
 
         $this->expectException(InvalidMailTemplateVariablesConfigurationException::class);
-        $mailTemplateConfiguration->addVariable('{variable2}', 'Variable', MailTemplateVariables::CONTEXT_SUBJECT, MailTemplateVariables::REQUIRED_BODY);
-        $mailTemplateConfiguration->addVariable('{variable3}', 'Variable', MailTemplateVariables::CONTEXT_SUBJECT, MailTemplateVariables::REQUIRED_BOTH);
-        $mailTemplateConfiguration->addVariable('{variable4}', 'Variable', MailTemplateVariables::CONTEXT_SUBJECT, self::INVALID_VALUE);
+        $mailTemplateConfiguration->addVariable(
+            '{variable2}',
+            'Variable',
+            MailTemplateVariables::CONTEXT_SUBJECT,
+            MailTemplateVariables::REQUIRED_BODY
+        );
+        $mailTemplateConfiguration->addVariable(
+            '{variable3}',
+            'Variable',
+            MailTemplateVariables::CONTEXT_SUBJECT,
+            MailTemplateVariables::REQUIRED_BOTH
+        );
+        $mailTemplateConfiguration->addVariable(
+            '{variable4}',
+            'Variable',
+            MailTemplateVariables::CONTEXT_SUBJECT,
+            self::INVALID_VALUE
+        );
     }
 
     public function testRequiredInBody(): void
     {
         $mailTemplateConfiguration = new MailTemplateVariables('Template');
 
-        $mailTemplateConfiguration->addVariable('{variable1}', 'Variable', MailTemplateVariables::CONTEXT_BODY, MailTemplateVariables::REQUIRED_BODY);
+        $mailTemplateConfiguration->addVariable(
+            '{variable1}',
+            'Variable',
+            MailTemplateVariables::CONTEXT_BODY,
+            MailTemplateVariables::REQUIRED_BODY
+        );
         $this->assertEquals(['{variable1}'], $mailTemplateConfiguration->getRequiredBodyVariables());
         $this->assertEquals([], $mailTemplateConfiguration->getRequiredSubjectVariables());
 
         $this->expectException(InvalidMailTemplateVariablesConfigurationException::class);
-        $mailTemplateConfiguration->addVariable('{variable2}', 'Variable', MailTemplateVariables::CONTEXT_BODY, MailTemplateVariables::REQUIRED_SUBJECT);
-        $mailTemplateConfiguration->addVariable('{variable3}', 'Variable', MailTemplateVariables::CONTEXT_BODY, MailTemplateVariables::REQUIRED_BOTH);
-        $mailTemplateConfiguration->addVariable('{variable4}', 'Variable', MailTemplateVariables::CONTEXT_BODY, self::INVALID_VALUE);
+        $mailTemplateConfiguration->addVariable(
+            '{variable2}',
+            'Variable',
+            MailTemplateVariables::CONTEXT_BODY,
+            MailTemplateVariables::REQUIRED_SUBJECT
+        );
+        $mailTemplateConfiguration->addVariable(
+            '{variable3}',
+            'Variable',
+            MailTemplateVariables::CONTEXT_BODY,
+            MailTemplateVariables::REQUIRED_BOTH
+        );
+        $mailTemplateConfiguration->addVariable(
+            '{variable4}',
+            'Variable',
+            MailTemplateVariables::CONTEXT_BODY,
+            self::INVALID_VALUE
+        );
     }
 
     public function testRequiredInBoth(): void
     {
         $mailTemplateConfiguration = new MailTemplateVariables('Template');
 
-        $mailTemplateConfiguration->addVariable('{variable1}', 'Variable', MailTemplateVariables::CONTEXT_BOTH, MailTemplateVariables::REQUIRED_BOTH);
-        $mailTemplateConfiguration->addVariable('{variable2}', 'Variable', MailTemplateVariables::CONTEXT_BOTH, MailTemplateVariables::REQUIRED_BODY);
-        $mailTemplateConfiguration->addVariable('{variable3}', 'Variable', MailTemplateVariables::CONTEXT_BOTH, MailTemplateVariables::REQUIRED_SUBJECT);
+        $mailTemplateConfiguration->addVariable(
+            '{variable1}',
+            'Variable',
+            MailTemplateVariables::CONTEXT_BOTH,
+            MailTemplateVariables::REQUIRED_BOTH
+        );
+        $mailTemplateConfiguration->addVariable(
+            '{variable2}',
+            'Variable',
+            MailTemplateVariables::CONTEXT_BOTH,
+            MailTemplateVariables::REQUIRED_BODY
+        );
+        $mailTemplateConfiguration->addVariable(
+            '{variable3}',
+            'Variable',
+            MailTemplateVariables::CONTEXT_BOTH,
+            MailTemplateVariables::REQUIRED_SUBJECT
+        );
 
         $this->assertEquals(['{variable1}', '{variable2}'], $mailTemplateConfiguration->getRequiredBodyVariables());
         $this->assertEquals(['{variable1}', '{variable3}'], $mailTemplateConfiguration->getRequiredSubjectVariables());
 
         $this->expectException(InvalidMailTemplateVariablesConfigurationException::class);
-        $mailTemplateConfiguration->addVariable('{variable4}', 'Variable', MailTemplateVariables::CONTEXT_BOTH, self::INVALID_VALUE);
+        $mailTemplateConfiguration->addVariable(
+            '{variable4}',
+            'Variable',
+            MailTemplateVariables::CONTEXT_BOTH,
+            self::INVALID_VALUE
+        );
     }
 }

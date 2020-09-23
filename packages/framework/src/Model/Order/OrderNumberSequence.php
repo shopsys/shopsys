@@ -12,7 +12,6 @@ class OrderNumberSequence
 {
     /**
      * @var int
-     *
      * @ORM\Column(type="integer")
      * @ORM\Id
      */
@@ -20,7 +19,6 @@ class OrderNumberSequence
 
     /**
      * @var string
-     *
      * @ORM\Column(type="decimal", precision=10, scale=0, nullable=false)
      */
     protected $number;

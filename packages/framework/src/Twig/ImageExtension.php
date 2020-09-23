@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Twig;
 
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\Image\Exception\ImageNotFoundException;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
 use Shopsys\FrameworkBundle\Component\Image\ImageLocator;
 use Shopsys\FrameworkBundle\Component\Utils\Utils;
@@ -93,7 +94,7 @@ class ImageExtension extends AbstractExtension
     {
         try {
             $image = $this->imageFacade->getImageByObject($imageOrEntity, $type);
-        } catch (\Shopsys\FrameworkBundle\Component\Image\Exception\ImageNotFoundException $e) {
+        } catch (ImageNotFoundException $e) {
             return false;
         }
 
@@ -101,7 +102,7 @@ class ImageExtension extends AbstractExtension
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Image\Image|Object $imageOrEntity
+     * @param \Shopsys\FrameworkBundle\Component\Image\Image|object $imageOrEntity
      * @param string|null $sizeName
      * @param string|null $type
      * @return string
@@ -109,14 +110,19 @@ class ImageExtension extends AbstractExtension
     public function getImageUrl($imageOrEntity, $sizeName = null, $type = null)
     {
         try {
-            return $this->imageFacade->getImageUrl($this->domain->getCurrentDomainConfig(), $imageOrEntity, $sizeName, $type);
-        } catch (\Shopsys\FrameworkBundle\Component\Image\Exception\ImageNotFoundException $e) {
+            return $this->imageFacade->getImageUrl(
+                $this->domain->getCurrentDomainConfig(),
+                $imageOrEntity,
+                $sizeName,
+                $type
+            );
+        } catch (ImageNotFoundException $e) {
             return $this->getEmptyImageUrl();
         }
     }
 
     /**
-     * @param Object $entity
+     * @param object $entity
      * @param string|null $type
      * @return \Shopsys\FrameworkBundle\Component\Image\Image[]
      */
@@ -126,7 +132,7 @@ class ImageExtension extends AbstractExtension
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Image\Image|Object $imageOrEntity
+     * @param \Shopsys\FrameworkBundle\Component\Image\Image|object $imageOrEntity
      * @param array $attributes
      * @return string
      */
@@ -138,10 +144,15 @@ class ImageExtension extends AbstractExtension
             $image = $this->imageFacade->getImageByObject($imageOrEntity, $attributes['type']);
             $entityName = $image->getEntityName();
             $attributes['src'] = $this->getImageUrl($image, $attributes['size'], $attributes['type']);
-            $additionalImagesData = $this->imageFacade->getAdditionalImagesData($this->domain->getCurrentDomainConfig(), $image, $attributes['size'], $attributes['type']);
+            $additionalImagesData = $this->imageFacade->getAdditionalImagesData(
+                $this->domain->getCurrentDomainConfig(),
+                $image,
+                $attributes['size'],
+                $attributes['type']
+            );
 
             return $this->getImageHtmlByEntityName($attributes, $entityName, $additionalImagesData);
-        } catch (\Shopsys\FrameworkBundle\Component\Image\Exception\ImageNotFoundException $e) {
+        } catch (ImageNotFoundException $e) {
             return $this->getNoimageHtml($attributes);
         }
     }

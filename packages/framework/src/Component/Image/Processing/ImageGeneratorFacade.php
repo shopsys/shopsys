@@ -49,7 +49,7 @@ class ImageGeneratorFacade
     /**
      * @param \Shopsys\FrameworkBundle\Component\Image\Image $image
      * @param string $entityName
-     * @param null|string $type
+     * @param string|null $type
      */
     protected function checkEntityNameAndType(Image $image, string $entityName, ?string $type): void
     {

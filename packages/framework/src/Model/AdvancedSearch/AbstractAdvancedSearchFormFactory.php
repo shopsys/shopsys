@@ -80,7 +80,7 @@ abstract class AbstractAdvancedSearchFormFactory
      */
     protected function createRuleFormBuilder($name, AdvancedSearchFilterInterface $ruleFilter)
     {
-        $filterFormBuilder = $this->formFactory->createNamedBuilder($name, FormType::class, null, [
+        return $this->formFactory->createNamedBuilder($name, FormType::class, null, [
             'data_class' => AdvancedSearchRuleData::class,
         ])
             ->add('subject', ChoiceType::class, [
@@ -94,8 +94,6 @@ abstract class AbstractAdvancedSearchFormFactory
                 'multiple' => false,
             ])
             ->add('value', $ruleFilter->getValueFormType(), $ruleFilter->getValueFormOptions());
-
-        return $filterFormBuilder;
     }
 
     /**
@@ -119,7 +117,9 @@ abstract class AbstractAdvancedSearchFormFactory
     {
         $choices = [];
         foreach ($this->advancedSearchConfig->getAllFilters() as $filter) {
-            $choices[$this->advancedSearchFilterTranslation->translateFilterName($filter->getName())] = $filter->getName();
+            $choices[$this->advancedSearchFilterTranslation->translateFilterName(
+                $filter->getName()
+            )] = $filter->getName();
         }
 
         return $choices;

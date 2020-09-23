@@ -5,8 +5,10 @@ namespace Shopsys\FrameworkBundle\Form\Constraints;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\UrlListData;
+use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
+use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
 class UniqueSlugsOnDomainsValidator extends ConstraintValidator
 {
@@ -37,7 +39,7 @@ class UniqueSlugsOnDomainsValidator extends ConstraintValidator
     public function validate($values, Constraint $constraint)
     {
         if (!$constraint instanceof UniqueSlugsOnDomains) {
-            throw new \Symfony\Component\Validator\Exception\UnexpectedTypeException($constraint, UniqueSlugsOnDomains::class);
+            throw new UnexpectedTypeException($constraint, UniqueSlugsOnDomains::class);
         }
 
         $this->validateDuplication($values, $constraint);
@@ -80,7 +82,7 @@ class UniqueSlugsOnDomainsValidator extends ConstraintValidator
             $domainRouter = $this->domainRouterFactory->getRouter($domainId);
             try {
                 $domainRouter->match('/' . $slug);
-            } catch (\Symfony\Component\Routing\Exception\ResourceNotFoundException $e) {
+            } catch (ResourceNotFoundException $e) {
                 continue;
             }
 

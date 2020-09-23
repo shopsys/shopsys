@@ -6,6 +6,7 @@ namespace Shopsys\FrontendApiBundle\Model\Order;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
+use Shopsys\FrameworkBundle\Model\Order\Exception\OrderNotFoundException;
 use Shopsys\FrameworkBundle\Model\Order\Order;
 
 class OrderRepository
@@ -73,7 +74,7 @@ class OrderRepository
         $order = $this->findByUuidAndCustomerUser($uuid, $customerUser);
 
         if ($order === null) {
-            throw new \Shopsys\FrameworkBundle\Model\Order\Exception\OrderNotFoundException(sprintf(
+            throw new OrderNotFoundException(sprintf(
                 'Order with UUID \'%s\' not found.',
                 $uuid
             ));

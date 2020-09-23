@@ -78,7 +78,16 @@ class ListedProductViewFactory
         ProductActionView $action,
         ?ImageView $image
     ): ListedProductView {
-        return new ListedProductView($id, $name, $shortDescription, $availability, $sellingPrice, $flagIds, $action, $image);
+        return new ListedProductView(
+            $id,
+            $name,
+            $shortDescription,
+            $availability,
+            $sellingPrice,
+            $flagIds,
+            $action,
+            $image
+        );
     }
 
     /**
@@ -128,13 +137,20 @@ class ListedProductViewFactory
      */
     public function createFromProducts(array $products): array
     {
-        $imageViews = $this->imageViewFacade->getMainImagesByEntityIds(Product::class, $this->getIdsForProducts($products));
+        $imageViews = $this->imageViewFacade->getMainImagesByEntityIds(
+            Product::class,
+            $this->getIdsForProducts($products)
+        );
         $productActionViews = $this->productActionViewFacade->getForProducts($products);
 
         $listedProductViews = [];
         foreach ($products as $product) {
             $productId = $product->getId();
-            $listedProductViews[$productId] = $this->createFromProduct($product, $imageViews[$productId], $productActionViews[$productId]);
+            $listedProductViews[$productId] = $this->createFromProduct(
+                $product,
+                $imageViews[$productId],
+                $productActionViews[$productId]
+            );
         }
 
         return $listedProductViews;
@@ -192,12 +208,22 @@ class ListedProductViewFactory
     public function setImageViewFacade(ImageViewFacadeInterface $imageViewFacade): void
     {
         if ($this->imageViewFacade !== null && $this->imageViewFacade !== $imageViewFacade) {
-            throw new BadMethodCallException(sprintf('Method "%s" has been already called and cannot be called multiple times.', __METHOD__));
+            throw new BadMethodCallException(
+                sprintf('Method "%s" has been already called and cannot be called multiple times.', __METHOD__)
+            );
         }
-        if ($this->imageViewFacade === null) {
-            @trigger_error(sprintf('The %s() method is deprecated and will be removed in the next major. Use the constructor injection instead.', __METHOD__), E_USER_DEPRECATED);
-            $this->imageViewFacade = $imageViewFacade;
+        if ($this->imageViewFacade !== null) {
+            return;
         }
+
+        @trigger_error(
+            sprintf(
+                'The %s() method is deprecated and will be removed in the next major. Use the constructor injection instead.',
+                __METHOD__
+            ),
+            E_USER_DEPRECATED
+        );
+        $this->imageViewFacade = $imageViewFacade;
     }
 
     /**
@@ -208,11 +234,21 @@ class ListedProductViewFactory
     public function setProductActionViewFacade(ProductActionViewFacadeInterface $productActionViewFacade): void
     {
         if ($this->productActionViewFacade !== null && $this->productActionViewFacade !== $productActionViewFacade) {
-            throw new BadMethodCallException(sprintf('Method "%s" has been already called and cannot be called multiple times.', __METHOD__));
+            throw new BadMethodCallException(
+                sprintf('Method "%s" has been already called and cannot be called multiple times.', __METHOD__)
+            );
         }
-        if ($this->productActionViewFacade === null) {
-            @trigger_error(sprintf('The %s() method is deprecated and will be removed in the next major. Use the constructor injection instead.', __METHOD__), E_USER_DEPRECATED);
-            $this->productActionViewFacade = $productActionViewFacade;
+        if ($this->productActionViewFacade !== null) {
+            return;
         }
+
+        @trigger_error(
+            sprintf(
+                'The %s() method is deprecated and will be removed in the next major. Use the constructor injection instead.',
+                __METHOD__
+            ),
+            E_USER_DEPRECATED
+        );
+        $this->productActionViewFacade = $productActionViewFacade;
     }
 }

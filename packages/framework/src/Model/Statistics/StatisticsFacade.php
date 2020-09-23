@@ -6,7 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Statistics;
 
 use DateInterval;
 use DateTime;
-use DateTimeImmutable as DateTimeImmutable;
+use DateTimeImmutable;
 
 class StatisticsFacade
 {

@@ -14,6 +14,7 @@ use FOS\RestBundle\Request\ParamFetcher;
 use FOS\RestBundle\View\View;
 use Shopsys\BackendApiBundle\Component\HeaderLinks\HeaderLinksTransformer;
 use Shopsys\BackendApiBundle\Component\Validation\HttpUuidValidator;
+use Shopsys\FrameworkBundle\Model\Product\Exception\ProductNotFoundException;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
 use Shopsys\FrameworkBundle\Model\Product\ProductQueryParams;
@@ -80,6 +81,7 @@ class ProductController extends AbstractFOSRestController
 
     /**
      * Retrieves Product resource
+     *
      * @Get("/products/{uuid}")
      * @param string $uuid
      * @return \Symfony\Component\HttpFoundation\Response
@@ -99,6 +101,7 @@ class ProductController extends AbstractFOSRestController
 
     /**
      * Retrieves multiple Product resources
+     *
      * @Get("/products")
      * @QueryParam(name="page", requirements="-?\d+", default=1)
      * @QueryParam(name="uuids", map=true, allowBlank=false)
@@ -139,6 +142,7 @@ class ProductController extends AbstractFOSRestController
     /**
      * Create a Product resource
      * If UUID ins't specified, generates it's own
+     *
      * @Post("/products")
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @return \Symfony\Component\HttpFoundation\Response
@@ -168,6 +172,7 @@ class ProductController extends AbstractFOSRestController
 
     /**
      * Delete a Product resource
+     *
      * @Delete("/products/{uuid}")
      * @param string $uuid
      * @return \Symfony\Component\HttpFoundation\Response
@@ -208,7 +213,8 @@ class ProductController extends AbstractFOSRestController
             $this->productFacade->getByUuid($uuid);
 
             throw new UnprocessableEntityHttpException('Product with ' . $uuid . ' UUID already exists');
-        } catch (\Shopsys\FrameworkBundle\Model\Product\Exception\ProductNotFoundException $e) {
+        } catch (ProductNotFoundException $e) {
+            return;
         }
     }
 
@@ -218,12 +224,15 @@ class ProductController extends AbstractFOSRestController
     protected function assertProductIsNotVariantType(Product $product): void
     {
         if ($product->isVariant() || $product->isMainVariant()) {
-            throw new BadRequestHttpException('cannot update/delete variant/main variant, this functionality is not supported yet');
+            throw new BadRequestHttpException(
+                'cannot update/delete variant/main variant, this functionality is not supported yet'
+            );
         }
     }
 
     /**
      * Partially update a Product resource
+     *
      * @Patch("/products/{uuid}")
      * @param string $uuid
      * @param \Symfony\Component\HttpFoundation\Request $request

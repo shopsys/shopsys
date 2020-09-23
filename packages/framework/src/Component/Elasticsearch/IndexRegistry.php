@@ -42,7 +42,6 @@ class IndexRegistry
 
     /**
      * @param string $indexName
-     *
      * @return \Shopsys\FrameworkBundle\Component\Elasticsearch\AbstractIndex
      */
     public function getIndexByIndexName(string $indexName): AbstractIndex

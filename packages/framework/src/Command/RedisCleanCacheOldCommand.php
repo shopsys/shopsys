@@ -25,6 +25,7 @@ class RedisCleanCacheOldCommand extends Command
     public function __construct(RedisVersionsFacade $redisVersionsFacade)
     {
         $this->redisVersionsFacade = $redisVersionsFacade;
+
         parent::__construct();
     }
 

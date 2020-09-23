@@ -2,6 +2,7 @@
 
 namespace Shopsys\FrameworkBundle\Model\Order\PromoCode;
 
+use Shopsys\FrameworkBundle\Model\Order\PromoCode\Exception\InvalidPromoCodeException;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class CurrentPromoCodeFacade
@@ -48,10 +49,9 @@ class CurrentPromoCodeFacade
     {
         $promoCode = $this->promoCodeFacade->findPromoCodeByCode($enteredCode);
         if ($promoCode === null) {
-            throw new \Shopsys\FrameworkBundle\Model\Order\PromoCode\Exception\InvalidPromoCodeException($enteredCode);
-        } else {
-            $this->session->set(static::PROMO_CODE_SESSION_KEY, $enteredCode);
+            throw new InvalidPromoCodeException($enteredCode);
         }
+        $this->session->set(static::PROMO_CODE_SESSION_KEY, $enteredCode);
     }
 
     public function removeEnteredPromoCode()

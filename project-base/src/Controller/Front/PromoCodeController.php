@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Controller\Front;
 
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\CurrentPromoCodeFacade;
+use Shopsys\FrameworkBundle\Model\Order\PromoCode\Exception\InvalidPromoCodeException;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -41,7 +42,7 @@ class PromoCodeController extends FrontBaseController
         $promoCode = $request->get(self::PROMO_CODE_PARAMETER);
         try {
             $this->currentPromoCodeFacade->setEnteredPromoCode($promoCode);
-        } catch (\Shopsys\FrameworkBundle\Model\Order\PromoCode\Exception\InvalidPromoCodeException $ex) {
+        } catch (InvalidPromoCodeException $ex) {
             return new JsonResponse([
                 'result' => false,
                 'message' => t('Promo code invalid. Check it, please.'),

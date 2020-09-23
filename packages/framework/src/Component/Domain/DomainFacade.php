@@ -68,7 +68,11 @@ class DomainFacade
     public function editIcon($domainId, $iconName)
     {
         $temporaryFilepath = $this->fileUpload->getTemporaryFilepath($iconName);
-        $this->domainIconResizer->convertToDomainIconFormatAndSave($domainId, $temporaryFilepath, $this->domainImagesDirectory);
+        $this->domainIconResizer->convertToDomainIconFormatAndSave(
+            $domainId,
+            $temporaryFilepath,
+            $this->domainImagesDirectory
+        );
     }
 
     /**

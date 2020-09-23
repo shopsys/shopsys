@@ -79,9 +79,8 @@ class ProductAvailabilityCalculation
         }
         if ($product->isUsingStock()) {
             return $this->calculateAvailabilityForUsingStockProduct($product);
-        } else {
-            return $product->getAvailability();
         }
+        return $product->getAvailability();
     }
 
     /**
@@ -94,9 +93,8 @@ class ProductAvailabilityCalculation
             && $product->getOutOfStockAction() === Product::OUT_OF_STOCK_ACTION_SET_ALTERNATE_AVAILABILITY
         ) {
             return $product->getOutOfStockAvailability();
-        } else {
-            return $this->availabilityFacade->getDefaultInStockAvailability();
         }
+        return $this->availabilityFacade->getDefaultInStockAvailability();
     }
 
     /**

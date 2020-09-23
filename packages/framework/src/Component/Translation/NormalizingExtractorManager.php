@@ -21,6 +21,7 @@ class NormalizingExtractorManager extends ExtractorManager
     public function __construct(FileExtractor $extractor, LoggerInterface $logger, MessageIdNormalizer $messageIdNormalizer)
     {
         parent::__construct($extractor, $logger);
+
         $this->messageIdNormalizer = $messageIdNormalizer;
     }
 

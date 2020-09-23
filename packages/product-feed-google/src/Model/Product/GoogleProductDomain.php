@@ -14,7 +14,6 @@ class GoogleProductDomain
 {
     /**
      * @var int
-     *
      * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
@@ -23,7 +22,6 @@ class GoogleProductDomain
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\Product
-     *
      * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Product\Product")
      * @ORM\JoinColumn(name="product_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
      */
@@ -31,7 +29,6 @@ class GoogleProductDomain
 
     /**
      * @var bool
-     *
      * @ORM\Column(type="boolean")
      */
     protected $show;

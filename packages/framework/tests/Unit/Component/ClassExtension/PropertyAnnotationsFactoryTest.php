@@ -36,7 +36,10 @@ class PropertyAnnotationsFactoryTest extends TestCase
             'Tests\FrameworkBundle\Unit\Component\ClassExtension\Source\PropertyAnnotationsFactoryTest\BaseClass4' => 'Tests\FrameworkBundle\Unit\Component\ClassExtension\Source\PropertyAnnotationsFactoryTest\ChildClass4',
         ]);
 
-        $this->propertyAnnotationsFactory = new PropertyAnnotationsFactory($replacementMap, new AnnotationsReplacer($replacementMap));
+        $this->propertyAnnotationsFactory = new PropertyAnnotationsFactory(
+            $replacementMap,
+            new AnnotationsReplacer($replacementMap)
+        );
     }
 
     /**
@@ -45,9 +48,21 @@ class PropertyAnnotationsFactoryTest extends TestCase
     public function testGetProjectClassNecessaryPropertyAnnotationsLinesEmptyResultDataProvider(): array
     {
         return [
-            'property redeclared in the child using annotation' => [ReflectionObject::createFromName(BaseClass::class), ReflectionObject::createFromName(ChildClass::class)],
-            'property not included in the extension map' => [ReflectionObject::createFromName(BaseClass2::class), ReflectionObject::createFromName(ChildClass2::class)],
-            'property redeclared in the child\'s source code' => [ReflectionObject::createFromName(BaseClass3::class), ReflectionObject::createFromName(ChildClass3::class)],
+            'property redeclared in the child using annotation' => [ReflectionObject::createFromName(
+                BaseClass::class
+            ), ReflectionObject::createFromName(
+                ChildClass::class
+            )],
+            'property not included in the extension map' => [ReflectionObject::createFromName(
+                BaseClass2::class
+            ), ReflectionObject::createFromName(
+                ChildClass2::class
+            )],
+            'property redeclared in the child\'s source code' => [ReflectionObject::createFromName(
+                BaseClass3::class
+            ), ReflectionObject::createFromName(
+                ChildClass3::class
+            )],
         ];
     }
 
@@ -75,6 +90,9 @@ class PropertyAnnotationsFactoryTest extends TestCase
             ReflectionObject::createFromName(ChildClass4::class)
         );
 
-        $this->assertStringContainsString('@property \App\Model\Category\CategoryFacade $categoryFacade', $annotationLines);
+        $this->assertStringContainsString(
+            '@property \App\Model\Category\CategoryFacade $categoryFacade',
+            $annotationLines
+        );
     }
 }

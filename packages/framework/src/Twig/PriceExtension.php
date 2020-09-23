@@ -162,9 +162,8 @@ class PriceExtension extends AbstractExtension
     {
         if ($price->isZero()) {
             return t('Free');
-        } else {
-            return $this->priceFilter($price);
         }
+        return $this->priceFilter($price);
     }
 
     /**
@@ -177,10 +176,9 @@ class PriceExtension extends AbstractExtension
     {
         if ($price->isZero()) {
             return t('Free');
-        } else {
-            $currency = $this->currencyFacade->getById($currencyId);
-            return $this->formatCurrency($price, $currency, $locale);
         }
+        $currency = $this->currencyFacade->getById($currencyId);
+        return $this->formatCurrency($price, $currency, $locale);
     }
 
     /**

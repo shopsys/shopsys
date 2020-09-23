@@ -36,6 +36,7 @@ class FlagInlineEdit extends AbstractGridInlineEdit
         FlagDataFactoryInterface $flagDataFactory
     ) {
         parent::__construct($flagGridFactory);
+
         $this->flagFacade = $flagFacade;
         $this->formFactory = $formFactory;
         $this->flagDataFactory = $flagDataFactory;

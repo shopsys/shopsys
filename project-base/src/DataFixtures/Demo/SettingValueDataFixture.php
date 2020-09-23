@@ -44,8 +44,15 @@ class SettingValueDataFixture extends AbstractReferenceFixture implements Depend
             $locale = $domainConfig->getLocale();
 
             /** @var \App\Model\Article\Article $termsAndConditions */
-            $termsAndConditions = $this->getReferenceForDomain(ArticleDataFixture::ARTICLE_TERMS_AND_CONDITIONS, $domainId);
-            $this->setting->setForDomain(Setting::TERMS_AND_CONDITIONS_ARTICLE_ID, $termsAndConditions->getId(), $domainId);
+            $termsAndConditions = $this->getReferenceForDomain(
+                ArticleDataFixture::ARTICLE_TERMS_AND_CONDITIONS,
+                $domainId
+            );
+            $this->setting->setForDomain(
+                Setting::TERMS_AND_CONDITIONS_ARTICLE_ID,
+                $termsAndConditions->getId(),
+                $domainId
+            );
 
             /** @var \App\Model\Article\Article $privacyPolicy */
             $privacyPolicy = $this->getReferenceForDomain(ArticleDataFixture::ARTICLE_PRIVACY_POLICY, $domainId);
@@ -55,16 +62,34 @@ class SettingValueDataFixture extends AbstractReferenceFixture implements Depend
             $cookies = $this->getReferenceForDomain(ArticleDataFixture::ARTICLE_COOKIES, $domainId);
             $this->setting->setForDomain(Setting::COOKIES_ARTICLE_ID, $cookies->getId(), $domainId);
 
-            $personalDataDisplaySiteContent = t('By entering an email below, you can view your personal information that we register in our online store.
+            $personalDataDisplaySiteContent = t(
+                'By entering an email below, you can view your personal information that we register in our online store.
                 An email with a link will be sent to you after entering your email address, to verify your identity.
-                Clicking on the link will take you to a page listing all the personal details we have connected to your email address.', [], 'dataFixtures', $locale);
-            $this->setting->setForDomain(Setting::PERSONAL_DATA_DISPLAY_SITE_CONTENT, $personalDataDisplaySiteContent, $domainId);
+                Clicking on the link will take you to a page listing all the personal details we have connected to your email address.',
+                [],
+                'dataFixtures',
+                $locale
+            );
+            $this->setting->setForDomain(
+                Setting::PERSONAL_DATA_DISPLAY_SITE_CONTENT,
+                $personalDataDisplaySiteContent,
+                $domainId
+            );
 
-            $personalDataExportSiteContent = t('By entering an email below, you can download your personal and other information (for example, order history)
+            $personalDataExportSiteContent = t(
+                'By entering an email below, you can download your personal and other information (for example, order history)
                 from our online store. An email with a link will be sent to you after entering your email address, to verify your identity.
                 Clicking on the link will take you to a page where you’ll be able to download these informations in readable format - it will be the data
-                registered to given email address on this online store domain.', [], 'dataFixtures', $locale);
-            $this->setting->setForDomain(Setting::PERSONAL_DATA_EXPORT_SITE_CONTENT, $personalDataExportSiteContent, $domainId);
+                registered to given email address on this online store domain.',
+                [],
+                'dataFixtures',
+                $locale
+            );
+            $this->setting->setForDomain(
+                Setting::PERSONAL_DATA_EXPORT_SITE_CONTENT,
+                $personalDataExportSiteContent,
+                $domainId
+            );
 
             $orderSentText = t('
                 <p>
@@ -86,8 +111,16 @@ class SettingValueDataFixture extends AbstractReferenceFixture implements Depend
                 t('Shopsys Framework - the best solution for your eshop.', [], 'dataFixtures', $locale),
                 $domainId
             );
-            $this->setting->setForDomain(SeoSettingFacade::SEO_TITLE_MAIN_PAGE, t('Shopsys Framework - Title page', [], 'dataFixtures', $locale), $domainId);
-            $this->setting->setForDomain(SeoSettingFacade::SEO_TITLE_ADD_ON, t('| Demo eshop', [], 'dataFixtures', $locale), $domainId);
+            $this->setting->setForDomain(
+                SeoSettingFacade::SEO_TITLE_MAIN_PAGE,
+                t('Shopsys Framework - Title page', [], 'dataFixtures', $locale),
+                $domainId
+            );
+            $this->setting->setForDomain(
+                SeoSettingFacade::SEO_TITLE_ADD_ON,
+                t('| Demo eshop', [], 'dataFixtures', $locale),
+                $domainId
+            );
 
             $this->setDomainDefaultCurrency($domainId);
         }

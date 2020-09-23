@@ -3,6 +3,7 @@
 namespace Shopsys\FrameworkBundle\Component\Image;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Shopsys\FrameworkBundle\Component\Image\Exception\ImageNotFoundException;
 
 class ImageRepository
 {
@@ -35,7 +36,7 @@ class ImageRepository
      */
     public function findImageByEntity($entityName, $entityId, $type)
     {
-        $image = $this->getImageRepository()->findOneBy(
+        return $this->getImageRepository()->findOneBy(
             [
                 'entityName' => $entityName,
                 'entityId' => $entityId,
@@ -46,8 +47,6 @@ class ImageRepository
                 'id' => 'asc',
             ]
         );
-
-        return $image;
     }
 
     /**
@@ -61,7 +60,7 @@ class ImageRepository
         $image = $this->findImageByEntity($entityName, $entityId, $type);
         if ($image === null) {
             $message = 'Image of type "' . ($type ?: 'NULL') . '" not found for entity "' . $entityName . '" with ID ' . $entityId;
-            throw new \Shopsys\FrameworkBundle\Component\Image\Exception\ImageNotFoundException($message);
+            throw new ImageNotFoundException($message);
         }
 
         return $image;
@@ -114,7 +113,7 @@ class ImageRepository
         $image = $this->getImageRepository()->find($imageId);
 
         if ($image === null) {
-            throw new \Shopsys\FrameworkBundle\Component\Image\Exception\ImageNotFoundException('Image with ID ' . $imageId . ' does not exist.');
+            throw new ImageNotFoundException('Image with ID ' . $imageId . ' does not exist.');
         }
 
         return $image;

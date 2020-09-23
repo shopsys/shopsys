@@ -21,6 +21,7 @@ final class MeasurePerformanceReleaseWorker extends AbstractShopsysReleaseWorker
 
     /**
      * Higher first
+     *
      * @return int
      */
     public function getPriority(): int
@@ -33,7 +34,9 @@ final class MeasurePerformanceReleaseWorker extends AbstractShopsysReleaseWorker
      */
     public function work(Version $version): void
     {
-        $this->symfonyStyle->note('See https://docs.google.com/document/d/1VRQOl_c2KkDekMUkLPwencUVhE3UPtvkQQSywNtjyX8/edit#heading=h.2h92hrp89r2b');
+        $this->symfonyStyle->note(
+            'See https://docs.google.com/document/d/1VRQOl_c2KkDekMUkLPwencUVhE3UPtvkQQSywNtjyX8/edit#heading=h.2h92hrp89r2b'
+        );
         $this->confirm('Confirm the performance test is finished');
     }
 

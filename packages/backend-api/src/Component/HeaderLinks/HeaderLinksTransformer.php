@@ -23,7 +23,11 @@ class HeaderLinksTransformer
 
         if (!$paginationResult->isFirstPage()) {
             $firstUrl = $this->createUrlWithParameter($baseUrl, 'page', '1');
-            $previousUrl = $this->createUrlWithParameter($baseUrl, 'page', (string)$paginationResult->getPreviousPage());
+            $previousUrl = $this->createUrlWithParameter(
+                $baseUrl,
+                'page',
+                (string)$paginationResult->getPreviousPage()
+            );
 
             $links = $links
                 ->add($firstUrl, 'first')

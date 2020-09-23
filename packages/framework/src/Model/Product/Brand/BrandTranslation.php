@@ -19,7 +19,6 @@ class BrandTranslation extends AbstractTranslation
 
     /**
      * @var string
-     *
      * @ORM\Column(type="text", nullable=true)
      */
     protected $description;

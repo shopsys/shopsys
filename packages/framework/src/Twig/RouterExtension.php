@@ -3,6 +3,7 @@
 namespace Shopsys\FrameworkBundle\Twig;
 
 use Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory;
+use Symfony\Component\Routing\Exception\RouteNotFoundException;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
@@ -47,7 +48,7 @@ class RouterExtension extends AbstractExtension
 
         try {
             return $domainRouter->generate($route, $routeParams, UrlGeneratorInterface::ABSOLUTE_URL);
-        } catch (\Symfony\Component\Routing\Exception\RouteNotFoundException $e) {
+        } catch (RouteNotFoundException $e) {
             return null;
         }
     }

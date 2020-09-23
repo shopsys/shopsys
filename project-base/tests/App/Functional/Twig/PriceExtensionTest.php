@@ -85,12 +85,24 @@ class PriceExtensionTest extends FunctionalTestCase
                 'domainId' => Domain::FIRST_DOMAIN_ID,
                 'result' => 'CZK123,456,789.1234567891',
             ],
-            ['input' => Money::create(12), 'domainId' => Domain::SECOND_DOMAIN_ID, 'result' => '12,00' . self::NBSP . '€'],
-            ['input' => Money::create('12.00'), 'domainId' => Domain::SECOND_DOMAIN_ID, 'result' => '12,00' . self::NBSP . '€'],
-            ['input' => Money::create('12.600'), 'domainId' => Domain::SECOND_DOMAIN_ID, 'result' => '12,60' . self::NBSP . '€'],
-            ['input' => Money::create('12.630000'), 'domainId' => Domain::SECOND_DOMAIN_ID, 'result' => '12,63' . self::NBSP . '€'],
-            ['input' => Money::create('12.638000'), 'domainId' => Domain::SECOND_DOMAIN_ID, 'result' => '12,638' . self::NBSP . '€'],
-            ['input' => Money::create('12.630000'), 'domainId' => Domain::SECOND_DOMAIN_ID, 'result' => '12,63' . self::NBSP . '€'],
+            ['input' => Money::create(
+                12
+            ), 'domainId' => Domain::SECOND_DOMAIN_ID, 'result' => '12,00' . self::NBSP . '€'],
+            ['input' => Money::create(
+                '12.00'
+            ), 'domainId' => Domain::SECOND_DOMAIN_ID, 'result' => '12,00' . self::NBSP . '€'],
+            ['input' => Money::create(
+                '12.600'
+            ), 'domainId' => Domain::SECOND_DOMAIN_ID, 'result' => '12,60' . self::NBSP . '€'],
+            ['input' => Money::create(
+                '12.630000'
+            ), 'domainId' => Domain::SECOND_DOMAIN_ID, 'result' => '12,63' . self::NBSP . '€'],
+            ['input' => Money::create(
+                '12.638000'
+            ), 'domainId' => Domain::SECOND_DOMAIN_ID, 'result' => '12,638' . self::NBSP . '€'],
+            ['input' => Money::create(
+                '12.630000'
+            ), 'domainId' => Domain::SECOND_DOMAIN_ID, 'result' => '12,63' . self::NBSP . '€'],
             [
                 'input' => Money::create('123456789.123456789'),
                 'domainId' => Domain::SECOND_DOMAIN_ID,

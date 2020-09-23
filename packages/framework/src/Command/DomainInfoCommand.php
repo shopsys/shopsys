@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Command;
 
+use InvalidArgumentException;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Symfony\Component\Console\Command\Command;
@@ -54,9 +55,23 @@ class DomainInfoCommand extends Command
         $this
             ->setDescription('Loads and displays domain info.')
             ->addArgument(static::ARG_PROPERTY_NAME, InputArgument::OPTIONAL, 'Property that should be loaded', 'id')
-            ->addArgument(static::ARG_ID, InputArgument::OPTIONAL, 'Domain ID (if omitted, the command will output all values)')
-            ->addOption(static::OPTION_DEDUPLICATE, 'd', InputOption::VALUE_NONE, 'Return only unique property values (sorted alphabetically)')
-            ->addOption(static::OPTION_ONELINE, 'o', InputOption::VALUE_NONE, 'Return property values on one line separated by tabs');
+            ->addArgument(
+                static::ARG_ID,
+                InputArgument::OPTIONAL,
+                'Domain ID (if omitted, the command will output all values)'
+            )
+            ->addOption(
+                static::OPTION_DEDUPLICATE,
+                'd',
+                InputOption::VALUE_NONE,
+                'Return only unique property values (sorted alphabetically)'
+            )
+            ->addOption(
+                static::OPTION_ONELINE,
+                'o',
+                InputOption::VALUE_NONE,
+                'Return property values on one line separated by tabs'
+            );
     }
 
     /**
@@ -68,7 +83,7 @@ class DomainInfoCommand extends Command
 
         try {
             $domainConfigs = $this->getDomainConfigs($input);
-        } catch (\InvalidArgumentException $e) {
+        } catch (InvalidArgumentException $e) {
             $io->error($e->getMessage());
 
             return static::RETURN_CODE_ERROR;
@@ -108,7 +123,7 @@ class DomainInfoCommand extends Command
                 }
             }
 
-            throw new \InvalidArgumentException(sprintf('Domain with ID "%s" not found.', $domainId));
+            throw new InvalidArgumentException(sprintf('Domain with ID "%s" not found.', $domainId));
         }
 
         return $domainConfigs;
@@ -157,13 +172,16 @@ class DomainInfoCommand extends Command
         return array_map(function ($propertyValue) {
             if ($propertyValue === null) {
                 return '<options=bold;fg=cyan>NULL</options=bold;fg=cyan>';
-            } elseif ($propertyValue === true) {
-                return '<options=bold;fg=green>YES</options=bold;fg=green>';
-            } elseif ($propertyValue === false) {
-                return '<options=bold;fg=red>NO</options=bold;fg=red>';
-            } else {
-                return $propertyValue;
             }
+
+            if ($propertyValue === true) {
+                return '<options=bold;fg=green>YES</options=bold;fg=green>';
+            }
+
+            if ($propertyValue === false) {
+                return '<options=bold;fg=red>NO</options=bold;fg=red>';
+            }
+            return $propertyValue;
         }, $propertyValues);
     }
 }

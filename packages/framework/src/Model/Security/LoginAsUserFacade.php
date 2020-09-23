@@ -5,6 +5,7 @@ namespace Shopsys\FrameworkBundle\Model\Security;
 use Shopsys\FrameworkBundle\Model\Administrator\Security\AdministratorFrontSecurityFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRepository;
+use Shopsys\FrameworkBundle\Model\Security\Exception\LoginAsRememberedUserException;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
@@ -77,11 +78,11 @@ class LoginAsUserFacade
     public function loginAsRememberedUser(Request $request)
     {
         if (!$this->administratorFrontSecurityFacade->isAdministratorLogged()) {
-            throw new \Shopsys\FrameworkBundle\Model\Security\Exception\LoginAsRememberedUserException('Access denied');
+            throw new LoginAsRememberedUserException('Access denied');
         }
 
         if (!$this->session->has(static::SESSION_LOGIN_AS)) {
-            throw new \Shopsys\FrameworkBundle\Model\Security\Exception\LoginAsRememberedUserException('User not set.');
+            throw new LoginAsRememberedUserException('User not set.');
         }
 
         /** @var \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $unserializedUser */

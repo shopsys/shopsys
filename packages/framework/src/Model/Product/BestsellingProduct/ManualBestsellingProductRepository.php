@@ -79,7 +79,12 @@ class ManualBestsellingProductRepository
         $queryBuilder
             ->select('c.id, COUNT(mbp) AS cnt')
             ->from(Category::class, 'c')
-            ->leftJoin(ManualBestsellingProduct::class, 'mbp', Join::WITH, 'mbp.category = c AND mbp.domainId = :domainId')
+            ->leftJoin(
+                ManualBestsellingProduct::class,
+                'mbp',
+                Join::WITH,
+                'mbp.category = c AND mbp.domainId = :domainId'
+            )
             ->setParameter('domainId', $domainId)
             ->groupBy('c.id');
 

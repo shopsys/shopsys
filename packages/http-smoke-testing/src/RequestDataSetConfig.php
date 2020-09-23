@@ -11,7 +11,6 @@ interface RequestDataSetConfig
      *
      * @see \Shopsys\HttpSmokeTesting\Auth\BasicHttpAuth
      * @see \Shopsys\HttpSmokeTesting\Auth\NoAuth
-     *
      * @param \Shopsys\HttpSmokeTesting\Auth\AuthInterface $auth
      * @return $this
      */

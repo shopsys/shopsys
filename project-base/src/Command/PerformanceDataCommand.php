@@ -63,7 +63,9 @@ class PerformanceDataCommand extends Command
     protected function configure()
     {
         $this
-            ->setDescription('Import performance data to test db. Demo and base data fixtures must be imported first.');
+            ->setDescription(
+                'Import performance data to test db. Demo and base data fixtures must be imported first.'
+            );
     }
 
     /**

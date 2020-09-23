@@ -4,6 +4,9 @@ namespace Tests\FrameworkBundle\Unit\Component\DataFixture;
 
 use Doctrine\ORM\EntityManager;
 use PHPUnit\Framework\TestCase;
+use Shopsys\FrameworkBundle\Component\DataFixture\Exception\EntityNotFoundException;
+use Shopsys\FrameworkBundle\Component\DataFixture\Exception\MethodGetIdDoesNotExistException;
+use Shopsys\FrameworkBundle\Component\DataFixture\Exception\PersistentReferenceNotFoundException;
 use Shopsys\FrameworkBundle\Component\DataFixture\PersistentReference;
 use Shopsys\FrameworkBundle\Component\DataFixture\PersistentReferenceFacade;
 use Shopsys\FrameworkBundle\Component\DataFixture\PersistentReferenceFactory;
@@ -34,7 +37,7 @@ class PersistentReferenceFacadeTest extends TestCase
             $persistentReferenceRepositoryMock,
             new PersistentReferenceFactory(new EntityNameResolver([]))
         );
-        $this->expectException(\Shopsys\FrameworkBundle\Component\DataFixture\Exception\MethodGetIdDoesNotExistException::class);
+        $this->expectException(MethodGetIdDoesNotExistException::class);
         $persistentReferenceFacade->persistReference('referenceName', new stdClass());
     }
 
@@ -52,7 +55,7 @@ class PersistentReferenceFacadeTest extends TestCase
             ->disableOriginalConstructor()
             ->getMock();
 
-        $expectedException = new \Shopsys\FrameworkBundle\Component\DataFixture\Exception\PersistentReferenceNotFoundException('newReferenceName');
+        $expectedException = new PersistentReferenceNotFoundException('newReferenceName');
         $persistentReferenceRepositoryMock->method('getByReferenceName')->willThrowException($expectedException);
 
         $productMock = $this->getMockBuilder(Product::class)
@@ -124,7 +127,7 @@ class PersistentReferenceFacadeTest extends TestCase
             new PersistentReferenceFactory(new EntityNameResolver([]))
         );
 
-        $this->expectException(\Shopsys\FrameworkBundle\Component\DataFixture\Exception\EntityNotFoundException::class);
+        $this->expectException(EntityNotFoundException::class);
         $persistentReferenceFacade->getReference('referenceName');
     }
 }

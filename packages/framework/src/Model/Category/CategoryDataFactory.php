@@ -120,7 +120,11 @@ class CategoryDataFactory implements CategoryDataFactoryInterface
             $categoryData->descriptions[$domainId] = $category->getDescription($domainId);
             $categoryData->enabled[$domainId] = $category->isEnabled($domainId);
 
-            $mainFriendlyUrl = $this->friendlyUrlFacade->findMainFriendlyUrl($domainId, 'front_product_list', $category->getId());
+            $mainFriendlyUrl = $this->friendlyUrlFacade->findMainFriendlyUrl(
+                $domainId,
+                'front_product_list',
+                $category->getId()
+            );
             $categoryData->urls->mainFriendlyUrlsByDomainId[$domainId] = $mainFriendlyUrl;
         }
 

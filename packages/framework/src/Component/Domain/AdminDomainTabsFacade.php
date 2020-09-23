@@ -2,6 +2,7 @@
 
 namespace Shopsys\FrameworkBundle\Component\Domain;
 
+use Shopsys\FrameworkBundle\Component\Domain\Exception\InvalidDomainIdException;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class AdminDomainTabsFacade
@@ -50,7 +51,7 @@ class AdminDomainTabsFacade
         try {
             $domainId = $this->session->get(static::SESSION_SELECTED_DOMAIN);
             return $this->domain->getDomainConfigById($domainId);
-        } catch (\Shopsys\FrameworkBundle\Component\Domain\Exception\InvalidDomainIdException $e) {
+        } catch (InvalidDomainIdException $e) {
             $allDomains = $this->domain->getAll();
             return reset($allDomains);
         }

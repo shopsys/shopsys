@@ -28,9 +28,20 @@ class PhingConfigFixerCommand extends Command
     protected function configure(): void
     {
         $this
-            ->setDescription('Fixes syntax of Phing configuration automatically (sorts targets alphabetically and normalizes whitespace).')
-            ->addArgument(static::ARG_XML_PATH, InputArgument::REQUIRED | InputArgument::IS_ARRAY, 'Path(-s) to the Phing XML configuration')
-            ->addOption(static::OPTION_ONLY_CHECK, null, InputOption::VALUE_NONE, 'Will not modify the XML, only fails if the output would be different');
+            ->setDescription(
+                'Fixes syntax of Phing configuration automatically (sorts targets alphabetically and normalizes whitespace).'
+            )
+            ->addArgument(
+                static::ARG_XML_PATH,
+                InputArgument::REQUIRED | InputArgument::IS_ARRAY,
+                'Path(-s) to the Phing XML configuration'
+            )
+            ->addOption(
+                static::OPTION_ONLY_CHECK,
+                null,
+                InputOption::VALUE_NONE,
+                'Will not modify the XML, only fails if the output would be different'
+            );
     }
 
     /**
@@ -67,7 +78,12 @@ class PhingConfigFixerCommand extends Command
         } elseif ($returnCode === static::RETURN_CODE_ERROR) {
             $io->error('Some Phing configuration files are not OK.');
 
-            $io->comment(sprintf('Re-run the command without the "%s" option to fix it automatically.', static::OPTION_ONLY_CHECK));
+            $io->comment(
+                sprintf(
+                    'Re-run the command without the "%s" option to fix it automatically.',
+                    static::OPTION_ONLY_CHECK
+                )
+            );
         }
 
         return $returnCode;
@@ -152,7 +168,9 @@ class PhingConfigFixerCommand extends Command
             $replacedContent = str_replace($targetBlock, $targetPlaceholder, $content);
 
             if ($content === $replacedContent) {
-                throw new RuntimeException("This block was not found in the XML content and could not be replaced:\n\n" . $targetBlock);
+                throw new RuntimeException(
+                    "This block was not found in the XML content and could not be replaced:\n\n" . $targetBlock
+                );
             }
 
             $content = $replacedContent;
@@ -175,7 +193,12 @@ class PhingConfigFixerCommand extends Command
             $replacedContent = str_replace($targetPlaceholder, $targetBlock, $content);
 
             if ($content === $replacedContent) {
-                throw new RuntimeException(sprintf('The placeholder for target #%d was not found in the XML content and could not be replaced.', $position));
+                throw new RuntimeException(
+                    sprintf(
+                        'The placeholder for target #%d was not found in the XML content and could not be replaced.',
+                        $position
+                    )
+                );
             }
 
             $content = $replacedContent;

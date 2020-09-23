@@ -98,9 +98,16 @@ class FilterQueryFactory
 
         $filterQuery = $this->productFilterDataToQueryTransformer->addBrandsToQuery($productFilterData, $filterQuery);
         $filterQuery = $this->productFilterDataToQueryTransformer->addFlagsToQuery($productFilterData, $filterQuery);
-        $filterQuery = $this->productFilterDataToQueryTransformer->addParametersToQuery($productFilterData, $filterQuery);
+        $filterQuery = $this->productFilterDataToQueryTransformer->addParametersToQuery(
+            $productFilterData,
+            $filterQuery
+        );
         $filterQuery = $this->productFilterDataToQueryTransformer->addStockToQuery($productFilterData, $filterQuery);
-        $filterQuery = $this->productFilterDataToQueryTransformer->addPricesToQuery($productFilterData, $filterQuery, $this->currentCustomerUser->getPricingGroup());
+        $filterQuery = $this->productFilterDataToQueryTransformer->addPricesToQuery(
+            $productFilterData,
+            $filterQuery,
+            $this->currentCustomerUser->getPricingGroup()
+        );
 
         return $filterQuery;
     }
@@ -200,7 +207,11 @@ class FilterQueryFactory
      */
     public function addPricesAndStockFromFilterDataToQuery(ProductFilterData $productFilterData, FilterQuery $filterQuery): FilterQuery
     {
-        $filterQuery = $this->productFilterDataToQueryTransformer->addPricesToQuery($productFilterData, $filterQuery, $this->currentCustomerUser->getPricingGroup());
+        $filterQuery = $this->productFilterDataToQueryTransformer->addPricesToQuery(
+            $productFilterData,
+            $filterQuery,
+            $this->currentCustomerUser->getPricingGroup()
+        );
         $filterQuery = $this->productFilterDataToQueryTransformer->addStockToQuery($productFilterData, $filterQuery);
 
         return $filterQuery;

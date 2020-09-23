@@ -33,7 +33,10 @@ class HeurekaProductRepository
     {
         $queryBuilder = $this->productRepository->getAllVisibleQueryBuilder($domainConfig->getId(), $pricingGroup)
             ->addSelect('b')->leftJoin('p.brand', 'b')
-            ->andWhere('p.variantType != :variantTypeMain')->setParameter('variantTypeMain', Product::VARIANT_TYPE_MAIN)
+            ->andWhere('p.variantType != :variantTypeMain')->setParameter(
+                'variantTypeMain',
+                Product::VARIANT_TYPE_MAIN
+            )
             ->andWhere('p.calculatedSellingDenied = FALSE')
             ->orderBy('p.id', 'asc')
             ->setMaxResults($maxResults);

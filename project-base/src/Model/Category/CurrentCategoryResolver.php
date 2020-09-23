@@ -47,7 +47,9 @@ class CurrentCategoryResolver
             $currentCategory = $this->categoryFacade->getById($categoryId);
 
             return $currentCategory;
-        } elseif ($routeName === 'front_product_detail') {
+        }
+
+        if ($routeName === 'front_product_detail') {
             $productId = $request->get('id');
             $product = $this->productFacade->getById($productId);
             /** @var \App\Model\Category\Category $currentCategory */

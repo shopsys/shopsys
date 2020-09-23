@@ -56,7 +56,10 @@ class ProductCatnumFilter implements AdvancedSearchFilterInterface
         foreach ($rulesData as $index => $ruleData) {
             if ($ruleData->operator === self::OPERATOR_NOT_SET) {
                 $queryBuilder->andWhere('p.catnum IS NULL');
-            } elseif ($ruleData->operator === self::OPERATOR_CONTAINS || $ruleData->operator === self::OPERATOR_NOT_CONTAINS) {
+            } elseif (
+                $ruleData->operator === self::OPERATOR_CONTAINS
+                || $ruleData->operator === self::OPERATOR_NOT_CONTAINS
+            ) {
                 if ($ruleData->value === null) {
                     $searchValue = '%';
                 } else {

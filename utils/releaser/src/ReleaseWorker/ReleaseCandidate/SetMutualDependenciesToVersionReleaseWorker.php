@@ -52,6 +52,7 @@ final class SetMutualDependenciesToVersionReleaseWorker extends AbstractShopsysR
 
     /**
      * Higher first
+     *
      * @return int
      */
     public function getPriority(): int

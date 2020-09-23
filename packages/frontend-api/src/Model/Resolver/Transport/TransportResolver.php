@@ -9,6 +9,7 @@ use Overblog\GraphQLBundle\Definition\Resolver\ResolverInterface;
 use Overblog\GraphQLBundle\Error\UserError;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Model\Transport\Exception\TransportNotFoundException;
 use Shopsys\FrameworkBundle\Model\Transport\Transport;
 use Shopsys\FrameworkBundle\Model\Transport\TransportFacade;
 
@@ -46,7 +47,7 @@ class TransportResolver implements ResolverInterface, AliasedInterface
 
         try {
             return $this->transportFacade->getByUuid($uuid);
-        } catch (\Shopsys\FrameworkBundle\Model\Transport\Exception\TransportNotFoundException $transportNotFoundException) {
+        } catch (TransportNotFoundException $transportNotFoundException) {
             throw new UserError($transportNotFoundException->getMessage());
         }
     }

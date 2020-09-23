@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\App\Functional\Component\Domain\Multidomain;
 
+use Doctrine\DBAL\Exception\DriverException;
 use Shopsys\FrameworkBundle\Component\Doctrine\SqlQuoter;
 use Shopsys\FrameworkBundle\Component\Domain\Multidomain\MultidomainEntityClassFinderFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Multidomain\MultidomainEntityDataCreator;
@@ -39,7 +40,11 @@ class MultidomainEntityDataCreatorTest extends TransactionFunctionalTestCase
 
         $sqlQuoter = new SqlQuoter($this->em);
 
-        $multidomainEntityDataCreator = new MultidomainEntityDataCreator($multidomainEntityClassFinderFacadeMock, $this->em, $sqlQuoter);
+        $multidomainEntityDataCreator = new MultidomainEntityDataCreator(
+            $multidomainEntityClassFinderFacadeMock,
+            $this->em,
+            $sqlQuoter
+        );
 
         $multidomainEntityDataCreator->copyAllMultidomainDataForNewDomain(1, 2);
 
@@ -92,11 +97,15 @@ class MultidomainEntityDataCreatorTest extends TransactionFunctionalTestCase
 
         $sqlQuoter = new SqlQuoter($this->em);
 
-        $multidomainEntityDataCreator = new MultidomainEntityDataCreator($multidomainEntityClassFinderFacadeMock, $this->em, $sqlQuoter);
+        $multidomainEntityDataCreator = new MultidomainEntityDataCreator(
+            $multidomainEntityClassFinderFacadeMock,
+            $this->em,
+            $sqlQuoter
+        );
 
         try {
             $multidomainEntityDataCreator->copyAllMultidomainDataForNewDomain(1, 2);
-        } catch (\Doctrine\DBAL\Exception\DriverException $ex) {
+        } catch (DriverException $ex) {
             $this->fail('Exception not expected');
         }
     }

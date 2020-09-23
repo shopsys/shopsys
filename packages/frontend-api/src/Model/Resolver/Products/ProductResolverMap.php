@@ -64,11 +64,12 @@ class ProductResolverMap extends ResolverMap
 
                     if ($isMainVariant) {
                         return 'MainVariant';
-                    } elseif ($isVariant) {
-                        return 'Variant';
-                    } else {
-                        return 'RegularProduct';
                     }
+
+                    if ($isVariant) {
+                        return 'Variant';
+                    }
+                    return 'RegularProduct';
                 },
             ],
             'RegularProduct' => $this->mapProduct(),
@@ -84,14 +85,18 @@ class ProductResolverMap extends ResolverMap
     {
         return [
             'shortDescription' => function ($data) {
-                return $data instanceof Product ? $data->getShortDescription($this->domain->getId()) : $data['short_description'];
+                return $data instanceof Product ? $data->getShortDescription(
+                    $this->domain->getId()
+                ) : $data['short_description'];
             },
             'link' => function ($data) {
                 $productId = $data instanceof Product ? $data->getId() : $data['id'];
                 return $this->getProductLink($productId);
             },
             'categories' => function ($data) {
-                return $data instanceof Product ? $data->getCategoriesIndexedByDomainId()[$this->domain->getId()] : $this->getCategoriesForData($data);
+                return $data instanceof Product ? $data->getCategoriesIndexedByDomainId()[$this->domain->getId()] : $this->getCategoriesForData(
+                    $data
+                );
             },
             'flags' => function ($data) {
                 return $this->getFlagsForData($data);
@@ -117,7 +122,10 @@ class ProductResolverMap extends ResolverMap
      */
     protected function getProductLink(int $productId): string
     {
-        $absoluteUrlsIndexedByProductId = $this->productCollectionFacade->getAbsoluteUrlsIndexedByProductId([$productId], $this->domain->getCurrentDomainConfig());
+        $absoluteUrlsIndexedByProductId = $this->productCollectionFacade->getAbsoluteUrlsIndexedByProductId(
+            [$productId],
+            $this->domain->getCurrentDomainConfig()
+        );
 
         return $absoluteUrlsIndexedByProductId[$productId];
     }
@@ -130,13 +138,12 @@ class ProductResolverMap extends ResolverMap
     {
         if ($data instanceof Product) {
             return $data->getFlags();
-        } else {
-            $flags = [];
-            foreach ($data['flags'] as $flagId) {
-                $flags[] = $this->flagFacade->getById($flagId);
-            }
-            return $flags;
         }
+        $flags = [];
+        foreach ($data['flags'] as $flagId) {
+            $flags[] = $this->flagFacade->getById($flagId);
+        }
+        return $flags;
     }
 
     /**

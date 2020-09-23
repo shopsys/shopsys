@@ -123,7 +123,11 @@ final class MonorepoUpgradeFileManipulator
      */
     private function createNewHeadline(Version $version, string $nextDevelopmentVersionString): string
     {
-        return sprintf('## [From %s to %s]' . PHP_EOL . PHP_EOL, $version->getVersionString(), $nextDevelopmentVersionString);
+        return sprintf(
+            '## [From %s to %s]' . PHP_EOL . PHP_EOL,
+            $version->getVersionString(),
+            $nextDevelopmentVersionString
+        );
     }
 
     /**

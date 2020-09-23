@@ -4,10 +4,16 @@ namespace Shopsys\FrameworkBundle\Component\Image\Config;
 
 use BadMethodCallException;
 use Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver;
+use Shopsys\FrameworkBundle\Component\Image\Config\Exception\DuplicateEntityNameException;
 use Shopsys\FrameworkBundle\Component\Image\Config\Exception\DuplicateMediaException;
+use Shopsys\FrameworkBundle\Component\Image\Config\Exception\DuplicateSizeNameException;
+use Shopsys\FrameworkBundle\Component\Image\Config\Exception\DuplicateTypeNameException;
+use Shopsys\FrameworkBundle\Component\Image\Config\Exception\EntityParseException;
+use Shopsys\FrameworkBundle\Component\Image\Config\Exception\ImageConfigException;
 use Shopsys\FrameworkBundle\Component\Image\Config\Exception\WidthAndHeightMissingException;
 use Shopsys\FrameworkBundle\Component\Utils\Utils;
 use Symfony\Component\Config\Definition\Processor;
+use Symfony\Component\Filesystem\Exception\FileNotFoundException;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Yaml\Parser;
 
@@ -56,16 +62,18 @@ class ImageConfigLoader
                 __METHOD__
             ));
         }
-        if ($this->entityNameResolver === null) {
-            @trigger_error(
-                sprintf(
-                    'The %s() method is deprecated and will be removed in the next major. Use the constructor injection instead.',
-                    __METHOD__
-                ),
-                E_USER_DEPRECATED
-            );
-            $this->entityNameResolver = $entityNameResolver;
+        if ($this->entityNameResolver !== null) {
+            return;
         }
+
+        @trigger_error(
+            sprintf(
+                'The %s() method is deprecated and will be removed in the next major. Use the constructor injection instead.',
+                __METHOD__
+            ),
+            E_USER_DEPRECATED
+        );
+        $this->entityNameResolver = $entityNameResolver;
     }
 
     /**
@@ -77,7 +85,7 @@ class ImageConfigLoader
         $yamlParser = new Parser();
 
         if (!$this->filesystem->exists($filename)) {
-            throw new \Symfony\Component\Filesystem\Exception\FileNotFoundException(
+            throw new FileNotFoundException(
                 'File ' . $filename . ' does not exist'
             );
         }
@@ -105,8 +113,8 @@ class ImageConfigLoader
         foreach ($outputConfig as $entityConfig) {
             try {
                 $this->processEntityConfig($entityConfig);
-            } catch (\Shopsys\FrameworkBundle\Component\Image\Config\Exception\ImageConfigException $e) {
-                throw new \Shopsys\FrameworkBundle\Component\Image\Config\Exception\EntityParseException(
+            } catch (ImageConfigException $e) {
+                throw new EntityParseException(
                     $entityConfig[ImageConfigDefinition::CONFIG_CLASS],
                     $e
                 );
@@ -127,7 +135,7 @@ class ImageConfigLoader
         if (array_key_exists($entityClass, $this->foundEntityConfigs)
             || array_key_exists($entityName, $this->foundEntityNames)
         ) {
-            throw new \Shopsys\FrameworkBundle\Component\Image\Config\Exception\DuplicateEntityNameException($entityName);
+            throw new DuplicateEntityNameException($entityName);
         }
 
         $types = $this->prepareTypes($entityConfig[ImageConfigDefinition::CONFIG_TYPES]);
@@ -149,22 +157,32 @@ class ImageConfigLoader
         foreach ($sizesConfig as $sizeConfig) {
             $sizeName = $sizeConfig[ImageConfigDefinition::CONFIG_SIZE_NAME];
             $key = Utils::ifNull($sizeName, ImageEntityConfig::WITHOUT_NAME_KEY);
-            $additionalSizes = $this->prepareAdditionalSizes($sizeName ?: '~', $sizeConfig[ImageConfigDefinition::CONFIG_SIZE_ADDITIONAL_SIZES]);
-            if (!array_key_exists($key, $result)) {
-                $result[$key] = new ImageSizeConfig(
-                    $sizeName,
-                    $sizeConfig[ImageConfigDefinition::CONFIG_SIZE_WIDTH],
-                    $sizeConfig[ImageConfigDefinition::CONFIG_SIZE_HEIGHT],
-                    $sizeConfig[ImageConfigDefinition::CONFIG_SIZE_CROP],
-                    $sizeConfig[ImageConfigDefinition::CONFIG_SIZE_OCCURRENCE],
-                    $additionalSizes
-                );
-            } else {
-                throw new \Shopsys\FrameworkBundle\Component\Image\Config\Exception\DuplicateSizeNameException($sizeName);
+            $additionalSizes = $this->prepareAdditionalSizes(
+                $sizeName ?: '~',
+                $sizeConfig[ImageConfigDefinition::CONFIG_SIZE_ADDITIONAL_SIZES]
+            );
+            if (array_key_exists($key, $result)) {
+                throw new DuplicateSizeNameException($sizeName);
             }
+
+            $result[$key] = new ImageSizeConfig(
+                $sizeName,
+                $sizeConfig[ImageConfigDefinition::CONFIG_SIZE_WIDTH],
+                $sizeConfig[ImageConfigDefinition::CONFIG_SIZE_HEIGHT],
+                $sizeConfig[ImageConfigDefinition::CONFIG_SIZE_CROP],
+                $sizeConfig[ImageConfigDefinition::CONFIG_SIZE_OCCURRENCE],
+                $additionalSizes
+            );
         }
         if (!array_key_exists(ImageConfig::ORIGINAL_SIZE_NAME, $result)) {
-            $result[ImageConfig::ORIGINAL_SIZE_NAME] = new ImageSizeConfig(ImageConfig::ORIGINAL_SIZE_NAME, null, null, false, null, []);
+            $result[ImageConfig::ORIGINAL_SIZE_NAME] = new ImageSizeConfig(
+                ImageConfig::ORIGINAL_SIZE_NAME,
+                null,
+                null,
+                false,
+                null,
+                []
+            );
         }
 
         return $result;
@@ -209,11 +227,11 @@ class ImageConfigLoader
         $result = [];
         foreach ($typesConfig as $typeConfig) {
             $typeName = $typeConfig[ImageConfigDefinition::CONFIG_TYPE_NAME];
-            if (!array_key_exists($typeName, $result)) {
-                $result[$typeName] = $this->prepareSizes($typeConfig[ImageConfigDefinition::CONFIG_SIZES]);
-            } else {
-                throw new \Shopsys\FrameworkBundle\Component\Image\Config\Exception\DuplicateTypeNameException($typeName);
+            if (array_key_exists($typeName, $result)) {
+                throw new DuplicateTypeNameException($typeName);
             }
+
+            $result[$typeName] = $this->prepareSizes($typeConfig[ImageConfigDefinition::CONFIG_SIZES]);
         }
 
         return $result;

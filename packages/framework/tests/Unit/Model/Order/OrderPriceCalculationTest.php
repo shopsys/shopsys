@@ -122,14 +122,22 @@ class OrderPriceCalculationTest extends TestCase
             ->setMethods(['roundPriceWithVatByCurrency'])
             ->disableOriginalConstructor()
             ->getMock();
-        $roundingMock->expects($this->any())->method('roundPriceWithVatByCurrency')->willReturnCallback(function (Money $value) {
-            return $value->round(2);
-        });
+        $roundingMock->expects($this->any())->method(
+            'roundPriceWithVatByCurrency'
+        )->willReturnCallback(
+            function (Money $value) {
+                return $value->round(2);
+            }
+        );
 
         $orderItemPriceCalculationMock = $this->createMock(OrderItemPriceCalculation::class);
 
         $priceCalculation = new OrderPriceCalculation($orderItemPriceCalculationMock, $roundingMock);
-        $roundingPrice = $priceCalculation->calculateOrderRoundingPrice($payment, $currency, $orderTotalPrice)->getPriceWithVat();
+        $roundingPrice = $priceCalculation->calculateOrderRoundingPrice(
+            $payment,
+            $currency,
+            $orderTotalPrice
+        )->getPriceWithVat();
 
         $this->assertThat($roundingPrice, new IsMoneyEqual(Money::create('-0.3')));
     }
@@ -151,14 +159,22 @@ class OrderPriceCalculationTest extends TestCase
             ->setMethods(['roundPriceWithVatByCurrency'])
             ->disableOriginalConstructor()
             ->getMock();
-        $roundingMock->expects($this->any())->method('roundPriceWithVatByCurrency')->willReturnCallback(function (Money $value) {
-            return $value->round(2);
-        });
+        $roundingMock->expects($this->any())->method(
+            'roundPriceWithVatByCurrency'
+        )->willReturnCallback(
+            function (Money $value) {
+                return $value->round(2);
+            }
+        );
 
         $orderItemPriceCalculationMock = $this->createMock(OrderItemPriceCalculation::class);
 
         $priceCalculation = new OrderPriceCalculation($orderItemPriceCalculationMock, $roundingMock);
-        $roundingPrice = $priceCalculation->calculateOrderRoundingPrice($payment, $currency, $orderTotalPrice)->getPriceWithVat();
+        $roundingPrice = $priceCalculation->calculateOrderRoundingPrice(
+            $payment,
+            $currency,
+            $orderTotalPrice
+        )->getPriceWithVat();
 
         $this->assertThat($roundingPrice, new IsMoneyEqual(Money::create('0.1')));
     }

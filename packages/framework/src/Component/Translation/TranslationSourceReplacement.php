@@ -64,6 +64,7 @@ class TranslationSourceReplacement
 
     /**
      * Paths relative to any of directories that are scanned for translations
+     *
      * @return string[]
      */
     public function getSourceFilePaths()

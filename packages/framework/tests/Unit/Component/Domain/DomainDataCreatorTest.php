@@ -7,6 +7,7 @@ use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Domain\DomainDataCreator;
 use Shopsys\FrameworkBundle\Component\Domain\Multidomain\MultidomainEntityDataCreator;
+use Shopsys\FrameworkBundle\Component\Setting\Exception\SettingValueNotFoundException;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\FrameworkBundle\Component\Setting\SettingValueRepository;
 use Shopsys\FrameworkBundle\Component\Translation\TranslatableEntityDataCreator;
@@ -73,7 +74,7 @@ class DomainDataCreatorTest extends TestCase
                 if ($domainId === Domain::FIRST_DOMAIN_ID) {
                     return true;
                 }
-                throw new \Shopsys\FrameworkBundle\Component\Setting\Exception\SettingValueNotFoundException();
+                throw new SettingValueNotFoundException();
             });
 
         $domain = new Domain($domainConfigs, $settingMock);
@@ -128,8 +129,18 @@ class DomainDataCreatorTest extends TestCase
 
     public function testCreateNewDomainsDataNewLocale()
     {
-        $domainConfigWithDataCreated = new DomainConfig(Domain::FIRST_DOMAIN_ID, 'http://example.com:8080', 'example', 'cs');
-        $domainConfigWithNewLocale = new DomainConfig(Domain::SECOND_DOMAIN_ID, 'http://example.com:8080', 'example', 'en');
+        $domainConfigWithDataCreated = new DomainConfig(
+            Domain::FIRST_DOMAIN_ID,
+            'http://example.com:8080',
+            'example',
+            'cs'
+        );
+        $domainConfigWithNewLocale = new DomainConfig(
+            Domain::SECOND_DOMAIN_ID,
+            'http://example.com:8080',
+            'example',
+            'en'
+        );
         $domainConfigs = [
             $domainConfigWithDataCreated,
             $domainConfigWithNewLocale,
@@ -143,7 +154,7 @@ class DomainDataCreatorTest extends TestCase
                 if ($domainId === Domain::FIRST_DOMAIN_ID) {
                     return true;
                 }
-                throw new \Shopsys\FrameworkBundle\Component\Setting\Exception\SettingValueNotFoundException();
+                throw new SettingValueNotFoundException();
             });
 
         $domainMock = $this->createMock(Domain::class);

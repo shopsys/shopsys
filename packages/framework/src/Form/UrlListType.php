@@ -7,6 +7,7 @@ use Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\UrlListData;
 use Shopsys\FrameworkBundle\Form\Constraints\UniqueSlugsOnDomains;
+use Shopsys\FrameworkBundle\Form\Exception\MissingRouteNameException;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
@@ -56,7 +57,7 @@ class UrlListType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         if ($options['route_name'] === null) {
-            throw new \Shopsys\FrameworkBundle\Form\Exception\MissingRouteNameException();
+            throw new MissingRouteNameException();
         }
 
         $builder->add('toDelete', FormType::class);
@@ -71,7 +72,10 @@ class UrlListType extends AbstractType
             ],
         ]);
 
-        $friendlyUrlsByDomain = $this->getFriendlyUrlsIndexedByDomain($options['route_name'], (int)$options['entity_id']);
+        $friendlyUrlsByDomain = $this->getFriendlyUrlsIndexedByDomain(
+            $options['route_name'],
+            (int)$options['entity_id']
+        );
 
         foreach ($friendlyUrlsByDomain as $domainId => $friendlyUrls) {
             $builder->get('toDelete')->add($domainId, ChoiceType::class, [

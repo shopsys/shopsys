@@ -36,6 +36,7 @@ class UnitInlineEdit extends AbstractGridInlineEdit
         UnitDataFactoryInterface $unitDataFactory
     ) {
         parent::__construct($unitGridFactory);
+
         $this->unitFacade = $unitFacade;
         $this->formFactory = $formFactory;
         $this->unitDataFactory = $unitDataFactory;

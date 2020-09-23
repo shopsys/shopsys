@@ -52,6 +52,8 @@ class ProductParameterValueDataFactory implements ProductParameterValueDataFacto
     protected function fillFromProductParameterValue(ProductParameterValueData $productParameterValueData, ProductParameterValue $productParameterValue)
     {
         $productParameterValueData->parameter = $productParameterValue->getParameter();
-        $productParameterValueData->parameterValueData = $this->parameterValueDataFactory->createFromParameterValue($productParameterValue->getValue());
+        $productParameterValueData->parameterValueData = $this->parameterValueDataFactory->createFromParameterValue(
+            $productParameterValue->getValue()
+        );
     }
 }

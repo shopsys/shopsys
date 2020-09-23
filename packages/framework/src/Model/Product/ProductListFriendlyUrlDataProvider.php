@@ -48,7 +48,12 @@ class ProductListFriendlyUrlDataProvider implements FriendlyUrlDataProviderInter
             ->from(Category::class, 'c')
             ->join('c.translations', 'ct', Join::WITH, 'ct.locale = :locale')
             ->setParameter('locale', $domainConfig->getLocale())
-            ->leftJoin(FriendlyUrl::class, 'f', Join::WITH, 'c.id = f.entityId AND f.routeName = :routeName AND f.domainId = :domainId')
+            ->leftJoin(
+                FriendlyUrl::class,
+                'f',
+                Join::WITH,
+                'c.id = f.entityId AND f.routeName = :routeName AND f.domainId = :domainId'
+            )
             ->setParameter('routeName', static::ROUTE_NAME)
             ->setParameter('domainId', $domainConfig->getId())
             ->where('f.entityId IS NULL AND ct.name IS NOT NULL');

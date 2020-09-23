@@ -60,7 +60,9 @@ class ZboziFeedItemTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->productPriceCalculationForCustomerUserMock = $this->createMock(ProductPriceCalculationForCustomerUser::class);
+        $this->productPriceCalculationForCustomerUserMock = $this->createMock(
+            ProductPriceCalculationForCustomerUser::class
+        );
         $this->productUrlsBatchLoaderMock = $this->createMock(ProductUrlsBatchLoader::class);
         $this->productParametersBatchLoaderMock = $this->createMock(ProductParametersBatchLoader::class);
         $this->categoryFacadeMock = $this->createMock(CategoryFacade::class);
@@ -91,7 +93,9 @@ class ZboziFeedItemTest extends TestCase
             ->with($this->defaultProduct, $this->defaultDomain)->willReturn('https://example.com/product-1');
 
         $this->categoryFacadeMock->method('getCategoryNamesInPathFromRootToProductMainCategoryOnDomain')
-            ->with($this->defaultProduct, $this->defaultDomain)->willReturn(['category A', 'category B', 'category C']);
+            ->with($this->defaultProduct, $this->defaultDomain)->willReturn(
+                ['category A', 'category B', 'category C']
+            );
     }
 
     /**
@@ -214,7 +218,11 @@ class ZboziFeedItemTest extends TestCase
         $zboziProductDomainData->cpc = Money::create('5.0');
         $zboziProductDomain = new ZboziProductDomain($zboziProductDomainData);
 
-        $zboziFeedItem = $this->zboziFeedItemFactory->create($this->defaultProduct, $zboziProductDomain, $this->defaultDomain);
+        $zboziFeedItem = $this->zboziFeedItemFactory->create(
+            $this->defaultProduct,
+            $zboziProductDomain,
+            $this->defaultDomain
+        );
 
         self::assertThat($zboziFeedItem->getMaxCpc(), new IsMoneyEqual(Money::create(5)));
         self::assertNull($zboziFeedItem->getMaxCpcSearch());
@@ -226,7 +234,11 @@ class ZboziFeedItemTest extends TestCase
         $zboziProductDomainData->cpcSearch = Money::create('5.0');
         $zboziProductDomain = new ZboziProductDomain($zboziProductDomainData);
 
-        $zboziFeedItem = $this->zboziFeedItemFactory->create($this->defaultProduct, $zboziProductDomain, $this->defaultDomain);
+        $zboziFeedItem = $this->zboziFeedItemFactory->create(
+            $this->defaultProduct,
+            $zboziProductDomain,
+            $this->defaultDomain
+        );
 
         self::assertNull($zboziFeedItem->getMaxCpc());
         self::assertThat($zboziFeedItem->getMaxCpcSearch(), new IsMoneyEqual(Money::create(5)));

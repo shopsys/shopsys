@@ -68,7 +68,9 @@ class OrderResolver implements ResolverInterface, AliasedInterface
         try {
             if ($uuid !== null && $customerUser !== null) {
                 return $this->getOrderForCustomerUserByUuid($customerUser, $uuid);
-            } elseif ($urlHash !== null) {
+            }
+
+            if ($urlHash !== null) {
                 return $this->orderFacade->getByUrlHashAndDomain($urlHash, $this->domain->getId());
             }
         } catch (OrderNotFoundException $orderNotFoundException) {

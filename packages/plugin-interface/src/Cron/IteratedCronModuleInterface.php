@@ -13,6 +13,7 @@ use Symfony\Bridge\Monolog\Logger;
  * If the module takes too long to run it will be suspended by sleep() method and will be woken up
  * and re-run next time regardless of the current system time.
  * If you want to process a short task that does not take more than one minute use
+ *
  * @see \Shopsys\Plugin\Cron\SimpleCronModuleInterface.
  */
 interface IteratedCronModuleInterface

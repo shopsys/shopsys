@@ -37,8 +37,8 @@ class TranslationExtension extends AbstractExtension
      * Similar to "trans" filter, the message is not escaped in html but all translation arguments are
      *
      * Helpful for protection from XSS when providing user input as translation argument
-     * @see \Symfony\Bridge\Twig\Extension\TranslationExtension::trans()
      *
+     * @see \Symfony\Bridge\Twig\Extension\TranslationExtension::trans()
      * @param \Twig\Environment $twig
      * @param string $message
      * @param array $arguments
@@ -58,8 +58,8 @@ class TranslationExtension extends AbstractExtension
      * Similar to "transchoice" filter, the message is not escaped in html but all translation arguments are
      *
      * Helpful for protection from XSS when providing user input as translation argument
-     * @see \Symfony\Bridge\Twig\Extension\TranslationExtension::transchoice()
      *
+     * @see \Symfony\Bridge\Twig\Extension\TranslationExtension::transchoice()
      * @param \Twig\Environment $twig
      * @param string $message
      * @param int $count

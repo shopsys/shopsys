@@ -6,6 +6,11 @@ use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Shopsys\FrameworkBundle\Component\DateTimeHelper\DateTimeHelper;
 use Shopsys\FrameworkBundle\Component\Money\Money;
+use Shopsys\FrameworkBundle\Component\Setting\Exception\InvalidArgumentException;
+use Shopsys\FrameworkBundle\Component\Setting\Exception\SettingValueTypeNotMatchValueException;
+use function get_class;
+use function gettype;
+use function is_object;
 
 /**
  * @ORM\Table(name="setting_values")
@@ -30,7 +35,6 @@ class SettingValue
 
     /**
      * @var string
-     *
      * @ORM\Id
      * @ORM\Column(type="string", length=255)
      */
@@ -38,7 +42,6 @@ class SettingValue
 
     /**
      * @var int
-     *
      * @ORM\Id
      * @ORM\Column(type="integer")
      */
@@ -46,14 +49,12 @@ class SettingValue
 
     /**
      * @var string
-     *
      * @ORM\Column(type="text", nullable=true)
      */
     protected $value;
 
     /**
      * @var string
-     *
      * @ORM\Column(type="string", length=8)
      */
     protected $type;
@@ -93,7 +94,7 @@ class SettingValue
     {
         if ($this->value === null && $this->type !== static::TYPE_NULL) {
             $message = 'Setting value type "' . $this->type . '" does not allow null value.';
-            throw new \Shopsys\FrameworkBundle\Component\Setting\Exception\SettingValueTypeNotMatchValueException($message);
+            throw new SettingValueTypeNotMatchValueException($message);
         }
 
         switch ($this->type) {
@@ -140,29 +141,48 @@ class SettingValue
     }
 
     /**
-     * @param \DateTime|\Shopsys\FrameworkBundle\Component\Money\Money|string|int|float|bool|null|mixed $value
+     * @param \DateTime|\Shopsys\FrameworkBundle\Component\Money\Money|string|int|float|bool|mixed|null $value
      * @return string
      */
     protected function getValueType($value)
     {
         if (is_int($value)) {
             return static::TYPE_INTEGER;
-        } elseif (is_float($value)) {
+        }
+
+        if (is_float($value)) {
             return static::TYPE_FLOAT;
-        } elseif (is_bool($value)) {
+        }
+
+        if (is_bool($value)) {
             return static::TYPE_BOOLEAN;
-        } elseif (is_string($value)) {
+        }
+
+        if (is_string($value)) {
             return static::TYPE_STRING;
-        } elseif (is_null($value)) {
+        }
+
+        if ($value === null) {
             return static::TYPE_NULL;
-        } elseif ($value instanceof DateTime) {
+        }
+
+        if ($value instanceof DateTime) {
             return static::TYPE_DATETIME;
-        } elseif ($value instanceof Money) {
+        }
+
+        if ($value instanceof Money) {
             return static::TYPE_MONEY;
         }
 
-        $message = sprintf('Setting value type of "%s" is unsupported.', \is_object($value) ? \get_class($value) : \gettype($value))
-            . sprintf(' Supported is "%s", "%s", string, integer, float, boolean or null.', DateTime::class, Money::class);
-        throw new \Shopsys\FrameworkBundle\Component\Setting\Exception\InvalidArgumentException($message);
+        $message = sprintf(
+            'Setting value type of "%s" is unsupported.',
+            is_object($value) ? get_class($value) : gettype($value)
+        )
+            . sprintf(
+                ' Supported is "%s", "%s", string, integer, float, boolean or null.',
+                DateTime::class,
+                Money::class
+            );
+        throw new InvalidArgumentException($message);
     }
 }

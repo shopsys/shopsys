@@ -41,7 +41,6 @@ class ResetPasswordMail implements MessageFactoryInterface
     /**
      * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplate $template
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
-     *
      * @return \Shopsys\FrameworkBundle\Model\Mail\MessageData
      */
     public function createMessage(MailTemplate $template, $customerUser)
@@ -60,7 +59,6 @@ class ResetPasswordMail implements MessageFactoryInterface
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
-     *
      * @return string[]
      */
     protected function getBodyValuesIndexedByVariableName(CustomerUser $customerUser)
@@ -73,7 +71,6 @@ class ResetPasswordMail implements MessageFactoryInterface
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
-     *
      * @return string
      */
     protected function getVariableNewPasswordUrl(CustomerUser $customerUser)
@@ -94,7 +91,6 @@ class ResetPasswordMail implements MessageFactoryInterface
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
-     *
      * @return string[]
      */
     protected function getSubjectValuesIndexedByVariableName(CustomerUser $customerUser)

@@ -166,7 +166,10 @@ class PricingGroupFacade
             $newPricingGroup = null;
         }
 
-        if ($newPricingGroup !== null && $this->pricingGroupSettingFacade->isPricingGroupDefaultOnSelectedDomain($oldPricingGroup)) {
+        if (
+            $newPricingGroup !== null
+            && $this->pricingGroupSettingFacade->isPricingGroupDefaultOnSelectedDomain($oldPricingGroup)
+        ) {
             $this->pricingGroupSettingFacade->setDefaultPricingGroupForSelectedDomain($newPricingGroup);
         }
 
@@ -221,7 +224,6 @@ class PricingGroupFacade
     /**
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
      * @param string $eventType
-     *
      * @see \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupEvent class
      */
     protected function dispatchPricingGroupEvent(PricingGroup $pricingGroup, string $eventType): void

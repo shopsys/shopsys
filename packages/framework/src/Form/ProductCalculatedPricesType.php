@@ -52,7 +52,9 @@ class ProductCalculatedPricesType extends AbstractType
         $product = $options['product'];
 
         if ($product !== null) {
-            $productSellingPricesIndexedByDomainId = $this->productFacade->getAllProductSellingPricesIndexedByDomainId($product);
+            $productSellingPricesIndexedByDomainId = $this->productFacade->getAllProductSellingPricesIndexedByDomainId(
+                $product
+            );
             $view->vars['productSellingPricesIndexedByDomainId'] = $productSellingPricesIndexedByDomainId;
         } else {
             $view->vars['pricingGroupsIndexedByDomainId'] = $this->pricingGroupFacade->getAllIndexedByDomainId();

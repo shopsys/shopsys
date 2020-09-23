@@ -67,7 +67,10 @@ class ParameterFilterChoiceRepository
         $rows = $productsQueryBuilder->getQuery()->execute(null, GroupedScalarHydrator::HYDRATION_MODE);
 
         $visibleParametersIndexedById = $this->getVisibleParametersIndexedByIdOrderedByName($rows, $locale);
-        $parameterValuesIndexedByParameterId = $this->getParameterValuesIndexedByParameterIdOrderedByValueText($rows, $locale);
+        $parameterValuesIndexedByParameterId = $this->getParameterValuesIndexedByParameterIdOrderedByValueText(
+            $rows,
+            $locale
+        );
         $parameterFilterChoices = [];
 
         foreach ($visibleParametersIndexedById as $parameterId => $parameter) {

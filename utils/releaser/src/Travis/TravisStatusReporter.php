@@ -11,12 +11,14 @@ final class TravisStatusReporter
 {
     /**
      * Packages that are not on Packagist, so unable to found by API, but also running on Travis
+     *
      * @var string[]
      */
     private const EXTRA_PACKAGES = [];
 
     /**
      * Packages that are not tested on Travis - old packages or forks
+     *
      * @var string[]
      */
     private const EXCLUDED_PACKAGES = [

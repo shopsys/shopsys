@@ -103,7 +103,9 @@ class FileUploadType extends AbstractType
                     'entry_options' => [
                         'constraints' => [
                             new Constraints\NotBlank(['message' => 'Please enter the filename']),
-                            new Constraints\Length(['max' => 245, 'maxMessage' => 'File name cannot be longer than {{ limit }} characters']),
+                            new Constraints\Length(
+                                ['max' => 245, 'maxMessage' => 'File name cannot be longer than {{ limit }} characters']
+                            ),
                         ],
                     ],
                 ])
@@ -132,7 +134,10 @@ class FileUploadType extends AbstractType
             return [];
         }
 
-        $uploadedFiles = $this->uploadedFileFacade->getUploadedFilesByEntity($options['entity'], $options['file_type']);
+        $uploadedFiles = $this->uploadedFileFacade->getUploadedFilesByEntity(
+            $options['entity'],
+            $options['file_type']
+        );
 
         $uploadedFilesIndexedById = [];
         foreach ($uploadedFiles as $uploadedFile) {
@@ -152,7 +157,9 @@ class FileUploadType extends AbstractType
             return false;
         }
 
-        $fileEntityConfig = $this->uploadedFileConfig->getUploadedFileEntityConfigByClass($options['file_entity_class']);
+        $fileEntityConfig = $this->uploadedFileConfig->getUploadedFileEntityConfigByClass(
+            $options['file_entity_class']
+        );
         $fileTypeConfig = $fileEntityConfig->getTypeByName($options['file_type']);
 
         return $fileTypeConfig->isMultiple();

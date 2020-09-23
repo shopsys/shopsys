@@ -6,6 +6,7 @@ namespace Tests\FrameworkBundle\Unit\Command;
 
 use PHPUnit\Framework\TestCase;
 use Redis;
+use RedisException;
 use Shopsys\FrameworkBundle\Command\CheckRedisCommand;
 use Shopsys\FrameworkBundle\Component\Redis\RedisFacade;
 use Symfony\Component\Console\Input\StringInput;
@@ -20,9 +21,13 @@ final class CheckRedisCommandTest extends TestCase
     {
         yield [true, new RedisFacade([])];
         yield [true, new RedisFacade([$this->createRedisMockExpectingPing()])];
-        yield [true, new RedisFacade([$this->createRedisMockExpectingPing(), $this->createRedisMockExpectingPing(), $this->createRedisMockExpectingPing()])];
+        yield [true, new RedisFacade(
+            [$this->createRedisMockExpectingPing(), $this->createRedisMockExpectingPing(), $this->createRedisMockExpectingPing()]
+        )];
         yield [false, new RedisFacade([$this->createRedisMockThrowingException()])];
-        yield [false, new RedisFacade([$this->createRedisMockExpectingPing(), $this->createRedisMockThrowingException()])];
+        yield [false, new RedisFacade(
+            [$this->createRedisMockExpectingPing(), $this->createRedisMockThrowingException()]
+        )];
     }
 
     /**
@@ -38,7 +43,10 @@ final class CheckRedisCommandTest extends TestCase
         $returnCode = $checkRedisCommand->run(new StringInput(''), $output);
 
         $this->assertSame($expectSuccess ? 0 : 1, $returnCode);
-        $this->assertStringContainsString($expectSuccess ? 'Redis is available' : 'Redis is not available', $output->fetch());
+        $this->assertStringContainsString(
+            $expectSuccess ? 'Redis is available' : 'Redis is not available',
+            $output->fetch()
+        );
     }
 
     /**
@@ -60,7 +68,7 @@ final class CheckRedisCommandTest extends TestCase
     {
         /** @var \Redis|\PHPUnit\Framework\MockObject\MockObject $redisMock */
         $redisMock = $this->createMock(Redis::class);
-        $redisMock->method('ping')->willThrowException(new \RedisException());
+        $redisMock->method('ping')->willThrowException(new RedisException());
 
         return $redisMock;
     }

@@ -36,7 +36,9 @@ class Version20191107162719 extends AbstractMigration
 
     private function migrateCurrentVats(): void
     {
-        $currentVats = $this->sql('SELECT id, name, percent, replace_with_id FROM vats WHERE domain_id = 1')->fetchAll();
+        $currentVats = $this->sql(
+            'SELECT id, name, percent, replace_with_id FROM vats WHERE domain_id = 1'
+        )->fetchAll();
 
         foreach ($this->getAllDomainIds() as $domainId) {
             foreach ($currentVats as $currentVat) {
@@ -67,7 +69,9 @@ class Version20191107162719 extends AbstractMigration
 
     private function migrateReplaceWithColumnData(): void
     {
-        $vatsForMigrateReplaceWithColumn = $this->sql('SELECT id, replace_with_id, domain_id FROM vats WHERE replace_with_id is not null and domain_id > 1')->fetchAll();
+        $vatsForMigrateReplaceWithColumn = $this->sql(
+            'SELECT id, replace_with_id, domain_id FROM vats WHERE replace_with_id is not null and domain_id > 1'
+        )->fetchAll();
 
         foreach ($vatsForMigrateReplaceWithColumn as $vatForMigrateReplaceWithColumn) {
             $newVatId = $this
@@ -86,7 +90,11 @@ class Version20191107162719 extends AbstractMigration
 
     private function migrateCurrentVatSetting(): void
     {
-        $currentDefaultVat = $this->sql('SELECT value FROM setting_values WHERE name = \'defaultVatId\' AND domain_id = 0;')->fetchColumn(0);
+        $currentDefaultVat = $this->sql(
+            'SELECT value FROM setting_values WHERE name = \'defaultVatId\' AND domain_id = 0;'
+        )->fetchColumn(
+            0
+        );
 
         foreach ($this->getAllDomainIds() as $domainId) {
             $newVatId = $this

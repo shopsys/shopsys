@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Form;
 
+use Shopsys\FrameworkBundle\Component\FileUpload\Exception\FileUploadException;
 use Shopsys\FrameworkBundle\Component\FileUpload\FileUpload;
 use Shopsys\FrameworkBundle\Form\Constraints\FileExtensionMaxLength;
 use Symfony\Component\Form\AbstractType;
@@ -79,6 +80,7 @@ class AbstractFileUploadType extends AbstractType implements DataTransformerInte
     public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         parent::buildView($view, $form, $options);
+
         $view->vars['info_text'] = $options['info_text'];
     }
 
@@ -101,7 +103,9 @@ class AbstractFileUploadType extends AbstractType implements DataTransformerInte
                 'entry_type' => HiddenType::class,
                 'allow_add' => true,
                 'constraints' => [
-                    new Constraints\Callback(['callback' => [$this, 'validateUploadedFiles'], 'payload' => $fileConstraints]),
+                    new Constraints\Callback(
+                        ['callback' => [$this, 'validateUploadedFiles'], 'payload' => $fileConstraints]
+                    ),
                 ],
             ])
             ->add('uploadedFilenames', CollectionType::class, [
@@ -110,7 +114,9 @@ class AbstractFileUploadType extends AbstractType implements DataTransformerInte
                 'entry_options' => [
                     'constraints' => [
                         new Constraints\NotBlank(['message' => 'Please enter the filename']),
-                        new Constraints\Length(['max' => 245, 'maxMessage' => 'File name cannot be longer than {{ limit }} characters']),
+                        new Constraints\Length(
+                            ['max' => 245, 'maxMessage' => 'File name cannot be longer than {{ limit }} characters']
+                        ),
                     ],
                 ],
             ]);
@@ -144,19 +150,21 @@ class AbstractFileUploadType extends AbstractType implements DataTransformerInte
     public function onPreSubmit(FormEvent $event)
     {
         $data = $event->getData();
-        if (is_array($data) && array_key_exists('file', $data) && is_array($data['file'])) {
-            $fallbackFiles = $data['file'];
-            foreach ($fallbackFiles as $file) {
-                if ($file instanceof UploadedFile) {
-                    try {
-                        $data['uploadedFiles'][] = $this->fileUpload->upload($file);
-                    } catch (\Shopsys\FrameworkBundle\Component\FileUpload\Exception\FileUploadException $ex) {
-                        $event->getForm()->addError(new FormError(t('File upload failed')));
-                    }
+        if (!is_array($data) || !array_key_exists('file', $data) || !is_array($data['file'])) {
+            return;
+        }
+
+        $fallbackFiles = $data['file'];
+        foreach ($fallbackFiles as $file) {
+            if ($file instanceof UploadedFile) {
+                try {
+                    $data['uploadedFiles'][] = $this->fileUpload->upload($file);
+                } catch (FileUploadException $ex) {
+                    $event->getForm()->addError(new FormError(t('File upload failed')));
                 }
             }
-
-            $event->setData($data);
         }
+
+        $event->setData($data);
     }
 }

@@ -3,6 +3,7 @@
 namespace Shopsys\FrameworkBundle\Model\Product\Collection;
 
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
+use Shopsys\FrameworkBundle\Model\Product\Collection\Exception\ProductParametersNotLoadedException;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 
 class ProductParametersBatchLoader
@@ -31,7 +32,10 @@ class ProductParametersBatchLoader
      */
     public function loadForProducts(array $products, DomainConfig $domainConfig): void
     {
-        $parametersByProductIdAndName = $this->productCollectionFacade->getProductParameterValuesIndexedByProductIdAndParameterName($products, $domainConfig);
+        $parametersByProductIdAndName = $this->productCollectionFacade->getProductParameterValuesIndexedByProductIdAndParameterName(
+            $products,
+            $domainConfig
+        );
 
         foreach ($products as $product) {
             $key = $this->getKey($product, $domainConfig);
@@ -50,7 +54,7 @@ class ProductParametersBatchLoader
     {
         $key = $this->getKey($product, $domainConfig);
         if (!array_key_exists($key, $this->loadedProductParametersByName)) {
-            throw new \Shopsys\FrameworkBundle\Model\Product\Collection\Exception\ProductParametersNotLoadedException($product, $domainConfig);
+            throw new ProductParametersNotLoadedException($product, $domainConfig);
         }
 
         return $this->loadedProductParametersByName[$key];

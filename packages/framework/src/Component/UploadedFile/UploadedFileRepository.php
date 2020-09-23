@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Component\UploadedFile;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
+use Shopsys\FrameworkBundle\Component\UploadedFile\Exception\FileNotFoundException;
 
 class UploadedFileRepository
 {
@@ -76,7 +77,7 @@ class UploadedFileRepository
 
         if ($uploadedFile === null) {
             $message = 'UploadedFile with ID ' . $uploadedFileId . ' does not exist.';
-            throw new \Shopsys\FrameworkBundle\Component\UploadedFile\Exception\FileNotFoundException($message);
+            throw new FileNotFoundException($message);
         }
 
         return $uploadedFile;
@@ -99,7 +100,7 @@ class UploadedFileRepository
         );
 
         if ($uploadedFile === null) {
-            throw new \Shopsys\FrameworkBundle\Component\UploadedFile\Exception\FileNotFoundException(
+            throw new FileNotFoundException(
                 sprintf(
                     'UploadedFile with ID "%s", slug "%s" and extension "%s" does not exist.',
                     $uploadedFileId,

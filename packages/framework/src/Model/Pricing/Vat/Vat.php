@@ -14,7 +14,6 @@ class Vat
 
     /**
      * @var int
-     *
      * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
@@ -23,21 +22,18 @@ class Vat
 
     /**
      * @var string
-     *
      * @ORM\Column(type="string", length=50)
      */
     protected $name;
 
     /**
      * @var string
-     *
      * @ORM\Column(type="decimal", precision=20, scale=4)
      */
     protected $percent;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat|null
-     *
      * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat")
      * @ORM\JoinColumn(nullable=true)
      */
@@ -45,7 +41,6 @@ class Vat
 
     /**
      * @var int
-     *
      * @ORM\Column(type="integer")
      */
     protected $domainId;

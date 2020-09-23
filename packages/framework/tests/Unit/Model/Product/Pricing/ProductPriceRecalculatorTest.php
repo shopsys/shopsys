@@ -18,8 +18,12 @@ class ProductPriceRecalculatorTest extends TestCase
 {
     public function testRunImmediatelyRecalculations()
     {
-        $productMock = $this->getMockBuilder(Product::class)->setMethods(null)->disableOriginalConstructor()->getMock();
-        $pricingGroupMock = $this->getMockBuilder(PricingGroup::class)->setMethods(null)->disableOriginalConstructor()->getMock();
+        $productMock = $this->getMockBuilder(Product::class)->setMethods(
+            null
+        )->disableOriginalConstructor()->getMock();
+        $pricingGroupMock = $this->getMockBuilder(PricingGroup::class)->setMethods(
+            null
+        )->disableOriginalConstructor()->getMock();
         $emMock = $this->getMockBuilder(EntityManager::class)
             ->disableOriginalConstructor()
             ->setMethods(['clear', 'flush'])
@@ -38,7 +42,11 @@ class ProductPriceRecalculatorTest extends TestCase
             ->disableOriginalConstructor()
             ->setMethods(['getProductsForImmediateRecalculation'])
             ->getMock();
-        $productPriceRecalculationSchedulerMock->expects($this->once())->method('getProductsForImmediateRecalculation')->willReturn([$productMock]);
+        $productPriceRecalculationSchedulerMock->expects($this->once())->method(
+            'getProductsForImmediateRecalculation'
+        )->willReturn(
+            [$productMock]
+        );
         $pricingGroupFacadeMock = $this->getMockBuilder(PricingGroupFacade::class)
             ->disableOriginalConstructor()
             ->setMethods(['getAll'])

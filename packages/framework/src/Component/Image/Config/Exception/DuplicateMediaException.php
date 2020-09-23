@@ -13,6 +13,7 @@ class DuplicateMediaException extends Exception implements ImageConfigException
     public function __construct(string $media, ?Exception $previous = null)
     {
         $message = sprintf('Additional size media "%s" is not unique.', $media);
+
         parent::__construct($message, 0, $previous);
     }
 }

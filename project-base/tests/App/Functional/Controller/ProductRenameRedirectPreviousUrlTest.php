@@ -45,14 +45,22 @@ class ProductRenameRedirectPreviousUrlTest extends FunctionalTestCase
         /** @var \App\Model\Product\Product $product */
         $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . self::TESTED_PRODUCT_ID);
 
-        $previousFriendlyUrlSlug = $this->friendlyUrlFacade->findMainFriendlyUrl(Domain::FIRST_DOMAIN_ID, 'front_product_detail', self::TESTED_PRODUCT_ID)->getSlug();
+        $previousFriendlyUrlSlug = $this->friendlyUrlFacade->findMainFriendlyUrl(
+            Domain::FIRST_DOMAIN_ID,
+            'front_product_detail',
+            self::TESTED_PRODUCT_ID
+        )->getSlug();
 
         $productData = $this->productDataFactory->createFromProduct($product);
         $productData->name[$this->domain->getDomainConfigById(Domain::FIRST_DOMAIN_ID)->getLocale()] = Text::asciify();
 
         $this->productFacade->edit(self::TESTED_PRODUCT_ID, $productData);
 
-        $overWriteDomainUrl = preg_replace('#^https?://#', '', $this->getContainer()->getParameter('overwrite_domain_url'));
+        $overWriteDomainUrl = preg_replace(
+            '#^https?://#',
+            '',
+            $this->getContainer()->getParameter('overwrite_domain_url')
+        );
 
         $client = $this->findClient(true, null, null, [], ['HTTP_HOST' => $overWriteDomainUrl]);
         $client->request('GET', '/' . $previousFriendlyUrlSlug);

@@ -14,6 +14,8 @@ use PhpParser\Node\Expr\MethodCall;
 use PhpParser\Node\Name;
 use PhpParser\NodeTraverser;
 use PhpParser\NodeVisitor;
+use Shopsys\FrameworkBundle\Component\Translation\Exception\ExtractionException;
+use Shopsys\FrameworkBundle\Component\Translation\Exception\MessageIdArgumentNotPresent;
 use SplFileInfo;
 use Twig_Node;
 
@@ -114,10 +116,13 @@ class PhpFileExtractor implements FileVisitorInterface, NodeVisitor
         $messageIdArgumentIndex = $this->transMethodSpecifications[$methodName]->getMessageIdArgumentIndex();
 
         if (!isset($node->args[$messageIdArgumentIndex])) {
-            throw new \Shopsys\FrameworkBundle\Component\Translation\Exception\MessageIdArgumentNotPresent();
+            throw new MessageIdArgumentNotPresent();
         }
 
-        return PhpParserNodeHelper::getConcatenatedStringValue($node->args[$messageIdArgumentIndex]->value, $this->file);
+        return PhpParserNodeHelper::getConcatenatedStringValue(
+            $node->args[$messageIdArgumentIndex]->value,
+            $this->file
+        );
     }
 
     /**
@@ -130,10 +135,12 @@ class PhpFileExtractor implements FileVisitorInterface, NodeVisitor
         $domainArgumentIndex = $this->transMethodSpecifications[$methodName]->getDomainArgumentIndex();
 
         if ($domainArgumentIndex !== null && isset($node->args[$domainArgumentIndex])) {
-            return PhpParserNodeHelper::getConcatenatedStringValue($node->args[$domainArgumentIndex]->value, $this->file);
-        } else {
-            return static::DEFAULT_MESSAGE_DOMAIN;
+            return PhpParserNodeHelper::getConcatenatedStringValue(
+                $node->args[$domainArgumentIndex]->value,
+                $this->file
+            );
         }
+        return static::DEFAULT_MESSAGE_DOMAIN;
     }
 
     /**
@@ -145,7 +152,7 @@ class PhpFileExtractor implements FileVisitorInterface, NodeVisitor
         if ($node instanceof MethodCall || $node instanceof FuncCall) {
             try {
                 $methodName = $this->getNormalizedMethodName($this->getNodeName($node));
-            } catch (\Shopsys\FrameworkBundle\Component\Translation\Exception\ExtractionException $ex) {
+            } catch (ExtractionException $ex) {
                 return false;
             }
 
@@ -181,7 +188,10 @@ class PhpFileExtractor implements FileVisitorInterface, NodeVisitor
         $docComment = $this->getDocComment($node);
 
         if ($docComment !== null) {
-            return $this->docParser->parse($docComment->getText(), 'file ' . $this->file . ' near line ' . $node->getLine());
+            return $this->docParser->parse(
+                $docComment->getText(),
+                'file ' . $this->file . ' near line ' . $node->getLine()
+            );
         }
 
         return [];
@@ -221,11 +231,12 @@ class PhpFileExtractor implements FileVisitorInterface, NodeVisitor
     {
         if ($node instanceof MethodCall) {
             return (string)$node->name;
-        } elseif ($node instanceof FuncCall && $node->name instanceof Name) {
-            return (string)$node->name;
-        } else {
-            throw new \Shopsys\FrameworkBundle\Component\Translation\Exception\ExtractionException('Unable to resolve node name');
         }
+
+        if ($node instanceof FuncCall && $node->name instanceof Name) {
+            return (string)$node->name;
+        }
+        throw new ExtractionException('Unable to resolve node name');
     }
 
     /**

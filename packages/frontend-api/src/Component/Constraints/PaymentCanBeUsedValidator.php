@@ -11,6 +11,7 @@ use Shopsys\FrameworkBundle\Model\Payment\PaymentPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
+use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
 class PaymentCanBeUsedValidator extends ConstraintValidator
 {
@@ -59,7 +60,7 @@ class PaymentCanBeUsedValidator extends ConstraintValidator
     public function validate($value, Constraint $constraint): void
     {
         if (!$constraint instanceof PaymentCanBeUsed) {
-            throw new \Symfony\Component\Validator\Exception\UnexpectedTypeException($constraint, PaymentCanBeUsed::class);
+            throw new UnexpectedTypeException($constraint, PaymentCanBeUsed::class);
         }
         // Field types and content is assured by GraphQL type definition
         $uuid = $value['uuid'];
@@ -73,7 +74,11 @@ class PaymentCanBeUsedValidator extends ConstraintValidator
                 throw new PaymentNotFoundException('Payment is disabled on domain');
             }
         } catch (PaymentNotFoundException $exception) {
-            $this->addViolationWithCodeToContext($constraint->paymentNotFoundMessage, PaymentCanBeUsed::PAYMENT_NOT_FOUND_ERROR, $uuid);
+            $this->addViolationWithCodeToContext(
+                $constraint->paymentNotFoundMessage,
+                PaymentCanBeUsed::PAYMENT_NOT_FOUND_ERROR,
+                $uuid
+            );
             return;
         }
 
@@ -83,12 +88,18 @@ class PaymentCanBeUsedValidator extends ConstraintValidator
             $this->domain->getId()
         );
 
-        if (!$paymentPrice->getPriceWithoutVat()->equals($priceWithoutVat) ||
-            !$paymentPrice->getPriceWithVat()->equals($priceWithVat) ||
-            !$paymentPrice->getVatAmount()->equals($vatAmount)
+        if ($paymentPrice->getPriceWithoutVat()->equals($priceWithoutVat) &&
+            $paymentPrice->getPriceWithVat()->equals($priceWithVat) &&
+            $paymentPrice->getVatAmount()->equals($vatAmount)
         ) {
-            $this->addViolationWithCodeToContext($constraint->pricesDoesNotMatchMessage, PaymentCanBeUsed::PRICES_DOES_NOT_MATCH_ERROR, $uuid);
+            return;
         }
+
+        $this->addViolationWithCodeToContext(
+            $constraint->pricesDoesNotMatchMessage,
+            PaymentCanBeUsed::PRICES_DOES_NOT_MATCH_ERROR,
+            $uuid
+        );
     }
 
     /**

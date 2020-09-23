@@ -5,9 +5,11 @@ namespace Shopsys\FrameworkBundle\Controller\Admin;
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Domain\DomainFacade;
+use Shopsys\FrameworkBundle\Component\FileUpload\Exception\MoveToFolderFailedException;
 use Shopsys\FrameworkBundle\Component\FlashMessage\ErrorExtractor;
 use Shopsys\FrameworkBundle\Component\Grid\ArrayDataSource;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
+use Shopsys\FrameworkBundle\Component\Image\Processing\Exception\FileIsNotSupportedImageException;
 use Shopsys\FrameworkBundle\Form\Admin\Domain\DomainFormType;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -83,9 +85,8 @@ class DomainController extends AdminBaseController
         $referer = $request->server->get('HTTP_REFERER');
         if ($referer === null) {
             return $this->redirectToRoute('admin_default_dashboard');
-        } else {
-            return $this->redirect($referer);
         }
+        return $this->redirect($referer);
     }
 
     /**
@@ -140,9 +141,9 @@ class DomainController extends AdminBaseController
                 }
 
                 return new JsonResponse(['result' => 'valid']);
-            } catch (\Shopsys\FrameworkBundle\Component\Image\Processing\Exception\FileIsNotSupportedImageException $ex) {
+            } catch (FileIsNotSupportedImageException $ex) {
                 $this->addErrorFlash(t('File type not supported.'));
-            } catch (\Shopsys\FrameworkBundle\Component\FileUpload\Exception\MoveToFolderFailedException $ex) {
+            } catch (MoveToFolderFailedException $ex) {
                 $this->addErrorFlash(t('File upload failed, try again please.'));
             }
         }

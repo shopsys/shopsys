@@ -13,6 +13,7 @@ use Shopsys\FrameworkBundle\Model\Advert\Advert;
 use Shopsys\FrameworkBundle\Model\Advert\AdvertDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Advert\AdvertFacade;
 use Shopsys\FrameworkBundle\Model\Advert\AdvertPositionRegistry;
+use Shopsys\FrameworkBundle\Model\Advert\Exception\AdvertNotFoundException;
 use Shopsys\FrameworkBundle\Twig\ImageExtension;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -124,7 +125,9 @@ class AdvertController extends AdminBaseController
             $this->addErrorFlash(t('Please check the correctness of all data filled.'));
         }
 
-        $this->breadcrumbOverrider->overrideLastItem(t('Editing advertising - %name%', ['%name%' => $advert->getName()]));
+        $this->breadcrumbOverrider->overrideLastItem(
+            t('Editing advertising - %name%', ['%name%' => $advert->getName()])
+        );
 
         return $this->render('@ShopsysFramework/Admin/Content/Advert/edit.html.twig', [
             'form' => $form->createView(),
@@ -244,7 +247,7 @@ class AdvertController extends AdminBaseController
                     'name' => $fullName,
                 ]
             );
-        } catch (\Shopsys\FrameworkBundle\Model\Advert\Exception\AdvertNotFoundException $ex) {
+        } catch (AdvertNotFoundException $ex) {
             $this->addErrorFlash(t('Selected advertisement doesn\'t exist.'));
         }
 

@@ -69,7 +69,7 @@ class IndexRepository
     public function deleteIndexByIndexDefinition(IndexDefinition $indexDefinition): void
     {
         $indexes = $this->elasticsearchClient->indices();
-        foreach ($indexes->getAliases() as $indexName => list('aliases' => $aliases)) {
+        foreach ($indexes->getAliases() as $indexName => ['aliases' => $aliases]) {
             if (array_key_exists($indexDefinition->getIndexAlias(), $aliases)) {
                 $this->deleteIndex($indexName);
             }
@@ -179,7 +179,7 @@ class IndexRepository
         $indexes = $this->elasticsearchClient->indices();
 
         $indexesWithAlias = array_keys($indexes->getAlias(['name' => $aliasName]));
-        if (empty($indexesWithAlias)) {
+        if (count($indexesWithAlias) === 0) {
             throw ElasticsearchIndexException::noIndexFoundForAlias($aliasName);
         }
 

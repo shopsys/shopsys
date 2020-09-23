@@ -2,6 +2,8 @@
 
 namespace Shopsys\FrameworkBundle\Component\Image\Config;
 
+use Shopsys\FrameworkBundle\Component\Image\Config\Exception\ImageSizeNotFoundException;
+use Shopsys\FrameworkBundle\Component\Image\Config\Exception\ImageTypeNotFoundException;
 use Shopsys\FrameworkBundle\Component\Utils\Utils;
 
 class ImageEntityConfig
@@ -97,9 +99,8 @@ class ImageEntityConfig
     {
         if (array_key_exists($type, $this->sizeConfigsByType)) {
             return $this->sizeConfigsByType[$type];
-        } else {
-            throw new \Shopsys\FrameworkBundle\Component\Image\Config\Exception\ImageTypeNotFoundException($this->entityClass, $type);
         }
+        throw new ImageTypeNotFoundException($this->entityClass, $type);
     }
 
     /**
@@ -135,9 +136,8 @@ class ImageEntityConfig
         $key = Utils::ifNull($type, self::WITHOUT_NAME_KEY);
         if (array_key_exists($key, $this->multipleByType)) {
             return $this->multipleByType[$key];
-        } else {
-            throw new \Shopsys\FrameworkBundle\Component\Image\Config\Exception\ImageTypeNotFoundException($this->entityClass, $type);
         }
+        throw new ImageTypeNotFoundException($this->entityClass, $type);
     }
 
     /**
@@ -150,8 +150,7 @@ class ImageEntityConfig
         $key = Utils::ifNull($sizeName, self::WITHOUT_NAME_KEY);
         if (array_key_exists($key, $sizes)) {
             return $sizes[$key];
-        } else {
-            throw new \Shopsys\FrameworkBundle\Component\Image\Config\Exception\ImageSizeNotFoundException($this->entityClass, $sizeName);
         }
+        throw new ImageSizeNotFoundException($this->entityClass, $sizeName);
     }
 }

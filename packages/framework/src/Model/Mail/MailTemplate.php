@@ -29,42 +29,36 @@ class MailTemplate
 
     /**
      * @var string
-     *
      * @ORM\Column(type="string", length=255)
      */
     protected $name;
 
     /**
      * @var int
-     *
      * @ORM\Column(type="integer")
      */
     protected $domainId;
 
     /**
      * @var string|null
-     *
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     protected $bccEmail;
 
     /**
      * @var string|null
-     *
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     protected $subject;
 
     /**
      * @var string|null
-     *
      * @ORM\Column(type="text", nullable=true)
      */
     protected $body;
 
     /**
      * @var bool
-     *
      * @ORM\Column(type="boolean")
      */
     protected $sendMail;

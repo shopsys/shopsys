@@ -107,7 +107,15 @@ class PersonalInfoFormTypeTest extends TypeTestCase
     {
         return [
             new ValidatorExtension(Validation::createValidator()),
-            new PreloadedExtension([new PersonalInfoFormType($this->countryFacade, $this->heurekaFacade, $this->domain, $this->currentCustomerUser)], []),
+            new PreloadedExtension(
+                [new PersonalInfoFormType(
+                    $this->countryFacade,
+                    $this->heurekaFacade,
+                    $this->domain,
+                    $this->currentCustomerUser
+                )],
+                []
+            ),
         ];
     }
 
@@ -125,6 +133,7 @@ class PersonalInfoFormTypeTest extends TypeTestCase
         $this->currentCustomerUser = $this->createMock(CurrentCustomerUser::class);
 
         $this->heurekaFacade = $this->createMock(HeurekaFacade::class);
+
         parent::setUp();
     }
 
@@ -133,11 +142,9 @@ class PersonalInfoFormTypeTest extends TypeTestCase
      */
     private function createPersonalInfoForm(): FormInterface
     {
-        $personalInfoForm = $this->factory->create(PersonalInfoFormType::class, null, [
+        return $this->factory->create(PersonalInfoFormType::class, null, [
             'domain_id' => 1,
         ]);
-
-        return $personalInfoForm;
     }
 
     private function disableHeurekaShopCertification(): void

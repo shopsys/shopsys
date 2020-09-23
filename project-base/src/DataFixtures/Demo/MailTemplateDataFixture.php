@@ -55,7 +55,12 @@ class MailTemplateDataFixture extends AbstractReferenceFixture
         foreach ($this->domain->getAll() as $domainConfig) {
             $domainId = $domainConfig->getId();
             $locale = $domainConfig->getLocale();
-            $mailTemplateData->subject = t('Thank you for your order no. {number} placed at {date}', [], 'dataFixtures', $locale);
+            $mailTemplateData->subject = t(
+                'Thank you for your order no. {number} placed at {date}',
+                [],
+                'dataFixtures',
+                $locale
+            );
             $mailTemplateData->body = t('Dear customer,<br /><br />'
                 . 'Your order has been placed successfully.<br /><br />'
                 . 'You will be contacted when the order state changes.<br />'

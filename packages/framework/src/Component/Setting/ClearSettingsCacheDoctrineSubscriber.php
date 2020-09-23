@@ -28,7 +28,11 @@ class ClearSettingsCacheDoctrineSubscriber implements EventSubscriber
     {
         $class = $args->getEntityClass();
 
-        if ($args->clearsAllEntities() || $class === SettingValue::class || is_subclass_of($class, SettingValue::class)) {
+        if (
+            $args->clearsAllEntities()
+            || $class === SettingValue::class
+            || is_subclass_of($class, SettingValue::class)
+        ) {
             $this->setting->clearCache();
         }
     }

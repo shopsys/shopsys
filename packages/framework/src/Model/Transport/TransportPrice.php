@@ -15,7 +15,6 @@ class TransportPrice
 {
     /**
      * @var \Shopsys\FrameworkBundle\Model\Transport\Transport
-     *
      * @ORM\Id
      * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Transport\Transport", inversedBy="prices")
      * @ORM\JoinColumn(nullable=false)
@@ -24,14 +23,12 @@ class TransportPrice
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\Money\Money
-     *
      * @ORM\Column(type="money", precision=20, scale=6)
      */
     protected $price;
 
     /**
      * @var int
-     *
      * @ORM\Id
      * @ORM\Column(type="integer")
      */

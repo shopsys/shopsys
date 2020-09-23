@@ -12,7 +12,7 @@ class HeurekaDeliveryFeedItemFactory
     {
         foreach (['id', 'stockQuantity'] as $requiredKey) {
             if (!array_key_exists($requiredKey, $dataRow)) {
-                throw new \Shopsys\ProductFeed\HeurekaDeliveryBundle\Model\FeedItem\HeurekaDeliveryDataMissingException($requiredKey);
+                throw new HeurekaDeliveryDataMissingException($requiredKey);
             }
         }
 

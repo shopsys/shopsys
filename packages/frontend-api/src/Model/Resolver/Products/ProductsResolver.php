@@ -65,17 +65,17 @@ class ProductsResolver implements ResolverInterface, AliasedInterface
                 __METHOD__
             ));
         }
-        if ($this->productFacade === null) {
-            @trigger_error(
-                sprintf(
-                    'The %s() method is deprecated and will be removed in the next major. Use the constructor injection instead.',
-                    __METHOD__
-                ),
-                E_USER_DEPRECATED
-            );
-
-            $this->productFacade = $productFacade;
+        if ($this->productFacade !== null) {
+            return;
         }
+        @trigger_error(
+            sprintf(
+                'The %s() method is deprecated and will be removed in the next major. Use the constructor injection instead.',
+                __METHOD__
+            ),
+            E_USER_DEPRECATED
+        );
+        $this->productFacade = $productFacade;
     }
 
     /**

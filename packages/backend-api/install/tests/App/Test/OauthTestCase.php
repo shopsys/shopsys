@@ -23,6 +23,7 @@ class OauthTestCase extends FunctionalTestCase
     protected function setUp(): void
     {
         parent::setUp();
+
         $this->connection = $this->getContainer()->get('doctrine.orm.entity_manager')->getConnection();
         $this->createOauthClientInDatabase();
     }
@@ -30,12 +31,15 @@ class OauthTestCase extends FunctionalTestCase
     private function createOauthClientInDatabase(): void
     {
         try {
-            $statement = $this->connection->prepare('INSERT INTO "oauth2_client" ("identifier", "secret", "grants", "active") VALUES (:identifier, :secret, \'client_credentials password\', \'1\')');
+            $statement = $this->connection->prepare(
+                'INSERT INTO "oauth2_client" ("identifier", "secret", "grants", "active") VALUES (:identifier, :secret, \'client_credentials password\', \'1\')'
+            );
             $statement->bindValue(':identifier', self::OAUTH_IDENTIFIER);
             $statement->bindValue(':secret', self::OAUTH_SECRET);
             $statement->execute();
         } catch (UniqueConstraintViolationException $e) {
             // ok, client is there probably from last unsuccessful run
+            return;
         }
     }
 

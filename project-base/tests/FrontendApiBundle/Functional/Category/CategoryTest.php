@@ -116,7 +116,12 @@ class CategoryTest extends GraphQlTestCase
                                 'name' => t('47" LG 47LA790V (FHD)', [], 'dataFixtures', $locale),
                             ]],
                             ['node' => [
-                                'name' => t('A4tech mouse X-710BK, OSCAR Game, 2000DPI, black,', [], 'dataFixtures', $locale),
+                                'name' => t(
+                                    'A4tech mouse X-710BK, OSCAR Game, 2000DPI, black,',
+                                    [],
+                                    'dataFixtures',
+                                    $locale
+                                ),
                             ]],
                         ],
                     ],

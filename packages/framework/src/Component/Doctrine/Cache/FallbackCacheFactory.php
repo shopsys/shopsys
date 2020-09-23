@@ -21,8 +21,7 @@ class FallbackCacheFactory
 
             return $redisCache;
         } catch (Exception $exception) {
+            return new ArrayCache();
         }
-
-        return new ArrayCache();
     }
 }

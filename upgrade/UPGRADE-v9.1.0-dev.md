@@ -120,3 +120,12 @@ There you can find links to upgrade notes for other versions too.
         - `Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFacade::getIdsForProducts()`
             use `Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFactory::getIdsForProducts()` instead
     - see #project-base-diff to update your project
+
+- added more coding standards ([#2035](https://github.com/shopsys/shopsys/pull/2035))
+    - the most of the rules have their own fixer, run `php phing ecs-fix` to resolve them
+        - you need to run `ecs-fix` multiple times unless it is OK, because of the amount of changes
+    - disallowed usage of `empty()` is one which must be fixed manually
+        - first of all, you should keep in mind the `empty` ignores undefined offsets and is typed weak - this state should be probably kept
+        - when your part of code has not been strictly typed yet, you should resolve it first otherwise you will be hacking a new `empty` function by yourself and this rule will have no benefit for you
+        - if `empty` is used for checking elements of an array it can be replaced with `count($array)`
+    - see #project-base-diff to update your project

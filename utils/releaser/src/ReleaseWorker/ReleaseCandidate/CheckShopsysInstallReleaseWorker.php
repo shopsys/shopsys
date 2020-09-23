@@ -21,6 +21,7 @@ final class CheckShopsysInstallReleaseWorker extends AbstractCheckShopsysInstall
 
     /**
      * Higher first
+     *
      * @return int
      */
     public function getPriority(): int
@@ -62,6 +63,7 @@ docker rmi --force $(docker images -q)
             $branchName,
             $versionStringWithoutPrefix
         ));
+
         parent::work($version);
     }
 }

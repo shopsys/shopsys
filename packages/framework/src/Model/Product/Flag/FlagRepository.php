@@ -3,6 +3,7 @@
 namespace Shopsys\FrameworkBundle\Model\Product\Flag;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Shopsys\FrameworkBundle\Model\Product\Flag\Exception\FlagNotFoundException;
 
 class FlagRepository
 {
@@ -45,7 +46,7 @@ class FlagRepository
         $flag = $this->findById($flagId);
 
         if ($flag === null) {
-            throw new \Shopsys\FrameworkBundle\Model\Product\Flag\Exception\FlagNotFoundException('Flag with ID ' . $flagId . ' not found.');
+            throw new FlagNotFoundException('Flag with ID ' . $flagId . ' not found.');
         }
 
         return $flag;

@@ -6,8 +6,10 @@ namespace App\DataFixtures\Performance;
 
 use App\DataFixtures\Demo\ProductDataFixture as DemoProductDataFixture;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\NoResultException;
 use Faker\Generator as Faker;
 use Shopsys\FrameworkBundle\Component\Console\ProgressBarFactory;
+use Shopsys\FrameworkBundle\Component\DataFixture\Exception\PersistentReferenceNotFoundException;
 use Shopsys\FrameworkBundle\Component\DataFixture\PersistentReferenceFacade;
 use Shopsys\FrameworkBundle\Component\Doctrine\SqlLoggerFacade;
 use Shopsys\FrameworkBundle\Model\Category\Category;
@@ -219,7 +221,7 @@ class ProductDataFixture
                     $variants[] = $this->getProductByCatnum($variantCatnum . $uniqueIndex);
                 }
                 $this->productVariantFacade->createVariant($mainProduct, $variants);
-            } catch (\Doctrine\ORM\NoResultException $e) {
+            } catch (NoResultException $e) {
                 continue;
             }
         }
@@ -292,7 +294,7 @@ class ProductDataFixture
                 $product = $this->persistentReferenceFacade->getReference(DemoProductDataFixture::PRODUCT_PREFIX . $i);
                 $this->productTemplates[] = $product;
                 $i++;
-            } catch (\Shopsys\FrameworkBundle\Component\DataFixture\Exception\PersistentReferenceNotFoundException $e) {
+            } catch (PersistentReferenceNotFoundException $e) {
                 break;
             }
         }

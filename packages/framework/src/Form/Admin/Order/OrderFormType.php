@@ -178,7 +178,7 @@ class OrderFormType extends AbstractType
             $builderBasicInformationGroup
                 ->add('createdAsAdministrator', DisplayOnlyType::class, [
                     'label' => t('Created by administrator'),
-                    'data' => ($order->getCreatedAsAdministrator() === null) ? $order->getCreatedAsAdministratorName() : $order->getCreatedAsAdministrator()->getRealName(),
+                    'data' => $order->getCreatedAsAdministrator() === null ? $order->getCreatedAsAdministratorName() : $order->getCreatedAsAdministrator()->getRealName(),
                 ]);
         }
 

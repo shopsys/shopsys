@@ -28,7 +28,7 @@ class FrontCheckbox extends AbstractCheckbox
      */
     protected function getImageElementClass(): string
     {
-        $imageElementClass = 'js-checkbox-image-' . rand();
+        $imageElementClass = 'js-checkbox-image-' . random_int(0, getrandmax());
 
         $script = sprintf('$("%s").next().addClass("%s")', $this->cssSelector, $imageElementClass);
         $this->tester->executeJS($script);

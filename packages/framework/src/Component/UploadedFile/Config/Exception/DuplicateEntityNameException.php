@@ -20,6 +20,7 @@ class DuplicateEntityNameException extends Exception implements UploadedFileConf
         $this->entityName = $entityName;
 
         $message = sprintf('UploadedFile entity name "%s" is not unique.', $this->entityName);
+
         parent::__construct($message, 0, $previous);
     }
 

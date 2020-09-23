@@ -180,7 +180,9 @@ class ProductFormType extends AbstractType
             'required' => false,
             'entry_options' => [
                 'constraints' => [
-                    new Constraints\Length(['max' => 255, 'maxMessage' => 'Product name cannot be longer than {{ limit }} characters']),
+                    new Constraints\Length(
+                        ['max' => 255, 'maxMessage' => 'Product name cannot be longer than {{ limit }} characters']
+                    ),
                 ],
             ],
             'label' => t('Name'),
@@ -236,7 +238,7 @@ class ProductFormType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param null|\Shopsys\FrameworkBundle\Model\Product\Product $product
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product|null $product
      * @param array $disabledItemInMainVariantAttr
      * @return \Symfony\Component\Form\FormBuilderInterface
      */
@@ -249,7 +251,9 @@ class ProductFormType extends AbstractType
         $builderBasicInformationGroup->add('catnum', TextType::class, [
             'required' => false,
             'constraints' => [
-                new Constraints\Length(['max' => 100, 'maxMessage' => 'Catalog number cannot be longer than {{ limit }} characters']),
+                new Constraints\Length(
+                    ['max' => 100, 'maxMessage' => 'Catalog number cannot be longer than {{ limit }} characters']
+                ),
             ],
             'disabled' => $this->isProductMainVariant($product),
             'attr' => $disabledItemInMainVariantAttr,
@@ -258,7 +262,9 @@ class ProductFormType extends AbstractType
             ->add('partno', TextType::class, [
                 'required' => false,
                 'constraints' => [
-                    new Constraints\Length(['max' => 100, 'maxMessage' => 'Part number cannot be longer than {{ limit }} characters']),
+                    new Constraints\Length(
+                        ['max' => 100, 'maxMessage' => 'Part number cannot be longer than {{ limit }} characters']
+                    ),
                 ],
                 'disabled' => $this->isProductMainVariant($product),
                 'attr' => $disabledItemInMainVariantAttr,
@@ -267,7 +273,9 @@ class ProductFormType extends AbstractType
             ->add('ean', TextType::class, [
                 'required' => false,
                 'constraints' => [
-                    new Constraints\Length(['max' => 100, 'maxMessage' => 'EAN cannot be longer than {{ limit }} characters']),
+                    new Constraints\Length(
+                        ['max' => 100, 'maxMessage' => 'EAN cannot be longer than {{ limit }} characters']
+                    ),
                 ],
                 'disabled' => $this->isProductMainVariant($product),
                 'attr' => $disabledItemInMainVariantAttr,
@@ -305,7 +313,7 @@ class ProductFormType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param null|\Shopsys\FrameworkBundle\Model\Product\Product $product
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product|null $product
      * @return \Symfony\Component\Form\FormBuilderInterface
      */
     private function createShortDescriptionsGroup(FormBuilderInterface $builder, ?Product $product)
@@ -343,7 +351,7 @@ class ProductFormType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param null|\Shopsys\FrameworkBundle\Model\Product\Product $product
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product|null $product
      * @return \Symfony\Component\Form\FormBuilderInterface
      */
     private function createDescriptionsGroup(FormBuilderInterface $builder, ?Product $product)
@@ -376,7 +384,7 @@ class ProductFormType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param null|\Shopsys\FrameworkBundle\Model\Product\Product $product
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product|null $product
      * @param array $disabledItemInMainVariantAttr
      * @return \Symfony\Component\Form\FormBuilderInterface
      */
@@ -384,24 +392,32 @@ class ProductFormType extends AbstractType
     {
         $productMainCategoriesIndexedByDomainId = [];
         if ($product !== null) {
-            $productMainCategoriesIndexedByDomainId = $this->categoryFacade->getProductMainCategoriesIndexedByDomainId($product);
+            $productMainCategoriesIndexedByDomainId = $this->categoryFacade->getProductMainCategoriesIndexedByDomainId(
+                $product
+            );
         }
 
         $mainCategoriesOptionsByDomainId = [];
         foreach ($this->domain->getAll() as $domainConfig) {
             $domainId = $domainConfig->getId();
 
-            if (count($productMainCategoriesIndexedByDomainId) > 0) {
-                $productMainCategory = $productMainCategoriesIndexedByDomainId[$domainId];
-                $mainCategoriesOptionsByDomainId[$domainId] = [
-                    'attr' => [
-                        'readonly' => 'readonly',
-                        'show_label' => true,
-                    ],
-                    'label' => count($productMainCategoriesIndexedByDomainId) > 1 ? $this->domain->getDomainConfigById($domainId)->getName() : t('Main category'),
-                    'data' => $productMainCategory === null ? '-' : $productMainCategory->getName(),
-                ];
+            if (count($productMainCategoriesIndexedByDomainId) <= 0) {
+                continue;
             }
+
+            $productMainCategory = $productMainCategoriesIndexedByDomainId[$domainId];
+            $mainCategoriesOptionsByDomainId[$domainId] = [
+                'attr' => [
+                    'readonly' => 'readonly',
+                    'show_label' => true,
+                ],
+                'label' => count($productMainCategoriesIndexedByDomainId) > 1 ? $this->domain->getDomainConfigById(
+                    $domainId
+                )->getName() : t(
+                    'Main category'
+                ),
+                'data' => $productMainCategory === null ? '-' : $productMainCategory->getName(),
+            ];
         }
 
         $categoriesOptionsByDomainId = [];
@@ -421,7 +437,12 @@ class ProductFormType extends AbstractType
                 'label' => t('Hide product'),
             ]);
 
-        if ($product !== null && $product->isUsingStock() && $product->getCalculatedHidden() && $product->getStockQuantity() <= 0) {
+        if (
+            $product !== null
+            && $product->isUsingStock()
+            && $product->getCalculatedHidden()
+            && $product->getStockQuantity() <= 0
+        ) {
             $builderDisplayAvailabilityGroup
                 ->add('productCalculatedHiddenInfo', WarningMessageType::class, [
                     'data' => t('Product is hidden due to sellout'),
@@ -450,11 +471,16 @@ class ProductFormType extends AbstractType
                 'label' => t('Exclude from sale'),
                 'attr' => [
                     'icon' => true,
-                    'iconTitle' => t('Products excluded from sale can\'t be displayed on lists and can\'t be searched. Product detail is available by direct access from the URL, but it is not possible to add product to cart.'),
+                    'iconTitle' => t(
+                        'Products excluded from sale can\'t be displayed on lists and can\'t be searched. Product detail is available by direct access from the URL, but it is not possible to add product to cart.'
+                    ),
                 ],
             ]);
 
-        if ($product !== null && $product->isUsingStock() && $product->getCalculatedSellingDenied()
+        if (
+            $product !== null
+            && $product->isUsingStock()
+            && $product->getCalculatedSellingDenied()
             && $product->getStockQuantity() <= 0
         ) {
             $builderDisplayAvailabilityGroup
@@ -609,7 +635,7 @@ class ProductFormType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param null|\Shopsys\FrameworkBundle\Model\Product\Product $product
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product|null $product
      * @return \Symfony\Component\Form\FormBuilderInterface
      */
     private function createPricesGroup(FormBuilderInterface $builder, ?Product $product)
@@ -618,11 +644,15 @@ class ProductFormType extends AbstractType
             'label' => t('Prices'),
         ]);
 
-        $productCalculatedPricesGroup = $builder->create('productCalculatedPricesGroup', ProductCalculatedPricesType::class, [
-            'product' => $product,
-            'inherit_data' => true,
-            'render_form_row' => false,
-        ]);
+        $productCalculatedPricesGroup = $builder->create(
+            'productCalculatedPricesGroup',
+            ProductCalculatedPricesType::class,
+            [
+                'product' => $product,
+                'inherit_data' => true,
+                'render_form_row' => false,
+            ]
+        );
 
         $builderPricesGroup->add($productCalculatedPricesGroup);
         $manualInputPricesByPricingGroup = $builder->create('manualInputPricesByPricingGroupId', FormType::class, [
@@ -684,7 +714,7 @@ class ProductFormType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param null|\Shopsys\FrameworkBundle\Model\Product\Product $product
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product|null $product
      * @return \Symfony\Component\Form\FormBuilderInterface
      */
     private function createSeoGroup(FormBuilderInterface $builder, ?Product $product)
@@ -755,7 +785,7 @@ class ProductFormType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param null|\Shopsys\FrameworkBundle\Model\Product\Product $product
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product|null $product
      * @return \Symfony\Component\Form\FormBuilderInterface
      */
     private function createVariantGroup(FormBuilderInterface $builder, ?Product $product)
@@ -782,7 +812,9 @@ class ProductFormType extends AbstractType
                 'required' => false,
                 'entry_options' => [
                     'constraints' => [
-                        new Constraints\Length(['max' => 255, 'maxMessage' => 'Variant alias cannot be longer than {{ limit }} characters']),
+                        new Constraints\Length(
+                            ['max' => 255, 'maxMessage' => 'Variant alias cannot be longer than {{ limit }} characters']
+                        ),
                     ],
                 ],
                 'label' => t('Variant alias'),

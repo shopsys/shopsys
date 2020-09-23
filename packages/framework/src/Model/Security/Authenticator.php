@@ -2,7 +2,9 @@
 
 namespace Shopsys\FrameworkBundle\Model\Security;
 
+use Exception;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
+use Shopsys\FrameworkBundle\Model\Security\Exception\LoginFailedException;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
@@ -52,9 +54,9 @@ class Authenticator
         }
 
         if ($error !== null) {
-            throw new \Shopsys\FrameworkBundle\Model\Security\Exception\LoginFailedException(
+            throw new LoginFailedException(
                 'Log in failed.',
-                $error instanceof \Exception ? $error : null
+                $error instanceof Exception ? $error : null
             );
         }
 
@@ -67,7 +69,12 @@ class Authenticator
      */
     public function loginUser(CustomerUser $customerUser, Request $request)
     {
-        $token = new UsernamePasswordToken($customerUser, $customerUser->getPassword(), 'frontend', $customerUser->getRoles());
+        $token = new UsernamePasswordToken(
+            $customerUser,
+            $customerUser->getPassword(),
+            'frontend',
+            $customerUser->getRoles()
+        );
         $this->tokenStorage->setToken($token);
 
         // dispatch the login event

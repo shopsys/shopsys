@@ -20,6 +20,7 @@ class FormRenderingConfigurationExtension extends AbstractTypeExtension
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
         parent::buildView($view, $form, $options);
+
         $view->vars['macro'] = $options['macro'];
         $view->vars['icon_title'] = $options['icon_title'];
         $view->vars['display_format'] = $options['display_format'];

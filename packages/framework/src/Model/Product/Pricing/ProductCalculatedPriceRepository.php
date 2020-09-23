@@ -52,7 +52,11 @@ class ProductCalculatedPriceRepository
         ]);
 
         if ($productCalculatedPrice === null) {
-            $productCalculatedPrice = $this->productCalculatedPriceFactory->create($product, $pricingGroup, $priceWithVat);
+            $productCalculatedPrice = $this->productCalculatedPriceFactory->create(
+                $product,
+                $pricingGroup,
+                $priceWithVat
+            );
             $this->em->persist($productCalculatedPrice);
         } else {
             $productCalculatedPrice->setPriceWithVat($priceWithVat);

@@ -5,6 +5,7 @@ namespace Shopsys\FrameworkBundle\Controller\Admin;
 use Shopsys\FrameworkBundle\Component\ConfirmDelete\ConfirmDeleteResponseFactory;
 use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
 use Shopsys\FrameworkBundle\Form\Admin\Product\Unit\UnitSettingFormType;
+use Shopsys\FrameworkBundle\Model\Product\Unit\Exception\UnitNotFoundException;
 use Shopsys\FrameworkBundle\Model\Product\Unit\UnitFacade;
 use Shopsys\FrameworkBundle\Model\Product\Unit\UnitInlineEdit;
 use Symfony\Component\HttpFoundation\Request;
@@ -88,15 +89,14 @@ class UnitController extends AdminBaseController
                     $id,
                     $this->unitFacade->getAllExceptId($id)
                 );
-            } else {
-                $message = t(
-                    'Do you really want to remove unit "%name%" permanently? It is not used anywhere.',
-                    ['%name%' => $unit->getName()]
-                );
-
-                return $this->confirmDeleteResponseFactory->createDeleteResponse($message, 'admin_unit_delete', $id);
             }
-        } catch (\Shopsys\FrameworkBundle\Model\Product\Unit\Exception\UnitNotFoundException $ex) {
+            $message = t(
+                'Do you really want to remove unit "%name%" permanently? It is not used anywhere.',
+                ['%name%' => $unit->getName()]
+            );
+
+            return $this->confirmDeleteResponseFactory->createDeleteResponse($message, 'admin_unit_delete', $id);
+        } catch (UnitNotFoundException $ex) {
             return new Response(t('Selected unit doesn\'t exist'));
         }
     }
@@ -133,7 +133,7 @@ class UnitController extends AdminBaseController
                     ]
                 );
             }
-        } catch (\Shopsys\FrameworkBundle\Model\Product\Unit\Exception\UnitNotFoundException $ex) {
+        } catch (UnitNotFoundException $ex) {
             $this->addErrorFlash(t('Selected unit doesn\'t exist.'));
         }
 
@@ -148,7 +148,7 @@ class UnitController extends AdminBaseController
     {
         try {
             $defaultUnit = $this->unitFacade->getDefaultUnit();
-        } catch (\Shopsys\FrameworkBundle\Model\Product\Unit\Exception\UnitNotFoundException $ex) {
+        } catch (UnitNotFoundException $ex) {
             $defaultUnit = null;
         }
         $unitSettingsFormData = ['defaultUnit' => $defaultUnit];

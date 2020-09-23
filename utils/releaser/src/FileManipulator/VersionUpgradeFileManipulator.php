@@ -53,7 +53,11 @@ final class VersionUpgradeFileManipulator
             $content,
             self::HEADLINE_WITH_LINK_PATTERN,
             function ($match) use ($versionString, $initialBranchName) {
-                return str_replace([$versionString . '-dev', '...' . $initialBranchName], [$versionString, '...' . $versionString], $match[0]);
+                return str_replace(
+                    [$versionString . '-dev', '...' . $initialBranchName],
+                    [$versionString, '...' . $versionString],
+                    $match[0]
+                );
             }
         );
     }

@@ -10,7 +10,7 @@ use Shopsys\ReadModelBundle\Image\ImageView;
 class ImageExtension extends BaseImageExtension
 {
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Image\Image|\Shopsys\ReadModelBundle\Image\ImageView|Object|null $imageView
+     * @param \Shopsys\FrameworkBundle\Component\Image\Image|\Shopsys\ReadModelBundle\Image\ImageView|object|null $imageView
      * @param array $attributes
      * @return string
      */
@@ -50,7 +50,7 @@ class ImageExtension extends BaseImageExtension
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Image\Image|\Shopsys\ReadModelBundle\Image\ImageView|Object $imageView
+     * @param \Shopsys\FrameworkBundle\Component\Image\Image|\Shopsys\ReadModelBundle\Image\ImageView|object $imageView
      * @param string|null $sizeName
      * @param string|null $type
      * @return string

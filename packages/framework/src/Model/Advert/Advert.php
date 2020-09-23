@@ -15,7 +15,6 @@ class Advert
 
     /**
      * @var int
-     *
      * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
@@ -24,49 +23,42 @@ class Advert
 
     /**
      * @var int
-     *
      * @ORM\Column(type="integer")
      */
     protected $domainId;
 
     /**
      * @var string
-     *
      * @ORM\Column(type="text")
      */
     protected $name;
 
     /**
      * @var string
-     *
      * @ORM\Column(type="text")
      */
     protected $type;
 
     /**
      * @var string|null
-     *
      * @ORM\Column(type="text", nullable=true)
      */
     protected $code;
 
     /**
      * @var string
-     *
      * @ORM\Column(type="text", nullable=true)
      */
     protected $link;
 
     /**
      * @var string
-     *
      * @ORM\Column(type="text")
      */
     protected $positionName;
 
     /**
      * @var bool
-     *
      * @ORM\Column(type="boolean")
      */
     protected $hidden;

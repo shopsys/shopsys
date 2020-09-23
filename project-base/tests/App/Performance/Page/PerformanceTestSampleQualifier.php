@@ -52,7 +52,9 @@ class PerformanceTestSampleQualifier
     {
         if ($duration >= $this->durationCritical) {
             return self::STATUS_CRITICAL;
-        } elseif ($duration >= $this->durationWarning) {
+        }
+
+        if ($duration >= $this->durationWarning) {
             return self::STATUS_WARNING;
         }
 
@@ -67,7 +69,9 @@ class PerformanceTestSampleQualifier
     {
         if ($queryCount >= $this->queryCountCritical) {
             return self::STATUS_CRITICAL;
-        } elseif ($queryCount >= $this->queryCountWarning) {
+        }
+
+        if ($queryCount >= $this->queryCountWarning) {
             return self::STATUS_WARNING;
         }
 
