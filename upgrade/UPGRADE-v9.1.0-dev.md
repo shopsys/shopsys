@@ -128,4 +128,7 @@ There you can find links to upgrade notes for other versions too.
         - first of all, you should keep in mind the `empty` ignores undefined offsets and is typed weak - this state should be probably kept
         - when your part of code has not been strictly typed yet, you should resolve it first otherwise you will be hacking a new `empty` function by yourself and this rule will have no benefit for you
         - if `empty` is used for checking elements of an array it can be replaced with `count($array)`
+
+- remove unnecessary default values for ENV variables ([#2040](https://github.com/shopsys/shopsys/pull/2040))
+    - these parameters should be configured via ENV variables if set
     - see #project-base-diff to update your project

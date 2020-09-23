@@ -1,4 +1,12 @@
 # Application Configuration
+
+The application is configurable by [Symfony configuration files](https://symfony.com/doc/4.4/configuration.html#configuration-parameters) or via environment variables which allows you to overwrite them.
+
+- [Configuration by parameters](#configuration-by-parameters)
+- [Configuration by environment variables](#configuration-by-environment-variables)
+
+## Configuration by parameters
+
 For operating Shopsys Framework it is needed to have correctly set connections to external services via `parameters.yaml` config.
 From the clean project, during composer installation process it will prompt you to set the values of parameters (`config/parameters.yaml`):
 
@@ -20,8 +28,6 @@ From the clean project, during composer installation process it will prompt you 
 | `mailer_delivery_whitelist`              | set as array with regex text items if you want to have master email but allow sending to specific addresses |
 | `secret`                                 | randomly generated secret token                                                                              |
 | `trusted_proxies`                        | proxies that are trusted to pass traffic, used mainly for production                                         |
-| `env(REDIS_PREFIX)`                      | separates more projects that use the same redis service                                                      |
-| `env(ELASTIC_SEARCH_INDEX_PREFIX)`       | separates more projects that use the same elasticsearch service                                              |
 
 Composer will then prompt you to set parameters for testing environment (`config/parameters_test.yaml`):
 
@@ -46,3 +52,26 @@ Composer will then prompt you to set parameters for testing environment (`config
 
 !!! tip
     Host values can be modified or can be aliased for your Operating System via `/etc/hosts` or `C:\Windows\System32\drivers\etc\hosts`
+
+## Configuration by environment variables
+
+Environment variables are really handy to configure the right setting in the desired application environment.
+You may want to set some settings in a different way (such as production, test, or CI servers).
+[Setting environment variables](/introduction/setting-environment-variables) depends on environment of your application.
+
+### Application
+
+| Name                                   | Default | Description                                                                          |
+| -------------------------------------- | ------- | ------------------------------------------------------------------------------------ |
+| `REDIS_PREFIX`                         | `''`    | separates more projects that use the same redis service                              |
+| `ELASTIC_SEARCH_INDEX_PREFIX`          | `''`    | separates more projects that use the same elasticsearch service                      |
+| `IGNORE_DEFAULT_ADMIN_PASSWORD_CHECK`  | `'0'`   | set to `true` if you want to allow administrators to log in with default credentials |
+
+### Google Cloud Bundle
+
+These variables are specific for [shopsys/google-cloud-bundle](https://github.com/shopsys/google-cloud-bundle)
+
+| Name                                    | Default | Description                                              |
+| --------------------------------------- | ------- | -------------------------------------------------------- |
+| `GOOGLE_CLOUD_PROJECT_ID`               | `''`    | defines Google Cloud Project ID                          |
+| `GOOGLE_CLOUD_STORAGE_BUCKET_NAME`      | `''`    | defines Bucket Name in Google CLoud Storage              |
