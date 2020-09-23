@@ -2,8 +2,8 @@
 @in-paging-item-height: 50px;
 @in-paging-item-margin: 0 0.25rem;
 @in-paging-item-font-size: 15px;
-@in-paging-item-arrow-bg: @color-f;
-@in-paging-item-active-bg: @color-f;
+@in-paging-item-arrow-bg: @color-light;
+@in-paging-item-active-bg: @color-light;
 @in-paging-item-icon-font-size: 24px;
 @in-paging-item-separator-font-size: 24px;
 @in-paging-item-inactive-opacity: 0.5;
@@ -39,7 +39,7 @@
             }
 
             &:hover {
-                background-color: @color-f;
+                background-color: darken(@color-light, 2%);
                 text-decoration: none;
             }
 
@@ -62,6 +62,7 @@
 
                 &--inactive {
                     opacity: @in-paging-item-inactive-opacity;
+                    pointer-events: none;
                 }
             }
 
@@ -71,9 +72,29 @@
 
             &__icon {
                 position: relative;
-                top: 2px;
+                width: 13px;
+                height: 20px;
 
-                font-size: @in-paging-item-icon-font-size;
+                &::before,
+                &::after {
+                    position: absolute;
+                    left: 7px;
+                    width: 3px;
+                    height: 14px;
+                    content: '';
+
+                    background-color: @color-primary;
+                }
+
+                &::before {
+                    top: -1px;
+                    transform: rotate(-45deg);
+                }
+
+                &::after {
+                    bottom: -1px;
+                    transform: rotate(45deg);
+                }
             }
 
             &__separate {
