@@ -79,6 +79,8 @@ parameters:
             - '*/tests/FrontendApiBundle/Functional/Transport/TransportsTest.php'
             - '*/tests/FrontendApiBundle/Functional/Order/MultipleProductsInOrderTest.php'
             - '*/tests/FrontendApiBundle/Functional/Product/ProductVariantTest.php'
+            - '*/tests/FrontendApiBundle/Functional/Brand/BrandTest.php'
+            - '*/tests/FrontendApiBundle/Functional/Brand/BrandsTest.php'
 
         ObjectCalisthenics\Sniffs\Files\ClassTraitAndInterfaceLengthSniff:
             - '*/tests/App/Functional/Model/Product/ProductVisibilityRepositoryTest.php'
