@@ -123,4 +123,23 @@
             line-height: 1.5;
         }
     }
+
+    &--check {
+        .form-error--choice {
+            position: static;
+            margin-top: 8px;
+        }
+
+        .form-input-error + .css-checkbox__image {
+            color: @color-red !important;
+
+            a {
+                color: inherit !important;
+            }
+        }
+
+        .form-error__icon {
+            display: none;
+        }
+    }
 }
