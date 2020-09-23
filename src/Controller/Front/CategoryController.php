@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace App\Controller\Front;
 
+use App\Model\Category\Category;
 use App\Model\Category\CategoryFacade;
 use App\Model\Category\CurrentCategoryResolver;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Model\Category\CategoryWithLazyLoadedVisibleChildren;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -76,11 +78,14 @@ class CategoryController extends FrontBaseController
             $this->domain->getCurrentDomainConfig()
         );
 
+        $mattressesAndSlatsCategoryWithLazyLoadedVisibleChildrenForParent = null;
         $filteredCategoriesWithLazyLoadedVisibleChildren = [];
         foreach ($categoriesWithLazyLoadedVisibleChildren as $categoryWithLazyLoadedVisibleChildren) {
             /** @var \App\Model\Category\Category $category */
             $category = $categoryWithLazyLoadedVisibleChildren->getCategory();
-            if (!$category->isSaleCategory()) {
+
+            if($category->getAkeneoCode() === 'eshop__nabytek'){
+                $mattressesAndSlatsCategoryWithLazyLoadedVisibleChildrenForParent = $this->getMattressesAndSlatsCategoryWithLazyLoadedVisibleChildrenForParent($category);
                 $filteredCategoriesWithLazyLoadedVisibleChildren[] = $categoryWithLazyLoadedVisibleChildren;
             }
         }
@@ -89,7 +94,31 @@ class CategoryController extends FrontBaseController
             'categoriesWithLazyLoadedVisibleChildren' => $filteredCategoriesWithLazyLoadedVisibleChildren,
             'isFirstLevel' => true,
             'saleCategory' => $this->categoryFacade->findSaleCategory(),
+            'mattressesAndSlatsCategoryWithLazyLoadedVisibleChildrenForParent' => $mattressesAndSlatsCategoryWithLazyLoadedVisibleChildrenForParent
         ]);
+    }
+
+    /**
+     * @param \App\Model\Category\Category $furnitureCategory
+     * @return \Shopsys\FrameworkBundle\Model\Category\CategoryWithLazyLoadedVisibleChildren|null
+     */
+    private function getMattressesAndSlatsCategoryWithLazyLoadedVisibleChildrenForParent(Category $furnitureCategory): ?CategoryWithLazyLoadedVisibleChildren
+    {
+        $categoriesWithLazyLoadedVisibleChildren = $this->categoryFacade->getCategoriesWithLazyLoadedVisibleChildrenForParent(
+            $furnitureCategory,
+            $this->domain->getCurrentDomainConfig()
+        );
+
+        foreach($categoriesWithLazyLoadedVisibleChildren as $categoryWithLazyLoadedVisibleChildren){
+            /** @var \App\Model\Category\Category $category */
+            $category = $categoryWithLazyLoadedVisibleChildren->getCategory();
+
+            if($category->getAkeneoCode() === 'eshop__matrace_a_rosty'){
+                return $categoryWithLazyLoadedVisibleChildren;
+            }
+        }
+
+        return null;
     }
 
     /**

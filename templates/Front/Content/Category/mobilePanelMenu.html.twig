@@ -1,4 +1,4 @@
-{% if categoriesWithLazyLoadedVisibleChildren|length > 0 %}
+
     {% set currentMenuListId = currentMenuListId ?? 0 %}
     {% set parentMenuListId = parentMenuListId ?? 'null' %}
 
@@ -50,6 +50,36 @@
             </li>
         {% endfor %}
         {% if isFirstLevel %}
+            <li class="mobile-menu__item">
+                <a
+                    href="{{ url('front_kitchen') }}"
+                    class="mobile-menu__item__link mobile-menu__item__link--level-1">
+                    {{ "Kuchyně"|trans }}
+                </a>
+            </li>
+            {% if mattressesAndSlatsCategoryWithLazyLoadedVisibleChildrenForParent is not null %}
+                <li class="mobile-menu__item js-mobile-menu-item">
+                    <a
+                            href="{{ url('front_product_list', { id: mattressesAndSlatsCategoryWithLazyLoadedVisibleChildrenForParent.category.id }) }}"
+                            class="mobile-menu__item__link{{ mattressesAndSlatsCategoryWithLazyLoadedVisibleChildrenForParent.hasChildren ? ' mobile-menu__item__link--has-children js-mobile-menu-item-link js-mobile-menu-expand-control' }}"
+                            {% if mattressesAndSlatsCategoryWithLazyLoadedVisibleChildrenForParent.hasChildren %}
+                                data-child-menu-id="#js-mobile-menu-list-{{ mattressesAndSlatsCategoryWithLazyLoadedVisibleChildrenForParent.category.id }}"
+                            {% endif %}
+                    >
+                        <span class="mobile-menu__item__link__text">{{ mattressesAndSlatsCategoryWithLazyLoadedVisibleChildrenForParent.category.name }}</span>
+                        {% if mattressesAndSlatsCategoryWithLazyLoadedVisibleChildrenForParent.hasChildren %}
+                            <i class="mobile-menu__item__control svg svg-chevron"></i>
+                        {% endif %}
+                    </a>
+                </li>
+            {% endif %}
+            <li class="mobile-menu__item">
+                <a
+                    href="{{ url('front_productseries_list') }}"
+                    class="mobile-menu__item__link mobile-menu__item__link--level-1">
+                    {{ "Nábytkové programy"|trans }}
+                </a>
+            </li>
             {% if saleCategory is not null %}
                 <li class="mobile-menu__item mobile-menu__item--sale">
                     <a
@@ -92,5 +122,3 @@
         </div>
         </nav>
     {% endif %}
-
-{% endif %}
