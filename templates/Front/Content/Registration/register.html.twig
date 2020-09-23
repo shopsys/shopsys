@@ -11,13 +11,13 @@
 {% endblock %}
 
 {% block main_content %}
-    <div class="web__line web__line--bg-color web__line--spacing--big web__line--margin-bottom-up-big">
+    <div class="web__line web__line--spacing--big web__line--margin-bottom-up-big">
         <div class="web__container">
             <h1 class="heading heading--primary heading--primary-subpage">{{ 'Registration'|trans }}</h1>
             {{ render(controller('App\\Controller\\Front\\BreadcrumbController:indexAction', { routeName: getRoute(), routeParameters: getRouteParams() } )) }}
             {{ form_errors(form) }}
             {{ form_errors(companyForm) }}
-            <div class="box-form box-form--registration">
+            <div class="box-form box-form--registration box-form--small">
                 <div class="box-login box-login--registration">
                     <div class="box-login__profile box-login__profile--standalone">
                         <strong class="box-login__profile__text-strong">{{ 'Ještě nemáte Váš Sconto účet?'|trans }}</strong>
@@ -33,10 +33,14 @@
                 <div class="in-tab js-responsive-tabs js-tabs-only">
                     <div class="in-tab__head dont-print">
                         <a href="#" class="in-tab__head__item js-tabs-button  {{ commonTabActiveClass }}" data-tab-id="common-customer">
-                            {{ "Koncový zákazník"|trans }}
+                            <span class="in-tab__head__item__text">
+                                {{ "Koncový zákazník"|trans }}
+                            </span>
                         </a>
                         <a href="#" class="in-tab__head__item js-tabs-button  {{ companyTabActiveClass }}" data-tab-id="company-customer">
-                            {{ "Firma"|trans }}
+                            <span class="in-tab__head__item__text">
+                                {{ "Firma"|trans }}
+                            </span>
                         </a>
                     </div>
                     <div class="in-tab__content">
