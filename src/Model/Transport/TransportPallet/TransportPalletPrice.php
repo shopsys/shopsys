@@ -25,7 +25,7 @@ class TransportPalletPrice
 
     /**
      * @var \App\Model\Transport\Transport
-     * @ORM\ManyToOne(targetEntity="App\Model\Transport\Transport")Version20200923055405
+     * @ORM\ManyToOne(targetEntity="App\Model\Transport\Transport")
      */
     private Transport $transport;
 
