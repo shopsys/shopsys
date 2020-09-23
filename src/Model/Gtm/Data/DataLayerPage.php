@@ -14,12 +14,14 @@ class DataLayerPage implements JsonSerializable
     public const TYPE_BLOG_ARTICLE = 'article';
     public const TYPE_CART = 'cart';
     public const TYPE_CATEGORY = 'category';
-    public const TYPE_CONTACT = 'contact'; // TODO tato stránka zatím neexistuje
+    public const TYPE_CONTACT = 'contact';
     public const TYPE_HOME = 'home';
     public const TYPE_ORDER_STEP1 = 'order step 1';
     public const TYPE_ORDER_STEP2 = 'order step 2';
     public const TYPE_OTHER = 'other';
     public const TYPE_PRODUCT = 'product';
+    public const TYPE_PROGRAM = 'program';
+    public const TYPE_KITCHEN = 'kitchen';
     public const TYPE_PURCHASE = 'purchase';
     public const TYPE_PURCHASE_FAIL = 'purchase fail';
     public const TYPE_SEARCH = 'search';
@@ -72,6 +74,8 @@ class DataLayerPage implements JsonSerializable
             self::TYPE_ORDER_STEP2,
             self::TYPE_OTHER,
             self::TYPE_PRODUCT,
+            self::TYPE_PROGRAM,
+            self::TYPE_KITCHEN,
             self::TYPE_PURCHASE,
             self::TYPE_PURCHASE_FAIL,
             self::TYPE_SEARCH,

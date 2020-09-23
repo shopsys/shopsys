@@ -6,6 +6,7 @@ namespace App\Model\Cart;
 
 use App\Model\Category\CategoryFacade;
 use App\Model\Product\Availability\ProductAvailabilityFacade;
+use App\Model\Product\Product;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
@@ -270,5 +271,21 @@ class CartFacade extends BaseCartFacade
         }
 
         return false;
+    }
+
+    /**
+     * @param Product $product
+     * @param int $quantity
+     */
+    public function changeQuantity(Product $product, int $quantity): void
+    {
+        $cart = $this->findCartOfCurrentCustomerUser();
+
+        if ($cart === null) {
+            return;
+        }
+
+        $cart->changeQuantity($product, $quantity);
+        $this->em->flush();
     }
 }

@@ -8,6 +8,7 @@ use App\Model\Order\Item\Exception\OrderItemRelatedException;
 use App\Model\Product\Type\ProductType;
 use App\Model\Stock\Stock;
 use Doctrine\ORM\Mapping as ORM;
+use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItem as BaseOrderItem;
 use Shopsys\FrameworkBundle\Model\Order\Order as BaseOrder;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
@@ -188,5 +189,35 @@ class OrderItem extends BaseOrderItem
     public function getType(): string
     {
         return $this->type;
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Component\Money\Money
+     */
+    public function getFinalPriceWithVat(): Money
+    {
+        $coupon = $this->getRelatedCoupon();
+        $priceWithVat = $this->getPriceWithVat();
+        
+        if ($coupon instanceof self) {
+            $priceWithVat = $priceWithVat->add($coupon->getPriceWithVat());
+        }
+
+        return $priceWithVat;
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Component\Money\Money
+     */
+    public function getFinalPriceWithoutVat(): Money
+    {
+        $coupon = $this->getRelatedCoupon();
+        $priceWithoutVat = $this->getPriceWithoutVat();
+        
+        if ($coupon instanceof self) {
+            $priceWithoutVat = $priceWithoutVat->add($coupon->getPriceWithoutVat());
+        }
+
+        return $priceWithoutVat;
     }
 }

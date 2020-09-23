@@ -50,4 +50,16 @@ class Cart extends BaseCart
 
         return null;
     }
+
+    /**
+     * @param \App\Model\Product\Product $product
+     * @param int $quantity
+     */
+    public function changeQuantity(Product $product, int $quantity): void
+    {
+        $item = $this->findCartItemByProduct($product);
+        $item->changeQuantity($quantity);
+
+        $this->setModifiedNow();
+    }
 }

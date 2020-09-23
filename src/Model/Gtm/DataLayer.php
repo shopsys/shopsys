@@ -25,6 +25,7 @@ class DataLayer
     public const LIST_NAME_PRODUCT_SIMILAR_PRODUCTS = 'Product - podobné produkty';
     public const LIST_NAME_PRODUCT_ACCESSORIES = 'Product - příslušenství';
     public const LIST_NAME_PRODUCT_PROGRAM = 'Product - program';
+    public const LIST_NAME_SEARCH_STANDARD = 'Search - standard';
 
     public const HOMEPAGE_SLIDER_LABEL = 'homepage-top-center';
 

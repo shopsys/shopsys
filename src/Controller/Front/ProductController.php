@@ -529,6 +529,7 @@ class ProductController extends FrontBaseController
             'productFilterSetup' => $productFilterSetup,
             'orderModeName' => $orderModeName,
             'gtmList' => 'Category - ' . $category->getName($this->domain->getLocale()) . ' - standard',
+            'nextIndex' => $nextIndex,
         ];
 
         $viewParameters = array_merge(
@@ -692,6 +693,8 @@ class ProductController extends FrontBaseController
             'allParameterValuesImagesIndexedById' => $allParameterValuesImageFilePathsIndexedById,
             'productFilterSetup' => $productFilterSetup,
             'orderModeName' => $orderModeName,
+            'gtmList' => DataLayer::LIST_NAME_SEARCH_STANDARD,
+            'nextIndex' => $nextIndex
         ];
 
         $viewParameters = array_merge(

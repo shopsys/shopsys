@@ -97,6 +97,9 @@ services:
             - '%env(CDN_DOMAIN)%'
         lazy: true
 
+    App\Model\Cart\CartFacade:
+        lazy: true
+
     Shopsys\FrameworkBundle\Model\Localization\LocalizationListener:
         alias: App\Model\Localization\LocalizationListener
 

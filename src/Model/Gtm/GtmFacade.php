@@ -9,6 +9,7 @@ use App\Model\Category\Category;
 use App\Model\Gtm\Data\DataLayerPage;
 use App\Model\Gtm\Data\DataLayerUser;
 use App\Model\Order\Order;
+use App\Model\Order\Preview\OrderPreviewSplittingFacade;
 use App\Model\Order\Preview\SplitOrderPreview;
 use App\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
@@ -47,26 +48,32 @@ class GtmFacade
     private $currencyFacade;
 
     /**
+     * @var \App\Model\Order\Preview\OrderPreviewSplittingFacade
+     */
+    private $orderPreviewSplittingFacade;
+
+    /**
      * @param \App\Model\Gtm\GtmContainer $gtmContainer
      * @param \App\Model\Gtm\DataLayerMapper $dataLayerMapper
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomer
      * @param \App\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
+     * @param \App\Model\Order\Preview\OrderPreviewSplittingFacade $orderPreviewSplittingFacade
      */
     public function __construct(
         GtmContainer $gtmContainer,
         DataLayerMapper $dataLayerMapper,
         CurrentCustomerUser $currentCustomer,
         Domain $domain,
-        CurrencyFacade $currencyFacade
+        CurrencyFacade $currencyFacade,
+        OrderPreviewSplittingFacade $orderPreviewSplittingFacade
     ) {
         $this->gtmContainer = $gtmContainer;
         $this->dataLayerMapper = $dataLayerMapper;
+        $this->currentCustomer = $currentCustomer;
         $this->domain = $domain;
         $this->currencyFacade = $currencyFacade;
-
-        $this->dataLayer = $this->gtmContainer->getDataLayer();
-        $this->currentCustomer = $currentCustomer;
+        $this->orderPreviewSplittingFacade = $orderPreviewSplittingFacade;
     }
 
     /**
@@ -77,6 +84,8 @@ class GtmFacade
         if (!$this->gtmContainer->isEnabled()) {
             return;
         }
+
+        $this->dataLayer = $this->gtmContainer->getDataLayer();
 
         $dataLayerPage = new DataLayerPage();
         $this->dataLayer->set('page', $dataLayerPage);
@@ -132,7 +141,12 @@ class GtmFacade
         $gtmEventData = [
             'ecommerce' => [
                 'currencyCode' => $this->getCurrentDomainDefaultCurrencyCode(),
-                'impressions' => $this->dataLayerMapper->createDataLayerProductsFromListedProductViews($listedProductViews, $nextIndex),
+                'impressions' => $this->dataLayerMapper->createDataLayerProductsFromListedProductViews(
+                    $listedProductViews,
+                    $nextIndex,
+                    null,
+                    DataLayer::LIST_NAME_SEARCH_STANDARD
+                ),
             ],
         ];
 
@@ -259,6 +273,8 @@ class GtmFacade
             return;
         }
 
+        $splitOrderPreview = $this->orderPreviewSplittingFacade->createSplitOrderPreviewForCurrentCustomer(null);
+
         $gtmEventData = [
             'ecommerce' => [
                 'currencyCode' => $this->getCurrentDomainDefaultCurrencyCode(),
@@ -270,6 +286,14 @@ class GtmFacade
                     ),
                 ],
             ],
+            'cartContent' => [
+                'revenue' => $splitOrderPreview->getTotalPrice()->getPriceWithoutVat(),
+                'revenueWithTax' => $splitOrderPreview->getTotalPrice()->getPriceWithVat(),
+                'products' => $this->dataLayerMapper->createDataLayerProductsFromSplitOrderPreview(
+                    $splitOrderPreview,
+                    $this->dataLayer->getLocale()
+                ),
+            ]
         ];
 
         $this->dataLayer->push(DataLayer::EVENT_NAME_PRODUCT_ADD_TO_CART, $gtmEventData);
@@ -285,6 +309,8 @@ class GtmFacade
             return;
         }
 
+        $splitOrderPreview = $this->orderPreviewSplittingFacade->createSplitOrderPreviewForCurrentCustomer(null);
+
         $gtmEventData = [
             'ecommerce' => [
                 'currencyCode' => $this->getCurrentDomainDefaultCurrencyCode(),
@@ -296,6 +322,14 @@ class GtmFacade
                     ),
                 ],
             ],
+            'cartContent' => [
+                'revenue' => $splitOrderPreview->getTotalPrice()->getPriceWithoutVat(),
+                'revenueWithTax' => $splitOrderPreview->getTotalPrice()->getPriceWithVat(),
+                'products' => $this->dataLayerMapper->createDataLayerProductsFromSplitOrderPreview(
+                    $splitOrderPreview,
+                    $this->dataLayer->getLocale()
+                ),
+            ]
         ];
 
         $this->dataLayer->push(DataLayer::EVENT_NAME_PRODUCT_REMOVE_FROM_CART, $gtmEventData);

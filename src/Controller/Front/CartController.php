@@ -163,17 +163,20 @@ class CartController extends FrontBaseController
         if ($form->isSubmitted() && $form->isValid()) {
             try {
                 foreach ($this->cartFacade->getQuantifiedProductsOfCurrentCustomer() as $id => $quantifiedProduct) {
-                    $originalQuantity = $quantifiedProduct->getQuantity();
-                    $newQuantity = $form->getData()['quantities'][$id];
-                    /** @var \App\Model\Product\Product $product */
-                    $product = $quantifiedProduct->getProduct();
-                    $viewParameters['gtmEvent'] = $this->gtmJsPushFacade->getCartItemChangedEvent(
-                        $product,
-                        $newQuantity - $originalQuantity
-                    );
-                }
+                    if (array_key_exists($id, $form->getData()['quantities'])) {
+                        $originalQuantity = $quantifiedProduct->getQuantity();
+                        $newQuantity = $form->getData()['quantities'][$id];
+                        $quantityDiff = $newQuantity - $originalQuantity;
 
-                $this->cartFacade->changeQuantities($form->getData()['quantities']);
+                        if ($quantityDiff !== 0) {
+                            /** @var \App\Model\Product\Product $product */
+                            $product = $quantifiedProduct->getProduct();
+                            $this->cartFacade->changeQuantity($product, (int) $form->getData()['quantities'][$id]);
+
+                            $viewParameters['gtmEvent'] = $this->gtmJsPushFacade->getCartItemChangedEvent($product, $quantityDiff);
+                        }
+                    }
+                }
 
                 if (!$request->get(self::RECALCULATE_ONLY_PARAMETER_NAME, false)) {
                     return $this->redirectToRoute('front_order_index');
@@ -482,7 +485,9 @@ class CartController extends FrontBaseController
 
         if ($this->isCsrfTokenValid('front_cart_delete_' . $cartItemId, $token)) {
             try {
+                $product = $this->cartFacade->getProductByCartItemId($cartItemId);
                 $this->cartFacade->deleteCartItem($cartItemId);
+                $gtmEvent = $this->gtmJsPushFacade->onRemoveProductFromCart($product);
             } catch (\Shopsys\FrameworkBundle\Model\Cart\Exception\InvalidCartItemException $ex) {
                 return $this->json([
                     'success' => false,
@@ -498,6 +503,7 @@ class CartController extends FrontBaseController
 
         return $this->json([
             'success' => true,
+            'gtmEvent' => $gtmEvent,
         ]);
     }
 

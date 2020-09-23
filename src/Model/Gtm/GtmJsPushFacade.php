@@ -185,7 +185,10 @@ class GtmJsPushFacade
         return $this->gtmContainer->getDataLayer()->getPushes()[0];
     }
 
-    public function getEmptyFilterResult()
+    /**
+     * @return array
+     */
+    public function getEmptyFilterResult(): array
     {
         return [
             'event' => DataLayer::EVENT_NAME_CATEGORY_FILTER,
@@ -194,6 +197,21 @@ class GtmJsPushFacade
                 'action' => 'Prázdný výsledek filtru',
             ],
         ];
+    }
+
+    /**
+     * @param \App\Model\Product\Product $product
+     * @return array
+     */
+    public function onRemoveProductFromCart(Product $product): array
+    {
+        if (!$this->gtmContainer->isEnabled()) {
+            return [];
+        }
+
+        $this->gtmFacade->onRemoveProductFromCart($product);
+
+        return $this->gtmContainer->getDataLayer()->getPushes()[0];
     }
 
     /**

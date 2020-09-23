@@ -1,6 +1,7 @@
 import Register from 'framework/common/utils/Register';
 import Ajax from 'framework/common/utils/Ajax';
 import Window from '../utils/Window';
+import Gtm from '../../gtm';
 
 export default class CartBoxItemRemover {
 
@@ -16,6 +17,7 @@ export default class CartBoxItemRemover {
                     success: function (data) {
                         if (data.success === true) {
                             $('#js-cart-box').trigger('reload');
+                            Gtm.pushEvent(data.gtmEvent);
                         } else {
                             // eslint-disable-next-line no-new
                             new Window({

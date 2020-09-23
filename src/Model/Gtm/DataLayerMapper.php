@@ -37,11 +37,16 @@ class DataLayerMapper
         'front_blogarticle_detail' => DataLayerPage::TYPE_BLOG_ARTICLE,
         'front_cart' => DataLayerPage::TYPE_CART,
         'front_product_detail' => DataLayerPage::TYPE_PRODUCT,
+        'front_productseries_list' => DataLayerPage::TYPE_PROGRAM,
+        'front_productseriescategory_detail' => DataLayerPage::TYPE_PROGRAM,
+        'front_productseries_detail' => DataLayerPage::TYPE_PROGRAM,
+        'front_kitchen' => DataLayerPage::TYPE_KITCHEN,
         'front_order_sent' => DataLayerPage::TYPE_PURCHASE,
         'front_product_search' => DataLayerPage::TYPE_SEARCH,
         'front_product_list' => DataLayerPage::TYPE_CATEGORY,
         'front_stores' => DataLayerPage::TYPE_STORES,
         'front_stores_detail' => DataLayerPage::TYPE_STORES,
+        'front_contacts' => DataLayerPage::TYPE_CONTACT,
         'front_error' => DataLayerPage::TYPE_ERROR,
     ];
 
@@ -361,8 +366,8 @@ class DataLayerMapper
         /** @var \App\Model\Product\Product $product */
         $product = $productItem->getProduct();
 
-        $priceWithVat = $productItem->getPriceWithVat();
-        $priceWithoutVat = $productItem->getPriceWithoutVat();
+        $priceWithVat = $productItem->getFinalPriceWithVat();
+        $priceWithoutVat = $productItem->getFinalPriceWithoutVat();
         $vat = $priceWithVat->subtract($priceWithoutVat);
 
         /** @var \App\Model\Category\Category $productMainCategory */

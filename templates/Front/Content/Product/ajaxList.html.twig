@@ -36,7 +36,7 @@
         ></div>
 
     </div>
-    {% include 'Front/Content/Product/productsWithControls.html.twig' with {paginationResult: paginationResult, filterFormSubmitted: filterFormSubmitted} %}
+    {% include 'Front/Content/Product/productsWithControls.html.twig' with {paginationResult: paginationResult, filterFormSubmitted: filterFormSubmitted, nextIndex: nextIndex} %}
     <div class="gtm-info" data-gtm-event="{{ gtmEvent|json_encode() }}"></div>
 </div>
 
