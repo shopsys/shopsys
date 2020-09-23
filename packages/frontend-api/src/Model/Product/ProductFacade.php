@@ -105,4 +105,16 @@ class ProductFacade
         $productsResult = $this->productElasticsearchRepository->getSortedProductsResultByFilterQuery($filterQuery);
         return $productsResult->getHits();
     }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
+     * @return int
+     */
+    public function getProductsByCategoryCount(Category $category): int
+    {
+        $filterQuery = $this->filterQueryFactory->createListable()
+            ->filterByCategory([$category->getId()]);
+
+        return $this->productElasticsearchRepository->getProductsCountByFilterQuery($filterQuery);
+    }
 }
