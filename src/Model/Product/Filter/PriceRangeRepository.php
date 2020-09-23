@@ -9,6 +9,7 @@ use App\Model\Product\ProductRepository;
 use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
+use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Product\Filter\PriceRange;
@@ -16,7 +17,6 @@ use Shopsys\FrameworkBundle\Model\Product\Filter\PriceRangeRepository as BasePri
 
 /**
  * @property \App\Component\Doctrine\QueryBuilderExtender $queryBuilderExtender
- * @method \Shopsys\FrameworkBundle\Model\Product\Filter\PriceRange getPriceRangeInCategory(int $domainId, \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup, \App\Model\Category\Category $category)
  * @property \App\Model\Product\ProductRepository $productRepository
  */
 class PriceRangeRepository extends BasePriceRangeRepository
@@ -76,5 +76,22 @@ class PriceRangeRepository extends BasePriceRangeRepository
             Money::createFromFloat(floor($minimalPrice), $minFractionDigits),
             Money::createFromFloat(ceil($maximalPrice), $minFractionDigits)
         );
+    }
+
+    /**
+     * @param int $domainId
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
+     * @param \App\Model\Category\Category $category
+     * @return \Shopsys\FrameworkBundle\Model\Product\Filter\PriceRange
+     */
+    public function getPriceRangeInCategory($domainId, PricingGroup $pricingGroup, Category $category)
+    {
+        $productsQueryBuilder = $this->productRepository->getSellableInCategoryQueryBuilder(
+            $domainId,
+            $pricingGroup,
+            $category
+        );
+
+        return $this->getPriceRangeByProductsQueryBuilder($productsQueryBuilder, $pricingGroup);
     }
 }
