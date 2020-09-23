@@ -564,10 +564,21 @@
         width: auto;
 
         pointer-events: none;
-        border: 0;
+        border-width: 0;
+        box-shadow: none;
 
         &::before {
             display: none;
+        }
+    }
+
+    &--login {
+        .in-message--alert {
+            padding: 0.5rem;
+            margin-bottom: 1rem;
+
+            border-width: 1px;
+            box-shadow: 0 0 0 3px rgba(@in-message-error-color, .25);
         }
     }
 }
