@@ -5,9 +5,11 @@
              <div class="box-articles">
                 <div class="box-articles__wrap">
                     <div class="box-articles__text">
-                        <h2 class="box-articles__heading">{{ rootCategory.getName(domain.locale)|upper }}</h2>
-                        <div class="box-articles__desc">{{ rootCategory.getDescription(domain.locale) }}</div>
-                        <a class="btn btn--outline dont-print" href="{{ url('front_blogcategory_detail', { id: constant('App\\Model\\Blog\\Category\\BlogCategory::BLOG_MAIN_PAGE_CATEGORY_ID')}) }}">{{ "všechny články"|trans }}</a>
+                        <div class="box-articles__text__inner">
+                            <h2 class="box-articles__heading">{{ rootCategory.getName(domain.locale)|upper }}</h2>
+                            <div class="box-articles__desc">{{ rootCategory.getDescription(domain.locale) }}</div>
+                            <a class="btn btn--outline dont-print" href="{{ url('front_blogcategory_detail', { id: constant('App\\Model\\Blog\\Category\\BlogCategory::BLOG_MAIN_PAGE_CATEGORY_ID')}) }}">{{ "všechny články"|trans }}</a>
+                        </div>
                     </div>
                     <div class="list-articles list-articles--hp">
                         {% for blogArticle in homepageArticles %}
