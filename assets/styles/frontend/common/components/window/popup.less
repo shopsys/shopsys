@@ -555,6 +555,21 @@
             }
         }
     }
+
+    .in-message {
+        position: static;
+        height: auto;
+        margin: 0;
+        padding: 0;
+        width: auto;
+
+        pointer-events: none;
+        border: 0;
+
+        &::before {
+            display: none;
+        }
+    }
 }
 
 @keyframes stroke {
