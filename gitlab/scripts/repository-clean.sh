@@ -7,9 +7,8 @@ NO_COLOR='\e[39m'
 
 declare -A REPOSITORY_NAME_MAP_TO_ENVIRONMENT=(
   ["master"]="production"
-  ["devel"]="devel"
+  ["devel"]="develop"
   ["beta"]="beta"
-  ["clear-stabil"]="clear-stabil"
 )
 
 containsElement () {
