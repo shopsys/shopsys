@@ -47,14 +47,18 @@
                         <div class="wrap-box__in__col wrap-box__in__col--first">
                             <h2 class="wrap-box__title">{{ 'Billing address'|trans }}</h2>
                             <table class="box-table box-table--fullwidth box-table--vertical box-table--params">
+                                {% if(order.firstName) %}
                                 <tr class="box-table__row">
                                     <th class="box-table__item box-table__item--heading">{{ 'First name'|trans }}: </th>
                                     <td class="box-table__item">{{ order.firstName }}</td>
                                 </tr>
+                                {% endif %}
+                                {% if(order.lastName) %}
                                 <tr class="box-table__row">
                                     <th class="box-table__item box-table__item--heading">{{ 'Last name'|trans }}: </th>
                                     <td class="box-table__item">{{ order.lastName }}</td>
                                 </tr>
+                                {% endif %}
                                 <tr class="box-table__row">
                                     <th class="box-table__item box-table__item--heading">{{ 'Email'|trans }}: </th>
                                     <td class="box-table__item box-table__item--break-all">{{ order.email }}</td>

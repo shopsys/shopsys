@@ -62,8 +62,6 @@ class RegistrationFacade implements RegistrationFacadeInterface
     public function registerCompany(RegistrationData $registrationData): CustomerUser
     {
         $registrationData->companyCustomer = true;
-        $registrationData->firstName = $registrationData->companyName;
-        $registrationData->lastName = $registrationData->companyName;
         $registrationData->gender = '';
         return $this->register($registrationData);
     }
