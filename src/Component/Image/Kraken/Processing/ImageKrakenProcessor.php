@@ -63,12 +63,13 @@ class ImageKrakenProcessor
     /**
      * @param string $sourceImageFilepath
      * @param \Shopsys\FrameworkBundle\Component\Image\Config\ImageSizeConfig[] $sizesConfig
+     * @param string $entityName
      * @return array
      */
-    public function resizeBySizeConfig(string $sourceImageFilepath, array $sizesConfig): array
+    public function resizeBySizeConfig(string $sourceImageFilepath, array $sizesConfig, string $entityName): array
     {
         $tempImageFilePath = $this->getTempImageFilePath($sourceImageFilepath);
-        $krakenImageData = $this->resizeAndWaitForResult($tempImageFilePath, $sizesConfig);
+        $krakenImageData = $this->resizeAndWaitForResult($tempImageFilePath, $sizesConfig, $entityName);
         $this->removeTempImageFile($tempImageFilePath);
 
         return $krakenImageData;
@@ -101,19 +102,22 @@ class ImageKrakenProcessor
     /**
      * @param string $filepath
      * @param \Shopsys\FrameworkBundle\Component\Image\Config\ImageSizeConfig[] $sizesConfig
+     * @param string $entityName
      * @return array|null
      */
-    private function resizeAndWaitForResult(string $filepath, array $sizesConfig): ?array
+    private function resizeAndWaitForResult(string $filepath, array $sizesConfig, string $entityName): ?array
     {
         $resizeImages = [];
 
         foreach ($sizesConfig as $sizeConfig) {
-            $resizeImages[] = [
+            $resizeImage = [
                 'id' => $sizeConfig->getName() ?? ImageConfig::DEFAULT_SIZE_NAME,
                 'width' => $sizeConfig->getWidth(),
                 'height' => $sizeConfig->getHeight(),
                 'strategy' => $this->getImageStrategy($sizeConfig->getWidth(), $sizeConfig->getHeight(), $sizeConfig->getCrop()),
             ];
+            $this->resolveLossySetup($resizeImage, $entityName);
+            $resizeImages[] = $resizeImage;
         }
 
         $params = [
@@ -124,7 +128,25 @@ class ImageKrakenProcessor
             'resize' => $resizeImages,
         ];
 
+
         return $this->kraken->upload($params);
+    }
+
+    /**
+     * @param array $resizeImage
+     * @param string $entityName
+     */
+    private function resolveLossySetup(array &$resizeImage, string $entityName): void
+    {
+        $lossless = $this->krakenConfig->getLossless();
+        if (array_key_exists($entityName, $lossless)) {
+            if (array_key_exists('size', $lossless[$entityName])) {
+                $sizeName = $resizeImage['id'];
+                if ($lossless[$entityName]['size'] === $sizeName) {
+                    $resizeImage['lossy'] = false;
+                }
+            }
+        }
     }
 
     /**

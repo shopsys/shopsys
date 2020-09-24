@@ -34,6 +34,11 @@ class KrakenConfig
     private $apiSecret;
 
     /**
+     * @var array
+     */
+    private $lossless;
+
+    /**
      * @param array $krakenConfig
      */
     public function __construct(array $krakenConfig)
@@ -48,6 +53,8 @@ class KrakenConfig
             'api_secret',
         ]);
 
+        $optionsResolver->setDefined(['lossless']);
+
         $optionsResolver->setAllowedTypes(
             'enabled',
             ['bool']
@@ -68,6 +75,10 @@ class KrakenConfig
             'api_secret',
             ['string']
         );
+        $optionsResolver->setAllowedTypes(
+            'lossless',
+            'string[][]'
+        );
 
         $optionsResolver->resolve($krakenConfig);
 
@@ -76,6 +87,8 @@ class KrakenConfig
         $this->lossy = $krakenConfig['lossy'];
         $this->apiKey = $krakenConfig['api_key'];
         $this->apiSecret = $krakenConfig['api_secret'];
+
+        $this->lossless = $krakenConfig['lossless'] ?? [];
     }
 
     /**
@@ -116,5 +129,13 @@ class KrakenConfig
     public function getApiSecret(): string
     {
         return $this->apiSecret;
+    }
+
+    /**
+     * @return array
+     */
+    public function getLossless(): array
+    {
+        return $this->lossless;
     }
 }
