@@ -53,3 +53,7 @@ There you can find links to upgrade notes for other versions too.
 - allow multiple elasticsearch hosts ([#2240](https://github.com/shopsys/shopsys/pull/2240))
     - now it's possible to set multiple elasticsearch hosts like `'["elasticsearch:9200", "elasticsearch2:9200"]'`
     - `Elasticsearch\ClientBuilder` is now created with a different factory, you may want to check your overridden service definition (see PR for details)
+
+- unify logo rendering on homepage and subpages ([#2048](https://github.com/shopsys/shopsys/pull/2048))
+    - on homepage is no longer H1 element, consider adding it in your custom design
+    - see #project-base-diff to update your project
