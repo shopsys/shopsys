@@ -82,11 +82,11 @@ class TransportPalletPriceFacade
             }
 
             foreach ($oldPalletPrices as $oldPalletPrice) {
-                if ($oldPalletPrice->getProductsPriceTo() === null
-                    || $this->containsSamePriceToInData($newPalletPricesData, $oldPalletPrice) === false
-                ) {
+                $matchedPriceToAndPriceData = $this->findPriceDataWithSamePriceFrom($newPalletPricesData, $oldPalletPrice);
+                if ($matchedPriceToAndPriceData === null || $oldPalletPrice->getProductsPriceTo() === null) {
                     $this->entityManager->remove($oldPalletPrice);
                 } else {
+                    $oldPalletPrice->updateTransportPrice($matchedPriceToAndPriceData->price);
                     $maxTransportPalletPrice = $this->getMaxTransportPalletPriceByPriceTo($oldPalletPrice, $maxTransportPalletPrice);
                 }
             }
@@ -105,24 +105,27 @@ class TransportPalletPriceFacade
             }
         }
 
-
         $this->entityManager->flush();
     }
 
     /**
      * @param \App\Component\Pricing\PriceToAndPriceData[] $priceToAndPricesData
      * @param \App\Model\Transport\TransportPallet\TransportPalletPrice $transportPalletPrice
-     * @return bool
+     * @return \App\Component\Pricing\PriceToAndPriceData|null
      */
-    private function containsSamePriceToInData(array $priceToAndPricesData, TransportPalletPrice $transportPalletPrice): bool
+    private function findPriceDataWithSamePriceFrom(array $priceToAndPricesData, TransportPalletPrice $transportPalletPrice): ?PriceToAndPriceData
     {
-        foreach ($priceToAndPricesData as $newPalletPriceData) {
-            if ($newPalletPriceData->priceTo->equals($transportPalletPrice->getProductsPriceTo())) {
-                return true;
+        if ($transportPalletPrice->getProductsPriceTo() === null) {
+            return null;
+        }
+
+        foreach ($priceToAndPricesData as $priceToAndPriceData) {
+            if ($priceToAndPriceData->priceTo->equals($transportPalletPrice->getProductsPriceTo())) {
+                return $priceToAndPriceData;
             }
         }
 
-        return false;
+        return null;
     }
 
     /**

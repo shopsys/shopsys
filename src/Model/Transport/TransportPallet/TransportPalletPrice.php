@@ -83,4 +83,12 @@ class TransportPalletPrice
     {
         $this->productsPriceTo = null;
     }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Component\Money\Money $price
+     */
+    public function updateTransportPrice(Money $price): void
+    {
+        $this->transportPrice = $price;
+    }
 }
