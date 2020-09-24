@@ -19,6 +19,7 @@ arrange:
     - using-form-types.md
     - friendly-url.md
     - front-end-breadcrumb-navigation.md
+    - autocompletion-for-phing-targets.md
     - running-acceptance-tests.md
     - required-php-configuration.md
     - shopsys-framework-on-docker.md
