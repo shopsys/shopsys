@@ -119,9 +119,11 @@
                                 data-src="{{ asset('public/frontend/images/prodejny.png') }}"
                                 alt="{{ 'Prodejny Sconto'|trans }}">
                     </picture>
-                    <p class="box-block__item__desc">{{ 'Další doplňkový sortiment, zákaznické centrum nebo osobní<br>vyzvednutí zboží z e-shopu zdarma na 8 místech v ČR.'|trans|raw }}</p>
+                    <p class="box-block__item__desc">
+                        {{ 'Naleznete široký sortiment rozmanitých stylů, barevných provedení i cenových úrovní. Navíc na vás čeká rozsáhlý výběr kuchyňských doplňků, textilu a bytových dekorací.'|transHtml }}
+                    </p>
                     <a class="btn btn--next btn-no-style" href="{{ url('front_stores') }}">
-                        {{ 'Číst dál'|trans }}
+                        {{ 'Přehled všech prodejen'|trans }}
                         <i class="btn__icon svg svg-chevron"></i>
                     </a>
                 </div>

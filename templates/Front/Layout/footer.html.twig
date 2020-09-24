@@ -36,7 +36,9 @@
                                 data-src="{{ asset("public/frontend/images/#{logoName}.svg") }}"
                                 alt="{{ 'SCONTO'|trans }}"
                             >
-                            <p class="footer__block__paragraph">{{ 'SCONTO Nábytek s.r.o. je součástí německého<br>koncernu Höffner, který patří k největším<br>producentům nábytku v Evropě již od roku 1990.'|trans|raw }}</p>
+                            <p class="footer__block__paragraph">
+                                {{ 'SCONTO Nábytek s.r.o. je součástí německého<br>koncernu Höffner, který patří k největším<br>prodejcům nábytku v Evropě již od roku 1990.'|transHtml }}
+                            </p>
                             <div class="footer__block__langs">
                                 <a
                                     href="{{ domain.id == 1 ? '/' : 'https://www.sconto.cz/' }}"

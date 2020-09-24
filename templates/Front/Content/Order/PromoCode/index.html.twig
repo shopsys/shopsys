@@ -1,14 +1,14 @@
 {% set domain = getDomain() %}
 <div class="box-promo-code">
+    {% set promoDescUrl = '/akce' %}
+    {% if domain.id == 2 %}
+        {% set promoDescUrl = '/akcia' %}
+    {% endif %}
     {% if validEnteredPromoCode is null %}
         <div class="box-promo-code__wrap">
             <input type="text" value="" id="js-promo-code-input" class="box-promo-code__input" placeholder="{{ 'Slevový kód'|trans }}" data-apply-code-url="{{ url('front_promo_code_apply') }}"/>
             <button type="button" id="js-promo-code-submit-button" class="btn btn--primary box-promo-code__btn">{{ 'Apply'|trans }}</button>
         </div>
-        {% set promoDescUrl = '/akce' %}
-        {% if domain.id == 2 %}
-            {% set promoDescUrl = '/akcia' %}
-        {% endif %}
         <p class="box-cart__promo__desc">
             {{ 'Nemáte slevový kód? Prohlédněte si seznam našich aktuálně platných <a href="%url%">akcí</a>.'|transHtml({'%url%': promoDescUrl}) }}
         </p>
@@ -25,8 +25,7 @@
             </span>
         </span>
         <p class="box-cart__promo__desc box-cart__promo__desc--apply">
-            {{ 'Sleva byla uplatněna na všechny již neslevněné položky na které se akce vztahuje podle
-            <a class="box-cart__promo__desc__link js-not-implemented-yet" href="#">pravidel</a>'|transHtml }}
+            {{ 'Slevový kód se uplati na všechny již neslevněné položky na které se akce vztahuje podle <a href="%url%">pravidel</a>.'|transHtml({'%url%': promoDescUrl}) }}
         </p>
     {% endif %}
 </div>

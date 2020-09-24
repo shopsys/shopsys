@@ -35,7 +35,7 @@
         </div>
         <div class="box-login__col box-login__col--right">
             <div class="box-login__profile">
-                <strong class="box-login__profile__text">{{ 'Ještě nemáte<br>Váš Sconto profil?'|transHtml }}</strong>
+                <strong class="box-login__profile__text">{{ 'Nemáte ješte účet?<br>Registrujte se.'|transHtml }}</strong>
                 <div class="box-login__profile__icon">
                     <picture>
                         <source srcset="{{ asset('public/frontend/images/qmark2x.png') }} 2x, {{ asset('public/frontend/images/qmark.png') }} 1x" />
@@ -43,7 +43,9 @@
                     </picture>
                 </div>
             </div>
-            <p class="box-login__message">{{ 'Tuny slev lorem ipsum dolor sit amet, consestur adpising elit.'|trans }}</p>
+            <p class="box-login__message">
+                {{ 'Nebudete muset dokola vyplňovat adresy a uvidíte přehled všech objednávek.'|trans }}
+            </p>
             <a href="{{ url('front_registration_register') }}" class="btn btn--secondary btn--full-width btn--registration js-registration-link-desktop">{{ 'Registrujte se'|trans }}</a>
         </div>
     </div>
