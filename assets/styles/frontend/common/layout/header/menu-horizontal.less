@@ -107,16 +107,42 @@
         }
 
         &--drop {
-            &:hover {
-                box-shadow: 0 20px 20px 5px rgba(@color-0, .15);
-            }
-        }
+            overflow: visible;
 
-        &:hover {
-            color: @color-add;
+            border-top-left-radius: @radius;
+            border-top-right-radius: @radius;
+            border: 1px solid transparent;
+
+            &:hover {
+                border-color: @color-add-secondary;
+                box-shadow: 0 0 0 3px rgba(255, 173, 0, 0.25);
+
+                > .menu-horizontal__item__link::before {
+                    visibility: visible;
+                }
+
+                .menu-horizontal__sub {
+                    opacity: 1;
+                    transform: scale(1);
+                    pointer-events: auto;
+                }
+            }
 
             > .menu-horizontal__item__link {
-                color: inherit;
+                position: relative;
+
+                &::before {
+                    position: absolute;
+                    left: 0;
+                    bottom: -4px;
+                    height: 8px;
+                    width: 100%;
+                    content: '';
+                    z-index: 101;
+                    visibility: hidden;
+
+                    background-color: @color-f;
+                }
             }
         }
 
@@ -202,8 +228,8 @@
             }
 
             &:hover {
-                color: @color-add;
-                text-decoration: none;
+                color: @menu-horizontal-font-color;
+                text-decoration: underline;
             }
 
             .svg {
@@ -289,7 +315,7 @@
     }
 
     &__sub {
-        display: none;
+        display: block !important;
         position: absolute;
         z-index: 100;
         width: 100%;
@@ -301,8 +327,15 @@
 
         border-bottom-left-radius: @radius;
         border-bottom-right-radius: @radius;
+        border: 1px solid @color-add-secondary;
         background: @color-f;
-        box-shadow: 0 20px 20px 5px rgba(@color-0, .15);
+        transition: none;
+        will-change: transform;
+        box-shadow: 0 0 0 3px rgba(255, 173, 0, .25);
+        opacity: 0;
+        transform: scale(0.9);
+        transform-origin: top left;
+        pointer-events: none;
 
         &__wrap {
             display: flex;
@@ -393,9 +426,13 @@
                     padding-right: 12px;
 
                     font-size: 16px;
-                    font-family: @font-tertiary;
+                    font-family: @font-quartenary;
                     line-height: 1.4;
-                    color: @color-primary;
+                    color: @color-primary-light;
+
+                    &:hover {
+                        color: @color-add-secondary;
+                    }
                 }
 
                 ul {
@@ -406,11 +443,14 @@
                         font-size: 15px;
                         display: block;
                         color: @color-primary;
-                        transition: all 200ms;
                     }
 
                     li ul {
                         margin: -19px 0 25px 15px;
+
+                        @media @query-xl {
+                            margin-bottom: 40px;
+                        }
 
                         li {
                             margin-bottom: 5px;
@@ -426,14 +466,24 @@
                                 font-family: @font-base;
                                 font-weight: 400;
                                 font-size: 15px;
-                                color: @color-base-lighter;
+                                color: @color-base-secondary;
+                                transition: none;
+
+                                &:hover {
+                                    color: @color-add-secondary;
+                                }
                             }
 
                             .btn--next {
                                 .btn__icon {
-                                    padding-left: 2px;
+                                    padding-left: 6px;
+                                    top: auto;
 
-                                    font-size: 23px;
+                                    font-size: 17px;
+                                }
+
+                                &:hover {
+                                    color: @color-add-secondary;
                                 }
                             }
                         }
