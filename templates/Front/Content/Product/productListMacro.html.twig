@@ -13,21 +13,7 @@
                         {% endif %}
                     " class="list-products__item__block" {{ gtm(productView, nextIndex + loop.index0, { 'list': gtmList }) }}>
                         <div class="list-products__item__image dont-print">
-                            {% if productView.variantImageUrl is null %}
-                                {{ image(productView.image, { size: 'list', alt: productView.name }) }}
-                            {% else %}
-                                <picture>
-                                    <img
-                                            src="{{ productView.variantImageUrl }}"
-                                            data-src="{{ productView.variantImageUrl }}"
-                                            alt="{{ productView.name }}"
-                                            title="{{ productView.name }}"
-                                            class="image-product-list loaded"
-                                            itemprop="image"
-                                            loading="lazy"
-                                    />
-                                </picture>
-                            {% endif %}
+                            {{ image(productView.image, { size: 'list', alt: productView.name }) }}
                             {{ renderFlagsByIds(productView.flagIds, 'in-flag--in-list') }}
                             {% if productView.nonSellingPrice.priceWithVat.isPositive and not productView.hasScontoFlag and not productView.sellingPrice.priceFrom %}
                                 {{ discount.circle(productView.sellingPrice.priceWithVat, productView.nonSellingPrice.priceWithVat) }}

@@ -47,11 +47,6 @@ class ListedProductView extends BaseListedProductView
     private $variantUrl;
 
     /**
-     * @var string|null
-     */
-    private $variantImageUrl;
-
-    /**
      * @var string
      */
     private $mainCategoryPath;
@@ -206,22 +201,6 @@ class ListedProductView extends BaseListedProductView
     }
 
     /**
-     * @return string|null
-     */
-    public function getVariantImageUrl(): ?string
-    {
-        return $this->variantImageUrl;
-    }
-
-    /**
-     * @param string|null $variantImageUrl
-     */
-    public function setVariantImageUrl(?string $variantImageUrl): void
-    {
-        $this->variantImageUrl = $variantImageUrl;
-    }
-
-    /**
      * @return string
      */
     public function getFullName(): string
@@ -291,5 +270,13 @@ class ListedProductView extends BaseListedProductView
     public function setFlagIds(array $flagIds): void
     {
         $this->flagIds = $flagIds;
+    }
+
+    /**
+     * @param \Shopsys\ReadModelBundle\Image\ImageView|null $image
+     */
+    public function setImage(?ImageView $image): void
+    {
+        $this->image = $image;
     }
 }

@@ -6,9 +6,24 @@ namespace App\Model\Product\Filter;
 
 use App\Model\Product\Listed\ListedProductView;
 use Shopsys\FrameworkBundle\Component\Paginator\PaginationResult;
+use Shopsys\FrameworkBundle\Model\Product\Product;
+use Shopsys\ReadModelBundle\Image\ImageViewFacade;
 
 class ProductVariantFilterFacade
 {
+    /**
+     * @var \Shopsys\ReadModelBundle\Image\ImageViewFacade
+     */
+    private ImageViewFacade $imageViewFacade;
+
+    /**
+     * @param \Shopsys\ReadModelBundle\Image\ImageViewFacade $imageViewFacade
+     */
+    public function __construct(ImageViewFacade $imageViewFacade)
+    {
+        $this->imageViewFacade = $imageViewFacade;
+    }
+
     /**
      * @param \Shopsys\FrameworkBundle\Component\Paginator\PaginationResult $paginationResult
      */
@@ -76,7 +91,6 @@ class ProductVariantFilterFacade
                     $listedProductView->deleteVariantParametersSetupByVariantId($variantId);
                 } else {
                     $listedProductView->setVariantUrl($variantParameterSetup['variant_url'] ?? null);
-                    $listedProductView->setVariantImageUrl($variantParameterSetup['image_url'] ?? null);
                     if (isset($variantParameterSetup['variant_availability_info']['product_availability_information'])) {
                         $listedProductView->setAvailability($variantParameterSetup['variant_availability_info']['product_availability_information']);
                     }
@@ -86,6 +100,8 @@ class ProductVariantFilterFacade
                     $listedProductView->setFlagIds($variantParameterSetup['variant_flags'] ?? []);
                     $listedProductView->setHasScontoFlag($variantParameterSetup['variant_has_sconto_flag'] ?? false);
                     $listedProductView->setProductCountExposedInStores($variantParameterSetup['variant_availability_info']['product_count_exposed_in_stores_information'] ?? null);
+                    $imageViews = $this->imageViewFacade->getForEntityIds(Product::class, [$variantId]);
+                    $listedProductView->setImage($imageViews[$variantId] ?? null);
                 }
             }
         }

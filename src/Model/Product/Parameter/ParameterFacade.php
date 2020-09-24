@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Model\Product\Parameter;
 
-use App\Component\Image\Image;
 use App\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use App\Model\CategorySeo\ReadyCategorySeoMixFacade;
 use App\Model\Product\Availability\ProductAvailabilityFacade;
@@ -13,7 +12,6 @@ use App\Model\Product\Product;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\NoResultException;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\Component\Image\Exception\ImageNotFoundException;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRepository;
 use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade;
@@ -357,9 +355,6 @@ class ParameterFacade extends BaseParameterFacade
 
         $variantSetup = $this->transformParameterValuesDataToSetupArray($variantProductParameterValuesData);
         $variantExtendedSetup = $this->transformParameterValuesDataToSetupArray($variantProductExtendedParameterValuesData);
-        $entityIds = array_unique(array_merge(array_keys($variantSetup), array_keys($variantExtendedSetup)));
-        /** @var \App\Component\Image\Image[] $imagesIndexedByEntityIds */
-        $imagesIndexedByEntityIds = $this->imageFacade->getImagesByEntitiesIndexedByEntityId($entityIds, Product::class);
 
         $defaultVariantId = null;
         if (count($variantSetup) > 0 && $mainProduct->getDefaultVariant() !== null) {
@@ -375,13 +370,6 @@ class ParameterFacade extends BaseParameterFacade
                 'parameter_values_setup' => $parameterValuesList,
                 'variant_url' => $this->getVariantUrl($variantId, $domainId),
             ];
-
-            if (array_key_exists($variantId, $imagesIndexedByEntityIds)) {
-                try {
-                    $variantParametersSetup['image_url'] = $this->getVariantImageUrl($imagesIndexedByEntityIds[$variantId], $domainId);
-                } catch (ImageNotFoundException $imageNotFoundException) {
-                }
-            }
 
             if ($variantId === $defaultVariantId) {
                 $variantParametersSetup['is_default_variant'] = true;
@@ -403,13 +391,6 @@ class ParameterFacade extends BaseParameterFacade
                     'variant_url' => $this->getVariantUrl($variantId, $domainId),
                 ];
 
-                if (array_key_exists($variantId, $imagesIndexedByEntityIds)) {
-                    try {
-                        $variantParametersSetup['image_url'] = $this->getVariantImageUrl($imagesIndexedByEntityIds[$variantId], $domainId);
-                    } catch (ImageNotFoundException $imageNotFoundException) {
-                    }
-                }
-
                 $variantParametersSetup = $this->addVariantAvailabilityInfo($variantParametersSetup, $variantId, $domainId);
 
                 $variantsSetupForElastic[] = $variantParametersSetup;
@@ -417,18 +398,6 @@ class ParameterFacade extends BaseParameterFacade
         }
 
         return $variantsSetupForElastic;
-    }
-
-    /**
-     * @param \App\Component\Image\Image $image
-     * @param int $domainId
-     * @return string
-     */
-    private function getVariantImageUrl(Image $image, int $domainId): string
-    {
-        $domainConfig = $this->domain->getDomainConfigById($domainId);
-
-        return $this->imageFacade->getImageUrl($domainConfig, $image, 'list');
     }
 
     /**
