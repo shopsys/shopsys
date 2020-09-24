@@ -7,6 +7,7 @@ namespace App\Model\Mail;
 use App\Model\Payment\Payment;
 use App\Model\Transport\Transport;
 use Shopsys\FrameworkBundle\Model\Mail\MailTemplateData as MailTemplateDataBase;
+use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus;
 
 class MailTemplateData extends MailTemplateDataBase
 {
@@ -21,9 +22,9 @@ class MailTemplateData extends MailTemplateDataBase
     public ?Payment $payment = null;
 
     /**
-     * @var string|null
+     * @var \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus|null
      */
-    public ?string $orderStockStatus = null;
+    public ?OrderStatus $orderStatus = null;
 
     /**
      * It's used only for creating by administrator, not for editing!

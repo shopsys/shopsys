@@ -23,13 +23,13 @@ class MailTemplateFacade extends BaseMailTemplateFacade
      * @param \App\Model\Mail\MailTemplateData $mailTemplateData
      * @return \App\Model\Mail\MailTemplate
      */
-    public function createOrderStockStatusTemplate(MailTemplateData $mailTemplateData): MailTemplate
+    public function createOrderStatusTemplate(MailTemplateData $mailTemplateData): MailTemplate
     {
-        $existingMailTemplate = $this->mailTemplateRepository->findOrderStockStatusMailTemplate(
+        $existingMailTemplate = $this->mailTemplateRepository->findOrderStatusMailTemplate(
             $mailTemplateData->domainId,
             $mailTemplateData->transport,
             $mailTemplateData->payment,
-            $mailTemplateData->orderStockStatus,
+            $mailTemplateData->orderStatus,
         );
 
         if ($existingMailTemplate !== null) {
@@ -38,7 +38,7 @@ class MailTemplateFacade extends BaseMailTemplateFacade
 
         /** @var \App\Model\Mail\MailTemplate $mailTemplate */
         $mailTemplate = $this->mailTemplateFactory->create(
-            MailTemplate::ORDER_STOCK_STATUS_NAME,
+            MailTemplate::ORDER_STATUS_NAME,
             $mailTemplateData->domainId,
             $mailTemplateData
         );
@@ -54,7 +54,7 @@ class MailTemplateFacade extends BaseMailTemplateFacade
      */
     public function delete(MailTemplate $mailTemplate): void
     {
-        if ($mailTemplate->getName() !== MailTemplate::ORDER_STOCK_STATUS_NAME) {
+        if ($mailTemplate->getName() !== MailTemplate::ORDER_STATUS_NAME) {
             throw new Exception\DeleteMailTemplateException();
         }
 
@@ -66,19 +66,15 @@ class MailTemplateFacade extends BaseMailTemplateFacade
      * @param \App\Model\Order\Order $order
      * @return \App\Model\Mail\MailTemplate[]
      */
-    public function getOrderStockStatusTemplatesByOrder(Order $order): array
+    public function getOrderStatusTemplatesByOrder(Order $order): array
     {
-        if ($order->getStockStatus() === null) {
-            return [];
-        }
-
         $mailTemplates = [];
         foreach ($order->getTransports() as $transport) {
-            $mailTemplate = $this->mailTemplateRepository->findOrderStockStatusMailTemplate(
+            $mailTemplate = $this->mailTemplateRepository->findOrderStatusMailTemplate(
                 $order->getDomainId(),
                 $transport,
                 $order->getPayment(),
-                $order->getStockStatus()
+                $order->getStatus()
             );
             if ($mailTemplate !== null) {
                 $mailTemplates[] = $mailTemplate;

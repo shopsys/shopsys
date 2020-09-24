@@ -31,7 +31,7 @@ class MailController extends baseMailController
     {
         $mailTemplateData = $this->mailTemplateDataFactory->create();
         $mailTemplateData->domainId = $this->adminDomainTabsFacade->getSelectedDomainId();
-        $mailTemplateVariables = $this->mailTemplateConfiguration->getMailTemplateVariablesBySlug(MailTemplate::ORDER_STOCK_STATUS_NAME);
+        $mailTemplateVariables = $this->mailTemplateConfiguration->getMailTemplateVariablesBySlug(MailTemplate::ORDER_STATUS_NAME);
 
         $form = $this->createForm(
             MailTemplateFormType::class,
@@ -47,7 +47,7 @@ class MailController extends baseMailController
 
         if ($form->isSubmitted() && $form->isValid()) {
             try {
-                $mailTemplate = $this->mailTemplateFacade->createOrderStockStatusTemplate($mailTemplateData);
+                $mailTemplate = $this->mailTemplateFacade->createOrderStatusTemplate($mailTemplateData);
 
                 $this->addSuccessFlashTwig(
                     t('Emailová šablona <strong><a href="{{ url }}">{{ name }}</a></strong> byla vytvořena.'),

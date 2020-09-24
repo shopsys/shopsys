@@ -144,28 +144,30 @@ team of {domain}
             $paymentGoPay = $this->getReference(PaymentDataFixture::PAYMENT_GOPAY);
             /** @var \App\Model\Payment\Payment $paymentCashOnDelivery */
             $paymentCashOnDelivery = $this->getReference(PaymentDataFixture::PAYMENT_CASH_ON_DELIVERY);
+            /** @var \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus $orderStatusInProgress */
+            $orderStatusInProgress = $this->getReference(OrderStatusDataFixture::ORDER_STATUS_IN_PROGRESS);
 
             $mailTemplateData->transport = $transportPallet;
             $mailTemplateData->payment = $paymentGoPay;
-            $mailTemplateData->orderStockStatus = Order::STOCK_STATUS_IN_STOCK;
+            $mailTemplateData->orderStatus = $orderStatusInProgress;
             $mailTemplateData->subject = t('Vaši zásilku Vám posíláme', [], 'dataFixtures', $locale);
             $mailTemplateData->body = t('Vážený zákazníku, <br/><br/>
 Vaše objednávka {number} je vyřízená, vše je zaplaceno a tak Vám objednávku dovezeme vlastní přepravou až ke dveřím
 ', [], 'dataFixtures', $locale);
-            $this->createMailTemplate($manager, MailTemplate::ORDER_STOCK_STATUS_NAME, $mailTemplateData, $domainId);
+            $this->createMailTemplate($manager, MailTemplate::ORDER_STATUS_NAME, $mailTemplateData, $domainId);
 
             $mailTemplateData->transport = $transportPallet;
             $mailTemplateData->payment = $paymentCashOnDelivery;
-            $mailTemplateData->orderStockStatus = Order::STOCK_STATUS_IN_STOCK;
+            $mailTemplateData->orderStatus = $orderStatusInProgress;
             $mailTemplateData->subject = t('Vaši zásilku Vám posíláme', [], 'dataFixtures', $locale);
             $mailTemplateData->body = t('Vážený zákazníku, <br/><br/>
 Vaše objednávka {number} je vyřízená. Objednávku Vám dovezeme vlastní přepravou až ke dveřím, nicméně připravte si částku {total_price} k zaplacení dobírky.
 ', [], 'dataFixtures', $locale);
-            $this->createMailTemplate($manager, MailTemplate::ORDER_STOCK_STATUS_NAME, $mailTemplateData, $domainId);
+            $this->createMailTemplate($manager, MailTemplate::ORDER_STATUS_NAME, $mailTemplateData, $domainId);
 
             $mailTemplateData->transport = null;
             $mailTemplateData->payment = null;
-            $mailTemplateData->orderStockStatus = null;
+            $mailTemplateData->orderStatus = null;
         }
     }
 
@@ -188,7 +190,7 @@ Vaše objednávka {number} je vyřízená. Objednávku Vám dovezeme vlastní p�
             'domainId' => $domainId,
             'transport' => $mailTemplateData->transport,
             'payment' => $mailTemplateData->payment,
-            'orderStockStatus' => $mailTemplateData->orderStockStatus,
+            'orderStatus' => $mailTemplateData->orderStatus,
         ]);
 
         if ($mailTemplate === null) {
@@ -209,6 +211,7 @@ Vaše objednávka {number} je vyřízená. Objednávku Vám dovezeme vlastní p�
         return [
             TransportDataFixture::class,
             PaymentDataFixture::class,
+            OrderStatusDataFixture::class,
         ];
     }
 }

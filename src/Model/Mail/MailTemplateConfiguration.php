@@ -17,12 +17,12 @@ class MailTemplateConfiguration extends BaseMailTemplateConfiguration
     public function __construct(OrderStatusFacade $orderStatusFacade)
     {
         parent::__construct($orderStatusFacade);
-        $this->registerOrderStockStatusMailTemplates();
+        $this->registerExtendedOrderStatusMailTemplates();
     }
 
-    private function registerOrderStockStatusMailTemplates(): void
+    private function registerExtendedOrderStatusMailTemplates(): void
     {
-        $mailTemplate = new MailTemplateVariables(t('Změna skladovosti objednávky'));
+        $mailTemplate = new MailTemplateVariables(t('Změna stavu objednávky'));
         $mailTemplate
             ->addVariable(OrderMail::VARIABLE_NUMBER, t('Order number'))
             ->addVariable(OrderMail::VARIABLE_DATE, t('Date and time of order creation'))
@@ -38,6 +38,6 @@ class MailTemplateConfiguration extends BaseMailTemplateConfiguration
             ->addVariable(OrderMail::VARIABLE_TRANSPORT_INSTRUCTIONS, t('Shipping instructions'), MailTemplateVariables::CONTEXT_BODY)
             ->addVariable(OrderMail::VARIABLE_PAYMENT_INSTRUCTIONS, t('Payment instructions'), MailTemplateVariables::CONTEXT_BODY);
 
-        $this->addMailTemplateVariables(MailTemplate::ORDER_STOCK_STATUS_NAME, $mailTemplate);
+        $this->addMailTemplateVariables(MailTemplate::ORDER_STATUS_NAME, $mailTemplate);
     }
 }

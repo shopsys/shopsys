@@ -40,11 +40,6 @@ use Shopsys\FrameworkBundle\Model\Order\OrderEditResult;
  */
 class Order extends BaseOrder
 {
-    public const STOCK_STATUS_IN_STOCK = 'inStock';
-    public const STOCK_STATUS_NOT_IN_STOCK = 'notInStock';
-    public const STOCK_STATUS_PARTIALLY_IN_STOCK = 'partiallyInStock';
-    public const STOCK_STATUS_IN_FUTURE = 'inFuture';
-
     /**
      * @var \App\Model\GoPay\GoPayTransaction[]|\Doctrine\Common\Collections\ArrayCollection
      *
@@ -110,13 +105,6 @@ class Order extends BaseOrder
     protected $scontoBridgeStatus;
 
     /**
-     * @var string|null
-     *
-     * @ORM\Column(type="string", length=32, nullable=true)
-     */
-    private ?string $stockStatus;
-
-    /**
      * @param \App\Model\Order\OrderData $orderData
      * @param string $orderNumber
      * @param string $urlHash
@@ -133,7 +121,6 @@ class Order extends BaseOrder
         $this->goPayTransactions = new ArrayCollection();
         $this->gtmCoupon = $orderData->gtmCoupon;
         $this->scontoBridgeStatus = $orderData->scontoBridgeStatus;
-        $this->stockStatus = $orderData->stockStatus;
     }
 
     /**
@@ -155,7 +142,6 @@ class Order extends BaseOrder
         parent::editData($orderData);
 
         $this->gtmCoupon = $orderData->gtmCoupon;
-        $this->stockStatus = $orderData->stockStatus;
     }
 
     /**
@@ -306,26 +292,5 @@ class Order extends BaseOrder
     public function setScontoBridgeStatus(OrderScontoBridgeStatusEnum $status): void
     {
         $this->scontoBridgeStatus = $status->getValue();
-    }
-
-    /**
-     * @return string[]
-     */
-    public static function getAllStockStatusesTranslations(): array
-    {
-        return [
-            self::STOCK_STATUS_IN_STOCK => t('skladem'),
-            self::STOCK_STATUS_NOT_IN_STOCK => t('není skladem'),
-            self::STOCK_STATUS_PARTIALLY_IN_STOCK => t('částečně skladem'),
-            self::STOCK_STATUS_IN_FUTURE => t('budoucí sklad stavů'),
-        ];
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getStockStatus(): ?string
-    {
-        return $this->stockStatus;
     }
 }

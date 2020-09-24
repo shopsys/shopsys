@@ -277,12 +277,12 @@ class OrderFacade extends BaseOrderFacade
     public function edit($orderId, OrderData $orderData)
     {
         $order = $this->orderRepository->getById($orderId);
-        $oldOrderStockStatus = $order->getStockStatus();
+        $oldOrderStatus = $order->getStatus();
 
         parent::edit($orderId, $orderData);
 
-        if ($oldOrderStockStatus !== $order->getStockStatus()) {
-            $this->orderMailFacade->sendOrderStockStatusMailByOrder($order);
+        if ($oldOrderStatus !== $order->getStatus()) {
+            $this->orderMailFacade->sendOrderStatusMailByOrder($order);
         }
 
         return $order;

@@ -20,9 +20,9 @@ class OrderMailFacade extends BaseOrderMailFacade
     /**
      * @param \App\Model\Order\Order $order
      */
-    public function sendOrderStockStatusMailByOrder(Order $order): void
+    public function sendOrderStatusMailByOrder(Order $order): void
     {
-        $mailTemplates = $this->mailTemplateFacade->getOrderStockStatusTemplatesByOrder($order);
+        $mailTemplates = $this->mailTemplateFacade->getOrderStatusTemplatesByOrder($order);
 
         foreach ($mailTemplates as $mailTemplate) {
             $messageData = $this->orderMail->createMessage($mailTemplate, $order);

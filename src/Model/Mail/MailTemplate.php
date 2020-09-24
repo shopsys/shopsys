@@ -9,12 +9,13 @@ use App\Model\Transport\Transport;
 use Doctrine\ORM\Mapping as ORM;
 use Shopsys\FrameworkBundle\Model\Mail\MailTemplate as BaseMailTemplate;
 use Shopsys\FrameworkBundle\Model\Mail\MailTemplateData as BaseMailTemplateData;
+use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus;
 
 /**
  * @ORM\Table(
  *     name="mail_templates",
  *     uniqueConstraints={
- *         @ORM\UniqueConstraint(name="name_domain", columns={"name", "domain_id", "transport_id", "payment_id", "order_stock_status"})
+ *         @ORM\UniqueConstraint(name="name_domain", columns={"name", "domain_id", "transport_id", "payment_id", "order_status_id"})
  *     }
  * )
  * @ORM\Entity
@@ -22,7 +23,7 @@ use Shopsys\FrameworkBundle\Model\Mail\MailTemplateData as BaseMailTemplateData;
  */
 class MailTemplate extends BaseMailTemplate
 {
-    public const ORDER_STOCK_STATUS_NAME = 'order_stock_status';
+    public const ORDER_STATUS_NAME = 'order_status';
 
     /**
      * @var \App\Model\Transport\Transport|null
@@ -39,10 +40,11 @@ class MailTemplate extends BaseMailTemplate
     private ?Payment $payment;
 
     /**
-     * @var string|null
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @var \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus|null
+     * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus")
+     * @ORM\JoinColumn(nullable=true, onDelete="CASCADE")
      */
-    private ?string $orderStockStatus;
+    private ?OrderStatus $orderStatus;
 
     /**
      * @param \App\Model\Mail\MailTemplateData $mailTemplateData
@@ -52,7 +54,7 @@ class MailTemplate extends BaseMailTemplate
         parent::edit($mailTemplateData);
         $this->transport = $mailTemplateData->transport;
         $this->payment = $mailTemplateData->payment;
-        $this->orderStockStatus = $mailTemplateData->orderStockStatus;
+        $this->orderStatus = $mailTemplateData->orderStatus;
     }
 
     /**
@@ -72,10 +74,10 @@ class MailTemplate extends BaseMailTemplate
     }
 
     /**
-     * @return string|null
+     * @return \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus|null
      */
-    public function getOrderStockStatus(): ?string
+    public function getOrderStatus(): ?OrderStatus
     {
-        return $this->orderStockStatus;
+        return $this->orderStatus;
     }
 }

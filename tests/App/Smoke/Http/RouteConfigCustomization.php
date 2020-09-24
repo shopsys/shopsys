@@ -313,7 +313,7 @@ class RouteConfigCustomization
                 $config->skipRoute('Deleting Availability is no longer available.');
             })
             ->customizeByRouteName('admin_mail_deletetemplate', function (RouteConfig $config) {
-                $config->changeDefaultRequestDataSet('MailTemplate can be deleted only if it is OrderStockStatus type')
+                $config->changeDefaultRequestDataSet('MailTemplate can be deleted only if it is OrderStock type')
                     ->setParameter('id', 17)
                     ->setExpectedStatusCode(302);
             });

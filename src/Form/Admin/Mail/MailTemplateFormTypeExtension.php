@@ -10,6 +10,7 @@ use App\Model\Payment\PaymentFacade;
 use App\Model\Transport\TransportFacade;
 use Shopsys\FrameworkBundle\Form\Admin\Mail\MailTemplateFormType;
 use Shopsys\FrameworkBundle\Form\DomainType;
+use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusFacade;
 use Symfony\Component\Form\AbstractTypeExtension;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -29,13 +30,23 @@ class MailTemplateFormTypeExtension extends AbstractTypeExtension
     private PaymentFacade $paymentFacade;
 
     /**
+     * @var \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusFacade
+     */
+    private OrderStatusFacade $orderStatusFacade;
+
+    /**
      * @param \App\Model\Transport\TransportFacade $transportFacade
      * @param \App\Model\Payment\PaymentFacade $paymentFacade
+     * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusFacade $orderStatusFacade
      */
-    public function __construct(TransportFacade $transportFacade, PaymentFacade $paymentFacade)
-    {
+    public function __construct(
+        TransportFacade $transportFacade,
+        PaymentFacade $paymentFacade,
+        OrderStatusFacade $orderStatusFacade
+    ) {
         $this->transportFacade = $transportFacade;
         $this->paymentFacade = $paymentFacade;
+        $this->orderStatusFacade = $orderStatusFacade;
     }
 
     /**
@@ -46,7 +57,7 @@ class MailTemplateFormTypeExtension extends AbstractTypeExtension
     {
         /** @var \App\Model\Mail\MailTemplate|null $mailTemplate */
         $mailTemplate = $options['entity'];
-        $isOrderStockStatusTemplate = $mailTemplate === null || $mailTemplate->getName() === MailTemplate::ORDER_STOCK_STATUS_NAME;
+        $isOrderStatusTemplate = $mailTemplate === null || $mailTemplate->getName() === MailTemplate::ORDER_STATUS_NAME;
 
         if ($mailTemplate === null) {
             $builder->add('domainId', DomainType::class, [
@@ -59,8 +70,21 @@ class MailTemplateFormTypeExtension extends AbstractTypeExtension
             ]);
         }
 
-        if ($isOrderStockStatusTemplate === true) {
+        if ($isOrderStatusTemplate === true) {
             $builder
+                ->add('orderStatus', ChoiceType::class, [
+                    'required' => true,
+                    'label' => t('Stav objednávky'),
+                    'multiple' => false,
+                    'expanded' => false,
+                    'choices' => $this->orderStatusFacade->getAll(),
+                    'choice_label' => 'name',
+                    'choice_value' => 'id',
+                    'constraints' => [
+                        new NotBlank(),
+                    ],
+                    'position' => ['after' => 'bccEmail'],
+                ])
                 ->add('transport', ChoiceType::class, [
                     'required' => true,
                     'label' => t('Doprava'),
@@ -72,7 +96,7 @@ class MailTemplateFormTypeExtension extends AbstractTypeExtension
                     'constraints' => [
                         new NotBlank(),
                     ],
-                    'position' => ['before' => 'bccEmail'],
+                    'position' => ['after' => 'orderStatus'],
                 ])
                 ->add('payment', ChoiceType::class, [
                     'required' => true,
@@ -86,17 +110,6 @@ class MailTemplateFormTypeExtension extends AbstractTypeExtension
                         new NotBlank(),
                     ],
                     'position' => ['after' => 'transport'],
-                ])
-                ->add('orderStockStatus', ChoiceType::class, [
-                    'required' => true,
-                    'label' => t('Skladovost'),
-                    'multiple' => false,
-                    'expanded' => false,
-                    'choices' => array_flip(Order::getAllStockStatusesTranslations()),
-                    'constraints' => [
-                        new NotBlank(),
-                    ],
-                    'position' => ['after' => 'payment'],
                 ]);
         }
     }
