@@ -49,7 +49,7 @@
                                             <span class="wrap-box__button__content">
                                                 <span class="wrap-box__button__name">{{ payment.name }}</span>
                                                 <span
-                                                class="wrap-box__button__price ">
+                                                class="wrap-box__button__price{{ payment.getPrice(getDomain().id).price.isZero() ? '' : ' wrap-box__button__price--not-free' }}">
                                                     {{ payment.getPrice(getDomain().id).price|priceText }}
                                                 </span>
                                             </span>
