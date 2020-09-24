@@ -6,8 +6,8 @@ export default function showFormErrorsWindow (container) {
     const $formattedFormErrors = CustomizeBundle.getFormattedFormErrors(container);
     const $window = $('#js-window');
 
-    const $errorListHtml = '<div class="text-left">'
-        + Translator.trans('Please check the entered values.<br>')
+    const $errorListHtml = '<div class="window-popup__errors">'
+        + Translator.trans('<h2 class="window-popup__heading">Prosím zkontrolujte zadané údaje.</h2>')
         + $formattedFormErrors[0].outerHTML
         + '</div>';
 

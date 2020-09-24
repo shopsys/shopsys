@@ -13,7 +13,7 @@
                     {% endif %}
                     {% set routeParams = routeParams|merge({(pageQueryParameter): page}) %}
                     <a class="in-paging__control__item in-paging__control__item--arrow in-paging__control__item--arrow--prev" href="{{ path(route, routeParams) }}" rel ="prev">
-                        <i class="in-paging__control__item__icon svg svg-chevron"></i>
+                        <i class="in-paging__control__item__icon"></i>
                     </a>
 
                     {% set routeParams = routeParams|merge({(pageQueryParameter): null}) %}
@@ -24,7 +24,7 @@
                     {% endif %}
                 {% else %}
                     <span class="in-paging__control__item in-paging__control__item--arrow in-paging__control__item--arrow--prev in-paging__control__item--arrow--inactive">
-                        <i class="in-paging__control__item__icon svg svg-chevron"></i>
+                        <i class="in-paging__control__item__icon"></i>
                     </span>
                 {% endif %}
 
@@ -72,11 +72,11 @@
 
                     {% set routeParams = routeParams|merge({(pageQueryParameter): paginationResult.page + 1}) %}
                     <a class="in-paging__control__item in-paging__control__item in-paging__control__item--arrow in-paging__control__item--arrow--next" href="{{ path(route, routeParams) }}" rel="next">
-                        <i class="in-paging__control__item__icon svg svg-chevron"></i>
+                        <i class="in-paging__control__item__icon"></i>
                     </a>
                 {% else %}
                     <span class="in-paging__control__item in-paging__control__item--arrow in-paging__control__item--arrow--next in-paging__control__item--arrow--inactive">
-                        <i class="in-paging__control__item__icon svg svg-chevron"></i>
+                        <i class="in-paging__control__item__icon"></i>
                     </span>
                 {% endif %}
             {% endif %}

@@ -107,10 +107,11 @@
         &__in {
             position: relative;
             width: 100%;
+            text-align: left;
         }
 
         &__input {
-            width: 100%;
+            width: 95%;
             height: 38px;
 
             background-color: @color-f;
@@ -139,14 +140,24 @@
     }
 
     .form-error {
-        position: absolute;
-        top: 50%;
-        margin-top: -14px;
-        right: 10px;
+        text-align: left;
+
+        &__icon {
+            top: -37px;
+            right: 40px;
+
+            @media @query-mobile {
+                display: none;
+            }
+        }
 
         &--choice {
             margin-top: -10px;
             right: -20px;
+        }
+
+        &__list li {
+            padding-left: 0;
         }
     }
 

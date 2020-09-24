@@ -1,4 +1,4 @@
-@in-overlay-spinner-size: 28px;
+@in-overlay-spinner-size: 44px;
 
 .in-overlay {
     position: relative !important;
@@ -12,7 +12,7 @@
         z-index: 4000;
         text-align: center;
 
-        background: rgba(255, 255, 255, 0.5);
+        background: rgba(@color-f, 0.5);
 
         &--absolute {
             position: absolute;
@@ -29,6 +29,7 @@
         margin-left: -@in-overlay-spinner-size / 2;
         line-height: @in-overlay-spinner-size;
         text-align: center;
+        transform-origin: center center;
 
         &--absolute {
             position: absolute;
@@ -40,11 +41,20 @@
             height: @in-overlay-spinner-size;
             line-height: @in-overlay-spinner-size;
             will-change: transform;
-            opacity: .3;
+            opacity: 1;
+            transform-origin: center center;
+            border: 4px solid @color-add-secondary;
+            border-left-color: @color-f;
+            box-shadow: 0 0 2px 0 inset rgba(@color-0, 0.5);
 
             font-size: @in-overlay-spinner-size;
-            animation: spin 2s linear infinite;
-            color: @color-base;
+            animation: spin 1s linear infinite;
+            color: @color-add;
+            border-radius: 100%;
+
+            .svg-spinner {
+                display: none;
+            }
 
             &:before {
                 display: block;

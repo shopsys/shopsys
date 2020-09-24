@@ -6,6 +6,8 @@ export default class FormField {
     changeFormFieldFocus () {
         const $formField = $('.js-form-field').find('.input');
         const focusClass = 'is-focused';
+        const focusClassOnError = 'is-focused-error';
+        const classOnBlur = 'has-blur';
 
         $formField.each(function () {
             const $currField = $(this);
@@ -26,11 +28,20 @@ export default class FormField {
             $currField.on({
                 focus: function () {
                     $parent.addClass(focusClass);
+                    if ($parent.find('.form-error__icon').is(':visible')) {
+                        $parent.addClass(focusClassOnError);
+                        $parent.removeClass(classOnBlur);
+                    }
                 },
 
                 blur: function () {
+                    $parent.removeClass(focusClassOnError);
                     if ($currField.val() == '') {
                         $parent.removeClass(focusClass);
+                    } else {
+                        if ($parent.find('.form-error__icon').is(':hidden')) {
+                            $parent.addClass(classOnBlur);
+                        }
                     }
                 }
             });

@@ -9,13 +9,7 @@
     cursor: default;
 
     &--line {
-        position: absolute;
-        top: 9px;
-        right: 20px;
-
-        @media @query-lg {
-            right: 25px;
-        }
+        position: static;
     }
 
     &--inline {
@@ -43,6 +37,9 @@
     }
 
     &__icon {
+        position: absolute;
+        top: 11px;
+        right: 15px;
         display: inline-block;
         vertical-align: middle;
         width: @form-error-size;
@@ -51,7 +48,7 @@
 
         color: @color-alert;
         font-weight: bold;
-        font-size: 17px;
+        font-size: 19px;
 
         .form-error--inline & {
             width: auto;
@@ -63,73 +60,23 @@
 
     &__list {
         .reset-ul();
-        position: absolute;
-        top: 100%;
-        left: 50%;
-        width: 120px;
-        margin-left: -60px;
-        margin-top: 10px;
-        padding: 5px;
-        display: none;
-        z-index: 50;
-        text-align: center;
-
-        background: rgba(0,0,0, 0.7);
-        color: @color-f;
-
-        &:after {
-            position: absolute;
-            top: -@form-error-arrow-size;
-            left: 50%;
-            margin-left: -@form-error-arrow-size;
-            content: '';
-
-            border-bottom: @form-error-arrow-size solid rgba(0,0,0, 0.7);
-            border-left: @form-error-arrow-size solid transparent;
-            border-right: @form-error-arrow-size solid transparent;
-        }
-
-        .form-error:hover & {
-            display: block;
-        }
-
-        .form-error--inline:hover & {
-            display: inline-block;
-        }
-
-        .form-error--inline & {
-            display: inline-block;
-            position: static;
-            width: auto;
-            padding: 0;
-            margin: 0;
-
-            background: none;
-
-            &:after {
-                display: none;
-            }
-        }
+        position: relative;
+        top: 3px;
 
         li {
+            padding-left: 9px;
+
+            color: @color-alert;
             font-size: 12px;
-            color: @color-f;
-        }
+            line-height: 1.4;
 
-        &.right {
-            left: -170%;
-
-            &:after {
-                left: 87%;
-            }
-        }
-
-        &.left {
-            left: 60px;
-
-            &:after {
-                left: 9%;
+            @media @query-xl {
+                white-space: nowrap;
             }
         }
     }
+}
+
+select + .form-error .form-error__icon {
+    right: 45px;
 }

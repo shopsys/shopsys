@@ -5,6 +5,7 @@
 
 @input-error-border-color: @color-red;
 @input-background: #f0f3f4;
+@input-error-background: #fde7e7;
 @input-border-color: @input-background;
 @input-disabled-background: #eff1f2;
 @input-border-radius: 4px;
@@ -19,9 +20,9 @@
     line-height: normal;
     padding: 0 @input-padding-horizontal;
 
-    border: 2px solid @input-border-color;
+    border: 1px solid @input-border-color;
     color: @color-primary;
-    background: @input-background;
+    background-color: @input-background;
     border-radius: @input-border-radius;
     caret-color: @color-add-secondary;
     font-size: 16px;
@@ -47,12 +48,20 @@
     &.form-input-error {
         padding-right: 25px;
 
-        border-color: @input-error-border-color;
         box-shadow: none;
+        background-color: @input-error-background;
+        border-color: @input-error-background;
+    }
 
-        &:focus {
-            border-color: @input-error-border-color;
-        }
+    .has-blur & {
+        border-color: transparent;
+        background-color: @input-background;
+        box-shadow: none;
+    }
+
+    &.form-input-error + label {
+        font-family: @font-quartenary;
+        color: @color-alert;
     }
 
     .form-input-disabled &,
@@ -132,6 +141,34 @@
     }
 }
 
+.is-focused-error {
+    .form-input-required,
+    .input + label {
+        color: @color-alert;
+    }
+}
+
+.is-focused .input:focus {
+    border-color: @color-add-secondary;
+    background-color: @color-f;
+    box-shadow: 0 0 0 3px rgba(@color-add-secondary, .25);
+}
+
+.is-focused-error .input:focus {
+    border-color: @input-error-border-color;
+    background-color: @input-error-background;
+    box-shadow: 0 0 0 3px rgba(@input-error-border-color, .25);
+    caret-color: @color-alert;
+}
+
+.is-focused {
+    .form-input-error {
+        box-shadow: none;
+        background-color: @input-error-background;
+        border-color: @input-error-background;
+    }
+}
+
 .input-no-style {
     width: auto;
 
@@ -174,14 +211,23 @@ textarea {
     resize: vertical;
 }
 
-input:-webkit-autofill,
-input:-webkit-autofill:hover,
-input:-webkit-autofill:focus,
-textarea:-webkit-autofill,
-textarea:-webkit-autofill:hover,
-textarea:-webkit-autofill:focus,
-select:-webkit-autofill,
-select:-webkit-autofill:hover,
-select:-webkit-autofill:focus {
-    box-shadow: 0 0 0 1000px @input-background inset;
+html input:-webkit-autofill,
+html input:-webkit-autofill:hover,
+html input:-webkit-autofill:focus,
+html textarea:-webkit-autofill,
+html textarea:-webkit-autofill:hover,
+html textarea:-webkit-autofill:focus,
+html select:-webkit-autofill,
+html select:-webkit-autofill:hover,
+html select:-webkit-autofill:focus,
+html input:-internal-autofill-selected {
+    box-shadow: 0 0 0 1000px @input-background inset !important;
+    background: @input-background !important;
+}
+
+select {
+    background-image: url('@{path-design}/arrow.svg');
+    background-size: 10px 10px;
+    background-position: 95% 54%;
+    background-repeat: no-repeat;
 }
