@@ -1,5 +1,6 @@
 arrange:
     - index.md
+    - start-building-your-application.md
     - console-commands-for-application-management-phing-targets.md
     - automated-testing.md
     - basics-about-package-architecture.md
@@ -12,8 +13,14 @@ arrange:
     - how-to-set-up-domains-and-locales.md
     - development-workflow-of-project-on-shopsys-framework.md
     - translations.md
+    - working-with-date-time-values.md
     - directories.md
     - cron.md
     - using-form-types.md
     - friendly-url.md
     - front-end-breadcrumb-navigation.md
+    - running-acceptance-tests.md
+    - required-php-configuration.md
+    - shopsys-framework-on-docker.md
+    - monorepo.md
+    - faq-and-common-issues.md
