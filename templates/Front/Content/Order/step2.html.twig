@@ -87,7 +87,9 @@
                                                     </strong>
                                                     {% if transport.description %}
                                                         <span class="box-chooser__item__title__description" data-origin="{{ transport.description }}">
-                                                            {% if transportPersonalPickupStockId == null %}
+                                                            {% if transport.isPersonalPickup() == false %}
+                                                                {{ transport.description }}
+                                                            {% elseif transportPersonalPickupStockId == null %}
                                                                 {{ transport.description }}
                                                             {% else %}
                                                                 <span class="box-chooser__item__title__description__address">
