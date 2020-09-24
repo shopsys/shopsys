@@ -105,3 +105,5 @@ parameters:
             data_layer_locale: sk
 
     show_mail_restriction_info_bar: true
+
+    google_map_api_key: ''
