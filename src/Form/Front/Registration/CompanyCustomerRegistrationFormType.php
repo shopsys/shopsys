@@ -50,9 +50,8 @@ class CompanyCustomerRegistrationFormType extends AbstractType
             'companyTaxNumber',
             TextType::class,
             [
-                'required' => true,
+                'required' => false,
                 'constraints' => [
-                    new Constraints\NotBlank(['message' => 'Vyplňte prosím DIČ']),
                     new Constraints\Length(['max' => 50, 'maxMessage' => 'Vyplňte prosím DIČ/Ič DPH kratší než {{ limit }} znaků.']),
                 ],
             ]
