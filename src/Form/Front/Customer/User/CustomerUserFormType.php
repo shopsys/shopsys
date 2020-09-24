@@ -32,13 +32,6 @@ class CustomerUserFormType extends AbstractType
     {
         if (!$options['is_company_customer']) {
             $builder
-                ->add('gender', ChoiceType::class, [
-                    'choices' => array_flip(CustomerUser::getAllGenders()),
-                    'placeholder' => t(''),
-                    'constraints' => [
-                        new Constraints\NotBlank(['message' => 'Please choose your gender']),
-                    ],
-                ])
                 ->add('firstName', TextType::class, [
                     'constraints' => [
                         new Constraints\NotBlank(['message' => 'Please enter first name']),

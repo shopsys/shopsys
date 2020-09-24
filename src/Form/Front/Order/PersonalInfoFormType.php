@@ -82,16 +82,6 @@ class PersonalInfoFormType extends AbstractType
 
         if (!$options['is_company_customer']) {
             $builder
-                ->add('gender', ChoiceType::class, [
-                    'choices' => array_flip(CustomerUser::getAllGenders()),
-                    'placeholder' => t(''),
-                    'constraints' => [
-                        new Constraints\NotBlank([
-                            'message' => 'Prosím vyberte si oslovení',
-                            'groups' => [self::VALIDATION_GROUP_COMMON_CUSTOMER],
-                        ]),
-                    ],
-                ])
                 ->add('firstName', TextType::class, [
                     'constraints' => [
                         new Constraints\NotBlank([

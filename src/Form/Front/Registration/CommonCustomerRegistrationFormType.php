@@ -28,13 +28,6 @@ class CommonCustomerRegistrationFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('gender', ChoiceType::class, [
-                'choices' => array_flip(CustomerUser::getAllGenders()),
-                'placeholder' => t(''),
-                'constraints' => [
-                    new Constraints\NotBlank(['message' => 'Prosím vyberte si oslovení']),
-                ],
-            ])
             ->add('firstName', TextType::class, [
                 'constraints' => [
                     new Constraints\NotBlank(['message' => 'Please enter first name']),

@@ -104,17 +104,6 @@ class CustomerUser extends BaseUser
     }
 
     /**
-     * @return array
-     */
-    public static function getAllGenders(): array
-    {
-        return [
-            self::GENDER_MALE => t('pan'),
-            self::GENDER_FEMALE => t('paní/slečna'),
-        ];
-    }
-
-    /**
      * @return int|null
      */
     public function getErpCustomerNumber(): ?int

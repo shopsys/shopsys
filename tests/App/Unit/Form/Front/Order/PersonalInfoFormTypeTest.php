@@ -57,7 +57,6 @@ class PersonalInfoFormTypeTest extends TypeTestCase
     private function getPersonalInfoFormData()
     {
         $personalInfoFormData = [];
-        $personalInfoFormData['gender'] = 'female';
         $personalInfoFormData['firstName'] = 'test';
         $personalInfoFormData['lastName'] = 'test';
         $personalInfoFormData['email'] = 'test@test.cz';

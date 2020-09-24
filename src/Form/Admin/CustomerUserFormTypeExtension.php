@@ -15,7 +15,6 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 class CustomerUserFormTypeExtension extends AbstractTypeExtension
 {
     private const DISABLED_FIELDS = [
-        'gender',
         'email',
         'firstName',
         'lastName',
@@ -40,26 +39,6 @@ class CustomerUserFormTypeExtension extends AbstractTypeExtension
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        /* @var $customerUser \App\Model\Customer\User\CustomerUser */
-        $customerUser = $options['customerUser'];
-        $isCompanyCustomer = false;
-        if ($customerUser !== null) {
-            $isCompanyCustomer = $customerUser->getCustomer()->getBillingAddress()->isCompanyCustomer();
-        }
-
-        if (!$isCompanyCustomer) {
-            $personalDataBuilder = $builder->get('personalData');
-            $personalDataBuilder->add('gender', ChoiceType::class, [
-                'label' => t('Oslovení'),
-                'position' => 'first',
-                'choices' => array_flip(CustomerUser::getAllGenders()),
-                'placeholder' => t('-- Vyber oslovení --'),
-                'constraints' => [
-                    new NotBlank(['message' => 'Please choose your gender']),
-                ],
-            ]);
-        }
-
         $this->formBuilderHelper->disableFieldsByConfigurations($builder, self::DISABLED_FIELDS);
     }
 

@@ -32,6 +32,7 @@ class CustomerUserData extends BaseUserData
     {
         parent::__construct();
 
+        $this->gender = CustomerUser::GENDER_MALE;
         $this->scontoBridgeStatus = CustomerUserScontoBridgeStatusEnum::STATUS_NEW;
     }
 }
