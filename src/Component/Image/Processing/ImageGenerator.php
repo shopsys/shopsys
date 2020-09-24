@@ -99,7 +99,7 @@ class ImageGenerator extends BaseImageGenerator
      */
     private function processImageInKraken(string $sourceImageFilepath, string $targetImageFilepath, ImageSizeConfig $sizeConfig, Image $image): void
     {
-        $krakenImageData = $this->imageKrakenProcessor->resizeBySizeConfig($sourceImageFilepath, [$sizeConfig]);
+        $krakenImageData = $this->imageKrakenProcessor->resizeBySizeConfig($sourceImageFilepath, [$sizeConfig], $image->getEntityName());
 
         if (!array_key_exists('success', $krakenImageData) || $krakenImageData['success'] === false) {
             $this->logger->addError(
@@ -129,7 +129,7 @@ class ImageGenerator extends BaseImageGenerator
     {
         $sourceImageFilepath = $this->imageLocator->getAbsoluteImageFilepath($image, ImageConfig::ORIGINAL_SIZE_NAME);
 
-        $krakenImagesData = $this->imageKrakenProcessor->resizeBySizeConfig($sourceImageFilepath, $sizesConfig);
+        $krakenImagesData = $this->imageKrakenProcessor->resizeBySizeConfig($sourceImageFilepath, $sizesConfig, $image->getEntityName());
 
         if (!array_key_exists('results', $krakenImagesData)) {
             return false;
