@@ -119,11 +119,32 @@
         }
 
         &__btn {
-            // TODO: Should have icon, i'll do it, after designer send his icons.
             @media @query-mobile {
+                position: relative;
                 min-width: 50px;
 
                 text-indent: -9999px;
+
+                &::before,
+                &::after {
+                    position: absolute;
+                    left: 23px;
+                    width: 3px;
+                    height: 14px;
+                    content: '';
+
+                    background-color: @color-f;
+                }
+
+                &::before {
+                    top: 7px;
+                    transform: rotate(-45deg);
+                }
+
+                &::after {
+                    bottom: 7px;
+                    transform: rotate(45deg);
+                }
             }
         }
 
