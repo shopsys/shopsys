@@ -132,6 +132,14 @@
         </exec>
     </target>
 
+    <target name="cron-orders" description="Run crons regarding order sync (to bridge, from bridge...). Runs every minute.">
+        <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
+            <arg value="${path.bin-console}" />
+            <arg value="shopsys:cron" />
+            <arg value="--instance-name=orders" />
+        </exec>
+    </target>
+
     <target name="cron-lock" description="This command will lock cron command so crons will not run until this command is terminated.">
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
             <arg value="${path.bin-console}" />

@@ -9,12 +9,25 @@ use Symfony\Bridge\Monolog\Logger;
 
 class OrderTransferScontoBridgeImportCronModule implements SimpleCronModuleInterface
 {
+    /**
+     * @var OrderTransferScontoBridgeImportFacade
+     */
+    private OrderTransferScontoBridgeImportFacade $importFacade;
+
+    /**
+     * @param OrderTransferScontoBridgeImportFacade $importFacade
+     */
+    public function __construct(OrderTransferScontoBridgeImportFacade $importFacade)
+    {
+        $this->importFacade = $importFacade;
+    }
+
     public function setLogger(Logger $logger)
     {
     }
 
-    public function run()
+    public function run(): void
     {
-        // TODO: Implement run() method.
+        $this->importFacade->runTransfer();
     }
 }

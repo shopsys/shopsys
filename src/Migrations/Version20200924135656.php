@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Migrations;
 
 use Doctrine\DBAL\Schema\Schema;
-use Shopsys\FrameworkBundle\Migrations\MultidomainMigrationTrait;
+
 use Shopsys\MigrationBundle\Component\Doctrine\Migrations\AbstractMigration;
 
 final class Version20200924135656 extends AbstractMigration
@@ -55,7 +55,7 @@ final class Version20200924135656 extends AbstractMigration
      * @param int $domainId
      * @param string $sendMail
      */
-    private function createMailTemplateIfNotExist($mailTemplateName, $domainId, $sendMail)
+    private function createMailTemplateIfNotExist($mailTemplateName, $domainId, $sendMail): void
     {
         $mailTemplateCount = $this->sql('SELECT count(*) FROM mail_templates WHERE name = :mailTemplateName AND domain_id = :domainId', [
             'mailTemplateName' => $mailTemplateName,
