@@ -135,3 +135,6 @@ There you can find links to upgrade notes for other versions too.
 
 - add brands in frontend API ([#2047](https://github.com/shopsys/shopsys/pull/2047))
     - see #project-base-diff to update your project
+
+- add autocompletion for Phing targets ([#2049](https://github.com/shopsys/shopsys/pull/2049))
+    - see #project-base-diff to update your project
