@@ -90,10 +90,18 @@
                                                             {% if transportPersonalPickupStockId == null %}
                                                                 {{ transport.description }}
                                                             {% else %}
-                                                                <span class="box-chooser__item__title__description__name">{{ stocksById[transportPersonalPickupStockId].name }}</span>
                                                                 <span class="box-chooser__item__title__description__address">
+                                                                    <span class="box-chooser__item__title__description__name">{{ stocksById[transportPersonalPickupStockId].name }}</span>
                                                                     <span class="box-chooser__item__title__description__street">{{ stocksById[transportPersonalPickupStockId].street }}</span>
-                                                                    <span class="box-chooser__item__title__description__city">{{ stocksById[transportPersonalPickupStockId].city }}</span>
+                                                                </span>
+                                                                <span class="box-chooser__item__title__description__hours">
+                                                                    <strong>{{ 'Otevřeno'|trans }}</strong>
+                                                                    {{ stocksById[transportPersonalPickupStockId].openingHours|nl2br }}
+                                                                </span>
+                                                                <span class="box-chooser__item__title__description__availability">
+                                                                </span>
+                                                                <span class="box-chooser__item__title__description__availability js-not-implemented-yet">
+                                                                    {{ 'Můžete mít <strong>ihned</strong>'|transHtml }}
                                                                 </span>
                                                             {% endif %}
                                                         </span>

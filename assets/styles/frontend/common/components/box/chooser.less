@@ -3,7 +3,7 @@
 @box-chooser-item-hover-bg: @color-light-secondary;
 
 @box-chooser-check-size: 20px;
-@box-chooser-image-width: 70px;
+@box-chooser-image-width: 100px;
 @box-chooser-price-width: 80px;
 @box-chooser-check-border-color: darken(@color-border-lighter, 5%);
 @box-chooser-check-border-color-active: darken(@color-border-lighter, 10%);
@@ -403,7 +403,56 @@
             }
 
             &__description {
-                display: block;
+                font-size: 14px;
+                line-height: 1.3;
+
+                @media @query-lg {
+                    display: flex;
+                }
+
+                &__name {
+                    display: block;
+                }
+
+                &__hours {
+                    display: block;
+                    margin-top: 0.25rem;
+                    max-width: 160px;
+
+                    @media @query-lg {
+                        margin-left: 2rem;
+                        margin-top: 0;
+                    }
+
+                    @media @query-xl {
+                        margin-left: 3rem;
+                    }
+
+                    strong {
+                        display: block;
+
+                        font-weight: 400;
+                        color: @color-primary-light;
+                    }
+                }
+
+                &__availability {
+                    display: block;
+                    margin-top: 0.25rem;
+
+                    @media @query-lg {
+                        margin-left: 2rem;
+                        margin-top: 0;
+                    }
+
+                    @media @query-xl {
+                        margin-left: 3rem;
+                    }
+
+                    strong {
+                        color: #73a90d;
+                    }
+                }
             }
         }
 

@@ -81,14 +81,30 @@ export default class PersonalPickup {
             .val($personalPickupStockRadio.val())
             .trigger('orderRememberData.littleDelayedSaveData');
 
-        const address = $personalPickupStockRadio.data('stock-name') + ' ' + $personalPickupStockRadio.data('stock-street') + ' ' + $personalPickupStockRadio.data('stock-city');
+        const stockName = $personalPickupStockRadio.data('stock-name');
+        const stockStreet = $personalPickupStockRadio.data('stock-street');
+        const stockOpeningHours = $personalPickupStockRadio.data('stock-openingHours');
+        const stockAvailability = $personalPickupStockRadio.data('stock-availability');
+        const address = `
+            <span class="box-chooser__item__title__description__address">
+                <span class="box-chooser__item__title__description__name">${stockName}</span>
+                <span class="box-chooser__item__title__description__street">${stockStreet}</span>
+            </span>
+            <span class="box-chooser__item__title__description__hours">
+                <strong>${Translator.trans('Otevřeno')}</strong>
+                ${stockOpeningHours}
+            </span>
+            <span class="box-chooser__item__title__description__availability">
+                ${stockAvailability}
+            </span>
+        `;
         this.setCurrentCheckboxDescription($transportCheckbox, address);
 
         $transportCheckbox.prop('checked', true).change();
     }
 
     setCurrentCheckboxDescription ($transportCheckbox, description) {
-        $transportCheckbox.parents('.box-chooser__item').find('.box-chooser__item__title__description').text(description);
+        $transportCheckbox.parents('.box-chooser__item').find('.box-chooser__item__title__description').html(description);
     }
 
     resetCurrentCheckboxToOrigin ($transportCheckbox) {
