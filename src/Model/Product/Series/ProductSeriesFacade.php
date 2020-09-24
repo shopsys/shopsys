@@ -202,9 +202,9 @@ class ProductSeriesFacade implements ProductSeriesFacadeInterface
      * @param \App\Model\Product\Series\Category\ProductSeriesCategory $productSeriesCategory
      * @return \App\Model\Product\Series\ProductSeries[]
      */
-    public function getByProductSeriesCategoryForCurrentDomain(ProductSeriesCategory $productSeriesCategory): array
+    public function getVisibleProductSeriesByCategoryForCurrentDomain(ProductSeriesCategory $productSeriesCategory): array
     {
-        return $this->productSeriesRepository->getByProductSeriesCategoryAndDomainId($productSeriesCategory, $this->domain->getId());
+        return $this->productSeriesRepository->getVisibleProductSeriesByCategoryForCurrentDomain($productSeriesCategory, $this->domain->getId());
     }
 
     /**

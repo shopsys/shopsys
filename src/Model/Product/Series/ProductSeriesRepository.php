@@ -136,9 +136,9 @@ class ProductSeriesRepository
      * @param int $domainId
      * @return \App\Model\Product\Series\ProductSeries[]
      */
-    public function getByProductSeriesCategoryAndDomainId(ProductSeriesCategory $productSeriesCategory, int $domainId): array
+    public function getVisibleProductSeriesByCategoryForCurrentDomain(ProductSeriesCategory $productSeriesCategory, int $domainId): array
     {
-        return $this->getQueryBuilderByDomainId($domainId)
+        return $this->getVisibleQueryBuilderByDomainId($domainId)
             ->join('ps.productSeriesCategories', 'psc', Join::WITH, 'psc = :productSeriesCategory')
             ->setParameter('productSeriesCategory', $productSeriesCategory)
             ->getQuery()

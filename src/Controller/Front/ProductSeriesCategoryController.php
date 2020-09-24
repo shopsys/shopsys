@@ -39,7 +39,7 @@ class ProductSeriesCategoryController extends FrontBaseController
     public function detailAction(int $id): Response
     {
         $productSeriesCategory = $this->productSeriesCategoryFacade->getById($id);
-        $productSeries = $this->productSeriesFacade->getByProductSeriesCategoryForCurrentDomain($productSeriesCategory);
+        $productSeries = $this->productSeriesFacade->getVisibleProductSeriesByCategoryForCurrentDomain($productSeriesCategory);
 
         return $this->render('Front/Content/ProductSeriesCategory/detail.html.twig', [
             'productSeriesCategory' => $productSeriesCategory,
