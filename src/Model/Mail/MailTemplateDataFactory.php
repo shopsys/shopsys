@@ -32,6 +32,7 @@ class MailTemplateDataFactory extends BaseMailTemplateDataFactory
         parent::fillFromMailTemplate($mailTemplateData, $mailTemplate);
         $mailTemplateData->transport = $mailTemplate->getTransport();
         $mailTemplateData->payment = $mailTemplate->getPayment();
+        $mailTemplateData->orderStatus = $mailTemplate->getOrderStatus();
         $mailTemplateData->domainId = $mailTemplate->getDomainId();
     }
 }
