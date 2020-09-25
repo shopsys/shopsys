@@ -97,11 +97,8 @@ class ProductSeriesProductRepository
      */
     public function findAvailableProductsByProductSeries(ProductSeries $productSeries): array
     {
-        $queryBuilder = $this->productRepository->getAllVisibleQueryBuilder($this->domain->getId());
-
-        $this->productRepository->filterTemporaryExcludedProducts($queryBuilder, $this->domain->getId());
-        $this->productRepository->filterSellingDenied($queryBuilder);
-        $this->productRepository->addDomain($queryBuilder, $this->domain->getId());
+        $queryBuilder = $this->productRepository->getAllSellableQueryBuilder($this->domain->getId());
+        $queryBuilder->addSelect('pd');
 
         return $queryBuilder->join(ProductSeriesProduct::class, 'psp', Join::WITH, 'psp.product = p')
             ->andWhere('psp.productSeries = :productSeries')
