@@ -12,11 +12,16 @@
 {% endblock %}
 
 {% block main_content %}
-    <div class="web__line">
-        <div class="web__container web__container--big-padding">
-            <h1 class="in-title in-title--center in-title--big">{{ 'Uhrazení objednávky č. %orderNumber% platební kartou.'|trans({'%orderNumber%': order.number}) }}</h1>
-
-            <p class="in-user-text text-center">{{ 'Nyní budete přesměrováni na platební bránu GoPay.'|trans }}</p>
+    <div class="web__line web__line--spacing web__line--spacing--big web__line--spacing--bottom-small">
+        <div class="web__container">
+            <div class="wrap-box wrap-box--v2 wrap-box--empty wrap-box--payment-reload">
+                <h1 class="wrap-box__heading">
+                    {{ 'Děkujeme za vaši objednávku.<br>Budete přesměrování na platební bránu.'|transHtml }}
+                </h1>
+                <span class="in-overlay__spinner__icon wrap-box__spinner">
+                    <i class="svg svg-spinner"></i>
+                </span>
+            </div>
         </div>
     </div>
 
