@@ -12,7 +12,7 @@
 {% endblock %}
 
 {% block main_content %}
-   <div class="web__line web__line--grey web__line--spacing web__line--spacing--big web__line--margin-bottom-up">
+    <div class="web__line web__line--spacing web__line--spacing--big web__line--spacing--bottom-small">
         <div class="web__container">
             <h1 class="web__container__heading">{{ 'My orders'|trans }}</h1>
             {{ render(controller('App\\Controller\\Front\\BreadcrumbController:indexAction', { routeName: getRoute(), routeParameters: getRouteParams() } )) }}
@@ -20,7 +20,7 @@
                 {{ 'No order so far.'|trans }}
             {% else %}
                 <div class="in-scroll box-table box-table--orders">
-                    <div class="in-scroll__in">
+                    <div class="in-scroll__in box-table__wrap">
                         <table class="box-table__table">
                             <tr class="box-table__row">
                                 <th class="box-table__item box-table__item--order-number box-table__item--heading">{{ 'Order number'|trans }}</th>
@@ -35,11 +35,6 @@
                                 <tr class="box-table__row">
                                     <td class="box-table__item box-table__item--order-number">
                                         <a href="{{ url('front_customer_order_detail_registered', { orderNumber: order.number }) }}">{{ order.number }}</a>
-                                        {% if order.payment.goPay is same as (true) and order.gopayPaid == false %}
-                                            <a class="btn btn--success btn--mini btn--in-text box-table__btn" href="{{ url('front_order_repeat_gopay_payment', { urlHash: order.urlHash }) }}">
-                                                {{ 'Zaplatit'|trans }}
-                                            </a>
-                                        {% endif %}
                                     </td>
                                     <td class="box-table__item text-right">{{ order.createdAt|formatDate }}</td>
                                     <td class="box-table__item box-table__item--orders-count text-right">{{ order.productItemsCount }}</td>
@@ -55,12 +50,19 @@
                                             <span class="box-table__item__transport box-table__item__transport--{{ loop.index }}">{{ uniqTransportItem.name }}</span>
                                         {% endfor %}
                                     </td>
-                                    <td class="box-table__item box-table__item--payment-name">{{ order.paymentName }}</td>
+                                    <td class="box-table__item box-table__item--payment-name">
+                                        {{ order.paymentName }}
+                                        {% if order.payment.goPay is same as (true) and order.gopayPaid == false %}
+                                            <a class="btn btn--success-v2 btn--mini btn--in-text box-table__btn" href="{{ url('front_order_repeat_gopay_payment', { urlHash: order.urlHash }) }}">
+                                                {{ 'Zaplatit'|trans }}
+                                            </a>
+                                        {% endif %}
+                                    </td>
                                     <td class="box-table__item box-table__item--price text-right">{{ order.totalPriceWithVat|priceWithCurrency(order.currency) }}</td>
                                     <td class="box-table__item box-table__item--detail text-center">
                                         <a href="{{ url('front_customer_order_detail_registered', { orderNumber: order.number }) }}" class="in-icon in-icon--detail">
                                             {{ 'Detail'|trans }}
-                                            <i class="box-table__item--detail__icon svg svg-chevron"></i>
+                                            <i class="box-table__item--detail__icon svg svg-chevron svg-fw-bold"></i>
                                         </a>
                                     </td>
                                 </tr>

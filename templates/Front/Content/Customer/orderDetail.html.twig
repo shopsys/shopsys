@@ -14,13 +14,13 @@
 {% endblock %}
 
 {% block main_content %}
-   <div class="web__line web__line--grey web__line--spacing web__line--spacing--big web__line--margin-bottom-up">
+    <div class="web__line web__line--spacing web__line--spacing--big web__line--spacing--bottom-small">
         <div class="web__container">
             <h1 class="heading heading--primary heading--primary-subpage">{{ 'Order Nr.'|trans }} {{order.number}}</h1>
             {{ render(controller('App\\Controller\\Front\\BreadcrumbController:indexAction', { routeName: getRoute(), routeParameters: getRouteParams() } )) }}
             <div class="box-order-detail">
 
-                <div class="wrap-box">
+                <div class="wrap-box wrap-box--v2">
                     <div class="wrap-box__in">
                         <div class="wrap-box__in__col">
                             <h2 class="wrap-box__title">{{ 'Basic information'|trans }}</h2>
@@ -42,7 +42,7 @@
                 </div>
 
 
-                <div class="wrap-box">
+                <div class="wrap-box wrap-box--v2">
                     <div class="wrap-box__in">
                         <div class="wrap-box__in__col wrap-box__in__col--first">
                             <h2 class="wrap-box__title">{{ 'Billing address'|trans }}</h2>
