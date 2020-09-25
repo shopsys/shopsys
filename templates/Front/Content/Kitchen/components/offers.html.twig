@@ -1,5 +1,7 @@
 {% from 'Front/Macros/picture.html.twig' import picture as picture %}
 
+{% set domain = getDomain() %}
+
 <div class="box-furniture-offer-wrap">
     <div class="box-furniture-offer box-furniture-offer--meeting theme-kitchen-bg-darker">
         <div class="box-furniture-offer__content">
@@ -32,6 +34,7 @@
             <a
                 class="box-furniture-offer__btn btn btn--ghost btn--ghost--light btn--ghost--wider"
                 href="/kuchyne/online-rezervace"
+                href="{{ domain.id == 1 ? '/kuchyne/online-rezervace' : '/kuchyne/online-rezervacie' }}"
             >
                 {{ 'Domluvit plánování'|trans }}
             </a>
