@@ -65,6 +65,7 @@ declare -A CRON_INSTANCES=(
     ["cron-import-akeneo-product"]='*/5 * * * *'
     ["cron-import-im"]='*/5 * * * *'
     ["cron-import-akeneo-other"]='*/5 * * * *'
+    ["cron-import-akeneo-files"]='*/5 * * * *'
     ["cron-gopay"]='*/5 * * * *'
 )
 
