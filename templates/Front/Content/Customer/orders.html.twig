@@ -17,7 +17,12 @@
             <h1 class="web__container__heading">{{ 'My orders'|trans }}</h1>
             {{ render(controller('App\\Controller\\Front\\BreadcrumbController:indexAction', { routeName: getRoute(), routeParameters: getRouteParams() } )) }}
             {% if orders|length == 0 %}
-                {{ 'No order so far.'|trans }}
+                <div class="wrap-box wrap-box--v2 wrap-box--empty">
+                    <h2 class="wrap-box__heading">{{ 'No order so far.'|trans }}</h2>
+                    <a class="btn btn--success-v2" href="{{ url('front_homepage') }}">
+                        {{ 'Zpět do obchodu'|trans }}
+                    </a>
+                </div>
             {% else %}
                 <div class="in-scroll box-table box-table--orders">
                     <div class="in-scroll__in box-table__wrap">
