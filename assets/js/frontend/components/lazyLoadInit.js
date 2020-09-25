@@ -5,7 +5,7 @@ import Register from 'framework/common/utils/Register';
 new MiniLazyload({
     rootMargin: '500px',
     threshold: 0.5,
-    placeholder: '/assets/frontend/images/noimage.png'
+    placeholder: $('body').data('assets-url') + '/public/frontend/images/optimized-noimage.png'
 }, '', MiniLazyload.IGNORE_NATIVE_LAZYLOAD);
 
 export function lazyLoadInit (container) {

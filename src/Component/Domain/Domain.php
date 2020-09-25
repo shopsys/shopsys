@@ -72,4 +72,12 @@ class Domain extends BaseDomain
     {
         return $this->isOnCdnDomain;
     }
+
+    /**
+     * @return string
+     */
+    public function getAssetsUrl(): string
+    {
+        return $this->cdnDomain ?? $this->getUrl();
+    }
 }
