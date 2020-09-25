@@ -138,3 +138,6 @@ There you can find links to upgrade notes for other versions too.
 
 - add autocompletion for Phing targets ([#2049](https://github.com/shopsys/shopsys/pull/2049))
     - see #project-base-diff to update your project
+
+- made tests to be domain independent ([#2051](https://github.com/shopsys/shopsys/pull/2051))
+    - see #project-base-diff to update your project
