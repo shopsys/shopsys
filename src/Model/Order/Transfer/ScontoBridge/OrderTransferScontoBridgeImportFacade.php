@@ -68,6 +68,7 @@ class OrderTransferScontoBridgeImportFacade extends AbstractScontoBridgeImportTr
      * @param ScontoBridgeClient $scontoBridgeClient
      * @param OrderRepository $orderRepository
      * @param StockRepository $stockRepository
+     * @param OrderStatusRepository $orderStatusRepository
      */
     public function __construct(
         ScontoBridgeImportTransferDependency $scontoBridgeImportTransferDependency,
@@ -109,7 +110,7 @@ class OrderTransferScontoBridgeImportFacade extends AbstractScontoBridgeImportTr
      */
     protected function processItem(array $scontoBridgeOrderData): void
     {
-        $orderId = $scontoBridgeOrderData['orderId'];
+        $orderId = $scontoBridgeOrderData['eshopId'];
         $this->logger->addInfo(sprintf('Downloading date for order id: %d', $orderId));
 
         try {
@@ -131,7 +132,7 @@ class OrderTransferScontoBridgeImportFacade extends AbstractScontoBridgeImportTr
         $order->setStatus($status);
 
         try {
-            $expeditionStock = $this->findExpeditionStockByCode($scontoBridgeOrderData['expeditionStockCode']);
+            $expeditionStock = $this->findExpeditionStockByCode($scontoBridgeOrderData['primaryStoreCode']);
         } catch (StockNotFoundException $e) {
             $this->logError($orderId, $e->getMessage());
 
