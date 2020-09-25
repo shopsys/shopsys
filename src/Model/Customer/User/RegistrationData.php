@@ -98,5 +98,6 @@ class RegistrationData
 
     public function __construct()
     {
+        $this->gender = CustomerUser::GENDER_MALE;
     }
 }
