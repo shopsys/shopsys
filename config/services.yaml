@@ -932,7 +932,9 @@ services:
         alias: App\Component\Router\DomainRouterFactory
 
     App\Component\Router\DomainRouterFactory:
-        arguments: ['%router.resource%']
+        arguments:
+            $routerConfiguration: '%router.resource%'
+            $cacheDir: '%kernel.cache_dir%'
 
     Shopsys\FrameworkBundle\Model\Feed\FeedFacade:
         alias: App\Model\Feed\FeedFacade

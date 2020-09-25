@@ -25,6 +25,21 @@ class DomainRouterFactory extends BaseDomainRouterFactory
      */
     private ContainerInterface $container;
 
+    /**
+     * @var string
+     */
+    private string $cacheDir;
+
+    /**
+     * @param string $routerConfiguration
+     * @param \Symfony\Component\Config\Loader\LoaderInterface $configLoader
+     * @param \Shopsys\FrameworkBundle\Component\Router\LocalizedRouterFactory $localizedRouterFactory
+     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRouterFactory $friendlyUrlRouterFactory
+     * @param \App\Component\Domain\Domain $domain
+     * @param \Symfony\Component\HttpFoundation\RequestStack $requestStack
+     * @param \Psr\Container\ContainerInterface $container
+     * @param string $cacheDir
+     */
     public function __construct(
         string $routerConfiguration,
         LoaderInterface $configLoader,
@@ -32,7 +47,8 @@ class DomainRouterFactory extends BaseDomainRouterFactory
         FriendlyUrlRouterFactory $friendlyUrlRouterFactory,
         Domain $domain,
         RequestStack $requestStack,
-        ContainerInterface $container
+        ContainerInterface $container,
+        string $cacheDir
     ) {
         parent::__construct(
             $routerConfiguration,
@@ -43,6 +59,7 @@ class DomainRouterFactory extends BaseDomainRouterFactory
             $requestStack
         );
         $this->container = $container;
+        $this->cacheDir = $cacheDir;
     }
 
     /**
@@ -54,7 +71,10 @@ class DomainRouterFactory extends BaseDomainRouterFactory
         return new Router(
             $this->container,
             $this->routerConfiguration,
-            ['resource_type' => 'service'],
+            [
+                'resource_type' => 'service',
+                'cache_dir' => $this->cacheDir . '/routing/domain' . $domainConfig->getId(),
+            ],
             $this->getRequestContextByDomainConfig($domainConfig)
         );
     }
