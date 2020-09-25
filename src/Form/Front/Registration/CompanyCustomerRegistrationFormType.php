@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Form\Front\Registration;
 
+use App\Component\Validator\RegexValidationRule;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -33,7 +34,11 @@ class CompanyCustomerRegistrationFormType extends AbstractType
                 'required' => true,
                 'constraints' => [
                     new Constraints\NotBlank(['message' => 'Vyplňte prosím název společnosti']),
-                    new Constraints\Length(['max' => 100, 'maxMessage' => 'Vyplňte prosím název společnosti kratší než {{ limit }} znaků.']),
+                    new Constraints\Length(['max' => 30]),
+                    new Constraints\Regex([
+                        'pattern' => RegexValidationRule::MOEVE_DENY_CHARS,
+                        'message' => 'Prosím, nepoužívejte žádné speciální znaky. Například őűàèìòùâêîôûâêîôãñõđåæøçłßþż€£¥ƒ¢§¶ªº',
+                    ]),
                 ],
             ]
         )->add(
@@ -43,7 +48,11 @@ class CompanyCustomerRegistrationFormType extends AbstractType
                 'required' => true,
                 'constraints' => [
                     new Constraints\NotBlank(['message' => 'Vyplňte prosím IČ']),
-                    new Constraints\Length(['max' => 50, 'maxMessage' => 'Vyplňte prosím IČ kratší než {{ limit }} znaků.']),
+                    new Constraints\Length(['min' => 8, 'max' => 8]),
+                    new Constraints\Regex([
+                        'pattern' => RegexValidationRule::COMPANY_NUMBER_REGEX,
+                        'message' => 'Prosím, zadávejte pouze čísla',
+                    ]),
                 ],
             ]
         )->add(
@@ -52,7 +61,11 @@ class CompanyCustomerRegistrationFormType extends AbstractType
             [
                 'required' => false,
                 'constraints' => [
-                    new Constraints\Length(['max' => 50, 'maxMessage' => 'Vyplňte prosím DIČ/Ič DPH kratší než {{ limit }} znaků.']),
+                    new Constraints\Length(['min' => 12, 'max' => 12]),
+                    new Constraints\Regex([
+                        'pattern' => RegexValidationRule::COMPANY_TAX_NUMBER_REGEX,
+                        'message' => 'Musí obsahovat pouze pouze čísla a velká písmena',
+                    ]),
                 ],
             ]
         );
@@ -64,7 +77,11 @@ class CompanyCustomerRegistrationFormType extends AbstractType
                     'required' => true,
                     'constraints' => [
                         new Constraints\NotBlank(['message' => 'Vyplňte prosím DIČ-2']),
-                        new Constraints\Length(['max' => 50, 'maxMessage' => 'Vyplňte prosím DIČ/Ič DPH kratší než {{ limit }} znaků.']),
+                        new Constraints\Length(['min' => 10, 'max' => 10]),
+                        new Constraints\Regex([
+                            'pattern' => RegexValidationRule::COMPANY_NUMBER_WITH_VAT_REGEX,
+                            'message' => 'Prosím, zadávejte pouze čísla',
+                        ]),
                     ],
                 ]
             );

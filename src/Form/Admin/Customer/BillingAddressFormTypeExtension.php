@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Form\Admin\Customer;
 
 use App\Component\Form\FormBuilderHelper;
+use App\Component\Validator\RegexValidationRule;
 use App\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Form\Admin\Customer\BillingAddressFormType;
@@ -55,8 +56,13 @@ class BillingAddressFormTypeExtension extends AbstractTypeExtension
             'required' => false,
             'constraints' => [
                 new Constraints\Length([
-                    'max' => 50,
-                    'maxMessage' => 'Tax number cannot be longer than {{ limit }} characters',
+                    'min' => 12,
+                    'max' => 12,
+                    'groups' => [BillingAddressFormType::VALIDATION_GROUP_COMPANY_CUSTOMER],
+                ]),
+                new Constraints\Regex([
+                    'pattern' => RegexValidationRule::COMPANY_TAX_NUMBER_REGEX,
+                    'message' => 'Musí obsahovat pouze pouze čísla a velká písmena',
                     'groups' => [BillingAddressFormType::VALIDATION_GROUP_COMPANY_CUSTOMER],
                 ]),
             ],
@@ -76,8 +82,13 @@ class BillingAddressFormTypeExtension extends AbstractTypeExtension
                             'groups' => [BillingAddressFormType::VALIDATION_GROUP_COMPANY_CUSTOMER],
                         ]),
                         new Constraints\Length([
-                            'max' => 50,
-                            'maxMessage' => 'Vyplňte prosím DIČ kratší než {{ limit }} znaků.',
+                            'min' => 10,
+                            'max' => 10,
+                            'groups' => [BillingAddressFormType::VALIDATION_GROUP_COMPANY_CUSTOMER],
+                        ]),
+                        new Constraints\Regex([
+                            'pattern' => RegexValidationRule::COMPANY_NUMBER_WITH_VAT_REGEX,
+                            'message' => 'Prosím, zadávejte pouze čísla',
                             'groups' => [BillingAddressFormType::VALIDATION_GROUP_COMPANY_CUSTOMER],
                         ]),
                     ],

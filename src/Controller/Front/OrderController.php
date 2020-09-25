@@ -271,7 +271,6 @@ class OrderController extends FrontBaseController
         if ($orderFlow->isBackToCartTransition()) {
             return $this->redirectToRoute('front_cart');
         }
-        $orderFlow->setIsCompanyCustomer($isCompanyCustomer);
         $orderFlow->bind($frontOrderFormData);
         $orderFlow->saveSentStepData();
 
@@ -293,6 +292,8 @@ class OrderController extends FrontBaseController
         $frontOrderFormData = $this->orderFacade->revalidatePaymentAndTransport($frontOrderFormData, $payments, $transports);
         $orderData = $this->orderDataMapper->getOrderDataFromFrontOrderData($frontOrderFormData);
         $splitOrderPreview = $this->orderPreviewSplittingFacade->createSplitOrderPreviewForCurrentCustomer($orderData);
+
+        $isCompanyCustomer = $frontOrderFormData->companyCustomer;
 
         $stocksById = $this->stockFacade->getStocksWithoutCentralByDomainIdIndexedByStockId($domainId);
         $prefilledCustomerEmail = $this->session->get(self::SESSION_PREFILLED_CUSTOMER_EMAIL, null);

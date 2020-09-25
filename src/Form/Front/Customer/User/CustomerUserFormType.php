@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Form\Front\Customer\User;
 
-use App\Model\Customer\User\CustomerUser;
+use App\Component\Validator\RegexValidationRule;
 use Shopsys\FrameworkBundle\Form\Constraints\Email;
 use Shopsys\FrameworkBundle\Form\Constraints\FieldsAreNotIdentical;
 use Shopsys\FrameworkBundle\Form\Constraints\NotIdenticalToEmailLocalPart;
@@ -13,7 +13,6 @@ use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserData;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserPasswordFacade;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
@@ -35,13 +34,21 @@ class CustomerUserFormType extends AbstractType
                 ->add('firstName', TextType::class, [
                     'constraints' => [
                         new Constraints\NotBlank(['message' => 'Please enter first name']),
-                        new Constraints\Length(['max' => 100, 'maxMessage' => 'First name cannot be longer than {{ limit }} characters']),
+                        new Constraints\Length(['max' => 30, 'maxMessage' => 'First name cannot be longer than {{ limit }} characters']),
+                        new Constraints\Regex([
+                            'pattern' => RegexValidationRule::MOEVE_DENY_CHARS,
+                            'message' => 'Prosím, nepoužívejte žádné speciální znaky. Například őűàèìòùâêîôûâêîôãñõđåæøçłßþż€£¥ƒ¢§¶ªº',
+                        ]),
                     ],
                 ])
                 ->add('lastName', TextType::class, [
                     'constraints' => [
                         new Constraints\NotBlank(['message' => 'Please enter last name']),
-                        new Constraints\Length(['max' => 100, 'maxMessage' => 'Last name cannot be longer than {{ limit }} characters']),
+                        new Constraints\Length(['max' => 30, 'maxMessage' => 'Last name cannot be longer than {{ limit }} characters']),
+                        new Constraints\Regex([
+                            'pattern' => RegexValidationRule::MOEVE_DENY_CHARS,
+                            'message' => 'Prosím, nepoužívejte žádné speciální znaky. Například őűàèìòùâêîôûâêîôãñõđåæøçłßþż€£¥ƒ¢§¶ªº',
+                        ]),
                     ],
                 ]);
         }
@@ -51,7 +58,15 @@ class CustomerUserFormType extends AbstractType
                 'required' => true,
                 'constraints' => [
                     new Constraints\NotBlank(['message' => 'Please enter email']),
+                    new Constraints\Length([
+                        'max' => 64,
+                        'maxMessage' => 'Email cannot be longer than {{ limit }} characters',
+                    ]),
                     new Email(['message' => 'Please enter valid email']),
+                    new Constraints\Regex([
+                        'pattern' => RegexValidationRule::MOEVE_DENY_CHARS,
+                        'message' => 'Prosím, nepoužívejte žádné speciální znaky. Například őűàèìòùâêîôûâêîôãñõđåæøçłßþż€£¥ƒ¢§¶ªº',
+                    ]),
                 ],
             ])
             ->add('telephone', TextType::class, [
@@ -59,8 +74,12 @@ class CustomerUserFormType extends AbstractType
                 'constraints' => [
                     new Constraints\NotBlank(['message' => 'Please enter telephone number']),
                     new Constraints\Length([
-                        'max' => 30,
+                        'max' => 20,
                         'maxMessage' => 'Telephone number cannot be longer than {{ limit }} characters',
+                    ]),
+                    new Constraints\Regex([
+                        'pattern' => RegexValidationRule::TELEPHONE_REGEX,
+                        'message' => 'Prosím, zadávejte pouze čísla a znak +',
                     ]),
                 ],
             ])

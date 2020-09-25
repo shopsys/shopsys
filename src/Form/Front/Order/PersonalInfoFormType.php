@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Form\Front\Order;
 
+use App\Component\Validator\RegexValidationRule;
 use App\Model\Country\CountryFacade;
-use App\Model\Customer\User\CustomerUser;
 use App\Model\Order\FrontOrderData;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Form\Constraints\Email;
@@ -80,35 +80,43 @@ class PersonalInfoFormType extends AbstractType
     {
         $countries = [$this->countryFacade->getCountryOnCurrentDomain()];
 
-        if (!$options['is_company_customer']) {
-            $builder
-                ->add('firstName', TextType::class, [
-                    'constraints' => [
-                        new Constraints\NotBlank([
-                            'message' => 'Please enter first name',
-                            'groups' => [self::VALIDATION_GROUP_COMMON_CUSTOMER],
-                        ]),
-                        new Constraints\Length([
-                            'max' => 100,
-                            'maxMessage' => 'First name cannot be longer than {{ limit }} characters',
-                            'groups' => [self::VALIDATION_GROUP_COMMON_CUSTOMER],
-                        ]),
-                    ],
-                ])
-                ->add('lastName', TextType::class, [
-                    'constraints' => [
-                        new Constraints\NotBlank([
-                            'message' => 'Please enter last name',
-                            'groups' => [self::VALIDATION_GROUP_COMMON_CUSTOMER],
-                        ]),
-                        new Constraints\Length([
-                            'max' => 100,
-                            'maxMessage' => 'Last name cannot be longer than {{ limit }} characters',
-                            'groups' => [self::VALIDATION_GROUP_COMMON_CUSTOMER],
-                        ]),
-                    ],
-                ]);
-        }
+        $builder
+            ->add('firstName', TextType::class, [
+                'constraints' => [
+                    new Constraints\NotBlank([
+                        'message' => 'Please enter first name',
+                        'groups' => [self::VALIDATION_GROUP_COMMON_CUSTOMER],
+                    ]),
+                    new Constraints\Length([
+                        'max' => 30,
+                        'maxMessage' => 'First name cannot be longer than {{ limit }} characters',
+                        'groups' => [self::VALIDATION_GROUP_COMMON_CUSTOMER],
+                    ]),
+                    new Constraints\Regex([
+                        'pattern' => RegexValidationRule::MOEVE_DENY_CHARS,
+                        'message' => 'Prosím, nepoužívejte žádné speciální znaky. Například őűàèìòùâêîôûâêîôãñõđåæøçłßþż€£¥ƒ¢§¶ªº',
+                        'groups' => [self::VALIDATION_GROUP_COMMON_CUSTOMER],
+                    ]),
+                ],
+            ])
+            ->add('lastName', TextType::class, [
+                'constraints' => [
+                    new Constraints\NotBlank([
+                        'message' => 'Please enter last name',
+                        'groups' => [self::VALIDATION_GROUP_COMMON_CUSTOMER],
+                    ]),
+                    new Constraints\Length([
+                        'max' => 30,
+                        'maxMessage' => 'Last name cannot be longer than {{ limit }} characters',
+                        'groups' => [self::VALIDATION_GROUP_COMMON_CUSTOMER],
+                    ]),
+                    new Constraints\Regex([
+                        'pattern' => RegexValidationRule::MOEVE_DENY_CHARS,
+                        'message' => 'Prosím, nepoužívejte žádné speciální znaky. Například őűàèìòùâêîôûâêîôãñõđåæøçłßþż€£¥ƒ¢§¶ªº',
+                        'groups' => [self::VALIDATION_GROUP_COMMON_CUSTOMER],
+                    ]),
+                ],
+            ]);
 
         $builder->add('companyCustomer', CheckboxType::class, ['required' => false]);
 
@@ -118,13 +126,21 @@ class PersonalInfoFormType extends AbstractType
                 'constraints' => [
                     new Constraints\NotBlank(['message' => 'Please enter email']),
                     new Email(['message' => 'Please enter valid email']),
-                    new Constraints\Length(['max' => 255, 'maxMessage' => 'Email cannot be longer than {{ limit }} characters']),
+                    new Constraints\Length(['max' => 64, 'maxMessage' => 'Email cannot be longer than {{ limit }} characters']),
+                    new Constraints\Regex([
+                        'pattern' => RegexValidationRule::MOEVE_DENY_CHARS,
+                        'message' => 'Prosím, nepoužívejte žádné speciální znaky. Například őűàèìòùâêîôûâêîôãñõđåæøçłßþż€£¥ƒ¢§¶ªº',
+                    ]),
                 ],
             ])
             ->add('telephone', TextType::class, [
                 'constraints' => [
                     new Constraints\NotBlank(['message' => 'Please enter telephone number']),
-                    new Constraints\Length(['max' => 30, 'maxMessage' => 'Telephone number cannot be longer than {{ limit }} characters']),
+                    new Constraints\Length(['max' => 20, 'maxMessage' => 'Telephone number cannot be longer than {{ limit }} characters']),
+                    new Constraints\Regex([
+                        'pattern' => RegexValidationRule::TELEPHONE_REGEX,
+                        'message' => 'Prosím, zadávejte pouze čísla a znak +',
+                    ]),
                 ],
             ])
             ->add('companyName', TextType::class, [
@@ -134,8 +150,13 @@ class PersonalInfoFormType extends AbstractType
                         'message' => 'Please enter company name',
                         'groups' => [self::VALIDATION_GROUP_COMPANY_CUSTOMER],
                     ]),
-                    new Constraints\Length(['max' => 100,
+                    new Constraints\Length(['max' => 30,
                         'maxMessage' => 'Company name cannot be longer than {{ limit }} characters',
+                        'groups' => [self::VALIDATION_GROUP_COMPANY_CUSTOMER],
+                    ]),
+                    new Constraints\Regex([
+                        'pattern' => RegexValidationRule::MOEVE_DENY_CHARS,
+                        'message' => 'Prosím, nepoužívejte žádné speciální znaky. Například őűàèìòùâêîôûâêîôãñõđåæøçłßþż€£¥ƒ¢§¶ªº',
                         'groups' => [self::VALIDATION_GROUP_COMPANY_CUSTOMER],
                     ]),
                 ],
@@ -148,8 +169,13 @@ class PersonalInfoFormType extends AbstractType
                         'groups' => [self::VALIDATION_GROUP_COMPANY_CUSTOMER],
                     ]),
                     new Constraints\Length([
-                        'max' => 50,
-                        'maxMessage' => 'Identification number cannot be longer than {{ limit }} characters',
+                        'min' => 8,
+                        'max' => 8,
+                        'groups' => [self::VALIDATION_GROUP_COMPANY_CUSTOMER],
+                    ]),
+                    new Constraints\Regex([
+                        'pattern' => RegexValidationRule::COMPANY_NUMBER_REGEX,
+                        'message' => 'Prosím, zadejte pouze čísla',
                         'groups' => [self::VALIDATION_GROUP_COMPANY_CUSTOMER],
                     ]),
                 ],
@@ -158,8 +184,13 @@ class PersonalInfoFormType extends AbstractType
                 'required' => false,
                 'constraints' => [
                     new Constraints\Length([
-                        'max' => 50,
-                        'maxMessage' => 'Tax number cannot be longer than {{ limit }} characters',
+                        'min' => 12,
+                        'max' => 12,
+                        'groups' => [self::VALIDATION_GROUP_COMPANY_CUSTOMER],
+                    ]),
+                    new Constraints\Regex([
+                        'pattern' => RegexValidationRule::COMPANY_TAX_NUMBER_REGEX,
+                        'message' => 'Musí obsahovat pouze pouze čísla a velká písmena',
                         'groups' => [self::VALIDATION_GROUP_COMPANY_CUSTOMER],
                     ]),
                 ],
@@ -167,19 +198,39 @@ class PersonalInfoFormType extends AbstractType
             ->add('street', TextType::class, [
                 'constraints' => [
                     new Constraints\NotBlank(['message' => 'Please enter street']),
-                    new Constraints\Length(['max' => 100, 'maxMessage' => 'Street name cannot be longer than {{ limit }} characters']),
+                    new Constraints\Length(['max' => 30, 'maxMessage' => 'Street name cannot be longer than {{ limit }} characters']),
+                    new Constraints\Regex([
+                        'pattern' => RegexValidationRule::MOEVE_DENY_CHARS,
+                        'message' => 'Prosím, nepoužívejte žádné speciální znaky. Například őűàèìòùâêîôûâêîôãñõđåæøçłßþż€£¥ƒ¢§¶ªº',
+                    ]),
+                    new Constraints\Regex([
+                        'pattern' => RegexValidationRule::STREET_ALPHABET_REGEX,
+                        'message' => 'Ulice musí obsahovat písmeno',
+                    ]),
+                    new Constraints\Regex([
+                        'pattern' => RegexValidationRule::STREET_NUMBER_REGEX,
+                        'message' => 'Ulice musí obsahovat číslo',
+                    ]),
                 ],
             ])
             ->add('city', TextType::class, [
                 'constraints' => [
                     new Constraints\NotBlank(['message' => 'Please enter city']),
-                    new Constraints\Length(['max' => 100, 'maxMessage' => 'City name cannot be longer than {{ limit }} characters']),
+                    new Constraints\Length(['max' => 30, 'maxMessage' => 'City name cannot be longer than {{ limit }} characters']),
+                    new Constraints\Regex([
+                        'pattern' => RegexValidationRule::MOEVE_DENY_CHARS,
+                        'message' => 'Prosím, nepoužívejte žádné speciální znaky. Například őűàèìòùâêîôûâêîôãñõđåæøçłßþż€£¥ƒ¢§¶ªº',
+                    ]),
                 ],
             ])
             ->add('postcode', TextType::class, [
                 'constraints' => [
                     new Constraints\NotBlank(['message' => 'Please enter zip code']),
-                    new Constraints\Length(['max' => 30, 'maxMessage' => 'Zip code cannot be longer than {{ limit }} characters']),
+                    new Constraints\Length(['max' => 5, 'maxMessage' => 'Zip code cannot be longer than {{ limit }} characters']),
+                    new Constraints\Regex([
+                        'pattern' => RegexValidationRule::MOEVE_DENY_CHARS,
+                        'message' => 'Prosím, nepoužívejte žádné speciální znaky. Například őűàèìòùâêîôûâêîôãñõđåæøçłßþż€£¥ƒ¢§¶ªº',
+                    ]),
                 ],
             ])
             ->add('country', ChoiceType::class, [
@@ -212,8 +263,13 @@ class PersonalInfoFormType extends AbstractType
                         'groups' => [self::VALIDATION_GROUP_DIFFERENT_DELIVERY_ADDRESS],
                     ]),
                     new Constraints\Length([
-                        'max' => 100,
+                        'max' => 30,
                         'maxMessage' => 'First name of contact person cannot be longer than {{ limit }} characters',
+                        'groups' => [self::VALIDATION_GROUP_DIFFERENT_DELIVERY_ADDRESS],
+                    ]),
+                    new Constraints\Regex([
+                        'pattern' => RegexValidationRule::MOEVE_DENY_CHARS,
+                        'message' => 'Prosím, nepoužívejte žádné speciální znaky. Například őűàèìòùâêîôûâêîôãñõđåæøçłßþż€£¥ƒ¢§¶ªº',
                         'groups' => [self::VALIDATION_GROUP_DIFFERENT_DELIVERY_ADDRESS],
                     ]),
                 ],
@@ -226,8 +282,13 @@ class PersonalInfoFormType extends AbstractType
                         'groups' => [self::VALIDATION_GROUP_DIFFERENT_DELIVERY_ADDRESS],
                     ]),
                     new Constraints\Length([
-                        'max' => 100,
+                        'max' => 30,
                         'maxMessage' => 'Last name of contact person cannot be longer than {{ limit }} characters',
+                        'groups' => [self::VALIDATION_GROUP_DIFFERENT_DELIVERY_ADDRESS],
+                    ]),
+                    new Constraints\Regex([
+                        'pattern' => RegexValidationRule::MOEVE_DENY_CHARS,
+                        'message' => 'Prosím, nepoužívejte žádné speciální znaky. Například őűàèìòùâêîôûâêîôãñõđåæøçłßþż€£¥ƒ¢§¶ªº',
                         'groups' => [self::VALIDATION_GROUP_DIFFERENT_DELIVERY_ADDRESS],
                     ]),
                 ],
@@ -236,8 +297,13 @@ class PersonalInfoFormType extends AbstractType
                 'required' => false,
                 'constraints' => [
                     new Constraints\Length([
-                        'max' => 100,
+                        'max' => 30,
                         'maxMessage' => 'Company name cannot be longer than {{ limit }} characters',
+                        'groups' => [self::VALIDATION_GROUP_DIFFERENT_DELIVERY_ADDRESS],
+                    ]),
+                    new Constraints\Regex([
+                        'pattern' => RegexValidationRule::MOEVE_DENY_CHARS,
+                        'message' => 'Prosím, nepoužívejte žádné speciální znaky. Například őűàèìòùâêîôûâêîôãñõđåæøçłßþż€£¥ƒ¢§¶ªº',
                         'groups' => [self::VALIDATION_GROUP_DIFFERENT_DELIVERY_ADDRESS],
                     ]),
                 ],
@@ -246,8 +312,13 @@ class PersonalInfoFormType extends AbstractType
                 'required' => false,
                 'constraints' => [
                     new Constraints\Length([
-                        'max' => 30,
+                        'max' => 20,
                         'maxMessage' => 'Telephone number cannot be longer than {{ limit }} characters',
+                        'groups' => [self::VALIDATION_GROUP_DIFFERENT_DELIVERY_ADDRESS],
+                    ]),
+                    new Constraints\Regex([
+                        'pattern' => RegexValidationRule::TELEPHONE_REGEX,
+                        'message' => 'Prosím, zadávejte pouze čísla a znak +',
                         'groups' => [self::VALIDATION_GROUP_DIFFERENT_DELIVERY_ADDRESS],
                     ]),
                 ],
@@ -260,8 +331,23 @@ class PersonalInfoFormType extends AbstractType
                         'groups' => [self::VALIDATION_GROUP_DIFFERENT_DELIVERY_ADDRESS],
                     ]),
                     new Constraints\Length([
-                        'max' => 100,
+                        'max' => 30,
                         'maxMessage' => 'Street name cannot be longer than {{ limit }} characters',
+                        'groups' => [self::VALIDATION_GROUP_DIFFERENT_DELIVERY_ADDRESS],
+                    ]),
+                    new Constraints\Regex([
+                        'pattern' => RegexValidationRule::MOEVE_DENY_CHARS,
+                        'message' => 'Prosím, nepoužívejte žádné speciální znaky. Například őűàèìòùâêîôûâêîôãñõđåæøçłßþż€£¥ƒ¢§¶ªº',
+                        'groups' => [self::VALIDATION_GROUP_DIFFERENT_DELIVERY_ADDRESS],
+                    ]),
+                    new Constraints\Regex([
+                        'pattern' => RegexValidationRule::STREET_NUMBER_REGEX,
+                        'message' => 'Ulice musí obsahovat číslo',
+                        'groups' => [self::VALIDATION_GROUP_DIFFERENT_DELIVERY_ADDRESS],
+                    ]),
+                    new Constraints\Regex([
+                        'pattern' => RegexValidationRule::STREET_ALPHABET_REGEX,
+                        'message' => 'Ulice musí obsahovat písmena',
                         'groups' => [self::VALIDATION_GROUP_DIFFERENT_DELIVERY_ADDRESS],
                     ]),
                 ],
@@ -274,8 +360,13 @@ class PersonalInfoFormType extends AbstractType
                         'groups' => [self::VALIDATION_GROUP_DIFFERENT_DELIVERY_ADDRESS],
                     ]),
                     new Constraints\Length([
-                        'max' => 100,
+                        'max' => 30,
                         'maxMessage' => 'City name cannot be longer than {{ limit }} characters',
+                        'groups' => [self::VALIDATION_GROUP_DIFFERENT_DELIVERY_ADDRESS],
+                    ]),
+                    new Constraints\Regex([
+                        'pattern' => RegexValidationRule::MOEVE_DENY_CHARS,
+                        'message' => 'Prosím, nepoužívejte žádné speciální znaky. Například őűàèìòùâêîôûâêîôãñõđåæøçłßþż€£¥ƒ¢§¶ªº',
                         'groups' => [self::VALIDATION_GROUP_DIFFERENT_DELIVERY_ADDRESS],
                     ]),
                 ],
@@ -288,8 +379,13 @@ class PersonalInfoFormType extends AbstractType
                         'groups' => [self::VALIDATION_GROUP_DIFFERENT_DELIVERY_ADDRESS],
                     ]),
                     new Constraints\Length([
-                        'max' => 30,
+                        'max' => 5,
                         'maxMessage' => 'Zip code cannot be longer than {{ limit }} characters',
+                        'groups' => [self::VALIDATION_GROUP_DIFFERENT_DELIVERY_ADDRESS],
+                    ]),
+                    new Constraints\Regex([
+                        'pattern' => RegexValidationRule::MOEVE_DENY_CHARS,
+                        'message' => 'Prosím, nepoužívejte žádné speciální znaky. Například őűàèìòùâêîôûâêîôãñõđåæøçłßþż€£¥ƒ¢§¶ªº',
                         'groups' => [self::VALIDATION_GROUP_DIFFERENT_DELIVERY_ADDRESS],
                     ]),
                 ],
@@ -353,8 +449,13 @@ class PersonalInfoFormType extends AbstractType
                             'groups' => [self::VALIDATION_GROUP_COMPANY_CUSTOMER],
                         ]),
                         new Constraints\Length([
-                            'max' => 50,
-                            'maxMessage' => 'Vyplňte prosím DIČ kratší než {{ limit }} znaků.',
+                            'min' => 10,
+                            'max' => 10,
+                            'groups' => [self::VALIDATION_GROUP_COMPANY_CUSTOMER],
+                        ]),
+                        new Constraints\Regex([
+                            'pattern' => RegexValidationRule::COMPANY_NUMBER_WITH_VAT_REGEX,
+                            'message' => 'Prosím, používejte pouze čísla',
                             'groups' => [self::VALIDATION_GROUP_COMPANY_CUSTOMER],
                         ]),
                     ],
@@ -383,9 +484,8 @@ class PersonalInfoFormType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver
-            ->setRequired(['domain_id', 'is_company_customer'])
+            ->setRequired(['domain_id'])
             ->setAllowedTypes('domain_id', 'int')
-            ->setAllowedTypes('is_company_customer', 'bool')
             ->setDefaults([
                 'data_class' => FrontOrderData::class,
                 'attr' => ['novalidate' => 'novalidate'],

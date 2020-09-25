@@ -24,24 +24,11 @@ class OrderFlow extends FormFlow
     private $domainId;
 
     /**
-     * @var bool
-     */
-    private $isCompanyCustomer = false;
-
-    /**
      * @param int $domainId
      */
     public function setDomainId($domainId)
     {
         $this->domainId = $domainId;
-    }
-
-    /**
-     * @param bool $isCompanyCustomer
-     */
-    public function setIsCompanyCustomer(bool $isCompanyCustomer): void
-    {
-        $this->isCompanyCustomer = $isCompanyCustomer;
     }
 
     /**
@@ -70,7 +57,6 @@ class OrderFlow extends FormFlow
                 'form_type' => PersonalInfoFormType::class,
                 'form_options' => [
                     'domain_id' => $this->domainId,
-                    'is_company_customer' => $this->isCompanyCustomer,
                 ],
             ],
         ];

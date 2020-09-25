@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Form\Front\Customer;
 
+use App\Component\Validator\RegexValidationRule;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Form\ValidationGroup;
 use Shopsys\FrameworkBundle\Model\Country\CountryFacade;
@@ -50,8 +51,13 @@ class BillingAddressFormType extends AbstractType
                         'groups' => [self::VALIDATION_GROUP_COMPANY_CUSTOMER],
                     ]),
                     new Constraints\Length([
-                        'max' => 100,
+                        'max' => 30,
                         'maxMessage' => 'Company name cannot be longer than {{ limit }} characters',
+                        'groups' => [self::VALIDATION_GROUP_COMPANY_CUSTOMER],
+                    ]),
+                    new Constraints\Regex([
+                        'pattern' => RegexValidationRule::MOEVE_DENY_CHARS,
+                        'message' => 'Prosím, nepoužívejte žádné speciální znaky. Například őűàèìòùâêîôûâêîôãñõđåæøçłßþż€£¥ƒ¢§¶ªº',
                         'groups' => [self::VALIDATION_GROUP_COMPANY_CUSTOMER],
                     ]),
                 ],
@@ -64,8 +70,13 @@ class BillingAddressFormType extends AbstractType
                         'groups' => [self::VALIDATION_GROUP_COMPANY_CUSTOMER],
                     ]),
                     new Constraints\Length([
-                        'max' => 50,
-                        'maxMessage' => 'Identification number cannot be longer than {{ limit }} characters',
+                        'min' => 8,
+                        'max' => 8,
+                        'groups' => [self::VALIDATION_GROUP_COMPANY_CUSTOMER],
+                    ]),
+                    new Constraints\Regex([
+                        'pattern' => RegexValidationRule::COMPANY_NUMBER_REGEX,
+                        'message' => 'Prosím, zadávejte pouze čísla',
                         'groups' => [self::VALIDATION_GROUP_COMPANY_CUSTOMER],
                     ]),
                 ],
@@ -74,8 +85,13 @@ class BillingAddressFormType extends AbstractType
                 'required' => false,
                 'constraints' => [
                     new Constraints\Length([
-                        'max' => 50,
-                        'maxMessage' => 'Tax number cannot be longer than {{ limit }} characters',
+                        'min' => 12,
+                        'max' => 12,
+                        'groups' => [self::VALIDATION_GROUP_COMPANY_CUSTOMER],
+                    ]),
+                    new Constraints\Regex([
+                        'pattern' => RegexValidationRule::COMPANY_TAX_NUMBER_REGEX,
+                        'message' => 'Musí obsahovat pouze pouze čísla a velká písmena',
                         'groups' => [self::VALIDATION_GROUP_COMPANY_CUSTOMER],
                     ]),
                 ],
@@ -87,8 +103,20 @@ class BillingAddressFormType extends AbstractType
                         'message' => 'Vyplňte prosím ulici a č. popisné',
                     ]),
                     new Constraints\Length([
-                        'max' => 100,
+                        'max' => 30,
                         'maxMessage' => 'Street name cannot be longer than {{ limit }} characters',
+                    ]),
+                    new Constraints\Regex([
+                        'pattern' => RegexValidationRule::MOEVE_DENY_CHARS,
+                        'message' => 'Prosím, nepoužívejte žádné speciální znaky. Například őűàèìòùâêîôûâêîôãñõđåæøçłßþż€£¥ƒ¢§¶ªº',
+                    ]),
+                    new Constraints\Regex([
+                        'pattern' => RegexValidationRule::STREET_NUMBER_REGEX,
+                        'message' => 'Ulice musí obsahovat číslo',
+                    ]),
+                    new Constraints\Regex([
+                        'pattern' => RegexValidationRule::STREET_ALPHABET_REGEX,
+                        'message' => 'Ulice musí obsahovat písmeno',
                     ]),
                 ],
             ])
@@ -99,8 +127,12 @@ class BillingAddressFormType extends AbstractType
                         'message' => 'Vyplňte prosím město',
                     ]),
                     new Constraints\Length([
-                        'max' => 100,
+                        'max' => 30,
                         'maxMessage' => 'City name cannot be longer than {{ limit }} characters',
+                    ]),
+                    new Constraints\Regex([
+                        'pattern' => RegexValidationRule::MOEVE_DENY_CHARS,
+                        'message' => 'Prosím, nepoužívejte žádné speciální znaky. Například őűàèìòùâêîôûâêîôãñõđåæøçłßþż€£¥ƒ¢§¶ªº',
                     ]),
                 ],
             ])
@@ -111,8 +143,12 @@ class BillingAddressFormType extends AbstractType
                         'message' => 'Vyplňte prosím PSČ',
                     ]),
                     new Constraints\Length([
-                        'max' => 30,
+                        'max' => 5,
                         'maxMessage' => 'Zip code cannot be longer than {{ limit }} characters',
+                    ]),
+                    new Constraints\Regex([
+                        'pattern' => RegexValidationRule::MOEVE_DENY_CHARS,
+                        'message' => 'Prosím, nepoužívejte žádné speciální znaky. Například őűàèìòùâêîôûâêîôãñõđåæøçłßþż€£¥ƒ¢§¶ªº',
                     ]),
                 ],
             ])
@@ -137,8 +173,13 @@ class BillingAddressFormType extends AbstractType
                             'groups' => [self::VALIDATION_GROUP_COMPANY_CUSTOMER],
                         ]),
                         new Constraints\Length([
-                            'max' => 50,
-                            'maxMessage' => 'Vyplňte prosím DIČ kratší než {{ limit }} znaků.',
+                            'min' => 10,
+                            'max' => 10,
+                            'groups' => [self::VALIDATION_GROUP_COMPANY_CUSTOMER],
+                        ]),
+                        new Constraints\Regex([
+                            'pattern' => RegexValidationRule::COMPANY_NUMBER_WITH_VAT_REGEX,
+                            'message' => 'Prosím, zadávejte pouze čísla',
                             'groups' => [self::VALIDATION_GROUP_COMPANY_CUSTOMER],
                         ]),
                     ],

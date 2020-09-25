@@ -61,7 +61,7 @@ class PersonalInfoFormTypeTest extends TypeTestCase
         $personalInfoFormData['lastName'] = 'test';
         $personalInfoFormData['email'] = 'test@test.cz';
         $personalInfoFormData['telephone'] = '123456789';
-        $personalInfoFormData['street'] = 'test';
+        $personalInfoFormData['street'] = 'test 3';
         $personalInfoFormData['city'] = 'test';
         $personalInfoFormData['postcode'] = '12345';
         $personalInfoFormData['country'] = 1;
@@ -122,7 +122,6 @@ class PersonalInfoFormTypeTest extends TypeTestCase
         Translator::injectSelf($translatorMock);
         $personalInfoForm = $this->factory->create(PersonalInfoFormType::class, null, [
             'domain_id' => 1,
-            'is_company_customer' => false,
         ]);
 
         return $personalInfoForm;

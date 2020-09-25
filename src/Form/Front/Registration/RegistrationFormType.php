@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Form\Front\Registration;
 
+use App\Component\Validator\RegexValidationRule;
 use App\Model\Customer\User\RegistrationData;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Form\TimedFormTypeExtension;
@@ -84,15 +85,23 @@ class RegistrationFormType extends AbstractType
                 'required' => true,
                 'constraints' => [
                     new Constraints\NotBlank(['message' => 'Please enter telephone number']),
-                    new Constraints\Length(['max' => 30, 'maxMessage' => 'Telephone number cannot be longer than {{ limit }} characters']),
+                    new Constraints\Length(['max' => 20, 'maxMessage' => 'Telephone number cannot be longer than {{ limit }} characters']),
+                    new Constraints\Regex([
+                        'pattern' => RegexValidationRule::TELEPHONE_REGEX,
+                        'message' => 'Prosím, zadávejte pouze čísla a znak +',
+                    ]),
                 ],
             ])
             ->add('email', EmailType::class, [
                 'constraints' => [
                     new Constraints\NotBlank(['message' => 'Please enter email']),
                     new Email(['message' => 'Please enter valid email']),
-                    new Constraints\Length(['max' => 255, 'maxMessage' => 'Email cannot be longer than {{ limit }} characters']),
+                    new Constraints\Length(['max' => 64, 'maxMessage' => 'Email cannot be longer than {{ limit }} characters']),
                     new UniqueEmail(['message' => 'This email is already registered']),
+                    new Constraints\Regex([
+                        'pattern' => RegexValidationRule::MOEVE_DENY_CHARS,
+                        'message' => 'Prosím, nepoužívejte žádné speciální znaky. Například őűàèìòùâêîôûâêîôãñõđåæøçłßþż€£¥ƒ¢§¶ªº',
+                    ]),
                 ],
             ]);
     }
@@ -107,21 +116,41 @@ class RegistrationFormType extends AbstractType
                 'required' => true,
                 'constraints' => [
                     new Constraints\NotBlank(['message' => 'Prosím zadejte vaší ulici']),
-                    new Constraints\Length(['max' => 100, 'maxMessage' => 'Street cannot be longer than {{ limit }} characters']),
+                    new Constraints\Length(['max' => 30, 'maxMessage' => 'Street cannot be longer than {{ limit }} characters']),
+                    new Constraints\Regex([
+                        'pattern' => RegexValidationRule::MOEVE_DENY_CHARS,
+                        'message' => 'Prosím, nepoužívejte žádné speciální znaky. Například őűàèìòùâêîôûâêîôãñõđåæøçłßþż€£¥ƒ¢§¶ªº',
+                    ]),
+                    new Constraints\Regex([
+                        'pattern' => RegexValidationRule::STREET_NUMBER_REGEX,
+                        'message' => 'Ulice musí obsahovat číslo',
+                    ]),
+                    new Constraints\Regex([
+                        'pattern' => RegexValidationRule::STREET_ALPHABET_REGEX,
+                        'message' => 'Ulice musí obsahovat písmena',
+                    ]),
                 ],
             ])
             ->add('city', TextType::class, [
                 'required' => true,
                 'constraints' => [
                     new Constraints\NotBlank(['message' => 'Prosím zadejte vaše město']),
-                    new Constraints\Length(['max' => 100, 'maxMessage' => 'City cannot be longer than {{ limit }} characters']),
+                    new Constraints\Length(['max' => 30, 'maxMessage' => 'City cannot be longer than {{ limit }} characters']),
+                    new Constraints\Regex([
+                        'pattern' => RegexValidationRule::MOEVE_DENY_CHARS,
+                        'message' => 'Prosím, nepoužívejte žádné speciální znaky. Například őűàèìòùâêîôûâêîôãñõđåæøçłßþż€£¥ƒ¢§¶ªº',
+                    ]),
                 ],
             ])
             ->add('postcode', TextType::class, [
                 'required' => true,
                 'constraints' => [
                     new Constraints\NotBlank(['message' => 'Prosím zadejte vaše poštovní směrovací číslo']),
-                    new Constraints\Length(['max' => 30, 'maxMessage' => 'Postcode cannot be longer than {{ limit }} characters']),
+                    new Constraints\Length(['max' => 5, 'maxMessage' => 'Postcode cannot be longer than {{ limit }} characters']),
+                    new Constraints\Regex([
+                        'pattern' => RegexValidationRule::MOEVE_DENY_CHARS,
+                        'message' => 'Prosím, nepoužívejte žádné speciální znaky. Například őűàèìòùâêîôûâêîôãñõđåæøçłßþż€£¥ƒ¢§¶ªº',
+                    ]),
                 ],
             ]);
     }
