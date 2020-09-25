@@ -54,6 +54,7 @@ class ProductExportRepositoryTest extends TransactionFunctionalTestCase
             'categories',
             'detail_url',
             'in_stock',
+            'is_available',
             'prices',
             'parameters',
             'ordering_priority',
