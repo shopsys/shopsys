@@ -196,12 +196,17 @@ class OrderItem extends BaseOrderItem
      */
     public function getFinalPriceWithVat(): Money
     {
-        $coupon = $this->getRelatedCoupon();
         $priceWithVat = $this->getPriceWithVat();
-        
-        if ($coupon instanceof self) {
-            $discountPerItem = $coupon->getPriceWithVat()->divide($this->quantity, 2);
-            $priceWithVat = $priceWithVat->add($discountPerItem);
+
+        try {
+            $coupon = $this->getRelatedCoupon();
+
+            if ($coupon instanceof self) {
+                $discountPerItem = $coupon->getPriceWithVat()->divide($this->quantity, 2);
+                $priceWithVat = $priceWithVat->add($discountPerItem);
+            }
+        } catch (OrderItemRelatedException $e) {
+            //order item is not discounted
         }
 
         return $priceWithVat;
@@ -212,12 +217,16 @@ class OrderItem extends BaseOrderItem
      */
     public function getFinalPriceWithoutVat(): Money
     {
-        $coupon = $this->getRelatedCoupon();
         $priceWithVat = $this->getPriceWithoutVat();
-        
-        if ($coupon instanceof self) {
-            $discountPerItem = $coupon->getPriceWithoutVat()->divide($this->quantity, 2);
-            $priceWithVat = $priceWithVat->add($discountPerItem);
+        try {
+            $coupon = $this->getRelatedCoupon();
+
+            if ($coupon instanceof self) {
+                $discountPerItem = $coupon->getPriceWithoutVat()->divide($this->quantity, 2);
+                $priceWithVat = $priceWithVat->add($discountPerItem);
+            }
+        } catch (OrderItemRelatedException $e) {
+            //order item is not discounted
         }
 
         return $priceWithVat;
@@ -228,11 +237,15 @@ class OrderItem extends BaseOrderItem
      */
     public function getFinalQuantifiedPriceWithVat(): Money
     {
-        $coupon = $this->getRelatedCoupon();
         $priceWithVat = $this->getPriceWithVat()->multiply($this->quantity);
-        
-        if ($coupon instanceof self) {
-            $priceWithVat = $priceWithVat->add($coupon->getPriceWithVat());
+        try {
+            $coupon = $this->getRelatedCoupon();
+
+            if ($coupon instanceof self) {
+                $priceWithVat = $priceWithVat->add($coupon->getPriceWithVat());
+            }
+        } catch (OrderItemRelatedException $e) {
+            //order item is not discounted
         }
 
         return $priceWithVat;
@@ -243,11 +256,16 @@ class OrderItem extends BaseOrderItem
      */
     public function getFinalQuantifiedPriceWithoutVat(): Money
     {
-        $coupon = $this->getRelatedCoupon();
         $priceWithoutVat = $this->getPriceWithoutVat()->multiply($this->quantity);
-        
-        if ($coupon instanceof self) {
-            $priceWithoutVat = $priceWithoutVat->add($coupon->getPriceWithoutVat());
+
+        try {
+            $coupon = $this->getRelatedCoupon();
+
+            if ($coupon instanceof self) {
+                $priceWithoutVat = $priceWithoutVat->add($coupon->getPriceWithoutVat());
+            }
+        } catch (OrderItemRelatedException $e) {
+            //order item is not discounted
         }
 
         return $priceWithoutVat;
