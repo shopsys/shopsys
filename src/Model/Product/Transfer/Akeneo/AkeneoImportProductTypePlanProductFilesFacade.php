@@ -9,6 +9,7 @@ use App\Component\Akeneo\Transfer\AkeneoImportTransferDependency;
 use App\Component\Akeneo\Transfer\MediaFiles\MediaFilesTransferAkeneoFacade;
 use App\Model\Product\Product;
 use App\Model\Product\ProductRepository;
+use App\Model\Product\Transfer\Akeneo\Exception\FileSaveFailedException;
 use League\Flysystem\FileExistsException;
 use League\Flysystem\FileNotFoundException;
 use League\Flysystem\FilesystemInterface;
@@ -123,11 +124,7 @@ class AkeneoImportProductTypePlanProductFilesFacade extends AbstractAkeneoImport
 
             $this->storeFile($fileName, $content);
         } catch (\Throwable $exception) {
-            $this->logger->addError('File save failed', [
-                'reason' => $exception->getMessage(),
-                'dictionary' => $this->productFilesDir,
-                'filename' => $fileName,
-            ]);
+            throw new FileSaveFailedException($exception->getMessage(), $this->productFilesDir, $fileName, 0, $exception);
         }
     }
 

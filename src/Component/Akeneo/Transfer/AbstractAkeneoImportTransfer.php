@@ -8,6 +8,7 @@ use Akeneo\Pim\ApiClient\Exception\RuntimeException;
 use App\Component\Akeneo\Transfer\Exception\TransferException;
 use App\Component\Akeneo\Transfer\Exception\TransferInvalidDataAdministratorCriticalException;
 use App\Component\Akeneo\Transfer\Exception\TransferInvalidDataAdministratorNonCriticalException;
+use App\Model\Product\Transfer\Akeneo\Exception\FileSaveFailedException;
 use App\Model\Transfer\TransferIdentificationInterface;
 use Exception;
 use Symfony\Component\Validator\Validator\TraceableValidator;
@@ -116,6 +117,9 @@ abstract class AbstractAkeneoImportTransfer implements TransferIdentificationInt
                     $transferException->getMessage()
                 )
             );
+            $this->em->rollback();
+        } catch (FileSaveFailedException $transferException) {
+            $this->logger->addWarning($transferException->getMessage());
             $this->em->rollback();
         } catch (Exception $exception) {
             $this->logger->addError(
