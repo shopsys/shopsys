@@ -37,12 +37,13 @@ class OrderRepository extends BaseOrderRepository
     {
         $queryBuilder = $this->createOrderQueryBuilder()
             ->join(Payment::class, 'p', Join::WITH, 'o.payment = p.id')
-            ->join(GoPayTransaction::class, 'gpt', Join::WITH, 'o.id = gpt.order AND gpt.goPayStatus != :statusPaid')
+            ->join(GoPayTransaction::class, 'gpt', Join::WITH, 'o.id = gpt.order')
             ->andWhere('p.type = :type')
             ->andWhere('o.createdAt >= :fromDate')
+            ->andWhere('gpt.goPayStatus NOT IN (:paymentStatuses)')
             ->orderBy('o.createdAt', 'ASC')
             ->setParameter('fromDate', $fromDate)
-            ->setParameter('statusPaid', PaymentStatus::PAID)
+            ->setParameter('paymentStatuses', [PaymentStatus::PAID, PaymentStatus::CANCELED, PaymentStatus::TIMEOUTED])
             ->setParameter('type', Payment::TYPE_GOPAY);
 
         return $queryBuilder->getQuery()->execute();
