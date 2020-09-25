@@ -211,7 +211,8 @@ class OrderTransferScontoBridgeMapper
             if ($promoCodeItem !== null) {
                 $erpOrderItem->setPromocodeIdentifier($promoCodeItem->getPromoCodeIdentifier());
             }
-        } catch (OrderItemRelatedException $e) {}
+        } catch (OrderItemRelatedException $e) {
+        }
 
         $sku = $orderItem->getCatnum();
         if ($sku !== null && $orderItem->isTypeProduct()) {
