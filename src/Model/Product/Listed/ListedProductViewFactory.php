@@ -82,40 +82,42 @@ class ListedProductViewFactory extends BaseListedProductViewFactory
     public function createFromProduct(Product $product, ?ImageView $imageView, ProductActionView $productActionView): BaseListedProductView
     {
         $variantsParametersSetup = [];
+        $domainId = $this->domain->getId();
         if ($product->isMainVariant()) {
             $variantsParametersSetup = $this->parameterFacade->getVariantsSetupForElasticByMainProduct(
                 $product,
                 $this->domain->getLocale(),
-                $this->domain->getId()
+                $domainId
             );
         }
         $variantsParametersSetup = $this->prepareVariantsParametersSetup($variantsParametersSetup);
         list($countColorsInVariants, $countDifferentVariants) = $this->getParametersValuesInformation($variantsParametersSetup);
 
-        $flagIds = $this->getFlagIdsForProductForDomain($product, $this->domain->getId());
+        $flagIds = $this->getFlagIdsForProductForDomain($product, $domainId);
 
         return new ListedProductView(
             $product->getId(),
             $product->getName(),
-            $product->getShortDescription($this->domain->getId()),
-            $this->productAvailabilityFacade->getProductAvailabilityInformationByDomainId($product, $this->domain->getId()),
+            $product->getShortDescription($domainId),
+            $this->productAvailabilityFacade->getProductAvailabilityInformationByDomainId($product, $domainId),
             $this->productCachedAttributesFacade->getProductSellingPrice($product),
             $flagIds,
             $productActionView,
             $imageView,
             $product->isMainVariant() ? $product->getDefaultVariant()->getNamePrefix() : $product->getNamePrefix(),
             $product->isMainVariant() ? '' : $product->getNameSufix(),
-            $this->getProductPriceWithVatByMoney($this->productFacade->getNonSellingPriceByProductAndDomainId($product, $this->domain->getId()) ?? Money::zero()),
-            $this->productAvailabilityFacade->getProductAvailableStocksCountInformationByDomainId($product, $this->domain->getId()),
-            $this->productAvailabilityFacade->getProductCountExposedInStocksInformationByDomainId($product, $this->domain->getId()),
+            $this->getProductPriceWithVatByMoney($this->productFacade->getNonSellingPriceByProductAndDomainId($product, $domainId) ?? Money::zero()),
+            $this->productAvailabilityFacade->getProductAvailableStocksCountInformationByDomainId($product, $domainId),
+            $this->productAvailabilityFacade->getProductCountExposedInStocksInformationByDomainId($product, $domainId),
             $variantsParametersSetup,
             $this->categoryFacade->getCategoriesNamesInPathAsString(
-                $this->categoryFacade->getProductMainCategoryByDomainId($product, $this->domain->getId()),
+                $this->categoryFacade->getProductMainCategoryByDomainId($product, $domainId),
                 $this->domain->getLocale()
             ),
             $countColorsInVariants,
             $countDifferentVariants,
-            $product->hasFlagByAkeneoCodeForDomain(Flag::AKENEO_CODE_SCONTO, $this->domain->getId())
+            $product->hasFlagByAkeneoCodeForDomain(Flag::AKENEO_CODE_SCONTO, $domainId),
+            $this->productAvailabilityFacade->isProductAvailableOnDomainCached($product, $domainId),
         );
     }
 
@@ -150,6 +152,7 @@ class ListedProductViewFactory extends BaseListedProductViewFactory
             $countColorsInVariants,
             $countDifferentVariants,
             array_key_exists('has_sconto_flag', $productArray) ? $productArray['has_sconto_flag'] : false,
+            array_key_exists('is_available', $productArray) ? $productArray['is_available'] : true,
         );
     }
 

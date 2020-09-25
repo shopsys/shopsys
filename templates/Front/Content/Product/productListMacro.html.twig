@@ -64,7 +64,7 @@
                                 </div>
                             {% endif %}
                             <div class="list-products__item__info__availability">
-                                <strong class="list-products__item__info__availability__text list-products__item__info__availability__text--primary">{{ productView.availability }}</strong>
+                                <strong class="list-products__item__info__availability__text {{ productView.available ? 'list-products__item__info__availability__text--primary' : ' ' }}">{{ productView.availability }}</strong>
                                 {% if productView.productAvailableStocksCountInformation is not empty %}
                                     <span class="list-products__item__info__availability__text list-products__item__info__availability__text--secondary">{{ productView.productAvailableStocksCountInformation|raw }}</span>
                                 {% endif %}

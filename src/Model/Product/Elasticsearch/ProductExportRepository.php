@@ -145,6 +145,7 @@ class ProductExportRepository extends BaseProductExportRepository
             'categories' => $categoryIds,
             'main_category_path' => $this->categoryFacade->getCategoriesNamesInPathAsString($mainCategory, $locale),
             'in_stock' => $this->productAvailabilityFacade->isProductAvailableWithFutureStockOnDomainOrHasPreorder($product, $domainId),
+            'is_available' => $this->productAvailabilityFacade->isProductAvailableOnDomainCached($product, $domainId),
             'prices' => $prices,
             'parameters' => $parameters,
             'ordering_priority' => $product->getDomainOrderingPriority($domainId),

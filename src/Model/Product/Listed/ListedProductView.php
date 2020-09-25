@@ -67,6 +67,11 @@ class ListedProductView extends BaseListedProductView
     private $hasScontoFlag;
 
     /**
+     * @var bool
+     */
+    private bool $isAvailable;
+
+    /**
      * @param int $id
      * @param string $name
      * @param string|null $shortDescription
@@ -85,6 +90,7 @@ class ListedProductView extends BaseListedProductView
      * @param int $countColorsInVariants
      * @param int $countDifferentVariants
      * @param bool $hasScontoFlag
+     * @param bool $isAvailable
      */
     public function __construct(
         int $id,
@@ -104,7 +110,8 @@ class ListedProductView extends BaseListedProductView
         string $mainCategoryPath,
         int $countColorsInVariants,
         int $countDifferentVariants,
-        bool $hasScontoFlag
+        bool $hasScontoFlag,
+        bool $isAvailable
     ) {
         parent::__construct($id, $name, $shortDescription, $availability, $sellingPrice, $flagIds, $action, $image);
 
@@ -118,6 +125,7 @@ class ListedProductView extends BaseListedProductView
         $this->countColorsInVariants = $countColorsInVariants;
         $this->countDifferentVariants = $countDifferentVariants;
         $this->hasScontoFlag = $hasScontoFlag;
+        $this->isAvailable = $isAvailable;
     }
 
     /**
@@ -278,5 +286,13 @@ class ListedProductView extends BaseListedProductView
     public function setImage(?ImageView $image): void
     {
         $this->image = $image;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isAvailable(): bool
+    {
+        return $this->isAvailable;
     }
 }
