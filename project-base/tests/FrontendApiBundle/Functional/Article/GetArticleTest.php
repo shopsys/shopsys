@@ -36,10 +36,10 @@ class GetArticleTest extends GraphQlTestCase
 
     public function testGetArticleReturnsError(): void
     {
-        $article = $this->getArticleOnDifferentDomain();
-        $expectedErrorMessage = 'Article with UUID \'' . $article->getUuid() . '\' not found.';
+        $wrongUuid = '123e4567-e89b-12d3-a456-426614174000';
+        $expectedErrorMessage = 'Article with UUID \'' . $wrongUuid . '\' not found.';
 
-        $response = $this->getResponseContentForQuery($this->getArticleQuery($article->getUuid()));
+        $response = $this->getResponseContentForQuery($this->getArticleQuery($wrongUuid));
         $this->assertResponseContainsArrayOfErrors($response);
         $errors = $this->getErrorsFromResponse($response);
 
@@ -201,13 +201,5 @@ class GetArticleTest extends GraphQlTestCase
                 }
             }
         ';
-    }
-
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Article\Article
-     */
-    private function getArticleOnDifferentDomain(): Article
-    {
-        return $this->articleFacade->getById(6);
     }
 }
