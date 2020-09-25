@@ -876,6 +876,9 @@ services:
     Shopsys\FrameworkBundle\Component\Error\ErrorPagesFacade:
         alias: App\Component\Error\ErrorPagesFacade
 
+    Shopsys\FrameworkBundle\Component\Error\LogoutExceptionSubscriber:
+        lazy: true
+
     FOS\CKEditorBundle\Config\CKEditorConfigurationInterface:
         alias: fos_ck_editor.configuration
 
