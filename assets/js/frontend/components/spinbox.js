@@ -12,7 +12,9 @@ export default class Spinbox {
 
         $input
             .on('spinbox.plus', Spinbox.plus)
-            .on('spinbox.minus', Spinbox.minus);
+            .on('spinbox.minus', Spinbox.minus)
+            .on('input', function () { Spinbox.changeValue($(this), ''); })
+        ;
 
         $plus
             .on('mousedown.spinbox', function (e) {
@@ -50,7 +52,8 @@ export default class Spinbox {
 
             if (action === '+') {
                 value += 1;
-            } else {
+            }
+            if (action === '-') {
                 value -= 1;
             }
 
@@ -69,6 +72,17 @@ export default class Spinbox {
 
             input.val(value);
             input.change();
+        } else {
+            if (value === '') {
+                return;
+            }
+            if (min !== undefined) {
+                value = min;
+            } else {
+                value = 1;
+            }
+
+            input.val(value);
         }
     }
 
