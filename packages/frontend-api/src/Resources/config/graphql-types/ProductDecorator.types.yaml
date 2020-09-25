@@ -45,3 +45,6 @@ ProductDecorator:
                         defaultValue: null
                     size:
                         type: "String"
+            brand:
+                type: "Brand"
+                description: "Brand of product"

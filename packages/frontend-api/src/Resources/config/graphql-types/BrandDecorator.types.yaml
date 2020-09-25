@@ -1,0 +1,42 @@
+BrandDecorator:
+    type: object
+    decorator: true
+    config:
+        description: "Represents a brand"
+        fields:
+            uuid:
+                type: "Uuid!"
+                description: "UUID"
+            name:
+                type: "String!"
+                description: "Brand name"
+            description:
+                type: "String"
+                description: "Brand description"
+            link:
+                type: "String!"
+                description: "Brand main URL"
+            seoTitle:
+                type: "String"
+                description: "Brand SEO title"
+            seoMetaDescription:
+                type: "String"
+                description: "Brand SEO meta description"
+            seoH1:
+                type: "String"
+                description: "Brand SEO H1"
+            images:
+                type: "[Image]!"
+                description: "Brand images"
+                resolve: '@=service("Shopsys\\FrontendApiBundle\\Model\\Resolver\\Image\\ImagesResolver").resolveByBrand(value, args["type"], args["size"])'
+                args:
+                    type:
+                        type: "String"
+                        defaultValue: null
+                    size:
+                        type: "String"
+            products:
+                type: "ProductConnection"
+                description: "Paginated products of brand"
+                argsBuilder: "Relay::Connection"
+                resolve: '@=service("Shopsys\\FrontendApiBundle\\Model\\Resolver\\Products\\ProductsResolver").resolveByBrand(args, value)'

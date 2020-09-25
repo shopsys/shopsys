@@ -42,6 +42,11 @@ class BrandData
      */
     public $seoH1s;
 
+    /**
+     * @var string|null
+     */
+    public $uuid;
+
     public function __construct()
     {
         $this->name = '';

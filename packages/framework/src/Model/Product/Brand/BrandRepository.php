@@ -51,4 +51,19 @@ class BrandRepository
     {
         return $this->getBrandRepository()->findBy([], ['name' => 'asc']);
     }
+
+    /**
+     * @param string $uuid
+     * @return \Shopsys\FrameworkBundle\Model\Product\Brand\Brand
+     */
+    public function getOneByUuid(string $uuid): Brand
+    {
+        $brand = $this->getBrandRepository()->findOneBy(['uuid' => $uuid]);
+
+        if ($brand === null) {
+            throw new BrandNotFoundException('Brand with UUID ' . $uuid . ' does not exist.');
+        }
+
+        return $brand;
+    }
 }

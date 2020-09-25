@@ -6,6 +6,7 @@ namespace Shopsys\FrontendApiBundle\Model\Product;
 
 use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
+use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\Search\FilterQueryFactory;
@@ -114,6 +115,40 @@ class ProductFacade
     {
         $filterQuery = $this->filterQueryFactory->createListable()
             ->filterByCategory([$category->getId()]);
+
+        return $this->productElasticsearchRepository->getProductsCountByFilterQuery($filterQuery);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Brand\Brand $brand
+     * @param int $limit
+     * @param int $offset
+     * @param string $orderingModeId
+     * @return array
+     */
+    public function getProductsByBrand(Brand $brand, int $limit, int $offset, string $orderingModeId): array
+    {
+        $emptyProductFilterData = new ProductFilterData();
+        $filterQuery = $this->filterQueryFactory->createListableProductsByBrandId(
+            $emptyProductFilterData,
+            $orderingModeId,
+            1,
+            $limit,
+            $brand->getId()
+        )->setFrom($offset);
+
+        $productsResult = $this->productElasticsearchRepository->getSortedProductsResultByFilterQuery($filterQuery);
+        return $productsResult->getHits();
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Brand\Brand $brand
+     * @return int
+     */
+    public function getProductsByBrandCount(Brand $brand): int
+    {
+        $filterQuery = $this->filterQueryFactory->createListable()
+            ->filterByBrands([$brand->getId()]);
 
         return $this->productElasticsearchRepository->getProductsCountByFilterQuery($filterQuery);
     }

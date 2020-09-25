@@ -15,6 +15,7 @@ use Shopsys\FrameworkBundle\Component\Image\Config\ImageEntityConfig;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
 use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Payment\Payment;
+use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Transport\Transport;
 use Shopsys\FrontendApiBundle\Component\Image\ImageFacade as FrontendApiImageFacade;
@@ -25,6 +26,7 @@ class ImagesResolver implements ResolverInterface
     protected const IMAGE_ENTITY_CATEGORY = 'category';
     protected const IMAGE_ENTITY_PAYMENT = 'payment';
     protected const IMAGE_ENTITY_TRANSPORT = 'transport';
+    protected const IMAGE_ENTITY_BRAND = 'brand';
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\Image\ImageFacade
@@ -135,6 +137,17 @@ class ImagesResolver implements ResolverInterface
     public function resolveByTransport(Transport $transport, ?string $type, ?string $size): array
     {
         return $this->resolveByEntityId($transport->getId(), static::IMAGE_ENTITY_TRANSPORT, $type, $size);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Brand\Brand $brand
+     * @param string|null $type
+     * @param string|null $size
+     * @return array
+     */
+    public function resolveByBrand(Brand $brand, ?string $type, ?string $size): array
+    {
+        return $this->resolveByEntityId($brand->getId(), static::IMAGE_ENTITY_BRAND, $type, $size);
     }
 
     /**

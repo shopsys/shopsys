@@ -132,3 +132,6 @@ There you can find links to upgrade notes for other versions too.
 - remove unnecessary default values for ENV variables ([#2040](https://github.com/shopsys/shopsys/pull/2040))
     - these parameters should be configured via ENV variables if set
     - see #project-base-diff to update your project
+
+- add brands in frontend API ([#2047](https://github.com/shopsys/shopsys/pull/2047))
+    - see #project-base-diff to update your project
