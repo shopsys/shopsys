@@ -40,7 +40,7 @@ class MailTemplate extends BaseMailTemplate
     private ?Payment $payment;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus|null
+     * @var \App\Model\Order\Status\OrderStatus|null
      * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus")
      * @ORM\JoinColumn(nullable=true, onDelete="CASCADE")
      */
@@ -74,7 +74,7 @@ class MailTemplate extends BaseMailTemplate
     }
 
     /**
-     * @return \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus|null
+     * @return \App\Model\Order\Status\OrderStatus|null
      */
     public function getOrderStatus(): ?OrderStatus
     {

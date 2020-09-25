@@ -21,6 +21,7 @@ class PaymentDataFixture extends AbstractReferenceFixture implements DependentFi
     public const PAYMENT_CASH_ON_DELIVERY = 'payment_cash_on_delivery';
     public const PAYMENT_CASH = 'payment_cash';
     public const PAYMENT_GOPAY = Payment::TYPE_GOPAY;
+    public const PAYMENT_OVER_LIMIT = 'payment_over_limit';
 
     /** @var \App\Model\Payment\PaymentFacade */
     private $paymentFacade;
@@ -136,6 +137,18 @@ class PaymentDataFixture extends AbstractReferenceFixture implements DependentFi
             TransportDataFixture::TRANSPORT_PPL,
             TransportDataFixture::TRANSPORT_PALLET,
         ]);
+
+        $paymentData = $this->paymentDataFactory->create();
+        $paymentData->externalId = 5;
+        $paymentData->meanOfPayment = 'e';
+        $paymentData->type = Payment::TYPE_BASIC;
+
+        foreach ($this->domain->getAllLocales() as $locale) {
+            $paymentData->name[$locale] = t('Nadlimitnís', [], 'dataFixtures', $locale);
+        }
+
+        $this->setPriceForAllDomainDefaultCurrencies($paymentData, Money::create('199.90'));
+        $this->createPayment(self::PAYMENT_OVER_LIMIT, $paymentData, [TransportDataFixture::TRANSPORT_OVER_LIMIT]);
     }
 
     /**

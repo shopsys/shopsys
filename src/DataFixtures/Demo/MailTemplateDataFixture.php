@@ -144,7 +144,7 @@ team of {domain}
             $paymentGoPay = $this->getReference(PaymentDataFixture::PAYMENT_GOPAY);
             /** @var \App\Model\Payment\Payment $paymentCashOnDelivery */
             $paymentCashOnDelivery = $this->getReference(PaymentDataFixture::PAYMENT_CASH_ON_DELIVERY);
-            /** @var \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus $orderStatusInProgress */
+            /** @var \App\Model\Order\Status\OrderStatus $orderStatusInProgress */
             $orderStatusInProgress = $this->getReference(OrderStatusDataFixture::ORDER_STATUS_IN_PROGRESS);
 
             $mailTemplateData->transport = $transportPallet;

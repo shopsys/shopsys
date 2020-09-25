@@ -22,7 +22,7 @@ class MailTemplateData extends MailTemplateDataBase
     public ?Payment $payment = null;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus|null
+     * @var \App\Model\Order\Status\OrderStatus|null
      */
     public ?OrderStatus $orderStatus = null;
 

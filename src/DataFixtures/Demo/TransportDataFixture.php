@@ -23,6 +23,7 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
     public const TRANSPORT_PPL = 'transport_ppl';
     public const TRANSPORT_PERSONAL = 'transport_personal';
     public const TRANSPORT_PALLET = 'transport_pallet';
+    public const TRANSPORT_OVER_LIMIT = 'transport_over_limit';
 
     /** @var \App\Model\Transport\TransportFacade */
     private $transportFacade;
@@ -230,6 +231,28 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
 
         $this->setPriceForAllDomains($transportData, Money::create('399.95'));
         $this->createTransport(self::TRANSPORT_PALLET, $transportData);
+
+        $transportData = $this->transportDataFactory->create();
+        $transportData->externalId = 5;
+        $transportData->daysUntilDelivery = 0;
+        $transportData->deliveryCode = 'E';
+        $transportData->typeOfDeliveryKey = 5;
+
+        foreach ($this->domain->getAllLocales() as $locale) {
+            $transportData->name[$locale] = t('Nadlimitní', [], 'dataFixtures', $locale);
+            $transportData->description[$locale] = t('Máš to moc velké... takže tě víc zkásnem', [], 'dataFixtures', $locale);
+            $transportData->instructions[$locale] = t('Očekávej to koncem příštího měsíce', [], 'dataFixtures', $locale);
+        }
+
+        $transportData->type = Transport::TYPE_COMMON;
+        $transportData->productTypes = [
+            $productTypeOversized,
+        ];
+
+        $transportData->personalPickup = false;
+
+        $this->setPriceForAllDomains($transportData, Money::zero());
+        $this->createTransport(self::TRANSPORT_OVER_LIMIT, $transportData);
     }
 
     /**

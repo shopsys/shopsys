@@ -14,6 +14,7 @@ use Shopsys\FrameworkBundle\Model\Order\OrderData as BaseOrderData;
  * @property \App\Model\Order\Item\OrderItemData|null $orderPayment
  * @property \App\Model\Order\Item\OrderItemData|null $orderTransport
  * @method \App\Model\Order\Item\OrderItemData[] getNewItemsWithoutTransportAndPayment()
+ * @property \App\Model\Order\Status\OrderStatus|null $status
  */
 class OrderData extends BaseOrderData
 {
@@ -61,6 +62,11 @@ class OrderData extends BaseOrderData
      * @var string
      */
     public $scontoBridgeStatus;
+
+    /**
+     * @var bool
+     */
+    public $isOverLimit;
 
     public function __construct()
     {

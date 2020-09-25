@@ -37,6 +37,9 @@ use Shopsys\FrameworkBundle\Model\Order\OrderEditResult;
  * @method addItem(\App\Model\Order\Item\OrderItem $item)
  * @method removeItem(\App\Model\Order\Item\OrderItem $item)
  * @method fillCommonFields(\App\Model\Order\OrderData $orderData)
+ * @property \App\Model\Order\Status\OrderStatus $status
+ * @method setStatus(\App\Model\Order\Status\OrderStatus $status)
+ * @method \App\Model\Order\Status\OrderStatus getStatus()
  */
 class Order extends BaseOrder
 {
@@ -105,6 +108,13 @@ class Order extends BaseOrder
     protected $scontoBridgeStatus;
 
     /**
+     * @var bool
+     *
+     * @ORM\Column(type="boolean")
+     */
+    protected $isOverLimit;
+
+    /**
      * @param \App\Model\Order\OrderData $orderData
      * @param string $orderNumber
      * @param string $urlHash
@@ -121,6 +131,7 @@ class Order extends BaseOrder
         $this->goPayTransactions = new ArrayCollection();
         $this->gtmCoupon = $orderData->gtmCoupon;
         $this->scontoBridgeStatus = $orderData->scontoBridgeStatus;
+        $this->isOverLimit = $orderData->isOverLimit;
     }
 
     /**
@@ -142,6 +153,7 @@ class Order extends BaseOrder
         parent::editData($orderData);
 
         $this->gtmCoupon = $orderData->gtmCoupon;
+        $this->isOverLimit = $orderData->isOverLimit;
     }
 
     /**
@@ -292,5 +304,21 @@ class Order extends BaseOrder
     public function setScontoBridgeStatus(OrderScontoBridgeStatusEnum $status): void
     {
         $this->scontoBridgeStatus = $status->getValue();
+    }
+
+    /**
+     * @return bool
+     */
+    public function getIsOverLimit(): bool
+    {
+        return $this->isOverLimit;
+    }
+
+    /**
+     * @param bool $value
+     */
+    public function setIsOverLimit(bool $value): void
+    {
+        $this->isOverLimit = $value;
     }
 }

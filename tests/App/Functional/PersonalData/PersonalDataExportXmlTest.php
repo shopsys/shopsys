@@ -9,6 +9,7 @@ use App\Model\Customer\User\CustomerUserData;
 use App\Model\Order\Item\OrderItem;
 use App\Model\Order\Order;
 use App\Model\Order\OrderData;
+use App\Model\Order\Status\OrderStatus;
 use App\Model\Product\Product;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
@@ -21,7 +22,6 @@ use Shopsys\FrameworkBundle\Model\Customer\Customer;
 use Shopsys\FrameworkBundle\Model\Customer\CustomerData;
 use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress;
 use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressData;
-use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyData;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
@@ -153,7 +153,7 @@ class PersonalDataExportXmlTest extends TransactionFunctionalTestCase
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
-     * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus $status
+     * @param \App\Model\Order\Status\OrderStatus $status
      * @param \Shopsys\FrameworkBundle\Model\Country\Country $country
      * @return \App\Model\Order\Order
      */

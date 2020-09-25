@@ -11,7 +11,7 @@ use Shopsys\FrameworkBundle\Model\Mail\MailTemplateDataFactory as BaseMailTempla
 /**
  * @method \App\Model\Mail\MailTemplateData create()
  * @method \App\Model\Mail\MailTemplateData createFromMailTemplate(\App\Model\Mail\MailTemplate $mailTemplate)
- * @method \App\Model\Mail\MailTemplateData[] createFromOrderStatuses(\Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus[] $orderStatuses, \App\Model\Mail\MailTemplate[] $mailTemplates)
+ * @method \App\Model\Mail\MailTemplateData[] createFromOrderStatuses(\App\Model\Order\Status\OrderStatus[] $orderStatuses, \App\Model\Mail\MailTemplate[] $mailTemplates)
  */
 class MailTemplateDataFactory extends BaseMailTemplateDataFactory
 {

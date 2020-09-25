@@ -14,6 +14,7 @@ use App\Model\Order\Item\OrderItemDataFactory;
 use App\Model\Order\Preview\OrderPreview;
 use App\Model\Order\Preview\OrderPreviewSplittingFacade;
 use App\Model\Order\Preview\SplitOrderPreview;
+use App\Model\Order\Status\OrderStatus;
 use App\Model\Payment\Payment;
 use Doctrine\ORM\EntityManagerInterface;
 use GoPay\Definition\Response\PaymentStatus;
@@ -45,7 +46,6 @@ use Shopsys\FrameworkBundle\Model\Order\OrderUrlGenerator;
 use Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreview as BaseOrderPreview;
 use Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreviewFactory;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\CurrentPromoCodeFacade;
-use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus;
 use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusRepository;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
@@ -244,8 +244,28 @@ class OrderFacade extends BaseOrderFacade
             $promoCode->decreaseRemainingUses();
         }
 
-        $orderData->status = $this->orderStatusRepository->getDefault();
         $splitOrderPreview = $this->cartSplittingFacade->createSplitOrderPreviewForCurrentCustomer($orderData);
+
+        $orderData->isOverLimit = false;
+        foreach ($splitOrderPreview->getOrderPreviews() as $orderPreview) {
+            /** @var \App\Model\Transport\Transport $transport */
+            $transport = $orderPreview->getTransport();
+            if ($transport->isOverLimitTransport() === true) {
+                $orderData->isOverLimit = true;
+            }
+        }
+
+        if ($orderData->isOverLimit === true) {
+            /** @var \App\Model\Order\Status\OrderStatus $status */
+            $status = $this->orderStatusRepository->findById(OrderStatus::TYPE_OVER_LIMIT);
+            $orderData->status = $status;
+            $orderData->scontoBridgeStatus = OrderScontoBridgeStatusEnum::STATUS_OVER_LIMIT;
+        } else {
+            /** @var \App\Model\Order\Status\OrderStatus $status */
+            $status = $this->orderStatusRepository->getDefault();
+            $orderData->status = $status;
+        }
+
         /** @var \App\Model\Customer\User\CustomerUser|null $customerUser */
         $customerUser = $this->currentCustomerUser->findCurrentCustomerUser();
         if ($customerUser === null) {

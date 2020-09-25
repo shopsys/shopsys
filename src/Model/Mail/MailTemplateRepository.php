@@ -62,7 +62,7 @@ class MailTemplateRepository extends BaseMailTemplateRepository
      * @param int $domainId
      * @param \App\Model\Transport\Transport $transport
      * @param \App\Model\Payment\Payment $payment
-     * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus $orderStatus
+     * @param \App\Model\Order\Status\OrderStatus $orderStatus
      * @return \App\Model\Mail\MailTemplate|null
      */
     public function findOrderStatusMailTemplate(

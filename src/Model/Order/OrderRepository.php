@@ -26,6 +26,7 @@ use Shopsys\FrameworkBundle\Model\Order\OrderRepository as BaseOrderRepository;
  * @method \App\Model\Order\Order getByUuidAndUrlHash(string $uuid, string $urlHash)
  * @method \App\Model\Order\Order[] getCustomerUserOrderLimitedList(\App\Model\Customer\User\CustomerUser $customerUser, int $limit, int $offset)
  * @method int getCustomerUserOrderCount(\App\Model\Customer\User\CustomerUser $customerUser)
+ * @method bool isOrderStatusUsed(\App\Model\Order\Status\OrderStatus $orderStatus)
  */
 class OrderRepository extends BaseOrderRepository
 {

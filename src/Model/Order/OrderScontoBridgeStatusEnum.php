@@ -12,4 +12,5 @@ class OrderScontoBridgeStatusEnum extends AbstractEnum
     public const STATUS_PROCESSING = 'processing';
     public const STATUS_DONE = 'done';
     public const STATUS_ERROR = 'error';
+    public const STATUS_OVER_LIMIT = 'overLimit';
 }

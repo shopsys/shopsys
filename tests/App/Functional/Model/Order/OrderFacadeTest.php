@@ -107,6 +107,7 @@ class OrderFacadeTest extends TransactionFunctionalTestCase
         $orderData->note = 'note';
         $orderData->domainId = Domain::FIRST_DOMAIN_ID;
         $orderData->currency = $this->getReference(CurrencyDataFixture::CURRENCY_CZK);
+        $orderData->isOverLimit = false;
 
         /** @var \App\Model\Product\Type\ProductType $productType */
         $productType = $this->persistentReferenceFacade->getReference(ProductTypeDataFixture::TYPE_COMMON);

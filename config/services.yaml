@@ -251,6 +251,9 @@ services:
     Shopsys\FrameworkBundle\Model\Order\OrderFlowFactoryInterface:
         alias: App\Form\Front\Order\DomainAwareOrderFlowFactory
 
+    Shopsys\FrameworkBundle\Model\Order\Status\Grid\OrderStatusGridFactory:
+        alias: App\Model\Order\Status\Grid\OrderStatusGridFactory
+
     App\Model\Order\Watcher\SplitTransportAndPaymentWatcher: ~
 
     Shopsys\FrameworkBundle\Model\Article\ArticleDataFactoryInterface:

@@ -14,6 +14,7 @@ use Shopsys\FrameworkBundle\Model\Order\FrontOrderData as BaseFrontOrderData;
  * @property \App\Model\Order\Item\OrderItemData|null $orderPayment
  * @property \App\Model\Order\Item\OrderItemData|null $orderTransport
  * @method \App\Model\Order\Item\OrderItemData[] getNewItemsWithoutTransportAndPayment()
+ * @property \App\Model\Order\Status\OrderStatus|null $status
  */
 class FrontOrderData extends BaseFrontOrderData
 {
