@@ -125,7 +125,7 @@ export default class SlickCarousel {
 
         // Common product grid carousel
         if ($furnitureCatsCarousel.length) {
-            $furnitureCatsCarousel.slick({
+            $furnitureCatsCarousel.not('.slick-initialized').slick({
                 slidesToShow: 1,
                 slidesToScroll: 1,
                 dots: true,
