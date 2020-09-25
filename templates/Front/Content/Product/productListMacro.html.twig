@@ -5,13 +5,8 @@
         {% for productView in productViews %}
             <div class="list-products__item js-list-products-item">
                 <div class="list-products__item__in">
-                    <a href="
-                        {% if productView.variantUrl is null %}
-                            {{ productView.action.detailUrl }}
-                        {% else %}
-                            {{ productView.variantUrl }}
-                        {% endif %}
-                    " class="list-products__item__block" {{ gtm(productView, nextIndex + loop.index0, { 'list': gtmList }) }}>
+                    <a href="{{ productView.variantUrl is null ? productView.action.detailUrl : productView.variantUrl }}"
+                       class="list-products__item__block" {{ gtm(productView, nextIndex + loop.index0, { 'list': gtmList }) }}>
                         <div class="list-products__item__image dont-print">
                             {{ image(productView.image, { size: 'list', alt: productView.name }) }}
                             {{ renderFlagsByIds(productView.flagIds, 'in-flag--in-list') }}
