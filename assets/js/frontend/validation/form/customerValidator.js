@@ -16,6 +16,12 @@ export default function customerValidator () {
         }
     });
 
+    $('#customer_user_update_form_deliveryAddressData_addressFilled').change(function () {
+        if ($(this).is(':checked') === false) {
+            $customerDeliveryAddressForm.find('input').jsFormValidator('validate');
+        }
+    });
+
     const $customerBillingAddressForm = window.$('.js-billing-address-form');
     $customerBillingAddressForm.jsFormValidator({
         'groups': function () {
