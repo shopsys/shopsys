@@ -253,6 +253,9 @@
       "in_stock": {
         "type": "boolean"
       },
+      "is_available": {
+        "type": "boolean"
+      },
       "parameters": {
         "type": "nested",
         "properties": {
@@ -365,6 +368,9 @@
               },
               "product_count_exposed_in_stores_information": {
                 "type": "text"
+              },
+              "is_available": {
+                "type": "boolean"
               }
             }
           }

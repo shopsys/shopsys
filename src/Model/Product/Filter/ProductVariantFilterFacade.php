@@ -93,6 +93,9 @@ class ProductVariantFilterFacade
                     $listedProductView->setVariantUrl($variantParameterSetup['variant_url'] ?? null);
                     if (isset($variantParameterSetup['variant_availability_info']['product_availability_information'])) {
                         $listedProductView->setAvailability($variantParameterSetup['variant_availability_info']['product_availability_information']);
+                        if (array_key_exists('is_available', $variantParameterSetup['variant_availability_info'])) {
+                            $listedProductView->setIsAvailable($variantParameterSetup['variant_availability_info']['is_available']);
+                        }
                     }
                     $listedProductView->setProductAvailableStocksCountInformation(
                         $variantParameterSetup['variant_availability_info']['product_available_stocks_count_information'] ?? null

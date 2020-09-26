@@ -295,4 +295,12 @@ class ListedProductView extends BaseListedProductView
     {
         return $this->isAvailable;
     }
+
+    /**
+     * @param bool $isAvailable
+     */
+    public function setIsAvailable(bool $isAvailable): void
+    {
+        $this->isAvailable = $isAvailable;
+    }
 }
