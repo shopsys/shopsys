@@ -180,10 +180,6 @@ export default class Gtm {
                 localStorage.clear(LOCALSTORAGE_FILTER_TAG);
             }
         }
-
-        $('.js-transport_and_payment_form_save').click(function (e) {
-            Gtm.pushTransportAndPayment($(this.closest('form')), e);
-        });
     }
 
     static compare (otherArray) {
