@@ -17,7 +17,6 @@ final class Version20200924135656 extends AbstractMigration
         $this->createOrderStatusWithEnglishAndCzechTranslations(10, 'ERP - waiting', 'ERP - čeká na dodání');
         $this->createOrderStatusWithEnglishAndCzechTranslations(11, 'ERP - ordered', 'ERP - Objednáno u dodavatele');
         $this->createOrderStatusWithEnglishAndCzechTranslations(12, 'ERP - error', 'ERP - chyba');
-        $this->sql('ALTER SEQUENCE order_statuses_id_seq RESTART WITH 13');
     }
 
     /**
