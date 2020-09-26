@@ -54,17 +54,15 @@
                                 <div class="box-gallery dont-print js-gallery{{ galleryImagesCount > 5 ? ' js-gallery-slick-carousel' }}">
                                     <div class="box-gallery__in js-gallery-wrap">
                                         {% for galleryImage in galleryImages %}
-                                            {% if loop.index != 1 %}
-                                                <div class="box-gallery__item js-gallery-item">
-                                                    <a
-                                                        data-fancybox="products-gallery"
-                                                        data-caption="{{ product.name }}"
-                                                        href="{{ imageUrl(galleryImage, 'original') }}"
-                                                        class="box-gallery__item__link">
-                                                        {{ image(galleryImage, {size: 'galleryThumbnail', lazy: false, alt: product.fullname ~ ' ' ~ loop.index}) }}
-                                                    </a>
-                                                </div>
-                                            {% endif %}
+                                            <div class="box-gallery__item js-gallery-item">
+                                                <a
+                                                    data-fancybox="products-gallery"
+                                                    data-caption="{{ product.name }}"
+                                                    href="{{ imageUrl(galleryImage, 'original') }}"
+                                                    class="box-gallery__item__link">
+                                                    {{ image(galleryImage, {size: 'galleryThumbnail', lazy: false, alt: product.fullname ~ ' ' ~ loop.index}) }}
+                                                </a>
+                                            </div>
                                         {% endfor %}
                                     </div>
                                 </div>
@@ -104,6 +102,37 @@
                                     {% endif %}
                                 </ul>
                             </div>
+
+                            {% if productSeriesList|length > 0 %}
+                                {% for productSeries in productSeriesList %}
+                                    <div class="box-series box-series--standalone box-series--standalone--mini">
+                                        <div class="box-series__in">
+                                            {% if imageExists(productSeries) %}
+                                                <span class="box-series__img">
+                                                    {{ image(productSeries, { itemprop: 'image', size: 'previewDetailSmall' }) }}
+                                                </span>
+                                            {% else %}
+                                                <span class="box-series__img">
+                                                    {{ noimage({ alt: productSeries.name }) }}
+                                                </span>
+                                            {% endif %}
+                                            <span class="box-series__content">
+                                                <p class="box-series__content__text">
+                                                    {{ 'Prohlédněte si další zboží ze série'|trans }}
+                                                    {{ productSeries.getSeoH1(domain.id)|default(productSeries.name) }}
+                                                    {{ ' a slaďte svůj domov'|trans }}
+                                                </p>
+                                                <a
+                                                    class="box-series__content__link box-detail__info__anchor js-smooth-scroll-anchor"
+                                                    href="#series-{{ productSeries.name }}">
+                                                    {{ productSeries.getSeoH1(domain.id)|default(productSeries.name) }}
+                                                    <i class="box-detail__info__anchor__icon svg svg-chevron"></i>
+                                                </a>
+                                            </span>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            {% endif %}
 
                             {% if not product.isMainVariant %}
                                 {{ render(controller('App\\Controller\\Front\\ProductController:variantParametersAction', {product: product} )) }}
@@ -202,37 +231,6 @@
                                         </div>
                                     {% endif %}
                                 </div>
-                            {% endif %}
-
-                            {% if productSeriesList|length > 0 %}
-                                {% for productSeries in productSeriesList %}
-                                    <div class="box-series box-series--standalone box-series--standalone--mini">
-                                        <div class="box-series__in">
-                                            {% if imageExists(productSeries) %}
-                                                <span class="box-series__img">
-                                                    {{ image(productSeries, { itemprop: 'image', size: 'previewDetailSmall' }) }}
-                                                </span>
-                                            {% else %}
-                                                <span class="box-series__img">
-                                                    {{ noimage({ alt: productSeries.name }) }}
-                                                </span>
-                                            {% endif %}
-                                            <span class="box-series__content">
-                                                <p class="box-series__content__text">
-                                                    {{ 'Prohlédněte si další zboží ze série'|trans }}
-                                                    {{ productSeries.getSeoH1(domain.id)|default(productSeries.name) }}
-                                                    {{ ' a slaďte svůj domov'|trans }}
-                                                </p>
-                                                <a
-                                                    class="box-series__content__link box-detail__info__anchor js-smooth-scroll-anchor"
-                                                    href="#series-{{ productSeries.name }}">
-                                                    {{ productSeries.getSeoH1(domain.id)|default(productSeries.name) }}
-                                                    <i class="box-detail__info__anchor__icon svg svg-chevron"></i>
-                                                </a>
-                                            </span>
-                                        </div>
-                                    </div>
-                                {% endfor %}
                             {% endif %}
                         </div>
                     </div>
