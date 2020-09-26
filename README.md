@@ -1,5 +1,3 @@
-Only for devel: change following number for new deploy: 1
-
 # Shopsys Project-base
 
 This repository is part of Shopsys Framework - a **scalable ecommerce framework** for fast-growing ecommerce sites created and maintained by in-house developers or outsourcing agencies.
