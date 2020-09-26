@@ -1,0 +1,5 @@
+{% if categories is not empty %}
+    <div class="list-categories-wrap list-categories-wrap--centered">
+        {{ render(controller('App\\Controller\\Front\\CategoryController:categoryListAction', {categories: categories})) }}
+    </div>
+{% endif %}

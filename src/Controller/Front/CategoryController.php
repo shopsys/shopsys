@@ -237,4 +237,21 @@ class CategoryController extends FrontBaseController
             'listableProductCountsIndexedByCategoryId' => $listableProductCountsIndexedByCategoryId,
         ]);
     }
+
+    /**
+     * @param \App\Model\Category\Category $category
+     * @param bool $showProductsCountByCategory
+     * @param string|null $cssClass
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function categoryChildrenListAction(Category $category, bool $showProductsCountByCategory = true, ?string $cssClass = null): Response
+    {
+        $categories = $this->categoryFacade->getAllVisibleChildrenByCategoryAndDomainId($category, $this->domain->getId());
+
+        return $this->render('Front/Content/Category/categoryChildrenList.html.twig', [
+            'categories' => $categories,
+            'showProductsCountByCategory' => $showProductsCountByCategory,
+            'cssClass' => $cssClass,
+        ]);
+    }
 }

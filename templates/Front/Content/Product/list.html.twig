@@ -45,11 +45,9 @@
                     </div>
                 {% endif %}
             </div>
-            {% if visibleChildren is not empty %}
-                <div class="list-categories-wrap list-categories-wrap--centered">
-                    {{ render(controller('App\\Controller\\Front\\CategoryController:categoryListAction', {categories: visibleChildren})) }}
-                </div>
-            {% endif %}
+            {% cache 'category_children_' ~ category.id {lifetime:60*60, domainId:getDomain().id} %}
+                {{ render(controller('App\\Controller\\Front\\CategoryController:categoryChildrenListAction', {category: category}))|spaceless }}
+            {% endcache %}
             {{ render(controller('App\\Controller\\Front\\BestsellingProductController:listAction', { category: category })) }}
             {% if categoryProductSeries is not empty %}
                 <div class="box-series">
