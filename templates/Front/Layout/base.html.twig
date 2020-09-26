@@ -24,7 +24,7 @@
         {{ render(controller('App\\Controller\\Front\\SelfCanonicalController:getSelfCanonicalLink')) }}
         {% block javascripts %}{% endblock %}
 
-        <title>{% block title %}Shopsys Framework{% endblock %} {{ getSeoTitleAddOn() }}</title>
+        <title>{% block title %}{{ 'SCONTO Nábytek'|trans }}{% endblock %} {{ getSeoTitleAddOn() }}</title>
 
         {# Favicons #}
         <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('public/frontend/images/favicons/favicon-16x16.png') }}">

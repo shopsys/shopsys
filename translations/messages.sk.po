@@ -1489,6 +1489,9 @@ msgstr ""
 msgid "SCONTO"
 msgstr ""
 
+msgid "SCONTO Nábytek"
+msgstr "SCONTO Nábytok"
+
 msgid "SCONTO Nábytek s.r.o. je součástí německého koncernu Höffner, který patří k největším prodejcům nábytku v Evropě již od roku 1990."
 msgstr ""
 
