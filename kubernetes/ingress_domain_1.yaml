@@ -10,7 +10,7 @@ metadata:
 spec:
     tls:
         -   hosts: ~
-            secretName: tls-certificate
+            secretName: tls-certificate-sk
     rules:
         -   host: ~
             http:
