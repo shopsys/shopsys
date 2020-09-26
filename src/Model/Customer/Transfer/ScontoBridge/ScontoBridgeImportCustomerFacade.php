@@ -132,7 +132,7 @@ class ScontoBridgeImportCustomerFacade extends AbstractScontoBridgeImportTransfe
 
         $this->customerTransferScontoBridgeValidator->validate($scontoBridgeCustomerData);
 
-        /** @var CustomerUser $customerUser */
+        /** @var CustomerUser|null $customerUser */
         $customerUser = $this->customerUserFacade->findCustomerUserByEmailAndDomain(
             $scontoBridgeCustomerData['email'],
             $this->distributionChannelResolver->getDomainIdByDistributionChannelCode(
