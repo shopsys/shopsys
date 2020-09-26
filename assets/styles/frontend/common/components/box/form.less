@@ -125,15 +125,14 @@
         width: @box-form-width;
         max-width: 100%;
         margin: 0 auto;
-        padding: 2rem 0 1rem;
+        padding: 1rem 0 0.25rem;
 
         @media @query-md {
-            padding: 3rem 0 2rem;
             flex-direction: row;
-            justify-content: space-between;
+            justify-content: center;
         }
 
-        .btn--dark {
+        .btn--success {
             @media @query-mobile {
                 justify-content: center;
                 padding-top: 1.25rem;
@@ -141,8 +140,18 @@
                 width: 100%;
                 margin-bottom: 1rem;
             }
+
             @media @query-md {
                 order: 1;
+                margin-left: 15px;
+            }
+        }
+
+        .btn--prev {
+            font-size: 18px;
+
+            @media @query-md {
+                margin-right: 15px;
             }
         }
     }

@@ -14,13 +14,21 @@
 {% endblock %}
 
 {% block main_content %}
-   <div class="web__line web__line--grey web__line--spacing web__line--spacing--big web__line--margin-bottom-up">
+    <div class="web__line web__line--spacing web__line--spacing--big web__line--spacing--bottom-small">
         <div class="web__container">
             <h1 class="heading heading--primary heading--primary-subpage">{{ 'Order Nr.'|trans }} {{order.number}}</h1>
             {{ render(controller('App\\Controller\\Front\\BreadcrumbController:indexAction', { routeName: getRoute(), routeParameters: getRouteParams() } )) }}
             <div class="box-order-detail">
 
-                <div class="wrap-box">
+                {% if order.payment.goPay is same as (true) and order.gopayPaid == false %}
+                    <div class="wrap-box-top">
+                        <a class="btn btn btn--inline-block btn--success-v2" href="{{ url('front_order_repeat_gopay_payment', { urlHash: order.urlHash }) }}">
+                            {{ 'Opakovat platbu'|trans }}
+                        </a>
+                    </div>
+                {% endif %}
+
+                <div class="wrap-box wrap-box--v2">
                     <div class="wrap-box__in">
                         <div class="wrap-box__in__col">
                             <h2 class="wrap-box__title">{{ 'Basic information'|trans }}</h2>
@@ -31,18 +39,11 @@
                                 </tr>
                             </table>
                         </div>
-                        {% if order.payment.goPay is same as (true) and order.gopayPaid == false %}
-                            <div class="wrap-box__in__col wrap-box__in__col--last wrap-box__in__col--payment-repeat">
-                                <a class="btn btn--dark btn--inline-block btn--center" href="{{ url('front_order_repeat_gopay_payment', { urlHash: order.urlHash }) }}">
-                                    {{ 'Opakovat platbu'|trans }}
-                                </a>
-                            </div>
-                        {% endif %}
                     </div>
                 </div>
 
 
-                <div class="wrap-box">
+                <div class="wrap-box wrap-box--v2">
                     <div class="wrap-box__in">
                         <div class="wrap-box__in__col wrap-box__in__col--first">
                             <h2 class="wrap-box__title">{{ 'Billing address'|trans }}</h2>
@@ -151,7 +152,7 @@
             {% set allUsedProductTypes = order.allUsedProductTypes %}
             {% if allUsedProductTypes|length > 1 %}
                 {% for productType in allUsedProductTypes %}
-                    <div class="wrap-box wrap-box--small-spacing">
+                    <div class="wrap-box wrap-box--small-spacing wrap-box--heading">
                         <div class="wrap-box__in wrap-box__in--no-spacing">
                             <h2 class="wrap-box__title wrap-box__title--spaced">{{ 'Zásilka'|trans }} - {{ productType.name }}</h2>
                             {{ orderItemsTableMacro.table(order.itemsByProductType(productType), orderItemTotalPricesById, order.currency) }}

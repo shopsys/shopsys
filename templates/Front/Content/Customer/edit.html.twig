@@ -8,7 +8,7 @@
 {% endblock %}
 
 {% block main_content %}
-    <div class="web__line web__line--bg-color web__line--spacing--big web__line--margin-bottom-up-big">
+    <div class="web__line web__line--spacing--big web__line--margin-bottom-up-big">
         <div class="web__container">
              <h1 class="heading heading--primary heading--primary-subpage">{{ 'Upravit údaje'|trans }}</h1>
             {{ render(controller('App\\Controller\\Front\\BreadcrumbController:indexAction', { routeName: getRoute(), routeParameters: getRouteParams() } )) }}
@@ -16,7 +16,7 @@
                 {{ form_errors(form) }}
 
                 <div id="{{ form.customerUserData.vars.id }}">
-                    <div class="box-form box-form--edit box-form--no-bottom-spacing">
+                    <div class="box-form box-form--registration box-form--small">
                         <div class="form-line-block-section form-line-block-section--no-spacing">
                             <h2 class="form-line-block-section__heading">{{ 'Personal data'|trans }}</h2>
                             {{ form_row(form.customerUserData.email, {
@@ -52,7 +52,6 @@
                                 }) }}
                             </div>
                         {% endif %}
-                        <hr class="box-form__sep" />
                         <div class="form-line-block-section">
                             <h2 class="form-line-block-section__heading">{{ 'Changing password'|trans }}</h2>
                             <div id="{{ form.customerUserData.password.vars.id }}">
@@ -86,7 +85,6 @@
                                 {% endif %}
                             {% endif %}
                         </div>
-                        <hr class="box-form__sep" />
                         <div class="form-line-block-section">
                             <h2 class="form-line-block-section__heading">{{ 'Fakturační adresa'|trans }}</h2>
                             {{ form_row(form.billingAddressData.street, {
@@ -108,7 +106,7 @@
                                 rowClass: 'form-line-block js-form-field'
                             }) }}
                         </div>
-                        <div id="{{ form.deliveryAddressData.vars.id }}" class="js-delivery-address-form">
+                        <div id="{{ form.deliveryAddressData.vars.id }}" class="box-chooser-check-wrap js-delivery-address-form">
                             {{ form_row(form.customerUserData.defaultDeliveryAddress) }}
                             <div class="box-chooser box-chooser--check box-chooser--check--spaced">
                                 <span class="box-chooser__item">
@@ -123,7 +121,7 @@
                                 </span>
                             </div>
 
-                            <div id="js-delivery-address-fields">
+                            <div class="box-chooser__item__in" id="js-delivery-address-fields">
                                 {{ form_row(form.deliveryAddressData.companyName, {
                                     label: 'Company'|trans,
                                     rowClass: 'form-line-block js-form-field'
@@ -162,18 +160,18 @@
                                 }) }}
                             </div>
                         </div>
-                    </div>
-                    <div class="box-form-buttons">
-                        {{ form_widget(form.save, {
-                            label: 'Uložit údaje'|trans,
-                            attr: {
-                                class: 'btn btn--dark'
-                            }
-                        }) }}
-                        <a href="{{ url('front_homepage') }}" class="btn btn--prev btn-no-style btn--arrow btn--arrow-prev">
-                            <i class="btn__icon svg svg-chevron"></i>
-                            {{ 'Zrušit úpravy'|trans }}
-                        </a>
+                        <div class="box-form-buttons">
+                            {{ form_widget(form.save, {
+                                label: 'Uložit údaje'|trans,
+                                attr: {
+                                    class: 'btn btn--success btn--submit-next btn--no-icon'
+                                }
+                            }) }}
+                            <a href="{{ url('front_homepage') }}" class="btn btn--prev btn-no-style btn--arrow btn--arrow-prev">
+                                <i class="btn__icon svg svg-chevron"></i>
+                                {{ 'Zrušit úpravy'|trans }}
+                            </a>
+                        </div>
                     </div>
                 </div>
             {{ form_end(form) }}

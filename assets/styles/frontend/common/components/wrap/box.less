@@ -8,11 +8,67 @@
         margin-bottom: 3rem;
     }
 
+    &-top {
+        margin: 1rem 0 2rem;
+        text-align: center;
+
+        @media @query-md {
+            margin: 2rem 0 3rem;
+        }
+    }
+
     &--small-spacing {
         margin-bottom: 15px;
 
         &:last-child {
+            margin-bottom: 2rem;
+        }
+    }
+
+    &--v2 {
+        border: 2px solid @color-border-lighter;
+
+        border-radius: @radius + 2;
+
+        .box-table {
             margin-bottom: 0;
+
+            border: 0;
+            border-radius: 0;
+        }
+    }
+
+    &--empty {
+        margin-bottom: 2rem;
+        padding: 2rem;
+        text-align: center;
+
+        .wrap-box__heading {
+            text-transform: none;
+            font-size: 26px;
+            font-family: @font-tertiary;
+        }
+
+        .btn {
+            display: inline-flex;
+            padding-left: 25px;
+            padding-right: 25px;
+
+            text-transform: none;
+            font-size: 15px;
+            font-family: @font-quartenary;
+            letter-spacing: 0;
+        }
+    }
+
+    &--payment-reload {
+        .wrap-box__heading {
+            @media @query-lg {
+                margin-bottom: 2rem;
+
+                font-size: 30px;
+                line-height: 42px;
+            }
         }
     }
 
@@ -54,20 +110,7 @@
         margin: 0 10px 10px 0;
 
         &__price {
-            position: relative;
-            top: 1px;
-
-            font-family: @font-quartenary;
-            color: @color-add-secondary;
-            text-transform: none;
-
-            @media screen and (min-width: 1400px) {
-                font-size: 18px;
-            }
-
-            &--not-free {
-                color: @color-base-secondary;
-            }
+            color: @color-add;
         }
     }
 
@@ -131,6 +174,19 @@
             @media @query-md {
                 margin-bottom: 1.5rem;
             }
+        }
+    }
+
+    &--heading {
+        border: 2px solid @color-border-lighter;
+        border-radius: @radius;
+
+        .box-table {
+            border: 0;
+        }
+
+        .wrap-box__title {
+            border-bottom: 1px solid @color-border-lighter;
         }
     }
 

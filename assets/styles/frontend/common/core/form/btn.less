@@ -50,10 +50,12 @@
         text-transform: none;
         color: @btn-success-color;
         background: @btn-success-bg;
+        transition: box-shadow @transition;
 
         &:hover {
             color: @btn-success-color-hover;
             background: @btn-success-bg-hover;
+            box-shadow: 0 3px 7px 0 rgba(#fcc308, 0.9);
         }
 
         &.btn--success--cart {
@@ -118,6 +120,20 @@
 
                 top: 6px;
             }
+        }
+    }
+
+    &--success-v2 {
+        background: linear-gradient(to top, #ffad00, #ffd500);
+        text-transform: uppercase;
+        color: @color-f;
+        letter-spacing: 1px;
+        transition: box-shadow @transition;
+
+        &:hover {
+            background: linear-gradient(to top, #ffad00, #ffd500);
+            color: @color-f;
+            box-shadow: 0 0 10px 0 rgba(#ffb900, .8);
         }
     }
 
@@ -610,6 +626,12 @@
         &--wider {
             padding-left: 25px;
             padding-right: 25px;
+        }
+    }
+
+    &--no-icon {
+        &::before {
+            display: none;
         }
     }
 }
