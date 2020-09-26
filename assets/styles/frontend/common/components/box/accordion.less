@@ -1,6 +1,6 @@
 @box-accordion-bg-color: @color-f;
 @box-accordion-padding-vertical: 15px;
-@box-accordion-padding-vertical-lg: 25px;
+@box-accordion-padding-vertical-lg: 20px;
 @box-accordion-padding-horisontal: 20px;
 @box-accordion-padding-horisontal-lg: 30px;
 
@@ -14,7 +14,7 @@
     border: 2px solid @color-border-lighter;
 
     @media @query-lg {
-        margin-bottom: 2rem;
+        margin-bottom: 29px;
     }
 
     &:hover {
@@ -36,6 +36,18 @@
             .box-accordion__header__toggle {
                 display: none;
             }
+        }
+    }
+
+    &--opened {
+        .box-accordion__body {
+            display: block;
+
+            border: 0;
+        }
+
+        .box-accordion__header__toggle {
+            display: none;
         }
     }
 
@@ -75,12 +87,27 @@
         width: 100%;
         padding: @box-accordion-padding-vertical @box-accordion-padding-horisontal;
 
+        color: @color-primary;
+
         @media @query-lg {
             padding: @box-accordion-padding-vertical-lg @box-accordion-padding-horisontal-lg;
         }
 
         &:hover {
             text-decoration: none;
+        }
+
+        &--with-desc {
+            @media @query-tablet {
+                align-items: flex-start;
+                flex-wrap: wrap;
+                flex-direction: column;
+                padding-bottom: 10px;
+            }
+
+            @media @query-lg {
+                border-bottom: 1px solid @color-border-lighter;
+            }
         }
 
         &__toggle {
@@ -93,6 +120,16 @@
 
                     color: @color-base-lighter;
                 }
+            }
+        }
+
+        &__desc {
+            margin: 0;
+
+            color: @color-base-secondary;
+
+            @media @query-md {
+                display: none;
             }
         }
     }
@@ -146,6 +183,10 @@
 
             .box-accordion__body__content--measures {
                 flex-grow: 1;
+
+                @media @query-lg {
+                    order: 1;
+                }
             }
 
             .box-accordion__body__content--img {
@@ -155,9 +196,10 @@
                     justify-content: center;
                     padding-left: 30px;
                     flex-grow: 1;
-                    min-height: 645px;
-                    max-width: 645px;
+                    min-height: 500px;
+                    max-width: 500px;
                     text-align: right;
+                    margin-right: 2rem;
 
                     border: 1px solid @color-border-lighter;
                     border-radius: @radius;
@@ -172,6 +214,21 @@
         &--no-spacing {
             @media @query-lg {
                 padding: 0;
+            }
+        }
+
+        &--measures {
+            align-items: center;
+
+            .table--params {
+                td, th {
+                    color: @color-primary-light;
+                }
+
+                th {
+                    font-weight: 400;
+                    font-family: @font-quartenary;
+                }
             }
         }
 
@@ -192,6 +249,8 @@
     }
 
     &__heading {
+        position: relative;
+        top: 1px;
         margin: 0;
 
         text-transform: none;
@@ -208,6 +267,23 @@
 
         @media @query-vl {
             overflow: visible;
+        }
+
+        &--mobile-accords {
+            @media @query-tablet {
+                .box-accordion__grid-table__row {
+                    margin-bottom: 15px;
+
+                    border: 2px solid @color-border-lighter;
+                    border-radius: @radius;
+
+                    &:last-child {
+                        margin-bottom: 0.5rem;
+
+                        border-bottom: 2px solid @color-border-lighter;
+                    }
+                }
+            }
         }
 
         &__body {
@@ -288,7 +364,7 @@
             strong {
                 font-family: @font-quartenary;
                 font-weight: 400;
-                color: @color-primary-light;
+                color: @color-base-lighter;
             }
 
             &__icon {
@@ -299,6 +375,55 @@
 
                 &--out-of-stock {
                     filter: grayscale(1);
+                }
+            }
+
+            &--mobile-accord-header {
+                @media @query-tablet {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    padding-left: 0.8rem;
+
+                    border: 0;
+                }
+
+                &.is-active {
+                    margin-bottom: 1rem;
+
+                    border-bottom: 1px solid @color-border-lighter;
+
+                    .box-accordion__grid-table__col__toggle {
+                        transform: rotate(-180deg);
+                    }
+                }
+
+                .box-accordion__grid-table__col__toggle {
+                    display: block;
+                    position: relative;
+                    right: 10px;
+
+                    @media @query-lg {
+                        display: none;
+                    }
+                }
+            }
+
+            &--mobile-accord-content {
+                @media @query-tablet {
+                    display: none;
+                    padding: 0 0.8rem 0.8rem;
+
+                    border: 0;
+
+                    &:last-child {
+                        padding-left: 48px;
+                    }
+                }
+
+                &.is-opened {
+                    display: block;
+                    text-align: left;
                 }
             }
         }

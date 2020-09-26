@@ -3,27 +3,53 @@
  */
 
 import 'slick-carousel';
+import Responsive from '../utils/Responsive';
 import Register from 'framework/common/utils/Register';
 
 export default class SlickCarousel {
 
     static init () {
 
-        const $galleryCarousel = $(`.js-gallery-slick-carousel`).find('.js-gallery-wrap');
+        const $mainImageCarousel = $('.js-main-image-carousel').find('.js-gallery-wrap');
+        const $galleryCarousel = $('.js-gallery-slick-carousel').find('.js-gallery-wrap');
         const $galleryCarouselCols = $('.js-products-slick-carousel-cols').find('.js-product-list');
         const $productsCarousel = $('.js-products-slick-carousel').find('.js-product-list');
         const $furnitureCatsCarousel = $('.js-furniture-cats-carousel');
 
+        if ($mainImageCarousel.length) {
+            $mainImageCarousel.not('.slick-initialized').slick({
+                fade: false,
+                autoplay: false,
+                slidesToShow: 1,
+                slidesToScroll: 1,
+                asNavFor: $galleryCarousel,
+                infinite: false,
+                arrows: true,
+                dots: false,
+                prevArrow: '<button type="button" data-role="none" class="slick-prev slick-arrow" aria-label="Předchozí" role="button"></button>',
+                nextArrow: '<button type="button" data-role="none" class="slick-next slick-arrow" aria-label="Další" role="button"></button>'
+            });
+        }
+
         // Product detail gallery carousel
         if ($galleryCarousel.length) {
+            let carouselVariableWidth = false;
+
+            if ($(window).width() >= Responsive.XXL) {
+                carouselVariableWidth = true;
+            }
+
             $galleryCarousel.not('.slick-initialized').slick({
                 slidesToShow: 4,
                 slidesToScroll: 1,
                 dots: false,
-                infinite: false,
                 swipeToSlide: true,
-                variableWidth: false,
+                variableWidth: carouselVariableWidth,
+                asNavFor: $mainImageCarousel,
                 speed: 300,
+                focusOnSelect: true,
+                infinite: false,
+                arrows: false,
                 prevArrow: '<button type="button" data-role="none" class="slick-prev slick-arrow" aria-label="Předchozí" role="button"></button>',
                 nextArrow: '<button type="button" data-role="none" class="slick-next slick-arrow" aria-label="Další" role="button"></button>',
                 responsive: [{
@@ -44,6 +70,17 @@ export default class SlickCarousel {
                         slidesToShow: 3
                     }
                 }]
+            });
+
+            // slick-active-current - slick carousel always gives slick-active to asNavFor element,
+            // so we must give our special active class.
+            $galleryCarousel.find('.slick-slide').removeClass('slick-active-current');
+            $galleryCarousel.find('.slick-slide').eq(0).addClass('slick-active-current');
+
+            // On before slide change match active thumbnail to current slide
+            $mainImageCarousel.on('afterChange', function (event, slick, currentSlide, nextSlide) {
+                $galleryCarousel.find('.slick-slide').removeClass('slick-active-current');
+                $galleryCarousel.find('.slick-slide').eq(currentSlide).addClass('slick-active-current');
             });
         }
 
