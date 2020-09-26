@@ -201,15 +201,16 @@ class GtmJsPushFacade
 
     /**
      * @param \App\Model\Product\Product $product
+     * @param int $quantity
      * @return array
      */
-    public function onRemoveProductFromCart(Product $product): array
+    public function onRemoveProductFromCart(Product $product, ?int $quantity): array
     {
         if (!$this->gtmContainer->isEnabled()) {
             return [];
         }
 
-        $this->gtmFacade->onRemoveProductFromCart($product);
+        $this->gtmFacade->onRemoveProductFromCart($product, $quantity);
 
         return $this->gtmContainer->getDataLayer()->getPushes()[0];
     }

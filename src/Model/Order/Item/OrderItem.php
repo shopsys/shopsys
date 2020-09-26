@@ -200,7 +200,8 @@ class OrderItem extends BaseOrderItem
         $priceWithVat = $this->getPriceWithVat();
         
         if ($coupon instanceof self) {
-            $priceWithVat = $priceWithVat->add($coupon->getPriceWithVat());
+            $discountPerItem = $coupon->getPriceWithVat()->divide($this->quantity, 2);
+            $priceWithVat = $priceWithVat->add($discountPerItem);
         }
 
         return $priceWithVat;
@@ -212,7 +213,38 @@ class OrderItem extends BaseOrderItem
     public function getFinalPriceWithoutVat(): Money
     {
         $coupon = $this->getRelatedCoupon();
-        $priceWithoutVat = $this->getPriceWithoutVat();
+        $priceWithVat = $this->getPriceWithoutVat();
+        
+        if ($coupon instanceof self) {
+            $discountPerItem = $coupon->getPriceWithoutVat()->divide($this->quantity, 2);
+            $priceWithVat = $priceWithVat->add($discountPerItem);
+        }
+
+        return $priceWithVat;
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Component\Money\Money
+     */
+    public function getFinalQuantifiedPriceWithVat(): Money
+    {
+        $coupon = $this->getRelatedCoupon();
+        $priceWithVat = $this->getPriceWithVat()->multiply($this->quantity);
+        
+        if ($coupon instanceof self) {
+            $priceWithVat = $priceWithVat->add($coupon->getPriceWithVat());
+        }
+
+        return $priceWithVat;
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Component\Money\Money
+     */
+    public function getFinalQuantifiedPriceWithoutVat(): Money
+    {
+        $coupon = $this->getRelatedCoupon();
+        $priceWithoutVat = $this->getPriceWithoutVat()->multiply($this->quantity);
         
         if ($coupon instanceof self) {
             $priceWithoutVat = $priceWithoutVat->add($coupon->getPriceWithoutVat());

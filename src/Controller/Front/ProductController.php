@@ -548,6 +548,7 @@ class ProductController extends FrontBaseController
             );
 
             $viewParameters['gtmEvent'] = $this->gtmContainer->getDataLayer()->getData();
+            $viewParameters['gtmEvent']['event'] = DataLayer::EVENT_NAME_PRODUCT_IMPRESSIONS;
             if (!($viewParameters['gtmEvent']['ecommerce']['impressions'] ?? false)) {
                 $viewParameters['gtmEvent'] = $this->gtmJsPushFacade->getEmptyFilterResult();
             }

@@ -18,6 +18,7 @@ use Shopsys\FrameworkBundle\Model\Cart\AddProductResult;
 use Shopsys\FrameworkBundle\Model\Cart\CartFacade;
 use Shopsys\FrameworkBundle\Model\Module\ModuleFacade;
 use Shopsys\FrameworkBundle\Model\Module\ModuleList;
+use Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\ReadModelBundle\Product\Action\ProductActionView;
 use Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFacadeInterface;
@@ -454,9 +455,14 @@ class CartController extends FrontBaseController
 
                 $product = $this->cartFacade->getProductByCartItemId($cartItemId);
 
+                $quantity = $this->getQuantityOfProductInOrderQuantifiedProducts(
+                    $product,
+                    $this->cartFacade->getQuantifiedProductsOfCurrentCustomer()
+                );
+
                 $this->cartFacade->deleteCartItem($cartItemId);
 
-                $this->gtmFacade->onRemoveProductFromCart($product);
+                $this->gtmFacade->onRemoveProductFromCart($product, $quantity);
 
                 $this->addSuccessFlashTwig(
                     t('Product {{ name }} removed from cart'),
@@ -486,8 +492,14 @@ class CartController extends FrontBaseController
         if ($this->isCsrfTokenValid('front_cart_delete_' . $cartItemId, $token)) {
             try {
                 $product = $this->cartFacade->getProductByCartItemId($cartItemId);
+
+                $quantity = $this->getQuantityOfProductInOrderQuantifiedProducts(
+                    $product,
+                    $this->cartFacade->getQuantifiedProductsOfCurrentCustomer()
+                );
+
                 $this->cartFacade->deleteCartItem($cartItemId);
-                $gtmEvent = $this->gtmJsPushFacade->onRemoveProductFromCart($product);
+                $gtmEvent = $this->gtmJsPushFacade->onRemoveProductFromCart($product, $quantity);
             } catch (\Shopsys\FrameworkBundle\Model\Cart\Exception\InvalidCartItemException $ex) {
                 return $this->json([
                     'success' => false,
@@ -572,5 +584,23 @@ class CartController extends FrontBaseController
             @trigger_error(sprintf('The %s() method is deprecated and will be removed in the next major. Use the constructor injection instead.', __METHOD__), E_USER_DEPRECATED);
             $this->moduleFacade = $moduleFacade;
         }
+    }
+
+    /**
+     * @param Product $product
+     * @param QuantifiedProduct[] $quantifiedProducts
+     * @return int
+     */
+    private function getQuantityOfProductInOrderQuantifiedProducts(Product $product, array $quantifiedProducts): int
+    {
+        $quantity = 0;
+        foreach ($quantifiedProducts as $quatifiedProduct) {
+            if ($quatifiedProduct->getProduct()->getId() === $product->getId()) {
+                $quantity = $quatifiedProduct->getQuantity();
+                break;
+            }
+        }
+
+        return $quantity;
     }
 }
