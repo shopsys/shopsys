@@ -6,12 +6,12 @@ namespace App\Model\Customer\Transfer\ScontoBridge;
 
 use App\Component\ScontoBridge\ScontoBridgeClient;
 use App\Component\ScontoBridge\Transfer\AbstractScontoBridgeImportTransfer;
+use App\Component\ScontoBridge\Transfer\ScontoBridgeDistributionChannelResolver;
 use App\Component\ScontoBridge\Transfer\ScontoBridgeImportTransferDependency;
 use App\Component\Setting\Setting;
+use App\Model\Customer\User\CustomerUser;
 use App\Model\Customer\User\CustomerUserFacade;
 use DateTime;
-use Shopsys\FrameworkBundle\Component\String\HashGenerator;
-use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserPasswordFacade;
 
 class ScontoBridgeImportCustomerFacade extends AbstractScontoBridgeImportTransfer
 {
@@ -50,9 +50,9 @@ class ScontoBridgeImportCustomerFacade extends AbstractScontoBridgeImportTransfe
     private $customerUserFacade;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Component\String\HashGenerator
+     * @var ScontoBridgeDistributionChannelResolver
      */
-    private $hashGenerator;
+    private ScontoBridgeDistributionChannelResolver $distributionChannelResolver;
 
     /**
      * @param \App\Component\ScontoBridge\Transfer\ScontoBridgeImportTransferDependency $scontoBridgeImportTransferDependency
@@ -61,7 +61,7 @@ class ScontoBridgeImportCustomerFacade extends AbstractScontoBridgeImportTransfe
      * @param \App\Model\Customer\Transfer\ScontoBridge\CustomerTransferScontoBridgeValidator $customerTransferScontoBridgeValidator
      * @param \App\Model\Customer\Transfer\ScontoBridge\CustomerTransferScontoBridgeMapper $customerTransferScontoBridgeMapper
      * @param \App\Model\Customer\User\CustomerUserFacade $customerUserFacade
-     * @param \Shopsys\FrameworkBundle\Component\String\HashGenerator $hashGenerator
+     * @param ScontoBridgeDistributionChannelResolver $distributionChannelResolver
      */
     public function __construct(
         ScontoBridgeImportTransferDependency $scontoBridgeImportTransferDependency,
@@ -70,7 +70,7 @@ class ScontoBridgeImportCustomerFacade extends AbstractScontoBridgeImportTransfe
         CustomerTransferScontoBridgeValidator $customerTransferScontoBridgeValidator,
         CustomerTransferScontoBridgeMapper $customerTransferScontoBridgeMapper,
         CustomerUserFacade $customerUserFacade,
-        HashGenerator $hashGenerator
+        ScontoBridgeDistributionChannelResolver $distributionChannelResolver
     ) {
         parent::__construct($scontoBridgeImportTransferDependency);
 
@@ -79,7 +79,7 @@ class ScontoBridgeImportCustomerFacade extends AbstractScontoBridgeImportTransfe
         $this->customerTransferScontoBridgeValidator = $customerTransferScontoBridgeValidator;
         $this->customerTransferScontoBridgeMapper = $customerTransferScontoBridgeMapper;
         $this->customerUserFacade = $customerUserFacade;
-        $this->hashGenerator = $hashGenerator;
+        $this->distributionChannelResolver = $distributionChannelResolver;
     }
 
     /**
@@ -132,7 +132,13 @@ class ScontoBridgeImportCustomerFacade extends AbstractScontoBridgeImportTransfe
 
         $this->customerTransferScontoBridgeValidator->validate($scontoBridgeCustomerData);
 
-        $customerUser = $this->customerUserFacade->findByErpCustomerNumber($scontoBridgeCustomerData['erpCustomerNumber']);
+        /** @var CustomerUser $customerUser */
+        $customerUser = $this->customerUserFacade->findCustomerUserByEmailAndDomain(
+            $scontoBridgeCustomerData['email'],
+            $this->distributionChannelResolver->getDomainIdByDistributionChannelCode(
+                $scontoBridgeCustomerData['distributionChannelCode']
+            )
+        );
         $customerUserUpdateData = $this->customerTransferScontoBridgeMapper->mapScontoBridgeCustomerDataToCustomerUserUpdateData(
             $scontoBridgeCustomerData,
             $customerUser

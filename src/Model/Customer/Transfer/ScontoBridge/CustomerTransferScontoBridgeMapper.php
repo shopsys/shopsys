@@ -95,6 +95,10 @@ class CustomerTransferScontoBridgeMapper
             $customerUserUpdateData = $this->customerUserUpdateDataFactory->createFromCustomerUser($customerUser);
             /** @var \App\Model\Customer\User\CustomerUserData $customerUserData */
             $customerUserData = $customerUserUpdateData->customerUserData;
+
+            if ($customerUserData->erpCustomerNumber === null) {
+                $customerUserData->erpCustomerNumber = $scontoBridgeCustomerData['erpCustomerNumber'];
+            }
         }
 
         /** @var \App\Model\Customer\BillingAddressData $billingAddressData */
