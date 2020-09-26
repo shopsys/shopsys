@@ -13,20 +13,25 @@ cp "${BASE_PATH}/config/domains_urls.yaml.dist" $domains_urls_filepath
 
 # Configure domains
 domain_iterator=0
-smtp_other_hostnames=""
 
 for DOMAIN in ${DOMAINS[@]}; do
-    yq write --inplace "${CONFIGURATION_TARGET_PATH}/ingress_domain_${domain_iterator}.yaml" spec.rules[0].host ${!DOMAIN}
-    yq write --inplace "${CONFIGURATION_TARGET_PATH}/ingress_domain_${domain_iterator}.yaml" spec.tls[0].hosts[+] ${!DOMAIN}
-    yq write --inplace "${CONFIGURATION_TARGET_PATH}/deployments/webserver-php-fpm.yaml" spec.template.spec.hostAliases[0].hostnames[+] ${!DOMAIN}
-    yq write --inplace $domains_urls_filepath domains_urls[${domain_iterator}].url https://${!DOMAIN}
+    BASE_DOMAIN=${!DOMAIN}
 
-    if [ ${RUNNING_PRODUCTION} -eq "1" ]; then
-        yq write --inplace "${CONFIGURATION_TARGET_PATH}/ingress_domain_${domain_iterator}.yaml" spec.tls[0].hosts[+] www.${!DOMAIN}
+    if [[ ${!DOMAIN} == "www."* ]]; then
+      REDIRECT_DOMAIN=${!DOMAIN#"www."}
+    else
+      REDIRECT_DOMAIN="www.${!DOMAIN}"
     fi
 
-    if [ ${domain_iterator} -gt "0" ]; then
-        smtp_other_hostnames+="${!DOMAIN};"
+    echo "Www-redirect from ${REDIRECT_DOMAIN} to ${BASE_DOMAIN}"
+
+    yq write --inplace "${CONFIGURATION_TARGET_PATH}/ingress_domain_${domain_iterator}.yaml" spec.rules[0].host ${BASE_DOMAIN}
+    yq write --inplace "${CONFIGURATION_TARGET_PATH}/ingress_domain_${domain_iterator}.yaml" spec.tls[0].hosts[+] ${BASE_DOMAIN}
+    yq write --inplace "${CONFIGURATION_TARGET_PATH}/deployments/webserver-php-fpm.yaml" spec.template.spec.hostAliases[0].hostnames[+] ${BASE_DOMAIN}
+    yq write --inplace $domains_urls_filepath domains_urls[${domain_iterator}].url https://${BASE_DOMAIN}
+
+    if [ ${RUNNING_PRODUCTION} -eq "1" ]; then
+        yq write --inplace "${CONFIGURATION_TARGET_PATH}/ingress_domain_${domain_iterator}.yaml" spec.tls[0].hosts[+] ${REDIRECT_DOMAIN}
     fi
 
     domain_iterator=$(expr $domain_iterator + 1)
