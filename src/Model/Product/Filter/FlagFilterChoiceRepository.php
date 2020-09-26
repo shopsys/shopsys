@@ -27,7 +27,7 @@ class FlagFilterChoiceRepository extends BaseFlagFilterChoiceRepository
      */
     public function getFlagFilterChoicesInCategory($domainId, PricingGroup $pricingGroup, $locale, Category $category)
     {
-        $productsQueryBuilder = $this->productRepository->getListableInCategoryQueryBuilder(
+        $productsQueryBuilder = $this->productRepository->getSellableInCategoryQueryBuilder(
             $domainId,
             $pricingGroup,
             $category
@@ -46,7 +46,7 @@ class FlagFilterChoiceRepository extends BaseFlagFilterChoiceRepository
     public function getFlagFilterChoicesForSearch($domainId, PricingGroup $pricingGroup, $locale, $searchText)
     {
         $productsQueryBuilder = $this->productRepository
-            ->getListableBySearchTextQueryBuilder($domainId, $pricingGroup, $locale, $searchText);
+            ->getSellableBySearchTextQueryBuilder($domainId, $pricingGroup, $locale, $searchText);
 
         return $this->getVisibleFlagsByProductsQueryBuilderForDomain($productsQueryBuilder, $locale, $domainId);
     }

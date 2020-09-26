@@ -96,6 +96,7 @@ class ParameterFacade extends BaseParameterFacade
      * @param \App\Component\Image\ImageFacade $imageFacade
      * @param \App\Component\Router\FriendlyUrl\FriendlyUrlRepository $friendlyUrlRepository
      * @param \App\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
+     * @param \App\Model\Product\Availability\ProductAvailabilityFacade $productAvailabilityFacade
      * @param \App\Model\Product\ProductOnCurrentDomainElasticFacade $productOnCurrentDomainFacade
      */
     public function __construct(

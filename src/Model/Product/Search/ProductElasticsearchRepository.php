@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\Product\Search;
 
+use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Model\Product\Search\ProductElasticsearchRepository as BaseProductElasticsearchRepository;
 
 /**
@@ -22,5 +23,22 @@ class ProductElasticsearchRepository extends BaseProductElasticsearchRepository
     protected function extractTotalCount(array $result): int
     {
         return (int)$result['hits']['total']['value'];
+    }
+
+    /**
+     * @param \Doctrine\ORM\QueryBuilder $productQueryBuilder
+     * @param string|null $searchText
+     */
+    public function filterBySearchText(QueryBuilder $productQueryBuilder, $searchText)
+    {
+        $productIds = $this->getFoundProductIds($productQueryBuilder, $searchText);
+
+        if (count($productIds) > 0) {
+            $productQueryBuilder->andWhere('p.id IN (:productIds)')
+                ->orWhere('p.mainVariant IN (:productIds)')
+                ->setParameter('productIds', $productIds);
+        } else {
+            $productQueryBuilder->andWhere('TRUE = FALSE');
+        }
     }
 }

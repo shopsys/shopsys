@@ -94,4 +94,19 @@ class PriceRangeRepository extends BasePriceRangeRepository
 
         return $this->getPriceRangeByProductsQueryBuilder($productsQueryBuilder, $pricingGroup);
     }
+
+    /**
+     * @param int $domainId
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
+     * @param string $locale
+     * @param string|null $searchText
+     * @return \Shopsys\FrameworkBundle\Model\Product\Filter\PriceRange
+     */
+    public function getPriceRangeForSearch($domainId, PricingGroup $pricingGroup, $locale, $searchText)
+    {
+        $productsQueryBuilder = $this->productRepository
+            ->getSellableBySearchTextQueryBuilder($domainId, $pricingGroup, $locale, $searchText);
+
+        return $this->getPriceRangeByProductsQueryBuilder($productsQueryBuilder, $pricingGroup);
+    }
 }

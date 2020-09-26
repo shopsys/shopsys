@@ -184,14 +184,6 @@ class ProductRepository extends BaseProductRepository
     }
 
     /**
-     * @param \Doctrine\ORM\QueryBuilder $queryBuilder
-     */
-    public function filterSellingDenied(QueryBuilder $queryBuilder): void
-    {
-        $queryBuilder->andWhere('p.sellingDenied = FALSE');
-    }
-
-    /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Availability\Availability $availability
      * @return \App\Model\Product\Product[]
      */
@@ -260,6 +252,28 @@ class ProductRepository extends BaseProductRepository
         $searchText
     ) {
         $queryBuilder = $this->getAllListableQueryBuilder($domainId, $pricingGroup);
+
+        $this->addTranslation($queryBuilder, $locale);
+
+        $this->productElasticsearchRepository->filterBySearchText($queryBuilder, $searchText);
+
+        return $queryBuilder;
+    }
+
+    /**
+     * @param int $domainId
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
+     * @param string $locale
+     * @param string|null $searchText
+     * @return \Doctrine\ORM\QueryBuilder
+     */
+    public function getSellableBySearchTextQueryBuilder(
+        $domainId,
+        PricingGroup $pricingGroup,
+        $locale,
+        $searchText
+    ) {
+        $queryBuilder = $this->getAllSellableQueryBuilder($domainId, $pricingGroup);
 
         $this->addTranslation($queryBuilder, $locale);
 

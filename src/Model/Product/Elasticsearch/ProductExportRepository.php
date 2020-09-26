@@ -339,7 +339,21 @@ class ProductExportRepository extends BaseProductExportRepository
      */
     protected function extractFlagsForDomain(int $domainId, Product $product): array
     {
-        return $product->getFlagsIdsForDomain($domainId);
+        $flagIds = $product->getFlagsIdsForDomain($domainId);
+        $variants = [];
+        if ($product->isMainVariant() === true) {
+            $variants = $this->productRepository->getAllSellableVariantsByMainVariant(
+                $product,
+                $domainId,
+                $this->pricingGroupSettingFacade->getDefaultPricingGroupByDomainId($domainId)
+            );
+        }
+
+        foreach ($variants as $variant) {
+            $flagIds = array_merge($flagIds, $variant->getFlagsIdsForDomain($domainId));
+        }
+
+        return  array_unique($flagIds);
     }
 
     /**
