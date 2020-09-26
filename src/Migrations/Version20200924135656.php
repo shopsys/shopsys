@@ -10,8 +10,6 @@ use Shopsys\MigrationBundle\Component\Doctrine\Migrations\AbstractMigration;
 
 final class Version20200924135656 extends AbstractMigration
 {
-    use MultidomainMigrationTrait;
-
     public function up(Schema $schema): void
     {
         $this->createOrderStatusWithEnglishAndCzechTranslations(6, 'IM - odesláno');
@@ -35,7 +33,7 @@ final class Version20200924135656 extends AbstractMigration
             'type' => $orderStatusType,
         ]);
         $id = $this->connection->lastInsertId();
-        foreach (['cs','en','sk'] as $locale) {
+        foreach (['cs', 'en', 'sk'] as $locale) {
             $this->sql('INSERT INTO order_status_translations (translatable_id, name, locale) VALUES (:translatableId, :name, :locale)', [
                 'translatableId' => $id,
                 'name' => $orderStatusCzechName,
@@ -43,7 +41,7 @@ final class Version20200924135656 extends AbstractMigration
             ]);
         }
         $mailTemplateName = sprintf('order_status_%d', $id);
-        foreach ([1,2] as $domainId) {
+        foreach ([1, 2] as $domainId) {
             $this->createMailTemplateIfNotExist($mailTemplateName, $domainId, 'false');
         }
     }
