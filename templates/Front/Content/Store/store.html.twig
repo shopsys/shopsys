@@ -9,6 +9,7 @@
 
 {% block main_content %}
     <div class="web__line web__line--spacing--big">
+        {% set domain = getDomain() %}
         <div class="web__container">
             <h1 class="heading heading--primary heading--primary-subpage">{{ "Prodejny"|trans }}</h1>
             <div class="web__container web__container--fullwidth web__container--max-width web__container--no-spacing">
@@ -20,19 +21,20 @@
                 <div class="box-stores__map">
                     <div id="js-google-map-box" class="box-stores__map__google"></div>
                 </div>
+                {% set storeImage = domain.id == 1 ? 'obchodni_domy_cz' : 'obchodni_domy_sk' %}
                 <div class="box-stores__info">
                     <div class="box-stores__store box-stores__store--default">
                         <picture>
                             <source
                                     srcset="
-                                    {{ asset('public/frontend/images/prodejny2x.png') }} 2x,
-                                    {{ asset('public/frontend/images/prodejny.png') }} 1x"
+                                    {{ asset("public/frontend/images/#{storeImage}_2x.png") }} 2x,
+                                    {{ asset("public/frontend/images/#{storeImage}.png") }} 1x"
                             />
                             <img
                                     class="box-stores__store__img box-stores__store__img--default"
                                     loading="lazy"
                                     src="{{ imgLazyloadPlaceholder }}"
-                                    data-src="{{ asset('public/frontend/images/prodejny.png') }}"
+                                    data-src="{{ asset("public/frontend/images/#{storeImage}.png") }}"
                                     alt="{{ 'Prodejny Sconto'|trans }}">
                         </picture>
                         <h2 class="box-stores__store__title">{{ 'Prodejny Sconto'|trans }}</h2>

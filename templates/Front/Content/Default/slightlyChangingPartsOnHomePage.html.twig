@@ -106,17 +106,18 @@
                 </div>
                 <div class="box-block__item box-block__item box-block__item--bg box-block__item--half box-block__item--right">
                     <h2 class="box-block__item__heading">{{ 'Prodejny Sconto'|trans }}</h2>
+                    {% set storeImage = domain.id == 1 ? 'obchodni_domy_cz' : 'obchodni_domy_sk' %}
                     <picture>
                         <source
                                 srcset="
-                                {{ asset('public/frontend/images/prodejny2x.png') }} 2x,
-                                {{ asset('public/frontend/images/prodejny.png') }} 1x"
+                                {{ asset("public/frontend/images/#{storeImage}_2x.png") }} 2x,
+                                {{ asset("public/frontend/images/#{storeImage}.png") }} 1x"
                         />
                         <img
                                 class="box-block__item__img box-block__item__img--right"
                                 loading="lazy"
                                 src="{{ imgLazyloadPlaceholder }}"
-                                data-src="{{ asset('public/frontend/images/prodejny.png') }}"
+                                data-src="{{ asset("public/frontend/images/#{storeImage}.png") }}"
                                 alt="{{ 'Prodejny Sconto'|trans }}">
                     </picture>
                     <p class="box-block__item__desc">
