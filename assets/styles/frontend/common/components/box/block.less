@@ -57,15 +57,24 @@
         &__img {
             position: absolute;
             left: 0;
-            top: -7px;
+            top: -15px;
 
             @media @query-lg {
                 left: auto;
                 right: 0;
+                top: auto;
+                bottom: 5px;
             }
 
             @media @query-xl {
                 right: 15px;
+            }
+
+            &--left {
+                @media @query-lg {
+                    top: auto;
+                    bottom: 0;
+                }
             }
 
             &--right {

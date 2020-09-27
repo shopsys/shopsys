@@ -10,6 +10,10 @@ export default class MobileSlidingMenu {
         const draggableFinalWidth = $draggableItem.outerWidth();
         const minimalLeftPosition = 1000 + baseContainerWidth - draggableFinalWidth;
 
+        if ($draggableItem.outerWidth() <= $(window).width()) {
+            return;
+        }
+
         $draggableItem.draggable({
             cursor: 'move',
             axis: 'x',
