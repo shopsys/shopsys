@@ -101,15 +101,25 @@
                                                                     {{ stocksById[transportPersonalPickupStockId].openingHours|nl2br }}
                                                                 </span>
                                                                 <span class="box-chooser__item__title__description__availability">
-                                                                </span>
-                                                                <span class="box-chooser__item__title__description__availability js-not-implemented-yet">
-                                                                    {{ 'Můžete mít <strong>ihned</strong>'|transHtml }}
+                                                                    {% set minimalDaysAvailability = stockDayAvailabilitiesByStockId[transportPersonalPickupStockId] %}
+                                                                    {% if minimalDaysAvailability < 7 %}
+                                                                        {% transchoice minimalDaysAvailability with {'%daysAvailability%': minimalDaysAvailability} %}
+                                                                        {0} <span class="box-chooser__item__avail__text box-chooser__item__avail__text--now">Můžete mít <strong>ihned</strong></span>
+                                                                        | [1,Inf] <span class="box-chooser__item__avail__text">Osobní odběr do <strong>%daysAvailability% dnů</strong></span>
+                                                                        {% endtranschoice %}
+                                                                    {% else %}
+                                                                        {% transchoice minimalDaysAvailability|daysToWeeks with {'%weeksAvailability%': minimalDaysAvailability|daysToWeeks} %}
+                                                                            {1} <span class="box-chooser__item__avail__text">K dispozici do <strong>1 týdne</strong> </span>
+                                                                            | [2,Inf] <span class="box-chooser__item__avail__text">K dispozici do <strong>%weeksAvailability% týdnů</strong></span>
+                                                                        {% endtranschoice %}
+                                                                    {% endif %}
                                                                 </span>
                                                             {% endif %}
                                                         </span>
                                                     {% endif %}
                                                 </span>
-                                                <span class="box-chooser__item__delivery-information js-chooser-delivery-information">
+
+                                                <span class="box-chooser__item__delivery-information js-chooser-delivery-information {% if transport.isPersonalPickup() and transportPersonalPickupStockId != null %}hidden{% endif %}">
                                                     {% set minimalDaysAvailability = minimalDaysAvailabilityIndexedByTransportIds[transport.id] %}
                                                     {% if minimalDaysAvailability < 7 %}
                                                         {% if transport.isPersonalPickup() %}
@@ -130,6 +140,7 @@
                                                         {% endtranschoice %}
                                                     {% endif %}
                                                 </span>
+
 
                                                 <span class="box-chooser__item__price">
                                                     {{ transportPrice.priceWithVat|priceText }}

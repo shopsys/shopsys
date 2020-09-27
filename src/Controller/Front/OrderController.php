@@ -359,11 +359,17 @@ class OrderController extends FrontBaseController
             }
         }
 
-        $minimalDaysAvailabilityIndexedByTransportIds = [];
+        $minimalDaysAvailabilityIndexedByTransportIds = $stockDayAvailabilitiesByStockId = [];
         if ($orderFlow->getCurrentStepNumber() === OrderFlow::STEP_SECOND) {
+            $stocks = $this->stockFacade->getStocksWithoutCentralByDomainIdIndexedByStockId($domainId);
+            $stockDayAvailabilitiesByStockId = $this->productAvailabilityFacade->getStockDayAvailabilitiesIndexedByStockId(
+                $domainId,
+                $stocks,
+                $cart->getQuantifiedProducts()
+            );
             $minimalDaysAvailabilityIndexedByTransportIds = $this->productAvailabilityFacade->getMinimalDaysAvailabilityIndexedByTransportIds(
                 $domainId,
-                $this->stockFacade->getStocksWithoutCentralByDomainIdIndexedByStockId($domainId),
+                $stocks,
                 $cart->getQuantifiedProducts(),
                 $transports
             );
@@ -386,6 +392,7 @@ class OrderController extends FrontBaseController
             'displayFormType' => 'order_flow',
             'prefilledCustomerEmail' => ($this->isGranted(Roles::ROLE_LOGGED_CUSTOMER) === false) ? $prefilledCustomerEmail : null,
             'minimalDaysAvailabilityIndexedByTransportIds' => $minimalDaysAvailabilityIndexedByTransportIds,
+            'stockDayAvailabilitiesByStockId' => $stockDayAvailabilitiesByStockId
         ]);
     }
 
