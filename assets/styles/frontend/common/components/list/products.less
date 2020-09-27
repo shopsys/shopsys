@@ -259,11 +259,15 @@
         &__variants {
             display: flex;
             flex-direction: column;
-            margin-bottom: 0.75rem;
 
             @media @query-lg {
                 display: inline-flex;
                 flex-direction: row;
+            }
+
+            &-wrap {
+                flex: 1;
+                margin-bottom: 0.75rem;
             }
 
             &--multiple {
