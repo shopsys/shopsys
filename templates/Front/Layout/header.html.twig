@@ -84,10 +84,10 @@
                 </li>
                 {% if is_granted('ROLE_LOGGED_CUSTOMER') %}
                     <li class="menu-iconic__item menu-iconic__item--sub">
-                        <a href="#" class="menu-iconic__item__link">
+                        <button class="menu-iconic__item__link menu-iconic__item__link--button">
                             <i class="menu-iconic__item__icon svg svg-user svg-fw-bold"></i>
                             <span class="menu-iconic__item__text">{{ 'Můj účet'|trans }}</span>
-                        </a>
+                        </button>
                         <ul class="menu-iconic__sub">
                             <li class="menu-iconic__sub__item">
                                 <a href="{{ url('front_customer_orders') }}" class="menu-iconic__sub__item__link">{{ 'My orders'|trans }}</a>
