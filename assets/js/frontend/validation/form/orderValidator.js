@@ -26,10 +26,29 @@ export default function orderValidator ($container) {
             } else {
                 groups.push(constant('\\App\\Form\\Front\\Customer\\BillingAddressFormType::VALIDATION_GROUP_COMMON_CUSTOMER'));
             }
-
             return groups;
         }
     });
+
+    $orderPersonalInfoForm.find('.js-order-delivery-address')
+        .change(function(){
+            // Run validation for this field
+            if ($(this).is(':checked') === false) {
+                $orderPersonalInfoForm.find('.js-order-delivery-address-fields input').jsFormValidator('validate');
+            }
+        });
+    $container.find('#order_personal_info_form_companyCustomer')
+        .change(function(){
+            // Run validation for this field
+            if ($(this).is(':checked')) {
+                console.log('company');
+                $orderPersonalInfoForm.find('*[data-tab-id="common-customer"] input').jsFormValidator('validate');
+            }else {
+                console.log('common');
+                $orderPersonalInfoForm.find('*[data-tab-id="company-customer"] input').jsFormValidator('validate');
+            }
+        });
+
 }
 
 (new Register()).registerCallback(orderValidator);

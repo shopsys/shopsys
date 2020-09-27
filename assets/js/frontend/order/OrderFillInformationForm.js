@@ -7,9 +7,9 @@ export default class OrderFillInformationForm {
         const customerType = $(this).data('tab-id');
         const hiddenCustomerTypeFormField = $('#order_personal_info_form_companyCustomer');
         if (customerType == 'company-customer') {
-            hiddenCustomerTypeFormField.prop('checked', true);
+            hiddenCustomerTypeFormField.prop('checked', true).change();
         } else {
-            hiddenCustomerTypeFormField.prop('checked', false);
+            hiddenCustomerTypeFormField.prop('checked', false).change();
         }
     }
 
