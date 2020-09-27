@@ -61,4 +61,13 @@ class OrderRepository extends BaseOrderRepository
 
         return $queryBuilder->getQuery()->execute();
     }
+
+    /**
+     * @param string $number
+     * @return \App\Model\Order\Order|null
+     */
+    public function findByNumber(string $number): ?Order
+    {
+        return $this->getOrderRepository()->findOneBy(['number' => $number]);
+    }
 }

@@ -54,7 +54,6 @@ use Shopsys\FrameworkBundle\Twig\NumberFormatterExtension;
 
 /**
  * @property \App\Component\Setting\Setting $setting
- * @method \App\Model\Order\Order createOrder(\App\Model\Order\OrderData $orderData, \Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreview $orderPreview, \App\Model\Customer\User\CustomerUser|null $customerUser)
  * @method sendHeurekaOrderInfo(\App\Model\Order\Order $order, bool $disallowHeurekaVerifiedByCustomers)
  * @method prefillFrontOrderData(\App\Model\Order\FrontOrderData $orderData, \App\Model\Customer\User\CustomerUser $customerUser)
  * @method \App\Model\Order\Order[] getCustomerUserOrderList(\App\Model\Customer\User\CustomerUser $customerUser)
@@ -87,10 +86,13 @@ use Shopsys\FrameworkBundle\Twig\NumberFormatterExtension;
  * @method \App\Model\Order\Order getByUuidAndUrlHash(string $uuid, string $urlHash)
  * @method updateTransportAndPaymentNamesInOrderData(\App\Model\Order\OrderData $orderData, \App\Model\Order\Order $order)
  * @property \App\Model\Order\Mail\OrderMailFacade $orderMailFacade
+ * @method \App\Model\Order\Order createOrder(\App\Model\Order\OrderData $orderData, \Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreview $orderPreview, \App\Model\Customer\User\CustomerUser|null $customerUser)
  * @property \App\Model\Order\Status\OrderStatusRepository $orderStatusRepository
  */
 class OrderFacade extends BaseOrderFacade
 {
+    protected const MAX_GENERATE_TRIES = 100;
+
     /**
      * @var \App\Model\Order\Item\OrderItemDataFactory
      */
@@ -234,6 +236,26 @@ class OrderFacade extends BaseOrderFacade
     }
 
     /**
+     * @return string
+     */
+    private function getNextNumber(): string
+    {
+        $triesCount = 0;
+        do {
+            $random = substr((string) rand(1000000, 2999999), 1);
+
+            $number = date('y') . $random;
+            $order = $this->orderRepository->findByNumber($number);
+            $triesCount++;
+            if ($triesCount > self::MAX_GENERATE_TRIES) {
+                throw new \Shopsys\FrameworkBundle\Model\Order\Exception\OrderHashGenerateException('Trying generate order number reached the limit.');
+            }
+        } while ($order !== null);
+
+        return $number;
+    }
+
+    /**
      * @param \App\Model\Order\OrderData $orderData
      * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress|null $deliveryAddress
      * @return \App\Model\Order\Order
@@ -318,7 +340,7 @@ class OrderFacade extends BaseOrderFacade
      */
     public function createOrderBySplitOrderPreview(OrderData $orderData, SplitOrderPreview $splitOrderPreview, ?CustomerUser $customerUser): Order
     {
-        $orderNumber = (string)$this->orderNumberSequenceRepository->getNextNumber();
+        $orderNumber = $this->getNextNumber();
         $orderUrlHash = $this->orderHashGeneratorRepository->getUniqueHash();
         $toFlush = [];
 
