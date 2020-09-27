@@ -148,10 +148,10 @@ class SingleImportUrlRedirectTableFacade implements TransferIdentificationInterf
             $this->sqlLoggerFacade->reenableLogging();
         } catch (RuntimeException $exception) {
             $this->logger->addError('RuntimeException: ' . $exception->getMessage());
-            $this->sqlLoggerFacade->reenableLogging();
+            $this->logger->persistAllLoggedTransferIssues();
         } catch (Exception $exception) {
             $this->logger->addError('Exception: ' . $exception->getMessage());
-            $this->sqlLoggerFacade->reenableLogging();
+            $this->logger->persistAllLoggedTransferIssues();
         }
 
         $this->doAfterTransfer();

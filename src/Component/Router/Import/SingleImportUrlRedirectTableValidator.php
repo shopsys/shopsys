@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Component\Router\Import;
 
-use App\Component\Akeneo\Transfer\Exception\SingleImportDataException;
+use App\Model\Order\PromoCode\Import\SingleImportDataException;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
