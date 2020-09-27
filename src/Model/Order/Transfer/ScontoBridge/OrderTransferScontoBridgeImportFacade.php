@@ -9,7 +9,8 @@ use App\Component\ScontoBridge\Transfer\AbstractScontoBridgeImportTransfer;
 use App\Component\ScontoBridge\Transfer\ScontoBridgeImportTransferDependency;
 use App\Component\Setting\Setting;
 use App\Model\Order\OrderRepository;
-use App\Model\Order\OrderStatusEnum;
+use App\Model\Order\Status\OrderStatus;
+use App\Model\Order\Status\OrderStatusRepository;
 use App\Model\Stock\Exception\StockNotFoundException;
 use App\Model\Stock\Stock;
 use App\Model\Stock\StockRepository;
@@ -17,19 +18,17 @@ use DateTime;
 use Generator;
 use Shopsys\FrameworkBundle\Model\Order\Exception\OrderNotFoundException;
 use Shopsys\FrameworkBundle\Model\Order\Status\Exception\OrderStatusNotFoundException;
-use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus;
-use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusRepository;
 
 class OrderTransferScontoBridgeImportFacade extends AbstractScontoBridgeImportTransfer
 {
     private const URI_ERP_ORDERS = '/api/services/app/ErpOrder/GetErpOrders';
     private const NEXT_PAGE_POSTFIX = 'NextPage';
-    private const ERP_ORDER_STATUSES = [
-        OrderStatusEnum::STATUS_ERP_INSTOCK => 1,
-        OrderStatusEnum::STATUS_ERP_INTRANSIT => 4,
-        OrderStatusEnum::STATUS_ERP_WAITING => 2,
-        OrderStatusEnum::STATUS_ERP_ORDERED => 3,
-        OrderStatusEnum::STATUS_ERP_ERROR => 5,
+    private const ERP_ORDER_STATUS_TYPES = [
+        OrderStatus::TYPE_ERP_INSTOCK => 1,
+        OrderStatus::TYPE_ERP_INTRANSIT => 4,
+        OrderStatus::TYPE_ERP_WAITING => 2,
+        OrderStatus::TYPE_ERP_ORDERED => 3,
+        OrderStatus::TYPE_ERP_ERROR => 5,
     ];
     public const PAGE_SIZE_LIMIT = 20;
 
@@ -223,7 +222,7 @@ class OrderTransferScontoBridgeImportFacade extends AbstractScontoBridgeImportTr
      */
     private function resolveErpOrderStatus(int $erpOrderStatus): OrderStatus
     {
-        $statuses = array_flip(self::ERP_ORDER_STATUSES);
+        $statuses = array_flip(self::ERP_ORDER_STATUS_TYPES);
 
         if (array_key_exists($erpOrderStatus, $statuses) === false) {
             throw new OrderTransferScontoBridgeImportInvalidStatusException(
@@ -231,7 +230,16 @@ class OrderTransferScontoBridgeImportFacade extends AbstractScontoBridgeImportTr
             );
         }
 
-        return $this->orderStatusRepository->getById($statuses[$erpOrderStatus]);
+        $statusType = $statuses[$erpOrderStatus];
+        $status = $this->orderStatusRepository->findByType($statusType);
+
+        if ($status === null) {
+            throw new OrderTransferScontoBridgeImportInvalidStatusException(
+                sprintf('Order status type \'%d\' not found', $statusType)
+            );
+        }
+
+        return $status;
     }
 
     /**

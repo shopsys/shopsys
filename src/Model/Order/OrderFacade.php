@@ -87,6 +87,7 @@ use Shopsys\FrameworkBundle\Twig\NumberFormatterExtension;
  * @method \App\Model\Order\Order getByUuidAndUrlHash(string $uuid, string $urlHash)
  * @method updateTransportAndPaymentNamesInOrderData(\App\Model\Order\OrderData $orderData, \App\Model\Order\Order $order)
  * @property \App\Model\Order\Mail\OrderMailFacade $orderMailFacade
+ * @property \App\Model\Order\Status\OrderStatusRepository $orderStatusRepository
  */
 class OrderFacade extends BaseOrderFacade
 {
@@ -130,7 +131,7 @@ class OrderFacade extends BaseOrderFacade
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderNumberSequenceRepository $orderNumberSequenceRepository
      * @param \App\Model\Order\OrderRepository $orderRepository
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderUrlGenerator $orderUrlGenerator
-     * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusRepository $orderStatusRepository
+     * @param \App\Model\Order\Status\OrderStatusRepository $orderStatusRepository
      * @param \App\Model\Order\Mail\OrderMailFacade $orderMailFacade
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderHashGeneratorRepository $orderHashGeneratorRepository
      * @param \App\Component\Setting\Setting $setting
