@@ -963,3 +963,6 @@ services:
 
     Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserPasswordFacade:
         alias: App\Model\Customer\User\CustomerUserPasswordFacade
+
+    Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusRepository:
+        alias: App\Model\Order\Status\OrderStatusRepository

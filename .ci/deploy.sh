@@ -67,8 +67,8 @@ declare -A CRON_INSTANCES=(
     ["cron-import-akeneo-other"]='*/5 * * * *'
     ["cron-import-akeneo-files"]='*/5 * * * *'
     ["cron-gopay"]='*/5 * * * *'
+    ["cron-orders"]='* * * * *'
 )
-
 
 VARS=(
     POSTGRES_DATABASE_IP_ADDRESS

@@ -11,6 +11,8 @@ use App\Model\Customer\Transfer\ScontoBridge\CustomerTransferScontoBridgeMapperE
 use App\Model\Order\Order;
 use App\Model\Order\OrderRepository;
 use App\Model\Order\OrderScontoBridgeStatusEnum;
+use App\Model\Order\Status\OrderStatus;
+use App\Model\Order\Status\OrderStatusRepository;
 use App\Model\Transfer\TransferIdentificationInterface;
 use App\Model\Transfer\TransferLoggerInterface;
 use Exception;
@@ -31,6 +33,11 @@ class OrderTransferScontoBridgeFacade implements TransferIdentificationInterface
     private OrderRepository $orderRepository;
 
     /**
+     * @var OrderStatusRepository
+     */
+    private OrderStatusRepository $orderStatusRepository;
+
+    /**
      * @var \App\Model\Transfer\TransferLoggerInterface
      */
     private TransferLoggerInterface $logger;
@@ -48,11 +55,13 @@ class OrderTransferScontoBridgeFacade implements TransferIdentificationInterface
     public function __construct(
         ScontoBridgeImportTransferDependency $scontoBridgeImportTransferDependency,
         OrderRepository $orderRepository,
+        OrderStatusRepository $orderStatusRepository,
         OrderTransferScontoBridgeExporter $orderTransferScontoBridgeExporter,
         CustomerTransferScontoBridgeExporter $customerTransferScontoBridgetExporter
     ) {
         $this->scontoBridgeImportTransferDependency = $scontoBridgeImportTransferDependency;
         $this->orderRepository = $orderRepository;
+        $this->orderStatusRepository = $orderStatusRepository;
         $this->logger = $this->scontoBridgeImportTransferDependency->getTransferLoggerFactory()->getTransferLoggerByIdentifier($this);
         $this->orderTransferScontoBridgeExporter = $orderTransferScontoBridgeExporter;
         $this->customerTransferScontoBridgetExporter = $customerTransferScontoBridgetExporter;
@@ -178,6 +187,14 @@ class OrderTransferScontoBridgeFacade implements TransferIdentificationInterface
     private function setOrderScontoBridgeStatus(Order $order, OrderScontoBridgeStatusEnum $status): void
     {
         $order->setScontoBridgeStatus($status);
+        if ($this->isScontoBridgeError($status)) {
+            $orderStatus = $this->orderStatusRepository->findByType(OrderStatus::TYPE_IM_ERROR);
+        } else {
+            $orderStatus = $this->orderStatusRepository->findByType(OrderStatus::TYPE_IM_SENT);
+        }
+        if ($orderStatus !== null) {
+            $order->setStatus($orderStatus);
+        }
         $em = $this->scontoBridgeImportTransferDependency->getEm();
         $em->persist($order);
         $em->flush();
@@ -205,5 +222,17 @@ class OrderTransferScontoBridgeFacade implements TransferIdentificationInterface
     public function getServiceIdentifier(): string
     {
         return 'ScontoBridge';
+    }
+
+    /**
+     * @param OrderScontoBridgeStatusEnum $status
+     * @return bool
+     */
+    private function isScontoBridgeError(OrderScontoBridgeStatusEnum $status): bool
+    {
+        return in_array($status->getValue(), [
+            OrderScontoBridgeStatusEnum::STATUS_ERROR,
+            OrderScontoBridgeStatusEnum::STATUS_PROCESSING,
+        ], true);
     }
 }
