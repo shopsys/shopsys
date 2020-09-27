@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Component\Akeneo\Transfer\Exception;
+namespace App\Model\Order\PromoCode\Import;
 
 use Exception;
 use Symfony\Component\Validator\ConstraintViolationListInterface;

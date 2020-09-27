@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Model\Order\PromoCode\Import;
 
-use App\Component\Akeneo\Transfer\Exception\SingleImportDataException;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
@@ -66,9 +65,6 @@ class SingleImportPromoCodeValidator
                     new Assert\Type(['type' => 'integer']),
                 ],
                 'discount_type' => [
-                    new Assert\Type(['type' => 'integer']),
-                ],
-                'discount' => [
                     new Assert\Type(['type' => 'integer']),
                 ],
                 'moeve_code' => [
