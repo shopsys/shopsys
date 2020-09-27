@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Model\Order\Transfer\ScontoBridge;
@@ -124,7 +125,7 @@ class OrderTransferScontoBridgeImportFacade extends AbstractScontoBridgeImportTr
 
         try {
             $status = $this->resolveErpOrderStatus($scontoBridgeOrderData['status']);
-        } catch (OrderTransferScontoBridgeImportInvalidStatusException|OrderStatusNotFoundException $e) {
+        } catch (OrderTransferScontoBridgeImportInvalidStatusException | OrderStatusNotFoundException $e) {
             $this->logError($orderId, $e->getMessage());
 
             return;
