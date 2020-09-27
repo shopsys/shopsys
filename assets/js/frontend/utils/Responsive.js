@@ -23,6 +23,11 @@ export default class Responsive {
         return windowWidth <= Responsive.MD;
     }
 
+    static isTabletVersion () {
+        const windowWidth = window.innerWidth || $(window).width();
+        return windowWidth <= Responsive.LG;
+    }
+
     registerOnLayoutChange (callback) {
         this.onLayoutChangeListeners.push(callback);
     }
@@ -45,3 +50,4 @@ Responsive.LG = 769;
 Responsive.VL = 980;
 Responsive.VLX = 1023;
 Responsive.XL = 1200;
+Responsive.XXL = 1450;

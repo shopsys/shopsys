@@ -13,6 +13,13 @@ export default class Accordion {
             _this.toggleAccordionContent($(this));
         });
 
+        this.$accordion.find('.js-accordion-mobile-header').on('click', function (e) {
+            if (Responsive.isTabletVersion()) {
+                e.preventDefault();
+                _this.toggleAccordionMobileContent($(this));
+            }
+        });
+
         if (this.$accordion.hasClass('js-accordion-closed-on-mobile') && Responsive.isMobileVersion()) {
             this.$accordion.removeClass('is-opened');
         }
@@ -29,6 +36,13 @@ export default class Accordion {
             .toggleClass('is-opened');
 
         $accordionToggle.text(accordionToggleText);
+    }
+
+    toggleAccordionMobileContent ($accordion) {
+        const $siblingsSections = $accordion.siblings('.js-accordion-mobile-section');
+
+        $accordion.toggleClass('is-active');
+        $siblingsSections.toggleClass('is-opened');
     }
 
     static init ($container) {

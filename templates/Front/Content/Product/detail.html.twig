@@ -38,33 +38,38 @@
                     </h1>
                     <div class="box-detail__wrap">
                         <div class="box-detail__image">
-                            <div class="box-detail__image__main">
-                                {% if imageExists(product) %}
-                                    <a data-fancybox="products-gallery" data-caption="{{ product.name }}" href="{{ imageUrl(product, 'original') }}" class="box-detail__image__main__link {{ showGallery ? 'js-gallery-main-image' }}">
-                                        {{ image(product, { itemprop: 'image', alt: product.fullname }) }}
-                                    </a>
-                                {% else %}
-                                    {{ noimage({ alt: product.fullname }) }}
-                                {% endif %}
+                            <div class="box-detail__image__wrap js-main-image-carousel">
+                                <div class="box-detail__image__main js-gallery-wrap">
+                                    {% for galleryImage in galleryImages %}
+                                        <div class="box-detail__image__main__item">
+                                            {% if imageExists(product) %}
+                                                <a
+                                                    data-fancybox="products-gallery"
+                                                    data-caption="{{ product.name }}"
+                                                    href="{{ imageUrl(galleryImage, 'original') }}"
+                                                    class="box-detail__image__main__item__link">
+                                                    {{ image(galleryImage, {lazy: false, alt: product.fullname ~ ' ' ~ loop.index}) }}
+                                                </a>
+                                            {% else %}
+                                                {{ noimage({ alt: product.fullname }) }}
+                                            {% endif %}
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                                {{ productFlags.list(product.getFlagsForDomain(domain.id)) }}
                             </div>
-                            {{ productFlags.list(product.getFlagsForDomain(domain.id)) }}
 
                             {% if showGallery %}
                                 {% set galleryImagesCount = galleryImages|length %}
-                                <div class="box-gallery dont-print js-gallery{{ galleryImagesCount > 5 ? ' js-gallery-slick-carousel' }}">
-                                    <div class="box-gallery__in js-gallery-wrap">
+                                <div class="box-gallery dont-print js-gallery{{ galleryImagesCount > 1 ? ' js-gallery-slick-carousel' }}">
+                                    <div class="box-gallery__in{{ galleryImagesCount <= 4 ? ' box-gallery__in--centered' }} js-gallery-wrap">
                                         {% for galleryImage in galleryImages %}
-                                            {% if loop.index != 1 %}
-                                                <div class="box-gallery__item js-gallery-item">
-                                                    <a
-                                                        data-fancybox="products-gallery"
-                                                        data-caption="{{ product.name }}"
-                                                        href="{{ imageUrl(galleryImage, 'original') }}"
-                                                        class="box-gallery__item__link">
-                                                        {{ image(galleryImage, {size: 'galleryThumbnail', lazy: false, alt: product.fullname ~ ' ' ~ loop.index}) }}
-                                                    </a>
-                                                </div>
-                                            {% endif %}
+                                            <button class="box-gallery__item">
+                                                <span
+                                                    class="box-gallery__item__link">
+                                                    {{ image(galleryImage, {size: 'galleryThumbnail', lazy: false, alt: product.fullname ~ ' ' ~ loop.index}) }}
+                                                </span>
+                                            </button>
                                         {% endfor %}
                                     </div>
                                 </div>
@@ -104,6 +109,37 @@
                                     {% endif %}
                                 </ul>
                             </div>
+
+                            {% if productSeriesList|length > 0 %}
+                                {% for productSeries in productSeriesList %}
+                                    <div class="box-series box-series--standalone box-series--standalone--mini">
+                                        <div class="box-series__in">
+                                            {% if imageExists(productSeries) %}
+                                                <span class="box-series__img">
+                                                    {{ image(productSeries, { itemprop: 'image', size: 'previewDetailSmall' }) }}
+                                                </span>
+                                            {% else %}
+                                                <span class="box-series__img">
+                                                    {{ noimage({ alt: productSeries.name }) }}
+                                                </span>
+                                            {% endif %}
+                                            <span class="box-series__content">
+                                                <p class="box-series__content__text">
+                                                    {{ 'Prohlédněte si další zboží ze série'|trans }}
+                                                    {{ productSeries.getSeoH1(domain.id)|default(productSeries.name) }}
+                                                    {{ ' a slaďte svůj domov'|trans }}
+                                                </p>
+                                                <a
+                                                    class="box-series__content__link box-detail__info__anchor js-smooth-scroll-anchor"
+                                                    href="#series-{{ productSeries.name }}">
+                                                    {{ productSeries.getSeoH1(domain.id)|default(productSeries.name) }}
+                                                    <i class="box-detail__info__anchor__icon svg svg-chevron"></i>
+                                                </a>
+                                            </span>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            {% endif %}
 
                             {% if not product.isMainVariant %}
                                 {{ render(controller('App\\Controller\\Front\\ProductController:variantParametersAction', {product: product} )) }}
@@ -202,37 +238,6 @@
                                         </div>
                                     {% endif %}
                                 </div>
-                            {% endif %}
-
-                            {% if productSeriesList|length > 0 %}
-                                {% for productSeries in productSeriesList %}
-                                    <div class="box-series box-series--standalone box-series--standalone--mini">
-                                        <div class="box-series__in">
-                                            {% if imageExists(productSeries) %}
-                                                <span class="box-series__img">
-                                                    {{ image(productSeries, { itemprop: 'image', size: 'previewDetailSmall' }) }}
-                                                </span>
-                                            {% else %}
-                                                <span class="box-series__img">
-                                                    {{ noimage({ alt: productSeries.name }) }}
-                                                </span>
-                                            {% endif %}
-                                            <span class="box-series__content">
-                                                <p class="box-series__content__text">
-                                                    {{ 'Prohlédněte si další zboží ze série'|trans }}
-                                                    {{ productSeries.getSeoH1(domain.id)|default(productSeries.name) }}
-                                                    {{ ' a slaďte svůj domov'|trans }}
-                                                </p>
-                                                <a
-                                                    class="box-series__content__link box-detail__info__anchor js-smooth-scroll-anchor"
-                                                    href="#series-{{ productSeries.name }}">
-                                                    {{ productSeries.getSeoH1(domain.id)|default(productSeries.name) }}
-                                                    <i class="box-detail__info__anchor__icon svg svg-chevron"></i>
-                                                </a>
-                                            </span>
-                                        </div>
-                                    </div>
-                                {% endfor %}
                             {% endif %}
                         </div>
                     </div>
@@ -378,9 +383,14 @@
                                 <i class="box-accordion__header__toggle__icon svg svg-arrow"></i>
                             </span>
                         </a>
-                        <div class="box-accordion__body box-accordion__body--cols js-accordion-body">
+                        <div class="box-accordion__body box-accordion__body--cols box-accordion__body--measures js-accordion-body">
                             <div class="box-accordion__body__content box-accordion__body__content--measures">
                                 <table class="table table--params">
+                                    <thead>
+                                        <tr>
+                                            <th colspan="2">{{ 'Rozměry'|trans }}</th>
+                                        </tr>
+                                    </thead>
                                     <tbody>
                                         {% for parameterValuesViewData in dimensionParameterValuesViewsData %}
                                             <tr>
@@ -429,29 +439,23 @@
                 {% endif %}
 
                 {% if productStocksAvailabilitiesInformation|length > 0 %}
-                    <div class="box-accordion box-accordion--opened-on-mobile is-opened js-accordion" id="stocks-availabilities">
-                        <a class="box-accordion__header js-accordion-header" href="#">
+                    <div class="box-accordion box-accordion--opened js-accordion js-accordion-mobile" id="stocks-availabilities">
+                        <div class="box-accordion__header box-accordion__header--with-desc">
                             <strong class="box-accordion__heading">{{ 'Dostupnost na prodejnách'|trans }}</strong>
-                            <span class="box-accordion__header__toggle">
-                                <span
-                                    class="box-accordion__header__toggle__text js-accordion-toggle-text"
-                                    data-text-more="{{ 'Zobrazit víc'|trans }}"
-                                    data-text-less="{{ 'Skrýt'|trans }}"
-                                >
-                                    {{ 'Skrýt'|trans }}
-                                </span>
-                                <i class="box-accordion__header__toggle__icon svg svg-arrow"></i>
-                            </span>
-                        </a>
-                        <div class="box-accordion__body box-accordion__body--no-spacing js-accordion-body">
-                            <table class="box-accordion__grid-table">
-                                <tbody class="box-accordion__grid-table__body">
+                            <p class="box-accordion__header__desc">
+                                {{ 'Vyberte prodejnu ze seznamu'|trans }}
+                            </p>
+                        </div>
+                        <div class="box-accordion__body box-accordion__body--no-spacing">
+                            <div class="box-accordion__grid-table box-accordion__grid-table--mobile-accords">
+                                <div class="box-accordion__grid-table__body">
                                 {% for productStockAvailabilityInformation in productStocksAvailabilitiesInformation %}
-                                    <tr class="box-accordion__grid-table__row">
-                                        <th class="box-accordion__grid-table__col">
+                                    <div class="box-accordion__grid-table__row">
+                                        <div class="box-accordion__grid-table__col box-accordion__grid-table__col--mobile-accord-header js-accordion-mobile-header">
                                             <strong class="box-accordion__grid-table__title">{{ productStockAvailabilityInformation.stockName }}</strong>
-                                        </th>
-                                        <td class="box-accordion__grid-table__col">
+                                            <i class="box-accordion__grid-table__col__toggle svg svg-arrow"></i>
+                                        </div>
+                                        <div class="box-accordion__grid-table__col box-accordion__grid-table__col--mobile-accord-content js-accordion-mobile-section">
                                             {% if productStockAvailabilityInformation.availabilityStatus == "in-stock" %}
                                                 <picture>
                                                     <source
@@ -478,26 +482,38 @@
                                                 </picture>
                                             {% endif %}
                                             {{ productStockAvailabilityInformation.availabilityInformation|raw }}
-                                        </td>
-                                        <td class="box-accordion__grid-table__col box-accordion__grid-table__col--expose">
+                                        </div>
+                                        <div class="box-accordion__grid-table__col box-accordion__grid-table__col--expose box-accordion__grid-table__col--mobile-accord-content js-accordion-mobile-section">
                                             {% if productStockAvailabilityInformation.exposedProduct %}
-                                                <img class="box-accordion__grid-table__col__icon" loading="lazy" data-src="{{ asset('public/frontend/images/vystaveno.png') }}" alt="{{ 'Vystaveno'|trans }}">
+                                                <img
+                                                    class="box-accordion__grid-table__col__icon"
+                                                    loading="lazy"
+                                                    src="{{ imgLazyloadPlaceholder }}"
+                                                    data-src="{{ asset('public/frontend/images/vystaveno.svg') }}"
+                                                    alt="{{ 'Vystaveno'|trans }}"
+                                                >
                                                 {{ '<strong class="box-accordion__grid-table__col__expose">Vystaveno</strong> na prodejně'|transHtml }}
                                             {% else %}
-                                                <img class="box-accordion__grid-table__col__icon" loading="lazy" data-src="{{ asset('public/frontend/images/nevystaveno.png') }}" alt="{{ 'Není vystaveno'|trans }}">
+                                                <img
+                                                    class="box-accordion__grid-table__col__icon"
+                                                    loading="lazy"
+                                                    src="{{ imgLazyloadPlaceholder }}"
+                                                    data-src="{{ asset('public/frontend/images/nevystaveno.svg') }}"
+                                                    alt="{{ 'Není vystaveno'|trans }}"
+                                                >
                                                 {{ '<strong class="box-accordion__grid-table__col__expose">Není vystaveno</strong> na prodejně'|transHtml }}
                                             {% endif %}
-                                        </td>
-                                        <td class="box-accordion__grid-table__col box-accordion__grid-table__col--showrooms">
+                                        </div>
+                                        <div class="box-accordion__grid-table__col box-accordion__grid-table__col--showrooms box-accordion__grid-table__col--mobile-accord-content js-accordion-mobile-section">
                                             <a class="box-detail__info__anchor" href="{{ url('front_stores_detail', { id: productStockAvailabilityInformation.stockId }) }}">
                                                 {{ 'Detail prodejny'|trans }}
-                                                <i class="box-detail__info__anchor__icon box-detail__info__anchor__icon--spaced svg svg-chevron"></i>
+                                                <i class="box-detail__info__anchor__icon box-detail__info__anchor__icon--spaced svg svg-chevron svg-fw-bold"></i>
                                             </a>
-                                        </td>
-                                    </tr>
+                                        </div>
+                                    </div>
                                 {% endfor %}
-                                </tbody>
-                            </table>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 {% endif %}
@@ -563,7 +579,7 @@
                         <div class="box-detail-cats__wrap">
                             {% for category in categoryList %}
                                 <a class="box-detail-cats__item" href="{{ url('front_product_list', { id: category.id }) }}">
-                                    <img class="box-detail-cats__item__icon" loading="lazy" data-src="{{ asset('public/frontend/images/category_icon.png') }}" alt="{{ category.name }}">
+                                    <img class="box-detail-cats__item__icon" loading="lazy" data-src="{{ asset('public/frontend/images/category_icon.svg') }}" alt="{{ category.name }}">
                                     {{ category.name }}
                                 </a>
                             {% endfor %}

@@ -93,7 +93,7 @@
                 }
 
                 .slick-slide & {
-                    transform: none;
+                    box-shadow: 0 10px 20px 5px @color-border-lighter;
                 }
             }
         }
@@ -346,6 +346,8 @@
         position: relative;
         overflow: hidden;
         width: 100%;
+        padding-top: 5px;
+        padding-bottom: 25px;
 
         @media @query-md {
             max-width: calc(100% - 140px);
