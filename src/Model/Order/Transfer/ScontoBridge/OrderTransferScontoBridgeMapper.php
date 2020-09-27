@@ -8,6 +8,7 @@ use App\Component\ScontoBridge\Transfer\Exception\ScontoBridgeDistributionChanne
 use App\Component\ScontoBridge\Transfer\ScontoBridgeDistributionChannelResolver;
 use App\Component\ScontoBridge\Transfer\ScontoBridgeTitleResolver;
 use App\Model\Customer\User\CustomerUser;
+use App\Model\Order\Item\Exception\OrderItemRelatedException;
 use App\Model\Order\Item\OrderItem;
 use App\Model\Order\Order;
 use App\Model\Order\Transfer\ScontoBridge\Entity\ScontoBridgeErpOrder;
@@ -171,11 +172,13 @@ class OrderTransferScontoBridgeMapper
                 }
             }
 
-            $orderItemPriceIsNonzero = $orderItem->getTotalPriceWithVat()->getAmount() > 0;
+            $orderItemPriceIsNonzero = $orderItem->getFinalPriceWithVat()->isPositive();
             $orderItemIsTransportOrPaymentWithNonzeroPrice = $orderItemPriceIsNonzero &&
                 ($orderItem->isTypeTransport() || $orderItem->isTypePayment());
 
-            if ($orderItemIsTransportOrPaymentWithNonzeroPrice || $orderItem->isTypeProduct()) {
+            if ($orderItemIsTransportOrPaymentWithNonzeroPrice
+                || ($orderItem->isTypeProduct() && $orderItem->getTotalPriceWithVat()->isPositive())
+            ) {
                 $erpOrder->addItem($this->mapOrderItem($orderItem));
             }
         }
@@ -190,17 +193,27 @@ class OrderTransferScontoBridgeMapper
         $erpOrderItem = new ScontoBridgeOrderItem();
         $erpOrderItem->setEshopId($orderItem->getId());
         $erpOrderItem->setQuantity($orderItem->getQuantity());
-        $erpOrderItem->setUnitPriceWithVat((float)$orderItem->getPriceWithVat()->getAmount());
-        $erpOrderItem->setPriceWithVat((float)$orderItem->getTotalPriceWithVat()->getAmount());
+
+        $erpOrderItem->setUnitPriceWithVat(
+            (float)$orderItem->getFinalPriceWithVat()->getAmount()
+        );
+        $erpOrderItem->setPriceWithVat(
+            (float)$orderItem->getFinalQuantifiedPriceWithVat()->getAmount()
+        );
+
         $erpOrderItem->setType($this->resolveType($orderItem));
         $personalPickupStore = $orderItem->getPersonalPickupStock();
         if ($personalPickupStore !== null) {
             $erpOrderItem->setStoreCode($personalPickupStore->getExternalId());
         }
-        $promoCode = $orderItem->getPromoCodeIdentifier();
-        if ($promoCode !== null) {
-            $erpOrderItem->setPromocodeIdentifier($promoCode);
+        try {
+            $promoCodeItem = $orderItem->getRelatedCoupon();
+            if ($promoCodeItem !== null) {
+                $erpOrderItem->setPromocodeIdentifier($promoCodeItem->getPromoCodeIdentifier());
+            }
+        } catch (OrderItemRelatedException $e) {
         }
+
         $sku = $orderItem->getCatnum();
         if ($sku !== null && $orderItem->isTypeProduct()) {
             $erpOrderItem->setSku($sku);
