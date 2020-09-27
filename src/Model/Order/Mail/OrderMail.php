@@ -27,6 +27,8 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
  */
 class OrderMail extends BaseOrderMail
 {
+    public const VARIABLE_ERP_NUMBER = '{erp_number}';
+
     /**
      * @param \App\Model\Order\Order $order
      * @return string[]
@@ -58,6 +60,7 @@ class OrderMail extends BaseOrderMail
             self::VARIABLE_ORDER_DETAIL_URL => $this->orderUrlGenerator->getOrderDetailUrl($order),
             self::VARIABLE_TRANSPORT_INSTRUCTIONS => implode('<br /> ', $transportsInstructions),
             self::VARIABLE_PAYMENT_INSTRUCTIONS => $paymentInstructions,
+            self::VARIABLE_ERP_NUMBER => $order->getErpNumber(),
         ];
     }
 }

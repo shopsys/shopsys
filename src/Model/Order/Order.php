@@ -325,6 +325,14 @@ class Order extends BaseOrder
     }
 
     /**
+     * @return string|null
+     */
+    public function getErpNumber(): ?string
+    {
+        return $this->erpNumber;
+    }
+
+    /**
      * @param string $erpNumber
      */
     public function setErpNumber(string $erpNumber): void
