@@ -12,13 +12,16 @@
 .box-chooser {
     &-check-wrap {
         margin-top: 2rem;
-        margin-bottom: 25px;
 
-        border: 2px solid @color-border-lighter;
-        border-radius: @radius;
+        &__in {
+            margin-bottom: 25px;
 
-        &:hover {
-            border-color: darken(@color-border-lighter, 5%);
+            border: 2px solid @color-border-lighter;
+            border-radius: @radius;
+
+            &:hover {
+                border-color: darken(@color-border-lighter, 5%);
+            }
         }
 
         .box-chooser__item__in {
@@ -128,6 +131,12 @@
                 transform: translateY(-50%);
             }
 
+            // in-overlay class added position: relative !important, which in this case caused unwanted jumping
+            // TODO: Try to fix common .in-overlay css class
+            .css-checkbox.in-overlay {
+                position: absolute !important;
+            }
+
             &__remove {
                 position: absolute;
                 top: 50%;
@@ -136,6 +145,10 @@
 
                 .svg {
                     font-size: 25px;
+
+                    &:hover {
+                        color: @color-add-secondary;
+                    }
                 }
             }
 
@@ -189,6 +202,12 @@
 
             border: 2px solid @color-border-lighter;
             border-radius: @radius;
+            cursor: pointer;
+
+            &:hover {
+                background-color: @color-f;
+                border-color: darken(@color-border-lighter, 5%);
+            }
         }
     }
 

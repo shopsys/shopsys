@@ -131,62 +131,65 @@
                                         {{ form_row(form.country, { label: 'Country'|trans }) }}
                                         </div>
                                     </div>
-                                    <fieldset>
-                                        <div class="box-chooser box-chooser--check">
-                                            <span class="box-chooser__item">
-                                                {{ form_row(form.deliveryAddressFilled, {
-                                                    attr: { class: 'js-checkbox-toggle', 'data-checkbox-toggle-container-id': 'js-order-delivery-address' },
-                                                    label: 'Přidat dodací adresu'|trans
-                                                }) }}
-                                                <picture>
-                                                    <source srcset="{{ asset('public/frontend/images/marker_2x.png') }} 2x, {{ asset('public/frontend/images/marker.png') }} 1x" />
-                                                    <img class="box-chooser__item__marker" loading="lazy" src="" data-src="{{ asset('public/frontend/images/marker.png') }}" alt="{{ 'Dodací adresa'|trans }}">
-                                                </picture>
-                                            </span>
-                                        </div>
+                                    <div class="box-chooser-check-wrap">
+                                        <div class="box-chooser-check-wrap__in">
+                                            <div class="box-chooser box-chooser--check">
+                                                <span class="box-chooser__item">
+                                                    {{ form_row(form.deliveryAddressFilled, {
+                                                        attr: { class: 'js-checkbox-toggle', 'data-checkbox-toggle-container-id': 'js-order-delivery-address' },
+                                                        label: 'Přidat dodací adresu'|trans
+                                                    }) }}
+                                                    <picture>
+                                                        <source srcset="{{ asset('public/frontend/images/marker_2x.png') }} 2x, {{ asset('public/frontend/images/marker.png') }} 1x" />
+                                                        <img class="box-chooser__item__marker" loading="lazy" src="" data-src="{{ asset('public/frontend/images/marker.png') }}" alt="{{ 'Dodací adresa'|trans }}">
+                                                    </picture>
+                                                </span>
+                                            </div>
+                                            <div class="box-chooser__item__in" id="js-order-delivery-address">
+                                                {% if app.user is not null %}
+                                                    {{ form_row(form.deliveryAddress) }}
+                                                {% endif %}
 
-                                        <div id="js-order-delivery-address">
-                                            {% if app.user is not null %}
-                                                {{ form_row(form.deliveryAddress) }}
-                                            {% endif %}
-
-                                            <div class="js-order-delivery-address-fields{% if app.user is not null and form.deliveryAddress.vars.value is not same as('') %} display-none{% endif %}">
-                                                {{ form_row(form.deliveryFirstName, {
-                                                    label: 'First name'|trans,
-                                                    rowClass: 'form-line-block js-form-field'
-                                                }) }}
-                                                {{ form_row(form.deliveryLastName, {
-                                                    label: 'Last name'|trans,
-                                                    rowClass: 'form-line-block js-form-field'
-                                                }) }}
-                                                {{ form_row(form.deliveryCompanyName, {
-                                                    label: 'Company'|trans,
-                                                    rowClass: 'form-line-block js-form-field'
-                                                }) }}
-                                                {{ form_row(form.deliveryTelephone, {
-                                                    label: 'Telephone'|trans,
-                                                    rowClass: 'form-line-block js-form-field'
-                                                }) }}
-                                                {{ form_row(form.deliveryStreet, {
-                                                    label: 'Ulice a č. popisné'|trans,
-                                                    rowClass: 'form-line-block js-form-field'
-                                                }) }}
-                                                {{ form_row(form.deliveryCity, {
-                                                    label: 'City'|trans,
-                                                    rowClass: 'form-line-block js-form-field'
-                                                }) }}
-                                                {{ form_row(form.deliveryPostcode, {
-                                                    label: 'Postcode'|trans,
-                                                    rowClass: 'form-line-block form-line-block--small-width js-form-field'
-                                                }) }}
-                                                <div class="hidden">
-                                                {{ form_row(form.deliveryCountry, {
-                                                    label: 'Country'|trans
-                                                }) }}
+                                                <div class="js-order-delivery-address-fields{% if app.user is not null and form.deliveryAddress.vars.value is not same as('') %} display-none{% endif %}">
+                                                    {{ form_row(form.deliveryFirstName, {
+                                                        label: 'First name'|trans,
+                                                        rowClass: 'form-line-block js-form-field'
+                                                    }) }}
+                                                    {{ form_row(form.deliveryLastName, {
+                                                        label: 'Last name'|trans,
+                                                        rowClass: 'form-line-block js-form-field'
+                                                    }) }}
+                                                    {{ form_row(form.deliveryCompanyName, {
+                                                        label: 'Company'|trans,
+                                                        rowClass: 'form-line-block js-form-field'
+                                                    }) }}
+                                                    {{ form_row(form.deliveryTelephone, {
+                                                        label: 'Telephone'|trans,
+                                                        rowClass: 'form-line-block js-form-field'
+                                                    }) }}
+                                                    {{ form_row(form.deliveryStreet, {
+                                                        label: 'Ulice a č. popisné'|trans,
+                                                        rowClass: 'form-line-block js-form-field'
+                                                    }) }}
+                                                    <div class="form-line-block-section__grid">
+                                                        {{ form_row(form.deliveryCity, {
+                                                            label: 'City'|trans,
+                                                            rowClass: 'form-line-block form-line-block--full-width form-line-block--first js-form-field'
+                                                        }) }}
+                                                        {{ form_row(form.deliveryPostcode, {
+                                                            label: 'Postcode'|trans,
+                                                            rowClass: 'form-line-block form-line-block--small-width js-form-field'
+                                                        }) }}
+                                                    </div>
+                                                    <div class="hidden">
+                                                    {{ form_row(form.deliveryCountry, {
+                                                        label: 'Country'|trans
+                                                    }) }}
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </fieldset>
+                                    </div>
                                 </div>
                             </div>
                         </div>
