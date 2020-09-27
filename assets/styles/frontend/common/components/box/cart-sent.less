@@ -44,7 +44,10 @@
     &__figure {
         align-self: center;
         margin-top: 2rem;
-        margin-bottom: -3rem;
+
+        @media @query-lg {
+            margin-bottom: -3rem;
+        }
 
         @media @query-sm {
             align-self: flex-end;
@@ -62,9 +65,15 @@
     }
 
     &__text {
-        padding-right: 1rem;
-
         color: @color-base-secondary;
+
+        @media @query-md {
+            padding-right: 1rem;
+        }
+
+        @media @query-xl {
+            padding-right: 3rem;
+        }
 
         p {
             margin-top: 0;

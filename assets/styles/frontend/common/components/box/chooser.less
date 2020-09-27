@@ -3,7 +3,7 @@
 @box-chooser-item-hover-bg: @color-light-secondary;
 
 @box-chooser-check-size: 20px;
-@box-chooser-image-width: 100px;
+@box-chooser-image-width: 150px;
 @box-chooser-price-width: 80px;
 @box-chooser-check-border-color: darken(@color-border-lighter, 5%);
 @box-chooser-check-border-color-active: darken(@color-border-lighter, 10%);
@@ -622,6 +622,15 @@
 
         &__in {
             padding: 1rem;
+        }
+
+        &__title {
+            &--checkout {
+                @media screen and (max-width: 1200px) {
+                    display: block;
+                    width: 100%;
+                }
+            }
         }
     }
 
