@@ -14,7 +14,9 @@ use App\Model\Transfer\TransferLoggerInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use League\Flysystem\FilesystemInterface;
+use League\Flysystem\MountManager;
 use Shopsys\FrameworkBundle\Component\Doctrine\SqlLoggerFacade;
+use Shopsys\FrameworkBundle\Component\Filesystem\LocalFilesystemFactory;
 use Symfony\Component\Validator\Validator\TraceableValidator;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
@@ -88,6 +90,10 @@ class SingleImportPromoCodeFacade implements TransferIdentificationInterface
      * @var string
      */
     private string $displayTimezone;
+    /**
+     * @var \League\Flysystem\MountManager
+     */
+    private MountManager $mountManager;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Doctrine\SqlLoggerFacade $sqlLoggerFacade
@@ -106,13 +112,14 @@ class SingleImportPromoCodeFacade implements TransferIdentificationInterface
         EntityManagerInterface $em,
         ValidatorInterface $validator,
         TransferLoggerFactory $transferLoggerFactory,
-        FilesystemInterface $localFilesystem,
+        LocalFilesystemFactory $filesystemFactory,
         SingleImportPromoCodeValidator $singleImportPromoCodeValidator,
         PromoCodeFacade $promoCodeFacade,
         PromoCodeDataFactory $promoCodeDataFactory,
-        PromoCodeLimitFactory $promoCodeLimitFactory
+        PromoCodeLimitFactory $promoCodeLimitFactory,
+        MountManager $mountManager
     ) {
-        $this->localFilesystem = $localFilesystem;
+        $this->localFilesystem = $filesystemFactory->create();
         $this->sqlLoggerFacade = $sqlLoggerFacade;
         $this->em = $em;
         $this->validator = $validator;
@@ -122,6 +129,7 @@ class SingleImportPromoCodeFacade implements TransferIdentificationInterface
         $this->promoCodeDataFactory = $promoCodeDataFactory;
         $this->promoCodeLimitFactory = $promoCodeLimitFactory;
         $this->displayTimezone = $displayTimezone;
+        $this->mountManager = $mountManager;
     }
 
     /**
@@ -280,13 +288,23 @@ class SingleImportPromoCodeFacade implements TransferIdentificationInterface
 
     protected function doBeforeTransfer(): void
     {
+        $localFilePath = '/var/www/html/' . $this->singleImportPromoCodesConfig['file'];
+        try {
+            $this->mountManager->copy('main://' . $this->singleImportPromoCodesConfig['file'], 'local://'.$localFilePath);
+            $this->logger->addInfo('MoveFile from cloud to local');
+        } catch (Exception $e) {
+            $this->logger->addInfo('MoveFile from cloud to local FAILED');
+        }
+
         $this->logger->addInfo('Import promo codes from file.');
-        $this->handler = $this->localFilesystem->readStream($this->singleImportPromoCodesConfig['file']);
+        $this->handler = $this->localFilesystem->readStream($localFilePath);
     }
 
     protected function doAfterTransfer(): void
     {
         $this->logger->addInfo('Import is done.');
+        $localFilePath = '/var/www/html/' . $this->singleImportPromoCodesConfig['file'];
+        $this->localFilesystem->delete($localFilePath);
     }
 
     /**
