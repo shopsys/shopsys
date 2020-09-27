@@ -224,10 +224,7 @@ class SingleImportPromoCodeFacade implements TransferIdentificationInterface
                 (string)$this->singleImportPromoCodesConfig['discount']
             );
             $promoCodeData->limits[] = $promoCodeLimit;
-
-            $promoCode = $this->promoCodeFacade->create($promoCodeData);
-
-            $this->logger->addInfo(sprintf('Promo code "%s" was successfully created.', $promoCode->getCode()));
+            $this->promoCodeFacade->create($promoCodeData);
         } else {
             $this->logger->addInfo(sprintf('Promo code "%s" already exists.', $promoCode->getCode()));
         }
