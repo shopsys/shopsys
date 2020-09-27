@@ -195,10 +195,10 @@ class OrderTransferScontoBridgeMapper
         $erpOrderItem->setQuantity($orderItem->getQuantity());
 
         $erpOrderItem->setUnitPriceWithVat(
-            (float)$orderItem->getFinalPriceWithVat()->divide($orderItem->getQuantity(), 2)->getAmount()
+            (float)$orderItem->getFinalPriceWithVat()->getAmount()
         );
         $erpOrderItem->setPriceWithVat(
-            (float)$orderItem->getFinalPriceWithVat()->getAmount()
+            (float)$orderItem->getFinalQuantifiedPriceWithVat()->getAmount()
         );
 
         $erpOrderItem->setType($this->resolveType($orderItem));
