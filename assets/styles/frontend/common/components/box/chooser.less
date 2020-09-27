@@ -12,13 +12,22 @@
 .box-chooser {
     &-check-wrap {
         margin-top: 2rem;
-        margin-bottom: 25px;
 
-        border: 2px solid @color-border-lighter;
-        border-radius: @radius;
+        &--checkout {
+            .box-chooser-adresses-wrap {
+                margin-top: 0;
+            }
+        }
 
-        &:hover {
-            border-color: darken(@color-border-lighter, 5%);
+        &__in {
+            margin-bottom: 25px;
+
+            border: 2px solid @color-border-lighter;
+            border-radius: @radius;
+
+            &:hover {
+                border-color: darken(@color-border-lighter, 5%);
+            }
         }
 
         .box-chooser__item__in {
@@ -81,6 +90,129 @@
                 top: 14px;
 
                 pointer-events: none;
+            }
+        }
+    }
+
+    &-adresses-wrap {
+        margin-top: 1rem;
+    }
+
+    &--adresses {
+        display: flex;
+        flex-direction: column;
+        margin: 0;
+        padding: 0;
+
+        list-style: none;
+
+        .box-chooser__item {
+            margin: 0 0 0.75rem;
+            padding: 0;
+
+            border: 0;
+
+            &::after {
+                display: none;
+            }
+
+            &--last {
+                order: 1;
+
+                .box-chooser__item__marker {
+                    position: absolute;
+                    right: 1rem;
+                    top: 15px;
+                }
+            }
+
+            &__title {
+                font-family: @font-quartenary;
+                color: @color-primary;
+            }
+
+            input[type=radio].css-checkbox + .css-checkbox__image {
+                top: 50%;
+                left: 1rem;
+                transform: translateY(-50%);
+            }
+
+            // in-overlay class added position: relative !important, which in this case caused unwanted jumping
+            // TODO: Try to fix common .in-overlay css class
+            .css-checkbox.in-overlay {
+                position: absolute !important;
+            }
+
+            &__remove {
+                position: absolute;
+                top: 50%;
+                right: 1.5rem;
+                transform: translateY(-50%);
+
+                .svg {
+                    font-size: 25px;
+
+                    &:hover {
+                        color: @color-add-secondary;
+                    }
+                }
+            }
+
+            &__name {
+                display: block;
+                margin-bottom: 1px;
+
+                color: @color-primary;
+                font-family: @font-quartenary;
+                font-weight: 400;
+            }
+
+            &__address {
+                display: block;
+
+                font-size: 14px;
+                color: @color-base-secondary;
+            }
+
+            &__company {
+                display: inline-block;
+                margin-left: 2px;
+
+                font-size: 14px;
+                color: @color-base-secondary;
+                font-family: @font-base;
+            }
+
+            &__phone {
+                display: flex;
+                align-items: center;
+                margin-top: 3px;
+
+                font-size: 13px;
+
+                .svg {
+                    margin-right: 4px;
+
+                    color: @color-add;
+                    font-size: 18px;
+                }
+            }
+        }
+
+        .form-choice {
+            position: relative;
+            display: block;
+            width: 100%;
+            padding: 1rem 50px 1rem 50px;
+            margin: 0;
+
+            border: 2px solid @color-border-lighter;
+            border-radius: @radius;
+            cursor: pointer;
+
+            &:hover {
+                background-color: @color-f;
+                border-color: darken(@color-border-lighter, 5%);
             }
         }
     }
@@ -487,6 +619,21 @@
                 color: @color-inactive;
             }
         }
+
+        &__in {
+            padding: 1rem;
+        }
+    }
+
+    &__delivery-address-fields {
+        position: relative;
+        z-index: 1;
+        padding: 1rem;
+        margin: -20px 0 15px;
+
+        border-top: 0;
+        border-radius: @radius;
+        background-color: @color-f;
     }
 
     &__free-transport {

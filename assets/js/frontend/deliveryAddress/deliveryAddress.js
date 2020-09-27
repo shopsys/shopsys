@@ -55,9 +55,9 @@ export default class DeliveryAddress {
 
         if ($orderDeliveryAddressFields !== 'undefined') {
             if ($input.val() == '') {
-                $orderDeliveryAddressFields.show();
+                $orderDeliveryAddressFields.slideDown();
             } else {
-                $orderDeliveryAddressFields.hide();
+                $orderDeliveryAddressFields.slideUp();
             }
         }
     }
