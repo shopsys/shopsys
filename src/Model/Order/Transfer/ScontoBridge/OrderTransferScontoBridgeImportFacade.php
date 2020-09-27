@@ -219,7 +219,7 @@ class OrderTransferScontoBridgeImportFacade extends AbstractScontoBridgeImportTr
 
     /**
      * @param int $erpOrderStatus
-     * @return int
+     * @return \App\Model\Order\Status\OrderStatus
      */
     private function resolveErpOrderStatus(int $erpOrderStatus): OrderStatus
     {

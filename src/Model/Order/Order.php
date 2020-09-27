@@ -316,6 +316,9 @@ class Order extends BaseOrder
         return $this->gtmCoupon;
     }
 
+    /**
+     * @param OrderScontoBridgeStatusEnum $status
+     */
     public function setScontoBridgeStatus(OrderScontoBridgeStatusEnum $status): void
     {
         $this->scontoBridgeStatus = $status->getValue();
@@ -338,7 +341,7 @@ class Order extends BaseOrder
     }
 
     /**
-     * @return string[]
+     * @return bool
      */
     public function getIsOverLimit(): bool
     {
