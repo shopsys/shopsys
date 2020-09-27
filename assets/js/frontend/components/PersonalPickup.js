@@ -105,6 +105,9 @@ export default class PersonalPickup {
 
     setCurrentCheckboxDescription ($transportCheckbox, description) {
         $transportCheckbox.parents('.box-chooser__item').find('.box-chooser__item__title__description').html(description);
+        if ($('.js-chooser-delivery-information').length) {
+            $('.js-chooser-delivery-information').addClass('hidden');
+        }
     }
 
     resetCurrentCheckboxToOrigin ($transportCheckbox) {
@@ -112,6 +115,9 @@ export default class PersonalPickup {
             $transportCheckbox,
             $transportCheckbox.parents('.box-chooser__item').find('.box-chooser__item__title__description').data('origin')
         );
+        if ($('.js-chooser-delivery-information').length) {
+            $('.js-chooser-delivery-information').removeClass('hidden');
+        }
     }
 
     setupRadioPersonalPickupByHiddenStockId ($transportCheckbox, $window) {

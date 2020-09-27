@@ -561,4 +561,24 @@
             }
         }
     }
+
+    &__item__delivery-information {
+        white-space: nowrap;
+        font-size: 14px;
+        color: @color-light-tertiary;
+
+        .box-chooser__item__avail__time {
+            font-family: @font-tertiary;
+
+            &--now {
+                color: #73a90d;
+            }
+        }
+    }
+
+    &__item__price {
+        @media @query-lg {
+            min-width: 100px;
+        }
+    }
 }
