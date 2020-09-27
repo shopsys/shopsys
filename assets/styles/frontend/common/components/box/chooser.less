@@ -13,6 +13,12 @@
     &-check-wrap {
         margin-top: 2rem;
 
+        &--checkout {
+            .box-chooser-adresses-wrap {
+                margin-top: 0;
+            }
+        }
+
         &__in {
             margin-bottom: 25px;
 
@@ -617,6 +623,17 @@
         &__in {
             padding: 1rem;
         }
+    }
+
+    &__delivery-address-fields {
+        position: relative;
+        z-index: 1;
+        padding: 1rem;
+        margin: -20px 0 15px;
+
+        border-top: 0;
+        border-radius: @radius;
+        background-color: @color-f;
     }
 
     &__free-transport {
