@@ -11,6 +11,7 @@ use App\Component\ScontoBridge\Transfer\ScontoBridgeImportTransferDependency;
 use App\Component\Setting\Setting;
 use App\Model\Customer\User\CustomerUser;
 use App\Model\Customer\User\CustomerUserFacade;
+use App\Model\Customer\User\CustomerUserScontoBridgeStatusEnum;
 use DateTime;
 
 class ScontoBridgeImportCustomerFacade extends AbstractScontoBridgeImportTransfer
@@ -146,10 +147,14 @@ class ScontoBridgeImportCustomerFacade extends AbstractScontoBridgeImportTransfe
 
         if ($customerUser === null) {
             $customerUserUpdateData->customerUserData->password = '';
+            $customerUserUpdateData->customerUserData->scontoBridgeStatus = CustomerUserScontoBridgeStatusEnum::STATUS_DONE;
             $newCustomerUser = $this->customerUserFacade->create($customerUserUpdateData);
             $this->logger->addInfo(sprintf('Created customer with eshop ID: %s ', $newCustomerUser->getId()));
         } else {
             $this->customerUserFacade->editByAdmin($customerUser->getId(), $customerUserUpdateData);
+            $customerUser->setScontoBridgeStatus(
+                CustomerUserScontoBridgeStatusEnum::create(CustomerUserScontoBridgeStatusEnum::STATUS_DONE)
+            );
             $this->em->flush();
             $this->logger->addInfo(sprintf('Updated customer with eshop ID: %s', $customerUser->getId()));
         }
