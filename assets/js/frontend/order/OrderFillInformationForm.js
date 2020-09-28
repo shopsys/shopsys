@@ -18,7 +18,7 @@ export default class OrderFillInformationForm {
             .filterAllNodes('.js-tabs-button')
             .bind('click', OrderFillInformationForm.setCustomerTypeFormFiled);
 
-        $container.keypress(event => {
+        $container.find('form[name=order_personal_info_form]').keypress(event => {
             if (event.which == '13') {
                 event.preventDefault();
             }
