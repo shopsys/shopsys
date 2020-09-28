@@ -217,6 +217,7 @@ class SingleImportPromoCodeFacade implements TransferIdentificationInterface
             $promoCodeData->inAction = $this->mapBooleanConfig($this->singleImportPromoCodesConfig['in_action']);
             $promoCodeData->scontoPrice = $this->mapBooleanConfig($this->singleImportPromoCodesConfig['sconto_price']);
             $promoCodeData->withoutLowPrice = $this->mapBooleanConfig($this->singleImportPromoCodesConfig['without_low_price']);
+            $promoCodeData->priceHit = false;
             $promoCodeData->discountType = $this->singleImportPromoCodesConfig['discount_type'];
 
             $promoCodeLimit = $this->promoCodeLimitFactory->create(
