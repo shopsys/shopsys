@@ -101,12 +101,12 @@ class SingleImportPromoCodeFacade implements TransferIdentificationInterface
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Symfony\Component\Validator\Validator\ValidatorInterface $validator
      * @param \App\Model\Transfer\TransferLoggerFactory $transferLoggerFactory
-     * @param LocalFilesystemFactory $filesystemFactory
+     * @param \Shopsys\FrameworkBundle\Component\Filesystem\LocalFilesystemFactory $filesystemFactory
      * @param \App\Model\Order\PromoCode\Import\SingleImportPromoCodeValidator $singleImportPromoCodeValidator
      * @param \App\Model\Order\PromoCode\PromoCodeFacade $promoCodeFacade
      * @param \App\Model\Order\PromoCode\PromoCodeDataFactory $promoCodeDataFactory
      * @param \App\Model\Order\PromoCode\PromoCodeLimitFactory $promoCodeLimitFactory
-     * @param MountManager $mountManager
+     * @param \League\Flysystem\MountManager $mountManager
      */
     public function __construct(
         string $displayTimezone,

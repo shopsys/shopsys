@@ -388,8 +388,7 @@ class ProductAvailabilityFacade
                 $availabilityStatus = self::AVAILABILITY_STATUS_OUT_OF_STOCK;
             } else {
                 if ($productStock->getProductQuantity() <= 0) {
-                    $availabilityInformation = $outOfStockAvailabilityInformation;
-                    $availabilityStatus = self::AVAILABILITY_STATUS_OUT_OF_STOCK;
+                    $availabilityInformation = $this->getWeeksAvailabilityMessageByWeeks($weeks);
                 }
             }
 
