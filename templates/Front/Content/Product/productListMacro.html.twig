@@ -15,18 +15,7 @@
                             {% endif %}
                         </div>
 
-                        <{{ productHeadingTagName|default('h2') }} class="list-products__item__title js-list-products-item-title">
-                            {% if productView.namePrefix is not empty %}
-                                <span class="list-products__item__title__prefix">{{ productView.namePrefix }}</span>
-                            {% endif %}
-                            <span>
-                                {{ productView.name }}{{ productView.nameSufix is not empty ? ',' }}
-                            </span>
-                            {% if productView.nameSufix is not empty %}
-                                <span class="list-products__item__title__suffix"> {{ productView.nameSufix }}</span>
-                            {% endif %}
-                        </{{ productHeadingTagName|default('h2') }}>
-                        <div class="list-products__item__info dont-print">
+                        <div class="list-products__item__variants-wrap">
                             {% if productView.countColorsInVariants > 0 or productView.countDifferentVariants > 0 %}
                                 <div
                                     class="list-products__item__variants
@@ -36,7 +25,7 @@
                                             <img
                                                 class="list-products__item__variants__item__icon list-products__item__variants__item__icon--color"
                                                 loading="lazy"
-                                                data-src="{{ asset('public/frontend/images/variant-icon-color.svg') }}"
+                                                data-src="{{ asset('public/frontend/images/variant-icon-color-2.svg') }}"
                                                 alt="{{ 'Barva'|trans }}"
                                             >
                                             {% transchoice productView.countColorsInVariants with { '%itemsCount%': productView.countColorsInVariants } %}
@@ -63,6 +52,19 @@
                                     {% endif %}
                                 </div>
                             {% endif %}
+                        </div>
+                        <{{ productHeadingTagName|default('h2') }} class="list-products__item__title js-list-products-item-title">
+                            {% if productView.namePrefix is not empty %}
+                                <span class="list-products__item__title__prefix">{{ productView.namePrefix }}</span>
+                            {% endif %}
+                            <span>
+                                {{ productView.name }}{{ productView.nameSufix is not empty ? ',' }}
+                            </span>
+                            {% if productView.nameSufix is not empty %}
+                                <span class="list-products__item__title__suffix"> {{ productView.nameSufix }}</span>
+                            {% endif %}
+                        </{{ productHeadingTagName|default('h2') }}>
+                        <div class="list-products__item__info dont-print">
                             <div class="list-products__item__info__availability">
                                 <strong class="list-products__item__info__availability__text {{ productView.available ? 'list-products__item__info__availability__text--primary' : ' ' }}">{{ productView.availability }}</strong>
                                 {% if productView.productAvailableStocksCountInformation is not empty %}

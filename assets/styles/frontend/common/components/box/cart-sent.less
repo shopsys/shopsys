@@ -16,14 +16,13 @@
     @media @query-lg {
         flex-direction: row;
         align-items: center;
-        padding: 0 1.5rem 0 2rem;
+        padding: 2.5rem 4rem 3rem 3rem;
         margin: 3rem 0 2rem 0;
     }
 
     @media @query-vl {
-        padding: 0 4rem 0 3rem;
-        margin: 118px 0 2rem 0;
-        height: 230px;
+        margin: 48px 0 2rem 0;
+        min-height: 230px;
     }
 
     @media @query-xl {
@@ -46,6 +45,10 @@
         align-self: center;
         margin-top: 2rem;
 
+        @media @query-lg {
+            margin-bottom: -3rem;
+        }
+
         @media @query-sm {
             align-self: flex-end;
             margin-top: 0;
@@ -61,20 +64,40 @@
         }
     }
 
-    &__info {
-        margin-bottom: 1.5rem;
+    &__text {
+        color: @color-base-secondary;
 
-        font-family: @font-quartenary;
-        color: @color-base-lighter;
+        @media @query-md {
+            padding-right: 1rem;
+        }
 
-        strong {
-            color: @color-primary;
-            font-weight: 400;
+        @media @query-xl {
+            padding-right: 3rem;
+        }
+
+        p {
+            margin-top: 0;
+        }
+
+        p, li {
+            color: inherit;
+        }
+
+        &--wrap-all {
+            word-break: break-all;
         }
     }
 
+    &__buttons {
+        margin-top: 2rem;
+    }
+
     &__btn {
+        display: inline-flex;
+        align-items: center;
         margin-bottom: 12px;
+        height: 50px;
+        padding: 0 25px;
 
         font-family: @font-quartenary;
         font-size: 15px;
