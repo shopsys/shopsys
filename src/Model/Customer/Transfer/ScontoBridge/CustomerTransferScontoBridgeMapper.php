@@ -253,11 +253,12 @@ class CustomerTransferScontoBridgeMapper
     {
         $erpIndividual = new ScontoBridgeIndividual();
 
-        $erpIndividual->setIndividualTitle(
-            $this->scontoBridgeTitleResolver->getIndividualTitleByGender(
-                $customerUser->getGender() ?? ''
-            )
+        $title = $this->scontoBridgeTitleResolver->getIndividualTitleByGender(
+            $customerUser->getGender() ?? ''
         );
+        if ($title !== null) {
+            $erpIndividual->setIndividualTitle($title);
+        }
         $erpIndividual->setFirstName($customerUser->getFirstName());
         $erpIndividual->setLastName($customerUser->getLastName());
 

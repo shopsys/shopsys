@@ -9,9 +9,9 @@ use JsonSerializable;
 class ScontoBridgeIndividual implements JsonSerializable
 {
     /**
-     * @var int
+     * @var int|null
      */
-    private int $individualTitle;
+    private ?int $individualTitle;
 
     /**
      * @var string
@@ -31,6 +31,7 @@ class ScontoBridgeIndividual implements JsonSerializable
     public function __construct()
     {
         $this->birthDate = null;
+        $this->individualTitle = null;
     }
 
     /**
