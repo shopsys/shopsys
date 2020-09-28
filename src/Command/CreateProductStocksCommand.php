@@ -68,7 +68,7 @@ class CreateProductStocksCommand extends Command
         $this->setDescription('Generate rows for each stock for each product if does not exist');
     }
 
-    public function execute(InputInterface $input, OutputInterface $output): void
+    public function execute(InputInterface $input, OutputInterface $output)
     {
         $stocks = $this->stockFacade->getAllStocks();
 
