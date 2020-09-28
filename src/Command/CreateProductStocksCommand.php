@@ -9,6 +9,7 @@ use App\Model\Product\ProductRepository;
 use App\Model\Stock\ProductStockDataFactory;
 use App\Model\Stock\ProductStockFacade;
 use App\Model\Stock\StockFacade;
+use Shopsys\FrameworkBundle\Command\CommandResultCodes;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -95,5 +96,7 @@ class CreateProductStocksCommand extends Command
             }
             $output->writeln('');
         }
+
+        return CommandResultCodes::RESULT_OK;
     }
 }
