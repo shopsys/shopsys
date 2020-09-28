@@ -148,7 +148,7 @@
                                             </label>
                                         {% endfor %}
                                         {% if loop.first and not splitOrderPreview.morePreviews %}
-                                            <div class="box-chooser__free-transport">
+                                            <div class="box-chooser__free-transport {{ orderPreview.productType.isFreeTransport(getDomain().id) ? '' : ' box-chooser__free-transport--empty' }}">
                                                 {{ cartFreeTransportMacro.progressBar(orderPreview) }}
                                             </div>
                                         {% endif %}
