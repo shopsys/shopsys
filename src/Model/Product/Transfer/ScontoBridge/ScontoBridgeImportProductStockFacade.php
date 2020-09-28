@@ -8,7 +8,10 @@ use App\Component\ScontoBridge\ScontoBridgeClient;
 use App\Component\ScontoBridge\Transfer\AbstractScontoBridgeImportTransfer;
 use App\Component\ScontoBridge\Transfer\ScontoBridgeImportTransferDependency;
 use App\Component\Setting\Setting;
+use App\Model\Product\ProductFacade;
+use App\Model\Stock\ProductStock;
 use App\Model\Stock\ProductStockFacade;
+use App\Model\Stock\StockFacade;
 use DateTime;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionLoader;
@@ -72,6 +75,10 @@ class ScontoBridgeImportProductStockFacade extends AbstractScontoBridgeImportTra
      */
     private $domain;
 
+    private $stockFacade;
+
+    private $productFacade;
+
     /**
      * @param \App\Component\ScontoBridge\Transfer\ScontoBridgeImportTransferDependency $scontoBridgeImportTransferDependency
      * @param \App\Component\ScontoBridge\ScontoBridgeClient $scontoBridgeClient
@@ -94,7 +101,9 @@ class ScontoBridgeImportProductStockFacade extends AbstractScontoBridgeImportTra
         IndexFacade $indexFacade,
         IndexDefinitionLoader $indexDefinitionLoader,
         ProductIndex $index,
-        Domain $domain
+        Domain $domain,
+        StockFacade $stockFacade,
+        ProductFacade $productFacade
     ) {
         parent::__construct($scontoBridgeImportTransferDependency);
 
@@ -107,6 +116,8 @@ class ScontoBridgeImportProductStockFacade extends AbstractScontoBridgeImportTra
         $this->indexDefinitionLoader = $indexDefinitionLoader;
         $this->index = $index;
         $this->domain = $domain;
+        $this->stockFacade = $stockFacade;
+        $this->productFacade = $productFacade;
     }
 
     /**
@@ -169,6 +180,15 @@ class ScontoBridgeImportProductStockFacade extends AbstractScontoBridgeImportTra
         );
 
         if ($productStock === null) {
+            $product = $this->productFacade->findByCatnum($scontoBridgeItemData['sku']);
+            if ($product !== null) {
+                $stocks = $this->stockFacade->getAllStocks();
+                foreach ($stocks as $stock) {
+                    $productStock = new ProductStock($stock, $product);
+                    $this->em->persist($productStock);
+                }
+            }
+
             $this->logger->addWarning(sprintf(
                 'ProductStock with product catnum %s and stock ID %s not found',
                 $scontoBridgeItemData['sku'],
