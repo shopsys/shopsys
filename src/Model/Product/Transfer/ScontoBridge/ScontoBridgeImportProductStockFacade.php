@@ -187,6 +187,7 @@ class ScontoBridgeImportProductStockFacade extends AbstractScontoBridgeImportTra
                     $productStock = new ProductStock($stock, $product);
                     $this->em->persist($productStock);
                 }
+                $this->em->flush();
             }
 
             $this->logger->addWarning(sprintf(
