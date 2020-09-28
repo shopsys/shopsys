@@ -32,7 +32,8 @@ export default class PromoCode {
         } else {
             // eslint-disable-next-line no-new
             new Window({
-                content: Translator.trans('Please enter promo code.')
+                content: Translator.trans('Please enter promo code.'),
+                cssClass: 'window-popup--promo-code'
             });
         }
     }
@@ -43,7 +44,8 @@ export default class PromoCode {
         } else {
             // eslint-disable-next-line no-new
             new Window({
-                content: response.message
+                content: response.message,
+                cssClass: 'window-popup--promo-code'
             });
         }
     }
