@@ -44,4 +44,4 @@ export default class TransportForm {
 
 };
 
-(new Register()).registerCallback(TransportForm.init, 'TransportForm.init', 100); // Priority has to be lower then priority of transportPalletPrices.js
+(new Register()).registerCallback(TransportForm.init, 'TransportForm.init', 110); // Priority has to be lower then priority of transportPalletPrices.js
