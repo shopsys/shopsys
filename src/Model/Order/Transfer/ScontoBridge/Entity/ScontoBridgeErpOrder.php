@@ -466,7 +466,7 @@ class ScontoBridgeErpOrder implements JsonSerializable
             'priceWithVat' => $this->priceWithVat,
             'priceCurrency' => $this->priceCurrency,
             'title' => $this->title,
-            'inviceAddresCompanyName' => $this->invoiceAddressCompanyName,
+            'invoiceAddressCompanyName' => $this->invoiceAddressCompanyName,
             'invoiceAddressLastName' => $this->invoiceAddressLastName,
             'invoiceAddressFirstName' => $this->invoiceAddressFirstName,
             'invoiceAddressStreet' => $this->invoiceAddressStreet,
