@@ -53,7 +53,9 @@ export default class AjaxMoreLoader {
 
                 Gtm.pushEvent($response.find('.gtm-info').data('gtmEvent'));
 
+                const oldScroll = $(window).scrollTop();
                 ajaxMoreLoader.$currentList.append($nextItems);
+                $(window).scrollTop(oldScroll);
                 ajaxMoreLoader.page++;
                 ajaxMoreLoader.paginationToItem += $nextItems.length;
                 ajaxMoreLoader.$paginationToItemSpan.text(ajaxMoreLoader.paginationToItem);
