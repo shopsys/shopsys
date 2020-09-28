@@ -54,7 +54,7 @@ class ProductController extends FrontBaseController
 {
     public const SEARCH_TEXT_PARAMETER = 'q';
     public const PAGE_QUERY_PARAMETER = 'page';
-    public const PRODUCTS_PER_PAGE = 36;
+    public const PRODUCTS_PER_PAGE = 6;
     public const SIMILAR_PRODUCTS_PER_PAGE = 8;
     private const PARAMETER_VALUE_ENTITY_NAME = 'parameterValue';
     public const SALE_PRODUCTS_PER_PAGE = 8;
