@@ -7,9 +7,9 @@
             {% if stockAvailabilityNumber == 0 %}
                 {% set stockAvailabilityText = 'Můžete mít <strong>ihned</strong>'|transHtml %}
             {% elseif stockAvailabilityNumber == 1 %}
-                {% set stockAvailabilityText = 'K dispozici do <strong>týdne</strong>'|transHtml %}
+                {% set stockAvailabilityText = 'K dispozici do <span>týdne</span>'|transHtml %}
             {% else %}
-                {% set stockAvailabilityText = "K dispozici do <strong>#{stockAvailabilityNumber}</strong> týdnů"|transHtml %}
+                {% set stockAvailabilityText = "K dispozici do <span>#{stockAvailabilityNumber}</span> týdnů"|transHtml %}
             {% endif %}
             <label class="box-chooser__item">
                 <span class="box-chooser__item__check">

@@ -518,6 +518,10 @@
                 left: 38px;
             }
 
+            @media @query-xl {
+                min-width: @box-chooser-image-width;
+            }
+
             img {
                 display: block;
             }
@@ -544,6 +548,7 @@
             &__description {
                 font-size: 14px;
                 line-height: 1.3;
+                color: @color-light-tertiary;
 
                 @media @query-lg {
                     display: flex;
@@ -585,11 +590,18 @@
                     }
 
                     @media @query-xl {
-                        margin-left: 3rem;
+                        margin-left: 8rem;
+                        white-space: nowrap;
                     }
 
                     strong {
                         color: #73a90d;
+                    }
+
+                    .box-chooser__item__avail__text--now {
+                        span {
+                            font-family: @font-quartenary;
+                        }
                     }
                 }
             }
@@ -726,6 +738,11 @@
         white-space: nowrap;
         font-size: 14px;
         color: @color-light-tertiary;
+
+        @media @query-xl {
+            min-width: 200px;
+            text-align: left;
+        }
 
         .box-chooser__item__avail__time {
             font-family: @font-tertiary;

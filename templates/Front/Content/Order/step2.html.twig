@@ -104,7 +104,7 @@
                                                                     {% set minimalDaysAvailability = stockDayAvailabilitiesByStockId[transportPersonalPickupStockId] %}
                                                                     {% if minimalDaysAvailability < 7 %}
                                                                         {% transchoice minimalDaysAvailability with {'%daysAvailability%': minimalDaysAvailability} %}
-                                                                        {0} <span class="box-chooser__item__avail__text box-chooser__item__avail__text--now">Můžete mít <strong>ihned</strong></span>
+                                                                        {0} <span class="box-chooser__item__avail__text box-chooser__item__avail__text--now">Můžete mít <strong class="now">ihned</strong></span>
                                                                         | [1,Inf] <span class="box-chooser__item__avail__text">Osobní odběr do <strong>%daysAvailability% dnů</strong></span>
                                                                         {% endtranschoice %}
                                                                     {% else %}
