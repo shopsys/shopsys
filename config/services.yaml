@@ -889,6 +889,8 @@ services:
 
     App\Command\CleanOpcacheCommand: ~
 
+    App\Command\CreateProductStocksCommand: ~
+
     App\Command\ElFinderPostInstallCommand: ~
 
     App\Command\SingleImportPromoCodesCommand: ~
