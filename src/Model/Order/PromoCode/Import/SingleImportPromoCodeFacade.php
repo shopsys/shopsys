@@ -290,7 +290,7 @@ class SingleImportPromoCodeFacade implements TransferIdentificationInterface
     {
         $localFilePath = '/var/www/html/' . $this->singleImportPromoCodesConfig['file'];
         try {
-            $this->mountManager->copy('main://' . $this->singleImportPromoCodesConfig['file'], 'local://'.$localFilePath);
+            $this->mountManager->copy('main://' . $this->singleImportPromoCodesConfig['file'], 'local://' . $localFilePath);
             $this->logger->addInfo('MoveFile from cloud to local');
         } catch (Exception $e) {
             $this->logger->addInfo('MoveFile from cloud to local FAILED');
