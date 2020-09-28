@@ -175,7 +175,6 @@ class CustomerTransferScontoBridgeMapper
         $erpUser->setDistributionChannelCode(
             $this->getDistributionChannelByCountry($country)
         );
-        $erpUser->setPhonePrefix($this->getPhonePrefixByCountry($country));
         $erpUser->setPhoneNumber($customerUser->getTelephone());
 
         $erpUser->setPrimaryAddress($this->mapPrimaryAddress($customerUser));
@@ -197,11 +196,11 @@ class CustomerTransferScontoBridgeMapper
      */
     private function getPhoneNumberByScontoBridgeCustomerData(array $scontoBridgeCustomerData): ?string
     {
-        if ($scontoBridgeCustomerData['phoneNumber'] === null || $scontoBridgeCustomerData['phonePrefix'] === null) {
+        if ($scontoBridgeCustomerData['phoneNumber'] === null) {
             return null;
         }
 
-        return '+' . $scontoBridgeCustomerData['phonePrefix'] . $scontoBridgeCustomerData['phoneNumber'];
+        return $scontoBridgeCustomerData['phoneNumber'];
     }
 
     /**
@@ -263,21 +262,6 @@ class CustomerTransferScontoBridgeMapper
         $erpIndividual->setLastName($customerUser->getLastName());
 
         return $erpIndividual;
-    }
-
-    /**
-     * @param Country $country
-     * @return int
-     */
-    private function getPhonePrefixByCountry(Country $country): int
-    {
-        $domainId = $this->getDomainIdByCountryCode($country->getCode());
-
-        try {
-            return $this->countryFacade->getPhonePrefixByDomainId($domainId);
-        } catch (CountryDataInvalidException $e) {
-            throw new CustomerTransferScontoBridgeMapperException($e->getMessage(), $e);
-        }
     }
 
     /**

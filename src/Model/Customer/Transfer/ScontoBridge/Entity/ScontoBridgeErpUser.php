@@ -37,11 +37,6 @@ class ScontoBridgeErpUser implements JsonSerializable
     private int $customerType;
 
     /**
-     * @var int
-     */
-    private int $phonePrefix;
-
-    /**
      * @var string|null
      */
     private ?string $phoneNumber;
@@ -110,14 +105,6 @@ class ScontoBridgeErpUser implements JsonSerializable
     }
 
     /**
-     * @param int $phonePrefix
-     */
-    public function setPhonePrefix(int $phonePrefix): void
-    {
-        $this->phonePrefix = $phonePrefix;
-    }
-
-    /**
      * @param string $phoneNumber
      */
     public function setPhoneNumber(?string $phoneNumber): void
@@ -160,7 +147,6 @@ class ScontoBridgeErpUser implements JsonSerializable
             'newsletter' => $this->newsletter,
             'distributionChannelCode' => $this->distributionChannelCode,
             'customerType' => $this->customerType,
-            'phonePrefix' => $this->phonePrefix,
             'phoneNumber' => $this->phoneNumber,
             'primaryAddress' => $this->primaryAddress,
             'individual' => $this->individual,
