@@ -286,12 +286,6 @@ class OrderTransferScontoBridgeImportFacade extends AbstractScontoBridgeImportTr
             'fields' => [
                 'status' => [
                     new NotBlank()
-                ],
-                'erpOrderNumber' => [
-                    new NotBlank()
-                ],
-                'primaryStoreCode' => [
-                    new NotBlank()
                 ]
             ]
         ]));
