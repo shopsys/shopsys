@@ -10,24 +10,24 @@ const FILTER_OFF_TEXT = 'Filtrace off';
 
 export default class Gtm {
     static clickPush (e) {
-        if ($(this).parents('.is-not-clickable').length) {
-            return;
-        }
-
         /* eslint-disable camelcase */
         if (typeof google_tag_manager != 'undefined') {
-            e.preventDefault();
-        }
+            if ($(this).parents('.is-not-clickable').length) {
+                return;
+            }
 
-        let ctrl = false;
-        let url = this.href;
+            /* eslint-disable camelcase */
+            if (typeof google_tag_manager != 'undefined') {
+                e.preventDefault();
+            }
 
-        if (e.ctrlKey) {
-            ctrl = true;
-        }
+            let ctrl = false;
+            let url = this.href;
 
-        /* eslint-disable camelcase */
-        if (typeof google_tag_manager != 'undefined') {
+            if (e.ctrlKey) {
+                ctrl = true;
+            }
+
             dataLayer.push(
                 $.extend({}, $(this).data('gtm-event'), {
                     'eventCallback': function (gtmId) {
@@ -44,43 +44,46 @@ export default class Gtm {
     }
 
     static initScrollerPush (scroller) {
-        scroller
-            .setup({
-                step: '.gtm-scroll',
-                once: true,
-                offset: 0.5
-            })
-            .onStepEnter(response => {
-                /* eslint-disable camelcase */
-                if (typeof google_tag_manager != 'undefined') {
-                    dataLayer.push($(response.element).data('gtm-event'));
-                }
-            });
+        /* eslint-disable camelcase */
+        if (typeof google_tag_manager != 'undefined') {
+            scroller
+                .setup({
+                    step: '.gtm-scroll',
+                    once: true,
+                    offset: 0.5
+                })
+                .onStepEnter(response => {
+                    /* eslint-disable camelcase */
+                    if (typeof google_tag_manager != 'undefined') {
+                        dataLayer.push($(response.element).data('gtm-event'));
+                    }
+                });
+        }
     }
 
     static pushTransportAndPayment (form, e) {
-        e.preventDefault();
-
-        let options = [];
-        $('form[name=transport_and_payment_form]').find('input:checkbox:checked').each((index, val) => {
-            options.push($(val).closest('label').find('span.box-chooser__item__title strong').text().trim());
-        });
-
-        const data = {
-            'event': EVENT_NAME_CHECKOUT_OPTION,
-            'ecommerce': {
-                'currencyCode': currencyCode,
-                'checkout_option': {
-                    'actionField': {
-                        'step': 1,
-                        'option': options.join('|')
-                    }
-                }
-            }
-        };
-
         /* eslint-disable camelcase */
         if (typeof google_tag_manager != 'undefined') {
+            e.preventDefault();
+
+            let options = [];
+            $('form[name=transport_and_payment_form]').find('input:checkbox:checked').each((index, val) => {
+                options.push($(val).closest('label').find('span.box-chooser__item__title strong').text().trim());
+            });
+
+            const data = {
+                'event': EVENT_NAME_CHECKOUT_OPTION,
+                'ecommerce': {
+                    'currencyCode': currencyCode,
+                    'checkout_option': {
+                        'actionField': {
+                            'step': 1,
+                            'option': options.join('|')
+                        }
+                    }
+                }
+            };
+
             dataLayer.push(
                 $.extend({}, data, {
                     'eventCallback': function (gtmId) {
@@ -93,92 +96,98 @@ export default class Gtm {
     }
 
     static pushFilterData (serializedData) {
-        let index = serializedData.length - 1;
-        while (index >= 0) {
-            if (serializedData[index].value === '' || serializedData[index].value === null) {
-                serializedData.splice(index, 1);
-            }
-            index--;
-        }
-
-        try {
-            var originalValues = JSON.parse(localStorage.getItem(LOCALSTORAGE_FILTER_TAG));
-        } catch (e) {
-            var originalValues = [];
-        }
-
-        localStorage.setItem(LOCALSTORAGE_FILTER_TAG, JSON.stringify(serializedData));
-
-        const addedValues = $.isEmptyObject(originalValues) ? serializedData : serializedData.filter(Gtm.compare(originalValues));
-        const removedValues = $.isEmptyObject(originalValues) ? [] : originalValues.filter(Gtm.compare(serializedData));
-
-        const pushFunction = (item, category) => {
-            if (item.name !== 'q') {
-                const section = $(`*[name="${item.name}"]`).closest('.js-product-filter-box').children('.js-product-filter-box-label').text().trim();
-                const label = $(`*[name="${item.name}"][value="${item.value}"]`).siblings('label');
-                const valueEl = label.children('a');
-
-                valueEl.find('span').remove();
-                const value = valueEl.text().trim() || label.attr('title');
-
-                const data = {
-                    'event': EVENT_NAME_CATEGORY_FILTER,
-                    'eventData': {
-                        'category': category,
-                        'action': section !== '' ? section : FILTER_FIRST_SECTION_LABEL,
-                        'label': value
-                    }
-                };
-
-                if (typeof value !== 'undefined' || category !== FILTER_OFF_TEXT) {
-                    Gtm.pushEvent(data);
+        /* eslint-disable camelcase */
+        if (typeof google_tag_manager != 'undefined') {
+            let index = serializedData.length - 1;
+            while (index >= 0) {
+                if (serializedData[index].value === '' || serializedData[index].value === null) {
+                    serializedData.splice(index, 1);
                 }
+                index--;
             }
-        };
 
-        addedValues.forEach(item => pushFunction(item, FILTER_ON_TEXT));
-        removedValues.forEach(item => pushFunction(item, FILTER_OFF_TEXT));
+            try {
+                var originalValues = JSON.parse(localStorage.getItem(LOCALSTORAGE_FILTER_TAG));
+            } catch (e) {
+                var originalValues = [];
+            }
+
+            localStorage.setItem(LOCALSTORAGE_FILTER_TAG, JSON.stringify(serializedData));
+
+            const addedValues = $.isEmptyObject(originalValues) ? serializedData : serializedData.filter(Gtm.compare(originalValues));
+            const removedValues = $.isEmptyObject(originalValues) ? [] : originalValues.filter(Gtm.compare(serializedData));
+
+            const pushFunction = (item, category) => {
+                if (item.name !== 'q') {
+                    const section = $(`*[name="${item.name}"]`).closest('.js-product-filter-box').children('.js-product-filter-box-label').text().trim();
+                    const label = $(`*[name="${item.name}"][value="${item.value}"]`).siblings('label');
+                    const valueEl = label.children('a');
+
+                    valueEl.find('span').remove();
+                    const value = valueEl.text().trim() || label.attr('title');
+
+                    const data = {
+                        'event': EVENT_NAME_CATEGORY_FILTER,
+                        'eventData': {
+                            'category': category,
+                            'action': section !== '' ? section : FILTER_FIRST_SECTION_LABEL,
+                            'label': value
+                        }
+                    };
+
+                    if (typeof value !== 'undefined' || category !== FILTER_OFF_TEXT) {
+                        Gtm.pushEvent(data);
+                    }
+                }
+            };
+
+            addedValues.forEach(item => pushFunction(item, FILTER_ON_TEXT));
+            removedValues.forEach(item => pushFunction(item, FILTER_OFF_TEXT));
+        }
     }
 
     static pushSortData (text) {
-        const data = {
-            'event': EVENT_NAME_CATEGORY_FILTER,
-            'eventData': {
-                'category': FILTER_ON_TEXT,
-                'action': 'Řazení',
-                'label': text.trim()
-            }
-        };
-        Gtm.pushEvent(data);
+        /* eslint-disable camelcase */
+        if (typeof google_tag_manager != 'undefined') {
+            const data = {
+                'event': EVENT_NAME_CATEGORY_FILTER,
+                'eventData': {
+                    'category': FILTER_ON_TEXT,
+                    'action': 'Řazení',
+                    'label': text.trim()
+                }
+            };
+            Gtm.pushEvent(data);
+        }
     }
 
     static pushEvent (data) {
-        if (typeof dataLayer != 'undefined') {
-            dataLayer.push(data);
+        /* eslint-disable camelcase */
+        if (typeof google_tag_manager != 'undefined') {
+            if (typeof dataLayer != 'undefined') {
+                dataLayer.push(data);
+            }
         }
     }
 
     static init ($container) {
-        /* eslint-disable camelcase */
-        if (typeof google_tag_manager != 'undefined') {
-            $container.find('a').filter(function () {
-                return $(this).data('gtm-event') !== undefined;
-            }).on('click', Gtm.clickPush);
+        $container.find('a').filter(function () {
+            return $(this).data('gtm-event') !== undefined;
+        }).on('click', Gtm.clickPush);
 
-            if ($container.find('.gtm-scroll').length > 0) {
-                const scrollama = require('scrollama');
-                var scroller = scrollama();
+        if ($container.find('.gtm-scroll').length > 0) {
+            const scrollama = require('scrollama');
+            var scroller = scrollama();
 
-                Gtm.initScrollerPush(scroller);
-            }
+            Gtm.initScrollerPush(scroller);
+        }
 
-            $container.find('.js-transport_and_payment_form_save').click(function (e) {
-                Gtm.pushTransportAndPayment($(this.closest('form')), e);
-            });
+        $container.find('.js-transport_and_payment_form_save').click(function (e) {
+            Gtm.pushTransportAndPayment($(this.closest('form')), e);
+        });
 
-            if ($container.is('body')) {
-                localStorage.clear(LOCALSTORAGE_FILTER_TAG);
-            }
+        if ($container.is('body')) {
+            localStorage.clear(LOCALSTORAGE_FILTER_TAG);
         }
     }
 

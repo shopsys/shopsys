@@ -220,7 +220,7 @@ class DataLayerMapper
      */
     public function mapProductToDataLayerProduct(Product $product, DataLayerProduct $dataLayerProduct, string $locale): void
     {
-        $dataLayerProduct->setName((string)$product->getName($locale));
+        $dataLayerProduct->setName(implode(' ', [$product->getNamePrefix(), $product->getName($locale), $product->getNameSufix()]));
         $dataLayerProduct->setId((string)$product->getId());
 
         $sellingPrice = $this->productCachedAttributesFacade->getProductSellingPrice($product);
@@ -374,7 +374,7 @@ class DataLayerMapper
         $productMainCategory = $this->categoryFacade->getProductMainCategoryByDomainId($product, $this->domain->getId());
 
         $productData = [
-            'name' => $product->getName($locale),
+            'name' => implode(' ', [$product->getNamePrefix(), $product->getName($locale), $product->getNameSufix()]),
             'id' => $product->getId(),
             'price' => $this->getMoneyAsString($priceWithoutVat),
             'tax' => $this->getMoneyAsString($vat),
