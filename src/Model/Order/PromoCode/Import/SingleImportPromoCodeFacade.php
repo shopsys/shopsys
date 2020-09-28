@@ -96,15 +96,17 @@ class SingleImportPromoCodeFacade implements TransferIdentificationInterface
     private MountManager $mountManager;
 
     /**
+     * @param string $displayTimezone
      * @param \Shopsys\FrameworkBundle\Component\Doctrine\SqlLoggerFacade $sqlLoggerFacade
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Symfony\Component\Validator\Validator\ValidatorInterface $validator
      * @param \App\Model\Transfer\TransferLoggerFactory $transferLoggerFactory
-     * @param \League\Flysystem\FilesystemInterface $localFilesystem
+     * @param LocalFilesystemFactory $filesystemFactory
      * @param \App\Model\Order\PromoCode\Import\SingleImportPromoCodeValidator $singleImportPromoCodeValidator
      * @param \App\Model\Order\PromoCode\PromoCodeFacade $promoCodeFacade
      * @param \App\Model\Order\PromoCode\PromoCodeDataFactory $promoCodeDataFactory
      * @param \App\Model\Order\PromoCode\PromoCodeLimitFactory $promoCodeLimitFactory
+     * @param MountManager $mountManager
      */
     public function __construct(
         string $displayTimezone,
