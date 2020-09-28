@@ -49,7 +49,7 @@ declare -A PARAMETERS=(
     ["parameters.gopay_config.cs.clientSecret"]=${GOPAY_CS_CLIENTSECRET}
     ["parameters.gopay_config.sk.clientSecret"]=${GOPAY_SK_CLIENTSECRET}
     ["parameters.gopay_config.isProductionMode"]=${GOPAY_PRODUCTION_MODE}
-    ["parameters.googleMapApiKey"]=${GOOGLE_MAP_API_KEY}
+    ["parameters.google_map_api_key"]=${GOOGLE_MAP_API_KEY}
 )
 
 # declare parameters, that types' need to be forced
