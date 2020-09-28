@@ -26,6 +26,7 @@ class CustomerTransferScontoBridgeMapper
 {
     public const CUSTOMER_TYPE_INDIVIDUAL = 0;
     public const CUSTOMER_TYPE_COMPANY = 1;
+    private const DEFAULT_TITLE = 1;
 
     /**
      * @var \App\Model\Customer\User\CustomerUserUpdateDataFactory
@@ -256,9 +257,7 @@ class CustomerTransferScontoBridgeMapper
         $title = $this->scontoBridgeTitleResolver->getIndividualTitleByGender(
             $customerUser->getGender() ?? ''
         );
-        if ($title !== null) {
-            $erpIndividual->setIndividualTitle($title);
-        }
+        $erpIndividual->setIndividualTitle($title ?? self::DEFAULT_TITLE);
         $erpIndividual->setFirstName($customerUser->getFirstName());
         $erpIndividual->setLastName($customerUser->getLastName());
 
