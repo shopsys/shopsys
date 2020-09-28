@@ -256,7 +256,7 @@ class CustomerTransferScontoBridgeMapper
 
         $erpIndividual->setIndividualTitle(
             $this->scontoBridgeTitleResolver->getIndividualTitleByGender(
-                $customerUser->getGender()
+                $customerUser->getGender() ?? ''
             )
         );
         $erpIndividual->setFirstName($customerUser->getFirstName());

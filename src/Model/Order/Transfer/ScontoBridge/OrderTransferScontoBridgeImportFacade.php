@@ -6,6 +6,7 @@ namespace App\Model\Order\Transfer\ScontoBridge;
 
 use App\Component\ScontoBridge\ScontoBridgeClient;
 use App\Component\ScontoBridge\Transfer\AbstractScontoBridgeImportTransfer;
+use App\Component\ScontoBridge\Transfer\Exception\TransferInvalidDataAdministratorCriticalException;
 use App\Component\ScontoBridge\Transfer\ScontoBridgeImportTransferDependency;
 use App\Component\Setting\Setting;
 use App\Model\Order\OrderRepository;
@@ -18,6 +19,9 @@ use DateTime;
 use Generator;
 use Shopsys\FrameworkBundle\Model\Order\Exception\OrderNotFoundException;
 use Shopsys\FrameworkBundle\Model\Order\Status\Exception\OrderStatusNotFoundException;
+use Symfony\Component\Validator\Constraints\Collection;
+use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class OrderTransferScontoBridgeImportFacade extends AbstractScontoBridgeImportTransfer
 {
@@ -76,7 +80,8 @@ class OrderTransferScontoBridgeImportFacade extends AbstractScontoBridgeImportTr
         ScontoBridgeClient $scontoBridgeClient,
         OrderRepository $orderRepository,
         StockRepository $stockRepository,
-        OrderStatusRepository $orderStatusRepository
+        OrderStatusRepository $orderStatusRepository,
+        ValidatorInterface $validator
     ) {
         parent::__construct($scontoBridgeImportTransferDependency);
 
@@ -86,6 +91,7 @@ class OrderTransferScontoBridgeImportFacade extends AbstractScontoBridgeImportTr
         $this->orderRepository = $orderRepository;
         $this->stockRepository = $stockRepository;
         $this->orderStatusRepository = $orderStatusRepository;
+        $this->validator = $validator;
     }
 
     protected function doBeforeTransfer(): void
@@ -110,6 +116,7 @@ class OrderTransferScontoBridgeImportFacade extends AbstractScontoBridgeImportTr
      */
     protected function processItem(array $scontoBridgeOrderData): void
     {
+        $this->validate($scontoBridgeOrderData);
         $orderId = $scontoBridgeOrderData['eshopId'];
         $this->logger->addInfo(sprintf('Downloading date for order id: %d', $orderId));
 
@@ -264,5 +271,30 @@ class OrderTransferScontoBridgeImportFacade extends AbstractScontoBridgeImportTr
     private function logError(int $orderId, string $message): void
     {
         $this->logger->addError(sprintf('Sconto bridge order id \'%d\' import failed: ' . $message, $orderId));
+    }
+
+    /**
+     * @param array $scontoBridgeOrderData
+     */
+    private function validate(array $scontoBridgeOrderData): void
+    {
+        $violations = $this->validator->validate($scontoBridgeOrderData, new Collection([
+            'allowExtraFields' => true,
+            'fields' => [
+                'status' => [
+                    new NotBlank()
+                ],
+                'erpOrderNumber' => [
+                    new NotBlank()
+                ],
+                'primaryStoreCode' => [
+                    new NotBlank()
+                ]
+            ]
+        ]));
+
+        if (count($violations) > 0) {
+            throw new TransferInvalidDataAdministratorCriticalException($violations);
+        }
     }
 }

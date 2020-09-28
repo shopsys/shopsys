@@ -108,7 +108,7 @@ class OrderTransferScontoBridgeMapper
     {
         $billingAddress = $customerUser->getCustomer()->getBillingAddress();
         if ($billingAddress->isCompanyCustomer() === false) {
-            $title = $this->scontoBridgeTitleResolver->getIndividualTitleByGender($customerUser->getGender());
+            $title = $this->scontoBridgeTitleResolver->getIndividualTitleByGender($customerUser->getGender() ?? '');
             if ($title !== null) {
                 $erpOrder->setTitle($title);
             }
@@ -144,8 +144,14 @@ class OrderTransferScontoBridgeMapper
         /** @var string|null $deliveryCompanyName */
         $deliveryCompanyName = $order->getDeliveryCompanyName();
 
-        $erpOrder->setDeliveryAddressFirstName($order->getDeliveryFirstName());
-        $erpOrder->setDeliveryAddressLastName($order->getDeliveryLastName());
+        $deliveryFirstName = $order->getDeliveryFirstName();
+        if ($deliveryFirstName !== null) {
+            $erpOrder->setDeliveryAddressFirstName($order->getDeliveryFirstName());
+        }
+        $deliveryLastName = $order->getDeliveryLastName();
+        if ($deliveryLastName !== null) {
+            $erpOrder->setDeliveryAddressLastName($order->getDeliveryLastName());
+        }
         if ($deliveryCompanyName !== null) {
             $erpOrder->setDeliveryAddressCompanyName($deliveryCompanyName);
         }
