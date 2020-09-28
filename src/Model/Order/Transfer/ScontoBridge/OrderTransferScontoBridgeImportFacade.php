@@ -127,25 +127,28 @@ class OrderTransferScontoBridgeImportFacade extends AbstractScontoBridgeImportTr
 
             return;
         }
-        $order->setErpNumber($scontoBridgeOrderData['erpOrderNumber']);
+
+        if ($scontoBridgeOrderData['erpOrderNumber'] !== null) {
+            $order->setErpNumber($scontoBridgeOrderData['erpOrderNumber']);
+        }
 
         try {
             $status = $this->resolveErpOrderStatus($scontoBridgeOrderData['status']);
+
+            $order->setStatus($status);
         } catch (OrderTransferScontoBridgeImportInvalidStatusException | OrderStatusNotFoundException $e) {
             $this->logError($orderId, $e->getMessage());
-
-            return;
         }
-        $order->setStatus($status);
 
-        try {
-            $expeditionStock = $this->findExpeditionStockByCode($scontoBridgeOrderData['primaryStoreCode']);
-        } catch (StockNotFoundException $e) {
-            $this->logError($orderId, $e->getMessage());
+        if ($scontoBridgeOrderData['primaryStoreCode'] !== null) {
+            try {
+                $expeditionStock = $this->findExpeditionStockByCode($scontoBridgeOrderData['primaryStoreCode']);
 
-            return;
+                $order->setExpeditionStock($expeditionStock);
+            } catch (StockNotFoundException $e) {
+                $this->logError($orderId, $e->getMessage());
+            }
         }
-        $order->setExpeditionStock($expeditionStock);
 
         $this->em->persist($order);
         $this->em->flush();
@@ -163,7 +166,7 @@ class OrderTransferScontoBridgeImportFacade extends AbstractScontoBridgeImportTr
 
         $urlParameters = [
             'pageSize' => self::PAGE_SIZE_LIMIT,
-            'modifiedAfter' => null//$modifiedAfter->format(ScontoBridgeClient::DATE_TIME_FORMAT),
+            'modifiedAfter' => $modifiedAfter->format(ScontoBridgeClient::DATE_TIME_FORMAT),
         ];
 
         $nextPageToken = null;
