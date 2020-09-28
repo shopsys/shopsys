@@ -40,6 +40,8 @@ class OrderTransferScontoBridgeExporter extends AbstractScontoBridgeExporter
     public function exportOrderToScontoBridge(Order $order): void
     {
         $erpOrder = $this->orderTransferScontoBridgeMapper->mapOrderToScontoBridgeOrderData($order);
+
+        var_dump(json_encode($erpOrder));die;
         $uri = self::URI_ERP_ORDER;
         $response = $this->scontoBridgeClient->post($uri, $erpOrder);
         if ($this->transferFailed($response)) {

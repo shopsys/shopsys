@@ -56,9 +56,6 @@ class CustomerTransferScontoBridgeValidator
                         CustomerTransferScontoBridgeMapper::CUSTOMER_TYPE_INDIVIDUAL,
                     ]),
                 ],
-                'phonePrefix' => [
-                    new Assert\Type(['type' => 'int']),
-                ],
                 'phoneNumber' => [
                     new Assert\Type(['type' => 'int']),
                 ],
