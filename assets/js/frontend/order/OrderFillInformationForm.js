@@ -17,6 +17,12 @@ export default class OrderFillInformationForm {
         $container
             .filterAllNodes('.js-tabs-button')
             .bind('click', OrderFillInformationForm.setCustomerTypeFormFiled);
+
+        $container.keypress(event => {
+            if (event.which == '13') {
+                event.preventDefault();
+            }
+        });
     }
 }
 
