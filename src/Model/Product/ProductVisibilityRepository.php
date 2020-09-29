@@ -83,6 +83,7 @@ class ProductVisibilityRepository extends BaseProductVisibilityRepository
                                 WHERE pdom1.domain_id = :domainId
                                     AND pdom1.description IS NOT NULL 
                                     AND pdom1.description <> \'\'
+                                    AND pdom1.product_id = p.id
                             )
                         )
                     )
