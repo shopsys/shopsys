@@ -146,8 +146,10 @@ class ScontoBridgeImportCustomerFacade extends AbstractScontoBridgeImportTransfe
         );
 
         if ($customerUser === null) {
-            $customerUserUpdateData->customerUserData->password = '';
-            $customerUserUpdateData->customerUserData->scontoBridgeStatus = CustomerUserScontoBridgeStatusEnum::STATUS_DONE;
+            /** @var \App\Model\Customer\User\CustomerUserData $customerUserData */
+            $customerUserData = $customerUserUpdateData->customerUserData;
+            $customerUserData->password = '';
+            $customerUserData->scontoBridgeStatus = CustomerUserScontoBridgeStatusEnum::STATUS_DONE;
             $newCustomerUser = $this->customerUserFacade->create($customerUserUpdateData);
             $this->logger->addInfo(sprintf('Created customer with eshop ID: %s ', $newCustomerUser->getId()));
         } else {
