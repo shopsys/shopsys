@@ -98,7 +98,7 @@ class OrderTransferScontoBridgeImportFacade extends AbstractScontoBridgeImportTr
     {
         if ($this->lastModificationAtFromScontoBridge === null) {
             $this->lastModificationAtFromScontoBridge =
-                $this->setting->get(Setting::SCONTO_BRIDGE_TRANSFER_ORDER_STATUS_LAST_UPDATED_DATETIME);
+                new DateTime($this->setting->get(Setting::SCONTO_BRIDGE_TRANSFER_ORDER_STATUS_LAST_UPDATED_DATETIME));
         }
 
         $this->logger->addInfo(
@@ -192,7 +192,7 @@ class OrderTransferScontoBridgeImportFacade extends AbstractScontoBridgeImportTr
     {
         $this->logger->addInfo('Importing orders from Sconto bridge finished.');
         $this->setting->set(
-            Setting::SCONTO_BRIDGE_TRANSFER_EXPOSED_PRODUCT_LAST_UPDATED_DATETIME,
+            Setting::SCONTO_BRIDGE_TRANSFER_ORDER_STATUS_LAST_UPDATED_DATETIME,
             $this->lastModificationAtFromScontoBridge->format(ScontoBridgeClient::DATE_TIME_FORMAT)
         );
     }
