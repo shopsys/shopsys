@@ -17,10 +17,6 @@ done
 unset FILES
 unset VARS
 
-if [ ${RUNNING_PRODUCTION} -eq "1" ]; then
-    yq write --inplace "${CONFIGURATION_TARGET_PATH}/ingress.yaml" metadata.annotations."\"nginx.ingress.kubernetes.io/from-to-www-redirect\"" "\"true\""
-fi
-
 domain_iterator=0
 for DOMAIN in ${DOMAINS[@]}; do
   variable=$"HTTP_AUTHENTICATE_DOMAIN_${domain_iterator}"
