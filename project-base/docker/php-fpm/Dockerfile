@@ -30,6 +30,7 @@ RUN chmod +x /usr/local/bin/docker-install-composer && \
 # autoconf needed by "redis" extension
 RUN apt-get update && \
     apt-get install -y \
+    bash-completion \
     libpng-dev \
     libjpeg-dev \
     libfreetype6-dev \
@@ -76,6 +77,9 @@ ENV LC_ALL en_US.UTF-8
 # copy php.ini configuration
 COPY ${project_root}/docker/php-fpm/php-ini-overrides.ini /usr/local/etc/php/php.ini
 
+# add bash completion for phing
+COPY ${project_root}/docker/php-fpm/phing-completion /etc/bash_completion.d/phing
+
 # overwrite the original entry-point from the PHP Docker image with our own
 COPY ${project_root}/docker/php-fpm/docker-php-entrypoint /usr/local/bin/
 RUN chmod +x /usr/local/bin/docker-php-entrypoint
@@ -88,6 +92,9 @@ RUN usermod -m -d /home/www-data www-data && \
 
 # Switch to user
 USER www-data
+
+# enable bash completion
+RUN echo "source /etc/bash_completion" >> ~/.bashrc
 
 RUN mkdir -p /var/www/html/.npm-global
 ENV NPM_CONFIG_PREFIX /var/www/html/.npm-global

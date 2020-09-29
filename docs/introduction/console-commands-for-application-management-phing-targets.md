@@ -9,6 +9,9 @@ You can list all available Phing targets by running:
 php phing
 ```
 
+!!! note
+    Check out the [Autocompletion for Phing Targets](./autocompletion-for-phing-targets.md) article, where you can find useful info about autocompletion of target names.
+
 ## How Phing targets work
 Phing targets are defined in `build.xml` file.
 Any Phing target can execute a subset of other targets or console commands.
