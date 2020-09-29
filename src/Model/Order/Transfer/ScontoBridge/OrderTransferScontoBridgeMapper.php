@@ -162,7 +162,9 @@ class OrderTransferScontoBridgeMapper
             $erpOrder->setDeliveryAddressCountryISO($country->getCode());
         }
         $erpOrder->setDeliveryAddressZipCode($order->getDeliveryPostcode());
-        $erpOrder->setDeliveryAddressPhone($order->getDeliveryTelephone());
+        if ($order->getDeliveryTelephone() !== null) {
+            $erpOrder->setDeliveryAddressPhone($order->getDeliveryTelephone());
+        }
     }
 
     /**
