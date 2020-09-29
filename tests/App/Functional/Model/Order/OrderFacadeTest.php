@@ -88,9 +88,9 @@ class OrderFacadeTest extends TransactionFunctionalTestCase
         $orderData->lastName = 'lastName';
         $orderData->email = 'email';
         $orderData->telephone = 'telephone';
-        $orderData->companyName = 'companyName';
-        $orderData->companyNumber = 'companyNumber';
-        $orderData->companyTaxNumber = 'companyTaxNumber';
+        $orderData->companyName = null;
+        $orderData->companyNumber = null;
+        $orderData->companyTaxNumber = null;
         $orderData->street = 'street';
         $orderData->city = 'city';
         $orderData->postcode = 'postcode';
