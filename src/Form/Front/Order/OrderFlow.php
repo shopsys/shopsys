@@ -11,7 +11,7 @@ class OrderFlow extends FormFlow
 {
     public const STEP_FIRST = 1;
     public const STEP_SECOND = 2;
-    public const STEP_THIRST = 3;
+    public const STEP_THIRD = 3;
 
     /**
      * @var bool

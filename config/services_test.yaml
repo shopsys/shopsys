@@ -296,3 +296,10 @@ services:
         arguments: ['%shopsys.image_url_prefix%']
         calls:
             - { method: setCdnDomain, arguments: ['%env(CDN_DOMAIN)%'] }
+
+    Shopsys\FrameworkBundle\Model\Cart\CartMigrationFacade:
+        alias: App\Model\Cart\CartMigrationFacade
+
+    App\Model\Cart\CartMigrationFacade:
+        tags:
+            - { name: kernel.event_listener, event: kernel.controller, method: onKernelController }
