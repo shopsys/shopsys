@@ -7,6 +7,7 @@ namespace App\Model\CategorySeo;
 use App\Component\Domain\Domain;
 use App\Model\Category\Category;
 use App\Model\CategorySeo\Exception\UnableToFindReadyCategorySeoMixException;
+use App\Model\Product\Filter\ProductFilterCacheFacade;
 use Doctrine\Common\Persistence\ObjectRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query\Expr\Join;
@@ -33,6 +34,11 @@ class ReadyCategorySeoMixRepository
     private Localization $localization;
 
     /**
+     * @var string[][][]
+     */
+    private array $readySeoCategorySetup;
+
+    /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \App\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Localization\Localization $localization
@@ -45,6 +51,7 @@ class ReadyCategorySeoMixRepository
         $this->em = $em;
         $this->domain = $domain;
         $this->localization = $localization;
+        $this->readySeoCategorySetup = [];
     }
 
     /**
@@ -127,11 +134,19 @@ class ReadyCategorySeoMixRepository
             $parameterValueIdByParameterId
         );
 
+        $combinationJson = json_encode($combinationArray);
+
+        if ($this->isJsonCombinationSeoCategory($categoryId, $domainConfig->getId(), $combinationJson) === false) {
+            throw new UnableToFindReadyCategorySeoMixException(
+                'Unable to find ReadyCategorySeoMix: no exact match by product filter form and ordering'
+            );
+        }
+
         $readyCategorySeoMix = $this->em->createQueryBuilder()
             ->select('rcsm')
             ->from(ReadyCategorySeoMix::class, 'rcsm')
             ->andWhere('rcsm.choseCategorySeoMixCombinationJson = :combinationJson')
-            ->setParameter('combinationJson', json_encode($combinationArray))
+            ->setParameter('combinationJson', $combinationJson)
             ->getQuery()
             ->getOneOrNullResult();
 
@@ -142,6 +157,47 @@ class ReadyCategorySeoMixRepository
         }
 
         return $readyCategorySeoMix;
+    }
+
+    /**
+     * @param int $categoryId
+     * @param int $domainId
+     * @param string $combinationJson
+     * @return bool
+     */
+    private function isJsonCombinationSeoCategory(int $categoryId, int $domainId, string $combinationJson): bool
+    {
+        $readySeoCategorySetup = $this->getReadySeoCategorySetupFromLocalCache($categoryId, $domainId);
+
+        return in_array($combinationJson, $readySeoCategorySetup);
+    }
+
+    /**
+     * @param int $categoryId
+     * @param int $domainId
+     * @return string[]
+     */
+    private function getReadySeoCategorySetupFromLocalCache(int $categoryId, int $domainId): array
+    {
+        if (($this->readySeoCategorySetup[$domainId][$categoryId] ?? null) === null) {
+            $scalarData = $this->em->createQueryBuilder()
+                ->select('rcsm.choseCategorySeoMixCombinationJson as json')
+                ->from(ReadyCategorySeoMix::class, 'rcsm')
+                ->where('IDENTITY(rcsm.category) = :categoryId')
+                ->andWhere('rcsm.domainId = :domainId')
+                ->setParameter('categoryId', $categoryId)
+                ->setParameter('domainId', $domainId)
+                ->getQuery()->getScalarResult();
+
+            $readySeoCategorySetup = [];
+            foreach ($scalarData as $data) {
+                $readySeoCategorySetup[] = $data['json'];
+            }
+
+            $this->readySeoCategorySetup[$domainId][$categoryId] = $readySeoCategorySetup;
+        }
+
+        return $this->readySeoCategorySetup[$domainId][$categoryId];
     }
 
     /**
