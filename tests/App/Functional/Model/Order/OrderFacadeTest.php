@@ -144,9 +144,6 @@ class OrderFacadeTest extends TransactionFunctionalTestCase
         $this->assertSame($orderData->lastName, $orderFromDb->getLastName());
         $this->assertSame($orderData->email, $orderFromDb->getEmail());
         $this->assertSame($orderData->telephone, $orderFromDb->getTelephone());
-        $this->assertSame($orderData->companyName, $orderFromDb->getCompanyName());
-        $this->assertSame($orderData->companyNumber, $orderFromDb->getCompanyNumber());
-        $this->assertSame($orderData->companyTaxNumber, $orderFromDb->getCompanyTaxNumber());
         $this->assertSame($orderData->street, $orderFromDb->getStreet());
         $this->assertSame($orderData->city, $orderFromDb->getCity());
         $this->assertSame($orderData->postcode, $orderFromDb->getPostcode());
