@@ -25,6 +25,12 @@ export default class FindCustomerByEmail {
         const EmailValidator = new SymfonyComponentValidatorConstraintsEmail();
         const errors = EmailValidator.validate(inputText);
         if (inputText.length > 0 && Array.isArray(errors) && errors.length === 0) {
+            $emailInput
+                .siblings('.js-check-existing-email-error')
+                .addClass('display-none');
+            $emailInput
+                .removeClass('form-input-error');
+
             return true;
         } else {
             $emailInput
@@ -33,6 +39,7 @@ export default class FindCustomerByEmail {
             $emailInput
                 .addClass('form-input-error')
                 .focus();
+
             return false;
         }
     }
@@ -57,13 +64,15 @@ export default class FindCustomerByEmail {
 
     static init ($container) {
         const findCustomerByEmail = new FindCustomerByEmail();
+        const $emailInput = $('#js-check-existing-email');
         $container.filterAllNodes('#js-check-existing-email-submit').click((event) => findCustomerByEmail.ajaxSubmit());
-        $container.filterAllNodes('#js-check-existing-email').keypress(function (event) {
+        $emailInput.keypress(function (event) {
             if (event.keyCode === KeyCodes.ENTER) {
                 findCustomerByEmail.ajaxSubmit();
                 return false;
             }
         });
+        $emailInput.focusout((event) => FindCustomerByEmail.validateEmail($emailInput));
     }
 }
 
