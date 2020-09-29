@@ -56,6 +56,13 @@ class Flag extends BaseFlag
     private $noticeHighPrice;
 
     /**
+     * @var string|null
+     *
+     * @ORM\Column(type="string", length=2, nullable=true)
+     */
+    private $code;
+
+    /**
      * @param \App\Model\Product\Flag\FlagData $flagData
      */
     public function __construct(FlagData $flagData)
@@ -66,6 +73,7 @@ class Flag extends BaseFlag
         $this->akeneoCode = $flagData->akeneoCode ?? '';
         $this->noticeLowPrice = $flagData->noticeLowPrice;
         $this->noticeHighPrice = $flagData->noticeHighPrice;
+        $this->code = $flagData->code;
     }
 
     /**
@@ -78,6 +86,7 @@ class Flag extends BaseFlag
         $this->sale = $flagData->sale;
         $this->noticeLowPrice = $flagData->noticeLowPrice;
         $this->noticeHighPrice = $flagData->noticeHighPrice;
+        $this->code = $flagData->code;
     }
 
     /**
@@ -110,5 +119,13 @@ class Flag extends BaseFlag
     public function getNoticeHighPrice(): ?string
     {
         return $this->noticeHighPrice;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getCode(): ?string
+    {
+        return $this->code;
     }
 }
