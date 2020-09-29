@@ -51,9 +51,9 @@ class ScontoBridgeCompany implements JsonSerializable
     }
 
     /**
-     * @param string $vatNumber
+     * @param string|null $vatNumber
      */
-    public function setVatNumber(string $vatNumber): void
+    public function setVatNumber(?string $vatNumber): void
     {
         $this->vatNumber = $vatNumber;
     }
