@@ -55,23 +55,28 @@
                             {{ '+ 420 225 510 000'|trans }}
                         </strong>
                         <span class="box-contact__subtitle box-contact__subtitle--hours">
-                            {{ 'Po–Pá 8–19h | So–Ne 8–16h'|trans }}
+                            {% if domain.id == 1 %}
+                                {{ 'Po–Pá 8–19h | So–Ne 8–16h'|trans }}
+                            {% else %}
+                                {{ 'Po–Pia 8–18h'|trans }}
+                            {% endif %}
                         </span>
                         <div class="box-contact__infolink">
                             <strong class="box-contact__infolink__title">
                                 {{ 'Vytíženost infolinky'|trans }}
                             </strong>
+                            {% set infoImage = domain.id == 1 ? 'infolinka' : 'infolinka_sk' %}
                             <picture class="box-contact__infolink__image">
                                 <source
                                         srcset="
-                                        {{ asset('public/frontend/images/infolinka_2x.png') }} 2x,
-                                        {{ asset('public/frontend/images/infolinka.png') }} 1x"
+                                        {{ asset("public/frontend/images/#{infoImage}_2x.png") }} 2x,
+                                        {{ asset("public/frontend/images/#{infoImage}.png") }} 1x"
                                 >
                                 <img
                                     loading="lazy"
                                     class="box-contact__infolink__img"
                                     src="{{ imgLazyloadPlaceholder }}"
-                                    data-src="{{ asset('public/frontend/images/infolinka.png') }}"
+                                    data-src="{{ asset("public/frontend/images/#{infoImage}.png") }}"
                                     alt="{{ 'Vytíženost infolinky'|trans }}"
                                 >
                             </picture>
