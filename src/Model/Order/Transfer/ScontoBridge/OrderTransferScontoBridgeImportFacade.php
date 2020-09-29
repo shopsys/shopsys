@@ -9,6 +9,7 @@ use App\Component\ScontoBridge\Transfer\AbstractScontoBridgeImportTransfer;
 use App\Component\ScontoBridge\Transfer\Exception\TransferInvalidDataAdministratorCriticalException;
 use App\Component\ScontoBridge\Transfer\ScontoBridgeImportTransferDependency;
 use App\Component\Setting\Setting;
+use App\Model\Order\Mail\OrderMailFacade;
 use App\Model\Order\OrderRepository;
 use App\Model\Order\Status\OrderStatus;
 use App\Model\Order\Status\OrderStatusRepository;
@@ -67,12 +68,19 @@ class OrderTransferScontoBridgeImportFacade extends AbstractScontoBridgeImportTr
     private OrderStatusRepository $orderStatusRepository;
 
     /**
-     * @param ScontoBridgeImportTransferDependency $scontoBridgeImportTransferDependency
-     * @param Setting $setting
-     * @param ScontoBridgeClient $scontoBridgeClient
-     * @param OrderRepository $orderRepository
-     * @param StockRepository $stockRepository
-     * @param OrderStatusRepository $orderStatusRepository
+     * @var \App\Model\Order\Mail\OrderMailFacade
+     */
+    private OrderMailFacade $orderMailFacade;
+
+    /**
+     * @param \App\Component\ScontoBridge\Transfer\ScontoBridgeImportTransferDependency $scontoBridgeImportTransferDependency
+     * @param \App\Component\Setting\Setting $setting
+     * @param \App\Component\ScontoBridge\ScontoBridgeClient $scontoBridgeClient
+     * @param \App\Model\Order\OrderRepository $orderRepository
+     * @param \App\Model\Stock\StockRepository $stockRepository
+     * @param \App\Model\Order\Status\OrderStatusRepository $orderStatusRepository
+     * @param \Symfony\Component\Validator\Validator\ValidatorInterface $validator
+     * @param \App\Model\Order\Mail\OrderMailFacade $orderMailFacade
      */
     public function __construct(
         ScontoBridgeImportTransferDependency $scontoBridgeImportTransferDependency,
@@ -81,7 +89,8 @@ class OrderTransferScontoBridgeImportFacade extends AbstractScontoBridgeImportTr
         OrderRepository $orderRepository,
         StockRepository $stockRepository,
         OrderStatusRepository $orderStatusRepository,
-        ValidatorInterface $validator
+        ValidatorInterface $validator,
+        OrderMailFacade $orderMailFacade
     ) {
         parent::__construct($scontoBridgeImportTransferDependency);
 
@@ -92,6 +101,7 @@ class OrderTransferScontoBridgeImportFacade extends AbstractScontoBridgeImportTr
         $this->stockRepository = $stockRepository;
         $this->orderStatusRepository = $orderStatusRepository;
         $this->validator = $validator;
+        $this->orderMailFacade = $orderMailFacade;
     }
 
     protected function doBeforeTransfer(): void
@@ -122,6 +132,7 @@ class OrderTransferScontoBridgeImportFacade extends AbstractScontoBridgeImportTr
 
         try {
             $order = $this->orderRepository->getById($orderId);
+            $oldOrderStatus = $order->getStatus();
         } catch (OrderNotFoundException $e) {
             $this->logError($orderId, $e->getMessage());
 
@@ -152,6 +163,10 @@ class OrderTransferScontoBridgeImportFacade extends AbstractScontoBridgeImportTr
 
         $this->em->persist($order);
         $this->em->flush();
+
+        if ($oldOrderStatus !== $order->getStatus()) {
+            $this->orderMailFacade->sendOrderStatusMailByOrder($order);
+        }
 
         $this->setLastModificationAtFromScontoBridge($scontoBridgeOrderData['erpLastModificationTime']);
     }
