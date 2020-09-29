@@ -31,4 +31,9 @@ class OrderItemData extends BaseOrderItemData
      * @var \App\Model\Order\Item\OrderItem|null
      */
     public $relatedOrderItem;
+
+    /**
+     * @var string|null
+     */
+    public $flagCode;
 }
