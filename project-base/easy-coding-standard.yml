@@ -145,3 +145,7 @@ parameters:
         # @deprecated File is excluded as the comments are already missing and deprecated methods will not be in next major
         SlevomatCodingStandard\Sniffs\Commenting\DeprecatedAnnotationDeclarationSniff:
             - '*/tests/App/Test/Codeception/Module/StrictWebDriver.php'
+
+        # @deprecated This will be moved from project-base to coding-standards package in next major version
+        # rule breaks jms/translation-budle as it fails on this usage: `[, $b] = $var`
+        PhpCsFixer\Fixer\ListNotation\ListSyntaxFixer: ~
