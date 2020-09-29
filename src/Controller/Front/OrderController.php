@@ -8,6 +8,7 @@ use App\Form\Front\Login\LoginFormType;
 use App\Form\Front\Order\DomainAwareOrderFlowFactory;
 use App\Form\Front\Order\OrderFlow;
 use App\Form\Front\Order\PaymentFormType;
+use App\Model\Cart\CartMigrationFacade;
 use App\Model\GoPay\BankSwift\GoPayBankSwift;
 use App\Model\GoPay\BankSwift\GoPayBankSwiftFacade;
 use App\Model\GoPay\Exception\GoPayNotConfiguredException;
@@ -164,6 +165,11 @@ class OrderController extends FrontBaseController
     private ProductAvailabilityFacade $productAvailabilityFacade;
 
     /**
+     * @var \App\Model\Cart\CartMigrationFacade
+     */
+    private CartMigrationFacade $cartMigrationFacade;
+
+    /**
      * @param \App\Model\Order\OrderFacade $orderFacade
      * @param \App\Model\Cart\CartFacade $cartFacade
      * @param \App\Component\Domain\Domain $domain
@@ -208,7 +214,8 @@ class OrderController extends FrontBaseController
         GtmFacade $gtmFacade,
         Authenticator $authenticator,
         TransportLogisticFacade $transportLogisticFacade,
-        ProductAvailabilityFacade $productAvailabilityFacade
+        ProductAvailabilityFacade $productAvailabilityFacade,
+        CartMigrationFacade $cartMigrationFacade
     ) {
         $this->orderFacade = $orderFacade;
         $this->cartFacade = $cartFacade;
@@ -232,6 +239,7 @@ class OrderController extends FrontBaseController
         $this->authenticator = $authenticator;
         $this->transportLogisticFacade = $transportLogisticFacade;
         $this->productAvailabilityFacade = $productAvailabilityFacade;
+        $this->cartMigrationFacade = $cartMigrationFacade;
     }
 
     /**
@@ -248,11 +256,9 @@ class OrderController extends FrontBaseController
         $customerUser = $this->getUser();
         $frontOrderFormData = new FrontOrderData();
         $frontOrderFormData->deliveryAddressSameAsBillingAddress = true;
-        $isCompanyCustomer = false;
         $isWithoutRegistration = false;
         if ($customerUser instanceof CustomerUser) {
             $this->orderFacade->prefillFrontOrderData($frontOrderFormData, $customerUser);
-            $isCompanyCustomer = $customerUser->getCustomer()->getBillingAddress()->isCompanyCustomer();
             $isWithoutRegistration = true;
         }
         $domainId = $this->domain->getId();
@@ -343,7 +349,7 @@ class OrderController extends FrontBaseController
 
         $this->gtmFacade->onOrderPages($splitOrderPreview, $orderFlow->getCurrentStepNumber());
 
-        if ($orderFlow->getCurrentStepNumber() === OrderFlow::STEP_THIRST && $this->isGranted(Roles::ROLE_LOGGED_CUSTOMER) === false) {
+        if ($orderFlow->getCurrentStepNumber() === OrderFlow::STEP_THIRD && $this->isGranted(Roles::ROLE_LOGGED_CUSTOMER) === false) {
             $customerEmailExists = $this->session->get(self::SESSION_CUSTOMER_EMAIL_EXISTS, null);
             $this->session->remove(self::SESSION_CUSTOMER_EMAIL_EXISTS);
             if ($customerEmailExists !== false) {
@@ -357,6 +363,15 @@ class OrderController extends FrontBaseController
                     'prefilledCustomerEmail' => $prefilledCustomerEmail,
                 ]);
             }
+        }
+
+        if (
+            $orderFlow->getCurrentStepNumber() === OrderFlow::STEP_THIRD
+            && $this->isGranted(Roles::ROLE_LOGGED_CUSTOMER)
+            && $this->cartMigrationFacade->isCartChanged()
+        ) {
+            $this->addInfoFlash(t('Obsah vašeho košíku se změnil'));
+            return $this->redirectToRoute('front_cart');
         }
 
         $minimalDaysAvailabilityIndexedByTransportIds = $stockDayAvailabilitiesByStockId = [];

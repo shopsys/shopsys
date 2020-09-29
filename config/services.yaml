@@ -968,3 +968,10 @@ services:
 
     Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusRepository:
         alias: App\Model\Order\Status\OrderStatusRepository
+
+    Shopsys\FrameworkBundle\Model\Cart\CartMigrationFacade:
+        alias: App\Model\Cart\CartMigrationFacade
+
+    App\Model\Cart\CartMigrationFacade:
+        tags:
+            - { name: kernel.event_listener, event: kernel.controller, method: onKernelController }
