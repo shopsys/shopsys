@@ -683,6 +683,7 @@ class OrderFacade extends BaseOrderFacade
             $registrationData->domainId = $orderData->domainId;
             $registrationData->password = $orderData->password;
             $registrationData->companyCustomer = $orderData->isCompanyCustomer;
+            $registrationData->newsletterSubscription = true;
 
             return $this->registrationFacade->register($registrationData);
         }

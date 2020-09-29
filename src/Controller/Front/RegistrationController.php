@@ -133,6 +133,7 @@ class RegistrationController extends FrontBaseController
         if ($form->isSubmitted()) {
             if ($form->isValid()) {
                 $registrationData = $form->getData();
+                $registrationData->newsletterSubscription = true;
                 $customerUser = $this->registrationFacade->register($registrationData);
                 $this->addSuccessFlash(t('You have been successfully registered.'));
 
@@ -160,6 +161,7 @@ class RegistrationController extends FrontBaseController
 
                 /** @var \App\Model\Customer\User\RegistrationData $registrationData */
                 $registrationData = $form->getData();
+                $registrationData->newsletterSubscription = true;
                 $customerUser = $this->registrationFacade->registerCompany($registrationData);
                 $this->addSuccessFlash(t('You have been successfully registered.'));
 
