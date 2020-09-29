@@ -79,6 +79,12 @@ class ProductsTest extends GraphQlTestCase
                             brand {
                                 name
                             }
+                            accessories {
+                                name
+                            }
+                            isSellingDenied
+                            description
+                            orderingPriority
                         }
                     }
                 }
@@ -140,6 +146,15 @@ class ProductsTest extends GraphQlTestCase
                 'brand' => [
                     'name' => 'Hyundai',
                 ],
+                'accessories' => [],
+                'isSellingDenied' => false,
+                'description' => t(
+                    'Television monitor LED 16: 9, 5M: 1, 250cd/m2, 9.5ms, 1366x768, DVB-T/C, HDMI, SCART, D-Sub, USB, speakers, Energ. Class A',
+                    [],
+                    'dataFixtures',
+                    $firstDomainLocale
+                ),
+                'orderingPriority' => null,
             ],
         ];
     }

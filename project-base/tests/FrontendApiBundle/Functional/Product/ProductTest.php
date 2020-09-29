@@ -67,19 +67,26 @@ class ProductTest extends GraphQlTestCase
                     },
                     stockQuantity,
                     categories {
-                      name
+                        name
                     },
                     flags {
-                      name, rgbColor
+                        name, 
+                        rgbColor
                     },
                     price {
-                      priceWithVat,
-                      priceWithoutVat,
-                      vatAmount
+                        priceWithVat,
+                        priceWithoutVat,
+                        vatAmount
                     },
                     brand {
-                      name
-                    }
+                        name
+                    },
+                    accessories {
+                        name
+                    },
+                    isSellingDenied,
+                    description,
+                    orderingPriority
                 }
             }
         ';
@@ -139,6 +146,27 @@ class ProductTest extends GraphQlTestCase
                     'brand' => [
                         'name' => 'Sencor',
                     ],
+                    'accessories' => [
+                        [
+                            'name' => t(
+                                'Kabel HDMI A - HDMI A M/M 2m gold-plated connectors High Speed HD',
+                                [],
+                                'dataFixtures',
+                                $firstDomainLocale
+                            ),
+                        ],
+                        [
+                            'name' => t('Defender 2.0 SPK-480', [], 'dataFixtures', $firstDomainLocale),
+                        ],
+                    ],
+                    'isSellingDenied' => false,
+                    'description' => t(
+                        'Television LED, 55 cm diagonal, 1920x1080 Full HD, DVB-T MPEG4 tuner with USB recording and playback (DivX, XviD, MP3, WMA, JPEG), HDMI, SCART, VGA, pink execution, energ. Class B',
+                        [],
+                        'dataFixtures',
+                        $firstDomainLocale
+                    ),
+                    'orderingPriority' => 1,
                 ],
             ],
         ];

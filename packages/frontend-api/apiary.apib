@@ -56,6 +56,12 @@ Authorization header is not required.
                         brand {
                             name
                         }
+                        accessories {
+                            name
+                        }
+                        isSellingDenied
+                        description
+                        orderingPriority
                     }
                 }
             }
@@ -97,7 +103,11 @@ Authorization header is not required.
                                 "vatAmount": "0.84"
                             },
                             "images": [],
-                            "brand": null
+                            "brand": null,
+                            "accessories": [],
+                            "isSellingDenied": false,
+                            "description": "Coupon valued to 100 Czech crowns. You can cash it at any exchange office",
+                            "orderingPriority": null
                         }
                     },
                     {
@@ -220,7 +230,18 @@ Authorization header is not required.
                             ],
                             "brand": {
                                 "name": "Sencor"
-                            }
+                            },
+                            "accessories": [
+                                {
+                                    "name": "Kabel HDMI A - HDMI A M/M 2m gold-plated connectors High Speed HD"
+                                },
+                                {
+                                    "name": "Defender 2.0 SPK-480"
+                                }
+                            ],
+                            "isSellingDenied": false,
+                            "description": "Television LED, 55 cm diagonal, 1920x1080 Full HD, DVB-T MPEG4 tuner with USB recording and playback (DivX, XviD, MP3, WMA, JPEG), HDMI, SCART, VGA, pink execution, energ. Class B",
+                            "orderingPriority": null
                         }
                     }
                 ]
@@ -272,6 +293,12 @@ Returns product filtered using UUID
             brand {
                 name
             }
+            accessories {
+                name
+            }
+            isSellingDenied
+            description
+            orderingPriority
         }
     }
 
@@ -397,7 +424,18 @@ Returns product filtered using UUID
                 ],
                 "brand": {
                     "name": "Sencor"
-                }
+                },
+                "accessories": [
+                    {
+                        "name": "Kabel HDMI A - HDMI A M/M 2m gold-plated connectors High Speed HD"
+                    },
+                    {
+                        "name": "Defender 2.0 SPK-480"
+                    }
+                ],
+                "isSellingDenied": false,
+                "description": "Television LED, 55 cm diagonal, 1920x1080 Full HD, DVB-T MPEG4 tuner with USB recording and playback (DivX, XviD, MP3, WMA, JPEG), HDMI, SCART, VGA, pink execution, energ. Class B",
+                "orderingPriority": null
             }
         }
     }

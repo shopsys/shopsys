@@ -8,10 +8,13 @@ use BadMethodCallException;
 use Overblog\GraphQLBundle\Resolver\ResolverMap;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
+use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade;
 use Shopsys\FrameworkBundle\Model\Product\Collection\ProductCollectionFacade;
 use Shopsys\FrameworkBundle\Model\Product\Flag\FlagFacade;
 use Shopsys\FrameworkBundle\Model\Product\Product;
+use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
+use Shopsys\FrontendApiBundle\Model\Product\ProductAccessoryFacade;
 
 class ProductResolverMap extends ResolverMap
 {
@@ -41,24 +44,48 @@ class ProductResolverMap extends ResolverMap
     protected $brandFacade;
 
     /**
+     * @var \Shopsys\FrontendApiBundle\Model\Product\ProductAccessoryFacade|null
+     */
+    protected $productAccessoryFacade;
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser|null
+     */
+    protected $currentCustomerUser;
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Product\ProductFacade|null
+     */
+    protected $productFacade;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Product\Collection\ProductCollectionFacade $productCollectionFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Flag\FlagFacade $flagFacade
      * @param \Shopsys\FrameworkBundle\Model\Category\CategoryFacade $categoryFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade|null $brandFacade
+     * @param \Shopsys\FrontendApiBundle\Model\Product\ProductAccessoryFacade|null $productAccessoryFacade
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser|null $currentCustomerUser
+     * @param \Shopsys\FrameworkBundle\Model\Product\ProductFacade|null $productFacade
      */
     public function __construct(
         Domain $domain,
         ProductCollectionFacade $productCollectionFacade,
         FlagFacade $flagFacade,
         CategoryFacade $categoryFacade,
-        ?BrandFacade $brandFacade = null
+        ?BrandFacade $brandFacade = null,
+        ?ProductAccessoryFacade $productAccessoryFacade = null,
+        ?CurrentCustomerUser $currentCustomerUser = null,
+        ?ProductFacade $productFacade = null
     ) {
         $this->domain = $domain;
         $this->productCollectionFacade = $productCollectionFacade;
         $this->flagFacade = $flagFacade;
         $this->categoryFacade = $categoryFacade;
         $this->brandFacade = $brandFacade;
+        $this->productAccessoryFacade = $productAccessoryFacade;
+        $this->currentCustomerUser = $currentCustomerUser;
+        $this->productFacade = $productFacade;
     }
 
     /**
@@ -85,6 +112,84 @@ class ProductResolverMap extends ResolverMap
             E_USER_DEPRECATED
         );
         $this->brandFacade = $brandFacade;
+    }
+
+    /**
+     * @required
+     * @param \Shopsys\FrontendApiBundle\Model\Product\ProductAccessoryFacade $productAccessoryFacade
+     * @internal This function will be replaced by constructor injection in next major
+     */
+    public function setProductAccessoryFacade(ProductAccessoryFacade $productAccessoryFacade): void
+    {
+        if ($this->productAccessoryFacade !== null && $this->productAccessoryFacade !== $productAccessoryFacade) {
+            throw new BadMethodCallException(
+                sprintf('Method "%s" has been already called and cannot be called multiple times.', __METHOD__)
+            );
+        }
+        if ($this->productAccessoryFacade !== null) {
+            return;
+        }
+
+        @trigger_error(
+            sprintf(
+                'The %s() method is deprecated and will be removed in the next major. Use the constructor injection instead.',
+                __METHOD__
+            ),
+            E_USER_DEPRECATED
+        );
+        $this->productAccessoryFacade = $productAccessoryFacade;
+    }
+
+    /**
+     * @required
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
+     * @internal This function will be replaced by constructor injection in next major
+     */
+    public function setCurrentCustomerUser(CurrentCustomerUser $currentCustomerUser): void
+    {
+        if ($this->currentCustomerUser !== null && $this->currentCustomerUser !== $currentCustomerUser) {
+            throw new BadMethodCallException(
+                sprintf('Method "%s" has been already called and cannot be called multiple times.', __METHOD__)
+            );
+        }
+        if ($this->currentCustomerUser !== null) {
+            return;
+        }
+
+        @trigger_error(
+            sprintf(
+                'The %s() method is deprecated and will be removed in the next major. Use the constructor injection instead.',
+                __METHOD__
+            ),
+            E_USER_DEPRECATED
+        );
+        $this->currentCustomerUser = $currentCustomerUser;
+    }
+
+    /**
+     * @required
+     * @param \Shopsys\FrameworkBundle\Model\Product\ProductFacade $productFacade
+     * @internal This function will be replaced by constructor injection in next major
+     */
+    public function setProductFacade(ProductFacade $productFacade): void
+    {
+        if ($this->productFacade !== null && $this->productFacade !== $productFacade) {
+            throw new BadMethodCallException(
+                sprintf('Method "%s" has been already called and cannot be called multiple times.', __METHOD__)
+            );
+        }
+        if ($this->productFacade !== null) {
+            return;
+        }
+
+        @trigger_error(
+            sprintf(
+                'The %s() method is deprecated and will be removed in the next major. Use the constructor injection instead.',
+                __METHOD__
+            ),
+            E_USER_DEPRECATED
+        );
+        $this->productFacade = $productFacade;
     }
 
     /**
@@ -159,6 +264,20 @@ class ProductResolverMap extends ResolverMap
                 }
 
                 return null;
+            },
+            'isSellingDenied' => function ($data) {
+                return $data instanceof Product ? $data->getCalculatedSellingDenied() : $data['calculated_selling_denied'];
+            },
+            'accessories' => function ($data) {
+                $product = $data instanceof Product ? $data : $this->productFacade->getById($data['id']);
+                return $this->productAccessoryFacade->getAllAccessories(
+                    $product,
+                    $this->domain->getId(),
+                    $this->currentCustomerUser->getPricingGroup()
+                );
+            },
+            'description' => function ($data) {
+                return $data instanceof Product ? $data->getDescription($this->domain->getId()) : $data['description'];
             },
         ];
     }
