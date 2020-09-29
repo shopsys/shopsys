@@ -665,14 +665,17 @@ class OrderFacade extends BaseOrderFacade
             $registrationData = $this->registrationDataFactory->createForDomainId($orderData->domainId);
 
             $registrationData->gender = $orderData->gender;
-            $registrationData->firstName = $orderData->firstName;
-            $registrationData->lastName = $orderData->lastName;
+            if ($orderData->isCompanyCustomer === true) {
+                $registrationData->companyName = $orderData->companyName;
+                $registrationData->companyNumber = $orderData->companyNumber;
+                $registrationData->companyTaxNumber = $orderData->companyTaxNumber;
+                $registrationData->companyNumberWithVat = $orderData->companyNumberWithVat;
+            } else {
+                $registrationData->firstName = $orderData->firstName;
+                $registrationData->lastName = $orderData->lastName;
+            }
             $registrationData->email = $orderData->email;
             $registrationData->telephone = $orderData->telephone;
-            $registrationData->companyName = $orderData->companyName;
-            $registrationData->companyNumber = $orderData->companyNumber;
-            $registrationData->companyTaxNumber = $orderData->companyTaxNumber;
-            $registrationData->companyNumberWithVat = $orderData->companyNumberWithVat;
             $registrationData->street = $orderData->street;
             $registrationData->city = $orderData->city;
             $registrationData->postcode = $orderData->postcode;

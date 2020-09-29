@@ -141,6 +141,19 @@ class Order extends BaseOrder
     ) {
         parent::__construct($orderData, $orderNumber, $urlHash, $customerUser);
 
+        if ($orderData->isCompanyCustomer === true) {
+            $this->companyName = $orderData->companyName;
+            $this->companyNumber = $orderData->companyNumber;
+            $this->companyTaxNumber = $orderData->companyTaxNumber;
+            $this->firstName = null;
+            $this->lastName = null;
+        } else {
+            $this->companyName = null;
+            $this->companyNumber = null;
+            $this->companyTaxNumber = null;
+            $this->firstName = $orderData->firstName;
+            $this->lastName = $orderData->lastName;
+        }
         $this->goPayTransactions = new ArrayCollection();
         $this->gtmCoupon = $orderData->gtmCoupon;
         $this->scontoBridgeStatus = $orderData->scontoBridgeStatus;
