@@ -235,7 +235,7 @@ class CartFacade extends BaseCartFacade
      * @param int|null $quantityLimit
      * @return bool
      */
-    private function isQuantityOverLimitReached(int $quantity, ?int $quantityLimit): bool
+    public function isQuantityOverLimitReached(int $quantity, ?int $quantityLimit): bool
     {
         if ($quantityLimit === null) {
             return false;
