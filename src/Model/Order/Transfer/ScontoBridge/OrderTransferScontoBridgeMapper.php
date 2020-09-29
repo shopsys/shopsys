@@ -219,6 +219,11 @@ class OrderTransferScontoBridgeMapper
         if ($personalPickupStore !== null) {
             $erpOrderItem->setStoreCode($personalPickupStore->getExternalId());
         }
+
+        if ($orderItem->getFlagCode() !== null) {
+            $erpOrderItem->setPromocodeIdentifier($orderItem->getFlagCode());
+        }
+
         try {
             $promoCodeItem = $orderItem->getRelatedCoupon();
             if ($promoCodeItem !== null) {

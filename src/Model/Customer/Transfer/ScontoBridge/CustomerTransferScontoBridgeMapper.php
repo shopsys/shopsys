@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Model\Customer\Transfer\ScontoBridge;
 
-use App\Component\Domain\Domain;
 use App\Component\ScontoBridge\Transfer\Exception\ScontoBridgeDistributionChannelResolverException;
 use App\Component\ScontoBridge\Transfer\ScontoBridgeDistributionChannelResolver;
 use App\Component\ScontoBridge\Transfer\ScontoBridgeTitleResolver;
