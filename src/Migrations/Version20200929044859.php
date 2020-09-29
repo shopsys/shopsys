@@ -15,6 +15,7 @@ class Version20200929044859 extends AbstractMigration
     public function up(Schema $schema): void
     {
         $this->sql('ALTER TABLE flags ADD code VARCHAR(2) DEFAULT NULL');
+        $this->sql('ALTER TABLE order_items ADD flag_code TEXT DEFAULT NULL');
     }
 
     /**

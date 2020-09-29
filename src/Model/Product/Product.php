@@ -884,4 +884,19 @@ class Product extends BaseProduct
 
         return false;
     }
+
+    /**
+     * @param int $getDomainId
+     * @return string|null
+     */
+    public function findFirstFlagCode(int $getDomainId): ?string
+    {
+        foreach ($this->getProductDomain($getDomainId)->getFlags() as $flag) {
+            if ($flag->getCode() !== null) {
+                return $flag->getCode();
+            }
+        }
+
+        return null;
+    }
 }
