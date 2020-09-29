@@ -48,11 +48,17 @@ class ScontoBridgeOrderItem implements JsonSerializable
      */
     private ?string $promocodeIdentifier;
 
+    /**
+     * @var string|null
+     */
+    private ?string $voucher;
+
     public function __construct()
     {
         $this->storeCode = null;
         $this->sku = null;
         $this->promocodeIdentifier = null;
+        $this->voucher = null;
     }
 
     /**
@@ -120,6 +126,14 @@ class ScontoBridgeOrderItem implements JsonSerializable
     }
 
     /**
+     * @param string|null $voucher
+     */
+    public function setVoucher(?string $voucher): void
+    {
+        $this->voucher = $voucher;
+    }
+
+    /**
      * @return array
      */
     public function jsonSerialize(): array
@@ -133,6 +147,7 @@ class ScontoBridgeOrderItem implements JsonSerializable
             'priceWithVat' => $this->priceWithVat,
             'type' => $this->type,
             'promocodeIdentifier' => $this->promocodeIdentifier,
+            'voucher' => $this->voucher,
         ];
     }
 }
