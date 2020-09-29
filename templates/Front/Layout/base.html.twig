@@ -7,12 +7,19 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta name="description" content="{% block meta_description %}{% endblock %}">
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <!-- Value for robots during development -->
-        <meta name="robots" content="noindex,nofollow" />
-        <!--
-        Prepared value for robots in production environment
+        {% if getDomain().id == 1 -%}
+            <!-- Value for robots during development -->
+            <meta name="robots" content="noindex,nofollow" />
+        {%- endif %}
+
+        {% if getDomain().id == 1 -%}
+            <!--
+            Prepared value for robots in production environment
+        {%- endif %}
         {% block meta_robots %}{% endblock %}
-        -->
+        {% if getDomain().id == 1 -%}
+            -->
+        {% endif %}
         {% block prev_next_links %}{% endblock %}
 
         {% set entryDirectory = 'frontend-style-' ~ getDomain().currentDomainConfig.stylesDirectory %}
