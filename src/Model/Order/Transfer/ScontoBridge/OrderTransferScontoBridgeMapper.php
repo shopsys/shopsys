@@ -199,6 +199,7 @@ class OrderTransferScontoBridgeMapper
         $erpOrderItem = new ScontoBridgeOrderItem();
         $erpOrderItem->setEshopId($orderItem->getId());
         $erpOrderItem->setQuantity($orderItem->getQuantity());
+        $erpOrderItem->setVoucher($orderItem->getFlagCode());
 
         $erpOrderItem->setUnitPriceWithVat(
             (float)$orderItem->getFinalPriceWithVat()->getAmount()
