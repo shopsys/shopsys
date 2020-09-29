@@ -472,6 +472,7 @@ class OrderFacade extends BaseOrderFacade
             $orderItemData->unitName = $product->getUnit()->getName($locale);
             $orderItemData->catnum = $product->getCatnum();
             $orderItemData->productType = $orderPreview->getProductType();
+            $orderItemData->flagCode = $product->findFirstFlagCode($order->getDomainId());
 
             $orderItem = $this->orderItemFactory->createProductByOrderItemData(
                 $orderItemData,

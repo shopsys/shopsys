@@ -60,6 +60,13 @@ class OrderItem extends BaseOrderItem
     private $relatedOrderItem;
 
     /**
+     * @var string|null
+     *
+     * @ORM\Column(type="text", length=2, nullable=true)
+     */
+    private $flagCode;
+
+    /**
      * @param \App\Model\Order\Order $order
      * @param string $name
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $price
@@ -137,6 +144,22 @@ class OrderItem extends BaseOrderItem
     public function setPromoCodeIdentifier(?string $promoCodeIdentifier): void
     {
         $this->promoCodeIdentifier = $promoCodeIdentifier;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getFlagCode(): ?string
+    {
+        return $this->flagCode;
+    }
+
+    /**
+     * @param string|null $flagCode
+     */
+    public function setFlagCode(?string $flagCode): void
+    {
+        $this->flagCode = $flagCode;
     }
 
     /**
