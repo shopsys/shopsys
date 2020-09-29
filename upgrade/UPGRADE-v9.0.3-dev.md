@@ -27,3 +27,6 @@ There you can find links to upgrade notes for other versions too.
 
 - fix webserver URL in frontend API tests ([#2045](https://github.com/shopsys/shopsys/pull/2045))
     - see #project-base-diff to update your project
+
+- fix loading of multi design templates ([#2050](https://github.com/shopsys/shopsys/pull/2050))
+    - see #project-base-diff to update your project
