@@ -121,6 +121,9 @@ msgstr ""
 msgid "Tax number cannot be longer than {{ limit }} characters"
 msgstr ""
 
+msgid "Telephone number cannot be shorter than {{ limit }} characters"
+msgstr ""
+
 msgid "Telephone number cannot be longer than {{ limit }} characters"
 msgstr ""
 
@@ -135,4 +138,3 @@ msgstr ""
 
 msgid "Zip code cannot be longer than {{ limit }} characters"
 msgstr ""
-

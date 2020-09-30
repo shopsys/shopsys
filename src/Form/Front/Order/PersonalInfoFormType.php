@@ -136,7 +136,12 @@ class PersonalInfoFormType extends AbstractType
             ->add('telephone', TextType::class, [
                 'constraints' => [
                     new Constraints\NotBlank(['message' => 'Please enter telephone number']),
-                    new Constraints\Length(['max' => 20, 'maxMessage' => 'Telephone number cannot be longer than {{ limit }} characters']),
+                    new Constraints\Length([
+                        'min' => 9,
+                        'minMessage' => 'Telephone number cannot be shorter than {{ limit }} characters',
+                        'max' => 30,
+                        'maxMessage' => 'Telephone number cannot be longer than {{ limit }} characters',
+                    ]),
                     new Constraints\Regex([
                         'pattern' => RegexValidationRule::TELEPHONE_REGEX,
                         'message' => 'Prosím, zadávejte pouze čísla a znak +',
@@ -312,7 +317,9 @@ class PersonalInfoFormType extends AbstractType
                 'required' => false,
                 'constraints' => [
                     new Constraints\Length([
-                        'max' => 20,
+                        'min' => 9,
+                        'minMessage' => 'Telephone number cannot be shorter than {{ limit }} characters',
+                        'max' => 30,
                         'maxMessage' => 'Telephone number cannot be longer than {{ limit }} characters',
                         'groups' => [self::VALIDATION_GROUP_DIFFERENT_DELIVERY_ADDRESS],
                     ]),

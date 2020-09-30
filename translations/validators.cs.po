@@ -226,6 +226,9 @@ msgstr "Název ulice nesmí být delší než {{ limit }} znaků"
 msgid "Tax number cannot be longer than {{ limit }} characters"
 msgstr "DIČ nesmí být delší než {{ limit }} znaků"
 
+msgid "Telephone number cannot be shorter than {{ limit }} characters"
+msgstr "Telefon nesmí být kratší než {{ limit }} znaků"
+
 msgid "Telephone number cannot be longer than {{ limit }} characters"
 msgstr "Telefon nesmí být delší než {{ limit }} znaků"
 
@@ -309,4 +312,3 @@ msgstr ""
 
 msgid "Zip code cannot be longer than {{ limit }} characters"
 msgstr "PSČ nesmí být delší než {{ limit }} znaků"
-
