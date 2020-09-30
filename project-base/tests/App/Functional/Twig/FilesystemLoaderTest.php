@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\App\Functional\Twig;
 
+use ReflectionClass;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
@@ -37,7 +38,7 @@ class FilesystemLoaderTest extends FunctionalTestCase
 
         $domain = new Domain([$domainConfigWithoutCustomDesignId, $domainConfigWithCustomDesignId], $setting);
 
-        $twigReflection = new \ReflectionClass($twigFilesystemLoader);
+        $twigReflection = new ReflectionClass($twigFilesystemLoader);
         $domainReflection = $twigReflection->getProperty('domain');
         $domainReflection->setAccessible(true);
         $domainReflection->setValue($twigFilesystemLoader, $domain);

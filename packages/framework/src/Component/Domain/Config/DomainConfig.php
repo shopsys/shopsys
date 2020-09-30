@@ -42,7 +42,7 @@ class DomainConfig
      * @param string $name
      * @param string $locale
      * @param string $stylesDirectory
-     * @param null $designId
+     * @param string|null $designId
      */
     public function __construct($id, $url, $name, $locale, $stylesDirectory = self::STYLES_DIRECTORY_DEFAULT, $designId = null)
     {
