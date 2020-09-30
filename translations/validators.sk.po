@@ -155,7 +155,7 @@ msgid "This email is already registered"
 msgstr "Tento email je už zaregistrovaný"
 
 msgid "Vyberte prosím platbu"
-msgstr "\nVyberte, prosím, platbu"
+msgstr "Vyberte, prosím, platbu"
 
 msgid "Vyplňte prosím DIČ"
 msgstr "Vyplňte, prosím, DIČ"
@@ -167,16 +167,16 @@ msgid "Vyplňte prosím DIČ-2"
 msgstr "Vyplňte, prosím, DIČ-2"
 
 msgid "Vyplňte prosím DIČ/Ič DPH kratší než {{ limit }} znaků."
-msgstr "\nVyplňte, prosím, DIČ/IČO DPH kratšie ako {{ limit }} znakov."
+msgstr "Vyplňte, prosím, DIČ/IČO DPH kratšie ako {{ limit }} znakov."
 
 msgid "Vyplňte prosím IČ"
-msgstr "\n\n\nVyplňte, prosím, IČO"
+msgstr "Vyplňte, prosím, IČO"
 
 msgid "Vyplňte prosím IČ kratší než {{ limit }} znaků."
 msgstr "Vyplňte, prosím, IČO kratšie ako {{ limit }} znakov."
 
 msgid "Vyplňte prosím PSČ"
-msgstr "\nVyplňte, prosím, PSČ"
+msgstr "Vyplňte, prosím, PSČ"
 
 msgid "Vyplňte prosím Stát"
 msgstr "Vyplňte, prosím, štát"
