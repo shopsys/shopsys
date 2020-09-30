@@ -16,14 +16,16 @@ class FilesystemLoader extends BaseFilesystemLoader
     protected $domain;
 
     /**
+     * @param array $paths
      * @param string|null $rootPath
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain|null $domain
      */
     public function __construct(
+        array $paths = [],
         ?string $rootPath = null,
         ?Domain $domain = null
     ) {
-        parent::__construct([], $rootPath);
+        parent::__construct($paths, $rootPath);
 
         $this->domain = $domain;
         $this->assertDomainDependency();

@@ -8,6 +8,7 @@ use Shopsys\FrameworkBundle\DependencyInjection\Compiler\AddConstraintValidators
 use Shopsys\FrameworkBundle\DependencyInjection\Compiler\LazyRedisCompilerPass;
 use Shopsys\FrameworkBundle\DependencyInjection\Compiler\RegisterCronModulesCompilerPass;
 use Shopsys\FrameworkBundle\DependencyInjection\Compiler\RegisterExtendedEntitiesCompilerPass;
+use Shopsys\FrameworkBundle\DependencyInjection\Compiler\RegisterMultiDesignFilesystemLoaderCompilerPass;
 use Shopsys\FrameworkBundle\DependencyInjection\Compiler\RegisterPluginCrudExtensionsCompilerPass;
 use Shopsys\FrameworkBundle\DependencyInjection\Compiler\RegisterPluginDataFixturesCompilerPass;
 use Shopsys\FrameworkBundle\DependencyInjection\Compiler\RegisterProductFeedConfigsCompilerPass;
@@ -37,6 +38,7 @@ class ShopsysFrameworkBundle extends Bundle
         $container->addCompilerPass(new LazyRedisCompilerPass());
         $container->addCompilerPass(new RegisterExtendedEntitiesCompilerPass());
         $container->addCompilerPass(new AddConstraintValidatorsPass());
+        $container->addCompilerPass(new RegisterMultiDesignFilesystemLoaderCompilerPass());
 
         $container->registerForAutoconfiguration(AbstractIndex::class)->addTag('elasticsearch.index');
 
