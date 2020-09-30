@@ -76,7 +76,7 @@ class OrderFacadeTest extends TransactionFunctionalTestCase
         $this->cartFacade->addProductToCart($product->getId(), 1);
 
         /** @var \App\Model\Transport\Transport $transport */
-        $transport = $this->transportRepository->getById(1);
+        $transport = $this->transportRepository->getById(3);
         /** @var \App\Model\Payment\Payment $payment */
         $payment = $this->paymentRepository->getById(1);
 
