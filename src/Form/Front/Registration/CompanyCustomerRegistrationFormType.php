@@ -59,12 +59,13 @@ class CompanyCustomerRegistrationFormType extends AbstractType
             'companyTaxNumber',
             TextType::class,
             [
-                'required' => false,
+                'required' => true,
                 'constraints' => [
-                    new Constraints\Length(['min' => 12, 'max' => 12]),
+                    new Constraints\NotBlank(['message' => 'Vyplňte prosím DIČ-2']),
+                    new Constraints\Length(['min' => 10, 'max' => 10]),
                     new Constraints\Regex([
                         'pattern' => RegexValidationRule::COMPANY_TAX_NUMBER_REGEX,
-                        'message' => 'Musí obsahovat pouze pouze čísla a velká písmena',
+                        'message' => 'Prosím, zadávejte pouze čísla',
                     ]),
                 ],
             ]
@@ -74,13 +75,12 @@ class CompanyCustomerRegistrationFormType extends AbstractType
                 'companyNumberWithVat',
                 TextType::class,
                 [
-                    'required' => true,
+                    'required' => false,
                     'constraints' => [
-                        new Constraints\NotBlank(['message' => 'Vyplňte prosím DIČ-2']),
-                        new Constraints\Length(['min' => 10, 'max' => 10]),
+                        new Constraints\Length(['min' => 12, 'max' => 12]),
                         new Constraints\Regex([
                             'pattern' => RegexValidationRule::COMPANY_NUMBER_WITH_VAT_REGEX,
-                            'message' => 'Prosím, zadávejte pouze čísla',
+                            'message' => 'Musí obsahovat pouze pouze čísla a velká písmena',
                         ]),
                     ],
                 ]
