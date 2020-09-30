@@ -74,7 +74,9 @@ class CustomerUserFormType extends AbstractType
                 'constraints' => [
                     new Constraints\NotBlank(['message' => 'Please enter telephone number']),
                     new Constraints\Length([
-                        'max' => 20,
+                        'min' => 9,
+                        'minMessage' => 'Telephone number cannot be shorter than {{ limit }} characters',
+                        'max' => 30,
                         'maxMessage' => 'Telephone number cannot be longer than {{ limit }} characters',
                     ]),
                     new Constraints\Regex([

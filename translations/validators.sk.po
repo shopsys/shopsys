@@ -145,6 +145,9 @@ msgstr "Názov ulice nemôže byť dlhší než {{ limit }} znakov"
 msgid "Tax number cannot be longer than {{ limit }} characters"
 msgstr "IČ DPH nemôže byť dlhšie než {{ limit }} znakov"
 
+msgid "Telephone number cannot be shorter than {{ limit }} characters"
+msgstr "Tel. číslo nemôže byť kratšie než {{ limit }} znakov"
+
 msgid "Telephone number cannot be longer than {{ limit }} characters"
 msgstr "Tel. číslo nemôže byť dlhšie než {{ limit }} znakov"
 
@@ -195,4 +198,3 @@ msgstr "Musíte súhlasiť so Zásadami ochrany osobných údajov"
 
 msgid "Zip code cannot be longer than {{ limit }} characters"
 msgstr "PSČ nemôže byť dlhšie než {{ limit }} znakov"
-
