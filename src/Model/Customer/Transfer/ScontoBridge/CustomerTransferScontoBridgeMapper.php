@@ -215,11 +215,11 @@ class CustomerTransferScontoBridgeMapper
         $erpCompany = new ScontoBridgeCompany();
         $erpCompany->setCompanyNumber($billingAddress->getCompanyNumber());
         $erpCompany->setName($billingAddress->getCompanyName());
-        $erpCompany->setVatNumber($billingAddress->getCompanyTaxNumber());
+        $erpCompany->setTaxNumber($billingAddress->getCompanyTaxNumber());
 
         $companyNumberWithVat = $billingAddress->getCompanyNumberWithVat();
         if ($companyNumberWithVat !== null) {
-            $erpCompany->setTaxNumber($companyNumberWithVat);
+            $erpCompany->setVatNumber($companyNumberWithVat);
         }
 
         return $erpCompany;
