@@ -100,7 +100,7 @@ class TransportPriceCalculation extends BaseTransportPriceCalculation
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $productsPrice
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Price
      */
-    private function calculatePriceByQuantifiedProducts(
+    public function calculatePriceByQuantifiedProducts(
         Transport $transport,
         Currency $currency,
         int $domainId,
