@@ -214,6 +214,7 @@ class SingleImportPromoCodeFacade implements TransferIdentificationInterface
 
         if ($promoCode === null) {
             $promoCodeData = $this->promoCodeDataFactory->create();
+            $promoCodeData->remainingUses = 1;
             $promoCodeData->domainId = $domainId;
             $promoCodeData->code = $code;
             $promoCodeData->datetimeValidFrom = $this->mapDateTime($data['valid_from'] ?? null);
