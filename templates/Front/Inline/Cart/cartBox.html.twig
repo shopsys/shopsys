@@ -44,7 +44,9 @@
                                 {{ 'Celkem zaplatíte'|trans }}
                             </div>
                             <div class="cart-detail__total__price">
-                                <span class="cart-detail__total__price__previous">{{ productsHighPrice.priceWithVat|price }}</span>
+                                {% if productsHighPrice.priceWithVat.isGreaterThan(productsPrice.priceWithVat) %}
+                                    <span class="cart-detail__total__price__previous">{{ productsHighPrice.priceWithVat|price }}</span>
+                                {% endif %}
                                 {{ productsPrice.priceWithVat|price }}
                             </div>
                         </div>
