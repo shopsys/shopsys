@@ -30,6 +30,35 @@ The changelog is generated during the release process using [ChangelogLinker](ht
 
 <!-- changelog-linker -->
 
+## [v9.0.3](https://github.com/shopsys/shopsys/compare/v9.0.2...v9.0.3) - 2020-09-30
+
+### [shopsys/framework]
+
+#### Changed
+
+- [#2036] move creation of FilterQuery from facade to factory
+
+#### Fixed
+
+- [#2050] fixed loading of multi design templates
+
+### [shopsys/frontend-api]
+
+#### Changed
+
+- [#2046] pagination now works with right number of products
+- [#2043] frontend API now correctly uses methods from frontend API facades instead of framework ones
+
+### [shopsys/shopsys]
+
+- [#2045] frontend API tests are always run on CI in monorepo
+- [#2041] Moved methods used only by FE API from framework facades to FE API facades
+- [#2038] required symfony/http-kernel in 4.4.13 or higher due to security issue
+
+#### Fixed
+
+- [#2026] fixed import path in ecs configurations
+
 ## [v9.0.2](https://github.com/shopsys/shopsys/compare/v9.0.1...v9.0.2) - 2020-09-01
 
 ### [shopsys/framework]
@@ -3692,4 +3721,11 @@ That's why is this section formatted differently.
 [#1823]: https://github.com/shopsys/shopsys/pull/1823
 [#1777]: https://github.com/shopsys/shopsys/pull/1777
 [#1750]: https://github.com/shopsys/shopsys/pull/1750
-
+[#2036]: https://github.com/shopsys/shopsys/pull/2036
+[#2050]: https://github.com/shopsys/shopsys/pull/2050
+[#2046]: https://github.com/shopsys/shopsys/pull/2046
+[#2043]: https://github.com/shopsys/shopsys/pull/2043
+[#2045]: https://github.com/shopsys/shopsys/pull/2045
+[#2041]: https://github.com/shopsys/shopsys/pull/2041
+[#2038]: https://github.com/shopsys/shopsys/pull/2038
+[#2026]: https://github.com/shopsys/shopsys/pull/2026
