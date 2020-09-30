@@ -1,0 +1,66 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Shopsys\FrontendApiBundle\Model\Parameter;
+
+use Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter;
+use Shopsys\FrameworkBundle\Model\Product\Product;
+use Shopsys\FrameworkBundle\Model\Product\ProductCachedAttributesFacade;
+
+class ParameterWithValuesFactory
+{
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Product\ProductCachedAttributesFacade
+     */
+    protected $productCachedAttributesFacade;
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\ProductCachedAttributesFacade $productCachedAttributesFacade
+     */
+    public function __construct(
+        ProductCachedAttributesFacade $productCachedAttributesFacade
+    ) {
+        $this->productCachedAttributesFacade = $productCachedAttributesFacade;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter $parameter
+     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValue[] $parameterValues
+     * @return \Shopsys\FrontendApiBundle\Model\Parameter\ParameterWithValues
+     */
+    public function create(Parameter $parameter, array $parameterValues): ParameterWithValues
+    {
+        return new ParameterWithValues($parameter, $parameterValues);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
+     * @return \Shopsys\FrontendApiBundle\Model\Parameter\ParameterWithValues[]
+     */
+    public function createMultipleForProduct(Product $product): array
+    {
+        $productParameterValues = $this->productCachedAttributesFacade->getProductParameterValues($product);
+
+        $valuesByParameterId = [];
+        $parameters = [];
+        $parametersWithValues = [];
+
+        foreach ($productParameterValues as $productParameterValue) {
+            $parameterId = $productParameterValue->getParameter()->getId();
+
+            if (!array_key_exists($parameterId, $valuesByParameterId)) {
+                $valuesByParameterId[$parameterId] = [];
+            }
+
+            array_push($valuesByParameterId[$parameterId], $productParameterValue->getValue());
+            $parameters[$parameterId] = $productParameterValue->getParameter();
+        }
+
+        foreach ($parameters as $parameter) {
+            $parametersWithValues[] = $this->create($parameter, $valuesByParameterId[$parameter->getId()]);
+        }
+
+        return $parametersWithValues;
+    }
+}

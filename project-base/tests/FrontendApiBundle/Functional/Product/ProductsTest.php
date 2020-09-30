@@ -85,6 +85,12 @@ class ProductsTest extends GraphQlTestCase
                             isSellingDenied
                             description
                             orderingPriority
+                            parameters {
+                                name
+                                values {
+                                    text
+                                }
+                            }
                         }
                     }
                 }
@@ -155,6 +161,48 @@ class ProductsTest extends GraphQlTestCase
                     $firstDomainLocale
                 ),
                 'orderingPriority' => null,
+                'parameters' => [
+                    [
+                        'name' => t('HDMI', [], 'dataFixtures', $firstDomainLocale),
+                        'values' => [
+                            [
+                                'text' => t('Yes', [], 'dataFixtures', $firstDomainLocale),
+                            ],
+                        ],
+                    ],
+                    [
+                        'name' => t('Resolution', [], 'dataFixtures', $firstDomainLocale),
+                        'values' => [
+                            [
+                                'text' => t('1920×1080 (Full HD)', [], 'dataFixtures', $firstDomainLocale),
+                            ],
+                        ],
+                    ],
+                    [
+                        'name' => t('Screen size', [], 'dataFixtures', $firstDomainLocale),
+                        'values' => [
+                            [
+                                'text' => t('30"', [], 'dataFixtures', $firstDomainLocale),
+                            ],
+                        ],
+                    ],
+                    [
+                        'name' => t('Technology', [], 'dataFixtures', $firstDomainLocale),
+                        'values' => [
+                            [
+                                'text' => t('LED', [], 'dataFixtures', $firstDomainLocale),
+                            ],
+                        ],
+                    ],
+                    [
+                        'name' => t('USB', [], 'dataFixtures', $firstDomainLocale),
+                        'values' => [
+                            [
+                                'text' => t('Yes', [], 'dataFixtures', $firstDomainLocale),
+                            ],
+                        ],
+                    ],
+                ],
             ],
         ];
     }

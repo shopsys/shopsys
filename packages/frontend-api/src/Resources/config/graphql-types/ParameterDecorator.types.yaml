@@ -1,0 +1,16 @@
+ParameterDecorator:
+    type: object
+    decorator: true
+    config:
+        description: "Represents a parameter"
+        fields:
+            uuid:
+                type: "Uuid!"
+                description: "UUID"
+            name:
+                type: "String!"
+                description: "Parameter name"
+            visible:
+                type: "Boolean!"
+            values:
+                type: "[ParameterValue!]!"

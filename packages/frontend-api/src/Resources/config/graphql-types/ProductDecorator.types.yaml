@@ -56,3 +56,5 @@ ProductDecorator:
                 type: "String"
             accessories:
                 type: "[Product]"
+            parameters:
+                type: "[Parameter]!"

@@ -1,0 +1,4 @@
+Parameter:
+    type: object
+    inherits:
+        - 'ParameterDecorator'

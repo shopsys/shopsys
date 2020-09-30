@@ -21,3 +21,4 @@ parameters:
             - '*/tests/*'
         ObjectCalisthenics\Sniffs\Files\FunctionLengthSniff:
             - '*/tests/FrontendApiBundle/Functional/Article/GetArticlesTest.php'
+            - '*/src/Model/Resolver/Products/ProductResolverMap.php'

@@ -14,6 +14,7 @@ use Shopsys\FrameworkBundle\Model\Product\Collection\ProductCollectionFacade;
 use Shopsys\FrameworkBundle\Model\Product\Flag\FlagFacade;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
+use Shopsys\FrontendApiBundle\Model\Parameter\ParameterWithValuesFactory;
 use Shopsys\FrontendApiBundle\Model\Product\ProductAccessoryFacade;
 
 class ProductResolverMap extends ResolverMap
@@ -59,6 +60,11 @@ class ProductResolverMap extends ResolverMap
     protected $productFacade;
 
     /**
+     * @var \Shopsys\FrontendApiBundle\Model\Parameter\ParameterWithValuesFactory|null
+     */
+    protected $parameterWithValuesFactory;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Product\Collection\ProductCollectionFacade $productCollectionFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Flag\FlagFacade $flagFacade
@@ -67,6 +73,7 @@ class ProductResolverMap extends ResolverMap
      * @param \Shopsys\FrontendApiBundle\Model\Product\ProductAccessoryFacade|null $productAccessoryFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser|null $currentCustomerUser
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductFacade|null $productFacade
+     * @param \Shopsys\FrontendApiBundle\Model\Parameter\ParameterWithValuesFactory|null $parameterWithValuesFactory
      */
     public function __construct(
         Domain $domain,
@@ -76,7 +83,8 @@ class ProductResolverMap extends ResolverMap
         ?BrandFacade $brandFacade = null,
         ?ProductAccessoryFacade $productAccessoryFacade = null,
         ?CurrentCustomerUser $currentCustomerUser = null,
-        ?ProductFacade $productFacade = null
+        ?ProductFacade $productFacade = null,
+        ?ParameterWithValuesFactory $parameterWithValuesFactory = null
     ) {
         $this->domain = $domain;
         $this->productCollectionFacade = $productCollectionFacade;
@@ -86,6 +94,7 @@ class ProductResolverMap extends ResolverMap
         $this->productAccessoryFacade = $productAccessoryFacade;
         $this->currentCustomerUser = $currentCustomerUser;
         $this->productFacade = $productFacade;
+        $this->parameterWithValuesFactory = $parameterWithValuesFactory;
     }
 
     /**
@@ -193,6 +202,35 @@ class ProductResolverMap extends ResolverMap
     }
 
     /**
+     * @required
+     * @param \Shopsys\FrontendApiBundle\Model\Parameter\ParameterWithValuesFactory $parameterWithValuesFactory
+     * @internal This function will be replaced by constructor injection in next major
+     */
+    public function setParameterWithValuesFactory(ParameterWithValuesFactory $parameterWithValuesFactory): void
+    {
+        if (
+            $this->parameterWithValuesFactory !== null
+            && $this->parameterWithValuesFactory !== $parameterWithValuesFactory
+        ) {
+            throw new BadMethodCallException(
+                sprintf('Method "%s" has been already called and cannot be called multiple times.', __METHOD__)
+            );
+        }
+        if ($this->parameterWithValuesFactory !== null) {
+            return;
+        }
+
+        @trigger_error(
+            sprintf(
+                'The %s() method is deprecated and will be removed in the next major. Use the constructor injection instead.',
+                __METHOD__
+            ),
+            E_USER_DEPRECATED
+        );
+        $this->parameterWithValuesFactory = $parameterWithValuesFactory;
+    }
+
+    /**
      * @return array
      */
     protected function map(): array
@@ -278,6 +316,11 @@ class ProductResolverMap extends ResolverMap
             },
             'description' => function ($data) {
                 return $data instanceof Product ? $data->getDescription($this->domain->getId()) : $data['description'];
+            },
+            'parameters' => function ($data) {
+                $product = $data instanceof Product ? $data : $this->productFacade->getById($data['id']);
+
+                return $this->parameterWithValuesFactory->createMultipleForProduct($product);
             },
         ];
     }
