@@ -148,11 +148,12 @@ class OrderPreviewCalculation extends BaseOrderPreviewCalculation
             if ($transportForFree) {
                 $transportPrice = Price::zero();
             } else {
-                $transportPrice = $this->transportPriceCalculation->calculatePrice(
+                $transportPrice = $this->transportPriceCalculation->calculatePriceByQuantifiedProducts(
                     $transport,
                     $currency,
-                    $productsPrice,
-                    $domainId
+                    $domainId,
+                    $productTypeQuantifiedProducts,
+                    $productsPrice
                 );
             }
         } else {
