@@ -4,7 +4,6 @@
 # This file will be removed in the next major, when all occurrences of parameters will be replaced.
 
 parameters:
-    selenium_server_host: '%env(SELENIUM_SERVER_HOST)%'
     overwrite_domain_url: '%env(OVERWRITE_DOMAIN_URL)%'
     shopsys.content_dir_name: '%env(SHOPSYS_CONTENT_DIR_NAME)%'
 
