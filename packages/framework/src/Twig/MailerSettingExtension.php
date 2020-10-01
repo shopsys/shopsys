@@ -41,9 +41,11 @@ class MailerSettingExtension extends AbstractExtension
     public function __construct(ContainerInterface $container, Environment $twigEnvironment)
     {
         $this->container = $container;
+
+        $this->mailerWhitelistExpressions = $this->container->getParameter('mailer_delivery_whitelist');
         $this->isDeliveryDisabled = $this->container->getParameter('mailer_disable_delivery');
         $this->mailerMasterEmailAddress = $this->container->getParameter('mailer_master_email_address');
-        $this->mailerWhitelistExpressions = $this->container->getParameter('mailer_delivery_whitelist');
+
         $this->twigEnvironment = $twigEnvironment;
     }
 

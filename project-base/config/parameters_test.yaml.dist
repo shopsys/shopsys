@@ -1,16 +1,19 @@
+# @deprecated
+# This file is kept to provide a backward compatibility for parameters set in services.
+# All values should be set with ENV variables exclusively.
+# This file will be removed in the next major, when all occurrences of parameters will be replaced.
+
 parameters:
-    test_database_host: postgres
-    test_database_port: ~
-    test_database_name: shopsys-test
-    test_database_user: root
-    test_database_password: root
+    selenium_server_host: '%env(SELENIUM_SERVER_HOST)%'
+    overwrite_domain_url: '%env(OVERWRITE_DOMAIN_URL)%'
+    shopsys.content_dir_name: '%env(SHOPSYS_CONTENT_DIR_NAME)%'
 
-    selenium_server_host: selenium-server
-    overwrite_domain_url: http://webserver:8080
-
-    test_mailer_transport: smtp
-    test_mailer_host: smtp-server
-    test_mailer_user: ~
-    test_mailer_password: ~
-
-    shopsys.content_dir_name: 'content-test'
+    test_database_host: '%env(DATABASE_HOST)%'
+    test_database_port: '%env(DATABASE_PORT)%'
+    test_database_name: '%env(DATABASE_NAME)%'
+    test_database_user: '%env(DATABASE_USER)%'
+    test_database_password: '%env(DATABASE_PASSWORD)%'
+    test_mailer_transport: '%env(MAILER_TRANSPORT)%'
+    test_mailer_host: '%env(MAILER_HOST)%'
+    test_mailer_user: '%env(MAILER_USER)%'
+    test_mailer_password: '%env(MAILER_PASSWORD)%'

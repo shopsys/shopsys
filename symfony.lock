@@ -277,9 +277,6 @@
     "heureka/overeno-zakazniky": {
         "version": "v2.0.6"
     },
-    "incenteev/composer-parameter-handler": {
-        "version": "v2.1.3"
-    },
     "intervention/image": {
         "version": "2.5.0"
     },
