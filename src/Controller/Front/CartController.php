@@ -6,6 +6,7 @@ namespace App\Controller\Front;
 
 use App\Form\Front\Cart\AddProductFormType;
 use App\Form\Front\Cart\CartFormType;
+use App\Model\Category\CategoryFacade;
 use App\Model\Gtm\GtmFacade;
 use App\Model\Gtm\GtmJsPushFacade;
 use App\Model\Order\Preview\OrderPreviewFactory;
@@ -95,6 +96,11 @@ class CartController extends FrontBaseController
     private $moduleFacade;
 
     /**
+     * @var \App\Model\Category\CategoryFacade
+     */
+    private $categoryFacade;
+
+    /**
      * @param \App\Model\Cart\CartFacade $cartFacade
      * @param \App\Component\Domain\Domain $domain
      * @param \App\Model\Order\Preview\OrderPreviewFactory $orderPreviewFactory
@@ -107,6 +113,7 @@ class CartController extends FrontBaseController
      * @param \App\Model\Gtm\GtmFacade $gtmFacade
      * @param \App\Model\Gtm\GtmJsPushFacade $gtmJsPushFacade
      * @param \Shopsys\FrameworkBundle\Model\Module\ModuleFacade|null $moduleFacade
+     * @param \App\Model\Category\CategoryFacade $categoryFacade
      */
     public function __construct(
         CartFacade $cartFacade,
@@ -120,7 +127,8 @@ class CartController extends FrontBaseController
         ProductFacade $productFacade,
         GtmFacade $gtmFacade,
         GtmJsPushFacade $gtmJsPushFacade,
-        ?ModuleFacade $moduleFacade = null
+        ?ModuleFacade $moduleFacade = null,
+        CategoryFacade $categoryFacade
     ) {
         $this->cartFacade = $cartFacade;
         $this->domain = $domain;
@@ -134,6 +142,7 @@ class CartController extends FrontBaseController
         $this->gtmFacade = $gtmFacade;
         $this->gtmJsPushFacade = $gtmJsPushFacade;
         $this->moduleFacade = $moduleFacade;
+        $this->categoryFacade = $categoryFacade;
     }
 
     /**
@@ -173,6 +182,16 @@ class CartController extends FrontBaseController
                             /** @var \App\Model\Product\Product $product */
                             $product = $quantifiedProduct->getProduct();
                             $this->cartFacade->changeQuantity($product, (int) $form->getData()['quantities'][$id]);
+                            $overLimitQuantity = $this->categoryFacade->getOverLimitQuantity($product, $this->domain->getId());
+                            $isQuantityOverLimit = $this->cartFacade->isQuantityOverLimitReached((int)$newQuantity, $overLimitQuantity);
+
+                            if ($isQuantityOverLimit) {
+                                $this->addQuantityOverLimitFlash(
+                                    $product->getName(),
+                                    $overLimitQuantity,
+                                    $product->getUnit()->getName()
+                                );
+                            }
 
                             $viewParameters['gtmEvent'] = $this->gtmJsPushFacade->getCartItemChangedEvent($product, $quantityDiff);
                         }
@@ -365,7 +384,11 @@ class CartController extends FrontBaseController
                 }
 
                 if ($addProductResult->isQuantityOverLimit()) {
-                    $this->addQuantityOverLimitFlash($addProductResult);
+                    $this->addQuantityOverLimitFlash(
+                        $addProductResult->getCartItem()->getName(),
+                        $addProductResult->getOverLimitQuantity(),
+                        $addProductResult->getCartItem()->getProduct()->getUnit()->getName()
+                    );
                 }
 
                 $product = $addProductResult->getCartItem()->getProduct();
@@ -556,18 +579,22 @@ class CartController extends FrontBaseController
     }
 
     /**
-     * @param \App\Model\Cart\AddProductResult $addProductResult
+     * @param string|null $name
+     * @param int|null $limit
+     * @param string $unitName
      */
-    private function addQuantityOverLimitFlash(AddProductResult $addProductResult): void
+    private function addQuantityOverLimitFlash(?string $name, ?int $limit, string $unitName): void
     {
-        $this->addInfoFlashTwig(
-            t('V košíku máte velké množství zboží {{name}}. Limit je {{ limit|formatNumber }} {{ unitName }}, proto budete mít speciální typ objednávky.'),
-            [
-                'name' => $addProductResult->getCartItem()->getName(),
-                'limit' => $addProductResult->getOverLimitQuantity(),
-                'unitName' => $addProductResult->getCartItem()->getProduct()->getUnit()->getName(),
-            ]
-        );
+        if ($name !== null && $limit !== null) {
+            $this->addInfoFlashTwig(
+                t('V košíku máte velké množství zboží {{name}}. Limit je {{ limit|formatNumber }} {{ unitName }}, proto budete mít speciální typ objednávky.'),
+                [
+                    'name' => $name,
+                    'limit' => $limit,
+                    'unitName' => $unitName,
+                ]
+            );
+        }
     }
 
     /**
