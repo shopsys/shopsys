@@ -13,6 +13,11 @@ Typical upgrade sequence should be:
 
 ***Note:** During the execution of `build-demo-dev phing target`, there will be installed 3-rd party software as dependencies of Shopsys Framework by [composer](https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies) and [npm](https://docs.npmjs.com/about-the-public-npm-registry) with licenses that are described in document [Open Source License Acknowledgements and Third-Party Copyrights](https://github.com/shopsys/shopsys/blob/7.3/open-source-license-acknowledgements-and-third-party-copyrights.md)*
 
+## [From v9.0.3 to v9.1.0-dev]
+
+- allow overriding parameters with ENV variables ([#2055](https://github.com/shopsys/shopsys/pull/2055)))
+     - remove `config/parameters.yaml` and `config/parameters_test.yaml` then run `composer install`
+
 ## [From v9.0.3 to v9.0.4-dev]
 
 ## [From v9.0.2 to v9.0.3]

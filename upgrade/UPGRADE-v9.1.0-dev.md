@@ -144,3 +144,7 @@ There you can find links to upgrade notes for other versions too.
 
 - add additional data to Product frontend API type ([#2057](https://github.com/shopsys/shopsys/pull/2057))
     - see #project-base-diff to update your project
+
+- made parameters overridable by ENV variables ([#2055](https://github.com/shopsys/shopsys/pull/2055))
+    - how to configure your application with ENV variables can be found [in our docs](https://docs.shopsys.com/en/latest/installation/application-configuration/)
+    - see #project-base-diff to update your project
