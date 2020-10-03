@@ -237,3 +237,12 @@ There you can find links to upgrade notes for other versions too.
     - run `php phing elasticsearch-index-migrate elasticsearch-export` to apply changes in Elasticsearch schema mapping
     - *BC BREAK* single product by UUID is now loaded from Elasticsearch with `productByUuid` resolver
         - if necessary, you can switch to the former resolver `product` in your `Query.types.yaml` file
+
+- provide cache directory to DomainRouterFactory and LocalizedRouterFactory ([#2133](https://github.com/shopsys/shopsys/pull/2133))
+    - the step is necessary in case you have extended following classes:
+        - `Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory`
+        - `Shopsys\FrameworkBundle\Component\Router\LocalizedRouterFactory`
+    - pass cache directory argument in your `services.yaml` as `$cacheDir`
+        - for this purpose there were introduced 2 new parameters to be used:
+            - `shopsys.router.domain.cache_dir`
+            - `shopsys.router.localized.cache_dir`
