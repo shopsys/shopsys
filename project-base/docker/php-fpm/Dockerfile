@@ -40,6 +40,7 @@ RUN apt-get update && \
     vim \
     nano \
     mc \
+    netcat \
     htop \
     autoconf && \
     apt-get clean

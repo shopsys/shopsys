@@ -1,0 +1,13 @@
+rabbitmq:
+    dsn: '%env(RABBITMQ_DSN)%'
+
+    exchanges:
+        products_export:
+            durable: true
+            type: topic
+
+    queues:
+        products_export:
+            durable: true
+            bindings:
+                -   exchange: products_export

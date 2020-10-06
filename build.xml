@@ -280,6 +280,22 @@
         </if>
     </target>
 
+    <target name="rabbit-run-consumers" depends="rabbit-setup" description="Run RabbitMq consumers.">
+        <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
+            <arg value="${path.bin-console}"/>
+            <arg value="rabbitmq:consumer:run"/>
+            <arg value="products_export_consumer"/>
+        </exec>
+    </target>
+
+    <target name="rabbit-setup" description="Setup of RabbitMq exchanges, queues and  binding.">
+        <exec executable="${path.root}/bin/wait-for-rabbitmq.sh" passthru="true" checkreturn="true"/>
+        <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
+            <arg value="${path.bin-console}"/>
+            <arg value="rabbitmq:setup"/>
+        </exec>
+    </target>
+
     <target name="standards" depends="shopsys_framework.standards,phing-config-check" description="Checks coding standards."/>
 
     <target name="standards-diff" depends="shopsys_framework.standards-diff,phing-config-check" description="Checks coding standards in changed files."/>

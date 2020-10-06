@@ -6,8 +6,8 @@ use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
 use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityRecalculationScheduler;
-use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductExportScheduler;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceRecalculationScheduler;
+use Shopsys\FrameworkBundle\Model\Product\Producer\ProductExportProducer;
 
 class ProductVariantFacade
 {
@@ -47,9 +47,9 @@ class ProductVariantFacade
     protected $productAvailabilityRecalculationScheduler;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductExportScheduler
+     * @var \Shopsys\FrameworkBundle\Model\Product\Producer\ProductExportProducer
      */
-    protected $productExportScheduler;
+    protected $productExportProducer;
 
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
@@ -59,7 +59,7 @@ class ProductVariantFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductFactoryInterface $productFactory
      * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceRecalculationScheduler $productPriceRecalculationScheduler
      * @param \Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityRecalculationScheduler $productAvailabilityRecalculationScheduler
-     * @param \Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductExportScheduler $productExportScheduler
+     * @param \Shopsys\FrameworkBundle\Model\Product\Producer\ProductExportProducer $productExportProducer
      */
     public function __construct(
         EntityManagerInterface $em,
@@ -69,7 +69,7 @@ class ProductVariantFacade
         ProductFactoryInterface $productFactory,
         ProductPriceRecalculationScheduler $productPriceRecalculationScheduler,
         ProductAvailabilityRecalculationScheduler $productAvailabilityRecalculationScheduler,
-        ProductExportScheduler $productExportScheduler
+        ProductExportProducer $productExportProducer
     ) {
         $this->em = $em;
         $this->productFacade = $productFacade;
@@ -78,7 +78,7 @@ class ProductVariantFacade
         $this->productFactory = $productFactory;
         $this->productPriceRecalculationScheduler = $productPriceRecalculationScheduler;
         $this->productAvailabilityRecalculationScheduler = $productAvailabilityRecalculationScheduler;
-        $this->productExportScheduler = $productExportScheduler;
+        $this->productExportProducer = $productExportProducer;
     }
 
     /**
@@ -107,9 +107,9 @@ class ProductVariantFacade
             throw $exception;
         }
 
-        $this->productExportScheduler->scheduleRowIdForImmediateExport($mainVariant->getId());
+        $this->productExportProducer->publishProduct($mainVariant);
         foreach ($mainVariant->getVariants() as $variant) {
-            $this->productExportScheduler->scheduleRowIdForImmediateExport($variant->getId());
+            $this->productExportProducer->publishProduct($variant);
         }
 
         return $mainVariant;

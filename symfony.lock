@@ -11,6 +11,12 @@
     "behat/transliterator": {
         "version": "v1.2.0"
     },
+    "bunny/bunny": {
+        "version": "v0.4.3"
+    },
+    "cdn77/rabbitmq-bundle": {
+        "version": "v0.1.2"
+    },
     "codeception/codeception": {
         "version": "2.3",
         "recipe": {
@@ -357,6 +363,9 @@
     "myclabs/deep-copy": {
         "version": "1.9.3"
     },
+    "myclabs/php-enum": {
+        "version": "1.7.6"
+    },
     "nette/application": {
         "version": "v3.0.4"
     },
@@ -535,6 +544,9 @@
     },
     "ramsey/uuid": {
         "version": "3.8.0"
+    },
+    "react/event-loop": {
+        "version": "v1.1.1"
     },
     "react/promise": {
         "version": "v2.7.1"

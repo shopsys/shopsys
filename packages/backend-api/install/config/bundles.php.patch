@@ -1,7 +1,7 @@
-@@ -41,4 +41,7 @@
-     Symfony\Bundle\WebProfilerBundle\WebProfilerBundle::class => ['dev' => true],
+@@ -42,4 +42,7 @@ return [
      Symfony\Bundle\DebugBundle\DebugBundle::class => ['dev' => true],
      Symfony\WebpackEncoreBundle\WebpackEncoreBundle::class => ['all' => true],
+     Cdn77\RabbitMQBundle\Cdn77RabbitMQBundle::class => ['all' => true],
 +    Shopsys\BackendApiBundle\ShopsysBackendApiBundle::class => ['all' => true],
 +    Trikoder\Bundle\OAuth2Bundle\TrikoderOAuth2Bundle::class => ['all' => true],
 +    FOS\RestBundle\FOSRestBundle::class => ['all' => true],

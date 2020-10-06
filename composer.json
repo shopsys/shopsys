@@ -71,6 +71,7 @@
         "ext-xml": "*",
         "arvenil/ninja-mutex": "^0.4.1",
         "barryvdh/elfinder-flysystem-driver": "^0.2",
+        "cdn77/rabbitmq-bundle": "^0.1.2",
         "commerceguys/intl": "^1.0.0",
         "composer/composer": "^1.6.0",
         "craue/formflow-bundle": "^3.0.3",
