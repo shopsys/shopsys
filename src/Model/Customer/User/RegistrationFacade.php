@@ -4,8 +4,11 @@ declare(strict_types=1);
 
 namespace App\Model\Customer\User;
 
+use App\Component\Domain\Domain;
 use App\Model\Country\CountryFacade;
+use Shopsys\FrameworkBundle\Model\Administrator\Exception\DuplicateUserNameException;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateData;
 
 class RegistrationFacade implements RegistrationFacadeInterface
 {
@@ -20,23 +23,31 @@ class RegistrationFacade implements RegistrationFacadeInterface
     private $customerUserUpdateDataFactory;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade
+     * @var \App\Model\Customer\User\CustomerUserFacade
      */
     private $customerUserFacade;
 
     /**
+     * @var \App\Component\Domain\Domain
+     */
+    private Domain $domain;
+
+    /**
      * @param \App\Model\Country\CountryFacade $countryFacade
      * @param \App\Model\Customer\User\CustomerUserUpdateDataFactory $customerUserUpdateDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade $customerUserFacade
+     * @param \App\Model\Customer\User\CustomerUserFacade $customerUserFacade
+     * @param \App\Component\Domain\Domain $domain
      */
     public function __construct(
         CountryFacade $countryFacade,
         CustomerUserUpdateDataFactory $customerUserUpdateDataFactory,
-        CustomerUserFacade $customerUserFacade
+        CustomerUserFacade $customerUserFacade,
+        Domain $domain
     ) {
         $this->countryFacade = $countryFacade;
         $this->customerUserUpdateDataFactory = $customerUserUpdateDataFactory;
         $this->customerUserFacade = $customerUserFacade;
+        $this->domain = $domain;
     }
 
     /**
@@ -45,6 +56,21 @@ class RegistrationFacade implements RegistrationFacadeInterface
      */
     public function register(RegistrationData $registrationData): CustomerUser
     {
+        /** @var \App\Model\Customer\User\CustomerUser|null $customerUser */
+        $customerUser = $this->customerUserFacade->findCustomerUserByEmailAndDomain($registrationData->email, $this->domain->getId());
+
+        if ($customerUser !== null) {
+            if ($customerUser->isActivated() === true) {
+                throw new DuplicateUserNameException($registrationData->email);
+            }
+
+            $customerUserUpdateData = $this->mapRegistrationDataToCustomerUserUpdateData($customerUser, $registrationData);
+            $this->customerUserFacade->edit($customerUser->getId(), $customerUserUpdateData);
+            $this->customerUserFacade->sendActivationMail($customerUser);
+
+            return $customerUser;
+        }
+
         $country = $this->countryFacade->getCountryOnCurrentDomain();
 
         $customerUserUpdateData = $this->customerUserUpdateDataFactory->createFromRegistrationData($registrationData);
@@ -64,5 +90,48 @@ class RegistrationFacade implements RegistrationFacadeInterface
         $registrationData->companyCustomer = true;
         $registrationData->gender = '';
         return $this->register($registrationData);
+    }
+
+    /**
+     * @param \App\Model\Customer\User\CustomerUser $customerUser
+     * @param \App\Model\Customer\User\RegistrationData $registrationData
+     * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateData
+     */
+    private function mapRegistrationDataToCustomerUserUpdateData(
+        CustomerUser $customerUser,
+        RegistrationData $registrationData
+    ): CustomerUserUpdateData {
+        $customerUserUpdateData = $this->customerUserUpdateDataFactory->createFromCustomerUser($customerUser);
+
+        /** @var \App\Model\Customer\BillingAddressData $billingAddressData */
+        $billingAddressData = $customerUserUpdateData->billingAddressData;
+        $billingAddressData->companyCustomer = $registrationData->companyCustomer;
+        if ($registrationData->companyCustomer === true) {
+            $billingAddressData->companyName = $registrationData->companyName;
+            $billingAddressData->companyNumber = $registrationData->companyNumber;
+            $billingAddressData->companyVatNumber = $registrationData->companyVatNumber;
+            $billingAddressData->companyTaxNumber = $registrationData->companyTaxNumber;
+        } else {
+            $billingAddressData->companyName = null;
+            $billingAddressData->companyNumber = null;
+            $billingAddressData->companyVatNumber = null;
+            $billingAddressData->companyTaxNumber = null;
+        }
+        $billingAddressData->street = $registrationData->street;
+        $billingAddressData->city = $registrationData->city;
+        $billingAddressData->postcode = $registrationData->postcode;
+
+        /** @var \App\Model\Customer\User\CustomerUserData $customerUserData */
+        $customerUserData = $customerUserUpdateData->customerUserData;
+        if ($registrationData->companyCustomer === false) {
+            $customerUserData->firstName = $registrationData->firstName;
+            $customerUserData->lastName = $registrationData->lastName;
+        } else {
+            $customerUserData->firstName = null;
+            $customerUserData->lastName = null;
+        }
+        $customerUserData->telephone = $registrationData->telephone;
+
+        return $customerUserUpdateData;
     }
 }

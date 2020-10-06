@@ -92,7 +92,7 @@ export default class PersonalPickup {
             </span>
             <span class="box-chooser__item__title__description__hours">
                 <strong>${Translator.trans('Otevřeno')}</strong>
-                ${stockOpeningHours}
+                <span class="box-chooser__item__title__description__hours__value">${stockOpeningHours}</span>
             </span>
             <span class="box-chooser__item__title__description__availability">
                 ${stockAvailability}
@@ -106,14 +106,23 @@ export default class PersonalPickup {
     setCurrentCheckboxDescription ($transportCheckbox, description) {
         $transportCheckbox.parents('.box-chooser__item').find('.box-chooser__item__title__description').html(description);
         $transportCheckbox.parents('.box-chooser__item').find('.box-chooser__item__delivery-information').addClass('hidden');
+        $('.box-chooser__item').removeClass('box-chooser__item--selected');
+        $transportCheckbox.parents('.box-chooser__item').addClass('box-chooser__item--selected');
     }
 
     resetCurrentCheckboxToOrigin ($transportCheckbox) {
+        let originData = $transportCheckbox.parents('.box-chooser__item').find('.box-chooser__item__title__description').data('origin');
+        let $description = `
+            <div class="box-chooser__item__tooltip__wrap">
+                <i class="box-chooser__item__tooltip__handler">i</i>
+                <div class="box-chooser__item__tooltip">${originData}</div>
+            </div>`;
         this.setCurrentCheckboxDescription(
             $transportCheckbox,
-            $transportCheckbox.parents('.box-chooser__item').find('.box-chooser__item__title__description').data('origin')
+            $description
         );
         $transportCheckbox.parents('.box-chooser__item').find('.box-chooser__item__delivery-information').removeClass('hidden');
+        $transportCheckbox.parents('.box-chooser__item').removeClass('box-chooser__item--selected');
     }
 
     setupRadioPersonalPickupByHiddenStockId ($transportCheckbox, $window) {

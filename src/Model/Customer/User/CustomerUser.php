@@ -142,4 +142,15 @@ class CustomerUser extends BaseUser
     {
         parent::setData($customerUserData);
     }
+
+    /**
+     * @return bool
+     */
+    public function isActivated(): bool
+    {
+        /** @var \App\Model\Customer\BillingAddress $billingAddress */
+        $billingAddress = $this->getCustomer()->getBillingAddress();
+
+        return $billingAddress->isActivated();
+    }
 }

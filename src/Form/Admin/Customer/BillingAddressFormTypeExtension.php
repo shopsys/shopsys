@@ -42,7 +42,7 @@ class BillingAddressFormTypeExtension extends AbstractTypeExtension
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        /* @var $customerUser \App\Model\Customer\User\CustomerUser */
+        /* @var $customerUser \App\Model\Customer\User\CustomerUser|null */
         $customerUser = $options['customerUser'];
 
         $domainId = Domain::SECOND_DOMAIN_ID;

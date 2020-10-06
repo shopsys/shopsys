@@ -53,6 +53,7 @@
 
     &--small-width {
         width: 150px;
+        min-width: 150px;
     }
 
     &--full-width {
@@ -78,12 +79,25 @@
         }
 
         &__heading {
-            margin-bottom: 1rem;
+            margin-bottom: 0.75rem;
 
             font-size: 18px;
             font-family: @font-quartenary;
             font-weight: 400;
             text-transform: none;
+
+            &--small-spacing {
+                margin-bottom: 0.5rem;
+            }
+
+            &--mini {
+                margin: -15px 0 15px 35px;
+
+                font-family: @font-base;
+                color: @color-primary;
+                font-size: 15px;
+                line-height: 1.4;
+            }
         }
 
         &__grid {

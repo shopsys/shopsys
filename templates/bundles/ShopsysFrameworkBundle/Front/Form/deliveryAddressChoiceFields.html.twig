@@ -13,13 +13,13 @@
                                 <span class="css-checkbox__image"></span>
                                 <strong class="box-chooser__item__name">
                                     {{ deliveryAddress.firstName }} {{ deliveryAddress.lastName }}
-                                    {% if deliveryAddress.companyName %}
-                                        <span class="box-chooser__item__company">
-                                            | {{ deliveryAddress.companyName }}
-                                        </span>
-                                    {% endif %}
                                 </strong>
                                 <span class="box-chooser__item__address">
+                                    {% if deliveryAddress.companyName %}
+                                        <span class="box-chooser__item__company">
+                                            {{ deliveryAddress.companyName }}
+                                        </span>
+                                    {% endif %}
                                     <span>
                                         {{ deliveryAddress.street }},
                                         {{ deliveryAddress.city }} {{ deliveryAddress.postcode }}
@@ -43,7 +43,7 @@
                             </label>
                         </li>
                     {% else %}
-                        <li class="box-chooser__item box-chooser__item--last {% if child.vars.checked %} active {% endif %} js-delivery-address-row">
+                        <li class="box-chooser__item box-chooser__item--no-bg box-chooser__item--last {% if child.vars.checked %} active {% endif %} js-delivery-address-row">
                             <label for="{{ child.vars.id }}" class="form-choice">
                                 {{ form_widget(child, { attr: { class: 'css-checkbox js-delivery-address-input' } }) }}
                                 <span class="css-checkbox__image"></span>

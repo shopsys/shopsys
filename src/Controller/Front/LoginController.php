@@ -106,10 +106,12 @@ class LoginController extends FrontBaseController
             'errorHeader' => t('Špatné přihlašovací údaje'),
             'errorMessage' => t('Zadali jste špatné uživatelské jméno nebo heslo.'),
         ];
-        $formData = $request->get('front_login_form');
+
+        $email = $request->get('email');
+        $passsword = $request->get('password');
 
         try {
-            $user = $this->frontendCustomerUserProvider->loadUserByUsername($formData['email']);
+            $user = $this->frontendCustomerUserProvider->loadUserByUsername($email);
         } catch (UsernameNotFoundException $e) {
             $user = null;
         }
@@ -120,7 +122,7 @@ class LoginController extends FrontBaseController
             $responseData['errorMessage'] = t('Přihlašujete se poprvé na novém e-shopu, prosím nastavte si heslo pomocí funkce “Obnovení hesla”.');
         }
 
-        if ($user !== null && $this->userPasswordEncoder->isPasswordValid($user, $formData['password'])) {
+        if ($user !== null && $this->userPasswordEncoder->isPasswordValid($user, $passsword)) {
             $this->authenticator->loginUser($user, $request);
             $responseData['success'] = true;
             $this->session->set(self::SESSION_LOGIN_IN_ORDER_SUCCESS, true);

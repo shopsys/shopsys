@@ -238,6 +238,12 @@ front_find_customer_by_email_ajax:
         _controller: App\Controller\Front\CustomerController:findCustomerByEmailAjaxAction
     methods: [POST]
 
+front_customer_email_check:
+    path: /customer/email-check/
+    defaults:
+        _controller: App\Controller\Front\CustomerController:emailCheckAction
+    methods: [GET]
+
 front_reset_password_ajax:
     path: /customer/reset-password-ajax/
     defaults:

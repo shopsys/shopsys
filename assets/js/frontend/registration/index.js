@@ -1,0 +1,2 @@
+import './RegistrationFillInformationForm';
+import './RegistrationForm';

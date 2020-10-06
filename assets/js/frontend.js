@@ -14,6 +14,7 @@ import './loadTranslations';
 import './frontend/components';
 
 import './frontend/validation/form';
+import './frontend/registration';
 // HP entry?
 import './frontend/homepage/slickInit';
 

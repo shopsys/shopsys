@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\Mail;
 
+use App\Model\Customer\Mail\CustomerActivationMail;
 use App\Model\Order\Mail\OrderMail;
 use App\Model\Order\Status\OrderStatus;
 use Shopsys\FrameworkBundle\Model\Mail\MailTemplateConfiguration as BaseMailTemplateConfiguration;
@@ -19,6 +20,7 @@ class MailTemplateConfiguration extends BaseMailTemplateConfiguration
     {
         parent::__construct($orderStatusFacade);
         $this->registerExtendedOrderStatusMailTemplates();
+        $this->registerCustomerActivationMailTemplate();
     }
 
     private function registerExtendedOrderStatusMailTemplates(): void
@@ -41,6 +43,15 @@ class MailTemplateConfiguration extends BaseMailTemplateConfiguration
             ->addVariable(OrderMail::VARIABLE_ERP_NUMBER, t('ID objednávky z ERP'), MailTemplateVariables::CONTEXT_BODY);
 
         $this->addMailTemplateVariables(MailTemplate::ORDER_STATUS_NAME, $mailTemplate);
+    }
+
+    private function registerCustomerActivationMailTemplate(): void
+    {
+        $mailTemplate = new MailTemplateVariables(t('Dokončení registrace'));
+        $mailTemplate
+            ->addVariable(CustomerActivationMail::VARIABLE_EMAIL, t('Email'))
+            ->addVariable(CustomerActivationMail::VARIABLE_ACTIVATION_URL, t('Odkaz na dokončení registrace'), MailTemplateVariables::CONTEXT_BODY, MailTemplateVariables::REQUIRED_BODY);
+        $this->addMailTemplateVariables(CustomerActivationMail::CUSTOMER_ACTIVATION_NAME, $mailTemplate);
     }
 
     protected function registerOrderStatusMailTemplates(): void

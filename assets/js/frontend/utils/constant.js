@@ -5,7 +5,12 @@ const constant = {
     '\\Shopsys\\FrameworkBundle\\Form\\ValidationGroup::VALIDATION_GROUP_DEFAULT': 'Default',
     '\\App\\Form\\Front\\Customer\\DeliveryAddressFormType::VALIDATION_GROUP_DIFFERENT_DELIVERY_ADDRESS': 'differentDeliveryAddress',
     '\\App\\Form\\Front\\Customer\\BillingAddressFormType::VALIDATION_GROUP_COMPANY_CUSTOMER': 'companyCustomer',
-    '\\App\\Form\\Front\\Customer\\BillingAddressFormType::VALIDATION_GROUP_COMMON_CUSTOMER': 'ordinaryCustomer'
+    '\\App\\Form\\Front\\Customer\\BillingAddressFormType::VALIDATION_GROUP_COMMON_CUSTOMER': 'ordinaryCustomer',
+    '\\App\\Form\\Front\\Order\\PersonalInfoFormType::VALIDATION_REGISTRATION': 'registration',
+    '\\App\\Form\\Front\\Order\\PersonalInfoFormType::VALIDATION_GROUP_REGISTRATION_WITH_PASSWORD': 'registrationWithPassword',
+    '\\App\\Form\\Front\\Registration\\RegistrationFormType::VALIDATION_GROUP_COMMON_CUSTOMER': 'commonCustomer',
+    '\\App\\Form\\Front\\Registration\\RegistrationFormType::VALIDATION_GROUP_COMPANY_CUSTOMER': 'companyCustomer',
+    '\\App\\Form\\Front\\Registration\\RegistrationFormType::VALIDATION_GROUP_REGULAR_REGISTRATION': 'regularRegistration'
 };
 
 export default (key) => constant[key];

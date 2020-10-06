@@ -13,7 +13,6 @@ import './InMessage';
 import './lazyLoadInit';
 import './legalConditions';
 import './Login';
-import './LoginInOrder';
 import './NewsletterSubscriptionForm';
 import './notImplementedYetTooltip';
 import './ProductsCarousel';

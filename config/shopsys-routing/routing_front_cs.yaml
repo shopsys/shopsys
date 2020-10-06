@@ -71,6 +71,10 @@ front_registration_set_new_password:
     path: /nove-heslo
     defaults: { _controller: App\Controller\Front\CustomerPasswordController:setNewPasswordAction }
 
+front_customer_activation:
+    path: /povrzeni-registrace
+    defaults: { _controller: App\Controller\Front\CustomerPasswordController:customerActivationAction }
+
 front_brand_list:
     path: /prehled-znacek
     defaults: { _controller: App\Controller\Front\BrandController:listAction }

@@ -49,7 +49,7 @@
                         </div>
                     </div>
                 {% else %}
-                    {{ form_start(form, {attr: {'multipleForm': true, 'data-login-url': url('front_login_in_order_ajax'), class: loginFormInOrder ? 'js-login-in-order':''}}) }}
+                    {{ form_start(form, {attr: {'multipleForm': true, class: loginFormInOrder ? 'js-login-in-order':''}}) }}
                         {{ form_errors(form, {errors_attr: { class: 'in-message--alert' }}) }}
                         <div class="box-cart-card box-cart-card--form box-cart-card--form--spaced">
                             <div class="box-cart-card__form">

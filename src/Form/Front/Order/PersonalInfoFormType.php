@@ -6,6 +6,7 @@ namespace App\Form\Front\Order;
 
 use App\Component\Validator\RegexValidationRule;
 use App\Model\Country\CountryFacade;
+use App\Model\Customer\User\CustomerUserFacade;
 use App\Model\Order\FrontOrderData;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Form\Constraints\Email;
@@ -33,6 +34,8 @@ class PersonalInfoFormType extends AbstractType
     public const VALIDATION_GROUP_COMPANY_CUSTOMER = 'companyCustomer';
     public const VALIDATION_GROUP_DIFFERENT_DELIVERY_ADDRESS = 'differentDeliveryAddress';
     public const VALIDATION_GROUP_COMMON_CUSTOMER = 'ordinaryCustomer';
+    public const VALIDATION_GROUP_REGISTRATION = 'registration';
+    public const VALIDATION_GROUP_REGISTRATION_WITH_PASSWORD = 'registrationWithPassword';
 
     /**
      * @var \App\Model\Country\CountryFacade
@@ -55,21 +58,29 @@ class PersonalInfoFormType extends AbstractType
     private $currentCustomerUser;
 
     /**
+     * @var \App\Model\Customer\User\CustomerUserFacade
+     */
+    private CustomerUserFacade $customerUserFacade;
+
+    /**
      * @param \App\Model\Country\CountryFacade $countryFacade
      * @param \Shopsys\FrameworkBundle\Model\Heureka\HeurekaFacade $heurekaFacade
      * @param \App\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
+     * @param \App\Model\Customer\User\CustomerUserFacade $customerUserFacade
      */
     public function __construct(
         CountryFacade $countryFacade,
         HeurekaFacade $heurekaFacade,
         Domain $domain,
-        CurrentCustomerUser $currentCustomerUser
+        CurrentCustomerUser $currentCustomerUser,
+        CustomerUserFacade $customerUserFacade
     ) {
         $this->countryFacade = $countryFacade;
         $this->heurekaFacade = $heurekaFacade;
         $this->domain = $domain;
         $this->currentCustomerUser = $currentCustomerUser;
+        $this->customerUserFacade = $customerUserFacade;
     }
 
     /**
@@ -79,6 +90,7 @@ class PersonalInfoFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $countries = [$this->countryFacade->getCountryOnCurrentDomain()];
+        $currentCustomerUser = $this->currentCustomerUser->findCurrentCustomerUser();
 
         $builder
             ->add('firstName', TextType::class, [
@@ -120,19 +132,26 @@ class PersonalInfoFormType extends AbstractType
 
         $builder->add('companyCustomer', CheckboxType::class, ['required' => false]);
 
+        $emailOptions = [
+            'attr' => [],
+            'constraints' => [
+                new Constraints\NotBlank(['message' => 'Please enter email']),
+                new Email(['message' => 'Please enter valid email']),
+                new Constraints\Length(['max' => 64, 'maxMessage' => 'Email cannot be longer than {{ limit }} characters']),
+                new Constraints\Regex([
+                    'pattern' => RegexValidationRule::MOEVE_DENY_CHARS,
+                    'message' => 'Prosím, nepoužívejte žádné speciální znaky. Například őűàèìòùâêîôûâêîôãñõđåæøçłßþż€£¥ƒ¢§¶ªº',
+                ]),
+            ],
+        ];
+        if ($currentCustomerUser !== null) {
+            $emailOptions['disabled'] = true;
+            $emailOptions['attr']['readonly'] = 'readonly';
+            $emailOptions['attr']['disabled'] = 'disabled';
+            $emailOptions['data'] = $currentCustomerUser->getEmail();
+        }
         $builder
-            ->add('email', EmailType::class, [
-                'attr' => ['readonly' => true],
-                'constraints' => [
-                    new Constraints\NotBlank(['message' => 'Please enter email']),
-                    new Email(['message' => 'Please enter valid email']),
-                    new Constraints\Length(['max' => 64, 'maxMessage' => 'Email cannot be longer than {{ limit }} characters']),
-                    new Constraints\Regex([
-                        'pattern' => RegexValidationRule::MOEVE_DENY_CHARS,
-                        'message' => 'Prosím, nepoužívejte žádné speciální znaky. Například őűàèìòùâêîôûâêîôãñõđåæøçłßþż€£¥ƒ¢§¶ªº',
-                    ]),
-                ],
-            ])
+            ->add('email', EmailType::class, $emailOptions)
             ->add('telephone', TextType::class, [
                 'constraints' => [
                     new Constraints\NotBlank(['message' => 'Please enter telephone number']),
@@ -261,7 +280,7 @@ class PersonalInfoFormType extends AbstractType
                 ])
                 ->addModelTransformer(new InverseTransformer()));
 
-        if ($this->currentCustomerUser->findCurrentCustomerUser() !== null) {
+        if ($currentCustomerUser !== null) {
             $builder->add('deliveryAddress', DeliveryAddressChoiceType::class, [
                 'required' => false,
             ]);
@@ -420,7 +439,8 @@ class PersonalInfoFormType extends AbstractType
             ->add('note', TextareaType::class, ['required' => false])
             ->add('save', SubmitType::class);
 
-        if ($this->currentCustomerUser->findCurrentCustomerUser() === null) {
+        if ($currentCustomerUser === null) {
+            $builder->add('register', CheckboxType::class, ['required' => false]);
             $builder->add('password', RepeatedType::class, [
                 'type' => PasswordType::class,
                 'options' => [
@@ -430,10 +450,12 @@ class PersonalInfoFormType extends AbstractType
                     'constraints' => [
                         new Constraints\NotBlank([
                             'message' => 'Please enter password',
+                            'groups' => [self::VALIDATION_GROUP_REGISTRATION_WITH_PASSWORD],
                         ]),
                         new Constraints\Length([
                             'min' => 6,
                             'minMessage' => 'Password must be at least {{ limit }} characters long',
+                            'groups' => [self::VALIDATION_GROUP_REGISTRATION_WITH_PASSWORD],
                         ]),
                     ],
                 ],
@@ -441,10 +463,12 @@ class PersonalInfoFormType extends AbstractType
                     'constraints' => [
                         new Constraints\NotBlank([
                             'message' => 'Please enter password',
+                            'groups' => [self::VALIDATION_GROUP_REGISTRATION_WITH_PASSWORD],
                         ]),
                         new Constraints\Length([
                             'min' => 6,
                             'minMessage' => 'Password must be at least {{ limit }} characters long',
+                            'groups' => [self::VALIDATION_GROUP_REGISTRATION_WITH_PASSWORD],
                         ]),
                     ],
                 ],
@@ -501,6 +525,7 @@ class PersonalInfoFormType extends AbstractType
 
                     /** @var \App\Model\Order\FrontOrderData $orderData */
                     $orderData = $form->getData();
+                    $customerInfo = $this->customerUserFacade->getCustomerInfo($orderData->email, $this->domain->getId());
 
                     if ($orderData->companyCustomer) {
                         $validationGroups[] = self::VALIDATION_GROUP_COMPANY_CUSTOMER;
@@ -510,6 +535,13 @@ class PersonalInfoFormType extends AbstractType
 
                     if (!$orderData->deliveryAddressSameAsBillingAddress && $orderData->deliveryAddress === null) {
                         $validationGroups[] = self::VALIDATION_GROUP_DIFFERENT_DELIVERY_ADDRESS;
+                    }
+
+                    if ($orderData->register) {
+                        $validationGroups[] = self::VALIDATION_GROUP_REGISTRATION;
+                        if ($customerInfo['exists'] === false) {
+                            $validationGroups[] = self::VALIDATION_GROUP_REGISTRATION_WITH_PASSWORD;
+                        }
                     }
 
                     return $validationGroups;

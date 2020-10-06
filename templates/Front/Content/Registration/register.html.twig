@@ -4,19 +4,23 @@
     {{ 'Registration'|trans }}
 {% endblock %}
 
-{%  set commonTabActiveClass = firstTabActiveSetting ? "active" : "" %}
-{%  set companyTabActiveClass = firstTabActiveSetting ? "" : "active" %}
-
 {% block breadcrumb %}
 {% endblock %}
 
 {% block main_content %}
+    {%  set commonTabActiveClass = form.companyCustomer.vars.data ? "" : "active" %}
+    {%  set companyTabActiveClass = form.companyCustomer.vars.data ? "active" : "" %}
+
     <div class="web__line web__line--spacing--big web__line--margin-bottom-up-big">
         <div class="web__container">
             <h1 class="heading heading--primary heading--primary-subpage">{{ 'Registration'|trans }}</h1>
             {{ render(controller('App\\Controller\\Front\\BreadcrumbController:indexAction', { routeName: getRoute(), routeParameters: getRouteParams() } )) }}
+            {{ form_start(form, {attr: {
+                'data-email-check-url': url('front_customer_email_check'),
+                'data-customer-info': customerInfo|json_encode
+            }}) }}
             {{ form_errors(form) }}
-            {{ form_errors(companyForm) }}
+            {{ form_widget(form.companyCustomer, { attr: { class: 'display-none'}}) }}
             <div class="box-form box-form--registration box-form--small">
                 <div class="box-login box-login--registration">
                     <div class="box-login__profile box-login__profile--standalone">
@@ -30,8 +34,9 @@
                         </div>
                     </div>
                 </div>
+                {{ form_row(form.email, { label: 'Váš e-mail'|trans , rowClass: 'form-line-block js-form-field', attr: {'data-request-url' : url('front_registration_exists_email') } }) }}
                 <div class="in-tab js-responsive-tabs js-tabs-only">
-                    <div class="in-tab__head dont-print">
+                    <div class="in-tab__head dont-print js-registration-form-customer-type-selector">
                         <a href="#" class="in-tab__head__item js-tabs-button  {{ commonTabActiveClass }}" data-tab-id="common-customer">
                             <span class="in-tab__head__item__text">
                                 {{ "Koncový zákazník"|trans }}
@@ -44,23 +49,84 @@
                         </a>
                     </div>
                     <div class="in-tab__content">
-                        <a href="#" class="in-tab__content__title js-tabs-button  {{ commonTabActiveClass }}" data-tab-id="common-customer">
-                            {{ "Koncový zákazník"|trans }}
-                            <i class="svg svg-arrow"></i>
-                        </a>
-                        <div class="in-tab__content__item js-tabs-content  {{ commonTabActiveClass }}" data-tab-id="common-customer">
-                            {% include 'Front/Content/Registration/commonCustomerRegistrationForm.html.twig' %}
+                        <div class="js-registration-form-customer-type-selector">
+                            <a href="#" class="in-tab__content__title js-tabs-button  {{ commonTabActiveClass }}" data-tab-id="common-customer">
+                                {{ "Koncový zákazník"|trans }}
+                                <i class="svg svg-arrow"></i>
+                            </a>
+                            <a href="#" class="in-tab__content__title js-tabs-button  {{ companyTabActiveClass }}" data-tab-id="company-customer">
+                                {{ "Firma"|trans }}
+                                <i class="svg svg-arrow"></i>
+                            </a>
                         </div>
-                        <a href="#" class="in-tab__content__title js-tabs-button  {{ companyTabActiveClass }}" data-tab-id="company-customer">
-                            {{ "Firma"|trans }}
-                            <i class="svg svg-arrow"></i>
-                        </a>
-                        <div class="in-tab__content__item js-tabs-content  {{ companyTabActiveClass }}" data-tab-id="company-customer">
-                            {% include 'Front/Content/Registration/companyCustomerRegistrationForm.html.twig' %}
+
+                        <div class="form-line-block-section form-line-block-section--no-spacing">
+                            {{ form_row(form.telephone, { label: 'Telefon'|trans, rowClass: 'form-line-block js-form-field' }) }}
+                        </div>
+                        <div class="in-tab__content__item js-tabs-content {{ commonTabActiveClass }}" data-tab-id="common-customer">
+                            <div class="form-line-block-section">
+                                {{ form_row(form.firstName, { label: 'First name'|trans, rowClass: 'form-line-block js-form-field' }) }}
+                                {{ form_row(form.lastName, { label: 'Last name'|trans, rowClass: 'form-line-block js-form-field' }) }}
+                            </div>
+                        </div>
+                        <div class="in-tab__content__item js-tabs-content {{ companyTabActiveClass }}" data-tab-id="company-customer">
+                            <div class="form-line-block-section">
+                                {{ form_row(form.companyName, { label: 'Název společnosti'|trans, rowClass: 'form-line-block js-form-field' }) }}
+                                {{ form_row(form.companyNumber, { label: 'Company number'|trans, rowClass: 'form-line-block js-form-field' }) }}
+                                {{ form_row(form.companyNumberWithVat, { label: 'Vat number'|trans, rowClass: 'form-line-block js-form-field' }) }}
+                                {% if getDomain().id == 2 %}
+                                    {{ form_row(form.companyTaxNumber, { label: 'Tax number'|trans, rowClass: 'form-line-block js-form-field' }) }}
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="form-line-block-section" id="js-registration-form-password-container">
+                            <h2 class="form-line-block-section__heading">{{ 'Password'|trans }}</h2>
+                            {{ form_row(form.password.first, {
+                                label: 'Password'|trans,
+                                rowClass: 'form-line-block js-form-field'
+                            }) }}
+                            {{ form_row(form.password.second, { label: 'Password again'|trans, rowClass: 'form-line-block js-form-field' }) }}
+                        </div>
+                        <div id="js-registration-form-activation-info">
+                            <p>{{ 'Po odeslání formuláře Vám zašleme e-mail s instrukcemi pro dokončení registrace'|trans }}</p>
+                        </div>
+                        <div class="form-line-block-section">
+                            <h2 class="form-line-block-section__heading">{{ 'Fakturační adresa'|trans }}</h2>
+                            {{ form_row(form.street, { label: 'Ulice a č. popisné'|trans, rowClass: 'form-line-block js-form-field' }) }}
+                            <div class="form-line-block-section__grid">
+                                {{ form_row(form.city, { label: 'Město'|trans, rowClass: 'form-line-block form-line-block--full-width form-line-block--first js-form-field' }) }}
+                                {{ form_row(form.postcode, { label: 'PSČ'|trans, rowClass: 'form-line-block form-line-block--small-width js-form-field' }) }}
+                            </div>
+                        </div>
+                        <dl class="form-line-block form-line-block--check">
+                            <dd>
+                                <div class="form-choice">
+                                    {{ form_widget(form.privacyPolicy, { attr: { class: "css-checkbox" } }) }}
+                                    <label for="{{ form.privacyPolicy.vars.id }}" class="css-checkbox__image">
+                                        {% if privacyPolicyArticle is not null %}
+                                            {% set articleUrl = url('front_article_detail', {'id': privacyPolicyArticle.id}) %}
+                                            {{ 'I agree with <a href="%url%" target="_blank">privacy policy</a>.'|trans({'%url%': articleUrl})|raw }}
+                                        {% else %}
+                                            {{ 'I agree with privacy policy.'|trans }}
+                                        {% endif %}
+                                        <span class="form-input-required">*</span>
+                                    </label>
+                                    <div class="js-validation-errors-list js-validation-error-list-{{ form.privacyPolicy.vars.id }} form-error form-error--choice display-none">
+                                        <span class="form-error__icon">
+                                            <i class="svg svg-warning"></i>
+                                        </span>
+                                        <ul class="form-error__list"></ul>
+                                    </div>
+                                </div>
+                            </dd>
+                        </dl>
+                        <div class="box-form__submit">
+                            {{ form_widget(form.save, { label: 'Register'|trans, attr: {'class' : 'btn--success btn--submit-next'} }) }}
                         </div>
                     </div>
                 </div>
             </div>
+            {{ form_end(form) }}
         </div>
     </div>
 {% endblock %}

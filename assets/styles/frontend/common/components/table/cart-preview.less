@@ -42,11 +42,16 @@
 
         &--products,
         &--payment {
+            .table-cart-preview__row {
+                margin: 3px 0;
+            }
+
             .table-cart-preview__cell {
                 padding-top: 1px;
                 padding-bottom: 1px;
 
                 color: @color-base-secondary;
+                line-height: 1.4;
             }
         }
     }
@@ -54,6 +59,10 @@
     &__row {
         display: flex;
         justify-content: space-between;
+
+        &--previous-price {
+            padding-bottom: 4px;
+        }
 
         &--section-price {
             .table-cart-preview__cell {
@@ -70,7 +79,14 @@
         }
 
         &--total--discount {
+            align-items: center;
             margin-bottom: 1rem;
+        }
+
+        &--transport {
+            padding: 8px 0 1px;
+
+            border-top: 1px solid @color-border-tertiary;
         }
     }
 

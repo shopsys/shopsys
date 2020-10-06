@@ -96,8 +96,14 @@ class RegistrationData
      */
     public $country;
 
+    /**
+     * @var bool
+     */
+    public bool $activated;
+
     public function __construct()
     {
         $this->gender = CustomerUser::GENDER_MALE;
+        $this->activated = true;
     }
 }

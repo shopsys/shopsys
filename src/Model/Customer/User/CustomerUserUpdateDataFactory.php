@@ -28,6 +28,7 @@ class CustomerUserUpdateDataFactory extends BaseCustomerUserUpdateDataFactory
         $billingAddressData->companyNumber = $registrationData->companyNumber;
         $billingAddressData->companyTaxNumber = $registrationData->companyTaxNumber;
         $billingAddressData->companyNumberWithVat = $registrationData->companyNumberWithVat;
+        $billingAddressData->activated = $registrationData->activated;
 
         /**
          * @var \App\Model\Customer\User\CustomerUserData
@@ -45,7 +46,7 @@ class CustomerUserUpdateDataFactory extends BaseCustomerUserUpdateDataFactory
         $customerUserUpdateData = $this->create();
         $customerUserUpdateData->billingAddressData = $billingAddressData;
         $customerUserUpdateData->customerUserData = $customerUserData;
-        $customerUserUpdateData->sendRegistrationMail = true;
+        $customerUserUpdateData->sendRegistrationMail = $registrationData->activated;
 
         return $customerUserUpdateData;
     }

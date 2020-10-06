@@ -70,6 +70,10 @@ services:
             $fileValidator: '@Symfony\Component\Validator\Constraints\ImageValidator'
             $localTemporaryDir: '%kernel.cache_dir%'
 
+    App\Form\Constraints\UniqueEmailValidator:
+        class: App\Form\Constraints\UniqueEmailValidator
+        public: true
+
     validator.validator_factory:
         class: 'App\Component\Validator\ContainerConstraintValidatorFactory'
         arguments:
@@ -77,7 +81,8 @@ services:
             - '@service_container'
             - {
                 'Symfony\Component\Validator\Constraints\ImageValidator': 'app.component.validator.image_validator',
-                'Symfony\Component\Validator\Constraints\FileValidator': 'app.component.validator.file_validator'
+                'Symfony\Component\Validator\Constraints\FileValidator': 'app.component.validator.file_validator',
+                'Shopsys\FrameworkBundle\Form\Constraints\UniqueEmailValidator': App\Form\Constraints\UniqueEmailValidator
             }
 
     App\Component\Doctrine\QueryBuilderExtender: ~
@@ -946,6 +951,11 @@ services:
 
     Shopsys\FrameworkBundle\Model\Transport\TransportRepository:
         alias: App\Model\Transport\TransportRepository
+
+    Shopsys\FrameworkBundle\Model\Customer\Mail\CustomerMailFacade:
+        alias: App\Model\Customer\Mail\CustomerMailFacade
+
+    App\Model\Customer\Mail\CustomerActivationMail: ~
 
     App\Model\Customer\Transfer\ScontoBridge\CustomerTransferScontoBridgeExporter: ~
 

@@ -69,10 +69,10 @@ export default class PaymentTransportChooser {
             $(group).toggleClass('is-disabled', hideNextGroups);
 
             if ($(group).find('.js-payment-transport-checkbox:checked').length > 0) {
-                $changeButton.removeClass('display-none');
+                $changeButton.parents('.box-chooser__toggle').removeClass('display-none');
             } else {
                 hideNextGroups = true;
-                $changeButton.addClass('display-none');
+                $changeButton.parents('.box-chooser__toggle').addClass('display-none');
             }
         });
     }

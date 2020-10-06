@@ -1,0 +1,44 @@
+{% extends 'Front/Layout/layoutWithoutPanel.html.twig' %}
+
+{% block meta_robots -%}
+    <meta name="robots" content="noindex, follow">
+{% endblock %}
+
+{% block title %}
+    {{ 'Dokončení registrace'|trans }}
+{% endblock %}
+
+{% block breadcrumb %}
+{% endblock %}
+
+{% block main_content %}
+    <div class="web__line web__line--spacing--big web__line--margin-bottom-up-big">
+        <div class="web__container">
+            <h1 class="heading heading--primary heading--primary-subpage">{{ 'Dokončení registrace'|trans }}</h1>
+
+            <p>{{ 'Pro úspěšné dokončení Vaší registrace si prosím nastavte bezpečné heslo k Vašemu účtu.'|trans }}</p>
+
+            {{ form_errors(form) }}
+            {{ form_start(form) }}
+            <div class="box-form box-form--registration box-form--small">
+                {{ form_row(form.newPassword.first, {
+                    label: 'Password'|trans,
+                    rowClass: 'form-line-block js-form-field'
+                }) }}
+
+                {{ form_row(form.newPassword.second, {
+                    label: 'Password again'|trans,
+                    rowClass: 'form-line-block js-form-field'
+                }) }}
+
+                <div class="box-form__submit">
+                    {{ form_widget(form.submit, {
+                        label: 'Nastavit heslo'|trans,
+                        attr: {'class' : 'btn--success btn--submit-next'}
+                    }) }}
+                </div>
+            </div>
+            {{ form_end(form) }}
+        </div>
+    </div>
+{% endblock %}

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\DataFixtures\Demo;
 
+use App\Model\Customer\Mail\CustomerActivationMail;
 use App\Model\Mail\MailTemplate;
 use App\Model\Mail\MailTemplateData;
 use App\Model\Mail\MailTemplateDataFactory;
@@ -137,6 +138,15 @@ team of {domain}
 ', [], 'dataFixtures', $locale);
 
             $this->createMailTemplate($manager, MailTemplate::PERSONAL_DATA_EXPORT_NAME, $mailTemplateData, $domainId);
+
+            if ($domainId === 2) {
+                $mailTemplateData->subject = 'Dokončenie registrácie';
+                $mailTemplateData->body = 'Vážený zákazník,<br /><br />na tomto odkaze môžete dokončiť registráciu a nastaviť si svoje nové heslo: <a href="{activation_url}">{activation_url}</a>';
+            } else {
+                $mailTemplateData->subject = 'Dokončení registrace';
+                $mailTemplateData->body = 'Vážený zákazníku,<br /><br />na tomto odkazu můžete dokončit registraci a nastavit si své nové heslo: <a href="{activation_url}">{activation_url}</a>';
+            }
+            $this->createMailTemplate($manager, CustomerActivationMail::CUSTOMER_ACTIVATION_NAME, $mailTemplateData, $domainId);
 
             /** @var \App\Model\Transport\Transport $transportPallet */
             $transportPallet = $this->getReference(TransportDataFixture::TRANSPORT_PALLET);

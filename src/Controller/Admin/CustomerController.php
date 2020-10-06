@@ -99,6 +99,7 @@ class CustomerController extends BaseCustomerController
             $this->adminDomainTabsFacade->getSelectedDomainId(),
             $quickSearchForm->getData()
         );
+        $queryBuilder->addSelect('BOOL_AND(ba.activated) as isActivated');
 
         $innerDataSource = new QueryBuilderDataSource($queryBuilder, 'u.id');
         $dataSource = new MoneyConvertingDataSourceDecorator($innerDataSource, ['ordersSumPrice']);
@@ -111,6 +112,7 @@ class CustomerController extends BaseCustomerController
         $grid->addColumn('city', 'city', t('City'), true);
         $grid->addColumn('telephone', 'u.telephone', t('Telephone'), true);
         $grid->addColumn('email', 'u.email', t('Email'), true);
+        $grid->addColumn('isActivated', 'isActivated', t('Aktvní'), true);
         $grid->addColumn('pricingGroup', 'pricingGroup', t('Pricing group'), true);
         $grid->addColumn('orders_count', 'ordersCount', t('Number of orders'), true)->setClassAttribute('text-right');
         $grid->addColumn('orders_sum_price', 'ordersSumPrice', t('Orders value'), true)

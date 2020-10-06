@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\Customer\User;
 
+use App\Component\String\HashGenerator;
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Model\Customer\BillingAddressDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Customer\BillingAddressFacade;
@@ -24,6 +25,7 @@ use Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade;
 
 /**
  * @property \App\Model\Customer\User\CustomerUserRepository $customerUserRepository
+ * @property \App\Model\Customer\Mail\CustomerMailFacade $customerMailFacade
  */
 class CustomerUserFacade extends BaseCustomerUserFacade
 {
@@ -33,10 +35,15 @@ class CustomerUserFacade extends BaseCustomerUserFacade
     private $newsletterFacade;
 
     /**
+     * @var \App\Component\String\HashGenerator
+     */
+    private HashGenerator $hashGenerator;
+
+    /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \App\Model\Customer\User\CustomerUserRepository $customerUserRepository
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactoryInterface $customerUserUpdateDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\Customer\Mail\CustomerMailFacade $customerMailFacade
+     * @param \App\Model\Customer\Mail\CustomerMailFacade $customerMailFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\BillingAddressFactoryInterface $billingAddressFactory
      * @param \Shopsys\FrameworkBundle\Model\Customer\BillingAddressDataFactoryInterface $billingAddressDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFactoryInterface $customerUserFactory
@@ -47,6 +54,7 @@ class CustomerUserFacade extends BaseCustomerUserFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\BillingAddressFacade $billingAddressFacade
      * @param \App\Model\Newsletter\NewsletterFacade $newsletterFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRefreshTokenChainFacade $customerUserRefreshTokenChainFacade
+     * @param \App\Component\String\HashGenerator $hashGenerator
      */
     public function __construct(
         EntityManagerInterface $em,
@@ -62,7 +70,8 @@ class CustomerUserFacade extends BaseCustomerUserFacade
         CustomerDataFactoryInterface $customerDataFactory,
         BillingAddressFacade $billingAddressFacade,
         NewsletterFacade $newsletterFacade,
-        CustomerUserRefreshTokenChainFacade $customerUserRefreshTokenChainFacade
+        CustomerUserRefreshTokenChainFacade $customerUserRefreshTokenChainFacade,
+        HashGenerator $hashGenerator
     ) {
         parent::__construct(
             $em,
@@ -80,6 +89,7 @@ class CustomerUserFacade extends BaseCustomerUserFacade
             $customerUserRefreshTokenChainFacade
         );
         $this->newsletterFacade = $newsletterFacade;
+        $this->hashGenerator = $hashGenerator;
     }
 
     /**
@@ -120,5 +130,63 @@ class CustomerUserFacade extends BaseCustomerUserFacade
     public function findByErpCustomerNumber(int $erpCustomerNumber): ?CustomerUser
     {
         return $this->customerUserRepository->findByErpCustomerNumber($erpCustomerNumber);
+    }
+
+    /**
+     * @param string|null $email
+     * @param int $domainId
+     * @return bool[]
+     */
+    public function getCustomerInfo(?string $email, int $domainId): array
+    {
+        $customerInfo = [
+            'exists' => false,
+            'activated' => false,
+            'isCompanyCustomer' => false,
+        ];
+
+        $customerUser = $this->findCustomerUserByEmailAndDomain($email, $domainId);
+        if ($customerUser !== null) {
+            /** @var \App\Model\Customer\BillingAddress $billingAddress */
+            $billingAddress = $customerUser->getCustomer()->getBillingAddress();
+
+            $customerInfo['exists'] = true;
+            $customerInfo['activated'] = $billingAddress->isActivated();
+            $customerInfo['isCompanyCustomer'] = $billingAddress->isCompanyCustomer();
+        }
+
+        return $customerInfo;
+    }
+
+    /**
+     * @param \App\Model\Customer\User\CustomerUser $customerUser
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateData $customerUserUpdateData
+     */
+    public function activeCustomerUser(CustomerUser $customerUser, CustomerUserUpdateData $customerUserUpdateData): void
+    {
+        /** @var \App\Model\Customer\BillingAddress $billingAddress */
+        $billingAddress = $customerUser->getCustomer()->getBillingAddress();
+
+        if ($billingAddress->isActivated()) {
+            return;
+        }
+
+        $this->edit($customerUser->getId(), $customerUserUpdateData);
+        $billingAddress->activate();
+        $this->em->flush();
+
+        $this->customerMailFacade->sendRegistrationMail($customerUser);
+    }
+
+    /**
+     * @param \App\Model\Customer\User\CustomerUser $customerUser
+     */
+    public function sendActivationMail(CustomerUser $customerUser): void
+    {
+        $resetPasswordHash = $this->hashGenerator->generateHash(CustomerUserPasswordFacade::RESET_PASSWORD_HASH_LENGTH);
+        $customerUser->setResetPasswordHash($resetPasswordHash);
+        $this->em->flush();
+
+        $this->customerMailFacade->sendActivationMail($customerUser);
     }
 }

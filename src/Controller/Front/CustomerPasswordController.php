@@ -7,10 +7,13 @@ namespace App\Controller\Front;
 use App\Form\Front\Customer\Password\NewPasswordFormType;
 use App\Form\Front\Customer\Password\ResetPasswordFormType;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Model\Customer\Exception\CustomerUserNotFoundByEmailAndDomainException;
+use Shopsys\FrameworkBundle\Model\Customer\Exception\InvalidResetPasswordHashUserException;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserPasswordFacade;
 use Shopsys\FrameworkBundle\Model\Security\Authenticator;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class CustomerPasswordController extends FrontBaseController
 {
@@ -66,7 +69,7 @@ class CustomerPasswordController extends FrontBaseController
                     ]
                 );
                 return $this->redirectToRoute('front_registration_reset_password');
-            } catch (\Shopsys\FrameworkBundle\Model\Customer\Exception\CustomerUserNotFoundByEmailAndDomainException $ex) {
+            } catch (CustomerUserNotFoundByEmailAndDomainException $ex) {
                 $this->addErrorFlashTwig(
                     t('Customer with email address <strong>{{ email }}</strong> doesn\'t exist. '
                         . '<a href="{{ registrationLink }}"> Register</a>'),
@@ -108,7 +111,7 @@ class CustomerPasswordController extends FrontBaseController
                 $customerUser = $this->customerUserPasswordFacade->setNewPassword($email, $this->domain->getId(), $hash, $newPassword);
 
                 $this->authenticator->loginUser($customerUser, $request);
-            } catch (\Shopsys\FrameworkBundle\Model\Customer\Exception\CustomerUserNotFoundByEmailAndDomainException $ex) {
+            } catch (CustomerUserNotFoundByEmailAndDomainException $ex) {
                 $this->addErrorFlashTwig(
                     t('Customer with email address <strong>{{ email }}</strong> doesn\'t exist. '
                         . '<a href="{{ registrationLink }}"> Register</a>'),
@@ -117,7 +120,7 @@ class CustomerPasswordController extends FrontBaseController
                         'registrationLink' => $this->generateUrl('front_registration_register'),
                     ]
                 );
-            } catch (\Shopsys\FrameworkBundle\Model\Customer\Exception\InvalidResetPasswordHashUserException $ex) {
+            } catch (InvalidResetPasswordHashUserException $ex) {
                 $this->addErrorFlash(t('The link to change your password expired.'));
             }
 
@@ -145,7 +148,7 @@ class CustomerPasswordController extends FrontBaseController
                     'success' => true,
                     'email' => $email,
                 ]);
-            } catch (\Shopsys\FrameworkBundle\Model\Customer\Exception\CustomerUserNotFoundByEmailAndDomainException $ex) {
+            } catch (CustomerUserNotFoundByEmailAndDomainException $ex) {
                 return $this->json([
                     'success' => false,
                     'email' => $email,
@@ -156,6 +159,63 @@ class CustomerPasswordController extends FrontBaseController
         return $this->json([
             'success' => false,
             'email' => $email,
+        ]);
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function customerActivationAction(Request $request): Response
+    {
+        $email = $request->query->get('email');
+        $hash = $request->query->get('hash');
+
+        if (!$this->customerUserPasswordFacade->isResetPasswordHashValid($email, $this->domain->getId(), $hash)) {
+            $this->addErrorFlashTwig(
+                t('Platnost odkazu již vypršela. Pomocí <a href="{{ resetLink }}">resetu hesla</a> si můžete nechat zaslat nový.'),
+                [
+                    'resetLink' => $this->generateUrl('front_registration_reset_password'),
+                ]
+            );
+            return $this->redirectToRoute('front_homepage');
+        }
+
+        $form = $this->createForm(NewPasswordFormType::class);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $formData = $form->getData();
+            $newPassword = $formData['newPassword'];
+
+            try {
+                $customerUser = $this->customerUserPasswordFacade->setNewPassword($email, $this->domain->getId(), $hash, $newPassword);
+
+                $this->authenticator->loginUser($customerUser, $request);
+                $this->addSuccessFlash(t('Váš účet byl úspěšně aktivován'));
+            } catch (CustomerUserNotFoundByEmailAndDomainException $ex) {
+                $this->addErrorFlashTwig(
+                    t('Customer with email address <strong>{{ email }}</strong> doesn\'t exist. '
+                        . '<a href="{{ registrationLink }}"> Register</a>'),
+                    [
+                        'email' => $ex->getEmail(),
+                        'registrationLink' => $this->generateUrl('front_registration_register'),
+                    ]
+                );
+            } catch (InvalidResetPasswordHashUserException $ex) {
+                $this->addErrorFlashTwig(
+                    t('Platnost odkazu již vypršela. Pomocí <a href="{{ resetLink }}">resetu hesla</a> si můžete nechat zaslat nový.'),
+                    [
+                        'resetLink' => $this->generateUrl('front_registration_reset_password'),
+                    ]
+                );
+            }
+
+            return $this->redirectToRoute('front_homepage');
+        }
+
+        return $this->render('Front/Content/Registration/customerActivation.html.twig', [
+            'form' => $form->createView(),
         ]);
     }
 }

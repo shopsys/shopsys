@@ -280,6 +280,10 @@
     &--cart {
         padding-bottom: 0;
 
+        @media @query-lg {
+            margin-top: 10px;
+        }
+
         .header__logo {
             max-width: none;
         }
@@ -295,6 +299,28 @@
         @media @query-xl {
             .menu-iconic {
                 margin-right: -10px;
+            }
+        }
+
+        .menu-iconic__item__link {
+            position: relative;
+            flex-direction: row;
+            height: 56px;
+            top: 12px;
+            padding: 0 20px;
+
+            background: linear-gradient(#fff, #f7f8f9);
+            border-radius: @radius;
+            font-family: @font-quartenary;
+            font-size: 16px;
+
+            .menu-iconic__item__icon {
+                position: relative;
+                top: 1px;
+                order: 1;
+                margin-left: 15px;
+
+                font-size: 24px;
             }
         }
     }

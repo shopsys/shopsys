@@ -26,5 +26,6 @@ class BillingAddressDataFactory extends BaseBillingAddressDataFactory
     {
         parent::fillFromBillingAddress($billingAddressData, $billingAddress);
         $billingAddressData->companyNumberWithVat = $billingAddress->getCompanyNumberWithVat();
+        $billingAddressData->activated = $billingAddress->isActivated();
     }
 }

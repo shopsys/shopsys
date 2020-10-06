@@ -4,20 +4,19 @@
             <li class="box-progress__item {% if step == 1 %}box-progress__item--active{% elseif step > 1 %}box-progress__item--done{% endif %}{% if step == 2 %} box-progress__item--previous-active{% endif %}">
                 {% if step == 1 %}
                     <span class="box-progress__item__inner">
-                        <span class="box-progress__item__step">1.</span>
-                        <span class="box-progress__item__title">{{ 'Cart'|trans }}</span>
-                        <span class="box-progress__item__sep"></span>
+                        <span class="box-progress__item__title">{{ 'Nákupní košík'|trans }}</span>
                     </span>
                 {% else %}
                     <a
                         class="box-progress__item__inner box-progress__item__inner--link"
                         href="{{ url('front_cart') }}"
                     >
-                        <span class="box-progress__item__step">1.</span>
-                        <span class="box-progress__item__title">{{ 'Cart'|trans }}</span>
-                        <span class="box-progress__item__sep"></span>
+                        <span class="box-progress__item__title">{{ 'Nákupní košík'|trans }}</span>
                     </a>
                 {% endif %}
+                <span class="box-progress__item__sep">
+                    <i class="svg svg-chevron svg-fw-bold"></i>
+                </span>
             </li>
 
             <li class="box-progress__item {% if step == 2 %}box-progress__item--active{% elseif step > 2 %}box-progress__item--done{% endif %}{% if step == 3 %} box-progress__item--previous-active{% endif %}">
@@ -26,24 +25,21 @@
                         class="box-progress__item__inner box-progress__item__inner--link"
                         href="{{ url('front_order_index') }}"
                     >
-                        <span class="box-progress__item__step">2.</span>
                         <span class="box-progress__item__title">{{ 'Shipping and payment'|trans }}</span>
-                        <span class="box-progress__item__sep"></span>
                     </a>
                 {% else %}
                     <span class="box-progress__item__inner">
-                        <span class="box-progress__item__step">2.</span>
                         <span class="box-progress__item__title">{{ 'Shipping and payment'|trans }}</span>
-                        <span class="box-progress__item__sep"></span>
                     </span>
                 {% endif %}
+                <span class="box-progress__item__sep">
+                    <i class="svg svg-chevron svg-fw-bold"></i>
+                </span>
             </li>
 
             <li class="box-progress__item {% if step == 3 %}box-progress__item--active{% endif %}">
                 <span class="box-progress__item__inner">
-                    <span class="box-progress__item__step">3.</span>
-                    <span class="box-progress__item__title">{{ 'Údaje'|trans }}</span>
-                    <span class="box-progress__item__sep"></span>
+                    <span class="box-progress__item__title">{{ 'Vaše údaje'|trans }}</span>
                 </span>
             </li>
         </ul>

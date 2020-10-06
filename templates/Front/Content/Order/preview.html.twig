@@ -28,7 +28,7 @@
             </div>
         {% endif %}
         <hr class="box-cart-card__separator" />
-        <h2 class="box-cart-card__title">{{ 'Vaše objednávka'|trans }}</h2>
+        <h2 class="box-cart-card__title box-cart-card__title--small-margin">{{ 'Vaše objednávka'|trans }}</h2>
         <table class="table-cart-preview">
             <tbody class="table-cart-preview__body">
                 <tr class="table-cart-preview__body__row">
@@ -68,7 +68,7 @@
                     {% endif %}
 
                     {% if orderPreview.transport is not null %}
-                        <tr class="table-cart-preview__row">
+                        <tr class="table-cart-preview__row table-cart-preview__row--transport">
                             <td class="table-cart-preview__cell table-cart-preview__cell--transport">
                                 {{ orderPreview.transport.name }}
                                 {% if imageExists(orderPreview.transport) %}
@@ -119,12 +119,12 @@
 
         {% if splitOrderPreview.hasAnyProductCommonPrice(getDomain().id) %}
             {% if splitOrderPreview.sumTotalPriceDiscount is null %}
-                <tr class="table-cart-preview__row">
+                <tr class="table-cart-preview__row table-cart-preview__row--previous-price">
                     <td class="table-cart-preview__cell table-cart-preview__cell--no-spacing table-cart-preview__cell--summary">
-                        {{ 'Původně'|trans }}:
+                        {{ 'Místo'|trans }}
                     </td>
                     <td class="table-cart-preview__cell table-cart-preview__cell--no-spacing table-cart-preview__cell--summary table-cart-preview__cell--price">
-                        <span class="cart-price cart-price--secondary cart-price--previous">{{ splitOrderPreview.productsCommonPrice.priceWithVat|price }}</span>
+                        <span class="cart-price cart-price--secondary cart-price--previous cart-price--previous-no-decoration">{{ splitOrderPreview.productsCommonPrice.priceWithVat|price }}</span>
                     </td>
                 </tr>
             {% endif %}
@@ -142,20 +142,21 @@
         {% endif %}
 
         {% if splitOrderPreview.sumTotalPriceDiscount is not null %}
-            <tr class="table-cart-preview__row">
-                <td class="table-cart-preview__cell table-cart-preview__cell--no-spacing">
-                    {{ 'Původně'|trans }}
+            <tr class="table-cart-preview__row table-cart-preview__row--previous-price">
+                <td class="table-cart-preview__cell table-cart-preview__cell--no-spacing table-cart-preview__cell--summary">
+                    {{ 'Místo'|trans }}
                 </td>
-                <td class="table-cart-preview__cell table-cart-preview__cell--no-spacing table-cart-preview__cell--price">
-                    <span class="line-through">{{ splitOrderPreview.sumTotalPriceWithoutDiscount.priceWithVat|price }}</span>
+                <td class="table-cart-preview__cell table-cart-preview__cell--no-spacing table-cart-preview__cell--summary table-cart-preview__cell--price">
+                    <span>{{ splitOrderPreview.sumTotalPriceWithoutDiscount.priceWithVat|price }}</span>
                 </td>
             </tr>
             <tr class="table-cart-preview__row table-cart-preview__row--total table-cart-preview__row--total--discount">
                 <td class="table-cart-preview__cell table-cart-preview__cell--no-spacing">
+                    <span class="cart-tag--promo-text">{{ 'Sleva'|trans }}</span>
                     <span class="cart-tag cart-tag--promo">{{ promoCodeCode }}</span>
                 </td>
-                <td class="table-cart-preview__cell table-cart-preview__cell--no-spacing table-cart-preview__cell--price">
-                    <span class="cart-price cart-price--promo">- {{ splitOrderPreview.sumTotalPriceDiscount.priceWithVat|price }}</span>
+                <td class="table-cart-preview__cell table-cart-preview__cell--no-spacing table-cart-preview__cell--summary table-cart-preview__cell--price">
+                    <span class="cart-price cart-price--promo cart-price--promo-preview">- {{ splitOrderPreview.sumTotalPriceDiscount.priceWithVat|price }}</span>
                 </td>
             </tr>
         {% endif %}

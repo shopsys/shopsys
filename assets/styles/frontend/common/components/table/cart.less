@@ -3,6 +3,11 @@
 @table-cart-image-gap: 10px;
 
 .table-cart {
+    &__product-sku {
+        color: #646f7c;
+        line-height: 1.3;
+    }
+
     &__cell {
         &--action {
             a {
@@ -45,6 +50,8 @@
         }
 
         &__product-name {
+            display: block;
+
             font-family: @font-quartenary;
             font-size: 16px;
             line-height: 24px;
@@ -79,10 +86,6 @@
             font-size: 22px;
             color: @color-primary;
 
-            @media @query-lg {
-                top: -12px;
-            }
-
             &:hover {
                 color: @color-add;
             }
@@ -109,6 +112,13 @@
     }
 
     &-preview {
+        &__row--previous-price {
+            td, td span {
+                font-size: 15px;
+                color: @color-primary-light;
+            }
+        }
+
         &__cell__title {
             font-family: @font-quartenary;
             font-size: 14px;
@@ -137,7 +147,11 @@
             padding: 12px 0;
             position: relative;
 
-            border-bottom: 1px solid @color-border-lighter;
+            border-bottom: 1px solid @color-border-tertiary;
+
+            &:last-child {
+                border-bottom: 0;
+            }
 
             @media @query-md {
                 max-width: 100%;
@@ -236,17 +250,6 @@
                 margin-top: -4px;
 
                 border: 0;
-
-                &::after {
-                    position: absolute;
-                    left: 0;
-                    top: calc(100% + 6px);
-                    width: 100%;
-                    height: 1px;
-                    content: '';
-
-                    background-color: @color-border-lighter;
-                }
             }
         }
 
@@ -256,7 +259,7 @@
             text-align: left;
 
             font-size: 13px;
-            color: @color-light-tertiary;
+            color: #979ca9;
             font-weight: 400;
             -webkit-font-smoothing: antialiased;
 
@@ -268,8 +271,15 @@
             }
 
             &--head {
-                font-family: @font-base;
-                font-size: 14px;
+                text-transform: uppercase;
+                font-size: 12px;
+                color: #979ca9;
+                font-family: @font-quartenary;
+
+                &.table-cart__cell--image {
+                    position: relative;
+                    left: -22px;
+                }
             }
 
             &--image {
@@ -279,7 +289,9 @@
 
                 color: @color-primary;
                 font-family: @font-quartenary;
-                font-size: 15px;
+                font-size: 28px;
+                text-transform: none;
+                line-height: 1.4;
             }
 
             &--name {
@@ -289,7 +301,8 @@
             }
 
             &--amount {
-                text-align: right;
+                min-width: 110px;
+                text-align: center;
             }
 
             &--avail {
@@ -328,6 +341,24 @@
 
             &__price-mobile {
                 display: none;
+            }
+        }
+    }
+}
+
+@media @query-xl {
+    .table-cart {
+        &__cell {
+            &--avail {
+                min-width: 150px;
+            }
+
+            &--price-final {
+                min-width: 110px;
+            }
+
+            &--price {
+                padding-right: 16px;
             }
         }
     }

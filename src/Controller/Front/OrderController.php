@@ -9,6 +9,8 @@ use App\Form\Front\Order\DomainAwareOrderFlowFactory;
 use App\Form\Front\Order\OrderFlow;
 use App\Form\Front\Order\PaymentFormType;
 use App\Model\Cart\CartMigrationFacade;
+use App\Model\Customer\User\CustomerUser;
+use App\Model\Customer\User\CustomerUserFacade;
 use App\Model\GoPay\BankSwift\GoPayBankSwift;
 use App\Model\GoPay\BankSwift\GoPayBankSwiftFacade;
 use App\Model\GoPay\Exception\GoPayNotConfiguredException;
@@ -31,7 +33,6 @@ use App\Model\Transport\Logistic\TransportLogisticFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\HttpFoundation\DownloadFileResponse;
 use Shopsys\FrameworkBundle\Model\Cart\CartFacade;
-use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\LegalConditions\LegalConditionsFacade;
 use Shopsys\FrameworkBundle\Model\Order\Exception\OrderNotFoundException;
 use Shopsys\FrameworkBundle\Model\Order\Mail\OrderMailFacade;
@@ -51,8 +52,6 @@ class OrderController extends FrontBaseController
 {
     public const SESSION_CREATED_ORDER = 'created_order_id';
     public const SESSION_GOPAY_CHOOSEN_SWIFT = 'gopay_choosen_swift';
-    public const SESSION_CUSTOMER_EMAIL_EXISTS = 'customer_email_exists';
-    public const SESSION_PREFILLED_CUSTOMER_EMAIL = 'prefilled_customer_email';
 
     /**
      * @var \App\Form\Front\Order\DomainAwareOrderFlowFactory
@@ -170,6 +169,11 @@ class OrderController extends FrontBaseController
     private CartMigrationFacade $cartMigrationFacade;
 
     /**
+     * @var \App\Model\Customer\User\CustomerUserFacade
+     */
+    private CustomerUserFacade $customerUserFacade;
+
+    /**
      * @param \App\Model\Order\OrderFacade $orderFacade
      * @param \App\Model\Cart\CartFacade $cartFacade
      * @param \App\Component\Domain\Domain $domain
@@ -191,6 +195,7 @@ class OrderController extends FrontBaseController
      * @param \App\Model\Gtm\GtmFacade $gtmFacade
      * @param \Shopsys\FrameworkBundle\Model\Security\Authenticator $authenticator
      * @param \App\Model\Transport\Logistic\TransportLogisticFacade $transportLogisticFacade
+     * @param \App\Model\Customer\User\CustomerUserFacade $customerUserFacade
      */
     public function __construct(
         OrderFacade $orderFacade,
@@ -215,7 +220,8 @@ class OrderController extends FrontBaseController
         Authenticator $authenticator,
         TransportLogisticFacade $transportLogisticFacade,
         ProductAvailabilityFacade $productAvailabilityFacade,
-        CartMigrationFacade $cartMigrationFacade
+        CartMigrationFacade $cartMigrationFacade,
+        CustomerUserFacade $customerUserFacade
     ) {
         $this->orderFacade = $orderFacade;
         $this->cartFacade = $cartFacade;
@@ -240,6 +246,7 @@ class OrderController extends FrontBaseController
         $this->transportLogisticFacade = $transportLogisticFacade;
         $this->productAvailabilityFacade = $productAvailabilityFacade;
         $this->cartMigrationFacade = $cartMigrationFacade;
+        $this->customerUserFacade = $customerUserFacade;
     }
 
     /**
@@ -256,10 +263,8 @@ class OrderController extends FrontBaseController
         $customerUser = $this->getUser();
         $frontOrderFormData = new FrontOrderData();
         $frontOrderFormData->deliveryAddressSameAsBillingAddress = true;
-        $isWithoutRegistration = false;
         if ($customerUser instanceof CustomerUser) {
             $this->orderFacade->prefillFrontOrderData($frontOrderFormData, $customerUser);
-            $isWithoutRegistration = true;
         }
         $domainId = $this->domain->getId();
         $frontOrderFormData->domainId = $domainId;
@@ -282,10 +287,14 @@ class OrderController extends FrontBaseController
 
         if ($this->session->get(LoginController::SESSION_LOGIN_IN_ORDER_SUCCESS, null) === true) {
             $orderFlow->nextStep();
-            $this->session->remove(LoginController::SESSION_LOGIN_IN_ORDER_SUCCESS);
         }
+        $this->session->remove(LoginController::SESSION_LOGIN_IN_ORDER_SUCCESS);
         $form = $orderFlow->createForm();
         $isValid = $orderFlow->isValid($form);
+        if ($customerUser instanceof CustomerUser) {
+            // Overriding of email, because form field is disabled and data in session could be overridden in another old browser tab
+            $frontOrderFormData->email = $customerUser->getEmail();
+        }
 
         /** @var \App\Model\Payment\Payment[] $payments */
         $payments = $this->paymentFacade->getVisibleOnCurrentDomain();
@@ -302,7 +311,6 @@ class OrderController extends FrontBaseController
         $isCompanyCustomer = $frontOrderFormData->companyCustomer;
 
         $stocksById = $this->stockFacade->getStocksWithoutCentralByDomainIdIndexedByStockId($domainId);
-        $prefilledCustomerEmail = $this->session->get(self::SESSION_PREFILLED_CUSTOMER_EMAIL, null);
 
         $this->checkTransportAndPaymentChanges($frontOrderFormData, $splitOrderPreview);
         if ($isValid) {
@@ -315,11 +323,12 @@ class OrderController extends FrontBaseController
                 return $this->redirectToRoute('front_order_index');
             } elseif (count($this->getErrorMessages()) === 0 && count($this->getInfoMessages()) === 0) {
                 $deliveryAddress = $orderData->deliveryAddressSameAsBillingAddress === false ? $frontOrderFormData->deliveryAddress : null;
-                /** @var \App\Model\Order\Order $order */
-                $order = $this->orderFacade->createOrderFromFront($orderData, $deliveryAddress);
+                $orderCreatedResult = $this->orderFacade->createOrderFromFrontWithRegistration($orderData, $deliveryAddress, $frontOrderFormData);
+                $order = $orderCreatedResult->getOrder();
+
                 $this->orderFacade->sendHeurekaOrderInfo($order, $frontOrderFormData->disallowHeurekaVerifiedByCustomers);
 
-                if ($isWithoutRegistration === false && $order->getCustomerUser() instanceof CustomerUser) {
+                if ($order->getCustomerUser() instanceof CustomerUser && $orderCreatedResult->isLoginCustomer()) {
                     $this->authenticator->loginUser($order->getCustomerUser(), $orderFlow->getRequest());
                 }
 
@@ -349,22 +358,6 @@ class OrderController extends FrontBaseController
 
         $this->gtmFacade->onOrderPages($splitOrderPreview, $orderFlow->getCurrentStepNumber());
 
-        if ($orderFlow->getCurrentStepNumber() === OrderFlow::STEP_THIRD && $this->isGranted(Roles::ROLE_LOGGED_CUSTOMER) === false) {
-            $customerEmailExists = $this->session->get(self::SESSION_CUSTOMER_EMAIL_EXISTS, null);
-            $this->session->remove(self::SESSION_CUSTOMER_EMAIL_EXISTS);
-            if ($customerEmailExists !== false) {
-                return $this->render('Front/Content/Order/index.html.twig', [
-                    'form' => $this->getLoginForm()->createView(),
-                    'flow' => $orderFlow,
-                    'displayFormType' => 'login',
-                    'customerEmailExists' => $customerEmailExists,
-                    'loginFormInOrder' => true,
-                    'splitOrderPreview' => $splitOrderPreview,
-                    'prefilledCustomerEmail' => $prefilledCustomerEmail,
-                ]);
-            }
-        }
-
         if (
             $orderFlow->getCurrentStepNumber() === OrderFlow::STEP_THIRD
             && $this->isGranted(Roles::ROLE_LOGGED_CUSTOMER)
@@ -390,6 +383,8 @@ class OrderController extends FrontBaseController
             );
         }
 
+        $customerInfo = $this->customerUserFacade->getCustomerInfo($frontOrderFormData->email, $this->domain->getId());
+
         return $this->render('Front/Content/Order/index.html.twig', [
             'form' => $form->createView(),
             'flow' => $orderFlow,
@@ -402,12 +397,11 @@ class OrderController extends FrontBaseController
             'goPayBankSwifts' => $goPayBankSwifts,
             'goPayBankTransferIdentifier' => GoPayPaymentMethod::IDENTIFIER_BANK_TRANSFER,
             'paymentTransportRelations' => $this->getPaymentTransportRelations($payments),
-            'isWithoutRegistration' => $isWithoutRegistration,
             'isCompanyCustomer' => $isCompanyCustomer,
-            'displayFormType' => 'order_flow',
-            'prefilledCustomerEmail' => ($this->isGranted(Roles::ROLE_LOGGED_CUSTOMER) === false) ? $prefilledCustomerEmail : null,
             'minimalDaysAvailabilityIndexedByTransportIds' => $minimalDaysAvailabilityIndexedByTransportIds,
-            'stockDayAvailabilitiesByStockId' => $stockDayAvailabilitiesByStockId
+            'stockDayAvailabilitiesByStockId' => $stockDayAvailabilitiesByStockId,
+            'customerInfo' => $customerInfo,
+            'customerUser' => $customerUser
         ]);
     }
 

@@ -40,6 +40,15 @@ class CustomerUserFormTypeExtension extends AbstractTypeExtension
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $this->formBuilderHelper->disableFieldsByConfigurations($builder, self::DISABLED_FIELDS);
+
+        if ($customerUser !== null) {
+            $builderSystemDataGroup = $builder->get('systemData');
+            $builderSystemDataGroup->add('activated', DisplayOnlyType::class, [
+                'label' => t('Aktivní'),
+                'data' => $customerUser->isActivated() ? t('Ano') : t('Ne'),
+                'position' => ['after' => 'formId'],
+            ]);
+        }
     }
 
     /**

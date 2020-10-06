@@ -236,42 +236,48 @@
     &--in-header {
         display: none;
         margin: 0 1rem 0 0;
+        padding: 6px;
+
+        background-color: #f3f5f6;
+        border-radius: @radius;
 
         @media @query-vl {
             display: flex;
         }
 
         @media @query-xl {
-            margin-right: 2rem;
+            margin-right: 20px;
         }
 
         .box-info__img {
-            min-width: 50px;
-            width: 50px;
-            height: 50px;
+            min-width: 44px;
+            width: 44px;
+            height: 44px;
+            margin-right: 20px;
 
+            border-radius: @radius;
             image-rendering: -webkit-optimize-contrast;
+            box-shadow: 0 4px 5px 0 #cdd5da;
         }
 
         .box-info__content {
             display: block;
-            margin-left: 1.5rem;
-            padding: 0.5rem 0.5rem 0.5rem 1rem;
+            margin: 0;
+            padding: 0;
 
-            @media screen and (min-width: 1200px) {
+            border: 0;
+
+            @media @query-vl {
                 display: flex;
             }
 
             &::before {
-                width: 12px;
-                height: 12px;
-                left: -7px;
-                margin-top: -6px;
+                display: none;
             }
         }
 
         .box-info__text {
-            margin-right: 1.5rem;
+            margin-right: 2.5rem;
             flex-direction: column;
             align-items: flex-start;
         }
@@ -286,6 +292,7 @@
         .box-info__hours {
             font-size: 13px;
             line-height: 1.1;
+            color: #979ca9;
         }
 
         .box-info__contacts__link {
@@ -295,11 +302,30 @@
             line-height: 1.1;
         }
 
+        .box-info__contacts__icon {
+            background: linear-gradient(to bottom, #ffd800, #ffad00);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+
+            &--phone {
+                font-size: 26px;
+            }
+        }
+
         .box-info__contacts__btn {
-            padding: 4px 10px 2px 13px;
+            padding: 8px 10px 6px 13px;
             min-height: 0;
 
-            font-size: 13px;
+            background: linear-gradient(#fff, #f7f8f9);
+            font-size: 14px;
+            color: @color-primary-light;
+            box-shadow: 0 5px 10px 0 rgba(#cdd5da, .5);
+            transition: all @transition;
+
+            &:hover {
+                box-shadow: 0 5px 10px 0 darken(@color-border-lighter, 5%);
+            }
 
             .box-info__contacts__icon {
                 margin-right: 0;

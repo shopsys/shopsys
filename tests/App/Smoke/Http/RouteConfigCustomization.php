@@ -459,6 +459,9 @@ class RouteConfigCustomization
                     ->setParameter('hash', 'invalidHash')
                     ->setExpectedStatusCode(302);
             })
+            ->customizeByRouteName('front_customer_activation', function (RouteConfig $config) {
+                $config->skipRoute('Customer activation is not tested.');
+            })
             ->customizeByRouteName('front_personal_data_access', function (RouteConfig $config) {
                 /** @var \Shopsys\FrameworkBundle\Model\PersonalData\PersonalDataAccessRequest $personalDataAccessRequest */
                 $personalDataAccessRequest = $this->getPersistentReference(PersonalDataAccessRequestDataFixture::REFERENCE_ACCESS_DISPLAY_REQUEST);

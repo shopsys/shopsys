@@ -47,4 +47,9 @@ class FrontOrderData extends BaseFrontOrderData
      * @var string|null
      */
     public $password;
+
+    /**
+     * @var bool
+     */
+    public $register = false;
 }

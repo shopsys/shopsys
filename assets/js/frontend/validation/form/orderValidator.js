@@ -26,6 +26,14 @@ export default function orderValidator ($container) {
             } else {
                 groups.push(constant('\\App\\Form\\Front\\Customer\\BillingAddressFormType::VALIDATION_GROUP_COMMON_CUSTOMER'));
             }
+            if ($orderPersonalInfoForm.find('#order_personal_info_form_register').is(':checked')) {
+                groups.push(constant('\\App\\Form\\Front\\Order\\PersonalInfoFormType::VALIDATION_REGISTRATION'));
+                const orderForm = $orderPersonalInfoForm.data('order-form-instance');
+                if (orderForm.customerInfo.exists === false) {
+                    groups.push(constant('\\App\\Form\\Front\\Order\\PersonalInfoFormType::VALIDATION_GROUP_REGISTRATION_WITH_PASSWORD'));
+                }
+            }
+
             return groups;
         }
     });

@@ -12,4 +12,9 @@ class BillingAddressData extends BaseBillingAddressData
      * @var string|null
      */
     public $companyNumberWithVat;
+
+    /**
+     * @var bool
+     */
+    public $activated = true;
 }

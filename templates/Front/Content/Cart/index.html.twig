@@ -44,8 +44,8 @@
                         <button
                             type="submit"
                             name="cart_form[submit]"
-                            class="btn btn--success btn--checkout-step js-no-validate-button">
-                            {{ 'Další krok'|trans }}
+                            class="btn btn--checkout-step js-no-validate-button">
+                            {{ 'Doprava a platba'|trans }}
                         </button>
                     </div>
                     {% if splitOrderPreview.morePreviews %}
@@ -87,29 +87,31 @@
                         {% endfor %}
                     </div>
                     <div class="box-cart__col box-cart__col--preview box-cart__col--preview-step-1">
-                        <div class="box-cart-card box-cart-card--preview box-cart-card--preview">
-                            <div id="js-order-preview" data-url="{{ url('front_order_preview') }}">
-                                {{ render(controller('App\\Controller\\Front\\OrderController:previewAction', {
-                                    transportIdsByProductTypeId: splitOrderPreview.transportIdsIndexedByProductTypeId,
-                                    paymentId: splitOrderPreview.hasPayment() ? splitOrderPreview.payment.id : null,
-                                    showProducts: false,
-                                    showAdvert: true,
-                                    showPromo: true
-                                })) }}
-                            </div>
-                        </div>
-                        <div class="box-cart__buttons">
-                            <div class="box-cart__buttons__back">
-                                <a href="{{ url('front_homepage') }}" class="btn btn--prev btn-no-style btn--arrow btn--arrow-prev">
-                                    <i class="btn__icon svg svg-chevron"></i>
-                                    {{ 'Zpět do obchodu'|trans }}
-                                </a>
-                            </div>
-                            {% if cart.itemsCount > 0 %}
-                                <div class="box-cart__buttons__next">
-                                    {{ form_row(form.submit, { label: 'Další krok'|trans, attr: { class: 'btn btn--success btn--checkout-step'}}) }}
+                        <div class="box-cart-card-preview-wrap">
+                            <div class="box-cart-card box-cart-card--preview box-cart-card--preview">
+                                <div id="js-order-preview" data-url="{{ url('front_order_preview') }}">
+                                    {{ render(controller('App\\Controller\\Front\\OrderController:previewAction', {
+                                        transportIdsByProductTypeId: splitOrderPreview.transportIdsIndexedByProductTypeId,
+                                        paymentId: splitOrderPreview.hasPayment() ? splitOrderPreview.payment.id : null,
+                                        showProducts: false,
+                                        showAdvert: true,
+                                        showPromo: true
+                                    })) }}
                                 </div>
-                            {% endif %}
+                            </div>
+                            <div class="box-cart__buttons">
+                                <div class="box-cart__buttons__back">
+                                    <a href="{{ url('front_homepage') }}" class="btn btn--prev btn--checkout-prev btn-no-style btn--arrow btn--arrow-prev">
+                                        <i class="btn__icon svg svg-chevron svg-fw-bold"></i>
+                                        {{ 'Zpět do obchodu'|trans }}
+                                    </a>
+                                </div>
+                                {% if cart.itemsCount > 0 %}
+                                    <div class="box-cart__buttons__next">
+                                        {{ form_row(form.submit, { label: 'Doprava a platba'|trans, attr: { class: 'btn btn--checkout-step'}}) }}
+                                    </div>
+                                {% endif %}
+                            </div>
                         </div>
                     </div>
                 {{ form_end(form) }}

@@ -4,23 +4,21 @@ declare(strict_types=1);
 
 namespace App\Controller\Front;
 
-use App\Form\Front\Registration\CommonCustomerRegistrationFormType;
-use App\Form\Front\Registration\CompanyCustomerRegistrationFormType;
+use App\Form\Front\Registration\RegistrationFormType;
+use App\Model\Customer\User\CustomerUserFacade;
 use App\Model\Customer\User\RegistrationDataFactoryInterface;
 use App\Model\Customer\User\RegistrationFacadeInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
 use Shopsys\FrameworkBundle\Model\LegalConditions\LegalConditionsFacade;
 use Shopsys\FrameworkBundle\Model\Security\Authenticator;
 use Shopsys\FrameworkBundle\Model\Security\Roles;
-use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 class RegistrationController extends FrontBaseController
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade
+     * @var \App\Model\Customer\User\CustomerUserFacade
      */
     private $customerUserFacade;
 
@@ -50,13 +48,8 @@ class RegistrationController extends FrontBaseController
     private $registrationFacade;
 
     /**
-     * @var bool
-     */
-    private $firstTabActiveSetting = true;
-
-    /**
      * @param \App\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade $customerUserFacade
+     * @param \App\Model\Customer\User\CustomerUserFacade $customerUserFacade
      * @param \Shopsys\FrameworkBundle\Model\Security\Authenticator $authenticator
      * @param \Shopsys\FrameworkBundle\Model\LegalConditions\LegalConditionsFacade $legalConditionsFacade
      * @param \App\Model\Customer\User\RegistrationDataFactoryInterface $registrationDataFactory
@@ -85,9 +78,10 @@ class RegistrationController extends FrontBaseController
     public function existsEmailAction(Request $request)
     {
         $email = $request->get('email');
+        /** @var \App\Model\Customer\User\CustomerUser $customerUser */
         $customerUser = $this->customerUserFacade->findCustomerUserByEmailAndDomain($email, $this->domain->getId());
 
-        return new JsonResponse($customerUser !== null);
+        return new JsonResponse($customerUser !== null && $customerUser->isActivated() === true);
     }
 
     /**
@@ -99,91 +93,39 @@ class RegistrationController extends FrontBaseController
         if ($this->isGranted(Roles::ROLE_LOGGED_CUSTOMER)) {
             return $this->redirectToRoute('front_homepage');
         }
-        $this->activateCommonCustomerRegistrationForm();
+
         $registrationData = $this->registrationDataFactory->createForDomainId($this->domain->getId());
 
-        $form = $this->createForm(CommonCustomerRegistrationFormType::class, $registrationData);
+        $form = $this->createForm(RegistrationFormType::class, $registrationData);
         $form->handleRequest($request);
-        if ($this->handleCommonCustomerRegistrationForm($form, $request)) {
+        if ($form->isSubmitted() && $form->isValid()) {
+            $registrationData->newsletterSubscription = true;
+            if ($registrationData->companyCustomer === true) {
+                $customerUser = $this->registrationFacade->registerCompany($registrationData);
+            } else {
+                $customerUser = $this->registrationFacade->register($registrationData);
+            }
+
+            if ($customerUser->isActivated() === true) {
+                $this->addSuccessFlash(t('You have been successfully registered.'));
+                $this->authenticator->loginUser($customerUser, $request);
+            } else {
+                $this->addSuccessFlash(t('Na Váš email, Vám byly zaslány infromace pro dokončení registrace.'));
+            }
+
             return $this->redirectToRoute('front_homepage');
         }
 
-        $companyRegistrationForm = $this->createForm(CompanyCustomerRegistrationFormType::class, $registrationData);
-        $companyRegistrationForm->handleRequest($request);
-        if ($this->handleCompanyCustomerRegistrationForm($companyRegistrationForm, $request)) {
-            return $this->redirectToRoute('front_homepage');
+        if ($form->isSubmitted() && $form->isValid() === false) {
+            $this->addErrorFlash(t('Please check the correctness of all data filled.'));
         }
+
+        $customerInfo = $this->customerUserFacade->getCustomerInfo($registrationData->email, $this->domain->getId());
 
         return $this->render('Front/Content/Registration/register.html.twig', [
             'form' => $form->createView(),
-            'companyForm' => $companyRegistrationForm->createView(),
             'privacyPolicyArticle' => $this->legalConditionsFacade->findPrivacyPolicy($this->domain->getId()),
-            'domain' => $this->domain,
-            'firstTabActiveSetting' => $this->firstTabActiveSetting,
+            'customerInfo' => $customerInfo,
         ]);
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormInterface $form
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @return bool
-     */
-    private function handleCommonCustomerRegistrationForm(FormInterface $form, Request $request): bool
-    {
-        if ($form->isSubmitted()) {
-            if ($form->isValid()) {
-                $registrationData = $form->getData();
-                $registrationData->newsletterSubscription = true;
-                $customerUser = $this->registrationFacade->register($registrationData);
-                $this->addSuccessFlash(t('You have been successfully registered.'));
-
-                $this->authenticator->loginUser($customerUser, $request);
-
-                return true;
-            } else {
-                $this->addErrorFlash(t('Please check the correctness of all data filled.'));
-            }
-            $this->activateCommonCustomerRegistrationForm();
-        }
-
-        return false;
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormInterface $form
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @return bool
-     */
-    private function handleCompanyCustomerRegistrationForm(FormInterface $form, Request $request): bool
-    {
-        if ($form->isSubmitted()) {
-            if ($form->isValid()) {
-
-                /** @var \App\Model\Customer\User\RegistrationData $registrationData */
-                $registrationData = $form->getData();
-                $registrationData->newsletterSubscription = true;
-                $customerUser = $this->registrationFacade->registerCompany($registrationData);
-                $this->addSuccessFlash(t('You have been successfully registered.'));
-
-                $this->authenticator->loginUser($customerUser, $request);
-
-                return true;
-            } else {
-                $this->addErrorFlash(t('Please check the correctness of all data filled.'));
-            }
-            $this->activateCompanyCustomerRegistrationForm();
-        }
-
-        return false;
-    }
-
-    private function activateCommonCustomerRegistrationForm()
-    {
-        $this->firstTabActiveSetting = true;
-    }
-
-    private function activateCompanyCustomerRegistrationForm()
-    {
-        $this->firstTabActiveSetting = false;
     }
 }

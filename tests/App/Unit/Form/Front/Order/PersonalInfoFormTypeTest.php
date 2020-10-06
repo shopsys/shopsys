@@ -7,6 +7,7 @@ namespace Tests\App\Unit\Form\Front\Order;
 use App\Component\Domain\Domain;
 use App\Form\Front\Order\PersonalInfoFormType;
 use App\Model\Country\CountryFacade;
+use App\Model\Customer\User\CustomerUserFacade;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Country\Country;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
@@ -38,6 +39,11 @@ class PersonalInfoFormTypeTest extends TypeTestCase
      * @var \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser|\PHPUnit\Framework\MockObject\MockObject
      */
     private $currentCustomerUser;
+
+    /**
+     * @var \App\Model\Customer\User\CustomerUserFacade|\PHPUnit\Framework\MockObject\MockObject
+     */
+    private CustomerUserFacade $customerUserFacade;
 
     public function testTermsAndConditionsAgreementIsNotMandatory(): void
     {
@@ -91,7 +97,7 @@ class PersonalInfoFormTypeTest extends TypeTestCase
     {
         return [
             new ValidatorExtension(Validation::createValidator()),
-            new PreloadedExtension([new PersonalInfoFormType($this->countryFacade, $this->heurekaFacade, $this->domain, $this->currentCustomerUser)], []),
+            new PreloadedExtension([new PersonalInfoFormType($this->countryFacade, $this->heurekaFacade, $this->domain, $this->currentCustomerUser, $this->customerUserFacade)], []),
         ];
     }
 
@@ -107,6 +113,7 @@ class PersonalInfoFormTypeTest extends TypeTestCase
         $this->domain->method('getId')->willReturn(Domain::FIRST_DOMAIN_ID);
 
         $this->currentCustomerUser = $this->createMock(CurrentCustomerUser::class);
+        $this->customerUserFacade = $this->createMock(CustomerUserFacade::class);
 
         $this->heurekaFacade = $this->createMock(HeurekaFacade::class);
         parent::setUp();

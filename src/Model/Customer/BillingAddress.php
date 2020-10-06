@@ -23,6 +23,13 @@ class BillingAddress extends BaseBillingAddress
     protected $companyNumberWithVat;
 
     /**
+     * @var bool
+     *
+     * @ORM\Column(type="boolean")
+     */
+    private bool $activated;
+
+    /**
      * @param \App\Model\Customer\BillingAddressData $billingAddressData
      */
     public function __construct(BillingAddressData $billingAddressData)
@@ -31,6 +38,7 @@ class BillingAddress extends BaseBillingAddress
         if ($this->companyCustomer) {
             $this->companyNumberWithVat = $billingAddressData->companyNumberWithVat;
         }
+        $this->activated = $billingAddressData->activated;
     }
 
     /**
@@ -50,5 +58,18 @@ class BillingAddress extends BaseBillingAddress
     public function getCompanyNumberWithVat(): ?string
     {
         return $this->companyNumberWithVat;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isActivated(): bool
+    {
+        return $this->activated;
+    }
+
+    public function activate(): void
+    {
+        $this->activated = true;
     }
 }

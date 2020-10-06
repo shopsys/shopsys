@@ -62,14 +62,14 @@
     }
 
     &--light {
-        background-color: @color-f;
-        border-color: @color-border-lighter;
+        background-color: @color-light-secondary;
+        border-color: @color-light-secondary;
 
         .form-input-spinbox__btn {
-            background-color: @color-border-lighter;
+            background-color: @color-light-secondary;
 
             &:hover {
-                background-color: darken(@color-border-lighter, 3%);
+                background-color: darken(@color-light-secondary, 3%);
             }
         }
     }
@@ -121,6 +121,11 @@
     }
 
     &--light {
-        border: 1px solid @color-border-tertiary;
+        border: 1px solid @color-light-secondary;
+
+        &:focus {
+            border-color: @color-add-secondary;
+            background-color: @color-f;
+        }
     }
 }

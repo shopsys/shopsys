@@ -1,6 +1,12 @@
+@promo-code-spinner-size: 26px;
+
 .box-promo-code {
     &__wrap {
         position: relative;
+    }
+
+    label {
+        left: 14px;
     }
 
     &__input {
@@ -10,16 +16,34 @@
 
         border-radius: @radius;
         background-color: @color-f;
-        border: 2px solid @color-f;
+        border: 1px solid @color-f;
         outline: 0;
+        transition: all @transition;
 
         &:focus {
-            border-color: darken(#f0f3f4, 5%);
+            border-color: @color-add-secondary;
+            box-shadow: 0 0 0 3px rgba(@color-add-secondary, .25);
+        }
+
+        &::-webkit-input-placeholder {
+            color: @color-base-lighter;
+            opacity: 1;
+        }
+
+        &::-moz-placeholder {
+            color: @color-base-lighter;
+            opacity: 1;
+        }
+
+        &:-ms-input-placeholder {
+            color: @color-base-lighter;
+            opacity: 1;
         }
     }
 
     &__btn {
-        position: absolute;
+        // .in-overlay has position: relative !important
+        position: absolute !important;
         top: 8px;
         right: 10px;
         padding-left: 20px;
@@ -30,6 +54,37 @@
         font-family: @font-quartenary;
         font-weight: 400;
         letter-spacing: 0;
+
+        &.in-overlay {
+            color: #ffb900;
+        }
+
+        .in-overlay__in {
+            background-color: transparent;
+        }
+
+        .in-overlay__spinner {
+            min-width: @promo-code-spinner-size;
+            min-height: @promo-code-spinner-size;
+            margin-top: -@promo-code-spinner-size / 2;
+            margin-left: -@promo-code-spinner-size / 2;
+            line-height: @promo-code-spinner-size;
+        }
+
+        .in-overlay__spinner__icon {
+            width: @promo-code-spinner-size;
+            height: @promo-code-spinner-size;
+
+            border: 3px solid @color-f;
+            border-left-color: @color-add-secondary;
+            box-shadow: none;
+
+            &::before {
+                width: @promo-code-spinner-size;
+                height: @promo-code-spinner-size;
+                line-height: @promo-code-spinner-size;
+            }
+        }
     }
 
     &__added {
@@ -42,7 +97,7 @@
 
             .svg {
                 font-size: 16px;
-                color: #7f00ff;
+                color: @color-f;
             }
         }
     }

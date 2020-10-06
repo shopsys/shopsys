@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace App\Controller\Front;
 
 use App\Form\Front\Customer\User\CustomerUserUpdateFormType;
+use App\Model\Customer\User\CustomerUserFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressFacade;
-use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Order\OrderFacade;
@@ -21,7 +21,7 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 class CustomerController extends FrontBaseController
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade
+     * @var \App\Model\Customer\User\CustomerUserFacade
      */
     private $customerUserFacade;
 
@@ -61,7 +61,7 @@ class CustomerController extends FrontBaseController
     private $session;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade $customerUserFacade
+     * @param \App\Model\Customer\User\CustomerUserFacade $customerUserFacade
      * @param \App\Model\Order\OrderFacade $orderFacade
      * @param \App\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemPriceCalculation $orderItemPriceCalculation
@@ -259,19 +259,26 @@ class CustomerController extends FrontBaseController
         $email = $request->get('email');
         if ($request->isXmlHttpRequest() && $email !== null) {
             $customerUser = $this->customerUserFacade->findCustomerUserByEmailAndDomain($email, $this->domain->getId());
-            $this->session->set(OrderController::SESSION_PREFILLED_CUSTOMER_EMAIL, $email);
             if ($customerUser !== null) {
-                $this->session->set(OrderController::SESSION_CUSTOMER_EMAIL_EXISTS, true);
                 return $this->json([
                     'success' => true,
                 ]);
             }
         }
-        $this->session->set(OrderController::SESSION_PREFILLED_CUSTOMER_EMAIL, $email);
-        $this->session->set(OrderController::SESSION_CUSTOMER_EMAIL_EXISTS, false);
 
         return $this->json([
             'success' => false,
         ]);
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function emailCheckAction(Request $request): JsonResponse
+    {
+        $email = $request->get('email');
+
+        return $this->json($this->customerUserFacade->getCustomerInfo($email, $this->domain->getId()));
     }
 }

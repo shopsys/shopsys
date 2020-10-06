@@ -11,7 +11,6 @@ use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserPasswordFacade as Ba
 /**
  * @property \App\Model\Customer\User\CustomerUserRepository $customerUserRepository
  * @method __construct(\Doctrine\ORM\EntityManagerInterface $em, \App\Model\Customer\User\CustomerUserRepository $customerUserRepository, \Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface $encoderFactory, \Shopsys\FrameworkBundle\Model\Customer\Mail\ResetPasswordMailFacade $resetPasswordMailFacade, \Shopsys\FrameworkBundle\Component\String\HashGenerator $hashGenerator, \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRefreshTokenChainFacade $customerUserRefreshTokenChainFacade)
- * @method \App\Model\Customer\User\CustomerUser setNewPassword(string $email, int $domainId, string|null $resetPasswordHash, string $newPassword)
  */
 class CustomerUserPasswordFacade extends BaseCustomerUserPasswordFacade
 {
@@ -26,5 +25,18 @@ class CustomerUserPasswordFacade extends BaseCustomerUserPasswordFacade
         } else {
             $customerUser->setPasswordHash('');
         }
+    }
+
+    public function setNewPassword(string $email, int $domainId, ?string $resetPasswordHash, string $newPassword): CustomerUser
+    {
+        /** @var \App\Model\Customer\User\CustomerUser $customerUser */
+        $customerUser = parent::setNewPassword($email, $domainId, $resetPasswordHash, $newPassword);
+        /** @var \App\Model\Customer\BillingAddress $billingAddress */
+        $billingAddress = $customerUser->getCustomer()->getBillingAddress();
+
+        $billingAddress->activate();
+        $this->em->flush();
+
+        return $customerUser;
     }
 }
