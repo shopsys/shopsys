@@ -78,6 +78,7 @@ parameters:
             - '*/tests/FrontendApiBundle/Functional/Payment/PaymentsTest.php'
             - '*/tests/FrontendApiBundle/Functional/Transport/TransportsTest.php'
             - '*/tests/FrontendApiBundle/Functional/Order/MultipleProductsInOrderTest.php'
+            - '*/tests/FrontendApiBundle/Functional/Product/ProductTest.php'
             - '*/tests/FrontendApiBundle/Functional/Product/ProductVariantTest.php'
             - '*/tests/FrontendApiBundle/Functional/Product/ProductTest.php'
             - '*/tests/FrontendApiBundle/Functional/Product/ProductsTest.php'

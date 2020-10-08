@@ -562,6 +562,9 @@ msgstr ""
 msgid "Construction"
 msgstr ""
 
+msgid "Coupon valued to 100 Czech crowns."
+msgstr ""
+
 msgid "Coupon valued to 100 Czech crowns. You can cash it at any exchange office"
 msgstr ""
 
@@ -815,6 +818,15 @@ msgid "Hand printing adhesive labels Brother especially suitable for easy markin
 msgstr ""
 
 msgid "Have you ever experienced an accident and didn't know how to react? Or are you going to? This book is just for you!"
+msgstr ""
+
+msgid "Hello Kitty TV"
+msgstr ""
+
+msgid "Hello Kitty TV, LED, 55 cm diagonal, 1920x1080 Full HD."
+msgstr ""
+
+msgid "Hello Kitty Television"
 msgstr ""
 
 msgid "Hewlett-Packard was founded in the difficult times of the Great Depression."
@@ -1502,6 +1514,12 @@ msgid "This pot holder is used to hold pots. No more burnt kitchen tables!"
 msgstr ""
 
 msgid "This product is not an independently functional unit and may require professional installation."
+msgstr ""
+
+msgid "Ticket for 100 CZK"
+msgstr ""
+
+msgid "Ticket for 100 Czech crowns"
 msgstr ""
 
 msgid "Toilet paper with Euro pictures. Even you can feel rich now!"

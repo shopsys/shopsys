@@ -162,6 +162,24 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
                 'dataFixtures',
                 $domain->getLocale()
             );
+            $productData->seoH1s[$domain->getId()] = t(
+                'Hello Kitty Television',
+                [],
+                'dataFixtures',
+                $domain->getLocale()
+            );
+            $productData->seoTitles[$domain->getId()] = t(
+                'Hello Kitty TV',
+                [],
+                'dataFixtures',
+                $domain->getLocale()
+            );
+            $productData->seoMetaDescriptions[$domain->getId()] = t(
+                'Hello Kitty TV, LED, 55 cm diagonal, 1920x1080 Full HD.',
+                [],
+                'dataFixtures',
+                $domain->getLocale()
+            );
 
             $i = 0;
             $this->addParameterTranslations(
@@ -5120,6 +5138,24 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             );
             $productData->shortDescriptions[$domain->getId()] = t(
                 'Coupon valued to 100 Czech crowns. You can cash it at any exchange office',
+                [],
+                'dataFixtures',
+                $domain->getLocale()
+            );
+            $productData->seoH1s[$domain->getId()] = t(
+                'Ticket for 100 Czech crowns',
+                [],
+                'dataFixtures',
+                $domain->getLocale()
+            );
+            $productData->seoTitles[$domain->getId()] = t(
+                'Ticket for 100 CZK',
+                [],
+                'dataFixtures',
+                $domain->getLocale()
+            );
+            $productData->seoMetaDescriptions[$domain->getId()] = t(
+                'Coupon valued to 100 Czech crowns.',
                 [],
                 'dataFixtures',
                 $domain->getLocale()

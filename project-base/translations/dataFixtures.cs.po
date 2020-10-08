@@ -562,6 +562,9 @@ msgstr "Konektory"
 msgid "Construction"
 msgstr "Konstrukce"
 
+msgid "Coupon valued to 100 Czech crowns."
+msgstr "Poukázka na 100 Kč."
+
 msgid "Coupon valued to 100 Czech crowns. You can cash it at any exchange office"
 msgstr "Poukázka na 100 Kč. Můžete ji využít v libovolné směnárně."
 
@@ -816,6 +819,15 @@ msgstr "tiskárna samolepících štítků, ruční, rychlost tisku 20 mm/s, kl�
 
 msgid "Have you ever experienced an accident and didn't know how to react? Or are you going to? This book is just for you!"
 msgstr "Karta je vyrobena z odolného materiálu a obsahuje přehledný návod na poskytnutí první pomoci"
+
+msgid "Hello Kitty TV"
+msgstr "Hello Kitty TV"
+
+msgid "Hello Kitty TV, LED, 55 cm diagonal, 1920x1080 Full HD."
+msgstr "Hello Kitty TV, LED, uhlopříčka 55 cm, 1920x1080 Full HD."
+
+msgid "Hello Kitty Television"
+msgstr "Hello Kitty Televize"
 
 msgid "Hewlett-Packard was founded in the difficult times of the Great Depression."
 msgstr "S touto jednoduchou a cenově dostupnou multifunkční tiskárnou HP Deskjet můžete tisknout, skenovat i kopírovat."
@@ -1503,6 +1515,12 @@ msgstr "Konec nemotornému odkládání hrnců na novou kuchyňskou linku nebo n
 
 msgid "This product is not an independently functional unit and may require professional installation."
 msgstr "Přenosný pevný disk GT SuperSpeed USB 3.0 se inspiruje dlouhou historií sportovních vozů"
+
+msgid "Ticket for 100 CZK"
+msgstr "Poukázka na 100 CZK"
+
+msgid "Ticket for 100 Czech crowns"
+msgstr "Poukázka na 100 korun českých"
 
 msgid "Toilet paper with Euro pictures. Even you can feel rich now!"
 msgstr "toaleťák s potiskem bankovek EURO, pocit z použití tohoto toaletního papíru dá zapomenout na jakékoliv trable spojené s finanční krizí"
