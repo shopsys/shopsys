@@ -106,3 +106,7 @@ QueryDecorator:
                     uuid:
                         type: "Uuid!"
                 description: "Returns brand filtered using UUID"
+            promotedProducts:
+                type: '[Product!]!'
+                resolve: "@=resolver('promotedProducts')"
+                description: "Returns promoted products"

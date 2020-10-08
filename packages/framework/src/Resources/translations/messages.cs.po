@@ -1340,7 +1340,7 @@ msgid "Main image"
 msgstr "Hlavní obrázek"
 
 msgid "Main page products"
-msgstr "Zboží na titulní stránce"
+msgstr "Propagované produkty"
 
 msgid "Main text"
 msgstr "Text"

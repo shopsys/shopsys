@@ -1340,7 +1340,7 @@ msgid "Main image"
 msgstr ""
 
 msgid "Main page products"
-msgstr ""
+msgstr "Promoted products"
 
 msgid "Main text"
 msgstr ""
