@@ -421,6 +421,9 @@ msgstr "Aktivní"
 msgid "Active/Passive"
 msgstr "Aktivní/Pasivní"
 
+msgid "All kind of electronic devices."
+msgstr "Všechny druhy elektroniky."
+
 msgid "Annual energy consumption"
 msgstr "Roční spotřeba energie"
 
@@ -705,6 +708,12 @@ msgstr "Multifunkční tiskárna CANON PIXMA MG2450, A4, print/scan/copy, USB, V
 
 msgid "Easy printing, scanning and copying in one device will take much less space and you'll save money than buying individual components. The printing machine uses an innovative print FINE technology Which guarantee excellent print quality."
 msgstr "Multifunkční tiskárna CANON PIXMA MG2450, A4, print/scan/copy, USB, Vysoce kvalitní tisk"
+
+msgid "Electronic devices"
+msgstr "Elektrické zařízení"
+
+msgid "Electronic stuff"
+msgstr "Elektrické věci"
 
 msgid "Electronics"
 msgstr "Elektro"

@@ -421,6 +421,9 @@ msgstr ""
 msgid "Active/Passive"
 msgstr ""
 
+msgid "All kind of electronic devices."
+msgstr ""
+
 msgid "Annual energy consumption"
 msgstr ""
 
@@ -704,6 +707,12 @@ msgid "Easy printing, scanning and copying in one device will take much less spa
 msgstr ""
 
 msgid "Easy printing, scanning and copying in one device will take much less space and you'll save money than buying individual components. The printing machine uses an innovative print FINE technology Which guarantee excellent print quality."
+msgstr ""
+
+msgid "Electronic devices"
+msgstr ""
+
+msgid "Electronic stuff"
 msgstr ""
 
 msgid "Electronics"

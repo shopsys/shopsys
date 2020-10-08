@@ -669,6 +669,9 @@ Returns complete list of categories
         query: categories {
             uuid
             name
+            seoH1
+            seoTitle
+            seoMetaDescription
             children {
                 name
             }
@@ -701,6 +704,9 @@ Returns complete list of categories
                 {
                     "uuid": "f757f375-2828-489a-9b60-46c608f05b4f",
                     "name": "Electronics",
+                    "seoH1": "Electronic devices",
+                    "seoTitle": "Electronic stuff",
+                    "seoMetaDescription": "All kind of electronic devices.",
                     "children": [
                         {
                             "name": "TV, audio"
@@ -755,6 +761,9 @@ Returns complete list of categories
                 {
                     "uuid": "093460cd-7e31-4847-8ae7-a5d8a3241f47",
                     "name": "Books",
+                    "seoH1": null,
+                    "seoTitle": null,
+                    "seoMetaDescription": null,
                     "children": [],
                     "parent": {
                         "name": null
@@ -790,6 +799,9 @@ Returns complete list of categories
                 {
                     "uuid": "c011e65f-201e-459c-a1b5-47da5942a13d",
                     "name": "Toys",
+                    "seoH1": null,
+                    "seoTitle": null,
+                    "seoMetaDescription": null,
                     "children": [],
                     "parent": {
                         "name": null
@@ -819,6 +831,9 @@ Returns complete list of categories
                 {
                     "uuid": "3c8d9534-6432-4726-b068-bab0a47036cd",
                     "name": "Garden tools",
+                    "seoH1": null,
+                    "seoTitle": null,
+                    "seoMetaDescription": null,
                     "children": [],
                     "parent": {
                         "name": null
@@ -854,6 +869,9 @@ Returns complete list of categories
                 {
                     "uuid": "2c7c9a49-8626-4e4c-b081-e48d663417a1",
                     "name": "Food",
+                    "seoH1": null,
+                    "seoTitle": null,
+                    "seoMetaDescription": null,
                     "children": [],
                     "parent": {
                         "name": null
@@ -902,6 +920,9 @@ Returns category filtered using UUID
         query: category (uuid: "f757f375-2828-489a-9b60-46c608f05b4f") {
             uuid
             name
+            seoH1
+            seoTitle
+            seoMetaDescription
             children {
                 name
             }
@@ -933,6 +954,9 @@ Returns category filtered using UUID
             "query": {
                 "uuid": "f757f375-2828-489a-9b60-46c608f05b4f",
                 "name": "Electronics",
+                "seoH1": "Electronic devices",
+                "seoTitle": "Electronic stuff",
+                "seoMetaDescription": "All kind of electronic devices.",
                 "children": [
                     {
                         "name": "TV, audio"
