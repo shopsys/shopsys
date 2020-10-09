@@ -46,6 +46,11 @@ class AdvertData
      */
     public $domainId;
 
+    /**
+     * @var string
+     */
+    public $uuid;
+
     public function __construct()
     {
         $this->hidden = false;

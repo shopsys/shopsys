@@ -110,3 +110,14 @@ QueryDecorator:
                 type: '[Product!]!'
                 resolve: "@=resolver('promotedProducts')"
                 description: "Returns promoted products"
+            adverts:
+                type: '[Advert!]!'
+                resolve: "@=resolver('adverts', [args['positionName']])"
+                args:
+                    positionName:
+                        type: "String"
+                description: "Returns list of adverts, optionally filtered by `positionName`"
+            AdvertCode:
+                type: 'AdvertCode'
+            AdvertImage:
+                type: 'AdvertImage'

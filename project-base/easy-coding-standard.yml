@@ -73,6 +73,7 @@ parameters:
             - '*/tests/App/Smoke/Http/RouteConfigCustomization.php'
             - '*/tests/App/Functional/Model/Product/ProductOnCurrentDomainFacadeCountDataTest.php'
             - '*/tests/App/Functional/Model/Cart/CartMigrationFacadeTest.php'
+            - '*/tests/FrontendApiBundle/Functional/Advert/GetAdvertsTest.php'
             - '*/tests/FrontendApiBundle/Functional/Article/GetArticlesTest.php'
             - '*/tests/FrontendApiBundle/Functional/Image/ProductImagesTest.php'
             - '*/tests/FrontendApiBundle/Functional/Payment/PaymentsTest.php'

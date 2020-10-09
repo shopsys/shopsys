@@ -3,6 +3,7 @@
 namespace Shopsys\FrameworkBundle\Model\Advert;
 
 use Doctrine\ORM\Mapping as ORM;
+use Ramsey\Uuid\Uuid;
 
 /**
  * @ORM\Table(name="adverts")
@@ -20,6 +21,12 @@ class Advert
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     protected $id;
+
+    /**
+     * @var string
+     * @ORM\Column(type="guid", unique=true)
+     */
+    protected $uuid;
 
     /**
      * @var int
@@ -91,6 +98,7 @@ class Advert
         $this->link = $advert->link;
         $this->positionName = $advert->positionName;
         $this->hidden = $advert->hidden;
+        $this->uuid = $advert->uuid ?: Uuid::uuid4()->toString();
     }
 
     /**
@@ -99,6 +107,14 @@ class Advert
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * @return string
+     */
+    public function getUuid(): string
+    {
+        return $this->uuid;
     }
 
     /**

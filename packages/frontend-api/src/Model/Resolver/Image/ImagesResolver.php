@@ -12,7 +12,10 @@ use Shopsys\FrameworkBundle\Component\Image\Config\Exception\ImageSizeNotFoundEx
 use Shopsys\FrameworkBundle\Component\Image\Config\Exception\ImageTypeNotFoundException;
 use Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig;
 use Shopsys\FrameworkBundle\Component\Image\Config\ImageEntityConfig;
+use Shopsys\FrameworkBundle\Component\Image\Config\ImageSizeConfig;
+use Shopsys\FrameworkBundle\Component\Image\Image;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
+use Shopsys\FrameworkBundle\Model\Advert\Advert;
 use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Payment\Payment;
 use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
@@ -27,6 +30,7 @@ class ImagesResolver implements ResolverInterface
     protected const IMAGE_ENTITY_PAYMENT = 'payment';
     protected const IMAGE_ENTITY_TRANSPORT = 'transport';
     protected const IMAGE_ENTITY_BRAND = 'brand';
+    protected const IMAGE_ENTITY_ADVERT = 'noticer';
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\Image\ImageFacade
@@ -151,6 +155,24 @@ class ImagesResolver implements ResolverInterface
     }
 
     /**
+     * @param \Shopsys\FrameworkBundle\Model\Advert\Advert $advert
+     * @param string|null $type
+     * @param string|null $size
+     * @return array
+     */
+    public function resolveByAdvert(Advert $advert, ?string $type, ?string $size): array
+    {
+        return $this->getResolvedImages(
+            $this->frontendApiImageFacade->getImagesByEntityIdAndNameIndexedById(
+                $advert->getId(),
+                static::IMAGE_ENTITY_ADVERT,
+                $type
+            ),
+            $this->getSizeConfigsForAdvert($advert, $type, $size)
+        );
+    }
+
+    /**
      * @param int $entityId
      * @param string $entityName
      * @param string|null $type
@@ -213,22 +235,51 @@ class ImagesResolver implements ResolverInterface
 
         foreach ($images as $image) {
             foreach ($sizeConfigs as $sizeConfig) {
-                $resolvedImages[] = [
-                    'type' => $image->getType(),
-                    'position' => $image->getPosition(),
-                    'width' => $sizeConfig->getWidth(),
-                    'height' => $sizeConfig->getHeight(),
-                    'size' => $sizeConfig->getName() === null ? ImageConfig::DEFAULT_SIZE_NAME : $sizeConfig->getName(),
-                    'url' => $this->imageFacade->getImageUrl(
-                        $this->domain->getCurrentDomainConfig(),
-                        $image,
-                        $sizeConfig->getName(),
-                        $image->getType()
-                    ),
-                ];
+                $resolvedImages[] = $this->getResolvedImage($image, $sizeConfig);
             }
         }
 
         return $resolvedImages;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Component\Image\Image $image
+     * @param \Shopsys\FrameworkBundle\Component\Image\Config\ImageSizeConfig $sizeConfig
+     * @return array
+     */
+    protected function getResolvedImage(Image $image, ImageSizeConfig $sizeConfig): array
+    {
+        return [
+            'type' => $image->getType(),
+            'position' => $image->getPosition(),
+            'width' => $sizeConfig->getWidth(),
+            'height' => $sizeConfig->getHeight(),
+            'size' => $sizeConfig->getName() === null ? ImageConfig::DEFAULT_SIZE_NAME : $sizeConfig->getName(),
+            'url' => $this->imageFacade->getImageUrl(
+                $this->domain->getCurrentDomainConfig(),
+                $image,
+                $sizeConfig->getName(),
+                $image->getType()
+            ),
+        ];
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Advert\Advert $advert
+     * @param string|null $type
+     * @param string|null $size
+     * @return \Shopsys\FrameworkBundle\Component\Image\Config\ImageSizeConfig[]
+     */
+    protected function getSizeConfigsForAdvert(Advert $advert, ?string $type, ?string $size): array
+    {
+        $entityName = static::IMAGE_ENTITY_ADVERT;
+        if ($size === null) {
+            return array_merge(
+                $this->getSizeConfigs($type, $advert->getPositionName(), $entityName),
+                $this->getSizeConfigs($type, ImageConfig::ORIGINAL_SIZE_NAME, $entityName)
+            );
+        }
+
+        return $this->getSizeConfigs($type, $size, $entityName);
     }
 }

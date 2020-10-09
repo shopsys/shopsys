@@ -1,0 +1,23 @@
+AdvertImageDecorator:
+    type: object
+    decorator: true
+    inherits:
+        - 'AdvertDecorator'
+    config:
+        fields:
+            link:
+                type: "String"
+                description: "Advert link"
+            image:
+                type: "[Image]"
+                description: "Advert image"
+                resolve: '@=service("Shopsys\\FrontendApiBundle\\Model\\Resolver\\Image\\ImagesResolver").resolveByAdvert(value, args["type"], args["size"])'
+                args:
+                    type:
+                        type: "String"
+                        defaultValue: null
+                    size:
+                        type: "String"
+                        defaultValue: null
+        interfaces:
+            - 'Advert'
