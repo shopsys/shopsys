@@ -48,3 +48,13 @@ ProductDecorator:
             brand:
                 type: "Brand"
                 description: "Brand of product"
+            isSellingDenied:
+                type: "Boolean!"
+            orderingPriority:
+                type: "Int"
+            description:
+                type: "String"
+            accessories:
+                type: "[Product]"
+            parameters:
+                type: "[Parameter]!"

@@ -79,6 +79,18 @@ class ProductsTest extends GraphQlTestCase
                             brand {
                                 name
                             }
+                            accessories {
+                                name
+                            }
+                            isSellingDenied
+                            description
+                            orderingPriority
+                            parameters {
+                                name
+                                values {
+                                    text
+                                }
+                            }
                         }
                     }
                 }
@@ -139,6 +151,57 @@ class ProductsTest extends GraphQlTestCase
                 ],
                 'brand' => [
                     'name' => 'Hyundai',
+                ],
+                'accessories' => [],
+                'isSellingDenied' => false,
+                'description' => t(
+                    'Television monitor LED 16: 9, 5M: 1, 250cd/m2, 9.5ms, 1366x768, DVB-T/C, HDMI, SCART, D-Sub, USB, speakers, Energ. Class A',
+                    [],
+                    'dataFixtures',
+                    $firstDomainLocale
+                ),
+                'orderingPriority' => null,
+                'parameters' => [
+                    [
+                        'name' => t('HDMI', [], 'dataFixtures', $firstDomainLocale),
+                        'values' => [
+                            [
+                                'text' => t('Yes', [], 'dataFixtures', $firstDomainLocale),
+                            ],
+                        ],
+                    ],
+                    [
+                        'name' => t('Resolution', [], 'dataFixtures', $firstDomainLocale),
+                        'values' => [
+                            [
+                                'text' => t('1920×1080 (Full HD)', [], 'dataFixtures', $firstDomainLocale),
+                            ],
+                        ],
+                    ],
+                    [
+                        'name' => t('Screen size', [], 'dataFixtures', $firstDomainLocale),
+                        'values' => [
+                            [
+                                'text' => t('30"', [], 'dataFixtures', $firstDomainLocale),
+                            ],
+                        ],
+                    ],
+                    [
+                        'name' => t('Technology', [], 'dataFixtures', $firstDomainLocale),
+                        'values' => [
+                            [
+                                'text' => t('LED', [], 'dataFixtures', $firstDomainLocale),
+                            ],
+                        ],
+                    ],
+                    [
+                        'name' => t('USB', [], 'dataFixtures', $firstDomainLocale),
+                        'values' => [
+                            [
+                                'text' => t('Yes', [], 'dataFixtures', $firstDomainLocale),
+                            ],
+                        ],
+                    ],
                 ],
             ],
         ];

@@ -73,5 +73,6 @@ class ParameterDataFactory implements ParameterDataFactoryInterface
         }
         $parameterData->name = $names;
         $parameterData->visible = $parameter->isVisible();
+        $parameterData->uuid = $parameter->getUuid();
     }
 }

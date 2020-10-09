@@ -3,6 +3,7 @@
 namespace Shopsys\FrameworkBundle\Model\Product\Parameter;
 
 use Doctrine\ORM\Mapping as ORM;
+use Ramsey\Uuid\Uuid;
 
 /**
  * @ORM\Table(name="parameter_values")
@@ -17,6 +18,12 @@ class ParameterValue
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     protected $id;
+
+    /**
+     * @var string
+     * @ORM\Column(type="guid", unique=true)
+     */
+    protected $uuid;
 
     /**
      * @var string
@@ -37,6 +44,7 @@ class ParameterValue
     {
         $this->text = $parameterData->text;
         $this->locale = $parameterData->locale;
+        $this->uuid = $parameterData->uuid ?: Uuid::uuid4()->toString();
     }
 
     /**
@@ -45,6 +53,14 @@ class ParameterValue
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * @return string
+     */
+    public function getUuid(): string
+    {
+        return $this->uuid;
     }
 
     /**

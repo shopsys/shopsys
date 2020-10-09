@@ -40,5 +40,6 @@ class ParameterValueDataFactory implements ParameterValueDataFactoryInterface
     {
         $parameterValueData->text = $parameterValue->getText();
         $parameterValueData->locale = $parameterValue->getLocale();
+        $parameterValueData->uuid = $parameterValue->getUuid();
     }
 }

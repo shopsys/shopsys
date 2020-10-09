@@ -5,6 +5,7 @@ namespace Shopsys\FrameworkBundle\Model\Product\Parameter;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Prezent\Doctrine\Translatable\Annotation as Prezent;
+use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Model\Localization\AbstractTranslatableEntity;
 
 /**
@@ -21,6 +22,12 @@ class Parameter extends AbstractTranslatableEntity
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     protected $id;
+
+    /**
+     * @var string
+     * @ORM\Column(type="guid", unique=true)
+     */
+    protected $uuid;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterTranslation[]|\Doctrine\Common\Collections\Collection
@@ -40,6 +47,7 @@ class Parameter extends AbstractTranslatableEntity
     public function __construct(ParameterData $parameterData)
     {
         $this->translations = new ArrayCollection();
+        $this->uuid = $parameterData->uuid ?: Uuid::uuid4()->toString();
         $this->setData($parameterData);
     }
 
@@ -66,6 +74,14 @@ class Parameter extends AbstractTranslatableEntity
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * @return string
+     */
+    public function getUuid(): string
+    {
+        return $this->uuid;
     }
 
     /**

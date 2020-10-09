@@ -141,3 +141,6 @@ There you can find links to upgrade notes for other versions too.
 
 - made tests to be domain independent ([#2051](https://github.com/shopsys/shopsys/pull/2051))
     - see #project-base-diff to update your project
+
+- add additional data to Product frontend API type ([#2057](https://github.com/shopsys/shopsys/pull/2057))
+    - see #project-base-diff to update your project

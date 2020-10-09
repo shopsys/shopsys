@@ -13,4 +13,9 @@ class ParameterValueData
      * @var string|null
      */
     public $locale;
+
+    /**
+     * @var string|null
+     */
+    public $uuid;
 }

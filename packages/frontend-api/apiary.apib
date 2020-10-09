@@ -56,6 +56,20 @@ Authorization header is not required.
                         brand {
                             name
                         }
+                        accessories {
+                            name
+                        }
+                        isSellingDenied
+                        description
+                        orderingPriority
+                        parameters {
+                            uuid
+                            name
+                            values {
+                                uuid
+                                text
+                            }
+                        }
                     }
                 }
             }
@@ -97,7 +111,12 @@ Authorization header is not required.
                                 "vatAmount": "0.84"
                             },
                             "images": [],
-                            "brand": null
+                            "brand": null,
+                            "accessories": [],
+                            "isSellingDenied": false,
+                            "description": "Coupon valued to 100 Czech crowns. You can cash it at any exchange office",
+                            "orderingPriority": null,
+                            "parameters": []
                         }
                     },
                     {
@@ -220,7 +239,70 @@ Authorization header is not required.
                             ],
                             "brand": {
                                 "name": "Sencor"
-                            }
+                            },
+                            "accessories": [
+                                {
+                                    "name": "Kabel HDMI A - HDMI A M/M 2m gold-plated connectors High Speed HD"
+                                },
+                                {
+                                    "name": "Defender 2.0 SPK-480"
+                                }
+                            ],
+                            "isSellingDenied": false,
+                            "description": "Television LED, 55 cm diagonal, 1920x1080 Full HD, DVB-T MPEG4 tuner with USB recording and playback (DivX, XviD, MP3, WMA, JPEG), HDMI, SCART, VGA, pink execution, energ. Class B",
+                            "orderingPriority": null,
+                            "parameters": [
+                                {
+                                    "uuid": "728f47d2-eef7-48c4-a8a4-c6af3af7ea39",
+                                    "name": "HDMI"
+                                    "values": [
+                                        {
+                                            "uuid": "87768319-f601-491d-b34a-8109215bb75b",
+                                            "text": "Yes"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "uuid": "238305c0-ea42-427d-a291-b5c9e77a7420",
+                                    "name": "Resolution"
+                                    "values": [
+                                        {
+                                            "uuid": "953cfc88-6f5f-4d27-8993-d2a4430778a1",
+                                            "text": "1920×1080 (Full HD)"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "uuid": "4c99f0ca-af64-4d1a-85d3-0b3148033301",
+                                    "name": "Screen size"
+                                    "values": [
+                                        {
+                                            "uuid": "47c91459-6d05-4758-8154-e9f711602bb0",
+                                            "text": "27\""
+                                        }
+                                    ]
+                                },
+                                {
+                                    "uuid": "ac302aa6-64f5-4c5a-9a5e-2dbe87cdb25a",
+                                    "name": "Technology"
+                                    "values": [
+                                        {
+                                            "uuid": "b7b4375c-3403-48e2-8c32-5ba48843ad98",
+                                            "text": "LED"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "uuid": "924ce936-2632-4fb4-becd-d20837aff51e",
+                                    "name": "USB"
+                                    "values": [
+                                        {
+                                            "uuid": "87768319-f601-491d-b34a-8109215bb75b",
+                                            "text": "Yes"
+                                        }
+                                    ]
+                                }
+                            ]
                         }
                     }
                 ]
@@ -271,6 +353,20 @@ Returns product filtered using UUID
             }
             brand {
                 name
+            }
+            accessories {
+                name
+            }
+            isSellingDenied
+            description
+            orderingPriority
+            parameters {
+                uuid
+                name
+                values {
+                    uuid
+                    text
+                }
             }
         }
     }
@@ -397,7 +493,70 @@ Returns product filtered using UUID
                 ],
                 "brand": {
                     "name": "Sencor"
-                }
+                },
+                "accessories": [
+                    {
+                        "name": "Kabel HDMI A - HDMI A M/M 2m gold-plated connectors High Speed HD"
+                    },
+                    {
+                        "name": "Defender 2.0 SPK-480"
+                    }
+                ],
+                "isSellingDenied": false,
+                "description": "Television LED, 55 cm diagonal, 1920x1080 Full HD, DVB-T MPEG4 tuner with USB recording and playback (DivX, XviD, MP3, WMA, JPEG), HDMI, SCART, VGA, pink execution, energ. Class B",
+                "orderingPriority": null,
+                "parameters": [
+                    {
+                        "uuid": "728f47d2-eef7-48c4-a8a4-c6af3af7ea39",
+                        "name": "HDMI"
+                        "values": [
+                            {
+                                "uuid": "87768319-f601-491d-b34a-8109215bb75b",
+                                "text": "Yes"
+                            }
+                        ]
+                    },
+                    {
+                        "uuid": "238305c0-ea42-427d-a291-b5c9e77a7420",
+                        "name": "Resolution"
+                        "values": [
+                            {
+                                "uuid": "953cfc88-6f5f-4d27-8993-d2a4430778a1",
+                                "text": "1920×1080 (Full HD)"
+                            }
+                        ]
+                    },
+                    {
+                        "uuid": "4c99f0ca-af64-4d1a-85d3-0b3148033301",
+                        "name": "Screen size"
+                        "values": [
+                            {
+                                "uuid": "47c91459-6d05-4758-8154-e9f711602bb0",
+                                "text": "27\""
+                            }
+                        ]
+                    },
+                    {
+                        "uuid": "ac302aa6-64f5-4c5a-9a5e-2dbe87cdb25a",
+                        "name": "Technology"
+                        "values": [
+                            {
+                                "uuid": "b7b4375c-3403-48e2-8c32-5ba48843ad98",
+                                "text": "LED"
+                            }
+                        ]
+                    },
+                    {
+                        "uuid": "924ce936-2632-4fb4-becd-d20837aff51e",
+                        "name": "USB"
+                        "values": [
+                            {
+                                "uuid": "87768319-f601-491d-b34a-8109215bb75b",
+                                "text": "Yes"
+                            }
+                        ]
+                    }
+                ]
             }
         }
     }
