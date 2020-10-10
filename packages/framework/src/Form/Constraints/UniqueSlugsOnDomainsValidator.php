@@ -15,12 +15,12 @@ class UniqueSlugsOnDomainsValidator extends ConstraintValidator
     /**
      * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
      */
-    private $domain;
+    protected $domain;
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory
      */
-    private $domainRouterFactory;
+    protected $domainRouterFactory;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
@@ -50,7 +50,7 @@ class UniqueSlugsOnDomainsValidator extends ConstraintValidator
      * @param array $values
      * @param \Shopsys\FrameworkBundle\Form\Constraints\UniqueSlugsOnDomains $constraint
      */
-    private function validateDuplication(array $values, UniqueSlugsOnDomains $constraint)
+    protected function validateDuplication(array $values, UniqueSlugsOnDomains $constraint)
     {
         $slugsCountByDomainId = $this->getSlugsCountIndexedByDomainId($values);
         foreach ($slugsCountByDomainId as $domainId => $countBySlug) {
@@ -72,7 +72,7 @@ class UniqueSlugsOnDomainsValidator extends ConstraintValidator
      * @param array $values
      * @param \Shopsys\FrameworkBundle\Form\Constraints\UniqueSlugsOnDomains $constraint
      */
-    private function validateExists($values, UniqueSlugsOnDomains $constraint)
+    protected function validateExists($values, UniqueSlugsOnDomains $constraint)
     {
         foreach ($values as $urlData) {
             $domainId = $urlData[UrlListData::FIELD_DOMAIN];
@@ -99,7 +99,7 @@ class UniqueSlugsOnDomainsValidator extends ConstraintValidator
      * @param array $values
      * @return int[][]
      */
-    private function getSlugsCountIndexedByDomainId(array $values)
+    protected function getSlugsCountIndexedByDomainId(array $values)
     {
         $slugsCountByDomainId = [];
         foreach ($values as $urlData) {

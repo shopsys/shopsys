@@ -16,17 +16,17 @@ class FileAbstractFilesystemValidator extends FileValidator
     /**
      * @var \League\Flysystem\MountManager
      */
-    private $mountManager;
+    protected $mountManager;
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\FileUpload\FileUpload
      */
-    private $fileUpload;
+    protected $fileUpload;
 
     /**
      * @var \Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface
      */
-    private $parameterBag;
+    protected $parameterBag;
 
     /**
      * @param \League\Flysystem\MountManager $mountManager

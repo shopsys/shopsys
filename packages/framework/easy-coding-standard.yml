@@ -13,6 +13,7 @@ services:
                             - Shopsys\FrameworkBundle\Component
                             - Shopsys\FrameworkBundle\Controller
                             - Shopsys\FrameworkBundle\Form\Admin\AdvancedSearch
+                            - Shopsys\FrameworkBundle\Form\Constraints
                             - Shopsys\FrameworkBundle\Form\Transformer
                             - Shopsys\FrameworkBundle\Twig
 
