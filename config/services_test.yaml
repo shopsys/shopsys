@@ -303,3 +303,12 @@ services:
     App\Model\Cart\CartMigrationFacade:
         tags:
             - { name: kernel.event_listener, event: kernel.controller, method: onKernelController }
+
+    Shopsys\FrameworkBundle\Component\ClassExtension\ClassExtensionRegistry:
+        arguments:
+            - '%shopsys.entity_extension.map%'
+            - '%shopsys.framework.root_dir%'
+
+    App\Command\ExtendedClassesAnnotationsCommand:
+        arguments:
+            - '%shopsys.root_dir%'
