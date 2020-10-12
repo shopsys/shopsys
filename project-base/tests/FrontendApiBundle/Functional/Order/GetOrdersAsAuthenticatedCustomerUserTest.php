@@ -4,10 +4,18 @@ declare(strict_types=1);
 
 namespace Tests\FrontendApiBundle\Functional\Order;
 
+use Shopsys\FrameworkBundle\Component\Money\Money;
+use Shopsys\FrontendApiBundle\Component\Price\MoneyFormatterHelper;
 use Tests\FrontendApiBundle\Test\GraphQlWithLoginTestCase;
 
 class GetOrdersAsAuthenticatedCustomerUserTest extends GraphQlWithLoginTestCase
 {
+    /**
+     * @var \Shopsys\FrontendApiBundle\Component\Price\MoneyFormatterHelper
+     * @inject
+     */
+    private $moneyFormatterHelper;
+
     public function testGetAllCustomerUserOrders(): void
     {
         foreach ($this->getOrdersDataProvider() as $dataSet) {
@@ -135,30 +143,31 @@ class GetOrdersAsAuthenticatedCustomerUserTest extends GraphQlWithLoginTestCase
     private function getExpectedUserOrders(): array
     {
         $firstDomainLocale = $this->getLocaleForFirstDomain();
+        $domainId = $this->domain->getId();
         return [
             [
                 'status' => t('In Progress', [], 'dataFixtures', $firstDomainLocale),
-                'priceWithVat' => '153.640000',
+                'priceWithVat' => MoneyFormatterHelper::formatWithMaxFractionDigits(Money::create('153.64')),
             ],
             [
                 'status' => t('Done', [], 'dataFixtures', $firstDomainLocale),
-                'priceWithVat' => '4308.320000',
+                'priceWithVat' => MoneyFormatterHelper::formatWithMaxFractionDigits(Money::create('4308.32')),
             ],
             [
                 'status' => t('New [adjective]', [], 'dataFixtures', $firstDomainLocale),
-                'priceWithVat' => '83.580000',
+                'priceWithVat' => MoneyFormatterHelper::formatWithMaxFractionDigits(Money::create('83.58')),
             ],
             [
                 'status' => t('Done', [], 'dataFixtures', $firstDomainLocale),
-                'priceWithVat' => '245.970000',
+                'priceWithVat' => MoneyFormatterHelper::formatWithMaxFractionDigits(Money::create('245.97')),
             ],
             [
                 'status' => t('New [adjective]', [], 'dataFixtures', $firstDomainLocale),
-                'priceWithVat' => '76.580000',
+                'priceWithVat' => MoneyFormatterHelper::formatWithMaxFractionDigits(Money::create('76.58')),
             ],
             [
                 'status' => t('New [adjective]', [], 'dataFixtures', $firstDomainLocale),
-                'priceWithVat' => '1012.420000',
+                'priceWithVat' => MoneyFormatterHelper::formatWithMaxFractionDigits(Money::create('1012.42')),
             ],
         ];
     }

@@ -6,6 +6,7 @@ namespace Shopsys\FrontendApiBundle\Model\ScalarType;
 
 use GraphQL\Language\AST\StringValueNode;
 use Shopsys\FrameworkBundle\Component\Money\Money;
+use Shopsys\FrontendApiBundle\Component\Price\MoneyFormatterHelper;
 
 class MoneyType
 {
@@ -15,7 +16,7 @@ class MoneyType
      */
     public static function serialize(Money $value): string
     {
-        return $value->getAmount();
+        return MoneyFormatterHelper::formatWithMaxFractionDigits($value);
     }
 
     /**

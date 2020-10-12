@@ -141,3 +141,6 @@ There you can find links to upgrade notes for other versions too.
 
 - made tests to be domain independent ([#2051](https://github.com/shopsys/shopsys/pull/2051))
     - see #project-base-diff to update your project
+
+- fixed fraction digits of prices in frontend API ([#2062](https://github.com/shopsys/shopsys/pull/2062))
+    - see #project-base-diff to update your project
