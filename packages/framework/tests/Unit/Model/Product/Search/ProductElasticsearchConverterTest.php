@@ -39,6 +39,9 @@ class ProductElasticsearchConverterTest extends TestCase
             'calculated_selling_denied' => true,
             'selling_denied' => true,
             'brand' => null,
+            'seo_h1' => null,
+            'seo_title' => null,
+            'seo_meta_description' => null,
         ];
 
         $converter = new ProductElasticsearchConverter();
