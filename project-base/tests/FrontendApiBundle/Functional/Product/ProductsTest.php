@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\FrontendApiBundle\Functional\Product;
 
+use App\DataFixtures\Demo\VatDataFixture;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class ProductsTest extends GraphQlTestCase
@@ -121,6 +122,9 @@ class ProductsTest extends GraphQlTestCase
     private function getExpectedDataForFifthProduct(): array
     {
         $firstDomainLocale = $this->getLocaleForFirstDomain();
+        /** @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vatHigh */
+        $vatHigh = $this->getReferenceForDomain(VatDataFixture::VAT_HIGH, $this->domain->getId());
+
         return [
             [
                 'name' => t('30” Hyundai 22MT44D', [], 'dataFixtures', $firstDomainLocale),
@@ -144,11 +148,7 @@ class ProductsTest extends GraphQlTestCase
                     ],
                 ],
                 'flags' => [],
-                'price' => [
-                    'priceWithVat' => $this->getPriceWithVatConvertedToDomainDefaultCurrency('4838.75'),
-                    'priceWithoutVat' => $this->getPriceWithoutVatConvertedToDomainDefaultCurrency('3999'),
-                    'vatAmount' => $this->getPriceWithoutVatConvertedToDomainDefaultCurrency('839.75'),
-                ],
+                'price' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('3999', $vatHigh),
                 'brand' => [
                     'name' => 'Hyundai',
                 ],

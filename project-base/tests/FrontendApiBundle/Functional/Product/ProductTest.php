@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\FrontendApiBundle\Functional\Product;
 
+use App\DataFixtures\Demo\VatDataFixture;
 use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
@@ -116,6 +117,9 @@ class ProductTest extends GraphQlTestCase
             $firstDomainLocale
         );
 
+        /** @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vatHigh */
+        $vatHigh = $this->getReferenceForDomain(VatDataFixture::VAT_HIGH, $this->domain->getId());
+
         return [
             'data' => [
                 'product' => [
@@ -165,11 +169,7 @@ class ProductTest extends GraphQlTestCase
                             'rgbColor' => '#f9ffd6',
                         ],
                     ],
-                    'price' => [
-                        'priceWithVat' => $this->getPriceWithVatConvertedToDomainDefaultCurrency('3499'),
-                        'priceWithoutVat' => $this->getPriceWithoutVatConvertedToDomainDefaultCurrency('2891.74'),
-                        'vatAmount' => $this->getPriceWithoutVatConvertedToDomainDefaultCurrency('607.26'),
-                    ],
+                    'price' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('2891.70', $vatHigh),
                     'brand' => [
                         'name' => 'Sencor',
                     ],

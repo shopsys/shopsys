@@ -7,7 +7,6 @@ namespace Tests\App\Test;
 use Psr\Container\ContainerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Environment\EnvironmentType;
-use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -28,12 +27,6 @@ abstract class FunctionalTestCase extends WebTestCase implements ServiceContaine
      * @inject
      */
     protected $persistentReferenceFacade;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\PriceConverter
-     * @inject
-     */
-    private $priceConverter;
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
@@ -157,33 +150,5 @@ abstract class FunctionalTestCase extends WebTestCase implements ServiceContaine
         $router = $domainRouterFactory->getRouter(Domain::FIRST_DOMAIN_ID);
 
         return $router->generate($routeName, $parameters, UrlGeneratorInterface::ABSOLUTE_URL);
-    }
-
-    /**
-     * @param string $price
-     * @return string
-     */
-    protected function getPriceWithVatConvertedToDomainDefaultCurrency(string $price): string
-    {
-        $money = $this->priceConverter->convertPriceWithVatToPriceInDomainDefaultCurrency(
-            Money::create($price),
-            Domain::FIRST_DOMAIN_ID
-        );
-
-        return $money->getAmount();
-    }
-
-    /**
-     * @param string $price
-     * @return string
-     */
-    protected function getPriceWithoutVatConvertedToDomainDefaultCurrency(string $price): string
-    {
-        $money = $this->priceConverter->convertPriceWithoutVatToPriceInDomainDefaultCurrency(
-            Money::create($price),
-            Domain::FIRST_DOMAIN_ID
-        );
-
-        return $money->getAmount();
     }
 }

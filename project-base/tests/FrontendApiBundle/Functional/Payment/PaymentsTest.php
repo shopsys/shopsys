@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\FrontendApiBundle\Functional\Payment;
 
+use App\DataFixtures\Demo\VatDataFixture;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class PaymentsTest extends GraphQlTestCase
@@ -32,6 +33,9 @@ class PaymentsTest extends GraphQlTestCase
             }
         ';
 
+        /** @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vatZero */
+        $vatZero = $this->getReferenceForDomain(VatDataFixture::VAT_ZERO, $this->domain->getId());
+
         $arrayExpected = [
             'data' => [
                 'payments' => [
@@ -45,11 +49,7 @@ class PaymentsTest extends GraphQlTestCase
                         ),
                         'instruction' => null,
                         'position' => 0,
-                        'price' => [
-                            'priceWithVat' => $this->getPriceWithVatConvertedToDomainDefaultCurrency('100'),
-                            'priceWithoutVat' => $this->getPriceWithVatConvertedToDomainDefaultCurrency('100.00'),
-                            'vatAmount' => '0.00',
-                        ],
+                        'price' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('100', $vatZero),
                         'images' => [
                             ['url' => $this->getFullUrlPath('/content-test/images/payment/default/53.jpg')],
                             ['url' => $this->getFullUrlPath('/content-test/images/payment/original/53.jpg')],
@@ -64,11 +64,7 @@ class PaymentsTest extends GraphQlTestCase
                         'description' => null,
                         'instruction' => null,
                         'position' => 1,
-                        'price' => [
-                            'priceWithVat' => $this->getPriceWithVatConvertedToDomainDefaultCurrency('50'),
-                            'priceWithoutVat' => $this->getPriceWithVatConvertedToDomainDefaultCurrency('50.00'),
-                            'vatAmount' => '0.00',
-                        ],
+                        'price' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('50', $vatZero),
                         'images' => [
                             ['url' => $this->getFullUrlPath('/content-test/images/payment/default/55.jpg')],
                             ['url' => $this->getFullUrlPath('/content-test/images/payment/original/55.jpg')],
@@ -82,11 +78,7 @@ class PaymentsTest extends GraphQlTestCase
                         'description' => null,
                         'instruction' => null,
                         'position' => 2,
-                        'price' => [
-                            'priceWithVat' => '0.00',
-                            'priceWithoutVat' => '0.00',
-                            'vatAmount' => '0.00',
-                        ],
+                        'price' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('0', $vatZero),
                         'images' => [
                             ['url' => $this->getFullUrlPath('/content-test/images/payment/default/54.jpg')],
                             ['url' => $this->getFullUrlPath('/content-test/images/payment/original/54.jpg')],

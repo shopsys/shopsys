@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\FrontendApiBundle\Functional\Transport;
 
+use App\DataFixtures\Demo\VatDataFixture;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class TransportsTest extends GraphQlTestCase
@@ -32,6 +33,12 @@ class TransportsTest extends GraphQlTestCase
             }
         ';
 
+        $domainId = $this->domain->getId();
+        /** @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vatHigh */
+        $vatHigh = $this->getReferenceForDomain(VatDataFixture::VAT_HIGH, $domainId);
+        /** @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vatZero */
+        $vatZero = $this->getReferenceForDomain(VatDataFixture::VAT_ZERO, $domainId);
+
         $arrayExpected = [
             'data' => [
                 'transports' => [
@@ -40,11 +47,7 @@ class TransportsTest extends GraphQlTestCase
                         'description' => null,
                         'instruction' => null,
                         'position' => 0,
-                        'price' => [
-                            'priceWithVat' => $this->getPriceWithVatConvertedToDomainDefaultCurrency('121'),
-                            'priceWithoutVat' => $this->getPriceWithVatConvertedToDomainDefaultCurrency('100.00'),
-                            'vatAmount' => $this->getPriceWithVatConvertedToDomainDefaultCurrency('21.00'),
-                        ],
+                        'price' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('100', $vatHigh),
                         'images' => [
                             ['url' => $this->getFullUrlPath('/content-test/images/transport/default/56.jpg')],
                             ['url' => $this->getFullUrlPath('/content-test/images/transport/original/56.jpg')],
@@ -58,11 +61,7 @@ class TransportsTest extends GraphQlTestCase
                         'description' => null,
                         'instruction' => null,
                         'position' => 1,
-                        'price' => [
-                            'priceWithVat' => $this->getPriceWithVatConvertedToDomainDefaultCurrency('242'),
-                            'priceWithoutVat' => $this->getPriceWithVatConvertedToDomainDefaultCurrency('200.00'),
-                            'vatAmount' => $this->getPriceWithVatConvertedToDomainDefaultCurrency('42.00'),
-                        ],
+                        'price' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('200', $vatHigh),
                         'images' => [
                             ['url' => $this->getFullUrlPath('/content-test/images/transport/default/57.jpg')],
                             ['url' => $this->getFullUrlPath('/content-test/images/transport/original/57.jpg')],
@@ -81,11 +80,7 @@ class TransportsTest extends GraphQlTestCase
                         ),
                         'instruction' => null,
                         'position' => 2,
-                        'price' => [
-                            'priceWithVat' => '0.00',
-                            'priceWithoutVat' => '0.00',
-                            'vatAmount' => '0.00',
-                        ],
+                        'price' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('0', $vatZero),
                         'images' => [
                             ['url' => $this->getFullUrlPath('/content-test/images/transport/default/58.jpg')],
                             ['url' => $this->getFullUrlPath('/content-test/images/transport/original/58.jpg')],

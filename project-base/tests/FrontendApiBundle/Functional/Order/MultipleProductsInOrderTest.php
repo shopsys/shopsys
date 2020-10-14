@@ -4,13 +4,17 @@ declare(strict_types=1);
 
 namespace Tests\FrontendApiBundle\Functional\Order;
 
+use App\DataFixtures\Demo\PaymentDataFixture;
 use App\DataFixtures\Demo\ProductDataFixture;
+use App\DataFixtures\Demo\TransportDataFixture;
+use App\DataFixtures\Demo\VatDataFixture;
 
 class MultipleProductsInOrderTest extends AbstractOrderTestCase
 {
     public function testCreateFullOrder(): void
     {
         $firstDomainLocale = $this->getLocaleForFirstDomain();
+        $expectedOrderItems = $this->getExpectedOrderItems();
         $expected = [
             'data' => [
                 'CreateOrder' => [
@@ -21,12 +25,10 @@ class MultipleProductsInOrderTest extends AbstractOrderTestCase
                         'name' => t('Cash on delivery', [], 'dataFixtures', $firstDomainLocale),
                     ],
                     'status' => t('New [adjective]', [], 'dataFixtures', $firstDomainLocale),
-                    'totalPrice' => [
-                        'priceWithVat' => '4964.44',
-                        'priceWithoutVat' => '4103.19',
-                        'vatAmount' => '861.25',
-                    ],
-                    'items' => $this->getExpectedOrderItems(),
+                    'totalPrice' => AbstractOrderTestCase::getSerializedOrderTotalPriceByExpectedOrderItems(
+                        $expectedOrderItems
+                    ),
+                    'items' => $expectedOrderItems,
                     'firstName' => 'firstName',
                     'lastName' => 'lastName',
                     'email' => 'user@example.com',
@@ -52,28 +54,7 @@ class MultipleProductsInOrderTest extends AbstractOrderTestCase
             ],
         ];
 
-        $orderMutation = $this->getOrderMutation(__DIR__ . '/Resources/multipleProductsInOrder.graphql');
-
-        $this->assertQueryWithExpectedArray($orderMutation, $expected);
-    }
-
-    /**
-     * @param string $filePath
-     * @return string
-     */
-    protected function getOrderMutation(string $filePath): string
-    {
-        $mutation = parent::getOrderMutation($filePath);
-
-        $replaces = [
-            '___UUID_PRODUCT_2___' => $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '72')->getUuid(),
-            '___UUID_PRODUCT_3___' => $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '80')->getUuid(),
-            '___UUID_PRODUCT_4___' => $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '81')->getUuid(),
-            '___UUID_PRODUCT_5___' => $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '77')->getUuid(),
-            '___UUID_PRODUCT_6___' => $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '2')->getUuid(),
-        ];
-
-        return strtr($mutation, $replaces);
+        $this->assertQueryWithExpectedArray($this->getMutation(), $expected);
     }
 
     /**
@@ -82,135 +63,238 @@ class MultipleProductsInOrderTest extends AbstractOrderTestCase
     protected function getExpectedOrderItems(): array
     {
         $firstDomainLocale = $this->getLocaleForFirstDomain();
+        $domainId = $this->domain->getId();
+        /** @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vatHigh */
+        $vatHigh = $this->getReferenceForDomain(VatDataFixture::VAT_HIGH, $domainId);
+        /** @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vatZero */
+        $vatZero = $this->getReferenceForDomain(VatDataFixture::VAT_ZERO, $domainId);
+
         return [
             0 => [
                 'name' => t('22" Sencor SLE 22F46DM4 HELLO KITTY', [], 'dataFixtures', $firstDomainLocale),
-                'unitPrice' => [
-                    'priceWithVat' => '139.96',
-                    'priceWithoutVat' => '115.67',
-                    'vatAmount' => '24.29',
-                ],
-                'totalPrice' => [
-                    'priceWithVat' => '1399.60',
-                    'priceWithoutVat' => '1156.69',
-                    'vatAmount' => '242.91',
-                ],
+                'unitPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('2891.70', $vatHigh),
+                'totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('2891.70', $vatHigh, 10),
                 'quantity' => 10,
                 'vatRate' => '21.0000',
                 'unit' => t('pcs', [], 'dataFixtures', $firstDomainLocale),
             ],
             1 => [
                 'name' => t('100 Czech crowns ticket', [], 'dataFixtures', $firstDomainLocale),
-                'unitPrice' => [
-                    'priceWithVat' => '4.84',
-                    'priceWithoutVat' => '4.00',
-                    'vatAmount' => '0.84',
-                ],
-                'totalPrice' => [
-                    'priceWithVat' => '484.00',
-                    'priceWithoutVat' => '400.00',
-                    'vatAmount' => '84.00',
-                ],
+                'unitPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('100', $vatHigh),
+                'totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('100', $vatHigh, 100),
                 'quantity' => 100,
                 'vatRate' => '21.0000',
                 'unit' => t('pcs', [], 'dataFixtures', $firstDomainLocale),
             ],
             2 => [
                 'name' => t('27” Hyundai T27D590EY', [], 'dataFixtures', $firstDomainLocale),
-                'unitPrice' => [
-                    'priceWithVat' => '300.03',
-                    'priceWithoutVat' => '247.96',
-                    'vatAmount' => '52.07',
-                ],
-                'totalPrice' => [
-                    'priceWithVat' => '300.03',
-                    'priceWithoutVat' => '247.96',
-                    'vatAmount' => '52.07',
-                ],
+                'unitPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('6199', $vatHigh),
+                'totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('6199', $vatHigh),
                 'quantity' => 1,
                 'vatRate' => '21.0000',
                 'unit' => t('pcs', [], 'dataFixtures', $firstDomainLocale),
             ],
             3 => [
                 'name' => t('27” Hyundai T27D590EZ', [], 'dataFixtures', $firstDomainLocale),
-                'unitPrice' => [
-                    'priceWithVat' => '309.71',
-                    'priceWithoutVat' => '255.96',
-                    'vatAmount' => '53.75',
-                ],
-                'totalPrice' => [
-                    'priceWithVat' => '619.42',
-                    'priceWithoutVat' => '511.92',
-                    'vatAmount' => '107.50',
-                ],
+                'unitPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('6399', $vatHigh),
+                'totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('6399', $vatHigh, 2),
                 'quantity' => 2,
                 'vatRate' => '21.0000',
                 'unit' => t('pcs', [], 'dataFixtures', $firstDomainLocale),
             ],
             4 => [
                 'name' => t('30” Hyundai 22MT44D', [], 'dataFixtures', $firstDomainLocale),
-                'unitPrice' => [
-                    'priceWithVat' => '193.55',
-                    'priceWithoutVat' => '159.96',
-                    'vatAmount' => '33.59',
-                ],
-                'totalPrice' => [
-                    'priceWithVat' => '967.75',
-                    'priceWithoutVat' => '799.79',
-                    'vatAmount' => '167.96',
-                ],
+                'unitPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('3999.00', $vatHigh),
+                'totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('3999.00', $vatHigh, 5),
                 'quantity' => 5,
                 'vatRate' => '21.0000',
                 'unit' => t('pcs', [], 'dataFixtures', $firstDomainLocale),
             ],
             5 => [
                 'name' => t('32" Philips 32PFL4308', [], 'dataFixtures', $firstDomainLocale),
-                'unitPrice' => [
-                    'priceWithVat' => '395.60',
-                    'priceWithoutVat' => '326.94',
-                    'vatAmount' => '68.66',
-                ],
-                'totalPrice' => [
-                    'priceWithVat' => '1186.80',
-                    'priceWithoutVat' => '980.83',
-                    'vatAmount' => '205.97',
-                ],
+                'unitPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('8173.55', $vatHigh),
+                'totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('8173.55', $vatHigh, 3),
                 'quantity' => 3,
                 'vatRate' => '21.0000',
                 'unit' => t('pcs', [], 'dataFixtures', $firstDomainLocale),
             ],
             6 => [
                 'name' => t('Cash on delivery', [], 'dataFixtures', $firstDomainLocale),
-                'unitPrice' => [
-                    'priceWithVat' => '2.00',
-                    'priceWithoutVat' => '2.00',
-                    'vatAmount' => '0.00',
-                ],
-                'totalPrice' => [
-                    'priceWithVat' => '2.00',
-                    'priceWithoutVat' => '2.00',
-                    'vatAmount' => '0.00',
-                ],
+                'unitPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('50', $vatZero),
+                'totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('50', $vatZero),
                 'quantity' => 1,
                 'vatRate' => '0.0000',
                 'unit' => null,
             ],
             7 => [
                 'name' => t('Czech post', [], 'dataFixtures', $firstDomainLocale),
-                'unitPrice' => [
-                    'priceWithVat' => '4.84',
-                    'priceWithoutVat' => '4.00',
-                    'vatAmount' => '0.84',
-                ],
-                'totalPrice' => [
-                    'priceWithVat' => '4.84',
-                    'priceWithoutVat' => '4.00',
-                    'vatAmount' => '0.84',
-                ],
+                'unitPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('100', $vatHigh),
+                'totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('100', $vatHigh),
                 'quantity' => 1,
                 'vatRate' => '21.0000',
                 'unit' => null,
             ],
         ];
+    }
+
+    /**
+     * @return string
+     */
+    private function getMutation(): string
+    {
+        $domainId = $this->domain->getId();
+        /** @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vatHigh */
+        $vatHigh = $this->getReferenceForDomain(VatDataFixture::VAT_HIGH, $domainId);
+        /** @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vatZero */
+        $vatZero = $this->getReferenceForDomain(VatDataFixture::VAT_ZERO, $domainId);
+
+        /** @var \Shopsys\FrameworkBundle\Model\Product\Product $product1 */
+        $product1 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1');
+        $product1UnitPrice = $this->getMutationPriceConvertedToDomainDefaultCurrency('2891.70', $vatHigh);
+
+        /** @var \Shopsys\FrameworkBundle\Model\Product\Product $product72 */
+        $product72 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '72');
+        $product72UnitPrice = $this->getMutationPriceConvertedToDomainDefaultCurrency('100', $vatHigh);
+
+        /** @var \Shopsys\FrameworkBundle\Model\Product\Product $product80 */
+        $product80 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '80');
+        $product80UnitPrice = $this->getMutationPriceConvertedToDomainDefaultCurrency('6199', $vatHigh);
+
+        /** @var \Shopsys\FrameworkBundle\Model\Product\Product $product81 */
+        $product81 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '81');
+        $product81UnitPrice = $this->getMutationPriceConvertedToDomainDefaultCurrency('3999', $vatHigh);
+
+        /** @var \Shopsys\FrameworkBundle\Model\Product\Product $product77 */
+        $product77 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '77');
+        $product77UnitPrice = $this->getMutationPriceConvertedToDomainDefaultCurrency('6399', $vatHigh);
+
+        /** @var \Shopsys\FrameworkBundle\Model\Product\Product $product2 */
+        $product2 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '2');
+        $product2UnitPrice = $this->getMutationPriceConvertedToDomainDefaultCurrency('8173.55', $vatHigh);
+
+        /** @var \Shopsys\FrameworkBundle\Model\Payment\Payment $paymentCashOnDelivery */
+        $paymentCashOnDelivery = $this->getReference(PaymentDataFixture::PAYMENT_CASH_ON_DELIVERY);
+        $paymentPrice = $this->getMutationPriceConvertedToDomainDefaultCurrency('50', $vatZero);
+
+        /** @var \Shopsys\FrameworkBundle\Model\Transport\Transport $transportCzechPost */
+        $transportCzechPost = $this->getReference(TransportDataFixture::TRANSPORT_CZECH_POST);
+        $transportPrice = $this->getMutationPriceConvertedToDomainDefaultCurrency('100', $vatHigh);
+
+        return 'mutation {
+                    CreateOrder(
+                        input: {
+                            firstName: "firstName"
+                            lastName: "lastName"
+                            email: "user@example.com"
+                            telephone: "+53 123456789"
+                            onCompanyBehalf: true
+                            companyName: "Airlocks s.r.o."
+                            companyNumber: "1234"
+                            companyTaxNumber: "EU4321"
+                            street: "123 Fake Street"
+                            city: "Springfield"
+                            postcode: "12345"
+                            country: "CZ"
+                            note:"Thank You"
+                            payment: {
+                                uuid: "' . $paymentCashOnDelivery->getUuid() . '"
+                                price: ' . $paymentPrice . '
+                            }
+                            transport: {
+                                uuid: "' . $transportCzechPost->getUuid() . '"
+                                price: ' . $transportPrice . '
+                            }
+                            differentDeliveryAddress: true
+                            deliveryFirstName: "deliveryFirstName"
+                            deliveryLastName: "deliveryLastName"
+                            deliveryStreet: "deliveryStreet"
+                            deliveryCity: "deliveryCity"
+                            deliveryCountry: "SK"
+                            deliveryPostcode: "13453"
+                            products: [
+                                {
+                                    uuid: "' . $product1->getUuid() . '",
+                                    unitPrice: ' . $product1UnitPrice . ',
+                                    quantity: 10
+                                },
+                                {
+                                    uuid: "' . $product72->getUuid() . '",
+                                    unitPrice: ' . $product72UnitPrice . ',
+                                    quantity: 100
+                                },
+                                {
+                                    uuid: "' . $product80->getUuid() . '",
+                                    unitPrice: ' . $product80UnitPrice . ',
+                                    quantity: 1
+                                },
+                                {
+                                    uuid: "' . $product81->getUuid() . '",
+                                    unitPrice: ' . $product77UnitPrice . ',
+                                    quantity: 2
+                                },
+                                {
+                                    uuid: "' . $product77->getUuid() . '",
+                                    unitPrice: ' . $product81UnitPrice . ',
+                                    quantity: 5
+                                },
+                                {
+                                    uuid: "' . $product2->getUuid() . '",
+                                    unitPrice: ' . $product2UnitPrice . ',
+                                    quantity: 3
+                                }
+                            ]
+                        }
+                    ) {
+                        transport {
+                            name
+                        }
+                        payment {
+                            name
+                        }
+                        status
+                        totalPrice {
+                            priceWithVat
+                            priceWithoutVat
+                            vatAmount
+                        }
+                        items {
+                            name
+                            unitPrice {
+                                priceWithVat
+                                priceWithoutVat
+                                vatAmount
+                            }
+                            totalPrice {
+                                priceWithVat
+                                priceWithoutVat
+                                vatAmount
+                            }
+                            quantity
+                            vatRate
+                            unit
+                        }
+                        firstName
+                        lastName
+                        email
+                        telephone
+                        companyName
+                        companyNumber
+                        companyTaxNumber
+                        street
+                        city
+                        postcode
+                        country
+                        differentDeliveryAddress
+                        deliveryFirstName
+                        deliveryLastName
+                        deliveryCompanyName
+                        deliveryTelephone
+                        deliveryStreet
+                        deliveryCity
+                        deliveryPostcode
+                        deliveryCountry
+                        note
+                    }
+                }';
     }
 }

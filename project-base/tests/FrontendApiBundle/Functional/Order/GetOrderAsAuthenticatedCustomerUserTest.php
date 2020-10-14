@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\FrontendApiBundle\Functional\Order;
 
 use Shopsys\FrameworkBundle\Model\Order\Order;
+use Shopsys\FrontendApiBundle\Component\Price\MoneyFormatterHelper;
 use Tests\FrontendApiBundle\Test\GraphQlWithLoginTestCase;
 
 class GetOrderAsAuthenticatedCustomerUserTest extends GraphQlWithLoginTestCase
@@ -61,7 +62,9 @@ class GetOrderAsAuthenticatedCustomerUserTest extends GraphQlWithLoginTestCase
                 $order->getUuid(),
                 [
                     'status' => $order->getStatus()->getName(),
-                    'totalPriceWithVat' => $order->getTotalPriceWithVat()->getAmount(),
+                    'totalPriceWithVat' => MoneyFormatterHelper::formatWithMaxFractionDigits(
+                        $order->getTotalPriceWithVat()
+                    ),
                 ],
             ];
         }
