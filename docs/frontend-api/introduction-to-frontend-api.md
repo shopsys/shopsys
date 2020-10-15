@@ -61,6 +61,27 @@ And you get back following JSON containing names of all root categories on the d
 Frontend API respects the domain you call so in case of the standard two domain setup with default data fixtures,
 you can get data for the first domain with the request made to `http://127.0.0.1:8000/graphql/` while requesting `http://127.0.0.2:8000/graphql/` returns data for the second domain.
 
+###  Requesting API from another domain (handling CORS)
+[overblog/GraphQLBundle](https://github.com/overblog/GraphQLBundle) comes out of the box with a generic and simple [CORS (Cross-Origin Resource Sharing)](http://enable-cors.org/) handler.
+The handler is disabled by default, so your API is better protected from attacks by malicious scripts.
+
+You can enable the simple CORS handler in `config/packages/shopsys_frontend_api.yaml` file:
+
+``` diff
+    overblog_graphql:
++       security:
++           handle_cors: true
+        definitions:
+            schema:
+            # ...
+```
+
+You can read more in [OverblogGraphQLBundle documentation](https://github.com/overblog/GraphQLBundle/blob/v0.13.4/docs/security/handle-cors.md)
+
+!!! note
+    Default CORS handler provides only basic configuration, for example resources cannot be shared only with the specific domain.  
+    You can gain more flexibility with [NelmioCorsBundle](https://github.com/nelmio/NelmioCorsBundle).
+
 ### Debug your queries
 Frontend API package also integrates graphical interactive in-browser GraphQL IDE [GraphiQL](https://github.com/graphql/graphiql/tree/master/packages/graphiql#readme).
 With it, you can debug your query easily and also browse the endpoint documentation for available objects, fields and their meaning.
