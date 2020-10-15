@@ -322,7 +322,7 @@ class ProductController extends FrontBaseController
         $productCountExposedInStores = $this->productAvailabilityFacade->getProductCountExposedInStocksInformationByDomainId($productVariant, $this->domain->getId());
         $productStocksAvailabilitiesInformation = $this->productAvailabilityFacade->getProductStocksAvailabilitiesInformationByDomainIdIndexedByStockId($productVariant, $this->domain->getId());
 
-        $this->gtmFacade->onProductDetailPage($product);
+        $this->gtmFacade->onProductDetailPage($productVariant);
 
         //parts build from main product
         /** @var \App\Model\Product\Listed\ListedProductView[] $accessories */
