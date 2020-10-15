@@ -18,6 +18,9 @@ Typical upgrade sequence should be:
 - allow overriding parameters with ENV variables ([#2055](https://github.com/shopsys/shopsys/pull/2055)))
      - remove `config/parameters.yaml` and `config/parameters_test.yaml` then run `composer install`
 
+- added Product SEO informations to elasticsearch ([#2074](https://github.com/shopsys/shopsys/pull/2074))
+    - run `php phing elasticsearch-index-migrate elasticsearch-export` to apply changes
+
 ## [From v9.0.3 to v9.0.4-dev]
 
 ## [From v9.0.2 to v9.0.3]

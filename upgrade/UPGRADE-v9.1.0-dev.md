@@ -148,3 +148,7 @@ There you can find links to upgrade notes for other versions too.
 - made parameters overridable by ENV variables ([#2055](https://github.com/shopsys/shopsys/pull/2055))
     - how to configure your application with ENV variables can be found [in our docs](https://docs.shopsys.com/en/latest/installation/application-configuration/)
     - see #project-base-diff to update your project
+
+- added Product SEO informations to elasticsearch ([#2074](https://github.com/shopsys/shopsys/pull/2074))
+    - see #project-base-diff to update your project
+    - run `php phing elasticsearch-index-migrate elasticsearch-export` to apply changes

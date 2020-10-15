@@ -241,6 +241,15 @@
       },
       "main_variant_id": {
         "type": "integer"
+      },
+      "seo_h1": {
+        "type": "text"
+      },
+      "seo_title": {
+        "type": "text"
+      },
+      "seo_meta_description": {
+        "type": "text"
       }
     }
   }

@@ -220,6 +220,9 @@ class ProductExportRepository
             'stock_quantity' => $product->getStockQuantity(),
             'variants' => $variantIds,
             'main_variant_id' => $product->isVariant() ? $product->getMainVariant()->getId() : null,
+            'seo_h1' => $product->getSeoH1($domainId),
+            'seo_title' => $product->getSeoTitle($domainId),
+            'seo_meta_description' => $product->getSeoMetaDescription($domainId),
         ];
     }
 
