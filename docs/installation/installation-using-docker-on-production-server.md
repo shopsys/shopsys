@@ -275,7 +275,7 @@ echo $'domains_urls:
 ' >  config/domains_urls.yaml
 ```
 
-Then we check whether `mailer_master_email_address` property in [`parameters.yaml.dist`](https://github.com/shopsys/shopsys/blob/master/project-base/config/parameters.yaml.dist) is set correctly.
+Then we check whether ENV variable `MAILER_MASTER_EMAIL_ADDRESS` in [`.env` or `.env.local`](https://github.com/shopsys/shopsys/blob/master/project-base/.env) is set correctly.
 
 After the project is setup correctly, we launch the build of php-fpm container by docker build command that will build image with composer, npm packages and created assets.
 

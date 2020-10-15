@@ -16,9 +16,6 @@ cp project-base/config/parameters.yaml.dist project-base/config/parameters.yaml
 yq write --inplace project-base/config/domains_urls.yaml domains_urls[0].url http://${FIRST_DOMAIN_HOSTNAME}:${NGINX_INGRESS_CONTROLLER_HOST_PORT}
 yq write --inplace project-base/config/domains_urls.yaml domains_urls[1].url http://${SECOND_DOMAIN_HOSTNAME}:${NGINX_INGRESS_CONTROLLER_HOST_PORT}
 
-# Change "overwrite_domain_url" parameter for Selenium tests as containers "webserver" and "php-fpm" are bundled together in a pod "webserver-php-fpm"
-yq write --inplace project-base/config/parameters_test.yaml parameters.overwrite_domain_url http://webserver-php-fpm:8080
-
 # Pull or build Docker images for the current commit
 DOCKER_IMAGE_TAG=ci-commit-${GIT_COMMIT}
 DOCKER_ELASTIC_IMAGE_TAG=ci-elasticsearch-7
@@ -55,6 +52,8 @@ DOCKER_ELASTIC_IMAGE=${DOCKER_USERNAME}/elasticsearch:${DOCKER_ELASTIC_IMAGE_TAG
 PATH_CONFIG_DIRECTORY='/var/www/html/project-base/config'
 GOOGLE_CLOUD_STORAGE_BUCKET_NAME=''
 GOOGLE_CLOUD_PROJECT_ID=''
+# Change "OVERWRITE_DOMAIN_URL" parameter for Selenium tests as containers "webserver" and "php-fpm" are bundled together in a pod "webserver-php-fpm"
+OVERWRITE_DOMAIN_URL='http://webserver-php-fpm:8080'
 
 FILES=$( find project-base/kubernetes -type f )
 VARS=(
@@ -65,6 +64,7 @@ VARS=(
     PATH_CONFIG_DIRECTORY
     GOOGLE_CLOUD_STORAGE_BUCKET_NAME
     GOOGLE_CLOUD_PROJECT_ID
+    OVERWRITE_DOMAIN_URL
 )
 
 for FILE in $FILES; do

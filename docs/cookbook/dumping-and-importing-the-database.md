@@ -30,7 +30,7 @@ Then you can import the dump:
 psql --quiet --username=database_user --host=database_host target_database_name < dump.sql
 ```
 
-Replace `database_user`, `database_host` and `target_database_name` with the correct values (from your `config/parameters.yaml`).
+Replace `database_user`, `database_host` and `target_database_name` with the correct values (from your `.env.local`).
 The command will prompt you for the user's password.
 
 ## Importing database into a new database
@@ -49,5 +49,5 @@ Then you can import the dump:
 psql --quiet --username=database_user --host=database_host target_database_name < dump.sql
 ```
 
-Replace `database_user`, `database_host` and `target_database_name` with the correct values (from your `config/parameters.yaml`).
+Replace `database_user`, `database_host` and `target_database_name` with the correct values (from your `.env.local`).
 The command will prompt you for the user's password.

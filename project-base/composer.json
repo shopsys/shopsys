@@ -49,7 +49,6 @@
         "fzaninotto/faker": "^1.7.1",
         "helios-ag/fm-elfinder-bundle": "^10.0.4",
         "heureka/overeno-zakazniky": "^2.0.6",
-        "incenteev/composer-parameter-handler": "^2.1.3",
         "intervention/image": "^2.3.14",
         "jms/serializer-bundle": "^2.4",
         "jms/translation-bundle": "1.4.4",
@@ -126,12 +125,14 @@
     },
     "scripts": {
         "post-install-cmd": [
-            "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
+            "cp -n config/parameters.yaml.dist config/parameters.yaml || echo '[skiped] parameters.yaml exists'",
+            "cp -n config/parameters_test.yaml.dist config/parameters_test.yaml || echo '[skiped] parameters_test.yaml exists'",
             "App\\Environment::checkEnvironment",
             "@auto-scripts"
         ],
         "post-update-cmd": [
-            "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
+            "cp -n config/parameters.yaml.dist config/parameters.yaml || echo '[skiped] parameters.yaml exists'",
+            "cp -n config/parameters_test.yaml.dist config/parameters_test.yaml || echo '[skiped] parameters_test.yaml exists'",
             "App\\Environment::checkEnvironment",
             "@auto-scripts"
         ],
@@ -162,16 +163,6 @@
         "symfony": {
             "allow-contrib": true,
             "require": "^4.4"
-        },
-        "incenteev-parameters": [
-            {
-                "file": "config/parameters.yaml",
-                "keep-outdated": true
-            },
-            {
-                "file": "config/parameters_test.yaml",
-                "keep-outdated": true
-            }
-        ]
+        }
     }
 }

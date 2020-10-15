@@ -10,10 +10,10 @@ docker exec -it shopsys-framework-php-fpm bash
 
 !!! note
     For `selenium-server` to be able to connect to you `webserver` container and access your application, all domains should have URL set to `http://webserver:8000`.
-    This is done via parameter `%overwrite_domain_url%` defined in `config/parameters_test.yaml`.
+    This is done via ENV `OVERWRITE_DOMAIN_URL` defined in `.env.test` or `.env.test.local`.
     Everything should be configured for you by default but it is important to keep the domain URL overwriting in mind when dealing with acceptance tests.
 
-If you are logged into your `php-fpm` container and have the `%overwrite_domain_url%` parameter properly set,
+If you are logged into your `php-fpm` container and have the `OVERWRITE_DOMAIN_URL` ENV properly set,
 you can run acceptance tests:
 ```sh
 php phing tests-acceptance
@@ -55,10 +55,10 @@ For running acceptance tests you need to install [Google Chrome browser](https:/
 You must choose compatible versions of Google Chrome and ChromeDriver.
 As Chrome browser has auto-update enabled by default this may require you to update ChromeDriver from time to time.
 
-When installing Shopsys Framework natively, it is important to update parameters in `config/parameters_test.yaml`:
+When installing Shopsys Framework natively, it is important to update parameters in `.env.test.local`:
 
-* `overwrite_domain_url: ~` (disables domain URL overwriting in `TEST` environment)
-* `selenium_server_host: 127.0.0.1`
+* `OVERWRITE_DOMAIN_URL=` (disables domain URL overwriting in `TEST` environment)
+* `SELENIUM_SERVER_HOST=127.0.0.1`
 
 ### Installing Google Chrome browser
 Download and install Google Chrome browser from <https://www.google.com/chrome/browser/desktop/>

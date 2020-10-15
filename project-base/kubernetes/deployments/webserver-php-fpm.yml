@@ -76,6 +76,8 @@ spec:
                             value: "{{GOOGLE_CLOUD_STORAGE_BUCKET_NAME}}"
                         -   name: GOOGLE_CLOUD_PROJECT_ID
                             value: "{{GOOGLE_CLOUD_PROJECT_ID}}"
+                        -   name: OVERWRITE_DOMAIN_URL
+                            value: "{{OVERWRITE_DOMAIN_URL}}"
             containers:
                 -   image: "{{DOCKER_PHP_FPM_IMAGE}}"
                     name: php-fpm
@@ -96,6 +98,8 @@ spec:
                             value: "{{GOOGLE_CLOUD_STORAGE_BUCKET_NAME}}"
                         -   name: GOOGLE_CLOUD_PROJECT_ID
                             value: "{{GOOGLE_CLOUD_PROJECT_ID}}"
+                        -   name: OVERWRITE_DOMAIN_URL
+                            value: "{{OVERWRITE_DOMAIN_URL}}"
                 -   image: nginx:1.13.10-alpine
                     name: webserver
                     ports:
