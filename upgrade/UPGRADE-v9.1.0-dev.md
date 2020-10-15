@@ -152,3 +152,6 @@ There you can find links to upgrade notes for other versions too.
 - added Product SEO informations to elasticsearch ([#2074](https://github.com/shopsys/shopsys/pull/2074))
     - see #project-base-diff to update your project
     - run `php phing elasticsearch-index-migrate elasticsearch-export` to apply changes
+
+- added SEO informations to frontend API ([#2067](https://github.com/shopsys/shopsys/pull/2067))
+    - see #project-base-diff to update your project

@@ -58,6 +58,9 @@ class ProductTest extends GraphQlTestCase
                 product(uuid: "' . $this->product->getUuid() . '") {
                     name,
                     shortDescription,
+                    seoH1,
+                    seoTitle,
+                    seoMetaDescription
                     link,
                     unit {
                         name
@@ -118,6 +121,24 @@ class ProductTest extends GraphQlTestCase
                 'product' => [
                     'name' => t('22" Sencor SLE 22F46DM4 HELLO KITTY', [], 'dataFixtures', $firstDomainLocale),
                     'shortDescription' => $shortDescription,
+                    'seoH1' => t(
+                        'Hello Kitty Television',
+                        [],
+                        'dataFixtures',
+                        $firstDomainLocale
+                    ),
+                    'seoTitle' => t(
+                        'Hello Kitty TV',
+                        [],
+                        'dataFixtures',
+                        $firstDomainLocale
+                    ),
+                    'seoMetaDescription' => t(
+                        'Hello Kitty TV, LED, 55 cm diagonal, 1920x1080 Full HD.',
+                        [],
+                        'dataFixtures',
+                        $firstDomainLocale
+                    ),
                     'link' => $this->getLocalizedPathOnFirstDomainByRouteName('front_product_detail', ['id' => 1]),
                     'unit' => [
                         'name' => t('pcs', [], 'dataFixtures', $firstDomainLocale),

@@ -322,6 +322,18 @@ class ProductResolverMap extends ResolverMap
 
                 return $this->parameterWithValuesFactory->createMultipleForProduct($product);
             },
+            'seoH1' => function ($data) {
+                return $data instanceof Product ? $data->getSeoH1($this->domain->getId()) : $data['seo_h1'];
+            },
+            'seoTitle' => function ($data) {
+                return $data instanceof Product ? $data->getSeoTitle($this->domain->getId()) : $data['seo_title'];
+            },
+            'seoMetaDescription' => function ($data) {
+                if ($data instanceof Product) {
+                    return $data->getSeoMetaDescription($this->domain->getId());
+                }
+                return $data['seo_meta_description'];
+            },
         ];
     }
 

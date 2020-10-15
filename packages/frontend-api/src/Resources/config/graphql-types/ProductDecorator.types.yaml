@@ -58,3 +58,12 @@ ProductDecorator:
                 type: "[Product]"
             parameters:
                 type: "[Parameter]!"
+            seoH1:
+                type: "String"
+                description: "Seo first level heading of product"
+            seoTitle:
+                type: "String"
+                description: "Seo title of product"
+            seoMetaDescription:
+                type: "String"
+                description: "Seo meta description of product"

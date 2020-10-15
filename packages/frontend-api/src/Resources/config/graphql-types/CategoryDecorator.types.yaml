@@ -31,3 +31,12 @@ CategoryDecorator:
                 description: "Paginated products of category"
                 argsBuilder: "Relay::Connection"
                 resolve: '@=service("Shopsys\\FrontendApiBundle\\Model\\Resolver\\Products\\ProductsResolver").resolveByCategory(args, value)'
+            seoH1:
+                type: "String"
+                description: "Seo first level heading of category"
+            seoTitle:
+                type: "String"
+                description: "Seo title of category"
+            seoMetaDescription:
+                type: "String"
+                description: "Seo meta description of category"

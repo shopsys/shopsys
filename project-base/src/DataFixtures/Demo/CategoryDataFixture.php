@@ -80,6 +80,24 @@ class CategoryDataFixture extends AbstractReferenceFixture
                 'dataFixtures',
                 $locale
             );
+            $categoryData->seoH1s[$domainConfig->getId()] = t(
+                'Electronic devices',
+                [],
+                'dataFixtures',
+                $locale
+            );
+            $categoryData->seoTitles[$domainConfig->getId()] = t(
+                'Electronic stuff',
+                [],
+                'dataFixtures',
+                $locale
+            );
+            $categoryData->seoMetaDescriptions[$domainConfig->getId()] = t(
+                'All kind of electronic devices.',
+                [],
+                'dataFixtures',
+                $locale
+            );
         }
         $categoryData->parent = $rootCategory;
         $this->createCategory($categoryData, self::CATEGORY_ELECTRONICS);

@@ -25,6 +25,9 @@ Authorization header is not required.
                         uuid
                         name
                         shortDescription
+                        seoH1
+                        seoTitle
+                        seoMetaDescription
                         link
                         unit {
                             name
@@ -86,6 +89,9 @@ Authorization header is not required.
                             "uuid": "5a095ccf-1ea4-47c6-b773-16b94234c150",
                             "name": "100 Czech crowns ticket",
                             "shortDescription": "Coupon valued to 100 Czech crowns. You can cash it at any exchange office",
+                            "seoH1": "Ticket for 100 Czech crowns",
+                            "seoTitle": "Ticket for 100 CZK",
+                            "seoMetaDescription": "Coupon valued to 100 Czech crowns.",
                             "link": "http://127.0.0.1:8000/100-czech-crowns-ticket/",
                             "unit": {
                                 "name": "pcs"
@@ -124,6 +130,9 @@ Authorization header is not required.
                             "uuid": "04a561ae-d08c-47f9-aed0-e52c469038aa",
                             "name": "22\" Sencor SLE 22F46DM4 HELLO KITTY",
                             "shortDescription": "Television LED, 55 cm diagonal, 1920x1080 Full HD, DVB-T MPEG4 tuner with USB recording and playback",
+                            "seoH1": "Hello Kitty Television",
+                            "seoTitle": "Hello Kitty TV",
+                            "seoMetaDescription": "Hello Kitty TV, LED, 55 cm diagonal, 1920x1080 Full HD.",
                             "link": "http://127.0.0.1:8000/22-sencor-sle-22f46dm4-hello-kitty/",
                             "unit": {
                                 "name": "pcs"
@@ -323,6 +332,9 @@ Returns product filtered using UUID
             uuid,
             name
             shortDescription
+            seoH1
+            seoTitle
+            seoMetaDescription
             link
             unit {
                 name
@@ -378,6 +390,9 @@ Returns product filtered using UUID
                 "uuid": "04a561ae-d08c-47f9-aed0-e52c469038aa",
                 "name": "22\" Sencor SLE 22F46DM4 HELLO KITTY",
                 "shortDescription": "Television LED, 55 cm diagonal, 1920x1080 Full HD, DVB-T MPEG4 tuner with USB recording and playback",
+                "seoH1": "Hello Kitty TV",
+                "seoTitle": "Hello Kitty television",
+                "seoMetaDescription": "Television LED, 55 cm diagonal, 1920x1080 Full HD.",
                 "link": "http://127.0.0.1:8000/22-sencor-sle-22f46dm4-hello-kitty/",
                 "unit": {
                     "name": "pcs"
@@ -654,6 +669,9 @@ Returns complete list of categories
         query: categories {
             uuid
             name
+            seoH1
+            seoTitle
+            seoMetaDescription
             children {
                 name
             }
@@ -686,6 +704,9 @@ Returns complete list of categories
                 {
                     "uuid": "f757f375-2828-489a-9b60-46c608f05b4f",
                     "name": "Electronics",
+                    "seoH1": "Electronic devices",
+                    "seoTitle": "Electronic stuff",
+                    "seoMetaDescription": "All kind of electronic devices.",
                     "children": [
                         {
                             "name": "TV, audio"
@@ -740,6 +761,9 @@ Returns complete list of categories
                 {
                     "uuid": "093460cd-7e31-4847-8ae7-a5d8a3241f47",
                     "name": "Books",
+                    "seoH1": null,
+                    "seoTitle": null,
+                    "seoMetaDescription": null,
                     "children": [],
                     "parent": {
                         "name": null
@@ -775,6 +799,9 @@ Returns complete list of categories
                 {
                     "uuid": "c011e65f-201e-459c-a1b5-47da5942a13d",
                     "name": "Toys",
+                    "seoH1": null,
+                    "seoTitle": null,
+                    "seoMetaDescription": null,
                     "children": [],
                     "parent": {
                         "name": null
@@ -804,6 +831,9 @@ Returns complete list of categories
                 {
                     "uuid": "3c8d9534-6432-4726-b068-bab0a47036cd",
                     "name": "Garden tools",
+                    "seoH1": null,
+                    "seoTitle": null,
+                    "seoMetaDescription": null,
                     "children": [],
                     "parent": {
                         "name": null
@@ -839,6 +869,9 @@ Returns complete list of categories
                 {
                     "uuid": "2c7c9a49-8626-4e4c-b081-e48d663417a1",
                     "name": "Food",
+                    "seoH1": null,
+                    "seoTitle": null,
+                    "seoMetaDescription": null,
                     "children": [],
                     "parent": {
                         "name": null
@@ -887,6 +920,9 @@ Returns category filtered using UUID
         query: category (uuid: "f757f375-2828-489a-9b60-46c608f05b4f") {
             uuid
             name
+            seoH1
+            seoTitle
+            seoMetaDescription
             children {
                 name
             }
@@ -918,6 +954,9 @@ Returns category filtered using UUID
             "query": {
                 "uuid": "f757f375-2828-489a-9b60-46c608f05b4f",
                 "name": "Electronics",
+                "seoH1": "Electronic devices",
+                "seoTitle": "Electronic stuff",
+                "seoMetaDescription": "All kind of electronic devices.",
                 "children": [
                     {
                         "name": "TV, audio"
