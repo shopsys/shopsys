@@ -78,7 +78,7 @@ You can enable the simple CORS handler in `config/packages/shopsys_frontend_api.
 
 You can read more in [OverblogGraphQLBundle documentation](https://github.com/overblog/GraphQLBundle/blob/v0.13.4/docs/security/handle-cors.md)
 
-!!! note
+!!! warning
     Default CORS handler provides only basic configuration, for example resources cannot be shared only with the specific domain.  
     You can gain more flexibility with [NelmioCorsBundle](https://github.com/nelmio/NelmioCorsBundle).
 
