@@ -263,7 +263,6 @@ class OrderFacade
     {
         $orderNumber = (string)$this->orderNumberSequenceRepository->getNextNumber();
         $orderUrlHash = $this->orderHashGeneratorRepository->getUniqueHash();
-        $toFlush = [];
 
         $this->setOrderDataAdministrator($orderData);
 
@@ -273,13 +272,11 @@ class OrderFacade
             $orderUrlHash,
             $customerUser
         );
-        $toFlush[] = $order;
 
         $this->fillOrderItems($order, $orderPreview);
 
         foreach ($order->getItems() as $orderItem) {
             $this->em->persist($orderItem);
-            $toFlush[] = $orderItem;
         }
 
         $order->setTotalPrice(
@@ -287,7 +284,7 @@ class OrderFacade
         );
 
         $this->em->persist($order);
-        $this->em->flush($toFlush);
+        $this->em->flush();
 
         return $order;
     }
