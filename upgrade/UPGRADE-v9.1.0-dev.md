@@ -173,3 +173,6 @@ There you can find links to upgrade notes for other versions too.
 
 - fixed standards on new release of FriendsOfPHP/PHP-CS-Fixer ([#2094](https://github.com/shopsys/shopsys/pull/2094))
     - run `php phing standards-fix` to apply fixes
+
+- allow placing scripts in administration after content([#2086](https://github.com/shopsys/shopsys/pull/2086))
+    - see #project-base-diff to update your project

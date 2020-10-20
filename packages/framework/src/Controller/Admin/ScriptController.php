@@ -137,6 +137,7 @@ class ScriptController extends AdminBaseController
         $grid->setTheme('@ShopsysFramework/Admin/Content/Script/listGrid.html.twig', [
             'PLACEMENT_ORDER_SENT_PAGE' => Script::PLACEMENT_ORDER_SENT_PAGE,
             'PLACEMENT_ALL_PAGES' => Script::PLACEMENT_ALL_PAGES,
+            'PLACEMENT_ALL_PAGES_AFTER_CONTENT' => Script::PLACEMENT_ALL_PAGES_AFTER_CONTENT,
         ]);
 
         return $this->render('@ShopsysFramework/Admin/Content/Script/list.html.twig', [

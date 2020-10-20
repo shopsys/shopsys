@@ -4,7 +4,6 @@
 {% block h1 %}{% endblock %}
 
 {% block main_content %}
-    <div class="in-message in-message--block">{{ 'Script will be placed at the beginning of the page, after tag <body>.'|trans }} </div>
 
     {{ form_start(form) }}
         {{ form_errors(form) }}
@@ -13,7 +12,7 @@
 
         {{ form_row(form.name, { label: 'Name'|trans}) }}
         {{ form_row(form.code, { label: 'Code'|trans, attr: {class: 'measuring-code-input'} }) }}
-        {{ form_row(form.placement, { label: 'Add only to order confirmation page'|trans}) }}
+        {{ form_row(form.placement, { label: 'Script placement'|trans}) }}
         {% embed '@ShopsysFramework/Admin/Inline/FixedBar/fixedBar.html.twig' %}
             {% block fixed_bar_content %}
                 <a href="{{ url('admin_script_list') }}" class="btn-link-style">{{ 'Back to overview'|trans }}</a>
@@ -21,7 +20,15 @@
             {% endblock %}
         {% endembed %}
     {{ form_end(form) }}
-    <div id="js-order-sent-page-variables">
+
+    <div class="wrap-bar js-script-placement-info js-script-placement-info-{{ constant('Shopsys\\FrameworkBundle\\Model\\Script\\Script::PLACEMENT_ALL_PAGES') }}">
+        <div class="in-message in-message--block in-message--warning">
+            {{ 'Script will be placed at the beginning of the page, after tag <body>.'|trans }}
+            {{ 'This may significantly impact site performance and should be avoided whenever possible.'|trans }}
+        </div>
+    </div>
+
+    <div class="js-script-placement-info js-script-placement-info-{{ constant('Shopsys\\FrameworkBundle\\Model\\Script\\Script::PLACEMENT_ORDER_SENT_PAGE') }} {# @deprecated #}js-order-sent-page-variables">
         <table class="table-main">
             <thead>
                 <tr>

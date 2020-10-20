@@ -154,6 +154,9 @@ msgstr "Reklama <strong>{{ name }}</strong> byla smazána"
 msgid "Advertising system"
 msgstr "Reklamní systém"
 
+msgid "After content (all pages)"
+msgstr "Po obsahu (na všech stránkách)"
+
 msgid "All domains"
 msgstr "Všechny domény"
 
@@ -267,6 +270,9 @@ msgstr "Jelikož dostupnost \"%name%\" je používána ještě u některých pro
 
 msgid "Because status \"%name%\" is used with other orders also, you have to choose a new status which will replace the existing one. Which status you want to set to these orders? When changing this, there won't be emails sent to customers."
 msgstr "Jelikož stav \"%name%\" je používán ještě u některých objednávek, musíte zvolit, jaký stav bude použit místo něj. Jaký stav chcete těmto objednávkám nastavit? Při této změně stavu nebude odeslán e-mail zákazníkům."
+
+msgid "Before content (all pages)"
+msgstr "Před obsahem (na všech stránkách)"
 
 msgid "Best-selling products of category <strong><a href=\"{{ url }}\">{{ name }}</a></strong> set."
 msgstr "Bylo nastaveno nejprodávanější zboží kategorie <strong><a href=\"{{ url }}\">{{ name }}</a></strong>"
@@ -1945,6 +1951,9 @@ msgstr "Skript <strong>{{ name }}</strong> byl smazán"
 msgid "Script name"
 msgstr "Název skriptu"
 
+msgid "Script placement"
+msgstr "Umístění skriptu"
+
 msgid "Script will be placed at the beginning of the page, after tag <body>."
 msgstr "Skript bude vložen na začátek stránky, za tag <body>."
 
@@ -2226,6 +2235,9 @@ msgstr "Tento e-mail byl odeslán z kontaktního formuláře umístěného pod p
 
 msgid "This item can be set in product detail of a specific variant"
 msgstr "Tuto položku můžete nastavit na kartě konkrétní varianty"
+
+msgid "This may significantly impact site performance and should be avoided whenever possible."
+msgstr "Toto nastavení může významně ovlivnit výkon webu a nemělo by se používat, pokud to není nutné."
 
 msgid "This status can't be deleted, because there is a functionality bounded to it - it identifies orders that were not successfully processed."
 msgstr "Tento stav není možné smazat, jelikož je na něj navázána funkčnost - určuje objednávky, které nebyly úspěšně vyřízeny."

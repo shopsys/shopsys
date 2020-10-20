@@ -22,12 +22,13 @@
 
     <body class="web">
 
-        {{ render(controller('App\\Controller\\Front\\ScriptController:embedAllPagesScriptsAction')) }}
+        {{ getAllPagesBeforeContentScripts()|raw }}
         {{ render(controller('App\\Controller\\Front\\ScriptController:embedAllPagesGoogleAnalyticsScriptAction')) }}
 
         {% block html_body %}{% endblock %}
 
         {% block javascripts_bottom %}{% endblock %}
+        {{ getAllPagesAfterContentScripts()|raw }}
 
         {{ js_validator_config() }}
         {{ init_js_validation() }}

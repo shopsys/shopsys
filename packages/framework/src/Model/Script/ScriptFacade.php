@@ -127,17 +127,19 @@ class ScriptFacade
 
     /**
      * @return string[]
+     * @deprecated use getAllPagesBeforeContentScriptCodes() instead
      */
     public function getAllPagesScriptCodes()
     {
-        $allPagesScripts = $this->scriptRepository->getScriptsByPlacement(Script::PLACEMENT_ALL_PAGES);
-        $scriptCodes = [];
+        @trigger_error(
+            sprintf(
+                'The "%s()" method is deprecated and will be removed in the next major. Use "getAllPagesBeforeContentScriptCodes()" instead.',
+                __METHOD__
+            ),
+            E_USER_DEPRECATED
+        );
 
-        foreach ($allPagesScripts as $script) {
-            $scriptCodes[] = $script->getCode();
-        }
-
-        return $scriptCodes;
+        return $this->getAllPagesBeforeContentScriptCodes();
     }
 
     /**
@@ -146,14 +148,14 @@ class ScriptFacade
      */
     public function getOrderSentPageScriptCodesWithReplacedVariables(Order $order)
     {
-        $scripts = $this->scriptRepository->getScriptsByPlacement(Script::PLACEMENT_ORDER_SENT_PAGE);
-        $scriptCodes = [];
+        $scriptCodes = $this->getScriptCodesByPlacement(Script::PLACEMENT_ORDER_SENT_PAGE);
 
-        foreach ($scripts as $script) {
-            $scriptCodes[] = $this->replaceVariables($script->getCode(), $order);
+        $scriptCodesWithReplacedVariables = [];
+        foreach ($scriptCodes as $scriptCode) {
+            $scriptCodesWithReplacedVariables[] = $this->replaceVariables($scriptCode, $order);
         }
 
-        return $scriptCodes;
+        return $scriptCodesWithReplacedVariables;
     }
 
     /**
@@ -196,5 +198,49 @@ class ScriptFacade
         ];
 
         return strtr($code, $variableReplacements);
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getAllPagesBeforeContentScriptCodes(): array
+    {
+        return $this->getScriptCodesByPlacement(Script::PLACEMENT_ALL_PAGES);
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getAllPagesAfterContentScriptCodes(): array
+    {
+        return $this->getScriptCodesByPlacement(Script::PLACEMENT_ALL_PAGES_AFTER_CONTENT);
+    }
+
+    /**
+     * @param string $placement
+     * @return string[]
+     */
+    protected function getScriptCodesByPlacement(string $placement): array
+    {
+        $scripts = $this->scriptRepository->getScriptsByPlacement($placement);
+        $scriptCodes = [];
+
+        foreach ($scripts as $script) {
+            $scriptCodes[] = $script->getCode();
+        }
+
+        return $scriptCodes;
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getAvailablePlacementChoices(): array
+    {
+        return [
+            t('After content (all pages)') => Script::PLACEMENT_ALL_PAGES_AFTER_CONTENT,
+            t('Order confirmation page') => Script::PLACEMENT_ORDER_SENT_PAGE,
+            t('Before content (all pages)') => Script::PLACEMENT_ALL_PAGES,
+        ];
     }
 }

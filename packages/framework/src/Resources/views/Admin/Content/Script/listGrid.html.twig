@@ -8,6 +8,8 @@
     {% if value == PLACEMENT_ORDER_SENT_PAGE %}
         {{ 'Order confirmation page'|trans }}
     {% elseif value == PLACEMENT_ALL_PAGES %}
-        {{ 'All pages'|trans }}
+        {{ 'Before content (all pages)'|trans }}
+    {% elseif value == PLACEMENT_ALL_PAGES_AFTER_CONTENT %}
+        {{ 'After content (all pages)'|trans }}
     {% endif %}
 {% endblock %}

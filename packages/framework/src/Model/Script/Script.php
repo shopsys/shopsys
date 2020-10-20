@@ -12,6 +12,7 @@ class Script
 {
     public const PLACEMENT_ORDER_SENT_PAGE = 'placementOrderSentPage';
     public const PLACEMENT_ALL_PAGES = 'placementAllPages';
+    public const PLACEMENT_ALL_PAGES_AFTER_CONTENT = 'placementAllPagesAfterContent';
     public const GOOGLE_ANALYTICS_TRACKING_ID_SETTING_NAME = 'googleAnalyticsTrackingId';
 
     /**

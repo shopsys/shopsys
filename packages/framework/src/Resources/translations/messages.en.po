@@ -154,6 +154,9 @@ msgstr ""
 msgid "Advertising system"
 msgstr ""
 
+msgid "After content (all pages)"
+msgstr ""
+
 msgid "All domains"
 msgstr ""
 
@@ -266,6 +269,9 @@ msgid "Because availability \"%name%\" is used with other products also, you hav
 msgstr ""
 
 msgid "Because status \"%name%\" is used with other orders also, you have to choose a new status which will replace the existing one. Which status you want to set to these orders? When changing this, there won't be emails sent to customers."
+msgstr ""
+
+msgid "Before content (all pages)"
 msgstr ""
 
 msgid "Best-selling products of category <strong><a href=\"{{ url }}\">{{ name }}</a></strong> set."
@@ -1945,6 +1951,9 @@ msgstr ""
 msgid "Script name"
 msgstr ""
 
+msgid "Script placement"
+msgstr ""
+
 msgid "Script will be placed at the beginning of the page, after tag <body>."
 msgstr ""
 
@@ -2225,6 +2234,9 @@ msgid "This email was sent from the contact form located below the panel of cate
 msgstr ""
 
 msgid "This item can be set in product detail of a specific variant"
+msgstr ""
+
+msgid "This may significantly impact site performance and should be avoided whenever possible."
 msgstr ""
 
 msgid "This status can't be deleted, because there is a functionality bounded to it - it identifies orders that were not successfully processed."
