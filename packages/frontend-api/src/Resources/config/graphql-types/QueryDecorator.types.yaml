@@ -121,3 +121,7 @@ QueryDecorator:
                 type: 'AdvertCode'
             AdvertImage:
                 type: 'AdvertImage'
+            advertPositions:
+                type: '[AdvertPosition!]!'
+                resolve: "@=resolver('advertPositions')"
+                description: "Returns list of advert positions."

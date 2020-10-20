@@ -1,0 +1,11 @@
+AdvertPositionDecorator:
+    type: object
+    decorator: true
+    config:
+        fields:
+            description:
+                type: "String!"
+                description: "Desription of advert position"
+            positionName:
+                type: "String!"
+                description: "Position of advert"
