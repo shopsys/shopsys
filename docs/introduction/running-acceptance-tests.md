@@ -31,8 +31,8 @@ In your `docker-compose.yml`, use `standalone-chrome-debug` image for `selenium-
 
 ```diff
   selenium-server:
--    image: selenium/standalone-chrome:3.11
-+    image: selenium/standalone-chrome-debug:3.11
+-    image: selenium/standalone-chrome:3.141.5
++    image: selenium/standalone-chrome-debug:3.141.5
      container_name: shopsys-framework-acceptance-tests
          ports:
              - "4400:4444"
