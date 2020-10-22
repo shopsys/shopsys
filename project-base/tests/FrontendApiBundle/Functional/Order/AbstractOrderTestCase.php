@@ -7,6 +7,9 @@ namespace Tests\FrontendApiBundle\Functional\Order;
 use App\DataFixtures\Demo\PaymentDataFixture;
 use App\DataFixtures\Demo\ProductDataFixture;
 use App\DataFixtures\Demo\TransportDataFixture;
+use App\DataFixtures\Demo\VatDataFixture;
+use Shopsys\FrameworkBundle\Component\Money\Money;
+use Shopsys\FrameworkBundle\Model\Pricing\Price;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class AbstractOrderTestCase extends GraphQlTestCase
@@ -17,51 +20,33 @@ class AbstractOrderTestCase extends GraphQlTestCase
     protected function getExpectedOrderItems(): array
     {
         $firstDomainLocale = $this->getLocaleForFirstDomain();
+        $domainId = $this->domain->getId();
+        /** @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vatHigh */
+        $vatHigh = $this->getReferenceForDomain(VatDataFixture::VAT_HIGH, $domainId);
+        /** @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vatZero */
+        $vatZero = $this->getReferenceForDomain(VatDataFixture::VAT_ZERO, $domainId);
+
         return [
             0 => [
                 'name' => t('22" Sencor SLE 22F46DM4 HELLO KITTY', [], 'dataFixtures', $firstDomainLocale),
-                'unitPrice' => [
-                    'priceWithVat' => '139.96',
-                    'priceWithoutVat' => '115.67',
-                    'vatAmount' => '24.29',
-                ],
-                'totalPrice' => [
-                    'priceWithVat' => '1399.60',
-                    'priceWithoutVat' => '1156.69',
-                    'vatAmount' => '242.91',
-                ],
+                'unitPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('2891.70', $vatHigh),
+                'totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('2891.70', $vatHigh, 10),
                 'quantity' => 10,
                 'vatRate' => '21.0000',
                 'unit' => t('pcs', [], 'dataFixtures', $firstDomainLocale),
             ],
             1 => [
                 'name' => t('Cash on delivery', [], 'dataFixtures', $firstDomainLocale),
-                'unitPrice' => [
-                    'priceWithVat' => '2.00',
-                    'priceWithoutVat' => '2.00',
-                    'vatAmount' => '0.00',
-                ],
-                'totalPrice' => [
-                    'priceWithVat' => '2.00',
-                    'priceWithoutVat' => '2.00',
-                    'vatAmount' => '0.00',
-                ],
+                'unitPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('50', $vatZero),
+                'totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('50', $vatZero),
                 'quantity' => 1,
                 'vatRate' => '0.0000',
                 'unit' => null,
             ],
             2 => [
                 'name' => t('Czech post', [], 'dataFixtures', $firstDomainLocale),
-                'unitPrice' => [
-                    'priceWithVat' => '4.84',
-                    'priceWithoutVat' => '4.00',
-                    'vatAmount' => '0.84',
-                ],
-                'totalPrice' => [
-                    'priceWithVat' => '4.84',
-                    'priceWithoutVat' => '4.00',
-                    'vatAmount' => '0.84',
-                ],
+                'unitPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('100', $vatHigh),
+                'totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('100', $vatHigh),
                 'quantity' => 1,
                 'vatRate' => '21.0000',
                 'unit' => null,
@@ -84,5 +69,41 @@ class AbstractOrderTestCase extends GraphQlTestCase
         ];
 
         return strtr($mutation, $replaces);
+    }
+
+    /**
+     * @param array $expectedOrderItems
+     * @return \Shopsys\FrameworkBundle\Model\Pricing\Price
+     */
+    public static function getOrderTotalPriceByExpectedOrderItems(array $expectedOrderItems): Price
+    {
+        $totalPriceWithVat = Money::zero();
+        $totalPriceWithoutVat = Money::zero();
+
+        foreach ($expectedOrderItems as $expectedOrderItem) {
+            $expectedOrderItemTotalPrice = $expectedOrderItem['totalPrice'];
+            $totalPriceWithVat = $totalPriceWithVat->add(
+                Money::create($expectedOrderItemTotalPrice['priceWithVat'])
+            );
+            $totalPriceWithoutVat = $totalPriceWithoutVat->add(
+                Money::create($expectedOrderItemTotalPrice['priceWithoutVat'])
+            );
+        }
+        return new Price($totalPriceWithoutVat, $totalPriceWithVat);
+    }
+
+    /**
+     * @param array $expectedOrderItems
+     * @return array
+     */
+    public static function getSerializedOrderTotalPriceByExpectedOrderItems(array $expectedOrderItems): array
+    {
+        $price = static::getOrderTotalPriceByExpectedOrderItems($expectedOrderItems);
+
+        return [
+            'priceWithVat' => $price->getPriceWithVat()->getAmount(),
+            'priceWithoutVat' => $price->getPriceWithoutVat()->getAmount(),
+            'vatAmount' => $price->getVatAmount()->getAmount(),
+        ];
     }
 }

@@ -160,3 +160,6 @@ There you can find links to upgrade notes for other versions too.
     - translation in the administration was changed from "Main page products" to "Promoted products"
         - translation ID will be changed accordingly in the next major
     - see #project-base-diff to update your project
+
+- made frontend API tests to be currency independent ([#2075](https://github.com/shopsys/shopsys/pull/2075))
+    - see #project-base-diff to update your project

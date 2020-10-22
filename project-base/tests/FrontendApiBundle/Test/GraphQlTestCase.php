@@ -5,7 +5,12 @@ declare(strict_types=1);
 namespace Tests\FrontendApiBundle\Test;
 
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\Money\Money;
+use Shopsys\FrameworkBundle\Model\Pricing\Price;
+use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
+use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
 use Shopsys\FrontendApiBundle\Component\Domain\EnabledOnDomainChecker;
+use Shopsys\FrontendApiBundle\Component\Price\MoneyFormatterHelper;
 use Symfony\Component\HttpFoundation\Response;
 use Tests\App\Test\FunctionalTestCase;
 
@@ -25,6 +30,30 @@ abstract class GraphQlTestCase extends FunctionalTestCase
      * @var string
      */
     protected $overwriteDomainUrl;
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Pricing\BasePriceCalculation
+     * @inject
+     */
+    protected $basePriceCalculation;
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Pricing\PriceConverter
+     * @inject
+     */
+    protected $priceConverter;
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade
+     * @inject
+     */
+    protected $currencyFacade;
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade
+     * @inject
+     */
+    protected $vatFacade;
 
     protected function setUp(): void
     {
@@ -204,5 +233,75 @@ abstract class GraphQlTestCase extends FunctionalTestCase
         $this->assertArrayHasKey('extensions', $errors[0]);
         $this->assertArrayHasKey('validation', $errors[0]['extensions']);
         $this->assertIsArray($errors[0]['extensions']['validation']);
+    }
+
+    /**
+     * @param string $priceWithoutVat
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vat
+     * @param int $quantity
+     * @return \Shopsys\FrameworkBundle\Model\Pricing\Price
+     */
+    private function getConvertedPriceToDomainDefaultCurrency(
+        string $priceWithoutVat,
+        Vat $vat,
+        int $quantity = 1
+    ): Price {
+        $domainId = $this->domain->getId();
+        $currency = $this->currencyFacade->getDomainDefaultCurrencyByDomainId($domainId);
+
+        $basePrice = $this->basePriceCalculation->calculateBasePriceRoundedByCurrency(
+            $this->priceConverter->convertPriceWithoutVatToPriceInDomainDefaultCurrency(
+                Money::create($priceWithoutVat),
+                $domainId
+            ),
+            PricingSetting::INPUT_PRICE_TYPE_WITHOUT_VAT,
+            $vat,
+            $currency
+        );
+
+        return $this->basePriceCalculation->calculateBasePriceRoundedByCurrency(
+            $basePrice->getPriceWithVat()->multiply($quantity),
+            PricingSetting::INPUT_PRICE_TYPE_WITH_VAT,
+            $vat,
+            $currency
+        );
+    }
+
+    /**
+     * @param string $priceWithoutVat
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vat
+     * @param int $quantity
+     * @return array
+     */
+    protected function getSerializedPriceConvertedToDomainDefaultCurrency(
+        string $priceWithoutVat,
+        Vat $vat,
+        int $quantity = 1
+    ): array {
+        $price = $this->getConvertedPriceToDomainDefaultCurrency($priceWithoutVat, $vat, $quantity);
+        return [
+            'priceWithVat' => MoneyFormatterHelper::formatWithMaxFractionDigits($price->getPriceWithVat()),
+            'priceWithoutVat' => MoneyFormatterHelper::formatWithMaxFractionDigits($price->getPriceWithoutVat()),
+            'vatAmount' => MoneyFormatterHelper::formatWithMaxFractionDigits($price->getVatAmount()),
+        ];
+    }
+
+    /**
+     * @param string $priceWithoutVat
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vat
+     * @param int $quantity
+     * @return string
+     */
+    protected function getMutationPriceConvertedToDomainDefaultCurrency(
+        string $priceWithoutVat,
+        Vat $vat,
+        int $quantity = 1
+    ): string {
+        $price = $this->getConvertedPriceToDomainDefaultCurrency($priceWithoutVat, $vat, $quantity);
+        return '{
+            priceWithVat: "' . MoneyFormatterHelper::formatWithMaxFractionDigits($price->getPriceWithVat()) . '",
+            priceWithoutVat: "' . MoneyFormatterHelper::formatWithMaxFractionDigits($price->getPriceWithoutVat()) . '",
+            vatAmount: "' . MoneyFormatterHelper::formatWithMaxFractionDigits($price->getVatAmount()) . '"
+        }';
     }
 }

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\FrontendApiBundle\Functional\Order;
 
+use App\DataFixtures\Demo\VatDataFixture;
 use Tests\FrontendApiBundle\Test\GraphQlWithLoginTestCase;
 
 class GetOrdersAsAuthenticatedCustomerUserTest extends GraphQlWithLoginTestCase
@@ -135,31 +136,103 @@ class GetOrdersAsAuthenticatedCustomerUserTest extends GraphQlWithLoginTestCase
     private function getExpectedUserOrders(): array
     {
         $firstDomainLocale = $this->getLocaleForFirstDomain();
+        $domainId = $this->domain->getId();
+        /** @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vatHigh */
+        $vatHigh = $this->getReferenceForDomain(VatDataFixture::VAT_HIGH, $domainId);
+        /** @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vatZero */
+        $vatZero = $this->getReferenceForDomain(VatDataFixture::VAT_ZERO, $domainId);
+
+        $expectedOrderItems1 = [
+            ['totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('2891.7', $vatHigh)],
+            ['totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('100', $vatZero)],
+            ['totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('200', $vatHigh)],
+        ];
+        $expectedOrder1 = [
+            'status' => t('In Progress', [], 'dataFixtures', $firstDomainLocale),
+            'priceWithVat' => AbstractOrderTestCase::getOrderTotalPriceByExpectedOrderItems(
+                $expectedOrderItems1
+            )->getPriceWithVat()->getAmount(),
+        ];
+
+        $expectedOrderItems2 = [
+            ['totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('8173.50', $vatHigh, 8)],
+            ['totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('17843.00', $vatHigh)],
+            ['totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('2891.70', $vatHigh, 2)],
+            ['totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('0', $vatZero)],
+            ['totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('0', $vatZero)],
+        ];
+        $expectedOrder2 = [
+            'status' => t('Done', [], 'dataFixtures', $firstDomainLocale),
+            'priceWithVat' => AbstractOrderTestCase::getOrderTotalPriceByExpectedOrderItems(
+                $expectedOrderItems2
+            )->getPriceWithVat()->getAmount(),
+        ];
+
+        $expectedOrderItems3 = [
+            ['totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('263.60', $vatHigh, 6)],
+            ['totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('5.00', $vatHigh)],
+            ['totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('50', $vatZero)],
+            ['totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('100', $vatHigh)],
+        ];
+        $expectedOrder3 = [
+            'status' => t('New [adjective]', [], 'dataFixtures', $firstDomainLocale),
+            'priceWithVat' => AbstractOrderTestCase::getOrderTotalPriceByExpectedOrderItems(
+                $expectedOrderItems3
+            )->getPriceWithVat()->getAmount(),
+        ];
+
+        $expectedOrderItems4 = [
+            ['totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('1314.10', $vatHigh, 2)],
+            ['totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('818.00', $vatHigh, 3)],
+            ['totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('0', $vatZero)],
+            ['totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('0', $vatZero)],
+        ];
+        $expectedOrder4 = [
+            'status' => t('Done', [], 'dataFixtures', $firstDomainLocale),
+            'priceWithVat' => AbstractOrderTestCase::getOrderTotalPriceByExpectedOrderItems(
+                $expectedOrderItems4
+            )->getPriceWithVat()->getAmount(),
+        ];
+
+        $expectedOrderItems5 = [
+            ['totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('437.20', $vatHigh, 2)],
+            ['totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('180.00', $vatHigh)],
+            ['totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('429.80', $vatHigh)],
+            ['totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('3.00', $vatHigh, 5)],
+            ['totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('100', $vatZero)],
+            ['totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('0', $vatZero)],
+        ];
+        $expectedOrder5 = [
+            'status' => t('New [adjective]', [], 'dataFixtures', $firstDomainLocale),
+            'priceWithVat' => AbstractOrderTestCase::getOrderTotalPriceByExpectedOrderItems(
+                $expectedOrderItems5
+            )->getPriceWithVat()->getAmount(),
+        ];
+
+        $expectedOrderItems6 = [
+            ['totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('98.30', $vatHigh, 2)],
+            ['totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('19743.60', $vatHigh)],
+            ['totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('3.00', $vatHigh)],
+            ['totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('90.10', $vatHigh)],
+            ['totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('164.50', $vatHigh)],
+            ['totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('437.20', $vatHigh)],
+            ['totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('100', $vatZero)],
+            ['totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('200', $vatHigh)],
+        ];
+        $expectedOrder6 = [
+            'status' => t('New [adjective]', [], 'dataFixtures', $firstDomainLocale),
+            'priceWithVat' => AbstractOrderTestCase::getOrderTotalPriceByExpectedOrderItems(
+                $expectedOrderItems6
+            )->getPriceWithVat()->getAmount(),
+        ];
+
         return [
-            [
-                'status' => t('In Progress', [], 'dataFixtures', $firstDomainLocale),
-                'priceWithVat' => '153.640000',
-            ],
-            [
-                'status' => t('Done', [], 'dataFixtures', $firstDomainLocale),
-                'priceWithVat' => '4308.320000',
-            ],
-            [
-                'status' => t('New [adjective]', [], 'dataFixtures', $firstDomainLocale),
-                'priceWithVat' => '83.580000',
-            ],
-            [
-                'status' => t('Done', [], 'dataFixtures', $firstDomainLocale),
-                'priceWithVat' => '245.970000',
-            ],
-            [
-                'status' => t('New [adjective]', [], 'dataFixtures', $firstDomainLocale),
-                'priceWithVat' => '76.580000',
-            ],
-            [
-                'status' => t('New [adjective]', [], 'dataFixtures', $firstDomainLocale),
-                'priceWithVat' => '1012.420000',
-            ],
+            $expectedOrder1,
+            $expectedOrder2,
+            $expectedOrder3,
+            $expectedOrder4,
+            $expectedOrder5,
+            $expectedOrder6,
         ];
     }
 }
