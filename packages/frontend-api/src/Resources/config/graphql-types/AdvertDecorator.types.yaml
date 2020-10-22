@@ -1,0 +1,17 @@
+AdvertDecorator:
+    type: interface
+    decorator: true
+    config:
+        fields:
+            uuid:
+                type: "Uuid!"
+                description: "UUID"
+            name:
+                type: "String!"
+                description: "Name of advert"
+            type:
+                type: "String!"
+                description: "Type of advert"
+            positionName:
+                type: "String!"
+                description: "Position of advert"

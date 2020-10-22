@@ -1,0 +1,12 @@
+AdvertCodeDecorator:
+    type: object
+    decorator: true
+    inherits:
+        - 'AdvertDecorator'
+    config:
+        fields:
+            code:
+                type: "String!"
+                description: "Advert code"
+        interfaces:
+            - 'Advert'

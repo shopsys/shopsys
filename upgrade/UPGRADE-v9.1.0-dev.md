@@ -163,3 +163,6 @@ There you can find links to upgrade notes for other versions too.
 
 - made frontend API tests to be currency independent ([#2075](https://github.com/shopsys/shopsys/pull/2075))
     - see #project-base-diff to update your project
+
+- add adverts in frontend API ([#2068](https://github.com/shopsys/shopsys/pull/2068))
+    - see #project-base-diff to update your project
