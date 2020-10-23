@@ -25,6 +25,9 @@ class CustomerRegistrationCest
         $me->wantTo('successfully register new customer');
         $me->amOnPage('/');
         $layoutPage->clickOnRegistration();
+
+        $me->reloadPage();
+
         $registrationPage->register('Roman', 'Štěpánek', 'no-reply.16@shopsys.com', 'user123', 'user123');
         $me->wait(self::MINIMUM_FORM_SUBMIT_WAIT_TIME);
         $me->seeTranslationFrontend('You have been successfully registered.');
