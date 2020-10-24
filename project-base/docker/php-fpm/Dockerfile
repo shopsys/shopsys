@@ -99,9 +99,6 @@ RUN echo "source /etc/bash_completion" >> ~/.bashrc
 RUN mkdir -p /var/www/html/.npm-global
 ENV NPM_CONFIG_PREFIX /var/www/html/.npm-global
 
-# hirak/prestissimo makes the install of Composer dependencies faster by parallel downloading
-RUN composer global require hirak/prestissimo
-
 # set COMPOSER_MEMORY_LIMIT to -1 (i.e. unlimited - this is a hotfix until https://github.com/shopsys/shopsys/issues/634 is solved)
 ENV COMPOSER_MEMORY_LIMIT=-1
 
