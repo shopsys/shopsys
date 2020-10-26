@@ -115,6 +115,7 @@ class CustomerUserRepository
                 u.id,
                 u.email,
                 u.telephone,
+                u.domainId,
                 MAX(pg.name) AS pricingGroup,
                 MAX(ba.city) city,
                 MAX(CASE WHEN ba.companyCustomer = true
