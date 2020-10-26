@@ -199,4 +199,14 @@ class ProductElasticsearchRepository
 
         return $this->extractTotalCount($result);
     }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery $filterQuery
+     * @return array
+     */
+    public function getProductsByFilterQuery(FilterQuery $filterQuery): array
+    {
+        $result = $this->client->search($filterQuery->getQuery());
+        return $this->extractHits($result);
+    }
 }

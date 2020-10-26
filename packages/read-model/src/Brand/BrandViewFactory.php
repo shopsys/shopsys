@@ -21,4 +21,13 @@ class BrandViewFactory
             $brandMainUrl
         );
     }
+
+    /**
+     * @param array $productArray
+     * @return \Shopsys\ReadModelBundle\Brand\BrandView
+     */
+    public function createFromProductArray(array $productArray): BrandView
+    {
+        return new BrandView((int)$productArray['brand'], $productArray['brand_name'], $productArray['brand_url']);
+    }
 }

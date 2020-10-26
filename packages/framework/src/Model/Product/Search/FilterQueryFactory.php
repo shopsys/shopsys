@@ -216,4 +216,13 @@ class FilterQueryFactory
 
         return $filterQuery;
     }
+
+    /**
+     * @param int $productId
+     * @return \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery
+     */
+    public function createVisibleProductsByProductIdFilter(int $productId): FilterQuery
+    {
+        return $this->createListable()->filterByProductId($productId);
+    }
 }

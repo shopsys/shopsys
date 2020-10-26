@@ -23,7 +23,7 @@ class ProductElasticsearchConverter
 
         $result['categories'] = $product['categories'] ?? [];
         $result['flags'] = $product['flags'] ?? [];
-        $result['parameters'] = $product['parameters'] ?? [];
+        $result['parameters'] = $product['parameters'] ? $this->fillEmptyParameters($product['parameters']) : [];
         $result['prices'] = $product['prices'] ?? [];
         $result['visibility'] = $product['visibility'] ?? [];
 
@@ -38,11 +38,33 @@ class ProductElasticsearchConverter
 
         // unknown default value, used for filtering only
         $result['brand'] = $product['brand'] ?? null;
+        $result['brand_name'] = $product['brand_name'] ?? '';
+        $result['brand_url'] = $product['brand_url'] ?? '';
+        $result['main_category_id'] = $product['main_category_id'] ?? $result['categories'][0];
 
         $result['seo_h1'] = $product['seo_h1'] ?? null;
         $result['seo_title'] = $product['seo_title'] ?? null;
         $result['seo_meta_description'] = $product['seo_meta_description'] ?? null;
 
         return $result;
+    }
+
+    /**
+     * @param array $parameters
+     * @return array
+     */
+    protected function fillEmptyParameters(array $parameters): array
+    {
+        $results = [];
+        foreach ($parameters as $parameter) {
+            $filledParameter = [];
+            $filledParameter['parameter_id'] = $parameter['parameter_id'] ?? '';
+            $filledParameter['parameter_name'] = $parameter['parameter_name'] ?? '';
+            $filledParameter['parameter_value_id'] = $parameter['parameter_value_id'] ?? '';
+            $filledParameter['parameter_value_text'] = $parameter['parameter_value_text'] ?? '';
+            $results[] = $filledParameter;
+        }
+
+        return $results;
     }
 }

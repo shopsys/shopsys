@@ -285,6 +285,23 @@ class FilterQuery
     }
 
     /**
+     * @param int $productId
+     * @return \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery
+     */
+    public function filterByProductId(int $productId): self
+    {
+        $clone = clone $this;
+
+        $clone->filters[] = [
+            'terms' => [
+                'id' => [$productId],
+            ],
+        ];
+
+        return $clone;
+    }
+
+    /**
      * @return \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery
      */
     public function filterOnlyInStock(): self

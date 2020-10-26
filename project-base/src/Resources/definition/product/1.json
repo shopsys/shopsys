@@ -158,7 +158,16 @@
       "brand": {
         "type": "integer"
       },
+      "brand_name": {
+        "type": "text"
+      },
+      "brand_url": {
+        "type": "text"
+      },
       "categories": {
+        "type": "integer"
+      },
+      "main_category_id": {
         "type": "integer"
       },
       "prices": {
@@ -190,8 +199,14 @@
           "parameter_id": {
             "type": "integer"
           },
+          "parameter_name": {
+            "type": "text"
+          },
           "parameter_value_id": {
             "type": "integer"
+          },
+          "parameter_value_text": {
+            "type": "text"
           }
         }
       },

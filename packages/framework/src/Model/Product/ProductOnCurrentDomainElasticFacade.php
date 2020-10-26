@@ -435,4 +435,20 @@ class ProductOnCurrentDomainElasticFacade implements ProductOnCurrentDomainFacad
         $productsResult = $this->productElasticsearchRepository->getSortedProductsResultByFilterQuery($filterQuery);
         return $productsResult->getHits();
     }
+
+    /**
+     * @param int $productId
+     * @return array
+     */
+    public function getVisibleProductArrayById(int $productId): array
+    {
+        $products = $this->productElasticsearchRepository->getProductsByFilterQuery(
+            $this->filterQueryFactory->createVisibleProductsByProductIdFilter($productId)
+        );
+
+        if (count($products) === 0) {
+            throw new ProductNotFoundException();
+        }
+        return array_shift($products);
+    }
 }
