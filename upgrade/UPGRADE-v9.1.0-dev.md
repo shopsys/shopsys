@@ -168,5 +168,5 @@ There you can find links to upgrade notes for other versions too.
     - see #project-base-diff to update your project
 
 - remove hirak/prestissimo from Dockerfile ([#2089](https://github.com/shopsys/shopsys/pull/2089))
-    - make sure you have composer 2 installed
+    - make sure you have composer 2 installed (`composer --version`)
     - see #project-base-diff to update your project 
