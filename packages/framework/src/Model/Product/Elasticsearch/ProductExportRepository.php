@@ -13,6 +13,8 @@ use Shopsys\FrameworkBundle\Component\Paginator\QueryPaginator;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRepository;
 use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
+use Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryFacade;
+use Shopsys\FrameworkBundle\Model\Product\Brand\BrandCachedFacade;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice;
 use Shopsys\FrameworkBundle\Model\Product\Product;
@@ -63,6 +65,16 @@ class ProductExportRepository
     protected $categoryFacade;
 
     /**
+     * @var \Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryFacade
+     */
+    protected $productAccessoryFacade;
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Product\Brand\BrandCachedFacade
+     */
+    protected $brandCachedFacade;
+
+    /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository $parameterRepository
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductFacade $productFacade
@@ -71,6 +83,8 @@ class ProductExportRepository
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductVisibilityRepository $productVisibilityRepository
      * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
      * @param \Shopsys\FrameworkBundle\Model\Category\CategoryFacade|null $categoryFacade
+     * @param \Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryFacade|null $productAccessoryFacade
+     * @param \Shopsys\FrameworkBundle\Model\Product\Brand\BrandCachedFacade|null $brandCachedFacade
      */
     public function __construct(
         EntityManagerInterface $em,
@@ -80,7 +94,9 @@ class ProductExportRepository
         Domain $domain,
         ProductVisibilityRepository $productVisibilityRepository,
         FriendlyUrlFacade $friendlyUrlFacade,
-        ?CategoryFacade $categoryFacade = null
+        ?CategoryFacade $categoryFacade = null,
+        ?ProductAccessoryFacade $productAccessoryFacade = null,
+        ?BrandCachedFacade $brandCachedFacade = null
     ) {
         $this->parameterRepository = $parameterRepository;
         $this->productFacade = $productFacade;
@@ -90,6 +106,8 @@ class ProductExportRepository
         $this->productVisibilityRepository = $productVisibilityRepository;
         $this->friendlyUrlFacade = $friendlyUrlFacade;
         $this->categoryFacade = $categoryFacade;
+        $this->productAccessoryFacade = $productAccessoryFacade;
+        $this->brandCachedFacade = $brandCachedFacade;
     }
 
     /**
@@ -121,6 +139,68 @@ class ProductExportRepository
         );
 
         $this->categoryFacade = $categoryFacade;
+    }
+
+    /**
+     * @required
+     * @param \Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryFacade $productAccessoryFacade
+     * @internal This function will be replaced by constructor injection in next major
+     */
+    public function setProductAccessoryFacade(ProductAccessoryFacade $productAccessoryFacade): void
+    {
+        if (
+            $this->productAccessoryFacade !== null
+            && $this->productAccessoryFacade !== $productAccessoryFacade
+        ) {
+            throw new BadMethodCallException(sprintf(
+                'Method "%s" has been already called and cannot be called multiple times.',
+                __METHOD__
+            ));
+        }
+        if ($this->productAccessoryFacade !== null) {
+            return;
+        }
+
+        @trigger_error(
+            sprintf(
+                'The %s() method is deprecated and will be removed in the next major. Use the constructor injection instead.',
+                __METHOD__
+            ),
+            E_USER_DEPRECATED
+        );
+
+        $this->productAccessoryFacade = $productAccessoryFacade;
+    }
+
+    /**
+     * @required
+     * @param \Shopsys\FrameworkBundle\Model\Product\Brand\BrandCachedFacade $brandCachedFacade
+     * @internal This function will be replaced by constructor injection in next major
+     */
+    public function setBrandCachedFacade(BrandCachedFacade $brandCachedFacade): void
+    {
+        if (
+            $this->brandCachedFacade !== null
+            && $this->brandCachedFacade !== $brandCachedFacade
+        ) {
+            throw new BadMethodCallException(sprintf(
+                'Method "%s" has been already called and cannot be called multiple times.',
+                __METHOD__
+            ));
+        }
+        if ($this->brandCachedFacade !== null) {
+            return;
+        }
+
+        @trigger_error(
+            sprintf(
+                'The %s() method is deprecated and will be removed in the next major. Use the constructor injection instead.',
+                __METHOD__
+            ),
+            E_USER_DEPRECATED
+        );
+
+        $this->brandCachedFacade = $brandCachedFacade;
     }
 
     /**
@@ -259,6 +339,7 @@ class ProductExportRepository
             'selling_denied' => $product->isSellingDenied(),
             'availability' => $product->getCalculatedAvailability()->getName($locale),
             'is_main_variant' => $product->isMainVariant(),
+            'is_variant' => $product->isVariant(),
             'detail_url' => $detailUrl,
             'visibility' => $visibility,
             'uuid' => $product->getUuid(),
@@ -270,6 +351,7 @@ class ProductExportRepository
             'seo_h1' => $product->getSeoH1($domainId),
             'seo_title' => $product->getSeoTitle($domainId),
             'seo_meta_description' => $product->getSeoMetaDescription($domainId),
+            'accessories' => $this->extractAccessoriesIds($product),
         ];
     }
 
@@ -313,15 +395,13 @@ class ProductExportRepository
         $queryBuilder = $this->em->createQueryBuilder()
             ->select('p')
             ->from(Product::class, 'p')
-                ->where('p.variantType != :variantTypeVariant')
             ->join(ProductVisibility::class, 'prv', Join::WITH, 'prv.product = p.id')
                 ->andWhere('prv.domainId = :domainId')
                 ->andWhere('prv.visible = TRUE')
             ->groupBy('p.id')
             ->orderBy('p.id');
 
-        $queryBuilder->setParameter('domainId', $domainId)
-            ->setParameter('variantTypeVariant', Product::VARIANT_TYPE_VARIANT);
+        $queryBuilder->setParameter('domainId', $domainId);
 
         return $queryBuilder;
     }
@@ -451,10 +531,22 @@ class ProductExportRepository
             return '';
         }
 
-        return $this->friendlyUrlFacade->getAbsoluteUrlByRouteNameAndEntityId(
-            $domainId,
-            'front_brand_detail',
-            $brand->getId()
-        );
+        return $this->brandCachedFacade->getBrandUrlByDomainId($brand->getId(), $domainId);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
+     * @return array
+     */
+    protected function extractAccessoriesIds(Product $product): array
+    {
+        $accessoriesIds = [];
+        $accessories = $this->productAccessoryFacade->getAllAccessories($product);
+
+        foreach ($accessories as $accessory) {
+            $accessoriesIds[] = $accessory->getAccessory()->getId();
+        }
+
+        return $accessoriesIds;
     }
 }

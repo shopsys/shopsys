@@ -16,7 +16,7 @@ class PriceFactory
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
      * @return \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice|null
      */
-    public static function createProductPriceFromArrayByPricingGroup(
+    public function createProductPriceFromArrayByPricingGroup(
         array $pricesArray,
         PricingGroup $pricingGroup
     ): ?ProductPrice {

@@ -26,12 +26,15 @@ class ProductElasticsearchConverter
         $result['parameters'] = $product['parameters'] ? $this->fillEmptyParameters($product['parameters']) : [];
         $result['prices'] = $product['prices'] ?? [];
         $result['visibility'] = $product['visibility'] ?? [];
+        $result['accessories'] = $product['accessories'] ?? [];
 
         $result['ordering_priority'] = $product['ordering_priority'] ?? 0;
 
         $result['in_stock'] = $product['in_stock'] ?? false;
         $result['is_main_variant'] = $product['is_main_variant'] ?? false;
+        $result['is_variant'] = $product['is_variant'] ?? false;
         $result['main_variant_id'] = $product['main_variant_id'] ?? null;
+        $result['variants'] = $product['variants'] ?? [];
 
         $result['calculated_selling_denied'] = $product['calculated_selling_denied'] ?? true;
         $result['selling_denied'] = $product['selling_denied'] ?? true;
@@ -40,7 +43,7 @@ class ProductElasticsearchConverter
         $result['brand'] = $product['brand'] ?? null;
         $result['brand_name'] = $product['brand_name'] ?? '';
         $result['brand_url'] = $product['brand_url'] ?? '';
-        $result['main_category_id'] = $product['main_category_id'] ?? $result['categories'][0];
+        $result['main_category_id'] = $product['main_category_id'] ?? null;
 
         $result['seo_h1'] = $product['seo_h1'] ?? null;
         $result['seo_title'] = $product['seo_title'] ?? null;

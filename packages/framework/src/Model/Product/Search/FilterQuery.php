@@ -285,16 +285,32 @@ class FilterQuery
     }
 
     /**
-     * @param int $productId
+     * @param int[] $productIds
      * @return \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery
      */
-    public function filterByProductId(int $productId): self
+    public function filterByProductIds(array $productIds): self
     {
         $clone = clone $this;
 
         $clone->filters[] = [
             'terms' => [
-                'id' => [$productId],
+                'id' => $productIds,
+            ],
+        ];
+
+        return $clone;
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery
+     */
+    public function filterOutVariants(): self
+    {
+        $clone = clone $this;
+
+        $clone->filters[] = [
+            'term' => [
+                'is_variant' => false,
             ],
         ];
 

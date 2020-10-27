@@ -4,35 +4,30 @@ declare(strict_types=1);
 
 namespace Shopsys\ReadModelBundle\Product\Detail;
 
-use Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainElasticFacade;
+use Shopsys\FrameworkBundle\Model\Product\ProductElasticsearchProvider;
 
 class ProductDetailViewElasticsearchFacade implements ProductDetailViewFacadeInterface
 {
-    /**
-     * @var \Shopsys\ReadModelBundle\Product\Detail\ProductDetailViewFactory
-     */
-    protected $productDetailViewFactory;
-
     /**
      * @var \Shopsys\ReadModelBundle\Product\Detail\ProductDetailViewElasticsearchFactory
      */
     protected $productDetailViewElasticsearchFactory;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainElasticFacade
+     * @var \Shopsys\FrameworkBundle\Model\Product\ProductElasticsearchProvider
      */
-    protected $productOnCurrentDomainElasticFacade;
+    protected $productElasticsearchProvider;
 
     /**
      * @param \Shopsys\ReadModelBundle\Product\Detail\ProductDetailViewElasticsearchFactory $productDetailViewElasticsearchFactory
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainElasticFacade $productOnCurrentDomainElasticFacade
+     * @param \Shopsys\FrameworkBundle\Model\Product\ProductElasticsearchProvider $productElasticsearchProvider
      */
     public function __construct(
         ProductDetailViewElasticsearchFactory $productDetailViewElasticsearchFactory,
-        ProductOnCurrentDomainElasticFacade $productOnCurrentDomainElasticFacade
+        ProductElasticsearchProvider $productElasticsearchProvider
     ) {
         $this->productDetailViewElasticsearchFactory = $productDetailViewElasticsearchFactory;
-        $this->productOnCurrentDomainElasticFacade = $productOnCurrentDomainElasticFacade;
+        $this->productElasticsearchProvider = $productElasticsearchProvider;
     }
 
     /**
@@ -42,7 +37,7 @@ class ProductDetailViewElasticsearchFacade implements ProductDetailViewFacadeInt
     public function getVisibleProductDetail(int $productId): ProductDetailView
     {
         return $this->productDetailViewElasticsearchFactory->createFromProductArray(
-            $this->productOnCurrentDomainElasticFacade->getVisibleProductArrayById($productId)
+            $this->productElasticsearchProvider->getVisibleProductArrayById($productId)
         );
     }
 }

@@ -185,7 +185,6 @@ use Shopsys\ReadModelBundle\Image\ImageView;
 use Shopsys\ReadModelBundle\Product\Action\ProductActionView;
 use Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFactory as BaseListedProductViewFactory;
 use Shopsys\ReadModelBundle\Product\Listed\ListedProductView as BaseListedProductView;
-use Shopsys\ReadModelBundle\Product\PriceFactory;
 
 class ListedProductViewFactory extends BaseListedProductViewFactory
 {
@@ -203,7 +202,7 @@ class ListedProductViewFactory extends BaseListedProductViewFactory
             $productArray['name'],
             $productArray['short_description'],
             $productArray['availability'],
-            PriceFactory::createProductPriceFromArrayByPricingGroup($productArray['prices'], $pricingGroup),
+            $this->priceFactory->createProductPriceFromArrayByPricingGroup($productArray['prices'], $pricingGroup),
             $productArray['flags'],
             $productActionView,
             $imageView,

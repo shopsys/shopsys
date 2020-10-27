@@ -17,9 +17,13 @@ use Shopsys\ReadModelBundle\Brand\BrandViewFacadeInterface;
 use Shopsys\ReadModelBundle\Image\ImageView;
 use Shopsys\ReadModelBundle\Image\ImageViewFacadeInterface;
 use Shopsys\ReadModelBundle\Parameter\ParameterViewFacadeInterface;
+use Shopsys\ReadModelBundle\Product\Action\ProductActionView;
 use Shopsys\ReadModelBundle\Product\Action\ProductActionViewFacade;
 use Shopsys\ReadModelBundle\Product\Detail\ProductDetailView;
 use Shopsys\ReadModelBundle\Product\Detail\ProductDetailViewFactory;
+use Shopsys\ReadModelBundle\Product\Listed\ListedProductVariantsViewFacade;
+use Shopsys\ReadModelBundle\Product\Listed\ListedProductView;
+use Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFacade;
 
 class ProductDetailViewFactoryTest extends TestCase
 {
@@ -182,24 +186,33 @@ class ProductDetailViewFactoryTest extends TestCase
      * @param bool $isVariant
      * @param \Shopsys\FrameworkBundle\Model\Product\Product|null $mainVariantMock
      * @param int|null $expectedMainVariantId
+     * @param \Shopsys\ReadModelBundle\Product\Listed\ListedProductView[] $expectedVariants
      */
     public function testVariants(
         bool $isMainVariant,
         bool $isVariant,
         ?Product $mainVariantMock,
-        ?int $expectedMainVariantId
+        ?int $expectedMainVariantId,
+        array $expectedVariants = []
     ): void {
         $productDetailView = $this->createProductDetailView(
             [
                 'isMainVariant' => $isMainVariant,
                 'isVariant' => $isVariant,
                 'getMainVariant' => $mainVariantMock,
-            ]
+            ],
+            [],
+            [],
+            $expectedVariants
         );
 
         self::assertSame($isMainVariant, $productDetailView->isMainVariant());
         self::assertSame($isVariant, $productDetailView->isVariant());
         self::assertSame($expectedMainVariantId, $productDetailView->getMainVariantId());
+        self::assertCount(count($expectedVariants), $productDetailView->getVariants());
+        foreach ($productDetailView->getVariants() as $variant) {
+            self::assertInstanceOf(ListedProductView::class, $variant);
+        }
     }
 
     /**
@@ -212,12 +225,24 @@ class ProductDetailViewFactoryTest extends TestCase
         $mainVariantMock = $this->createMock(Product::class);
         $mainVariantMock->method('getId')->willReturn($mainVariantId);
 
+        $variant1 = new ListedProductView(
+            1,
+            'Variant 1',
+            null,
+            'available',
+            new ProductPrice(Price::zero(), true),
+            [],
+            new ProductActionView(1, false, false, '/detail/1'),
+            null
+        );
+
         return [
             [
                 'isMainVariant' => true,
                 'isVariant' => false,
                 'mainVariantMock' => null,
                 'expectedMainVariantId' => null,
+                'expectedVariants' => [$variant1],
             ], [
                 'isMainVariant' => false,
                 'isVariant' => false,
@@ -274,6 +299,8 @@ class ProductDetailViewFactoryTest extends TestCase
         $productDetailView = $this->createProductDetailView(
             [],
             [],
+            [],
+            [],
             null
         );
 
@@ -328,12 +355,16 @@ class ProductDetailViewFactoryTest extends TestCase
     /**
      * @param array $productData
      * @param \Shopsys\ReadModelBundle\Image\ImageView[] $imageViews
+     * @param array $accessories
+     * @param array $variants
      * @param int|null $priceAmount
      * @return \Shopsys\ReadModelBundle\Product\Detail\ProductDetailView
      */
     private function createProductDetailView(
         array $productData,
         array $imageViews = [],
+        array $accessories = [],
+        array $variants = [],
         ?int $priceAmount = 10
     ): ProductDetailView {
         $imageViewFacadeMock = $this->createImageViewFacadeMock($imageViews);
@@ -344,6 +375,8 @@ class ProductDetailViewFactoryTest extends TestCase
         $categoryFacadeMock = $this->createCategoryFacadeMock();
         $domainMock = $this->createDomainMock();
         $seoSettingFacadeMock = $this->createSeoSettingFacadeMock();
+        $listedProductViewFacadeMock = $this->createListedProductViewFacadeMock($accessories);
+        $listedProductVariantsViewFacadeMock = $this->createListedProductVariantsViewFacadeMock($variants);
 
         $productDetailViewFactory = new ProductDetailViewFactory(
             $imageViewFacadeMock,
@@ -353,7 +386,9 @@ class ProductDetailViewFactoryTest extends TestCase
             $domainMock,
             $productCachedAttributesFacadeMock,
             $categoryFacadeMock,
-            $seoSettingFacadeMock
+            $seoSettingFacadeMock,
+            $listedProductViewFacadeMock,
+            $listedProductVariantsViewFacadeMock
         );
 
         return $productDetailViewFactory->createFromProduct($this->createProductMock($productData));
@@ -499,5 +534,33 @@ class ProductDetailViewFactoryTest extends TestCase
     private function createProductPrice(int $amount): ProductPrice
     {
         return new ProductPrice(new Price(Money::create($amount), Money::create($amount)), false);
+    }
+
+    /**
+     * @param \Shopsys\ReadModelBundle\Product\Listed\ListedProductView[] $accessories
+     * @return \Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFacade
+     */
+    private function createListedProductViewFacadeMock(array $accessories): ListedProductViewFacade
+    {
+        $listedProductViewFacadeMock = $this->createMock(ListedProductViewFacade::class);
+        $listedProductViewFacadeMock
+            ->method('getAllAccessories')
+            ->withAnyParameters()
+            ->willReturn($accessories);
+        return $listedProductViewFacadeMock;
+    }
+
+    /**
+     * @param \Shopsys\ReadModelBundle\Product\Listed\ListedProductView[] $variants
+     * @return \Shopsys\ReadModelBundle\Product\Listed\ListedProductVariantsViewFacade
+     */
+    private function createListedProductVariantsViewFacadeMock(array $variants)
+    {
+        $listedProductVariantsViewFacadeMock = $this->createMock(ListedProductVariantsViewFacade::class);
+        $listedProductVariantsViewFacadeMock
+            ->method('getAllVariants')
+            ->withAnyParameters()
+            ->willReturn($variants);
+        return $listedProductVariantsViewFacadeMock;
     }
 }

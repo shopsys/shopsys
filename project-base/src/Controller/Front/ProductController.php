@@ -150,13 +150,8 @@ class ProductController extends FrontBaseController
             return $this->redirectToRoute('front_product_detail', ['id' => $productDetailView->getMainVariantId()]);
         }
 
-        $accessories = $this->listedProductViewFacade->getAllAccessories($id);
-        $variants = $this->listedProductVariantsViewFacade->getAllVariants($id);
-
         return $this->render('Front/Content/Product/detail.html.twig', [
             'productView' => $productDetailView,
-            'accessories' => $accessories,
-            'variants' => $variants,
         ]);
     }
 
