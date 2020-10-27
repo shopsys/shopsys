@@ -64,7 +64,7 @@ class HeurekaSetting
      */
     public function isHeurekaShopCertificationActivated($domainId)
     {
-        return $this->setting->getForDomain(static::HEUREKA_API_KEY, $domainId) !== '';
+        return $this->setting->getForDomain(static::HEUREKA_API_KEY, $domainId) !== null;
     }
 
     /**
@@ -73,6 +73,6 @@ class HeurekaSetting
      */
     public function isHeurekaWidgetActivated($domainId)
     {
-        return $this->setting->getForDomain(static::HEUREKA_WIDGET_CODE, $domainId) !== '';
+        return $this->setting->getForDomain(static::HEUREKA_WIDGET_CODE, $domainId) !== null;
     }
 }
