@@ -120,7 +120,7 @@ class ErrorController extends FrontBaseController
 
         return $this->render($this->getTemplatePath($code, $format), [
             'status_code' => $code,
-            'status_text' => isset(Response::$statusTexts[$code]) ? Response::$statusTexts[$code] : '',
+            'status_text' => Response::$statusTexts[$code] ?? '',
             'exception' => $exception,
             'logger' => $logger,
         ]);
