@@ -14,6 +14,11 @@ To customize your grid, you just need to create a new template extending the ori
      - the block contains a message that is displayed when there are no data in the grid
      - the default (translatable) value is "No records found"
 
+## Rendering type Money in administration
+
+When creating grid containing prices in administration you can provide ID of the domain as `domainId` in the datasource.
+Money will format to given domain default currency and in case `domainId` is not available it will fallback to default administration currency.
+
 ## Example
 Let's say we have a grid of salesmen (in fact, such a grid is created in ["Create basic grid"](../cookbook/create-basic-grid.md) cookbook)
 and we want to display all their names bold, and also, we want to be more specific when there are no salesmen in our database.

@@ -363,7 +363,11 @@
 {% endblock %}
 
 {% block grid_value_cell_type_Shopsys_FrameworkBundle_Component_Money_Money %}
-    {{ value|priceWithCurrencyAdmin }}
+    {% if 'domainId' in row|keys %}
+        {{ value|priceWithCurrencyByDomainId(row.domainId) }}
+    {% else %}
+        {{ value|priceWithCurrencyAdmin }}
+    {% endif %}
 {% endblock %}
 
 {% block grid_hidden_inputs %}
