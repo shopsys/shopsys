@@ -185,7 +185,7 @@ class SideMenuBuilder
         if ($this->authorizationChecker->isGranted(Roles::ROLE_SUPER_ADMIN)) {
             $currenciesMenuItem = $menu->addChild(
                 'currencies',
-                ['route' => 'admin_currency_list', 'label' => t('Currencies')]
+                ['route' => 'admin_currency_list', 'label' => t('Currencies and rounding')]
             );
             $currenciesMenuItem->setExtra('superadmin', true);
         }
