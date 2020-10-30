@@ -170,3 +170,6 @@ There you can find links to upgrade notes for other versions too.
 - remove hirak/prestissimo from Dockerfile ([#2089](https://github.com/shopsys/shopsys/pull/2089))
     - make sure you have composer 2 installed (`composer --version`)
     - see #project-base-diff to update your project 
+
+- fixed standards on new release of FriendsOfPHP/PHP-CS-Fixer ([#2094](https://github.com/shopsys/shopsys/pull/2094))
+    - run `php phing standards-fix` to apply fixes
