@@ -208,12 +208,12 @@
                             <span class="link-style link-style--alternative">Span which looks like alternative link</span>
                             <br>
                             <span class="in-icon">
-                                <i class="svg svg-info in-icon__icon"></i>
+                                {{ icon('info', { class: 'in-icon__icon'}) }}
                                 <span class="in-icon__label">Text with icon</span>
                             </span>
                             <br>
                             <a href="#" class="in-icon in-icon--link">
-                                <i class="svg svg-info in-icon__icon"></i>
+                                {{ icon('info', { class: 'in-icon__icon'}) }}
                                 <span class="in-icon__label">Link with icon</span>
                             </a>
                         </p>
@@ -318,8 +318,8 @@
 
                         <a href="#buttons" class="btn">Primary button</a> &nbsp;
                         <a href="#buttons" class="btn btn--success">Success button</a> &nbsp;
-                        <a href="#buttons" class="btn btn--success"><i class="svg svg-arrow"></i>Go to cart</a> &nbsp;
-                        <a href="#buttons" class="window-popup__actions__btn--continue window-button-continue btn btn--success test-window-button-continue">Go to cart <i class="svg svg-arrow"></i></a> &nbsp;
+                        <a href="#buttons" class="btn btn--success">{{ icon('arrow') }}Go to cart</a> &nbsp;
+                        <a href="#buttons" class="window-popup__actions__btn--continue window-button-continue btn btn--success">Go to cart {{ icon('arrow') }}</a> &nbsp;
                         <a href="#buttons" class="btn btn--disabled">Disabled</a> &nbsp;
                         <a href="#buttons" class="btn btn--outline">Outline</a> &nbsp;
                         <a href="#buttons" class="btn-no-style">No style</a> &nbsp;
@@ -332,8 +332,8 @@
                             <textarea class="codemirror-html" id="html-buttons">
 <a href="#" class="btn">Primary button</a>
 <a href="#" class="btn btn--success">Success button</a>
-<a href="#" class="btn btn--success"><i class="svg svg-arrow"></i>Go to cart</a>
-<a href="#" class="window-popup__actions__btn--continue window-button-continue btn btn--success test-window-button-continue">Go to cart <i class="svg svg-arrow"></i></a>
+<a href="#" class="btn btn--success">&#123;&#123; icon('arrow') &#125;&#125;Go to cart</a>
+<a href="#" class="window-popup__actions__btn--continue window-button-continue btn btn--success">Go to cart &#123;&#123; icon('arrow') &#125;&#125;</a>
 <a href="#" class="btn btn--disabled">Disabled</a>
 <a href="#" class="btn btn--outline">Outline</a>
 <a href="#" class="btn-no-style">No style</a>
@@ -361,7 +361,7 @@
                                         <input type="text" id="registration_form_firstName"
                                                name="registration_form[firstName]" required="required" class="input">
                                         <span class="js-validation-errors-list js-validation-error-list-registration_form_firstName form-error form-error--line display-none">
-                                            <span class="form-error__icon"><i class="svg svg-warning"></i></span>
+                                            <span class="form-error__icon">{{ icon('arrow') }}</span>
                                             <ul class="form-error__list"></ul>
                                         </span>
                                     </dd>
@@ -381,8 +381,7 @@
                                                     I buy on company behalf
                                                 </label>
                                                 <span class="js-validation-errors-list js-validation-error-list-order_personal_info_form_companyCustomer form-error form-error--choice display-none"
-                                                      style="display: none;"><span class="form-error__icon"><i
-                                                                class="svg svg-warning"></i></span>
+                                                      style="display: none;"><span class="form-error__icon">{{ icon('warning') }}</span>
                                                     <ul class="form-error__list"></ul>
                                                 </span>
 
@@ -404,7 +403,7 @@
                                                    class="input">
 
                                             <span class="js-validation-errors-list js-validation-error-list-order_personal_info_form_companyName form-error form-error--line display-none"><span
-                                                        class="form-error__icon"><i class="svg svg-warning"></i></span>
+                                                        class="form-error__icon">{{ icon('warning') }}</span>
                                                 <ul class="form-error__list"></ul>
                                             </span>
                                         </dd>
@@ -422,7 +421,7 @@
                                                    class="input">
 
                                             <span class="js-validation-errors-list js-validation-error-list-order_personal_info_form_companyNumber form-error form-error--line display-none"><span
-                                                        class="form-error__icon"><i class="svg svg-warning"></i></span>
+                                                        class="form-error__icon">{{ icon('warning') }}</span>
                                                 <ul class="form-error__list"></ul>
                                             </span>
                                         </dd>
@@ -439,7 +438,7 @@
                                                    name="order_personal_info_form[companyTaxNumber]" class="input">
 
                                             <span class="js-validation-errors-list js-validation-error-list-order_personal_info_form_companyTaxNumber form-error form-error--line display-none"><span
-                                                        class="form-error__icon"><i class="svg svg-warning"></i></span>
+                                                        class="form-error__icon">{{ icon('warning') }}</span>
                                                 <ul class="form-error__list"></ul>
                                             </span>
                                         </dd>
@@ -451,9 +450,11 @@
                                         <label for="registration_form_password_first" class="required">
                                             Password: <span class="form-input-required">*</span>
                                         </label>
-                                        <i class="svg svg-info in-icon in-icon--info js-tooltip" data-toggle="tooltip"
-                                           data-placement="right" title=""
-                                           data-original-title="Password must be at least six characters and can't be the same as entered email or its part before at sign."></i>
+                                        {{ icon('info', {
+                                            class: 'in-icon in-icon--info js-tooltip',
+                                            title: 'Password must be at least six characters and can\'t be the same as entered email or its part before at sign.'|trans,
+                                            data: { toggle: 'tooltip', placement: 'right' }
+                                        } ) }}
                                     </dt>
                                     <dd>
                                         <input type="password" id="registration_form_password_first"
@@ -461,7 +462,7 @@
                                                autocomplete="new-password" class="input">
 
                                         <span class="js-validation-errors-list js-validation-error-list-registration_form_password_first form-error form-error--line display-none"><span
-                                                    class="form-error__icon"><i class="svg svg-warning"></i></span>
+                                                    class="form-error__icon">{{ icon('warning') }}</span>
                                             <ul class="form-error__list"></ul>
                                         </span>
                                     </dd>
@@ -483,7 +484,7 @@
                                                 </label>
                                                 <span class="js-validation-errors-list js-validation-error-list-registration_form_privacyPolicy form-error form-error--choice display-none">
                                                     <span class="form-error__icon">
-                                                        <i class="svg svg-warning"></i>
+                                                        {{ icon('warning') }}
                                                     </span>
                                                     <ul class="form-error__list"></ul>
                                                 </span>
@@ -509,9 +510,11 @@
                                     <label for="order_personal_info_form_firstName" class="required">
                                         First name: <span class="form-input-required">*</span>
                                     </label>
-                                    <i class="svg svg-info in-icon in-icon--info js-tooltip" data-toggle="tooltip"
-                                       data-placement="right" title=""
-                                       data-original-title="Password must be at least six characters and can't be the same as entered email or its part before at sign."></i>
+                                    {{ icon('info', {
+                                        class: 'in-icon in-icon--info js-tooltip',
+                                        title: 'Password must be at least six characters and can\'t be the same as entered email or its part before at sign.'|trans,
+                                        data: { toggle: 'tooltip', placement: 'right' }
+                                    } ) }}
                                 </dt>
                                 <dd>
                                     <input id="order_personal_info_form_firstName"
@@ -520,7 +523,7 @@
 
                                     <span class="js-validation-errors-list js-validation-error-list-order_personal_info_form_firstName form-error form-error--line display-none"
                                           style="display: block;">
-                                        <span class="form-error__icon"><i class="svg svg-warning"></i></span>
+                                        <span class="form-error__icon">{{ icon('warning') }}</span>
                                         <ul class="form-error__list">
                                             <li class="js-validation-errors-message js-validation-error-list-order_personal_info_form_firstName">This value is not a valid Name</li>
                                         </ul>
@@ -710,7 +713,7 @@
                                            class="js-product-filter-call-change-after-reset input">
 
                                     <span class="js-validation-errors-list js-validation-error-list-product_filter_form_minimalPrice form-error form-error--line display-none"><span
-                                                class="form-error__icon"><i class="svg svg-warning"></i></span>
+                                                class="form-error__icon">{{ icon('warning') }}</span>
                                         <ul class="form-error__list"></ul>
                                     </span>
                                     CZK
@@ -729,7 +732,7 @@
                                            class="js-product-filter-call-change-after-reset input">
 
                                     <span class="js-validation-errors-list js-validation-error-list-product_filter_form_maximalPrice form-error form-error--line display-none"><span
-                                                class="form-error__icon"><i class="svg svg-warning"></i></span>
+                                                class="form-error__icon">{{ icon('warning') }}</span>
                                         <ul class="form-error__list"></ul>
                                     </span>
                                     CZK
@@ -751,7 +754,7 @@
                                     <div class="footer__newsletter__form__in">
                                                 <input type="email" id="subscription_form_email" name="subscription_form[email]" required="required" placeholder="Enter email" class="footer__newsletter__input input">
 
-                                                <span class="js-validation-errors-list js-validation-error-list-subscription_form_email form-error  display-none"><span class="form-error__icon"><i class="svg svg-warning"></i></span><ul class="form-error__list"></ul></span>
+                                                <span class="js-validation-errors-list js-validation-error-list-subscription_form_email form-error  display-none"><span class="form-error__icon">{{ icon('warning') }}</span><ul class="form-error__list"></ul></span>
                                     </div>
                                         <button type="submit" id="subscription_form_send" name="subscription_form[send]" class="footer__newsletter__form__btn btn">Log in</button>
 
@@ -767,7 +770,7 @@
                                         <label for="subscription_form_privacyPolicyAgreement">
                                             I agree with <a href="#" target="_blank">privacy policy</a>.
                                         </label>
-                                        <span class="js-validation-errors-list js-validation-error-list-subscription_form_privacyPolicyAgreement form-error form-error--choice display-none"><span class="form-error__icon"><i class="svg svg-warning"></i></span><ul class="form-error__list"></ul></span>
+                                        <span class="js-validation-errors-list js-validation-error-list-subscription_form_privacyPolicyAgreement form-error form-error--choice display-none"><span class="form-error__icon">{{ icon('warning') }}</span><ul class="form-error__list"></ul></span>
                                     </div>
                                 </div>
                             </div>
@@ -875,8 +878,7 @@
                                                 <td>Personal collection</td>
                                                 <td>Credit card</td>
                                                 <td class="text-right">CZK1,916.00</td>
-                                                <td class="text-center"><a href="#tables" class="in-icon in-icon--detail"><i
-                                                                class="svg svg-search"></i></a></td>
+                                                <td class="text-center"><a href="#tables" class="in-icon in-icon--detail">{{ icon('search') }}</a></td>
                                             </tr>
                                             <tr>
                                                 <td><a href="#tables">1506464371</a></td>
@@ -886,8 +888,7 @@
                                                 <td>Personal collection</td>
                                                 <td>Cash</td>
                                                 <td class="text-right">CZK6,150.00</td>
-                                                <td class="text-center"><a href="#tables" class="in-icon in-icon--detail"><i
-                                                                class="svg svg-search"></i></a></td>
+                                                <td class="text-center"><a href="#tables" class="in-icon in-icon--detail">{{ icon('search') }}</a></td>
                                             </tr>
                                             <tr>
                                                 <td><a href="#tables">1506464374</a></td>
@@ -897,8 +898,7 @@
                                                 <td>PPL</td>
                                                 <td>Credit card</td>
                                                 <td class="text-right">CZK3,841.00</td>
-                                                <td class="text-center"><a href="#tables" class="in-icon in-icon--detail"><i
-                                                                class="svg svg-search"></i></a></td>
+                                                <td class="text-center"><a href="#tables" class="in-icon in-icon--detail">{{ icon('search') }}</a></td>
                                             </tr>
                                             <tr>
                                                 <td><a href="#tables">1506464374</a></td>
@@ -908,8 +908,7 @@
                                                 <td>PPL</td>
                                                 <td>Credit card</td>
                                                 <td class="text-right">CZK3,841.00</td>
-                                                <td class="text-center"><a href="#tables" class="in-icon in-icon--detail"><i
-                                                                class="svg svg-search"></i></a></td>
+                                                <td class="text-center"><a href="#tables" class="in-icon in-icon--detail">{{ icon('search') }}</a></td>
                                             </tr>
                                             </tbody>
                                         </table>
@@ -946,15 +945,13 @@
                                                            placeholder="Email" class="input id__front_login_form_email"
                                                            type="text">
                                                     <span class="js-validation-errors-list js-validation-error-list-front_login_form_email form-error  display-none">
-                                                        <span class="form-error__icon"><i
-                                                                    class="svg svg-warning"></i></span>
+                                                        <span class="form-error__icon">{{ icon('warning') }}</span>
                                                         <ul class="form-error__list"></ul>
                                                     </span>
                                                 </div>
                                                 <div class="box-login__item">
                                                     <span class="js-validation-errors-list js-validation-error-list-front_login_form_password form-error  display-none">
-                                                        <span class="form-error__icon"><i
-                                                                    class="svg svg-warning"></i></span>
+                                                        <span class="form-error__icon">{{ icon('warning') }}</span>
                                                         <ul class="form-error__list"></ul>
                                                     </span>
                                                     <input name="front_login_form[password]" required="required"
@@ -963,17 +960,19 @@
                                                 </div>
                                                 <div class="box-login__item box-login__item--checkbox">
                                                     <label class="form-choice">
-                                                    <span class="form-choice__input">
-                                                    <input name="front_login_form[rememberMe]"
-                                                           class="id__front_login_form_rememberMe" value="1"
-                                                           type="checkbox">
-                                                    </span>
+                                                        <span class="form-choice__input">
+                                                            <input name="front_login_form[rememberMe]"
+                                                               class="id__front_login_form_rememberMe" value="1"
+                                                               type="checkbox">
+                                                        </span>
                                                         <span class="form-choice__label">
-                                                    Remember my login
-                                                    <i class="svg svg-info in-icon in-icon--info js-tooltip"
-                                                       data-toggle="tooltip" data-placement="right" title=""
-                                                       data-original-title="We will remember your login on this computer for 30 days."></i>
-                                                    </span>
+                                                            Remember my login
+                                                            {{ icon('info', {
+                                                                class: 'in-icon in-icon--info js-tooltip',
+                                                                title: 'We will remember your login on this computer for 30 days.'|trans,
+                                                                data: { toggle: 'tooltip', placement: 'right' }
+                                                            } ) }}
+                                                        </span>
                                                     </label>
                                                 </div>
                                                 <div class="box-login__item box-login__item--submit">
@@ -991,7 +990,7 @@
                                         </form>
                                     </div>
                                     <a href="#popup" class="window-button-close window-popup__close js-window-button-close test-window-button-close"
-                                       title="Close (Esc)"><i class="svg svg-remove-thin"></i></a>
+                                       title="Close (Esc)">{{ icon('remove-thin') }}</a>
                                 </div>
                             </div>
                         </div>
@@ -1009,7 +1008,7 @@
                             <div class="in-overlay__in in-overlay__in--absolute">
                                 <div class="in-overlay__spinner in-overlay__spinner--absolute">
                                     <span class="in-overlay__spinner__icon">
-                                        <i class="svg svg-spinner"></i>
+                                        {{ icon('spinner') }}
                                     </span>
                                     <span class="in-overlay__spinner__message"></span>
                                 </div>
@@ -1020,7 +1019,7 @@
 <div class="in-overlay__in">
     <div class="in-overlay__spinner">
         <span class="in-overlay__spinner__icon">
-            <i class="svg svg-spinner"></i>
+            &#123;&#123; icon('spinner') &#125;&#125;
         </span>
         <span class="in-overlay__spinner__message"></span>
     </div>
@@ -1044,7 +1043,7 @@
 
                         <div class="in-paging__control">
                             <span class="in-paging__control__item in-paging__control__item--arrow in-paging__control__item--inactive">
-                                <i class="svg svg-arrow-left"></i>
+                                {{ icon('arrow-left') }}
                                 <span class="in-paging__control__item__arrow-text">
                                     Preview
                                 </span>
@@ -1079,7 +1078,7 @@
                                 <span class="in-paging__control__item__arrow-text">
                                     Next
                                 </span>
-                                <i class="svg svg-arrow-left"></i>
+                                {{ icon('arrow-left') }}
                             </a>
                         </div>
 
