@@ -37,7 +37,7 @@
                         {% if showGallery %}
                             <div class="box-gallery dont-print js-gallery">
                                 <span class="box-gallery__arrow box-gallery__arrow--prev js-gallery-prev">
-                                    <i class="svg svg-arrow"></i>
+                                    {{ icon('arrow') }}
                                 </span>
                                 <div class="box-gallery__in js-gallery-slides">
                                     {% for galleryImage in productView.galleryImageViews %}
@@ -50,7 +50,7 @@
                                     {% endfor %}
                                 </div>
                                 <span class="box-gallery__arrow box-gallery__arrow--next js-gallery-next">
-                                    <i class="svg svg-arrow"></i>
+                                    {{ icon('arrow') }}
                                 </span>
                             </div>
                         {% endif %}
@@ -227,7 +227,7 @@
                             {% if productView.description or productView.parameterViews %}
                                 <a href="#" class="in-tab__content__title js-tabs-button active" data-tab-id="description">
                                     {{ descriptionHeadline }}
-                                    <i class="svg svg-arrow"></i>
+                                    {{ icon('arrow') }}
                                 </a>
                                 <div class="in-tab__content__item js-tabs-content active" data-tab-id="description">
                                     <div class="in-user-text" itemprop="description">
@@ -260,7 +260,7 @@
                             {% if productView.accessories|length > 0 %}
                                 <a href="#" class="in-tab__content__title js-tabs-button" data-tab-id="accessories">
                                     {{ accessoriesHeadline }}
-                                    <i class="svg svg-arrow"></i>
+                                    {{ icon('arrow') }}
                                 </a>
                                 <div class="in-tab__content__item js-tabs-content" data-tab-id="accessories">
                                     {{ productList.list(productView.accessories) }}

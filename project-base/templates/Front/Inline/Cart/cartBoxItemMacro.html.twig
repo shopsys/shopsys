@@ -20,7 +20,7 @@
             href="{{ url('front_cart_delete_ajax', {cartItemId: cartItem.id, _token: csrf_token('front_cart_delete_' ~ cartItem.id)}) }}"
             title="{{ 'Remove item'|trans }}"
         >
-            <i class="svg svg-remove"></i>
+            {{ icon('remove') }}
         </a>
     </li>
 {% endmacro %}

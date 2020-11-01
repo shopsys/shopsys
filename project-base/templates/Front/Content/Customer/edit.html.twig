@@ -34,12 +34,11 @@
                         <h2 class="wrap-box__title">{{ 'Changing password'|trans }}</h2>
                         <div class="wrap-box__in" id="{{ form.customerUserData.password.vars.id }}">
                             {{ form_row(form.customerUserData.password.first, { label: 'Password'|trans}) }}
-                            <i class="svg svg-info in-icon in-icon--info form-line__info js-tooltip"
-                                data-toggle="tooltip"
-                                data-placement="right"
-                                title=""
-                                data-original-title="{{ 'Password must be at least six characters and can\'t be the same as entered email or its part before at sign.'|trans }}">
-                             </i>
+                            {{ icon('info', {
+                                class: 'in-icon in-icon--info form-line__info js-tooltip',
+                                title: 'Password must be at least six characters and can\'t be the same as entered email or its part before at sign.'|trans,
+                                data: { toggle: 'tooltip', placement: 'right' }
+                            }) }}
                             {{ form_row(form.customerUserData.password.second, { label: 'Password again'|trans}) }}
                         </div>
                     </div>
