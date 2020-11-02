@@ -28,7 +28,7 @@ class ProductImageUploadCest
         $entityEditPage->uploadTestImage(self::IMAGE_UPLOAD_FIELD_ID, self::TEST_IMAGE_NAME);
         $me->clickByName(self::SAVE_BUTTON_NAME);
         $me->seeTranslationAdmin(
-            'Product <strong><a href=\"{{ url }}\">{{ product|productDisplayName }}</a></strong> modified',
+            'Product <strong><a href="{{ url }}">{{ product|productDisplayName }}</a></strong> modified',
             'messages',
             [
                 '{{ url }}' => '',

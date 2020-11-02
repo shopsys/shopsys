@@ -28,11 +28,11 @@ class TransportImageUploadCest
         $entityEditPage->uploadTestImage(self::IMAGE_UPLOAD_FIELD_ID, self::TEST_IMAGE_NAME);
         $me->clickByName(self::SAVE_BUTTON_NAME);
         $me->seeTranslationAdmin(
-            'Shipping <strong><a href="{{ url }}">%name%</a></strong> was modified',
+            'Shipping <strong><a href="{{ url }}">{{ name }}</a></strong> was modified',
             'messages',
             [
                 '{{ url }}' => '',
-                '%name%' => t('Czech post', [], 'dataFixtures', $me->getAdminLocale()),
+                '{{ name }}' => t('Czech post', [], 'dataFixtures', $me->getAdminLocale()),
             ]
         );
     }
