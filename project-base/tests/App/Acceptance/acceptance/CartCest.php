@@ -62,20 +62,15 @@ class CartCest
         $me->wantTo('add product to cart from product list');
         // tv-audio
         $me->amOnLocalizedRoute('front_product_list', ['id' => 3]);
-        $productListPage->addProductToCartByName('Defender 2.0 SPK-480', 1);
-        $me->seeTranslationFrontend(
-            'Product <strong>{{ name }}</strong> ({{ quantity|formatNumber }} {{ unitName }}) added to the cart',
-            'messages',
-            [
-                '{{ name }}' => t('Defender 2.0 SPK-480', [], 'dataFixtures', $me->getFrontendLocale()),
-                '{{ quantity|formatNumber }}' => 1,
-                '{{ unitName }}' => $me->getDefaultUnitName(),
-            ]
-        );
+
+        $productName = 'Defender 2.0 SPK-480';
+        $productListPage->addProductToCartByName($productName, 1);
+        $cartPage->seeSuccessMessageForAddedProducts($productName, 1);
+
         $floatingWindowPage->closeFloatingWindow();
         $cartBoxPage->seeCountAndPriceRoundedByCurrencyInCartBox(1, '119');
         $me->amOnLocalizedRoute('front_cart');
-        $cartPage->assertProductPriceRoundedByCurrency('Defender 2.0 SPK-480', '119');
+        $cartPage->assertProductPriceRoundedByCurrency($productName, '119');
     }
 
     /**
@@ -94,20 +89,15 @@ class CartCest
     ) {
         $me->wantTo('add product to cart from homepage');
         $me->amOnPage('/');
-        $homepagePage->addTopProductToCartByName('22" Sencor SLE 22F46DM4 HELLO KITTY', 1);
-        $me->seeTranslationFrontend(
-            'Product <strong>{{ name }}</strong> ({{ quantity|formatNumber }} {{ unitName }}) added to the cart',
-            'messages',
-            [
-                '{{ name }}' => t('22" Sencor SLE 22F46DM4 HELLO KITTY', [], 'dataFixtures', $me->getFrontendLocale()),
-                '{{ quantity|formatNumber }}' => 1,
-                '{{ unitName }}' => $me->getDefaultUnitName(),
-            ]
-        );
+
+        $productName = '22" Sencor SLE 22F46DM4 HELLO KITTY';
+        $homepagePage->addTopProductToCartByName($productName);
+        $cartPage->seeSuccessMessageForAddedProducts($productName, 1);
+
         $floatingWindowPage->closeFloatingWindow();
         $cartBoxPage->seeCountAndPriceRoundedByCurrencyInCartBox(1, '3499');
         $me->amOnLocalizedRoute('front_cart');
-        $cartPage->assertProductPriceRoundedByCurrency('22" Sencor SLE 22F46DM4 HELLO KITTY', '3499');
+        $cartPage->assertProductPriceRoundedByCurrency($productName, '3499');
     }
 
     /**
@@ -115,31 +105,28 @@ class CartCest
      * @param \Tests\App\Acceptance\acceptance\PageObject\Front\CartBoxPage $cartBoxPage
      * @param \Tests\App\Test\Codeception\AcceptanceTester $me
      * @param \Tests\App\Acceptance\acceptance\PageObject\Front\FloatingWindowPage $floatingWindowPage
+     * @param \Tests\App\Acceptance\acceptance\PageObject\Front\CartPage $cartPage
      */
     public function testAddToCartFromProductDetail(
         ProductDetailPage $productDetailPage,
         CartBoxPage $cartBoxPage,
         AcceptanceTester $me,
-        FloatingWindowPage $floatingWindowPage
+        FloatingWindowPage $floatingWindowPage,
+        CartPage $cartPage
     ) {
         $me->wantTo('add product to cart from product detail');
         // 22-sencor-sle-22f46dm4-hello-kitty
         $me->amOnLocalizedRoute('front_product_detail', ['id' => 1]);
         $me->seeTranslationFrontend('Add to cart');
         $productDetailPage->addProductIntoCart(3);
-        $me->seeTranslationFrontend(
-            'Product <strong>{{ name }}</strong> ({{ quantity|formatNumber }} {{ unitName }}) added to the cart',
-            'messages',
-            [
-                '{{ name }}' => t('22" Sencor SLE 22F46DM4 HELLO KITTY', [], 'dataFixtures', $me->getFrontendLocale()),
-                '{{ quantity|formatNumber }}' => 3,
-                '{{ unitName }}' => $me->getDefaultUnitName(),
-            ]
-        );
+
+        $productName = '22" Sencor SLE 22F46DM4 HELLO KITTY';
+        $cartPage->seeSuccessMessageForAddedProducts($productName, 3);
+
         $floatingWindowPage->closeFloatingWindow();
         $cartBoxPage->seeCountAndPriceRoundedByCurrencyInCartBox(1, '10497');
         $me->amOnLocalizedRoute('front_cart');
-        $me->seeTranslationFrontend('22" Sencor SLE 22F46DM4 HELLO KITTY', 'dataFixtures');
+        $me->seeTranslationFrontend($productName, 'dataFixtures');
     }
 
     /**
@@ -160,10 +147,11 @@ class CartCest
         $productDetailPage->addProductIntoCart(3);
         $cartPage->clickGoToCartInPopUpWindow();
 
-        $cartPage->changeProductQuantity('22" Sencor SLE 22F46DM4 HELLO KITTY', 10);
+        $productName = '22" Sencor SLE 22F46DM4 HELLO KITTY';
+        $cartPage->changeProductQuantity($productName, 10);
 
         $products = [
-            '22" Sencor SLE 22F46DM4 HELLO KITTY' => 10,
+            $productName => 10,
         ];
 
         $cartPage->assertTotalPriceWithVatByProducts($products);
