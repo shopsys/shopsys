@@ -40,6 +40,7 @@ class OrderPage extends AbstractPage
             '#transport_and_payment_form_transport_' . $transportPosition
         );
         $frontCheckboxClicker->check();
+        $this->tester->waitForAjax();
     }
 
     /**
@@ -73,6 +74,7 @@ class OrderPage extends AbstractPage
             '#transport_and_payment_form_payment_' . $paymentPosition
         );
         $frontCheckboxClicker->check();
+        $this->tester->waitForAjax();
     }
 
     /**
@@ -115,6 +117,8 @@ class OrderPage extends AbstractPage
         $this->tester->fillFieldByName('order_personal_info_form[street]', $street);
         $this->tester->fillFieldByName('order_personal_info_form[city]', $city);
         $this->tester->fillFieldByName('order_personal_info_form[postcode]', $postcode);
+
+        $this->tester->waitForAjax();
     }
 
     /**
@@ -132,6 +136,8 @@ class OrderPage extends AbstractPage
             '#order_personal_info_form_legalConditionsAgreement'
         );
         $frontCheckboxClicker->check();
+        $this->tester->waitForAjax();
+        $this->tester->wait(1);
     }
 
     protected function scrollToPaymentForm()
@@ -147,5 +153,30 @@ class OrderPage extends AbstractPage
             [],
             WebDriverBy::cssSelector('#window-main-container')
         );
+    }
+
+    public function continueToSecondStep(): void
+    {
+        $this->tester->clickByTranslationFrontend('Order [verb]');
+    }
+
+    public function continueToThirdStep(): void
+    {
+        $this->tester->clickByTranslationFrontend('Continue in order');
+    }
+
+    public function goBackToSecondStep(): void
+    {
+        $this->tester->clickByTranslationFrontend('Back to shipping and payment selection');
+    }
+
+    public function finishOrder(): void
+    {
+        $this->tester->clickByTranslationFrontend('Finish the order');
+    }
+
+    public function checkOrderFinishedSuccessfully(): void
+    {
+        $this->tester->seeTranslationFrontend('Order sent');
     }
 }

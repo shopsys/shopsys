@@ -15,9 +15,17 @@ use Tests\App\Test\Codeception\Helper\SymfonyHelper;
 
 class OrderCest
 {
-    protected const MINIMUM_FORM_SUBMIT_WAIT_TIME = 10;
     private const TRANSPORT_CZECH_POST_POSITION = 0;
     private const PAYMENT_CACHE_ON_DELIVERY = 1;
+
+    private const DEFAULT_TRANSPORT_NAME = 'Czech post';
+    private const DEFAULT_PAYMENT_NAME = 'Cash on delivery';
+    private const DEFAULT_PRODUCT_NAME = 'Defender 2.0 SPK-480';
+
+    private const DEFAULT_BILLING_STREET = 'Koksární 10';
+    private const DEFAULT_BILLING_CITY = 'Ostrava';
+    private const DEFAULT_BILLING_POSTCODE = '702 00';
+    private const DEFAULT_PHONE = '123456789';
 
     /**
      * @param \Tests\App\Acceptance\acceptance\PageObject\Front\ProductListPage $productListPage
@@ -33,22 +41,23 @@ class OrderCest
 
         // tv-audio
         $me->amOnLocalizedRoute('front_product_list', ['id' => 3]);
-        $productListPage->addProductToCartByName('Defender 2.0 SPK-480');
-        $me->waitForAjax();
+        $productListPage->addProductToCartByName(self::DEFAULT_PRODUCT_NAME);
+
         $orderPage->clickGoToCartInPopUpWindow();
-        $me->clickByTranslationFrontend('Order [verb]');
 
-        $orderPage->assertTransportIsNotSelected('Czech post');
+        $orderPage->continueToSecondStep();
+
+        $orderPage->assertTransportIsNotSelected(self::DEFAULT_TRANSPORT_NAME);
         $orderPage->selectTransport(self::TRANSPORT_CZECH_POST_POSITION);
-        $me->waitForAjax();
-        $orderPage->assertPaymentIsNotSelected('Cash on delivery');
+        $orderPage->assertPaymentIsNotSelected(self::DEFAULT_PAYMENT_NAME);
         $orderPage->selectPayment(self::PAYMENT_CACHE_ON_DELIVERY);
-        $me->waitForAjax();
-        $me->clickByTranslationFrontend('Continue in order');
-        $me->clickByTranslationFrontend('Back to shipping and payment selection');
 
-        $orderPage->assertTransportIsSelected('Czech post');
-        $orderPage->assertPaymentIsSelected('Cash on delivery');
+        $orderPage->continueToThirdStep();
+
+        $orderPage->goBackToSecondStep();
+
+        $orderPage->assertTransportIsSelected(self::DEFAULT_TRANSPORT_NAME);
+        $orderPage->assertPaymentIsSelected(self::DEFAULT_PAYMENT_NAME);
     }
 
     /**
@@ -65,21 +74,19 @@ class OrderCest
 
         // tv-audio
         $me->amOnLocalizedRoute('front_product_list', ['id' => 3]);
-        $productListPage->addProductToCartByName('Defender 2.0 SPK-480');
+        $productListPage->addProductToCartByName(self::DEFAULT_PRODUCT_NAME);
         $orderPage->clickGoToCartInPopUpWindow();
-        $me->clickByTranslationFrontend('Order [verb]');
+        $orderPage->continueToSecondStep();
 
-        $orderPage->assertTransportIsNotSelected('Czech post');
+        $orderPage->assertTransportIsNotSelected(self::DEFAULT_TRANSPORT_NAME);
         $orderPage->selectTransport(self::TRANSPORT_CZECH_POST_POSITION);
-        $me->waitForAjax();
-        $orderPage->assertPaymentIsNotSelected('Cash on delivery');
+        $orderPage->assertPaymentIsNotSelected(self::DEFAULT_PAYMENT_NAME);
         $orderPage->selectPayment(self::PAYMENT_CACHE_ON_DELIVERY);
-        $me->waitForAjax();
-        $me->clickByTranslationFrontend('Continue in order');
-        $me->amOnLocalizedRoute('front_order_index');
+        $orderPage->continueToThirdStep();
 
-        $orderPage->assertTransportIsSelected('Czech post');
-        $orderPage->assertPaymentIsSelected('Cash on delivery');
+        $me->amOnLocalizedRoute('front_order_index');
+        $orderPage->assertTransportIsSelected(self::DEFAULT_TRANSPORT_NAME);
+        $orderPage->assertPaymentIsSelected(self::DEFAULT_PAYMENT_NAME);
     }
 
     /**
@@ -93,19 +100,19 @@ class OrderCest
 
         // tv-audio
         $me->amOnLocalizedRoute('front_product_list', ['id' => 3]);
-        $productListPage->addProductToCartByName('Defender 2.0 SPK-480');
+        $productListPage->addProductToCartByName(self::DEFAULT_PRODUCT_NAME);
         $orderPage->clickGoToCartInPopUpWindow();
-        $me->clickByTranslationFrontend('Order [verb]');
+        $orderPage->continueToSecondStep();
+
         $orderPage->selectTransport(self::TRANSPORT_CZECH_POST_POSITION);
-        $me->waitForAjax();
         $orderPage->selectPayment(self::PAYMENT_CACHE_ON_DELIVERY);
-        $me->waitForAjax();
-        $me->clickByTranslationFrontend('Continue in order');
+        $orderPage->continueToThirdStep();
 
         $orderPage->fillFirstName('Jan');
-        $me->clickByTranslationFrontend('Back to shipping and payment selection');
+        $orderPage->goBackToSecondStep();
+
         $me->amOnLocalizedRoute('front_order_index');
-        $me->clickByTranslationFrontend('Continue in order');
+        $orderPage->continueToThirdStep();
 
         $orderPage->assertFirstNameIsFilled('Jan');
     }
@@ -151,24 +158,25 @@ class OrderCest
     ) {
         // tv-audio
         $me->amOnLocalizedRoute('front_product_list', ['id' => 3]);
-        $productListPage->addProductToCartByName('Defender 2.0 SPK-480');
+        $productListPage->addProductToCartByName(self::DEFAULT_PRODUCT_NAME);
         $orderPage->clickGoToCartInPopUpWindow();
-        $me->clickByTranslationFrontend('Order [verb]');
+        $orderPage->continueToSecondStep();
 
         $orderPage->selectTransport(self::TRANSPORT_CZECH_POST_POSITION);
-        $me->waitForAjax();
         $orderPage->selectPayment(self::PAYMENT_CACHE_ON_DELIVERY);
-        $me->waitForAjax();
-        $me->clickByTranslationFrontend('Continue in order');
+        $orderPage->continueToThirdStep();
 
-        $orderPage->fillPersonalInfo('Karel', 'Novák', 'no-reply@shopsys.com', '123456789');
-        $orderPage->fillBillingAddress('Koksární 10', 'Ostrava', '702 00');
-        $me->waitForAjax();
+        $orderPage->fillPersonalInfo('Karel', 'Novák', 'no-reply@shopsys.com', self::DEFAULT_PHONE);
+        $orderPage->fillBillingAddress(
+            self::DEFAULT_BILLING_STREET,
+            self::DEFAULT_BILLING_CITY,
+            self::DEFAULT_BILLING_POSTCODE
+        );
         $orderPage->acceptLegalConditions();
 
-        $me->clickByTranslationFrontend('Finish the order');
+        $orderPage->finishOrder();
 
-        $me->seeTranslationFrontend('Order sent');
+        $orderPage->checkOrderFinishedSuccessfully();
     }
 
     /**
@@ -189,32 +197,44 @@ class OrderCest
 
         $me->amOnPage('/');
         $layoutPage->clickOnRegistration();
-        $registrationPage->register('Roman', 'Štěpánek', 'no-reply.16@shopsys.com', 'user123', 'user123');
-        $me->wait(self::MINIMUM_FORM_SUBMIT_WAIT_TIME);
-        $me->seeTranslationFrontend('You have been successfully registered.');
-        $me->see('Roman Štěpánek');
-        $me->seeTranslationFrontend('Log out');
+        $registrationPage->register(
+            CustomerRegistrationCest::DEFAULT_USER_FIRST_NAME,
+            CustomerRegistrationCest::DEFAULT_USER_LAST_NAME,
+            CustomerRegistrationCest::DEFAULT_USER_EMAIL,
+            CustomerRegistrationCest::DEFAULT_USER_PASSWORD,
+            CustomerRegistrationCest::DEFAULT_USER_PASSWORD
+        );
+        $registrationPage->checkRegistrationSuccessful(
+            CustomerRegistrationCest::DEFAULT_USER_FIRST_NAME . ' ' . CustomerRegistrationCest::DEFAULT_USER_LAST_NAME
+        );
 
         // tv-audio
         $me->amOnLocalizedRoute('front_product_list', ['id' => 3]);
 
-        $productListPage->addProductToCartByName('Defender 2.0 SPK-480');
+        $productListPage->addProductToCartByName(self::DEFAULT_PRODUCT_NAME);
         $orderPage->clickGoToCartInPopUpWindow();
-        $me->clickByTranslationFrontend('Order [verb]');
+        $orderPage->continueToSecondStep();
 
         $orderPage->selectTransport(self::TRANSPORT_CZECH_POST_POSITION);
-        $me->waitForAjax();
         $orderPage->selectPayment(self::PAYMENT_CACHE_ON_DELIVERY);
-        $me->waitForAjax();
-        $me->clickByTranslationFrontend('Continue in order');
 
-        $orderPage->fillPersonalInfo('Roman', 'Štěpánek', 'no-reply.16@shopsys.com', '123456789');
-        $orderPage->fillBillingAddress('Koksární 10', 'Ostrava', '702 00');
-        $me->waitForAjax();
+        $orderPage->continueToThirdStep();
+
+        $orderPage->fillPersonalInfo(
+            CustomerRegistrationCest::DEFAULT_USER_FIRST_NAME,
+            CustomerRegistrationCest::DEFAULT_USER_LAST_NAME,
+            CustomerRegistrationCest::DEFAULT_USER_EMAIL,
+            self::DEFAULT_PHONE
+        );
+        $orderPage->fillBillingAddress(
+            self::DEFAULT_BILLING_STREET,
+            self::DEFAULT_BILLING_CITY,
+            self::DEFAULT_BILLING_POSTCODE
+        );
         $orderPage->acceptLegalConditions();
 
-        $me->clickByTranslationFrontend('Finish the order');
+        $orderPage->finishOrder();
 
-        $me->seeTranslationFrontend('Order sent');
+        $orderPage->checkOrderFinishedSuccessfully();
     }
 }
