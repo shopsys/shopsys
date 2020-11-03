@@ -6,10 +6,31 @@ namespace Tests\App\Acceptance\acceptance\PageObject\Front;
 
 use Shopsys\FrameworkBundle\Component\Form\TimedFormTypeExtension;
 use Tests\App\Acceptance\acceptance\PageObject\AbstractPage;
+use Tests\App\Test\Codeception\AcceptanceTester;
+use Tests\App\Test\Codeception\Module\StrictWebDriver;
 use Tests\FrameworkBundle\Test\Codeception\FrontCheckbox;
 
 class RegistrationPage extends AbstractPage
 {
+    protected const MINIMUM_FORM_SUBMIT_WAIT_TIME = 10;
+
+    /**
+     * @var \Tests\App\Acceptance\acceptance\PageObject\Front\LoginPage
+     */
+    protected $loginPage;
+
+    /**
+     * @param \Tests\App\Test\Codeception\Module\StrictWebDriver $strictWebDriver
+     * @param \Tests\App\Test\Codeception\AcceptanceTester $tester
+     * @param \Tests\App\Acceptance\acceptance\PageObject\Front\LoginPage $loginPage
+     */
+    public function __construct(StrictWebDriver $strictWebDriver, AcceptanceTester $tester, LoginPage $loginPage)
+    {
+        $this->loginPage = $loginPage;
+
+        parent::__construct($strictWebDriver, $tester);
+    }
+
     /**
      * @param string $firstName
      * @param string $lastName
@@ -63,5 +84,15 @@ class RegistrationPage extends AbstractPage
         $this->tester->moveMouseOverByCss($fieldClass);
 
         $this->tester->seeTranslationFrontend($text, 'validators');
+    }
+
+    /**
+     * @param string|null $fullName
+     */
+    public function checkRegistrationSuccessful(?string $fullName = null): void
+    {
+        $this->tester->wait(self::MINIMUM_FORM_SUBMIT_WAIT_TIME);
+        $this->tester->seeTranslationFrontend('You have been successfully registered.');
+        $this->loginPage->checkUserLogged($fullName);
     }
 }

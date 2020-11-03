@@ -20,7 +20,10 @@ class LoginPage extends AbstractPage
         $this->tester->waitForAjax();
     }
 
-    public function checkUserLogged(): void
+    /**
+     * @param string|null $fullName
+     */
+    public function checkUserLogged(?string $fullName = null): void
     {
         $this->tester->see($fullName ?? self::DEFAULT_USER_NAME);
         $this->tester->seeTranslationFrontend('Log out');

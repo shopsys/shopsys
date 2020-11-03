@@ -10,7 +10,10 @@ use Tests\App\Test\Codeception\AcceptanceTester;
 
 class CustomerRegistrationCest
 {
-    protected const MINIMUM_FORM_SUBMIT_WAIT_TIME = 10;
+    public const DEFAULT_USER_FIRST_NAME = 'Roman';
+    public const DEFAULT_USER_LAST_NAME = 'Štěpánek';
+    public const DEFAULT_USER_PASSWORD = 'user123';
+    public const DEFAULT_USER_EMAIL = 'no-reply.16@shopsys.com';
 
     /**
      * @param \Tests\App\Acceptance\acceptance\PageObject\Front\RegistrationPage $registrationPage
@@ -28,11 +31,17 @@ class CustomerRegistrationCest
 
         $me->reloadPage();
 
-        $registrationPage->register('Roman', 'Štěpánek', 'no-reply.16@shopsys.com', 'user123', 'user123');
-        $me->wait(self::MINIMUM_FORM_SUBMIT_WAIT_TIME);
-        $me->seeTranslationFrontend('You have been successfully registered.');
-        $me->see('Roman Štěpánek');
-        $me->seeTranslationFrontend('Log out');
+        $registrationPage->register(
+            self::DEFAULT_USER_FIRST_NAME,
+            self::DEFAULT_USER_LAST_NAME,
+            self::DEFAULT_USER_EMAIL,
+            self::DEFAULT_USER_PASSWORD,
+            self::DEFAULT_USER_PASSWORD
+        );
+
+        $registrationPage->checkRegistrationSuccessful(
+            self::DEFAULT_USER_FIRST_NAME . ' ' . self::DEFAULT_USER_LAST_NAME
+        );
     }
 
     /**
@@ -43,7 +52,13 @@ class CustomerRegistrationCest
     {
         $me->wantTo('use already used email while registration');
         $me->amOnLocalizedRoute('front_registration_register');
-        $registrationPage->register('Roman', 'Štěpánek', 'no-reply@shopsys.com', 'user123', 'user123');
+        $registrationPage->register(
+            self::DEFAULT_USER_FIRST_NAME,
+            self::DEFAULT_USER_LAST_NAME,
+            'no-reply@shopsys.com',
+            self::DEFAULT_USER_PASSWORD,
+            self::DEFAULT_USER_PASSWORD
+        );
         $registrationPage->seeEmailError('This email is already registered');
     }
 
@@ -56,10 +71,10 @@ class CustomerRegistrationCest
         $me->wantTo('use mismatching passwords while registration');
         $me->amOnLocalizedRoute('front_registration_register');
         $registrationPage->register(
-            'Roman',
-            'Štěpánek',
-            'no-reply.16@shopsys.com',
-            'user123',
+            self::DEFAULT_USER_FIRST_NAME,
+            self::DEFAULT_USER_LAST_NAME,
+            self::DEFAULT_USER_EMAIL,
+            self::DEFAULT_USER_PASSWORD,
             'missmatchingPassword'
         );
         $registrationPage->seePasswordError('Passwords do not match');
