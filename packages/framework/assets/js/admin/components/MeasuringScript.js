@@ -3,17 +3,18 @@ import Register from '../../common/utils/Register';
 export default class MeasuringScript {
 
     constructor ($container) {
-        this.$embedOnlyInOrderSentPageCheckbox = $container.filterAllNodes('input[name="script_form[placement]"]');
+        const $placementSelectBox = $container.filterAllNodes('.js-measure-script-placement-choice');
 
-        if (this.$embedOnlyInOrderSentPageCheckbox.length > 0) {
-            this.toggleScriptVariables();
-            this.$embedOnlyInOrderSentPageCheckbox.on('change', () => this.toggleScriptVariables());
-        }
+        this.toggleMessageInfo($placementSelectBox.val(), $container);
+
+        $placementSelectBox.on('change', event => {
+            this.toggleMessageInfo($(event.target).val(), $container);
+        });
     }
 
-    toggleScriptVariables () {
-        const isChecked = this.$embedOnlyInOrderSentPageCheckbox.prop('checked');
-        $('#js-order-sent-page-variables').toggle(isChecked);
+    toggleMessageInfo (value, $container) {
+        $container.filterAllNodes('.js-script-placement-info').hide();
+        $container.filterAllNodes('.js-script-placement-info-' + value).show();
     }
 
     static init ($container) {

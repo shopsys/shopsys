@@ -6,6 +6,9 @@ use Shopsys\FrameworkBundle\Model\Script\Script;
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\Exception\TransformationFailedException;
 
+/**
+ * @deprecated No replacement suggested as it's not necessary anymore
+ */
 class ScriptPlacementToBooleanTransformer implements DataTransformerInterface
 {
     /**

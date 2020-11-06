@@ -2,10 +2,10 @@
 
 namespace Shopsys\FrameworkBundle\Form\Admin\Script;
 
-use Shopsys\FrameworkBundle\Form\Transformers\ScriptPlacementToBooleanTransformer;
 use Shopsys\FrameworkBundle\Model\Script\ScriptData;
+use Shopsys\FrameworkBundle\Model\Script\ScriptFacade;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -15,6 +15,19 @@ use Symfony\Component\Validator\Constraints;
 
 class ScriptFormType extends AbstractType
 {
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Script\ScriptFacade
+     */
+    protected $scriptFacade;
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Script\ScriptFacade $scriptFacade
+     */
+    public function __construct(ScriptFacade $scriptFacade)
+    {
+        $this->scriptFacade = $scriptFacade;
+    }
+
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
@@ -35,9 +48,13 @@ class ScriptFormType extends AbstractType
                     'class' => 'height-150',
                 ],
             ])
-            ->add($builder
-                ->create('placement', CheckboxType::class, ['required' => false])
-                ->addModelTransformer(new ScriptPlacementToBooleanTransformer()))
+            ->add('placement', ChoiceType::class, [
+                'required' => true,
+                'choices' => $this->scriptFacade->getAvailablePlacementChoices(),
+                'attr' => [
+                    'class' => 'js-measure-script-placement-choice',
+                ],
+            ])
             ->add('save', SubmitType::class);
     }
 
