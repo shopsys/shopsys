@@ -4,6 +4,7 @@ imports:
 parameters:
     # Use Shopsys validator factory for fp/jsformvalidator-bundle
     fp_js_form_validator.factory.class: Shopsys\FrameworkBundle\Form\JsFormValidatorFactory
+    fp_js_form_validator.twig_extension.class: Shopsys\FrameworkBundle\Twig\JsFormValidatorTwigExtension
 
     # Use Shopsys routing for knplabs/knp-menu-bundle that ignores missing parameters in routes
     knp_menu.factory_extension.routing.class: Shopsys\FrameworkBundle\Model\AdminNavigation\RoutingExtension
