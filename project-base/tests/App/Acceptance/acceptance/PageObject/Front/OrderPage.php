@@ -10,7 +10,7 @@ use Tests\FrameworkBundle\Test\Codeception\FrontCheckbox;
 
 class OrderPage extends AbstractPage
 {
-    protected const FIRST_NAME_FIELD_NAME = 'order_personal_info_form[firstName]';
+    private const FIRST_NAME_FIELD_NAME = 'order_personal_info_form[firstName]';
 
     /**
      * @param string $transportTitle
@@ -140,7 +140,7 @@ class OrderPage extends AbstractPage
         $this->tester->wait(1);
     }
 
-    protected function scrollToPaymentForm()
+    private function scrollToPaymentForm()
     {
         $this->tester->scrollTo(['css' => '#transport_and_payment_form_payment']);
     }

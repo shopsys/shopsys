@@ -12,12 +12,12 @@ use Tests\FrameworkBundle\Test\Codeception\FrontCheckbox;
 
 class RegistrationPage extends AbstractPage
 {
-    protected const MINIMUM_FORM_SUBMIT_WAIT_TIME = 10;
+    private const MINIMUM_FORM_SUBMIT_WAIT_TIME = 10;
 
     /**
      * @var \Tests\App\Acceptance\acceptance\PageObject\Front\LoginPage
      */
-    protected $loginPage;
+    private $loginPage;
 
     /**
      * @param \Tests\App\Test\Codeception\Module\StrictWebDriver $strictWebDriver
