@@ -75,6 +75,7 @@ class ProductFilterFormType extends AbstractType
             ->setAllowedTypes('product_filter_config', ProductFilterConfig::class)
             ->setDefaults([
                 'attr' => ['novalidate' => 'novalidate'],
+                'js_validation' => false,
                 'data_class' => ProductFilterData::class,
                 'method' => 'GET',
                 'csrf_protection' => false,

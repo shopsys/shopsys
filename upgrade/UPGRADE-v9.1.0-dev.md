@@ -211,3 +211,6 @@ There you can find links to upgrade notes for other versions too.
 
 - avoid missing or delayed logs ([#2103](https://github.com/shopsys/shopsys/pull/2103))
     - see #project-base-diff to update your project
+
+- disable javascript validation for product filter form ([#2104](https://github.com/shopsys/shopsys/pull/2104))
+    - see #project-base-diff to update your project
