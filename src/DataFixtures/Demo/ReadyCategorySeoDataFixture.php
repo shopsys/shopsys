@@ -97,7 +97,7 @@ class ReadyCategorySeoDataFixture extends AbstractReferenceFixture implements De
         );
 
         $choseCategorySeoMixCombinationArray['flagId'] = 2;
-        $choseCategorySeoMixCombinationArray['ordering'] = ProductListOrderingConfig::ORDER_BY_NAME_ASC;
+        $choseCategorySeoMixCombinationArray['ordering'] = ProductListOrderingConfig::ORDER_BY_PRIORITY;
         $choseCategorySeoMixCombinationArray['parameterValueIdsByParameterIds'] = [
             1 => 1,
             5 => 11,
@@ -166,6 +166,7 @@ class ReadyCategorySeoDataFixture extends AbstractReferenceFixture implements De
             $readyCategorySeoMixDataForForm,
             $choseCategorySeoMixCombination
         );
+        $readyCategorySeoMixData->showInCategory = true;
 
         $urlListData = new UrlListData();
         $urlListData->newUrls = [];

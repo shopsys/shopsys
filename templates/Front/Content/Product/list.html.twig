@@ -82,6 +82,9 @@
             {{ render(controller('App\\Controller\\Front\\AdvertController:categoryBoxAction',{'positionName' : constant('App\\Model\\Advert\\AdvertPositionRegistry::CATEGORIES_ABOVE_PRODUCT_LIST'), category: category})) }}
         </div>
     </div>
+    {% cache 'seo_categories_mixes__' ~ category.id ~ '_' ~ readyCategorySeoMixId {lifetime:60*60, domainId:getDomain().id} %}
+        {{ render(controller('App\\Controller\\Front\\CategorySeoMixController:childSeoCategoryMixesAction', {'category' : category, 'selectedReadyCategorySeoMixId': readyCategorySeoMixId}))|spaceless }}
+    {% endcache %}
     <div class="web__line web__line--product-list">
         <div class="web__container web__container--full-width web__container--no-padding">
             <div class="box-list js-product-list-with-filter">

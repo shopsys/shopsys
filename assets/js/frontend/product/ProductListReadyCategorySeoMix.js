@@ -9,6 +9,7 @@ export default class ProductListReadyCategorySeoMix {
             const $elementWithValues = $(this);
 
             ProductListReadyCategorySeoMix.setSeoPropertiesToProperElements(
+                $elementWithValues.attr('data-selected-ready-category-seo-mix-id'),
                 $elementWithValues.attr('data-seo-h1'),
                 $elementWithValues.attr('data-seo-description'),
                 $elementWithValues.attr('data-seo-short-description'),
@@ -19,7 +20,20 @@ export default class ProductListReadyCategorySeoMix {
         });
     }
 
-    static setSeoPropertiesToProperElements (h1, description, shortDescription, seoTitle, seoMetaDescription, url) {
+    static setSeoPropertiesToProperElements (
+        selectedReadyCategorySeoMixId,
+        h1,
+        description,
+        shortDescription,
+        seoTitle,
+        seoMetaDescription,
+        url
+    ) {
+        $('.js-category-seo-mix').removeClass('btn--primary');
+        if (selectedReadyCategorySeoMixId) {
+            $('.js-category-seo-mix-' + selectedReadyCategorySeoMixId).addClass('btn--primary');
+        }
+
         $('.js-ready-category-seo-mix-product-list-h1').text(h1);
         $('.js-ready-category-seo-mix-product-list-description').html(description);
         const $shortDescription = $('.js-ready-category-seo-mix-product-list-short-description');

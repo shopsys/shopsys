@@ -110,6 +110,13 @@ class ReadyCategorySeoMix
     private $metaDescription;
 
     /**
+     * @var bool
+     *
+     * @ORM\Column(type="boolean")
+     */
+    private $showInCategory;
+
+    /**
      * @param \App\Model\CategorySeo\ReadyCategorySeoMixData $readyCategorySeoMixData
      */
     public function __construct(ReadyCategorySeoMixData $readyCategorySeoMixData)
@@ -127,6 +134,7 @@ class ReadyCategorySeoMix
         $this->description = $readyCategorySeoMixData->description;
         $this->title = $readyCategorySeoMixData->title;
         $this->metaDescription = $readyCategorySeoMixData->metaDescription;
+        $this->showInCategory = $readyCategorySeoMixData->showInCategory;
     }
 
     /**
@@ -143,6 +151,7 @@ class ReadyCategorySeoMix
         $this->description = $readyCategorySeoMixData->description;
         $this->title = $readyCategorySeoMixData->title;
         $this->metaDescription = $readyCategorySeoMixData->metaDescription;
+        $this->showInCategory = $readyCategorySeoMixData->showInCategory;
     }
 
     /**
@@ -271,5 +280,13 @@ class ReadyCategorySeoMix
     public function getDomainId(): int
     {
         return $this->domainId;
+    }
+
+    /**
+     * @return bool
+     */
+    public function showInCategory(): bool
+    {
+        return $this->showInCategory;
     }
 }

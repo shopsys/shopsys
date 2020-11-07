@@ -41,19 +41,6 @@ class ListedProductViewFacadeTest extends FunctionalTestCase
         $this->assertEquals(t('Defender 2.0 SPK-480', [], 'dataFixtures', $firstDomainLocale), $listedProductViews[$productId2]->getName());
     }
 
-    public function testGetPaginatedForBrand(): void
-    {
-        $brandId = 1;
-        $foundProductId = 5;
-
-        $paginationResults = $this->listedProductViewFacade->getPaginatedForBrand($brandId, ProductListOrderingConfig::ORDER_BY_NAME_ASC, 1, 10);
-        $listedProductViews = $paginationResults->getResults();
-
-        $this->assertCount(1, $listedProductViews);
-        $this->assertArrayHasKey($foundProductId, $listedProductViews);
-        $this->assertInstanceOf(ListedProductView::class, $listedProductViews[$foundProductId]);
-    }
-
     public function testGetFilteredPaginatedForSearch(): void
     {
         $firstDomainLocale = $this->getFirstDomainLocale();

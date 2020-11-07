@@ -45,4 +45,9 @@ class ReadyCategorySeoMixDataForForm
      * @var \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\UrlListData
      */
     public $urls;
+
+    /**
+     * @var bool
+     */
+    public $showInCategory;
 }

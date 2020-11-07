@@ -7,6 +7,7 @@ namespace App\Form\Admin;
 use App\Model\CategorySeo\ReadyCategorySeoMix;
 use App\Model\CategorySeo\ReadyCategorySeoMixDataForForm;
 use FOS\CKEditorBundle\Form\Type\CKEditorType;
+use Shopsys\FormTypesBundle\YesNoType;
 use Shopsys\FrameworkBundle\Form\UrlListType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
@@ -43,6 +44,9 @@ class ReadyCategorySeoCombinationFormType extends AbstractType
                 'constraints' => [
                     new NotBlank(),
                 ],
+            ])
+            ->add('showInCategory', YesNoType::class, [
+                'label' => t('Zobrazit v rozcestníku'),
             ])
             ->add('shortDescription', TextareaType::class, [
                 'label' => t('Krátký popis kategorie'),

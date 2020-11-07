@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Tests\App\Functional\Model\Product;
 
-use App\DataFixtures\Demo\BrandDataFixture;
 use App\DataFixtures\Demo\CategoryDataFixture;
 use App\DataFixtures\Demo\FlagDataFixture;
 use App\Model\Category\Category;
@@ -12,7 +11,6 @@ use App\Model\Product\Filter\ParameterFilterData;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Component\Paginator\PaginationResult;
-use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData;
 use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingConfig;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue;
@@ -97,34 +95,6 @@ abstract class ProductOnCurrentDomainFacadeTest extends TransactionFunctionalTes
         $paginationResult = $this->getPaginationResultInCategory($productFilterData, $category);
 
         $this->assertCount(4, $paginationResult->getResults());
-    }
-
-    public function testFilterByBrand()
-    {
-        $category = $this->getReference(CategoryDataFixture::CATEGORY_PRINTERS);
-
-        /** @var \App\Model\Product\Brand\Brand $brandCanon */
-        $brandCanon = $this->getReference(BrandDataFixture::BRAND_CANON);
-        $productFilterData = new ProductFilterData();
-        $productFilterData->brands = [$brandCanon];
-        $paginationResult = $this->getPaginationResultInCategory($productFilterData, $category);
-
-        $this->assertCount(4, $paginationResult->getResults());
-    }
-
-    public function testFilterByBrandsReturnsProductsWithAnyOfUsedBrands()
-    {
-        $category = $this->getReference(CategoryDataFixture::CATEGORY_PRINTERS);
-
-        /** @var \App\Model\Product\Brand\Brand $brandHp */
-        $brandHp = $this->getReference(BrandDataFixture::BRAND_HP);
-        /** @var \App\Model\Product\Brand\Brand $brandCanon */
-        $brandCanon = $this->getReference(BrandDataFixture::BRAND_CANON);
-        $productFilterData = new ProductFilterData();
-        $productFilterData->brands = [$brandCanon, $brandHp];
-        $paginationResult = $this->getPaginationResultInCategory($productFilterData, $category);
-
-        $this->assertCount(5, $paginationResult->getResults());
     }
 
     public function testFilterByParameter()
@@ -277,50 +247,6 @@ abstract class ProductOnCurrentDomainFacadeTest extends TransactionFunctionalTes
     public function getPaginationResultInCategory(ProductFilterData $productFilterData, Category $category): PaginationResult
     {
         return $this->getPaginationResultInCategoryWithPageAndLimit($productFilterData, $category, 1, 1000);
-    }
-
-    public function testGetProductsForBrand(): void
-    {
-        $brand = $this->getReference(BrandDataFixture::BRAND_CANON);
-
-        $paginationResult = $this->getPaginatedProductsForBrand($brand);
-
-        $this->assertCount(8, $paginationResult->getResults());
-    }
-
-    /**
-     * @param \App\Model\Product\Brand\Brand $brand
-     * @return \Shopsys\FrameworkBundle\Component\Paginator\PaginationResult
-     */
-    public function getPaginatedProductsForBrand(Brand $brand): PaginationResult
-    {
-        $productOnCurrentDomainFacade = $this->getProductOnCurrentDomainFacade();
-        $page = 1;
-        $limit = 1000;
-
-        return $productOnCurrentDomainFacade->getPaginatedProductsForBrand(
-            ProductListOrderingConfig::ORDER_BY_NAME_ASC,
-            $page,
-            $limit,
-            $brand->getId()
-        );
-    }
-
-    public function testGetPaginatedProductsForSearchWithFlagsAndBrand(): void
-    {
-        $productFilterData = new ProductFilterData();
-
-        /** @var \Shopsys\FrameworkBundle\Model\Product\Flag\Flag $flagTopProduct */
-        $flagTopProduct = $this->getReference(FlagDataFixture::FLAG_PRODUCT_NEW);
-        $productFilterData->flags = [$flagTopProduct];
-
-        /** @var \App\Model\Product\Brand\Brand $brandCanon */
-        $brandCanon = $this->getReference(BrandDataFixture::BRAND_CANON);
-        $productFilterData->brands = [$brandCanon];
-
-        $paginationResult = $this->getPaginationResultInSearch($productFilterData, 'mg3550');
-
-        $this->assertCount(1, $paginationResult->getResults());
     }
 
     /**

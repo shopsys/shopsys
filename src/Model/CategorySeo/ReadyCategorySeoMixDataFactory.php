@@ -157,6 +157,7 @@ class ReadyCategorySeoMixDataFactory
         $readyCategorySeoMixData->description = $readyCategorySeoMixDataForForm->description;
         $readyCategorySeoMixData->title = $readyCategorySeoMixDataForForm->title;
         $readyCategorySeoMixData->metaDescription = $readyCategorySeoMixDataForForm->metaDescription;
+        $readyCategorySeoMixData->showInCategory = $readyCategorySeoMixDataForForm->showInCategory;
     }
 
     /**
@@ -170,5 +171,6 @@ class ReadyCategorySeoMixDataFactory
         $readyCategorySeoMixDataForForm->description = $readyCategorySeoMix->getDescription();
         $readyCategorySeoMixDataForForm->title = $readyCategorySeoMix->getTitle();
         $readyCategorySeoMixDataForForm->metaDescription = $readyCategorySeoMix->getMetaDescription();
+        $readyCategorySeoMixDataForForm->showInCategory = $readyCategorySeoMix->showInCategory();
     }
 }

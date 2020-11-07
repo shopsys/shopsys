@@ -57,6 +57,11 @@ class ReadyCategorySeoMixData
     public $metaDescription;
 
     /**
+     * @var bool
+     */
+    public $showInCategory;
+
+    /**
      * @var string|null
      */
     public $choseCategorySeoMixCombinationJson;

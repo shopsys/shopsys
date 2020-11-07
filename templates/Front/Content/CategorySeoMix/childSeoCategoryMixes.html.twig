@@ -1,0 +1,13 @@
+{% if readyCategorySeoMixes|length > 0 %}
+    <div class="web__line">
+        <div class="web__container">
+            {% for readyCategorySeoMix in readyCategorySeoMixes %}
+                <a href="{{ url('front_category_seo', { id: readyCategorySeoMix.id }) }}"
+                   class="btn {{ readyCategorySeoMix.id == selectedReadyCategorySeoMixId ? 'btn--primary' : '' }} js-category-seo-mix js-category-seo-mix-{{ readyCategorySeoMix.id }}"
+                >
+                    {{ readyCategorySeoMix.h1 }}
+                </a>
+            {% endfor %}
+        </div>
+    </div>
+{% endif %}

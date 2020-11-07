@@ -4,11 +4,14 @@ declare(strict_types=1);
 
 namespace App\Model\CategorySeo;
 
+use App\Component\Domain\Domain;
+use App\Model\Category\Category;
 use App\Model\CategorySeo\Exception\UnableToFindReadyCategorySeoMixException;
 use Doctrine\Common\Persistence\ObjectRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query\Expr\Join;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
+use Shopsys\FrameworkBundle\Model\Localization\Localization;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter;
 use function GuzzleHttp\json_encode as json_encode;
 
@@ -20,11 +23,28 @@ class ReadyCategorySeoMixRepository
     private $em;
 
     /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
+     * @var \App\Component\Domain\Domain
      */
-    public function __construct(EntityManagerInterface $em)
-    {
+    private $domain;
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Localization\Localization
+     */
+    private Localization $localization;
+
+    /**
+     * @param \Doctrine\ORM\EntityManagerInterface $em
+     * @param \App\Component\Domain\Domain $domain
+     * @param \Shopsys\FrameworkBundle\Model\Localization\Localization $localization
+     */
+    public function __construct(
+        EntityManagerInterface $em,
+        Domain $domain,
+        Localization $localization
+    ) {
         $this->em = $em;
+        $this->domain = $domain;
+        $this->localization = $localization;
     }
 
     /**
@@ -153,5 +173,30 @@ class ReadyCategorySeoMixRepository
                 'Unable to find ReadyCategorySeoMix: it cannot have more than one flag'
             );
         }
+    }
+
+    /**
+     * @param \App\Model\Category\Category $category
+     * @param int $domainId
+     * @return \App\Model\CategorySeo\ReadyCategorySeoMix[]
+     */
+    public function getAllForShowInCategory(Category $category, int $domainId): array
+    {
+        $locale = $this->domain->getDomainConfigById($domainId)->getLocale();
+        $collation = $this->localization->getCollationByLocale($locale);
+
+        return $this->em->createQueryBuilder()
+            ->select('rcsm')
+            ->from(ReadyCategorySeoMix::class, 'rcsm')
+            ->andWhere('rcsm.category = :category')
+            ->andWhere('rcsm.domainId = :domainId')
+            ->andWhere('rcsm.showInCategory = true')
+            ->orderBy("COLLATE(rcsm.h1, '" . $collation . "')", 'asc')
+            ->setParameters([
+                'category' => $category,
+                'domainId' => $domainId,
+            ])
+            ->getQuery()
+            ->execute();
     }
 }
