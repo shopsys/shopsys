@@ -214,3 +214,8 @@ There you can find links to upgrade notes for other versions too.
 
 - disable javascript validation for product filter form ([#2104](https://github.com/shopsys/shopsys/pull/2104))
     - see #project-base-diff to update your project
+
+- move doctrine metadata and annotations cache to file instead of redis ([#2107](https://github.com/shopsys/shopsys/pull/2107))
+    - class `Shopsys\FrameworkBundle\Component\Doctrine\Cache\FallbackCacheFactory` is deprecated and will be removed in next major version
+        - in case you need it in your project you should implement it by yourself
+    - see #project-base-diff to update your project
