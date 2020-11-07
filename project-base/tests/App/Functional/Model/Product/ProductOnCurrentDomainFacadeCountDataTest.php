@@ -22,7 +22,7 @@ abstract class ProductOnCurrentDomainFacadeCountDataTest extends ParameterTransa
     use SymfonyTestContainer;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfigFactory
+     * @var \Shopsys\FrameworkBundle\Model\Product\Filter\Elasticsearch\ProductFilterConfigFactory
      * @inject
      */
     protected $productFilterConfigFactory;
@@ -66,11 +66,7 @@ abstract class ProductOnCurrentDomainFacadeCountDataTest extends ParameterTransa
             /** @var \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData $expectedCountData */
             $expectedCountData = $dataProvider[2];
 
-            $filterConfig = $this->productFilterConfigFactory->createForCategory(
-                $this->domain->getId(),
-                $this->domain->getLocale(),
-                $category
-            );
+            $filterConfig = $this->productFilterConfigFactory->createForCategory($category);
             $countData = $this->productOnCurrentDomainFacade->getProductFilterCountDataInCategory(
                 $category->getId(),
                 $filterConfig,
@@ -109,11 +105,7 @@ abstract class ProductOnCurrentDomainFacadeCountDataTest extends ParameterTransa
             /** @var \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData $expectedCountData */
             $expectedCountData = $dataProvider[2];
 
-            $filterConfig = $this->productFilterConfigFactory->createForSearch(
-                $this->domain->getId(),
-                $this->domain->getLocale(),
-                $searchText
-            );
+            $filterConfig = $this->productFilterConfigFactory->createForSearch($searchText);
             $countData = $this->productOnCurrentDomainFacade->getProductFilterCountDataForSearch(
                 $searchText,
                 $filterConfig,

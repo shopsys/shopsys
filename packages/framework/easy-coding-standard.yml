@@ -84,6 +84,7 @@ parameters:
             - '*/src/DependencyInjection/Compiler/RegisterExtendedEntitiesCompilerPass.php'
             # class that is used by OrderPreviewFactory to create OrderPreview
             - '*/src/Model/Order/Preview/OrderPreviewCalculation.php'
+            - '*/src/Model/Product/Filter/Elasticsearch/ProductFilterConfigFactory.php'
 
         Shopsys\CodingStandards\Sniffs\ForbiddenDumpSniff:
             - '*/src/Component/DateTimeHelper/Exception/CannotParseDateTimeException.php'

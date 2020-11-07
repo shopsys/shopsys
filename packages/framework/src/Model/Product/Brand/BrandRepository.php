@@ -3,6 +3,7 @@
 namespace Shopsys\FrameworkBundle\Model\Product\Brand;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Query\Expr\Join;
 use Shopsys\FrameworkBundle\Model\Product\Brand\Exception\BrandNotFoundException;
 
 class BrandRepository
@@ -65,5 +66,23 @@ class BrandRepository
         }
 
         return $brand;
+    }
+
+    /**
+     * @param int[] $brandsIds
+     * @param string $locale
+     * @return \Shopsys\FrameworkBundle\Model\Product\Brand\Brand[]
+     */
+    public function getBrandsForFilterByIds(array $brandsIds, string $locale): array
+    {
+        $brandsQueryBuilder = $this->getBrandRepository()->createQueryBuilder('b')
+            ->select('b, bt')
+            ->join('b.translations', 'bt', Join::WITH, 'bt.locale = :locale')
+            ->where('b.id IN (:brandIds)')
+            ->setParameter('brandIds', $brandsIds)
+            ->setParameter('locale', $locale)
+            ->orderBy('b.name', 'asc');
+
+        return $brandsQueryBuilder->getQuery()->getResult();
     }
 }

@@ -183,4 +183,14 @@ class BrandFacade
     {
         return $this->brandRepository->getOneByUuid($uuid);
     }
+
+    /**
+     * @param int[] $brandsIds
+     * @param string $locale
+     * @return \Shopsys\FrameworkBundle\Model\Product\Brand\Brand[]
+     */
+    public function getBrandsForFilterByIds(array $brandsIds, string $locale): array
+    {
+        return $this->brandRepository->getBrandsForFilterByIds($brandsIds, $locale);
+    }
 }

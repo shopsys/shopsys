@@ -118,4 +118,14 @@ class FlagFacade
     {
         $this->eventDispatcher->dispatch(new FlagEvent($flag), $eventType);
     }
+
+    /**
+     * @param int[] $flagsIds
+     * @param string $locale
+     * @return \Shopsys\FrameworkBundle\Model\Product\Flag\Flag[]
+     */
+    public function getFlagsForFilterByIds(array $flagsIds, string $locale): array
+    {
+        return $this->flagRepository->getFlagsForFilterByIds($flagsIds, $locale);
+    }
 }

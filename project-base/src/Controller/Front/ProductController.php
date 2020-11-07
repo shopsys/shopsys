@@ -11,7 +11,7 @@ use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
 use Shopsys\FrameworkBundle\Model\Module\ModuleFacade;
 use Shopsys\FrameworkBundle\Model\Module\ModuleList;
 use Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade;
-use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfigFactory;
+use Shopsys\FrameworkBundle\Model\Product\Filter\Elasticsearch\ProductFilterConfigFactory;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData;
 use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingModeForBrandFacade;
 use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingModeForListFacade;
@@ -30,7 +30,7 @@ class ProductController extends FrontBaseController
     public const PRODUCTS_PER_PAGE = 12;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfigFactory
+     * @var \Shopsys\FrameworkBundle\Model\Product\Filter\Elasticsearch\ProductFilterConfigFactory
      */
     private $productFilterConfigFactory;
 
@@ -99,7 +99,7 @@ class ProductController extends FrontBaseController
      * @param \Shopsys\FrameworkBundle\Model\Category\CategoryFacade $categoryFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainFacadeInterface $productOnCurrentDomainFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfigFactory $productFilterConfigFactory
+     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\Elasticsearch\ProductFilterConfigFactory $productFilterConfigFactory
      * @param \Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingModeForListFacade $productListOrderingModeForListFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingModeForBrandFacade $productListOrderingModeForBrandFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingModeForSearchFacade $productListOrderingModeForSearchFacade
@@ -324,11 +324,7 @@ class ProductController extends FrontBaseController
      */
     private function createProductFilterConfigForCategory(Category $category)
     {
-        return $this->productFilterConfigFactory->createForCategory(
-            $this->domain->getId(),
-            $this->domain->getLocale(),
-            $category
-        );
+        return $this->productFilterConfigFactory->createForCategory($category);
     }
 
     /**
@@ -337,11 +333,7 @@ class ProductController extends FrontBaseController
      */
     private function createProductFilterConfigForSearch($searchText)
     {
-        return $this->productFilterConfigFactory->createForSearch(
-            $this->domain->getId(),
-            $this->domain->getLocale(),
-            $searchText
-        );
+        return $this->productFilterConfigFactory->createForSearch($searchText);
     }
 
     /**

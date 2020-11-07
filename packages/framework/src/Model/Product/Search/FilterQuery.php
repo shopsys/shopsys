@@ -543,6 +543,49 @@ class FilterQuery
     }
 
     /**
+     * Applies all filters for filter
+     * For flags, brands, stock, parameters, min and max price
+     * Parameters aggregation have nested structure in result [parameter_id][parameter_value_id]
+     *
+     * @param int $pricingGroupId
+     * @return array
+     */
+    public function getFilterQuery(int $pricingGroupId): array
+    {
+        $query = $this->getAbsoluteNumbersWithParametersQuery();
+
+        $query['body']['aggs']['prices'] = [
+            'nested' => [
+                'path' => 'prices',
+            ],
+            'aggs' => [
+                'filter_pricing_group' => [
+                    'filter' => [
+                        'term' => [
+                            'prices.pricing_group_id' => $pricingGroupId,
+                        ],
+                    ],
+                    'aggs' => [
+                        'min_price' => [
+                            'min' => [
+                                'field' => 'prices.price_with_vat',
+                            ],
+                        ],
+                        'max_price' => [
+                            'max' => [
+                                'field' => 'prices.price_with_vat',
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+
+        ];
+
+        return $query;
+    }
+
+    /**
      * Answers question "If I add this flag, how many products will be added?"
      * We are looking for count of products that meet all filters and don't have any of already selected flags
      *
