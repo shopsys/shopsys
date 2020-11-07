@@ -208,3 +208,6 @@ There you can find links to upgrade notes for other versions too.
 
 - enable logging in tests ([#2113](https://github.com/shopsys/shopsys/pull/2113))
     - see #project-base-diff to update your project
+
+- avoid missing or delayed logs ([#2103](https://github.com/shopsys/shopsys/pull/2103))
+    - see #project-base-diff to update your project
