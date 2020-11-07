@@ -50,12 +50,18 @@ class DomainRouterFactory
     protected $requestStack;
 
     /**
+     * @var string
+     */
+    protected $cacheDir;
+
+    /**
      * @param mixed $routerConfiguration
      * @param \Symfony\Component\Config\Loader\LoaderInterface $configLoader
      * @param \Shopsys\FrameworkBundle\Component\Router\LocalizedRouterFactory $localizedRouterFactory
      * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRouterFactory $friendlyUrlRouterFactory
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Symfony\Component\HttpFoundation\RequestStack $requestStack
+     * @param string $cacheDir
      */
     public function __construct(
         $routerConfiguration,
@@ -63,7 +69,8 @@ class DomainRouterFactory
         LocalizedRouterFactory $localizedRouterFactory,
         FriendlyUrlRouterFactory $friendlyUrlRouterFactory,
         Domain $domain,
-        RequestStack $requestStack
+        RequestStack $requestStack,
+        string $cacheDir
     ) {
         $this->routerConfiguration = $routerConfiguration;
         $this->configLoader = $configLoader;
@@ -71,6 +78,7 @@ class DomainRouterFactory
         $this->domain = $domain;
         $this->friendlyUrlRouterFactory = $friendlyUrlRouterFactory;
         $this->requestStack = $requestStack;
+        $this->cacheDir = $cacheDir;
     }
 
     /**
@@ -109,7 +117,10 @@ class DomainRouterFactory
         return new Router(
             $this->configLoader,
             $this->routerConfiguration,
-            ['resource_type' => 'service'],
+            [
+                'resource_type' => 'service',
+                'cache_dir' => $this->cacheDir . '/routing/base' . $domainConfig->getId(),
+            ],
             $this->getRequestContextByDomainConfig($domainConfig)
         );
     }

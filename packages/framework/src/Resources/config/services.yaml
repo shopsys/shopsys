@@ -477,7 +477,9 @@ services:
             - { name: router, priority: 70 }
 
     Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory:
-        arguments: ['%router.resource%']
+        arguments:
+            $routerConfiguration: '%router.resource%'
+            $cacheDir: '%kernel.cache_dir%'
 
     Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlDataProviderRegistry:
         arguments: [!tagged shopsys.friendly_url_provider]
@@ -486,7 +488,9 @@ services:
         arguments: ['%shopsys.router.friendly_url_router_filepath%']
 
     Shopsys\FrameworkBundle\Component\Router\LocalizedRouterFactory:
-        arguments: ['%shopsys.router.locale_router_filepath_mask%']
+        arguments:
+            $localeRoutersResourcesFilepathMask: '%shopsys.router.locale_router_filepath_mask%'
+            $cacheDir: '%kernel.cache_dir%'
 
     Shopsys\FrameworkBundle\Component\Router\Security\RouteCsrfProtector:
         arguments:

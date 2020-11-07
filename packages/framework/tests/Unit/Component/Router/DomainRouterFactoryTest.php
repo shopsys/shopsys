@@ -66,7 +66,8 @@ class DomainRouterFactoryTest extends TestCase
             $localizedRouterFactoryMock,
             $friendlyUrlRouterFactoryMock,
             $domain,
-            $requestStackMock
+            $requestStackMock,
+            __DIR__
         );
 
         $router = $domainRouterFactory->getRouter(Domain::THIRD_DOMAIN_ID);

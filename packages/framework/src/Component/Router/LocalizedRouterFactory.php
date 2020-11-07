@@ -27,14 +27,21 @@ class LocalizedRouterFactory
     protected $routersByLocaleAndHost;
 
     /**
+     * @var string
+     */
+    protected $cacheDir;
+
+    /**
      * @param string $localeRoutersResourcesFilepathMask
      * @param \Symfony\Component\Config\Loader\LoaderInterface $configLoader
+     * @param string $cacheDir
      */
-    public function __construct($localeRoutersResourcesFilepathMask, LoaderInterface $configLoader)
+    public function __construct($localeRoutersResourcesFilepathMask, LoaderInterface $configLoader, string $cacheDir)
     {
         $this->configLoader = $configLoader;
         $this->localeRoutersResourcesFilepathMask = $localeRoutersResourcesFilepathMask;
         $this->routersByLocaleAndHost = [];
+        $this->cacheDir = $cacheDir;
     }
 
     /**
@@ -56,7 +63,7 @@ class LocalizedRouterFactory
             $this->routersByLocaleAndHost[$locale][$context->getHost()] = new Router(
                 $this->configLoader,
                 $this->getLocaleRouterResourceByLocale($locale),
-                [],
+                ['cache_dir' => $this->cacheDir . '/routing/locale_' . $locale],
                 $context
             );
         }
