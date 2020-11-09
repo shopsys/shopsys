@@ -87,11 +87,11 @@ class ProductsResolver implements ResolverInterface, AliasedInterface
     {
         $this->setDefaultFirstOffsetIfNecessary($argument);
 
-        $paginator = new Paginator(function ($offset, $limit) {
+        $paginator = new Paginator(function ($offset, $limit) use ($argument) {
             return $this->productFacade->getProductsOnCurrentDomain(
                 $limit,
                 $offset,
-                ProductListOrderingConfig::ORDER_BY_PRIORITY
+                $this->getOrderingModeFromArgument($argument)
             );
         });
 
@@ -107,12 +107,12 @@ class ProductsResolver implements ResolverInterface, AliasedInterface
     {
         $this->setDefaultFirstOffsetIfNecessary($argument);
 
-        $paginator = new Paginator(function ($offset, $limit) use ($category) {
+        $paginator = new Paginator(function ($offset, $limit) use ($argument, $category) {
             return $this->productFacade->getProductsByCategory(
                 $category,
                 $limit,
                 $offset,
-                ProductListOrderingConfig::ORDER_BY_PRIORITY
+                $this->getOrderingModeFromArgument($argument)
             );
         });
 
@@ -128,12 +128,12 @@ class ProductsResolver implements ResolverInterface, AliasedInterface
     {
         $this->setDefaultFirstOffsetIfNecessary($argument);
 
-        $paginator = new Paginator(function ($offset, $limit) use ($brand) {
+        $paginator = new Paginator(function ($offset, $limit) use ($argument, $brand) {
             return $this->productFacade->getProductsByBrand(
                 $brand,
                 $limit,
                 $offset,
-                ProductListOrderingConfig::ORDER_BY_PRIORITY
+                $this->getOrderingModeFromArgument($argument)
             );
         });
 
@@ -158,5 +158,27 @@ class ProductsResolver implements ResolverInterface, AliasedInterface
         return [
             'resolve' => 'products',
         ];
+    }
+
+    /**
+     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
+     * @return string
+     */
+    protected function getOrderingModeFromArgument(Argument $argument): string
+    {
+        $orderingMode = $this->getDefaultOrderingMode();
+        if ($argument->offsetExists('orderingMode')) {
+            $orderingMode = $argument->offsetGet('orderingMode');
+        }
+
+        return $orderingMode;
+    }
+
+    /**
+     * @return string
+     */
+    protected function getDefaultOrderingMode(): string
+    {
+        return ProductListOrderingConfig::ORDER_BY_PRIORITY;
     }
 }

@@ -9,9 +9,12 @@ QueryDecorator:
                 description: "Returns complete list of categories"
             products:
                 type: "ProductConnection"
-                argsBuilder: "Relay::Connection"
+                argsBuilder:
+                    builder: "PaginatorArgumentsBuilder"
+                    config:
+                        orderingModeType: 'ProductOrderingModeEnum'
                 resolve: "@=resolver('products', [args])"
-                description: "Returns list of product that can be paginated using `first`, `last`, `before` and `after` keywords"
+                description: "Returns list of ordered products that can be paginated using `first`, `last`, `before` and `after` keywords"
             product:
                 type: 'Product'
                 resolve: "@=resolver('product', [args['uuid']])"

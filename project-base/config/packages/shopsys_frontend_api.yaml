@@ -7,3 +7,7 @@ overblog_graphql:
             types:
                 -   type: yaml
                     dir: "%shopsys.root_dir%/config/graphql/types"
+        builders:
+            args:
+                -   alias: "PaginatorArgumentsBuilder"
+                    class: Shopsys\FrontendApiBundle\Component\Arguments\PaginatorArgumentsBuilder

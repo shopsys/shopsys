@@ -37,6 +37,9 @@ BrandDecorator:
                         type: "String"
             products:
                 type: "ProductConnection"
-                description: "Paginated products of brand"
-                argsBuilder: "Relay::Connection"
+                description: "Paginated and ordered products of brand"
+                argsBuilder:
+                    builder: "PaginatorArgumentsBuilder"
+                    config:
+                        orderingModeType: 'ProductOrderingModeEnum'
                 resolve: '@=service("Shopsys\\FrontendApiBundle\\Model\\Resolver\\Products\\ProductsResolver").resolveByBrand(args, value)'
