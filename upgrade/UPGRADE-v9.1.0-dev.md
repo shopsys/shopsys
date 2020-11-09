@@ -186,3 +186,7 @@ There you can find links to upgrade notes for other versions too.
 
 - increase reliability and decrease maintainability of acceptance tests ([#2099](https://github.com/shopsys/shopsys/pull/2099))
     - see #project-base-diff to update your project
+
+- drop support for lower PHP versions than 7.4.1 ([#2109](https://github.com/shopsys/shopsys/pull/2109))
+    - see #project-base-diff to update your project 
+    - update your dependencies with `composer update` after you set `platform.php` in `composer.json` to the required version
