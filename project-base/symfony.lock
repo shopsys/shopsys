@@ -348,6 +348,15 @@
     "kriswallsmith/assetic": {
         "version": "v1.4.0"
     },
+    "laminas/laminas-code": {
+        "version": "3.4.1"
+    },
+    "laminas/laminas-eventmanager": {
+        "version": "3.3.0"
+    },
+    "laminas/laminas-zendframework-bridge": {
+        "version": "1.1.1"
+    },
     "lcobucci/jwt": {
         "version": "3.3.2"
     },
@@ -356,6 +365,9 @@
     },
     "league/flysystem-cached-adapter": {
         "version": "1.0.9"
+    },
+    "league/mime-type-detection": {
+        "version": "1.5.1"
     },
     "litipk/php-bignumbers": {
         "version": "0.8.6"
@@ -450,7 +462,7 @@
         "version": "2.16.1"
     },
     "php": {
-        "version": "7.2"
+        "version": "7.4.1"
     },
     "php-cs-fixer/diff": {
         "version": "v1.3.0"
@@ -487,6 +499,9 @@
     },
     "phpstan/phpstan-phpunit": {
         "version": "0.11.2"
+    },
+    "phpstan/phpstan-symfony": {
+        "version": "0.12.11"
     },
     "phpunit/php-code-coverage": {
         "version": "6.1.4"
@@ -1145,6 +1160,9 @@
     },
     "vasek-purchart/console-errors-bundle": {
         "version": "1.0.1"
+    },
+    "webimpress/safe-writer": {
+        "version": "2.1.0"
     },
     "webmozart/assert": {
         "version": "1.5.0"

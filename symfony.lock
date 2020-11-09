@@ -330,6 +330,15 @@
     "knplabs/knp-menu-bundle": {
         "version": "v2.3.0"
     },
+    "laminas/laminas-code": {
+        "version": "3.4.1"
+    },
+    "laminas/laminas-eventmanager": {
+        "version": "3.3.0"
+    },
+    "laminas/laminas-zendframework-bridge": {
+        "version": "1.1.1"
+    },
     "lcobucci/jwt": {
         "version": "3.3.1"
     },
@@ -341,6 +350,9 @@
     },
     "league/flysystem-cached-adapter": {
         "version": "1.0.9"
+    },
+    "league/mime-type-detection": {
+        "version": "1.5.1"
     },
     "league/oauth2-server": {
         "version": "7.2.0"
@@ -426,7 +438,7 @@
         "version": "2.16.1"
     },
     "php": {
-        "version": "7.2"
+        "version": "7.4.1"
     },
     "php-cs-fixer/diff": {
         "version": "v1.3.0"
@@ -1080,6 +1092,9 @@
     "vasek-purchart/console-errors-bundle": {
         "version": "1.0.1"
     },
+    "webimpress/safe-writer": {
+        "version": "2.1.0"
+    },
     "webmozart/assert": {
         "version": "1.5.0"
     },
@@ -1098,13 +1113,7 @@
     "zalas/phpunit-injector": {
         "version": "v1.2.7"
     },
-    "zendframework/zend-code": {
-        "version": "3.4.0"
-    },
     "zendframework/zend-diactoros": {
         "version": "1.8.7"
-    },
-    "zendframework/zend-eventmanager": {
-        "version": "3.2.1"
     }
 }
