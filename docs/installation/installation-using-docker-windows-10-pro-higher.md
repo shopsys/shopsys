@@ -20,7 +20,7 @@ This solution uses [*docker-sync*](http://docker-sync.io/) (for relatively fast 
 ## Requirements
 * [GIT](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
 * [PHP](http://php.net/manual/en/install.windows.php)
-    * At least version **7.2 or higher**
+    * At least version **7.4.1 or higher**
 * [Docker for Windows](https://docs.docker.com/docker-for-windows/install/)
     * Docker for Windows requires at least 6.5 GB of memory, but this is only required to run `composer install` and `composer update` which would result in `Killed` status if not enough memory would be available (we recommend to set at least 2.5 GB RAM, 1 CPU and 4 GB Swap in `Docker -> Preferences… -> Resources -> ADVANCED`)
     * Version of Docker Engine should be at least **17.05 or higher** so it supports [multi-stage builds](https://docs.docker.com/develop/develop-images/multistage-build/).

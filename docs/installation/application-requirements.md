@@ -4,7 +4,7 @@ To be able to install, develop and run Shopsys Framework, the system should have
 ## Linux / MacOS / WSL
 * [GIT](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
 * [PostgreSQL 12.1](https://wiki.postgresql.org/wiki/Detailed_installation_guides)
-* [PHP 7.2 - 7.4](http://php.net/manual/en/install.php) (configure your `php.ini` by [Required PHP Configuration](../introduction/required-php-configuration.md))
+* [PHP 7.4.1 or higher](http://php.net/manual/en/install.php) (configure your `php.ini` by [Required PHP Configuration](../introduction/required-php-configuration.md))
 * [Composer](https://getcomposer.org/doc/00-intro.md#globally)
 * [Node.js with npm](https://nodejs.org/en/download/) (npm is automatically installed when you install Node.js)
 * [Redis](https://redis.io/topics/quickstart)
@@ -18,7 +18,7 @@ To be able to install, develop and run Shopsys Framework, the system should have
 ## Windows
 * [GIT](https://git-scm.com/download/win)
 * [PostgreSQL 12.1](https://www.enterprisedb.com/downloads/postgres-postgresql-downloads#windows)
-* [PHP 7.2 - 7.4](http://php.net/manual/en/install.windows.php) (configure your `php.ini` by [Required PHP Configuration](../introduction/required-php-configuration.md))
+* [PHP 7.4.1 or higher](http://php.net/manual/en/install.windows.php) (configure your `php.ini` by [Required PHP Configuration](../introduction/required-php-configuration.md))
 * [Composer](https://getcomposer.org/doc/00-intro.md#installation-windows)
 * [Node.js with npm](https://nodejs.org/en/download/) (npm is automatically installed when you install Node.js)
 * [Redis](https://github.com/MicrosoftArchive/redis/releases)
