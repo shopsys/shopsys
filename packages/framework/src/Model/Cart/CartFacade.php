@@ -195,7 +195,9 @@ class CartFacade
 
     public function deleteCartOfCurrentCustomerUser()
     {
-        $cart = $this->findCartOfCurrentCustomerUser();
+        $customerUserIdentifier = $this->customerUserIdentifierFactory->get();
+
+        $cart = $this->cartRepository->findByCustomerUserIdentifier($customerUserIdentifier);
 
         if ($cart !== null) {
             $this->deleteCart($cart);
