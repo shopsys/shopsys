@@ -10,10 +10,10 @@ use Tests\App\Test\Codeception\AcceptanceTester;
 
 class ProductImageUploadCest
 {
-    protected const IMAGE_UPLOAD_FIELD_ID = 'product_form_imageGroup_images_file';
-    protected const SAVE_BUTTON_NAME = 'product_form[save]';
+    private const IMAGE_UPLOAD_FIELD_ID = 'product_form_imageGroup_images_file';
+    private const SAVE_BUTTON_NAME = 'product_form[save]';
 
-    protected const TEST_IMAGE_NAME = 'productTestImage.png';
+    private const TEST_IMAGE_NAME = 'productTestImage.png';
 
     /**
      * @param \Tests\App\Test\Codeception\AcceptanceTester $me
@@ -28,7 +28,7 @@ class ProductImageUploadCest
         $entityEditPage->uploadTestImage(self::IMAGE_UPLOAD_FIELD_ID, self::TEST_IMAGE_NAME);
         $me->clickByName(self::SAVE_BUTTON_NAME);
         $me->seeTranslationAdmin(
-            'Product <strong><a href=\"{{ url }}\">{{ product|productDisplayName }}</a></strong> modified',
+            'Product <strong><a href="{{ url }}">{{ product|productDisplayName }}</a></strong> modified',
             'messages',
             [
                 '{{ url }}' => '',

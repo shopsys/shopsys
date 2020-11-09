@@ -24,11 +24,9 @@ class CustomerLoginCest
         $me->amOnPage('/');
         $layoutPage->openLoginPopup();
         $me->wait(10);
-        $loginPage->login('no-reply@shopsys.com', 'user123');
-        $me->see('Jaromír Jágr');
+        $loginPage->login();
+        $loginPage->checkUserLogged();
         $layoutPage->logout();
-        $me->seeTranslationFrontend('Log in');
-        $me->seeCurrentPageEquals('/');
     }
 
     /**
@@ -46,11 +44,9 @@ class CustomerLoginCest
         $me->amOnLocalizedRoute('front_product_list', ['id' => 6]);
         $layoutPage->openLoginPopup();
         $me->wait(10);
-        $loginPage->login('no-reply@shopsys.com', 'user123');
-        $me->see('Jaromír Jágr');
+        $loginPage->login();
+        $loginPage->checkUserLogged();
         $layoutPage->logout();
-        $me->seeTranslationFrontend('Log in');
-        $me->seeCurrentPageEquals('/');
     }
 
     /**
@@ -65,10 +61,8 @@ class CustomerLoginCest
     ) {
         $me->wantTo('login as a customer from login page');
         $me->amOnLocalizedRoute('front_login');
-        $loginPage->login('no-reply@shopsys.com', 'user123');
-        $me->see('Jaromír Jágr');
+        $loginPage->login();
+        $loginPage->checkUserLogged();
         $layoutPage->logout();
-        $me->seeTranslationFrontend('Log in');
-        $me->seeCurrentPageEquals('/');
     }
 }

@@ -10,10 +10,10 @@ use Tests\App\Test\Codeception\AcceptanceTester;
 
 class TransportImageUploadCest
 {
-    protected const IMAGE_UPLOAD_FIELD_ID = 'transport_form_image_image_file';
-    protected const SAVE_BUTTON_NAME = 'transport_form[save]';
+    private const IMAGE_UPLOAD_FIELD_ID = 'transport_form_image_image_file';
+    private const SAVE_BUTTON_NAME = 'transport_form[save]';
 
-    protected const TEST_IMAGE_NAME = 'transportTestImage.png';
+    private const TEST_IMAGE_NAME = 'transportTestImage.png';
 
     /**
      * @param \Tests\App\Test\Codeception\AcceptanceTester $me
@@ -28,11 +28,11 @@ class TransportImageUploadCest
         $entityEditPage->uploadTestImage(self::IMAGE_UPLOAD_FIELD_ID, self::TEST_IMAGE_NAME);
         $me->clickByName(self::SAVE_BUTTON_NAME);
         $me->seeTranslationAdmin(
-            'Shipping <strong><a href="{{ url }}">%name%</a></strong> was modified',
+            'Shipping <strong><a href="{{ url }}">{{ name }}</a></strong> was modified',
             'messages',
             [
                 '{{ url }}' => '',
-                '%name%' => t('Czech post', [], 'dataFixtures', $me->getAdminLocale()),
+                '{{ name }}' => t('Czech post', [], 'dataFixtures', $me->getAdminLocale()),
             ]
         );
     }

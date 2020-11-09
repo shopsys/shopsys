@@ -241,4 +241,22 @@ class CartPage extends AbstractPage
             WebDriverBy::cssSelector('#window-main-container')
         );
     }
+
+    /**
+     * @param string $productName
+     * @param int $quantity
+     */
+    public function seeSuccessMessageForAddedProducts(string $productName, int $quantity): void
+    {
+        $productName = t($productName, [], 'dataFixtures', $this->tester->getFrontendLocale());
+        $this->tester->seeTranslationFrontend(
+            'Product <strong>{{ name }}</strong> ({{ quantity|formatNumber }} {{ unitName }}) added to the cart',
+            'messages',
+            [
+                '{{ name }}' => $productName,
+                '{{ quantity|formatNumber }}' => $quantity,
+                '{{ unitName }}' => $this->tester->getDefaultUnitName(),
+            ]
+        );
+    }
 }

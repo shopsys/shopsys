@@ -9,8 +9,8 @@ use Tests\App\Acceptance\acceptance\PageObject\AbstractPage;
 
 class ProductDetailPage extends AbstractPage
 {
-    protected const PRODUCT_DETAIL_QUANTITY_INPUT = '.js-product-detail-main-add-to-cart-wrapper input[name="add_product_form[quantity]"]';
-    protected const PRODUCT_DETAIL_MAIN_WRAPPER = '.js-product-detail-main-add-to-cart-wrapper';
+    private const PRODUCT_DETAIL_QUANTITY_INPUT = '.js-product-detail-main-add-to-cart-wrapper input[name="add_product_form[quantity]"]';
+    private const PRODUCT_DETAIL_MAIN_WRAPPER = '.js-product-detail-main-add-to-cart-wrapper';
 
     /**
      * @param int $quantity

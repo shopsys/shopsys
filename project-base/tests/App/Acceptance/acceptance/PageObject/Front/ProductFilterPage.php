@@ -15,7 +15,7 @@ use Tests\FrameworkBundle\Test\Codeception\FrontCheckbox;
 class ProductFilterPage extends AbstractPage
 {
     // Product filter waits for more requests before evaluation
-    protected const PRE_EVALUATION_WAIT = 2;
+    private const PRE_EVALUATION_WAIT = 2;
 
     /**
      * @param \Tests\App\Test\Codeception\Module\StrictWebDriver $strictWebDriver

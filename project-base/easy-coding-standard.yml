@@ -98,6 +98,7 @@ parameters:
             - '*/src/DataFixtures/Demo/OrderDataFixture.php'
             - '*/src/DataFixtures/Demo/ProductDataFixture.php'
             - '*/tests/App/Functional/Model/Product/ProductOnCurrentDomainFacadeCountDataTest.php'
+            - '*/tests/App/Test/Codeception/Module/StrictWebDriver.php'
 
         PHP_CodeSniffer\Standards\Generic\Sniffs\Metrics\CyclomaticComplexitySniff:
             - '*/src/DataFixtures/Demo/ProductDataFixture.php'
