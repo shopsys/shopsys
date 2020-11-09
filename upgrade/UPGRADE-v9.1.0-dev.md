@@ -180,3 +180,6 @@ There you can find links to upgrade notes for other versions too.
 
 - allow placing scripts in administration after content([#2086](https://github.com/shopsys/shopsys/pull/2086))
     - see #project-base-diff to update your project
+
+- increase reliability and decrease maintainability of acceptance tests ([#2099](https://github.com/shopsys/shopsys/pull/2099))
+    - see #project-base-diff to update your project
