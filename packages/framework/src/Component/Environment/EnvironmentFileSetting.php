@@ -26,12 +26,22 @@ class EnvironmentFileSetting
     }
 
     /**
-     * @param bool $console
+     * @param bool|null $console
      * @return string
      */
-    public function getEnvironment(bool $console): string
+    public function getEnvironment(?bool $console = null): string
     {
-        $environments = $console ? static::ENVIRONMENTS_CONSOLE : static::ENVIRONMENTS_DEFAULT;
+        if ($console !== null) {
+            @trigger_error(
+                sprintf(
+                    'The $console parameter of %s() method is deprecated and will be removed in the next major.',
+                    __METHOD__
+                ),
+                E_USER_DEPRECATED
+            );
+        }
+
+        $environments = static::ENVIRONMENTS_DEFAULT;
         foreach ($environments as $environment) {
             if (is_file($this->getEnvironmentFilePath($environment))) {
                 return $environment;
