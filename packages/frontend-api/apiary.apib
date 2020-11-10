@@ -17,6 +17,13 @@ Authorization header is not required.
     - Headers
         Authorization: Bearer --ACCESS-TOKEN--
 
+    - Attributes
+        - after
+        - first: (number)
+        - before
+        - last: (number)
+        - orderingMode: (ProductOrderingModeEnum)
+
     - Body
         {
             query: products (first: 2) {
@@ -3251,3 +3258,12 @@ Adverts may be filtered by `positionName` argument.
             ]
         }
     }
+
+## Data Structures
+### ProductOrderingModeEnum (enum)
++ `PRIORITY`
++ `PRICE_ASC`
++ `PRICE_DESC`
++ `NAME_ASC`
++ `NAME_DESC`
++ `RELEVANCE`
