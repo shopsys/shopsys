@@ -22,9 +22,10 @@ abstract class GraphQlWithLoginTestCase extends GraphQlTestCase
         $this->client = $this->findClient(true);
         $this->domain = $this->client->getContainer()->get(Domain::class);
         $this->em = $this->client->getContainer()->get('doctrine.orm.entity_manager');
-        $this->overwriteDomainUrl = $this->getContainer()->getParameter('overwrite_domain_url');
 
         $this->domain->switchDomainById(Domain::FIRST_DOMAIN_ID);
+        $firstDomain = $this->domain->getCurrentDomainConfig();
+        $this->firstDomainUrl = $firstDomain->getUrl();
 
         $this->runCheckTestEnabledOnCurrentDomain();
 

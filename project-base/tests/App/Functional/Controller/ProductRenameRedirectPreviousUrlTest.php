@@ -56,17 +56,17 @@ class ProductRenameRedirectPreviousUrlTest extends FunctionalTestCase
 
         $this->productFacade->edit(self::TESTED_PRODUCT_ID, $productData);
 
-        $overwriteDomainUrlParameter = $this->getContainer()->getParameter('overwrite_domain_url');
+        $firstDomainUrl = $this->domain->getDomainConfigById(Domain::FIRST_DOMAIN_ID)->getUrl();
 
-        $isSecured = parse_url($overwriteDomainUrlParameter, PHP_URL_SCHEME) === 'https';
+        $isSecured = parse_url($firstDomainUrl, PHP_URL_SCHEME) === 'https';
 
-        $overWriteDomainUrl = preg_replace(
+        $firstDomainUrl = preg_replace(
             '#^https?://#',
             '',
-            $overwriteDomainUrlParameter
+            $firstDomainUrl
         );
 
-        $client = $this->findClient(true, null, null, [], ['HTTP_HOST' => $overWriteDomainUrl, 'HTTPS' => $isSecured]);
+        $client = $this->findClient(true, null, null, [], ['HTTP_HOST' => $firstDomainUrl, 'HTTPS' => $isSecured]);
         $client->request('GET', '/' . $previousFriendlyUrlSlug);
 
         // Should be 301 (moved permanently), because old product urls should be permanently redirected

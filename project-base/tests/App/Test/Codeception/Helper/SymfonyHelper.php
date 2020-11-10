@@ -24,7 +24,7 @@ class SymfonyHelper extends Module
     {
         require_once Configuration::projectDir() . '/../app/autoload.php';
 
-        $this->kernel = new Kernel(EnvironmentType::TEST, EnvironmentType::isDebug(EnvironmentType::TEST));
+        $this->kernel = new Kernel(EnvironmentType::ACCEPTANCE, EnvironmentType::isDebug(EnvironmentType::ACCEPTANCE));
         $this->kernel->boot();
     }
 

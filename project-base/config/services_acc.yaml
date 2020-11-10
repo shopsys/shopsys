@@ -1,0 +1,17 @@
+# @deprecated This file content will be used on temporarily until next major, where it will be moved to framework
+framework:
+    test: true
+
+parameters:
+    overwrite_domain_url: '%env(OVERWRITE_DOMAIN_URL)%'
+
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: true
+
+    Shopsys\FrameworkBundle\Component\Domain\DomainFactory:
+        class: Shopsys\FrameworkBundle\Component\Domain\DomainFactoryOverwritingDomainUrl
+        arguments:
+            - '%env(OVERWRITE_DOMAIN_URL)%'

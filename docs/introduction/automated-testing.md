@@ -150,7 +150,7 @@ More information can be found in [Running Acceptance Tests](running-acceptance-t
 
 #### Disadvantages:
 * take a while to execute
-* whole application is switched to *TEST* environment
+* whole application is switched to *ACCEPTANCE* environment
 * occasional false negative reports (due to WebDriver brittleness)
 * requires installation of [Google Chrome](https://www.google.com/chrome/browser/desktop/) and [ChromeDriver](https://sites.google.com/a/chromium.org/chromedriver/)
 

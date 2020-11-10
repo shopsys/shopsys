@@ -10,7 +10,7 @@ docker exec -it shopsys-framework-php-fpm bash
 
 !!! note
     For `selenium-server` to be able to connect to you `webserver` container and access your application, all domains should have URL set to `http://webserver:8000`.
-    This is done via ENV `OVERWRITE_DOMAIN_URL` defined in `.env.test` or `.env.test.local`.
+    This is done via ENV `OVERWRITE_DOMAIN_URL` defined in `.env.acc` or `.env.acc.local`.
     Everything should be configured for you by default but it is important to keep the domain URL overwriting in mind when dealing with acceptance tests.
 
 If you are logged into your `php-fpm` container and have the `OVERWRITE_DOMAIN_URL` ENV properly set,
@@ -55,9 +55,9 @@ For running acceptance tests you need to install [Google Chrome browser](https:/
 You must choose compatible versions of Google Chrome and ChromeDriver.
 As Chrome browser has auto-update enabled by default this may require you to update ChromeDriver from time to time.
 
-When installing Shopsys Framework natively, it is important to update parameters in `.env.test.local`:
+When installing Shopsys Framework natively, it is important to update parameters in `.env.acc.local`:
 
-* `OVERWRITE_DOMAIN_URL=` (disables domain URL overwriting in `TEST` environment)
+* `OVERWRITE_DOMAIN_URL=` (disables domain URL overwriting in `ACCEPTANCE` environment)
 * `SELENIUM_SERVER_HOST=127.0.0.1`
 
 ### Installing Google Chrome browser
@@ -75,14 +75,18 @@ path.chromedriver.executable=C:\tools\chrome-driver\chromedriver.exe
 
 ## Running the whole acceptance test suite
 After finishing the steps above, running acceptance tests is easy.
-Just run the following commands (each in a separate terminal):
+
+### In native installation run the following commands (each in a separate terminal):
 ```sh
 # run PHP web server
 php phing server-run
 
 # run Selenium server
 php phing selenium-run
+```
 
+### In both docker and native installation run
+```sh
 # run acceptance test suite
 php phing tests-acceptance
 ```
@@ -92,41 +96,19 @@ php phing tests-acceptance
     You may have to add path of your PostgreSQL installation to the system `PATH` directory for it to work.
 
 !!! note
-    If you interrupt running acceptance tests you may need to delete root file named `TEST` that is temporarily created to switch application to `TEST` environment.
+    If you interrupt running acceptance tests you may need to delete root file named `ACCEPTANCE` that is temporarily created to switch application to `ACCEPTANCE` environment.
 
 ## Running individual tests
 Sometimes you may want to debug individual test without running the whole acceptance test suite (which can take several minutes).
 
-### Prepare database dump and switch to TEST environment
+### Run single test
 ```sh
-# create test database and fill it with demo data and export products to elasticsearch test index
-php phing test-db-demo
-php phing test-elasticsearch-export
-
-# create test database dump with current data which will be restored before each test
-php phing test-db-dump
-
-# switch application to TEST environment
-# on Unix systems (Linux, Mac OSX)
-touch TEST
-# in Windows CMD
-echo.>TEST
+php phing tests-acceptance-single -D test=OrderCest:testOrderCanBeCompleted
 ```
 
-### Run individual tests
+### Run all tests in one file
 ```sh
-vendor/bin/codecept run -c build/codeception.yml acceptance tests/App/Acceptance/acceptance/OrderCest.php:testOrderCanBeCompleted
+php phing tests-acceptance-single -D test=OrderCest
 ```
 
-Do not forget to run both PHP web server and Selenium server. See [Running the whole acceptance test suite](#running-the-whole-acceptance-test-suite).
-
-!!! note
-    In Windows CMD you have to use backslashes in the path of the executable: `vendor\bin\codecept run ...`
-
-### Do not forget to restore your original environment afterward
-```sh
-# on Unix systems (Linux, Mac OSX)
-rm TEST
-# in Windows CMD
-del TEST
-```
+Do not forget to run both PHP web server and Selenium server in native installation. See [Running the whole acceptance test suite](#running-the-whole-acceptance-test-suite).

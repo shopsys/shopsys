@@ -215,6 +215,11 @@ Runs acceptance tests. Running Selenium server is required.
 
 More on this topic can be found in [Running Acceptance Tests](./running-acceptance-tests.md).
 
+#### tests-acceptance-single
+Runs single acceptance test. Fastest way to run test without need of running whole acceptance suit
+
+Can be called as `php phing tests-acceptance-single -D test=OrderCest::testFormRemembersFirstName`.
+
 #### selenium-run
 Runs the Selenium server for acceptance testing. [ChromeDriver](https://sites.google.com/a/chromium.org/chromedriver/downloads) is required.
 

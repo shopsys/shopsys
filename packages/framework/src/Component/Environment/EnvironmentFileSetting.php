@@ -8,9 +8,24 @@ class EnvironmentFileSetting
         EnvironmentType::DEVELOPMENT => 'DEVELOPMENT',
         EnvironmentType::PRODUCTION => 'PRODUCTION',
         EnvironmentType::TEST => 'TEST',
+        EnvironmentType::ACCEPTANCE => 'ACCEPTANCE',
     ];
-    protected const ENVIRONMENTS_CONSOLE = [EnvironmentType::DEVELOPMENT, EnvironmentType::PRODUCTION];
-    protected const ENVIRONMENTS_DEFAULT = [EnvironmentType::TEST, EnvironmentType::DEVELOPMENT, EnvironmentType::PRODUCTION];
+
+    /**
+     * @deprecated constant ENVIRONMENTS_CONSOLE is deprecated and will be removed in next major version
+     */
+    protected const ENVIRONMENTS_CONSOLE = [
+        EnvironmentType::ACCEPTANCE,
+        EnvironmentType::TEST,
+        EnvironmentType::DEVELOPMENT,
+        EnvironmentType::PRODUCTION,
+    ];
+    protected const ENVIRONMENTS_DEFAULT = [
+        EnvironmentType::ACCEPTANCE,
+        EnvironmentType::TEST,
+        EnvironmentType::DEVELOPMENT,
+        EnvironmentType::PRODUCTION,
+    ];
 
     /**
      * @var string

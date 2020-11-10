@@ -13,7 +13,9 @@
     <property name="path.codeception.executable" value="${path.bin}/codecept"/>
     <property name="path.composer.executable" value="composer"/>
     <property name="path.config" value="${path.root}/config"/>
+    <!-- @deprecated property path.env.test is no longer in use and will be removed in next major -->
     <property name="path.env.test" value="${path.root}/TEST"/>
+    <property name="path.env.acc" value="${path.root}/ACCEPTANCE"/>
     <property name="path.eslint.executable" value="${path.node_modules.bin}/eslint"/>
     <property name="path.framework" value="${project.basedir}"/>
     <property name="path.framework.assets" value="${path.framework}/assets"/>
@@ -580,7 +582,7 @@
     <target name="elasticsearch-index-recreate" depends="production-protection, elasticsearch-index-delete, elasticsearch-index-create" description="Recreates indexes into elasticsearch (deletes existing indexes and creates new one)"/>
 
     <target name="environment-change" depends="production-protection" description="Change application environment and install composer dev-dependencies when development environment is selected.">
-        <input propertyName="change.environment" validArgs="dev, prod, test" defaultValue="prod" message="Select environment you want to change to"/>
+        <input propertyName="change.environment" validArgs="dev, prod, test, acc" defaultValue="prod" message="Select environment you want to change to"/>
         <phingcall target="maintenance-on"/>
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
             <arg value="${path.bin-console}"/>
@@ -1058,17 +1060,8 @@
 
     <target name="tests" depends="npm-install-dependencies,test-db-demo,test-elasticsearch-index-recreate,test-elasticsearch-export,error-pages-generate,tests-unit,tests-functional,tests-smoke" description="Runs unit, functional and smoke tests. Builds new test database in the process."/>
 
-    <target name="tests-acceptance" depends="production-protection,clean,clean-redis,test-db-dump" description="Runs acceptance tests. Running Selenium server is required (Selenium is always running in Docker setup).">
-        <available file="${path.env.test}" type="file" property="path.env.test.existed"/>
-        <if>
-            <not>
-                <equals arg1="${path.env.test.existed}" arg2="true"/>
-            </not>
-            <then>
-                <touch file="${path.root}/TEST"/>
-            </then>
-        </if>
-
+    <target name="tests-acceptance" depends="production-protection,clean,clean-redis" description="Runs acceptance tests. Running Selenium server is required (Selenium is always running in Docker setup).">
+        <phingcall target="tests-acceptance-before"/>
         <trycatch>
             <try>
                 <exec executable="${path.codeception.executable}" logoutput="true" passthru="true" checkreturn="true">
@@ -1077,16 +1070,32 @@
                 </exec>
             </try>
             <finally>
-                <if>
-                    <not>
-                        <equals arg1="${path.env.test.existed}" arg2="true"/>
-                    </not>
-                    <then>
-                        <delete file="${path.root}/TEST"/>
-                    </then>
-                </if>
+                <phingcall target="tests-acceptance-after"/>
             </finally>
         </trycatch>
+    </target>
+
+    <target name="tests-acceptance-after" description="Actions necessary to run after acceptance tests." hidden="true">
+        <available file="${path.env.acc}" type="file" property="path.env.acc.existed"/>
+        <if>
+            <equals arg1="${path.env.acc.existed}" arg2="true"/>
+            <then>
+                <delete file="${path.root}/ACCEPTANCE"/>
+            </then>
+        </if>
+    </target>
+
+    <target name="tests-acceptance-before" description="Actions necessary to run before acceptance tests." hidden="true">
+        <available file="${path.env.acc}" type="file" property="path.env.acc.existed"/>
+        <if>
+            <not>
+                <equals arg1="${path.env.acc.existed}" arg2="true"/>
+            </not>
+            <then>
+                <touch file="${path.root}/ACCEPTANCE"/>
+            </then>
+        </if>
+        <phingcall target="test-db-dump"/>
     </target>
 
     <target name="tests-acceptance-build" depends="production-protection" description="Generates AcceptanceTesterActions.php (execute after change of Codeception modules, eg. StrictWebDriver)." hidden="true">
@@ -1094,6 +1103,35 @@
             <arg value="build"/>
             <arg value="--config=${path.codeception.configuration}"/>
         </exec>
+    </target>
+
+    <target name="tests-acceptance-single" depends="production-protection,clean,clean-redis" description="Runs single suite or test depending on user input.">
+        <if>
+            <not><isset property="test"/></not>
+            <then>
+                <input propertyName="test" message="Enter acceptance suite name (eg. OrderCest) or specific test (eg. OrderCest::testFormRemembersFirstName)"/>
+            </then>
+        </if>
+        <if>
+            <equals arg1="${test}" arg2=""/>
+            <then>
+                <fail message="Test name not provided"/>
+            </then>
+        </if>
+        <phingcall target="tests-acceptance-before"/>
+        <trycatch>
+            <try>
+                <exec executable="${path.codeception.executable}" logoutput="true" passthru="true" checkreturn="true">
+                    <arg value="run"/>
+                    <arg value="--config=${path.codeception.configuration}"/>
+                    <arg value="acceptance"/>
+                    <arg value="${test}"/>
+                </exec>
+            </try>
+            <finally>
+                <phingcall target="tests-acceptance-after"/>
+            </finally>
+        </trycatch>
     </target>
 
     <target name="tests-functional" depends="production-protection,clean,clean-redis,domains-info-load" description="Runs functional tests.">
