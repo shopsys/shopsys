@@ -102,6 +102,8 @@ class CategoryDataFixture extends AbstractReferenceFixture
         $categoryData->parent = $rootCategory;
         $this->createCategory($categoryData, self::CATEGORY_ELECTRONICS);
 
+        $categoryData = $this->categoryDataFactory->create();
+
         foreach ($this->domain->getAll() as $domainConfig) {
             $locale = $domainConfig->getLocale();
             $categoryData->name[$locale] = t('TV, audio', [], 'dataFixtures', $locale);
