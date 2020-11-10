@@ -1,0 +1,49 @@
+RegistrationDataInputDecorator:
+    type: input-object
+    decorator: true
+    config:
+        description: "Represents the main input object to register customer user"
+        fields:
+            firstName:
+                type: "String!"
+                description: "Customer user first name"
+                validation:
+                    -   NotBlank:
+                            normalizer: "trim"
+                            message: "Please enter first name"
+                    -   Length:
+                            max: 100
+                            maxMessage: "First name cannot be longer than {{ limit }} characters"
+            lastName:
+                type: "String!"
+                description: "Customer user last name"
+                validation:
+                    -   NotBlank:
+                            normalizer: "trim"
+                            message: "Please enter last name"
+                    -   Length:
+                            max: 100
+                            maxMessage: "Last name cannot be longer than {{ limit }} characters"
+            email:
+                type: "String!"
+                description: "Customer user email."
+                validation:
+                    -   NotBlank:
+                            normalizer: "trim"
+                            message: "Please enter email"
+                    -   Email:
+                            message: "Please enter valid email"
+                    -   Length:
+                            max: 255
+                            maxMessage: "Email cannot be longer than {{ limit }} characters"
+                    -   Shopsys\FrameworkBundle\Form\Constraints\UniqueEmail:
+                            message: "This email is already registered"
+            password:
+                type: "String!"
+                description: "Customer user password."
+                validation:
+                    -   NotBlank:
+                            message: "Please enter password"
+                    -   Length:
+                            min: 6
+                            minMessage: "Password must be at least {{ limit }} characters long"

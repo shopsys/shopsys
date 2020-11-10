@@ -12,6 +12,9 @@ There you can find links to upgrade notes for other versions too.
 - add support for changing personal data and password to your Frontend API ([#1891](https://github.com/shopsys/shopsys/pull/1891))
     - see #project-base-diff to update your project
 
+- add support for customer user registration to your Frontend API ([#2100](https://github.com/shopsys/shopsys/pull/2100))
+    - see #project-base-diff to update your project
+
 - fix not working upload of files in wysiwyg editor ([#1899](https://github.com/shopsys/shopsys/pull/1899))
     - see #project-base-diff to update your project
 

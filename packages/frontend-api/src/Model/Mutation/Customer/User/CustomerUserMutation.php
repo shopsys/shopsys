@@ -9,13 +9,16 @@ use Overblog\GraphQLBundle\Definition\Argument;
 use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
 use Overblog\GraphQLBundle\Definition\Resolver\MutationInterface;
 use Overblog\GraphQLBundle\Validator\InputValidator;
+use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserPasswordFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRefreshTokenChainFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\FrontendCustomerUserProvider;
+use Shopsys\FrontendApiBundle\Model\Customer\User\CustomerUserDataFactory;
 use Shopsys\FrontendApiBundle\Model\Customer\User\CustomerUserUpdateDataFactory;
 use Shopsys\FrontendApiBundle\Model\Mutation\BaseTokenMutation;
+use Shopsys\FrontendApiBundle\Model\Token\TokenFacade;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
@@ -53,6 +56,16 @@ class CustomerUserMutation extends BaseTokenMutation implements MutationInterfac
     protected $customerUserFacade;
 
     /**
+     * @var \Shopsys\FrontendApiBundle\Model\Customer\User\CustomerUserDataFactory
+     */
+    protected $customerUserDataFactory;
+
+    /**
+     * @var \Shopsys\FrontendApiBundle\Model\Token\TokenFacade
+     */
+    protected $tokenFacade;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\FrontendCustomerUserProvider $frontendCustomerUserProvider
      * @param \Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface $userPasswordEncoder
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserPasswordFacade $customerUserPasswordFacade
@@ -60,6 +73,8 @@ class CustomerUserMutation extends BaseTokenMutation implements MutationInterfac
      * @param \Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface $tokenStorage
      * @param \Shopsys\FrontendApiBundle\Model\Customer\User\CustomerUserUpdateDataFactory $customerUserUpdateDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade $customerUserFacade
+     * @param \Shopsys\FrontendApiBundle\Model\Customer\User\CustomerUserDataFactory $customerUserDataFactory
+     * @param \Shopsys\FrontendApiBundle\Model\Token\TokenFacade $tokenFacade
      */
     public function __construct(
         FrontendCustomerUserProvider $frontendCustomerUserProvider,
@@ -68,7 +83,9 @@ class CustomerUserMutation extends BaseTokenMutation implements MutationInterfac
         CustomerUserRefreshTokenChainFacade $customerUserRefreshTokenChainFacade,
         TokenStorageInterface $tokenStorage,
         CustomerUserUpdateDataFactory $customerUserUpdateDataFactory,
-        CustomerUserFacade $customerUserFacade
+        CustomerUserFacade $customerUserFacade,
+        CustomerUserDataFactory $customerUserDataFactory,
+        TokenFacade $tokenFacade
     ) {
         parent::__construct($tokenStorage);
 
@@ -78,6 +95,8 @@ class CustomerUserMutation extends BaseTokenMutation implements MutationInterfac
         $this->customerUserRefreshTokenChainFacade = $customerUserRefreshTokenChainFacade;
         $this->customerUserUpdateDataFactory = $customerUserUpdateDataFactory;
         $this->customerUserFacade = $customerUserFacade;
+        $this->customerUserDataFactory = $customerUserDataFactory;
+        $this->tokenFacade = $tokenFacade;
     }
 
     /**
@@ -129,6 +148,26 @@ class CustomerUserMutation extends BaseTokenMutation implements MutationInterfac
     }
 
     /**
+     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
+     * @param \Overblog\GraphQLBundle\Validator\InputValidator $validator
+     * @return string[]
+     */
+    public function register(Argument $argument, InputValidator $validator): array
+    {
+        $validator->validate();
+
+        $customerUserData = $this->customerUserDataFactory->createWithArgument($argument);
+        $customerUser = $this->customerUserFacade->register($customerUserData);
+
+        $deviceId = Uuid::uuid4()->toString();
+
+        return [
+            'accessToken' => $this->tokenFacade->createAccessTokenAsString($customerUser, $deviceId),
+            'refreshToken' => $this->tokenFacade->createRefreshTokenAsString($customerUser, $deviceId),
+        ];
+    }
+
+    /**
      * @return string[]
      */
     public static function getAliases(): array
@@ -136,6 +175,7 @@ class CustomerUserMutation extends BaseTokenMutation implements MutationInterfac
         return [
             'changePassword' => 'customer_user_change_password',
             'changePersonalData' => 'customer_user_change_personal_data',
+            'register' => 'customer_user_register',
         ];
     }
 }

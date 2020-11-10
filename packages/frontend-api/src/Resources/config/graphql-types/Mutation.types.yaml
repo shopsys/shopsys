@@ -45,3 +45,11 @@ MutationDecorator:
                         type: ChangePersonalDataInput!
                         validation: cascade
                 resolve: "@=mutation('customer_user_change_personal_data', [args, validator])"
+            Register:
+                type: Token!
+                description: "Register new customer user"
+                args:
+                    input:
+                        type: RegistrationDataInput!
+                        validation: cascade
+                resolve: "@=mutation('customer_user_register', [args, validator])"
