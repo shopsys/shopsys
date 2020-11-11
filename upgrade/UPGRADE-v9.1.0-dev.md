@@ -190,3 +190,6 @@ There you can find links to upgrade notes for other versions too.
 
 - add support for customer user registration to your Frontend API ([#2100](https://github.com/shopsys/shopsys/pull/2100))
     - see #project-base-diff to update your project
+    
+- add support for ordering products to your Frontend API ([#2110](https://github.com/shopsys/shopsys/pull/2110))
+    - see #project-base-diff to update your project
