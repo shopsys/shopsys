@@ -1,0 +1,24 @@
+ProductOrderingModeEnumDecorator:
+    type: enum
+    decorator: true
+    config:
+        description: "One of possible ordering modes for product"
+        values:
+            PRIORITY:
+                value: '@=constant("Shopsys\\FrameworkBundle\\Model\\Product\\Listing\\ProductListOrderingConfig::ORDER_BY_PRIORITY")'
+                description: "Order by priority"
+            PRICE_ASC:
+                value: '@=constant("Shopsys\\FrameworkBundle\\Model\\Product\\Listing\\ProductListOrderingConfig::ORDER_BY_PRICE_ASC")'
+                description: "Order by price ascending"
+            PRICE_DESC:
+                value: '@=constant("Shopsys\\FrameworkBundle\\Model\\Product\\Listing\\ProductListOrderingConfig::ORDER_BY_PRICE_DESC")'
+                description: "Order by price descending"
+            NAME_ASC:
+                value: '@=constant("Shopsys\\FrameworkBundle\\Model\\Product\\Listing\\ProductListOrderingConfig::ORDER_BY_NAME_ASC")'
+                description: "Order by name ascending"
+            NAME_DESC:
+                value: '@=constant("Shopsys\\FrameworkBundle\\Model\\Product\\Listing\\ProductListOrderingConfig::ORDER_BY_NAME_DESC")'
+                description: "Order by name descending"
+            RELEVANCE:
+                value: '@=constant("Shopsys\\FrameworkBundle\\Model\\Product\\Listing\\ProductListOrderingConfig::ORDER_BY_RELEVANCE")'
+                description: "Order by relevance"

@@ -28,8 +28,11 @@ CategoryDecorator:
                         type: "String"
             products:
                 type: "ProductConnection"
-                description: "Paginated products of category"
-                argsBuilder: "Relay::Connection"
+                description: "Paginated and ordered products of category"
+                argsBuilder:
+                    builder: "PaginatorArgumentsBuilder"
+                    config:
+                        orderingModeType: 'ProductOrderingModeEnum'
                 resolve: '@=service("Shopsys\\FrontendApiBundle\\Model\\Resolver\\Products\\ProductsResolver").resolveByCategory(args, value)'
             seoH1:
                 type: "String"
