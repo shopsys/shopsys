@@ -125,7 +125,7 @@ To do so, remove the `config.platform.php` option from your `composer.json`:
          "preferred-install": "dist",
 -        "component-dir": "project-base/web/components",
 -        "platform": {
--            "php": "7.2"
+-            "php": "7.4.1"
 -        }
 +        "component-dir": "project-base/web/components"
      },
@@ -138,28 +138,28 @@ If you're interested in why we use the forced PHP version in the first place, re
 ---
 
 On the other hand, if you're planning to run your project in production on a natively installed PHP, you should respect the version installed on that server.
-We recommend to use the same version in your `php-fpm`'s `Dockerfile`, so that developers using Docker run the app in the same environment.
+We recommend using the same version in your `php-fpm`'s `Dockerfile`, so that developers using Docker run the app in the same environment.
 After all, your production server is the one that matters the most.
 
 First, run `php -v` on your server to find our the exact version, for example:
 ``` no-highlight
-PHP 7.2.19-0ubuntu0.18.04.1 (cli) (built: Jun  4 2019 14:48:12) ( NTS )
-Copyright (c) 1997-2018 The PHP Group
-Zend Engine v3.2.0, Copyright (c) 1998-2018 Zend Technologies
-    with Zend OPcache v7.2.19-0ubuntu0.18.04.1, Copyright (c) 1999-2018, by Zend Technologies
+PHP 7.4.12 (cli) (built: Oct  29 2020 18:37:21) ( NTS )
+Copyright (c) The PHP Group
+Zend Engine v3.4.0, Copyright (c) Zend Technologies
+    with Zend OPcache v7.4.12, Copyright (c), by Zend Technologies
 ```
 Then change the version in your `docker/php-fpm/Dockerfile`:
 ```diff
 - FROM php:7.4-fpm-buster as base
-+ FROM php:7.2.19-fpm-stretch as base
++ FROM php:7.4.12-fpm-buster as base
 ```
 After running `docker-compose up -d --build` you'll have the application running on the same PHP.
 
 Now you can modify the version in your `composer.json` as well so all packages will always be installed in a compatible version.
 ```diff
          "platform": {
--            "php": "7.2"
-+            "php": "7.2.19"
+-            "php": "7.4.1"
++            "php": "7.4.12"
          }
 ```
 To apply the new setting, execute `composer update` and commit the changes.

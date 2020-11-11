@@ -21,7 +21,7 @@
         }
     },
     "require": {
-        "php": "^7.2",
+        "php": "^7.4.1",
         "ext-json": "*",
         "ext-pdo": "*",
         "doctrine/dbal": "^2.7",
