@@ -285,6 +285,39 @@ class FilterQuery
     }
 
     /**
+     * @param int[] $productIds
+     * @return \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery
+     */
+    public function filterByProductIds(array $productIds): self
+    {
+        $clone = clone $this;
+
+        $clone->filters[] = [
+            'terms' => [
+                'id' => $productIds,
+            ],
+        ];
+
+        return $clone;
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery
+     */
+    public function filterOutVariants(): self
+    {
+        $clone = clone $this;
+
+        $clone->filters[] = [
+            'term' => [
+                'is_variant' => false,
+            ],
+        ];
+
+        return $clone;
+    }
+
+    /**
      * @return \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery
      */
     public function filterOnlyInStock(): self

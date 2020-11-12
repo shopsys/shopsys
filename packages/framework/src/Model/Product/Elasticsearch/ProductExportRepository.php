@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Product\Elasticsearch;
 
+use BadMethodCallException;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
@@ -11,6 +12,9 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Paginator\QueryPaginator;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRepository;
+use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
+use Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryFacade;
+use Shopsys\FrameworkBundle\Model\Product\Brand\BrandCachedFacade;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice;
 use Shopsys\FrameworkBundle\Model\Product\Product;
@@ -56,6 +60,21 @@ class ProductExportRepository
     protected $friendlyUrlFacade;
 
     /**
+     * @var \Shopsys\FrameworkBundle\Model\Category\CategoryFacade
+     */
+    protected $categoryFacade;
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryFacade
+     */
+    protected $productAccessoryFacade;
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Product\Brand\BrandCachedFacade
+     */
+    protected $brandCachedFacade;
+
+    /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository $parameterRepository
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductFacade $productFacade
@@ -63,6 +82,9 @@ class ProductExportRepository
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductVisibilityRepository $productVisibilityRepository
      * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
+     * @param \Shopsys\FrameworkBundle\Model\Category\CategoryFacade|null $categoryFacade
+     * @param \Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryFacade|null $productAccessoryFacade
+     * @param \Shopsys\FrameworkBundle\Model\Product\Brand\BrandCachedFacade|null $brandCachedFacade
      */
     public function __construct(
         EntityManagerInterface $em,
@@ -71,7 +93,10 @@ class ProductExportRepository
         FriendlyUrlRepository $friendlyUrlRepository,
         Domain $domain,
         ProductVisibilityRepository $productVisibilityRepository,
-        FriendlyUrlFacade $friendlyUrlFacade
+        FriendlyUrlFacade $friendlyUrlFacade,
+        ?CategoryFacade $categoryFacade = null,
+        ?ProductAccessoryFacade $productAccessoryFacade = null,
+        ?BrandCachedFacade $brandCachedFacade = null
     ) {
         $this->parameterRepository = $parameterRepository;
         $this->productFacade = $productFacade;
@@ -80,6 +105,102 @@ class ProductExportRepository
         $this->domain = $domain;
         $this->productVisibilityRepository = $productVisibilityRepository;
         $this->friendlyUrlFacade = $friendlyUrlFacade;
+        $this->categoryFacade = $categoryFacade;
+        $this->productAccessoryFacade = $productAccessoryFacade;
+        $this->brandCachedFacade = $brandCachedFacade;
+    }
+
+    /**
+     * @required
+     * @param \Shopsys\FrameworkBundle\Model\Category\CategoryFacade $categoryFacade
+     * @internal This function will be replaced by constructor injection in next major
+     */
+    public function setCategoryFacade(CategoryFacade $categoryFacade): void
+    {
+        if (
+            $this->categoryFacade !== null
+            && $this->categoryFacade !== $categoryFacade
+        ) {
+            throw new BadMethodCallException(sprintf(
+                'Method "%s" has been already called and cannot be called multiple times.',
+                __METHOD__
+            ));
+        }
+        if ($this->categoryFacade !== null) {
+            return;
+        }
+
+        @trigger_error(
+            sprintf(
+                'The %s() method is deprecated and will be removed in the next major. Use the constructor injection instead.',
+                __METHOD__
+            ),
+            E_USER_DEPRECATED
+        );
+
+        $this->categoryFacade = $categoryFacade;
+    }
+
+    /**
+     * @required
+     * @param \Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryFacade $productAccessoryFacade
+     * @internal This function will be replaced by constructor injection in next major
+     */
+    public function setProductAccessoryFacade(ProductAccessoryFacade $productAccessoryFacade): void
+    {
+        if (
+            $this->productAccessoryFacade !== null
+            && $this->productAccessoryFacade !== $productAccessoryFacade
+        ) {
+            throw new BadMethodCallException(sprintf(
+                'Method "%s" has been already called and cannot be called multiple times.',
+                __METHOD__
+            ));
+        }
+        if ($this->productAccessoryFacade !== null) {
+            return;
+        }
+
+        @trigger_error(
+            sprintf(
+                'The %s() method is deprecated and will be removed in the next major. Use the constructor injection instead.',
+                __METHOD__
+            ),
+            E_USER_DEPRECATED
+        );
+
+        $this->productAccessoryFacade = $productAccessoryFacade;
+    }
+
+    /**
+     * @required
+     * @param \Shopsys\FrameworkBundle\Model\Product\Brand\BrandCachedFacade $brandCachedFacade
+     * @internal This function will be replaced by constructor injection in next major
+     */
+    public function setBrandCachedFacade(BrandCachedFacade $brandCachedFacade): void
+    {
+        if (
+            $this->brandCachedFacade !== null
+            && $this->brandCachedFacade !== $brandCachedFacade
+        ) {
+            throw new BadMethodCallException(sprintf(
+                'Method "%s" has been already called and cannot be called multiple times.',
+                __METHOD__
+            ));
+        }
+        if ($this->brandCachedFacade !== null) {
+            return;
+        }
+
+        @trigger_error(
+            sprintf(
+                'The %s() method is deprecated and will be removed in the next major. Use the constructor injection instead.',
+                __METHOD__
+            ),
+            E_USER_DEPRECATED
+        );
+
+        $this->brandCachedFacade = $brandCachedFacade;
     }
 
     /**
@@ -202,8 +323,14 @@ class ProductExportRepository
             'description' => $product->getDescription($domainId),
             'short_description' => $product->getShortDescription($domainId),
             'brand' => $product->getBrand() ? $product->getBrand()->getId() : '',
+            'brand_name' => $product->getBrand() ? $product->getBrand()->getName() : '',
+            'brand_url' => $this->getBrandUrlForDomainByProduct($product, $domainId),
             'flags' => $flagIds,
             'categories' => $categoryIds,
+            'main_category_id' => $this->categoryFacade->getProductMainCategoryByDomainId(
+                $product,
+                $domainId
+            )->getId(),
             'in_stock' => $product->getCalculatedAvailability()->getDispatchTime() === 0,
             'prices' => $prices,
             'parameters' => $parameters,
@@ -212,6 +339,7 @@ class ProductExportRepository
             'selling_denied' => $product->isSellingDenied(),
             'availability' => $product->getCalculatedAvailability()->getName($locale),
             'is_main_variant' => $product->isMainVariant(),
+            'is_variant' => $product->isVariant(),
             'detail_url' => $detailUrl,
             'visibility' => $visibility,
             'uuid' => $product->getUuid(),
@@ -223,6 +351,7 @@ class ProductExportRepository
             'seo_h1' => $product->getSeoH1($domainId),
             'seo_title' => $product->getSeoTitle($domainId),
             'seo_meta_description' => $product->getSeoMetaDescription($domainId),
+            'accessories' => $this->extractAccessoriesIds($product),
         ];
     }
 
@@ -266,15 +395,13 @@ class ProductExportRepository
         $queryBuilder = $this->em->createQueryBuilder()
             ->select('p')
             ->from(Product::class, 'p')
-                ->where('p.variantType != :variantTypeVariant')
             ->join(ProductVisibility::class, 'prv', Join::WITH, 'prv.product = p.id')
                 ->andWhere('prv.domainId = :domainId')
                 ->andWhere('prv.visible = TRUE')
             ->groupBy('p.id')
             ->orderBy('p.id');
 
-        $queryBuilder->setParameter('domainId', $domainId)
-            ->setParameter('variantTypeVariant', Product::VARIANT_TYPE_VARIANT);
+        $queryBuilder->setParameter('domainId', $domainId);
 
         return $queryBuilder;
     }
@@ -332,7 +459,9 @@ class ProductExportRepository
 
             $parameters[] = [
                 'parameter_id' => $parameter->getId(),
+                'parameter_name' => $parameter->getName($locale),
                 'parameter_value_id' => $parameterValue->getId(),
+                'parameter_value_text' => $parameterValue->getText(),
             ];
         }
 
@@ -388,5 +517,36 @@ class ProductExportRepository
         }
 
         return $visibility;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
+     * @param int $domainId
+     * @return string
+     */
+    protected function getBrandUrlForDomainByProduct(Product $product, int $domainId): string
+    {
+        $brand = $product->getBrand();
+        if ($brand === null) {
+            return '';
+        }
+
+        return $this->brandCachedFacade->getBrandUrlByDomainId($brand->getId(), $domainId);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
+     * @return array
+     */
+    protected function extractAccessoriesIds(Product $product): array
+    {
+        $accessoriesIds = [];
+        $accessories = $this->productAccessoryFacade->getAllAccessories($product);
+
+        foreach ($accessories as $accessory) {
+            $accessoriesIds[] = $accessory->getAccessory()->getId();
+        }
+
+        return $accessoriesIds;
     }
 }

@@ -202,7 +202,7 @@ class ListedProductViewFactory extends BaseListedProductViewFactory
             $productArray['name'],
             $productArray['short_description'],
             $productArray['availability'],
-            $this->getProductPriceFromArrayByPricingGroup($productArray['prices'], $pricingGroup),
+            $this->priceFactory->createProductPriceFromArrayByPricingGroup($productArray['prices'], $pricingGroup),
             $productArray['flags'],
             $productActionView,
             $imageView,

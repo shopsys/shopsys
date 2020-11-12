@@ -193,3 +193,12 @@ There you can find links to upgrade notes for other versions too.
     
 - add support for ordering products to your Frontend API ([#2110](https://github.com/shopsys/shopsys/pull/2110))
     - see #project-base-diff to update your project
+
+- ProductDetailView provided by elasticsearch ([#2090](https://github.com/shopsys/shopsys/pull/2090))
+    - add new fields to elasticsearch index definition for all domains 
+        - see #project-base-diff to update your project
+    - run `php phing elasticsearch-index-migrate elasticsearch-export` to apply changes
+        - with products there are exported variants too now
+            - it should not cause any trouble as filtering product from Elasticsearch was edited to filter variants out, so it behaves same as earlier
+            - when you have some of related functionality extended you should probably want to filter variants out by yourself
+                - method `FilterQuery::filterOutVariants()` was introduced for this purposes

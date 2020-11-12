@@ -167,8 +167,17 @@ class FilterQueryFactory
      */
     public function createListable(): FilterQuery
     {
-        return $this->create($this->getIndexName())
+        return $this->createVisible()
             ->filterOnlySellable()
+            ->filterOutVariants();
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery
+     */
+    public function createVisible(): FilterQuery
+    {
+        return $this->create($this->getIndexName())
             ->filterOnlyVisible($this->currentCustomerUser->getPricingGroup());
     }
 
@@ -215,5 +224,24 @@ class FilterQueryFactory
         $filterQuery = $this->productFilterDataToQueryTransformer->addStockToQuery($productFilterData, $filterQuery);
 
         return $filterQuery;
+    }
+
+    /**
+     * @param int[] $productIds
+     * @return \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery
+     */
+    public function createVisibleProductsByProductIdsFilter(array $productIds): FilterQuery
+    {
+        return $this->createVisible()
+            ->filterByProductIds($productIds);
+    }
+
+    /**
+     * @param int[] $productIds
+     * @return \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery
+     */
+    public function createSellableProductsByProductIdsFilter(array $productIds): FilterQuery
+    {
+        return $this->createVisibleProductsByProductIdsFilter($productIds)->filterOnlySellable();
     }
 }

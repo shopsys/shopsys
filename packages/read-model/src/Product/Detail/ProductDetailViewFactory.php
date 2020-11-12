@@ -18,6 +18,8 @@ use Shopsys\ReadModelBundle\Image\ImageViewFacadeInterface;
 use Shopsys\ReadModelBundle\Parameter\ParameterViewFacadeInterface;
 use Shopsys\ReadModelBundle\Product\Action\ProductActionView;
 use Shopsys\ReadModelBundle\Product\Action\ProductActionViewFacadeInterface;
+use Shopsys\ReadModelBundle\Product\Listed\ListedProductVariantsViewFacadeInterface;
+use Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFacadeInterface;
 
 class ProductDetailViewFactory
 {
@@ -62,6 +64,16 @@ class ProductDetailViewFactory
     protected $categoryFacade;
 
     /**
+     * @var \Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFacadeInterface
+     */
+    protected $listedProductViewFacade;
+
+    /**
+     * @var \Shopsys\ReadModelBundle\Product\Listed\ListedProductVariantsViewFacadeInterface
+     */
+    protected $listedProductVariantsViewFacade;
+
+    /**
      * @param \Shopsys\ReadModelBundle\Image\ImageViewFacadeInterface $imageViewFacade
      * @param \Shopsys\ReadModelBundle\Product\Action\ProductActionViewFacadeInterface $productActionViewFacade
      * @param \Shopsys\ReadModelBundle\Brand\BrandViewFacadeInterface $brandViewFacade
@@ -70,6 +82,8 @@ class ProductDetailViewFactory
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductCachedAttributesFacade $productCachedAttributesFacade
      * @param \Shopsys\FrameworkBundle\Model\Category\CategoryFacade $categoryFacade
      * @param \Shopsys\FrameworkBundle\Model\Seo\SeoSettingFacade $seoSettingFacade
+     * @param \Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFacadeInterface $listedProductViewFacade
+     * @param \Shopsys\ReadModelBundle\Product\Listed\ListedProductVariantsViewFacadeInterface $listedProductVariantsViewFacade
      */
     public function __construct(
         ImageViewFacadeInterface $imageViewFacade,
@@ -79,7 +93,9 @@ class ProductDetailViewFactory
         Domain $domain,
         ProductCachedAttributesFacade $productCachedAttributesFacade,
         CategoryFacade $categoryFacade,
-        SeoSettingFacade $seoSettingFacade
+        SeoSettingFacade $seoSettingFacade,
+        ListedProductViewFacadeInterface $listedProductViewFacade,
+        ListedProductVariantsViewFacadeInterface $listedProductVariantsViewFacade
     ) {
         $this->imageViewFacade = $imageViewFacade;
         $this->productActionViewFacade = $productActionViewFacade;
@@ -89,6 +105,8 @@ class ProductDetailViewFactory
         $this->productCachedAttributesFacade = $productCachedAttributesFacade;
         $this->categoryFacade = $categoryFacade;
         $this->seoSettingFacade = $seoSettingFacade;
+        $this->listedProductViewFacade = $listedProductViewFacade;
+        $this->listedProductVariantsViewFacade = $listedProductVariantsViewFacade;
     }
 
     /**
@@ -101,6 +119,8 @@ class ProductDetailViewFactory
         $productActionView = $this->productActionViewFacade->getForProduct($product);
         $brandView = $this->brandViewFacade->findByProductId($product->getId());
         $parameterViews = $this->parameterViewFacade->getAllByProductId($product->getId());
+        $accessories = $this->listedProductViewFacade->getAllAccessories($product->getId());
+        $variants = $this->listedProductVariantsViewFacade->getAllVariants($product->getId());
 
         return $this->createInstance(
             $product,
@@ -109,7 +129,9 @@ class ProductDetailViewFactory
             $imageViews,
             $brandView,
             $productActionView,
-            $parameterViews
+            $parameterViews,
+            $accessories,
+            $variants
         );
     }
 
@@ -121,6 +143,8 @@ class ProductDetailViewFactory
      * @param \Shopsys\ReadModelBundle\Brand\BrandView|null $brandView
      * @param \Shopsys\ReadModelBundle\Product\Action\ProductActionView $productActionView
      * @param \Shopsys\ReadModelBundle\Parameter\ParameterView[] $parameterViews
+     * @param \Shopsys\ReadModelBundle\Product\Listed\ListedProductView[] $accessories
+     * @param \Shopsys\ReadModelBundle\Product\Listed\ListedProductView[] $variants
      * @return \Shopsys\ReadModelBundle\Product\Detail\ProductDetailView
      */
     protected function createInstance(
@@ -130,7 +154,9 @@ class ProductDetailViewFactory
         array $galleryImageViews,
         ?BrandView $brandView,
         ProductActionView $productActionView,
-        array $parameterViews
+        array $parameterViews,
+        array $accessories,
+        array $variants
     ): ProductDetailView {
         $domainId = $this->domain->getId();
         $locale = $this->domain->getLocale();
@@ -156,7 +182,9 @@ class ProductDetailViewFactory
             $brandView,
             $this->getMainImageView($galleryImageViews),
             $galleryImageViews,
-            $parameterViews
+            $parameterViews,
+            $accessories,
+            $variants
         );
     }
 

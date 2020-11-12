@@ -72,6 +72,9 @@ services:
     Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainFacadeInterface:
         alias: Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainElasticFacade
 
+    Shopsys\ReadModelBundle\Product\Detail\ProductDetailViewFacadeInterface:
+        class: Shopsys\ReadModelBundle\Product\Detail\ProductDetailViewElasticsearchFacade
+
     Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFacadeInterface:
         alias: Shopsys\ReadModelBundle\Product\Listed\ListedProductViewElasticFacade
 

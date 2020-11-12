@@ -6,9 +6,8 @@ namespace Shopsys\ReadModelBundle\Product\Listed;
 
 use BadMethodCallException;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\Component\Money\Money;
+use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
-use Shopsys\FrameworkBundle\Model\Pricing\Price;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\ProductCachedAttributesFacade;
@@ -16,6 +15,8 @@ use Shopsys\ReadModelBundle\Image\ImageView;
 use Shopsys\ReadModelBundle\Image\ImageViewFacadeInterface;
 use Shopsys\ReadModelBundle\Product\Action\ProductActionView;
 use Shopsys\ReadModelBundle\Product\Action\ProductActionViewFacadeInterface;
+use Shopsys\ReadModelBundle\Product\Action\ProductActionViewFactory;
+use Shopsys\ReadModelBundle\Product\PriceFactory;
 
 class ListedProductViewFactory
 {
@@ -40,21 +41,45 @@ class ListedProductViewFactory
     protected $productActionViewFacade;
 
     /**
+     * @var \Shopsys\ReadModelBundle\Product\Action\ProductActionViewFactory
+     */
+    protected $productActionViewFactory;
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser
+     */
+    protected $currentCustomerUser;
+
+    /**
+     * @var \Shopsys\ReadModelBundle\Product\PriceFactory
+     */
+    protected $priceFactory;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductCachedAttributesFacade $productCachedAttributesFacade
      * @param \Shopsys\ReadModelBundle\Image\ImageViewFacadeInterface|null $imageViewFacade
      * @param \Shopsys\ReadModelBundle\Product\Action\ProductActionViewFacadeInterface|null $productActionViewFacade
+     * @param \Shopsys\ReadModelBundle\Product\Action\ProductActionViewFactory|null $productActionViewFactory
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser|null $currentCustomerUser
+     * @param \Shopsys\ReadModelBundle\Product\PriceFactory|null $priceFactory
      */
     public function __construct(
         Domain $domain,
         ProductCachedAttributesFacade $productCachedAttributesFacade,
         ?ImageViewFacadeInterface $imageViewFacade = null,
-        ?ProductActionViewFacadeInterface $productActionViewFacade = null
+        ?ProductActionViewFacadeInterface $productActionViewFacade = null,
+        ?ProductActionViewFactory $productActionViewFactory = null,
+        ?CurrentCustomerUser $currentCustomerUser = null,
+        ?PriceFactory $priceFactory = null
     ) {
         $this->domain = $domain;
         $this->productCachedAttributesFacade = $productCachedAttributesFacade;
         $this->imageViewFacade = $imageViewFacade;
         $this->productActionViewFacade = $productActionViewFacade;
+        $this->productActionViewFactory = $productActionViewFactory;
+        $this->currentCustomerUser = $currentCustomerUser;
+        $this->priceFactory = $priceFactory;
     }
 
     /**
@@ -124,7 +149,7 @@ class ListedProductViewFactory
             $productArray['name'],
             $productArray['short_description'],
             $productArray['availability'],
-            $this->getProductPriceFromArrayByPricingGroup($productArray['prices'], $pricingGroup),
+            $this->priceFactory->createProductPriceFromArrayByPricingGroup($productArray['prices'], $pricingGroup),
             $productArray['flags'],
             $productActionView,
             $imageView
@@ -157,6 +182,31 @@ class ListedProductViewFactory
     }
 
     /**
+     * @param array $productsArray
+     * @return \Shopsys\ReadModelBundle\Product\Listed\ListedProductView[]
+     */
+    public function createFromProductsArray(array $productsArray): array
+    {
+        $imageViews = $this->imageViewFacade->getMainImagesByEntityIds(
+            Product::class,
+            array_column($productsArray, 'id')
+        );
+
+        $listedProductViews = [];
+        foreach ($productsArray as $productArray) {
+            $productId = $productArray['id'];
+            $listedProductViews[$productId] = $this->createFromArray(
+                $productArray,
+                $imageViews[$productId],
+                $this->productActionViewFactory->createFromArray($productArray),
+                $this->currentCustomerUser->getPricingGroup()
+            );
+        }
+
+        return $listedProductViews;
+    }
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Product[] $products
      * @return int[]
      */
@@ -171,19 +221,20 @@ class ListedProductViewFactory
      * @param array $pricesArray
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
      * @return \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice|null
+     * @deprecated This method will be removed in next major. Use PriceFactory::createProductPriceFromArrayByPricingGroup() instead.
      */
-    protected function getProductPriceFromArrayByPricingGroup(array $pricesArray, PricingGroup $pricingGroup): ?ProductPrice
-    {
-        foreach ($pricesArray as $priceArray) {
-            if ($priceArray['pricing_group_id'] === $pricingGroup->getId()) {
-                $priceWithoutVat = Money::create((string)$priceArray['price_without_vat']);
-                $priceWithVat = Money::create((string)$priceArray['price_with_vat']);
-                $price = new Price($priceWithoutVat, $priceWithVat);
-                return new ProductPrice($price, $priceArray['price_from']);
-            }
-        }
-
-        return null;
+    protected function getProductPriceFromArrayByPricingGroup(
+        array $pricesArray,
+        PricingGroup $pricingGroup
+    ): ?ProductPrice {
+        @trigger_error(
+            sprintf(
+                'The %s() method is deprecated and will be removed in the next major. Use PriceFactory::createProductPriceFromArrayByPricingGroup() instead.',
+                __METHOD__
+            ),
+            E_USER_DEPRECATED
+        );
+        return $this->priceFactory->createProductPriceFromArrayByPricingGroup($pricesArray, $pricingGroup);
     }
 
     /**
@@ -250,5 +301,86 @@ class ListedProductViewFactory
             E_USER_DEPRECATED
         );
         $this->productActionViewFacade = $productActionViewFacade;
+    }
+
+    /**
+     * @required
+     * @param \Shopsys\ReadModelBundle\Product\Action\ProductActionViewFactory $productActionViewFactory
+     * @internal This function will be replaced by constructor injection in next major
+     */
+    public function setProductActionViewFactory(ProductActionViewFactory $productActionViewFactory): void
+    {
+        if (
+            $this->productActionViewFactory !== null
+            && $this->productActionViewFactory !== $productActionViewFactory
+        ) {
+            throw new BadMethodCallException(
+                sprintf('Method "%s" has been already called and cannot be called multiple times.', __METHOD__)
+            );
+        }
+        if ($this->productActionViewFactory !== null) {
+            return;
+        }
+
+        @trigger_error(
+            sprintf(
+                'The %s() method is deprecated and will be removed in the next major. Use the constructor injection instead.',
+                __METHOD__
+            ),
+            E_USER_DEPRECATED
+        );
+        $this->productActionViewFactory = $productActionViewFactory;
+    }
+
+    /**
+     * @required
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
+     * @internal This function will be replaced by constructor injection in next major
+     */
+    public function setCurrentCustomerUser(CurrentCustomerUser $currentCustomerUser): void
+    {
+        if ($this->currentCustomerUser !== null && $this->currentCustomerUser !== $currentCustomerUser) {
+            throw new BadMethodCallException(
+                sprintf('Method "%s" has been already called and cannot be called multiple times.', __METHOD__)
+            );
+        }
+        if ($this->currentCustomerUser !== null) {
+            return;
+        }
+
+        @trigger_error(
+            sprintf(
+                'The %s() method is deprecated and will be removed in the next major. Use the constructor injection instead.',
+                __METHOD__
+            ),
+            E_USER_DEPRECATED
+        );
+        $this->currentCustomerUser = $currentCustomerUser;
+    }
+
+    /**
+     * @required
+     * @param \Shopsys\ReadModelBundle\Product\PriceFactory $priceFactory
+     * @internal This function will be replaced by constructor injection in next major
+     */
+    public function setPriceFactory(PriceFactory $priceFactory): void
+    {
+        if ($this->priceFactory !== null && $this->priceFactory !== $priceFactory) {
+            throw new BadMethodCallException(
+                sprintf('Method "%s" has been already called and cannot be called multiple times.', __METHOD__)
+            );
+        }
+        if ($this->priceFactory !== null) {
+            return;
+        }
+
+        @trigger_error(
+            sprintf(
+                'The %s() method is deprecated and will be removed in the next major. Use the constructor injection instead.',
+                __METHOD__
+            ),
+            E_USER_DEPRECATED
+        );
+        $this->priceFactory = $priceFactory;
     }
 }

@@ -62,7 +62,7 @@ class ProductDetailView
     protected $sellingPrice;
 
     /**
-     * @var int
+     * @var int|null
      */
     protected $mainCategoryId;
 
@@ -117,6 +117,16 @@ class ProductDetailView
     protected $parameterViews;
 
     /**
+     * @var \Shopsys\ReadModelBundle\Product\Listed\ListedProductView[]
+     */
+    protected $accessories;
+
+    /**
+     * @var \Shopsys\ReadModelBundle\Product\Listed\ListedProductView[]
+     */
+    protected $variants;
+
+    /**
      * @param int $id
      * @param string|null $name
      * @param string|null $description
@@ -125,7 +135,7 @@ class ProductDetailView
      * @param string|null $catnum
      * @param string|null $partno
      * @param string|null $ean
-     * @param int $mainCategoryId
+     * @param int|null $mainCategoryId
      * @param bool $isSellingDenied
      * @param bool $isInStock
      * @param bool $isMainVariant
@@ -138,6 +148,8 @@ class ProductDetailView
      * @param \Shopsys\ReadModelBundle\Image\ImageView|null $mainImageView
      * @param \Shopsys\ReadModelBundle\Image\ImageView[] $galleryImageViews
      * @param \Shopsys\ReadModelBundle\Parameter\ParameterView[] $parameterViews
+     * @param \Shopsys\ReadModelBundle\Product\Listed\ListedProductView[] $accessories
+     * @param \Shopsys\ReadModelBundle\Product\Listed\ListedProductView[] $variants
      */
     public function __construct(
         int $id,
@@ -148,7 +160,7 @@ class ProductDetailView
         ?string $catnum,
         ?string $partno,
         ?string $ean,
-        int $mainCategoryId,
+        ?int $mainCategoryId,
         bool $isSellingDenied,
         bool $isInStock,
         bool $isMainVariant,
@@ -160,7 +172,9 @@ class ProductDetailView
         ?BrandView $brandView,
         ?ImageView $mainImageView,
         array $galleryImageViews,
-        array $parameterViews
+        array $parameterViews,
+        array $accessories,
+        array $variants
     ) {
         $this->id = $id;
         $this->name = $name;
@@ -183,6 +197,8 @@ class ProductDetailView
         $this->brandView = $brandView;
         $this->galleryImageViews = $galleryImageViews;
         $this->parameterViews = $parameterViews;
+        $this->accessories = $accessories;
+        $this->variants = $variants;
     }
 
     /**
@@ -250,9 +266,9 @@ class ProductDetailView
     }
 
     /**
-     * @return int
+     * @return int|null
      */
-    public function getMainCategoryId(): int
+    public function getMainCategoryId(): ?int
     {
         return $this->mainCategoryId;
     }
@@ -359,5 +375,21 @@ class ProductDetailView
     public function getParameterViews(): array
     {
         return $this->parameterViews;
+    }
+
+    /**
+     * @return \Shopsys\ReadModelBundle\Product\Listed\ListedProductView[]
+     */
+    public function getAccessories(): array
+    {
+        return $this->accessories;
+    }
+
+    /**
+     * @return \Shopsys\ReadModelBundle\Product\Listed\ListedProductView[]
+     */
+    public function getVariants(): array
+    {
+        return $this->variants;
     }
 }

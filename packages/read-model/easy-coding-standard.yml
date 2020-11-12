@@ -18,4 +18,5 @@ parameters:
         - 'psr12'
     skip:
         Shopsys\CodingStandards\Sniffs\ObjectIsCreatedByFactorySniff:
+            - '*/src/Product/Detail/ProductDetailViewElasticsearchFactory.php'
             - '*/tests/*'

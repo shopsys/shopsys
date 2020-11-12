@@ -93,9 +93,11 @@
                                     </div>
                                     {{ render(controller('App\\Controller\\Front\\CartController:productActionAction', { productActionView: productView.actionView, type: 'large'} )) }}
                                 {% else %}
-                                    <div>
-                                        {{ 'This product is no longer available for purchase. Have a look at similar products <a href="%url%">here</a>.'|transHtml({"%url%": url('front_product_list', { id: productView.mainCategoryId })}) }}
-                                    </div>
+                                    {% if productView.mainCategoryId is not null %}
+                                        <div>
+                                            {{ 'This product is no longer available for purchase. Have a look at similar products <a href="%url%">here</a>.'|transHtml({"%url%": url('front_product_list', { id: productView.mainCategoryId })}) }}
+                                        </div>
+                                    {% endif %}
                                 {% endif %}
                             </div>
                         {% endif %}
@@ -146,7 +148,7 @@
                     </div>
                 </div>
 
-                {% if variants and not productView.isSellingDenied %}
+                {% if productView.variants and not productView.isSellingDenied %}
                     <table {% if productView.sellingPrice is not null %}itemprop="offers"
                            itemscope
                            itemtype="http://schema.org/AggregateOffer" {% endif %}
@@ -175,7 +177,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            {% for variant in variants %}
+                            {% for variant in productView.variants %}
                                 <tr class="table-variants__row">
                                     <td class="table-variants__cell table-variants__cell--image">
                                         <div class="table-variants__cell__image">
@@ -206,7 +208,7 @@
                     </table>
                 {% endif %}
 
-                {% if productView.description or productView.parameterViews or accessories|length > 0 %}
+                {% if productView.description or productView.parameterViews or productView.accessories|length > 0 %}
                     <div class="in-tab js-responsive-tabs">
                         <div class="in-tab__head dont-print">
                             {% if productView.description %}
@@ -215,7 +217,7 @@
                                 </a>
                             {% endif %}
 
-                            {% if accessories|length > 0 %}
+                            {% if productView.accessories|length > 0 %}
                                 <a href="#" class="in-tab__head__item js-tabs-button" data-tab-id="accessories">
                                     {{ accessoriesHeadline }}
                                 </a>
@@ -255,13 +257,13 @@
                                 </div>
                             {% endif %}
 
-                            {% if accessories|length > 0 %}
+                            {% if productView.accessories|length > 0 %}
                                 <a href="#" class="in-tab__content__title js-tabs-button" data-tab-id="accessories">
                                     {{ accessoriesHeadline }}
                                     <i class="svg svg-arrow"></i>
                                 </a>
                                 <div class="in-tab__content__item js-tabs-content" data-tab-id="accessories">
-                                    {{ productList.list(accessories) }}
+                                    {{ productList.list(productView.accessories) }}
                                 </div>
                             {% endif %}
                         </div>

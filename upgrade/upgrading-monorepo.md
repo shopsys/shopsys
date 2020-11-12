@@ -21,6 +21,9 @@ Typical upgrade sequence should be:
 - added Product SEO informations to elasticsearch ([#2074](https://github.com/shopsys/shopsys/pull/2074))
     - run `php phing elasticsearch-index-migrate elasticsearch-export` to apply changes
 
+- ProductDetailView provided by elasticsearch ([#2090](https://github.com/shopsys/shopsys/pull/2090))
+    - run `php phing elasticsearch-index-migrate elasticsearch-export` to apply changes
+
 ## [From v9.0.3 to v9.0.4-dev]
 
 ## [From v9.0.2 to v9.0.3]
