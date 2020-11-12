@@ -202,3 +202,6 @@ There you can find links to upgrade notes for other versions too.
             - it should not cause any trouble as filtering product from Elasticsearch was edited to filter variants out, so it behaves same as earlier
             - when you have some of related functionality extended you should probably want to filter variants out by yourself
                 - method `FilterQuery::filterOutVariants()` was introduced for this purposes
+
+- fix cleaning of old redis cache ([#2096](https://github.com/shopsys/shopsys/pull/2096))
+    - see #project-base-diff to update your project

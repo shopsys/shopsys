@@ -24,6 +24,7 @@ snc_redis:
             dsn: 'redis://%redis_host%'
             options:
                 prefix: '%env(REDIS_PREFIX)%%build-version%:cache:framework:annotations:'
+        # client is used exclusively for cleaning old versions of redis caches and should not be used for anything else
         global:
             type: 'phpredis'
             alias: 'global'
