@@ -33,7 +33,7 @@ class PaginatorArgumentsBuilder implements MappingInterface
                 'type' => 'Int',
             ],
             'orderingMode' => [
-                'type' => $config[self::CONFIG_ORDER_TYPE_KEY],
+                'type' => $config[static::CONFIG_ORDER_TYPE_KEY],
             ],
         ];
     }
@@ -44,11 +44,11 @@ class PaginatorArgumentsBuilder implements MappingInterface
      */
     protected function checkMandatoryFields(array $config): void
     {
-        if (array_key_exists(self::CONFIG_ORDER_TYPE_KEY, $config) === false) {
+        if (array_key_exists(static::CONFIG_ORDER_TYPE_KEY, $config) === false) {
             $message = sprintf(
                 'Using the `%s`, the key `%s` defining the GraphQL type of the node is required.',
                 self::class,
-                self::CONFIG_ORDER_TYPE_KEY
+                static::CONFIG_ORDER_TYPE_KEY
             );
             throw new MandatoryArgumentMissingException($message);
         }
