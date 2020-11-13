@@ -3259,6 +3259,28 @@ Adverts may be filtered by `positionName` argument.
         }
     }
 
+## Subscribe for e-mail newsletter [/graphql{?newsletter_subscribe}]
+
+### POST [POST]
+
+Subscribe for e-mail newsletter
+
+- Request (application/json)
+
+    - Body
+        mutation {
+            NewsletterSubscribe (input: {
+                email: "no-reply@shopsys.com"
+            })
+        }
+
+    - Response 200 (application/json; charset=utf-8)
+        {
+            "data": {
+                "NewsletterSubscribe": true
+            }
+        }
+
 ## Data Structures
 ### ProductOrderingModeEnum (enum)
 + `PRIORITY`

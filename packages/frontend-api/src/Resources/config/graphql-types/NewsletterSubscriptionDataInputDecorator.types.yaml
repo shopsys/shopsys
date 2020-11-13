@@ -1,0 +1,17 @@
+NewsletterSubscriptionDataInputDecorator:
+    type: input-object
+    decorator: true
+    config:
+        description: "Represents the main input object to subscribe for e-mail newsletter"
+        fields:
+            email:
+                type: "String!"
+                validation:
+                    -   NotBlank:
+                            normalizer: "trim"
+                            message: "Please enter email"
+                    -   Email:
+                            message: "Please enter valid email"
+                    -   Length:
+                            max: 255
+                            maxMessage: "Email cannot be longer than {{ limit }} characters"
