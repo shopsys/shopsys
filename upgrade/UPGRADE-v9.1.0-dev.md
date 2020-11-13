@@ -205,3 +205,6 @@ There you can find links to upgrade notes for other versions too.
 
 - fix cleaning of old redis cache ([#2096](https://github.com/shopsys/shopsys/pull/2096))
     - see #project-base-diff to update your project
+
+- enable logging in tests ([#2113](https://github.com/shopsys/shopsys/pull/2113))
+    - see #project-base-diff to update your project
