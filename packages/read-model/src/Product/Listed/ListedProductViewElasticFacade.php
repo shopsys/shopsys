@@ -11,6 +11,7 @@ use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryFacade;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData;
 use Shopsys\FrameworkBundle\Model\Product\Product;
+use Shopsys\FrameworkBundle\Model\Product\ProductElasticsearchProvider;
 use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
 use Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainFacadeInterface;
 use Shopsys\FrameworkBundle\Model\Product\TopProduct\TopProductFacade;
@@ -72,6 +73,11 @@ class ListedProductViewElasticFacade implements ListedProductViewFacadeInterface
     protected $productActionViewFactory;
 
     /**
+     * @var \Shopsys\FrameworkBundle\Model\Product\ProductElasticsearchProvider
+     */
+    protected $productElasticsearchProvider;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductFacade $productFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryFacade $productAccessoryFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
@@ -82,6 +88,7 @@ class ListedProductViewElasticFacade implements ListedProductViewFacadeInterface
      * @param \Shopsys\ReadModelBundle\Product\Action\ProductActionViewFacade $productActionViewFacade
      * @param \Shopsys\ReadModelBundle\Image\ImageViewFacadeInterface $imageViewFacade
      * @param \Shopsys\ReadModelBundle\Product\Action\ProductActionViewFactory|null $productActionViewFactory
+     * @param \Shopsys\FrameworkBundle\Model\Product\ProductElasticsearchProvider $productElasticsearchProvider
      */
     public function __construct(
         ProductFacade $productFacade,
@@ -93,7 +100,8 @@ class ListedProductViewElasticFacade implements ListedProductViewFacadeInterface
         ListedProductViewFactory $listedProductViewFactory,
         ProductActionViewFacade $productActionViewFacade,
         ImageViewFacadeInterface $imageViewFacade,
-        ?ProductActionViewFactory $productActionViewFactory = null
+        ?ProductActionViewFactory $productActionViewFactory = null,
+        ?ProductElasticsearchProvider $productElasticsearchProvider = null
     ) {
         $this->productFacade = $productFacade;
         $this->productAccessoryFacade = $productAccessoryFacade;
@@ -105,6 +113,7 @@ class ListedProductViewElasticFacade implements ListedProductViewFacadeInterface
         $this->productActionViewFacade = $productActionViewFacade;
         $this->imageViewFacade = $imageViewFacade;
         $this->productActionViewFactory = $productActionViewFactory;
+        $this->productElasticsearchProvider = $productElasticsearchProvider;
     }
 
     /**
@@ -143,16 +152,15 @@ class ListedProductViewElasticFacade implements ListedProductViewFacadeInterface
      */
     public function getAccessories(int $productId, int $limit): array
     {
-        $product = $this->productFacade->getById($productId);
+        $productArray = $this->productElasticsearchProvider->getVisibleProductArrayById($productId);
 
-        $accessories = $this->productAccessoryFacade->getTopOfferedAccessories(
-            $product,
-            $this->domain->getId(),
-            $this->currentCustomerUser->getPricingGroup(),
-            $limit
+        if (count($productArray) === 0) {
+            return [];
+        }
+
+        return $this->listedProductViewFactory->createFromProductsArray(
+            $this->productElasticsearchProvider->getSellableProductArrayByIds($productArray['accessories'], $limit)
         );
-
-        return $this->createFromProducts($accessories);
     }
 
     /**
@@ -161,16 +169,15 @@ class ListedProductViewElasticFacade implements ListedProductViewFacadeInterface
      */
     public function getAllAccessories(int $productId): array
     {
-        $product = $this->productFacade->getById($productId);
+        $productArray = $this->productElasticsearchProvider->getVisibleProductArrayById($productId);
 
-        $accessories = $this->productAccessoryFacade->getTopOfferedAccessories(
-            $product,
-            $this->domain->getId(),
-            $this->currentCustomerUser->getPricingGroup(),
-            null
+        if (count($productArray) === 0) {
+            return [];
+        }
+
+        return $this->listedProductViewFactory->createFromProductsArray(
+            $this->productElasticsearchProvider->getSellableProductArrayByIds($productArray['accessories'])
         );
-
-        return $this->createFromProducts($accessories);
     }
 
     /**
@@ -330,5 +337,34 @@ class ListedProductViewElasticFacade implements ListedProductViewFacadeInterface
             E_USER_DEPRECATED
         );
         $this->productActionViewFactory = $productActionViewFactory;
+    }
+
+    /**
+     * @required
+     * @param \Shopsys\FrameworkBundle\Model\Product\ProductElasticsearchProvider $productElasticsearchProvider
+     * @internal This function will be replaced by constructor injection in next major
+     */
+    public function setProductElasticsearchProvider(ProductElasticsearchProvider $productElasticsearchProvider): void
+    {
+        if (
+            $this->productElasticsearchProvider !== null
+            && $this->productElasticsearchProvider !== $productElasticsearchProvider
+        ) {
+            throw new BadMethodCallException(
+                sprintf('Method "%s" has been already called and cannot be called multiple times.', __METHOD__)
+            );
+        }
+        if ($this->productElasticsearchProvider !== null) {
+            return;
+        }
+
+        @trigger_error(
+            sprintf(
+                'The %s() method is deprecated and will be removed in the next major. Use the constructor injection instead.',
+                __METHOD__
+            ),
+            E_USER_DEPRECATED
+        );
+        $this->productElasticsearchProvider = $productElasticsearchProvider;
     }
 }
