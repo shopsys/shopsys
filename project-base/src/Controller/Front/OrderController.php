@@ -8,6 +8,8 @@ use App\Form\Front\Order\DomainAwareOrderFlowFactory;
 use App\Model\Order\FrontOrderData;
 use App\Model\Order\OrderData;
 use App\Model\Order\OrderDataMapper;
+use Doctrine\ORM\EntityManagerInterface;
+use Exception;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\HttpFoundation\DownloadFileResponse;
 use Shopsys\FrameworkBundle\Model\Cart\CartFacade;
@@ -115,6 +117,11 @@ class OrderController extends FrontBaseController
     private $newsletterFacade;
 
     /**
+     * @var \Doctrine\ORM\EntityManagerInterface
+     */
+    private EntityManagerInterface $entityManager;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderFacade $orderFacade
      * @param \Shopsys\FrameworkBundle\Model\Cart\CartFacade $cartFacade
      * @param \Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreviewFactory $orderPreviewFactory
@@ -131,6 +138,7 @@ class OrderController extends FrontBaseController
      * @param \Shopsys\FrameworkBundle\Model\Order\Mail\OrderMailFacade $orderMailFacade
      * @param \Shopsys\FrameworkBundle\Model\LegalConditions\LegalConditionsFacade $legalConditionsFacade
      * @param \Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade $newsletterFacade
+     * @param \Doctrine\ORM\EntityManagerInterface $entityManager
      */
     public function __construct(
         OrderFacade $orderFacade,
@@ -148,7 +156,8 @@ class OrderController extends FrontBaseController
         TransportAndPaymentWatcher $transportAndPaymentWatcher,
         OrderMailFacade $orderMailFacade,
         LegalConditionsFacade $legalConditionsFacade,
-        NewsletterFacade $newsletterFacade
+        NewsletterFacade $newsletterFacade,
+        EntityManagerInterface $entityManager
     ) {
         $this->orderFacade = $orderFacade;
         $this->cartFacade = $cartFacade;
@@ -166,6 +175,7 @@ class OrderController extends FrontBaseController
         $this->orderMailFacade = $orderMailFacade;
         $this->legalConditionsFacade = $legalConditionsFacade;
         $this->newsletterFacade = $newsletterFacade;
+        $this->entityManager = $entityManager;
     }
 
     public function indexAction()
@@ -218,15 +228,27 @@ class OrderController extends FrontBaseController
                 $form = $orderFlow->createForm();
             } elseif (count($this->getErrorMessages()) === 0 && count($this->getInfoMessages()) === 0) {
                 $deliveryAddress = $orderData->deliveryAddressSameAsBillingAddress === false ? $frontOrderFormData->deliveryAddress : null;
-                /** @var \App\Model\Order\Order $order */
-                $order = $this->orderFacade->createOrderFromFront($orderData, $deliveryAddress);
-                $this->orderFacade->sendHeurekaOrderInfo(
-                    $order,
-                    $frontOrderFormData->disallowHeurekaVerifiedByCustomers
-                );
+                $this->entityManager->beginTransaction();
 
-                if ($frontOrderFormData->newsletterSubscription) {
-                    $this->newsletterFacade->addSubscribedEmail($frontOrderFormData->email, $this->domain->getId());
+                try {
+                    /** @var \App\Model\Order\Order $order */
+                    $order = $this->orderFacade->createOrderFromFront($orderData, $deliveryAddress);
+                    $this->orderFacade->sendHeurekaOrderInfo(
+                        $order,
+                        $frontOrderFormData->disallowHeurekaVerifiedByCustomers
+                    );
+
+                    if ($frontOrderFormData->newsletterSubscription) {
+                        $this->newsletterFacade->addSubscribedEmail(
+                            $frontOrderFormData->email,
+                            $this->domain->getId()
+                        );
+                    }
+
+                    $this->entityManager->commit();
+                } catch (Exception $exception) {
+                    $this->entityManager->rollback();
+                    throw $exception;
                 }
 
                 $orderFlow->reset();

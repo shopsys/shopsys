@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Customer\User;
 
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
+use Exception;
 use Shopsys\FrameworkBundle\Model\Customer\BillingAddressData;
 use Shopsys\FrameworkBundle\Model\Customer\BillingAddressDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Customer\BillingAddressFacade;
@@ -156,14 +157,21 @@ class CustomerUserFacade
      */
     public function register(CustomerUserData $customerUserData)
     {
-        $customer = $this->createCustomerWithBillingAddress(
-            $customerUserData->domainId,
-            $this->billingAddressDataFactory->create()
-        );
+        $this->em->beginTransaction();
+        try {
+            $customer = $this->createCustomerWithBillingAddress(
+                $customerUserData->domainId,
+                $this->billingAddressDataFactory->create()
+            );
 
-        $customerUser = $this->createCustomerUser($customer, $customerUserData);
+            $customerUser = $this->createCustomerUser($customer, $customerUserData);
 
-        $this->customerMailFacade->sendRegistrationMail($customerUser);
+            $this->customerMailFacade->sendRegistrationMail($customerUser);
+            $this->em->commit();
+        } catch (Exception $exception) {
+            $this->em->rollback();
+            throw $exception;
+        }
 
         return $customerUser;
     }
@@ -287,9 +295,15 @@ class CustomerUserFacade
      */
     public function editByCustomerUser(int $customerUserId, CustomerUserUpdateData $customerUserUpdateData)
     {
-        $customerUser = $this->edit($customerUserId, $customerUserUpdateData);
-
-        $this->em->flush();
+        $this->em->beginTransaction();
+        try {
+            $customerUser = $this->edit($customerUserId, $customerUserUpdateData);
+            $this->em->flush();
+            $this->em->commit();
+        } catch (Exception $exception) {
+            $this->em->rollback();
+            throw $exception;
+        }
 
         return $customerUser;
     }

@@ -33,7 +33,10 @@ class TransactionalMasterRequestListener
      */
     public function onKernelRequest(GetResponseEvent $event)
     {
-        if ($event->isMasterRequest() && !$this->inTransaction) {
+        if ($event->isMasterRequest()
+            && $this->isAdminRoute($event->getRequest()->get('_route'))
+            && !$this->inTransaction
+        ) {
             $this->em->beginTransaction();
             $this->inTransaction = true;
         }
@@ -59,5 +62,14 @@ class TransactionalMasterRequestListener
             $this->em->rollback();
             $this->inTransaction = false;
         }
+    }
+
+    /**
+     * @param string $route
+     * @return bool
+     */
+    protected function isAdminRoute(string $route): bool
+    {
+        return strpos($route, 'admin_') === 0;
     }
 }
