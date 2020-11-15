@@ -43,7 +43,9 @@ class TwigCachedMenuFacade
     public function invalidateCachedMenuByCategory(Category $category): void
     {
         foreach ($category->getCategoryDomains() as $categoryDomain) {
-            $this->invalidateCachedMenuByDomainId($categoryDomain->getDomainId());
+            $domainId = $categoryDomain->getDomainId();
+            $this->invalidateCachedMenuByDomainId($domainId);
+            $this->twigCacheFacade->invalidateByKey('category_children_' . $category->getId(), $domainId);
         }
     }
 }

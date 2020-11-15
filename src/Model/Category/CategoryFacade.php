@@ -6,6 +6,7 @@ namespace App\Model\Category;
 
 use App\Component\Cache\TwigCachedMenuFacade;
 use App\Model\Category\CategoryProductSeries\CategoryProductSeriesFacade;
+use App\Model\Category\LinkedCategory\LinkedCategoryFacade;
 use App\Model\Product\Product;
 use App\Twig\Cache\TwigCacheFacade;
 use Doctrine\ORM\EntityManagerInterface;
@@ -72,6 +73,11 @@ class CategoryFacade extends BaseCategoryFacade
     private TwigCacheFacade $twigCacheFacade;
 
     /**
+     * @var \App\Model\Category\LinkedCategory\LinkedCategoryFacade
+     */
+    private LinkedCategoryFacade $linkedCategoryFacade;
+
+    /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \App\Model\Category\CategoryRepository $categoryRepository
      * @param \App\Component\Domain\Domain $domain
@@ -86,6 +92,7 @@ class CategoryFacade extends BaseCategoryFacade
      * @param \App\Model\Category\CategoryProductSeries\CategoryProductSeriesFacade $categoryProductSeriesFacade
      * @param \App\Component\Cache\TwigCachedMenuFacade $twigCachedMenuFacade
      * @param \App\Twig\Cache\TwigCacheFacade $twigCacheFacade
+     * @param \App\Model\Category\LinkedCategory\LinkedCategoryFacade $linkedCategoryFacade
      */
     public function __construct(
         EntityManagerInterface $em,
@@ -101,7 +108,8 @@ class CategoryFacade extends BaseCategoryFacade
         CategoryParameterFacade $categoryParameterFacade,
         CategoryProductSeriesFacade $categoryProductSeriesFacade,
         TwigCachedMenuFacade $twigCachedMenuFacade,
-        TwigCacheFacade $twigCacheFacade
+        TwigCacheFacade $twigCacheFacade,
+        LinkedCategoryFacade $linkedCategoryFacade
     ) {
         parent::__construct(
             $em,
@@ -119,6 +127,7 @@ class CategoryFacade extends BaseCategoryFacade
         $this->categoryProductSeriesFacade = $categoryProductSeriesFacade;
         $this->twigCachedMenuFacade = $twigCachedMenuFacade;
         $this->twigCacheFacade = $twigCacheFacade;
+        $this->linkedCategoryFacade = $linkedCategoryFacade;
     }
 
     /**
@@ -131,6 +140,7 @@ class CategoryFacade extends BaseCategoryFacade
         $category = parent::create($categoryData);
         $this->categoryParameterFacade->saveRelation($category, $categoryData->parametersPosition, $categoryData->parametersCollapsed);
         $this->categoryProductSeriesFacade->saveProductSeriesForCategory($category, $categoryData->categoryProductSeries);
+        $this->linkedCategoryFacade->updateLinkedCategories($category, $categoryData->linkedCategories);
         $this->twigCachedMenuFacade->invalidateCachedMenuByCategory($category);
 
         return $category;
@@ -147,6 +157,7 @@ class CategoryFacade extends BaseCategoryFacade
         $category = parent::edit($categoryId, $categoryData);
         $this->categoryParameterFacade->saveRelation($category, $categoryData->parametersPosition, $categoryData->parametersCollapsed);
         $this->categoryProductSeriesFacade->saveProductSeriesForCategory($category, $categoryData->categoryProductSeries);
+        $this->linkedCategoryFacade->updateLinkedCategories($category, $categoryData->linkedCategories);
         $this->twigCachedMenuFacade->invalidateCachedMenuByCategory($category);
 
         foreach ($this->domain->getAllIds() as $domainId) {
@@ -294,5 +305,44 @@ class CategoryFacade extends BaseCategoryFacade
         }
 
         $this->em->flush();
+    }
+
+    /**
+     * @param int $categoryId
+     */
+    public function deleteById($categoryId)
+    {
+        $category = $this->categoryRepository->getById($categoryId);
+        $parent = $category->getParent();
+        if ($parent !== null) {
+            $parentId = $parent->getId();
+            foreach ($this->domain->getAllIds() as $domainId) {
+                $this->twigCacheFacade->invalidateByKey('category_children_' . $parentId, $domainId);
+            }
+        }
+
+        parent::deleteById($categoryId);
+    }
+
+    /**
+     * @param string $locale
+     * @return string[]
+     */
+    public function getFullPathsIndexedByIds(string $locale): array
+    {
+        return $this->categoryRepository->getFullPathsIndexedByIds($locale);
+    }
+
+    /**
+     * @param \App\Model\Category\Category $parentCategory
+     * @param int $domainId
+     * @return \App\Model\Category\Category[]
+     */
+    public function getVisibleCategoriesLookingLikeChildren(Category $parentCategory, int $domainId): array
+    {
+        $children = $this->getAllVisibleChildrenByCategoryAndDomainId($parentCategory, $domainId);
+        $categoriesFromLinkedCategories = $this->categoryRepository->getVisibleCategoriesByLinkedCategories($parentCategory, $domainId, $children);
+
+        return array_merge($children, $categoriesFromLinkedCategories);
     }
 }

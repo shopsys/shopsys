@@ -7,6 +7,7 @@ namespace App\Form\Admin;
 use App\Component\Form\FormBuilderHelper;
 use App\Form\Transformers\ProductSeriesIdsToProductSeriesTransformer;
 use App\Model\Category\Category;
+use App\Model\Category\CategoryFacade;
 use App\Model\Product\Parameter\ParameterRepository;
 use App\Model\Product\Series\ProductSeriesFacade;
 use App\Model\Svg\SvgProvider;
@@ -17,6 +18,9 @@ use Shopsys\FrameworkBundle\Form\Admin\Category\CategoryFormType;
 use Shopsys\FrameworkBundle\Form\FormRenderingConfigurationExtension;
 use Shopsys\FrameworkBundle\Form\GroupType;
 use Shopsys\FrameworkBundle\Form\SortableValuesType;
+use Shopsys\FrameworkBundle\Form\Transformers\CategoriesIdsToCategoriesTransformer;
+use Shopsys\FrameworkBundle\Form\Transformers\RemoveDuplicatesFromArrayTransformer;
+use Shopsys\FrameworkBundle\Model\Localization\Localization;
 use Symfony\Component\Form\AbstractTypeExtension;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -56,24 +60,56 @@ class CategoryFormTypeExtension extends AbstractTypeExtension
     private $formBuilderHelper;
 
     /**
+     * @var \App\Model\Category\CategoryFacade
+     */
+    private CategoryFacade $categoryFacade;
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Form\Transformers\RemoveDuplicatesFromArrayTransformer
+     */
+    private RemoveDuplicatesFromArrayTransformer $removeDuplicatesFromArrayTransformer;
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Form\Transformers\CategoriesIdsToCategoriesTransformer
+     */
+    private CategoriesIdsToCategoriesTransformer $categoriesIdsToCategoriesTransformer;
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Localization\Localization
+     */
+    private Localization $localization;
+
+    /**
      * @param \App\Model\Svg\SvgProvider $svgProvider
      * @param \App\Model\Product\Parameter\ParameterRepository $parameterRepository
      * @param \App\Model\Product\Series\ProductSeriesFacade $productSeriesFacade
      * @param \App\Form\Transformers\ProductSeriesIdsToProductSeriesTransformer $productSeriesIdsToProductSeriesTransformer
      * @param \App\Component\Form\FormBuilderHelper $formBuilderHelper
+     * @param \App\Model\Category\CategoryFacade $categoryFacade
+     * @param \Shopsys\FrameworkBundle\Form\Transformers\RemoveDuplicatesFromArrayTransformer $removeDuplicatesFromArrayTransformer
+     * @param \Shopsys\FrameworkBundle\Form\Transformers\CategoriesIdsToCategoriesTransformer $categoriesIdsToCategoriesTransformer
+     * @param \Shopsys\FrameworkBundle\Model\Localization\Localization $localization
      */
     public function __construct(
         SvgProvider $svgProvider,
         ParameterRepository $parameterRepository,
         ProductSeriesFacade $productSeriesFacade,
         ProductSeriesIdsToProductSeriesTransformer $productSeriesIdsToProductSeriesTransformer,
-        FormBuilderHelper $formBuilderHelper
+        FormBuilderHelper $formBuilderHelper,
+        CategoryFacade $categoryFacade,
+        RemoveDuplicatesFromArrayTransformer $removeDuplicatesFromArrayTransformer,
+        CategoriesIdsToCategoriesTransformer $categoriesIdsToCategoriesTransformer,
+        Localization $localization
     ) {
         $this->svgProvider = $svgProvider;
         $this->parameterRepository = $parameterRepository;
         $this->productSeriesFacade = $productSeriesFacade;
         $this->productSeriesIdsToProductSeriesTransformer = $productSeriesIdsToProductSeriesTransformer;
         $this->formBuilderHelper = $formBuilderHelper;
+        $this->categoryFacade = $categoryFacade;
+        $this->removeDuplicatesFromArrayTransformer = $removeDuplicatesFromArrayTransformer;
+        $this->categoriesIdsToCategoriesTransformer = $categoriesIdsToCategoriesTransformer;
+        $this->localization = $localization;
     }
 
     /**
@@ -113,6 +149,20 @@ class CategoryFormTypeExtension extends AbstractTypeExtension
         $this->buildCategoryProductSeriesBlock($builder);
 
         $this->formBuilderHelper->disableFieldsByConfigurations($builder, self::DISABLED_FIELDS);
+
+        $categoryPaths = $this->categoryFacade->getFullPathsIndexedByIds(
+            $this->localization->getAdminLocale()
+        );
+        $builder->get('seo')->add(
+            $builder
+                    ->create('linkedCategories', SortableValuesType::class, [
+                        'labels_by_value' => $categoryPaths,
+                        'required' => false,
+                        'label' => t('Propojené kategorie'),
+                    ])
+                    ->addViewTransformer($this->removeDuplicatesFromArrayTransformer)
+                    ->addModelTransformer($this->categoriesIdsToCategoriesTransformer)
+        );
     }
 
     /**

@@ -91,6 +91,7 @@ class CategoryDataFixture extends AbstractReferenceFixture
             $categoryData->descriptions[$domainConfig->getId()] = t('Television or TV is a telecommunication medium used for transmitting sound with moving images in monochrome '
                 . '(black-and-white), or in color, and in two or three dimensions', [], 'dataFixtures', $locale);
         }
+        /** @var \App\Model\Category\Category $categoryElectronics */
         $categoryElectronics = $this->getReference(self::CATEGORY_ELECTRONICS);
         $categoryData->parent = $categoryElectronics;
         $this->createCategory($categoryData, self::CATEGORY_TV);
@@ -168,7 +169,7 @@ class CategoryDataFixture extends AbstractReferenceFixture
             $categoryData->descriptions[$domainConfig->getId()] = t('A garden tool is any one of many tools made for gardens and gardening and overlaps with the range of tools '
                 . 'made for agriculture and horticulture. Garden tools can also be hand tools and power tools.', [], 'dataFixtures', $locale);
         }
-        $this->createCategory($categoryData, self::CATEGORY_GARDEN_TOOLS);
+        $categoryGardenTools = $this->createCategory($categoryData, self::CATEGORY_GARDEN_TOOLS);
 
         foreach ($this->domain->getAll() as $domainConfig) {
             $locale = $domainConfig->getLocale();
@@ -178,7 +179,13 @@ class CategoryDataFixture extends AbstractReferenceFixture
                 . 'is ingested by an organism and assimilated by the organism\'s cells to provide energy, maintain life, '
                 . 'or stimulate growth.', [], 'dataFixtures', $locale);
         }
-        $this->createCategory($categoryData, self::CATEGORY_FOOD);
+        $categoryFood = $this->createCategory($categoryData, self::CATEGORY_FOOD);
+
+
+        $categoryData = $this->categoryDataFactory->createFromCategory($categoryElectronics);
+        $categoryData->linkedCategories[] = $categoryFood;
+        $categoryData->linkedCategories[] = $categoryGardenTools;
+        $this->categoryFacade->edit($categoryElectronics->getId(), $categoryData);
     }
 
     /**

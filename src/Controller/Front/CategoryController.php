@@ -246,7 +246,7 @@ class CategoryController extends FrontBaseController
      */
     public function categoryChildrenListAction(Category $category, bool $showProductsCountByCategory = true, ?string $cssClass = null): Response
     {
-        $categories = $this->categoryFacade->getAllVisibleChildrenByCategoryAndDomainId($category, $this->domain->getId());
+        $categories = $this->categoryFacade->getVisibleCategoriesLookingLikeChildren($category, $this->domain->getId());
 
         return $this->render('Front/Content/Category/categoryChildrenList.html.twig', [
             'categories' => $categories,

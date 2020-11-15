@@ -6,6 +6,8 @@ namespace App\Model\Category;
 
 use App\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use App\Model\Category\CategoryProductSeries\CategoryProductSeriesFacade;
+use App\Model\Category\LinkedCategory\LinkedCategory;
+use App\Model\Category\LinkedCategory\LinkedCategoryRepository;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
 use Shopsys\FrameworkBundle\Component\Plugin\PluginCrudExtensionFacade;
@@ -26,6 +28,11 @@ class CategoryDataFactory extends BaseCategoryDataFactory
     private $categoryProductSeriesFacade;
 
     /**
+     * @var \App\Model\Category\LinkedCategory\LinkedCategoryRepository
+     */
+    private LinkedCategoryRepository $linkedCategoryRepository;
+
+    /**
      * @param \App\Model\Category\CategoryRepository $categoryRepository
      * @param \App\Model\Category\CategoryParameterRepository $categoryParameterRepository
      * @param \App\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
@@ -33,6 +40,7 @@ class CategoryDataFactory extends BaseCategoryDataFactory
      * @param \App\Component\Domain\Domain $domain
      * @param \App\Component\Image\ImageFacade $imageFacade
      * @param \App\Model\Category\CategoryProductSeries\CategoryProductSeriesFacade $categoryProductSeriesFacade
+     * @param \App\Model\Category\LinkedCategory\LinkedCategoryRepository $linkedCategoryRepository
      */
     public function __construct(
         CategoryRepository $categoryRepository,
@@ -41,7 +49,8 @@ class CategoryDataFactory extends BaseCategoryDataFactory
         PluginCrudExtensionFacade $pluginCrudExtensionFacade,
         Domain $domain,
         ImageFacade $imageFacade,
-        CategoryProductSeriesFacade $categoryProductSeriesFacade
+        CategoryProductSeriesFacade $categoryProductSeriesFacade,
+        LinkedCategoryRepository $linkedCategoryRepository
     ) {
         parent::__construct(
             $categoryRepository,
@@ -52,6 +61,7 @@ class CategoryDataFactory extends BaseCategoryDataFactory
         );
         $this->categoryParameterRepository = $categoryParameterRepository;
         $this->categoryProductSeriesFacade = $categoryProductSeriesFacade;
+        $this->linkedCategoryRepository = $linkedCategoryRepository;
     }
 
     /**
@@ -123,6 +133,11 @@ class CategoryDataFactory extends BaseCategoryDataFactory
         $categoryData->overLimitQuantity = $category->getOverLimitQuantity();
         $categoryData->parametersPosition = $this->getParametersSortedByPositionFilteredByCategory($category);
         $categoryData->isSaleCategory = $category->isSaleCategory();
+
+        $linkedCategories = $this->linkedCategoryRepository->getAllByParentCategory($category);
+        $categoryData->linkedCategories = array_map(function (LinkedCategory $linkedCategory) {
+            return $linkedCategory->getCategory();
+        }, $linkedCategories);
     }
 
     /**

@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace App\Model\Category;
 
+use App\Model\Category\LinkedCategory\LinkedCategory;
 use Doctrine\ORM\Query\Expr\Join;
+use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Model\Category\CategoryRepository as BaseCategoryRepository;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Product\Product;
@@ -174,5 +176,64 @@ class CategoryRepository extends BaseCategoryRepository
         return $this->getAllVisibleByDomainIdQueryBuilder($domainId)
             ->getQuery()
             ->getResult();
+    }
+
+    /**
+     * @param string $locale
+     * @return string[]
+     */
+    public function getFullPathsIndexedByIds(string $locale): array
+    {
+        $queryBuilder = $this->getPreOrderTreeTraversalForAllCategoriesQueryBuilder($locale);
+
+        $rows = $queryBuilder->select('c.id, IDENTITY(c.parent) AS parentId, ct.name')->getQuery()->getScalarResult();
+
+        $fullPathsById = [];
+        foreach ($rows as $row) {
+            if (array_key_exists($row['parentId'], $fullPathsById)) {
+                $fullPathsById[$row['id']] = $fullPathsById[$row['parentId']] . ' - ' . $row['name'];
+            } else {
+                $fullPathsById[$row['id']] = $row['name'];
+            }
+        }
+
+        return $fullPathsById;
+    }
+
+    /**
+     * @param string $locale
+     * @return \Doctrine\ORM\QueryBuilder
+     */
+    private function getPreOrderTreeTraversalForAllCategoriesQueryBuilder(string $locale): QueryBuilder
+    {
+        $queryBuilder = $this->getAllQueryBuilder();
+        $this->addTranslation($queryBuilder, $locale);
+
+        $queryBuilder
+            ->andWhere('c.level >= 1')
+            ->orderBy('c.lft');
+
+        return $queryBuilder;
+    }
+
+    /**
+     * @param \App\Model\Category\Category $parentCategory
+     * @param int $domainId
+     * @param \App\Model\Category\Category[] $excludeCategories
+     * @return \App\Model\Category\Category[]
+     */
+    public function getVisibleCategoriesByLinkedCategories(Category $parentCategory, int $domainId, array $excludeCategories): array
+    {
+        $excludeCategories[] = $parentCategory;
+
+        $queryBuilder = $this->getAllVisibleByDomainIdQueryBuilder($domainId)
+            ->join(LinkedCategory::class, 'lc', Join::WITH, 'lc.category = c AND lc.parentCategory = :parentCategory')
+            ->andWhere('c NOT IN (:excludeCategories)')
+            ->orderBy('lc.position', 'asc')
+            ->setParameter('excludeCategories', $excludeCategories)
+            ->setParameter('parentCategory', $parentCategory);
+
+
+        return $queryBuilder->getQuery()->execute();
     }
 }
