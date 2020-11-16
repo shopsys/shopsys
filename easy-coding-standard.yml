@@ -45,11 +45,11 @@ parameters:
             - 'utils/*'
 
         Shopsys\CodingStandards\Sniffs\ConstantVisibilityRequiredSniff:
-            - '*/src/*'
+            - 'project-base/src/*'
             - '*/tests/App/*'
 
         Shopsys\CodingStandards\Sniffs\ForceLateStaticBindingForProtectedConstantsSniff:
-            - '*/src/*'
+            - 'project-base/src/*'
             - '*/tests/App/*'
 
         ObjectCalisthenics\Sniffs\Files\FunctionLengthSniff:
