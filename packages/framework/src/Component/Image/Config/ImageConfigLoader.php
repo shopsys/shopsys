@@ -16,6 +16,7 @@ use Symfony\Component\Config\Definition\Processor;
 use Symfony\Component\Filesystem\Exception\FileNotFoundException;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Yaml\Parser;
+use Symfony\Contracts\Cache\CacheInterface;
 
 class ImageConfigLoader
 {
@@ -40,13 +41,20 @@ class ImageConfigLoader
     protected $entityNameResolver;
 
     /**
-     * @param \Symfony\Component\Filesystem\Filesystem $filesystem
-     * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver $entityNameResolver
+     * @var \Symfony\Contracts\Cache\CacheInterface
      */
-    public function __construct(Filesystem $filesystem, ?EntityNameResolver $entityNameResolver = null)
+    protected $appCache;
+
+    /**
+     * @param \Symfony\Component\Filesystem\Filesystem $filesystem
+     * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver|null $entityNameResolver
+     * @param \Symfony\Contracts\Cache\CacheInterface|null $appCache
+     */
+    public function __construct(Filesystem $filesystem, ?EntityNameResolver $entityNameResolver = null, ?CacheInterface $appCache = null)
     {
         $this->filesystem = $filesystem;
         $this->entityNameResolver = $entityNameResolver;
+        $this->appCache = $appCache;
     }
 
     /**
@@ -77,28 +85,57 @@ class ImageConfigLoader
     }
 
     /**
+     * @required
+     * @internal This function will be replaced by constructor injection in next major
+     * @param \Symfony\Contracts\Cache\CacheInterface $appCache
+     */
+    public function setCacheInterface(CacheInterface $appCache): void
+    {
+        if ($this->appCache !== null && $this->appCache !== $appCache) {
+            throw new BadMethodCallException(sprintf(
+                'Method "%s" has been already called and cannot be called multiple times.',
+                __METHOD__
+            ));
+        }
+        if ($this->appCache !== null) {
+            return;
+        }
+
+        @trigger_error(
+            sprintf(
+                'The %s() method is deprecated and will be removed in the next major. Use the constructor injection instead.',
+                __METHOD__
+            ),
+            E_USER_DEPRECATED
+        );
+        $this->appCache = $appCache;
+    }
+
+    /**
      * @param string $filename
      * @return \Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig
      */
     public function loadFromYaml($filename)
     {
-        $yamlParser = new Parser();
+        $cachedImageConfig = $this->appCache->get('imageConfig', function () use ($filename) {
+            $yamlParser = new Parser();
 
-        if (!$this->filesystem->exists($filename)) {
-            throw new FileNotFoundException(
-                'File ' . $filename . ' does not exist'
-            );
-        }
+            if (!$this->filesystem->exists($filename)) {
+                throw new FileNotFoundException(
+                    'File ' . $filename . ' does not exist'
+                );
+            }
 
-        $imageConfigDefinition = new ImageConfigDefinition();
-        $processor = new Processor();
+            $imageConfigDefinition = new ImageConfigDefinition();
+            $processor = new Processor();
 
-        $inputConfig = $yamlParser->parse(file_get_contents($filename));
-        $outputConfig = $processor->processConfiguration($imageConfigDefinition, [$inputConfig]);
+            $inputConfig = $yamlParser->parse(file_get_contents($filename));
+            $outputConfig = $processor->processConfiguration($imageConfigDefinition, [$inputConfig]);
 
-        $preparedConfig = $this->loadFromArray($outputConfig);
+            return $this->loadFromArray($outputConfig);
+        });
 
-        return new ImageConfig($preparedConfig, $this->entityNameResolver);
+        return new ImageConfig($cachedImageConfig, $this->entityNameResolver);
     }
 
     /**
