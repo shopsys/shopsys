@@ -118,20 +118,13 @@ class ProductDetailViewElasticsearchFactory
             $parameterViews[] = $this->parameterViewFactory->createFromParameterArray($parameterArray);
         }
 
-        $accessories = $this->listedProductViewFactory->createFromProductsArray(
-            $this->productElasticsearchProvider->getSellableProductArrayByIds($productArray['accessories'])
-        );
-        $variants = $this->listedProductViewFactory->createFromProductsArray(
-            $this->productElasticsearchProvider->getSellableProductArrayByIds($productArray['variants'])
-        );
-
         return $this->createInstance(
             $productArray,
             $this->imageViewFacade->getAllImagesByEntityId(Product::class, $productArray['id']),
             $parameterViews,
             $this->brandViewFactory->createFromProductArray($productArray),
-            $accessories,
-            $variants
+            $this->getListedProductViewsByProductIds($productArray['accessories']),
+            $this->getListedProductViewsByProductIds($productArray['variants'])
         );
     }
 
@@ -204,5 +197,20 @@ class ProductDetailViewElasticsearchFactory
         }
 
         return $seoMetaDescription;
+    }
+
+    /**
+     * @param int[] $productIds
+     * @return \Shopsys\ReadModelBundle\Product\Listed\ListedProductView[]
+     */
+    protected function getListedProductViewsByProductIds(array $productIds): array
+    {
+        if (count($productIds) === 0) {
+            return [];
+        }
+
+        return $this->listedProductViewFactory->createFromProductsArray(
+            $this->productElasticsearchProvider->getSellableProductArrayByIds($productIds)
+        );
     }
 }
