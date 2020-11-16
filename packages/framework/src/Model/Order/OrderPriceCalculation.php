@@ -75,7 +75,7 @@ class OrderPriceCalculation
         }
 
         $priceWithVat = $orderTotalPrice->getPriceWithVat();
-        $roundedPriceWithVat = $priceWithVat->round(0);
+        $roundedPriceWithVat = $this->rounding->roundPriceWithVatByCurrency($priceWithVat, $currency);
 
         $roundingPrice = $this->rounding->roundPriceWithVatByCurrency(
             $roundedPriceWithVat->subtract($priceWithVat),
