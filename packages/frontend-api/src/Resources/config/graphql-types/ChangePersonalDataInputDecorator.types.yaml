@@ -8,7 +8,6 @@ ChangePersonalDataInputDecorator:
                 description: "Customer user first name"
                 validation:
                     -   NotBlank:
-                            normalizer: "trim"
                             message: "Please enter first name"
                     -   Length:
                             max: 100
@@ -18,7 +17,6 @@ ChangePersonalDataInputDecorator:
                 description: "Customer user last name"
                 validation:
                     -   NotBlank:
-                            normalizer: "trim"
                             message: "Please enter last name"
                     -   Length:
                             max: 100
@@ -28,7 +26,6 @@ ChangePersonalDataInputDecorator:
                 description: "Date and time when the order was created"
                 validation:
                     -   NotBlank:
-                            normalizer: "trim"
                             message: "Please enter telephone number"
                     -   Length:
                             max: 30
