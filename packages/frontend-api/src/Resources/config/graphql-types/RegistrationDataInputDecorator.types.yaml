@@ -36,7 +36,7 @@ RegistrationDataInputDecorator:
                     -   Shopsys\FrameworkBundle\Form\Constraints\UniqueEmail:
                             message: "This email is already registered"
             password:
-                type: "String!"
+                type: "Password!"
                 description: "Customer user password."
                 validation:
                     -   NotBlank:

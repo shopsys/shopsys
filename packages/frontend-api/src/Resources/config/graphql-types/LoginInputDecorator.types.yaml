@@ -7,5 +7,5 @@ LoginInputDecorator:
                 type: "String!"
                 description: "The user email."
             password:
-                type: "String!"
+                type: "Password!"
                 description: "The user password."
