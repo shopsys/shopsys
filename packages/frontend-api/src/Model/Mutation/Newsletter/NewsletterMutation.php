@@ -43,7 +43,7 @@ class NewsletterMutation implements MutationInterface, AliasedInterface
         $validator->validate();
 
         $input = $argument['input'];
-        $email = trim($input['email']);
+        $email = $input['email'];
         $this->newsletterFacade->addSubscribedEmail($email, $this->domain->getId());
 
         return [

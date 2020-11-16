@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace Shopsys\FrontendApiBundle\Controller;
 
+use BadMethodCallException;
 use Overblog\GraphQLBundle\Controller\GraphController;
 use Shopsys\FrontendApiBundle\Component\Domain\EnabledOnDomainChecker;
+use Shopsys\FrontendApiBundle\Model\GraphqlConfigurator;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -23,15 +25,23 @@ class FrontendApiController
     protected $graphController;
 
     /**
+     * @var \Shopsys\FrontendApiBundle\Model\GraphqlConfigurator
+     */
+    protected $graphqlConfigurator;
+
+    /**
      * @param \Overblog\GraphQLBundle\Controller\GraphController $graphController
      * @param \Shopsys\FrontendApiBundle\Component\Domain\EnabledOnDomainChecker $enabledOnDomainChecker
+     * @param \Shopsys\FrontendApiBundle\Model\GraphqlConfigurator|null $graphqlConfigurator
      */
     public function __construct(
         GraphController $graphController,
-        EnabledOnDomainChecker $enabledOnDomainChecker
+        EnabledOnDomainChecker $enabledOnDomainChecker,
+        ?GraphqlConfigurator $graphqlConfigurator = null
     ) {
         $this->enabledOnDomainChecker = $enabledOnDomainChecker;
         $this->graphController = $graphController;
+        $this->graphqlConfigurator = $graphqlConfigurator;
     }
 
     /**
@@ -44,6 +54,8 @@ class FrontendApiController
         if (!$this->enabledOnDomainChecker->isEnabledOnCurrentDomain()) {
             return $this->createApiNotEnabledResponse();
         }
+
+        $this->graphqlConfigurator->applyExtraConfiguration();
 
         return $this->graphController->endpointAction($request, $schemaName);
     }
@@ -59,6 +71,8 @@ class FrontendApiController
             return $this->createApiNotEnabledResponse();
         }
 
+        $this->graphqlConfigurator->applyExtraConfiguration();
+
         return $this->graphController->batchEndpointAction($request, $schemaName);
     }
 
@@ -68,5 +82,33 @@ class FrontendApiController
     protected function createApiNotEnabledResponse(): Response
     {
         return new JsonResponse(['errors' => [['message' => 'Frontend API is not enabled on current domain']]], 404);
+    }
+
+    /**
+     * @required
+     * @param \Shopsys\FrontendApiBundle\Model\GraphqlConfigurator $graphqlConfigurator
+     * @internal This function will be replaced by constructor injection in next major
+     */
+    public function setGraphqlConfigurator(GraphqlConfigurator $graphqlConfigurator): void
+    {
+        if ($this->graphqlConfigurator !== null && $this->graphqlConfigurator !== $graphqlConfigurator) {
+            throw new BadMethodCallException(sprintf(
+                'Method "%s" has been already called and cannot be called multiple times.',
+                __METHOD__
+            ));
+        }
+        if ($this->graphqlConfigurator !== null) {
+            return;
+        }
+
+        @trigger_error(
+            sprintf(
+                'The %s() method is deprecated and will be removed in the next major. Use the constructor injection instead.',
+                __METHOD__
+            ),
+            E_USER_DEPRECATED
+        );
+
+        $this->graphqlConfigurator = $graphqlConfigurator;
     }
 }
