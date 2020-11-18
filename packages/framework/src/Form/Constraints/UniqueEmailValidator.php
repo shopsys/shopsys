@@ -13,12 +13,12 @@ class UniqueEmailValidator extends ConstraintValidator
     /**
      * @var \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade
      */
-    private $customerUserFacade;
+    protected $customerUserFacade;
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
      */
-    private $domain;
+    protected $domain;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade $customerUserFacade

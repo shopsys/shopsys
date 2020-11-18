@@ -52,7 +52,7 @@ class UniqueCollectionValidator extends ConstraintValidator
      * @param mixed $value2
      * @return bool
      */
-    private function areValuesEqual(UniqueCollection $constraint, $value1, $value2)
+    protected function areValuesEqual(UniqueCollection $constraint, $value1, $value2)
     {
         if ($constraint->allowEmpty) {
             if ($value1 === null || $value2 === null) {
@@ -72,7 +72,7 @@ class UniqueCollectionValidator extends ConstraintValidator
      * @param mixed $value2
      * @return bool
      */
-    private function areValuesEqualInFields(array $fields, $value1, $value2)
+    protected function areValuesEqualInFields(array $fields, $value1, $value2)
     {
         foreach ($fields as $field) {
             $fieldValue1 = $this->getFieldValue($value1, $field);
@@ -91,7 +91,7 @@ class UniqueCollectionValidator extends ConstraintValidator
      * @param string $field
      * @return mixed
      */
-    private function getFieldValue($value, $field)
+    protected function getFieldValue($value, $field)
     {
         $propertyAccessor = PropertyAccess::createPropertyAccessor();
 
