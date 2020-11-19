@@ -7,6 +7,9 @@ use Doctrine\Common\Cache\RedisCache;
 use Exception;
 use Redis;
 
+/**
+ * @deprecated Class will be removed in next major version as it is not necessary anymore
+ */
 class FallbackCacheFactory
 {
     /**
