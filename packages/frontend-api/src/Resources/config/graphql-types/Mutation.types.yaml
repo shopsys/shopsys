@@ -53,3 +53,11 @@ MutationDecorator:
                         type: RegistrationDataInput!
                         validation: cascade
                 resolve: "@=mutation('customer_user_register', [args, validator])"
+            NewsletterSubscribe:
+                type: Boolean!
+                description: "Subscribe for e-mail newsletter"
+                args:
+                    input:
+                        type: NewsletterSubscriptionDataInput!
+                        validation: cascade
+                resolve: "@=mutation('newsletter_subscribe', [args, validator])"

@@ -219,3 +219,6 @@ There you can find links to upgrade notes for other versions too.
     - class `Shopsys\FrameworkBundle\Component\Doctrine\Cache\FallbackCacheFactory` is deprecated and will be removed in next major version
         - in case you need it in your project you should implement it by yourself
     - see #project-base-diff to update your project
+
+- add support for subscribing for e-mail newsletter to FE API ([#2119](https://github.com/shopsys/shopsys/pull/2119))
+    - see #project-base-diff to update your project
