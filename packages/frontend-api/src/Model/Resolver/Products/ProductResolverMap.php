@@ -334,6 +334,12 @@ class ProductResolverMap extends ResolverMap
                 }
                 return $data['seo_meta_description'];
             },
+            'orderingPriority' => function ($data) {
+                if ($data instanceof Product) {
+                    return $data->getOrderingPriority();
+                }
+                return $data['ordering_priority'];
+            }
         ];
     }
 

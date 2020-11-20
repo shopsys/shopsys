@@ -51,7 +51,7 @@ ProductDecorator:
             isSellingDenied:
                 type: "Boolean!"
             orderingPriority:
-                type: "Int"
+                type: "Int!"
             description:
                 type: "String"
             accessories:
