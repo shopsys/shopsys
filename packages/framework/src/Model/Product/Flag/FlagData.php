@@ -19,6 +19,11 @@ class FlagData
      */
     public $visible;
 
+    /**
+     * @var string|null
+     */
+    public $uuid;
+
     public function __construct()
     {
         $this->name = [];

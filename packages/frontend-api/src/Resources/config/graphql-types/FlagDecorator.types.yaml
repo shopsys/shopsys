@@ -4,6 +4,9 @@ FlagDecorator:
     config:
         description: "Represents a flag"
         fields:
+            uuid:
+                type: "Uuid!"
+                description: "UUID"
             name:
                 type: "String"
                 description: "Localized flag name (domain dependent)"
