@@ -130,27 +130,9 @@ class ProductDetailViewElasticsearchFactory
             $this->imageViewFacade->getAllImagesByEntityId(Product::class, $productArray['id']),
             $parameterViews,
             $this->brandViewFactory->createFromProductArray($productArray),
-            $this->sortIndexedArrayByArray($accessories, $productArray['accessories']),
-            $this->sortIndexedArrayByArray($variants, $productArray['variants'])
+            $accessories,
+            $variants
         );
-    }
-
-    /**
-     * @param array $array
-     * @param array $order
-     * @return array
-     */
-    protected function sortIndexedArrayByArray(array $array, array $order): array
-    {
-        $sortedArray = [];
-        foreach ($order as $key) {
-            if (!array_key_exists($key, $array)) {
-                continue;
-            }
-            $sortedArray[$key] = $array[$key];
-            unset($array[$key]);
-        }
-        return $sortedArray;
     }
 
     /**

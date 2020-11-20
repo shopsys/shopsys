@@ -50,12 +50,13 @@ class ProductElasticsearchProvider
 
     /**
      * @param int[] $productIds
+     * @param int|null $limit
      * @return array
      */
-    public function getSellableProductArrayByIds(array $productIds): array
+    public function getSellableProductArrayByIds(array $productIds, ?int $limit = null): array
     {
         return $this->productElasticsearchRepository->getProductsByFilterQuery(
-            $this->filterQueryFactory->createSellableProductsByProductIdsFilter($productIds)
+            $this->filterQueryFactory->createSellableProductsByProductIdsFilter($productIds, $limit)
         );
     }
 }

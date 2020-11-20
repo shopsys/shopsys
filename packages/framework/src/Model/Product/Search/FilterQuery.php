@@ -150,6 +150,38 @@ class FilterQuery
     }
 
     /**
+     * @param int[] $ids
+     * @return $this
+     */
+    public function applyOrderingByIdsArray(array $ids): self
+    {
+        $clone = clone $this;
+
+        $orderIndexedByIds = [];
+        $order = 0;
+        foreach ($ids as $id) {
+            $orderIndexedByIds[$id] = $order;
+            $order++;
+        }
+
+        $clone->sorting = [
+            '_script' => [
+                'type' => 'number',
+                'script' => [
+                    'lang' => 'painless',
+                    'source' => 'def a=doc[\'id\'].value; return params.sort[a.toString()];',
+                    'params' => [
+                        'sort' => $orderIndexedByIds,
+                    ],
+                ],
+                'order' => 'asc',
+            ],
+        ];
+
+        return $clone;
+    }
+
+    /**
      * @param array $parameters
      * @return \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery
      */
