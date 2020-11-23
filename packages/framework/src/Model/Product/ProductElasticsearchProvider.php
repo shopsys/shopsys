@@ -43,7 +43,7 @@ class ProductElasticsearchProvider
         );
 
         if (count($products) === 0) {
-            throw new ProductNotFoundException();
+            throw new ProductNotFoundException('Product with ID ' . $productId . ' does not exist.');
         }
         return array_shift($products);
     }
