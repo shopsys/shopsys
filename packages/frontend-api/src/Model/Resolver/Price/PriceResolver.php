@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrontendApiBundle\Model\Resolver\Price;
 
+use BadMethodCallException;
 use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
 use Overblog\GraphQLBundle\Definition\Resolver\ResolverInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
@@ -17,6 +18,7 @@ use Shopsys\FrameworkBundle\Model\Product\ProductCachedAttributesFacade;
 use Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainFacadeInterface;
 use Shopsys\FrameworkBundle\Model\Transport\Transport;
 use Shopsys\FrameworkBundle\Model\Transport\TransportPriceCalculation;
+use Shopsys\FrontendApiBundle\Model\Price\PriceFacade;
 
 class PriceResolver implements ResolverInterface, AliasedInterface
 {
@@ -51,12 +53,18 @@ class PriceResolver implements ResolverInterface, AliasedInterface
     protected $transportPriceCalculation;
 
     /**
+     * @var \Shopsys\FrontendApiBundle\Model\Price\PriceFacade|null
+     */
+    protected ?PriceFacade $priceFacade;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductCachedAttributesFacade $productCachedAttributesFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainFacadeInterface $productOnCurrentDomainFacade
      * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentPriceCalculation $paymentPriceCalculation
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
      * @param \Shopsys\FrameworkBundle\Model\Transport\TransportPriceCalculation $transportPriceCalculation
+     * @param \Shopsys\FrontendApiBundle\Model\Price\PriceFacade|null $priceFacade
      */
     public function __construct(
         ProductCachedAttributesFacade $productCachedAttributesFacade,
@@ -64,7 +72,8 @@ class PriceResolver implements ResolverInterface, AliasedInterface
         PaymentPriceCalculation $paymentPriceCalculation,
         Domain $domain,
         CurrencyFacade $currencyFacade,
-        TransportPriceCalculation $transportPriceCalculation
+        TransportPriceCalculation $transportPriceCalculation,
+        ?PriceFacade $priceFacade = null
     ) {
         $this->productCachedAttributesFacade = $productCachedAttributesFacade;
         $this->productOnCurrentDomainFacade = $productOnCurrentDomainFacade;
@@ -72,6 +81,33 @@ class PriceResolver implements ResolverInterface, AliasedInterface
         $this->domain = $domain;
         $this->currencyFacade = $currencyFacade;
         $this->transportPriceCalculation = $transportPriceCalculation;
+        $this->priceFacade = $priceFacade;
+    }
+
+    /**
+     * @required
+     * @param \Shopsys\FrontendApiBundle\Model\Price\PriceFacade $priceFacade
+     * @internal This function will be replaced by constructor injection in next major
+     */
+    public function setPriceFacade(PriceFacade $priceFacade): void
+    {
+        if ($this->priceFacade !== null && $this->priceFacade !== $priceFacade) {
+            throw new BadMethodCallException(
+                sprintf('Method "%s" has been already called and cannot be called multiple times.', __METHOD__)
+            );
+        }
+        if ($this->priceFacade !== null) {
+            return;
+        }
+
+        @trigger_error(
+            sprintf(
+                'The %s() method is deprecated and will be removed in the next major. Use the constructor injection instead.',
+                __METHOD__
+            ),
+            E_USER_DEPRECATED
+        );
+        $this->priceFacade = $priceFacade;
     }
 
     /**
@@ -80,10 +116,11 @@ class PriceResolver implements ResolverInterface, AliasedInterface
      */
     public function resolveByProduct($data): ProductPrice
     {
-        $product = $data instanceof Product ? $data : $this->productOnCurrentDomainFacade->getVisibleProductById(
-            $data['id']
-        );
-        return $this->productCachedAttributesFacade->getProductSellingPrice($product);
+        if ($data instanceof Product) {
+            return $this->productCachedAttributesFacade->getProductSellingPrice($data);
+        }
+
+        return $this->priceFacade->createProductPriceFromArrayForCurrentCustomer($data['prices']);
     }
 
     /**
