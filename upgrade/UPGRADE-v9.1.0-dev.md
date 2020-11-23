@@ -228,3 +228,6 @@ There you can find links to upgrade notes for other versions too.
     - `EnvironmentFileSetting::getEnvironment()` has now its `$console` parameter nullable and will be fully removed in next major
     - `TEST` environment can now be used in CLI
     - `DomainFactoryOverwritingDomainUrl` is now replacing `DomainFactory` in `ACCEPTANCE` environment instead of `TEST`
+
+- add automatic string trimming and new Password type in frontend API ([#2127](https://github.com/shopsys/shopsys/pull/2127))
+    - see #project-base-diff to update your project
