@@ -8,7 +8,6 @@ NewsletterSubscriptionDataInputDecorator:
                 type: "String!"
                 validation:
                     -   NotBlank:
-                            normalizer: "trim"
                             message: "Please enter email"
                     -   Email:
                             message: "Please enter valid email"

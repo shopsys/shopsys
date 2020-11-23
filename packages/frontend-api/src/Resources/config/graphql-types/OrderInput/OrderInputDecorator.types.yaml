@@ -11,7 +11,6 @@ OrderInputDecorator:
                 description: "The customer's first name"
                 validation:
                     -   NotBlank:
-                            normalizer: "trim"
                             message: "Please enter first name"
                     -   Length:
                             max: 100
@@ -21,7 +20,6 @@ OrderInputDecorator:
                 description: "The customer's last name"
                 validation:
                     -   NotBlank:
-                            normalizer: "trim"
                             message: "Please enter last name"
                     -   Length:
                             max: 100
@@ -31,7 +29,6 @@ OrderInputDecorator:
                 description: "The customer's email address"
                 validation:
                     -   NotBlank:
-                            normalizer: "trim"
                             message: "Please enter email"
                     -   Email:
                             message: "Please enter valid email"
@@ -43,7 +40,6 @@ OrderInputDecorator:
                 description: "The customer's telephone number"
                 validation:
                     -   NotBlank:
-                            normalizer: "trim"
                             message: "Please enter telephone number"
                     -   Length:
                             max: 30
@@ -57,7 +53,6 @@ OrderInputDecorator:
                 description: "The customer’s company name (required when onCompanyBehalf is true)"
                 validation:
                     -   NotBlank:
-                            normalizer: "trim"
                             message: "Please enter company name"
                             groups: "onCompanyBehalf"
                     -   Length:
@@ -69,7 +64,6 @@ OrderInputDecorator:
                 description: "The customer’s company identification number (required when onCompanyBehalf is true)"
                 validation:
                     -   NotBlank:
-                            normalizer: "trim"
                             message: "Please enter identification number"
                             groups: "onCompanyBehalf"
                     -   Length:
@@ -90,7 +84,6 @@ OrderInputDecorator:
                 description: "Billing address street name (will be on the tax invoice)"
                 validation:
                     -   NotBlank:
-                            normalizer: "trim"
                             message: "Please enter street"
                     -   Length:
                             max: 100
@@ -100,7 +93,6 @@ OrderInputDecorator:
                 description: "Billing address city name (will be on the tax invoice)"
                 validation:
                     -   NotBlank:
-                            normalizer: "trim"
                             message: "Please enter city"
                     -   Length:
                             max: 100
@@ -111,7 +103,6 @@ OrderInputDecorator:
                 description: "Billing address zip code (will be on the tax invoice)"
                 validation:
                     -   NotBlank:
-                            normalizer: "trim"
                             message: "Please enter zip code"
                     -   Length:
                             max: 30
@@ -122,7 +113,6 @@ OrderInputDecorator:
                 description: "Billing address country code (Country will be on the tax invoice)"
                 validation:
                     -   NotBlank:
-                            normalizer: "trim"
                             message: "Please choose country"
                     -   \Shopsys\FrameworkBundle\Form\Constraints\Country: ~
 
@@ -134,7 +124,6 @@ OrderInputDecorator:
                 description: "First name of the contact person for delivery (required when differentDeliveryAddress is true)"
                 validation:
                     -   NotBlank:
-                            normalizer: "trim"
                             message: "Please enter first name of contact person"
                             groups: "differentDeliveryAddress"
                     -   Length:
@@ -146,7 +135,6 @@ OrderInputDecorator:
                 description: "Last name of the contact person for delivery (required when differentDeliveryAddress is true)"
                 validation:
                     -   NotBlank:
-                            normalizer: "trim"
                             message: "Please enter last name of contact person"
                             groups: "differentDeliveryAddress"
                     -   Length:
@@ -174,7 +162,6 @@ OrderInputDecorator:
                 description: "Street name for delivery (required when differentDeliveryAddress is true)"
                 validation:
                     -   NotBlank:
-                            normalizer: "trim"
                             message: "Please enter street"
                             groups: "differentDeliveryAddress"
                     -   Length:
@@ -186,7 +173,6 @@ OrderInputDecorator:
                 description: "City name for delivery (required when differentDeliveryAddress is true)"
                 validation:
                     -   NotBlank:
-                            normalizer: "trim"
                             message: "Please enter city"
                             groups: "differentDeliveryAddress"
                     -   Length:
@@ -198,7 +184,6 @@ OrderInputDecorator:
                 description: "Zip code for delivery (required when differentDeliveryAddress is true)"
                 validation:
                     -   NotBlank:
-                            normalizer: "trim"
                             message: "Please enter zip code"
                             groups: "differentDeliveryAddress"
                     -   Length:
@@ -210,7 +195,6 @@ OrderInputDecorator:
                 description: "Country code for delivery (required when differentDeliveryAddress is true)"
                 validation:
                     -   NotBlank:
-                            normalizer: "trim"
                             message: "Please choose country"
                             groups: "differentDeliveryAddress"
                     -   Shopsys\FrameworkBundle\Form\Constraints\Country:

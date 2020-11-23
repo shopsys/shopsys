@@ -9,7 +9,6 @@ RegistrationDataInputDecorator:
                 description: "Customer user first name"
                 validation:
                     -   NotBlank:
-                            normalizer: "trim"
                             message: "Please enter first name"
                     -   Length:
                             max: 100
@@ -19,7 +18,6 @@ RegistrationDataInputDecorator:
                 description: "Customer user last name"
                 validation:
                     -   NotBlank:
-                            normalizer: "trim"
                             message: "Please enter last name"
                     -   Length:
                             max: 100
@@ -29,7 +27,6 @@ RegistrationDataInputDecorator:
                 description: "Customer user email."
                 validation:
                     -   NotBlank:
-                            normalizer: "trim"
                             message: "Please enter email"
                     -   Email:
                             message: "Please enter valid email"
@@ -39,7 +36,7 @@ RegistrationDataInputDecorator:
                     -   Shopsys\FrameworkBundle\Form\Constraints\UniqueEmail:
                             message: "This email is already registered"
             password:
-                type: "String!"
+                type: "Password!"
                 description: "Customer user password."
                 validation:
                     -   NotBlank:
