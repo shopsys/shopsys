@@ -231,3 +231,9 @@ There you can find links to upgrade notes for other versions too.
 
 - add automatic string trimming and new Password type in frontend API ([#2127](https://github.com/shopsys/shopsys/pull/2127))
     - see #project-base-diff to update your project
+
+- change source of data for a single product to Elasticsearch in FE API ([#2131](https://github.com/shopsys/shopsys/pull/2131))
+    - see #project-base-diff to update your project
+    - run `php phing elasticsearch-index-migrate elasticsearch-export` to apply changes in Elasticsearch schema mapping
+    - *BC BREAK* single product by UUID is now loaded from Elasticsearch with `productByUuid` resolver
+        - if necessary, you can switch to the former resolver `product` in your `Query.types.yaml` file
