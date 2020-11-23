@@ -7,6 +7,7 @@ namespace Shopsys\ReadModelBundle\Product\Detail;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Utils\Utils;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
+use Shopsys\FrameworkBundle\Model\Product\Pricing\PriceFactory;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\ProductElasticsearchProvider;
 use Shopsys\FrameworkBundle\Model\Seo\SeoSettingFacade;
@@ -17,7 +18,6 @@ use Shopsys\ReadModelBundle\Image\ImageViewFacadeInterface;
 use Shopsys\ReadModelBundle\Parameter\ParameterViewFactory;
 use Shopsys\ReadModelBundle\Product\Action\ProductActionViewFactory;
 use Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFactory;
-use Shopsys\ReadModelBundle\Product\PriceFactory;
 
 class ProductDetailViewElasticsearchFactory
 {
@@ -67,7 +67,7 @@ class ProductDetailViewElasticsearchFactory
     protected $listedProductViewFactory;
 
     /**
-     * @var \Shopsys\ReadModelBundle\Product\PriceFactory
+     * @var \Shopsys\FrameworkBundle\Model\Product\Pricing\PriceFactory
      */
     protected $priceFactory;
 
@@ -81,7 +81,7 @@ class ProductDetailViewElasticsearchFactory
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductElasticsearchProvider $productElasticsearchProvider
      * @param \Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFactory $listedProductViewFactory
-     * @param \Shopsys\ReadModelBundle\Product\PriceFactory $priceFactory
+     * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\PriceFactory $priceFactory
      */
     public function __construct(
         ImageViewFacadeInterface $imageViewFacade,

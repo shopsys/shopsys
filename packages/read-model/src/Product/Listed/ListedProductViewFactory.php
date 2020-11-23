@@ -8,6 +8,7 @@ use BadMethodCallException;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
+use Shopsys\FrameworkBundle\Model\Product\Pricing\PriceFactory;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\ProductCachedAttributesFacade;
@@ -16,7 +17,6 @@ use Shopsys\ReadModelBundle\Image\ImageViewFacadeInterface;
 use Shopsys\ReadModelBundle\Product\Action\ProductActionView;
 use Shopsys\ReadModelBundle\Product\Action\ProductActionViewFacadeInterface;
 use Shopsys\ReadModelBundle\Product\Action\ProductActionViewFactory;
-use Shopsys\ReadModelBundle\Product\PriceFactory;
 
 class ListedProductViewFactory
 {
@@ -51,7 +51,7 @@ class ListedProductViewFactory
     protected $currentCustomerUser;
 
     /**
-     * @var \Shopsys\ReadModelBundle\Product\PriceFactory
+     * @var \Shopsys\FrameworkBundle\Model\Product\Pricing\PriceFactory
      */
     protected $priceFactory;
 
@@ -62,7 +62,7 @@ class ListedProductViewFactory
      * @param \Shopsys\ReadModelBundle\Product\Action\ProductActionViewFacadeInterface|null $productActionViewFacade
      * @param \Shopsys\ReadModelBundle\Product\Action\ProductActionViewFactory|null $productActionViewFactory
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser|null $currentCustomerUser
-     * @param \Shopsys\ReadModelBundle\Product\PriceFactory|null $priceFactory
+     * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\PriceFactory|null $priceFactory
      */
     public function __construct(
         Domain $domain,
@@ -360,7 +360,7 @@ class ListedProductViewFactory
 
     /**
      * @required
-     * @param \Shopsys\ReadModelBundle\Product\PriceFactory $priceFactory
+     * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\PriceFactory $priceFactory
      * @internal This function will be replaced by constructor injection in next major
      */
     public function setPriceFactory(PriceFactory $priceFactory): void
