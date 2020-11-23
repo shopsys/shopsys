@@ -1,3 +1,5 @@
+## Group Brand
+
 ### Brand detail [/graphql{?brand_detail}]
 
 #### POST [POST]

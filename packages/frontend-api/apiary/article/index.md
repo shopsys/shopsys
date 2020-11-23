@@ -1,3 +1,5 @@
+## Group Article
+
 ### Article detail [/graphql{?article}]
 
 #### POST [POST]

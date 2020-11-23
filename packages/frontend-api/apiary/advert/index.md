@@ -1,3 +1,5 @@
+## Group Advert
+
 ### List of advert positions [/graphql{?advertPositions}]
 
 #### POST [POST]

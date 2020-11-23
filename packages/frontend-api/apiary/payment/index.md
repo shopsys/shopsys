@@ -1,3 +1,5 @@
+## Group Payment
+
 ### Detail of payment method [/graphql{?payment_detail}]
 
 #### POST [POST]

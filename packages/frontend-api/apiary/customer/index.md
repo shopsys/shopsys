@@ -1,3 +1,5 @@
+## Group Customer
+
 ### Change customer user personal data [/graphql{?change_customer_user_personal_data}]
 
 #### POST [POST]

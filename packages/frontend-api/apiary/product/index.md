@@ -1,3 +1,5 @@
+## Group Product
+
 :[list-of-products](methods/list-of-products.md)
 
 :[list-of-promoted-products](methods/list-of-promoted-products.md)

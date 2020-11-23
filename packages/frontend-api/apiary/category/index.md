@@ -1,3 +1,5 @@
+## Group Category
+
 ### Category detail [/graphql{?category_detail}]
 
 #### POST [POST]
