@@ -226,7 +226,7 @@ class GetAdvertsTest extends GraphQlTestCase
                     [
                         'url' => sprintf(
                             '%s/content-test/images/noticer/header/%s.png',
-                            $this->overwriteDomainUrl,
+                            $this->firstDomainUrl,
                             $testImage->getId()
                         ),
                         'type' => null,
@@ -238,7 +238,7 @@ class GetAdvertsTest extends GraphQlTestCase
                     [
                         'url' => sprintf(
                             '%s/content-test/images/noticer/original/%s.png',
-                            $this->overwriteDomainUrl,
+                            $this->firstDomainUrl,
                             $testImage->getId()
                         ),
                         'type' => null,

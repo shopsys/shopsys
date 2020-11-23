@@ -92,6 +92,7 @@ class StrictWebDriver extends WebDriver
         $locateBy = $this->getWebDriverByText($text);
 
         $clickable = $this->getElementBySelectorAndContext($locateBy, $contextSelector);
+        $this->moveMouseOverByElement($clickable);
 
         $clickable->click();
 

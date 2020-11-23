@@ -8,9 +8,24 @@ class EnvironmentFileSetting
         EnvironmentType::DEVELOPMENT => 'DEVELOPMENT',
         EnvironmentType::PRODUCTION => 'PRODUCTION',
         EnvironmentType::TEST => 'TEST',
+        EnvironmentType::ACCEPTANCE => 'ACCEPTANCE',
     ];
-    protected const ENVIRONMENTS_CONSOLE = [EnvironmentType::DEVELOPMENT, EnvironmentType::PRODUCTION];
-    protected const ENVIRONMENTS_DEFAULT = [EnvironmentType::TEST, EnvironmentType::DEVELOPMENT, EnvironmentType::PRODUCTION];
+
+    /**
+     * @deprecated constant ENVIRONMENTS_CONSOLE is deprecated and will be removed in next major version
+     */
+    protected const ENVIRONMENTS_CONSOLE = [
+        EnvironmentType::ACCEPTANCE,
+        EnvironmentType::TEST,
+        EnvironmentType::DEVELOPMENT,
+        EnvironmentType::PRODUCTION,
+    ];
+    protected const ENVIRONMENTS_DEFAULT = [
+        EnvironmentType::ACCEPTANCE,
+        EnvironmentType::TEST,
+        EnvironmentType::DEVELOPMENT,
+        EnvironmentType::PRODUCTION,
+    ];
 
     /**
      * @var string
@@ -26,12 +41,22 @@ class EnvironmentFileSetting
     }
 
     /**
-     * @param bool $console
+     * @param bool|null $console
      * @return string
      */
-    public function getEnvironment(bool $console): string
+    public function getEnvironment(?bool $console = null): string
     {
-        $environments = $console ? static::ENVIRONMENTS_CONSOLE : static::ENVIRONMENTS_DEFAULT;
+        if ($console !== null) {
+            @trigger_error(
+                sprintf(
+                    'The $console parameter of %s() method is deprecated and will be removed in the next major.',
+                    __METHOD__
+                ),
+                E_USER_DEPRECATED
+            );
+        }
+
+        $environments = static::ENVIRONMENTS_DEFAULT;
         foreach ($environments as $environment) {
             if (is_file($this->getEnvironmentFilePath($environment))) {
                 return $environment;

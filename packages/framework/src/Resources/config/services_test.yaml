@@ -6,11 +6,6 @@ services:
 
     Doctrine\Common\Cache\ArrayCache: ~
 
-    Shopsys\FrameworkBundle\Component\Domain\DomainFactory:
-        class: Shopsys\FrameworkBundle\Component\Domain\DomainFactoryOverwritingDomainUrl
-        arguments:
-            - '%overwrite_domain_url%'
-
     Shopsys\FrameworkBundle\Model\Feed\FeedRegistry:
         arguments:
             $knownTypes: ['daily', 'hourly']

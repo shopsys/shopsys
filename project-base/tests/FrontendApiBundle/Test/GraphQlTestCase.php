@@ -29,7 +29,7 @@ abstract class GraphQlTestCase extends FunctionalTestCase
     /**
      * @var string
      */
-    protected $overwriteDomainUrl;
+    protected $firstDomainUrl;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Pricing\BasePriceCalculation
@@ -67,9 +67,10 @@ abstract class GraphQlTestCase extends FunctionalTestCase
 
         $this->domain = $this->client->getContainer()->get(Domain::class);
         $this->em = $this->client->getContainer()->get('doctrine.orm.entity_manager');
-        $this->overwriteDomainUrl = $this->getContainer()->getParameter('overwrite_domain_url');
 
         $this->domain->switchDomainById(Domain::FIRST_DOMAIN_ID);
+        $firstDomain = $this->domain->getCurrentDomainConfig();
+        $this->firstDomainUrl = $firstDomain->getUrl();
 
         $this->runCheckTestEnabledOnCurrentDomain();
 
@@ -170,7 +171,7 @@ abstract class GraphQlTestCase extends FunctionalTestCase
      */
     protected function getFullUrlPath(string $uri): string
     {
-        return $this->overwriteDomainUrl . $uri;
+        return $this->firstDomainUrl . $uri;
     }
 
     /**

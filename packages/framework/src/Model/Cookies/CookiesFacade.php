@@ -114,7 +114,7 @@ class CookiesFacade
     public function isCookiesConsentGiven()
     {
         // Cookie fixed bar overlays some elements in viewport and mouseover fails on these elements in acceptance tests.
-        if ($this->environment === EnvironmentType::TEST) {
+        if ($this->environment === EnvironmentType::ACCEPTANCE) {
             return true;
         }
         $masterRequest = $this->requestStack->getMasterRequest();

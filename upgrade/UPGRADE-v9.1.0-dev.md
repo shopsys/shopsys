@@ -222,3 +222,9 @@ There you can find links to upgrade notes for other versions too.
 
 - add support for subscribing for e-mail newsletter to FE API ([#2119](https://github.com/shopsys/shopsys/pull/2119))
     - see #project-base-diff to update your project
+
+- apply environment changes in your application ([#2117](https://github.com/shopsys/shopsys/pull/2117))
+    - see #project-base-diff to update your project
+    - `EnvironmentFileSetting::getEnvironment()` has now its `$console` parameter nullable and will be fully removed in next major
+    - `TEST` environment can now be used in CLI
+    - `DomainFactoryOverwritingDomainUrl` is now replacing `DomainFactory` in `ACCEPTANCE` environment instead of `TEST`
