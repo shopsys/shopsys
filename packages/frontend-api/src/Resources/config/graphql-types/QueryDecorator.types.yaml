@@ -17,7 +17,7 @@ QueryDecorator:
                 description: "Returns list of ordered products that can be paginated using `first`, `last`, `before` and `after` keywords"
             product:
                 type: 'Product'
-                resolve: "@=resolver('product', [args['uuid']])"
+                resolve: "@=resolver('productByUuid', [args['uuid']])"
                 args:
                     uuid:
                         type: "Uuid!"

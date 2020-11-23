@@ -13,6 +13,9 @@ use Shopsys\FrameworkBundle\Model\Product\Exception\ProductNotFoundException;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
 
+/**
+ * @deprecated Use ProductByUuidResolver instead
+ */
 class ProductResolver implements ResolverInterface, AliasedInterface
 {
     /**
@@ -43,6 +46,15 @@ class ProductResolver implements ResolverInterface, AliasedInterface
      */
     public function resolver(string $uuid): Product
     {
+        @trigger_error(
+            sprintf(
+                'The "%s" class is deprecated and will be removed in the next major. Use "%s" instead.',
+                self::class,
+                ProductByUuidResolver::class
+            ),
+            E_USER_DEPRECATED
+        );
+
         if (Uuid::isValid($uuid) === false) {
             throw new UserError('Provided argument is not valid UUID.');
         }
