@@ -57,6 +57,15 @@ class FlagFacade
     }
 
     /**
+     * @param int[] $flagIds
+     * @return \Shopsys\FrameworkBundle\Model\Product\Flag\Flag[]
+     */
+    public function getByIds(array $flagIds): array
+    {
+        return $this->flagRepository->getByIds($flagIds);
+    }
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Flag\FlagData $flagData
      * @return \Shopsys\FrameworkBundle\Model\Product\Flag\Flag
      */

@@ -59,4 +59,32 @@ class ProductElasticsearchProvider
             $this->filterQueryFactory->createSellableProductsByProductIdsFilter($productIds, $limit)
         );
     }
+
+    /**
+     * @param string $productUuid
+     * @return array
+     */
+    public function getVisibleProductArrayByUuid(string $productUuid): array
+    {
+        $products = $this->productElasticsearchRepository->getProductsByFilterQuery(
+            $this->filterQueryFactory->createVisibleProductsByProductUuidsFilter([$productUuid])
+        );
+
+        if (count($products) === 0) {
+            throw new ProductNotFoundException('Product with UUID ' . $productUuid . ' does not exist.');
+        }
+
+        return array_shift($products);
+    }
+
+    /**
+     * @param string[] $productUuids
+     * @return array
+     */
+    public function getSellableProductArrayByUuids(array $productUuids): array
+    {
+        return $this->productElasticsearchRepository->getProductsByFilterQuery(
+            $this->filterQueryFactory->createSellableProductsByProductUuidsFilter($productUuids)
+        );
+    }
 }

@@ -63,4 +63,36 @@ class ParameterWithValuesFactory
 
         return $parametersWithValues;
     }
+
+    /**
+     * @param array $productData
+     * @return array
+     */
+    public function createParametersArrayFromProductArray(array $productData): array
+    {
+        $parametersWithValues = [];
+
+        foreach ($productData['parameters'] as $parameterArray) {
+            $parametersWithValues[] = $this->mapParameterArray($parameterArray);
+        }
+
+        return $parametersWithValues;
+    }
+
+    /**
+     * @param array $product
+     * @return array
+     */
+    protected function mapParameterArray(array $product): array
+    {
+        return [
+            'uuid' => $product['parameter_uuid'],
+            'name' => $product['parameter_name'],
+            'visible' => true,
+            'values' => [[
+                'uuid' => $product['parameter_value_uuid'],
+                'text' => $product['parameter_value_text'],
+            ]],
+        ];
+    }
 }

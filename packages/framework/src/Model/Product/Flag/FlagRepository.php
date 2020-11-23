@@ -53,6 +53,15 @@ class FlagRepository
     }
 
     /**
+     * @param int[] $flagIds
+     * @return \Shopsys\FrameworkBundle\Model\Product\Flag\Flag[]
+     */
+    public function getByIds(array $flagIds): array
+    {
+        return $this->getFlagRepository()->findBy(['id' => $flagIds], ['id' => 'asc']);
+    }
+
+    /**
      * @return \Shopsys\FrameworkBundle\Model\Product\Flag\Flag[]
      */
     public function getAll()
