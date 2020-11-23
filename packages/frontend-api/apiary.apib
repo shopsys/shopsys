@@ -51,28 +51,34 @@ Adverts may be filtered by `positionName` argument.
 
 - Request (application/json)
 
-        {
-            adverts (positionName:"footer") {
-                name
-                type
-                uuid
-                positionName
-                ... on AdvertImage {
-                    image {
-                        url
-                        type
-                        size
-                        width
-                        height
-                        position
+    - Attributes
+
+        - positionName
+
+    - Body
+
+            {
+                adverts (positionName:"footer") {
+                    name
+                    type
+                    uuid
+                    positionName
+                    ... on AdvertImage {
+                        image {
+                            url
+                            type
+                            size
+                            width
+                            height
+                            position
+                        }
+                        link
                     }
-                    link
-                }
-                ... on AdvertCode {
-                    code
+                    ... on AdvertCode {
+                        code
+                    }
                 }
             }
-        }
 
 - Response 200 (application/json; charset=utf-8)
 
@@ -125,17 +131,23 @@ Returns article filtered using UUID
 
 - Request (application/json)
 
-        {
-            article (uuid:"37e37351-f607-4e60-b66c-bc8ec9a87491") {
-                uuid
-                placement
-                name
-                text
-                seoH1
-                seoTitle
-                seoMetaDescription
+    - Attributes
+
+        - uuid
+
+    - Body
+
+            {
+                article (uuid:"37e37351-f607-4e60-b66c-bc8ec9a87491") {
+                    uuid
+                    placement
+                    name
+                    text
+                    seoH1
+                    seoTitle
+                    seoMetaDescription
+                }
             }
-        }
 
 
 - Response 200 (application/json; charset=utf-8)
@@ -202,21 +214,31 @@ You can read more about Connection specification in [connections article](https:
 
 - Request (application/json)
 
-        {
-            articles (first:2, placement:"topMenu") {
-                edges{
-                    node{
-                        uuid
-                        placement
-                        name
-                        text
-                        seoH1
-                        seoTitle
-                        seoMetaDescription
+    - Attributes
+
+        - after
+        - first (number)
+        - before
+        - last (number)
+        - placement
+
+    - Body
+
+            {
+                articles (first:2, placement:"topMenu") {
+                    edges{
+                        node{
+                            uuid
+                            placement
+                            name
+                            text
+                            seoH1
+                            seoTitle
+                            seoMetaDescription
+                        }
                     }
                 }
             }
-        }
 
 - Response 200 (application/json; charset=utf-8)
 
@@ -335,32 +357,38 @@ Returns brand filtered using UUID
 
 - Request (application/json)
 
-        {
-            brand(uuid: "7eef3b9e-4e57-4166-b587-d1fff68987c0") {
-                uuid
-                name
-                description
-                link
-                seoTitle
-                seoMetaDescription
-                seoH1
-                products (first: 5) {
-                    edges {
-                        node {
-                            name
+    - Attributes
+
+        - uuid
+
+    - Body
+
+            {
+                brand(uuid: "7eef3b9e-4e57-4166-b587-d1fff68987c0") {
+                    uuid
+                    name
+                    description
+                    link
+                    seoTitle
+                    seoMetaDescription
+                    seoH1
+                    products (first: 5) {
+                        edges {
+                            node {
+                                name
+                            }
                         }
                     }
-                }
-                images{
-                    url,
-                    type,
-                    size,
-                    width,
-                    height,
-                    position
+                    images{
+                        url,
+                        type,
+                        size,
+                        width,
+                        height,
+                        position
+                    }
                 }
             }
-        }
 
 - Response 200 (application/json; charset=utf-8)
 
@@ -554,36 +582,42 @@ Returns category filtered using UUID
 
 - Request (application/json)
 
-        {
-            query: category (uuid: "f757f375-2828-489a-9b60-46c608f05b4f") {
-                uuid
-                name
-                seoH1
-                seoTitle
-                seoMetaDescription
-                children {
+    - Attributes
+
+        - uuid
+
+    - Body
+
+            {
+                query: category (uuid: "f757f375-2828-489a-9b60-46c608f05b4f") {
+                    uuid
                     name
-                }
-                parent {
-                    name
-                }
-                images {
-                    type
-                    position
-                    size
-                    url
-                    width
-                    height
-                }
-                products (first: 1) {
-                    edges {
-                        node {
-                            name
+                    seoH1
+                    seoTitle
+                    seoMetaDescription
+                    children {
+                        name
+                    }
+                    parent {
+                        name
+                    }
+                    images {
+                        type
+                        position
+                        size
+                        url
+                        width
+                        height
+                    }
+                    products (first: 1) {
+                        edges {
+                            node {
+                                name
+                            }
                         }
                     }
                 }
             }
-        }
 
 - Response 200 (application/json; charset=utf-8)
 
@@ -1497,6 +1531,13 @@ You can read more about Connection specification in [connections article](https:
 
             Authorization: Bearer --ACCESS-TOKEN--
 
+    - Attributes
+
+        - after
+        - first (number)
+        - before
+        - last (number)
+
     - Body
 
             {
@@ -1643,6 +1684,10 @@ Returns order filtered using UUID and access token
 
             Authorization: Bearer --ACCESS-TOKEN--
 
+    - Attributes
+
+        - uuid
+
     - Body
 
             {
@@ -1732,6 +1777,10 @@ Returns order filtered using UUID and access token
 Returns order filtered using url hash
 
 - Request (application/json)
+
+    - Attributes
+
+        - urlHash
 
     - Body
 
@@ -1835,11 +1884,11 @@ Authorization header is not required.
 
     - Attributes
 
-            - after
-            - first: (number)
-            - before
-            - last: (number)
-            - orderingMode: (ProductOrderingModeEnum)
+        - after
+        - first (number)
+        - before
+        - last (number)
+        - orderingMode (ProductOrderingModeEnum)
 
     - Body
 
@@ -2488,18 +2537,24 @@ Lists variants for main variant
 
 - Request (application/json)
 
-        {
-            query: product(uuid: "49bc5aa8-c7e1-477d-9e0b-0208129ef56b") {
-                __typename
-                uuid
-                name
-                ...on MainVariant {
-                  variants {
+    - Attributes
+
+        - uuid
+
+    - Body
+
+            {
+                query: product(uuid: "49bc5aa8-c7e1-477d-9e0b-0208129ef56b") {
+                    __typename
+                    uuid
                     name
-                  }
+                    ...on MainVariant {
+                      variants {
+                        name
+                      }
+                    }
                 }
             }
-        }
 
 - Response 200 (application/json; charset=utf-8)
 
@@ -2532,61 +2587,67 @@ Returns product filtered using UUID
 
 - Request (application/json)
 
-        {
-            query: product (uuid: "04a561ae-d08c-47f9-aed0-e52c469038aa") {
-                uuid,
-                name
-                shortDescription
-                seoH1
-                seoTitle
-                seoMetaDescription
-                link
-                unit {
+    - Attributes
+
+        - uuid
+
+    - Body
+
+            {
+                query: product (uuid: "04a561ae-d08c-47f9-aed0-e52c469038aa") {
+                    uuid,
                     name
-                }
-                availability {
-                    name
-                }
-                stockQuantity
-                categories {
-                    name
-                }
-                flags {
-                    name
-                    rgbColor
-                }
-                price {
-                    priceWithVat
-                    priceWithoutVat
-                    vatAmount
-                }
-                images {
-                    type
-                    position
-                    size
-                    url
-                    width
-                    height
-                }
-                brand {
-                    name
-                }
-                accessories {
-                    name
-                }
-                isSellingDenied
-                description
-                orderingPriority
-                parameters {
-                    uuid
-                    name
-                    values {
+                    shortDescription
+                    seoH1
+                    seoTitle
+                    seoMetaDescription
+                    link
+                    unit {
+                        name
+                    }
+                    availability {
+                        name
+                    }
+                    stockQuantity
+                    categories {
+                        name
+                    }
+                    flags {
+                        name
+                        rgbColor
+                    }
+                    price {
+                        priceWithVat
+                        priceWithoutVat
+                        vatAmount
+                    }
+                    images {
+                        type
+                        position
+                        size
+                        url
+                        width
+                        height
+                    }
+                    brand {
+                        name
+                    }
+                    accessories {
+                        name
+                    }
+                    isSellingDenied
+                    description
+                    orderingPriority
+                    parameters {
                         uuid
-                        text
+                        name
+                        values {
+                            uuid
+                            text
+                        }
                     }
                 }
             }
-        }
 
 - Response 200 (application/json; charset=utf-8)
 
@@ -2790,18 +2851,24 @@ Adds main variant for variants
 
 - Request (application/json)
 
-        {
-            query: product(uuid: "81075e9a-29dc-4d37-b7aa-20800e8959cc") {
-                __typename
-                uuid
-                name
-                ...on Variant {
-                  mainVariant {
+    - Attributes
+
+        - uuid
+
+    - Body
+
+            {
+                query: product(uuid: "81075e9a-29dc-4d37-b7aa-20800e8959cc") {
+                    __typename
+                    uuid
                     name
-                  }
+                    ...on Variant {
+                      mainVariant {
+                        name
+                      }
+                    }
                 }
             }
-        }
 
 - Response 200 (application/json; charset=utf-8)
 
@@ -2828,32 +2895,38 @@ Returns payment filtered using UUID
 
 - Request (application/json)
 
-        {
-            query: payment(uuid: "81c834a6-f993-46f3-a3cd-a8ee868884e3") {
-                uuid
-                name
-                description
-                instruction
-                position
-                price {
-                    priceWithVat
-                    priceWithoutVat
-                    vatAmount
-                }
-                images {
-                    type
-                    position
-                    size
-                    url
-                    width
-                    height
-                }
-                transports {
+    - Attributes
+
+        - uuid
+
+    - Body
+
+            {
+                query: payment(uuid: "81c834a6-f993-46f3-a3cd-a8ee868884e3") {
                     uuid
                     name
+                    description
+                    instruction
+                    position
+                    price {
+                        priceWithVat
+                        priceWithoutVat
+                        vatAmount
+                    }
+                    images {
+                        type
+                        position
+                        size
+                        url
+                        width
+                        height
+                    }
+                    transports {
+                        uuid
+                        name
+                    }
                 }
             }
-        }
 
 - Response 200 (application/json; charset=utf-8)
 
@@ -3222,32 +3295,38 @@ Returns transport filtered using UUID
 
 - Request (application/json)
 
-        {
-            query: transport(uuid: "edbafa26-9306-46ed-b1e8-d1570f072832") {
-                uuid
-                name
-                description
-                instruction
-                position
-                price {
-                    priceWithVat
-                    priceWithoutVat
-                    vatAmount
-                }
-                images {
-                    type
-                    position
-                    size
-                    url
-                    width
-                    height
-                }
-                payments {
+    - Attributes
+
+        - uuid
+
+    - Body
+
+            {
+                query: transport(uuid: "edbafa26-9306-46ed-b1e8-d1570f072832") {
                     uuid
                     name
+                    description
+                    instruction
+                    position
+                    price {
+                        priceWithVat
+                        priceWithoutVat
+                        vatAmount
+                    }
+                    images {
+                        type
+                        position
+                        size
+                        url
+                        width
+                        height
+                    }
+                    payments {
+                        uuid
+                        name
+                    }
                 }
             }
-        }
 
 - Response 200 (application/json; charset=utf-8)
 
