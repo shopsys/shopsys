@@ -64,9 +64,7 @@ class ProductVariantTest extends GraphQlTestCase
                         $firstDomainLocale
                     ),
                     'variants' => [
-                        [
-                            'name' => t('51,5” Hyundai 22HD44D', [], 'dataFixtures', $firstDomainLocale),
-                        ],
+                        // Variant 51,5” Hyundai 22HD44D is not sellable, so it's not present
                         [
                             'name' => t('60” Hyundai 22HD44D', [], 'dataFixtures', $firstDomainLocale),
                         ],
