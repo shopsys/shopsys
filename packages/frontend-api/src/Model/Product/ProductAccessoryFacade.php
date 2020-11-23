@@ -27,7 +27,7 @@ class ProductAccessoryFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @param int $domainId
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
-     * @return array
+     * @return \Shopsys\FrameworkBundle\Model\Product\Product[]
      */
     public function getAllAccessories(Product $product, int $domainId, PricingGroup $pricingGroup): array
     {
