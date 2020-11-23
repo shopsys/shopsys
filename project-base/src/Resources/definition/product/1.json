@@ -199,11 +199,17 @@
           "parameter_id": {
             "type": "integer"
           },
+          "parameter_uuid": {
+            "type": "keyword"
+          },
           "parameter_name": {
             "type": "text"
           },
           "parameter_value_id": {
             "type": "integer"
+          },
+          "parameter_value_uuid": {
+            "type": "keyword"
           },
           "parameter_value_text": {
             "type": "text"

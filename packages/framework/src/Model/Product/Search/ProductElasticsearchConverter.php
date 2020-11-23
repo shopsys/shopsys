@@ -62,8 +62,10 @@ class ProductElasticsearchConverter
         foreach ($parameters as $parameter) {
             $filledParameter = [];
             $filledParameter['parameter_id'] = $parameter['parameter_id'] ?? '';
+            $filledParameter['parameter_uuid'] = $parameter['parameter_uuid'] ?? '';
             $filledParameter['parameter_name'] = $parameter['parameter_name'] ?? '';
             $filledParameter['parameter_value_id'] = $parameter['parameter_value_id'] ?? '';
+            $filledParameter['parameter_value_uuid'] = $parameter['parameter_value_uuid'] ?? '';
             $filledParameter['parameter_value_text'] = $parameter['parameter_value_text'] ?? '';
             $results[] = $filledParameter;
         }
