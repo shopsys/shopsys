@@ -254,4 +254,24 @@ class FilterQueryFactory
 
         return $filterQuery->setLimit($limit);
     }
+
+    /**
+     * @param string[] $productUuids
+     * @return \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery
+     */
+    public function createVisibleProductsByProductUuidsFilter(array $productUuids): FilterQuery
+    {
+        return $this->createVisible()
+            ->filterByProductUuids($productUuids);
+    }
+
+    /**
+     * @param string[] $productUuids
+     * @return \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery
+     */
+    public function createSellableProductsByProductUuidsFilter(array $productUuids): FilterQuery
+    {
+        return $this->createVisibleProductsByProductUuidsFilter($productUuids)
+            ->filterOnlySellable();
+    }
 }
