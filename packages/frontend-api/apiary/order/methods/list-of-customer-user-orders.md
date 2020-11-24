@@ -10,7 +10,7 @@ You can read more about Connection specification in [connections article](https:
 
     - Headers
 
-            Authorization: Bearer --ACCESS-TOKEN--
+            :[headers-authorization](../../components/headers/authorization.md)
 
     - Attributes
 

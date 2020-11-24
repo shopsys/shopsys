@@ -8,7 +8,7 @@ Change password using email address, old password and new password
 
     - Headers
 
-            Authorization: Bearer --ACCESS-TOKEN--
+            :[headers-authorization](../../components/headers/authorization.md)
 
     - Body
 

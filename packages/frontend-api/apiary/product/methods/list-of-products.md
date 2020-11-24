@@ -11,7 +11,7 @@ Authorization header is not required.
 
     - Headers
 
-            Authorization: Bearer --ACCESS-TOKEN--
+            :[headers-authorization](../../components/headers/authorization.md)
 
     - Attributes
 

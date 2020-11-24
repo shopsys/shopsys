@@ -8,7 +8,7 @@ Logout user
 
     - Headers
 
-            Authorization: Bearer ABCDEF
+            :[headers-authorization](../../components/headers/authorization.md)
 
     - Body
 

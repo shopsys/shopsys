@@ -8,7 +8,7 @@ Returns order filtered using UUID and access token
 
     - Headers
 
-            Authorization: Bearer --ACCESS-TOKEN--
+            :[headers-authorization](../../components/headers/authorization.md)
 
     - Attributes
 

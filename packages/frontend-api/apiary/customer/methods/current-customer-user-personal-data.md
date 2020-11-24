@@ -8,7 +8,7 @@ Get current customer user personal data
 
     - Headers
 
-            Authorization: Bearer --ACCESS-TOKEN--
+            :[headers-authorization](../../components/headers/authorization.md)
 
     - Body
 
