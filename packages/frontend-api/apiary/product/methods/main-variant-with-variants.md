@@ -8,7 +8,7 @@ Lists variants for main variant
 
     - Attributes
 
-        - uuid
+        - uuid (required)
 
     - Body
 

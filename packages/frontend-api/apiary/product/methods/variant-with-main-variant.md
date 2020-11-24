@@ -8,7 +8,7 @@ Adds main variant for variants
 
     - Attributes
 
-        - uuid
+        - uuid (required)
 
     - Body
 

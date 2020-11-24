@@ -8,7 +8,7 @@ Returns category filtered using UUID
 
     - Attributes
 
-        - uuid
+        - uuid (required)
 
     - Body
 

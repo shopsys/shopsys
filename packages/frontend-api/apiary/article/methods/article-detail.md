@@ -8,7 +8,7 @@ Returns article filtered using UUID
 
     - Attributes
 
-        - uuid
+        - uuid (required)
 
     - Body
 

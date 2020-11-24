@@ -12,7 +12,7 @@ Returns order filtered using UUID and access token
 
     - Attributes
 
-        - uuid
+        - uuid (required)
 
     - Body
 

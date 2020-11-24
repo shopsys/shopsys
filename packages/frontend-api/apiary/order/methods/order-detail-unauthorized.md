@@ -8,7 +8,7 @@ Returns order filtered using url hash
 
     - Attributes
 
-        - urlHash
+        - urlHash (required)
 
     - Body
 
