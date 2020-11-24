@@ -6,14 +6,20 @@ Refreshes access and refresh tokens
 
 - Request (application/json)
 
-        mutation {
-            RefreshTokens(input: {
-                refreshToken: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC8xMjcuMC4wLjE6ODAwMCIsImF1ZCI6Imh0dHA6XC9cLzEyNy4wLjAuMTo4MDAwIiwiaWF0IjoxNTg2NDM2NTg3LCJleHAiOjE1ODc2NDYxODcsInV1aWQiOiI0ZDAwNTEyZi1lNDkxLTRmMzEtYjBjYi04ZTViOGU0ODQ5ZDEiLCJzZWNyZXRDaGFpbiI6ImIyMGZkMTNkODIyNTVhNzdmYzJjYWM4OTA1YzU1MWQxZjNjYjc3ODkifQ._mBpd4yQZ1bF4aC6YY3C1BDI1mrH2hV_w0Yh9mKu_i0"
-            }) {
-                accessToken
-                refreshToken
+    - Headers
+
+            :[headers-authorization](../../components/headers/authorization.md)
+
+    - Body
+
+            mutation {
+                RefreshTokens(input: {
+                    refreshToken: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC8xMjcuMC4wLjE6ODAwMCIsImF1ZCI6Imh0dHA6XC9cLzEyNy4wLjAuMTo4MDAwIiwiaWF0IjoxNTg2NDM2NTg3LCJleHAiOjE1ODc2NDYxODcsInV1aWQiOiI0ZDAwNTEyZi1lNDkxLTRmMzEtYjBjYi04ZTViOGU0ODQ5ZDEiLCJzZWNyZXRDaGFpbiI6ImIyMGZkMTNkODIyNTVhNzdmYzJjYWM4OTA1YzU1MWQxZjNjYjc3ODkifQ._mBpd4yQZ1bF4aC6YY3C1BDI1mrH2hV_w0Yh9mKu_i0"
+                }) {
+                    accessToken
+                    refreshToken
+                }
             }
-        }
 
 - Response 200 (application/json; charset=utf-8)
 

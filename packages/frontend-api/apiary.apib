@@ -1115,14 +1115,20 @@ Refreshes access and refresh tokens
 
 - Request (application/json)
 
-        mutation {
-            RefreshTokens(input: {
-                refreshToken: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC8xMjcuMC4wLjE6ODAwMCIsImF1ZCI6Imh0dHA6XC9cLzEyNy4wLjAuMTo4MDAwIiwiaWF0IjoxNTg2NDM2NTg3LCJleHAiOjE1ODc2NDYxODcsInV1aWQiOiI0ZDAwNTEyZi1lNDkxLTRmMzEtYjBjYi04ZTViOGU0ODQ5ZDEiLCJzZWNyZXRDaGFpbiI6ImIyMGZkMTNkODIyNTVhNzdmYzJjYWM4OTA1YzU1MWQxZjNjYjc3ODkifQ._mBpd4yQZ1bF4aC6YY3C1BDI1mrH2hV_w0Yh9mKu_i0"
-            }) {
-                accessToken
-                refreshToken
+    - Headers
+
+            Authorization: Bearer --ACCESS-TOKEN--
+
+    - Body
+
+            mutation {
+                RefreshTokens(input: {
+                    refreshToken: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC8xMjcuMC4wLjE6ODAwMCIsImF1ZCI6Imh0dHA6XC9cLzEyNy4wLjAuMTo4MDAwIiwiaWF0IjoxNTg2NDM2NTg3LCJleHAiOjE1ODc2NDYxODcsInV1aWQiOiI0ZDAwNTEyZi1lNDkxLTRmMzEtYjBjYi04ZTViOGU0ODQ5ZDEiLCJzZWNyZXRDaGFpbiI6ImIyMGZkMTNkODIyNTVhNzdmYzJjYWM4OTA1YzU1MWQxZjNjYjc3ODkifQ._mBpd4yQZ1bF4aC6YY3C1BDI1mrH2hV_w0Yh9mKu_i0"
+                }) {
+                    accessToken
+                    refreshToken
+                }
             }
-        }
 
 - Response 200 (application/json; charset=utf-8)
 
@@ -1176,109 +1182,115 @@ Creates complete order with products and addresses
 
 - Request (application/json)
 
-        mutation {
-            CreateOrder(
-                input: {
-                    firstName: "firstName"
-                    lastName: "lastName"
-                    email: "user@example.com"
-                    telephone: "+53 123456789"
-                    onCompanyBehalf: true
-                    companyName: "Airlocks s.r.o."
-                    companyNumber: "1234"
-                    companyTaxNumber: "EU4321"
-                    street: "123 Fake Street"
-                    city: "Springfield"
-                    postcode: "12345"
-                    country: "CZ"
-                    note:"Thank You"
-                    payment: {
-                        uuid: "840f9191-c6f2-4ab0-9788-9c038f211ca6"
-                        price: {
-                            priceWithVat: "2"
-                            priceWithoutVat: "2"
-                            vatAmount: "0"
-                        }
-                    }
-                    transport: {
-                        uuid: "edbafa26-9306-46ed-b1e8-d1570f072832"
-                        price: {
-                            priceWithVat: "4.84"
-                            priceWithoutVat: "4"
-                            vatAmount: "0.84"
-                        }
-                    }
-                    differentDeliveryAddress: true
-                    deliveryFirstName: "deliveryFirstName"
-                    deliveryLastName: "deliveryLastName"
-                    deliveryStreet: "deliveryStreet"
-                    deliveryCity: "deliveryCity"
-                    deliveryCountry: "SK"
-                    deliveryPostcode: "13453"
-                    products: [
-                        {
-                            uuid: "04a561ae-d08c-47f9-aed0-e52c469038aa"
-                            unitPrice: {
-                                priceWithVat: "139.96"
-                                priceWithoutVat: "115.67"
-                                vatAmount: "24.29"
+    - Headers
+    
+            Authorization: Bearer --ACCESS-TOKEN-- (optional)
+        
+    - Body
+
+            mutation {
+                CreateOrder(
+                    input: {
+                        firstName: "firstName"
+                        lastName: "lastName"
+                        email: "user@example.com"
+                        telephone: "+53 123456789"
+                        onCompanyBehalf: true
+                        companyName: "Airlocks s.r.o."
+                        companyNumber: "1234"
+                        companyTaxNumber: "EU4321"
+                        street: "123 Fake Street"
+                        city: "Springfield"
+                        postcode: "12345"
+                        country: "CZ"
+                        note:"Thank You"
+                        payment: {
+                            uuid: "840f9191-c6f2-4ab0-9788-9c038f211ca6"
+                            price: {
+                                priceWithVat: "2"
+                                priceWithoutVat: "2"
+                                vatAmount: "0"
                             }
-                            quantity: 10
-                        },
-                    ]
-                }
-            ) {
-                transport {
-                    name
-                }
-                payment {
-                    name
-                }
-                status
-                totalPrice {
-                    priceWithVat
-                    priceWithoutVat
-                    vatAmount
-                }
-                items {
-                    name
-                    unitPrice {
-                        priceWithVat
-                        priceWithoutVat
-                        vatAmount
+                        }
+                        transport: {
+                            uuid: "edbafa26-9306-46ed-b1e8-d1570f072832"
+                            price: {
+                                priceWithVat: "4.84"
+                                priceWithoutVat: "4"
+                                vatAmount: "0.84"
+                            }
+                        }
+                        differentDeliveryAddress: true
+                        deliveryFirstName: "deliveryFirstName"
+                        deliveryLastName: "deliveryLastName"
+                        deliveryStreet: "deliveryStreet"
+                        deliveryCity: "deliveryCity"
+                        deliveryCountry: "SK"
+                        deliveryPostcode: "13453"
+                        products: [
+                            {
+                                uuid: "04a561ae-d08c-47f9-aed0-e52c469038aa"
+                                unitPrice: {
+                                    priceWithVat: "139.96"
+                                    priceWithoutVat: "115.67"
+                                    vatAmount: "24.29"
+                                }
+                                quantity: 10
+                            },
+                        ]
                     }
+                ) {
+                    transport {
+                        name
+                    }
+                    payment {
+                        name
+                    }
+                    status
                     totalPrice {
                         priceWithVat
                         priceWithoutVat
                         vatAmount
                     }
-                    quantity
-                    vatRate
-                    unit
+                    items {
+                        name
+                        unitPrice {
+                            priceWithVat
+                            priceWithoutVat
+                            vatAmount
+                        }
+                        totalPrice {
+                            priceWithVat
+                            priceWithoutVat
+                            vatAmount
+                        }
+                        quantity
+                        vatRate
+                        unit
+                    }
+                    firstName
+                    lastName
+                    email
+                    telephone
+                    companyName
+                    companyNumber
+                    companyTaxNumber
+                    street
+                    city
+                    postcode
+                    country
+                    differentDeliveryAddress
+                    deliveryFirstName
+                    deliveryLastName
+                    deliveryCompanyName
+                    deliveryTelephone
+                    deliveryStreet
+                    deliveryCity
+                    deliveryPostcode
+                    deliveryCountry
+                    note
                 }
-                firstName
-                lastName
-                email
-                telephone
-                companyName
-                companyNumber
-                companyTaxNumber
-                street
-                city
-                postcode
-                country
-                differentDeliveryAddress
-                deliveryFirstName
-                deliveryLastName
-                deliveryCompanyName
-                deliveryTelephone
-                deliveryStreet
-                deliveryCity
-                deliveryPostcode
-                deliveryCountry
-                note
             }
-        }
 
 - Response 200 (application/json; charset=utf-8)
 
