@@ -209,7 +209,7 @@ Returns product filtered using UUID
                     "parameters": [
                         {
                             "uuid": "728f47d2-eef7-48c4-a8a4-c6af3af7ea39",
-                            "name": "HDMI"
+                            "name": "HDMI",
                             "values": [
                                 {
                                     "uuid": "87768319-f601-491d-b34a-8109215bb75b",
@@ -219,7 +219,7 @@ Returns product filtered using UUID
                         },
                         {
                             "uuid": "238305c0-ea42-427d-a291-b5c9e77a7420",
-                            "name": "Resolution"
+                            "name": "Resolution",
                             "values": [
                                 {
                                     "uuid": "953cfc88-6f5f-4d27-8993-d2a4430778a1",
@@ -229,7 +229,7 @@ Returns product filtered using UUID
                         },
                         {
                             "uuid": "4c99f0ca-af64-4d1a-85d3-0b3148033301",
-                            "name": "Screen size"
+                            "name": "Screen size",
                             "values": [
                                 {
                                     "uuid": "47c91459-6d05-4758-8154-e9f711602bb0",
@@ -239,7 +239,7 @@ Returns product filtered using UUID
                         },
                         {
                             "uuid": "ac302aa6-64f5-4c5a-9a5e-2dbe87cdb25a",
-                            "name": "Technology"
+                            "name": "Technology",
                             "values": [
                                 {
                                     "uuid": "b7b4375c-3403-48e2-8c32-5ba48843ad98",
@@ -249,7 +249,7 @@ Returns product filtered using UUID
                         },
                         {
                             "uuid": "924ce936-2632-4fb4-becd-d20837aff51e",
-                            "name": "USB"
+                            "name": "USB",
                             "values": [
                                 {
                                     "uuid": "87768319-f601-491d-b34a-8109215bb75b",
