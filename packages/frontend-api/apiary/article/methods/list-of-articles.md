@@ -12,7 +12,7 @@ You can read more about Connection specification in [connections article](https:
     - Attributes
 
         - after
-        - first (number)
+        - first (number) - Default: **10**
         - before
         - last (number)
         - placement

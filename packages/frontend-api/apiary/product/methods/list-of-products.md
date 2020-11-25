@@ -16,7 +16,7 @@ Authorization header is not required.
     - Attributes
 
         - after
-        - first (number)
+        - first (number) - Default: **10**
         - before
         - last (number)
         - orderingMode (ProductOrderingModeEnum)
