@@ -22,13 +22,14 @@ HOST: https://polls.apiblueprint.org/
 :[transport](transport/index.md)
 
 ## Data Structures
+
 ### ProductOrderingModeEnum (enum)
-+ `PRIORITY`
-+ `PRICE_ASC`
-+ `PRICE_DESC`
-+ `NAME_ASC`
-+ `NAME_DESC`
-+ `RELEVANCE`
+- `PRIORITY`
+- `PRICE_ASC`
+- `PRICE_DESC`
+- `NAME_ASC`
+- `NAME_DESC`
+- `RELEVANCE`
 
 ### InputPrice (object)
 - priceWithVat (required) - Price with VAT
