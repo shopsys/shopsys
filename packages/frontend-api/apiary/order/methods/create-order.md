@@ -9,7 +9,36 @@ Creates complete order with products and addresses
     - Headers
     
             :[headers-authorization](../../components/headers/authorization.md) (optional)
-        
+
+    - Attributes
+
+        - firstName (required) - The customer's first name
+        - lastName (required) - The customer's last name
+        - email (required) - The customer's email address
+        - telephone (required) - The customer's telephone number
+        - onCompanyBehalf (boolean, required) - Determines whether the order is made on the company behalf.
+        - companyName - The customer’s company name (required when onCompanyBehalf is true)
+        - companyNumber - The customer’s company identification number (required when onCompanyBehalf is true)
+        - companyTaxNumber - The customer’s company tax number (required when onCompanyBehalf is true)
+        - street (required) - Billing address street name (will be on the tax invoice)
+        - city (required) - Billing address city name (will be on the tax invoice)
+        - postcode (required) - Billing address zip code (will be on the tax invoice)
+        - country (required) - Billing address country code (Country will be on the tax invoice)
+        - differentDeliveryAddress (boolean, required) - Determines whether to deliver products to a different address than the billing one
+        - deliveryFirstName - First name of the contact person for delivery (required when differentDeliveryAddress is true)
+        - deliveryLastName - Last name of the contact person for delivery (required when differentDeliveryAddress is true)
+        - deliveryCompanyName - Company name for delivery
+        - deliveryTelephone - Contact telephone number for delivery
+        - deliveryStreet - Street name for delivery (required when differentDeliveryAddress is true)
+        - deliveryCity - City name for delivery (required when differentDeliveryAddress is true)
+        - deliveryPostcode - Zip code for delivery (required when differentDeliveryAddress is true)
+        - deliveryCountry - Country code for delivery (required when differentDeliveryAddress is true)
+        - note - Other information related to the order
+        - payment (InputPayment, required) - Payment method applied to the order
+        - transport (InputTransport, required) - Transport method applied to the order
+        - products (array, required) - A list of products to order to
+            - (InputOrderProduct)
+
     - Body
 
             mutation {

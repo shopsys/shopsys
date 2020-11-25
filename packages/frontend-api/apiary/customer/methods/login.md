@@ -6,15 +6,21 @@ Login user and return access and refresh tokens
 
 - Request (application/json)
 
-        mutation {
-            Login(input: {
-                email: "no-reply@shopsys.com"
-                password: "user123"
-            }) {
-                accessToken
-                refreshToken
+    - Attributes
+
+        - Include InputLogin
+
+    - Body
+
+            mutation {
+                Login(input: {
+                    email: "no-reply@shopsys.com"
+                    password: "user123"
+                }) {
+                    accessToken
+                    refreshToken
+                }
             }
-        }
 
 - Response 200 (application/json; charset=utf-8)
 

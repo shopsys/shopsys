@@ -10,6 +10,10 @@ Returns customer user new personal data
 
             :[headers-authorization](../../components/headers/authorization.md)
 
+    - Attributes
+
+        - Include InputChangeCustomerUser
+
     - Body
 
             mutation {

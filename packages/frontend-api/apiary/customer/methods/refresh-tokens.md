@@ -10,6 +10,10 @@ Refreshes access and refresh tokens
 
             :[headers-authorization](../../components/headers/authorization.md)
 
+    - Attributes
+
+        - Include InputRefreshToken
+
     - Body
 
             mutation {

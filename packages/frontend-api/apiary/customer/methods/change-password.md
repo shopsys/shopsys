@@ -10,6 +10,10 @@ Change password using email address, old password and new password
 
             :[headers-authorization](../../components/headers/authorization.md)
 
+    - Attributes
+
+        - Include InputChangePassword
+
     - Body
 
             mutation {

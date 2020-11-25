@@ -6,17 +6,23 @@ Register and login a new customer user and return access and refresh tokens
 
 - Request (application/json)
 
-        mutation {
-            Register(input: {
-                firstName: "John"
-                lastName: "Doe"
-                email: "new-no-reply@shopsys.com"
-                password: "user123"
-            }) {
-                accessToken,
-                refreshToken
+    - Attributes
+
+        - Include InputRegisterNewCustomerUser
+
+    - Body
+
+            mutation {
+                Register(input: {
+                    firstName: "John"
+                    lastName: "Doe"
+                    email: "new-no-reply@shopsys.com"
+                    password: "user123"
+                }) {
+                    accessToken,
+                    refreshToken
+                }
             }
-        }
 
 - Response 200 (application/json; charset=utf-8)
 
