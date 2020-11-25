@@ -7,7 +7,6 @@ namespace Shopsys\FrontendApiBundle\Model\Resolver\Article;
 use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
 use Overblog\GraphQLBundle\Definition\Resolver\ResolverInterface;
 use Overblog\GraphQLBundle\Error\UserError;
-use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Article\Article;
 use Shopsys\FrameworkBundle\Model\Article\Exception\ArticleNotFoundException;
@@ -61,10 +60,6 @@ class ArticleResolver implements ResolverInterface, AliasedInterface
      */
     public function resolver(string $uuid): Article
     {
-        if (Uuid::isValid($uuid) === false) {
-            throw new UserError('Provided argument is not valid UUID.');
-        }
-
         try {
             return $this->articleFacade->getVisibleByDomainIdAndUuid($this->domain->getId(), $uuid);
         } catch (ArticleNotFoundException $articleNotFoundException) {
