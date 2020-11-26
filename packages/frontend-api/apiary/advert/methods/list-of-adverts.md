@@ -71,7 +71,7 @@ Adverts may be filtered by `positionName` argument.
                                 "position": null
                             }
                         ],
-                        "link": "https://shopsys.com",
+                        "link": "https://shopsys.com"
                     }
                 ]
             }

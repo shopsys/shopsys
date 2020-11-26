@@ -74,9 +74,6 @@ Returns complete list of brands
                             }
                         ]
                     },
-
-                    // ... 22 more brands hidden here to shorten this list in documentation
-
                     {
                         "uuid": "94b06eb9-bbbd-4adb-8f9c-46495c9330d6",
                         "name": "Verbatim",
