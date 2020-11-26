@@ -51,3 +51,15 @@
 - email (required) - Customer user email
 - oldPassword (required) - Current customer user password
 - newPassword (required) - New customer user password
+
+### InputProductFilter
+- minimalPrice (string) - Minimal price of products for filtering
+- maximalPrice (string) - Maximal price of products for filtering
+- brands (array) - Array of uuids of brands filter
+- flags (array) - Array of uuids of flags filter
+- inStock (boolean) - In stock filter
+- parameters (InputParameterFilter) - Parameter filter
+
+### InputParameterFilter
+- parameter (string, required) - Uuid of filtered parameter
+- values (array, required) - Array of uuids filtered parameter values

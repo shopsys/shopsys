@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopsys\FrameworkBundle\Model\Product\Filter;
 
 use Doctrine\ORM\QueryBuilder;
@@ -7,6 +9,7 @@ use Shopsys\FrameworkBundle\Component\Doctrine\QueryBuilderExtender;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
+use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductCalculatedPrice;
 use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
 
@@ -44,6 +47,38 @@ class PriceRangeRepository
             $domainId,
             $pricingGroup,
             $category
+        );
+
+        return $this->getPriceRangeByProductsQueryBuilder($productsQueryBuilder, $pricingGroup);
+    }
+
+    /**
+     * @param int $domainId
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
+     * @param \Shopsys\FrameworkBundle\Model\Product\Brand\Brand $brand
+     * @return \Shopsys\FrameworkBundle\Model\Product\Filter\PriceRange
+     */
+    public function getPriceRangeForBrand(int $domainId, PricingGroup $pricingGroup, Brand $brand): PriceRange
+    {
+        $productsQueryBuilder = $this->productRepository->getListableForBrandQueryBuilderPublic(
+            $domainId,
+            $pricingGroup,
+            $brand
+        );
+
+        return $this->getPriceRangeByProductsQueryBuilder($productsQueryBuilder, $pricingGroup);
+    }
+
+    /**
+     * @param int $domainId
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
+     * @return \Shopsys\FrameworkBundle\Model\Product\Filter\PriceRange
+     */
+    public function getPriceRangeForAll(int $domainId, PricingGroup $pricingGroup): PriceRange
+    {
+        $productsQueryBuilder = $this->productRepository->getAllListableQueryBuilder(
+            $domainId,
+            $pricingGroup
         );
 
         return $this->getPriceRangeByProductsQueryBuilder($productsQueryBuilder, $pricingGroup);

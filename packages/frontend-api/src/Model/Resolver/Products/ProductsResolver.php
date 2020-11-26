@@ -12,8 +12,10 @@ use Overblog\GraphQLBundle\Relay\Connection\ConnectionBuilder;
 use Overblog\GraphQLBundle\Relay\Connection\Paginator;
 use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
+use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig;
 use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingConfig;
 use Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainFacadeInterface;
+use Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterFacade;
 use Shopsys\FrontendApiBundle\Model\Product\ProductFacade;
 
 class ProductsResolver implements ResolverInterface, AliasedInterface
@@ -41,16 +43,24 @@ class ProductsResolver implements ResolverInterface, AliasedInterface
     protected $productFacade;
 
     /**
+     * @var \Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterFacade|null
+     */
+    protected $productFilterFacade;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainFacadeInterface $productOnCurrentDomainFacade
      * @param \Shopsys\FrontendApiBundle\Model\Product\ProductFacade|null $productFacade
+     * @param \Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterFacade|null $productFilterFacade
      */
     public function __construct(
         ProductOnCurrentDomainFacadeInterface $productOnCurrentDomainFacade,
-        ?ProductFacade $productFacade = null
+        ?ProductFacade $productFacade = null,
+        ?ProductFilterFacade $productFilterFacade = null
     ) {
         $this->productOnCurrentDomainFacade = $productOnCurrentDomainFacade;
         $this->connectionBuilder = new ConnectionBuilder();
         $this->productFacade = $productFacade;
+        $this->productFilterFacade = $productFilterFacade;
     }
 
     /**
@@ -80,6 +90,35 @@ class ProductsResolver implements ResolverInterface, AliasedInterface
     }
 
     /**
+     * @required
+     * @param \Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterFacade $productFilterFacade
+     * @internal This function will be replaced by constructor injection in next major
+     */
+    public function setProductFilterFacade(ProductFilterFacade $productFilterFacade): void
+    {
+        if ($this->productFilterFacade !== null && $this->productFilterFacade !== $productFilterFacade) {
+            throw new BadMethodCallException(sprintf(
+                'Method "%s" has been already called and cannot be called multiple times.',
+                __METHOD__
+            ));
+        }
+
+        if ($this->productFilterFacade !== null) {
+            return;
+        }
+
+        @trigger_error(
+            sprintf(
+                'The %s() method is deprecated and will be removed in the next major. Use the constructor injection instead.',
+                __METHOD__
+            ),
+            E_USER_DEPRECATED
+        );
+
+        $this->productFilterFacade = $productFilterFacade;
+    }
+
+    /**
      * @param \Overblog\GraphQLBundle\Definition\Argument $argument
      * @return \Overblog\GraphQLBundle\Relay\Connection\ConnectionInterface|object
      */
@@ -87,15 +126,23 @@ class ProductsResolver implements ResolverInterface, AliasedInterface
     {
         $this->setDefaultFirstOffsetIfNecessary($argument);
 
-        $paginator = new Paginator(function ($offset, $limit) use ($argument) {
-            return $this->productFacade->getProductsOnCurrentDomain(
+        $productFilterData = $this->productFilterFacade->getValidatedProductFilterDataForAll(
+            $argument
+        );
+
+        $paginator = new Paginator(function ($offset, $limit) use ($argument, $productFilterData) {
+            return $this->productFacade->getFilteredProductsOnCurrentDomain(
                 $limit,
                 $offset,
-                $this->getOrderingModeFromArgument($argument)
+                $this->getOrderingModeFromArgument($argument),
+                $productFilterData
             );
         });
 
-        return $paginator->auto($argument, $this->productFacade->getProductsCountOnCurrentDomain());
+        return $paginator->auto(
+            $argument,
+            $this->productFacade->getFilteredProductsCountOnCurrentDomain($productFilterData)
+        );
     }
 
     /**
@@ -107,16 +154,25 @@ class ProductsResolver implements ResolverInterface, AliasedInterface
     {
         $this->setDefaultFirstOffsetIfNecessary($argument);
 
-        $paginator = new Paginator(function ($offset, $limit) use ($argument, $category) {
-            return $this->productFacade->getProductsByCategory(
+        $productFilterData = $this->productFilterFacade->getValidatedProductFilterDataForCategory(
+            $argument,
+            $category
+        );
+
+        $paginator = new Paginator(function ($offset, $limit) use ($argument, $category, $productFilterData) {
+            return $this->productFacade->getFilteredProductsByCategory(
                 $category,
                 $limit,
                 $offset,
-                $this->getOrderingModeFromArgument($argument)
+                $this->getOrderingModeFromArgument($argument),
+                $productFilterData
             );
         });
 
-        return $paginator->auto($argument, $this->productFacade->getProductsByCategoryCount($category));
+        return $paginator->auto(
+            $argument,
+            $this->productFacade->getFilteredProductsByCategoryCount($category, $productFilterData)
+        );
     }
 
     /**
@@ -128,16 +184,25 @@ class ProductsResolver implements ResolverInterface, AliasedInterface
     {
         $this->setDefaultFirstOffsetIfNecessary($argument);
 
-        $paginator = new Paginator(function ($offset, $limit) use ($argument, $brand) {
-            return $this->productFacade->getProductsByBrand(
+        $productFilterData = $this->productFilterFacade->getValidatedProductFilterDataForBrand(
+            $argument,
+            $brand
+        );
+
+        $paginator = new Paginator(function ($offset, $limit) use ($argument, $brand, $productFilterData) {
+            return $this->productFacade->getFilteredProductsByBrand(
                 $brand,
                 $limit,
                 $offset,
-                $this->getOrderingModeFromArgument($argument)
+                $this->getOrderingModeFromArgument($argument),
+                $productFilterData
             );
         });
 
-        return $paginator->auto($argument, $this->productFacade->getProductsByBrandCount($brand));
+        return $paginator->auto(
+            $argument,
+            $this->productFacade->getFilteredProductsByBrandCount($brand, $productFilterData)
+        );
     }
 
     /**

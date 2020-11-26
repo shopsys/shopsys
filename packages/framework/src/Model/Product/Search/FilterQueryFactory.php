@@ -91,25 +91,10 @@ class FilterQueryFactory
         int $page,
         int $limit
     ): FilterQuery {
-        $filterQuery = $this->createListable()
+        return $this->createListableWithProductFilter($productFilterData)
             ->setPage($page)
             ->setLimit($limit)
             ->applyOrdering($orderingModeId, $this->currentCustomerUser->getPricingGroup());
-
-        $filterQuery = $this->productFilterDataToQueryTransformer->addBrandsToQuery($productFilterData, $filterQuery);
-        $filterQuery = $this->productFilterDataToQueryTransformer->addFlagsToQuery($productFilterData, $filterQuery);
-        $filterQuery = $this->productFilterDataToQueryTransformer->addParametersToQuery(
-            $productFilterData,
-            $filterQuery
-        );
-        $filterQuery = $this->productFilterDataToQueryTransformer->addStockToQuery($productFilterData, $filterQuery);
-        $filterQuery = $this->productFilterDataToQueryTransformer->addPricesToQuery(
-            $productFilterData,
-            $filterQuery,
-            $this->currentCustomerUser->getPricingGroup()
-        );
-
-        return $filterQuery;
     }
 
     /**
@@ -273,5 +258,28 @@ class FilterQueryFactory
     {
         return $this->createVisibleProductsByProductUuidsFilter($productUuids)
             ->filterOnlySellable();
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
+     * @return \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery
+     */
+    public function createListableWithProductFilter(ProductFilterData $productFilterData): FilterQuery
+    {
+        $filterQuery = $this->createListable();
+        $filterQuery = $this->productFilterDataToQueryTransformer->addBrandsToQuery($productFilterData, $filterQuery);
+        $filterQuery = $this->productFilterDataToQueryTransformer->addFlagsToQuery($productFilterData, $filterQuery);
+        $filterQuery = $this->productFilterDataToQueryTransformer->addParametersToQuery(
+            $productFilterData,
+            $filterQuery
+        );
+        $filterQuery = $this->productFilterDataToQueryTransformer->addStockToQuery($productFilterData, $filterQuery);
+        $filterQuery = $this->productFilterDataToQueryTransformer->addPricesToQuery(
+            $productFilterData,
+            $filterQuery,
+            $this->currentCustomerUser->getPricingGroup()
+        );
+
+        return $filterQuery;
     }
 }

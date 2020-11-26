@@ -35,6 +35,9 @@ class PaginatorArgumentsBuilder implements MappingInterface
             'orderingMode' => [
                 'type' => $config[static::CONFIG_ORDER_TYPE_KEY],
             ],
+            'filter' => [
+                'type' => 'ProductFilter',
+            ],
         ];
     }
 
