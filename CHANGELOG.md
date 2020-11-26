@@ -28,6 +28,14 @@ The changelog is generated during the release process using [ChangelogLinker](ht
 
 <!-- changelog-linker -->
 
+## [v7.3.6](https://github.com/shopsys/shopsys/compare/v7.3.5...v7.3.6) - 2020-11-26
+
+### [shopsys/project-base]
+
+#### Fixed
+
+- [#2136] lock composer to version 1.x for 7.3 branch
+
 ## [v7.3.5](https://github.com/shopsys/shopsys/compare/v7.3.4...v7.3.5) - 2020-09-10
 
 ### [shopsys/framework]
@@ -2911,3 +2919,4 @@ That's why is this section formatted differently.
 [@milanStano]: https://github.com/milanStano
 [@mposchl]: https://github.com/mposchl
 [@ondrejbohac]: https://github.com/ondrejbohac
+[#2136]: https://github.com/shopsys/shopsys/pull/2136
