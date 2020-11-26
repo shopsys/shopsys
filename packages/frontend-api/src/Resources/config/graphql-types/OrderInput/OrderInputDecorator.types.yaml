@@ -37,7 +37,7 @@ OrderInputDecorator:
                             maxMessage: "Email cannot be longer than {{ limit }} characters"
             telephone:
                 type: "String!"
-                description: "The customer's telephone number"
+                description: "The customer's phone number"
                 validation:
                     -   NotBlank:
                             message: "Please enter telephone number"
@@ -110,7 +110,7 @@ OrderInputDecorator:
 
             country:
                 type: "String!"
-                description: "Billing address country code (Country will be on the tax invoice)"
+                description: "Billing address country code in ISO 3166-1 alpha-2 (Country will be on the tax invoice)"
                 validation:
                     -   NotBlank:
                             message: "Please choose country"
@@ -192,7 +192,7 @@ OrderInputDecorator:
                             groups: "differentDeliveryAddress"
             deliveryCountry:
                 type: "String"
-                description: "Country code for delivery (required when differentDeliveryAddress is true)"
+                description: "Country code in ISO 3166-1 alpha-2 for delivery (required when differentDeliveryAddress is true)"
                 validation:
                     -   NotBlank:
                             message: "Please choose country"

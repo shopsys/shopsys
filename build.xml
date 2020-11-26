@@ -183,6 +183,12 @@
         <phingcall target="eslint-fix"/>
     </target>
 
+    <target name="frontend-api-generate-apiary-blueprint">
+        <echo level="info" message="Generating apiary blueprint"/>
+        <exec command="npx hercule ${path.frontend-api}/apiary/index.md -o ${path.frontend-api}/apiary.apib" passthru="true" checkreturn="true"/>
+        <echo message="Apiary blueprint was generated, commit changes when needed"/>
+    </target>
+
     <target name="npm-install-dependencies" description="Installs node modules dependencies." hidden="true">
         <phingcall target="shopsys_framework.npm-install-dependencies"/>
         <exec executable="${path.npm.executable}" dir="${path.framework.assets}" logoutput="true" passthru="true" checkreturn="true">

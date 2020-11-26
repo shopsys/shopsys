@@ -310,6 +310,12 @@ Uninstall backend API from the project.
 Reverts changes done by `backend-api-install` because we don't commit the backend API integration.
 If the install script was successful, the uninstall will be successful as well.
 
+#### frontend-api-generate-apiary-blueprint
+
+Generate apiary blueprint for frontend API based on its pieces.
+
+Pieces of frontend API blueprint are in `frontend-api/apiary`. These pieces are build together by running this command which creates complete blueprint to `frontend-api/apiary.apib`.
+
 ## Customization of Phing targets and properties
 You can override and replace any Phing target or property defined in the `shopsys/framework` package by redefining it in your `build.xml` config.
 
