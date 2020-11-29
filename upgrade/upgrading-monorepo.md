@@ -13,7 +13,9 @@ Typical upgrade sequence should be:
 
 ***Note:** During the execution of `build-demo-dev phing target`, there will be installed 3-rd party software as dependencies of Shopsys Framework by [composer](https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies) and [npm](https://docs.npmjs.com/about-the-public-npm-registry) with licenses that are described in document [Open Source License Acknowledgements and Third-Party Copyrights](https://github.com/shopsys/shopsys/blob/7.3/open-source-license-acknowledgements-and-third-party-copyrights.md)*
 
-## [From v7.3.5 to v7.3.6-dev]
+## [From v7.3.6 to v7.3.7-dev]
+
+## [From v7.3.5 to v7.3.6]
 
 ## [From v7.3.4 to v7.3.5]
 
@@ -156,7 +158,8 @@ Typical upgrade sequence should be:
     - `build.dockerfile` should be `docker/Dockerfile`
     - execute `docker-compose up -d --build`, microservices should be up and running
 
-[From v7.3.5 to v7.3.6-dev]: https://github.com/shopsys/shopsys/compare/v7.3.5...7.3
+[From v7.3.6 to v7.3.7-dev]: https://github.com/shopsys/shopsys/compare/v7.3.6...7.3
+[From v7.3.5 to v7.3.6]: https://github.com/shopsys/shopsys/compare/v7.3.5...v7.3.6
 [From v7.3.4 to v7.3.5]: https://github.com/shopsys/shopsys/compare/v7.3.4...v7.3.5
 [From v7.3.3 to v7.3.4]: https://github.com/shopsys/shopsys/compare/v7.3.3...v7.3.4
 [From v7.3.2 to v7.3.3]: https://github.com/shopsys/shopsys/compare/v7.3.2...v7.3.3
