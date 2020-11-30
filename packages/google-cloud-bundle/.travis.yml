@@ -12,7 +12,8 @@ install:
     - composer install
 
 before_install:
-- echo "extension = redis.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
+    - composer self-update --1
+    - echo "extension = redis.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
 
 script:
     - php vendor/bin/parallel-lint ./src

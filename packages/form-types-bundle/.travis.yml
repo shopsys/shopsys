@@ -5,6 +5,9 @@ php:
     - 7.2
     - 7.3
 
+before_install:
+    - composer self-update --1
+
 install:
     - composer install
 

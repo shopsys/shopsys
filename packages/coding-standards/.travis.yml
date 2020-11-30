@@ -9,6 +9,9 @@ cache:
     directories:
         - ~/.composer/cache
 
+before_install:
+    - composer self-update --1
+
 install:
     - composer install
 
