@@ -252,7 +252,7 @@ class CategoryFacade
     /**
      * @param int $domainId
      * @param string $locale
-     * @return \Shopsys\FrameworkBundle\Model\Category\Category[]
+     * @return string[]
      */
     public function getFullPathsIndexedByIdsForDomain($domainId, $locale)
     {
