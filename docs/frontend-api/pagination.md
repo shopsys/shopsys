@@ -14,10 +14,11 @@ If you want to get eg. paginated products you can use `products` query.
 }
 ```
 
-This query will return a `connection` object which consists of `pageInfo` and `edges`.
+This query will return a `connection` object which consists of `pageInfo`, `edges` and `totalCount`.
 
 `pageInfo` is object that represents information about current page of pagination that you are on.  
 `edges` are array of objects that are generated and represent the products that you get.  
+`totalCount` is total number of products available for query.
 `edge` need to consist of `cursor` (pointer to products location) and `node` (data of given product that you requested).  
 When you define connection you need to specify what should be the type of `node` (eg. `Product` or `String`)
 

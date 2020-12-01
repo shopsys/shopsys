@@ -2,5 +2,9 @@ ProductConnection:
     type: relay-connection
     config:
         nodeType: Product
+        connectionFields:
+            totalCount:
+                type: "Int!"
+                description: "Total number of products"
     inherits:
         - 'ProductConnectionDecorator'
