@@ -462,7 +462,7 @@ class ImageFacade
                     $sourceImage,
                     ImageConfig::ORIGINAL_SIZE_NAME
                 ),
-                'local://' . TransformString::removeDriveLetterFromPath(
+                'main://' . TransformString::removeDriveLetterFromPath(
                     $this->fileUpload->getTemporaryFilepath($sourceImage->getFilename())
                 )
             );
