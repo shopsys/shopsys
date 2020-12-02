@@ -7,7 +7,6 @@ namespace Shopsys\FrontendApiBundle\Model\Resolver\Category;
 use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
 use Overblog\GraphQLBundle\Definition\Resolver\ResolverInterface;
 use Overblog\GraphQLBundle\Error\UserError;
-use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
 use Shopsys\FrameworkBundle\Model\Category\Exception\CategoryNotFoundException;
@@ -34,10 +33,6 @@ class CategoryResolver implements ResolverInterface, AliasedInterface
      */
     public function resolver(string $uuid): Category
     {
-        if (Uuid::isValid($uuid) === false) {
-            throw new UserError('Provided argument is not valid UUID.');
-        }
-
         try {
             return $this->categoryFacade->getByUuid($uuid);
         } catch (CategoryNotFoundException $categoryNotFoundException) {

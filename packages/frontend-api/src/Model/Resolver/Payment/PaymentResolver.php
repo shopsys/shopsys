@@ -7,7 +7,6 @@ namespace Shopsys\FrontendApiBundle\Model\Resolver\Payment;
 use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
 use Overblog\GraphQLBundle\Definition\Resolver\ResolverInterface;
 use Overblog\GraphQLBundle\Error\UserError;
-use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Payment\Exception\PaymentNotFoundException;
 use Shopsys\FrameworkBundle\Model\Payment\Payment;
@@ -41,10 +40,6 @@ class PaymentResolver implements ResolverInterface, AliasedInterface
      */
     public function resolver(string $uuid): Payment
     {
-        if (Uuid::isValid($uuid) === false) {
-            throw new UserError('Provided argument is not valid UUID.');
-        }
-
         try {
             return $this->paymentFacade->getByUuid($uuid);
         } catch (PaymentNotFoundException $paymentNotFoundException) {

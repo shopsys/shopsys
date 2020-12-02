@@ -7,7 +7,6 @@ namespace Shopsys\FrontendApiBundle\Model\Resolver\Transport;
 use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
 use Overblog\GraphQLBundle\Definition\Resolver\ResolverInterface;
 use Overblog\GraphQLBundle\Error\UserError;
-use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Transport\Exception\TransportNotFoundException;
 use Shopsys\FrameworkBundle\Model\Transport\Transport;
@@ -41,10 +40,6 @@ class TransportResolver implements ResolverInterface, AliasedInterface
      */
     public function resolver(string $uuid): Transport
     {
-        if (Uuid::isValid($uuid) === false) {
-            throw new UserError('Provided argument is not valid UUID.');
-        }
-
         try {
             return $this->transportFacade->getByUuid($uuid);
         } catch (TransportNotFoundException $transportNotFoundException) {

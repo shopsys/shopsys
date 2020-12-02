@@ -7,7 +7,6 @@ namespace Shopsys\FrontendApiBundle\Model\Resolver\Brand;
 use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
 use Overblog\GraphQLBundle\Definition\Resolver\ResolverInterface;
 use Overblog\GraphQLBundle\Error\UserError;
-use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
 use Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade;
 use Shopsys\FrameworkBundle\Model\Product\Brand\Exception\BrandNotFoundException;
@@ -34,10 +33,6 @@ class BrandResolver implements ResolverInterface, AliasedInterface
      */
     public function resolver(string $uuid): Brand
     {
-        if (Uuid::isValid($uuid) === false) {
-            throw new UserError('Provided argument is not valid UUID.');
-        }
-
         try {
             return $this->brandFacade->getByUuid($uuid);
         } catch (BrandNotFoundException $brandNotFoundException) {
