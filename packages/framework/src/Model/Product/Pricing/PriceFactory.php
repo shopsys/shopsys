@@ -2,12 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Shopsys\ReadModelBundle\Product;
+namespace Shopsys\FrameworkBundle\Model\Product\Pricing;
 
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
-use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice;
 
 class PriceFactory
 {

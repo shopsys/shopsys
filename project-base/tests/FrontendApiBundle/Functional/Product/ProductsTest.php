@@ -160,7 +160,7 @@ class ProductsTest extends GraphQlTestCase
                     'dataFixtures',
                     $firstDomainLocale
                 ),
-                'orderingPriority' => null,
+                'orderingPriority' => 1,
                 'parameters' => [
                     [
                         'name' => t('HDMI', [], 'dataFixtures', $firstDomainLocale),

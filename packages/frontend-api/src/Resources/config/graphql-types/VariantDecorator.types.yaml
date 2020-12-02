@@ -6,6 +6,6 @@ VariantDecorator:
     config:
         fields:
             mainVariant:
-                type: 'Product'
+                type: 'MainVariant'
         interfaces:
             - 'Product'

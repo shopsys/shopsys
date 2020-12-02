@@ -334,6 +334,23 @@ class FilterQuery
     }
 
     /**
+     * @param string[] $productUuids
+     * @return \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery
+     */
+    public function filterByProductUuids(array $productUuids): self
+    {
+        $clone = clone $this;
+
+        $clone->filters[] = [
+            'terms' => [
+                'uuid' => $productUuids,
+            ],
+        ];
+
+        return $clone;
+    }
+
+    /**
      * @return \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery
      */
     public function filterOutVariants(): self

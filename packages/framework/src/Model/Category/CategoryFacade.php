@@ -110,6 +110,15 @@ class CategoryFacade
     }
 
     /**
+     * @param int[] $categoryIds
+     * @return \Shopsys\FrameworkBundle\Model\Category\Category[]
+     */
+    public function getByIds(array $categoryIds): array
+    {
+        return $this->categoryRepository->getCategoriesByIds($categoryIds);
+    }
+
+    /**
      * @param string $categoryUuid
      * @return \Shopsys\FrameworkBundle\Model\Category\Category
      */

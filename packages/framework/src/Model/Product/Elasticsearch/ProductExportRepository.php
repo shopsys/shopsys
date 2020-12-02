@@ -459,8 +459,10 @@ class ProductExportRepository
 
             $parameters[] = [
                 'parameter_id' => $parameter->getId(),
+                'parameter_uuid' => $parameter->getUuid(),
                 'parameter_name' => $parameter->getName($locale),
                 'parameter_value_id' => $parameterValue->getId(),
+                'parameter_value_uuid' => $parameterValue->getUuid(),
                 'parameter_value_text' => $parameterValue->getText(),
             ];
         }

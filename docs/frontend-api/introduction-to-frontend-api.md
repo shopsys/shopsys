@@ -235,3 +235,19 @@ services:
 ```
 
 you can read more info about `ResolveMap` in [documentation](https://github.com/overblog/GraphQLBundle/blob/master/docs/definitions/resolver-map.md).
+
+#### ProductResolverMap
+Data for products can be obtained in two ways – from the Elasticsearch (for example single product and list of products), or from the database (for example promoted products)
+
+For this reason it's necessary to know, how to map fields based on the type of the result.
+When client request any Product related field, `ProductResolverMap` check the type of data returned from the resolver and use appropriate field mapper from the `Shopsys\FrontendApiBundle\Model\Resolver\Products\DataMapper` namespace:
+
+ - `ProductEntityFieldMapper` if resolver returns the entity `Product`
+ - `ProductArrayFieldMapper` if resolver returns array of values
+
+Value for the field is resolved by one of previously mentioned field mapper class, with the one of methods with the specific name: 
+ - `get<FieldName>` – field `sellingDenied` use the method named `getSellingDenied()`
+ - `is<FieldName>` – field `sellingDenied` use the method named `isSellingDenied()`
+ - `<fieldName>` – field `sellingDenied` use the method named `sellingDenied()`
+
+Methods are searched in the order above and if corresponding method does not exist, resolving falls back to the default (see `Overblog\GraphQLBundle\Resolver\FieldResolver` class).
