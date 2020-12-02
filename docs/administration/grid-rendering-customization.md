@@ -13,6 +13,8 @@ To customize your grid, you just need to create a new template extending the ori
 - `grid_no_data`
      - the block contains a message that is displayed when there are no data in the grid
      - the default (translatable) value is "No records found"
+- `grid_title_cell_id_<column_id>`
+    - handy when you need to override a column title in a grid defined in the framework without overriding the grid factory
 
 ## Rendering type Money in administration
 
