@@ -2,8 +2,8 @@
 
 namespace Shopsys\FrameworkBundle\Model\Product\Pricing;
 
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\Query\ResultSetMapping;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Product\Product;
@@ -70,14 +70,15 @@ class ProductCalculatedPriceRepository
      */
     public function createProductCalculatedPricesForPricingGroup(PricingGroup $pricingGroup)
     {
-        $query = $this->em->createNativeQuery(
+        $this->em->getConnection()->executeStatement(
             'INSERT INTO product_calculated_prices (product_id, pricing_group_id, price_with_vat)
-            SELECT id, :pricingGroupId, :priceWithVat FROM products',
-            new ResultSetMapping()
+            SELECT id, :pricingGroupId, NULL FROM products',
+            [
+                'pricingGroupId' => $pricingGroup->getId(),
+            ],
+            [
+                'pricingGroupId' => Types::INTEGER,
+            ]
         );
-        $query->execute([
-            'pricingGroupId' => $pricingGroup->getId(),
-            'priceWithVat' => null,
-        ]);
     }
 }

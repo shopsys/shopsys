@@ -3,9 +3,9 @@
 namespace Shopsys\FrameworkBundle\Model\Product;
 
 use DateTime;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query\Expr\Join;
-use Doctrine\ORM\Query\ResultSetMapping;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
@@ -91,7 +91,7 @@ class ProductVisibilityRepository
             $onlyMarkedProductsWhereClause = '';
         }
 
-        $query = $this->em->createNativeQuery(
+        $this->em->getConnection()->executeStatement(
             'UPDATE products AS p
             SET calculated_visibility = (p.calculated_hidden = FALSE) AND EXISTS(
                     SELECT 1
@@ -99,10 +99,8 @@ class ProductVisibilityRepository
                     WHERE pv.product_id = p.id
                         AND pv.visible = TRUE
                 )
-            ' . $onlyMarkedProductsWhereClause,
-            new ResultSetMapping()
+            ' . $onlyMarkedProductsWhereClause
         );
-        $query->execute();
     }
 
     /**
@@ -111,16 +109,18 @@ class ProductVisibilityRepository
      */
     public function createAndRefreshProductVisibilitiesForPricingGroup(PricingGroup $pricingGroup, $domainId)
     {
-        $query = $this->em->createNativeQuery(
+        $this->em->getConnection()->executeStatement(
             'INSERT INTO product_visibilities (product_id, pricing_group_id, domain_id, visible)
-            SELECT id, :pricingGroupId, :domainId, :calculatedVisibility FROM products',
-            new ResultSetMapping()
+            SELECT id, :pricingGroupId, :domainId, false FROM products',
+            [
+                'pricingGroupId' => $pricingGroup->getId(),
+                'domainId' => $domainId,
+            ],
+            [
+                'pricingGroupId' => Types::INTEGER,
+                'domainId' => Types::INTEGER,
+            ]
         );
-        $query->execute([
-            'pricingGroupId' => $pricingGroup->getId(),
-            'domainId' => $domainId,
-            'calculatedVisibility' => false,
-        ]);
         $this->refreshProductsVisibility();
     }
 
@@ -170,10 +170,9 @@ class ProductVisibilityRepository
 
     protected function markAllProductsVisibilityAsRecalculated()
     {
-        $this->em->createNativeQuery(
-            'UPDATE products SET recalculate_visibility = FALSE WHERE recalculate_visibility = TRUE',
-            new ResultSetMapping()
-        )->execute();
+        $this->em->getConnection()->executeStatement(
+            'UPDATE products SET recalculate_visibility = FALSE WHERE recalculate_visibility = TRUE'
+        );
     }
 
     /**
@@ -188,8 +187,7 @@ class ProductVisibilityRepository
             $onlyMarkedProductsCondition = '';
         }
 
-        $query = $this->em->createNativeQuery(
-            'UPDATE product_visibilities AS pv
+        $query = 'UPDATE product_visibilities AS pv
             SET visible = CASE
                     WHEN (
                         p.calculated_hidden = FALSE
@@ -235,19 +233,27 @@ class ProductVisibilityRepository
                 AND pv.domain_id = :domainId
                 AND pv.domain_id = pd.domain_id
                 AND pv.pricing_group_id = :pricingGroupId
-            ' . $onlyMarkedProductsCondition,
-            new ResultSetMapping()
-        );
+            ' . $onlyMarkedProductsCondition;
 
         foreach ($this->pricingGroupRepository->getAll() as $pricingGroup) {
             $domain = $this->domain->getDomainConfigById($pricingGroup->getDomainId());
-            $query->execute([
-                'now' => $now,
-                'locale' => $domain->getLocale(),
-                'domainId' => $domain->getId(),
-                'pricingGroupId' => $pricingGroup->getId(),
-                'variantTypeMain' => Product::VARIANT_TYPE_MAIN,
-            ]);
+            $this->em->getConnection()->executeStatement(
+                $query,
+                [
+                    'now' => $now,
+                    'locale' => $domain->getLocale(),
+                    'domainId' => $domain->getId(),
+                    'pricingGroupId' => $pricingGroup->getId(),
+                    'variantTypeMain' => Product::VARIANT_TYPE_MAIN,
+                ],
+                [
+                    'now' => Types::DATETIME_MUTABLE,
+                    'locale' => Types::STRING,
+                    'domainId' => Types::INTEGER,
+                    'pricingGroupId' => Types::INTEGER,
+                    'variantTypeMain' => Types::STRING,
+                ]
+            );
         }
     }
 
@@ -262,7 +268,7 @@ class ProductVisibilityRepository
             $onlyMarkedProductsCondition = '';
         }
 
-        $query = $this->em->createNativeQuery(
+        $this->em->getConnection()->executeStatement(
             'UPDATE product_visibilities AS pv
             SET visible = FALSE
             FROM products AS p
@@ -278,12 +284,13 @@ class ProductVisibilityRepository
                         AND mpv.visible = FALSE
                 )
             ' . $onlyMarkedProductsCondition,
-            new ResultSetMapping()
+            [
+                'variantTypeVariant' => Product::VARIANT_TYPE_VARIANT,
+            ],
+            [
+                'variantTypeVariant' => Types::STRING,
+            ]
         );
-
-        $query->execute([
-            'variantTypeVariant' => Product::VARIANT_TYPE_VARIANT,
-        ]);
     }
 
     /**
@@ -297,7 +304,7 @@ class ProductVisibilityRepository
             $onlyMarkedProductsCondition = '';
         }
 
-        $query = $this->em->createNativeQuery(
+        $this->em->getConnection()->executeStatement(
             'UPDATE product_visibilities AS pv
             SET visible = FALSE
             FROM products AS p
@@ -315,11 +322,12 @@ class ProductVisibilityRepository
                         AND vpv.visible = TRUE
                 )
             ' . $onlyMarkedProductsCondition,
-            new ResultSetMapping()
+            [
+                'variantTypeMain' => Product::VARIANT_TYPE_MAIN,
+            ],
+            [
+                'variantTypeMain' => Types::STRING,
+            ]
         );
-
-        $query->execute([
-            'variantTypeMain' => Product::VARIANT_TYPE_MAIN,
-        ]);
     }
 }

@@ -2,8 +2,8 @@
 
 namespace Shopsys\FrameworkBundle\Component\Translation;
 
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\Query\ResultSetMapping;
 use Prezent\Doctrine\Translatable\TranslationInterface;
 use Shopsys\FrameworkBundle\Component\Doctrine\NotNullableColumnsFinder;
 use Shopsys\FrameworkBundle\Component\Doctrine\SqlQuoter;
@@ -91,17 +91,20 @@ class TranslatableEntityDataCreator
         $quotedColumnNames = $this->sqlQuoter->quoteIdentifiers($columnNames);
         $quotedColumnNamesSql = implode(', ', $quotedColumnNames);
         $quotedTableName = $this->sqlQuoter->quoteIdentifier($tableName);
-        $query = $this->em->createNativeQuery(
+        $this->em->getConnection()->executeStatement(
             'INSERT INTO ' . $quotedTableName . ' (locale, ' . $quotedColumnNamesSql . ')
             SELECT :newLocale, ' . $quotedColumnNamesSql . '
             FROM ' . $quotedTableName . '
             WHERE locale = :templateLocale
             ON CONFLICT DO NOTHING',
-            new ResultSetMapping()
+            [
+                'newLocale' => $newLocale,
+                'templateLocale' => $templateLocale,
+            ],
+            [
+                'newLocale' => Types::STRING,
+                'templateLocale' => Types::STRING,
+            ]
         );
-        $query->execute([
-            'newLocale' => $newLocale,
-            'templateLocale' => $templateLocale,
-        ]);
     }
 }

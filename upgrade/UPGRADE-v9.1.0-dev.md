@@ -258,3 +258,8 @@ There you can find links to upgrade notes for other versions too.
 
 - add support for finding entity by URL slug to FE API ([#2150](https://github.com/shopsys/shopsys/pull/2150))
     - see #project-base-diff to update your project
+
+- use DBAL native queries for DML instead of ORM Native SQL ([#2148](https://github.com/shopsys/shopsys/pull/2148))
+    - you may want to update your own native queries in similar way
+    - don't forget that parameters in the `executeStatement()` call should have a type explicitly defined (see PR for examples)
+    - see #project-base-diff to update your project
