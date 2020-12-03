@@ -2,5 +2,9 @@ ArticleConnection:
     type: relay-connection
     config:
         nodeType: Article
+        connectionFields:
+            totalCount:
+                type: "Int!"
+                description: "Total number of articles"
     inherits:
         - 'ArticleConnectionDecorator'

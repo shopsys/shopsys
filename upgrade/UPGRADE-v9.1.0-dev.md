@@ -246,3 +246,6 @@ There you can find links to upgrade notes for other versions too.
         - for this purpose there were introduced 2 new parameters to be used:
             - `shopsys.router.domain.cache_dir`
             - `shopsys.router.localized.cache_dir`
+
+- added total count to frontend API connections ([#2141](https://github.com/shopsys/shopsys/pull/2141))
+    - see #project-base-diff to update your project
