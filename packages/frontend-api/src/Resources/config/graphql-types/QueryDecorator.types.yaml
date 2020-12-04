@@ -30,11 +30,13 @@ QueryDecorator:
                 type: 'Variant'
             category:
                 type: 'Category'
-                resolve: "@=resolver('category', [args['uuid']])"
+                resolve: "@=resolver('categoryByUuidOrUrlSlug', [args['uuid'], args['urlSlug']])"
                 args:
                     uuid:
-                        type: "Uuid!"
-                description: "Returns category filtered using UUID"
+                        type: "Uuid"
+                    urlSlug:
+                        type: "String"
+                description: "Returns category filtered using UUID or URL slug"
             payments:
                 type: '[Payment!]!'
                 resolve: "@=resolver('payments')"
