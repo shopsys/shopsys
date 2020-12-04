@@ -117,16 +117,16 @@ class CartRepository
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerIdentifier $customerIdentifier
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifier $customerUserIdentifier
      * @return \Shopsys\FrameworkBundle\Model\Cart\Cart|null
      */
-    public function findByCustomerIdentifier(CustomerIdentifier $customerIdentifier)
+    public function findByCustomerUserIdentifier(CustomerUserIdentifier $customerUserIdentifier)
     {
         $criteria = [];
-        if ($customerIdentifier->getUser() !== null) {
-            $criteria['user'] = $customerIdentifier->getUser()->getId();
+        if ($customerUserIdentifier->getCustomerUser() !== null) {
+            $criteria['customerUser'] = $customerUserIdentifier->getCustomerUser()->getId();
         } else {
-            $criteria['cartIdentifier'] = $customerIdentifier->getCartIdentifier();
+            $criteria['cartIdentifier'] = $customerUserIdentifier->getCartIdentifier();
         }
 
         return $this->getCartRepository()->findOneBy($criteria, ['id' => 'desc']);
@@ -135,13 +135,13 @@ class CartRepository
     /**
      * @param int $daysLimit
      */
-    public function deleteOldCartsForUnregisteredCustomers($daysLimit)
+    public function deleteOldCartsForUnregisteredCustomerUsers($daysLimit)
     {
         $nativeQuery = $this->em->createNativeQuery(
             'DELETE FROM cart_items WHERE cart_id IN (
                 SELECT C.id
                 FROM carts C
-                WHERE C.modified_at <= :timeLimit AND user_id IS NULL)',
+                WHERE C.modified_at <= :timeLimit AND customer_user_id IS NULL)',
             new ResultSetMapping()
         );
 
@@ -150,7 +150,7 @@ class CartRepository
         ]);
 
         $nativeQuery = $this->em->createNativeQuery(
-            'DELETE FROM carts WHERE modified_at <= :timeLimit AND user_id IS NULL',
+            'DELETE FROM carts WHERE modified_at <= :timeLimit AND customer_user_id IS NULL',
             new ResultSetMapping()
         );
 
@@ -200,12 +200,31 @@ class CartFacade
         $product = $this->productRepository->getSellableById(
             $productId,
             $this->domain->getId(),
-            $this->currentCustomer->getPricingGroup()
+            $this->currentCustomerUser->getPricingGroup()
         );
-        $cart = $this->getCartOfCurrentCustomerCreateIfNotExists();
+        $cart = $this->getCartOfCurrentCustomerUserCreateIfNotExists();
 
-        /* @var $result \Shopsys\FrameworkBundle\Model\Cart\AddProductResult */
-        $result = $cart->addProduct($product, $quantity, $this->productPriceCalculation, $this->cartItemFactory);
+        if (!is_int($quantity) || $quantity <= 0) {
+            throw new InvalidQuantityException($quantity);
+        }
+
+        foreach ($cart->getItems() as $item) {
+            if ($item->getProduct() === $product) {
+                $item->changeQuantity($item->getQuantity() + $quantity);
+                $item->changeAddedAt(new DateTime());
+                $result = new AddProductResult($item, false, $quantity);
+                $this->em->persist($result->getCartItem());
+                $this->em->flush();
+
+                return $result;
+            }
+        }
+        $productPrice = $this->productPriceCalculation->calculatePriceForCurrentUser($product);
+        $newCartItem = $this->cartItemFactory->create($cart, $product, $quantity, $productPrice->getPriceWithVat());
+        $cart->addItem($newCartItem);
+        $cart->setModifiedNow();
+
+        $result = new AddProductResult($newCartItem, true, $quantity);
 
         $this->em->persist($result->getCartItem());
         $this->em->flush();
