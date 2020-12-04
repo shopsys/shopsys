@@ -13,7 +13,7 @@ use Shopsys\FrameworkBundle\Model\Product\Exception\ProductNotFoundException;
 use Shopsys\FrameworkBundle\Model\Product\ProductElasticsearchProvider;
 use Shopsys\FrontendApiBundle\Model\FriendlyUrl\FriendlyUrlFacade;
 
-class ProductByUuidResolver implements ResolverInterface, AliasedInterface
+class ProductDetailResolver implements ResolverInterface, AliasedInterface
 {
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\ProductElasticsearchProvider
@@ -69,7 +69,7 @@ class ProductByUuidResolver implements ResolverInterface, AliasedInterface
     public static function getAliases(): array
     {
         return [
-            'resolver' => 'productByUuid',
+            'resolver' => 'productDetail',
         ];
     }
 
