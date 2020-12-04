@@ -17,11 +17,13 @@ QueryDecorator:
                 description: "Returns list of ordered products that can be paginated using `first`, `last`, `before` and `after` keywords"
             product:
                 type: 'Product'
-                resolve: "@=resolver('productByUuid', [args['uuid']])"
+                resolve: "@=resolver('productByUuid', [args['uuid'], args['urlSlug']])"
                 args:
                     uuid:
-                        type: "Uuid!"
-                description: "Returns product filtered using UUID"
+                        type: "Uuid"
+                    urlSlug:
+                        type: "String"
+                description: "Returns product filtered using UUID or URL slug"
             RegularProduct:
                 type: 'RegularProduct'
             MainVariant:

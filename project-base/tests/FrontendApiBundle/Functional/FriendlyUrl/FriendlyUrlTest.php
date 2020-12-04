@@ -85,6 +85,11 @@ class FriendlyUrlTest extends GraphQlTestCase
                 'urlSlug' => 'electronics/',
                 'expectedName' => t('Electronics', [], 'dataFixtures', $this->getFirstDomainLocale()),
             ],
+            [
+                'graphQlType' => 'product',
+                'urlSlug' => 'canon-mg3550/',
+                'expectedName' => t('Canon MG3550', [], 'dataFixtures', $this->getFirstDomainLocale()),
+            ],
         ];
     }
 
@@ -108,6 +113,11 @@ class FriendlyUrlTest extends GraphQlTestCase
                 'graphQlType' => 'category',
                 'urlSlug' => 'electronicsNotExist/',
                 'errorMessage' => 'Category with URL slug `electronicsNotExist/` does not exist.',
+            ],
+            [
+                'graphQlType' => 'product',
+                'urlSlug' => 'canon-mg3550NotExist/',
+                'errorMessage' => 'Product with URL slug `canon-mg3550NotExist/` does not exist.',
             ],
         ];
     }
