@@ -75,6 +75,11 @@ class FriendlyUrlTest extends GraphQlTestCase
                 'urlSlug' => 'canon',
                 'expectedName' => t('Canon', [], 'dataFixtures', $this->getFirstDomainLocale()),
             ],
+            [
+                'graphQlType' => 'article',
+                'urlSlug' => 'terms-and-conditions/',
+                'expectedName' => t('Terms and conditions', [], 'dataFixtures', $this->getFirstDomainLocale()),
+            ],
         ];
     }
 
@@ -88,6 +93,11 @@ class FriendlyUrlTest extends GraphQlTestCase
                 'graphQlType' => 'brand',
                 'urlSlug' => 'canonNotExist/',
                 'errorMessage' => 'Brand with URL slug `canonNotExist/` does not exist.',
+            ],
+            [
+                'graphQlType' => 'article',
+                'urlSlug' => 'termsAndConditionsNotExist/',
+                'errorMessage' => 'Article with URL slug `termsAndConditionsNotExist/` does not exist.',
             ],
         ];
     }

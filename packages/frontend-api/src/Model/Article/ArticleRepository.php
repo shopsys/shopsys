@@ -190,4 +190,25 @@ class ArticleRepository
         }
         return $article;
     }
+
+    /**
+     * @param int $domainId
+     * @param int $articleId
+     * @return \Shopsys\FrameworkBundle\Model\Article\Article
+     */
+    public function getVisibleByDomainIdAndId(int $domainId, int $articleId): Article
+    {
+        $article = $this->getAllVisibleQueryBuilder()
+            ->andWhere('a.domainId = :domainId')
+            ->setParameter('domainId', $domainId)
+            ->andWhere('a.id = :id')
+            ->setParameter('id', $articleId)
+            ->getQuery()->getOneOrNullResult();
+
+        if ($article === null) {
+            $message = 'Article with ID \'' . $articleId . '\' not found.';
+            throw new ArticleNotFoundException($message);
+        }
+        return $article;
+    }
 }

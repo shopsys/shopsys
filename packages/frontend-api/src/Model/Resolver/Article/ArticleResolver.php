@@ -8,11 +8,13 @@ use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
 use Overblog\GraphQLBundle\Definition\Resolver\ResolverInterface;
 use Overblog\GraphQLBundle\Error\UserError;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\Exception\FriendlyUrlNotFoundException;
 use Shopsys\FrameworkBundle\Model\Article\Article;
 use Shopsys\FrameworkBundle\Model\Article\Exception\ArticleNotFoundException;
 use Shopsys\FrameworkBundle\Model\Cookies\CookiesFacade;
 use Shopsys\FrameworkBundle\Model\LegalConditions\LegalConditionsFacade;
 use Shopsys\FrontendApiBundle\Model\Article\ArticleFacade;
+use Shopsys\FrontendApiBundle\Model\FriendlyUrl\FriendlyUrlFacade;
 
 class ArticleResolver implements ResolverInterface, AliasedInterface
 {
@@ -37,34 +39,47 @@ class ArticleResolver implements ResolverInterface, AliasedInterface
     protected $cookiesFacade;
 
     /**
+     * @var \Shopsys\FrontendApiBundle\Model\FriendlyUrl\FriendlyUrlFacade
+     */
+    protected FriendlyUrlFacade $friendlyUrlFacade;
+
+    /**
      * @param \Shopsys\FrontendApiBundle\Model\Article\ArticleFacade $articleFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\LegalConditions\LegalConditionsFacade $legalConditionsFacade
      * @param \Shopsys\FrameworkBundle\Model\Cookies\CookiesFacade $cookiesFacade
+     * @param \Shopsys\FrontendApiBundle\Model\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
      */
     public function __construct(
         ArticleFacade $articleFacade,
         Domain $domain,
         LegalConditionsFacade $legalConditionsFacade,
-        CookiesFacade $cookiesFacade
+        CookiesFacade $cookiesFacade,
+        FriendlyUrlFacade $friendlyUrlFacade
     ) {
         $this->articleFacade = $articleFacade;
         $this->domain = $domain;
         $this->legalConditionsFacade = $legalConditionsFacade;
         $this->cookiesFacade = $cookiesFacade;
+        $this->friendlyUrlFacade = $friendlyUrlFacade;
     }
 
     /**
-     * @param string $uuid
+     * @param string|null $uuid
+     * @param string|null $urlSlug
      * @return \Shopsys\FrameworkBundle\Model\Article\Article
      */
-    public function resolver(string $uuid): Article
+    public function resolver(?string $uuid = null, ?string $urlSlug = null): Article
     {
-        try {
-            return $this->articleFacade->getVisibleByDomainIdAndUuid($this->domain->getId(), $uuid);
-        } catch (ArticleNotFoundException $articleNotFoundException) {
-            throw new UserError($articleNotFoundException->getMessage());
+        if ($uuid !== null) {
+            return $this->getVisibleByDomainIdAndUuid($uuid);
         }
+
+        if ($urlSlug !== null) {
+            return $this->getVisibleByDomainIdAndSlug($urlSlug);
+        }
+
+        throw new UserError('You need to provide argument \'uuid\' or \'urlSlug\'.');
     }
 
     /**
@@ -120,5 +135,40 @@ class ArticleResolver implements ResolverInterface, AliasedInterface
             'privacyPolicyArticle' => 'privacyPolicyArticle',
             'cookiesArticle' => 'cookiesArticle',
         ];
+    }
+
+    /**
+     * @param string $uuid
+     * @return \Shopsys\FrameworkBundle\Model\Article\Article
+     */
+    protected function getVisibleByDomainIdAndUuid(string $uuid): Article
+    {
+        try {
+            return $this->articleFacade->getVisibleByDomainIdAndUuid($this->domain->getId(), $uuid);
+        } catch (ArticleNotFoundException $articleNotFoundException) {
+            throw new UserError($articleNotFoundException->getMessage());
+        }
+    }
+
+    /**
+     * @param string $urlSlug
+     * @return \Shopsys\FrameworkBundle\Model\Article\Article
+     */
+    protected function getVisibleByDomainIdAndSlug(string $urlSlug): Article
+    {
+        try {
+            $friendlyUrl = $this->friendlyUrlFacade->getFriendlyUrlByRouteNameAndSlug(
+                $this->domain->getId(),
+                'front_article_detail',
+                $urlSlug
+            );
+
+            return $this->articleFacade->getVisibleByDomainIdAndId(
+                $this->domain->getId(),
+                $friendlyUrl->getEntityId()
+            );
+        } catch (FriendlyUrlNotFoundException | ArticleNotFoundException $articleNotFoundException) {
+            throw new UserError('Article with URL slug `' . $urlSlug . '` does not exist.');
+        }
     }
 }

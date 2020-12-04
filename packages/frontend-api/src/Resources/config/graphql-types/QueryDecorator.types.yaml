@@ -85,11 +85,13 @@ QueryDecorator:
                 description: "Returns list of articles that can be paginated using `first`, `last`, `before` and `after` keywords and filtered by `placement`"
             article:
                 type: 'Article'
-                resolve: "@=resolver('article', [args['uuid']])"
+                resolve: "@=resolver('article', [args['uuid'], args['urlSlug']])"
                 args:
                     uuid:
-                        type: "Uuid!"
-                description: "Returns article filtered using UUID"
+                        type: "Uuid"
+                    urlSlug:
+                        type: "String"
+                description: "Returns article filtered using UUID or URL slug"
             termsAndConditionsArticle:
                 type: 'Article'
                 resolve: "@=resolver('termsAndConditionsArticle')"
