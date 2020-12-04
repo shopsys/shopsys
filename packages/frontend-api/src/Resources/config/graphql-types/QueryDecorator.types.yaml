@@ -108,11 +108,13 @@ QueryDecorator:
                 description: "Returns complete list of brands"
             brand:
                 type: 'Brand'
-                resolve: "@=resolver('brand', [args['uuid']])"
+                resolve: "@=resolver('brand', [args['uuid'], args['urlSlug']])"
                 args:
                     uuid:
-                        type: "Uuid!"
-                description: "Returns brand filtered using UUID"
+                        type: "Uuid"
+                    urlSlug:
+                        type: "String"
+                description: "Returns brand filtered using UUID or URL slug"
             promotedProducts:
                 type: '[Product!]!'
                 resolve: "@=resolver('promotedProducts')"
