@@ -8,7 +8,8 @@ Returns brand filtered using UUID
 
     - Attributes
 
-        - uuid (required)
+        - uuid
+        - urlSlug
 
     - Body
 

@@ -255,3 +255,6 @@ There you can find links to upgrade notes for other versions too.
     
 - add email length validation in SubscriptionFormType ([#2120](https://github.com/shopsys/shopsys/pull/2120))
     - see #project-base-diff to update your project
+
+- add support for finding entity by URL slug to FE API ([#2150](https://github.com/shopsys/shopsys/pull/2150))
+    - see #project-base-diff to update your project
