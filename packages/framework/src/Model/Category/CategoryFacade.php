@@ -128,6 +128,23 @@ class CategoryFacade
     }
 
     /**
+     * @param int $domainId
+     * @param string $categoryUuid
+     * @return \Shopsys\FrameworkBundle\Model\Category\Category
+     */
+    public function getVisibleOnDomainByUuid(int $domainId, string $categoryUuid): Category
+    {
+        $category = $this->getByUuid($categoryUuid);
+        if (!$category->isVisible($domainId)) {
+            throw new CategoryNotFoundException(
+                sprintf('Category with UUID "%s" is not visible on domain ID "%s"', $categoryUuid, $domainId)
+            );
+        }
+
+        return $category;
+    }
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Category\CategoryData $categoryData
      * @return \Shopsys\FrameworkBundle\Model\Category\Category
      */
