@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace Shopsys\FrontendApiBundle\Model\Token;
 
 use BadMethodCallException;
+use DateInterval;
 use DateTime;
+use DateTimeImmutable;
 use Lcobucci\JWT\Builder;
 use Lcobucci\JWT\Parser;
 use Lcobucci\JWT\Signer;
@@ -97,13 +99,14 @@ class TokenFacade
      */
     protected function getTokenBuilderWithExpiration(int $expiration): Builder
     {
-        $currentTime = time();
+        $currentTime = new DateTimeImmutable();
+        $expirationTime = $currentTime->add(new DateInterval('PT' . $expiration . 'S'));
 
         return (new Builder())
             ->issuedBy($this->domain->getUrl())
             ->permittedFor($this->domain->getUrl())
             ->issuedAt($currentTime)
-            ->expiresAt($currentTime + $expiration);
+            ->expiresAt($expirationTime);
     }
 
     /**
