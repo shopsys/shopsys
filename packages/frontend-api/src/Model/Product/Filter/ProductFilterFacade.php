@@ -64,14 +64,14 @@ class ProductFilterFacade
     {
         $cacheKey = 'all';
 
-        if (array_key_exists($cacheKey, $this->productFilterConfigCache)) {
-            return $this->productFilterConfigCache[$cacheKey];
+        if (!array_key_exists($cacheKey, $this->productFilterConfigCache)) {
+            $this->productFilterConfigCache[$cacheKey] = $this->productFilterConfigFactory->createForAll(
+                $this->domain->getId(),
+                $this->domain->getLocale()
+            );
         }
 
-        return $this->productFilterConfigCache[$cacheKey] = $this->productFilterConfigFactory->createForAll(
-            $this->domain->getId(),
-            $this->domain->getLocale()
-        );
+        return $this->productFilterConfigCache[$cacheKey];
     }
 
     /**
@@ -82,15 +82,15 @@ class ProductFilterFacade
     {
         $cacheKey = 'brand_' . $brand->getId();
 
-        if (array_key_exists($cacheKey, $this->productFilterConfigCache)) {
-            return $this->productFilterConfigCache[$cacheKey];
+        if (!array_key_exists($cacheKey, $this->productFilterConfigCache)) {
+            $this->productFilterConfigCache[$cacheKey] = $this->productFilterConfigFactory->createForBrand(
+                $this->domain->getId(),
+                $this->domain->getLocale(),
+                $brand
+            );
         }
 
-        return $this->productFilterConfigCache[$cacheKey] = $this->productFilterConfigFactory->createForBrand(
-            $this->domain->getId(),
-            $this->domain->getLocale(),
-            $brand
-        );
+        return $this->productFilterConfigCache[$cacheKey];
     }
 
     /**
@@ -101,15 +101,15 @@ class ProductFilterFacade
     {
         $cacheKey = 'category_' . $category->getId();
 
-        if (array_key_exists($cacheKey, $this->productFilterConfigCache)) {
-            return $this->productFilterConfigCache[$cacheKey];
+        if (!array_key_exists($cacheKey, $this->productFilterConfigCache)) {
+            $this->productFilterConfigCache[$cacheKey] = $this->productFilterConfigFactory->createForCategory(
+                $this->domain->getId(),
+                $this->domain->getLocale(),
+                $category
+            );
         }
 
-        return $this->productFilterConfigCache[$cacheKey] = $this->productFilterConfigFactory->createForCategory(
-            $this->domain->getId(),
-            $this->domain->getLocale(),
-            $category
-        );
+        return $this->productFilterConfigCache[$cacheKey];
     }
 
     /**

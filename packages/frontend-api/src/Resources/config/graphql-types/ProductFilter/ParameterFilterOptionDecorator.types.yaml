@@ -1,0 +1,18 @@
+ParameterFilterOptionDecorator:
+    type: input-object
+    decorator: true
+    config:
+        description: "Parameter filter option"
+        fields:
+            uuid:
+                type: "Uuid!"
+                description: "UUID"
+            name:
+                type: "String!"
+                description: "Parameter name"
+            visible:
+                type: "Boolean!"
+                description: "Is parameter visible for customers"
+            values:
+                type: "[ParameterValueFilterOption!]!"
+                description: "Filter options of parameter values"

@@ -6,5 +6,7 @@ ProductConnection:
             totalCount:
                 type: "Int!"
                 description: "Total number of products"
+            productFilterOptions:
+                type: "ProductFilterOptions!"
     inherits:
         - 'ProductConnectionDecorator'

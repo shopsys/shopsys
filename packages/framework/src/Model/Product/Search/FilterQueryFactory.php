@@ -181,6 +181,32 @@ class FilterQueryFactory
     }
 
     /**
+     * @param int $brandId
+     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
+     * @return \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery
+     */
+    public function createListableProductsByBrandIdWithPriceAndStockFilter(int $brandId, ProductFilterData $productFilterData): FilterQuery
+    {
+        $filterQuery = $this->createListable()
+            ->filterByBrands([$brandId]);
+        $filterQuery = $this->addPricesAndStockFromFilterDataToQuery($productFilterData, $filterQuery);
+
+        return $filterQuery;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
+     * @return \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery
+     */
+    public function createListableProductsWithPriceAndStockFilter(ProductFilterData $productFilterData): FilterQuery
+    {
+        $filterQuery = $this->createListable();
+        $filterQuery = $this->addPricesAndStockFromFilterDataToQuery($productFilterData, $filterQuery);
+
+        return $filterQuery;
+    }
+
+    /**
      * @param string $searchText
      * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
      * @return \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery

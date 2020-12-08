@@ -1,0 +1,18 @@
+ParameterValueFilterOptionDecorator:
+    type: input-object
+    decorator: true
+    config:
+        description: "Parameter value filter option"
+        fields:
+            uuid:
+                type: "Uuid!"
+                description: "UUID"
+            text:
+                type: "String!"
+                description: "Parameter value"
+            count:
+                type: "Int!"
+                description: "Count of products that will be filtered if this filter option is applied."
+            isAbsolute:
+                type: "Boolean!"
+                description: "If true than count parameter is number of products that will be displayed if this filter option is applied, if false count parameter is number of products that will be added to current products result."

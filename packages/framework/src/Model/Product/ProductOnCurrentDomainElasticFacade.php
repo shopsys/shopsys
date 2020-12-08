@@ -255,6 +255,24 @@ class ProductOnCurrentDomainElasticFacade implements ProductOnCurrentDomainFacad
     }
 
     /**
+     * @param int $brandId
+     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
+     * @return \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData
+     */
+    public function getProductFilterCountDataForBrand(
+        int $brandId,
+        ProductFilterData $productFilterData
+    ): ProductFilterCountData {
+        return $this->productFilterCountDataElasticsearchRepository->getProductFilterCountDataInCategory(
+            $productFilterData,
+            $this->filterQueryFactory->createListableProductsByBrandIdWithPriceAndStockFilter(
+                $brandId,
+                $productFilterData
+            )
+        );
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function getProductFilterCountDataForSearch(
@@ -270,6 +288,19 @@ class ProductOnCurrentDomainElasticFacade implements ProductOnCurrentDomainFacad
                 $searchText,
                 $productFilterData
             )
+        );
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
+     * @return \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData
+     */
+    public function getProductFilterCountDataForAll(
+        ProductFilterData $productFilterData
+    ): ProductFilterCountData {
+        return $this->productFilterCountDataElasticsearchRepository->getProductFilterCountDataInSearch(
+            $productFilterData,
+            $this->filterQueryFactory->createListableProductsWithPriceAndStockFilter($productFilterData)
         );
     }
 

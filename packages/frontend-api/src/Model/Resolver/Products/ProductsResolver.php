@@ -9,12 +9,11 @@ use Overblog\GraphQLBundle\Definition\Argument;
 use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
 use Overblog\GraphQLBundle\Definition\Resolver\ResolverInterface;
 use Overblog\GraphQLBundle\Relay\Connection\ConnectionBuilder;
-use Overblog\GraphQLBundle\Relay\Connection\Paginator;
 use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
-use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig;
 use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingConfig;
 use Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainFacadeInterface;
+use Shopsys\FrontendApiBundle\Model\Product\Connection\ProductConnectionFactory;
 use Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterFacade;
 use Shopsys\FrontendApiBundle\Model\Product\ProductFacade;
 
@@ -45,22 +44,30 @@ class ProductsResolver implements ResolverInterface, AliasedInterface
     /**
      * @var \Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterFacade|null
      */
-    protected $productFilterFacade;
+    protected ?ProductFilterFacade $productFilterFacade;
+
+    /**
+     * @var \Shopsys\FrontendApiBundle\Model\Product\Connection\ProductConnectionFactory|null
+     */
+    protected ?ProductConnectionFactory $productConnectionFactory;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainFacadeInterface $productOnCurrentDomainFacade
      * @param \Shopsys\FrontendApiBundle\Model\Product\ProductFacade|null $productFacade
      * @param \Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterFacade|null $productFilterFacade
+     * @param \Shopsys\FrontendApiBundle\Model\Product\Connection\ProductConnectionFactory|null $productConnectionFactory
      */
     public function __construct(
         ProductOnCurrentDomainFacadeInterface $productOnCurrentDomainFacade,
         ?ProductFacade $productFacade = null,
-        ?ProductFilterFacade $productFilterFacade = null
+        ?ProductFilterFacade $productFilterFacade = null,
+        ?ProductConnectionFactory $productConnectionFactory = null
     ) {
         $this->productOnCurrentDomainFacade = $productOnCurrentDomainFacade;
         $this->connectionBuilder = new ConnectionBuilder();
         $this->productFacade = $productFacade;
         $this->productFilterFacade = $productFilterFacade;
+        $this->productConnectionFactory = $productConnectionFactory;
     }
 
     /**
@@ -119,6 +126,38 @@ class ProductsResolver implements ResolverInterface, AliasedInterface
     }
 
     /**
+     * @required
+     * @param \Shopsys\FrontendApiBundle\Model\Product\Connection\ProductConnectionFactory $productConnectionFactory
+     * @internal This function will be replaced by constructor injection in next major
+     */
+    public function setProductConnectionFactory(ProductConnectionFactory $productConnectionFactory): void
+    {
+        if (
+            $this->productConnectionFactory !== null
+            && $this->productConnectionFactory !== $productConnectionFactory
+        ) {
+            throw new BadMethodCallException(sprintf(
+                'Method "%s" has been already called and cannot be called multiple times.',
+                __METHOD__
+            ));
+        }
+
+        if ($this->productConnectionFactory !== null) {
+            return;
+        }
+
+        @trigger_error(
+            sprintf(
+                'The %s() method is deprecated and will be removed in the next major. Use the constructor injection instead.',
+                __METHOD__
+            ),
+            E_USER_DEPRECATED
+        );
+
+        $this->productConnectionFactory = $productConnectionFactory;
+    }
+
+    /**
      * @param \Overblog\GraphQLBundle\Definition\Argument $argument
      * @return \Overblog\GraphQLBundle\Relay\Connection\ConnectionInterface|object
      */
@@ -130,18 +169,18 @@ class ProductsResolver implements ResolverInterface, AliasedInterface
             $argument
         );
 
-        $paginator = new Paginator(function ($offset, $limit) use ($argument, $productFilterData) {
-            return $this->productFacade->getFilteredProductsOnCurrentDomain(
-                $limit,
-                $offset,
-                $this->getOrderingModeFromArgument($argument),
-                $productFilterData
-            );
-        });
-
-        return $paginator->auto(
+        return $this->productConnectionFactory->createConnectionForAll(
+            function ($offset, $limit) use ($argument, $productFilterData) {
+                return $this->productFacade->getFilteredProductsOnCurrentDomain(
+                    $limit,
+                    $offset,
+                    $this->getOrderingModeFromArgument($argument),
+                    $productFilterData
+                );
+            },
+            $this->productFacade->getFilteredProductsCountOnCurrentDomain($productFilterData),
             $argument,
-            $this->productFacade->getFilteredProductsCountOnCurrentDomain($productFilterData)
+            $productFilterData
         );
     }
 
@@ -159,19 +198,20 @@ class ProductsResolver implements ResolverInterface, AliasedInterface
             $category
         );
 
-        $paginator = new Paginator(function ($offset, $limit) use ($argument, $category, $productFilterData) {
-            return $this->productFacade->getFilteredProductsByCategory(
-                $category,
-                $limit,
-                $offset,
-                $this->getOrderingModeFromArgument($argument),
-                $productFilterData
-            );
-        });
-
-        return $paginator->auto(
+        return $this->productConnectionFactory->createConnectionForCategory(
+            $category,
+            function ($offset, $limit) use ($argument, $category, $productFilterData) {
+                return $this->productFacade->getFilteredProductsByCategory(
+                    $category,
+                    $limit,
+                    $offset,
+                    $this->getOrderingModeFromArgument($argument),
+                    $productFilterData
+                );
+            },
+            $this->productFacade->getFilteredProductsByCategoryCount($category, $productFilterData),
             $argument,
-            $this->productFacade->getFilteredProductsByCategoryCount($category, $productFilterData)
+            $productFilterData
         );
     }
 
@@ -189,19 +229,20 @@ class ProductsResolver implements ResolverInterface, AliasedInterface
             $brand
         );
 
-        $paginator = new Paginator(function ($offset, $limit) use ($argument, $brand, $productFilterData) {
-            return $this->productFacade->getFilteredProductsByBrand(
-                $brand,
-                $limit,
-                $offset,
-                $this->getOrderingModeFromArgument($argument),
-                $productFilterData
-            );
-        });
-
-        return $paginator->auto(
+        return $this->productConnectionFactory->createConnectionForBrand(
+            $brand,
+            function ($offset, $limit) use ($argument, $brand, $productFilterData) {
+                return $this->productFacade->getFilteredProductsByBrand(
+                    $brand,
+                    $limit,
+                    $offset,
+                    $this->getOrderingModeFromArgument($argument),
+                    $productFilterData
+                );
+            },
+            $this->productFacade->getFilteredProductsByBrandCount($brand, $productFilterData),
             $argument,
-            $this->productFacade->getFilteredProductsByBrandCount($brand, $productFilterData)
+            $productFilterData
         );
     }
 

@@ -8,4 +8,6 @@
 
 :[product-detail](methods/product-detail.md)
 
+:[product-filter-options](methods/product-filter-options.md)
+
 :[variant-with-main-variant](methods/variant-with-main-variant.md)
