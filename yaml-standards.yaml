@@ -1,6 +1,8 @@
 -   pathsToCheck:
         - .
     excludedPaths:
+        - ./docker-compose.yml
+        - ./docker-sync.yml
         - ./vendor
         - ./project-base/node_modules
         - ./project-base/config/domains_urls.yaml
