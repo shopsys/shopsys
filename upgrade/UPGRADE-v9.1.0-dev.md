@@ -252,3 +252,6 @@ There you can find links to upgrade notes for other versions too.
 
 - add ACCEPTANCE file to .gitignore ([#2145](https://github.com/shopsys/shopsys/pull/2145))
     - see #project-base-diff to update your project
+    
+- add email length validation in SubscriptionFormType ([#2120](https://github.com/shopsys/shopsys/pull/2120))
+    - see #project-base-diff to update your project
