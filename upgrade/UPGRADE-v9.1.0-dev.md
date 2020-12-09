@@ -249,3 +249,6 @@ There you can find links to upgrade notes for other versions too.
 
 - added total count to frontend API connections ([#2141](https://github.com/shopsys/shopsys/pull/2141))
     - see #project-base-diff to update your project
+
+- add ACCEPTANCE file to .gitignore ([#2145](https://github.com/shopsys/shopsys/pull/2145))
+    - see #project-base-diff to update your project
