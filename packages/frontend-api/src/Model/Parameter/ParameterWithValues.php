@@ -14,13 +14,13 @@ class ParameterWithValues
     protected $parameter;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValue[]
+     * @var \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue[]
      */
     protected $values;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter $parameter
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValue[] $values
+     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue[] $values
      */
     public function __construct(Parameter $parameter, array $values)
     {
@@ -61,7 +61,7 @@ class ParameterWithValues
     }
 
     /**
-     * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValue[]
+     * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue[]
      */
     public function getValues(): array
     {
