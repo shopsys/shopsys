@@ -26,7 +26,7 @@ class ParameterWithValuesFactory
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter $parameter
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValue[] $parameterValues
+     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue[] $parameterValues
      * @return \Shopsys\FrontendApiBundle\Model\Parameter\ParameterWithValues
      */
     public function create(Parameter $parameter, array $parameterValues): ParameterWithValues
