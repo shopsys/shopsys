@@ -2,24 +2,23 @@
 
 declare(strict_types=1);
 
-namespace Shopsys\FrontendApiBundle\Model\Resolver\Brand;
+namespace Shopsys\FrontendApiBundle\Model\Resolver\Products;
 
 use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
 use Overblog\GraphQLBundle\Definition\Resolver\ResolverInterface;
 use Overblog\GraphQLBundle\Error\UserError;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\Exception\FriendlyUrlNotFoundException;
-use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
-use Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade;
-use Shopsys\FrameworkBundle\Model\Product\Brand\Exception\BrandNotFoundException;
+use Shopsys\FrameworkBundle\Model\Product\Exception\ProductNotFoundException;
+use Shopsys\FrameworkBundle\Model\Product\ProductElasticsearchProvider;
 use Shopsys\FrontendApiBundle\Model\FriendlyUrl\FriendlyUrlFacade;
 
-class BrandResolver implements ResolverInterface, AliasedInterface
+class ProductDetailResolver implements ResolverInterface, AliasedInterface
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade
+     * @var \Shopsys\FrameworkBundle\Model\Product\ProductElasticsearchProvider
      */
-    protected $brandFacade;
+    protected ProductElasticsearchProvider $productElasticsearchProvider;
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
@@ -32,16 +31,16 @@ class BrandResolver implements ResolverInterface, AliasedInterface
     protected FriendlyUrlFacade $friendlyUrlFacade;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade $brandFacade
+     * @param \Shopsys\FrameworkBundle\Model\Product\ProductElasticsearchProvider $productElasticsearchProvider
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrontendApiBundle\Model\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
      */
     public function __construct(
-        BrandFacade $brandFacade,
+        ProductElasticsearchProvider $productElasticsearchProvider,
         Domain $domain,
         FriendlyUrlFacade $friendlyUrlFacade
     ) {
-        $this->brandFacade = $brandFacade;
+        $this->productElasticsearchProvider = $productElasticsearchProvider;
         $this->domain = $domain;
         $this->friendlyUrlFacade = $friendlyUrlFacade;
     }
@@ -49,16 +48,16 @@ class BrandResolver implements ResolverInterface, AliasedInterface
     /**
      * @param string|null $uuid
      * @param string|null $urlSlug
-     * @return \Shopsys\FrameworkBundle\Model\Product\Brand\Brand
+     * @return array
      */
-    public function resolver(?string $uuid = null, ?string $urlSlug = null): Brand
+    public function resolver(?string $uuid = null, ?string $urlSlug = null): array
     {
         if ($uuid !== null) {
-            return $this->getByUuid($uuid);
+            return $this->getVisibleProductArrayByUuid($uuid);
         }
 
         if ($urlSlug !== null) {
-            return $this->getByUrlSlug($urlSlug);
+            return $this->getVisibleProductArrayOnDomainBySlug($urlSlug);
         }
 
         throw new UserError('You need to provide argument \'uuid\' or \'urlSlug\'.');
@@ -70,39 +69,39 @@ class BrandResolver implements ResolverInterface, AliasedInterface
     public static function getAliases(): array
     {
         return [
-            'resolver' => 'brand',
+            'resolver' => 'productDetail',
         ];
     }
 
     /**
      * @param string $uuid
-     * @return \Shopsys\FrameworkBundle\Model\Product\Brand\Brand
+     * @return array
      */
-    protected function getByUuid(string $uuid): Brand
+    protected function getVisibleProductArrayByUuid(string $uuid): array
     {
         try {
-            return $this->brandFacade->getByUuid($uuid);
-        } catch (BrandNotFoundException $brandNotFoundException) {
-            throw new UserError($brandNotFoundException->getMessage());
+            return $this->productElasticsearchProvider->getVisibleProductArrayByUuid($uuid);
+        } catch (ProductNotFoundException $productNotFoundException) {
+            throw new UserError($productNotFoundException->getMessage());
         }
     }
 
     /**
      * @param string $urlSlug
-     * @return \Shopsys\FrameworkBundle\Model\Product\Brand\Brand
+     * @return array
      */
-    protected function getByUrlSlug(string $urlSlug): Brand
+    protected function getVisibleProductArrayOnDomainBySlug(string $urlSlug): array
     {
         try {
             $friendlyUrl = $this->friendlyUrlFacade->getFriendlyUrlByRouteNameAndSlug(
                 $this->domain->getId(),
-                'front_brand_detail',
+                'front_product_detail',
                 $urlSlug
             );
 
-            return $this->brandFacade->getById($friendlyUrl->getEntityId());
-        } catch (FriendlyUrlNotFoundException | BrandNotFoundException $brandNotFoundException) {
-            throw new UserError('Brand with URL slug `' . $urlSlug . '` does not exist.');
+            return $this->productElasticsearchProvider->getVisibleProductArrayById($friendlyUrl->getEntityId());
+        } catch (FriendlyUrlNotFoundException | ProductNotFoundException $productNotFoundException) {
+            throw new UserError('Product with URL slug `' . $urlSlug . '` does not exist.');
         }
     }
 }

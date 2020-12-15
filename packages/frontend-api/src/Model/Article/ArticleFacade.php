@@ -88,4 +88,14 @@ class ArticleFacade
     {
         return $this->articleRepository->getVisibleByDomainIdAndUuid($domainId, $uuid);
     }
+
+    /**
+     * @param int $domainId
+     * @param int $articleId
+     * @return \Shopsys\FrameworkBundle\Model\Article\Article
+     */
+    public function getVisibleByDomainIdAndId(int $domainId, int $articleId): Article
+    {
+        return $this->articleRepository->getVisibleByDomainIdAndId($domainId, $articleId);
+    }
 }

@@ -51,6 +51,21 @@ class TransformString
     }
 
     /**
+     * @param string $string
+     * @return string
+     */
+    public static function addOrRemoveTrailingSlashFromString(string $string): string
+    {
+        if (substr($string, -1) === '/') {
+            $string = rtrim($string, '/');
+        } else {
+            $string .= '/';
+        }
+
+        return $string;
+    }
+
+    /**
      * Transforms arbitrary string (natural sentence, under_score, PascalCase, ...) into one ascii camelCase string
      *
      * @see \Tests\FrameworkBundle\Unit\Component\String\TransformStringTest::stringToCamelCaseProvider() for example usages

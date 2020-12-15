@@ -13,7 +13,7 @@ use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
 
 /**
- * @deprecated Use ProductByUuidResolver instead
+ * @deprecated Use ProductDetailResolver instead
  */
 class ProductResolver implements ResolverInterface, AliasedInterface
 {
@@ -49,7 +49,7 @@ class ProductResolver implements ResolverInterface, AliasedInterface
             sprintf(
                 'The "%s" class is deprecated and will be removed in the next major. Use "%s" instead.',
                 self::class,
-                ProductByUuidResolver::class
+                ProductDetailResolver::class
             ),
             E_USER_DEPRECATED
         );

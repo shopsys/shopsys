@@ -235,7 +235,7 @@ There you can find links to upgrade notes for other versions too.
 - change source of data for a single product to Elasticsearch in FE API ([#2131](https://github.com/shopsys/shopsys/pull/2131))
     - see #project-base-diff to update your project
     - run `php phing elasticsearch-index-migrate elasticsearch-export` to apply changes in Elasticsearch schema mapping
-    - *BC BREAK* single product by UUID is now loaded from Elasticsearch with `productByUuid` resolver
+    - *BC BREAK* single product by UUID is now loaded from Elasticsearch with `productDetail` resolver
         - if necessary, you can switch to the former resolver `product` in your `Query.types.yaml` file
 
 - provide cache directory to DomainRouterFactory and LocalizedRouterFactory ([#2133](https://github.com/shopsys/shopsys/pull/2133))
@@ -254,4 +254,7 @@ There you can find links to upgrade notes for other versions too.
     - see #project-base-diff to update your project
     
 - add email length validation in SubscriptionFormType ([#2120](https://github.com/shopsys/shopsys/pull/2120))
+    - see #project-base-diff to update your project
+
+- add support for finding entity by URL slug to FE API ([#2150](https://github.com/shopsys/shopsys/pull/2150))
     - see #project-base-diff to update your project
