@@ -54,6 +54,9 @@ There you can find links to upgrade notes for other versions too.
 - phpstan analyse increased to level 5 ([#1922](https://github.com/shopsys/shopsys/pull/1922))
     - increasing phpstan level on your project is optional and may be set in `build.xml`
     - see [project-base-diff](https://github.com/shopsys/project-base/commit/b4ce5f9d1b8dedef369684117c2e6cb5d2f38fde) to update your project
+    
+- add articles resolver to your Frontend API ([#1996](https://github.com/shopsys/shopsys/pull/1996))
+    - see [project-base-diff](https://github.com/shopsys/project-base/commit/2c2999d73c0853e6d70c850fcfdf2b3ec6bec7cf) to update your project
 
 - move npm-global directory to project in order to make it included in Docker volumes ([#2024](https://github.com/shopsys/shopsys/pull/2024))
     - see [project-base-diff](https://github.com/shopsys/project-base/commit/cdfb7d709a6fec119ac48b9012f0841a95bdf880) to update your project
