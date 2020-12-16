@@ -19,6 +19,7 @@ class FlagFacadeTest extends TestCase
         $flagDataOriginal = new FlagData();
         $flagDataOriginal->name = ['cs' => 'flagNameCs', 'en' => 'flagNameEn'];
         $flagDataOriginal->rgbColor = '#336699';
+        $flagDataOriginal->uuid = '862e7a33-c022-4ea5-b700-0e580ffbc6d0';
         $flag = $flagFactory->create($flagDataOriginal);
 
         $domain = $this->createMock(Domain::class);
@@ -33,9 +34,11 @@ class FlagFacadeTest extends TestCase
         $flagDataOld = new FlagData();
         $flagDataOld->name = ['cs' => 'flagNameCs', 'en' => 'flagNameEn'];
         $flagDataOld->rgbColor = '#336699';
+        $flagDataOld->uuid = '862e7a33-c022-4ea5-b700-0e580ffbc6d0';
         $flagDataEdit = new FlagData();
         $flagDataEdit->name = ['cs' => 'editFlagNameCs', 'en' => 'editFlagNameEn'];
         $flagDataEdit->rgbColor = '#00CCFF';
+        $flagDataEdit->uuid = '862e7a33-c022-4ea5-b700-0e580ffbc6d0';
         $flag = new Flag($flagDataOld);
 
         $flag->edit($flagDataEdit);

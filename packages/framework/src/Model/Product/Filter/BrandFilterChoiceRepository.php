@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopsys\FrameworkBundle\Model\Product\Filter;
 
 use Doctrine\ORM\QueryBuilder;
@@ -52,6 +54,19 @@ class BrandFilterChoiceRepository
     {
         $productsQueryBuilder = $this->productRepository
             ->getListableBySearchTextQueryBuilder($domainId, $pricingGroup, $locale, $searchText);
+
+        return $this->getBrandsByProductsQueryBuilder($productsQueryBuilder);
+    }
+
+    /**
+     * @param int $domainId
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
+     * @return \Shopsys\FrameworkBundle\Model\Product\Brand\Brand[]
+     */
+    public function getBrandFilterChoicesForAll(int $domainId, PricingGroup $pricingGroup): array
+    {
+        $productsQueryBuilder = $this->productRepository
+            ->getAllListableQueryBuilder($domainId, $pricingGroup);
 
         return $this->getBrandsByProductsQueryBuilder($productsQueryBuilder);
     }

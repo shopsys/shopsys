@@ -66,6 +66,15 @@ class FlagFacade
     }
 
     /**
+     * @param string $uuid
+     * @return \Shopsys\FrameworkBundle\Model\Product\Flag\Flag
+     */
+    public function getByUuid(string $uuid): Flag
+    {
+        return $this->flagRepository->getByUuid($uuid);
+    }
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Flag\FlagData $flagData
      * @return \Shopsys\FrameworkBundle\Model\Product\Flag\Flag
      */
@@ -126,5 +135,14 @@ class FlagFacade
     protected function dispatchFlagEvent(Flag $flag, string $eventType): void
     {
         $this->eventDispatcher->dispatch(new FlagEvent($flag), $eventType);
+    }
+
+    /**
+     * @param string[] $uuids
+     * @return \Shopsys\FrameworkBundle\Model\Product\Flag\Flag[]
+     */
+    public function getByUuids(array $uuids): array
+    {
+        return $this->flagRepository->getByUuids($uuids);
     }
 }

@@ -34,3 +34,5 @@ services:
         alias: Shopsys\FrontendApiBundle\Model\User\FrontendApiUserFactory
 
     Shopsys\FrontendApiBundle\Model\GraphqlConfigurator: ~
+
+    Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterNormalizer: ~

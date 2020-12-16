@@ -66,4 +66,13 @@ class BrandRepository
 
         return $brand;
     }
+
+    /**
+     * @param string[] $uuids
+     * @return \Shopsys\FrameworkBundle\Model\Product\Brand\Brand[]
+     */
+    public function getByUuids(array $uuids): array
+    {
+        return $this->getBrandRepository()->findBy(['uuid' => $uuids]);
+    }
 }

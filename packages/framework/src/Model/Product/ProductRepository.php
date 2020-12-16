@@ -214,6 +214,21 @@ class ProductRepository
     /**
      * @param int $domainId
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
+     * @param \Shopsys\FrameworkBundle\Model\Product\Brand\Brand $brand
+     * @return \Doctrine\ORM\QueryBuilder
+     * @deprecated This method will be removed in next major and methods getListableForBrandQueryBuilder() visibility will be changed to public
+     */
+    public function getListableForBrandQueryBuilderPublic(
+        int $domainId,
+        PricingGroup $pricingGroup,
+        Brand $brand
+    ) {
+        return $this->getListableForBrandQueryBuilder($domainId, $pricingGroup, $brand);
+    }
+
+    /**
+     * @param int $domainId
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
      * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
      * @return \Doctrine\ORM\QueryBuilder
      */

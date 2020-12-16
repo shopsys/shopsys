@@ -305,4 +305,18 @@ abstract class GraphQlTestCase extends FunctionalTestCase
             vatAmount: "' . MoneyFormatterHelper::formatWithMaxFractionDigits($price->getVatAmount()) . '"
         }';
     }
+
+    /**
+     * @param string $price
+     * @return string
+     */
+    protected function getFormattedMoneyAmountConvertedToDomainDefaultCurrency(string $price): string
+    {
+        $money = $this->priceConverter->convertPriceWithoutVatToPriceInDomainDefaultCurrency(
+            Money::create($price),
+            Domain::FIRST_DOMAIN_ID
+        );
+
+        return MoneyFormatterHelper::formatWithMaxFractionDigits($money);
+    }
 }

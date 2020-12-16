@@ -20,6 +20,7 @@ Authorization header is not required.
         - before
         - last (number)
         - orderingMode (ProductOrderingModeEnum)
+        - filter (InputProductFilter)
 
     - Body
 

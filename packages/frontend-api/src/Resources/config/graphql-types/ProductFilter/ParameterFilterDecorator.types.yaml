@@ -1,0 +1,12 @@
+ParameterFilterDecorator:
+    type: input-object
+    decorator: true
+    config:
+        description: "Represents a parameter filter"
+        fields:
+            parameter:
+                type: "Uuid!"
+                description: "Uuid of filtered parameter"
+            values:
+                type: "[Uuid!]!"
+                description: "Array of uuids filtered parameter values"

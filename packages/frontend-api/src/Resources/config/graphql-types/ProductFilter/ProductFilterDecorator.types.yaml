@@ -1,0 +1,24 @@
+ProductFilterDecorator:
+    type: input-object
+    decorator: true
+    config:
+        description: "Represents a product filter"
+        fields:
+            minimalPrice:
+                type: "Money"
+                description: "Minimal price filter"
+            maximalPrice:
+                type: "Money"
+                description: "Maximal price filter"
+            brands:
+                type: "[Uuid!]"
+                description: "Array of uuids of brands filter"
+            flags:
+                type: "[Uuid!]"
+                description: "Array of uuids of flags filter"
+            onlyInStock:
+                type: "Boolean"
+                description: "Only in stock filter"
+            parameters:
+                type: "[ParameterFilter!]"
+                description: "Parameter filter"

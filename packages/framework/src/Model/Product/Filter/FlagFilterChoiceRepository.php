@@ -1,11 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopsys\FrameworkBundle\Model\Product\Filter;
 
 use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
+use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
 use Shopsys\FrameworkBundle\Model\Product\Flag\Flag;
 use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
 
@@ -38,6 +41,40 @@ class FlagFilterChoiceRepository
             $domainId,
             $pricingGroup,
             $category
+        );
+
+        return $this->getVisibleFlagsByProductsQueryBuilder($productsQueryBuilder, $locale);
+    }
+
+    /**
+     * @param int $domainId
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
+     * @param string $locale
+     * @param \Shopsys\FrameworkBundle\Model\Product\Brand\Brand $brand
+     * @return \Shopsys\FrameworkBundle\Model\Product\Flag\Flag[]
+     */
+    public function getFlagFilterChoicesForBrand(int $domainId, PricingGroup $pricingGroup, string $locale, Brand $brand): array
+    {
+        $productsQueryBuilder = $this->productRepository->getListableForBrandQueryBuilderPublic(
+            $domainId,
+            $pricingGroup,
+            $brand
+        );
+
+        return $this->getVisibleFlagsByProductsQueryBuilder($productsQueryBuilder, $locale);
+    }
+
+    /**
+     * @param int $domainId
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
+     * @param string $locale
+     * @return \Shopsys\FrameworkBundle\Model\Product\Flag\Flag[]
+     */
+    public function getFlagFilterChoicesForAll(int $domainId, PricingGroup $pricingGroup, string $locale): array
+    {
+        $productsQueryBuilder = $this->productRepository->getAllListableQueryBuilder(
+            $domainId,
+            $pricingGroup
         );
 
         return $this->getVisibleFlagsByProductsQueryBuilder($productsQueryBuilder, $locale);

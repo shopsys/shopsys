@@ -91,25 +91,10 @@ class FilterQueryFactory
         int $page,
         int $limit
     ): FilterQuery {
-        $filterQuery = $this->createListable()
+        return $this->createListableWithProductFilter($productFilterData)
             ->setPage($page)
             ->setLimit($limit)
             ->applyOrdering($orderingModeId, $this->currentCustomerUser->getPricingGroup());
-
-        $filterQuery = $this->productFilterDataToQueryTransformer->addBrandsToQuery($productFilterData, $filterQuery);
-        $filterQuery = $this->productFilterDataToQueryTransformer->addFlagsToQuery($productFilterData, $filterQuery);
-        $filterQuery = $this->productFilterDataToQueryTransformer->addParametersToQuery(
-            $productFilterData,
-            $filterQuery
-        );
-        $filterQuery = $this->productFilterDataToQueryTransformer->addStockToQuery($productFilterData, $filterQuery);
-        $filterQuery = $this->productFilterDataToQueryTransformer->addPricesToQuery(
-            $productFilterData,
-            $filterQuery,
-            $this->currentCustomerUser->getPricingGroup()
-        );
-
-        return $filterQuery;
     }
 
     /**
@@ -196,6 +181,32 @@ class FilterQueryFactory
     }
 
     /**
+     * @param int $brandId
+     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
+     * @return \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery
+     */
+    public function createListableProductsByBrandIdWithPriceAndStockFilter(int $brandId, ProductFilterData $productFilterData): FilterQuery
+    {
+        $filterQuery = $this->createListable()
+            ->filterByBrands([$brandId]);
+        $filterQuery = $this->addPricesAndStockFromFilterDataToQuery($productFilterData, $filterQuery);
+
+        return $filterQuery;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
+     * @return \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery
+     */
+    public function createListableProductsWithPriceAndStockFilter(ProductFilterData $productFilterData): FilterQuery
+    {
+        $filterQuery = $this->createListable();
+        $filterQuery = $this->addPricesAndStockFromFilterDataToQuery($productFilterData, $filterQuery);
+
+        return $filterQuery;
+    }
+
+    /**
      * @param string $searchText
      * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
      * @return \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery
@@ -273,5 +284,28 @@ class FilterQueryFactory
     {
         return $this->createVisibleProductsByProductUuidsFilter($productUuids)
             ->filterOnlySellable();
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
+     * @return \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery
+     */
+    public function createListableWithProductFilter(ProductFilterData $productFilterData): FilterQuery
+    {
+        $filterQuery = $this->createListable();
+        $filterQuery = $this->productFilterDataToQueryTransformer->addBrandsToQuery($productFilterData, $filterQuery);
+        $filterQuery = $this->productFilterDataToQueryTransformer->addFlagsToQuery($productFilterData, $filterQuery);
+        $filterQuery = $this->productFilterDataToQueryTransformer->addParametersToQuery(
+            $productFilterData,
+            $filterQuery
+        );
+        $filterQuery = $this->productFilterDataToQueryTransformer->addStockToQuery($productFilterData, $filterQuery);
+        $filterQuery = $this->productFilterDataToQueryTransformer->addPricesToQuery(
+            $productFilterData,
+            $filterQuery,
+            $this->currentCustomerUser->getPricingGroup()
+        );
+
+        return $filterQuery;
     }
 }

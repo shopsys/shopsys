@@ -1,9 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopsys\FrameworkBundle\Model\Product\Filter;
 
 use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
+use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
 
 class ProductFilterConfigFactory
 {
@@ -95,5 +98,38 @@ class ProductFilterConfigFactory
         );
 
         return new ProductFilterConfig($parameterFilterChoices, $flagFilterChoices, $brandFilterChoices, $priceRange);
+    }
+
+    /**
+     * @param int $domainId
+     * @param string $locale
+     * @param \Shopsys\FrameworkBundle\Model\Product\Brand\Brand $brand
+     * @return \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig
+     */
+    public function createForBrand(int $domainId, string $locale, Brand $brand): ProductFilterConfig
+    {
+        $pricingGroup = $this->currentCustomerUser->getPricingGroup();
+        $flagFilterChoices = $this->flagFilterChoiceRepository
+            ->getFlagFilterChoicesForBrand($domainId, $pricingGroup, $locale, $brand);
+        $priceRange = $this->priceRangeRepository->getPriceRangeForBrand($domainId, $pricingGroup, $brand);
+
+        return new ProductFilterConfig([], $flagFilterChoices, [], $priceRange);
+    }
+
+    /**
+     * @param int $domainId
+     * @param string $locale
+     * @return \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig
+     */
+    public function createForAll(int $domainId, string $locale): ProductFilterConfig
+    {
+        $pricingGroup = $this->currentCustomerUser->getPricingGroup();
+        $flagFilterChoices = $this->flagFilterChoiceRepository
+            ->getFlagFilterChoicesForAll($domainId, $pricingGroup, $locale);
+        $priceRange = $this->priceRangeRepository->getPriceRangeForAll($domainId, $pricingGroup);
+        $brandFilterChoices = $this->brandFilterChoiceRepository
+            ->getBrandFilterChoicesForAll($domainId, $pricingGroup);
+
+        return new ProductFilterConfig([], $flagFilterChoices, $brandFilterChoices, $priceRange);
     }
 }

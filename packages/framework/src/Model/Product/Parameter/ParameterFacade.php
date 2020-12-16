@@ -57,6 +57,24 @@ class ParameterFacade
     }
 
     /**
+     * @param string $uuid
+     * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter
+     */
+    public function getByUuid(string $uuid): Parameter
+    {
+        return $this->parameterRepository->getByUuid($uuid);
+    }
+
+    /**
+     * @param string $uuid
+     * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue
+     */
+    public function getParameterValueByUuid(string $uuid): ParameterValue
+    {
+        return $this->parameterRepository->getParameterValueByUuid($uuid);
+    }
+
+    /**
      * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter[]
      */
     public function getAll()
@@ -136,5 +154,23 @@ class ParameterFacade
     protected function dispatchParameterEvent(Parameter $parameter, string $eventType): void
     {
         $this->eventDispatcher->dispatch(new ParameterEvent($parameter), $eventType);
+    }
+
+    /**
+     * @param string[] $uuids
+     * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter[]
+     */
+    public function getParametersByUuids(array $uuids): array
+    {
+        return $this->parameterRepository->getParametersByUuids($uuids);
+    }
+
+    /**
+     * @param string[] $uuids
+     * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue[]
+     */
+    public function getParameterValuesByUuids(array $uuids): array
+    {
+        return $this->parameterRepository->getParameterValuesByUuids($uuids);
     }
 }

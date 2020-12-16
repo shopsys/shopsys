@@ -5,6 +5,7 @@ namespace Shopsys\FrameworkBundle\Model\Product\Flag;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Prezent\Doctrine\Translatable\Annotation as Prezent;
+use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Model\Localization\AbstractTranslatableEntity;
 
 /**
@@ -21,6 +22,12 @@ class Flag extends AbstractTranslatableEntity
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     protected $id;
+
+    /**
+     * @var string
+     * @ORM\Column(type="guid", unique=true)
+     */
+    protected $uuid;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\Flag\FlagTranslation[]|\Doctrine\Common\Collections\Collection
@@ -45,6 +52,8 @@ class Flag extends AbstractTranslatableEntity
      */
     public function __construct(FlagData $flagData)
     {
+        $this->uuid = $flagData->uuid ?: Uuid::uuid4()->toString();
+
         $this->translations = new ArrayCollection();
         $this->setData($flagData);
     }
@@ -73,6 +82,14 @@ class Flag extends AbstractTranslatableEntity
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * @return string
+     */
+    public function getUuid(): string
+    {
+        return $this->uuid;
     }
 
     /**

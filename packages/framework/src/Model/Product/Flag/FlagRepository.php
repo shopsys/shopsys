@@ -62,10 +62,34 @@ class FlagRepository
     }
 
     /**
+     * @param string $uuid
+     * @return \Shopsys\FrameworkBundle\Model\Product\Flag\Flag
+     */
+    public function getByUuid(string $uuid): Flag
+    {
+        $flag = $this->getFlagRepository()->findOneBy(['uuid' => $uuid]);
+
+        if ($flag === null) {
+            throw new FlagNotFoundException('Flag with UUID ' . $uuid . ' does not exist.');
+        }
+
+        return $flag;
+    }
+
+    /**
      * @return \Shopsys\FrameworkBundle\Model\Product\Flag\Flag[]
      */
     public function getAll()
     {
         return $this->getFlagRepository()->findBy([], ['id' => 'asc']);
+    }
+
+    /**
+     * @param string[] $uuids
+     * @return \Shopsys\FrameworkBundle\Model\Product\Flag\Flag[]
+     */
+    public function getByUuids(array $uuids): array
+    {
+        return $this->getFlagRepository()->findBy(['uuid' => $uuids]);
     }
 }

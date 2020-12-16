@@ -74,5 +74,6 @@ class FlagDataFactory implements FlagDataFactoryInterface
         $flagData->name = $names;
         $flagData->rgbColor = $flag->getRgbColor();
         $flagData->visible = $flag->isVisible();
+        $flagData->uuid = $flag->getUuid();
     }
 }
