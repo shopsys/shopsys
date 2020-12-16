@@ -3,7 +3,6 @@
 namespace Shopsys\FrameworkBundle\Component\Domain;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\Query\ResultSetMapping;
 use Shopsys\FrameworkBundle\Component\Doctrine\SqlQuoter;
 use Shopsys\FrameworkBundle\Component\Doctrine\StringColumnsFinder;
 
@@ -54,7 +53,7 @@ class DomainUrlReplacer
                 $domainConfigUrl
             );
 
-            $this->em->createNativeQuery($urlReplacementSql, new ResultSetMapping())->execute();
+            $this->em->getConnection()->executeStatement($urlReplacementSql);
         }
     }
 

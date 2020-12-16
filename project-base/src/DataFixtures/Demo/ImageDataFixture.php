@@ -4,10 +4,11 @@ declare(strict_types=1);
 
 namespace App\DataFixtures\Demo;
 
+use DateTimeImmutable;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\Query\ResultSetMapping;
 use League\Flysystem\FilesystemInterface;
 use League\Flysystem\MountManager;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
@@ -18,7 +19,6 @@ use Symfony\Component\Finder\Finder;
 class ImageDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
 {
     public const IMAGES_TABLE_NAME = 'images';
-
     public const IMAGE_TYPE = 'jpg';
 
     /**
@@ -254,21 +254,24 @@ class ImageDataFixture extends AbstractReferenceFixture implements DependentFixt
      */
     private function saveImageIntoDb(int $entityId, string $entityName, int $imageId)
     {
-        $query = $this->em->createNativeQuery(
+        $this->em->getConnection()->executeStatement(
             'INSERT INTO images (id, entity_name, entity_id, type, extension, position, modified_at)
-            VALUES (:id, :entity_name, :entity_id, :type, :extension, :position, :modified_at)',
-            new ResultSetMapping()
+            VALUES (:id, :entity_name, :entity_id, NULL, :extension, NULL, :modified_at)',
+            [
+                'id' => $imageId,
+                'entity_name' => $entityName,
+                'entity_id' => $entityId,
+                'extension' => self::IMAGE_TYPE,
+                'modified_at' => new DateTimeImmutable('2015-04-16 11:36:06'),
+            ],
+            [
+                'id' => Types::INTEGER,
+                'entity_name' => Types::STRING,
+                'entity_id' => Types::INTEGER,
+                'extension' => Types::STRING,
+                'modified_at' => Types::DATETIME_IMMUTABLE,
+            ]
         );
-
-        $query->execute([
-            'id' => $imageId,
-            'entity_name' => $entityName,
-            'entity_id' => $entityId,
-            'type' => null,
-            'extension' => self::IMAGE_TYPE,
-            'position' => null,
-            'modified_at' => '2015-04-16 11:36:06',
-        ]);
     }
 
     /**
@@ -297,15 +300,16 @@ class ImageDataFixture extends AbstractReferenceFixture implements DependentFixt
 
     private function truncateImagesFromDb()
     {
-        $this->em->createNativeQuery('TRUNCATE TABLE ' . self::IMAGES_TABLE_NAME, new ResultSetMapping())->execute();
+        $this->em->getConnection()->executeStatement(
+            'TRUNCATE TABLE ' . self::IMAGES_TABLE_NAME
+        );
     }
 
     private function restartImagesIdsDbSequence()
     {
-        $this->em->createNativeQuery(
-            'SELECT SETVAL(pg_get_serial_sequence(\'images\', \'id\'), COALESCE((SELECT MAX(id) FROM images) + 1, 1), false)',
-            new ResultSetMapping()
-        )->execute();
+        $this->em->getConnection()->executeStatement(
+            'SELECT SETVAL(pg_get_serial_sequence(\'images\', \'id\'), COALESCE((SELECT MAX(id) FROM images) + 1, 1), false)'
+        );
     }
 
     /**

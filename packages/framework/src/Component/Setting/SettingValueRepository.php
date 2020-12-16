@@ -2,8 +2,8 @@
 
 namespace Shopsys\FrameworkBundle\Component\Setting;
 
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\Query\ResultSetMapping;
 
 class SettingValueRepository
 {
@@ -43,7 +43,7 @@ class SettingValueRepository
      */
     public function copyAllMultidomainSettings($fromDomainId, $toDomainId)
     {
-        $query = $this->em->createNativeQuery(
+        $this->em->getConnection()->executeStatement(
             'INSERT INTO setting_values (name, value, type, domain_id)
             SELECT name, value, type, :toDomainId
             FROM setting_values
@@ -54,12 +54,16 @@ class SettingValueRepository
                     WHERE domain_id IS NOT NULL
                         AND domain_id != :commonDomainId
                 )',
-            new ResultSetMapping()
+            [
+                'toDomainId' => $toDomainId,
+                'fromDomainId' => $fromDomainId,
+                'commonDomainId' => SettingValue::DOMAIN_ID_COMMON,
+            ],
+            [
+                'toDomainId' => Types::INTEGER,
+                'fromDomainId' => Types::INTEGER,
+                'commonDomainId' => Types::INTEGER,
+            ]
         );
-        $query->execute([
-            'toDomainId' => $toDomainId,
-            'fromDomainId' => $fromDomainId,
-            'commonDomainId' => SettingValue::DOMAIN_ID_COMMON,
-        ]);
     }
 }

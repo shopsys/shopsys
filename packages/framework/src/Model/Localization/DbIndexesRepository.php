@@ -2,8 +2,8 @@
 
 namespace Shopsys\FrameworkBundle\Model\Localization;
 
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\Query\ResultSetMapping;
 
 class DbIndexesRepository
 {
@@ -26,10 +26,15 @@ class DbIndexesRepository
      */
     public function updateProductTranslationNameIndexForLocaleAndCollation(string $locale, string $collation)
     {
-        $this->em->createNativeQuery(
+        $this->em->getConnection()->executeStatement(
             'CREATE INDEX IF NOT EXISTS product_translations_name_' . $locale . '_idx
                 ON product_translations (name COLLATE "' . $collation . '") WHERE locale = \':locale\'',
-            new ResultSetMapping()
-        )->execute(['locale' => $locale]);
+            [
+                'locale' => $locale,
+            ],
+            [
+                'locale' => Types::STRING,
+            ]
+        );
     }
 }

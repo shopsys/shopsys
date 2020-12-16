@@ -3,7 +3,6 @@
 namespace Shopsys\FrameworkBundle\Component\Domain;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\Query\ResultSetMapping;
 
 class DomainDbFunctionsFacade
 {
@@ -49,7 +48,7 @@ class DomainDbFunctionsFacade
             $domainIdsByLocaleSqlClauses[] = $sql;
         }
 
-        $query = $this->em->createNativeQuery(
+        return $this->em->getConnection()->executeStatement(
             'CREATE OR REPLACE FUNCTION get_domain_ids_by_locale(locale text) RETURNS SETOF integer AS $$
             BEGIN
                 CASE
@@ -57,11 +56,8 @@ class DomainDbFunctionsFacade
                     ELSE RETURN;
                 END CASE;
             END
-            $$ LANGUAGE plpgsql IMMUTABLE;',
-            new ResultSetMapping()
+            $$ LANGUAGE plpgsql IMMUTABLE;'
         );
-
-        return $query->execute();
     }
 
     protected function createLocaleByDomainIdFunction()
@@ -73,7 +69,7 @@ class DomainDbFunctionsFacade
                 . ' THEN RETURN \'' . $domainConfig->getLocale() . '\';';
         }
 
-        $query = $this->em->createNativeQuery(
+        return $this->em->getConnection()->executeStatement(
             'CREATE OR REPLACE FUNCTION get_domain_locale(domain_id integer) RETURNS text AS $$
             BEGIN
                 CASE
@@ -81,10 +77,7 @@ class DomainDbFunctionsFacade
                     ELSE RAISE EXCEPTION \'Domain with ID % does not exists\', domain_id;
                 END CASE;
             END
-            $$ LANGUAGE plpgsql IMMUTABLE;',
-            new ResultSetMapping()
+            $$ LANGUAGE plpgsql IMMUTABLE;'
         );
-
-        return $query->execute();
     }
 }

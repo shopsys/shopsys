@@ -2,8 +2,8 @@
 
 namespace Shopsys\FrameworkBundle\Component\Domain\Multidomain;
 
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\Query\ResultSetMapping;
 use Shopsys\FrameworkBundle\Component\Doctrine\SqlQuoter;
 
 class MultidomainEntityDataCreator
@@ -71,16 +71,19 @@ class MultidomainEntityDataCreator
         $quotedColumnNames = $this->sqlQuoter->quoteIdentifiers($columnNames);
         $quotedColumnNamesSql = implode(', ', $quotedColumnNames);
         $quotedTableName = $this->sqlQuoter->quoteIdentifier($tableName);
-        $query = $this->em->createNativeQuery(
+        $this->em->getConnection()->executeStatement(
             'INSERT INTO ' . $quotedTableName . ' (domain_id, ' . $quotedColumnNamesSql . ')
             SELECT :newDomainId, ' . $quotedColumnNamesSql . '
             FROM ' . $quotedTableName . '
             WHERE domain_id = :templateDomainId',
-            new ResultSetMapping()
+            [
+                'newDomainId' => $newDomainId,
+                'templateDomainId' => $templateDomainId,
+            ],
+            [
+                'newDomainId' => Types::INTEGER,
+                'templateDomainId' => Types::INTEGER,
+            ]
         );
-        $query->execute([
-            'newDomainId' => $newDomainId,
-            'templateDomainId' => $templateDomainId,
-        ]);
     }
 }
