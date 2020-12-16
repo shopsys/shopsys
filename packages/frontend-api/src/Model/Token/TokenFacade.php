@@ -159,7 +159,7 @@ class TokenFacade
         $validationData->setAudience($this->domain->getUrl());
         $validationData->setIssuer($this->domain->getUrl());
 
-        if ($token->isExpired()) {
+        if ($token->isExpired(new DateTimeImmutable())) {
             throw new ExpiredTokenUserMessageException('Token is expired. Please renew.');
         }
 
