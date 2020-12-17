@@ -57,12 +57,9 @@ class TransformString
     public static function addOrRemoveTrailingSlashFromString(string $string): string
     {
         if (substr($string, -1) === '/') {
-            $string = rtrim($string, '/');
-        } else {
-            $string .= '/';
+            return rtrim($string, '/');
         }
-
-        return $string;
+        return $string . '/';
     }
 
     /**

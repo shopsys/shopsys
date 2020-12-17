@@ -150,4 +150,47 @@ class TransformStringTest extends TestCase
     {
         $this->assertSame($expected, TransformString::stringToCamelCase($actual));
     }
+
+    /**
+     * @return array
+     */
+    public function stringTrailingSlashesProvider(): array
+    {
+        return [
+            [
+                'foo',
+                'foo/',
+            ],
+            [
+                'foo/bar',
+                'foo/bar/',
+            ],
+            [
+                'foo/',
+                'foo',
+            ],
+            [
+                'foo/bar/',
+                'foo/bar',
+            ],
+            [
+                '',
+                '/',
+            ],
+            [
+                '/',
+                '',
+            ],
+        ];
+    }
+
+    /**
+     * @dataProvider stringTrailingSlashesProvider
+     * @param string $string
+     * @param string $expected
+     */
+    public function testAddOrRemoveTrailingSlashFromString(string $string, string $expected): void
+    {
+        static::assertSame($expected, TransformString::addOrRemoveTrailingSlashFromString($string));
+    }
 }

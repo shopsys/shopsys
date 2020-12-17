@@ -44,12 +44,7 @@ class NormalizeUrlTrailingSlashSubscriber implements EventSubscriberInterface
     {
         if ($event->getThrowable() instanceof NotFoundHttpException) {
             $pathInfo = $event->getRequest()->getPathInfo();
-
-            if (substr($pathInfo, -1) === '/') {
-                $pathInfo = rtrim($pathInfo, '/');
-            } else {
-                $pathInfo .= '/';
-            }
+            $pathInfo = TransformString::addOrRemoveTrailingSlashFromString($pathInfo);
 
             $this->redirectToExistingPath($pathInfo, $event);
         }
