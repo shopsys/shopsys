@@ -1,0 +1,3 @@
+CategoryConnectionDecorator:
+    type: object
+    decorator: true

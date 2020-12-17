@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopsys\FrameworkBundle\Model\Category;
 
 use Doctrine\ORM\EntityManagerInterface;
@@ -329,6 +331,24 @@ class CategoryRepository extends NestedTreeRepository
     }
 
     /**
+     * @param \Doctrine\ORM\QueryBuilder $queryBuilder
+     * @param string $locale
+     * @deprecated This method will be removed in next major and methods addTranslation() visibility will be changed to public
+     */
+    public function addTranslationPublic(QueryBuilder $queryBuilder, string $locale): void
+    {
+        @trigger_error(
+            sprintf(
+                'The %s() method is deprecated and will be removed in the next major. It will be replaced by addTranslation() which will change its visibility to public.',
+                __METHOD__
+            ),
+            E_USER_DEPRECATED
+        );
+
+        $this->addTranslation($queryBuilder, $locale);
+    }
+
+    /**
      * @param string|null $searchText
      * @param int $domainId
      * @param string $locale
@@ -468,6 +488,24 @@ class CategoryRepository extends NestedTreeRepository
             'NORMALIZE(ct.name) LIKE NORMALIZE(:searchText)'
         );
         $queryBuilder->setParameter('searchText', DatabaseSearching::getFullTextLikeSearchString($searchText));
+    }
+
+    /**
+     * @param \Doctrine\ORM\QueryBuilder $queryBuilder
+     * @param string $searchText
+     * @deprecated This method will be removed in next major and methods filterBySearchText() visibility will be changed to public
+     */
+    public function filterBySearchTextPublic(QueryBuilder $queryBuilder, string $searchText): void
+    {
+        @trigger_error(
+            sprintf(
+                'The %s() method is deprecated and will be removed in the next major. It will be replaced by filterBySearchText() which will change its visibility to public.',
+                __METHOD__
+            ),
+            E_USER_DEPRECATED
+        );
+
+        $this->filterBySearchText($queryBuilder, $searchText);
     }
 
     /**

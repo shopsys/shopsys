@@ -7,6 +7,14 @@ QueryDecorator:
                 type: '[Category!]!'
                 resolve: "@=resolver('categories')"
                 description: "Returns complete list of categories"
+            categoriesSearch:
+                type: "CategoryConnection"
+                argsBuilder: "Relay::Connection"
+                resolve: "@=resolver('categoriesSearch', [args])"
+                args:
+                    search:
+                        type: "String!"
+                description: "Returns list of searched categories that can be paginated using `first`, `last`, `before` and `after` keywords"
             products:
                 type: "ProductConnection"
                 argsBuilder:
