@@ -5,9 +5,8 @@ declare(strict_types=1);
 namespace Tests\FrontendApiBundle\Functional\Product;
 
 use App\DataFixtures\Demo\VatDataFixture;
-use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
-class ProductsTest extends GraphQlTestCase
+class ProductsTest extends ProductsGraphQlTestCase
 {
     public function testFirstFiveProductsWithName(): void
     {
@@ -32,20 +31,7 @@ class ProductsTest extends GraphQlTestCase
             ['name' => t('30” Hyundai 22MT44D', [], 'dataFixtures', $firstDomainLocale)],
         ];
 
-        $graphQlType = 'products';
-        $response = $this->getResponseContentForQuery($query);
-
-        $this->assertResponseContainsArrayOfDataForGraphQlType($response, $graphQlType);
-        $responseData = $this->getResponseDataForGraphQlType($response, $graphQlType);
-        $this->assertArrayHasKey('edges', $responseData);
-
-        $queryResult = [];
-        foreach ($responseData['edges'] as $edge) {
-            $this->assertArrayHasKey('node', $edge);
-            $queryResult[] = $edge['node'];
-        }
-
-        $this->assertEquals($productsExpected, $queryResult, json_encode($queryResult));
+        $this->assertProducts($query, 'products', $productsExpected);
     }
 
     public function testFifthProductWithAllAttributes(): void
