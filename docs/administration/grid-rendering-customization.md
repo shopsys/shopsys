@@ -6,6 +6,9 @@ The template is composed of a set of Twig blocks and you are able to override an
 To customize your grid, you just need to create a new template extending the original one, override appropriate blocks and then set the template as a theme of your grid using `Grid::setTheme` method.
 
 ## Blocks that are being overridden at most
+- `grid_title_cell_id_<column_id>`
+    - `<column_id>` stands for the ID of the column that is defined during the grid creation by the first argument of `Grid::addColumn` method
+    - handy when you need to override a column title in a grid defined in the framework without overriding the grid factory
 - `grid_value_cell_id_<column_id>`
     - `<column_id>` stands for the ID of the column that is defined during the grid creation by the first argument of `Grid::addColumn` method
     - used when you need to change the appearance of values in a particular column
