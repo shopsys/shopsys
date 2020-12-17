@@ -280,3 +280,6 @@ There you can find links to upgrade notes for other versions too.
         - `getProductsByCategoryCount()` has been replaced by `getFilteredProductsByCategoryCount()`
         - `getProductsByBrand()` has been replaced by `getFilteredProductsByBrand()`
         - `getProductsByBrandCount()` has been replaced by `getFilteredProductsByBrandCount()`
+
+- add search of products and categories to FE API ([#2163](https://github.com/shopsys/shopsys/pull/2163))
+    - see #project-base-diff to update your project
