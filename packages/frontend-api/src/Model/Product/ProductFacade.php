@@ -61,6 +61,14 @@ class ProductFacade
      */
     public function getProductsCountOnCurrentDomain(): int
     {
+        @trigger_error(
+            sprintf(
+                'The %s() method is deprecated and will be removed in the next major. It has been replaced by getFilteredProductsCountOnCurrentDomain().',
+                __METHOD__
+            ),
+            E_USER_DEPRECATED
+        );
+
         $filterQuery = $this->filterQueryFactory->createListable();
 
         return $this->productElasticsearchRepository->getProductsCountByFilterQuery($filterQuery);
@@ -86,6 +94,14 @@ class ProductFacade
      */
     public function getProductsOnCurrentDomain(int $limit, int $offset, string $orderingModeId): array
     {
+        @trigger_error(
+            sprintf(
+                'The %s() method is deprecated and will be removed in the next major. It has been replaced by getFilteredProductsOnCurrentDomain().',
+                __METHOD__
+            ),
+            E_USER_DEPRECATED
+        );
+
         $emptyProductFilterData = new ProductFilterData();
         $filterQuery = $this->filterQueryFactory->createWithProductFilterData(
             $emptyProductFilterData,
@@ -133,6 +149,14 @@ class ProductFacade
      */
     public function getProductsByCategory(Category $category, int $limit, int $offset, string $orderingModeId): array
     {
+        @trigger_error(
+            sprintf(
+                'The %s() method is deprecated and will be removed in the next major. It has been replaced by getFilteredProductsByCategory().',
+                __METHOD__
+            ),
+            E_USER_DEPRECATED
+        );
+
         $emptyProductFilterData = new ProductFilterData();
         $filterQuery = $this->filterQueryFactory->createListableProductsByCategoryId(
             $emptyProductFilterData,
@@ -181,6 +205,14 @@ class ProductFacade
      */
     public function getProductsByCategoryCount(Category $category): int
     {
+        @trigger_error(
+            sprintf(
+                'The %s() method is deprecated and will be removed in the next major. It has been replaced by getFilteredProductsByCategoryCount().',
+                __METHOD__
+            ),
+            E_USER_DEPRECATED
+        );
+
         $filterQuery = $this->filterQueryFactory->createListable()
             ->filterByCategory([$category->getId()]);
 
@@ -210,6 +242,14 @@ class ProductFacade
      */
     public function getProductsByBrand(Brand $brand, int $limit, int $offset, string $orderingModeId): array
     {
+        @trigger_error(
+            sprintf(
+                'The %s() method is deprecated and will be removed in the next major. It has been replaced by getFilteredProductsByBrand().',
+                __METHOD__
+            ),
+            E_USER_DEPRECATED
+        );
+
         $emptyProductFilterData = new ProductFilterData();
         $filterQuery = $this->filterQueryFactory->createListableProductsByBrandId(
             $emptyProductFilterData,
@@ -257,6 +297,14 @@ class ProductFacade
      */
     public function getProductsByBrandCount(Brand $brand): int
     {
+        @trigger_error(
+            sprintf(
+                'The %s() method is deprecated and will be removed in the next major. It has been replaced by getFilteredProductsByBrandCount().',
+                __METHOD__
+            ),
+            E_USER_DEPRECATED
+        );
+
         $filterQuery = $this->filterQueryFactory->createListable()
             ->filterByBrands([$brand->getId()]);
 

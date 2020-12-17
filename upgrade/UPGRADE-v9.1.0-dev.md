@@ -270,3 +270,13 @@ There you can find links to upgrade notes for other versions too.
 - set redis client to cache friendly url slugs ([#2146](https://github.com/shopsys/shopsys/pull/2146))
     - see #project-base-diff to update your project
         - you need to define new cache pool `main_friendly_url_slug_cache` which will be automatically passed in `Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRouterFactory` constructors argument named `$mainFriendlyUrlSlugCache`
+    
+- add products filtering to FE API ([#2156](https://github.com/shopsys/shopsys/pull/2156))
+    - see #project-base-diff to update your project
+    - these methods in `Shopsys\FrontendApiBundle\Model\Product\ProductFacade` are now deprecated:
+        - `getProductsCountOnCurrentDomain()` has been replaced by `getFilteredProductsCountOnCurrentDomain()`
+        - `getProductsOnCurrentDomain()` has been replaced by `getFilteredProductsOnCurrentDomain()`
+        - `getProductsByCategory()` has been replaced by `getFilteredProductsByCategory()`
+        - `getProductsByCategoryCount()` has been replaced by `getFilteredProductsByCategoryCount()`
+        - `getProductsByBrand()` has been replaced by `getFilteredProductsByBrand()`
+        - `getProductsByBrandCount()` has been replaced by `getFilteredProductsByBrandCount()`
