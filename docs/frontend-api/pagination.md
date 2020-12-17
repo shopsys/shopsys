@@ -86,8 +86,10 @@ To get next page you simply need to add the `after` parameter if you are using `
 }
 ```
 
-To order your result add the `orderingMode` parameter, which is GraphQL enum type `ProductOrderingModeEnum`. You are not able to use other value than supported values of the specified type.
+To order your result add the `orderingMode` parameter, which is GraphQL enum type `ProductOrderingModeEnum`. 
+You are not able to use other value than supported values of the specified type.
 If you want to add more ordering modes, feel free to extend the type in `ProductOrderingModeEnum.types.yaml`.
+Default ordering is `relevance` for search and `priority` for other queries.
 ```text
 {
   products (orderingMode: NAME_ASC) {

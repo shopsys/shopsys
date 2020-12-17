@@ -38,6 +38,9 @@ class PaginatorArgumentsBuilder implements MappingInterface
             'filter' => [
                 'type' => 'ProductFilter',
             ],
+            'search' => [
+                'type' => 'String',
+            ],
         ];
     }
 
