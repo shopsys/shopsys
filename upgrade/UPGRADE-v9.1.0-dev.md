@@ -263,3 +263,7 @@ There you can find links to upgrade notes for other versions too.
     - you may want to update your own native queries in similar way
     - don't forget that parameters in the `executeStatement()` call should have a type explicitly defined (see PR for examples)
     - see #project-base-diff to update your project
+
+- set redis client to cache friendly url slugs ([#2146](https://github.com/shopsys/shopsys/pull/2146))
+    - see #project-base-diff to update your project
+        - you need to define new cache pool `main_friendly_url_slug_cache` which will be automatically passed in `Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRouterFactory` constructors argument named `$mainFriendlyUrlSlugCache`

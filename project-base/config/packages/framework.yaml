@@ -21,3 +21,8 @@ framework:
         collect: false
     assets: ~
     error_controller: 'App\Controller\Front\ErrorController::showAction'
+    cache:
+        pools:
+            main_friendly_url_slug_cache:
+                adapter: cache.adapter.redis
+                provider: snc_redis.main_friendly_url_slugs

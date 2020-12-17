@@ -4,12 +4,14 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Component\Router\FriendlyUrl;
 
+use BadMethodCallException;
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\Exception\FriendlyUrlNotFoundException;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\Exception\ReachMaxUrlUniqueResolveAttemptException;
 use Symfony\Component\Routing\Exception\ResourceNotFoundException;
+use Symfony\Contracts\Cache\CacheInterface;
 
 class FriendlyUrlFacade
 {
@@ -46,12 +48,24 @@ class FriendlyUrlFacade
     protected $friendlyUrlFactory;
 
     /**
+     * @var \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlCacheKeyProvider|null
+     */
+    protected ?FriendlyUrlCacheKeyProvider $friendlyUrlCacheKeyProvider;
+
+    /**
+     * @var \Symfony\Contracts\Cache\CacheInterface|null
+     */
+    protected ?CacheInterface $mainFriendlyUrlSlugCache;
+
+    /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory $domainRouterFactory
      * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlUniqueResultFactory $friendlyUrlUniqueResultFactory
      * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRepository $friendlyUrlRepository
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFactoryInterface $friendlyUrlFactory
+     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlCacheKeyProvider|null $friendlyUrlCacheKeyProvider
+     * @param \Symfony\Contracts\Cache\CacheInterface|null $mainFriendlyUrlSlugCache
      */
     public function __construct(
         EntityManagerInterface $em,
@@ -59,14 +73,26 @@ class FriendlyUrlFacade
         FriendlyUrlUniqueResultFactory $friendlyUrlUniqueResultFactory,
         FriendlyUrlRepository $friendlyUrlRepository,
         Domain $domain,
-        FriendlyUrlFactoryInterface $friendlyUrlFactory
+        FriendlyUrlFactoryInterface $friendlyUrlFactory,
+        ?FriendlyUrlCacheKeyProvider $friendlyUrlCacheKeyProvider = null,
+        ?CacheInterface $mainFriendlyUrlSlugCache = null
     ) {
+        if ($mainFriendlyUrlSlugCache === null) {
+            $deprecationMessage = sprintf(
+                'The argument "$mainFriendlyUrlSlugCache" is not provided by constructor in "%s". In the next major it will be required.',
+                self::class
+            );
+            @trigger_error($deprecationMessage, E_USER_DEPRECATED);
+        }
+
         $this->em = $em;
         $this->domainRouterFactory = $domainRouterFactory;
         $this->friendlyUrlUniqueResultFactory = $friendlyUrlUniqueResultFactory;
         $this->friendlyUrlRepository = $friendlyUrlRepository;
         $this->domain = $domain;
         $this->friendlyUrlFactory = $friendlyUrlFactory;
+        $this->mainFriendlyUrlSlugCache = $mainFriendlyUrlSlugCache;
+        $this->friendlyUrlCacheKeyProvider = $friendlyUrlCacheKeyProvider;
     }
 
     /**
@@ -238,6 +264,7 @@ class FriendlyUrlFacade
             $friendlyUrl->setMain(false);
         }
         $mainFriendlyUrl->setMain(true);
+        $this->renewMainFriendlyUrlSlugCache($mainFriendlyUrl);
 
         $this->em->flush($friendlyUrls);
     }
@@ -264,5 +291,54 @@ class FriendlyUrlFacade
         }
 
         $this->em->flush();
+    }
+
+    /**
+     * @required
+     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlCacheKeyProvider $friendlyUrlCacheKeyProvider
+     * @internal This function will be replaced by constructor injection in next major
+     */
+    public function setFriendlyUrlCacheKeyProvider(FriendlyUrlCacheKeyProvider $friendlyUrlCacheKeyProvider): void
+    {
+        if (
+            $this->friendlyUrlCacheKeyProvider !== null
+            && $this->friendlyUrlCacheKeyProvider !== $friendlyUrlCacheKeyProvider
+        ) {
+            throw new BadMethodCallException(
+                sprintf('Method "%s" has been already called and cannot be called multiple times.', __METHOD__)
+            );
+        }
+        if ($this->friendlyUrlCacheKeyProvider !== null) {
+            return;
+        }
+
+        @trigger_error(
+            sprintf(
+                'The %s() method is deprecated and will be removed in the next major. Use the constructor injection instead.',
+                __METHOD__
+            ),
+            E_USER_DEPRECATED
+        );
+        $this->friendlyUrlCacheKeyProvider = $friendlyUrlCacheKeyProvider;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrl $mainFriendlyUrl
+     */
+    protected function renewMainFriendlyUrlSlugCache(FriendlyUrl $mainFriendlyUrl): void
+    {
+        if ($this->mainFriendlyUrlSlugCache === null) {
+            return;
+        }
+
+        $cacheKey = $this->friendlyUrlCacheKeyProvider->getMainFriendlyUrlSlugCacheKey(
+            $mainFriendlyUrl->getRouteName(),
+            $mainFriendlyUrl->getDomainId(),
+            $mainFriendlyUrl->getEntityId()
+        );
+        $this->mainFriendlyUrlSlugCache->delete($cacheKey);
+        $this->mainFriendlyUrlSlugCache->get($cacheKey, function () use ($mainFriendlyUrl) {
+            return $mainFriendlyUrl->getSlug();
+        });
     }
 }
