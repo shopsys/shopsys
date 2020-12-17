@@ -114,7 +114,7 @@ class CategoryResolver implements ResolverInterface, AliasedInterface
             E_USER_DEPRECATED
         );
         try {
-            return $this->categoryFacade->getByUuid($uuid);
+            return $this->categoryFacade->getVisibleOnDomainByUuid($this->domain->getId(), $uuid);
         } catch (CategoryNotFoundException $categoryNotFoundException) {
             throw new UserError($categoryNotFoundException->getMessage());
         }
