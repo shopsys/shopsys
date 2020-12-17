@@ -223,6 +223,13 @@ class ProductRepository
         PricingGroup $pricingGroup,
         Brand $brand
     ) {
+        @trigger_error(
+            sprintf(
+                'The %s() method is deprecated and will be removed in the next major. It will be replaced by getListableForBrandQueryBuilder() which will change its visibility to public.',
+                __METHOD__
+            ),
+            E_USER_DEPRECATED
+        );
         return $this->getListableForBrandQueryBuilder($domainId, $pricingGroup, $brand);
     }
 
