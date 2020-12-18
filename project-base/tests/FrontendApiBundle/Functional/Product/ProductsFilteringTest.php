@@ -8,9 +8,8 @@ use App\DataFixtures\Demo\BrandDataFixture;
 use App\DataFixtures\Demo\CategoryDataFixture;
 use App\DataFixtures\Demo\FlagDataFixture;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade;
-use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
-class ProductsFilteringTest extends GraphQlTestCase
+class ProductsFilteringTest extends ProductsGraphQlTestCase
 {
     private const PARAMETER_NUMBER_OF_BUTTONS_ID = 9;
 
@@ -204,37 +203,5 @@ class ProductsFilteringTest extends GraphQlTestCase
         ];
 
         $this->assertProducts($query, 'category', $productsExpected);
-    }
-
-    /**
-     * @param string $query
-     * @param string $graphQlType
-     * @param array $products
-     * @param bool $found
-     */
-    private function assertProducts(string $query, string $graphQlType, array $products, bool $found = true): void
-    {
-        $response = $this->getResponseContentForQuery($query);
-
-        $this->assertResponseContainsArrayOfDataForGraphQlType($response, $graphQlType);
-        $responseData = $this->getResponseDataForGraphQlType($response, $graphQlType);
-
-        if ($graphQlType !== 'products') {
-            $responseData = $responseData['products'];
-        }
-
-        $this->assertArrayHasKey('edges', $responseData);
-
-        $queryResult = [];
-        foreach ($responseData['edges'] as $edge) {
-            $this->assertArrayHasKey('node', $edge);
-            $queryResult[] = $edge['node'];
-        }
-
-        if ($found === true) {
-            $this->assertEquals($products, $queryResult, json_encode($queryResult));
-        } else {
-            $this->assertNotEquals($products, $queryResult, json_encode($queryResult));
-        }
     }
 }

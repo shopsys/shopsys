@@ -76,11 +76,16 @@ class ProductFacade
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
+     * @param string $search
      * @return int
      */
-    public function getFilteredProductsCountOnCurrentDomain(ProductFilterData $productFilterData): int
+    public function getFilteredProductsCountOnCurrentDomain(ProductFilterData $productFilterData, string $search): int
     {
         $filterQuery = $this->filterQueryFactory->createListableWithProductFilter($productFilterData);
+
+        if ($search !== '') {
+            $filterQuery = $filterQuery->search($search);
+        }
 
         return $this->productElasticsearchRepository->getProductsCountByFilterQuery($filterQuery);
     }
@@ -119,13 +124,15 @@ class ProductFacade
      * @param int $offset
      * @param string $orderingModeId
      * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
+     * @param string $search
      * @return array
      */
     public function getFilteredProductsOnCurrentDomain(
         int $limit,
         int $offset,
         string $orderingModeId,
-        ProductFilterData $productFilterData
+        ProductFilterData $productFilterData,
+        string $search
     ): array {
         $filterQuery = $this->filterQueryFactory->createWithProductFilterData(
             $productFilterData,
@@ -133,6 +140,10 @@ class ProductFacade
             1,
             $limit
         )->setFrom($offset);
+
+        if ($search !== '') {
+            $filterQuery = $filterQuery->search($search);
+        }
 
         $productsResult = $this->productElasticsearchRepository->getSortedProductsResultByFilterQuery($filterQuery);
 
@@ -176,6 +187,7 @@ class ProductFacade
      * @param int $offset
      * @param string $orderingModeId
      * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
+     * @param string $search
      * @return array
      */
     public function getFilteredProductsByCategory(
@@ -183,7 +195,8 @@ class ProductFacade
         int $limit,
         int $offset,
         string $orderingModeId,
-        ProductFilterData $productFilterData
+        ProductFilterData $productFilterData,
+        string $search
     ): array {
         $filterQuery = $this->filterQueryFactory->createListableProductsByCategoryId(
             $productFilterData,
@@ -192,6 +205,10 @@ class ProductFacade
             $limit,
             $category->getId()
         )->setFrom($offset);
+
+        if ($search !== '') {
+            $filterQuery = $filterQuery->search($search);
+        }
 
         $productsResult = $this->productElasticsearchRepository->getSortedProductsResultByFilterQuery($filterQuery);
 
@@ -222,12 +239,20 @@ class ProductFacade
     /**
      * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
      * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
+     * @param string $search
      * @return int
      */
-    public function getFilteredProductsByCategoryCount(Category $category, ProductFilterData $productFilterData): int
-    {
+    public function getFilteredProductsByCategoryCount(
+        Category $category,
+        ProductFilterData $productFilterData,
+        string $search
+    ): int {
         $filterQuery = $this->filterQueryFactory->createListableWithProductFilter($productFilterData)
             ->filterByCategory([$category->getId()]);
+
+        if ($search !== '') {
+            $filterQuery = $filterQuery->search($search);
+        }
 
         return $this->productElasticsearchRepository->getProductsCountByFilterQuery($filterQuery);
     }
@@ -269,6 +294,7 @@ class ProductFacade
      * @param int $offset
      * @param string $orderingModeId
      * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
+     * @param string $search
      * @return array
      */
     public function getFilteredProductsByBrand(
@@ -276,7 +302,8 @@ class ProductFacade
         int $limit,
         int $offset,
         string $orderingModeId,
-        ProductFilterData $productFilterData
+        ProductFilterData $productFilterData,
+        string $search
     ): array {
         $filterQuery = $this->filterQueryFactory->createListableProductsByBrandId(
             $productFilterData,
@@ -285,6 +312,10 @@ class ProductFacade
             $limit,
             $brand->getId()
         )->setFrom($offset);
+
+        if ($search !== '') {
+            $filterQuery = $filterQuery->search($search);
+        }
 
         $productsResult = $this->productElasticsearchRepository->getSortedProductsResultByFilterQuery($filterQuery);
         return $productsResult->getHits();
@@ -314,12 +345,20 @@ class ProductFacade
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Brand\Brand $brand
      * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
+     * @param string $search
      * @return int
      */
-    public function getFilteredProductsByBrandCount(Brand $brand, ProductFilterData $productFilterData): int
-    {
+    public function getFilteredProductsByBrandCount(
+        Brand $brand,
+        ProductFilterData $productFilterData,
+        string $search
+    ): int {
         $filterQuery = $this->filterQueryFactory->createListableWithProductFilter($productFilterData)
             ->filterByBrands([$brand->getId()]);
+
+        if ($search !== '') {
+            $filterQuery = $filterQuery->search($search);
+        }
 
         return $this->productElasticsearchRepository->getProductsCountByFilterQuery($filterQuery);
     }

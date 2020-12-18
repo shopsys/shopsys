@@ -163,6 +163,8 @@ class ProductsResolver implements ResolverInterface, AliasedInterface
      */
     public function resolve(Argument $argument)
     {
+        $search = $argument['search'] ?? '';
+
         $this->setDefaultFirstOffsetIfNecessary($argument);
 
         $productFilterData = $this->productFilterFacade->getValidatedProductFilterDataForAll(
@@ -170,15 +172,16 @@ class ProductsResolver implements ResolverInterface, AliasedInterface
         );
 
         return $this->productConnectionFactory->createConnectionForAll(
-            function ($offset, $limit) use ($argument, $productFilterData) {
+            function ($offset, $limit) use ($argument, $productFilterData, $search) {
                 return $this->productFacade->getFilteredProductsOnCurrentDomain(
                     $limit,
                     $offset,
                     $this->getOrderingModeFromArgument($argument),
-                    $productFilterData
+                    $productFilterData,
+                    $search
                 );
             },
-            $this->productFacade->getFilteredProductsCountOnCurrentDomain($productFilterData),
+            $this->productFacade->getFilteredProductsCountOnCurrentDomain($productFilterData, $search),
             $argument,
             $productFilterData
         );
@@ -191,6 +194,8 @@ class ProductsResolver implements ResolverInterface, AliasedInterface
      */
     public function resolveByCategory(Argument $argument, Category $category)
     {
+        $search = $argument['search'] ?? '';
+
         $this->setDefaultFirstOffsetIfNecessary($argument);
 
         $productFilterData = $this->productFilterFacade->getValidatedProductFilterDataForCategory(
@@ -200,16 +205,17 @@ class ProductsResolver implements ResolverInterface, AliasedInterface
 
         return $this->productConnectionFactory->createConnectionForCategory(
             $category,
-            function ($offset, $limit) use ($argument, $category, $productFilterData) {
+            function ($offset, $limit) use ($argument, $category, $productFilterData, $search) {
                 return $this->productFacade->getFilteredProductsByCategory(
                     $category,
                     $limit,
                     $offset,
                     $this->getOrderingModeFromArgument($argument),
-                    $productFilterData
+                    $productFilterData,
+                    $search
                 );
             },
-            $this->productFacade->getFilteredProductsByCategoryCount($category, $productFilterData),
+            $this->productFacade->getFilteredProductsByCategoryCount($category, $productFilterData, $search),
             $argument,
             $productFilterData
         );
@@ -222,6 +228,8 @@ class ProductsResolver implements ResolverInterface, AliasedInterface
      */
     public function resolveByBrand(Argument $argument, Brand $brand)
     {
+        $search = $argument['search'] ?? '';
+
         $this->setDefaultFirstOffsetIfNecessary($argument);
 
         $productFilterData = $this->productFilterFacade->getValidatedProductFilterDataForBrand(
@@ -231,16 +239,17 @@ class ProductsResolver implements ResolverInterface, AliasedInterface
 
         return $this->productConnectionFactory->createConnectionForBrand(
             $brand,
-            function ($offset, $limit) use ($argument, $brand, $productFilterData) {
+            function ($offset, $limit) use ($argument, $brand, $productFilterData, $search) {
                 return $this->productFacade->getFilteredProductsByBrand(
                     $brand,
                     $limit,
                     $offset,
                     $this->getOrderingModeFromArgument($argument),
-                    $productFilterData
+                    $productFilterData,
+                    $search
                 );
             },
-            $this->productFacade->getFilteredProductsByBrandCount($brand, $productFilterData),
+            $this->productFacade->getFilteredProductsByBrandCount($brand, $productFilterData, $search),
             $argument,
             $productFilterData
         );
@@ -272,7 +281,8 @@ class ProductsResolver implements ResolverInterface, AliasedInterface
      */
     protected function getOrderingModeFromArgument(Argument $argument): string
     {
-        $orderingMode = $this->getDefaultOrderingMode();
+        $orderingMode = $this->getDefaultOrderingMode($argument);
+
         if ($argument->offsetExists('orderingMode')) {
             $orderingMode = $argument->offsetGet('orderingMode');
         }
@@ -281,10 +291,15 @@ class ProductsResolver implements ResolverInterface, AliasedInterface
     }
 
     /**
+     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
      * @return string
      */
-    protected function getDefaultOrderingMode(): string
+    protected function getDefaultOrderingMode(Argument $argument): string
     {
+        if (isset($argument['search'])) {
+            return ProductListOrderingConfig::ORDER_BY_RELEVANCE;
+        }
+
         return ProductListOrderingConfig::ORDER_BY_PRIORITY;
     }
 }
