@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Customer\User;
 
+use BadMethodCallException;
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\String\HashGenerator;
 use Shopsys\FrameworkBundle\Model\Customer\Exception\InvalidResetPasswordHashUserException;
@@ -59,13 +60,43 @@ class CustomerUserPasswordFacade
         EncoderFactoryInterface $encoderFactory,
         ResetPasswordMailFacade $resetPasswordMailFacade,
         HashGenerator $hashGenerator,
-        CustomerUserRefreshTokenChainFacade $customerUserRefreshTokenChainFacade
+        ?CustomerUserRefreshTokenChainFacade $customerUserRefreshTokenChainFacade = null
     ) {
         $this->em = $em;
         $this->customerUserRepository = $customerUserRepository;
         $this->encoderFactory = $encoderFactory;
         $this->resetPasswordMailFacade = $resetPasswordMailFacade;
         $this->hashGenerator = $hashGenerator;
+        $this->customerUserRefreshTokenChainFacade = $customerUserRefreshTokenChainFacade;
+    }
+
+    /**
+     * @required
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRefreshTokenChainFacade $customerUserRefreshTokenChainFacade
+     * @internal This function will be replaced by constructor injection in next major
+     */
+    public function setCustomerUserRefreshTokenChainFacade(
+        CustomerUserRefreshTokenChainFacade $customerUserRefreshTokenChainFacade
+    ): void {
+        if (
+            $this->customerUserRefreshTokenChainFacade !== null
+            && $this->customerUserRefreshTokenChainFacade !== $customerUserRefreshTokenChainFacade
+        ) {
+            throw new BadMethodCallException(
+                sprintf('Method "%s" has been already called and cannot be called multiple times.', __METHOD__)
+            );
+        }
+        if ($this->customerUserRefreshTokenChainFacade !== null) {
+            return;
+        }
+
+        @trigger_error(
+            sprintf(
+                'The %s() method is deprecated and will be removed in the next major. Use the constructor injection instead.',
+                __METHOD__
+            ),
+            E_USER_DEPRECATED
+        );
         $this->customerUserRefreshTokenChainFacade = $customerUserRefreshTokenChainFacade;
     }
 
