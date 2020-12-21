@@ -1,6 +1,6 @@
-# [Upgrade from v9.0.1 to v9.1.0-dev](https://github.com/shopsys/shopsys/compare/v9.0.1...master)
+# [Upgrade from v9.0.4 to v9.1.0](https://github.com/shopsys/shopsys/compare/v9.0.4...v9.1.0)
 
-This guide contains instructions to upgrade from version v9.0.1 to v9.1.0-dev.
+This guide contains instructions to upgrade from version v9.0.4 to v9.1.0.
 
 **Before you start, don't forget to take a look at [general instructions](https://github.com/shopsys/shopsys/blob/master/UPGRADE.md) about upgrading.**
 There you can find links to upgrade notes for other versions too.
@@ -11,6 +11,19 @@ There you can find links to upgrade notes for other versions too.
 
 - add support for changing personal data and password to your Frontend API ([#1891](https://github.com/shopsys/shopsys/pull/1891))
     - see [project-base-diff](https://github.com/shopsys/project-base/commit/cc147582f14e1708443e5bd15f86a356d0de0b73) to update your project
+    - following methods has changed their interface:
+        - `Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserPasswordFacade::__construct()`
+            ```diff
+                public function __construct(
+                    EntityManagerInterface $em,
+                    CustomerUserRepository $customerUserRepository,
+                    EncoderFactoryInterface $encoderFactory,
+                    ResetPasswordMailFacade $resetPasswordMailFacade,
+            -       HashGenerator $hashGenerator
+            +       HashGenerator $hashGenerator,
+            +       ?CustomerUserRefreshTokenChainFacade $customerUserRefreshTokenChainFacade = null
+                ) {
+            ```
 
 - fix not working upload of files in wysiwyg editor ([#1899](https://github.com/shopsys/shopsys/pull/1899))
     - see [project-base-diff](https://github.com/shopsys/project-base/commit/f18165c505fa6d2960f8f4f9901a301e46c15b39) to update your project
@@ -54,6 +67,8 @@ There you can find links to upgrade notes for other versions too.
 - phpstan analyse increased to level 5 ([#1922](https://github.com/shopsys/shopsys/pull/1922))
     - increasing phpstan level on your project is optional and may be set in `build.xml`
     - see [project-base-diff](https://github.com/shopsys/project-base/commit/b4ce5f9d1b8dedef369684117c2e6cb5d2f38fde) to update your project
+    - *BC BREAK* method `FeedExportFactory::create` has changed definition of third argument (removed type hint)
+      - in case you have overridden this method you have to make the interface compatible
     
 - add articles resolver to your Frontend API ([#1996](https://github.com/shopsys/shopsys/pull/1996))
     - see [project-base-diff](https://github.com/shopsys/project-base/commit/2c2999d73c0853e6d70c850fcfdf2b3ec6bec7cf) to update your project
@@ -96,7 +111,7 @@ There you can find links to upgrade notes for other versions too.
             -       ImageViewFacade $imageViewFacade
             +       ImageViewFacadeInterface $imageViewFacade,
             +       ?ProductActionViewFactory $productActionViewFactory = null
-                )
+                ) {
             ```
         - `Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFactory::__construct()`
             ```diff
@@ -106,7 +121,7 @@ There you can find links to upgrade notes for other versions too.
             +       ProductCachedAttributesFacade $productCachedAttributesFacade,
             +       ?ImageViewFacadeInterface $imageViewFacade = null,
             +       ?ProductActionViewFacadeInterface $productActionViewFacade = null
-                )
+                ) {
             ```
     - following methods and properties were deprecated and will be removed in the next major version:
         - `Shopsys\ReadModelBundle\Image\ImageViewFacade::getForEntityIds()` use `getMainImagesByEntityIds()` instead
@@ -182,7 +197,19 @@ There you can find links to upgrade notes for other versions too.
     - see [project-base-diff](https://github.com/shopsys/project-base/commit/c07cdf108dab43cfcb59a04e21b937e55c8285dd) to update your project
 
 - allow placing scripts in administration after content([#2086](https://github.com/shopsys/shopsys/pull/2086))
-    - see [project-base-diff](https://github.com/shopsys/project-base/commit/84d773a9fa3a15299602062f5fde834a47149af8) to update your project
+    - see [project-base-diff](https://github.com/shopsys/project-base/commit/84d773a9fa3a15299602062f5fde834a47149af8) to update your project 
+    - following methods has changed their interface:
+        - `\Shopsys\FrameworkBundle\Form\Admin\Script\ScriptFormType::__construct()`
+            ```diff
+            +   public function __construct(ScriptFacade $scriptFacade)
+            +   {
+            +       $this->scriptFacade = $scriptFacade;
+            +   }
+            ```
+    - following class was deprecated and will be removed in the next major
+            - `Shopsys\FrameworkBundle\Form\Transformers\ScriptPlacementToBooleanTransformer`
+    - following method was deprecated and will be removed in the next major
+            - `Shopsys\FrameworkBundle\Model\Script\ScriptFacade::getAllPagesScriptCodes()`
 
 - increase reliability and decrease maintainability of acceptance tests ([#2099](https://github.com/shopsys/shopsys/pull/2099))
     - see [project-base-diff](https://github.com/shopsys/project-base/commit/ef086c60d0d442e31e340865a837565a27127a08) to update your project
@@ -205,12 +232,64 @@ There you can find links to upgrade notes for other versions too.
             - it should not cause any trouble as filtering product from Elasticsearch was edited to filter variants out, so it behaves same as earlier
             - when you have some of related functionality extended you should probably want to filter variants out by yourself
                 - method `FilterQuery::filterOutVariants()` was introduced for this purposes
+    - following methods has changed their interface:
+        - `Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductExportRepository::__construct()`
+            ```diff
+                public function __construct(
+                    EntityManagerInterface $em,
+                    ParameterRepository $parameterRepository,
+                    ProductFacade $productFacade,
+                    FriendlyUrlRepository $friendlyUrlRepository,
+                    Domain $domain,
+                    ProductVisibilityRepository $productVisibilityRepository,
+            -       FriendlyUrlFacade $friendlyUrlFacade
+            +       FriendlyUrlFacade $friendlyUrlFacade,
+            +       ?CategoryFacade $categoryFacade = null,
+            +       ?ProductAccessoryFacade $productAccessoryFacade = null,
+            +       ?BrandCachedFacade $brandCachedFacade = null
+                ) {
+            ```
+        - `Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFactory::__construct()`
+            ```diff
+                public function __construct(
+                    Domain $domain,
+                    ProductCachedAttributesFacade $productCachedAttributesFacade,
+                    ?ImageViewFacadeInterface $imageViewFacade = null,
+            -       ?ProductActionViewFacadeInterface $productActionViewFacade = null
+            +       ?ProductActionViewFacadeInterface $productActionViewFacade = null,
+            +       ?ProductActionViewFactory $productActionViewFactory = null,
+            +       ?CurrentCustomerUser $currentCustomerUser = null,
+            +       ?PriceFactory $priceFactory = null
+                ) {
+            ```
 
 - fix cleaning of old redis cache ([#2096](https://github.com/shopsys/shopsys/pull/2096))
     - see [project-base-diff](https://github.com/shopsys/project-base/commit/b7c4878d16ea0c6a920341af3baf0332156c4f98) to update your project
 
 - enable logging in tests ([#2113](https://github.com/shopsys/shopsys/pull/2113))
     - see [project-base-diff](https://github.com/shopsys/project-base/commit/3830685ea04c014a50fda41d856823d8fe006942) to update your project
+
+- replace private to protected for constraints ([#2070](https://github.com/shopsys/shopsys/pull/2070))
+    - visibility of following properties and methods is now protected instead of private. You should adjust visibility in extended classes
+        - `Shopsys\FrameworkBundle\Form\Constraints\CountryValidator::$domain`
+        - `Shopsys\FrameworkBundle\Form\Constraints\EmailValidator::isEmail()`
+        - `Shopsys\FrameworkBundle\Form\Constraints\FileAbstractFilesystemValidator::$mountManager`
+        - `Shopsys\FrameworkBundle\Form\Constraints\FileAbstractFilesystemValidator::$fileUpload`
+        - `Shopsys\FrameworkBundle\Form\Constraints\FileAbstractFilesystemValidator::$parameterBag`
+        - `Shopsys\FrameworkBundle\Form\Constraints\ImageAbstractFilesystemValidator::$mountManager`
+        - `Shopsys\FrameworkBundle\Form\Constraints\ImageAbstractFilesystemValidator::$fileUpload`
+        - `Shopsys\FrameworkBundle\Form\Constraints\ImageAbstractFilesystemValidator::$parameterBag`
+        - `Shopsys\FrameworkBundle\Form\Constraints\NotSelectedDomainToShowValidator::$domain`
+        - `Shopsys\FrameworkBundle\Form\Constraints\UniqueCollectionValidator::areValuesEqual()`
+        - `Shopsys\FrameworkBundle\Form\Constraints\UniqueCollectionValidator::areValuesEqualInFields()`
+        - `Shopsys\FrameworkBundle\Form\Constraints\UniqueCollectionValidator::getFieldValue()`
+        - `Shopsys\FrameworkBundle\Form\Constraints\UniqueEmailValidator::$customerUserFacade`
+        - `Shopsys\FrameworkBundle\Form\Constraints\UniqueEmailValidator::$domain`
+        - `Shopsys\FrameworkBundle\Form\Constraints\UniqueSlugsOnDomainsValidator::$domain`
+        - `Shopsys\FrameworkBundle\Form\Constraints\UniqueSlugsOnDomainsValidator::$domainRouterFactory`
+        - `Shopsys\FrameworkBundle\Form\Constraints\UniqueSlugsOnDomainsValidator::validateDuplication()`
+        - `Shopsys\FrameworkBundle\Form\Constraints\UniqueSlugsOnDomainsValidator::validateExists()`
+        - `Shopsys\FrameworkBundle\Form\Constraints\UniqueSlugsOnDomainsValidator::getSlugsCountIndexedByDomainId()`
 
 - avoid missing or delayed logs ([#2103](https://github.com/shopsys/shopsys/pull/2103))
     - see [project-base-diff](https://github.com/shopsys/project-base/commit/3e01fb33dc216dabc22782da99f920e2daaa97b2) to update your project
@@ -223,6 +302,26 @@ There you can find links to upgrade notes for other versions too.
         - in case you need it in your project you should implement it by yourself
     - see [project-base-diff](https://github.com/shopsys/project-base/commit/44ba56dba2eaf97ec0ecc05744bb56278e9cc9d3) to update your project
 
+- accessories is provided by elasticsearch for ListedProductView ([#2123](https://github.com/shopsys/shopsys/pull/2123))
+    - following methods has changed their interface:
+        - `Shopsys\ReadModelBundle\Product\Listed\ListedProductViewElasticFacade::__construct()`
+            ```diff
+                public function __construct(
+                    ProductFacade $productFacade,
+                    ProductAccessoryFacade $productAccessoryFacade,
+                    Domain $domain,
+                    CurrentCustomerUser $currentCustomerUser,
+                    TopProductFacade $topProductFacade,
+                    ProductOnCurrentDomainFacadeInterface $productOnCurrentDomainFacade,
+                    ListedProductViewFactory $listedProductViewFactory,
+                    ProductActionViewFacade $productActionViewFacade,
+                    ImageViewFacadeInterface $imageViewFacade,
+            -       ?ProductActionViewFactory $productActionViewFactory = null
+            +       ?ProductActionViewFactory $productActionViewFactory = null,
+            +       ?ProductElasticsearchProvider $productElasticsearchProvider = null
+                ) {
+            ```
+
 - add support for subscribing for e-mail newsletter to FE API ([#2119](https://github.com/shopsys/shopsys/pull/2119))
     - see [project-base-diff](https://github.com/shopsys/project-base/commit/ec0a50694da356bf25cce62de7169966762f87b0) to update your project
 
@@ -233,13 +332,29 @@ There you can find links to upgrade notes for other versions too.
     - `DomainFactoryOverwritingDomainUrl` is now replacing `DomainFactory` in `ACCEPTANCE` environment instead of `TEST`
 
 - add automatic string trimming and new Password type in frontend API ([#2127](https://github.com/shopsys/shopsys/pull/2127))
-    - see #project-base-diff to update your project
+    - see [project-base-diff](https://github.com/shopsys/project-base/commit/76dd04ed15d79208e0c66cd4bdf79f58c2e2020a) to update your project
 
 - change source of data for a single product to Elasticsearch in FE API ([#2131](https://github.com/shopsys/shopsys/pull/2131))
-    - see #project-base-diff to update your project
+    - see [project-base-diff](https://github.com/shopsys/project-base/commit/95d06cbddf63186ddee3a617292fa851587028bf) to update your project
     - run `php phing elasticsearch-index-migrate elasticsearch-export` to apply changes in Elasticsearch schema mapping
     - *BC BREAK* single product by UUID is now loaded from Elasticsearch with `productDetail` resolver
         - if necessary, you can switch to the former resolver `product` in your `Query.types.yaml` file
+    - following methods has changed their interface:
+        - `Shopsys\FrontendApiBundle\Model\Resolver\Price\PriceResolver::__construct()`
+            ```diff
+                public function __construct(
+                    ProductCachedAttributesFacade $productCachedAttributesFacade,
+                    ProductOnCurrentDomainFacadeInterface $productOnCurrentDomainFacade,
+                    PaymentPriceCalculation $paymentPriceCalculation,
+                    Domain $domain,
+                    CurrencyFacade $currencyFacade,
+            -       TransportPriceCalculation $transportPriceCalculation
+            +       TransportPriceCalculation $transportPriceCalculation,
+            +       ?PriceFacade $priceFacade = null
+                ) {
+            ```
+    - following class was deprecated and will be removed in the next major
+        - `Shopsys\FrontendApiBundle\Model\Resolver\Products\ProductResolver`
 
 - provide cache directory to DomainRouterFactory and LocalizedRouterFactory ([#2133](https://github.com/shopsys/shopsys/pull/2133))
     - the step is necessary in case you have extended following classes:
@@ -249,30 +364,94 @@ There you can find links to upgrade notes for other versions too.
         - for this purpose there were introduced 2 new parameters to be used:
             - `shopsys.router.domain.cache_dir`
             - `shopsys.router.localized.cache_dir`
+    - following methods has changed their interface:
+        - `Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory::__construct()`
+            ```diff
+                public function __construct(
+                    $routerConfiguration,
+            -       LoaderInterface $configLoader,
+            +       ?LoaderInterface $configLoader,
+                    LocalizedRouterFactory $localizedRouterFactory,
+                    FriendlyUrlRouterFactory $friendlyUrlRouterFactory,
+                    Domain $domain,
+            -       RequestStack $requestStack
+            +       RequestStack $requestStack,
+            +       ?ContainerInterface $container = null,
+            +       ?string $cacheDir = null
+                ) {
+            ```
+        - `Shopsys\FrameworkBundle\Component\Router\LocalizedRouterFactory::__construct()`
+            ```diff
+                public function __construct(
+                    $localeRoutersResourcesFilepathMask,
+            -       LoaderInterface $configLoader,
+            +       ?LoaderInterface $configLoader = null,
+            +       ?ContainerInterface $container = null,
+            +       ?string $cacheDir = null
+                ) {
+            ```
 
 - added total count to frontend API connections ([#2141](https://github.com/shopsys/shopsys/pull/2141))
-    - see #project-base-diff to update your project
+    - see [project-base-diff](https://github.com/shopsys/project-base/commit/f250b822a01bd30e601b043a448f08c1698578d9) to update your project
 
 - add ACCEPTANCE file to .gitignore ([#2145](https://github.com/shopsys/shopsys/pull/2145))
-    - see #project-base-diff to update your project
+    - see [project-base-diff](https://github.com/shopsys/project-base/commit/b29ed3a35f48f535b589e8b0634457c50855589a) to update your project
     
 - add email length validation in SubscriptionFormType ([#2120](https://github.com/shopsys/shopsys/pull/2120))
-    - see #project-base-diff to update your project
+    - see [project-base-diff](https://github.com/shopsys/project-base/commit/127f8dd6dabf713c6546953b9d1b25f31d08259a) to update your project
 
 - add support for finding entity by URL slug to FE API ([#2150](https://github.com/shopsys/shopsys/pull/2150))
-    - see #project-base-diff to update your project
+    - see [project-base-diff](https://github.com/shopsys/project-base/commit/68d1e8e8db55e875ebcdc6f1a1a0c47aba8b911b) to update your project
 
 - use DBAL native queries for DML instead of ORM Native SQL ([#2148](https://github.com/shopsys/shopsys/pull/2148))
     - you may want to update your own native queries in similar way
     - don't forget that parameters in the `executeStatement()` call should have a type explicitly defined (see PR for examples)
-    - see #project-base-diff to update your project
+    - see [project-base-diff](https://github.com/shopsys/project-base/commit/85d39c193dc334887b72f711b20a25bc7b513552) to update your project
+    - following class was deprecated and will be removed in the next major
+        - `Shopsys\FrameworkBundle\Component\DataFixture\AbstractNativeFixture`
 
 - set redis client to cache friendly url slugs ([#2146](https://github.com/shopsys/shopsys/pull/2146))
-    - see #project-base-diff to update your project
+    - see [project-base-diff](https://github.com/shopsys/project-base/commit/8c21732a1dfadc602c7ce47fa35ce2ded0041429) to update your project
         - you need to define new cache pool `main_friendly_url_slug_cache` which will be automatically passed in `Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRouterFactory` constructors argument named `$mainFriendlyUrlSlugCache`
-    
+    - following methods has changed their interface:
+        - `Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade::__construct()`
+            ```diff
+                public function __construct(
+                    EntityManagerInterface $em,
+                    DomainRouterFactory $domainRouterFactory,
+                    FriendlyUrlUniqueResultFactory $friendlyUrlUniqueResultFactory,
+                    FriendlyUrlRepository $friendlyUrlRepository,
+                    Domain $domain,
+            -       FriendlyUrlFactoryInterface $friendlyUrlFactory
+            +       FriendlyUrlFactoryInterface $friendlyUrlFactory,
+            +       ?FriendlyUrlCacheKeyProvider $friendlyUrlCacheKeyProvider = null,
+            +       ?CacheInterface $mainFriendlyUrlSlugCache = null
+                ) {
+            ```
+        - `Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlGenerator::__construct()`
+            ```diff
+                public function __construct(
+                    RequestContext $context,
+            -       FriendlyUrlRepository $friendlyUrlRepository
+            +       FriendlyUrlRepository $friendlyUrlRepository,
+            +       ?FriendlyUrlCacheKeyProvider $friendlyUrlCacheKeyProvider = null,
+            +       ?CacheInterface $mainFriendlyUrlSlugCache = null
+                ) {
+            ```
+        - `Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRouterFactory::__construct()`
+            ```diff
+                public function __construct(
+                    $friendlyUrlRouterResourceFilepath,
+                    LoaderInterface $configLoader,
+            -       FriendlyUrlRepository $friendlyUrlRepository
+            +       FriendlyUrlRepository $friendlyUrlRepository,
+            +       ?FriendlyUrlCacheKeyProvider $friendlyUrlCacheKeyProvider = null,
+            +       ?CacheInterface $mainFriendlyUrlSlugCache = null
+                ) {
+            ```
+
 - add products filtering to FE API ([#2156](https://github.com/shopsys/shopsys/pull/2156))
-    - see #project-base-diff to update your project
+    - see [project-base-diff](https://github.com/shopsys/project-base/commit/10daaee1274d4966544a59f07486afbfd64625fd) to update your project
     - these methods in `Shopsys\FrontendApiBundle\Model\Product\ProductFacade` are now deprecated:
         - `getProductsCountOnCurrentDomain()` has been replaced by `getFilteredProductsCountOnCurrentDomain()`
         - `getProductsOnCurrentDomain()` has been replaced by `getFilteredProductsOnCurrentDomain()`
@@ -280,6 +459,17 @@ There you can find links to upgrade notes for other versions too.
         - `getProductsByCategoryCount()` has been replaced by `getFilteredProductsByCategoryCount()`
         - `getProductsByBrand()` has been replaced by `getFilteredProductsByBrand()`
         - `getProductsByBrandCount()` has been replaced by `getFilteredProductsByBrandCount()`
+    - following methods has changed their interface:
+        - `\Shopsys\FrontendApiBundle\Model\Resolver\Products\ProductsResolver::__construct()`
+            ```diff
+                public function __construct(
+                    ProductOnCurrentDomainFacadeInterface $productOnCurrentDomainFacade,
+            -       ?ProductFacade $productFacade = null
+            +       ?ProductFacade $productFacade = null,
+            +       ?ProductFilterFacade $productFilterFacade = null,
+            +       ?ProductConnectionFactory $productConnectionFactory = null
+                ) {
+            ```
 
 - add search of products and categories to FE API ([#2163](https://github.com/shopsys/shopsys/pull/2163))
-    - see #project-base-diff to update your project
+    - see [project-base-diff](https://github.com/shopsys/project-base/commit/17263f533bc85ea6cdd4f4895e0a2cbf871d0127) to update your project

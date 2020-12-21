@@ -13,7 +13,9 @@ Typical upgrade sequence should be:
 
 ***Note:** During the execution of `build-demo-dev phing target`, there will be installed 3-rd party software as dependencies of Shopsys Framework by [composer](https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies) and [npm](https://docs.npmjs.com/about-the-public-npm-registry) with licenses that are described in document [Open Source License Acknowledgements and Third-Party Copyrights](https://github.com/shopsys/shopsys/blob/7.3/open-source-license-acknowledgements-and-third-party-copyrights.md)*
 
-## [From v9.0.3 to v9.1.0-dev]
+## [From v9.1.0 to v9.2.0-dev]
+
+## [From v9.0.4 to v9.1.0]
 
 - allow overriding parameters with ENV variables ([#2055](https://github.com/shopsys/shopsys/pull/2055)))
      - remove `config/parameters.yaml` and `config/parameters_test.yaml` then run `composer install`
@@ -24,7 +26,7 @@ Typical upgrade sequence should be:
 - ProductDetailView provided by elasticsearch ([#2090](https://github.com/shopsys/shopsys/pull/2090))
     - run `php phing elasticsearch-index-migrate elasticsearch-export` to apply changes
 
-## [From v9.0.3 to v9.0.4-dev]
+## [From v9.0.3 to v9.0.4]
 
 ## [From v9.0.2 to v9.0.3]
 
@@ -198,7 +200,9 @@ Typical upgrade sequence should be:
     - `build.dockerfile` should be `docker/Dockerfile`
     - execute `docker-compose up -d --build`, microservices should be up and running
 
-[From v9.0.3 to v9.0.4-dev]: https://github.com/shopsys/shopsys/compare/v9.0.3...9.0
+[From v9.1.0 to v9.2.0-dev]: https://github.com/shopsys/shopsys/compare/v9.1.0...master
+[From v9.0.4 to v9.1.0]: https://github.com/shopsys/shopsys/compare/v9.0.4...v9.1.0
+[From v9.0.3 to v9.0.4]: https://github.com/shopsys/shopsys/compare/v9.0.3...v9.0.4
 [From v9.0.2 to v9.0.3]: https://github.com/shopsys/shopsys/compare/v9.0.2...v9.0.3
 [From v9.0.1 to v9.0.2]: https://github.com/shopsys/shopsys/compare/v9.0.1...v9.0.2
 [From v9.0.0 to v9.0.1]: https://github.com/shopsys/shopsys/compare/v9.0.0...v9.0.1
