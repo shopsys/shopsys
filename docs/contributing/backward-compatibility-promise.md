@@ -23,7 +23,7 @@ Once created, a git tag marking a release will never be removed or edited.
     Pre-release version format is `MAJOR.MINOR.PATCH-<alpha|beta|rc><n>`, eg. `7.0.0-beta5`.
 
 ### Current Release Plan
-Currently, `7.3` and `9.0` versions are supported, i.e. we are releasing patch versions for them on a regular basis.
+Currently, `7.3` and `9.1` versions are supported, i.e. we are releasing patch versions for them on a regular basis.
 
 To be able to develop and improve Shopsys Framework we plan to release `MAJOR` version approximately once a year, for more details please see our [Roadmap](https://www.shopsys.com/product-roadmap/). 
 
