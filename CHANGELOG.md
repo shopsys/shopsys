@@ -30,6 +30,151 @@ The changelog is generated during the release process using [ChangelogLinker](ht
 
 <!-- changelog-linker -->
 
+## [v9.1.0](https://github.com/shopsys/shopsys/compare/v9.0.4...v9.1.0) - 2020-12-21
+
+### [shopsys/framework]
+
+#### Added
+
+- [#1951] new phing target for changing environment
+
+#### Changed
+
+- [#1933] optimization of calling replacing extended entities in queries, Thanks to [@pk16011990]
+- [#1994] added link into breadcrumb item in admin if uri is not null
+- [#2031] deprecated notice is triggered when deprecated method is called
+- [#2070] do not use private in constraints, Thanks to [@pk16011990]
+- [#2079] throwable is now available in logger context when a cron fails on error
+- [#2080] optimization: flush the whole identity map when an order is created
+- [#2084] do not run checks for cart modifications on cart delete
+- [#2118] ConstantVisibilityRequiredSniff and ForceLateStaticBindingForProtectedConstantsSniff are ignored for sources folders only in project-base
+- [#2133] enabled caching for DomainRouter and LocalizedRouter, Thanks to [@pk16011990]
+- [#2148] use DBAL native queries for DML instead of ORM Native SQL
+- [#2153] refactoring of NormalizeUrlTrailingSlashSubscriber
+
+#### Fixed
+
+- [#1760] added array_key_exists condition into to NotNullableColumnsFinder method
+- [#1901] fixed AdministratorFacade::changePassword() method
+- [#1952] JS validation: fix creating of prototype of compound item in collection, Thanks to [@pk16011990]
+- [#2064] fixed currencies menu text
+- [#2083] fixed checking of empty settings values
+- [#2091] fixed rendering currency symbol in admin grid
+- [#2095] wrong annotation of return type in getFullPathsIndexedByIdsForDomain, Thanks to [@CarabineSK]
+- [#2142] fixed copying images when creating variants
+
+#### Removed
+
+- [#2020] removed SliderFormType excessive ID constraint, Thanks to [@milanStano]
+
+### [shopsys/frontend-api]
+
+#### Added
+
+- [#1891] added support for changing personal data and password to frontend API
+- [#1960] added resolvers for orders
+- [#1996] added articles resolver
+- [#2002] added special article resolvers
+- [#2047] added brands to frontend API
+- [#2057] added missing data to Product frontend API type
+- [#2066] added promoted products
+- [#2067] added seo information to FEAPI
+- [#2068] added resolver for adverts into FEAPI
+- [#2100] added support for customer user registration to Frontend API
+- [#2110] FE API ordering products
+- [#2119] added support for subscribing for e-mail newsletter to FE API
+- [#2150] added support to find entity by slug into FEAPI
+- [#2163] added search for products and categories in frontend API
+
+#### Changed
+
+- [#2019] made functional tests independent on domain locales
+- [#2127] string inputs are always trimmed
+- [#2140] removed unnecessary UUID validations from resolvers
+- [#2151] FE API returns visible category by uuid
+- [#2154] removed deprecated use of time as integer in IAT and EXP claims
+- [#2159] rename Mutation to MutationDecorator, Thanks to [@stanoMilan]
+
+#### Fixed
+
+- [#1912] fixed ChangePasswordTest for FE API
+- [#2158] fixed wrong annotations of ParameterWithValues
+
+### [shopsys/shopsys]
+
+#### Added
+
+- [#1894] added psr/event-dispatcher in order to prevent phpstan to repport missing class errors
+- [#1961] added phpstan-symfony extension
+- [#1989] required new line at the end of files
+- [#2074] added product seo informations into elasticsearch
+- [#2141] added total count to frontend API connections
+
+#### Changed
+
+- [#1922] raised phpstan analyse to level 5
+- [#1957] update tests to use tests container to decrease amount of services defined in `services_test.yaml`
+- [#1976] moved setting common entity data to the method
+- [#1999] ReadModel for product detail
+- [#2025] optimized monorepo docker files
+- [#2024] moved npm-global directory to project so it is included in volume
+- [#2032] remove FE API only dependencies from framework
+- [#2035] added more coding standards
+- [#2037] changed default locale in test to domain locale
+- [#2040] unified using ENVs
+- [#2049] autocompletion for Phing targets
+- [#2052] do not require short list syntax
+- [#2055] made parameters overridable by ENV variables
+- [#2075] made frontend API tests to be currency independent
+- [#2077] removed merging common args monorepo docker-compose
+- [#2086] allow placing scripts in administration after content
+- [#2090] ProductDetailView provided by elasticsearch
+- [#2107] move doctrine metadata and annotations cache to file instead of redis, Thanks to [@henzigo]
+- [#2109] dropped support for PHP versions lower  than 7.4.1
+- [#2117] new application environment for running acceptance tests
+- [#2123] accessories is provided by elasticsearch for ListedProductView
+- [#2131] single product is now loaded from Elasticsearch in FE API
+- [#2132] maintainable frontend API apiary blueprint
+- [#2146] cache friendly url slugs for generator into redis
+- [#2155] excluded not commited files from yaml standards checks
+- [#2156] product filter in frontend API
+
+#### Fixed
+
+- [#1899] fixed not working upload of files in wysiwyg editor, Thanks to [@RostislavKreisinger]
+- [#2051] fixed wrong generated demodata for different number of domains than 2
+
+### [shopsys/project-base]
+
+#### Changed
+
+- [#1879] load javascripts after content is loaded, Thanks to [@henzigo]
+- [#1913] more reliable FE API tests
+- [#1990] added condition for get accessories if module is enabled only
+- [#2099] improved acceptance tests
+- [#2103] tail logs unbuffered, Thanks to [@henzigo]
+- [#2104] disable javascript validation for product filter form, Thanks to [@henzigo]
+- [#2113] enabled logging in tests
+- [#2120] added email length validation in SubscriptionFormType
+- [#2145] add ACCEPTANCE file to .gitignore
+
+#### Fixed
+
+- [#1974] fixed path to tests in phpstan.neon
+- [#2023] filterFormMacro.html.twig: display "+" only if counts > 0
+- [#2094] fixed standards on new release of FriendsOfPHP/PHP-CS-Fixer
+- [#2096] fix cleaning of old redis cache
+
+#### Removed
+
+- [#2089] removed hirak/prestissimo from build
+
+### [shopsys/read-model]
+
+#### Changed
+
+- [#2126] do not call unnecessary elasticsearch queries, Thanks to [@henzigo]
+
 ## [v9.0.3](https://github.com/shopsys/shopsys/compare/v9.0.2...v9.0.3) - 2020-09-30
 
 ### [shopsys/framework]
@@ -3729,3 +3874,96 @@ That's why is this section formatted differently.
 [#2041]: https://github.com/shopsys/shopsys/pull/2041
 [#2038]: https://github.com/shopsys/shopsys/pull/2038
 [#2026]: https://github.com/shopsys/shopsys/pull/2026
+
+[#2163]: https://github.com/shopsys/shopsys/pull/2163
+[#2159]: https://github.com/shopsys/shopsys/pull/2159
+[#2158]: https://github.com/shopsys/shopsys/pull/2158
+[#2156]: https://github.com/shopsys/shopsys/pull/2156
+[#2155]: https://github.com/shopsys/shopsys/pull/2155
+[#2154]: https://github.com/shopsys/shopsys/pull/2154
+[#2153]: https://github.com/shopsys/shopsys/pull/2153
+[#2151]: https://github.com/shopsys/shopsys/pull/2151
+[#2150]: https://github.com/shopsys/shopsys/pull/2150
+[#2148]: https://github.com/shopsys/shopsys/pull/2148
+[#2146]: https://github.com/shopsys/shopsys/pull/2146
+[#2145]: https://github.com/shopsys/shopsys/pull/2145
+[#2142]: https://github.com/shopsys/shopsys/pull/2142
+[#2141]: https://github.com/shopsys/shopsys/pull/2141
+[#2140]: https://github.com/shopsys/shopsys/pull/2140
+[#2133]: https://github.com/shopsys/shopsys/pull/2133
+[#2132]: https://github.com/shopsys/shopsys/pull/2132
+[#2131]: https://github.com/shopsys/shopsys/pull/2131
+[#2127]: https://github.com/shopsys/shopsys/pull/2127
+[#2126]: https://github.com/shopsys/shopsys/pull/2126
+[#2123]: https://github.com/shopsys/shopsys/pull/2123
+[#2120]: https://github.com/shopsys/shopsys/pull/2120
+[#2119]: https://github.com/shopsys/shopsys/pull/2119
+[#2118]: https://github.com/shopsys/shopsys/pull/2118
+[#2117]: https://github.com/shopsys/shopsys/pull/2117
+[#2113]: https://github.com/shopsys/shopsys/pull/2113
+[#2110]: https://github.com/shopsys/shopsys/pull/2110
+[#2109]: https://github.com/shopsys/shopsys/pull/2109
+[#2107]: https://github.com/shopsys/shopsys/pull/2107
+[#2104]: https://github.com/shopsys/shopsys/pull/2104
+[#2103]: https://github.com/shopsys/shopsys/pull/2103
+[#2100]: https://github.com/shopsys/shopsys/pull/2100
+[#2099]: https://github.com/shopsys/shopsys/pull/2099
+[#2096]: https://github.com/shopsys/shopsys/pull/2096
+[#2095]: https://github.com/shopsys/shopsys/pull/2095
+[#2094]: https://github.com/shopsys/shopsys/pull/2094
+[#2091]: https://github.com/shopsys/shopsys/pull/2091
+[#2090]: https://github.com/shopsys/shopsys/pull/2090
+[#2089]: https://github.com/shopsys/shopsys/pull/2089
+[#2086]: https://github.com/shopsys/shopsys/pull/2086
+[#2084]: https://github.com/shopsys/shopsys/pull/2084
+[#2083]: https://github.com/shopsys/shopsys/pull/2083
+[#2080]: https://github.com/shopsys/shopsys/pull/2080
+[#2079]: https://github.com/shopsys/shopsys/pull/2079
+[#2077]: https://github.com/shopsys/shopsys/pull/2077
+[#2075]: https://github.com/shopsys/shopsys/pull/2075
+[#2074]: https://github.com/shopsys/shopsys/pull/2074
+[#2070]: https://github.com/shopsys/shopsys/pull/2070
+[#2068]: https://github.com/shopsys/shopsys/pull/2068
+[#2067]: https://github.com/shopsys/shopsys/pull/2067
+[#2066]: https://github.com/shopsys/shopsys/pull/2066
+[#2064]: https://github.com/shopsys/shopsys/pull/2064
+[#2057]: https://github.com/shopsys/shopsys/pull/2057
+[#2055]: https://github.com/shopsys/shopsys/pull/2055
+[#2052]: https://github.com/shopsys/shopsys/pull/2052
+[#2051]: https://github.com/shopsys/shopsys/pull/2051
+[#2049]: https://github.com/shopsys/shopsys/pull/2049
+[#2047]: https://github.com/shopsys/shopsys/pull/2047
+[#2040]: https://github.com/shopsys/shopsys/pull/2040
+[#2037]: https://github.com/shopsys/shopsys/pull/2037
+[#2035]: https://github.com/shopsys/shopsys/pull/2035
+[#2032]: https://github.com/shopsys/shopsys/pull/2032
+[#2031]: https://github.com/shopsys/shopsys/pull/2031
+[#2025]: https://github.com/shopsys/shopsys/pull/2025
+[#2024]: https://github.com/shopsys/shopsys/pull/2024
+[#2023]: https://github.com/shopsys/shopsys/pull/2023
+[#2020]: https://github.com/shopsys/shopsys/pull/2020
+[#2019]: https://github.com/shopsys/shopsys/pull/2019
+[#2002]: https://github.com/shopsys/shopsys/pull/2002
+[#1999]: https://github.com/shopsys/shopsys/pull/1999
+[#1996]: https://github.com/shopsys/shopsys/pull/1996
+[#1994]: https://github.com/shopsys/shopsys/pull/1994
+[#1990]: https://github.com/shopsys/shopsys/pull/1990
+[#1989]: https://github.com/shopsys/shopsys/pull/1989
+[#1976]: https://github.com/shopsys/shopsys/pull/1976
+[#1974]: https://github.com/shopsys/shopsys/pull/1974
+[#1961]: https://github.com/shopsys/shopsys/pull/1961
+[#1960]: https://github.com/shopsys/shopsys/pull/1960
+[#1957]: https://github.com/shopsys/shopsys/pull/1957
+[#1952]: https://github.com/shopsys/shopsys/pull/1952
+[#1951]: https://github.com/shopsys/shopsys/pull/1951
+[#1933]: https://github.com/shopsys/shopsys/pull/1933
+[#1922]: https://github.com/shopsys/shopsys/pull/1922
+[#1913]: https://github.com/shopsys/shopsys/pull/1913
+[#1912]: https://github.com/shopsys/shopsys/pull/1912
+[#1901]: https://github.com/shopsys/shopsys/pull/1901
+[#1899]: https://github.com/shopsys/shopsys/pull/1899
+[#1894]: https://github.com/shopsys/shopsys/pull/1894
+[#1891]: https://github.com/shopsys/shopsys/pull/1891
+[#1879]: https://github.com/shopsys/shopsys/pull/1879
+[#1760]: https://github.com/shopsys/shopsys/pull/1760
+[@CarabineSK]: https://github.com/CarabineSK
