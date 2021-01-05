@@ -14,13 +14,8 @@ services:
     SlevomatCodingStandard\Sniffs\Classes\ParentCallSpacingSniff:
         linesCountBeforeParentCall: 1
         linesCountAfterParentCall: 1
-    SlevomatCodingStandard\Sniffs\ControlStructures\RequireMultiLineConditionSniff:
-        minLineLength: 120
-        alwaysSplitAllConditionParts: true
     SlevomatCodingStandard\Sniffs\Namespaces\ReferenceUsedNamesOnlySniff:
         allowPartialUses: true
-    SlevomatCodingStandard\Sniffs\Functions\RequireMultiLineCallSniff:
-        minLineLength: 120
     SlevomatCodingStandard\Sniffs\Commenting\DeprecatedAnnotationDeclarationSniff: ~
     SlevomatCodingStandard\Sniffs\Commenting\DocCommentSpacingSniff:
         linesCountBetweenDifferentAnnotationsTypes: 0

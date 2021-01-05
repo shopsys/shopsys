@@ -23,15 +23,8 @@ services:
         linesCountBeforeParentCall: 1
         linesCountAfterParentCall: 1
     # @deprecated This will be moved from project-base to coding-standards package in next major version
-    SlevomatCodingStandard\Sniffs\ControlStructures\RequireMultiLineConditionSniff:
-        minLineLength: 120
-        alwaysSplitAllConditionParts: true
-    # @deprecated This will be moved from project-base to coding-standards package in next major version
     SlevomatCodingStandard\Sniffs\Namespaces\ReferenceUsedNamesOnlySniff:
         allowPartialUses: true
-    # @deprecated This will be moved from project-base to coding-standards package in next major version
-    SlevomatCodingStandard\Sniffs\Functions\RequireMultiLineCallSniff:
-        minLineLength: 120
     # @deprecated This will be moved from project-base to coding-standards package in next major version
     SlevomatCodingStandard\Sniffs\Commenting\DeprecatedAnnotationDeclarationSniff: ~
     # @deprecated This will be moved from project-base to coding-standards package in next major version
