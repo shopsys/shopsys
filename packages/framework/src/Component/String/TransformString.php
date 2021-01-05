@@ -126,4 +126,13 @@ class TransformString
 
         return preg_replace($search, $replace, $subject, $limit);
     }
+
+    /**
+     * @param string $string
+     * @return string
+     */
+    public static function replaceInvalidUtf8CharactersByQuestionMark(string $string): string
+    {
+        return mb_convert_encoding($string, 'UTF-8', 'UTF-8');
+    }
 }
