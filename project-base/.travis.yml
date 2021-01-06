@@ -1,22 +1,32 @@
 language: bash
-dist: xenial
+dist: focal
 stages:
     - Linux
     - MacOS
+
 services:
     - docker
+
+addons:
+    apt:
+        packages:
+            - pass
 os:
     - linux
+
 jobs:
     include:
         -   stage: Linux
             name: "Test linux install script"
             script:
+                - sh .ci/docker_login.sh
                 - echo 1 | ./scripts/install.sh
                 - docker-compose exec php-fpm ./phing checks tests-acceptance
+                - docker logout
         -   stage: MacOS
             name: "Test MacOS script on linux"
             script:
+                - sh .ci/docker_login.sh
                 - sudo apt install ruby
                 - gem install docker-sync
                 - sed -i -r "s#sed -i '' -E#sed -i -r#" ./scripts/install.sh
@@ -24,3 +34,4 @@ jobs:
                 - chmod -R 777 ./var/elasticsearch-data
                 - echo 2 | ./scripts/install.sh --skip-aliasing
                 - docker-compose exec php-fpm ./phing checks tests-acceptance
+                - docker logout
