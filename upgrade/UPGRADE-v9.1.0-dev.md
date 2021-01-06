@@ -124,7 +124,7 @@ There you can find links to upgrade notes for other versions too.
             use `Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFactory::getIdsForProducts()` instead
     - see [project-base-diff](https://github.com/shopsys/project-base/commit/a15ca000c86133fa1c63d2c9638b8a2a69d18da2) to update your project
 
-- added more coding standards ([#2035](https://github.com/shopsys/shopsys/pull/2035), [#2052](https://github.com/shopsys/shopsys/pull/2052))
+- added more coding standards ([#2035](https://github.com/shopsys/shopsys/pull/2035), [#2052](https://github.com/shopsys/shopsys/pull/2052), [#2173](https://github.com/shopsys/shopsys/pull/2173))
     - the most of the rules have their own fixer, run `php phing ecs-fix` to resolve them
         - you need to run `ecs-fix` multiple times unless it is OK, because of the amount of changes
     - disallowed usage of `empty()` is one which must be fixed manually
