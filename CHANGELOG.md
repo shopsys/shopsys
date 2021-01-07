@@ -175,6 +175,14 @@ The changelog is generated during the release process using [ChangelogLinker](ht
 
 - [#2126] do not call unnecessary elasticsearch queries, Thanks to [@henzigo]
 
+## [v9.0.4](https://github.com/shopsys/shopsys/compare/v9.0.3...v9.0.4) - 2020-11-29
+
+### [shopsys/project-base]
+
+#### Fixed
+
+- [#2135] locked composer to version 1.x for 9.0 branch
+
 ## [v9.0.3](https://github.com/shopsys/shopsys/compare/v9.0.2...v9.0.3) - 2020-09-30
 
 ### [shopsys/framework]
@@ -3874,6 +3882,7 @@ That's why is this section formatted differently.
 [#2041]: https://github.com/shopsys/shopsys/pull/2041
 [#2038]: https://github.com/shopsys/shopsys/pull/2038
 [#2026]: https://github.com/shopsys/shopsys/pull/2026
+[#2135]: https://github.com/shopsys/shopsys/pull/2135
 
 [#2163]: https://github.com/shopsys/shopsys/pull/2163
 [#2159]: https://github.com/shopsys/shopsys/pull/2159

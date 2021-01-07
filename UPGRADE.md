@@ -40,6 +40,9 @@ Follow the instructions in the [monorepo upgrade guide](upgrade/upgrading-monore
 * even we care a lot about these instructions, it is possible we miss something. In case something doesn't work after the upgrade, you'll find more information in the [CHANGELOG](CHANGELOG.md)
 
 ## Upgrade guides
+* ### [From v9.0.4 to v9.1.0](/upgrade/UPGRADE-v9.1.0.md)
+* ### [From v9.0.3 to v9.0.4](/upgrade/UPGRADE-v9.0.4.md)
+* ### [From v9.0.2 to v9.0.3](/upgrade/UPGRADE-v9.0.3.md)
 * ### [From v9.0.1 to v9.0.2](/upgrade/UPGRADE-v9.0.2.md)
 * ### [From v9.0.0 to v9.0.1](/upgrade/UPGRADE-v9.0.1.md)
 * ### [From v8.1.1 to v9.0.0](/upgrade/UPGRADE-v9.0.0.md)
