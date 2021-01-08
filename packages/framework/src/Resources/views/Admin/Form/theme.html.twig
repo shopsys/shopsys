@@ -669,14 +669,28 @@
     {{- block('appendix_block') -}}
 {% endblock form_widget_simple %}
 
-{% use '@FOSCKEditor/Form/ckeditor_widget.html.twig' with ckeditor_widget as base_ckeditor_widget %}
+{% use '@FOSCKEditor/Form/ckeditor_widget.html.twig' %}
+{% block base_ckeditor_widget %}
+    <div class="cke-preview">
+        <div id="{{ id }}-preview" class="js-cke-preview cke-preview-text">
+            {{ value|raw }}
+            <div class="js-cke-preview-edit cke-preview-edit-button">{{ 'Edit'|trans }}</div>
+        </div>
+        <textarea {{ block('widget_attributes') }}>{{ value }}</textarea>
+
+        {% if enable and not async %}
+            {{ block('_ckeditor_javascript') }}
+        {% endif %}
+    </div>
+{% endblock %}
+
 {% block ckeditor_widget %}
     {% if localized is defined %}
-        {{ block('base_ckeditor_widget') }}
-        <span class="input__wysiwyg">
-            <span class="input__flag input__flag--wysiwyg">
-                {{ localeFlag(locale) }}
-            </span>
+        <div class="input-wysiwyg-localized">
+            {{ block('base_ckeditor_widget') }}
+        </div>
+        <span class="input__flag">
+            {{ localeFlag(locale) }}
         </span>
     {% else %}
         {{ block('base_ckeditor_widget') }}

@@ -18,7 +18,9 @@ export default class CustomizeBundle {
 
     static ckeditorValidationInit (element) {
         $.each(element.children, function (index, childElement) {
-            if (childElement.type === constant('\\FOS\\CKEditorBundle\\Form\\Type\\CKEditorType::class')) {
+            if (childElement.type === constant('\\FOS\\CKEditorBundle\\Form\\Type\\CKEditorType::class')
+                && CKEDITOR.instances[childElement.id]
+            ) {
                 CKEDITOR.instances[childElement.id].on('change', function () {
                     $(childElement.domNode).jsFormValidator('validate');
                 });

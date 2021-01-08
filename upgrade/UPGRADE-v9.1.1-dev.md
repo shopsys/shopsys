@@ -41,8 +41,11 @@ There you can find links to upgrade notes for other versions too.
     - if you extended `Price` type, you can remove duplicate definitions in `ProductPrice` type
 
 - update phpstan/phpstan to the latest version ([#2241](https://github.com/shopsys/shopsys/pull/2241))
-  - see #project-base-diff to update your project
+    - see #project-base-diff to update your project
 
 - improve acceptance test of product filter ([#2226](https://github.com/shopsys/shopsys/pull/2226))
     - see #project-base-diff to update your project
     - we have also improved displaying of price filter in our basic design, decide if such change is suitable for your project
+
+- initialize CKEditor after the click into appropriate field ([#2177](https://github.com/shopsys/shopsys/pull/2177))
+    - see #project-base-diff to update your project
