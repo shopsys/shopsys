@@ -137,14 +137,14 @@
             <div class="box-filter__parameters">
                 <div id="{{ filterForm.parameters.vars.id }}">
                     {% for parameterId, parameterForm in filterForm.parameters %}
-                        <div class="box-filter__choice js-product-filter-parameter js-product-filter-box" data-product-filter-box-id="{{ parameterForm.vars.id }}">
-                            <span class="box-filter__choice__title active js-product-filter-box-label js-product-filter-parameter-label">
+                        <div class="box-filter__choice test-product-filter-parameter js-product-filter-box" data-product-filter-box-id="{{ parameterForm.vars.id }}">
+                            <span class="box-filter__choice__title active js-product-filter-box-label test-product-filter-parameter-label">
                                 {{ parameterForm.vars.label }}
                                 <i class="svg svg-arrow cursor-pointer js-product-filter-box-arrow"></i>
                             </span>
                             <div id="{{ parameterForm.vars.id }}" class="box-filter__choice__inputs">
                                 {% for parameterValueForm in parameterForm %}
-                                    <div class="form-choice js-product-filter-parameter-value">
+                                    <div class="form-choice test-product-filter-parameter-value">
                                         {{ form_widget(parameterValueForm, { attr: { class: 'css-checkbox'} }) }}
                                         <label class="css-checkbox__image form-choice__label" for="{{ parameterValueForm.vars.id }}">
                                             {{ parameterValueForm.vars.label }}

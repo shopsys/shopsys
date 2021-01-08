@@ -13,7 +13,7 @@ class InlineEditPage extends AbstractPage
      */
     public function startInlineEdit($rowId)
     {
-        $class = $this->getRowCssLocator($rowId) . ' .js-inline-edit-edit';
+        $class = $this->getRowCssLocator($rowId) . ' .test-inline-edit-edit';
         $this->tester->scrollTo(['css' => $class]);
         $this->tester->clickByCss($class);
         $this->tester->waitForAjax();
@@ -21,7 +21,7 @@ class InlineEditPage extends AbstractPage
 
     public function createNewRow()
     {
-        $this->tester->clickByCss('.js-inline-edit-add');
+        $this->tester->clickByCss('.test-inline-edit-add');
         $this->tester->waitForAjax();
     }
 
@@ -35,7 +35,7 @@ class InlineEditPage extends AbstractPage
         $this->tester->clickByCss($class);
         $this->tester->wait(1); // Pop-up animation
 
-        $this->tester->clickByCss('.window-button-continue');
+        $this->tester->clickByCss('.test-window-button-continue');
         $this->tester->waitForAjax();
     }
 
@@ -46,7 +46,7 @@ class InlineEditPage extends AbstractPage
      */
     public function changeInputValue($rowId, $columnName, $value)
     {
-        $class = $this->getRowCssLocator($rowId) . ' .js-grid-column-' . $columnName . ' input';
+        $class = $this->getRowCssLocator($rowId) . ' .test-grid-column-' . $columnName . ' input';
         $this->tester->scrollTo(['css' => $class]);
         $this->tester->fillFieldByCss(
             $class,
@@ -59,7 +59,7 @@ class InlineEditPage extends AbstractPage
      */
     public function save($rowId)
     {
-        $class = $this->getRowCssLocator($rowId) . ' .js-inline-edit-save';
+        $class = $this->getRowCssLocator($rowId) . ' .test-inline-edit-save';
         $this->tester->scrollTo(['css' => $class]);
         $this->tester->clickByCss($class);
         $this->tester->waitForAjax();
@@ -72,7 +72,7 @@ class InlineEditPage extends AbstractPage
     {
         $highestId = $this->webDriver->executeScript(
             'var highestId = null;
-            $(".js-grid-row").each(function () {
+            $(".test-grid-row").each(function () {
                 var $row = $(this);
                 if ($row.data("inline-edit-row-id") > highestId) {
                     highestId = $row.data("inline-edit-row-id");
@@ -91,7 +91,7 @@ class InlineEditPage extends AbstractPage
      */
     public function assertSeeInColumn($rowId, $columnName, $text)
     {
-        $this->tester->seeInCss($text, $this->getRowCssLocator($rowId) . ' .js-grid-column-' . $columnName);
+        $this->tester->seeInCss($text, $this->getRowCssLocator($rowId) . ' .test-grid-column-' . $columnName);
     }
 
     /**
@@ -119,9 +119,9 @@ class InlineEditPage extends AbstractPage
     private function getRowCssLocator($rowId)
     {
         if ($rowId === null) {
-            return '.js-grid-row:not([data-inline-edit-row-id])';
+            return '.test-grid-row:not([data-inline-edit-row-id])';
         }
 
-        return '.js-grid-row[data-inline-edit-row-id="' . $rowId . '"]';
+        return '.test-grid-row[data-inline-edit-row-id="' . $rowId . '"]';
     }
 }

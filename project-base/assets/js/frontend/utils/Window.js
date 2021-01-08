@@ -88,7 +88,7 @@ export default class Window {
         this.$window.append($windowContent);
 
         if (this.options.buttonClose) {
-            const $windowButtonClose = $('<a href="#" class="window-button-close window-popup__close js-window-button-close" title="' + Translator.trans('Close (Esc)') + '"><i class="svg svg-remove-thin"></i></a>');
+            const $windowButtonClose = $('<a href="#" class="window-button-close window-popup__close test-window-button-close" title="' + Translator.trans('Close (Esc)') + '"><i class="svg svg-remove-thin"></i></a>');
             $windowButtonClose
                 .bind('click.window', this.options.eventClose)
                 .bind('click.windowClose', function () {
@@ -111,7 +111,7 @@ export default class Window {
         }
 
         if (this.options.buttonContinue) {
-            const $windowButtonContinue = $('<a href="" class="window-popup__actions__btn window-popup__actions__btn--continue window-button-continue btn"><i class="svg svg-arrow"></i></a>');
+            const $windowButtonContinue = $('<a href="" class="window-popup__actions__btn window-popup__actions__btn--continue window-button-continue btn test-window-button-continue"><i class="svg svg-arrow"></i></a>');
             $windowButtonContinue
                 .append(document.createTextNode(this.options.textContinue))
                 .addClass(this.options.cssClassContinue)

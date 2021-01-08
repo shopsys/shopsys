@@ -30,6 +30,6 @@ class CartBoxPage extends AbstractPage
             $this->tester->getFrontendLocale()
         );
 
-        $this->tester->seeInCss(strip_tags($translatedMessageWithTags), '.js-cart-info');
+        $this->tester->seeInCss(strip_tags($translatedMessageWithTags), '.test-cart-info');
     }
 }
