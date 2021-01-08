@@ -1,4 +1,4 @@
-# Automated Testing
+# Introduction to Automated Testing
 
 Testing is a crucial part of development and maintenance of reliable software.  
 For this reason Shopsys Framework comes with 5 types of automated tests:
@@ -82,7 +82,7 @@ Notice that test method names describe the tested scenario. Also, notice that ea
 When a test fails it provides detailed feedback to the developer.
 
 You can create similar unit tests anywhere in your directory `tests/Unit/`.
-If they are named with a prefix `Test` and are extending `\PHPUnit\Framework\TestCase` they will be executed during the [`tests` Phing target](./console-commands-for-application-management-phing-targets.md#tests).
+If they are named with a prefix `Test` and are extending `\PHPUnit\Framework\TestCase` they will be executed during the [`tests` Phing target](../introduction/console-commands-for-application-management-phing-targets.md#tests).
 
 ### Functional tests
 Even when all parts are working it is not guaranteed they work well together. Mocking can still be used for isolation when appropriate.
