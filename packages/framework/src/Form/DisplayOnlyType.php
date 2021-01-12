@@ -17,6 +17,7 @@ class DisplayOnlyType extends AbstractType
             ->setDefaults([
                 'mapped' => false,
                 'required' => false,
+                'disabled' => true,
                 'attr' => [
                     'readonly' => 'readonly',
                     'class' => '',
