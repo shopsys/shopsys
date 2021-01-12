@@ -102,7 +102,7 @@ class Cart
      */
     public function getItems()
     {
-        return $this->items->toArray();
+        return array_values($this->items->toArray());
     }
 
     /**
