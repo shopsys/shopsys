@@ -262,7 +262,7 @@ class ProductController extends FrontBaseController
     public function searchAction(Request $request)
     {
         $searchText = TransformString::replaceInvalidUtf8CharactersByQuestionMark(
-            (string)$request->query->get(self::SEARCH_TEXT_PARAMETER, self::SEARCH_TEXT_DEFAULT_VALUE)
+            trim((string)$request->query->get(self::SEARCH_TEXT_PARAMETER, self::SEARCH_TEXT_DEFAULT_VALUE))
         );
 
         $requestPage = $request->get(self::PAGE_QUERY_PARAMETER);
