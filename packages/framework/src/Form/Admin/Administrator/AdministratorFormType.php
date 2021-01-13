@@ -37,9 +37,6 @@ class AdministratorFormType extends AbstractType
         if ($options['scenario'] === self::SCENARIO_EDIT) {
             $builderSettingsGroup
                 ->add('id', DisplayOnlyType::class, [
-                    'constraints' => [
-                        new Constraints\NotBlank(['message' => 'Please enter article name']),
-                    ],
                     'data' => $options['administrator']->getId(),
                     'label' => t('ID'),
                 ]);
