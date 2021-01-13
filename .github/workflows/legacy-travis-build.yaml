@@ -1,0 +1,17 @@
+on: [push]
+name: "[Legacy] Complete build with standards and tests"
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        steps:
+            -   uses: actions/checkout@master
+                with:
+                    ref: ${{ github.ref }}
+            -   run: cp -f ./docker/conf/docker-compose.yml.dist ./docker-compose.yml
+            -   run: "sed -i \"s#www_data_uid: 1000#www_data_uid: $(id -u)#\" ./docker-compose.yml"
+            -   run: "sed -i \"s#www_data_gid: 1000#www_data_gid: $(id -g)#\" ./docker-compose.yml"
+            -   run: docker-compose pull --parallel postgres redis selenium-server webserver
+            -   run: docker-compose build --parallel elasticsearch php-fpm
+            -   run: docker-compose up -d postgres elasticsearch redis selenium-server php-fpm webserver
+            -   run: docker-compose exec -T php-fpm composer install --no-interaction
+            -   run: docker-compose exec -T php-fpm ./phing db-create test-db-create build-demo-dev tests-acceptance
