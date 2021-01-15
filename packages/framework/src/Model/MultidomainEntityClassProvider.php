@@ -5,6 +5,7 @@ namespace Shopsys\FrameworkBundle\Model;
 use Shopsys\FrameworkBundle\Component\Domain\Multidomain\MultidomainEntityClassProviderInterface;
 use Shopsys\FrameworkBundle\Component\Setting\SettingValue;
 use Shopsys\FrameworkBundle\Model\Category\CategoryDomain;
+use Shopsys\FrameworkBundle\Model\Country\CountryDomain;
 use Shopsys\FrameworkBundle\Model\Mail\MailTemplate;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentDomain;
 use Shopsys\FrameworkBundle\Model\Product\Brand\BrandDomain;
@@ -37,6 +38,7 @@ class MultidomainEntityClassProvider implements MultidomainEntityClassProviderIn
             PaymentDomain::class,
             ProductDomain::class,
             TransportDomain::class,
+            CountryDomain::class,
         ];
     }
 }
