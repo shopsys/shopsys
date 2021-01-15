@@ -5,7 +5,7 @@
                 <input
                     type="text"
                     name="{{ SEARCH_TEXT_PARAMETER }}"
-                    value="{{ searchText|escape('html_attr') }}"
+                    value="{{ searchText|trim|escape('html_attr') }}"
                     placeholder="{{ 'Searching'|trans }}"
                     class="input search__input"
                     id="js-search-autocomplete-input"

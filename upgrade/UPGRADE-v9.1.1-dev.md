@@ -7,3 +7,6 @@ There you can find links to upgrade notes for other versions too.
 
 - sanitize non-printable search text ([#2174](https://github.com/shopsys/shopsys/pull/2174))
     - see #project-base-diff to update your project
+  
+- trim search text from spaces ([#2187](https://github.com/shopsys/shopsys/pull/2187))
+    - see #project-base-diff to update your project
