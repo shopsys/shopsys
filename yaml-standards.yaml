@@ -3,6 +3,7 @@
     excludedPaths:
         - ./docker-compose.yml
         - ./docker-sync.yml
+        - ./.github/workflows/docker-build.yaml # yaml standards have problems with multiline definitions
         - ./vendor
         - ./project-base/node_modules
         - ./project-base/config/domains_urls.yaml

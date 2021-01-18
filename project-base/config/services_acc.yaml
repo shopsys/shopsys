@@ -15,3 +15,8 @@ services:
         class: Shopsys\FrameworkBundle\Component\Domain\DomainFactoryOverwritingDomainUrl
         arguments:
             - '%env(OVERWRITE_DOMAIN_URL)%'
+
+    Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionLoader:
+        arguments:
+            $indexDefinitionsDirectory: '%shopsys.elasticsearch.structure_dir%'
+            $indexPrefix: 'test_%env(ELASTIC_SEARCH_INDEX_PREFIX)%'
