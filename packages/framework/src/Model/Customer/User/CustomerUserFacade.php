@@ -233,12 +233,12 @@ class CustomerUserFacade
         ?DeliveryAddress $deliveryAddress = null
     ) {
         $customerUser = $this->getCustomerUserById($customerUserId);
-        $customerUserUpdateData->deliveryAddressData->customer = $customerUser->getCustomer();
 
         if (
             $customerUserUpdateData->deliveryAddressData
             && $customerUserUpdateData->deliveryAddressData->addressFilled
         ) {
+            $customerUserUpdateData->deliveryAddressData->customer = $customerUser->getCustomer();
             $deliveryAddress = $this->deliveryAddressFacade->create($customerUserUpdateData->deliveryAddressData);
             $customerUserUpdateData->customerUserData->defaultDeliveryAddress = $deliveryAddress;
         }
