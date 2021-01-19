@@ -1,8 +1,17 @@
 on: [push]
 name: "Docker build"
 jobs:
+    cancel:
+        name: Cancel previous workflow runs
+        runs-on: ubuntu-20.04
+        steps:
+            -   name: Cancelling
+                uses: styfle/cancel-workflow-action@0.7.0
+                with:
+                    access_token: ${{ github.token }}
     build-docker-images:
         name: Build PHP-FPM and Elasticsearch images
+        needs: cancel
         runs-on: ubuntu-20.04
         steps:
             -   name: GIT checkout branch - ${{ github.ref }}
