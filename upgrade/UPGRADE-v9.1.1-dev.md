@@ -10,3 +10,6 @@ There you can find links to upgrade notes for other versions too.
   
 - trim search text from spaces ([#2187](https://github.com/shopsys/shopsys/pull/2187))
     - see #project-base-diff to update your project
+
+- update annotations for EntityExtensionTest.php ([#2197](https://github.com/shopsys/shopsys/pull/2197))
+    - see #project-base-diff to update your project
