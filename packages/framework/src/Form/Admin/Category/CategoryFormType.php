@@ -128,9 +128,6 @@ class CategoryFormType extends AbstractType
         if ($options['scenario'] === self::SCENARIO_EDIT) {
             $builderSettingsGroup
                 ->add('id', DisplayOnlyType::class, [
-                    'constraints' => [
-                        new Constraints\NotBlank(['message' => 'Please enter article name']),
-                    ],
                     'data' => $options['category']->getId(),
                     'label' => t('ID'),
                 ]);

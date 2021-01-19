@@ -241,6 +241,13 @@ class ProductDataFactory implements ProductDataFactoryInterface
             $productData->seoTitles[$domainId] = $product->getSeoTitle($domainId);
             $productData->seoMetaDescriptions[$domainId] = $product->getSeoMetaDescription($domainId);
             $productData->vatsIndexedByDomainId[$domainId] = $product->getVatForDomain($domainId);
+
+            $mainFriendlyUrl = $this->friendlyUrlFacade->findMainFriendlyUrl(
+                $domainId,
+                'front_product_detail',
+                $product->getId()
+            );
+            $productData->urls->mainFriendlyUrlsByDomainId[$domainId] = $mainFriendlyUrl;
         }
         $productData->name = $names;
         $productData->variantAlias = $variantAliases;

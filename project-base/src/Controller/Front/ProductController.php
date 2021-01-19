@@ -6,6 +6,7 @@ namespace App\Controller\Front;
 
 use App\Form\Front\Product\ProductFilterFormType;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\String\TransformString;
 use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
 use Shopsys\FrameworkBundle\Model\Module\ModuleFacade;
@@ -26,6 +27,7 @@ use Symfony\Component\HttpFoundation\Request;
 class ProductController extends FrontBaseController
 {
     public const SEARCH_TEXT_PARAMETER = 'q';
+    private const SEARCH_TEXT_DEFAULT_VALUE = '';
     public const PAGE_QUERY_PARAMETER = 'page';
     public const PRODUCTS_PER_PAGE = 12;
 
@@ -259,7 +261,9 @@ class ProductController extends FrontBaseController
      */
     public function searchAction(Request $request)
     {
-        $searchText = $request->query->get(self::SEARCH_TEXT_PARAMETER, '');
+        $searchText = TransformString::replaceInvalidUtf8CharactersByQuestionMark(
+            trim((string)$request->query->get(self::SEARCH_TEXT_PARAMETER, self::SEARCH_TEXT_DEFAULT_VALUE))
+        );
 
         $requestPage = $request->get(self::PAGE_QUERY_PARAMETER);
         if (!$this->isRequestPageValid($requestPage)) {

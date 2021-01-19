@@ -198,6 +198,9 @@ class CategoryFacade
     public function deleteById($categoryId)
     {
         $category = $this->categoryRepository->getById($categoryId);
+
+        $this->categoryVisibilityRecalculationScheduler->scheduleRecalculation($category);
+
         foreach ($category->getChildren() as $child) {
             $child->setParent($category->getParent());
         }

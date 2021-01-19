@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller\Front;
 
+use Shopsys\FrameworkBundle\Component\String\TransformString;
 use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
 use Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainFacadeInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -40,7 +41,7 @@ class SearchController extends FrontBaseController
      */
     public function autocompleteAction(Request $request)
     {
-        $searchText = $request->get('searchText');
+        $searchText = trim($request->get('searchText'));
         $searchUrl = $this->generateUrl(
             'front_product_search',
             [ProductController::SEARCH_TEXT_PARAMETER => $searchText]
@@ -64,7 +65,9 @@ class SearchController extends FrontBaseController
      */
     public function boxAction(Request $request)
     {
-        $searchText = $request->query->get(ProductController::SEARCH_TEXT_PARAMETER);
+        $searchText = TransformString::replaceInvalidUtf8CharactersByQuestionMark(
+            trim((string)$request->query->get(ProductController::SEARCH_TEXT_PARAMETER))
+        );
 
         return $this->render('Front/Content/Search/searchBox.html.twig', [
             'searchText' => $searchText,

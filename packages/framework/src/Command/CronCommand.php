@@ -155,7 +155,7 @@ class CronCommand extends Command
         uasort(
             $cronModuleConfigs,
             function (CronModuleConfig $cronModuleConfigA, CronModuleConfig $cronModuleConfigB) {
-                return $cronModuleConfigA->getServiceId() > $cronModuleConfigB->getServiceId();
+                return strcmp($cronModuleConfigA->getServiceId(), $cronModuleConfigB->getServiceId());
             }
         );
 
