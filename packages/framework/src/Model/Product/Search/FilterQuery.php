@@ -58,6 +58,10 @@ class FilterQuery
     }
 
     /**
+     * Default Elasticsearch ordering is by relevance, represented by _score field
+     * In case you need to alter the ordering by relevance behavior, you can add condition
+     * if ($orderingModeId === ProductListOrderingConfig::ORDER_BY_RELEVANCE)
+     *
      * @param string $orderingModeId
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
      * @return \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery
