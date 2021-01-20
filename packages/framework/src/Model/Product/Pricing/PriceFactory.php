@@ -28,6 +28,14 @@ class PriceFactory
             }
         }
 
+        @trigger_error(
+            sprintf(
+                'Returning null value from method "%s" is deprecated. Exception "NoProductPriceForPricingGroupException" will be thrown.',
+                __METHOD__
+            ),
+            E_USER_DEPRECATED
+        );
+
         return null;
     }
 }

@@ -7,6 +7,7 @@ namespace Shopsys\ReadModelBundle\Product\Listed;
 use BadMethodCallException;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
+use Shopsys\FrameworkBundle\Model\Pricing\Exception\NoProductPriceForPricingGroupException;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\PriceFactory;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice;
@@ -144,12 +145,20 @@ class ListedProductViewFactory
      */
     public function createFromArray(array $productArray, ?ImageView $imageView, ProductActionView $productActionView, PricingGroup $pricingGroup): ListedProductView
     {
+        $productPrice = $this->priceFactory->createProductPriceFromArrayByPricingGroup(
+            $productArray['prices'],
+            $pricingGroup
+        );
+        if ($productPrice === null) {
+            throw new NoProductPriceForPricingGroupException($productArray['id'], $pricingGroup->getId());
+        }
+
         return $this->create(
             $productArray['id'],
             $productArray['name'],
             $productArray['short_description'],
             $productArray['availability'],
-            $this->priceFactory->createProductPriceFromArrayByPricingGroup($productArray['prices'], $pricingGroup),
+            $productPrice,
             $productArray['flags'],
             $productActionView,
             $imageView
@@ -195,12 +204,16 @@ class ListedProductViewFactory
         $listedProductViews = [];
         foreach ($productsArray as $productArray) {
             $productId = $productArray['id'];
-            $listedProductViews[$productId] = $this->createFromArray(
-                $productArray,
-                $imageViews[$productId],
-                $this->productActionViewFactory->createFromArray($productArray),
-                $this->currentCustomerUser->getPricingGroup()
-            );
+            try {
+                $listedProductViews[$productId] = $this->createFromArray(
+                    $productArray,
+                    $imageViews[$productId],
+                    $this->productActionViewFactory->createFromArray($productArray),
+                    $this->currentCustomerUser->getPricingGroup()
+                );
+            } catch (NoProductPriceForPricingGroupException $exception) {
+                continue;
+            }
         }
 
         return $listedProductViews;
