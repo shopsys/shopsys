@@ -33,7 +33,9 @@ class DenyScriptNameInRequestPathListener implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return [
-            KernelEvents::REQUEST => 'onKernelRequest',
+            // Check for access URL with script file has to be done after setting Domain in DomainSubscriber
+            // as other subscribers depends on the domain properly set, but before any other services.
+            KernelEvents::REQUEST => [['onKernelRequest', 90]],
         ];
     }
 }
