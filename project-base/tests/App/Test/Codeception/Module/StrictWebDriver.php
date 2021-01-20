@@ -59,7 +59,7 @@ class StrictWebDriver extends WebDriver
     }
 
     /**
-     * @deprecated
+     * @internal This method prevents developers from using parent method
      * @param mixed $link
      * @param mixed|null $context
      */
@@ -169,7 +169,7 @@ class StrictWebDriver extends WebDriver
     }
 
     /**
-     * @deprecated
+     * @internal This method prevents developers from using parent method
      * @param mixed $field
      * @param mixed $value
      */
@@ -265,7 +265,7 @@ class StrictWebDriver extends WebDriver
     }
 
     /**
-     * @deprecated
+     * @internal This method prevents developers from using parent method
      * @param mixed $checkbox
      */
     public function seeCheckboxIsChecked($checkbox): void
@@ -318,7 +318,7 @@ class StrictWebDriver extends WebDriver
     }
 
     /**
-     * @deprecated
+     * @internal This method is used to prevent users from using parent method
      * @param mixed $checkbox
      */
     public function dontSeeCheckboxIsChecked($checkbox): void
@@ -371,7 +371,7 @@ class StrictWebDriver extends WebDriver
     }
 
     /**
-     * @deprecated
+     * @internal This method prevents developers from using parent method
      * @param mixed $option
      */
     public function checkOption($option): void
@@ -458,7 +458,7 @@ class StrictWebDriver extends WebDriver
     }
 
     /**
-     * @deprecated
+     * @internal This method prevents developers from using parent method
      * @param mixed $field
      * @param mixed $value
      */
@@ -516,7 +516,7 @@ class StrictWebDriver extends WebDriver
     }
 
     /**
-     * @deprecated
+     * @internal This method prevents developers from using parent method
      * @param mixed $element
      * @param mixed $char
      */

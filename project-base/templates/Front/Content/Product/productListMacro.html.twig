@@ -2,10 +2,10 @@
 
     <ul class="list-products js-list js-product-list {{ listCssClass|default('') }}">
         {% for productView in productViews %}
-            <li class="list-products__item js-list-products-item">
+            <li class="list-products__item test-list-products-item">
                 <div class="list-products__item__in">
                     <a href="{{ productView.action.detailUrl }}" class="list-products__item__block">
-                        <{{ productHeadingTagName|default('h2') }} class="list-products__item__title js-list-products-item-title">
+                        <{{ productHeadingTagName|default('h2') }} class="list-products__item__title test-list-products-item-title">
                             {{ productView.name }}
                         </{{ productHeadingTagName|default('h2') }}>
 

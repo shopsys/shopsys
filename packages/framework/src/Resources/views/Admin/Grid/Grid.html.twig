@@ -143,7 +143,7 @@
 {% endblock %}
 
 {% block grid_row %}
-    <tr class="table-grid__row {{ cycle(['odd', 'even'], loopIndex) }} js-grid-row"
+    <tr class="table-grid__row {{ cycle(['odd', 'even'], loopIndex) }} js-grid-row test-grid-row"
             {% if grid.inlineEdit and row is not null%} data-inline-edit-row-id="{{ grid.getRowId(row)|json_encode() }}"{% endif %}
             {% if (grid.dragAndDrop or grid.multipleDragAndDrop)  and row is not null  %} data-drag-and-drop-grid-row-id="{{ grid.getRowId(row)|json_encode() }}"{% endif %}
     >
@@ -167,7 +167,7 @@
             </td>
         {% endif %}
         {% for column in grid.columnsById %}
-            <td class="table-grid__cell js-grid-column-{{ column.id }}{% if column.classAttribute %} {{ column.classAttribute }}{% endif %}">
+            <td class="table-grid__cell js-grid-column-{{ column.id }} test-grid-column-{{ column.id }}{% if column.classAttribute %} {{ column.classAttribute }}{% endif %}">
                 {{ gridView.renderCell(column, row, form|default(null)) }}
             </td>
         {% endfor %}
@@ -176,7 +176,7 @@
                 {% if grid.inlineEdit and form is defined %}
                     <div class="form-inline-edit js-inline-edit-buttons">
                         <div class="form-inline-edit__item">
-                            <a href="#" class="js-inline-edit-save in-icon in-icon--save svg svg-checked" title="{{ 'Save changes'|trans }}"></a>
+                            <a href="#" class="js-inline-edit-save test-inline-edit-save in-icon in-icon--save svg svg-checked" title="{{ 'Save changes'|trans }}"></a>
                         </div>
                         <div class="form-inline-edit__item">
                             <a href="#" class="js-inline-edit-cancel in-icon in-icon--cancel svg svg-delete" title="{{ 'Discard changes'|trans }}"> </a>
@@ -187,7 +187,7 @@
                     </span>
                 {% else %}
                     {% if grid.inlineEdit %}
-                        <a href="#" class="js-inline-edit-edit svg svg-pencil in-icon in-icon--edit" title="{{ 'Edit'|trans }}"></a>
+                        <a href="#" class="js-inline-edit-edit test-inline-edit-edit svg svg-pencil in-icon in-icon--edit" title="{{ 'Edit'|trans }}"></a>
                     {% endif %}
                     {% for actionColumn in grid.actionColumns %}
                         {{ gridView.renderActionCell(actionColumn, row)|raw }}
@@ -396,7 +396,7 @@
 
 {% block grid_inline_edit_add_button %}
     <div class="wrap-bar">
-        <a href="#" class="btn btn--primary btn--plus wrap-bar__btn js-inline-edit-add">
+        <a href="#" class="btn btn--primary btn--plus wrap-bar__btn js-inline-edit-add test-inline-edit-add">
             <i class="btn__icon">+</i>
             {{ addEntity|default('Create record'|trans) }}
         </a>

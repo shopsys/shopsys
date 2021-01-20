@@ -150,7 +150,7 @@ Yes we have, you can easily use [`djfarrelly/MailDev`](https://github.com/djfarr
 See [Outgoing emails](https://github.com/djfarrelly/MailDev#outgoing-email) in the documentation of the library for more information.*
 
 ## Can I see what is really happening in the Codeception acceptance tests when using Docker?
-Yes, you can! Check [the quick guide](./running-acceptance-tests.md#how-to-watch-what-is-going-on-in-the-selenium-browser).
+Yes, you can! Check [the quick guide](../automated-testing/running-acceptance-tests.md#how-to-watch-what-is-going-on-in-the-selenium-browser).
 
 ## Why is there a faked PHP 7.4.1 platform in the Composer config?
 As a general rule, packages and libraries that depend on PHP 7.4.1 will work as expected even on any higher 7.x version, but not vice versa.

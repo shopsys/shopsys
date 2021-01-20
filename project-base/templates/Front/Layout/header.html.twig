@@ -105,7 +105,7 @@
                             </ul>
                         </li>
                         <li class="menu-iconic__item">
-                            <a href="{{ url('front_logout', { _csrf_token: csrf_token('frontend_logout')}) }}" class="js-logout-link-desktop menu-iconic__item__link">
+                            <a href="{{ url('front_logout', { _csrf_token: csrf_token('frontend_logout')}) }}" class="test-logout-link-desktop menu-iconic__item__link">
                                 <span>
                                     {{ 'Log out'|trans }}
                                 </span>
@@ -116,7 +116,7 @@
                             <a
                                 href="{{ url('front_login') }}"
                                 data-url="{{ url('front_login_window_form') }}"
-                                class="js-login-link-desktop js-login-button menu-iconic__item__link"
+                                class="test-login-link-desktop js-login-button menu-iconic__item__link"
                             >
                                 <i class="svg svg-user"></i>
                                 <span>
@@ -125,7 +125,7 @@
                             </a>
                         </li>
                         <li class="menu-iconic__item">
-                            <a href="{{ url('front_registration_register') }}" class="js-registration-link-desktop menu-iconic__item__link">
+                            <a href="{{ url('front_registration_register') }}" class="test-registration-link-desktop menu-iconic__item__link">
                                 <span>
                                     {{ 'Registration'|trans }}
                                 </span>

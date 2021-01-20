@@ -67,7 +67,7 @@ class CartPage extends AbstractPage
     public function removeProductFromCart($productName)
     {
         $row = $this->findProductRowInCartByName($productName);
-        $removingButton = $row->findElement(WebDriverBy::cssSelector('.js-cart-item-remove-button'));
+        $removingButton = $row->findElement(WebDriverBy::cssSelector('.test-cart-item-remove-button'));
         $this->tester->clickByElement($removingButton);
     }
 
@@ -77,7 +77,7 @@ class CartPage extends AbstractPage
     public function assertProductIsInCartByName($productName)
     {
         $translatedProductName = t($productName, [], 'dataFixtures', $this->tester->getFrontendLocale());
-        $this->tester->see($translatedProductName, WebDriverBy::cssSelector('.js-cart-item-name'));
+        $this->tester->see($translatedProductName, WebDriverBy::cssSelector('.test-cart-item-name'));
     }
 
     /**
@@ -86,7 +86,7 @@ class CartPage extends AbstractPage
     public function assertProductIsNotInCartByName($productName)
     {
         $translatedProductName = t($productName, [], 'dataFixtures', $this->tester->getFrontendLocale());
-        $this->tester->dontSee($translatedProductName, WebDriverBy::cssSelector('.js-cart-item-name'));
+        $this->tester->dontSee($translatedProductName, WebDriverBy::cssSelector('.test-cart-item-name'));
     }
 
     /**
@@ -107,11 +107,11 @@ class CartPage extends AbstractPage
     private function findProductRowInCartByName($productName)
     {
         $translatedProductName = t($productName, [], 'dataFixtures', $this->tester->getFrontendLocale());
-        $rows = $this->webDriver->findElements(WebDriverBy::cssSelector('.js-cart-item'));
+        $rows = $this->webDriver->findElements(WebDriverBy::cssSelector('.test-cart-item'));
 
         foreach ($rows as $row) {
             try {
-                $nameCell = $row->findElement(WebDriverBy::cssSelector('.js-cart-item-name'));
+                $nameCell = $row->findElement(WebDriverBy::cssSelector('.test-cart-item-name'));
 
                 if ($nameCell->getText() === $translatedProductName) {
                     return $row;
@@ -137,7 +137,7 @@ class CartPage extends AbstractPage
     {
         $row = $this->findProductRowInCartByName($productName);
 
-        return $row->findElement(WebDriverBy::cssSelector('.js-cart-item-total-price'));
+        return $row->findElement(WebDriverBy::cssSelector('.test-cart-item-total-price'));
     }
 
     /**
@@ -148,7 +148,7 @@ class CartPage extends AbstractPage
     {
         $row = $this->findProductRowInCartByName($productName);
 
-        return $row->findElement(WebDriverBy::cssSelector('.js-cart-item-price'));
+        return $row->findElement(WebDriverBy::cssSelector('.test-cart-item-price'));
     }
 
     /**
@@ -156,7 +156,7 @@ class CartPage extends AbstractPage
      */
     private function getTotalProductsPriceCell()
     {
-        return $this->webDriver->findElement(WebDriverBy::cssSelector('.js-cart-total-price'));
+        return $this->webDriver->findElement(WebDriverBy::cssSelector('.test-cart-total-price'));
     }
 
     /**

@@ -21,9 +21,9 @@ class ProductAdvancedSearchPage extends AbstractPage
         $this->tester->amOnPage('/admin/product/list/');
 
         $this->tester->clickByTranslationAdmin('Advanced search');
-        $this->tester->selectOptionByCssAndValue('.js-advanced-search-rule-subject', $searchSubject);
+        $this->tester->selectOptionByCssAndValue('.test-advanced-search-rule-subject', $searchSubject);
         $this->tester->waitForAjax();
-        $this->tester->fillFieldByCss('.js-advanced-search-rule-value input', $value);
+        $this->tester->fillFieldByCss('.test-advanced-search-rule-value input', $value);
 
         $this->tester->clickByTranslationAdmin(
             'Search [verb]',
@@ -39,7 +39,7 @@ class ProductAdvancedSearchPage extends AbstractPage
     public function assertFoundProductByName($productName)
     {
         $translatedProductName = t($productName, [], 'dataFixtures', $this->tester->getAdminLocale());
-        $this->tester->seeTranslationAdminInCss($translatedProductName, '.js-grid-column-name');
+        $this->tester->seeTranslationAdminInCss($translatedProductName, '.test-grid-column-name');
     }
 
     /**

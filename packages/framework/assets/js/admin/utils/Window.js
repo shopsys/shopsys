@@ -61,7 +61,7 @@ export default class Window {
 
         this.$window.append($windowContent);
         if (this.options.buttonClose) {
-            const $windowButtonClose = $('<a href="#" class="window-button-close window__close js-window-button-close" title="' + Translator.trans('Close (Esc)') + '">X</a>');
+            const $windowButtonClose = $('<a href="#" class="window-button-close window__close test-window-button-close" title="' + Translator.trans('Close (Esc)') + '">X</a>');
             $windowButtonClose
                 .on('click.window', _this.options.eventClose)
                 .on('click.windowClose', function () {
@@ -93,7 +93,7 @@ export default class Window {
         }
 
         if (this.options.buttonContinue) {
-            const $windowButtonContinue = $('<a href="" class="window__actions__btn window-button-continue btn"></a>');
+            const $windowButtonContinue = $('<a href="" class="window__actions__btn window-button-continue btn test-window-button-continue"></a>');
             $windowButtonContinue
                 .text(this.options.textContinue)
                 .attr('href', this.options.urlContinue)

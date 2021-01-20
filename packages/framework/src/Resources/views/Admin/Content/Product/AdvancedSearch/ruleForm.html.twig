@@ -7,7 +7,7 @@
         {{- isTemplate ? ' id="js-advanced-search-rule-template"' : '' -}}
     >
         <div class="box-advanced-search__item__content">
-            {{ form_widget(ruleForm.subject, { attr: { class: 'js-advanced-search-rule-subject' }, isSimple: true} ) }}
+            {{ form_widget(ruleForm.subject, { attr: { class: 'js-advanced-search-rule-subject test-advanced-search-rule-subject' }, isSimple: true} ) }}
         </div>
 
         <div class="box-advanced-search__item__content">
@@ -15,7 +15,7 @@
         </div>
 
         <div class="box-advanced-search__item__content">
-            <span class="js-advanced-search-rule-value">
+            <span class="js-advanced-search-rule-value test-advanced-search-rule-value">
                 {{ form_widget(ruleForm.value, { isSimple: true }) }}
             </span>
         </div>

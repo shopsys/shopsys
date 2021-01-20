@@ -34,6 +34,8 @@ If you are struggling with Docker, [Docker Troubleshooting](./docker/docker-trou
     * Information about the frontend GraphQL API dedicated for connecting external storefront or mobile app.
 * [Extensibility](./extensibility/index.md)
     * How to customize the behavior of Shopsys Framework to suit your needs.
+* [Automated Testing](./automated-testing/index.md)
+    * Information about available types of tests and how to run them.
 * [Orchestration](./kubernetes/index.md)
     * Orchestration, Google Cloud, and Kubernetes-related articles and guides.
 * [Contributing](./contributing/index.md)

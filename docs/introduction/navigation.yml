@@ -2,7 +2,6 @@ arrange:
     - index.md
     - start-building-your-application.md
     - console-commands-for-application-management-phing-targets.md
-    - automated-testing.md
     - basics-about-package-architecture.md
     - basic-and-demo-data-during-application-installation.md
     - database-migrations.md
@@ -20,7 +19,6 @@ arrange:
     - friendly-url.md
     - front-end-breadcrumb-navigation.md
     - autocompletion-for-phing-targets.md
-    - running-acceptance-tests.md
     - required-php-configuration.md
     - shopsys-framework-on-docker.md
     - monorepo.md

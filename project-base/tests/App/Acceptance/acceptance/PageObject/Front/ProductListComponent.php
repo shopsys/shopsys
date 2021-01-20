@@ -37,11 +37,11 @@ class ProductListComponent extends AbstractPage
     private function findProductListItemByName($productName, WebDriverElement $context)
     {
         $translatedProductName = t($productName, [], 'dataFixtures', $this->tester->getFrontendLocale());
-        $productItems = $context->findElements(WebDriverBy::cssSelector('.js-list-products-item'));
+        $productItems = $context->findElements(WebDriverBy::cssSelector('.test-list-products-item'));
 
         foreach ($productItems as $item) {
             try {
-                $nameElement = $item->findElement(WebDriverBy::cssSelector('.js-list-products-item-title'));
+                $nameElement = $item->findElement(WebDriverBy::cssSelector('.test-list-products-item-title'));
 
                 if ($nameElement->getText() === $productName) {
                     return $item;

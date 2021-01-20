@@ -85,12 +85,12 @@ class ProductFilterPage extends AbstractPage
     {
         $translatedParameterLabel = t($parameterLabel, [], 'dataFixtures', $this->tester->getFrontendLocale());
         $parameterItems = $this->webDriver->findElements(
-            WebDriverBy::cssSelector('#product_filter_form_parameters .js-product-filter-parameter')
+            WebDriverBy::cssSelector('#product_filter_form_parameters .test-product-filter-parameter')
         );
 
         foreach ($parameterItems as $item) {
             try {
-                $itemLabel = $item->findElement(WebDriverBy::cssSelector('.js-product-filter-parameter-label'));
+                $itemLabel = $item->findElement(WebDriverBy::cssSelector('.test-product-filter-parameter-label'));
 
                 if (stripos($itemLabel->getText(), $translatedParameterLabel) !== false) {
                     return $item;
@@ -117,7 +117,7 @@ class ProductFilterPage extends AbstractPage
     {
         $translatedParameterValueText = t($parameterValueText, [], 'dataFixtures', $this->tester->getFrontendLocale());
         $labelElements = $parameterElement->findElements(
-            WebDriverBy::cssSelector('.js-product-filter-parameter-value')
+            WebDriverBy::cssSelector('.test-product-filter-parameter-value')
         );
 
         foreach ($labelElements as $labelElement) {

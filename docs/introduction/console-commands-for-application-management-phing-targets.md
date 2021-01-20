@@ -213,7 +213,7 @@ Creates a new test database with demo data and runs all tests except acceptance 
 #### tests-acceptance
 Runs acceptance tests. Running Selenium server is required.
 
-More on this topic can be found in [Running Acceptance Tests](./running-acceptance-tests.md).
+More on this topic can be found in [Running Acceptance Tests](../automated-testing/running-acceptance-tests.md).
 
 #### tests-acceptance-single
 Runs single acceptance test. Fastest way to run test without need of running whole acceptance suit

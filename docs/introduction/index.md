@@ -1,7 +1,6 @@
 # Introduction
 
 * [Console Commands for Application Management (Phing Targets)](./console-commands-for-application-management-phing-targets.md)
-* [Automated Testing](./automated-testing.md)
 * [Basics About Package Architecture](./basics-about-package-architecture.md)
 * [Basic and Demo Data During Application Installation](./basic-and-demo-data-during-application-installation.md)
 * [Database Migrations](./database-migrations.md)
