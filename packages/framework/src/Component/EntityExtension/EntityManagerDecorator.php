@@ -96,6 +96,24 @@ class EntityManagerDecorator extends BaseEntityManagerDecorator
 
     /**
      * @param string $className
+     */
+    public function refreshLoadedEntitiesByClassName(string $className): void
+    {
+        $className = $this->entityNameResolver->resolve($className);
+
+        $identityMap = $this->getUnitOfWork()->getIdentityMap();
+
+        if (!array_key_exists($className, $identityMap)) {
+            return;
+        }
+
+        foreach ($identityMap[$className] as $entity) {
+            $this->refresh($entity);
+        }
+    }
+
+    /**
+     * @param string $className
      * @return \Doctrine\Common\Persistence\ObjectRepository
      */
     public function getRepository($className)
