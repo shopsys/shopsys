@@ -106,9 +106,12 @@ class DatabaseDumpCommand extends Command
     private function getDescriptorSpec()
     {
         return [
-            0 => ['pipe', 'r'], // stdin
-            1 => ['pipe', 'w'], // stdout
-            2 => ['pipe', 'w'], // stderr
+            // stdin
+            0 => ['pipe', 'r'],
+            // stdout
+            1 => ['pipe', 'w'],
+            // stderr
+            2 => ['pipe', 'w'],
         ];
     }
 }

@@ -5,13 +5,17 @@ declare(strict_types=1);
 namespace Tests\App\Functional\Twig;
 
 use CommerceGuys\Intl\NumberFormat\NumberFormatRepository;
+use Shopsys\FrameworkBundle\Component\CurrencyFormatter\CurrencyFormatterFactory;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
+use Shopsys\FrameworkBundle\Model\Localization\IntlCurrencyRepository;
 use Shopsys\FrameworkBundle\Model\Localization\Localization;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
+use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
+use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFactoryInterface;
 use Shopsys\FrameworkBundle\Twig\PriceExtension;
 use Tests\App\Test\FunctionalTestCase;
 use Zalas\Injector\PHPUnit\Symfony\TestCase\SymfonyTestContainer;
@@ -23,28 +27,24 @@ class PriceExtensionTest extends FunctionalTestCase
     protected const NBSP = "\xc2\xa0";
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Localization\IntlCurrencyRepository
      * @inject
      */
-    private $intlCurrencyRepository;
+    private IntlCurrencyRepository $intlCurrencyRepository;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Component\CurrencyFormatter\CurrencyFormatterFactory
      * @inject
      */
-    private $currencyFormatterFactory;
+    private CurrencyFormatterFactory $currencyFormatterFactory;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFactoryInterface
      * @inject
      */
-    private $currencyFactory;
+    private CurrencyFactoryInterface $currencyFactory;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyDataFactoryInterface
      * @inject
      */
-    private $currencyDataFactory;
+    private CurrencyDataFactoryInterface $currencyDataFactory;
 
     protected function setUp(): void
     {

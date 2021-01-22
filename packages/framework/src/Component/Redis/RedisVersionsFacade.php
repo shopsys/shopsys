@@ -32,7 +32,8 @@ class RedisVersionsFacade
     {
         $prefix = (string)$this->globalClient->getOption(Redis::OPT_PREFIX);
 
-        $versionPattern = $prefix . '[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]*'; // redis pattern is a glob style and doesn't support repetitions
+        // redis pattern is a glob style and doesn't support repetitions
+        $versionPattern = $prefix . '[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]*';
         $currentVersionPrefix = $prefix . $this->currentVersion;
 
         /** @var int|null $iterator */
@@ -52,7 +53,8 @@ class RedisVersionsFacade
                     $keyWithoutPrefix = substr(
                         $key,
                         strlen($prefix)
-                    ); // redis returns keys including prefix but needs them without prefix during removing
+                    // redis returns keys including prefix but needs them without prefix during removing
+                    );
                     $toRemove[] = $keyWithoutPrefix;
                 }
             }

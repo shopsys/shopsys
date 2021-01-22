@@ -5,15 +5,13 @@ declare(strict_types=1);
 namespace Tests\FrontendApiBundle\Functional\Product;
 
 use App\DataFixtures\Demo\VatDataFixture;
+use App\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class ProductTest extends GraphQlTestCase
 {
-    /**
-     * @var \App\Model\Product\Product
-     */
-    private $product;
+    private ?Product $product = null;
 
     protected function setUp(): void
     {

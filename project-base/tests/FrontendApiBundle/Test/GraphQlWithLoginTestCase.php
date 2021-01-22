@@ -12,10 +12,7 @@ abstract class GraphQlWithLoginTestCase extends GraphQlTestCase
     public const DEFAULT_USER_EMAIL = 'no-reply@shopsys.com';
     public const DEFAULT_USER_PASSWORD = 'user123';
 
-    /**
-     * @var string
-     */
-    protected $accessToken;
+    protected ?string $accessToken = null;
 
     protected function setUp(): void
     {

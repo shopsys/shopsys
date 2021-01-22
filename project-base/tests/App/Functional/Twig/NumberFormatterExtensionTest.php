@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\App\Functional\Twig;
 
 use CommerceGuys\Intl\NumberFormat\NumberFormatRepository;
+use Shopsys\FrameworkBundle\Model\Administration\AdministrationFacade;
 use Shopsys\FrameworkBundle\Model\Localization\Localization;
 use Shopsys\FrameworkBundle\Twig\NumberFormatterExtension;
 use Tests\App\Test\FunctionalTestCase;
@@ -17,10 +18,9 @@ class NumberFormatterExtensionTest extends FunctionalTestCase
     protected const NBSP = "\xc2\xa0";
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Administration\AdministrationFacade
      * @inject
      */
-    private $administrationFacade;
+    private AdministrationFacade $administrationFacade;
 
     public function formatNumberDataProvider()
     {

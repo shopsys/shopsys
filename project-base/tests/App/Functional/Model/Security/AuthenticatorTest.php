@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Tests\App\Functional\Model\Security;
 
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
+use Shopsys\FrameworkBundle\Model\Security\Authenticator;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpFoundation\Session\Storage\MockArraySessionStorage;
@@ -15,16 +17,14 @@ class AuthenticatorTest extends FunctionalTestCase
     use SymfonyTestContainer;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Security\Authenticator
      * @inject
      */
-    private $authenticator;
+    private Authenticator $authenticator;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade
      * @inject
      */
-    private $customerUserFacade;
+    private CustomerUserFacade $customerUserFacade;
 
     public function testSessionIdIsChangedAfterLogin(): void
     {

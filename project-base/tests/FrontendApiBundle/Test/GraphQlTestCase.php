@@ -5,10 +5,15 @@ declare(strict_types=1);
 namespace Tests\FrontendApiBundle\Test;
 
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator;
 use Shopsys\FrameworkBundle\Component\Money\Money;
+use Shopsys\FrameworkBundle\Model\Pricing\BasePriceCalculation;
+use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
+use Shopsys\FrameworkBundle\Model\Pricing\PriceConverter;
 use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
+use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade;
 use Shopsys\FrontendApiBundle\Component\Domain\EnabledOnDomainChecker;
 use Shopsys\FrontendApiBundle\Component\Price\MoneyFormatterHelper;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,39 +26,29 @@ abstract class GraphQlTestCase extends FunctionalTestCase
      */
     protected $client;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator
-     */
-    protected $em;
+    protected ?EntityManagerDecorator $em = null;
+
+    protected string $firstDomainUrl;
 
     /**
-     * @var string
-     */
-    protected $firstDomainUrl;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\BasePriceCalculation
      * @inject
      */
-    protected $basePriceCalculation;
+    protected BasePriceCalculation $basePriceCalculation;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\PriceConverter
      * @inject
      */
-    protected $priceConverter;
+    protected PriceConverter $priceConverter;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade
      * @inject
      */
-    protected $currencyFacade;
+    protected CurrencyFacade $currencyFacade;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade
      * @inject
      */
-    protected $vatFacade;
+    protected VatFacade $vatFacade;
 
     protected function setUp(): void
     {

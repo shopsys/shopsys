@@ -6,6 +6,7 @@ namespace Tests\ReadModelBundle\Functional\Twig;
 
 use Shopsys\FrameworkBundle\Component\Image\AdditionalImageData;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
+use Shopsys\FrameworkBundle\Component\Image\ImageLocator;
 use Shopsys\ReadModelBundle\Image\ImageView;
 use Shopsys\ReadModelBundle\Twig\ImageExtension;
 use Tests\App\Test\FunctionalTestCase;
@@ -13,16 +14,14 @@ use Tests\App\Test\FunctionalTestCase;
 class ImageExtensionTest extends FunctionalTestCase
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Image\ImageFacade
      * @inject
      */
-    private $imageFacade;
+    private ImageFacade $imageFacade;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Image\ImageLocator
      * @inject
      */
-    private $imageLocator;
+    private ImageLocator $imageLocator;
 
     public function testGetImageHtmlWithMockedImageFacade(): void
     {

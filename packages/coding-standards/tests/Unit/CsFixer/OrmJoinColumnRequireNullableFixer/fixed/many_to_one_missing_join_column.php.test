@@ -5,6 +5,17 @@ class Bar
     /**
      * @var \StdObject
      * @ORM\ManyToOne(targetEntity="StdObject")
+     */
+    private $foo2;
+}
+-----
+<?php
+
+class Bar
+{
+    /**
+     * @var \StdObject
+     * @ORM\ManyToOne(targetEntity="StdObject")
      * @ORM\JoinColumn(nullable=false)
      */
     private $foo2;

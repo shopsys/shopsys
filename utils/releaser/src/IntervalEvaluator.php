@@ -33,7 +33,8 @@ final class IntervalEvaluator
 
         foreach ($intervals as $singleInterval) {
             $singleInterval = trim($singleInterval);
-            if (!Strings::contains($singleInterval, ',')) { // one sided interval|version?
+            // one sided interval|version?
+            if (!Strings::contains($singleInterval, ',')) {
                 if (!Strings::match($singleInterval, self::EXACT_VERSION_PATTERN)) {
                     // definitely opened
                     return false;

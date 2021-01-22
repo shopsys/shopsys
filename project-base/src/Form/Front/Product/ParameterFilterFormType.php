@@ -75,7 +75,8 @@ class ParameterFilterFormType extends AbstractType implements DataTransformerInt
         $parametersFilterData = [];
         foreach ($value as $parameterId => $parameterValues) {
             if (!array_key_exists($parameterId, $this->parameterChoicesIndexedByParameterId)) {
-                continue; // invalid parameter IDs are ignored
+                // invalid parameter IDs are ignored
+                continue;
             }
 
             $parameterFilterData = new ParameterFilterData();

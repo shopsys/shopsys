@@ -4,15 +4,13 @@ declare(strict_types=1);
 
 namespace Tests\FrontendApiBundle\Functional\Brand;
 
+use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
 use Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class BrandTest extends GraphQlTestCase
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Brand\Brand
-     */
-    protected $brand;
+    protected Brand $brand;
 
     protected function setUp(): void
     {

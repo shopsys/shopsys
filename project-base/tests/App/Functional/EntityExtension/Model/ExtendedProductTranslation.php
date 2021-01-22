@@ -14,10 +14,9 @@ use Shopsys\FrameworkBundle\Model\Product\ProductTranslation;
 class ExtendedProductTranslation extends ProductTranslation
 {
     /**
-     * @var string
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    protected $productDetailName;
+    protected ?string $productDetailName = null;
 
     /**
      * @return string

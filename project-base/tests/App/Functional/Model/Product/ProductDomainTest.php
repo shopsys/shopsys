@@ -6,7 +6,10 @@ namespace Tests\App\Functional\Model\Product;
 
 use App\DataFixtures\Demo\AvailabilityDataFixture;
 use App\Model\Product\Product;
+use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade;
 use Shopsys\FrameworkBundle\Model\Product\ProductData as BaseProductData;
+use Shopsys\FrameworkBundle\Model\Product\ProductDataFactoryInterface;
+use Shopsys\FrameworkBundle\Model\Product\ProductFactoryInterface;
 use Tests\App\Test\TransactionFunctionalTestCase;
 use Zalas\Injector\PHPUnit\Symfony\TestCase\SymfonyTestContainer;
 
@@ -23,22 +26,19 @@ class ProductDomainTest extends TransactionFunctionalTestCase
     protected const DEMONSTRATIVE_SHORT_DESCRIPTION = 'Demonstrative short description';
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\ProductDataFactoryInterface
      * @inject
      */
-    private $productDataFactory;
+    private ProductDataFactoryInterface $productDataFactory;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\ProductFactoryInterface
      * @inject
      */
-    private $productFactory;
+    private ProductFactoryInterface $productFactory;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade
      * @inject
      */
-    private $vatFacade;
+    private VatFacade $vatFacade;
 
     /**
      * @group multidomain

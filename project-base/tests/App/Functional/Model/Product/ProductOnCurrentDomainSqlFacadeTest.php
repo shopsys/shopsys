@@ -12,10 +12,9 @@ class ProductOnCurrentDomainSqlFacadeTest extends ProductOnCurrentDomainFacadeTe
     use SymfonyTestContainer;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainFacade
      * @inject
      */
-    private $productOnCurrentDomainFacade;
+    private ProductOnCurrentDomainFacadeInterface $productOnCurrentDomainFacade;
 
     /**
      * @return \Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainFacadeInterface

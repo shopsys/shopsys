@@ -149,7 +149,9 @@ class ProductController extends FrontBaseController
         $productDetailView = $this->productDetailViewFacade->getVisibleProductDetail($id);
 
         if ($productDetailView->getMainVariantId() !== null) {
-            return $this->redirectToRoute('front_product_detail', ['id' => $productDetailView->getMainVariantId()]);
+            return $this->redirectToRoute('front_product_detail', [
+                'id' => $productDetailView->getMainVariantId(),
+            ]);
         }
 
         return $this->render('Front/Content/Product/detail.html.twig', [

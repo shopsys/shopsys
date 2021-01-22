@@ -42,7 +42,8 @@ class OrderFlow extends FormFlow
     {
         return [
             [
-                'skip' => true, // the 1st step is the shopping cart
+                // the 1st step is the shopping cart
+                'skip' => true,
                 'form_options' => ['js_validation' => false],
             ],
             [
@@ -111,7 +112,8 @@ class OrderFlow extends FormFlow
      */
     public function bind($formData)
     {
-        parent::bind($formData); // load current step number
+        // load current step number
+        parent::bind($formData);
 
         $firstInvalidStep = $this->getFirstInvalidStep();
         if ($firstInvalidStep === null || $this->getCurrentStepNumber() <= $firstInvalidStep->getNumber()) {
@@ -120,7 +122,8 @@ class OrderFlow extends FormFlow
 
         $this->changeRequestToStep($firstInvalidStep);
 
-        parent::bind($formData); // load changed step
+        // load changed step
+        parent::bind($formData);
     }
 
     /**
@@ -147,7 +150,8 @@ class OrderFlow extends FormFlow
         $stepsData = $this->retrieveStepData();
         if (array_key_exists($stepNumber, $stepsData)) {
             $stepForm = $this->createFormForStep($stepNumber);
-            $stepForm->submit($stepsData[$stepNumber]); // the form is validated here
+            // the form is validated here
+            $stepForm->submit($stepsData[$stepNumber]);
             return $stepForm->isValid();
         }
 

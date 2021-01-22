@@ -50,7 +50,9 @@ class PromoCodeController extends FrontBaseController
         }
         $this->addSuccessFlash(t('Promo code added to order'));
 
-        return new JsonResponse(['result' => true]);
+        return new JsonResponse([
+            'result' => true,
+        ]);
     }
 
     public function removeAction()

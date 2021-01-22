@@ -7,8 +7,16 @@ namespace Tests\App\Functional\Model\Cart;
 use App\DataFixtures\Demo\ProductDataFixture;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Cart\CartFacade;
+use Shopsys\FrameworkBundle\Model\Cart\CartFactory;
+use Shopsys\FrameworkBundle\Model\Cart\CartRepository;
+use Shopsys\FrameworkBundle\Model\Cart\Item\CartItemFactoryInterface;
+use Shopsys\FrameworkBundle\Model\Cart\Watcher\CartWatcherFacade;
+use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifier;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifierFactory;
+use Shopsys\FrameworkBundle\Model\Order\PromoCode\CurrentPromoCodeFacade;
+use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser;
+use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
 use Tests\App\Test\TransactionFunctionalTestCase;
 use Zalas\Injector\PHPUnit\Symfony\TestCase\SymfonyTestContainer;
 
@@ -17,64 +25,54 @@ class CartFacadeTest extends TransactionFunctionalTestCase
     use SymfonyTestContainer;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Cart\CartFactory
      * @inject
      */
-    private $cartFactory;
+    private CartFactory $cartFactory;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\ProductRepository
      * @inject
      */
-    private $productRepository;
+    private ProductRepository $productRepository;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser
      * @inject
      */
-    private $currentCustomerUser;
+    private CurrentCustomerUser $currentCustomerUser;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Order\PromoCode\CurrentPromoCodeFacade
      * @inject
      */
-    private $currentPromoCodeFacade;
+    private CurrentPromoCodeFacade $currentPromoCodeFacade;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser
      * @inject
      */
-    private $productPriceCalculationForCustomerUser;
+    private ProductPriceCalculationForCustomerUser $productPriceCalculationForCustomerUser;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Cart\Item\CartItemFactoryInterface
      * @inject
      */
-    private $cartItemFactoryInterface;
+    private CartItemFactoryInterface $cartItemFactoryInterface;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Cart\CartRepository
      * @inject
      */
-    private $cartRepository;
+    private CartRepository $cartRepository;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Cart\Watcher\CartWatcherFacade
      * @inject
      */
-    private $cartWatcherFacade;
+    private CartWatcherFacade $cartWatcherFacade;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Cart\CartFacade
      * @inject
      */
-    private $cartFacadeFromContainer;
+    private CartFacade $cartFacadeFromContainer;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Cart\Item\CartItemFactoryInterface
      * @inject
      */
-    private $cartItemFactory;
+    private CartItemFactoryInterface $cartItemFactory;
 
     public function testAddProductToCartAddsItemsOnlyToCurrentCart()
     {
@@ -221,7 +219,8 @@ class CartFacadeTest extends TransactionFunctionalTestCase
     {
         return [
             ['productId' => 1, 'cartShouldBeNull' => false],
-            ['productId' => 34, 'cartShouldBeNull' => true], // not listable product
+            // not listable product
+            ['productId' => 34, 'cartShouldBeNull' => true],
 
         ];
     }

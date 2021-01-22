@@ -33,7 +33,8 @@ class InlineEditPage extends AbstractPage
         $class = $this->getRowCssLocator($rowId) . ' .in-icon--delete';
         $this->tester->scrollTo(['css' => $class]);
         $this->tester->clickByCss($class);
-        $this->tester->wait(1); // Pop-up animation
+        // Pop-up animation
+        $this->tester->wait(1);
 
         $this->tester->clickByCss('.test-window-button-continue');
         $this->tester->waitForAjax();

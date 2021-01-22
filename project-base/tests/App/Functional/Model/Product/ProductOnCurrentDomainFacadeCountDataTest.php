@@ -9,9 +9,12 @@ use App\DataFixtures\Demo\CategoryDataFixture;
 use App\DataFixtures\Demo\FlagDataFixture;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
+use Shopsys\FrameworkBundle\Model\Pricing\PriceConverter;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ParameterFilterData;
+use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfigFactory;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData;
+use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue;
 use Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainFacadeInterface;
 use Tests\App\Test\ParameterTransactionFunctionalTestCase;
@@ -22,27 +25,21 @@ abstract class ProductOnCurrentDomainFacadeCountDataTest extends ParameterTransa
     use SymfonyTestContainer;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfigFactory
      * @inject
      */
-    protected $productFilterConfigFactory;
+    protected ProductFilterConfigFactory $productFilterConfigFactory;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository
      * @inject
      */
-    protected $parameterRepository;
+    protected ParameterRepository $parameterRepository;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\PriceConverter
      * @inject
      */
-    protected $priceConverter;
+    protected PriceConverter $priceConverter;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainFacadeInterface
-     */
-    protected $productOnCurrentDomainFacade;
+    protected ?ProductOnCurrentDomainFacadeInterface $productOnCurrentDomainFacade = null;
 
     protected function setUp(): void
     {

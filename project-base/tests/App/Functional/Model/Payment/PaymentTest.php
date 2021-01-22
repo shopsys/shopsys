@@ -5,7 +5,10 @@ declare(strict_types=1);
 namespace Tests\App\Functional\Model\Payment;
 
 use App\Model\Payment\Payment;
+use App\Model\Payment\PaymentDataFactory;
 use App\Model\Transport\Transport;
+use App\Model\Transport\TransportDataFactory;
+use Shopsys\FrameworkBundle\Model\Transport\TransportFacade;
 use Tests\App\Test\TransactionFunctionalTestCase;
 use Zalas\Injector\PHPUnit\Symfony\TestCase\SymfonyTestContainer;
 
@@ -14,22 +17,19 @@ class PaymentTest extends TransactionFunctionalTestCase
     use SymfonyTestContainer;
 
     /**
-     * @var \App\Model\Payment\PaymentDataFactory
      * @inject
      */
-    private $paymentDataFactory;
+    private PaymentDataFactory $paymentDataFactory;
 
     /**
-     * @var \App\Model\Transport\TransportDataFactory
      * @inject
      */
-    private $transportDataFactory;
+    private TransportDataFactory $transportDataFactory;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Transport\TransportFacade
      * @inject
      */
-    private $transportFacade;
+    private TransportFacade $transportFacade;
 
     public function testRemoveTransportFromPaymentAfterDelete()
     {

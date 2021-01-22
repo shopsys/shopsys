@@ -9,10 +9,7 @@ use Tests\App\Test\FunctionalTestCase;
 
 class RedisFacadeTest extends FunctionalTestCase
 {
-    /**
-     * @var \Redis
-     */
-    private $redisClient;
+    private ?object $redisClient = null;
 
     protected function setUp(): void
     {

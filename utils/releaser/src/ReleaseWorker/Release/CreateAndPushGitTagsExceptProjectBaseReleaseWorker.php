@@ -145,7 +145,7 @@ final class CreateAndPushGitTagsExceptProjectBaseReleaseWorker extends AbstractS
             );
             $this->confirm(
                 sprintf(
-                    'Please fix the problem in %s and split the monorepo again. This step will be repeated after you confirm.',
+                    'Please fixed the problem in %s and split the monorepo again. This step will be repeated after you confirm.',
                     $packageNamesWithProblemsMessage
                 )
             );

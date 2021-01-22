@@ -4,20 +4,15 @@ declare(strict_types=1);
 
 namespace Tests\FrontendApiBundle\Functional\Product;
 
+use App\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class ProductVariantTest extends GraphQlTestCase
 {
-    /**
-     * @var \App\Model\Product\Product
-     */
-    private $productAsMainVariant;
+    private ?Product $productAsMainVariant = null;
 
-    /**
-     * @var \App\Model\Product\Product
-     */
-    private $productAsVariant;
+    private ?Product $productAsVariant = null;
 
     protected function setUp(): void
     {

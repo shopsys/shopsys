@@ -7,16 +7,16 @@ namespace Tests\App\Functional\Component\Doctrine;
 use App\Model\Category\Category;
 use App\Model\Product\Product;
 use Doctrine\ORM\Query\Expr\Join;
+use Shopsys\FrameworkBundle\Component\Doctrine\QueryBuilderExtender;
 use Shopsys\FrameworkBundle\Model\Product\Product as BaseProduct;
 use Tests\App\Test\TransactionFunctionalTestCase;
 
 class QueryBuilderExtenderTest extends TransactionFunctionalTestCase
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Doctrine\QueryBuilderExtender
      * @inject
      */
-    private $queryBuilderExtender;
+    private QueryBuilderExtender $queryBuilderExtender;
 
     /**
      * @dataProvider extendJoinWithExtendedEntityProvider

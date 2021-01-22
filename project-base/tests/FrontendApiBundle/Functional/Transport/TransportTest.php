@@ -4,20 +4,18 @@ declare(strict_types=1);
 
 namespace Tests\FrontendApiBundle\Functional\Transport;
 
+use Shopsys\FrameworkBundle\Model\Transport\Transport;
+use Shopsys\FrameworkBundle\Model\Transport\TransportFacade;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class TransportTest extends GraphQlTestCase
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Transport\TransportFacade
      * @inject
      */
-    protected $transportFacade;
+    protected TransportFacade $transportFacade;
 
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Transport\Transport
-     */
-    protected $transport;
+    protected ?Transport $transport = null;
 
     protected function setUp(): void
     {

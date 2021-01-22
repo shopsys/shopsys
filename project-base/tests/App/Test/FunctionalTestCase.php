@@ -5,9 +5,11 @@ declare(strict_types=1);
 namespace Tests\App\Test;
 
 use Psr\Container\ContainerInterface;
+use Shopsys\FrameworkBundle\Component\DataFixture\PersistentReferenceFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Environment\EnvironmentType;
 use Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory;
+use Symfony\Bundle\FrameworkBundle\Client;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Zalas\Injector\PHPUnit\Symfony\TestCase\SymfonyTestContainer;
@@ -17,22 +19,17 @@ abstract class FunctionalTestCase extends WebTestCase implements ServiceContaine
 {
     use SymfonyTestContainer;
 
-    /**
-     * @var \Symfony\Bundle\FrameworkBundle\Client
-     */
-    private $client;
+    private Client $client;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Component\DataFixture\PersistentReferenceFacade
      * @inject
      */
-    protected $persistentReferenceFacade;
+    protected PersistentReferenceFacade $persistentReferenceFacade;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
      * @inject
      */
-    protected $domain;
+    protected Domain $domain;
 
     protected function setUpDomain()
     {

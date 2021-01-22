@@ -39,8 +39,10 @@ class EmailValidator extends ConstraintValidator
      */
     protected function isEmail($value)
     {
-        $atom = "[-a-z0-9!#$%&'*+/=?^_`{|}~]"; // RFC 5322 unquoted characters in local-part
-        $alpha = "a-z\x80-\xFF"; // superset of IDN
+        // RFC 5322 unquoted characters in local-part
+        $atom = "[-a-z0-9!#$%&'*+/=?^_`{|}~]";
+        // superset of IDN
+        $alpha = "a-z\x80-\xFF";
 
         return (bool)preg_match('(^
             ("([ !#-[\\]-~]*|\\\\[ -~])+"|' . $atom . '+(\\.' . $atom . '+)*) # quoted or unquoted

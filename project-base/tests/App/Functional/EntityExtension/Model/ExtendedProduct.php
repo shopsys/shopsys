@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\App\Functional\EntityExtension\Model;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\ProductData;
@@ -16,31 +17,27 @@ use Shopsys\FrameworkBundle\Model\Product\ProductData;
 class ExtendedProduct extends Product
 {
     /**
-     * @var string|null
      * @ORM\Column(type="string", nullable=true)
      */
-    protected $stringField;
+    protected ?string $stringField = null;
 
     /**
-     * @var \Tests\App\Functional\EntityExtension\Model\UnidirectionalEntity
      * @ORM\ManyToOne(targetEntity="UnidirectionalEntity")
      * @ORM\JoinColumn(nullable=true, name="manyToOneUnidirectionalEntity_id", referencedColumnName="id")
      */
-    protected $manyToOneUnidirectionalEntity;
+    protected ?UnidirectionalEntity $manyToOneUnidirectionalEntity = null;
 
     /**
-     * @var \Tests\App\Functional\EntityExtension\Model\UnidirectionalEntity
      * @ORM\OneToOne(targetEntity="UnidirectionalEntity")
      * @ORM\JoinColumn(nullable=true, name="oneToOneUnidirectionalEntity_id", referencedColumnName="id")
      */
-    protected $oneToOneUnidirectionalEntity;
+    protected ?UnidirectionalEntity $oneToOneUnidirectionalEntity = null;
 
     /**
-     * @var \Tests\App\Functional\EntityExtension\Model\ProductOneToOneBidirectionalEntity
      * @ORM\OneToOne(targetEntity="ProductOneToOneBidirectionalEntity", mappedBy="product")
      * @ORM\JoinColumn(nullable=true)
      */
-    protected $oneToOneBidirectionalEntity;
+    protected ?ProductOneToOneBidirectionalEntity $oneToOneBidirectionalEntity = null;
 
     /**
      * @var \Tests\App\Functional\EntityExtension\Model\ExtendedProduct
@@ -53,7 +50,7 @@ class ExtendedProduct extends Product
      * @var \Doctrine\Common\Collections\Collection|\Tests\App\Functional\EntityExtension\Model\ProductOneToManyBidirectionalEntity[]
      * @ORM\OneToMany(targetEntity="ProductOneToManyBidirectionalEntity", mappedBy="product")
      */
-    protected $oneToManyBidirectionalEntities;
+    protected Collection $oneToManyBidirectionalEntities;
 
     /**
      * @var \Doctrine\Common\Collections\Collection|\Tests\App\Functional\EntityExtension\Model\UnidirectionalEntity[]
@@ -63,13 +60,13 @@ class ExtendedProduct extends Product
      *      inverseJoinColumns={@ORM\JoinColumn(name="oneToManyUnidirectionalWithJoinTableEntity_id", referencedColumnName="id", unique=true)}
      *      )
      */
-    protected $oneToManyUnidirectionalWithJoinTableEntities;
+    protected Collection $oneToManyUnidirectionalWithJoinTableEntities;
 
     /**
      * @var \Doctrine\Common\Collections\Collection|\Tests\App\Functional\EntityExtension\Model\ExtendedProduct[]
      * @ORM\OneToMany(targetEntity="ExtendedProduct", mappedBy="oneToManySelfReferencingInverseEntity")
      */
-    protected $oneToManySelfReferencingEntities;
+    protected Collection $oneToManySelfReferencingEntities;
 
     /**
      * @var \Tests\App\Functional\EntityExtension\Model\ExtendedProduct
@@ -86,20 +83,20 @@ class ExtendedProduct extends Product
      *      inverseJoinColumns={@ORM\JoinColumn(name="manyToManyUnidirectionalEntity_id", referencedColumnName="id")}
      *      )
      */
-    protected $manyToManyUnidirectionalEntities;
+    protected Collection $manyToManyUnidirectionalEntities;
 
     /**
      * @var \Doctrine\Common\Collections\Collection|\Tests\App\Functional\EntityExtension\Model\ProductManyToManyBidirectionalEntity[]
      * @ORM\ManyToMany(targetEntity="ProductManyToManyBidirectionalEntity", inversedBy="products")
      * @ORM\JoinTable(name="products_manyToManyBidirectionalEntity")
      */
-    protected $manyToManyBidirectionalEntities;
+    protected Collection $manyToManyBidirectionalEntities;
 
     /**
      * @var \Doctrine\Common\Collections\Collection|\Tests\App\Functional\EntityExtension\Model\ExtendedProduct[]
      * @ORM\ManyToMany(targetEntity="ExtendedProduct", mappedBy="manyToManySelfReferencingInverseEntities")
      */
-    protected $manyToManySelfReferencingEntities;
+    protected Collection $manyToManySelfReferencingEntities;
 
     /**
      * @var \Doctrine\Common\Collections\Collection|\Tests\App\Functional\EntityExtension\Model\ExtendedProduct[]
@@ -109,7 +106,7 @@ class ExtendedProduct extends Product
      *      inverseJoinColumns={@ORM\JoinColumn(name="manyToManySelfReferencing_id", referencedColumnName="id")}
      *      )
      */
-    protected $manyToManySelfReferencingInverseEntities;
+    protected Collection $manyToManySelfReferencingInverseEntities;
 
     /**
      * @param \App\Model\Product\ProductData $productData

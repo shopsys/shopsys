@@ -47,16 +47,14 @@ class EntityExtensionTest extends TransactionFunctionalTestCase
     protected const ORDER_ITEM_ID = 1;
 
     /**
-     * @var \Tests\App\Functional\EntityExtension\OverwritableEntityNameResolver
      * @inject
      */
-    private $entityNameResolver;
+    private OverwritableEntityNameResolver $entityNameResolver;
 
     /**
-     * @var \Tests\App\Functional\EntityExtension\OverwritableLoadORMMetadataSubscriber
      * @inject
      */
-    private $loadORMMetadataSubscriber;
+    private OverwritableLoadORMMetadataSubscriber $loadORMMetadataSubscriber;
 
     protected function setUp(): void
     {

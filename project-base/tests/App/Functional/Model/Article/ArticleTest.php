@@ -6,6 +6,8 @@ namespace Tests\App\Functional\Model\Article;
 
 use App\Model\Article\Article;
 use DateTime;
+use Shopsys\FrameworkBundle\Model\Article\ArticleDataFactoryInterface;
+use Shopsys\FrameworkBundle\Model\Article\ArticleFactoryInterface;
 use Tests\App\Test\TransactionFunctionalTestCase;
 use Zalas\Injector\PHPUnit\Symfony\TestCase\SymfonyTestContainer;
 
@@ -14,16 +16,14 @@ class ArticleTest extends TransactionFunctionalTestCase
     use SymfonyTestContainer;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Article\ArticleDataFactoryInterface
      * @inject
      */
-    private $articleDataFactory;
+    private ArticleDataFactoryInterface $articleDataFactory;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Article\ArticleFactoryInterface
      * @inject
      */
-    private $articleFactory;
+    private ArticleFactoryInterface $articleFactory;
 
     public function testArticleIsCorrectlyRestoredFromDatabase()
     {

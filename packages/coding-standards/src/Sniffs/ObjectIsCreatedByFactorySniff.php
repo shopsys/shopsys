@@ -7,23 +7,9 @@ namespace Shopsys\CodingStandards\Sniffs;
 use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Sniffs\Sniff;
 use SlevomatCodingStandard\Helpers\ClassHelper;
-use Symplify\CodingStandard\TokenRunner\Analyzer\SnifferAnalyzer\Naming;
 
 final class ObjectIsCreatedByFactorySniff implements Sniff
 {
-    /**
-     * @var \Symplify\CodingStandard\TokenRunner\Analyzer\SnifferAnalyzer\Naming
-     */
-    private $naming;
-
-    /**
-     * @param \Symplify\CodingStandard\TokenRunner\Analyzer\SnifferAnalyzer\Naming $naming
-     */
-    public function __construct(Naming $naming)
-    {
-        $this->naming = $naming;
-    }
-
     /**
      * @return int[]
      */
@@ -38,15 +24,14 @@ final class ObjectIsCreatedByFactorySniff implements Sniff
      */
     public function process(File $file, $position): void
     {
-        $endPosition = $file->findEndOfStatement($position);
-        $instantiatedClassNamePosition = $file->findNext(T_STRING, $position, $endPosition);
+        $tokens = $file->getTokens();
+        $className = $file->findNext(T_WHITESPACE, $position + 1, null, true);
 
-        if ($instantiatedClassNamePosition === false) {
-            // eg. new $className; cannot be resolved
+        if ($tokens[$className]['code'] !== T_STRING) {
             return;
         }
 
-        $instantiatedClassName = $this->naming->getClassName($file, $instantiatedClassNamePosition);
+        $instantiatedClassName = $tokens[$className]['content'];
         $factoryClassName = $instantiatedClassName . 'Factory';
         $currentClassName = $this->getFirstClassNameInFile($file);
 

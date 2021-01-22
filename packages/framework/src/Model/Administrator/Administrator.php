@@ -364,7 +364,8 @@ class Administrator implements UserInterface, Serializable, UniqueLoginInterface
      */
     public function getSalt()
     {
-        return null; // bcrypt include salt in password hash
+        // bcrypt include salt in password hash
+        return null;
     }
 
     /**

@@ -5,16 +5,16 @@ declare(strict_types=1);
 namespace Tests\App\Functional\Component\Image\Config;
 
 use App\Model\Product\Product;
+use Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig;
 use Shopsys\FrameworkBundle\Model\Product\Product as BaseProduct;
 use Tests\App\Test\FunctionalTestCase;
 
 class ImageConfigTest extends FunctionalTestCase
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig
      * @inject
      */
-    private $imageConfig;
+    private ImageConfig $imageConfig;
 
     public function testGetImageConfigForExtendedEntity()
     {

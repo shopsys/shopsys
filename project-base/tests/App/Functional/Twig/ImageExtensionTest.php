@@ -7,6 +7,7 @@ namespace Tests\App\Functional\Twig;
 use Shopsys\FrameworkBundle\Component\Image\AdditionalImageData;
 use Shopsys\FrameworkBundle\Component\Image\Image;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
+use Shopsys\FrameworkBundle\Component\Image\ImageLocator;
 use Shopsys\FrameworkBundle\Twig\ImageExtension;
 use Tests\App\Test\FunctionalTestCase;
 use Zalas\Injector\PHPUnit\Symfony\TestCase\SymfonyTestContainer;
@@ -16,10 +17,9 @@ class ImageExtensionTest extends FunctionalTestCase
     use SymfonyTestContainer;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Image\ImageLocator
      * @inject
      */
-    private $imageLocator;
+    private ImageLocator $imageLocator;
 
     public function testGetImageHtmlWithAdditional(): void
     {

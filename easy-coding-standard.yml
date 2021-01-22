@@ -49,3 +49,7 @@ parameters:
 
         ObjectCalisthenics\Sniffs\Files\FunctionLengthSniff:
             - 'utils/releaser/src/ReleaseWorker/Release/CreateAndPushGitTagsExceptProjectBaseReleaseWorker.php'
+
+        Symplify\CodingStandard\Fixer\ArrayNotation\ArrayListItemNewlineFixer: ~
+
+        Symplify\CodingStandard\Fixer\ArrayNotation\ArrayOpenerAndCloserNewlineFixer: ~

@@ -10,34 +10,19 @@ final class OrmJoinColumnRequireNullableFixerTest extends AbstractCheckerTestCas
 {
     public function testFix(): void
     {
-        $this->doTestWrongToFixedFile(
-            __DIR__ . '/wrong/many_to_one_missing_join_column.php',
-            __DIR__ . '/fixed/many_to_one_missing_join_column.php'
-        );
-        $this->doTestWrongToFixedFile(
-            __DIR__ . '/wrong/many_to_one_missing_nullable_param.php',
-            __DIR__ . '/fixed/many_to_one_missing_nullable_param.php'
-        );
-        $this->doTestWrongToFixedFile(
-            __DIR__ . '/wrong/one_to_one_missing_join_column.php',
-            __DIR__ . '/fixed/one_to_one_missing_join_column.php'
-        );
-        $this->doTestWrongToFixedFile(
-            __DIR__ . '/wrong/one_to_one_missing_nullable_param.php',
-            __DIR__ . '/fixed/one_to_one_missing_nullable_param.php'
-        );
-        $this->doTestWrongToFixedFile(
-            __DIR__ . '/wrong/one_to_one_multiline_missing_nullable_param.php',
-            __DIR__ . '/fixed/one_to_one_multiline_missing_nullable_param.php'
-        );
+        $this->doTestFileInfo(new SmartFileInfo(__DIR__ . '/fixed/many_to_one_missing_join_column.php.test'));
+        $this->doTestFileInfo(new SmartFileInfo(__DIR__ . '/fixed/many_to_one_missing_nullable_param.php.test'));
+        $this->doTestFileInfo(new SmartFileInfo(__DIR__ . '/fixed/one_to_one_missing_join_column.php.test'));
+        $this->doTestFileInfo(new SmartFileInfo(__DIR__ . '/fixed/one_to_one_missing_nullable_param.php.test'));
+        $this->doTestFileInfo(new SmartFileInfo(__DIR__ . '/fixed/one_to_one_multiline_missing_nullable_param.php.test'));
     }
 
     public function testCorrect(): void
     {
-        $this->doTestCorrectFile(__DIR__ . '/correct/one_to_many.php');
-        $this->doTestCorrectFile(__DIR__ . '/correct/many_to_one_missing_join_column.php');
-        $this->doTestCorrectFile(__DIR__ . '/correct/many_to_one_missing_nullable_param.php');
-        $this->doTestCorrectFile(__DIR__ . '/correct/one_to_one_missing_nullable_param.php');
+        $this->doTestFileInfo(new SmartFileInfo(__DIR__ . '/correct/one_to_many.php'));
+        $this->doTestFileInfo(new SmartFileInfo(__DIR__ . '/correct/many_to_one_missing_join_column.php'));
+        $this->doTestFileInfo(new SmartFileInfo(__DIR__ . '/correct/many_to_one_missing_nullable_param.php'));
+        $this->doTestFileInfo(new SmartFileInfo(__DIR__ . '/correct/one_to_one_missing_nullable_param.php'));
     }
 
     /**

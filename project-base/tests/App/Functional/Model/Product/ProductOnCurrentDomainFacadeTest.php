@@ -11,10 +11,12 @@ use App\Model\Category\Category;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Component\Paginator\PaginationResult;
+use Shopsys\FrameworkBundle\Model\Pricing\PriceConverter;
 use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ParameterFilterData;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData;
 use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingConfig;
+use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue;
 use Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainFacadeInterface;
 use Tests\App\Test\TransactionFunctionalTestCase;
@@ -25,16 +27,14 @@ abstract class ProductOnCurrentDomainFacadeTest extends TransactionFunctionalTes
     use SymfonyTestContainer;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository
      * @inject
      */
-    private $parameterRepository;
+    private ParameterRepository $parameterRepository;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\PriceConverter
      * @inject
      */
-    protected $priceConverter;
+    protected PriceConverter $priceConverter;
 
     public function testFilterByMinimalPrice()
     {

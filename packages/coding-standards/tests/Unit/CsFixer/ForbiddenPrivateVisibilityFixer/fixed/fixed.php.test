@@ -1,0 +1,39 @@
+<?php
+
+namespace TestNamespace\TestSubNamespace;
+
+class SomeClass
+{
+    /**
+     * @var int
+     */
+    private $field;
+
+    /**
+     * @return bool
+     */
+    private function method()
+    {
+        return true;
+    }
+}
+-----
+<?php
+
+namespace TestNamespace\TestSubNamespace;
+
+class SomeClass
+{
+    /**
+     * @var int
+     */
+    protected $field;
+
+    /**
+     * @return bool
+     */
+    protected function method()
+    {
+        return true;
+    }
+}

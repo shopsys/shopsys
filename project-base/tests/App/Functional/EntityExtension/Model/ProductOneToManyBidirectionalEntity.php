@@ -12,25 +12,22 @@ use Doctrine\ORM\Mapping as ORM;
 class ProductOneToManyBidirectionalEntity
 {
     /**
-     * @var int
      * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    protected $id;
+    protected int $id;
 
     /**
-     * @var \Tests\App\Functional\EntityExtension\Model\ExtendedProduct
      * @ORM\ManyToOne(targetEntity="ExtendedProduct", inversedBy="oneToManyBidirectionalEntity")
      * @ORM\JoinColumn(nullable=false, name="product_id", referencedColumnName="id")
      */
-    protected $product;
+    protected ?ExtendedProduct $product = null;
 
     /**
-     * @var string
      * @ORM\Column(type="string")
      */
-    protected $name;
+    protected string $name;
 
     /**
      * @param string $name

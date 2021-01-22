@@ -7,8 +7,13 @@ namespace Tests\App\Functional\Model\Pricing\Group;
 use App\DataFixtures\Demo\PricingGroupDataFixture;
 use App\DataFixtures\Demo\ProductDataFixture;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserDataFactoryInterface;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupData;
+use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductCalculatedPrice;
+use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceRecalculator;
 use Tests\App\Test\TransactionFunctionalTestCase;
 use Zalas\Injector\PHPUnit\Symfony\TestCase\SymfonyTestContainer;
 
@@ -17,34 +22,29 @@ class PricingGroupFacadeTest extends TransactionFunctionalTestCase
     use SymfonyTestContainer;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade
      * @inject
      */
-    private $pricingGroupFacade;
+    private PricingGroupFacade $pricingGroupFacade;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceRecalculator
      * @inject
      */
-    private $productPriceRecalculator;
+    private ProductPriceRecalculator $productPriceRecalculator;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade
      * @inject
      */
-    private $customerUserFacade;
+    private CustomerUserFacade $customerUserFacade;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserDataFactoryInterface
      * @inject
      */
-    private $customerUserDataFactory;
+    private CustomerUserDataFactoryInterface $customerUserDataFactory;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactoryInterface
      * @inject
      */
-    private $customerUserUpdateDataFactory;
+    private CustomerUserUpdateDataFactoryInterface $customerUserUpdateDataFactory;
 
     public function testCreate()
     {

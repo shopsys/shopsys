@@ -6,15 +6,15 @@ namespace Tests\FrontendApiBundle\Functional\Article;
 
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Model\Article\Article;
+use Shopsys\FrameworkBundle\Model\Article\ArticleFacade;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class GetArticleTest extends GraphQlTestCase
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Article\ArticleFacade
      * @inject
      */
-    private $articleFacade;
+    private ArticleFacade $articleFacade;
 
     public function testGetArticle(): void
     {

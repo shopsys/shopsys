@@ -28,6 +28,7 @@ class ProductDetailPage extends AbstractPage
             WebDriverBy::cssSelector(self::PRODUCT_DETAIL_MAIN_WRAPPER)
         );
         $this->tester->waitForAjax();
-        $this->tester->wait(1); // animation of popup window
+        // animation of popup window
+        $this->tester->wait(1);
     }
 }

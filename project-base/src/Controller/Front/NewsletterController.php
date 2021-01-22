@@ -80,7 +80,9 @@ class NewsletterController extends FrontBaseController
             $email = $form->getData()['email'];
             $this->newsletterFacade->addSubscribedEmail($email, $this->domain->getId());
 
-            return $this->json(['success' => true]);
+            return $this->json([
+                'success' => true,
+            ]);
         }
 
         return null;

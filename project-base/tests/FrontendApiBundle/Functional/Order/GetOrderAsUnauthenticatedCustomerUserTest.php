@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace Tests\FrontendApiBundle\Functional\Order;
 
+use Shopsys\FrameworkBundle\Model\Order\OrderFacade;
 use Shopsys\FrontendApiBundle\Component\Price\MoneyFormatterHelper;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class GetOrderAsUnauthenticatedCustomerUserTest extends GraphQlTestCase
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Order\OrderFacade
      * @inject
      */
-    private $orderFacade;
+    private OrderFacade $orderFacade;
 
     public function testGetOrder(): void
     {

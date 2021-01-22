@@ -45,7 +45,8 @@ class FriendlyUrlUniqueResultFactory
             $friendlyUrl->getEntityId(),
             (string)$entityName,
             $friendlyUrl->getDomainId(),
-            $attempt + 1 // if URL is duplicate, try again with "url-2", "url-3" and so on
+            // if URL is duplicate, try again with "url-2", "url-3" and so on
+            $attempt + 1
         );
 
         return new FriendlyUrlUniqueResult(false, $newIndexedFriendlyUrl);

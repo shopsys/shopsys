@@ -5,18 +5,19 @@ declare(strict_types=1);
 namespace Tests\CodingStandards\CsFixer\ForbiddenDumpFixer;
 
 use Symplify\EasyCodingStandardTester\Testing\AbstractCheckerTestCase;
+use Symplify\SmartFileSystem\SmartFileInfo;
 
 final class ForbiddenPrivateVisibilityFixerTest extends AbstractCheckerTestCase
 {
     public function testFix(): void
     {
-        $this->doTestWrongToFixedFile(__DIR__ . '/wrong/wrong.php', __DIR__ . '/fixed/fixed.php');
+        $this->doTestFileInfo(new SmartFileInfo(__DIR__ . '/fixed/fixed.php.test'));
     }
 
     public function testCorrect(): void
     {
-        $this->doTestCorrectFile(__DIR__ . '/correct/correct.php');
-        $this->doTestCorrectFile(__DIR__ . '/correct/ignored-namespace.php');
+        $this->doTestFileInfo(new SmartFileInfo(__DIR__ . '/correct/correct.php.test'));
+        $this->doTestFileInfo(new SmartFileInfo(__DIR__ . '/correct/ignored-namespace.php.test'));
     }
 
     /**

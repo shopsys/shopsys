@@ -145,7 +145,8 @@ class OrderItem
         $unitName,
         $catnum
     ) {
-        $this->order = $order; // Must be One-To-Many Bidirectional because of unnecessary join table
+        // Must be One-To-Many Bidirectional because of unnecessary join table
+        $this->order = $order;
         $this->name = $name;
         $this->priceWithoutVat = $price->getPriceWithoutVat();
         $this->priceWithVat = $price->getPriceWithVat();
@@ -154,7 +155,8 @@ class OrderItem
         $this->type = $type;
         $this->unitName = $unitName;
         $this->catnum = $catnum;
-        $this->order->addItem($this); // call after setting attrs for recalc total price
+        // call after setting attrs for recalc total price
+        $this->order->addItem($this);
     }
 
     /**

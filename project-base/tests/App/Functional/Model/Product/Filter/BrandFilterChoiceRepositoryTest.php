@@ -8,6 +8,7 @@ use App\DataFixtures\Demo\CategoryDataFixture;
 use App\DataFixtures\Demo\PricingGroupDataFixture;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
+use Shopsys\FrameworkBundle\Model\Product\Filter\BrandFilterChoiceRepository;
 use Tests\App\Test\TransactionFunctionalTestCase;
 use Zalas\Injector\PHPUnit\Symfony\TestCase\SymfonyTestContainer;
 
@@ -16,10 +17,9 @@ class BrandFilterChoiceRepositoryTest extends TransactionFunctionalTestCase
     use SymfonyTestContainer;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Filter\BrandFilterChoiceRepository
      * @inject
      */
-    private $brandFilterChoiceRepository;
+    private BrandFilterChoiceRepository $brandFilterChoiceRepository;
 
     public function testBrandFilterChoicesFromCategoryWithNoBrands(): void
     {

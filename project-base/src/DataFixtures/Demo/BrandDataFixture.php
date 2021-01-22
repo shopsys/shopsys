@@ -77,7 +77,9 @@ class BrandDataFixture extends AbstractReferenceFixture
             foreach ($this->domain->getAllLocales() as $locale) {
                 $brandData->descriptions[$locale] = t(
                     'This is description of brand %brandName%.',
-                    ['%brandName%' => $brandData->name],
+                    [
+                        '%brandName%' => $brandData->name,
+                    ],
                     'dataFixtures',
                     $locale
                 );
@@ -86,19 +88,25 @@ class BrandDataFixture extends AbstractReferenceFixture
             foreach ($this->domain->getAll() as $domain) {
                 $brandData->seoH1s[$domain->getId()] = t(
                     '%brandName% SEO H1',
-                    ['%brandName%' => $brandData->name],
+                    [
+                        '%brandName%' => $brandData->name,
+                    ],
                     'dataFixtures',
                     $domain->getLocale()
                 );
                 $brandData->seoTitles[$domain->getId()] = t(
                     '%brandName% SEO Title',
-                    ['%brandName%' => $brandData->name],
+                    [
+                        '%brandName%' => $brandData->name,
+                    ],
                     'dataFixtures',
                     $domain->getLocale()
                 );
                 $brandData->seoMetaDescriptions[$domain->getId()] = t(
                     'This is SEO meta description of brand %brandName%.',
-                    ['%brandName%' => $brandData->name],
+                    [
+                        '%brandName%' => $brandData->name,
+                    ],
                     'dataFixtures',
                     $domain->getLocale()
                 );

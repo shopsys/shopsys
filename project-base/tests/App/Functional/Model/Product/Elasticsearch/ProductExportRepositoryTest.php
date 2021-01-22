@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\App\Functional\Model\Product\Elasticsearch;
 
+use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductExportRepository;
 use Tests\App\Test\TransactionFunctionalTestCase;
 use Zalas\Injector\PHPUnit\Symfony\TestCase\SymfonyTestContainer;
 
@@ -12,10 +13,9 @@ class ProductExportRepositoryTest extends TransactionFunctionalTestCase
     use SymfonyTestContainer;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductExportRepository
      * @inject
      */
-    private $repository;
+    private ProductExportRepository $repository;
 
     public function testProductDataHaveExpectedStructure(): void
     {

@@ -330,7 +330,8 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface, Serializab
             $this->id,
             $this->email,
             $this->password,
-            time(), // lastActivity
+            // lastActivity
+            time(),
             $this->domainId,
         ]);
     }
@@ -371,7 +372,8 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface, Serializab
      */
     public function getSalt()
     {
-        return null; // bcrypt include salt in password hash
+        // bcrypt include salt in password hash
+        return null;
     }
 
     /**

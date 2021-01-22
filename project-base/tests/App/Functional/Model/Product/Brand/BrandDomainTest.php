@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Tests\App\Functional\Model\Product\Brand;
 
 use App\Model\Product\Brand\Brand;
+use Shopsys\FrameworkBundle\Model\Product\Brand\BrandDataFactoryInterface;
+use Shopsys\FrameworkBundle\Model\Product\Brand\BrandFactoryInterface;
 use Tests\App\Test\TransactionFunctionalTestCase;
 use Zalas\Injector\PHPUnit\Symfony\TestCase\SymfonyTestContainer;
 
@@ -18,16 +20,14 @@ class BrandDomainTest extends TransactionFunctionalTestCase
     protected const DEMONSTRATIVE_SEO_H1 = 'Demonstrative seo h1';
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Brand\BrandDataFactoryInterface
      * @inject
      */
-    private $brandDataFactory;
+    private BrandDataFactoryInterface $brandDataFactory;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Brand\BrandFactoryInterface
      * @inject
      */
-    private $brandFactory;
+    private BrandFactoryInterface $brandFactory;
 
     /**
      * @group multidomain

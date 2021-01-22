@@ -6,6 +6,10 @@ namespace Tests\App\Functional\Model\Product\Availability;
 
 use App\DataFixtures\Demo\AvailabilityDataFixture;
 use App\Model\Product\Product;
+use Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityFacade;
+use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityRecalculator;
+use Shopsys\FrameworkBundle\Model\Product\ProductDataFactoryInterface;
+use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
 use Tests\App\Test\TransactionFunctionalTestCase;
 use Zalas\Injector\PHPUnit\Symfony\TestCase\SymfonyTestContainer;
 
@@ -14,28 +18,24 @@ class ProductAvailabilityRecalculatorTest extends TransactionFunctionalTestCase
     use SymfonyTestContainer;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\ProductFacade
      * @inject
      */
-    private $productFacade;
+    private ProductFacade $productFacade;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\ProductDataFactoryInterface
      * @inject
      */
-    private $productDataFactory;
+    private ProductDataFactoryInterface $productDataFactory;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityRecalculator
      * @inject
      */
-    private $productAvailabilityRecalculator;
+    private ProductAvailabilityRecalculator $productAvailabilityRecalculator;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityFacade
      * @inject
      */
-    private $availabilityFacade;
+    private AvailabilityFacade $availabilityFacade;
 
     public function testRecalculateOnProductEditNotUsingStock()
     {

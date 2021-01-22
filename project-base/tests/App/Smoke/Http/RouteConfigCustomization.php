@@ -434,7 +434,7 @@ class RouteConfigCustomization
                     PersonalDataAccessRequestDataFixture::REFERENCE_ACCESS_DISPLAY_REQUEST
                 );
 
-                $config->changeDefaultRequestDataSet('Check personal data site with wrong hash')
+                $config->changeDefaultRequestDataSet('Check personal data site with fixed hash')
                     ->setParameter('hash', 'invalidHash')
                     ->setExpectedStatusCode(404);
                 $config->addExtraRequestDataSet('Check personal data site with right hash')
@@ -447,7 +447,7 @@ class RouteConfigCustomization
                     PersonalDataAccessRequestDataFixture::REFERENCE_ACCESS_EXPORT_REQUEST
                 );
 
-                $config->changeDefaultRequestDataSet('Check personal data export site with wrong hash')
+                $config->changeDefaultRequestDataSet('Check personal data export site with fixed hash')
                     ->setParameter('hash', 'invalidHash')
                     ->setExpectedStatusCode(404);
                 $config->addExtraRequestDataSet('Check personal data export site with right hash')
@@ -460,7 +460,7 @@ class RouteConfigCustomization
                     PersonalDataAccessRequestDataFixture::REFERENCE_ACCESS_EXPORT_REQUEST
                 );
 
-                $config->changeDefaultRequestDataSet('Check personal data XML export with wrong hash')
+                $config->changeDefaultRequestDataSet('Check personal data XML export with fixed hash')
                     ->setParameter('hash', 'invalidHash')
                     ->setExpectedStatusCode(404);
                 $config->addExtraRequestDataSet('Check personal data XML export with right hash')

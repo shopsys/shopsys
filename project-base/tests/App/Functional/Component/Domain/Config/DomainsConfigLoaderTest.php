@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\App\Functional\Component\Domain\Config;
 
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
+use Shopsys\FrameworkBundle\Component\Domain\Config\DomainsConfigLoader;
 use Shopsys\FrameworkBundle\Component\Domain\Config\Exception\DomainConfigsDoNotMatchException;
 use Symfony\Component\Filesystem\Exception\FileNotFoundException;
 use Tests\App\Test\FunctionalTestCase;
@@ -12,10 +13,9 @@ use Tests\App\Test\FunctionalTestCase;
 class DomainsConfigLoaderTest extends FunctionalTestCase
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Config\DomainsConfigLoader
      * @inject
      */
-    private $domainsConfigLoader;
+    private DomainsConfigLoader $domainsConfigLoader;
 
     public function testLoadDomainConfigsFromYaml()
     {

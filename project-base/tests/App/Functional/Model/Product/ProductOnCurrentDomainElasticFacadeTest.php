@@ -12,10 +12,9 @@ class ProductOnCurrentDomainElasticFacadeTest extends ProductOnCurrentDomainFaca
     use SymfonyTestContainer;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainElasticFacade
      * @inject
      */
-    private $productOnCurrentDomainElasticFacade;
+    private ProductOnCurrentDomainFacadeInterface $productOnCurrentDomainElasticFacade;
 
     /**
      * @return \Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainFacadeInterface

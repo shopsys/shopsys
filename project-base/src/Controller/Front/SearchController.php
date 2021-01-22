@@ -44,7 +44,9 @@ class SearchController extends FrontBaseController
         $searchText = trim($request->get('searchText'));
         $searchUrl = $this->generateUrl(
             'front_product_search',
-            [ProductController::SEARCH_TEXT_PARAMETER => $searchText]
+            [
+                ProductController::SEARCH_TEXT_PARAMETER => $searchText,
+            ]
         );
 
         $categoriesPaginationResult = $this->categoryFacade

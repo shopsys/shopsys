@@ -11,6 +11,7 @@ class FloatingWindowPage extends AbstractPage
     public function closeFloatingWindow()
     {
         $this->tester->clickByCss('.test-window-button-close');
-        $this->tester->wait(1); // animation of closing sometime hides page content
+        // animation of closing sometime hides page content
+        $this->tester->wait(1);
     }
 }

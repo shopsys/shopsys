@@ -8,8 +8,11 @@ use App\DataFixtures\Demo\OrderDataFixture;
 use RuntimeException;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItem;
+use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Order\Order;
 use Shopsys\FrameworkBundle\Model\Order\OrderData;
+use Shopsys\FrameworkBundle\Model\Order\OrderDataFactoryInterface;
+use Shopsys\FrameworkBundle\Model\Order\OrderFacade;
 use Tests\App\Test\TransactionFunctionalTestCase;
 use Tests\FrameworkBundle\Test\IsMoneyEqual;
 use Zalas\Injector\PHPUnit\Symfony\TestCase\SymfonyTestContainer;
@@ -23,28 +26,22 @@ final class OrderFacadeEditTest extends TransactionFunctionalTestCase
     private const PAYMENT_ITEM_ID = 46;
     private const TRANSPORT_ITEM_ID = 47;
 
-    /**
-     * @var \App\Model\Order\Order
-     */
-    private $order;
+    private ?object $order = null;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Order\OrderFacade
      * @inject
      */
-    private $orderFacade;
+    private OrderFacade $orderFacade;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Order\OrderDataFactoryInterface
      * @inject
      */
-    private $orderDataFactory;
+    private OrderDataFactoryInterface $orderDataFactory;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemDataFactoryInterface
      * @inject
      */
-    private $orderItemDataFactory;
+    private OrderItemDataFactoryInterface $orderItemDataFactory;
 
     protected function setUp(): void
     {

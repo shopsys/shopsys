@@ -112,7 +112,9 @@ class CartController extends FrontBaseController
         $cart = $this->cartFacade->findCartOfCurrentCustomerUser();
         $cartItems = $cart === null ? [] : $cart->getItems();
 
-        $cartFormData = ['quantities' => []];
+        $cartFormData = [
+            'quantities' => [],
+        ];
         foreach ($cartItems as $cartItem) {
             $cartFormData['quantities'][$cartItem->getId()] = $cartItem->getQuantity();
         }
@@ -205,7 +207,9 @@ class CartController extends FrontBaseController
      */
     public function addProductFormAction(Product $product, $type = 'normal')
     {
-        $form = $this->createForm(AddProductFormType::class, ['productId' => $product->getId()], [
+        $form = $this->createForm(AddProductFormType::class, [
+            'productId' => $product->getId(),
+        ], [
             'action' => $this->generateUrl('front_cart_add_product'),
         ]);
 
@@ -222,7 +226,9 @@ class CartController extends FrontBaseController
      */
     public function productActionAction(ProductActionView $productActionView, $type = 'normal')
     {
-        $form = $this->createForm(AddProductFormType::class, ['productId' => $productActionView->getId()], [
+        $form = $this->createForm(AddProductFormType::class, [
+            'productId' => $productActionView->getId(),
+        ], [
             'action' => $this->generateUrl('front_cart_add_product'),
         ]);
 
@@ -375,7 +381,9 @@ class CartController extends FrontBaseController
 
                 $this->addSuccessFlashTwig(
                     t('Product {{ name }} removed from cart'),
-                    ['name' => $productName]
+                    [
+                        'name' => $productName,
+                    ]
                 );
             } catch (InvalidCartItemException $ex) {
                 $this->addErrorFlash(t('Unable to remove item from cart. The item is probably already removed.'));

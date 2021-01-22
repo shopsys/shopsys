@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace Tests\App\Functional\Component\HttpFoundation;
 
 use App\Controller\Test\ExpectedTestException;
+use Symfony\Bridge\Twig\Extension\HttpKernelRuntime;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpFoundation\Session\Storage\MockArraySessionStorage;
 use Tests\App\Test\TransactionFunctionalTestCase;
@@ -16,16 +18,14 @@ class FragmentHandlerTest extends TransactionFunctionalTestCase
     use SymfonyTestContainer;
 
     /**
-     * @var \Symfony\Bridge\Twig\Extension\HttpKernelRuntime
      * @inject
      */
-    private $httpKernelRuntime;
+    private HttpKernelRuntime $httpKernelRuntime;
 
     /**
-     * @var \Symfony\Component\HttpFoundation\RequestStack
      * @inject
      */
-    private $requestStack;
+    private RequestStack $requestStack;
 
     public function testRenderingFragmentDoesNotIgnoreException()
     {

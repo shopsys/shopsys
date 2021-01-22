@@ -12,7 +12,8 @@ class LayoutPage extends AbstractPage
     {
         $this->tester->clickByCss('.test-login-link-desktop');
         $this->tester->waitForAjax();
-        $this->tester->wait(1); // wait for Shopsys.window to show
+        // wait for Shopsys.window to show
+        $this->tester->wait(1);
     }
 
     public function clickOnRegistration()

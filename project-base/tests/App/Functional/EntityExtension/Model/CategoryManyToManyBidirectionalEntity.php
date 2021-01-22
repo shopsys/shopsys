@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\App\Functional\EntityExtension\Model;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -13,24 +14,22 @@ use Doctrine\ORM\Mapping as ORM;
 class CategoryManyToManyBidirectionalEntity
 {
     /**
-     * @var int
      * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    protected $id;
+    protected int $id;
 
     /**
      * @var \Doctrine\Common\Collections\Collection|\Tests\App\Functional\EntityExtension\Model\ExtendedCategory[]
      * @ORM\ManyToMany(targetEntity="ExtendedCategory", mappedBy="manyToManyBidirectionalEntities")
      */
-    protected $categories;
+    protected Collection $categories;
 
     /**
-     * @var string
      * @ORM\Column(type="string")
      */
-    protected $name;
+    protected string $name;
 
     /**
      * @param string $name
