@@ -34,6 +34,19 @@ class TransformString
     }
 
     /**
+     * @param string|null $value
+     * @return string|null
+     */
+    public static function getTrimmedStringOrNullOnEmpty(?string $value): ?string
+    {
+        if ($value === null) {
+            return null;
+        }
+
+        return static::emptyToNull(trim($value));
+    }
+
+    /**
      * @param string $string
      * @return string
      * @link http://php.vrana.cz/vytvoreni-pratelskeho-url.php
