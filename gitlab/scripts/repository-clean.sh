@@ -7,8 +7,7 @@ NO_COLOR='\e[39m'
 
 declare -A REPOSITORY_NAME_MAP_TO_ENVIRONMENT=(
   ["master"]="production"
-  ["devel"]="develop"
-  ["beta"]="beta"
+  ["devel"]="devel"
 )
 
 containsElement () {
@@ -32,12 +31,11 @@ for BRANCH in $BRANCHES; do
   BRANCH_MERGED=$(echo "${BRANCH}" | jq -r '.merged')
 
   if [ -z "${REPOSITORY_NAME_MAP_TO_ENVIRONMENT[${BRANCH_NAME}]}" ] && ${BRANCH_MERGED} == "true"; then
-    ENCODED_BRANCH_NAME=$(echo "${BRANCH_NAME}" | sed 's;/;%2F;g')
   	CURL_OUTPUT=$(curl -L --silent --header "PRIVATE-TOKEN: ${API_TOKEN}" \
-      -X DELETE \
-      "${API_URL}/repository/branches/${ENCODED_BRANCH_NAME}")
+          -X DELETE \
+          "${API_URL}/repository/branches/${BRANCH_NAME}")
 
-    echo -e "    ${BRANCH_NAME} --> ${RED}DELETED!${NO_COLOR} (${CURL_OUTPUT})"
+    echo -e "    ${BRANCH_NAME} --> ${RED}DELETED!${NO_COLOR}"
     CURL_OUTPUT=''
   else
     echo -e "    ${BRANCH_NAME} --> ${GREEN}NOTHING TO DO!${NO_COLOR}"
@@ -53,11 +51,11 @@ for REGISTRY_REPOSITORY in $(echo "${REGISTRY_REPOSITORIES}" | jq -rc '.[]'); do
   REPOSITORY_NAME=$(echo "${REGISTRY_REPOSITORY}" | jq -r '.name')
   if ! containsElement "${REPOSITORY_NAME}" ${PROJECT_BRANCHES} && [ -z "${REPOSITORY_NAME_MAP_TO_ENVIRONMENT[${REPOSITORY_NAME}]}" ]; then
 
-    CURL_OUTPUT=$(curl -L --silent --header "PRIVATE-TOKEN: ${API_TOKEN}" \
+      CURL_OUTPUT=$(curl -L --silent --header "PRIVATE-TOKEN: ${API_TOKEN}" \
       -X DELETE "${API_URL}/registry/repositories/${REPOSITORY_ID}")
 
-    echo -e "    ${REPOSITORY_NAME} --> ${RED}GONE!${NO_COLOR} (${CURL_OUTPUT})"
-    continue
+      echo -e "    ${REPOSITORY_NAME} --> ${RED}GONE!${NO_COLOR} (${CURL_OUTPUT})"
+      continue
   else
 
     if [ ! -z "${REPOSITORY_NAME_MAP_TO_ENVIRONMENT[${REPOSITORY_NAME%%-*}]}" ]; then
@@ -67,9 +65,9 @@ for REGISTRY_REPOSITORY in $(echo "${REGISTRY_REPOSITORIES}" | jq -rc '.[]'); do
 
       if [ ! -z "${DEPLOYED_TAG}" ] && [ "${DEPLOYED_TAG_CREATED_DATE}" != "null" ]; then
 
-        TAGS_FOR_BRANCH=$(curl -L --silent --header "PRIVATE-TOKEN: ${API_TOKEN}" "${API_URL}/registry/repositories/${REPOSITORY_ID}/tags")
+      	TAGS_FOR_BRANCH=$(curl -L --silent --header "PRIVATE-TOKEN: ${API_TOKEN}" "${API_URL}/registry/repositories/${REPOSITORY_ID}/tags")
 
-        for TAG in $(echo "${TAGS_FOR_BRANCH}" | jq -r '.[].name'); do
+      	for TAG in $(echo "${TAGS_FOR_BRANCH}" | jq -r '.[].name'); do
       		TAG_DETAIL_CREATED_DATE=$(curl -L --silent --header "PRIVATE-TOKEN: ${API_TOKEN}" "${API_URL}/registry/repositories/${REPOSITORY_ID}/tags/${TAG}" | jq -r '.created_at')
 
       		if [[ ${DEPLOYED_TAG_CREATED_DATE} > ${TAG_DETAIL_CREATED_DATE} ]]; then

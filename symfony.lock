@@ -95,6 +95,9 @@
     "defuse/php-encryption": {
         "version": "v2.2.1"
     },
+    "devops/kubernetes-deployment": {
+        "version": "1.5.10"
+    },
     "doctrine/annotations": {
         "version": "1.0",
         "recipe": {
@@ -344,6 +347,12 @@
     },
     "kraken-io/kraken-php": {
         "version": "1.6"
+    },
+    "laminas/laminas-code": {
+        "version": "3.4.1"
+    },
+    "laminas/laminas-eventmanager": {
+        "version": "3.3.0"
     },
     "laminas/laminas-zendframework-bridge": {
         "version": "1.0.4"

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0e4243d65d7b05edcd2a512cb4c2cfda",
+    "content-hash": "b530f3ffb6694fcb184316fd1c4caadc",
     "packages": [
         {
             "name": "adoy/fastcgi-client",
@@ -258,6 +258,7 @@
                 "extension",
                 "twig"
             ],
+            "abandoned": "twig/cache-extension",
             "time": "2020-01-01T20:47:37+00:00"
         },
         {
@@ -998,6 +999,59 @@
             "time": "2018-07-24T23:27:56+00:00"
         },
         {
+            "name": "devops/kubernetes-deployment",
+            "version": "1.5.10",
+            "source": {
+                "type": "git",
+                "url": "https://gitlab+deploy-token-4:yqMfHR2F4qc6rbFequP4@gitlab.shopsys.cz/devops/kubernetes-deployment.git",
+                "reference": "31db2db6507848b7d23f606e7c580a8ab119a15f"
+            },
+            "require": {
+                "arvenil/ninja-mutex": "^0.4.1",
+                "doctrine/annotations": "^1.6.0",
+                "doctrine/common": "^2.8.1",
+                "doctrine/doctrine-bundle": "^1.8.1",
+                "gordalina/cachetool": "~3.0|~4.0",
+                "league/flysystem": "^1.0",
+                "league/flysystem-aws-s3-v3": "^1.0",
+                "php": "^7.1",
+                "shopsys/framework": "*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "DevOps\\KubernetesDeploymentBundle\\": "src"
+                },
+                "classmap": [
+                    "src"
+                ]
+            },
+            "autoload-dev": {
+                "psr-4": {
+                    "DevOps\\KubernetesDeploymentBundle\\": "tests"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jan Górecki",
+                    "email": "jan.gorecki@shopsys.com",
+                    "homepage": "http://shopsys.com"
+                }
+            ],
+            "description": "This bundle provides easy way to deploy Shopsys Framework into Kubernetes platform.",
+            "keywords": [
+                "deploy",
+                "framework",
+                "kubernetes",
+                "shopsys",
+                "symfony"
+            ],
+            "time": "2021-01-29T10:46:53+00:00"
+        },
+        {
             "name": "doctrine/annotations",
             "version": "1.10.4",
             "source": {
@@ -1708,6 +1762,7 @@
                 "cache",
                 "caching"
             ],
+            "abandoned": true,
             "time": "2019-11-29T11:22:01+00:00"
         },
         {
@@ -2429,6 +2484,7 @@
                 "reflection",
                 "static"
             ],
+            "abandoned": "roave/better-reflection",
             "time": "2020-03-27T11:06:43+00:00"
         },
         {
@@ -2912,6 +2968,7 @@
                 "faker",
                 "fixtures"
             ],
+            "abandoned": true,
             "time": "2019-12-12T13:22:17+00:00"
         },
         {
@@ -7458,6 +7515,7 @@
                 }
             ],
             "description": "A security checker for your composer.lock",
+            "abandoned": "https://github.com/fabpot/local-php-security-checker",
             "time": "2019-11-01T13:20:14+00:00"
         },
         {
@@ -14007,6 +14065,7 @@
                 "i18n",
                 "text"
             ],
+            "abandoned": true,
             "time": "2018-12-05T18:34:18+00:00"
         },
         {
@@ -14204,12 +14263,12 @@
             "version": "1.9.1",
             "source": {
                 "type": "git",
-                "url": "https://github.com/webmozart/assert.git",
+                "url": "https://github.com/webmozarts/assert.git",
                 "reference": "bafc69caeb4d49c39fd0779086c03a3738cbb389"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/webmozart/assert/zipball/bafc69caeb4d49c39fd0779086c03a3738cbb389",
+                "url": "https://api.github.com/repos/webmozarts/assert/zipball/bafc69caeb4d49c39fd0779086c03a3738cbb389",
                 "reference": "bafc69caeb4d49c39fd0779086c03a3738cbb389",
                 "shasum": ""
             },
@@ -15251,7 +15310,7 @@
                 "MIT"
             ],
             "description": "PHP CodeSniffer Object Calisthenics rules/sniffs",
-            "abandoned": "https://github.com/symplify/coding-standard",
+            "abandoned": "symplify/phpstan-rules",
             "time": "2020-09-08T10:18:44+00:00"
         },
         {
@@ -17440,6 +17499,7 @@
                 "MIT"
             ],
             "description": "Auto bind parameters for your Symfony applications",
+            "abandoned": "symplify/package-builder",
             "time": "2020-05-15T21:39:16+00:00"
         },
         {

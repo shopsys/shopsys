@@ -18,6 +18,12 @@
             "Tests\\": "tests/"
         }
     },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://gitlab+deploy-token-4:yqMfHR2F4qc6rbFequP4@gitlab.shopsys.cz/devops/kubernetes-deployment.git"
+        }
+    ],
     "require": {
         "php": "^7.4",
         "ext-bcmath": "*",
@@ -41,6 +47,7 @@
         "commerceguys/intl": "^1.0.0",
         "composer/composer": "^1.6.0",
         "craue/formflow-bundle": "^3.0.3",
+        "devops/kubernetes-deployment": "^1.5",
         "doctrine/annotations": "^1.6.0",
         "doctrine/common": "^2.8.1",
         "doctrine/doctrine-bundle": "^1.8.1",
