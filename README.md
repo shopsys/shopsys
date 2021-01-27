@@ -1,5 +1,13 @@
 update for new deploy version: 1
 
+# Important!!!
+
+This project is for company developers (with complete git history) and **MUST NOT** be shared with any external collaborators.
+
+In case we want to share these source codes it **MUST** be extracted and pushed into separate repository without complete git history!
+
+---
+
 # Shopsys Project-base
 
 This repository is part of Shopsys Framework - a **scalable ecommerce framework** for fast-growing ecommerce sites created and maintained by in-house developers or outsourcing agencies.
