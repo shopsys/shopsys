@@ -1,0 +1,30 @@
+on: [push]
+name: "Checks and tests"
+jobs:
+    checks-and-tests:
+        name: Run checks and tests in PHP ${{ matrix.php-versions }} ${{ matrix.composer-prefered-dependencies }}
+        runs-on: ubuntu-20.04
+        strategy:
+            matrix:
+                php-versions: ['7.2', '7.3', '7.4']
+                composer-prefered-dependencies: ['--prefer-lowest', '']
+            fail-fast: false
+        steps:
+            -   name: GIT checkout branch - ${{ github.ref }}
+                uses: actions/checkout@v2
+                with:
+                    ref: ${{ github.ref }}
+            -   name: Install PHP, extensions and tools
+                uses: shivammathur/setup-php@v2
+                with:
+                    php-version: ${{ matrix.php-versions }}
+                    extensions: bcmath, gd, intl, pdo_pgsql, redis, pgsql, zip
+                    tools: composer
+            -   name: Install Composer dependencies
+                run: composer update --optimize-autoloader --no-interaction ${{ matrix.composer-prefered-dependencies }}
+            -   name: Run parallel-lint
+                run: php vendor/bin/parallel-lint ./src ./tests
+            -   name: Run Easy Coding Standards
+                run: php vendor/bin/ecs check --verbose ./src ./tests
+            -   name: Run PHPUnit
+                run: php vendor/bin/phpunit tests
