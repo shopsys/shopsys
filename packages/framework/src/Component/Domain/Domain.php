@@ -172,8 +172,7 @@ class Domain implements DomainIdsProviderInterface
      */
     public function switchDomainByRequest(Request $request)
     {
-        // Request::getBasePath() never contains script file name (/index.php)
-        $url = $request->getSchemeAndHttpHost() . $request->getBasePath();
+        $url = $request->getSchemeAndHttpHost();
 
         foreach ($this->domainConfigs as $domainConfig) {
             if ($domainConfig->getUrl() === $url) {

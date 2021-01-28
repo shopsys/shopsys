@@ -46,7 +46,10 @@ class NormalizeUrlTrailingSlashSubscriber implements EventSubscriberInterface
             $pathInfo = $event->getRequest()->getPathInfo();
             $pathInfo = TransformString::addOrRemoveTrailingSlashFromString($pathInfo);
 
-            $this->redirectToExistingPath($pathInfo, $event);
+            // prevents invalid redirection if request URL is http://host/index.php as $pathInfo is empty in that case
+            if ($pathInfo !== '') {
+                $this->redirectToExistingPath($pathInfo, $event);
+            }
         }
     }
 
