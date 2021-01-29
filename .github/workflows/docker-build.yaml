@@ -225,7 +225,7 @@ jobs:
                     name: acceptance-logs
                     path: ./project-base/var/log/
     post-job:
-        if: ${{ success() }}
+        if: ${{ always() }} && ( ${{ needs.build-fork-docker-images.result }} == 'success' || ( ${{ needs.standards.result }} == 'success' && ${{ needs.tests-unit-functional-smoke.result }} == 'success' && ${{ needs.tests-acceptance.result }} == 'success' ))
         needs: [tests-acceptance, standards, tests-unit-functional-smoke, build-fork-docker-images]
         runs-on: ubuntu-20.04
         steps:
