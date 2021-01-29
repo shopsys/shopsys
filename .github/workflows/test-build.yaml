@@ -1,0 +1,9 @@
+on: [push]
+name: "Test build"
+jobs:
+    test-build:
+        name: Test build from external repository
+        runs-on: ubuntu-20.04
+        steps:
+            -   name: Test
+                run: echo "Hello world"
