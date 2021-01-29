@@ -1,4 +1,5 @@
 # Shopsys Framework
+[![Build Status - master](https://github.com/shopsys/shopsys/workflows/Docker%20build/badge.svg?branch=master)](https://github.com/shopsys/shopsys/actions?query=workflow%3A%22Docker+build%22+branch%3A%22master%22)
 [![Build Status](https://travis-ci.org/shopsys/shopsys.svg?branch=master)](https://travis-ci.org/shopsys/shopsys)
 
 Shopsys Framework is a **fully functional ecommerce platform for businesses transitioning into tech-companies with their own software development team**.

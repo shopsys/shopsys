@@ -1,0 +1,37 @@
+on:
+    schedule:
+        -   cron: '0 3 * * *'
+name: Rebuild Docker images
+jobs:
+    rebuild-master-images:
+        name: Rebuild ${{ matrix.branches }} branch Docker images on Docker Hub
+        runs-on: ubuntu-20.04
+        strategy:
+            matrix:
+                branches: ['master', '9.1']
+            fail-fast: false
+        steps:
+            -   name: GIT checkout branch - refs/heads/${{ matrix.branches }}
+                uses: actions/checkout@v2
+                with:
+                    ref: refs/heads/${{ matrix.branches }}
+            -   name: Login to Docker Hub
+                uses: docker/login-action@v1
+                with:
+                    username: ${{ secrets.DOCKER_USERNAME }}
+                    password: ${{ secrets.DOCKER_PASSWORD }}
+            -   name: Generate PHP-FPM tag
+                env:
+                    DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+                run: |
+                    DOCKER_PHP_FPM_IMAGE_TAG=gitlab-action-`find project-base/docker/php-fpm -type f -exec stat -c "%a %n" {} \; -exec cat {} \; | md5sum | awk '{ print $1 }'`
+                    echo "DOCKER_PHP_FPM_IMAGE_TAG=${DOCKER_PHP_FPM_IMAGE_TAG}" >> $GITHUB_ENV
+                    echo "DOCKER_USERNAME=${DOCKER_USERNAME}" >> $GITHUB_ENV
+            -   name: Build PHP-FPM image and push it to Docker Hub
+                run: .github/build-php-fpm-image.sh
+            -   name: Generate Elasticseach tag
+                run: |
+                    DOCKER_ELASTICSEARCH_IMAGE_TAG=gitlab-action-`find project-base/docker/elasticsearch -type f -exec stat -c "%a %n" {} \; -exec cat {} \; | md5sum | awk '{ print $1 }'`
+                    echo "DOCKER_ELASTICSEARCH_IMAGE_TAG=${DOCKER_ELASTICSEARCH_IMAGE_TAG}" >> $GITHUB_ENV
+            -   name: Build Elasticsearch image and push it to Docker Hub
+                run: .github/build-elasticsearch-image.sh
