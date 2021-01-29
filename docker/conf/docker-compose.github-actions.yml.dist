@@ -1,0 +1,65 @@
+version: "3.4"
+
+services:
+    postgres:
+        image: postgres:12.1-alpine
+        container_name: shopsys-framework-postgres
+        volumes:
+            - ./project-base/docker/postgres/postgres.conf:/var/lib/postgresql/data/postgresql.conf
+        environment:
+            - PGDATA=/var/lib/postgresql/data/pgdata
+            - POSTGRES_USER=root
+            - POSTGRES_PASSWORD=root
+            - POSTGRES_DB=shopsys
+        command:
+            - postgres
+            - -c
+            - config_file=/var/lib/postgresql/data/postgresql.conf
+
+    webserver:
+        image: nginx:1.13-alpine
+        container_name: shopsys-framework-webserver
+        depends_on:
+            - php-fpm
+        volumes:
+            - web-data:/var/www/html/project-base/web
+            - ./docker/nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+        ports:
+            - "8000:8080"
+
+    php-fpm:
+        image: php-fpm-image
+        container_name: shopsys-framework-php-fpm
+        volumes:
+            - web-data:/var/www/html/project-base/web
+        ports:
+            - "35729:35729"
+
+    redis:
+        image: redis:5.0-alpine
+        container_name: shopsys-framework-redis
+
+    selenium-server:
+        image: selenium/standalone-chrome:3.141.5
+        container_name: shopsys-framework-acceptance-tests
+        ports:
+            - "4400:4444"
+        environment:
+            - HUB_PORT_4444_TCP_ADDR=hub
+            - HUB_PORT_4444_TCP_PORT=4444
+
+    elasticsearch:
+        image: elasticsearch-image
+        container_name: shopsys-framework-elasticsearch
+        ulimits:
+            nofile:
+                soft: 65536
+                hard: 65536
+        ports:
+            - "9200:9200"
+        environment:
+            - discovery.type=single-node
+
+volumes:
+    web-data:
+        driver: local

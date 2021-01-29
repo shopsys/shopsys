@@ -123,6 +123,8 @@ USER www-data
 
 FROM base as production
 
+ARG project_root=.
+
 # copy FPM pool configuration
 COPY ${project_root}/docker/php-fpm/production-www.conf /usr/local/etc/php-fpm.d/www.conf
 
