@@ -8,3 +8,5 @@ There you can find links to upgrade notes for other versions too.
 ## Application
 - use different css classes for javascript and tests ([#2179](https://github.com/shopsys/shopsys/pull/2179))
     - see #project-base-diff to update your project
+
+- class `Shopsys\FrameworkBundle\Component\Csv\CsvReader` is deprecated, use `SplFileObject::fgetcsv()` instead ([#2218](https://github.com/shopsys/shopsys/pull/2218))
