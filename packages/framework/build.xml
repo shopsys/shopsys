@@ -111,10 +111,8 @@
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
             <arg value="${path.bin-console}"/>
             <arg value="elfinder:install"/>
-        </exec>
-        <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
-            <arg value="${path.bin-console}"/>
-            <arg value="shopsys:elfinder:post-install"/>
+            <arg value="--docroot"/>
+            <arg value="web"/>
         </exec>
     </target>
 

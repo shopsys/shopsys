@@ -11,6 +11,9 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Filesystem\Filesystem;
 
+/**
+ * @deprecated Command is no longer necessary as proper public dir can be set in elfinder:install with --docroot option
+ */
 class ElFinderPostInstallCommand extends Command
 {
     /**
@@ -47,6 +50,11 @@ class ElFinderPostInstallCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $symfonyStyleIo = new SymfonyStyle($input, $output);
+
+        $symfonyStyleIo->warning([
+            'The shopsys:elfinder:post-install command is deprecated and will be removed in the next major. ',
+            'Set public dir via --docroot option of elfinder:install command.',
+        ]);
 
         $publicDir = $this->parameterBag->get('kernel.project_dir') . '/public/bundles/fmelfinder';
         $webDir = $this->parameterBag->get('kernel.project_dir') . '/web/bundles/fmelfinder';
