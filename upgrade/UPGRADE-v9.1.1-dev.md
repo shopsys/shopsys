@@ -13,3 +13,9 @@ There you can find links to upgrade notes for other versions too.
 
 - update annotations for EntityExtensionTest.php ([#2197](https://github.com/shopsys/shopsys/pull/2197))
     - see #project-base-diff to update your project
+
+- replace `sensiolabs/security-checker` with `enlightn/security-checker` ([#2211](https://github.com/shopsys/shopsys/pull/2211))
+    - you can run `composer remove sensiolabs/security-checker; composer require enlightn/security-checker ^1.3` to avoid manual editing of composer files
+    - security checks are now executed automatically only after composer update, you should add the check into your CI pipeline
+    - you can run `composer security-check` or `php phing security-check` to perform security checks
+    - see #project-base-diff to update your project

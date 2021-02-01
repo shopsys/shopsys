@@ -8,6 +8,7 @@ use BadMethodCallException;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Paginator\PaginationResult;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
+use Shopsys\FrameworkBundle\Model\Pricing\Exception\NoProductPriceForPricingGroupException;
 use Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryFacade;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData;
 use Shopsys\FrameworkBundle\Model\Product\Product;
@@ -269,12 +270,16 @@ class ListedProductViewElasticFacade implements ListedProductViewFacadeInterface
         $listedProductViews = [];
         foreach ($productsArray as $productArray) {
             $productId = $productArray['id'];
-            $listedProductViews[$productId] = $this->listedProductViewFactory->createFromArray(
-                $productArray,
-                $imageViews[$productId],
-                $this->productActionViewFactory->createFromArray($productArray),
-                $this->currentCustomerUser->getPricingGroup()
-            );
+            try {
+                $listedProductViews[$productId] = $this->listedProductViewFactory->createFromArray(
+                    $productArray,
+                    $imageViews[$productId],
+                    $this->productActionViewFactory->createFromArray($productArray),
+                    $this->currentCustomerUser->getPricingGroup()
+                );
+            } catch (NoProductPriceForPricingGroupException $exception) {
+                continue;
+            }
         }
 
         return $listedProductViews;

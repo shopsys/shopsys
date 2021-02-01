@@ -855,6 +855,12 @@
         </exec>
     </target>
 
+    <target name="security-check" description="Runs security checks for dependencies with known security vulnerabilities">
+        <exec executable="${path.composer.executable}" logoutput="true" passthru="true" checkreturn="true">
+            <arg value="security-check"/>
+        </exec>
+    </target>
+
     <target name="selenium-run" description="Runs the Selenium server for acceptance testing. ChromeDriver is required. Only for native installation (Selenium is always running in Docker setup).">
         <exec executable="${path.chromedriver.executable}" logoutput="true" passthru="true" checkreturn="true">
             <arg value="--port=4444"/>
