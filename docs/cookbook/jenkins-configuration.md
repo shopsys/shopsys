@@ -570,6 +570,24 @@ since our composer folder is mounted on localhost.
 !!! note
     During composer installation there will be installed 3-rd party software as dependencies of Shopsys Framework with licenses that are described in document [Open Source License Acknowledgements and Third-Party Copyrights](https://github.com/shopsys/shopsys/blob/master/open-source-license-acknowledgements-and-third-party-copyrights.md)
 
+#### Security check
+It's important to be aware of known security vulnerabilities.
+To achieve this, we configure one more special job that checks for security issues every midnight, so we will know when some occurs.
+
+Create the new job, name it for example `master-security-check` and set `Build periodically` parameter in `Build triggers` section to `H 0 * * *`.
+
+Job should be configured the same way as [previously created template](#setting-configuration-template) is, only the last command is
+
+```sh
+/usr/bin/docker exec $JOB_NAME-shopsys-framework-php-fpm php phing security:check
+```
+
+instead of
+
+```sh
+/usr/bin/docker exec $JOB_NAME-shopsys-framework-php-fpm php phing -D production.confirm.action=y db-create test-db-create build-demo-ci
+```
+
 ### Done
 Now just start `Jenkins autojobs` tool again.
 
@@ -590,4 +608,4 @@ Some of the issues can be overcome via [Continuous Integration Using Kubernetes]
 We just did pretty big job, we just configured jenkins that can automatically create jobs by git branches,
 we are able to configure this jobs using `template`, that can build instances of your project in docker.
 
-We created special job that can clean all jobs if they are useless.
+We created special job that can clean all jobs if they are useless and one for periodic check for known security vulnerabilities.
