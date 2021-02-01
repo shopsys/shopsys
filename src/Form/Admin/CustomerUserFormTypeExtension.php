@@ -7,6 +7,7 @@ namespace App\Form\Admin;
 use App\Component\Form\FormBuilderHelper;
 use App\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Form\Admin\Customer\User\CustomerUserFormType;
+use Shopsys\FrameworkBundle\Form\DisplayOnlyType;
 use Symfony\Component\Form\AbstractTypeExtension;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -39,6 +40,14 @@ class CustomerUserFormTypeExtension extends AbstractTypeExtension
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        /** @var CustomerUser|null $customerUser */
+        $customerUser = $options['customerUser'];
+        $systemData = $builder->get('systemData');
+        $systemData->add('erpCustomerNumber', DisplayOnlyType::class, [
+            'label' => t('Číslo zákazníka Moeve'),
+            'data' => $customerUser !== null ? $customerUser->getErpCustomerNumber() : '',
+        ]);
+
         $this->formBuilderHelper->disableFieldsByConfigurations($builder, self::DISABLED_FIELDS);
 
         if ($customerUser !== null) {

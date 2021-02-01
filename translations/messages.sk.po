@@ -1933,7 +1933,7 @@ msgstr "Táto rubrika neobsahuje žiadne články."
 msgid "Tax number"
 msgstr "DIČ"
 
-msgid "Tax number with vat"
+msgid "Vat number"
 msgstr "IČ DPH"
 
 msgid "Technical parameters"
@@ -2476,3 +2476,26 @@ msgstr "Šírka"
 msgid "Žádné výsledky vyhledávání"
 msgstr "Žiadne výsledky vyhľadávania"
 
+msgid "CREATED"
+msgstr "Platba založena"
+
+msgid "PAYMENT_METHOD_CHOSEN"
+msgstr "Platební metoda vybrána"
+
+msgid "PAID"
+msgstr "Platba zaplacena"
+
+msgid "AUTHORIZED"
+msgstr "Platba předautorizována"
+
+msgid "CANCELED"
+msgstr "Platba zrušena"
+
+msgid "TIMEOUTED"
+msgstr "Vypršelá platnost platby"
+
+msgid "REFUNDED"
+msgstr "Platba refundována"
+
+msgid "PARTIALLY_REFUNDED"
+msgstr "Platba částečně refundována"

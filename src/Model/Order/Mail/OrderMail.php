@@ -14,7 +14,6 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
  * @method array getVariablesReplacementsForSubject(\App\Model\Order\Order $order)
  * @method string getFormattedPrice(\App\Model\Order\Order $order)
  * @method string getFormattedDateTime(\App\Model\Order\Order $order)
- * @method string getBillingAddressHtmlTable(\App\Model\Order\Order $order)
  * @method string getDeliveryAddressHtmlTable(\App\Model\Order\Order $order)
  * @method string getProductsHtmlTable(\App\Model\Order\Order $order)
  * @method string getDomainLocaleByOrder(\App\Model\Order\Order $order)
@@ -62,5 +61,18 @@ class OrderMail extends BaseOrderMail
             self::VARIABLE_PAYMENT_INSTRUCTIONS => $paymentInstructions,
             self::VARIABLE_ERP_NUMBER => $order->getErpNumber(),
         ];
+    }
+
+    /**
+     * @param \App\Model\Order\Order $order
+     * @return string
+     */
+    protected function getBillingAddressHtmlTable(Order $order)
+    {
+        return $this->twig->render('Mail/Order/billingAddress.html.twig', [
+            'order' => $order,
+            'orderLocale' => $this->getDomainLocaleByOrder($order),
+            'domain' => $this->domain,
+        ]);
     }
 }

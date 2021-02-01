@@ -187,7 +187,7 @@ class RegistrationFormType extends AbstractType
                     ]),
                 ],
             ])
-            ->add('companyNumberWithVat', TextType::class, [
+            ->add('companyVatNumber', TextType::class, [
                 'required' => false,
                 'constraints' => [
                     new Constraints\Length([
@@ -197,8 +197,8 @@ class RegistrationFormType extends AbstractType
                     ]),
                     new Constraints\Regex([
                         'pattern' => $options['domain_id'] === Domain::FIRST_DOMAIN_ID
-                            ? RegexValidationRule::COMPANY_TAX_NUMBER_REGEX
-                            : RegexValidationRule::COMPANY_NUMBER_WITH_VAT_REGEX,
+                            ? RegexValidationRule::COMPANY_CZ_VAT_NUMBER_REGEX
+                            : RegexValidationRule::COMPANY_SK_VAT_NUMBER_REGEX,
                         'message' => 'Musí obsahovat pouze čísla a velká písmena',
                         'groups' => [self::VALIDATION_GROUP_COMPANY_CUSTOMER],
                     ]),

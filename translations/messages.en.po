@@ -765,3 +765,27 @@ msgstr ""
 
 msgid "Skvělá volba! Vaše zboží jsme přidali do košíku"
 msgstr ""
+
+msgid "CREATED"
+msgstr "Payment created"
+
+msgid "PAYMENT_METHOD_CHOSEN"
+msgstr "Payment method chosen"
+
+msgid "PAID"
+msgstr "Paid"
+
+msgid "AUTHORIZED"
+msgstr "Payment authorized"
+
+msgid "CANCELED"
+msgstr "Payment cancelled"
+
+msgid "TIMEOUTED"
+msgstr "Payment timeout reached"
+
+msgid "REFUNDED"
+msgstr "Payment refunded"
+
+msgid "PARTIALLY_REFUNDED"
+msgstr "Payment partially refunded"

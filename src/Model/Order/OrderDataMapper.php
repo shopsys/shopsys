@@ -34,7 +34,7 @@ class OrderDataMapper extends BaseOrderDataMapper
         $orderData->gender = $frontOrderData->gender;
         $orderData->password = $frontOrderData->password;
         $orderData->isCompanyCustomer = $frontOrderData->companyCustomer;
-        $orderData->companyNumberWithVat = $frontOrderData->companyNumberWithVat;
+        $orderData->companyVatNumber = $frontOrderData->companyVatNumber;
 
         return $orderData;
     }

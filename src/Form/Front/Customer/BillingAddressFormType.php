@@ -81,21 +81,17 @@ class BillingAddressFormType extends AbstractType
                     ]),
                 ],
             ])
-            ->add('companyTaxNumber', TextType::class, [
-                'required' => true,
+            ->add('companyVatNumber', TextType::class, [
+                'required' => false,
                 'constraints' => [
-                    new Constraints\NotBlank([
-                        'message' => 'Vyplňte prosím DIČ-2',
-                        'groups' => [self::VALIDATION_GROUP_COMPANY_CUSTOMER],
-                    ]),
                     new Constraints\Length([
-                        'min' => 10,
-                        'max' => 10,
+                        'min' => 12,
+                        'max' => 12,
                         'groups' => [self::VALIDATION_GROUP_COMPANY_CUSTOMER],
                     ]),
                     new Constraints\Regex([
-                        'pattern' => RegexValidationRule::COMPANY_TAX_NUMBER_REGEX,
-                        'message' => 'Prosím, zadávejte pouze čísla',
+                        'pattern' => RegexValidationRule::COMPANY_VAT_NUMBER_REGEX,
+                        'message' => 'Musí obsahovat pouze pouze čísla a velká písmena',
                         'groups' => [self::VALIDATION_GROUP_COMPANY_CUSTOMER],
                     ]),
                 ],
@@ -169,21 +165,25 @@ class BillingAddressFormType extends AbstractType
             ]);
 
         if ($options['domain_id'] === Domain::SECOND_DOMAIN_ID) {
-            $builder->add('companyNumberWithVat', TextType::class, [
-                'required' => false,
-                'constraints' => [
-                    new Constraints\Length([
-                        'min' => 12,
-                        'max' => 12,
-                        'groups' => [self::VALIDATION_GROUP_COMPANY_CUSTOMER],
-                    ]),
-                    new Constraints\Regex([
-                        'pattern' => RegexValidationRule::COMPANY_NUMBER_WITH_VAT_REGEX,
-                        'message' => 'Musí obsahovat pouze pouze čísla a velká písmena',
-                        'groups' => [self::VALIDATION_GROUP_COMPANY_CUSTOMER],
-                    ]),
-                ],
-            ]);
+            $builder->add(
+                'companyTaxNumber',
+                TextType::class,
+                [
+                    'required' => true,
+                    'constraints' => [
+                        new Constraints\Length(['min' => 10, 'max' => 10]),
+                        new Constraints\NotBlank([
+                            'message' => 'Vyplňte prosím DIČ-2',
+                            'groups' => [self::VALIDATION_GROUP_COMPANY_CUSTOMER],
+                        ]),
+                        new Constraints\Regex([
+                            'pattern' => RegexValidationRule::COMPANY_TAX_NUMBER_REGEX,
+                            'message' => 'Prosím, zadávejte pouze čísla',
+                            'groups' => [self::VALIDATION_GROUP_COMPANY_CUSTOMER],
+                        ]),
+                    ],
+                ]
+            );
         }
     }
 

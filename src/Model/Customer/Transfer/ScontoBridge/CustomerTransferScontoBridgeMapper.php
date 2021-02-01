@@ -143,8 +143,8 @@ class CustomerTransferScontoBridgeMapper
 
             $billingAddressData->companyName = $scontoBridgeCustomerData['company']['name'];
             $billingAddressData->companyNumber = $scontoBridgeCustomerData['company']['companyNumber'];
-            $billingAddressData->companyTaxNumber = $scontoBridgeCustomerData['company']['vatNumber'];
-            $billingAddressData->companyNumberWithVat = $scontoBridgeCustomerData['company']['taxNumber'];
+            $billingAddressData->companyTaxNumber = $scontoBridgeCustomerData['company']['taxNumber'];
+            $billingAddressData->companyVatNumber = $scontoBridgeCustomerData['company']['vatNumber'];
 
             $deliveryAddressData->companyName = $scontoBridgeCustomerData['company']['name'];
         }
@@ -217,9 +217,9 @@ class CustomerTransferScontoBridgeMapper
         $erpCompany->setName($billingAddress->getCompanyName());
         $erpCompany->setTaxNumber($billingAddress->getCompanyTaxNumber());
 
-        $companyNumberWithVat = $billingAddress->getCompanyNumberWithVat();
-        if ($companyNumberWithVat !== null) {
-            $erpCompany->setVatNumber($companyNumberWithVat);
+        $companyVatNumber = $billingAddress->getCompanyVatNumber();
+        if ($companyVatNumber !== null) {
+            $erpCompany->setVatNumber($companyVatNumber);
         }
 
         return $erpCompany;

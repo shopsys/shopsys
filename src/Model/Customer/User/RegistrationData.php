@@ -49,7 +49,7 @@ class RegistrationData
     /**
      * @var string|null
      */
-    public $companyNumberWithVat;
+    public $companyVatNumber;
 
     /**
      * @var bool|null
