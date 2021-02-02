@@ -35,3 +35,7 @@ There you can find links to upgrade notes for other versions too.
 
 - Frontend API: add test for creating order with no product ([#2221](https://github.com/shopsys/shopsys/pull/2221))
     - see #project-base-diff to update your project
+
+- Frontend API: correctly inherited base type in `AdvertCodeDecorator`, `AdvertImageDecorator`, `ProductPriceDecorator` types ([#2222](https://github.com/shopsys/shopsys/pull/2222))
+  - if you extended `Advert` type, you can remove duplicate definitions in `AdvertCode` and `AdvertImage` types
+  - if you extended `Price` type, you can remove duplicate definitions in `ProductPrice` type
