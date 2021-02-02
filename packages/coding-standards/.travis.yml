@@ -5,12 +5,16 @@ php:
     - 7.3
     - 7.4
 
+env:
+    - DEPENDENCY_VERSION='--prefer-lowest'
+    - DEPENDENCY_VERSION='--prefer-stable'
+
 cache:
     directories:
         - ~/.composer/cache
 
 install:
-    - composer install
+    - composer update ${DEPENDENCY_VERSION}
 
 script:
     - php vendor/bin/parallel-lint ./src ./tests ./examples
