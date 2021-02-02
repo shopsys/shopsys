@@ -203,7 +203,7 @@ ResolverMap can be created as a child of `Overblog\GraphQLBundle\Resolver\Resolv
 Example of `ResolverMap`:
 
 ```php
-class ProductResolverMap extends ResolverMap
+class CategoryResolverMap extends ResolverMap
 {
     /**
      * @return array
@@ -211,12 +211,15 @@ class ProductResolverMap extends ResolverMap
     protected function map(): array
     {
         return [
-            'Product' => [
-                'shortDescription' => function (Product $product) {
-                    return $product->getShortDescription($this->domain->getId());
+            'Category' => [
+                'seoH1' => function (Category $category) {
+                    return $category->getSeoH1($this->domain->getId());
                 },
-                'link' => function (Product $product) {
-                    return $this->getProductLink($product);
+                'seoTitle' => function (Category $category) {
+                    return $category->getSeoTitle($this->domain->getId());
+                },
+                'seoMetaDescription' => function (Category $category) {
+                    return $category->getSeoMetaDescription($this->domain->getId());
                 },
             ],
         ];
@@ -229,7 +232,7 @@ Each resolver map must be tagged with the `overblog_graphql.resolver_map` tag.
 ```yaml
 # config/services.yaml
 services:
-    App\Model\FrontendApi\Resolver\ProductResolverMap:
+    App\Model\FrontendApi\Resolver\CategoryResolverMap:
         tags:
             - { name: overblog_graphql.resolver_map, schema: default }
 ```
