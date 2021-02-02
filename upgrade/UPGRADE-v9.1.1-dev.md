@@ -19,3 +19,7 @@ There you can find links to upgrade notes for other versions too.
     - security checks are now executed automatically only after composer update, you should add the check into your CI pipeline
     - you can run `composer security-check` or `php phing security-check` to perform security checks
     - see #project-base-diff to update your project
+
+- update elfinder installer to be compatible with `helios-ag/fm-elfinder-bundle` v10.1 ([#2217](https://github.com/shopsys/shopsys/pull/2217))
+    - if you have updated the `assets` phing target, you should remove `shopsys:elfinder:post-install` call
+      and add `--docroot` option for `elfinder:install` command. See PR for inspiration
