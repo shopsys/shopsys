@@ -4,6 +4,9 @@ namespace Shopsys\FrameworkBundle\Component\Csv;
 
 use Symfony\Component\Filesystem\Exception\FileNotFoundException;
 
+/**
+ * @deprecated Class is obsolete and will be removed in the next major. Use SplFileObject::fgetcsv() instead.
+ */
 class CsvReader
 {
     /**
@@ -13,6 +16,14 @@ class CsvReader
      */
     public function getRowsFromCsv($filename, $delimiter = ';')
     {
+        @trigger_error(
+            sprintf(
+                'The %s() method is deprecated and will be removed in the next major. Use SplFileObject::fgetcsv() instead.',
+                __METHOD__
+            ),
+            E_USER_DEPRECATED
+        );
+
         if (!file_exists($filename) || !is_readable($filename)) {
             throw new FileNotFoundException();
         }
