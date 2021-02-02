@@ -1,7 +1,7 @@
 ProductPriceDecorator:
     type: object
     inherits:
-        - 'PriceDecorator'
+        - 'Price'
     config:
         description: "Represents the price of the product"
         fields:
