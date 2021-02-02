@@ -5,6 +5,7 @@ namespace Shopsys\FrameworkBundle\Model\Transport;
 use Doctrine\ORM\Mapping as ORM;
 use Prezent\Doctrine\Translatable\Annotation as Prezent;
 use Prezent\Doctrine\Translatable\Entity\AbstractTranslation;
+use Shopsys\FrameworkBundle\Component\String\TransformString;
 
 /**
  * @ORM\Table(name="transport_translations")
@@ -18,25 +19,25 @@ class TransportTranslation extends AbstractTranslation
     protected $translatable;
 
     /**
-     * @var string
+     * @var string|null
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     protected $name;
 
     /**
-     * @var string
+     * @var string|null
      * @ORM\Column(type="text", nullable=true)
      */
     protected $description;
 
     /**
-     * @var string
+     * @var string|null
      * @ORM\Column(type="text", nullable=true)
      */
     protected $instructions;
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getName()
     {
@@ -44,7 +45,7 @@ class TransportTranslation extends AbstractTranslation
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getDescription()
     {
@@ -52,7 +53,7 @@ class TransportTranslation extends AbstractTranslation
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getInstructions()
     {
@@ -60,26 +61,26 @@ class TransportTranslation extends AbstractTranslation
     }
 
     /**
-     * @param string $name
+     * @param string|null $name
      */
     public function setName($name)
     {
-        $this->name = $name;
+        $this->name = TransformString::getTrimmedStringOrNullOnEmpty($name);
     }
 
     /**
-     * @param string $description
+     * @param string|null $description
      */
     public function setDescription($description)
     {
-        $this->description = $description;
+        $this->description = TransformString::getTrimmedStringOrNullOnEmpty($description);
     }
 
     /**
-     * @param string $instructions
+     * @param string|null $instructions
      */
     public function setInstructions($instructions)
     {
-        $this->instructions = $instructions;
+        $this->instructions = TransformString::getTrimmedStringOrNullOnEmpty($instructions);
     }
 }

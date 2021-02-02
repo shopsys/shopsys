@@ -193,4 +193,47 @@ class TransformStringTest extends TestCase
     {
         static::assertSame($expected, TransformString::addOrRemoveTrailingSlashFromString($string));
     }
+
+    /**
+     * @dataProvider trimmedStringOrNullProvider
+     * @param string|null $original
+     * @param string|null $expected
+     */
+    public function testGetTrimmedStringOrNullOnEmpty(?string $original, ?string $expected): void
+    {
+        static::assertSame($expected, TransformString::getTrimmedStringOrNullOnEmpty($original));
+    }
+
+    /**
+     * @return array
+     */
+    public function trimmedStringOrNullProvider(): array
+    {
+        return [
+            [
+                'foo ',
+                'foo',
+            ],
+            [
+                'foo  ',
+                'foo',
+            ],
+            [
+                "\t  foo",
+                'foo',
+            ],
+            [
+                "foo\n\t",
+                'foo',
+            ],
+            [
+                '',
+                null,
+            ],
+            [
+                '  ',
+                null,
+            ],
+        ];
+    }
 }
