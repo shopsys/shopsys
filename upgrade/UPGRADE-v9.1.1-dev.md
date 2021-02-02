@@ -23,3 +23,6 @@ There you can find links to upgrade notes for other versions too.
 - update elfinder installer to be compatible with `helios-ag/fm-elfinder-bundle` v10.1 ([#2217](https://github.com/shopsys/shopsys/pull/2217))
     - if you have updated the `assets` phing target, you should remove `shopsys:elfinder:post-install` call
       and add `--docroot` option for `elfinder:install` command. See PR for inspiration
+
+- all fields defined in GraphQL type `Product` are correctly inherited in `RegularProduct`, `Variant`, `MainVariant` types ([#2195](https://github.com/shopsys/shopsys/pull/2195))
+    - if you extended `Product` type, you could remove duplicate definitions in `RegularProduct`, `Variant`, `MainVariant` types
