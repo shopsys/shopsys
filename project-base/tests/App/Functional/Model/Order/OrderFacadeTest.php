@@ -77,21 +77,10 @@ class OrderFacadeTest extends TransactionFunctionalTestCase
         /** @var \App\Model\Payment\Payment $payment */
         $payment = $this->paymentRepository->getById(1);
 
-        $orderData = new OrderData();
+        $orderData = $this->createBaseOrderData();
+
         $orderData->transport = $transport;
         $orderData->payment = $payment;
-        $orderData->status = $this->getReference(OrderStatusDataFixture::ORDER_STATUS_NEW);
-        $orderData->firstName = 'firstName';
-        $orderData->lastName = 'lastName';
-        $orderData->email = 'email';
-        $orderData->telephone = 'telephone';
-        $orderData->companyName = 'companyName';
-        $orderData->companyNumber = 'companyNumber';
-        $orderData->companyTaxNumber = 'companyTaxNumber';
-        $orderData->street = 'street';
-        $orderData->city = 'city';
-        $orderData->postcode = 'postcode';
-        $orderData->country = $this->getReference(CountryDataFixture::COUNTRY_CZECH_REPUBLIC);
         $orderData->deliveryAddressSameAsBillingAddress = false;
         $orderData->deliveryFirstName = 'deliveryFirstName';
         $orderData->deliveryLastName = 'deliveryLastName';
@@ -100,10 +89,6 @@ class OrderFacadeTest extends TransactionFunctionalTestCase
         $orderData->deliveryStreet = 'deliveryStreet';
         $orderData->deliveryCity = 'deliveryCity';
         $orderData->deliveryPostcode = 'deliveryPostcode';
-        $orderData->deliveryCountry = $this->getReference(CountryDataFixture::COUNTRY_CZECH_REPUBLIC);
-        $orderData->note = 'note';
-        $orderData->domainId = Domain::FIRST_DOMAIN_ID;
-        $orderData->currency = $this->getReference(CurrencyDataFixture::CURRENCY_CZK);
 
         $orderPreview = $this->orderPreviewFactory->createForCurrentUser($transport, $payment);
         $order = $this->orderFacade->createOrder($orderData, $orderPreview, null);
@@ -172,5 +157,59 @@ class OrderFacadeTest extends TransactionFunctionalTestCase
         $orderFromDb = $this->orderRepository->getById($order->getId());
 
         $this->assertCount(5, $orderFromDb->getItems());
+    }
+
+    public function testEntityStateAfterOrder(): void
+    {
+        $product = $this->productRepository->getById(1);
+        $previousProductQuantity = $product->getStockQuantity();
+        // stock quantity for product is 300 in ProductDataFixture, buy quantity is selected so the product is hidden after order
+        $buyQuantity = 500;
+
+        $this->cartFacade->addProductToCart($product->getId(), $buyQuantity);
+
+        /** @var \App\Model\Transport\Transport $transport */
+        $transport = $this->transportRepository->getById(1);
+        /** @var \App\Model\Payment\Payment $payment */
+        $payment = $this->paymentRepository->getById(1);
+
+        $orderData = $this->createBaseOrderData();
+        $orderData->transport = $transport;
+        $orderData->payment = $payment;
+        $orderData->deliveryAddressSameAsBillingAddress = true;
+
+        // place order, expecting stock statuses are subtracted and visibilities are recalculated
+        $this->orderFacade->createOrderFromFront($orderData, null);
+
+        $product = $this->productRepository->getById(1);
+        $newStockQuantity = $product->getStockQuantity();
+
+        self::assertEquals($previousProductQuantity - $buyQuantity, $newStockQuantity);
+        self::assertEquals(true, $product->getCalculatedHidden(), 'Product has to be hidden as it\'s sold out');
+    }
+
+    /**
+     * @return \App\Model\Order\OrderData
+     */
+    private function createBaseOrderData(): OrderData
+    {
+        $orderData = new OrderData();
+        $orderData->status = $this->getReference(OrderStatusDataFixture::ORDER_STATUS_NEW);
+        $orderData->firstName = 'firstName';
+        $orderData->lastName = 'lastName';
+        $orderData->email = 'email';
+        $orderData->telephone = 'telephone';
+        $orderData->companyName = 'companyName';
+        $orderData->companyNumber = 'companyNumber';
+        $orderData->companyTaxNumber = 'companyTaxNumber';
+        $orderData->street = 'street';
+        $orderData->city = 'city';
+        $orderData->postcode = 'postcode';
+        $orderData->country = $this->getReference(CountryDataFixture::COUNTRY_CZECH_REPUBLIC);
+        $orderData->note = 'note';
+        $orderData->domainId = Domain::FIRST_DOMAIN_ID;
+        $orderData->currency = $this->getReference(CurrencyDataFixture::CURRENCY_CZK);
+
+        return $orderData;
     }
 }
