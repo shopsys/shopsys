@@ -29,3 +29,6 @@ There you can find links to upgrade notes for other versions too.
 
 - add test to check if entities are refreshed after order is completed and after recalculation ([#2202](https://github.com/shopsys/shopsys/pull/2202))
     - see #project-base-diff to update your project
+
+- fix smoke test for a new product for first domain on https ([#2214](https://github.com/shopsys/shopsys/pull/2214))
+    - see #project-base-diff to update your project

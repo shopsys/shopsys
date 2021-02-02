@@ -29,8 +29,10 @@ class NewProductTest extends FunctionalTestCase
     public function testCreateOrEditProduct($relativeUrl)
     {
         $domainUrl = $this->domain->getDomainConfigById(Domain::FIRST_DOMAIN_ID)->getUrl();
+        $isDomainSecured = parse_url($domainUrl, PHP_URL_SCHEME) === 'https';
         $server = [
             'HTTP_HOST' => sprintf('%s:%d', parse_url($domainUrl, PHP_URL_HOST), parse_url($domainUrl, PHP_URL_PORT)),
+            'HTTPS' => $isDomainSecured,
         ];
 
         $client1 = $this->findClient(false, 'admin', 'admin123');
@@ -47,7 +49,9 @@ class NewProductTest extends FunctionalTestCase
 
         /** @var \Symfony\Component\Security\Csrf\CsrfTokenManager $tokenManager */
         $tokenManager = $client2->getContainer()->get('security.csrf.token_manager');
-        $token = $tokenManager->getToken(ProductFormType::CSRF_TOKEN_ID);
+        // if domain is on HTTPS, previously created token is prefixed with https-
+        $tokenId = ($isDomainSecured ? 'https-' : '') . ProductFormType::CSRF_TOKEN_ID;
+        $token = $tokenManager->getToken($tokenId);
         $this->setFormCsrfToken($form, $token);
 
         $client2->submit($form);
