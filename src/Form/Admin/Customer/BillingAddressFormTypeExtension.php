@@ -52,48 +52,29 @@ class BillingAddressFormTypeExtension extends AbstractTypeExtension
 
         $builderCompanyDataGroup = $builder->get('companyData')->get('companyFields');
 
-        $builderCompanyDataGroup->add('companyTaxNumber', TextType::class, [
-            'required' => false,
-            'constraints' => [
-                new Constraints\Length([
-                    'min' => 12,
-                    'max' => 12,
-                    'groups' => [BillingAddressFormType::VALIDATION_GROUP_COMPANY_CUSTOMER],
-                ]),
-                new Constraints\Regex([
-                    'pattern' => RegexValidationRule::COMPANY_TAX_NUMBER_REGEX,
-                    'message' => 'Musí obsahovat pouze pouze čísla a velká písmena',
-                    'groups' => [BillingAddressFormType::VALIDATION_GROUP_COMPANY_CUSTOMER],
-                ]),
-            ],
-            'label' => 'Tax number',
-        ]);
+        $builderCompanyDataGroup->add(
+            'companyVatNumber',
+            TextType::class,
+            [
+                'label' => $domainId === DOMAIN::FIRST_DOMAIN_ID ? t('Vat number') : t('IČ DPH'),
+                'required' => true,
+                'constraints' => [
+                    new Constraints\Length([
+                        'min' => 12,
+                        'max' => 12,
+                        'groups' => [BillingAddressFormType::VALIDATION_GROUP_COMPANY_CUSTOMER],
+                    ]),
+                    new Constraints\Regex([
+                        'pattern' => RegexValidationRule::COMPANY_VAT_NUMBER_REGEX,
+                        'message' => 'Prosím, zadávejte pouze čísla',
+                        'groups' => [BillingAddressFormType::VALIDATION_GROUP_COMPANY_CUSTOMER],
+                    ]),
+                ],
+            ]
+        );
 
-        if ($domainId === Domain::SECOND_DOMAIN_ID) {
-            $builderCompanyDataGroup->add(
-                'companyNumberWithVat',
-                TextType::class,
-                [
-                    'label' => t('Tax number with vat'),
-                    'required' => true,
-                    'constraints' => [
-                        new Constraints\NotBlank([
-                            'message' => 'Vyplňte prosím DIČ-2',
-                            'groups' => [BillingAddressFormType::VALIDATION_GROUP_COMPANY_CUSTOMER],
-                        ]),
-                        new Constraints\Length([
-                            'min' => 10,
-                            'max' => 10,
-                            'groups' => [BillingAddressFormType::VALIDATION_GROUP_COMPANY_CUSTOMER],
-                        ]),
-                        new Constraints\Regex([
-                            'pattern' => RegexValidationRule::COMPANY_NUMBER_WITH_VAT_REGEX,
-                            'message' => 'Prosím, zadávejte pouze čísla',
-                            'groups' => [BillingAddressFormType::VALIDATION_GROUP_COMPANY_CUSTOMER],
-                        ]),
-                    ],
-                ]
-            );
+        if ($domainId === Domain::FIRST_DOMAIN_ID) {
+            $builderCompanyDataGroup->remove('companyTaxNumber');
         }
 
         $this->formBuilderHelper->disableFieldsByConfigurations($builder, self::DISABLED_FIELDS);

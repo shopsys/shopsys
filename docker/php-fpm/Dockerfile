@@ -32,16 +32,4 @@ RUN composer install --optimize-autoloader --no-interaction --no-progress --no-d
 
 RUN php phing build-deploy-part-1-db-independent clean
 
-########################################################################################################################
-
-FROM base as ci
-
-COPY --chown=www-data:www-data / /var/www/html
-
-RUN composer install --optimize-autoloader --no-interaction --no-progress --dev
-
-RUN php phing composer-dev dirs-create test-dirs-create assets npm standards tests-unit tests-acceptance-build
-
-RUN ./bin/console shopsys:environment:change prod
-
-RUN php phing clean
+RUN chmod +x ./deploy/deploy-project.sh && ./deploy/deploy-project.sh merge

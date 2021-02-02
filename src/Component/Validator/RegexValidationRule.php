@@ -13,7 +13,9 @@ class RegexValidationRule
 
     public const COMPANY_NUMBER_REGEX = '/^[0-9]+$/';
     public const COMPANY_TAX_NUMBER_REGEX = '/^[0-9]+$/';
-    public const COMPANY_NUMBER_WITH_VAT_REGEX = '/^[0-9A-Z]*([0-9]+[A-Z]+|[A-Z]+[0-9]+)[0-9A-Z]*$/';
+    public const COMPANY_VAT_NUMBER_REGEX = '/^[0-9A-Z]*([0-9]+[A-Z]+|[A-Z]+[0-9]+)[0-9A-Z]*$/';
+    public const COMPANY_CZ_VAT_NUMBER_REGEX = '/^[A-Z]{2}[0-9]{8,10}$/';
+    public const COMPANY_SK_VAT_NUMBER_REGEX = '/^[A-Z]{2}[0-9]{10}$/';
 
     public const TELEPHONE_REGEX = '/^[0-9\+]+$/';
 }

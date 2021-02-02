@@ -27,7 +27,7 @@ class FrontOrderDataMapper extends BaseFrontOrderDataMapper
 
         /** @var \App\Model\Customer\BillingAddress $billingAddress */
         $billingAddress = $customerUser->getCustomer()->getBillingAddress();
-        $frontOrderData->companyNumberWithVat = $billingAddress->getCompanyNumberWithVat();
+        $frontOrderData->companyVatNumber = $billingAddress->getCompanyVatNumber();
     }
 
     /**

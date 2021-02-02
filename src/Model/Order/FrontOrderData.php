@@ -21,7 +21,7 @@ class FrontOrderData extends BaseFrontOrderData
     /**
      * @var string|null
      */
-    public $companyNumberWithVat;
+    public $companyVatNumber;
 
     /**
      * @var string|null

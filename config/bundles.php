@@ -37,4 +37,5 @@ return [
     Symfony\Bundle\WebProfilerBundle\WebProfilerBundle::class => ['dev' => true],
     Symfony\Bundle\DebugBundle\DebugBundle::class => ['dev' => true],
     Symfony\WebpackEncoreBundle\WebpackEncoreBundle::class => ['all' => true],
+    DevOps\KubernetesDeployment\DevOpsKubernetesDeploymentBundle::class => ['all' => true],
 ];

@@ -73,7 +73,7 @@
                             <div class="form-line-block-section">
                                 {{ form_row(form.companyName, { label: 'Název společnosti'|trans, rowClass: 'form-line-block js-form-field' }) }}
                                 {{ form_row(form.companyNumber, { label: 'Company number'|trans, rowClass: 'form-line-block js-form-field' }) }}
-                                {{ form_row(form.companyNumberWithVat, { label: 'Vat number'|trans, rowClass: 'form-line-block js-form-field' }) }}
+                                {{ form_row(form.companyVatNumber, { label: 'Vat number'|trans, rowClass: 'form-line-block js-form-field' }) }}
                                 {% if getDomain().id == 2 %}
                                     {{ form_row(form.companyTaxNumber, { label: 'Tax number'|trans, rowClass: 'form-line-block js-form-field' }) }}
                                 {% endif %}

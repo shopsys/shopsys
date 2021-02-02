@@ -38,7 +38,7 @@ msgid "Heading (H1) cannot be longer than {{ limit }} characters"
 msgstr ""
 
 msgid "Identification number cannot be longer than {{ limit }} characters"
-msgstr "IČ nesmí být delší než {{ limit }} znaků"
+msgstr "IČO nesmí být delší než {{ limit }} znaků"
 
 msgid "Identifikátor musí obsahovat dva znaky"
 msgstr ""
@@ -149,7 +149,7 @@ msgid "Please enter full name"
 msgstr "Vyplňte prosím celé jméno"
 
 msgid "Please enter identification number"
-msgstr "Vyplňte prosím IČ"
+msgstr "Vyplňte prosím IČO"
 
 msgid "Please enter last name"
 msgstr "Vyplňte prosím příjmení"
