@@ -219,5 +219,7 @@ OrderInputDecorator:
                 type: "[OrderProductInput!]!"
                 description: "A list of products to order to"
                 validation:
+                    -   NotBlank:
+                            message: "Please enter at least one product"
                     -   All:
                             -   Shopsys\FrontendApiBundle\Component\Constraints\ProductCanBeOrdered: ~
