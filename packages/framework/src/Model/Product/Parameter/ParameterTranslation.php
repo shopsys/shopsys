@@ -5,6 +5,7 @@ namespace Shopsys\FrameworkBundle\Model\Product\Parameter;
 use Doctrine\ORM\Mapping as ORM;
 use Prezent\Doctrine\Translatable\Annotation as Prezent;
 use Prezent\Doctrine\Translatable\Entity\AbstractTranslation;
+use Shopsys\FrameworkBundle\Component\String\TransformString;
 
 /**
  * @ORM\Table(name="parameter_translations")
@@ -32,10 +33,10 @@ class ParameterTranslation extends AbstractTranslation
     }
 
     /**
-     * @param string $name
+     * @param string|null $name
      */
     public function setName($name)
     {
-        $this->name = $name;
+        $this->name = TransformString::getTrimmedStringOrNullOnEmpty($name);
     }
 }

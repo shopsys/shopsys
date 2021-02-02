@@ -2,7 +2,7 @@ VariantDecorator:
     type: object
     decorator: true
     inherits:
-        - 'ProductDecorator'
+        - 'Product'
     config:
         fields:
             mainVariant:

@@ -2,7 +2,7 @@ RegularProductDecorator:
     type: object
     decorator: true
     inherits:
-        - 'ProductDecorator'
+        - 'Product'
     config:
         interfaces:
             - 'Product'

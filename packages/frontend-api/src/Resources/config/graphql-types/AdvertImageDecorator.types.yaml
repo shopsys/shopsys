@@ -2,7 +2,7 @@ AdvertImageDecorator:
     type: object
     decorator: true
     inherits:
-        - 'AdvertDecorator'
+        - 'Advert'
     config:
         fields:
             link:

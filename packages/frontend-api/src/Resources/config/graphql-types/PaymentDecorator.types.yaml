@@ -20,7 +20,7 @@ PaymentDecorator:
                 type: "Int!"
                 description: "Payment position"
             price:
-                type: "Price"
+                type: "Price!"
                 description: "Payment price"
                 resolve: '@=service("Shopsys\\FrontendApiBundle\\Model\\Resolver\\Price\\PriceResolver").resolveByPayment(value)'
             images:

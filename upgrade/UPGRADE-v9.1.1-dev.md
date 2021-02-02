@@ -19,3 +19,23 @@ There you can find links to upgrade notes for other versions too.
     - security checks are now executed automatically only after composer update, you should add the check into your CI pipeline
     - you can run `composer security-check` or `php phing security-check` to perform security checks
     - see #project-base-diff to update your project
+
+- update elfinder installer to be compatible with `helios-ag/fm-elfinder-bundle` v10.1 ([#2217](https://github.com/shopsys/shopsys/pull/2217))
+    - if you have updated the `assets` phing target, you should remove `shopsys:elfinder:post-install` call
+      and add `--docroot` option for `elfinder:install` command. See PR for inspiration
+
+- all fields defined in GraphQL type `Product` are correctly inherited in `RegularProduct`, `Variant`, `MainVariant` types ([#2195](https://github.com/shopsys/shopsys/pull/2195))
+    - if you extended `Product` type, you could remove duplicate definitions in `RegularProduct`, `Variant`, `MainVariant` types
+
+- add test to check if entities are refreshed after order is completed and after recalculation ([#2202](https://github.com/shopsys/shopsys/pull/2202))
+    - see #project-base-diff to update your project
+
+- fix smoke test for a new product for first domain on https ([#2214](https://github.com/shopsys/shopsys/pull/2214))
+    - see #project-base-diff to update your project
+
+- Frontend API: add test for creating order with no product ([#2221](https://github.com/shopsys/shopsys/pull/2221))
+    - see #project-base-diff to update your project
+
+- Frontend API: correctly inherited base type in `AdvertCodeDecorator`, `AdvertImageDecorator`, `ProductPriceDecorator` types ([#2222](https://github.com/shopsys/shopsys/pull/2222))
+  - if you extended `Advert` type, you can remove duplicate definitions in `AdvertCode` and `AdvertImage` types
+  - if you extended `Price` type, you can remove duplicate definitions in `ProductPrice` type

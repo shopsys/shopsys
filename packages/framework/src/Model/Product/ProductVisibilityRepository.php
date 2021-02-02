@@ -15,7 +15,7 @@ use Shopsys\FrameworkBundle\Model\Product\Exception\ProductVisibilityNotFoundExc
 class ProductVisibilityRepository
 {
     /**
-     * @var \Doctrine\ORM\EntityManagerInterface
+     * @var \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator
      */
     protected $em;
 
@@ -30,7 +30,7 @@ class ProductVisibilityRepository
     protected $pricingGroupRepository;
 
     /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
+     * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator $em
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupRepository $pricingGroupRepository
      */
@@ -54,6 +54,10 @@ class ProductVisibilityRepository
         $this->hideMainVariantsWithoutVisibleVariants($onlyMarkedProducts);
         $this->refreshGlobalProductVisibility($onlyMarkedProducts);
         $this->markAllProductsVisibilityAsRecalculated();
+
+        // refresh entities after native query calls
+        $this->em->refreshLoadedEntitiesByClassName(Product::class);
+        $this->em->refreshLoadedEntitiesByClassName(ProductVisibility::class);
     }
 
     /**

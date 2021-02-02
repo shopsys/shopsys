@@ -5,6 +5,7 @@ namespace Shopsys\FrameworkBundle\Model\Product;
 use Doctrine\ORM\Mapping as ORM;
 use Prezent\Doctrine\Translatable\Annotation as Prezent;
 use Prezent\Doctrine\Translatable\Entity\AbstractTranslation;
+use Shopsys\FrameworkBundle\Component\String\TransformString;
 
 /**
  * @ORM\Table(name="product_translations")
@@ -18,7 +19,7 @@ class ProductTranslation extends AbstractTranslation
     protected $translatable;
 
     /**
-     * @var string
+     * @var string|null
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     protected $name;
@@ -30,13 +31,13 @@ class ProductTranslation extends AbstractTranslation
     protected $nameTsvector;
 
     /**
-     * @var string
+     * @var string|null
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     protected $variantAlias;
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getName()
     {
@@ -44,11 +45,11 @@ class ProductTranslation extends AbstractTranslation
     }
 
     /**
-     * @param string $name
+     * @param string|null $name
      */
     public function setName($name)
     {
-        $this->name = $name;
+        $this->name = TransformString::getTrimmedStringOrNullOnEmpty($name);
     }
 
     /**
@@ -64,6 +65,6 @@ class ProductTranslation extends AbstractTranslation
      */
     public function setVariantAlias($variantAlias)
     {
-        $this->variantAlias = $variantAlias;
+        $this->variantAlias = TransformString::getTrimmedStringOrNullOnEmpty($variantAlias);
     }
 }
