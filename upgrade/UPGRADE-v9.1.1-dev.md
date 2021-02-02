@@ -32,3 +32,6 @@ There you can find links to upgrade notes for other versions too.
 
 - fix smoke test for a new product for first domain on https ([#2214](https://github.com/shopsys/shopsys/pull/2214))
     - see #project-base-diff to update your project
+
+- Frontend API: add test for creating order with no product ([#2221](https://github.com/shopsys/shopsys/pull/2221))
+    - see #project-base-diff to update your project
