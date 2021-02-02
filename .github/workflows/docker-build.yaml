@@ -1,4 +1,13 @@
-on: [push]
+on:
+    push:
+        branches:
+            - 'master'
+            - '[1-9].[0-9]'
+        tags:
+            - '**'
+    pull_request:
+        branches:
+            - '**'
 name: "Docker build"
 jobs:
     cancel:
@@ -10,6 +19,7 @@ jobs:
                 with:
                     access_token: ${{ github.token }}
     build-docker-images:
+        if: github.event.pull_request.head.repo.full_name == 'shopsys/shopsys'
         name: Build PHP-FPM and Elasticsearch images
         needs: cancel
         runs-on: ubuntu-20.04
@@ -133,3 +143,101 @@ jobs:
                 with:
                     name: acceptance-logs
                     path: ./project-base/var/log/
+    build-fork-docker-images:
+        if: github.event.pull_request.head.repo.full_name != 'shopsys/shopsys'
+        name: Build application and run standards checks and tests
+        needs: cancel
+        runs-on: ubuntu-20.04
+        steps:
+            -   name: GIT checkout branch - ${{ github.ref }}
+                uses: actions/checkout@v2
+                with:
+                    ref: ${{ github.ref }}
+            -   name: Check if PHP-FPM image exists
+                env:
+                    DOCKER_USERNAME: shopsysbot
+                run: |
+                    DOCKER_PHP_FPM_IMAGE_TAG=gitlab-action-`find project-base/docker/php-fpm -type f -exec stat -c "%a %n" {} \; -exec cat {} \; | md5sum | awk '{ print $1 }'`
+                    echo "DOCKER_PHP_FPM_IMAGE_TAG=${DOCKER_PHP_FPM_IMAGE_TAG}" >> $GITHUB_ENV
+                    echo "DOCKER_USERNAME=${DOCKER_USERNAME}" >> $GITHUB_ENV
+                    DOCKER_PHP_FPM_IMAGE_EXISTS=`. .github/check-image-exists.sh && checkImageExists ${DOCKER_USERNAME} php-fpm ${DOCKER_PHP_FPM_IMAGE_TAG} > /dev/null ; echo $?`
+                    echo ${DOCKER_PHP_FPM_IMAGE_EXISTS}
+                    echo "DOCKER_PHP_FPM_IMAGE_EXISTS=${DOCKER_PHP_FPM_IMAGE_EXISTS}" >> $GITHUB_ENV
+            -   name: Build PHP-FPM image
+                if: env.DOCKER_PHP_FPM_IMAGE_EXISTS == 0
+                run: |
+                    docker image build \
+                        --build-arg project_root=project-base \
+                        --build-arg www_data_uid=$(id -u) \
+                        --build-arg www_data_gid=$(id -g) \
+                        --tag ${DOCKER_USERNAME}/php-fpm:${DOCKER_PHP_FPM_IMAGE_TAG} \
+                        --target development \
+                        --no-cache \
+                        --compress \
+                        -f project-base/docker/php-fpm/Dockerfile \
+                        .
+            -   name: Check if Elasticseach image exists
+                run: |
+                    DOCKER_ELASTICSEARCH_IMAGE_TAG=gitlab-action-`find project-base/docker/elasticsearch -type f -exec stat -c "%a %n" {} \; -exec cat {} \; | md5sum | awk '{ print $1 }'`
+                    echo "DOCKER_ELASTICSEARCH_IMAGE_TAG=${DOCKER_ELASTICSEARCH_IMAGE_TAG}" >> $GITHUB_ENV
+                    DOCKER_ELASTICSEARCH_IMAGE_EXISTS=`. .github/check-image-exists.sh && checkImageExists ${DOCKER_USERNAME} elasticsearch ${DOCKER_ELASTICSEARCH_IMAGE_TAG} > /dev/null ; echo $?`
+                    echo "DOCKER_ELASTICSEARCH_IMAGE_EXISTS=${DOCKER_ELASTICSEARCH_IMAGE_EXISTS}" >> $GITHUB_ENV
+            -   name: Build Elasticsearch image
+                if: env.DOCKER_ELASTICSEARCH_IMAGE_EXISTS == 0
+                run: |
+                    docker image build \
+                        --tag ${DOCKER_USERNAME}/elasticsearch:${DOCKER_ELASTICSEARCH_IMAGE_TAG} \
+                        --no-cache \
+                        --compress \
+                        -f project-base/docker/elasticsearch/Dockerfile \
+                        .
+            -   name: Copy and rename docker-compose.github-actions.yml.dist to docker-compose.yml
+                run: cp -f ./docker/conf/docker-compose.github-actions.yml.dist ./docker-compose.yml
+            -   name: Update docker-compose.yml file with right PHP-FPM image
+                run: "sed -i \"s#php-fpm-image#${DOCKER_USERNAME}/php-fpm:${DOCKER_PHP_FPM_IMAGE_TAG}#\" ./docker-compose.yml"
+            -   name: Update docker-compose.yml file with right Elastichsearch image
+                run: "sed -i \"s#elasticsearch-image#${DOCKER_USERNAME}/elasticsearch:${DOCKER_ELASTICSEARCH_IMAGE_TAG}#\" ./docker-compose.yml"
+            -   name: Build application
+                run: |
+                    docker-compose pull --parallel webserver postgres elasticsearch redis php-fpm selenium-server
+                    docker-compose up -d
+                    docker cp ./ shopsys-framework-php-fpm:/var/www/html
+                    docker-compose exec -T php-fpm composer install --optimize-autoloader --no-interaction
+                    docker-compose exec -T php-fpm php phing dirs-create test-dirs-create assets npm build-version-generate db-create test-db-create db-demo elasticsearch-index-recreate elasticsearch-export error-pages-generate test-db-demo test-elasticsearch-index-recreate test-elasticsearch-export tests-acceptance-build
+            -   name: Check standards
+                run: docker-compose exec -T php-fpm php phing standards
+            -   name: Run tests
+                run: docker-compose exec -T php-fpm php phing tests
+            -   name: Run acceptance tests
+                run: docker-compose exec -T php-fpm php phing tests-acceptance
+            -   name: PHP-FPM container logs
+                if: ${{ failure() }}
+                run: docker-compose logs php-fpm
+            -   name: Copy Codeception logs from container
+                if: ${{ failure() }}
+                run: docker cp shopsys-framework-php-fpm:/var/www/html/project-base/var/log ./project-base/var/log
+            -   name: Upload Codeception logs to artifacts
+                if: ${{ failure() }}
+                uses: actions/upload-artifact@v2
+                with:
+                    name: acceptance-logs
+                    path: ./project-base/var/log/
+    build-successful:
+        if: ${{ always() }}
+        name: Build successful
+        needs: [tests-acceptance, standards, tests-unit-functional-smoke, build-fork-docker-images]
+        runs-on: ubuntu-20.04
+        env:
+            BUILD_FORK_RESULT: ${{ needs.build-fork-docker-images.result }}
+            STANDARDS_RESULT: ${{ needs.standards.result }}
+            TESTS_RESULT: ${{ needs.tests-unit-functional-smoke.result }}
+            TESTS_ACCEPTANCE_RESULT: ${{ needs.tests-acceptance.result }}
+        steps:
+            -   name: GIT checkout branch - ${{ github.ref }}
+                uses: actions/checkout@v2
+                with:
+                    ref: ${{ github.ref }}
+            -   name: Build successful
+                run: |
+                    EXIT_CODE=`. .github/get-build-exit-code.sh && getBuildExitCodeBasedOnJobResults ${BUILD_FORK_RESULT} ${STANDARDS_RESULT} ${TESTS_RESULT} ${TESTS_ACCEPTANCE_RESULT} > /dev/null ; echo $?`
+                    exit "${EXIT_CODE}"
