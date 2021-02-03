@@ -12,34 +12,38 @@
             />
         {% endif %}
 
-        <div class="box-filter__price js-product-filter-box" data-product-filter-box-id="product_filter_box_price">
+        <div class="box-filter__choice box-filter__choice--without-border js-product-filter-box" data-product-filter-box-id="product_filter_box_price">
             <span class="box-filter__choice__title active js-product-filter-box-label">
                 {{ 'Price'|trans }}
                 <i class="svg svg-arrow cursor-pointer js-product-filter-box-arrow"></i>
             </span>
-            <div id="product_filter_box_price" class="box-filter__slider__wrap">
-                <div
-                    class="box-filter__slider__wrap__range js-range-slider"
-                    data-minimum-input-id="{{ filterForm.minimalPrice.vars.id }}"
-                    data-minimal-value="{{ priceRange.minimalPrice|moneyFormat }}"
-                    data-maximum-input-id="{{ filterForm.maximalPrice.vars.id }}"
-                    data-maximal-value="{{ priceRange.maximalPrice|moneyFormat }}"
-                ></div>
-                <div class="box-filter__price__item">
-                    {{ form_widget(filterForm.minimalPrice, {
-                        symbolAfterInput: currencySymbolByDomainId(getDomain().id),
-                        attr: { class: 'js-product-filter-call-change-after-reset', placeholder:priceRange.minimalPrice|price }
-                    }) }}
-
-                </div>
-                <div class="box-filter__price__item box-filter__price__item--text">
-                    {{ 'to'|trans }}
-                </div>
-                <div class="box-filter__price__item box-filter__price__item--right">
-                    {{ form_widget(filterForm.maximalPrice, {
-                        symbolAfterInput: currencySymbolByDomainId(getDomain().id),
-                        attr: { class: 'js-product-filter-call-change-after-reset', placeholder:priceRange.maximalPrice|price}
-                    }) }}
+            <div class="box-filter__choice__content" id="product_filter_box_price">
+                <div class="box-filter__price">
+                    <div
+                        class="box-filter__price__slider js-range-slider"
+                        data-minimum-input-id="{{ filterForm.minimalPrice.vars.id }}"
+                        data-minimal-value="{{ priceRange.minimalPrice|moneyFormat }}"
+                        data-maximum-input-id="{{ filterForm.maximalPrice.vars.id }}"
+                        data-maximal-value="{{ priceRange.maximalPrice|moneyFormat }}"
+                    ></div>
+                    <div class="box-filter__price__item">
+                        {{ form_widget(filterForm.minimalPrice, {
+                            symbolAfterInput: currencySymbolByDomainId(getDomain().id),
+                            attr: { class: 'js-product-filter-call-change-after-reset', placeholder:priceRange.minimalPrice.amount|formatNumber }
+                        }) }}
+                        <div class="box-filter__price__item__text">
+                            {{ 'to'|trans }}
+                        </div>
+                    </div>
+                    <div class="box-filter__price__item">
+                        {{ form_widget(filterForm.maximalPrice, {
+                            symbolAfterInput: currencySymbolByDomainId(getDomain().id),
+                            attr: { class: 'js-product-filter-call-change-after-reset', placeholder: priceRange.maximalPrice.amount|formatNumber }
+                        }) }}
+                        <div class="box-filter__price__item__text">
+                            {{ currencySymbolByDomainId(getDomain().id) }}
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -49,8 +53,8 @@
                 {{ 'Availability'|trans }}
                 <i class="svg svg-arrow cursor-pointer js-product-filter-box-arrow"></i>
             </span>
-            <div id="product_filter_box_availability" class="box-filter__choice__inputs">
-                <div class="form-choice">
+            <div id="product_filter_box_availability" class="box-filter__choice__content">
+                <div class="form-choice form-choice--block">
                     {{ form_widget(filterForm.inStock, { attr: { class: "css-checkbox" } }) }}
                     <label class="css-checkbox__image form-choice__label" for="{{ filterForm.inStock.vars.id }}">
                             {{ 'Products in stock only'|trans }}
@@ -75,9 +79,9 @@
                     {{ 'Flags'|trans }}
                     <i class="svg svg-arrow cursor-pointer js-product-filter-box-arrow"></i>
                 </span>
-                <div id="{{ filterForm.flags.vars.id }}" class="box-filter__choice__inputs">
+                <div id="{{ filterForm.flags.vars.id }}" class="box-filter__choice__content">
                     {% for flagForm in filterForm.flags %}
-                        <div class="form-choice">
+                        <div class="form-choice form-choice--block">
                             {{ form_widget(flagForm, { attr: { class: "css-checkbox" } }) }}
                             <label class="css-checkbox__image form-choice__label" for="{{ flagForm.vars.id }}">
                                 {{ flagForm.vars.label }}
@@ -107,9 +111,9 @@
                     {{ 'Brand'|trans }}
                     <i class="svg svg-arrow cursor-pointer js-product-filter-box-arrow"></i>
                 </span>
-                <div id="{{ filterForm.brands.vars.id }}" class="box-filter__choice__inputs">
+                <div id="{{ filterForm.brands.vars.id }}" class="box-filter__choice__content">
                     {% for brandForm in filterForm.brands %}
-                        <div class="form-choice">
+                        <div class="form-choice form-choice--block">
                             {{ form_widget(brandForm, { attr: { class: 'css-checkbox'} }) }}
                             <label class="css-checkbox__image form-choice__label" for="{{ brandForm.vars.id }}">
                                 {{ brandForm.vars.label }}
@@ -142,9 +146,9 @@
                                 {{ parameterForm.vars.label }}
                                 <i class="svg svg-arrow cursor-pointer js-product-filter-box-arrow"></i>
                             </span>
-                            <div id="{{ parameterForm.vars.id }}" class="box-filter__choice__inputs">
+                            <div id="{{ parameterForm.vars.id }}" class="box-filter__choice__content">
                                 {% for parameterValueForm in parameterForm %}
-                                    <div class="form-choice js-product-filter-parameter-value">
+                                    <div class="form-choice form-choice--block js-product-filter-parameter-value">
                                         {{ form_widget(parameterValueForm, { attr: { class: 'css-checkbox'} }) }}
                                         <label class="css-checkbox__image form-choice__label" for="{{ parameterValueForm.vars.id }}">
                                             {{ parameterValueForm.vars.label }}
@@ -173,7 +177,6 @@
         {% endif %}
 
         <div class="box-filter__action">
-
             <a class="btn js-product-filter-reset-button" href="{{ resetUrl }}">{{ 'Clear filter'|trans }}</a>
             {{ form_widget(filterForm.search, { label: 'View results'|trans, attr: {class: 'js-product-filter-show-result-button btn--primary' } }) }}
         </div>

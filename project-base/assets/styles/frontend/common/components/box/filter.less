@@ -1,4 +1,4 @@
-@box-filter-input-width: 80px;
+@box-filter-input-width: 70px;
 @box-filter-padding: 20px;
 @box-filter-right-gap: 30px;
 @box-filter-width: @web-panel-width - @box-filter-right-gap;
@@ -59,116 +59,88 @@
         }
     }
 
-    &__slider {
-        &__wrap {
-            font-size: 0;
-            margin-top: 15px;
-
-            &__range {
-                .is-no-js & {
-                    display: none;
-                }
-            }
-        }
-    }
-
     &__price {
-        width: 100%;
-        padding: @box-filter-padding;
+        display: flex;
+        flex-wrap: wrap;
+        padding-bottom: 14px;
+        padding-top: 4px;
 
-        font-size: 0;
+        &__slider {
+            width: 100%;
+            margin-bottom: 16px;
+        }
 
         &__item {
-            width: @box-filter-input-width;
-            display: inline-block;
-            line-height: @form-item-height;
-            margin-top: 15px;
+            display: flex;
+            width: @box-filter-input-width + 30px;
+            align-items: center;
+
+            @media @query-lg {
+                width: 50%;
+            }
 
             .input {
                 height: 40px;
                 width: @box-filter-input-width;
                 text-align: center;
+                padding: 0 3px;
 
-                font-size: 15px;
                 font-weight: 600;
                 color: @color-0;
 
                 &::-webkit-input-placeholder { /* Firefox 18- */
-                    opacity: 1;
-
                     color: @color-0;
                     font-style: normal;
                     font-weight: 500;
                 }
 
                 &::-moz-placeholder { /* Firefox 18- */
-                    opacity: 1;
-
                     color: @color-0;
                     font-style: normal;
                     font-weight: 500;
                 }
 
                 &:-ms-input-placeholder { /* Firefox 18- */
-                    opacity: 1;
-
                     color: @color-0;
                     font-style: normal;
                     font-weight: 500;
                 }
 
                 &:-moz-placeholder { /* Firefox 18- */
-                    opacity: 1;
-
                     color: @color-0;
                     font-style: normal;
                     font-weight: 500;
                 }
             }
 
-            &--text {
-                width: calc(~"100% - 2*@{box-filter-input-width}");
-                padding: 0 5px;
+            &__text {
+                flex: 1;
                 text-align: center;
-
-                font-size: 15px;
-            }
-
-            &--right {
-                text-align: right;
             }
         }
     }
 
     &__choice {
-        padding: @box-filter-padding;
-
         border-top: 1px solid @box-filter-delimiter-color;
 
-        &--first {
-            padding-top: 0;
-            margin-top: 0;
-
+        &--without-border {
             border-top: 0;
         }
 
         &__title {
-            display: block;
-            position: relative;
-            padding-right: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: @box-filter-padding;
 
             color: @color-0;
             font-weight: 700;
             font-size: @box-filter-title-font-size;
 
             .svg {
-                position: absolute;
-                right: 0;
-                top: 2px;
-
                 color: @color-0;
                 font-size: @box-filter-arrow-size;
-                transition: @transition color;
+                transition: @transition;
                 transform: rotate(0deg);
 
                 -webkit-tap-highlight-color: transparent; // Android Chrome
@@ -181,19 +153,12 @@
             }
 
             &.active .svg {
-                top: 2px;
                 transform: rotate(180deg);
-            }
-
-            &__link {
-                display: block;
-
-                font-size: 12px;
             }
         }
 
-        &__inputs {
-            margin-top: 15px;
+        &__content {
+            padding: 0 @box-filter-padding;
         }
     }
 
