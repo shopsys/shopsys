@@ -28,7 +28,6 @@
                     ></div>
                     <div class="box-filter__price__item">
                         {{ form_widget(filterForm.minimalPrice, {
-                            symbolAfterInput: currencySymbolByDomainId(getDomain().id),
                             attr: { class: 'js-product-filter-call-change-after-reset', placeholder:priceRange.minimalPrice.amount|formatNumber }
                         }) }}
                         <div class="box-filter__price__item__text">
@@ -37,8 +36,7 @@
                     </div>
                     <div class="box-filter__price__item">
                         {{ form_widget(filterForm.maximalPrice, {
-                            symbolAfterInput: currencySymbolByDomainId(getDomain().id),
-                            attr: { class: 'js-product-filter-call-change-after-reset', placeholder: priceRange.maximalPrice.amount|formatNumber }
+                            attr: { class: 'js-product-filter-call-change-after-reset', placeholder:priceRange.maximalPrice.amount|formatNumber }
                         }) }}
                         <div class="box-filter__price__item__text">
                             {{ currencySymbolByDomainId(getDomain().id) }}
