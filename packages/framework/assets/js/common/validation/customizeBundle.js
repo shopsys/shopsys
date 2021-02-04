@@ -177,7 +177,7 @@ export default class CustomizeBundle {
     }
 
     static isExpandedChoiceFormType (element, value) {
-        return element.type === constant('\\Symfony\\Component\\Form\\Extension\\Core\\Type\\ChoiceType::class') && !$.isArray(value);
+        return element.type === constant('\\Symfony\\Component\\Form\\Extension\\Core\\Type\\ChoiceType::class') && $.isArray(value);
     }
 
     static isExpandedChoiceEmpty (value) {
