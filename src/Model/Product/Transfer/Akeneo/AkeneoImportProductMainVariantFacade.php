@@ -13,7 +13,6 @@ use App\Model\Product\Parameter\Transfer\Akeneo\AkeneoImportProductParameterFaca
 use App\Model\Product\Product;
 use App\Model\Product\ProductDataFactory;
 use App\Model\Product\ProductFacade;
-use App\Model\Product\Series\Transfer\Akeneo\AkeneoImportProductSeriesFacade;
 
 class AkeneoImportProductMainVariantFacade extends AbstractAkeneoImportTransfer
 {
@@ -50,11 +49,6 @@ class AkeneoImportProductMainVariantFacade extends AbstractAkeneoImportTransfer
     private $akeneoImportProductGroupParameterFacade;
 
     /**
-     * @var \App\Model\Product\Series\Transfer\Akeneo\AkeneoImportProductSeriesFacade
-     */
-    private $akeneoImportProductSeriesFacade;
-
-    /**
      * @var \App\Model\Product\Parameter\ParameterFacade
      */
     private $parameterFacade;
@@ -76,7 +70,6 @@ class AkeneoImportProductMainVariantFacade extends AbstractAkeneoImportTransfer
      * @param \App\Model\Product\Transfer\Akeneo\ProductTransferAkeneoMapper $productTransferAkeneoMapper
      * @param \App\Model\Product\Parameter\Transfer\Akeneo\AkeneoImportProductParameterFacade $akeneoImportProductParameterFacade
      * @param \App\Model\Product\Parameter\Transfer\Akeneo\AkeneoImportProductGroupParameterFacade $akeneoImportProductGroupParameterFacade
-     * @param \App\Model\Product\Series\Transfer\Akeneo\AkeneoImportProductSeriesFacade $akeneoImportProductSeriesFacade
      * @param \App\Model\Product\Parameter\ParameterFacade $parameterFacade
      * @param \App\Model\Product\ProductDataFactory $productDataFactory
      * @param \App\Model\Product\ProductFacade $productFacade
@@ -88,7 +81,6 @@ class AkeneoImportProductMainVariantFacade extends AbstractAkeneoImportTransfer
         ProductTransferAkeneoMapper $productTransferAkeneoMapper,
         AkeneoImportProductParameterFacade $akeneoImportProductParameterFacade,
         AkeneoImportProductGroupParameterFacade $akeneoImportProductGroupParameterFacade,
-        AkeneoImportProductSeriesFacade $akeneoImportProductSeriesFacade,
         ParameterFacade $parameterFacade,
         ProductDataFactory $productDataFactory,
         ProductFacade $productFacade
@@ -99,7 +91,6 @@ class AkeneoImportProductMainVariantFacade extends AbstractAkeneoImportTransfer
         $this->productTransferAkeneoMapper = $productTransferAkeneoMapper;
         $this->akeneoImportProductParameterFacade = $akeneoImportProductParameterFacade;
         $this->akeneoImportProductGroupParameterFacade = $akeneoImportProductGroupParameterFacade;
-        $this->akeneoImportProductSeriesFacade = $akeneoImportProductSeriesFacade;
         $this->parameterFacade = $parameterFacade;
         $this->productDataFactory = $productDataFactory;
         $this->productFacade = $productFacade;
@@ -119,28 +110,17 @@ class AkeneoImportProductMainVariantFacade extends AbstractAkeneoImportTransfer
         $this->logger->addInfo('Transfer main variants data from Akeneo ...');
         $akeneoProductsData = $this->getData();
 
-        $allProductSeriesCodes = [];
         $isAllParametersImported = true;
         foreach ($akeneoProductsData as $akeneoProductData) {
             if ($isAllParametersImported === true) {
                 $isAllParametersImported = $this->transferredProductProcessor->checkIsAllParametersExistFromAkeneoData($akeneoProductData);
             }
-
-            $allProductSeriesCodes = array_merge(
-                $allProductSeriesCodes,
-                $this->productTransferAkeneoMapper->mapAkeneoProductDataToProductSeriesCodeList($akeneoProductData)
-            );
         }
 
         if ($isAllParametersImported === false) {
             $this->logger->addInfo('Transfer missing parameters from Akeneo');
             $this->akeneoImportProductGroupParameterFacade->runTransfer();
             $this->akeneoImportProductParameterFacade->runTransfer();
-        }
-
-        if ($this->transferredProductProcessor->checkIsAllProductSeriesImported($allProductSeriesCodes) === false) {
-            $this->logger->addInfo('Transfer missing Product Series from Akeneo');
-            $this->akeneoImportProductSeriesFacade->runTransfer();
         }
     }
 

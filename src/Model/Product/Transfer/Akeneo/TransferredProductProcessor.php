@@ -13,8 +13,6 @@ use App\Model\Product\Parameter\ParameterFacade;
 use App\Model\Product\Product;
 use App\Model\Product\ProductData;
 use App\Model\Product\ProductFacade;
-use App\Model\Product\Series\ProductSeriesFacade;
-use App\Model\Product\Series\ProductSeriesProductFacade;
 use App\Model\Transfer\TransferLoggerInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use League\Flysystem\FilesystemInterface;
@@ -52,11 +50,6 @@ class TransferredProductProcessor
     private $productTransferAkeneoValidator;
 
     /**
-     * @var \App\Model\Product\Series\ProductSeriesProductFacade
-     */
-    private $productSeriesProductFacade;
-
-    /**
      * @var \Doctrine\ORM\EntityManagerInterface
      */
     private $em;
@@ -92,11 +85,6 @@ class TransferredProductProcessor
     private $parameterFacade;
 
     /**
-     * @var \App\Model\Product\Series\ProductSeriesFacade
-     */
-    private $productSeriesFacade;
-
-    /**
      * @var \App\Component\Image\ImageCacheFacade
      */
     private $imageCacheFacade;
@@ -115,7 +103,6 @@ class TransferredProductProcessor
      * @param \App\Model\Product\ProductFacade $productFacade
      * @param \App\Model\Product\Transfer\Akeneo\ProductTransferAkeneoMapper $productTransferAkeneoMapper
      * @param \App\Model\Product\Transfer\Akeneo\ProductTransferAkeneoValidator $productTransferAkeneoValidator
-     * @param \App\Model\Product\Series\ProductSeriesProductFacade $productSeriesProductFacade
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \App\Model\Product\Package\ProductPackageFacade $productPackageFacade
      * @param \App\Component\Image\ImageFacade $imageFacade
@@ -123,7 +110,6 @@ class TransferredProductProcessor
      * @param \App\Model\Product\Transfer\Akeneo\AssetTransferAkeneoFacade $assetTransferAkeneoFacade
      * @param \App\Component\FileUpload\FileUpload $fileUpload
      * @param \App\Model\Product\Parameter\ParameterFacade $parameterFacade
-     * @param \App\Model\Product\Series\ProductSeriesFacade $productSeriesFacade
      * @param \App\Component\Image\Config\ImageConfig $imageConfig
      * @param \App\Component\Image\ImageCacheFacade $imageCacheFacade
      * @param \League\Flysystem\FilesystemInterface $filesystem
@@ -132,7 +118,6 @@ class TransferredProductProcessor
         ProductFacade $productFacade,
         ProductTransferAkeneoMapper $productTransferAkeneoMapper,
         ProductTransferAkeneoValidator $productTransferAkeneoValidator,
-        ProductSeriesProductFacade $productSeriesProductFacade,
         EntityManagerInterface $em,
         ProductPackageFacade $productPackageFacade,
         ImageFacade $imageFacade,
@@ -140,7 +125,6 @@ class TransferredProductProcessor
         AssetTransferAkeneoFacade $assetTransferAkeneoFacade,
         FileUpload $fileUpload,
         ParameterFacade $parameterFacade,
-        ProductSeriesFacade $productSeriesFacade,
         ImageConfig $imageConfig,
         ImageCacheFacade $imageCacheFacade,
         FilesystemInterface $filesystem
@@ -148,7 +132,6 @@ class TransferredProductProcessor
         $this->productFacade = $productFacade;
         $this->productTransferAkeneoMapper = $productTransferAkeneoMapper;
         $this->productTransferAkeneoValidator = $productTransferAkeneoValidator;
-        $this->productSeriesProductFacade = $productSeriesProductFacade;
         $this->em = $em;
         $this->productPackageFacade = $productPackageFacade;
         $this->imageFacade = $imageFacade;
@@ -156,7 +139,6 @@ class TransferredProductProcessor
         $this->assetTransferAkeneoFacade = $assetTransferAkeneoFacade;
         $this->fileUpload = $fileUpload;
         $this->parameterFacade = $parameterFacade;
-        $this->productSeriesFacade = $productSeriesFacade;
         $this->imageCacheFacade = $imageCacheFacade;
         $this->imageConfig = $imageConfig;
         $this->filesystem = $filesystem;
@@ -188,7 +170,6 @@ class TransferredProductProcessor
         }
 
         $this->setProductForImportFiles($product, $akeneoProductData);
-        $this->setRelationProductSeriesWithProduct($product, $akeneoProductData);
         $this->setProductImages($product, $akeneoProductData);
         $this->setProductPackageDetailInformationFormProduct($product, $akeneoProductData);
         $this->setProductAsVariant($product, $akeneoProductData, $isMainVariant);
@@ -351,16 +332,6 @@ class TransferredProductProcessor
      * @param \App\Model\Product\Product $product
      * @param array $akeneoProductData
      */
-    private function setRelationProductSeriesWithProduct(Product $product, array $akeneoProductData): void
-    {
-        $productSeriesCodeList = $this->productTransferAkeneoMapper->mapAkeneoProductDataToProductSeriesCodeList($akeneoProductData);
-        $this->productSeriesProductFacade->editProductSeriesProductRelation($product, $productSeriesCodeList);
-    }
-
-    /**
-     * @param \App\Model\Product\Product $product
-     * @param array $akeneoProductData
-     */
     private function setProductPackageDetailInformationFormProduct(Product $product, array $akeneoProductData): void
     {
         $productPackageDataList = $this->productTransferAkeneoMapper->mapAkeneoProductPackageDetailInformationToProductPackageDataList($akeneoProductData);
@@ -476,22 +447,6 @@ class TransferredProductProcessor
             if ($parameter === null) {
                 return false;
             }
-        }
-
-        return true;
-    }
-
-    /**
-     * @param string[] $allProductSeriesCodes
-     * @return bool
-     */
-    public function checkIsAllProductSeriesImported(array $allProductSeriesCodes): bool
-    {
-        $storedAkeneoCodes = $this->productSeriesFacade->findProductSeriesCodesWithAkeneoCode();
-        $difference = array_diff($allProductSeriesCodes, $storedAkeneoCodes);
-
-        if (count($difference) > 0) {
-            return false;
         }
 
         return true;

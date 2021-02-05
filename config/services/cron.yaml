@@ -76,10 +76,6 @@ services:
         tags:
             - { name: shopsys.cron, hours: '*', minutes: '*/5', instanceName: importAkeneoFiles, readableName: 'Import souborů k produktům z Akeneo' }
 
-    App\Model\Product\Series\Transfer\Akeneo\AkeneoImportProductSeriesCronModule:
-        tags:
-            - { name: shopsys.cron, hours: '23', minutes: '10', instanceName: importAkeneoOther, readableName: 'Import nábytkových programů z Akeneo' }
-
     App\Model\Newsletter\Synchronization\TargitoSynchronizationCronModule:
         tags:
             - { name: shopsys.cron, hours: '*', minutes: '*/5', instanceName: export, readableName: 'Synchronizace odběratelů v Targitu' }

@@ -8,7 +8,6 @@ use App\Component\Domain\Domain;
 use App\Model\Category\Category;
 use App\Model\Product\Brand\Brand;
 use App\Model\Product\Product;
-use App\Model\Product\Series\ProductSeries;
 use App\Twig\ImageExtension;
 use Doctrine\ORM\EntityManagerInterface;
 use League\Flysystem\FilesystemInterface;
@@ -170,9 +169,6 @@ class ImageFacade extends BaseImageFacade
             case 'product':
                 $product = $this->em->getRepository(Product::class)->find($image->getEntityId());
                 return $product === null ? null : $product->getName($locale);
-            case 'productSeries':
-                $productSeries = $this->em->getRepository(ProductSeries::class)->find($image->getEntityId());
-                return $productSeries === null ? null : $productSeries->getName($locale);
             case 'brand':
                 $brand = $this->em->getRepository(Brand::class)->find($image->getEntityId());
                 return $brand === null ? null : $brand->getName();

@@ -134,15 +134,6 @@ class ProductTransferAkeneoMapper
 
     /**
      * @param array $akeneoProductData
-     * @return string[]
-     */
-    public function mapAkeneoProductDataToProductSeriesCodeList(array $akeneoProductData): array
-    {
-        return $akeneoProductData['values']['product_series_entities'][0]['data'] ?? [];
-    }
-
-    /**
-     * @param array $akeneoProductData
      * @return int|null
      */
     public function mapAkeneoProductDataToParentCatnum(array $akeneoProductData): ?int

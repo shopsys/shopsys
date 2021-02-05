@@ -5,11 +5,9 @@ declare(strict_types=1);
 namespace App\Form\Admin;
 
 use App\Component\Form\FormBuilderHelper;
-use App\Form\Transformers\ProductSeriesIdsToProductSeriesTransformer;
 use App\Model\Category\Category;
 use App\Model\Category\CategoryFacade;
 use App\Model\Product\Parameter\ParameterRepository;
-use App\Model\Product\Series\ProductSeriesFacade;
 use App\Model\Svg\SvgProvider;
 use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Shopsys\FormTypesBundle\MultidomainType;
@@ -23,7 +21,6 @@ use Shopsys\FrameworkBundle\Form\Transformers\RemoveDuplicatesFromArrayTransform
 use Shopsys\FrameworkBundle\Model\Localization\Localization;
 use Symfony\Component\Form\AbstractTypeExtension;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 
@@ -43,16 +40,6 @@ class CategoryFormTypeExtension extends AbstractTypeExtension
      * @var \App\Model\Product\Parameter\ParameterRepository
      */
     private $parameterRepository;
-
-    /**
-     * @var \App\Model\Product\Series\ProductSeriesFacade
-     */
-    private $productSeriesFacade;
-
-    /**
-     * @var \App\Form\Transformers\ProductSeriesIdsToProductSeriesTransformer
-     */
-    private $productSeriesIdsToProductSeriesTransformer;
 
     /**
      * @var \App\Component\Form\FormBuilderHelper
@@ -82,8 +69,6 @@ class CategoryFormTypeExtension extends AbstractTypeExtension
     /**
      * @param \App\Model\Svg\SvgProvider $svgProvider
      * @param \App\Model\Product\Parameter\ParameterRepository $parameterRepository
-     * @param \App\Model\Product\Series\ProductSeriesFacade $productSeriesFacade
-     * @param \App\Form\Transformers\ProductSeriesIdsToProductSeriesTransformer $productSeriesIdsToProductSeriesTransformer
      * @param \App\Component\Form\FormBuilderHelper $formBuilderHelper
      * @param \App\Model\Category\CategoryFacade $categoryFacade
      * @param \Shopsys\FrameworkBundle\Form\Transformers\RemoveDuplicatesFromArrayTransformer $removeDuplicatesFromArrayTransformer
@@ -93,8 +78,6 @@ class CategoryFormTypeExtension extends AbstractTypeExtension
     public function __construct(
         SvgProvider $svgProvider,
         ParameterRepository $parameterRepository,
-        ProductSeriesFacade $productSeriesFacade,
-        ProductSeriesIdsToProductSeriesTransformer $productSeriesIdsToProductSeriesTransformer,
         FormBuilderHelper $formBuilderHelper,
         CategoryFacade $categoryFacade,
         RemoveDuplicatesFromArrayTransformer $removeDuplicatesFromArrayTransformer,
@@ -103,8 +86,6 @@ class CategoryFormTypeExtension extends AbstractTypeExtension
     ) {
         $this->svgProvider = $svgProvider;
         $this->parameterRepository = $parameterRepository;
-        $this->productSeriesFacade = $productSeriesFacade;
-        $this->productSeriesIdsToProductSeriesTransformer = $productSeriesIdsToProductSeriesTransformer;
         $this->formBuilderHelper = $formBuilderHelper;
         $this->categoryFacade = $categoryFacade;
         $this->removeDuplicatesFromArrayTransformer = $removeDuplicatesFromArrayTransformer;
@@ -145,8 +126,6 @@ class CategoryFormTypeExtension extends AbstractTypeExtension
         $builderShortDescriptionGroup->setPosition(['after' => 'seo']);
 
         $this->buildFilterParameters($builder, $options['category'], $options);
-
-        $this->buildCategoryProductSeriesBlock($builder);
 
         $this->formBuilderHelper->disableFieldsByConfigurations($builder, self::DISABLED_FIELDS);
 
@@ -197,58 +176,6 @@ class CategoryFormTypeExtension extends AbstractTypeExtension
             'choice_value' => 'id',
             'multiple' => true,
         ]);
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     */
-    private function buildCategoryProductSeriesBlock(FormBuilderInterface $builder): void
-    {
-        $allProductSeriesNamesById = $this->productSeriesFacade->getAllProductSeriesNamesIndexedById();
-
-        $builderCategoryProductSeriesBlock = $builder->create('categoryProductSeriesSelector', GroupType::class, [
-            'label' => t('Programy produktů kategorie'),
-        ]);
-
-        $builderCategoryProductSeriesBlock->add('productSeriesListTitle', MultidomainType::class, [
-            'entry_type' => TextareaType::class,
-            'required' => false,
-            'macro' => [
-                'name' => 'seoFormRowMacros.multidomainRow',
-                'recommended_length' => null,
-            ],
-            'label' => t('Titulek výpisu produktových programů'),
-        ]);
-
-        $builderCategoryProductSeriesBlock->add('productSeriesListDescription', MultidomainType::class, [
-            'entry_type' => TextareaType::class,
-            'required' => false,
-            'macro' => [
-                'name' => 'seoFormRowMacros.multidomainRow',
-                'recommended_length' => null,
-            ],
-            'label' => t('Popisek výpisu produktových programů'),
-        ]);
-
-        $builderCategoryProductSeriesBlock->add('productSeriesListLink', MultidomainType::class, [
-            'entry_type' => TextareaType::class,
-            'required' => false,
-            'macro' => [
-                'name' => 'seoFormRowMacros.multidomainRow',
-                'recommended_length' => null,
-            ],
-            'label' => t('Odkaz na výpis produktových programů'),
-        ]);
-
-        $builderCategoryProductSeriesBlock->add($builder
-            ->create('categoryProductSeries', SortableValuesType::class, [
-                'labels_by_value' => $allProductSeriesNamesById,
-                'label' => t('Vyberte Program'),
-                'required' => false,
-            ])
-            ->addModelTransformer($this->productSeriesIdsToProductSeriesTransformer));
-
-        $builder->add($builderCategoryProductSeriesBlock);
     }
 
     /**

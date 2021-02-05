@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Model\Category;
 
 use App\Component\Cache\TwigCachedMenuFacade;
-use App\Model\Category\CategoryProductSeries\CategoryProductSeriesFacade;
 use App\Model\Category\LinkedCategory\LinkedCategoryFacade;
 use App\Model\Product\Product;
 use App\Twig\Cache\TwigCacheFacade;
@@ -58,11 +57,6 @@ class CategoryFacade extends BaseCategoryFacade
     private $categoryParameterFacade;
 
     /**
-     * @var \App\Model\Category\CategoryProductSeries\CategoryProductSeriesFacade
-     */
-    private $categoryProductSeriesFacade;
-
-    /**
      * @var \App\Component\Cache\TwigCachedMenuFacade
      */
     private $twigCachedMenuFacade;
@@ -89,7 +83,6 @@ class CategoryFacade extends BaseCategoryFacade
      * @param \Shopsys\FrameworkBundle\Model\Category\CategoryWithLazyLoadedVisibleChildrenFactory $categoryWithLazyLoadedVisibleChildrenFactory
      * @param \Shopsys\FrameworkBundle\Model\Category\CategoryFactoryInterface $categoryFactory
      * @param \App\Model\Category\CategoryParameterFacade $categoryParameterFacade
-     * @param \App\Model\Category\CategoryProductSeries\CategoryProductSeriesFacade $categoryProductSeriesFacade
      * @param \App\Component\Cache\TwigCachedMenuFacade $twigCachedMenuFacade
      * @param \App\Twig\Cache\TwigCacheFacade $twigCacheFacade
      * @param \App\Model\Category\LinkedCategory\LinkedCategoryFacade $linkedCategoryFacade
@@ -106,7 +99,6 @@ class CategoryFacade extends BaseCategoryFacade
         CategoryWithLazyLoadedVisibleChildrenFactory $categoryWithLazyLoadedVisibleChildrenFactory,
         CategoryFactoryInterface $categoryFactory,
         CategoryParameterFacade $categoryParameterFacade,
-        CategoryProductSeriesFacade $categoryProductSeriesFacade,
         TwigCachedMenuFacade $twigCachedMenuFacade,
         TwigCacheFacade $twigCacheFacade,
         LinkedCategoryFacade $linkedCategoryFacade
@@ -124,7 +116,6 @@ class CategoryFacade extends BaseCategoryFacade
             $categoryFactory
         );
         $this->categoryParameterFacade = $categoryParameterFacade;
-        $this->categoryProductSeriesFacade = $categoryProductSeriesFacade;
         $this->twigCachedMenuFacade = $twigCachedMenuFacade;
         $this->twigCacheFacade = $twigCacheFacade;
         $this->linkedCategoryFacade = $linkedCategoryFacade;
@@ -139,7 +130,6 @@ class CategoryFacade extends BaseCategoryFacade
         /** @var \App\Model\Category\Category $category */
         $category = parent::create($categoryData);
         $this->categoryParameterFacade->saveRelation($category, $categoryData->parametersPosition, $categoryData->parametersCollapsed);
-        $this->categoryProductSeriesFacade->saveProductSeriesForCategory($category, $categoryData->categoryProductSeries);
         $this->linkedCategoryFacade->updateLinkedCategories($category, $categoryData->linkedCategories);
         $this->twigCachedMenuFacade->invalidateCachedMenuByCategory($category);
 
@@ -156,7 +146,6 @@ class CategoryFacade extends BaseCategoryFacade
         /** @var \App\Model\Category\Category $category */
         $category = parent::edit($categoryId, $categoryData);
         $this->categoryParameterFacade->saveRelation($category, $categoryData->parametersPosition, $categoryData->parametersCollapsed);
-        $this->categoryProductSeriesFacade->saveProductSeriesForCategory($category, $categoryData->categoryProductSeries);
         $this->linkedCategoryFacade->updateLinkedCategories($category, $categoryData->linkedCategories);
         $this->twigCachedMenuFacade->invalidateCachedMenuByCategory($category);
 

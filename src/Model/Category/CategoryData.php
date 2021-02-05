@@ -37,26 +37,6 @@ class CategoryData extends BaseCategoryData
     public $shortDescription;
 
     /**
-     * @var string[]|null[]
-     */
-    public $productSeriesListTitle;
-
-    /**
-     * @var string[]|null[]
-     */
-    public $productSeriesListDescription;
-
-    /**
-     * @var string[]|null[]
-     */
-    public $productSeriesListLink;
-
-    /**
-     * @var \App\Model\Product\Series\ProductSeries[]
-     */
-    public $categoryProductSeries;
-
-    /**
      * @var int[]|null[]
      */
     public $parametersPosition;
@@ -75,10 +55,6 @@ class CategoryData extends BaseCategoryData
     {
         parent::__construct();
         $this->shortDescription = [];
-        $this->productSeriesListTitle = [];
-        $this->productSeriesListDescription = [];
-        $this->productSeriesListLink = [];
-        $this->categoryProductSeries = [];
         $this->parametersPosition = [];
         $this->isSaleCategory = false;
         $this->linkedCategories = [];

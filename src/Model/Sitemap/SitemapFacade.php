@@ -33,22 +33,4 @@ class SitemapFacade extends BaseSitemapFacade
     {
         return $this->sitemapRepository->getSitemapItemsForBlogArticlesOnDomain($domainConfig);
     }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @return \Shopsys\FrameworkBundle\Model\Sitemap\SitemapItem[]
-     */
-    public function getSitemapItemsForProductSeries(DomainConfig $domainConfig): array
-    {
-        return $this->sitemapRepository->getSitemapItemsForProductSeriesOnDomain($domainConfig);
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @return \Shopsys\FrameworkBundle\Model\Sitemap\SitemapItem[]
-     */
-    public function getSitemapItemsForProductSeriesCategory(DomainConfig $domainConfig): array
-    {
-        return $this->sitemapRepository->getSitemapItemsForProductSeriesCategoryOnDomain($domainConfig);
-    }
 }

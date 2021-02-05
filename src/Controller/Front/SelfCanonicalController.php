@@ -18,9 +18,6 @@ class SelfCanonicalController extends FrontBaseController
         'front_brand_detail',
         'front_blogarticle_detail',
         'front_blogcategory_detail',
-        'front_productseries_detail',
-        'front_productseriescategory_detail',
-        'front_productseries_list',
         'front_category_seo',
     ];
 

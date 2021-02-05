@@ -6,8 +6,6 @@ namespace App\Model\Sitemap;
 
 use App\Model\Blog\Article\BlogArticleRepository;
 use App\Model\CategorySeo\ReadyCategorySeoMix;
-use App\Model\Product\Series\Category\ProductSeriesCategoryRepository;
-use App\Model\Product\Series\ProductSeriesRepository;
 use App\Model\Stock\ProductStock;
 use Doctrine\ORM\Query\Expr\Join;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
@@ -32,36 +30,20 @@ class SitemapRepository extends BaseSitemapRepository
     private $blogArticleRepository;
 
     /**
-     * @var \App\Model\Product\Series\ProductSeriesRepository
-     */
-    private $productSeriesRepository;
-
-    /**
-     * @var \App\Model\Product\Series\Category\ProductSeriesCategoryRepository
-     */
-    private $productSeriesCategoryRepository;
-
-    /**
      * @param \App\Model\Product\ProductRepository $productRepository
      * @param \App\Model\Category\CategoryRepository $categoryRepository
      * @param \App\Model\Article\ArticleRepository $articleRepository
      * @param \App\Model\Blog\Article\BlogArticleRepository $blogArticleRepository
-     * @param \App\Model\Product\Series\ProductSeriesRepository $productSeriesRepository
-     * @param \App\Model\Product\Series\Category\ProductSeriesCategoryRepository $productSeriesCategoryRepository
      */
     public function __construct(
         ProductRepository $productRepository,
         CategoryRepository $categoryRepository,
         ArticleRepository $articleRepository,
-        BlogArticleRepository $blogArticleRepository,
-        ProductSeriesRepository $productSeriesRepository,
-        ProductSeriesCategoryRepository $productSeriesCategoryRepository
+        BlogArticleRepository $blogArticleRepository
     ) {
         parent::__construct($productRepository, $categoryRepository, $articleRepository);
 
         $this->blogArticleRepository = $blogArticleRepository;
-        $this->productSeriesRepository = $productSeriesRepository;
-        $this->productSeriesCategoryRepository = $productSeriesCategoryRepository;
     }
 
     /**
@@ -209,54 +191,6 @@ class SitemapRepository extends BaseSitemapRepository
                 AND fu.main = TRUE'
             )
             ->setParameter('blogArticlesRouteName', 'front_blogarticle_detail')
-            ->setParameter('domainId', $domainConfig->getId());
-
-        return $this->getSitemapItemsFromQueryBuilderWithSlugField($queryBuilder);
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @return \Shopsys\FrameworkBundle\Model\Sitemap\SitemapItem[]
-     */
-    public function getSitemapItemsForProductSeriesOnDomain(DomainConfig $domainConfig): array
-    {
-        $queryBuilder = $this->productSeriesRepository->getVisibleQueryBuilderByDomainId($domainConfig->getId());
-        $queryBuilder
-            ->select('fu.slug')
-            ->join(
-                FriendlyUrl::class,
-                'fu',
-                Join::WITH,
-                'fu.routeName = :productSeriesRouteName
-                AND fu.entityId = ps.id
-                AND fu.domainId = :domainId
-                AND fu.main = TRUE'
-            )
-            ->setParameter('productSeriesRouteName', 'front_productseries_detail')
-            ->setParameter('domainId', $domainConfig->getId());
-
-        return $this->getSitemapItemsFromQueryBuilderWithSlugField($queryBuilder);
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @return \Shopsys\FrameworkBundle\Model\Sitemap\SitemapItem[]
-     */
-    public function getSitemapItemsForProductSeriesCategoryOnDomain(DomainConfig $domainConfig): array
-    {
-        $queryBuilder = $this->productSeriesCategoryRepository->getQueryBuilderByDomainId($domainConfig->getId());
-        $queryBuilder
-            ->select('fu.slug')
-            ->join(
-                FriendlyUrl::class,
-                'fu',
-                Join::WITH,
-                'fu.routeName = :productSeriesCategoryRouteName
-                AND fu.entityId = psc.id
-                AND fu.domainId = :domainId
-                AND fu.main = TRUE'
-            )
-            ->setParameter('productSeriesCategoryRouteName', 'front_productseriescategory_detail')
             ->setParameter('domainId', $domainConfig->getId());
 
         return $this->getSitemapItemsFromQueryBuilderWithSlugField($queryBuilder);

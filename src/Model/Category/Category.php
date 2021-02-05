@@ -122,33 +122,6 @@ class Category extends BaseCategory
     }
 
     /**
-     * @param int $domainId
-     * @return string|null
-     */
-    public function getProductSeriesListTitle(int $domainId): ?string
-    {
-        return $this->getCategoryDomain($domainId)->getProductSeriesListTitle();
-    }
-
-    /**
-     * @param int $domainId
-     * @return string|null
-     */
-    public function getProductSeriesListDescription(int $domainId): ?string
-    {
-        return $this->getCategoryDomain($domainId)->getProductSeriesListDescription();
-    }
-
-    /**
-     * @param int $domainId
-     * @return string|null
-     */
-    public function getProductSeriesListLink(int $domainId): ?string
-    {
-        return $this->getCategoryDomain($domainId)->getProductSeriesListLink();
-    }
-
-    /**
      * @param \App\Model\Category\CategoryData $categoryData
      */
     protected function setDomains(BaseCategoryData $categoryData): void
@@ -158,9 +131,6 @@ class Category extends BaseCategory
         foreach ($this->domains as $categoryDomain) {
             $domainId = $categoryDomain->getDomainId();
             $categoryDomain->setShortDescription($categoryData->shortDescription[$domainId]);
-            $categoryDomain->setProductSeriesListTitle($categoryData->productSeriesListTitle[$domainId]);
-            $categoryDomain->setProductSeriesListDescription($categoryData->productSeriesListDescription[$domainId]);
-            $categoryDomain->setProductSeriesListLink($categoryData->productSeriesListLink[$domainId]);
         }
     }
 

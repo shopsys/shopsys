@@ -151,27 +151,10 @@ services:
         tags:
             - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse }
 
-    App\Model\Product\Series\ProductSeriesFacade: ~
-
     App\Component\PromoCode\HttpBasicAuthOrByIpAccessAuthenticator:
         arguments:
             - '@monolog.logger.cron'
             - "%promo_code_manage_page_config%"
-
-    App\Model\Product\Series\ProductSeriesFacadeInterface:
-        alias: App\Model\Product\Series\ProductSeriesFacade
-
-    App\Model\Product\Series\ProductSeriesFactory: ~
-
-    App\Model\Product\Series\ProductSeriesFactoryInterface:
-        alias: App\Model\Product\Series\ProductSeriesFactory
-
-    App\Model\Product\Series\ProductSeriesDataFactory: ~
-
-    App\Model\Product\Series\ProductSeriesDataFactoryInterface:
-        alias: App\Model\Product\Series\ProductSeriesDataFactory
-
-    App\Model\Product\Series\Grid\ProductSeriesGridFactory: ~
 
     Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig:
         alias: App\Component\Image\Config\ImageConfig
