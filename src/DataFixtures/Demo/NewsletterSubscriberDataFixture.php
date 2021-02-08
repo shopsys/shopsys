@@ -11,7 +11,7 @@ use Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade;
 
 class NewsletterSubscriberDataFixture extends AbstractReferenceFixture
 {
-    /** @var \App\Model\Newsletter\NewsletterFacade */
+    /** @var \Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade */
     private $newsletterFacade;
 
     /**
@@ -20,7 +20,7 @@ class NewsletterSubscriberDataFixture extends AbstractReferenceFixture
     private $domain;
 
     /**
-     * @param \App\Model\Newsletter\NewsletterFacade $newsletterFacade
+     * @param \Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade $newsletterFacade
      * @param \App\Component\Domain\Domain $domain
      */
     public function __construct(NewsletterFacade $newsletterFacade, Domain $domain)

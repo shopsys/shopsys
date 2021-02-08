@@ -30,7 +30,7 @@ use Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade;
 class CustomerUserFacade extends BaseCustomerUserFacade
 {
     /**
-     * @var \App\Model\Newsletter\NewsletterFacade
+     * @var \Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade
      */
     private $newsletterFacade;
 
@@ -52,7 +52,7 @@ class CustomerUserFacade extends BaseCustomerUserFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressFacade $deliveryAddressFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerDataFactoryInterface $customerDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Customer\BillingAddressFacade $billingAddressFacade
-     * @param \App\Model\Newsletter\NewsletterFacade $newsletterFacade
+     * @param \Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade $newsletterFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRefreshTokenChainFacade $customerUserRefreshTokenChainFacade
      * @param \App\Component\String\HashGenerator $hashGenerator
      */
@@ -106,9 +106,7 @@ class CustomerUserFacade extends BaseCustomerUserFacade
 
         $newsletterSubscriber = $this->newsletterFacade->findNewsletterSubscriberByEmailAndDomainId($customerUser->getEmail(), $customerUser->getDomainId());
 
-        if ($newsletterSubscriber === null && $customerUser->isNewsletterSubscription()
-            || ($newsletterSubscriber !== null && $newsletterSubscriber->isDeleted() === true)
-        ) {
+        if ($newsletterSubscriber === null && $customerUser->isNewsletterSubscription()) {
             $this->newsletterFacade->addSubscribedEmail($customerUser->getEmail(), $customerUser->getDomainId());
         }
 

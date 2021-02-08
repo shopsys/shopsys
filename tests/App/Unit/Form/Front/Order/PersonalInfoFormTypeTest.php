@@ -72,6 +72,7 @@ class PersonalInfoFormTypeTest extends TypeTestCase
         $personalInfoFormData['postcode'] = '12345';
         $personalInfoFormData['country'] = 1;
         $personalInfoFormData['password'] = ['first' => 'testtest', 'second' => 'testtest'];
+        $personalInfoFormData['newsletterSubscription'] = false;
 
         return $personalInfoFormData;
     }

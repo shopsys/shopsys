@@ -8,6 +8,7 @@ use Shopsys\FrameworkBundle\Component\Form\TimedFormTypeExtension;
 use Shopsys\FrameworkBundle\Form\Constraints\Email;
 use Shopsys\FrameworkBundle\Form\HoneyPotType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -31,6 +32,15 @@ class SubscriptionFormType extends AbstractType
                 ],
             ])
             ->add('email2', HoneyPotType::class)
+            ->add('privacyPolicyAgreement', CheckboxType::class, [
+                'required' => true,
+                'mapped' => false,
+                'constraints' => [
+                    new Constraints\NotBlank([
+                        'message' => 'You have to agree with privacy policy',
+                    ]),
+                ],
+            ])
             ->add('send', SubmitType::class);
     }
 

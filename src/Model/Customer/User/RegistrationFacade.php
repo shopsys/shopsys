@@ -9,6 +9,7 @@ use App\Model\Country\CountryFacade;
 use Shopsys\FrameworkBundle\Model\Administrator\Exception\DuplicateUserNameException;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateData;
+use Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade;
 
 class RegistrationFacade implements RegistrationFacadeInterface
 {
@@ -33,20 +34,28 @@ class RegistrationFacade implements RegistrationFacadeInterface
     private Domain $domain;
 
     /**
+     * @var \Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade
+     */
+    private NewsletterFacade $newsletterFacade;
+
+    /**
      * @param \App\Model\Country\CountryFacade $countryFacade
      * @param \App\Model\Customer\User\CustomerUserUpdateDataFactory $customerUserUpdateDataFactory
      * @param \App\Model\Customer\User\CustomerUserFacade $customerUserFacade
+     * @param \Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade $newsletterFacade
      * @param \App\Component\Domain\Domain $domain
      */
     public function __construct(
         CountryFacade $countryFacade,
         CustomerUserUpdateDataFactory $customerUserUpdateDataFactory,
         CustomerUserFacade $customerUserFacade,
+        NewsletterFacade $newsletterFacade,
         Domain $domain
     ) {
         $this->countryFacade = $countryFacade;
         $this->customerUserUpdateDataFactory = $customerUserUpdateDataFactory;
         $this->customerUserFacade = $customerUserFacade;
+        $this->newsletterFacade = $newsletterFacade;
         $this->domain = $domain;
     }
 
@@ -78,6 +87,11 @@ class RegistrationFacade implements RegistrationFacadeInterface
 
         /** @var \App\Model\Customer\User\CustomerUser $customerUser */
         $customerUser = $this->customerUserFacade->create($customerUserUpdateData);
+
+        if ($customerUser->isNewsletterSubscription()) {
+            $this->newsletterFacade->addSubscribedEmail($customerUser->getEmail(), $customerUser->getDomainId());
+        }
+
         return $customerUser;
     }
 
