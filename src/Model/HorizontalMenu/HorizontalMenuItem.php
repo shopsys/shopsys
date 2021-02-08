@@ -46,13 +46,6 @@ class HorizontalMenuItem implements OrderableEntityInterface
     private $url;
 
     /**
-     * @var bool
-     *
-     * @ORM\Column(type="boolean", nullable=false)
-     */
-    private $isFurniture;
-
-    /**
      * @var int
      *
      * @ORM\Column(type="integer", nullable=false)
@@ -66,7 +59,6 @@ class HorizontalMenuItem implements OrderableEntityInterface
     {
         $this->name = $horizontalMenuItemData->name;
         $this->url = $horizontalMenuItemData->url;
-        $this->isFurniture = $horizontalMenuItemData->isFurniture ?? false;
         $this->domainId = $horizontalMenuItemData->domainId;
     }
 
@@ -77,7 +69,6 @@ class HorizontalMenuItem implements OrderableEntityInterface
     {
         $this->name = $horizontalMenuItemData->name;
         $this->url = $horizontalMenuItemData->url;
-        $this->isFurniture = $horizontalMenuItemData->isFurniture ?? false;
         $this->domainId = $horizontalMenuItemData->domainId;
     }
 
@@ -119,14 +110,6 @@ class HorizontalMenuItem implements OrderableEntityInterface
     public function setPosition($position): void
     {
         $this->position = $position;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isFurniture(): bool
-    {
-        return $this->isFurniture;
     }
 
     /**

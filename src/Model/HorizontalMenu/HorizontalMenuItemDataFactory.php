@@ -37,7 +37,6 @@ class HorizontalMenuItemDataFactory
         $horizontalMenuItemData = new HorizontalMenuItemData();
         $horizontalMenuItemData->name = $horizontalMenuItem->getName();
         $horizontalMenuItemData->url = $horizontalMenuItem->getUrl();
-        $horizontalMenuItemData->isFurniture = $horizontalMenuItem->isFurniture();
         $horizontalMenuItemData->domainId = $horizontalMenuItem->getDomainId();
 
         $horizontalMenuItemData->categoriesByColumnNumber = $this->horizontalMenuItemCategoryFacade

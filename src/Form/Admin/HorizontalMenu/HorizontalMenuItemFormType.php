@@ -88,15 +88,7 @@ class HorizontalMenuItemFormType extends AbstractType
                 'constraints' => [
                     new Constraints\NotBlank(['message' => 'Vyplňte prosím URL odkazu']),
                 ],
-            ])
-            ->add(
-                'isFurniture',
-                YesNoType::class,
-                [
-                    'label' => t('Nábytek'),
-                    'required' => false,
-                ]
-            );
+            ]);
         $this->addColumnFields($builder);
         $builder->add('save', SubmitType::class);
     }
