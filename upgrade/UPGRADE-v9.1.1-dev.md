@@ -39,3 +39,6 @@ There you can find links to upgrade notes for other versions too.
 - Frontend API: correctly inherited base type in `AdvertCodeDecorator`, `AdvertImageDecorator`, `ProductPriceDecorator` types ([#2222](https://github.com/shopsys/shopsys/pull/2222))
   - if you extended `Advert` type, you can remove duplicate definitions in `AdvertCode` and `AdvertImage` types
   - if you extended `Price` type, you can remove duplicate definitions in `ProductPrice` type
+
+- transform Twig\Error\RuntimeError to previous exception when it is caused by NotFoundHttpException ([#2224](https://github.com/shopsys/shopsys/pull/2224))
+    - see #project-base-diff to update your project

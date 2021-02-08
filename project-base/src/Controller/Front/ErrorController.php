@@ -15,9 +15,11 @@ use Shopsys\FrameworkBundle\Component\Error\ExceptionListener;
 use Symfony\Component\Debug\Exception\FlattenException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpKernel\Log\DebugLoggerInterface;
 use Tracy\BlueScreen;
 use Tracy\Debugger;
+use Twig\Error\RuntimeError;
 
 class ErrorController extends FrontBaseController
 {
@@ -88,6 +90,11 @@ class ErrorController extends FrontBaseController
         FlattenException $exception,
         ?DebugLoggerInterface $logger = null
     ) {
+        $lastException = $this->exceptionListener->getLastException();
+        if ($lastException instanceof RuntimeError && $lastException->getPrevious() instanceof NotFoundHttpException) {
+            $exception = FlattenException::createFromThrowable($lastException->getPrevious());
+        }
+
         if ($this->isUnableToResolveDomainInNotDebug($exception)) {
             return $this->createUnableToResolveDomainResponse($request);
         }
