@@ -40,20 +40,6 @@ class ImageRepository extends BaseImageRepository
     }
 
     /**
-     * @return \App\Component\Image\Image[]|null
-     */
-    public function findImagesForKrakenOptimization(): ?array
-    {
-        $images = $this->getImageRepository()->findBy(
-            [
-                'processedByKraken' => false,
-            ]
-        );
-
-        return $images;
-    }
-
-    /**
      * @param int $imageId
      * @return \App\Component\Image\Image|null
      */

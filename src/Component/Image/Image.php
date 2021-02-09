@@ -28,13 +28,6 @@ class Image extends BaseImage
     protected $akeneoImageType;
 
     /**
-     * @var bool
-     *
-     * @ORM\Column(type="boolean")
-     */
-    protected $processedByKraken = false;
-
-    /**
      * @return string|null
      */
     public function getAkeneoCode(): ?string
@@ -64,14 +57,6 @@ class Image extends BaseImage
     public function setAkeneoImageType(?string $akeneoImageType): void
     {
         $this->akeneoImageType = $akeneoImageType;
-    }
-
-    /**
-     * @param bool $processedByKraken
-     */
-    public function setProcessedByKraken(bool $processedByKraken): void
-    {
-        $this->processedByKraken = $processedByKraken;
     }
 
     /**

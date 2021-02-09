@@ -801,16 +801,6 @@ services:
             - '@twig_cache_extension.cache_provider'
             - '@twig_cache_extension.cache_strategy'
 
-    App\Component\Image\Kraken\KrakenConfig:
-        arguments:
-            $krakenConfig: "%kraken_config%"
-
-    App\Component\Image\Kraken\KrakenFactory: ~
-
-    Kraken:
-        class: Kraken
-        factory: ['@App\Component\Image\Kraken\KrakenFactory', createApi]
-
     App\Component\Image\ImageLocator:
         arguments: ['%shopsys.image_dir%']
 
@@ -828,11 +818,7 @@ services:
     Shopsys\FrameworkBundle\Component\Image\Processing\ImageGenerator:
         alias: App\Component\Image\Processing\ImageGenerator
 
-    App\Component\Image\Processing\ImageGenerator:
-        arguments:
-            $logger: '@monolog.logger.cron'
-
-    App\Component\Image\Kraken\Processing\ImageKrakenProcessor: ~
+    App\Component\Image\Processing\ImageGenerator: ~
 
     Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRouterFactory:
         class: App\Component\Router\FriendlyUrl\FriendlyUrlRouterFactory
@@ -855,10 +841,6 @@ services:
     App\ProductFeed\MergadoFeed\MergadoFeed:
         tags:
             - { name: shopsys.product_feed }
-
-    App\Component\Image\Kraken\KrakenOptimizationFacade:
-        arguments:
-            $logger: '@monolog.logger.cron'
 
     App\Component\Error\ErrorPagesFacade:
         arguments:

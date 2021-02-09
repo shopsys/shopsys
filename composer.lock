@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "73b97cbf10f2866c680cc97463a2ceb2",
+    "content-hash": "bc70cb67fb087722880b3b43883b1900",
     "packages": [
         {
             "name": "adoy/fastcgi-client",
@@ -4569,43 +4569,6 @@
                 "menu"
             ],
             "time": "2019-09-19T08:51:48+00:00"
-        },
-        {
-            "name": "kraken-io/kraken-php",
-            "version": "1.6",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/kraken-io/kraken-php.git",
-                "reference": "56563df1b9a7829f7039cc6e712cf89fab655e26"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/kraken-io/kraken-php/zipball/56563df1b9a7829f7039cc6e712cf89fab655e26",
-                "reference": "56563df1b9a7829f7039cc6e712cf89fab655e26",
-                "shasum": ""
-            },
-            "require": {
-                "ext-curl": "*",
-                "ext-json": "*"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-0": {
-                    "Kraken": "lib"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Kraken Image Optimizer",
-                    "email": "support@kraken.io"
-                }
-            ],
-            "description": "Official Kraken.io SDK",
-            "time": "2016-07-26T08:03:24+00:00"
         },
         {
             "name": "laminas/laminas-code",
