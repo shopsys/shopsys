@@ -49,8 +49,9 @@
 
             .svg {
                 position: absolute;
-                top: 13px;
                 right: 10px;
+                top: 50%;
+                transform: translateY(-50%);
 
                 font-size: 10px;
             }
@@ -59,7 +60,7 @@
                 color: @color-primary;
 
                 .svg {
-                    transform: rotate(180deg);
+                    transform: rotate(180deg) translateY(50%);
                 }
             }
         }

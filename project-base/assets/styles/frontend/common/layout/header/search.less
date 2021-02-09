@@ -25,9 +25,11 @@
         }
 
         &__icon {
+            display: flex;
             position: absolute;
-            top: 9px;
+            top: 50%;
             left: 10px;
+            transform: translateY(-50%);
             transition: @transition color;
 
             color: @color-inactive;
@@ -83,6 +85,8 @@
         }
 
         &__image {
+            display: flex;
+            align-items: center;
             position: relative;
             height: 30px;
             width: 30px;
@@ -92,10 +96,6 @@
             }
 
             .svg {
-                position: relative;
-                top: -2px;
-                margin-bottom: -2px;
-
                 font-size: 20px;
                 color: @color-base;
             }

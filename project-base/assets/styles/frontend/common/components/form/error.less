@@ -10,9 +10,10 @@
 
     &--line {
         position: absolute;
-        top: 7px;
-        right: 5px;
-
+        right: 5px; 
+        top: 50%;
+        transform: translateY(-50%);
+        
         @media @query-lg {
             right: auto;
             left: 295px;
@@ -32,23 +33,20 @@
         right: -20px;
         position: absolute;
         top: 50%;
-        margin-top: -10px;
+        transform: translateY(-50%);
     }
 
     &--line-block {
         position: absolute;
-        top: 7px;
         right: 5px;
+        top: 50%;
+        transform: translateY(-50%);
 
         z-index: 10;
     }
 
     &__icon {
-        display: inline-block;
-        vertical-align: middle;
-        width: @form-error-size;
-        height: @form-error-size;
-        text-align: center;
+        display: flex;
 
         color: @color-alert;
         font-weight: bold;
