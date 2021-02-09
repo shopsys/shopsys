@@ -198,6 +198,9 @@
     "elasticsearch/elasticsearch": {
         "version": "v6.7.2"
     },
+    "enlightn/security-checker": {
+        "version": "v1.5.0"
+    },
     "ezimuel/guzzlestreams": {
         "version": "3.0.1"
     },
@@ -635,18 +638,6 @@
     "sensio/framework-extra-bundle": {
         "version": "v3.0.29"
     },
-    "sensiolabs/security-checker": {
-        "version": "4.0",
-        "recipe": {
-            "repo": "github.com/symfony/recipes",
-            "branch": "master",
-            "version": "4.0",
-            "ref": "160c9b600564faa1224e8f387d49ef13ceb8b793"
-        },
-        "files": [
-            "project-base/config/packages/security_checker.yaml"
-        ]
-    },
     "shopsys/coding-standards": {
         "version": "dev-mg-weird-flex-but-ok"
     },
@@ -858,12 +849,6 @@
             "src/Controller/.gitignore",
             "src/Kernel.php"
         ]
-    },
-    "symfony/http-client": {
-        "version": "v4.3.6"
-    },
-    "symfony/http-client-contracts": {
-        "version": "v1.1.7"
     },
     "symfony/http-foundation": {
         "version": "v3.4.33"
