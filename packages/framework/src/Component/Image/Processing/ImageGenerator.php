@@ -66,7 +66,7 @@ class ImageGenerator
 
         $interventionImage->encode();
 
-        $this->filesystem->put($targetImageFilepath, $interventionImage);
+        $this->filesystem->put($targetImageFilepath, $interventionImage->getEncoded());
 
         return $targetImageFilepath;
     }
