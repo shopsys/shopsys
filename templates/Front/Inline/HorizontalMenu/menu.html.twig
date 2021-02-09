@@ -15,9 +15,6 @@
 				{% if itemDetail.categoryDetailsByColumnNumber is not empty %}
 					<div class="menu-horizontal__sub js-menu-horizontal-item-content">
 						<div class="menu-horizontal__sub__wrap">
-							{% if itemDetail.horizontalMenuItem.furniture %}
-								{% include 'Front/Inline/HorizontalMenu/furniture.html.twig' %}
-							{% endif %}
 							<ul class="menu-horizontal__sub__columns js-menu-horizontal-sub-columns">
 								{% for categories in itemDetail.categoryDetailsByColumnNumber %}
 									<li class="menu-horizontal__sub__columns__column js-menu-horizontal-item-container">

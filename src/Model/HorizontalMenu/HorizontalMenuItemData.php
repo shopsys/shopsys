@@ -17,11 +17,6 @@ class HorizontalMenuItemData
     public $url;
 
     /**
-     * @var bool|null
-     */
-    public $isFurniture;
-
-    /**
      * @var \App\Model\Category\Category[][]
      */
     public $categoriesByColumnNumber = [];
