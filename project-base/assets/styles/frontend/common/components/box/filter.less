@@ -88,28 +88,16 @@
                 font-weight: 600;
                 color: @color-0;
 
-                &::-webkit-input-placeholder { /* Firefox 18- */
+                .placeholder({
                     color: @color-0;
                     font-style: normal;
                     font-weight: 500;
-                }
+                });
 
-                &::-moz-placeholder { /* Firefox 18- */
-                    color: @color-0;
-                    font-style: normal;
-                    font-weight: 500;
-                }
-
-                &:-ms-input-placeholder { /* Firefox 18- */
-                    color: @color-0;
-                    font-style: normal;
-                    font-weight: 500;
-                }
-
-                &:-moz-placeholder { /* Firefox 18- */
-                    color: @color-0;
-                    font-style: normal;
-                    font-weight: 500;
+                &:focus {
+                    .placeholder({
+                        opacity: 1;
+                    });
                 }
             }
 
