@@ -76,60 +76,6 @@
                 </div>
             </div>
         {% endif %}
-        <div class="box-block">
-            <div class="box-block__wrap">
-                <div class="box-block__item box-block__item--bg box-block__item--half box-block__item--left">
-                    <h2 class="box-block__item__heading">{{ 'Aktuální leták'|trans }}</h2>
-                    <picture>
-                        <source
-                                srcset="
-                                {{ asset('public/frontend/images/letaky_sconto_2x.png') }} 2x,
-                                {{ asset('public/frontend/images/letaky_sconto.png') }} 1x"
-                        />
-                        <img
-                                class="box-block__item__img box-block__item__img--left"
-                                loading="lazy"
-                                src="{{ imgLazyloadPlaceholder }}"
-                                data-src="{{ asset('public/frontend/images/letaky_sconto.png') }}"
-                                alt="{{ 'Aktuální leták'|trans }}">
-                    </picture>
-                    <p class="box-block__item__desc">
-                        {{ 'Prohlédněte si náš aktuální leták, ve kterém naleznete stylový nábytek pro svůj byt či dům za akční cenu.'|trans }}
-                    </p>
-                    <a
-                        class="btn btn--next btn-no-style"
-                        href="{{ url('front_leaflet') }}"
-                    >
-                        {{ 'Prohlédnout leták'|trans }}
-                        <i class="btn__icon svg svg-chevron"></i>
-                    </a>
-                </div>
-                <div class="box-block__item box-block__item box-block__item--bg box-block__item--half box-block__item--right">
-                    <h2 class="box-block__item__heading">{{ 'Prodejny Sconto'|trans }}</h2>
-                    {% set storeImage = domain.id == 1 ? 'obchodni_domy_cz' : 'obchodni_domy_sk' %}
-                    <picture>
-                        <source
-                                srcset="
-                                {{ asset("public/frontend/images/#{storeImage}_2x.png") }} 2x,
-                                {{ asset("public/frontend/images/#{storeImage}.png") }} 1x"
-                        />
-                        <img
-                                class="box-block__item__img box-block__item__img--right"
-                                loading="lazy"
-                                src="{{ imgLazyloadPlaceholder }}"
-                                data-src="{{ asset("public/frontend/images/#{storeImage}.png") }}"
-                                alt="{{ 'Prodejny Sconto'|trans }}">
-                    </picture>
-                    <p class="box-block__item__desc">
-                        {{ 'Naleznete široký sortiment rozmanitých stylů, barevných provedení i cenových úrovní. Navíc na vás čeká rozsáhlý výběr kuchyňských doplňků, textilu a bytových dekorací.'|transHtml }}
-                    </p>
-                    <a class="btn btn--next btn-no-style" href="{{ url('front_stores') }}">
-                        {{ 'Přehled všech prodejen'|trans }}
-                        <i class="btn__icon svg svg-chevron"></i>
-                    </a>
-                </div>
-            </div>
-        </div>
     </div>
 </div>
 {% if topProducts is not empty %}
@@ -155,11 +101,6 @@
     <div class="web__container">
         <h2>{{ 'Oblíbené kategorie'|trans }}</h2>
         {{ render(controller('App\\Controller\\Front\\CategoryController:categoryListAction', {categories: categories, showProductsCountByCategory: false})) }}
-    </div>
-</div>
-<div class="web__line">
-    <div class="web__container">
-        {% include 'Front/Content/Rooms/list.html.twig' %}
     </div>
 </div>
 {% if homepageArticles is not null %}
