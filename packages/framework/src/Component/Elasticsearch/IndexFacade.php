@@ -110,6 +110,19 @@ class IndexFacade
 
         $this->sqlLoggerFacade->temporarilyDisableLogging();
 
+        $indexAlias = $indexDefinition->getIndexAlias();
+
+        try {
+            $this->indexRepository->findCurrentIndexNameForAlias($indexAlias);
+        } catch (ElasticsearchNoAliasException $exception) {
+            $output->writeln(sprintf(
+                'Index "%s" does not exist on domain "%s"',
+                $indexDefinition->getIndexName(),
+                $indexDefinition->getDomainId()
+            ));
+            $this->create($indexDefinition, $output);
+        }
+
         $domainId = $indexDefinition->getDomainId();
         $progressBar = $this->progressBarFactory->create(
             $output,
@@ -132,7 +145,7 @@ class IndexFacade
                 break;
             }
 
-            $this->indexRepository->bulkUpdate($indexDefinition->getIndexAlias(), $currentBatchData);
+            $this->indexRepository->bulkUpdate($indexAlias, $currentBatchData);
             $progressBar->advance($currentBatchSize);
 
             $exportedIds = array_merge($exportedIds, array_keys($currentBatchData));
