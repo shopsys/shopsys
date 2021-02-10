@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Model\Category;
 
 use App\Component\Router\FriendlyUrl\FriendlyUrlFacade;
-use App\Model\Category\CategoryProductSeries\CategoryProductSeriesFacade;
 use App\Model\Category\LinkedCategory\LinkedCategory;
 use App\Model\Category\LinkedCategory\LinkedCategoryRepository;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
@@ -23,11 +22,6 @@ class CategoryDataFactory extends BaseCategoryDataFactory
     private $categoryParameterRepository;
 
     /**
-     * @var \App\Model\Category\CategoryProductSeries\CategoryProductSeriesFacade
-     */
-    private $categoryProductSeriesFacade;
-
-    /**
      * @var \App\Model\Category\LinkedCategory\LinkedCategoryRepository
      */
     private LinkedCategoryRepository $linkedCategoryRepository;
@@ -39,7 +33,6 @@ class CategoryDataFactory extends BaseCategoryDataFactory
      * @param \Shopsys\FrameworkBundle\Component\Plugin\PluginCrudExtensionFacade $pluginCrudExtensionFacade
      * @param \App\Component\Domain\Domain $domain
      * @param \App\Component\Image\ImageFacade $imageFacade
-     * @param \App\Model\Category\CategoryProductSeries\CategoryProductSeriesFacade $categoryProductSeriesFacade
      * @param \App\Model\Category\LinkedCategory\LinkedCategoryRepository $linkedCategoryRepository
      */
     public function __construct(
@@ -49,7 +42,6 @@ class CategoryDataFactory extends BaseCategoryDataFactory
         PluginCrudExtensionFacade $pluginCrudExtensionFacade,
         Domain $domain,
         ImageFacade $imageFacade,
-        CategoryProductSeriesFacade $categoryProductSeriesFacade,
         LinkedCategoryRepository $linkedCategoryRepository
     ) {
         parent::__construct(
@@ -60,7 +52,6 @@ class CategoryDataFactory extends BaseCategoryDataFactory
             $imageFacade
         );
         $this->categoryParameterRepository = $categoryParameterRepository;
-        $this->categoryProductSeriesFacade = $categoryProductSeriesFacade;
         $this->linkedCategoryRepository = $linkedCategoryRepository;
     }
 
@@ -105,9 +96,6 @@ class CategoryDataFactory extends BaseCategoryDataFactory
 
         foreach ($this->domain->getAllIds() as $domainId) {
             $categoryData->shortDescription[$domainId] = null;
-            $categoryData->productSeriesListTitle[$domainId] = null;
-            $categoryData->productSeriesListDescription[$domainId] = null;
-            $categoryData->productSeriesListLink[$domainId] = null;
         }
     }
 
@@ -121,15 +109,11 @@ class CategoryDataFactory extends BaseCategoryDataFactory
 
         foreach ($this->domain->getAllIds() as $domainId) {
             $categoryData->shortDescription[$domainId] = $category->getShortDescription($domainId);
-            $categoryData->productSeriesListTitle[$domainId] = $category->getProductSeriesListTitle($domainId);
-            $categoryData->productSeriesListDescription[$domainId] = $category->getProductSeriesListDescription($domainId);
-            $categoryData->productSeriesListLink[$domainId] = $category->getProductSeriesListLink($domainId);
         }
 
         $categoryData->akeneoCode = $category->getAkeneoCode();
         $categoryData->svgIcon = $category->getSvgIcon();
         $categoryData->parametersCollapsed = $this->categoryParameterRepository->getParametersCollapsedByCategory($category);
-        $categoryData->categoryProductSeries = $this->categoryProductSeriesFacade->getAllCategoryProductSeriesByCategory($category);
         $categoryData->overLimitQuantity = $category->getOverLimitQuantity();
         $categoryData->parametersPosition = $this->getParametersSortedByPositionFilteredByCategory($category);
         $categoryData->isSaleCategory = $category->isSaleCategory();

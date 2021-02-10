@@ -97,16 +97,6 @@ class SideMenuConfigurationSubscriber implements EventSubscriberInterface
         $promoCodeMenu->addChild('promo_codes_edit', ['route' => 'admin_promocode_edit', 'display' => false, 'label' => t('Editace slevového kupónu')]);
         $promoCodeMenu->addChild('promo_codes_newmassgenerate', ['route' => 'admin_promocode_newmassgenerate', 'label' => t('Hromadné vytvoření slevových kupónů'), 'display' => false]);
 
-        $productSeriesMenu = $marketingMenu->addChild('product_series', ['label' => t('Programy produktů')]);
-
-        $productSeriesListMenu = $productSeriesMenu->addChild('product_series_list', ['route' => 'admin_productseries_list', 'label' => t('Programy produktů')]);
-        $productSeriesListMenu->addChild('new_product_series', ['route' => 'admin_productseries_new', 'display' => false, 'label' => t('Nový produktový program')]);
-        $productSeriesListMenu->addChild('edit_product_series', ['route' => 'admin_productseries_edit', 'display' => false, 'label' => t('Detail produktového programu')]);
-
-        $productSeriesCategoryMenu = $productSeriesMenu->addChild('product_series_category', ['route' => 'admin_productseriescategory_list', 'label' => t('Kategorie')]);
-        $productSeriesCategoryMenu->addChild('new_product_series_category', ['route' => 'admin_productseriescategory_new', 'display' => false, 'label' => t('Nová kategorie')]);
-        $productSeriesCategoryMenu->addChild('edit_product_series_category', ['route' => 'admin_productseriescategory_edit', 'display' => false, 'label' => t('Detail kategorie')]);
-
         $notificationBar = $marketingMenu->addChild('notification_bar', ['route' => 'admin_notificationbar_list', 'label' => t('Notifikační lišta')]);
         $notificationBar->addChild('notification_bar_new', ['route' => 'admin_notificationbar_new', 'label' => t('Nová notifikační lišta'), 'display' => false]);
         $notificationBar->addChild('notification_bar_edit', ['route' => 'admin_notificationbar_edit', 'label' => t('Editace notifikační lišty'), 'display' => false]);

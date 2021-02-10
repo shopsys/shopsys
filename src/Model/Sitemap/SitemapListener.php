@@ -72,11 +72,5 @@ class SitemapListener extends BaseSitemapListener
 
         $blogArticleSitemapItems = $this->sitemapFacade->getSitemapItemsForBlogArticlesOnDomain($domainConfig);
         $this->addUrlsBySitemapItems($blogArticleSitemapItems, $generator, $domainConfig, 'articles', static::PRIORITY_ARTICLES);
-
-        $productSeriesSitemapItems = $this->sitemapFacade->getSitemapItemsForProductSeries($domainConfig);
-        $this->addUrlsBySitemapItems($productSeriesSitemapItems, $generator, $domainConfig, 'series', static::PRIORITY_ARTICLES);
-
-        $productSeriesCategorySitemapItems = $this->sitemapFacade->getSitemapItemsForProductSeriesCategory($domainConfig);
-        $this->addUrlsBySitemapItems($productSeriesCategorySitemapItems, $generator, $domainConfig, 'series', static::PRIORITY_ARTICLES);
     }
 }

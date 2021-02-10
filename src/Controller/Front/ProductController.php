@@ -11,7 +11,6 @@ use App\Form\Front\Product\ProductFilterFormType;
 use App\Model\Category\Category;
 use App\Model\Category\CategoryFacade;
 use App\Model\Category\CategoryParameterFacade;
-use App\Model\Category\CategoryProductSeries\CategoryProductSeriesFacade;
 use App\Model\CategorySeo\Exception\UnableToFindReadyCategorySeoMixException;
 use App\Model\CategorySeo\ReadyCategorySeoMix;
 use App\Model\CategorySeo\ReadyCategorySeoMixFacade;
@@ -31,7 +30,6 @@ use App\Model\Product\Package\ProductPackageFacade;
 use App\Model\Product\Parameter\ParameterFacade;
 use App\Model\Product\Product;
 use App\Model\Product\ProductFacade;
-use App\Model\Product\Series\ProductSeriesFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Paginator\PaginationResult;
 use Shopsys\FrameworkBundle\Model\Module\ModuleFacade;
@@ -125,11 +123,6 @@ class ProductController extends FrontBaseController
     private $productFacade;
 
     /**
-     * @var \App\Model\Category\CategoryProductSeries\CategoryProductSeriesFacade
-     */
-    private $categoryProductSeriesFacade;
-
-    /**
      * @var \App\Model\CategorySeo\ReadyCategorySeoMixFacade
      */
     private $readyCategorySeoMixFacade;
@@ -143,11 +136,6 @@ class ProductController extends FrontBaseController
      * @var \App\Model\Category\CategoryParameterFacade
      */
     private $categoryParameterFacade;
-
-    /**
-     * @var \App\Model\Product\Series\ProductSeriesFacade
-     */
-    private $productSeriesFacade;
 
     /**
      * @var \App\Model\Product\Package\ProductPackageFacade
@@ -218,11 +206,9 @@ class ProductController extends FrontBaseController
      * @param \App\Model\Product\Listed\ListedProductViewElasticFacade $listedProductViewFacade
      * @param \App\Model\Product\Availability\ProductAvailabilityFacade $productAvailabilityFacade
      * @param \App\Model\Product\ProductFacade $productFacade
-     * @param \App\Model\Category\CategoryProductSeries\CategoryProductSeriesFacade $categoryProductSeriesFacade
      * @param \App\Model\CategorySeo\ReadyCategorySeoMixFacade $readyCategorySeoMixFacade
      * @param \Shopsys\FrameworkBundle\Model\Seo\SeoSettingFacade $seoSettingFacade
      * @param \App\Model\Category\CategoryParameterFacade $categoryParameterFacade
-     * @param \App\Model\Product\Series\ProductSeriesFacade $productSeriesFacade
      * @param \App\Model\Product\Package\ProductPackageFacade $productPackageFacade
      * @param \App\Component\Router\CategorySeoMix\CategorySeoMixUrlGenerator $categorySeoMixUrlGenerator
      * @param \App\Component\UploadedFile\UploadedFileFacade $uploadedFileFacade
@@ -249,11 +235,9 @@ class ProductController extends FrontBaseController
         ListedProductViewElasticFacade $listedProductViewFacade,
         ProductAvailabilityFacade $productAvailabilityFacade,
         ProductFacade $productFacade,
-        CategoryProductSeriesFacade $categoryProductSeriesFacade,
         ReadyCategorySeoMixFacade $readyCategorySeoMixFacade,
         SeoSettingFacade $seoSettingFacade,
         CategoryParameterFacade $categoryParameterFacade,
-        ProductSeriesFacade $productSeriesFacade,
         ProductPackageFacade $productPackageFacade,
         CategorySeoMixUrlGenerator $categorySeoMixUrlGenerator,
         UploadedFileFacade $uploadedFileFacade,
@@ -279,11 +263,9 @@ class ProductController extends FrontBaseController
         $this->categoryFacade = $categoryFacade;
         $this->productAvailabilityFacade = $productAvailabilityFacade;
         $this->productFacade = $productFacade;
-        $this->categoryProductSeriesFacade = $categoryProductSeriesFacade;
         $this->readyCategorySeoMixFacade = $readyCategorySeoMixFacade;
         $this->seoSettingFacade = $seoSettingFacade;
         $this->categoryParameterFacade = $categoryParameterFacade;
-        $this->productSeriesFacade = $productSeriesFacade;
         $this->productPackageFacade = $productPackageFacade;
         $this->categorySeoMixUrlGenerator = $categorySeoMixUrlGenerator;
         $this->uploadedFileFacade = $uploadedFileFacade;
@@ -331,16 +313,6 @@ class ProductController extends FrontBaseController
         $variants = $this->productOnCurrentDomainFacade->getVariantsForProduct($product);
         $productMainCategory = $this->categoryFacade->getProductMainCategoryByDomainId($product, $this->domain->getId());
         $categoryList = $this->categoryFacade->getAllProductCategoriesByProductAndDomainId($product, $this->domain->getId());
-        $productSeriesList = $this->productSeriesFacade->getAllVisibleByProductAndDomainId($product, $this->domain);
-        $productSeriesProducts = [];
-        $gtmProductSeriesProducts = [];
-        foreach ($productSeriesList as $productSeries) {
-            $productSeriesProducts[$productSeries->getId()] = $this->listedProductViewFacade->getAvailableProductsByProductSeries($productSeries);
-            $gtmProductSeriesProducts[$productSeries->getId()] = $this->gtmJsPushFacade->getListedProductViewsScrollData(
-                $productSeriesProducts[$productSeries->getId()],
-                DataLayer::LIST_NAME_PRODUCT_PROGRAM
-            );
-        }
 
         return $this->render('Front/Content/Product/detail.html.twig', [
             'product' => $productVariant,
@@ -355,15 +327,12 @@ class ProductController extends FrontBaseController
             'productAvailableStocksCountInformation' => $productAvailableStocksCountInformation,
             'productCountExposedInStores' => $productCountExposedInStores,
             'downloadFiles' => $downloadFiles,
-            'productSeriesList' => $productSeriesList,
-            'productSeriesProductsIndexedByProductSeries' => $productSeriesProducts,
             'productPackages' => $productPackages,
             'productMainVariantId' => $product->getId(),
             'gtmAccessoriesScrollEvent' => $this->gtmJsPushFacade->getListedProductViewsScrollData(
                 $accessories,
                 DataLayer::LIST_NAME_PRODUCT_ACCESSORIES
             ),
-            'gtmProductSeriesScrollEvent' => $gtmProductSeriesProducts,
         ]);
     }
 
@@ -520,7 +489,6 @@ class ProductController extends FrontBaseController
             'filterForm' => $filterForm->createView(),
             'filterFormSubmitted' => $filterForm->isSubmitted(),
             'priceRange' => $productFilterConfig->getPriceRange(),
-            'categoryProductSeries' => $this->categoryProductSeriesFacade->getVisibleProductSeriesByCategoryAndDomainId($category, $this->domain->getId()),
             'readyCategorySeoMixId' => $readyCategorySeoMix === null ? null : $readyCategorySeoMix->getId(),
             'filterCollapsedParameters' => $this->categoryParameterFacade->getParametersCollapsedIndexedByIdForCategory($category),
             'allParameterValuesImagesIndexedById' => $allParameterValuesImageFilePathsIndexedById,

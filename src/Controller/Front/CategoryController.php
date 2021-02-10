@@ -77,11 +77,10 @@ class CategoryController extends FrontBaseController
             }
         }
         $menuItems[1] = $this->buildSlidingMenuSetup('front_kitchen', null, t('Kuchyně'));
-        $menuItems[3] = $this->buildSlidingMenuSetup('front_productseries_list', null, t('Nábytkové programy'));
 
         $saleCategory = $this->categoryFacade->findSaleCategory();
         if ($saleCategory !== null) {
-            $menuItems[4] = $this->buildSlidingMenuSetup(
+            $menuItems[3] = $this->buildSlidingMenuSetup(
                 'front_product_list',
                 $saleCategory->getId(),
                 $saleCategory->getName($this->domain->getCurrentDomainConfig()->getLocale())

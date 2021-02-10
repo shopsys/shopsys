@@ -49,36 +49,6 @@
                 {{ render(controller('App\\Controller\\Front\\CategoryController:categoryChildrenListAction', {category: category}))|spaceless }}
             {% endcache %}
             {{ render(controller('App\\Controller\\Front\\BestsellingProductController:listAction', { category: category })) }}
-            {% if categoryProductSeries is not empty %}
-                <div class="box-series">
-                    <div class="box-series__left">
-                        <h2 class="box-series__heading">{{ category.getProductSeriesListTitle(domain.id) }}</h2>
-                        <div class="box-series__desc">{{ category.getProductSeriesListDescription(domain.id) }}</div>
-                        {% if category.getProductSeriesListLink(domain.id) %}
-                            <a class="btn btn--outline dont-print" href="{{ category.getProductSeriesListLink(domain.id) }}">{{ 'Zobrazit všechny'|trans }}</a>
-                        {% endif %}
-                    </div>
-                    <div class="box-series__right">
-                        <div class="box-series__grid">
-                            {% for productSeries in categoryProductSeries %}
-                                <div class="box-series__grid__item">
-                                    <a class="box-series__grid__item__link" href="{{ url('front_productseries_detail', { id: productSeries.id }) }}">
-                                        {% if imageExists(productSeries) %}
-                                            {{ image(productSeries, { size: 'preview', class: 'box-series__grid__item__image' }) }}
-                                        {% else %}
-                                            {{ noimage({ alt: productSeries.getName(domain.locale) }) }}
-                                        {% endif %}
-                                        <strong class="box-series__grid__item__name btn btn--next btn-no-style dont-print">
-                                            {{ productSeries.getName(domain.locale) }}
-                                            <i class="btn__icon svg svg-long-arrow-right"></i>
-                                        </strong>
-                                    </a>
-                                </div>
-                            {% endfor %}
-                        </div>
-                    </div>
-                </div>
-            {% endif %}
             {{ render(controller('App\\Controller\\Front\\AdvertController:categoryBoxAction',{'positionName' : constant('App\\Model\\Advert\\AdvertPositionRegistry::CATEGORIES_ABOVE_PRODUCT_LIST'), category: category})) }}
         </div>
     </div>

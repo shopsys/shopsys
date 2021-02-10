@@ -110,37 +110,6 @@
                                 </ul>
                             </div>
 
-                            {% if productSeriesList|length > 0 %}
-                                {% for productSeries in productSeriesList %}
-                                    <div class="box-series box-series--standalone box-series--standalone--mini">
-                                        <div class="box-series__in">
-                                            {% if imageExists(productSeries) %}
-                                                <span class="box-series__img">
-                                                    {{ image(productSeries, { itemprop: 'image', size: 'previewDetailSmall' }) }}
-                                                </span>
-                                            {% else %}
-                                                <span class="box-series__img">
-                                                    {{ noimage({ alt: productSeries.name }) }}
-                                                </span>
-                                            {% endif %}
-                                            <span class="box-series__content">
-                                                <p class="box-series__content__text">
-                                                    {{ 'Prohlédněte si další zboží ze série'|trans }}
-                                                    {{ productSeries.getSeoH1(domain.id)|default(productSeries.name) }}
-                                                    {{ ' a slaďte svůj domov'|trans }}
-                                                </p>
-                                                <a
-                                                    class="box-series__content__link box-detail__info__anchor js-smooth-scroll-anchor"
-                                                    href="#series-{{ productSeries.name|replace({' ': '-'})|url_encode }}">
-                                                    {{ productSeries.getSeoH1(domain.id)|default(productSeries.name) }}
-                                                    <i class="box-detail__info__anchor__icon svg svg-chevron"></i>
-                                                </a>
-                                            </span>
-                                        </div>
-                                    </div>
-                                {% endfor %}
-                            {% endif %}
-
                             {% if not product.isMainVariant %}
                                 {{ render(controller('App\\Controller\\Front\\ProductController:variantParametersAction', {product: product} )) }}
                             {% endif %}
@@ -524,44 +493,6 @@
                         <div class="box-products-accessories js-products-slick-carousel-cols">
                             {{ productList.list(accessories, null, null, constant('App\\Model\\Gtm\\DataLayer::LIST_NAME_PRODUCT_ACCESSORIES')) }}
                         </div>
-                    </div>
-                {% endif %}
-
-                {% if productSeriesList|length > 0 %}
-                    <div class="box-detail-series">
-                        {% for productSeries in productSeriesList %}
-                            <div class="box-series box-series--standalone box-series--standalone--large" id="series-{{ productSeries.name|replace({' ': '-'})|url_encode }}">
-                                <div class="box-series__in">
-                                    {% if imageExists(productSeries) %}
-                                        <span class="box-series__img">
-                                            {{ image(productSeries, { itemprop: 'image', size: 'previewDetail' }) }}
-                                        </span>
-                                    {% else %}
-                                        <span class="box-series__img">
-                                            {{ noimage({ alt: productSeries.name }) }}
-                                        </span>
-                                    {% endif %}
-                                    <div class="box-series__content">
-                                        <h2 class="box-series__heading">{{ productSeries.getSeoH1(domain.id)|default(productSeries.name) }}</h2>
-                                        <p class="box-series__content__text">{{ productSeries.getDescription }}</p>
-                                        <a class="box-series__content__link box-detail__info__anchor" href="{{ url('front_productseries_detail', { id: productSeries.id }) }}">
-                                            {{ 'Zobrazit celý program'|trans }}
-                                            <i class="box-detail__info__anchor__icon svg svg-chevron"></i>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div
-                                class="box-products-carousel box-products-carousel--detail gtm-scroll"
-                                data-gtm-event="{{ gtmProductSeriesScrollEvent[productSeries.id]|json_encode() }}"
-                            >
-                                <div class="box-products-carousel__in box-products-carousel__in--detail">
-                                    <div class="list-products-grid js-products-slick-carousel">
-                                        {{ productList.list(productSeriesProductsIndexedByProductSeries[productSeries.id], null, null, constant('App\\Model\\Gtm\\DataLayer::LIST_NAME_PRODUCT_PROGRAM')) }}
-                                    </div>
-                                </div>
-                            </div>
-                        {% endfor %}
                     </div>
                 {% endif %}
 

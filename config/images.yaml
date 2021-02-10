@@ -96,45 +96,6 @@
             additionalSizes:
                 - {width: 64, height: ~, media: "only screen and (-webkit-min-device-pixel-ratio: 1.5)"}
 
--   name: productSeries
-    class: App\Model\Product\Series\ProductSeries
-    multiple: true
-    sizes:
-        -   name: preview
-            width: 445
-            height: ~
-            crop: false
-            occurrence: 'Front-end: Main image in product series detail and list'
-            additionalSizes:
-                - {width: 710, height: ~, media: "(min-width: 480px) and (max-width: 768px)"}
-                - {width: 890, height: ~, media: "only screen and (-webkit-min-device-pixel-ratio: 1.5)"}
-        -   name: previewDetail
-            width: 450
-            height: ~
-            crop: false
-            occurrence: 'Front-end: Main image in product series detail and list'
-            additionalSizes:
-                - {width: 900, height: ~, media: "only screen and (-webkit-min-device-pixel-ratio: 1.5)"}
-        -   name: previewDetailSmall
-            width: 184
-            height: ~
-            crop: false
-            occurrence: 'Front-end: Main image in product series detail and list'
-            additionalSizes:
-                - {width: 368, height: ~, media: "only screen and (-webkit-min-device-pixel-ratio: 1.5)"}
-        -   name: galleryThumbnail
-            width: 120
-            height: 80
-            crop: false
-            occurrence: 'Front-end: Thumbnail of images under the main image in product series detail'
-        -   name: largePreview
-            width: 690
-            height: ~
-            crop: false
-            occurrence: 'Front-end: in detail'
-            additionalSizes:
-                - {width: 1380, height: ~, media: "only screen and (-webkit-min-device-pixel-ratio: 1.5)"}
-
 -   name: sliderItem
     class: Shopsys\FrameworkBundle\Model\Slider\SliderItem
     types:
