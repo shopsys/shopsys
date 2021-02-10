@@ -348,9 +348,6 @@
     "knplabs/knp-menu-bundle": {
         "version": "v2.3.0"
     },
-    "kraken-io/kraken-php": {
-        "version": "1.6"
-    },
     "laminas/laminas-code": {
         "version": "3.4.1"
     },

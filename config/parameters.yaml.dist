@@ -49,16 +49,6 @@ parameters:
 
     svg_icon_path: '%kernel.root_dir%/../src/Shopsys/ShopBundle/Resources/svg'
 
-    kraken_config:
-        enabled: false
-        sandbox: false # https://kraken.io/docs/sandbox
-        lossy: true
-        api_key: ''
-        api_secret: ''
-        lossless:
-            product_example: # this is entity name from images yaml, and his size
-                size: list
-
     targito_config:
         enabled: false
         eshop_to_targito_account_id: ''

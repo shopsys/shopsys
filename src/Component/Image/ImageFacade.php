@@ -436,14 +436,6 @@ class ImageFacade extends BaseImageFacade
     }
 
     /**
-     * @return \App\Component\Image\Image[]|null
-     */
-    public function findImagesForKrakenOptimization(): ?array
-    {
-        return $this->imageRepository->findImagesForKrakenOptimization();
-    }
-
-    /**
      * @param object $entity
      * @param string|null $type
      * @return \App\Component\Image\Image
