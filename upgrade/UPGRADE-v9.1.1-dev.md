@@ -57,3 +57,7 @@ There you can find links to upgrade notes for other versions too.
 - unify logo rendering on homepage and subpages ([#2048](https://github.com/shopsys/shopsys/pull/2048))
     - on homepage is no longer H1 element, consider adding it in your custom design
     - see #project-base-diff to update your project
+
+- replace deprecated method by throwing specific exception ([#2233](https://github.com/shopsys/shopsys/pull/2233))
+    - `Shopsys\FrameworkBundle\Component\Elasticsearch\Exception\ElasticsearchIndexException::indexAlreadyExists()`
+        - you should throw `Shopsys\FrameworkBundle\Component\Elasticsearch\Exception\ElasticsearchIndexAlreadyExistsException` directly
