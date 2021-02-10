@@ -89,11 +89,11 @@ class GoogleFeedItemTest extends TestCase
     /**
      * @param int $id
      * @param string $code
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency|\PHPUnit\Framework\MockObject\MockObject
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency
      */
     private function createCurrencyMock(int $id, string $code): Currency
     {
+        /** @var \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency|\PHPUnit\Framework\MockObject\MockObject $currencyMock */
         $currencyMock = $this->createMock(Currency::class);
 
         $currencyMock->method('getId')->willReturn($id);
