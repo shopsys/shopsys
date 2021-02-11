@@ -17,7 +17,7 @@ Inside every `.web__line` there should be `.web__container` - it has set `web-wi
 We use `.web__line` to change background with class modifications. E.g `class="web__line web__line--grey"`.
 
 ### Containers
-`.web__container` is centered div straight in `.web__line` with width set by variable `web-width` and it usually has small padding. This layout setting allows you confortably change order of these lines, switch on/off lines when you need it.
+`.web__container` is centered div straight in `.web__line` with width set by variable `web-width` and it usually has small padding. This layout setting allows you comfortably change order of these lines, switch on/off lines when you need it.
 
 You can set `web-width` in variables.less file.
 
