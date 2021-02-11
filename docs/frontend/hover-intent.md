@@ -8,7 +8,7 @@ You can set default values in file `assets/js/frontend/components/hoverIntent.js
 This plugin is binded to elements with class `.js-hover-intent`
 
 ### Force click
-In some scenarios you need to add hover functionality and simulate click on enother element. You can define it by `data-hover-intent-force-click="true"` and data element with `data-hover-intent-force-click-element=".js-element-to-click-class"`. I makes hover effect with defined interval a calls click event on element with class `.js-element-to-click-class`.
+In some scenarios you need to add hover functionality and simulate click on another element. You can define it by `data-hover-intent-force-click="true"` and data element with `data-hover-intent-force-click-element=".js-element-to-click-class"`. I makes hover effect with defined interval a calls click event on element with class `.js-element-to-click-class`.
 
 ### Javascript default settings
 ```javascript
