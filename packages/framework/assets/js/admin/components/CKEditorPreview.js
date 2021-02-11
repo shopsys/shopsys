@@ -6,7 +6,7 @@ export default class CKEditorPreview {
         const $editButton = $ckEditorPreview.children('.js-cke-preview-edit');
 
         if (this.isOverflown($ckEditorPreview)) {
-            $ckEditorPreview.addClass('cke-preview-text-collapsed');
+            $ckEditorPreview.addClass('in-ckeditor__text--collapsed');
         }
 
         $ckEditorPreview.click(() => {
