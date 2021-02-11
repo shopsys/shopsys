@@ -815,11 +815,6 @@ services:
         calls:
             - { method: setCdnDomain, arguments: ['%env(CDN_DOMAIN)%'] }
 
-    Shopsys\FrameworkBundle\Component\Image\Processing\ImageGenerator:
-        alias: App\Component\Image\Processing\ImageGenerator
-
-    App\Component\Image\Processing\ImageGenerator: ~
-
     Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRouterFactory:
         class: App\Component\Router\FriendlyUrl\FriendlyUrlRouterFactory
         arguments: ['%shopsys.router.friendly_url_router_filepath%']
