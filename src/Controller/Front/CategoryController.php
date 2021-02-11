@@ -66,29 +66,25 @@ class CategoryController extends FrontBaseController
         $menuItems = [];
         foreach ($topCategories as $category) {
             if ($category->getAkeneoCode() === 'eshop__nabytek') {
-                $menuItems[0] = $this->buildSlidingMenuSetup('front_product_list', $category->getId(), $category->getName($this->domain->getCurrentDomainConfig()->getLocale()));
+                $menuItems[] = $this->buildSlidingMenuSetup('front_product_list', $category->getId(), $category->getName($this->domain->getCurrentDomainConfig()->getLocale()));
 
                 $mattressesAndSlatsCategoryWithLazyLoadedVisibleChildrenForParent = $this->getMattressesAndSlatsCategoryWithLazyLoadedVisibleChildrenForParent($category);
-                $menuItems[2] = $this->buildSlidingMenuSetup(
+                $menuItems[] = $this->buildSlidingMenuSetup(
                     'front_product_list',
                     $mattressesAndSlatsCategoryWithLazyLoadedVisibleChildrenForParent->getCategory()->getId(),
                     $mattressesAndSlatsCategoryWithLazyLoadedVisibleChildrenForParent->getCategory()->getName($this->domain->getCurrentDomainConfig()->getLocale())
                 );
             }
         }
-        $menuItems[1] = $this->buildSlidingMenuSetup('front_kitchen', null, t('Kuchyně'));
 
         $saleCategory = $this->categoryFacade->findSaleCategory();
         if ($saleCategory !== null) {
-            $menuItems[3] = $this->buildSlidingMenuSetup(
+            $menuItems[] = $this->buildSlidingMenuSetup(
                 'front_product_list',
                 $saleCategory->getId(),
                 $saleCategory->getName($this->domain->getCurrentDomainConfig()->getLocale())
             );
         }
-
-        ksort($menuItems);
-
 
         return $this->render('Front/Content/Category/mobileSlidingMenu.html.twig', [
             'menuItems' => $menuItems

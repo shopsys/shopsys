@@ -37,7 +37,6 @@ class DataLayerMapper
         'front_blogarticle_detail' => DataLayerPage::TYPE_BLOG_ARTICLE,
         'front_cart' => DataLayerPage::TYPE_CART,
         'front_product_detail' => DataLayerPage::TYPE_PRODUCT,
-        'front_kitchen' => DataLayerPage::TYPE_KITCHEN,
         'front_order_sent' => DataLayerPage::TYPE_PURCHASE,
         'front_product_search' => DataLayerPage::TYPE_SEARCH,
         'front_product_list' => DataLayerPage::TYPE_CATEGORY,
