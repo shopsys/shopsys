@@ -1,0 +1,31 @@
+on: [push]
+name: "Docker build"
+jobs:
+    build-whole-application:
+        name: Build application and run standards checks and tests
+        runs-on: 'ubuntu-20.04'
+        steps:
+            -   name: GIT checkout branch - ${{ github.ref }}
+                uses: actions/checkout@v2
+                with:
+                    ref: ${{ github.ref }}
+            -   name: Build application
+                run: echo 1 | ./scripts/install.sh
+            -   name: Check standards
+                run: docker-compose exec -T php-fpm php phing standards
+            -   name: Run tests
+                run: docker-compose exec -T php-fpm php phing tests
+            -   name: Run acceptance tests
+                run: docker-compose exec -T php-fpm php phing tests-acceptance
+            -   name: PHP-FPM container logs
+                if: ${{ failure() }}
+                run: docker-compose logs php-fpm
+            -   name: Copy Codeception logs from container
+                if: ${{ failure() }}
+                run: docker cp shopsys-framework-php-fpm:/var/www/html/var/log ./var/log
+            -   name: Upload Codeception logs to artifacts
+                if: ${{ failure() }}
+                uses: actions/upload-artifact@v2
+                with:
+                    name: acceptance-logs
+                    path: ./var/log
