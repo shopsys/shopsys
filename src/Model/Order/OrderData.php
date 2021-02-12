@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Model\Order;
 
-use App\Model\Stock\Stock;
 use Shopsys\FrameworkBundle\Model\Order\OrderData as BaseOrderData;
 
 /**
@@ -68,16 +67,6 @@ class OrderData extends BaseOrderData
      * @var bool
      */
     public $isOverLimit;
-
-    /**
-     * @var string|null
-     */
-    public $erpNumber;
-
-    /**
-     * @var Stock|null
-     */
-    public $expeditionStock;
 
     public function __construct()
     {

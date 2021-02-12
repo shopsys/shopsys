@@ -17,5 +17,4 @@ class Setting extends BaseSetting
     public const SCONTO_BRIDGE_TRANSFER_PRODUCT_STOCK_LAST_UPDATED_DATETIME = 'scontoBridgeTransferProductStockLastUpdatedDatetime';
     public const SCONTO_BRIDGE_TRANSFER_FUTURE_PRODUCT_STOCK_LAST_UPDATED_DATETIME = 'scontoBridgeTransferFutureProductStockLastUpdatedDatetime';
     public const SCONTO_BRIDGE_TRANSFER_EXPOSED_PRODUCT_LAST_UPDATED_DATETIME = 'scontoBridgeTransferExposedProductLastUpdatedDatetime';
-    public const SCONTO_BRIDGE_TRANSFER_ORDER_STATUS_LAST_UPDATED_DATETIME = 'scontoBridgeTransferOrderStatusLastUpdatedDatetime';
 }

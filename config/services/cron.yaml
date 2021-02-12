@@ -98,7 +98,3 @@ services:
     App\Model\Order\Transfer\ScontoBridge\OrderTransferScontoBridgeCronModule:
         tags:
             - { name: shopsys.cron, hours: '*', minutes: '*', instanceName: orders, readableName: 'Export objednávek do můstku' }
-
-    App\Model\Order\Transfer\ScontoBridge\OrderTransferScontoBridgeImportCronModule:
-        tags:
-            - { name: shopsys.cron, hours: '*', minutes: '*', instanceName: orders, readableName: 'Import objednávek z můstku' }

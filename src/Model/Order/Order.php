@@ -6,7 +6,6 @@ namespace App\Model\Order;
 
 use App\Model\Order\Item\OrderItem;
 use App\Model\Product\Type\ProductType;
-use App\Model\Stock\Stock;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use GoPay\Definition\Response\PaymentStatus;
@@ -116,18 +115,6 @@ class Order extends BaseOrder
     protected $isOverLimit;
 
     /**
-     * @var string|null
-     *
-     * @ORM\Column(type="string", nullable=true)
-     */
-    private ?string $erpNumber;
-
-    /**
-     * @var Stock|null
-     */
-    private ?Stock $expeditionStock;
-
-    /**
      * @param \App\Model\Order\OrderData $orderData
      * @param string $orderNumber
      * @param string $urlHash
@@ -158,8 +145,6 @@ class Order extends BaseOrder
         $this->gtmCoupon = $orderData->gtmCoupon;
         $this->scontoBridgeStatus = $orderData->scontoBridgeStatus;
         $this->isOverLimit = $orderData->isOverLimit;
-        $this->erpNumber = $orderData->erpNumber;
-        $this->expeditionStock = $orderData->expeditionStock;
     }
 
     /**
@@ -335,30 +320,6 @@ class Order extends BaseOrder
     public function setScontoBridgeStatus(OrderScontoBridgeStatusEnum $status): void
     {
         $this->scontoBridgeStatus = $status->getValue();
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getErpNumber(): ?string
-    {
-        return $this->erpNumber;
-    }
-
-    /**
-     * @param string $erpNumber
-     */
-    public function setErpNumber(string $erpNumber): void
-    {
-        $this->erpNumber = $erpNumber;
-    }
-
-    /**
-     * @param Stock $stock
-     */
-    public function setExpeditionStock(Stock $stock): void
-    {
-        $this->expeditionStock = $stock;
     }
 
     /**

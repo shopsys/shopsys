@@ -784,20 +784,11 @@
 20200924135656:
     class: App\Migrations\Version20200924135656
     skip: false
-20200924145629:
-    class: App\Migrations\Version20200924145629
-    skip: false
 20200926142034:
     class: App\Migrations\Version20200926142034
     skip: false
-20200927082648:
-    class: App\Migrations\Version20200927082648
-    skip: false
 20200929044859:
     class: App\Migrations\Version20200929044859
-    skip: false
-20200929084646:
-    class: App\Migrations\Version20200929084646
     skip: false
 20201006052634:
     class: App\Migrations\Version20201006052634
