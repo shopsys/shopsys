@@ -297,12 +297,6 @@ services:
     Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserDataFactoryInterface:
         alias: App\Model\Customer\User\CustomerUserDataFactory
 
-    Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade:
-        alias: App\Model\Newsletter\NewsletterFacade
-
-    Shopsys\FrameworkBundle\Model\Newsletter\NewsletterRepository:
-        alias: App\Model\Newsletter\NewsletterRepository
-
     Shopsys\FrameworkBundle\Model\Order\OrderDataFactoryInterface:
         alias: App\Model\Order\OrderDataFactory
 
@@ -683,12 +677,6 @@ services:
             $scontoBridgeConfig: "%sconto_bridge_config%"
 
     App\Component\ScontoBridge\ScontoBridgeClient: ~
-
-    App\Component\Targito\TargitoConfig:
-        arguments:
-            $targitoConfig: "%targito_config%"
-
-    App\Component\Targito\TargitoClient: ~
 
     App\Component\ScontoBridge\Transfer\ScontoBridgeImportTransferDependency: ~
 

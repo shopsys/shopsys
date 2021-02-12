@@ -34,6 +34,7 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\HttpFoundation\DownloadFileResponse;
 use Shopsys\FrameworkBundle\Model\Cart\CartFacade;
 use Shopsys\FrameworkBundle\Model\LegalConditions\LegalConditionsFacade;
+use Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade;
 use Shopsys\FrameworkBundle\Model\Order\Exception\OrderNotFoundException;
 use Shopsys\FrameworkBundle\Model\Order\Mail\OrderMailFacade;
 use Shopsys\FrameworkBundle\Model\Order\OrderFacade;
@@ -174,6 +175,11 @@ class OrderController extends FrontBaseController
     private CustomerUserFacade $customerUserFacade;
 
     /**
+     * @var \Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade
+     */
+    private NewsletterFacade $newsletterFacade;
+
+    /**
      * @param \App\Model\Order\OrderFacade $orderFacade
      * @param \App\Model\Cart\CartFacade $cartFacade
      * @param \App\Component\Domain\Domain $domain
@@ -189,6 +195,7 @@ class OrderController extends FrontBaseController
      * @param \App\Model\GoPay\BankSwift\GoPayBankSwiftFacade $goPayBankSwiftFacade
      * @param \App\Model\GoPay\GoPayOnCurrentDomainFacade $goPayFacadeOnCurrentDomain
      * @param \App\Model\GoPay\GoPayTransactionFacade $goPayTransactionFacade
+     * @param \Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade $newsletterFacade
      * @param \App\Model\Order\Preview\OrderPreviewSplittingFacade $orderPreviewSplittingFacade
      * @param \App\Model\Order\OrderDataFactory $orderDataFactory
      * @param \App\Model\Stock\StockFacade $stockFacade
@@ -213,6 +220,7 @@ class OrderController extends FrontBaseController
         GoPayBankSwiftFacade $goPayBankSwiftFacade,
         GoPayOnCurrentDomainFacade $goPayFacadeOnCurrentDomain,
         GoPayTransactionFacade $goPayTransactionFacade,
+        NewsletterFacade $newsletterFacade,
         OrderPreviewSplittingFacade $orderPreviewSplittingFacade,
         OrderDataFactory $orderDataFactory,
         StockFacade $stockFacade,
@@ -241,6 +249,7 @@ class OrderController extends FrontBaseController
         $this->orderDataFactory = $orderDataFactory;
         $this->stockFacade = $stockFacade;
         $this->goPayTransactionFacade = $goPayTransactionFacade;
+        $this->newsletterFacade = $newsletterFacade;
         $this->gtmFacade = $gtmFacade;
         $this->authenticator = $authenticator;
         $this->transportLogisticFacade = $transportLogisticFacade;
@@ -327,6 +336,10 @@ class OrderController extends FrontBaseController
                 $order = $orderCreatedResult->getOrder();
 
                 $this->orderFacade->sendHeurekaOrderInfo($order, $frontOrderFormData->disallowHeurekaVerifiedByCustomers);
+
+                if ($frontOrderFormData->newsletterSubscription) {
+                    $this->newsletterFacade->addSubscribedEmail($frontOrderFormData->email, $this->domain->getId());
+                }
 
                 if ($order->getCustomerUser() instanceof CustomerUser && $orderCreatedResult->isLoginCustomer()) {
                     $this->authenticator->loginUser($order->getCustomerUser(), $orderFlow->getRequest());

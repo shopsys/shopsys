@@ -119,6 +119,11 @@
                                     </div>
                                 </div>
                             </dd>
+                            <dd>
+                                <div class="form-choice">
+                                    {{ form_row(form.newsletterSubscription, { label: 'Souhlasím se zasíláním newsletteru'|trans }) }}
+                                </div>
+                            </dd>
                         </dl>
                         <div class="box-form__submit">
                             {{ form_widget(form.save, { label: 'Register'|trans, attr: {'class' : 'btn--success btn--submit-next'} }) }}

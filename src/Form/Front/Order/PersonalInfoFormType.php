@@ -429,6 +429,9 @@ class PersonalInfoFormType extends AbstractType
                 ],
             ])
             ->add('note', TextareaType::class, ['required' => false])
+            ->add('newsletterSubscription', CheckboxType::class, [
+                'required' => false,
+            ])
             ->add('save', SubmitType::class);
 
         if ($currentCustomerUser === null) {
