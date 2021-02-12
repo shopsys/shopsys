@@ -22,7 +22,7 @@ use Shopsys\FrameworkBundle\Model\Transport\TransportVisibilityCalculation;
 
 /**
  * @property \App\Model\Payment\PaymentRepository $paymentRepository
- * @property \App\Component\Domain\Domain $domain
+ * @property \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
  * @property \App\Component\Image\ImageFacade $imageFacade
  * @property \App\Model\Transport\TransportPriceCalculation $transportPriceCalculation
  * @method \App\Model\Transport\Transport getById(int $id)
@@ -52,7 +52,7 @@ class TransportFacade extends BaseTransportFacade
      * @param \App\Model\Transport\TransportRepository $transportRepository
      * @param \App\Model\Payment\PaymentRepository $paymentRepository
      * @param \Shopsys\FrameworkBundle\Model\Transport\TransportVisibilityCalculation $transportVisibilityCalculation
-     * @param \App\Component\Domain\Domain $domain
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \App\Component\Image\ImageFacade $imageFacade
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
      * @param \App\Model\Transport\TransportPriceCalculation $transportPriceCalculation

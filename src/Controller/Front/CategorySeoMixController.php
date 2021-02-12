@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace App\Controller\Front;
 
-use App\Component\Domain\Domain;
 use App\Model\Category\Category;
 use App\Model\CategorySeo\ReadyCategorySeoMixFacade;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Symfony\Component\HttpFoundation\Response;
 
 class CategorySeoMixController extends FrontBaseController
 {
     /**
-     * @var \App\Component\Domain\Domain
+     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
      */
     private Domain $domain;
 
@@ -22,7 +22,7 @@ class CategorySeoMixController extends FrontBaseController
     private ReadyCategorySeoMixFacade $readyCategorySeoMixFacade;
 
     /**
-     * @param \App\Component\Domain\Domain $domain
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \App\Model\CategorySeo\ReadyCategorySeoMixFacade $readyCategorySeoMixFacade
      */
     public function __construct(

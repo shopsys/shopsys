@@ -27,13 +27,13 @@ class PriceRangeRepository extends BasePriceRangeRepository
     private $currencyFacade;
 
     /**
-     * @var \App\Component\Domain\Domain
+     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
      */
     private $domain;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
-     * @param \App\Component\Domain\Domain $domain
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \App\Model\Product\ProductRepository $productRepository
      * @param \App\Component\Doctrine\QueryBuilderExtender $queryBuilderExtender
      */

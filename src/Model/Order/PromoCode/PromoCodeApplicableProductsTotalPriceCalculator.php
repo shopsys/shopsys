@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Model\Order\PromoCode;
 
-use App\Component\Domain\Domain;
 use App\Model\Product\Pricing\QuantifiedProductPriceCalculation;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
 
@@ -27,7 +27,7 @@ class PromoCodeApplicableProductsTotalPriceCalculator
     private QuantifiedProductPriceCalculation $quantifiedProductPriceCalculation;
 
     /**
-     * @var \App\Component\Domain\Domain
+     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
      */
     private Domain $domain;
 
@@ -35,7 +35,7 @@ class PromoCodeApplicableProductsTotalPriceCalculator
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
      * @param \App\Model\Order\PromoCode\ProductPromoCodeFiller $productPromoCodeFiller
      * @param \App\Model\Product\Pricing\QuantifiedProductPriceCalculation $quantifiedProductPriceCalculation
-     * @param \App\Component\Domain\Domain $domain
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
         CurrentCustomerUser $currentCustomerUser,

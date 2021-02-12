@@ -17,7 +17,7 @@ class HorizontalMenuController extends FrontBaseController
     private $horizontalMenuItemFacade;
 
     /**
-     * @var \App\Component\Domain\Domain
+     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
      */
     private $domain;
 
@@ -28,7 +28,7 @@ class HorizontalMenuController extends FrontBaseController
 
     /**
      * @param \App\Model\HorizontalMenu\HorizontalMenuItemFacade $horizontalMenuItemFacade
-     * @param \App\Component\Domain\Domain $domain
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
         HorizontalMenuItemFacade $horizontalMenuItemFacade,

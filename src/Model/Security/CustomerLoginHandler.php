@@ -5,8 +5,8 @@ declare(strict_types=1);
 
 namespace App\Model\Security;
 
-use App\Component\Domain\Domain;
 use App\Model\Customer\User\CustomerUserFacade;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Router\CurrentDomainRouter;
 use Shopsys\FrameworkBundle\Model\Security\CustomerLoginHandler as BaseCustomerLoginHandler;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -22,14 +22,14 @@ class CustomerLoginHandler extends BaseCustomerLoginHandler
      */
     private CustomerUserFacade $customerUserFacade;
     /**
-     * @var \App\Component\Domain\Domain
+     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
      */
     private Domain $domain;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Router\CurrentDomainRouter $router
      * @param \App\Model\Customer\User\CustomerUserFacade $customerUserFacade
-     * @param \App\Component\Domain\Domain $domain
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
         CurrentDomainRouter $router,

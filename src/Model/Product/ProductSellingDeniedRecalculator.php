@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Model\Product;
 
-use App\Component\Domain\Domain;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query\ResultSetMapping;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\ProductSellingDeniedRecalculator as BaseProductSellingDeniedRecalculator;
 
@@ -17,7 +17,7 @@ use Shopsys\FrameworkBundle\Model\Product\ProductSellingDeniedRecalculator as Ba
 class ProductSellingDeniedRecalculator extends BaseProductSellingDeniedRecalculator
 {
     /**
-     * @var \App\Component\Domain\Domain
+     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
      */
     private Domain $domain;
 

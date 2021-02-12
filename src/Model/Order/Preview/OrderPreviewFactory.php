@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace App\Model\Order\Preview;
 
-use App\Component\Domain\Domain;
 use App\Model\Cart\CartFacade;
 use App\Model\Order\PromoCode\CurrentPromoCodeFacade;
 use App\Model\Order\PromoCode\PromoCodeLimitResolver;
 use App\Model\Product\Type\ProductType;
 use App\Model\Stock\Stock;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreviewFactory as BaseOrderPreviewFactory;
@@ -22,7 +22,7 @@ use Shopsys\FrameworkBundle\Model\Transport\Transport;
  * @property \App\Model\Order\Preview\OrderPreviewCalculation $orderPreviewCalculation
  * @property \App\Model\Order\PromoCode\CurrentPromoCodeFacade $currentPromoCodeFacade
  * @property \App\Model\Cart\CartFacade $cartFacade
- * @property \App\Component\Domain\Domain $domain
+ * @property \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
  */
 class OrderPreviewFactory extends BaseOrderPreviewFactory
 {
@@ -33,7 +33,7 @@ class OrderPreviewFactory extends BaseOrderPreviewFactory
 
     /**
      * @param \App\Model\Order\Preview\OrderPreviewCalculation $orderPreviewCalculation
-     * @param \App\Component\Domain\Domain $domain
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
      * @param \App\Model\Cart\CartFacade $cartFacade

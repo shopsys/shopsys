@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Form\Constraints;
 
-use App\Component\Domain\Domain;
 use App\Model\Customer\User\CustomerUserFacade;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Form\Constraints\UniqueCollection;
 use Shopsys\FrameworkBundle\Form\Constraints\UniqueEmail;
 use Shopsys\FrameworkBundle\Form\Constraints\UniqueEmailValidator as BaseUniqueEmailValidator;
@@ -20,13 +20,13 @@ class UniqueEmailValidator extends BaseUniqueEmailValidator
     private $customerUserFacade;
 
     /**
-     * @var \App\Component\Domain\Domain
+     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
      */
     private $domain;
 
     /**
      * @param \App\Model\Customer\User\CustomerUserFacade $customerUserFacade
-     * @param \App\Component\Domain\Domain $domain
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
         CustomerUserFacade $customerUserFacade,

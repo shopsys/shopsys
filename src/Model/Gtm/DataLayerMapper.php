@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Model\Gtm;
 
-use App\Component\Domain\Domain;
 use App\Model\Category\Category;
 use App\Model\Category\CategoryFacade;
 use App\Model\Customer\User\CustomerUser as BaseCustomer;
@@ -20,6 +19,7 @@ use App\Model\Product\Listed\ListedProductView;
 use App\Model\Product\Product;
 use App\Model\Product\ProductCachedAttributesFacade;
 use App\Model\Slider\SliderItem;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Administrator\Security\AdministratorFrontSecurityFacade;
 use Shopsys\FrameworkBundle\Model\Security\Roles;
@@ -52,7 +52,7 @@ class DataLayerMapper
     private $categoryFacade;
 
     /**
-     * @var \App\Component\Domain\Domain
+     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
      */
     private $domain;
 
@@ -78,7 +78,7 @@ class DataLayerMapper
 
     /**
      * @param \App\Model\Category\CategoryFacade $categoryFacade
-     * @param \App\Component\Domain\Domain $domain
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface $authorizationChecker
      * @param \App\Model\Product\ProductCachedAttributesFacade $productCachedAttributesFacade
      * @param \App\Model\Administrator\Security\AdministratorFrontSecurityFacade $administratorFrontSecurityFacade

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Model\Gtm;
 
-use App\Component\Domain\Domain;
 use App\Model\Category\Category;
 use App\Model\Gtm\Data\DataLayerPage;
 use App\Model\Gtm\Data\DataLayerUser;
@@ -12,6 +11,7 @@ use App\Model\Order\Order;
 use App\Model\Order\Preview\OrderPreviewSplittingFacade;
 use App\Model\Order\Preview\SplitOrderPreview;
 use App\Model\Product\Product;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 
@@ -38,7 +38,7 @@ class GtmFacade
     private $currentCustomer;
 
     /**
-     * @var \App\Component\Domain\Domain
+     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
      */
     private $domain;
 
@@ -56,7 +56,7 @@ class GtmFacade
      * @param \App\Model\Gtm\GtmContainer $gtmContainer
      * @param \App\Model\Gtm\DataLayerMapper $dataLayerMapper
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomer
-     * @param \App\Component\Domain\Domain $domain
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
      * @param \App\Model\Order\Preview\OrderPreviewSplittingFacade $orderPreviewSplittingFacade
      */

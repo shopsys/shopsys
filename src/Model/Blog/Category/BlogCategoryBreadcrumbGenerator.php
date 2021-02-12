@@ -16,13 +16,13 @@ class BlogCategoryBreadcrumbGenerator implements BreadcrumbGeneratorInterface
     private $blogCategoryRepository;
 
     /**
-     * @var \App\Component\Domain\Domain
+     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
      */
     private $domain;
 
     /**
      * @param \App\Model\Blog\Category\BlogCategoryRepository $blogCategoryRepository
-     * @param \App\Component\Domain\Domain $domain
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(BlogCategoryRepository $blogCategoryRepository, Domain $domain)
     {

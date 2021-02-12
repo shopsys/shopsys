@@ -49,9 +49,6 @@ parameters:
 
     svg_icon_path: '%kernel.root_dir%/../src/Shopsys/ShopBundle/Resources/svg'
 
-    # When you do not want to use CDN, it is used value '//' as workaround by https://github.com/symfony/symfony/issues/28391
-    env(CDN_DOMAIN): '//'
-
     gopay_config:
         cs:
             goid: 8111408481

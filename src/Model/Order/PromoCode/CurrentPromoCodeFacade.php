@@ -31,7 +31,7 @@ class CurrentPromoCodeFacade extends BaseCurrentPromoCodeFacade
     private $promoCodeCategoryRepository;
 
     /**
-     * @var \App\Component\Domain\Domain
+     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
      */
     private $domain;
 
@@ -60,7 +60,7 @@ class CurrentPromoCodeFacade extends BaseCurrentPromoCodeFacade
      * @param \Symfony\Component\HttpFoundation\Session\SessionInterface $session
      * @param \App\Model\Order\PromoCode\PromoCodeProductRepository $promoCodeProductRepository
      * @param \App\Model\Order\PromoCode\PromoCodeCategoryRepository $promoCodeCategoryRepository
-     * @param \App\Component\Domain\Domain $domain
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifierFactory $customerUserIdentifierFactory
      * @param \Shopsys\FrameworkBundle\Model\Cart\CartRepository $cartRepository
      * @param \App\Model\Order\PromoCode\ProductPromoCodeFiller $productPromoCodeFiller

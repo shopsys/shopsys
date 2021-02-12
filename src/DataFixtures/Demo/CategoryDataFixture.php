@@ -36,14 +36,14 @@ class CategoryDataFixture extends AbstractReferenceFixture
     private $categoryDataFactory;
 
     /**
-     * @var \App\Component\Domain\Domain
+     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
      */
     private $domain;
 
     /**
      * @param \App\Model\Category\CategoryFacade $categoryFacade
      * @param \App\Model\Category\CategoryDataFactory $categoryDataFactory
-     * @param \App\Component\Domain\Domain $domain
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
         CategoryFacade $categoryFacade,

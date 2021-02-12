@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace App\DataFixtures\Demo;
 
-use App\Component\Domain\Domain;
 use App\Model\NotificationBar\NotificationBarDataFactory;
 use App\Model\NotificationBar\NotificationBarFacade;
 use DateTime;
 use Doctrine\Persistence\ObjectManager;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 
 class NotificationBarDataFixture extends AbstractReferenceFixture
 {

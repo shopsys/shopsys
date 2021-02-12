@@ -10,10 +10,10 @@ use Shopsys\FrameworkBundle\Model\Advert\AdvertFacade as BaseAdvertFacade;
 
 /**
  * @property \App\Model\Advert\AdvertRepository $advertRepository
- * @property \App\Component\Domain\Domain $domain
+ * @property \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
  * @property \App\Component\Image\ImageFacade $imageFacade
  * @property \App\Model\Advert\AdvertPositionRegistry $advertPositionRegistry
- * @method __construct(\Doctrine\ORM\EntityManagerInterface $em, \App\Model\Advert\AdvertRepository $advertRepository, \App\Component\Image\ImageFacade $imageFacade, \App\Component\Domain\Domain $domain, \Shopsys\FrameworkBundle\Model\Advert\AdvertFactoryInterface $advertFactory, \App\Model\Advert\AdvertPositionRegistry $advertPositionRegistry)
+ * @method __construct(\Doctrine\ORM\EntityManagerInterface $em, \App\Model\Advert\AdvertRepository $advertRepository, \App\Component\Image\ImageFacade $imageFacade, \Shopsys\FrameworkBundle\Component\Domain\Domain $domain, \Shopsys\FrameworkBundle\Model\Advert\AdvertFactoryInterface $advertFactory, \App\Model\Advert\AdvertPositionRegistry $advertPositionRegistry)
  * @method \App\Model\Advert\Advert getById(int $advertId)
  * @method \App\Model\Advert\Advert|null findRandomAdvertByPositionOnCurrentDomain(string $positionName)
  */

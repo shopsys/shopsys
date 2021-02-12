@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace App\Model\Sitemap;
 
-use App\Component\Domain\Domain;
 use Presta\SitemapBundle\Event\SitemapPopulateEvent;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory;
 use Shopsys\FrameworkBundle\Model\Sitemap\SitemapFacade;
 use Shopsys\FrameworkBundle\Model\Sitemap\SitemapListener as BaseSitemapListener;
 
 /**
- * @property \App\Component\Domain\Domain $domain
+ * @property \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
  * @property \App\Model\Sitemap\SitemapFacade $sitemapFacade
  * @property \App\Component\Router\DomainRouterFactory $domainRouterFactory
  */
@@ -26,7 +26,7 @@ class SitemapListener extends BaseSitemapListener
 
     /**
      * @param \App\Model\Sitemap\SitemapFacade $sitemapFacade
-     * @param \App\Component\Domain\Domain $domain
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \App\Component\Router\DomainRouterFactory $domainRouterFactory
      * @param \App\Model\Sitemap\SitemapRepository $sitemapRepository
      */

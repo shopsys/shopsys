@@ -27,7 +27,7 @@ class StocksDataFixture extends AbstractReferenceFixture
     public const STOCK_PREFIX = 'stock_';
 
     /**
-     * @var \App\Component\Domain\Domain
+     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
      */
     private $domain;
 
@@ -42,7 +42,7 @@ class StocksDataFixture extends AbstractReferenceFixture
     private $stockDataFactory;
 
     /**
-     * @param \App\Component\Domain\Domain $domain
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \App\Model\Stock\StockFacade $stockFacade
      * @param \App\Model\Stock\StockDataFactory $stockDataFactory
      */

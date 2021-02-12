@@ -16,7 +16,7 @@ use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
- * @property \App\Component\Domain\Domain $domain
+ * @property \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
  */
 class DomainRouterFactory extends BaseDomainRouterFactory
 {
@@ -35,7 +35,7 @@ class DomainRouterFactory extends BaseDomainRouterFactory
      * @param \Symfony\Component\Config\Loader\LoaderInterface $configLoader
      * @param \Shopsys\FrameworkBundle\Component\Router\LocalizedRouterFactory $localizedRouterFactory
      * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRouterFactory $friendlyUrlRouterFactory
-     * @param \App\Component\Domain\Domain $domain
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Symfony\Component\HttpFoundation\RequestStack $requestStack
      * @param \Psr\Container\ContainerInterface $container
      * @param string $cacheDir

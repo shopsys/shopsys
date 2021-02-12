@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\DataFixtures\Demo;
 
-use App\Component\Domain\Domain;
 use App\Model\Product\Package\ProductPackageDataFactory;
 use App\Model\Product\Package\ProductPackageFacade;
 use App\Model\Product\Parameter\ParameterDataFactory;
@@ -21,6 +20,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Generator;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\PriceConverter;
@@ -41,7 +41,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
     private $productFacade;
 
     /**
-     * @var \App\Component\Domain\Domain
+     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
      */
     private $domain;
 
@@ -137,7 +137,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
     /**
      * @param \App\Model\Product\ProductFacade $productFacade
-     * @param \App\Component\Domain\Domain $domain
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade $pricingGroupFacade
      * @param \App\Model\Product\ProductDataFactory $productDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueDataFactory $productParameterValueDataFactory

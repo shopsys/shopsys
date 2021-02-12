@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Form\Admin;
 
-use App\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Form\Admin\Order\OrderFormType;
 use Shopsys\FrameworkBundle\Form\DisplayOnlyType;
 use Symfony\Component\Form\AbstractTypeExtension;

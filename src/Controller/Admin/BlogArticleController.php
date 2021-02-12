@@ -60,7 +60,7 @@ class BlogArticleController extends AdminBaseController
     private $session;
 
     /**
-     * @var \App\Component\Domain\Domain
+     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
      */
     private $domain;
 
@@ -72,7 +72,7 @@ class BlogArticleController extends AdminBaseController
      * @param \Shopsys\FrameworkBundle\Component\ConfirmDelete\ConfirmDeleteResponseFactory $confirmDeleteResponseFactory
      * @param \App\Model\Blog\Article\BlogArticleGridFactory $blogArticleGridFactory
      * @param \Symfony\Component\HttpFoundation\Session\SessionInterface $session
-     * @param \App\Component\Domain\Domain $domain
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
         BlogArticleFacade $blogArticleFacade,

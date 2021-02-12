@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Model\CategorySeo;
 
-use App\Component\Domain\Domain;
 use App\Model\Category\Category;
 use App\Model\CategorySeo\Exception\UnableToFindReadyCategorySeoMixException;
 use App\Model\Product\Filter\ProductFilterCacheFacade;
@@ -12,6 +11,7 @@ use Doctrine\Common\Persistence\ObjectRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query\Expr\Join;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Localization\Localization;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter;
 use function GuzzleHttp\json_encode as json_encode;
@@ -24,7 +24,7 @@ class ReadyCategorySeoMixRepository
     private $em;
 
     /**
-     * @var \App\Component\Domain\Domain
+     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
      */
     private $domain;
 
@@ -40,7 +40,7 @@ class ReadyCategorySeoMixRepository
 
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \App\Component\Domain\Domain $domain
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Localization\Localization $localization
      */
     public function __construct(

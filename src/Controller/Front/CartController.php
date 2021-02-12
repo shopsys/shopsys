@@ -41,7 +41,7 @@ class CartController extends FrontBaseController
     private $cartFacade;
 
     /**
-     * @var \App\Component\Domain\Domain
+     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
      */
     private $domain;
 
@@ -102,7 +102,7 @@ class CartController extends FrontBaseController
 
     /**
      * @param \App\Model\Cart\CartFacade $cartFacade
-     * @param \App\Component\Domain\Domain $domain
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \App\Model\Order\Preview\OrderPreviewFactory $orderPreviewFactory
      * @param \Shopsys\FrameworkBundle\Component\FlashMessage\ErrorExtractor $errorExtractor
      * @param \Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFacadeInterface $listedProductViewFacade

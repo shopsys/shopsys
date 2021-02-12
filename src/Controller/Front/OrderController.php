@@ -65,7 +65,7 @@ class OrderController extends FrontBaseController
     private $cartFacade;
 
     /**
-     * @var \App\Component\Domain\Domain
+     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
      */
     private $domain;
 
@@ -182,7 +182,7 @@ class OrderController extends FrontBaseController
     /**
      * @param \App\Model\Order\OrderFacade $orderFacade
      * @param \App\Model\Cart\CartFacade $cartFacade
-     * @param \App\Component\Domain\Domain $domain
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \App\Model\Transport\TransportFacade $transportFacade
      * @param \App\Model\Payment\PaymentFacade $paymentFacade
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade

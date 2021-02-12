@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace App\Model\Transport\TransportPallet;
 
-use App\Component\Domain\Domain;
 use App\Component\Pricing\PriceToAndPriceData;
 use App\Model\Transport\Transport;
 use App\Model\Transport\TransportData;
 use Doctrine\ORM\EntityManagerInterface;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
 
@@ -20,7 +20,7 @@ class TransportPalletPriceFacade
     private TransportPalletPriceRepository $transportPalletPriceRepository;
 
     /**
-     * @var \App\Component\Domain\Domain
+     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
      */
     private Domain $domain;
 
@@ -31,7 +31,7 @@ class TransportPalletPriceFacade
 
     /**
      * @param \App\Model\Transport\TransportPallet\TransportPalletPriceRepository $transportPalletPriceRepository
-     * @param \App\Component\Domain\Domain $domain
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Doctrine\ORM\EntityManagerInterface $entityManager
      */
     public function __construct(

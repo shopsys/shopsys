@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Model\Order\PromoCode;
 
-use App\Component\Domain\Domain;
 use App\Model\Product\Flag\Flag;
 use App\Model\Product\Product;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 
 class ProductPromoCodeFiller
 {
@@ -17,7 +17,7 @@ class ProductPromoCodeFiller
     private const BIT_PRICE_HIT = 16;
 
     /**
-     * @var \App\Component\Domain\Domain
+     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
      */
     private Domain $domain;
 
@@ -32,7 +32,7 @@ class ProductPromoCodeFiller
     private PromoCodeCategoryRepository $promoCodeCategoryRepository;
 
     /**
-     * @param \App\Component\Domain\Domain $domain
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \App\Model\Order\PromoCode\PromoCodeProductRepository $promoCodeProductRepository
      * @param \App\Model\Order\PromoCode\PromoCodeCategoryRepository $promoCodeCategoryRepository
      */

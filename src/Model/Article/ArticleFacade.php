@@ -15,7 +15,7 @@ use Shopsys\FrameworkBundle\Model\Article\ArticleFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Article\ArticleRepository;
 
 /**
- * @property \App\Component\Domain\Domain $domain
+ * @property \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
  * @property \App\Model\Article\ArticleRepository $articleRepository
  * @method \App\Model\Article\Article|null findById(int $articleId)
  * @method \App\Model\Article\Article getById(int $articleId)
@@ -36,7 +36,7 @@ class ArticleFacade extends BaseArticleFacade
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \App\Model\Article\ArticleRepository $articleRepository
-     * @param \App\Component\Domain\Domain $domain
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
      * @param \Shopsys\FrameworkBundle\Model\Article\ArticleFactoryInterface $articleFactory
      * @param \App\Twig\Cache\TwigCacheFacade $twigCacheFacade

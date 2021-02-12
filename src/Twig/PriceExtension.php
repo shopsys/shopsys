@@ -18,7 +18,7 @@ use Twig\TwigFilter;
 use Twig\TwigFunction;
 
 /**
- * @property \App\Component\Domain\Domain $domain
+ * @property \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
  */
 class PriceExtension extends BasePriceExtension
 {
@@ -29,7 +29,7 @@ class PriceExtension extends BasePriceExtension
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
-     * @param \App\Component\Domain\Domain $domain
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Localization\Localization $localization
      * @param \CommerceGuys\Intl\NumberFormat\NumberFormatRepositoryInterface $numberFormatRepository
      * @param \CommerceGuys\Intl\Currency\CurrencyRepositoryInterface $intlCurrencyRepository

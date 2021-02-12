@@ -71,7 +71,7 @@ class ScontoBridgeImportFutureProductStockFacade extends AbstractScontoBridgeImp
     private $index;
 
     /**
-     * @var \App\Component\Domain\Domain
+     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
      */
     private $domain;
 
@@ -100,7 +100,7 @@ class ScontoBridgeImportFutureProductStockFacade extends AbstractScontoBridgeImp
      * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexFacade $indexFacade
      * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionLoader $indexDefinitionLoader
      * @param \Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductIndex $index
-     * @param \App\Component\Domain\Domain $domain
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \App\Model\Stock\Future\FutureProductStockFacade $futureProductStockFacade
      * @param \App\Model\Stock\Future\FutureProductStockDataFactory $futureProductStockDataFactory
      */

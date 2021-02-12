@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\Model\Gtm;
 
-use App\Component\Domain\Domain;
 use App\Model\Product\Listed\ListedProductView;
 use App\Model\Product\Product;
 use App\Model\Slider\SliderItem;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 
 class GtmJsPushFacade
@@ -23,7 +23,7 @@ class GtmJsPushFacade
     private $dataLayerMapper;
 
     /**
-     * @var \App\Component\Domain\Domain
+     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
      */
     private $domain;
 
@@ -40,7 +40,7 @@ class GtmJsPushFacade
     /**
      * @param \App\Model\Gtm\GtmContainer $gtmContainer
      * @param \App\Model\Gtm\DataLayerMapper $dataLayerMapper
-     * @param \App\Component\Domain\Domain $domain
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
      * @param \App\Model\Gtm\GtmFacade $gtmFacade
      */

@@ -33,7 +33,7 @@ use Symfony\Component\Validator\Constraints;
 class BlogArticleFormType extends AbstractType
 {
     /**
-     * @var \App\Component\Domain\Domain
+     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
      */
     private $domain;
 
@@ -43,7 +43,7 @@ class BlogArticleFormType extends AbstractType
     private $seoSettingFacade;
 
     /**
-     * @param \App\Component\Domain\Domain $domain
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Seo\SeoSettingFacade $seoSettingFacade
      */
     public function __construct(

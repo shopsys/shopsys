@@ -20,7 +20,7 @@ class BrandDataFactory extends BaseBrandDataFactory
     /**
      * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade $brandFacade
-     * @param \App\Component\Domain\Domain $domain
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \App\Component\Image\ImageFacade $imageFacade
      */
     public function __construct(

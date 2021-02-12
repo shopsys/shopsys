@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace App\Model\Blog\Category;
 
-use App\Component\Domain\Domain;
 use App\Component\Image\ImageFacade;
 use App\Model\Blog\Article\BlogArticle;
 use App\Model\Blog\BlogVisibilityRecalculationScheduler;
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 
 class BlogCategoryFacade
@@ -54,7 +54,7 @@ class BlogCategoryFacade
      */
     private $blogVisibilityRecalculationScheduler;
     /**
-     * @var \App\Component\Domain\Domain
+     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
      */
     private Domain $domain;
 

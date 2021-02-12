@@ -10,9 +10,9 @@ use Shopsys\FrameworkBundle\Model\Mail\MailTemplateFacade as BaseMailTemplateFac
 
 /**
  * @property \App\Model\Mail\MailTemplateRepository $mailTemplateRepository
- * @property \App\Component\Domain\Domain $domain
+ * @property \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
  * @property \App\Component\UploadedFile\UploadedFileFacade $uploadedFileFacade
- * @method __construct(\Doctrine\ORM\EntityManagerInterface $em, \App\Model\Mail\MailTemplateRepository $mailTemplateRepository, \App\Component\Domain\Domain $domain, \App\Component\UploadedFile\UploadedFileFacade $uploadedFileFacade, \Shopsys\FrameworkBundle\Model\Mail\MailTemplateFactoryInterface $mailTemplateFactory, \Shopsys\FrameworkBundle\Model\Mail\MailTemplateDataFactoryInterface $mailTemplateDataFactory, \Shopsys\FrameworkBundle\Model\Mail\MailTemplateAttachmentFilepathProvider $mailTemplateAttachmentFilepathProvider)
+ * @method __construct(\Doctrine\ORM\EntityManagerInterface $em, \App\Model\Mail\MailTemplateRepository $mailTemplateRepository, \Shopsys\FrameworkBundle\Component\Domain\Domain $domain, \App\Component\UploadedFile\UploadedFileFacade $uploadedFileFacade, \Shopsys\FrameworkBundle\Model\Mail\MailTemplateFactoryInterface $mailTemplateFactory, \Shopsys\FrameworkBundle\Model\Mail\MailTemplateDataFactoryInterface $mailTemplateDataFactory, \Shopsys\FrameworkBundle\Model\Mail\MailTemplateAttachmentFilepathProvider $mailTemplateAttachmentFilepathProvider)
  * @method \App\Model\Mail\MailTemplate get(string $templateName, int $domainId)
  * @method \App\Model\Mail\MailTemplate getById(int $id)
  * @method \App\Model\Mail\MailTemplate edit(int $id, \App\Model\Mail\MailTemplateData $mailTemplateData)
