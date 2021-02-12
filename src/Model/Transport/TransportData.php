@@ -37,11 +37,6 @@ class TransportData extends BaseTransportData
     public $isOverLimitTransport;
 
     /**
-     * @var int
-     */
-    public int $externalId;
-
-    /**
      * @var int|null
      */
     public ?int $daysUntilDelivery;

@@ -99,7 +99,6 @@ class TransportDomainTest extends TransactionFunctionalTestCase
     {
         /** @var TransportData $transportData */
         $transportData = $this->transportDataFactory->create();
-        $transportData->externalId = $this->getNextTransportExternalId();
         $transportData->deliveryCode = 'A';
         $transportData->typeOfDeliveryKey = 1;
 

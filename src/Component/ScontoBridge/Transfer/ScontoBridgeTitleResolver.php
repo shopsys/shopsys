@@ -27,18 +27,4 @@ class ScontoBridgeTitleResolver
 
         return self::TITLE_GENDER[$individualTitle];
     }
-
-    /**
-     * @param string $gender
-     * @return int|null
-     */
-    public function getIndividualTitleByGender(string $gender): ?int
-    {
-        $genderTitle = array_flip(self::TITLE_GENDER);
-        if (array_key_exists($gender, $genderTitle) === false) {
-            return null;
-        }
-
-        return $genderTitle[$gender];
-    }
 }

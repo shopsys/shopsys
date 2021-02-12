@@ -60,13 +60,6 @@ class OrderItem extends BaseOrderItem
     private $relatedOrderItem;
 
     /**
-     * @var string|null
-     *
-     * @ORM\Column(type="text", length=2, nullable=true)
-     */
-    private $flagCode;
-
-    /**
      * @param \App\Model\Order\Order $order
      * @param string $name
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $price
@@ -115,14 +108,6 @@ class OrderItem extends BaseOrderItem
     }
 
     /**
-     * @return \App\Model\Stock\Stock|null
-     */
-    public function getPersonalPickupStock(): ?Stock
-    {
-        return $this->personalPickupStock;
-    }
-
-    /**
      * @param \App\Model\Stock\Stock|null $personalPickupStock
      */
     public function setPersonalPickupStock(?Stock $personalPickupStock): void
@@ -144,22 +129,6 @@ class OrderItem extends BaseOrderItem
     public function setPromoCodeIdentifier(?string $promoCodeIdentifier): void
     {
         $this->promoCodeIdentifier = $promoCodeIdentifier;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getFlagCode(): ?string
-    {
-        return $this->flagCode;
-    }
-
-    /**
-     * @param string|null $flagCode
-     */
-    public function setFlagCode(?string $flagCode): void
-    {
-        $this->flagCode = $flagCode;
     }
 
     /**
@@ -247,25 +216,6 @@ class OrderItem extends BaseOrderItem
             if ($coupon instanceof self) {
                 $discountPerItem = $coupon->getPriceWithoutVat()->divide($this->quantity, 2);
                 $priceWithVat = $priceWithVat->add($discountPerItem);
-            }
-        } catch (OrderItemRelatedException $e) {
-            //order item is not discounted
-        }
-
-        return $priceWithVat;
-    }
-
-    /**
-     * @return \Shopsys\FrameworkBundle\Component\Money\Money
-     */
-    public function getFinalQuantifiedPriceWithVat(): Money
-    {
-        $priceWithVat = $this->getPriceWithVat()->multiply($this->quantity);
-        try {
-            $coupon = $this->getRelatedCoupon();
-
-            if ($coupon instanceof self) {
-                $priceWithVat = $priceWithVat->add($coupon->getPriceWithVat());
             }
         } catch (OrderItemRelatedException $e) {
             //order item is not discounted

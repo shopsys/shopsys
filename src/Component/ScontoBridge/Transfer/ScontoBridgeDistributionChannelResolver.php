@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace App\Component\ScontoBridge\Transfer;
 
-use App\Component\ScontoBridge\Transfer\Exception\ScontoBridgeDistributionChannelResolverException;
-use App\Model\Country\CountryDataInvalidException;
 use App\Model\Country\CountryFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Country\Country;
@@ -38,30 +36,6 @@ class ScontoBridgeDistributionChannelResolver
         $codesByDomain = array_flip(self::DISTRIBUTION_CODES_BY_DOMAIN);
 
         return $codesByDomain[$countryString] ?? null;
-    }
-
-    /**
-     * @param Country $country
-     * @return int
-     * @throws ScontoBridgeDistributionChannelResolverException
-     */
-    public function getDistributionChannelCodeByCountry(Country $country): int
-    {
-        $code = $country->getCode();
-        try {
-            $domainId = $this->countryFacade->getDomainIdByCountryCode($code);
-        } catch (CountryDataInvalidException $e) {
-            throw new ScontoBridgeDistributionChannelResolverException(
-                sprintf('Unknown country code \'%s\' for distribution channel code', $code)
-            );
-        }
-        if (array_key_exists($domainId, self::DISTRIBUTION_CODES_BY_DOMAIN) === false) {
-            throw new ScontoBridgeDistributionChannelResolverException(
-                sprintf('Unknown domain \'%d\' for distribution channel code', $domainId)
-            );
-        }
-
-        return self::DISTRIBUTION_CODES_BY_DOMAIN[$domainId];
     }
 
     /**

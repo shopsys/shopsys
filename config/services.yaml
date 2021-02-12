@@ -874,17 +874,10 @@ services:
     Shopsys\FrameworkBundle\Model\Feed\FeedFacade:
         alias: App\Model\Feed\FeedFacade
 
-    Shopsys\FrameworkBundle\Model\Transport\TransportRepository:
-        alias: App\Model\Transport\TransportRepository
-
     Shopsys\FrameworkBundle\Model\Customer\Mail\CustomerMailFacade:
         alias: App\Model\Customer\Mail\CustomerMailFacade
 
     App\Model\Customer\Mail\CustomerActivationMail: ~
-
-    App\Model\Customer\Transfer\ScontoBridge\CustomerTransferScontoBridgeExporter: ~
-
-    App\Model\Order\Transfer\ScontoBridge\OrderTransferScontoBridgeExporter: ~
 
     Shopsys\FrameworkBundle\Model\Feed\FeedExportFactory:
         alias: App\Model\Feed\FeedExportFactory
@@ -900,9 +893,6 @@ services:
 
     Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserPasswordFacade:
         alias: App\Model\Customer\User\CustomerUserPasswordFacade
-
-    Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusRepository:
-        alias: App\Model\Order\Status\OrderStatusRepository
 
     Shopsys\FrameworkBundle\Model\Cart\CartMigrationFacade:
         alias: App\Model\Cart\CartMigrationFacade

@@ -23,19 +23,4 @@ class CountryFacade extends BaseCountryFacade
         $countryCode = self::COUNTRY_CODES_BY_DOMAIN_ID[$this->domain->getId()];
         return $this->countryRepository->findByCode($countryCode);
     }
-
-    /**
-     * @param string $code
-     * @return int
-     * @throws CountryDataInvalidException
-     */
-    public function getDomainIdByCountryCode(string $code): int
-    {
-        $domainIds = array_flip(self::COUNTRY_CODES_BY_DOMAIN_ID);
-        if (array_key_exists($code, $domainIds) === false) {
-            throw new CountryDataInvalidException(sprintf('Unknown country code \'%s\'', $code));
-        }
-
-        return $domainIds[$code];
-    }
 }

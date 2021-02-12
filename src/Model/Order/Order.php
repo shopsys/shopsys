@@ -101,13 +101,6 @@ class Order extends BaseOrder
     protected $gtmCoupon;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(type="string", length=64)
-     */
-    protected $scontoBridgeStatus;
-
-    /**
      * @var bool
      *
      * @ORM\Column(type="boolean")
@@ -143,7 +136,6 @@ class Order extends BaseOrder
         }
         $this->goPayTransactions = new ArrayCollection();
         $this->gtmCoupon = $orderData->gtmCoupon;
-        $this->scontoBridgeStatus = $orderData->scontoBridgeStatus;
         $this->isOverLimit = $orderData->isOverLimit;
     }
 
@@ -312,14 +304,6 @@ class Order extends BaseOrder
     public function getGtmCoupon(): ?string
     {
         return $this->gtmCoupon;
-    }
-
-    /**
-     * @param OrderScontoBridgeStatusEnum $status
-     */
-    public function setScontoBridgeStatus(OrderScontoBridgeStatusEnum $status): void
-    {
-        $this->scontoBridgeStatus = $status->getValue();
     }
 
     /**

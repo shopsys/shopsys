@@ -25,13 +25,4 @@ class PaymentRepository extends BasePaymentRepository
     {
         return $this->getPaymentRepository()->findBy(['goPayPaymentMethod' => $goPayPaymentMethod]);
     }
-
-    public function findByExternalId(int $id): ?Payment
-    {
-        return $this->getQueryBuilderForAll()
-            ->andWhere('p.externalId = :externalId')
-            ->setParameter('externalId', $id)
-            ->getQuery()
-            ->getOneOrNullResult();
-    }
 }

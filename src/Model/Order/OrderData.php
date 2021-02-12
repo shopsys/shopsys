@@ -59,11 +59,6 @@ class OrderData extends BaseOrderData
     public $gtmCoupon;
 
     /**
-     * @var string
-     */
-    public $scontoBridgeStatus;
-
-    /**
      * @var bool
      */
     public $isOverLimit;
@@ -73,6 +68,5 @@ class OrderData extends BaseOrderData
         parent::__construct();
 
         $this->isCompanyCustomer = false;
-        $this->scontoBridgeStatus = OrderScontoBridgeStatusEnum::STATUS_NEW;
     }
 }

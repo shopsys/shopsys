@@ -4,21 +4,13 @@ declare(strict_types=1);
 
 namespace App\Model\Customer\Transfer\ScontoBridge;
 
-use App\Component\ScontoBridge\Transfer\Exception\ScontoBridgeDistributionChannelResolverException;
 use App\Component\ScontoBridge\Transfer\ScontoBridgeDistributionChannelResolver;
 use App\Component\ScontoBridge\Transfer\ScontoBridgeTitleResolver;
-use App\Model\Country\CountryDataInvalidException;
 use App\Model\Country\CountryFacade;
-use App\Model\Customer\BillingAddress;
-use App\Model\Customer\Transfer\ScontoBridge\Entity\ScontoBridgeErpUser;
-use App\Model\Customer\Transfer\ScontoBridge\Entity\ScontoBridgeErpUser\ScontoBridgeCompany;
-use App\Model\Customer\Transfer\ScontoBridge\Entity\ScontoBridgeErpUser\ScontoBridgeIndividual;
-use App\Model\Customer\Transfer\ScontoBridge\Entity\ScontoBridgeErpUser\ScontoBridgePrimaryAddress;
 use App\Model\Customer\User\CustomerUser;
 use App\Model\Customer\User\CustomerUserDataFactory;
 use App\Model\Customer\User\CustomerUserUpdateDataFactory;
 use DateTime;
-use Shopsys\FrameworkBundle\Model\Country\Country;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateData;
 
 class CustomerTransferScontoBridgeMapper
@@ -155,42 +147,6 @@ class CustomerTransferScontoBridgeMapper
     }
 
     /**
-     * @param CustomerUser $customerUser
-     * @return ScontoBridgeErpUser
-     */
-    public function mapCustomerUserToScontoBridgeCustomerData(CustomerUser $customerUser): ScontoBridgeErpUser
-    {
-        $erpUser = new ScontoBridgeErpUser();
-        $erpUser->setEshopId($customerUser->getId());
-        $erpUser->setEmail($customerUser->getEmail());
-        $erpUser->setNewsletter($customerUser->isNewsletterSubscription());
-
-        $billingAddress = $customerUser->getCustomer()->getBillingAddress();
-        $country = $billingAddress->getCountry();
-        if ($country === null) {
-            throw new CustomerTransferScontoBridgeMapperException(
-                sprintf('Country not defined for customer user id \'%d\' - billing address', $customerUser->getId())
-            );
-        }
-        $erpUser->setDistributionChannelCode(
-            $this->getDistributionChannelByCountry($country)
-        );
-        $erpUser->setPhoneNumber($customerUser->getTelephone());
-
-        $erpUser->setPrimaryAddress($this->mapPrimaryAddress($customerUser));
-
-        if ($billingAddress->isCompanyCustomer()) {
-            $erpUser->setCompany($this->mapCompany($customerUser));
-            $erpUser->setCustomerType(self::CUSTOMER_TYPE_COMPANY);
-        } else {
-            $erpUser->setIndividual($this->mapIndividual($customerUser));
-            $erpUser->setCustomerType(self::CUSTOMER_TYPE_INDIVIDUAL);
-        }
-
-        return $erpUser;
-    }
-
-    /**
      * @param array $scontoBridgeCustomerData
      * @return string|null
      */
@@ -201,91 +157,5 @@ class CustomerTransferScontoBridgeMapper
         }
 
         return $scontoBridgeCustomerData['phoneNumber'];
-    }
-
-    /**
-     * @param CustomerUser $customer
-     * @return ScontoBridgeCompany
-     */
-    private function mapCompany(CustomerUser $customer): ScontoBridgeCompany
-    {
-        /** @var BillingAddress $billingAddress */
-        $billingAddress = $customer->getCustomer()->getBillingAddress();
-
-        $erpCompany = new ScontoBridgeCompany();
-        $erpCompany->setCompanyNumber($billingAddress->getCompanyNumber());
-        $erpCompany->setName($billingAddress->getCompanyName());
-        $erpCompany->setTaxNumber($billingAddress->getCompanyTaxNumber());
-
-        $companyVatNumber = $billingAddress->getCompanyVatNumber();
-        if ($companyVatNumber !== null) {
-            $erpCompany->setVatNumber($companyVatNumber);
-        }
-
-        return $erpCompany;
-    }
-
-    /**
-     * @param CustomerUser $customerUser
-     * @return ScontoBridgePrimaryAddress
-     */
-    private function mapPrimaryAddress(CustomerUser $customerUser): ScontoBridgePrimaryAddress
-    {
-        $billingAddress = $customerUser->getCustomer()->getBillingAddress();
-
-        $erpAddress = new ScontoBridgePrimaryAddress();
-        $erpAddress->setStreet($billingAddress->getStreet());
-        $erpAddress->setCity($billingAddress->getCity());
-        $country = $billingAddress->getCountry();
-        if ($country !== null) {
-            $erpAddress->setCountry($country->getCode());
-        }
-        $erpAddress->setZipCode($billingAddress->getPostcode());
-
-        return $erpAddress;
-    }
-
-    /**
-     * @param CustomerUser $customerUser
-     * @return ScontoBridgeIndividual
-     */
-    private function mapIndividual(CustomerUser $customerUser): ScontoBridgeIndividual
-    {
-        $erpIndividual = new ScontoBridgeIndividual();
-
-        $title = $this->scontoBridgeTitleResolver->getIndividualTitleByGender(
-            $customerUser->getGender() ?? ''
-        );
-        $erpIndividual->setIndividualTitle($title ?? self::DEFAULT_TITLE);
-        $erpIndividual->setFirstName($customerUser->getFirstName());
-        $erpIndividual->setLastName($customerUser->getLastName());
-
-        return $erpIndividual;
-    }
-
-    /**
-     * @param string $code
-     * @return int
-     */
-    private function getDomainIdByCountryCode(string $code): int
-    {
-        try {
-            return $this->countryFacade->getDomainIdByCountryCode($code);
-        } catch (CountryDataInvalidException $e) {
-            throw new CustomerTransferScontoBridgeMapperException($e->getMessage(), $e);
-        }
-    }
-
-    /**
-     * @param Country $country
-     * @return int
-     */
-    private function getDistributionChannelByCountry(Country $country): int
-    {
-        try {
-            return $this->distributionChannelResolver->getDistributionChannelCodeByCountry($country);
-        } catch (ScontoBridgeDistributionChannelResolverException $e) {
-            throw new CustomerTransferScontoBridgeMapperException($e->getMessage(), $e);
-        }
     }
 }

@@ -28,11 +28,6 @@ class FlagData extends BaseFlagData
      */
     public $noticeHighPrice;
 
-    /**
-     * @var string|null
-     */
-    public $code;
-
     public function __construct()
     {
         parent::__construct();
