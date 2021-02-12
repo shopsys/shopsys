@@ -26,19 +26,4 @@ class CustomerUserRepository extends BaseCustomerUserRepository
             'erpCustomerNumber' => $erpCustomerNumber,
         ]);
     }
-
-    /**
-     * @param CustomerUserScontoBridgeStatusEnum ...$statuses
-     * @return CustomerUser[]
-     */
-    public function findByScontoBridgeStatuses(CustomerUserScontoBridgeStatusEnum ...$statuses): array
-    {
-        $statusStrings = array_map(static function (CustomerUserScontoBridgeStatusEnum $enum) {
-            return $enum->getValue();
-        }, $statuses);
-
-        return $this->getCustomerUserRepository()->findBy([
-            'scontoBridgeStatus' => $statusStrings,
-        ]);
-    }
 }

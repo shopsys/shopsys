@@ -19,11 +19,6 @@ class CustomerUserData extends BaseUserData
     public $newsletterSubscription = false;
 
     /**
-     * @var string
-     */
-    public string $scontoBridgeStatus;
-
-    /**
      * @var int|null
      */
     public $erpCustomerNumber;
@@ -33,6 +28,5 @@ class CustomerUserData extends BaseUserData
         parent::__construct();
 
         $this->gender = CustomerUser::GENDER_MALE;
-        $this->scontoBridgeStatus = CustomerUserScontoBridgeStatusEnum::STATUS_NEW;
     }
 }
