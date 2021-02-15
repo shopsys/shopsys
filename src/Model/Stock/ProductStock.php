@@ -130,14 +130,6 @@ class ProductStock
     }
 
     /**
-     * @param bool $productExposed
-     */
-    public function setProductExposed(bool $productExposed): void
-    {
-        $this->productExposed = $productExposed;
-    }
-
-    /**
      * @return int|null
      */
     public function getFutureProductQuantity(): ?int

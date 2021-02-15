@@ -56,10 +56,6 @@ services:
         tags:
             - { name: shopsys.cron, hours: '*', minutes: '*/5', instanceName: importIM, readableName: 'Import budoucích skladovách zásob z IM' }
 
-    App\Model\Product\Transfer\ScontoBridge\ScontoBridgeImportExposedProductCronModule:
-        tags:
-            - { name: shopsys.cron, hours: '*', minutes: '*/5', instanceName: importIM, readableName: 'Import vystavených produktů z IM' }
-
     App\Model\Transfer\Issue\TransferIssueLogCleanerCronModule:
         tags:
             - { name: shopsys.cron, hours: '23', minutes: '10', instanceName: service, readableName: 'Mazání starých problémů v přenosech' }
