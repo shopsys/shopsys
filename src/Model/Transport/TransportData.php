@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Model\Transport;
 
-use App\Component\Pricing\PriceToAndPriceData;
 use Shopsys\FrameworkBundle\Model\Transport\TransportData as BaseTransportData;
 
 /**
@@ -57,11 +56,6 @@ class TransportData extends BaseTransportData
      */
     public int $typeOfDeliveryKey;
 
-    /**
-     * @var \App\Component\Pricing\PriceToAndPriceData[][]
-     */
-    public array $palletPricesByDomainId;
-
     public function __construct()
     {
         parent::__construct();
@@ -69,6 +63,5 @@ class TransportData extends BaseTransportData
         $this->personalPickup = false;
         $this->transportPackages = [];
         $this->isOverLimitTransport = false;
-        $this->palletPricesByDomainId = [];
     }
 }

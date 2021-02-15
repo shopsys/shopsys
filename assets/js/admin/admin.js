@@ -10,7 +10,6 @@ import './payment/payment';
 import './transport/transportForm';
 import './transport/transportPackages';
 import './transport/transportFormValidation';
-import './transport/transportPalletPrices';
 
 import './validation';
 import './advert/advert';

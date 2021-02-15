@@ -148,33 +148,6 @@ team of {domain}
             }
             $this->createMailTemplate($manager, CustomerActivationMail::CUSTOMER_ACTIVATION_NAME, $mailTemplateData, $domainId);
 
-            /** @var \App\Model\Transport\Transport $transportPallet */
-            $transportPallet = $this->getReference(TransportDataFixture::TRANSPORT_PALLET);
-            /** @var \App\Model\Payment\Payment $paymentGoPay */
-            $paymentGoPay = $this->getReference(PaymentDataFixture::PAYMENT_GOPAY);
-            /** @var \App\Model\Payment\Payment $paymentCashOnDelivery */
-            $paymentCashOnDelivery = $this->getReference(PaymentDataFixture::PAYMENT_CASH_ON_DELIVERY);
-            /** @var \App\Model\Order\Status\OrderStatus $orderStatusInProgress */
-            $orderStatusInProgress = $this->getReference(OrderStatusDataFixture::ORDER_STATUS_IN_PROGRESS);
-
-            $mailTemplateData->transport = $transportPallet;
-            $mailTemplateData->payment = $paymentGoPay;
-            $mailTemplateData->orderStatus = $orderStatusInProgress;
-            $mailTemplateData->subject = t('Vaši zásilku Vám posíláme', [], 'dataFixtures', $locale);
-            $mailTemplateData->body = t('Vážený zákazníku, <br/><br/>
-Vaše objednávka {number} je vyřízená, vše je zaplaceno a tak Vám objednávku dovezeme vlastní přepravou až ke dveřím
-', [], 'dataFixtures', $locale);
-            $this->createMailTemplate($manager, MailTemplate::ORDER_STATUS_NAME, $mailTemplateData, $domainId);
-
-            $mailTemplateData->transport = $transportPallet;
-            $mailTemplateData->payment = $paymentCashOnDelivery;
-            $mailTemplateData->orderStatus = $orderStatusInProgress;
-            $mailTemplateData->subject = t('Vaši zásilku Vám posíláme', [], 'dataFixtures', $locale);
-            $mailTemplateData->body = t('Vážený zákazníku, <br/><br/>
-Vaše objednávka {number} je vyřízená. Objednávku Vám dovezeme vlastní přepravou až ke dveřím, nicméně připravte si částku {total_price} k zaplacení dobírky.
-', [], 'dataFixtures', $locale);
-            $this->createMailTemplate($manager, MailTemplate::ORDER_STATUS_NAME, $mailTemplateData, $domainId);
-
             $mailTemplateData->transport = null;
             $mailTemplateData->payment = null;
             $mailTemplateData->orderStatus = null;

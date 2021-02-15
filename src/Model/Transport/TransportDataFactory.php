@@ -4,10 +4,8 @@ declare(strict_types=1);
 
 namespace App\Model\Transport;
 
-use App\Component\Pricing\PriceToAndPriceData;
 use App\Model\Transport\TransportPackage\TransportPackageDataFactory;
 use App\Model\Transport\TransportPackage\TransportPackageRepository;
-use App\Model\Transport\TransportPallet\TransportPalletPriceFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade;
@@ -29,18 +27,12 @@ class TransportDataFactory extends BaseTransportDataFactory
     private TransportPackageDataFactory $transportPackageDataFactory;
 
     /**
-     * @var \App\Model\Transport\TransportPallet\TransportPalletPriceFacade
-     */
-    private TransportPalletPriceFacade $transportPalletPriceFacade;
-
-    /**
      * @param \App\Model\Transport\TransportFacade $transportFacade
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade $vatFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \App\Component\Image\ImageFacade $imageFacade
      * @param \App\Model\Transport\TransportPackage\TransportPackageRepository $transportPackageRepository
      * @param \App\Model\Transport\TransportPackage\TransportPackageDataFactory $transportPackageDataFactory
-     * @param \App\Model\Transport\TransportPallet\TransportPalletPriceFacade $transportPalletPriceFacade
      */
     public function __construct(
         TransportFacade $transportFacade,
@@ -48,13 +40,11 @@ class TransportDataFactory extends BaseTransportDataFactory
         Domain $domain,
         ImageFacade $imageFacade,
         TransportPackageRepository $transportPackageRepository,
-        TransportPackageDataFactory $transportPackageDataFactory,
-        TransportPalletPriceFacade $transportPalletPriceFacade
+        TransportPackageDataFactory $transportPackageDataFactory
     ) {
         parent::__construct($transportFacade, $vatFacade, $domain, $imageFacade);
         $this->transportPackageRepository = $transportPackageRepository;
         $this->transportPackageDataFactory = $transportPackageDataFactory;
-        $this->transportPalletPriceFacade = $transportPalletPriceFacade;
     }
 
     /**
@@ -84,9 +74,6 @@ class TransportDataFactory extends BaseTransportDataFactory
         parent::fillNew($transportData);
         $transportData->type = Transport::TYPE_COMMON;
         $transportData->daysUntilDelivery = 0;
-        foreach ($this->domain->getAllIds() as $domainId) {
-            $transportData->palletPricesByDomainId[$domainId] = [];
-        }
     }
 
     /**
@@ -112,17 +99,6 @@ class TransportDataFactory extends BaseTransportDataFactory
         $transportData->externalId = $transport->getExternalId();
         $transportData->deliveryCode = $transport->getDeliveryCode();
         $transportData->typeOfDeliveryKey = $transport->getTypeOfDeliveryKey();
-
-        foreach ($this->domain->getAllIds() as $domainId) {
-            $transportData->palletPricesByDomainId[$domainId] = [];
-            $transportPalletPrices = $this->transportPalletPriceFacade->getSortedPalletPricesByTransportAndDomain($transport, $domainId);
-            foreach ($transportPalletPrices as $transportPalletPrice) {
-                $priceToAndPriceData = new PriceToAndPriceData();
-                $priceToAndPriceData->priceTo = $transportPalletPrice->getProductsPriceTo();
-                $priceToAndPriceData->price = $transportPalletPrice->getTransportPrice();
-                $transportData->palletPricesByDomainId[$domainId][] = $priceToAndPriceData;
-            }
-        }
 
         return $transportData;
     }

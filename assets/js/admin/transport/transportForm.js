@@ -5,16 +5,10 @@ export default class TransportForm {
     constructor ($transportForm) {
         this.$transportForm = $transportForm;
         this.$transportPackagesContainer = $transportForm.find('#transport_form_packagesGroup').closest('.wrap-divider');
-        this.$transportPalletPricesContainer = $transportForm.find('#transport_form_palletPricesGroup').closest('.wrap-divider');
-        this.$transportPalletPrices = $transportForm.find('.js-transport-pallet-prices');
         this.$typeInputs = $transportForm.find('#transport_form_basicInformation_type input');
-        this.$transportForm.on('change', '#transport_form_basicInformation_type input', () => {
-            this.setTransportPackagesVisibility();
-            this.setPalletPricesVisibility();
-        });
+        this.$transportForm.on('change', '#transport_form_basicInformation_type input', () => { this.setTransportPackagesVisibility(); });
 
         this.setTransportPackagesVisibility();
-        this.setPalletPricesVisibility();
     };
 
     static init ($container) {
@@ -22,16 +16,6 @@ export default class TransportForm {
             // eslint-disable-next-line no-new
             new TransportForm($(this));
         });
-    }
-
-    setPalletPricesVisibility () {
-        if (this.$typeInputs.filter(':checked').val() === 'pallet') { // App\Model\Transport\Transport::TYPE_PALLET
-            this.$transportPalletPricesContainer.show();
-            this.$transportPalletPrices.trigger('reinit');
-        } else {
-            this.$transportPalletPricesContainer.hide();
-            this.$transportPalletPrices.trigger('removeAllItems');
-        }
     }
 
     setTransportPackagesVisibility () {
@@ -44,4 +28,4 @@ export default class TransportForm {
 
 };
 
-(new Register()).registerCallback(TransportForm.init, 'TransportForm.init', 110); // Priority has to be lower then priority of transportPalletPrices.js
+(new Register()).registerCallback(TransportForm.init, 'TransportForm.init');
