@@ -658,9 +658,6 @@
 20200623103836:
     class: App\Migrations\Version20200623103836
     skip: false
-20200701114244:
-    class: App\Migrations\Version20200701114244
-    skip: false
 20200714071640:
     class: App\Migrations\Version20200714071640
     skip: false
@@ -699,9 +696,6 @@
     skip: false
 20200814063510:
     class: App\Migrations\Version20200814063510
-    skip: false
-20200811103617:
-    class: App\Migrations\Version20200811103617
     skip: false
 20200723053320:
     class: App\Migrations\Version20200723053320

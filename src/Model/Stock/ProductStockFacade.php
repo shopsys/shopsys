@@ -98,14 +98,4 @@ class ProductStockFacade
     {
         return $this->productStockRepository->findProductStockByStockExternalIdAndProductCatnum($stockExternalId, $productCatnum);
     }
-
-    public function resetFutureProductStockAfterNowDate(): void
-    {
-        $futureProductStockAfterNowDate = $this->productStockRepository->findFutureProductStockAfterNowDate();
-        foreach ($futureProductStockAfterNowDate as $productStock) {
-            $productStock->setDateOfStorage(null);
-            $productStock->setFutureProductQuantity(null);
-        }
-        $this->em->flush();
-    }
 }

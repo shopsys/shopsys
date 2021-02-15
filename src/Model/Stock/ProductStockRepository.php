@@ -159,17 +159,4 @@ class ProductStockRepository
             ->getQuery()
             ->execute();
     }
-
-    /**
-     * @return \App\Model\Stock\ProductStock[]
-     */
-    public function findFutureProductStockAfterNowDate(): array
-    {
-        return $this->getQueryBuilder()
-            ->where('ps.dateOfStorage IS NOT NULL')
-            ->andWhere('ps.dateOfStorage < :nowDate')
-            ->setParameter('nowDate', new \DateTime())
-            ->getQuery()
-            ->execute();
-    }
 }
