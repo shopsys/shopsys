@@ -64,9 +64,14 @@ class IndexFacade
             $indexDefinition->getDomainId()
         ));
 
-        $existingIndexName = $this->indexRepository->findCurrentIndexNameForAlias($indexDefinition->getIndexAlias());
-        if ($existingIndexName !== $indexDefinition->getVersionedIndexName()) {
-            throw new ElasticsearchAliasUsedByDifferentIndex($indexDefinition->getIndexAlias());
+        $alias = $indexDefinition->getIndexAlias();
+        try {
+            $existingIndexName = $this->indexRepository->findCurrentIndexNameForAlias($alias);
+            if ($existingIndexName !== $indexDefinition->getVersionedIndexName()) {
+                throw new ElasticsearchAliasUsedByDifferentIndex($alias);
+            }
+        } catch (ElasticsearchNoAliasException $exception) {
+            $output->writeln(sprintf('Alias "%s" does not exist', $alias));
         }
 
         $this->createIndexWhenNeeded($indexDefinition, $output);
