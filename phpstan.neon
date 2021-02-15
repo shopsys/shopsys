@@ -11,16 +11,7 @@ parameters:
         # shopsys/framework - don't forget to add these rules to phpstan.neon in framework
         -
             message: '#^Call to an undefined method Symfony\\Component\\Config\\Definition\\Builder\\NodeDefinition::children\(\)\.$#'
-            path: %currentWorkingDirectory%/packages/framework/src/Component/Domain/Config/DomainsConfigDefinition.php
-        -
-            message: '#^Call to an undefined method Symfony\\Component\\Config\\Definition\\Builder\\NodeDefinition::children\(\)\.$#'
             path: %currentWorkingDirectory%/packages/framework/src/Component/Domain/Config/DomainsUrlsConfigDefinition.php
-        -
-            message: '#^Call to an undefined method Symfony\\Component\\Config\\Definition\\Builder\\NodeParentInterface::scalarNode\(\)\.$#'
-            path: %currentWorkingDirectory%/packages/framework/src/Component/Image/Config/ImageConfigDefinition.php
-        -
-            message: '#^Call to an undefined method Symfony\\Component\\Config\\Definition\\Builder\\NodeParentInterface::scalarNode\(\)\.$#'
-            path: %currentWorkingDirectory%/packages/framework/src/Component/UploadedFile/Config/UploadedFileConfigDefinition.php
         -
             message: '#^Method Doctrine\\Persistence\\ObjectManager::flush\(\) invoked with 1 parameter, 0 required\.$#'
             path: *
