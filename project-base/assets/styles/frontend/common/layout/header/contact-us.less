@@ -2,26 +2,27 @@
     display: none;
 
     @media @query-lg {
-        display: block;
+        display: flex;
+        flex-wrap: wrap;
         margin-top: 5px;
 
         color: @color-inactive;
         font-size: 11px;
 
         &__phone {
-            display: inline-block;
+            display: inline-flex;
+            align-items: center;
             margin-right: 10px;
 
             .svg {
-                margin-right: 3px;
+                margin-right: 5px;
 
                 font-size: 10px;
             }
         }
 
-        &__email {
-            display: inline-block;
-            margin-left: 10px;
+        &__days {
+            margin-right: 10px;
         }
     }
 }

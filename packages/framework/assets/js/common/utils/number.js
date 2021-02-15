@@ -12,4 +12,4 @@ export const parseNumber = (value) => {
     }
 };
 
-export const formatDecimalNumber = (value, scale) => value.toFixed(scale).replace('.', ',');
+export const formatDecimalNumber = (value, scale) => value.toFixed(scale);

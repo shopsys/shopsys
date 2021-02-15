@@ -50,3 +50,21 @@
         font-style: @font-style;
     }
 }
+
+.placeholder(@rules) {
+    &::-webkit-input-placeholder {
+        @rules();
+    }
+
+    &:-moz-placeholder {
+        @rules();
+    }
+
+    &::-moz-placeholder {
+        @rules();
+    }
+
+    &:-ms-input-placeholder {
+        @rules();
+    }
+}

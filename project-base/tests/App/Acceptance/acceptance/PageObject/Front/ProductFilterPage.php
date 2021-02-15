@@ -67,7 +67,7 @@ class ProductFilterPage extends AbstractPage
     {
         $parameterElement = $this->findParameterElementByLabel($parameterLabel);
         $labelElement = $this->getLabelElementByParameterValueText($parameterElement, $valueLabel);
-        $labelElement->click();
+        $this->tester->clickByElement($labelElement);
         $this->waitForFilter();
     }
 
@@ -116,12 +116,13 @@ class ProductFilterPage extends AbstractPage
     private function getLabelElementByParameterValueText($parameterElement, $parameterValueText)
     {
         $translatedParameterValueText = t($parameterValueText, [], 'dataFixtures', $this->tester->getFrontendLocale());
-        $labelElements = $parameterElement->findElements(
+        $parameterValueDivs = $parameterElement->findElements(
             WebDriverBy::cssSelector('.js-product-filter-parameter-value')
         );
 
-        foreach ($labelElements as $labelElement) {
+        foreach ($parameterValueDivs as $parameterValueDiv) {
             try {
+                $labelElement = $parameterValueDiv->findElement(WebDriverBy::cssSelector('label'));
                 if (stripos($labelElement->getText(), $translatedParameterValueText) !== false) {
                     return $labelElement;
                 }
