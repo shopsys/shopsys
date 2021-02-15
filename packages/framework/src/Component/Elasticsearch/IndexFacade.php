@@ -7,6 +7,7 @@ namespace Shopsys\FrameworkBundle\Component\Elasticsearch;
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Console\ProgressBarFactory;
 use Shopsys\FrameworkBundle\Component\Doctrine\SqlLoggerFacade;
+use Shopsys\FrameworkBundle\Component\Elasticsearch\Exception\ElasticsearchAliasUsedByDifferentIndex;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\Exception\ElasticsearchIndexAlreadyExistsException;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\Exception\ElasticsearchNoAliasException;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -62,6 +63,11 @@ class IndexFacade
             $indexDefinition->getIndexName(),
             $indexDefinition->getDomainId()
         ));
+
+        $existingIndexName = $this->indexRepository->findCurrentIndexNameForAlias($indexDefinition->getIndexAlias());
+        if ($existingIndexName !== $indexDefinition->getVersionedIndexName()) {
+            throw new ElasticsearchAliasUsedByDifferentIndex($indexDefinition->getIndexAlias());
+        }
 
         $this->createIndexWhenNeeded($indexDefinition, $output);
         $this->createAlias($indexDefinition, $output);
