@@ -24,7 +24,6 @@ use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactoryInt
 use Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade;
 
 /**
- * @property \App\Model\Customer\User\CustomerUserRepository $customerUserRepository
  * @property \App\Model\Customer\Mail\CustomerMailFacade $customerMailFacade
  */
 class CustomerUserFacade extends BaseCustomerUserFacade
@@ -41,7 +40,7 @@ class CustomerUserFacade extends BaseCustomerUserFacade
 
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \App\Model\Customer\User\CustomerUserRepository $customerUserRepository
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRepository $customerUserRepository
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactoryInterface $customerUserUpdateDataFactory
      * @param \App\Model\Customer\Mail\CustomerMailFacade $customerMailFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\BillingAddressFactoryInterface $billingAddressFactory
@@ -115,15 +114,6 @@ class CustomerUserFacade extends BaseCustomerUserFacade
         }
 
         return $customerUser;
-    }
-
-    /**
-     * @param int $erpCustomerNumber
-     * @return \App\Model\Customer\User\CustomerUser|null
-     */
-    public function findByErpCustomerNumber(int $erpCustomerNumber): ?CustomerUser
-    {
-        return $this->customerUserRepository->findByErpCustomerNumber($erpCustomerNumber);
     }
 
     /**

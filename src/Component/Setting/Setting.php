@@ -13,5 +13,4 @@ class Setting extends BaseSetting
     public const DELIVERY_DAYS_ON_STOCK = 'deliveryDayOnStock';
     public const TRANSFER_DAYS_BETWEEN_STOCKS = 'transferDaysBetweenStocks';
     public const FUTURE_STORAGE_RESERVATION = 'futureStorageReservation';
-    public const SCONTO_BRIDGE_TRANSFER_CUSTOMERS_LAST_UPDATED_DATETIME = 'scontoBridgeTransferCustomersLastUpdatedDatetime';
 }

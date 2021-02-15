@@ -36,11 +36,6 @@ class OrderData extends BaseOrderData
     /**
      * @var string|null
      */
-    public $gender;
-
-    /**
-     * @var string|null
-     */
     public $password;
 
     /**

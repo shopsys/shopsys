@@ -9,11 +9,6 @@ class RegistrationData
     /**
      * @var string|null
      */
-    public $gender;
-
-    /**
-     * @var string|null
-     */
     public $street;
 
     /**
@@ -103,7 +98,6 @@ class RegistrationData
 
     public function __construct()
     {
-        $this->gender = CustomerUser::GENDER_MALE;
         $this->activated = true;
     }
 }

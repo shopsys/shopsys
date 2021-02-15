@@ -22,16 +22,6 @@ use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserData as BaseUserData
  */
 class CustomerUser extends BaseUser
 {
-    public const GENDER_MALE = 'male';
-    public const GENDER_FEMALE = 'female';
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(type="string", length=6, nullable=true)
-     */
-    protected $gender;
-
     /**
      * @var bool
      *
@@ -40,32 +30,13 @@ class CustomerUser extends BaseUser
     protected $newsletterSubscription;
 
     /**
-     * @var int|null
-     *
-     * @ORM\Column(type="integer", nullable=true, unique=true)
-     */
-    protected $erpCustomerNumber;
-
-    /**
-     * @ORM\Column(type="string", length=100, nullable=true)
-     */
-    protected $firstName;
-
-    /**
-     * @ORM\Column(type="string", length=100, nullable=true)
-     */
-    protected $lastName;
-
-    /**
      * @param \App\Model\Customer\User\CustomerUserData $customerUserData
      */
     public function __construct(
         BaseUserData $customerUserData
     ) {
         parent::__construct($customerUserData);
-        $this->gender = $customerUserData->gender;
         $this->newsletterSubscription = $customerUserData->newsletterSubscription;
-        $this->erpCustomerNumber = $customerUserData->erpCustomerNumber;
     }
 
     /**
@@ -74,16 +45,7 @@ class CustomerUser extends BaseUser
     public function edit(BaseUserData $customerUserData)
     {
         parent::edit($customerUserData);
-        $this->gender = $customerUserData->gender;
         $this->newsletterSubscription = $customerUserData->newsletterSubscription;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getGender(): ?string
-    {
-        return $this->gender;
     }
 
     /**
@@ -92,30 +54,6 @@ class CustomerUser extends BaseUser
     public function isNewsletterSubscription(): bool
     {
         return $this->newsletterSubscription;
-    }
-
-    /**
-     * @return int|null
-     */
-    public function getErpCustomerNumber(): ?int
-    {
-        return $this->erpCustomerNumber;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getLastName(): ?string
-    {
-        return parent::getLastName();
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getFullName(): ?string
-    {
-        return parent::getFullName();
     }
 
     /**

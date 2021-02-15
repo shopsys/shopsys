@@ -24,11 +24,6 @@ class FrontOrderData extends BaseFrontOrderData
     public $companyVatNumber;
 
     /**
-     * @var string|null
-     */
-    public $gender;
-
-    /**
      * @var \App\Model\Transport\Transport[]|null[]
      */
     public $transportsByProductTypeId;

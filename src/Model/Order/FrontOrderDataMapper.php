@@ -22,9 +22,6 @@ class FrontOrderDataMapper extends BaseFrontOrderDataMapper
     {
         parent::prefillFrontFormDataFromCustomer($frontOrderData, $customerUser);
 
-        /** @var \App\Model\Customer\User\CustomerUser $customerUser */
-        $frontOrderData->gender = $customerUser->getGender();
-
         /** @var \App\Model\Customer\BillingAddress $billingAddress */
         $billingAddress = $customerUser->getCustomer()->getBillingAddress();
         $frontOrderData->companyVatNumber = $billingAddress->getCompanyVatNumber();

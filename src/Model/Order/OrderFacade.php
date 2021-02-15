@@ -739,7 +739,6 @@ class OrderFacade extends BaseOrderFacade
     {
         $registrationData = $this->registrationDataFactory->createForDomainId($orderData->domainId);
 
-        $registrationData->gender = $orderData->gender;
         if ($orderData->isCompanyCustomer === true) {
             $registrationData->companyName = $orderData->companyName;
             $registrationData->companyNumber = $orderData->companyNumber;
