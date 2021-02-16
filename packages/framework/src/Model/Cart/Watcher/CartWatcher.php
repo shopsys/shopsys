@@ -3,6 +3,7 @@
 namespace Shopsys\FrameworkBundle\Model\Cart\Watcher;
 
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Cart\Cart;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Product\Exception\ProductNotFoundException;
@@ -79,6 +80,14 @@ class CartWatcher
                     );
 
                 if (!$productVisibility->isVisible() || $product->getCalculatedSellingDenied()) {
+                    $notListableItems[] = $item;
+                    continue;
+                }
+
+                $productPrice = $this->productPriceCalculationForCustomerUser->calculatePriceForCurrentUser(
+                    $product
+                );
+                if ($productPrice->getPriceWithVat()->equals(Money::zero())) {
                     $notListableItems[] = $item;
                 }
             } catch (ProductNotFoundException $e) {
