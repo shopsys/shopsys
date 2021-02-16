@@ -18,13 +18,13 @@ class TopProductDataFixture extends AbstractReferenceFixture implements Dependen
     private $topProductFacade;
 
     /**
-     * @var \App\Component\Domain\Domain
+     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
      */
     private $domain;
 
     /**
      * @param \App\Model\Product\TopProduct\TopProductFacade $topProductFacade
-     * @param \App\Component\Domain\Domain $domain
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(TopProductFacade $topProductFacade, Domain $domain)
     {

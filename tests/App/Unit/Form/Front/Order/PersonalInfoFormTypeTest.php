@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Tests\App\Unit\Form\Front\Order;
 
-use App\Component\Domain\Domain;
 use App\Form\Front\Order\PersonalInfoFormType;
 use App\Model\Country\CountryFacade;
 use App\Model\Customer\User\CustomerUserFacade;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Country\Country;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
@@ -31,7 +31,7 @@ class PersonalInfoFormTypeTest extends TypeTestCase
     private $heurekaFacade;
 
     /**
-     * @var \App\Component\Domain\Domain|\PHPUnit\Framework\MockObject\MockObject
+     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain|\PHPUnit\Framework\MockObject\MockObject
      */
     private $domain;
 

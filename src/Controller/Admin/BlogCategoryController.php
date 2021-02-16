@@ -38,7 +38,7 @@ class BlogCategoryController extends AdminBaseController
     private $session;
 
     /**
-     * @var \App\Component\Domain\Domain
+     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
      */
     private $domain;
 
@@ -51,7 +51,7 @@ class BlogCategoryController extends AdminBaseController
      * @param \App\Model\Blog\Category\BlogCategoryFacade $blogCategoryFacade
      * @param \App\Model\Blog\Category\BlogCategoryDataFactory $blogCategoryDataFactory
      * @param \Symfony\Component\HttpFoundation\Session\SessionInterface $session
-     * @param \App\Component\Domain\Domain $domain
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider $breadcrumbOverrider
      */
     public function __construct(

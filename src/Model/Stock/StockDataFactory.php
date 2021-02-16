@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Model\Stock;
 
-use App\Component\Domain\Domain;
 use App\Component\Image\ImageFacade;
 use App\Component\Router\FriendlyUrl\FriendlyUrlFacade;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 
 class StockDataFactory
 {
@@ -21,14 +21,14 @@ class StockDataFactory
     private $friendlyUrlFacade;
 
     /**
-     * @var \App\Component\Domain\Domain
+     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
      */
     private Domain $domain;
 
     /**
      * @param \App\Component\Image\ImageFacade $imageFacade
      * @param \App\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
-     * @param \App\Component\Domain\Domain $domain
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
         ImageFacade $imageFacade,

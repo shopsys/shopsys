@@ -10,10 +10,10 @@ use Shopsys\ReadModelBundle\Twig\ImageExtension as BaseImageExtension;
 use Twig\TwigFunction;
 
 /**
- * @property \App\Component\Domain\Domain $domain
+ * @property \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
  * @property \App\Component\Image\ImageFacade $imageFacade
  * @method \App\Component\Image\Image[] getImages(object $entity, string|null $type)
- * @method __construct(string $frontDesignImageUrlPrefix, \App\Component\Domain\Domain $domain, \App\Component\Image\ImageLocator $imageLocator, \App\Component\Image\ImageFacade $imageFacade, \Twig\Environment $twigEnvironment, bool $isLazyLoadEnabled)
+ * @method __construct(string $frontDesignImageUrlPrefix, \Shopsys\FrameworkBundle\Component\Domain\Domain $domain, \App\Component\Image\ImageLocator $imageLocator, \App\Component\Image\ImageFacade $imageFacade, \Twig\Environment $twigEnvironment, bool $isLazyLoadEnabled)
  * @method bool imageExists(\App\Component\Image\Image|object $imageOrEntity, string|null $type)
  * @method string getImageUrl(\App\Component\Image\Image|object $imageOrEntity, string|null $sizeName, string|null $type)
  * @property \App\Component\Image\ImageLocator $imageLocator

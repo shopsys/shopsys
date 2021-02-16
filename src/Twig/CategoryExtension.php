@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace App\Twig;
 
-use App\Component\Domain\Domain;
 use App\Model\Category\Category;
 use App\Model\Category\CategoryFacade;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
 class CategoryExtension extends AbstractExtension
 {
     /**
-     * @var \App\Component\Domain\Domain
+     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
      */
     private Domain $domain;
 
@@ -23,7 +23,7 @@ class CategoryExtension extends AbstractExtension
     private CategoryFacade $categoryFacade;
 
     /**
-     * @param \App\Component\Domain\Domain $domain
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \App\Model\Category\CategoryFacade $categoryFacade
      */
     public function __construct(

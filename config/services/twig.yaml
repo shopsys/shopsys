@@ -11,14 +11,8 @@ services:
         resource: '../../src/Twig/'
         exclude: '../../src/Twig/{JsFormValidatorTwigExtension.php}'
 
-    App\Twig\LocalizationExtension:
-        arguments:
-            - '%shopsys.web_dir%'
-
     App\Twig\PriceExtension: ~
 
-    Shopsys\FrameworkBundle\Twig\LocalizationExtension:
-        alias: App\Twig\LocalizationExtension
     Shopsys\FrameworkBundle\Twig\PriceExtension:
         alias: App\Twig\PriceExtension
 

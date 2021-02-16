@@ -91,29 +91,8 @@ services:
         tags:
             - { name: doctrine.event_subscriber, priority: -100 }
 
-    Shopsys\FrameworkBundle\Component\Domain\Domain:
-        alias: App\Component\Domain\Domain
-
-    App\Component\Domain\Domain:
-        factory: ['@App\Component\Domain\DomainFactory', createWithCdn]
-        arguments:
-            - '%shopsys.domain_config_filepath%'
-            - '%shopsys.domain_urls_config_filepath%'
-            - '%env(CDN_DOMAIN)%'
-        lazy: true
-
     App\Model\Cart\CartFacade:
         lazy: true
-
-    Shopsys\FrameworkBundle\Model\Localization\LocalizationListener:
-        alias: App\Model\Localization\LocalizationListener
-
-    Shopsys\FrameworkBundle\Component\Collector\ShopsysFrameworkDataCollector:
-        alias: App\Component\Collector\ShopsysFrameworkDataCollector
-
-    App\Component\Collector\ShopsysFrameworkDataCollector:
-        tags:
-            - { name: data_collector, id: shopsys_framework_core, template: '@ShopsysFramework/Components/Collector/shopsysFramework.html.twig', priority: -300 }
 
     Shopsys\FrameworkBundle\Model\MultidomainEntityClassProvider:
         alias: App\Model\MultidomainEntityClassProvider
@@ -800,8 +779,6 @@ services:
 
     App\Component\Image\ImageFacade:
         arguments: ['%shopsys.image_url_prefix%']
-        calls:
-            - { method: setCdnDomain, arguments: ['%env(CDN_DOMAIN)%'] }
 
     Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRouterFactory:
         class: App\Component\Router\FriendlyUrl\FriendlyUrlRouterFactory

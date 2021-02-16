@@ -28,14 +28,14 @@ class MailTemplateDataFixture extends AbstractReferenceFixture implements Depend
     private $mailTemplateDataFactory;
 
     /**
-     * @var \App\Component\Domain\Domain
+     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
      */
     private $domain;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplateFactoryInterface $mailTemplateFactory
      * @param \App\Model\Mail\MailTemplateDataFactory $mailTemplateDataFactory
-     * @param \App\Component\Domain\Domain $domain
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
         MailTemplateFactoryInterface $mailTemplateFactory,

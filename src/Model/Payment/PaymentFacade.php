@@ -33,7 +33,7 @@ use Shopsys\FrameworkBundle\Model\Transport\TransportRepository;
  * @method \Shopsys\FrameworkBundle\Model\Pricing\Price[] getIndependentBasePricesIndexedByDomainId(\App\Model\Payment\Payment $payment)
  * @method \Shopsys\FrameworkBundle\Model\Pricing\Price[] getPricesIndexedByDomainId(\App\Model\Payment\Payment|null $payment)
  * @method \App\Model\Payment\Payment getByUuid(string $uuid)
- * @property \App\Component\Domain\Domain $domain
+ * @property \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
  * @property \App\Component\Image\ImageFacade $imageFacade
  * @property \App\Model\Transport\TransportRepository $transportRepository
  */

@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Tests\App\Functional\Model\Transport\Logistic;
 
-use App\Component\Domain\Domain;
 use App\DataFixtures\Demo\TransportDataFixture;
 use App\Model\Product\Package\ProductPackageData;
 use App\Model\Transport\Transport;
 use App\Model\Transport\TransportPackage\TransportPackageData;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Tests\App\Test\TransactionFunctionalTestCase;
 

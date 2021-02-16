@@ -16,7 +16,7 @@ use Shopsys\FrameworkBundle\Model\Slider\SliderItemRepository;
 /**
  * @property \App\Model\Slider\SliderItemRepository $sliderItemRepository
  * @property \App\Component\Image\ImageFacade $imageFacade
- * @property \App\Component\Domain\Domain $domain
+ * @property \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
  * @method \App\Model\Slider\SliderItem getById(int $sliderItemId)
  * @method \App\Model\Slider\SliderItem[] getAllVisibleOnCurrentDomain()
  */
@@ -34,7 +34,7 @@ class SliderItemFacade extends BaseSliderItemFacade
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \App\Model\Slider\SliderItemRepository $sliderItemRepository
      * @param \App\Component\Image\ImageFacade $imageFacade
-     * @param \App\Component\Domain\Domain $domain
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Slider\SliderItemFactoryInterface $sliderItemFactory
      * @param \App\Twig\Cache\TwigCacheFacade $twigCacheFacade
      */

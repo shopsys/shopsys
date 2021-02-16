@@ -34,7 +34,7 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
     private $transportDataFactory;
 
     /**
-     * @var \App\Component\Domain\Domain
+     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
      */
     private $domain;
 
@@ -51,7 +51,7 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
     /**
      * @param \App\Model\Transport\TransportFacade $transportFacade
      * @param \App\Model\Transport\TransportDataFactory $transportDataFactory
-     * @param \App\Component\Domain\Domain $domain
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceConverter $priceConverter
      * @param \App\Model\Transport\TransportPackage\TransportPackageDataFactory $transportPackageDataFactory
      */

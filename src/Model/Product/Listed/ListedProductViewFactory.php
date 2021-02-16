@@ -51,7 +51,7 @@ class ListedProductViewFactory extends BaseListedProductViewFactory
     private ProductFacade $productFacade;
 
     /**
-     * @param \App\Component\Domain\Domain $domain
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \App\Model\Product\ProductCachedAttributesFacade $productCachedAttributesFacade
      * @param \App\Model\Product\Availability\ProductAvailabilityFacade $productAvailabilityFacade
      * @param \App\Model\Product\Parameter\ParameterFacade $parameterFacade

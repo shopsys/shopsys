@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Component\Router\Import;
 
 use Akeneo\Pim\ApiClient\Exception\RuntimeException;
-use App\Component\Domain\Domain;
 use App\Model\Transfer\TransferIdentificationInterface;
 use App\Model\Transfer\TransferLoggerFactory;
 use App\Model\Transfer\TransferLoggerInterface;
@@ -16,6 +15,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use League\Flysystem\FilesystemInterface;
 use Shopsys\FrameworkBundle\Component\Doctrine\SqlLoggerFacade;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Symfony\Component\Validator\Validator\TraceableValidator;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 

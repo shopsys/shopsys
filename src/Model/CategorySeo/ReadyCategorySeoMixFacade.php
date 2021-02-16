@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Model\CategorySeo;
 
-use App\Component\Domain\Domain;
 use App\Component\HttpFoundation\TransactionalMasterRequestListener;
 use App\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use App\Model\Category\Category;
@@ -13,6 +12,7 @@ use App\Model\CategorySeo\Exception\ReadyCategorySeoMixUrlsContainBadDomainUrlEx
 use App\Model\CategorySeo\Exception\ReadyCategorySeoMixUrlsDoNotContainMainFriendlyUrlException;
 use App\Model\CategorySeo\Exception\ReadyCategorySeoMixUrlsDoNotContainUrlForCorrectDomainException;
 use Doctrine\ORM\EntityManagerInterface;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\UrlListData;
 use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingModeForListFacade;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter;
@@ -48,7 +48,7 @@ class ReadyCategorySeoMixFacade
     private $requestStack;
 
     /**
-     * @var \App\Component\Domain\Domain
+     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
      */
     private $domain;
 
@@ -58,7 +58,7 @@ class ReadyCategorySeoMixFacade
      * @param \App\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
      * @param \App\Model\Product\Listing\ProductListOrderingModeForListFacade $productListOrderingModeForListFacade
      * @param \Symfony\Component\HttpFoundation\RequestStack $requestStack
-     * @param \App\Component\Domain\Domain $domain
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
         EntityManagerInterface $em,

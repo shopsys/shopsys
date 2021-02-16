@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\Command;
 
-use App\Component\Domain\Domain;
 use JMS\TranslationBundle\Translation\FileWriter;
 use JMS\TranslationBundle\Translation\Loader\SymfonyLoaderAdapter;
 use Shopsys\FrameworkBundle\Command\CommandResultCodes;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Translation\PoDumper;
 use Shopsys\FrameworkBundle\Component\Translation\PoFileLoader;
 use Symfony\Component\Config\Resource\FileResource;
@@ -30,7 +30,7 @@ class ImportPoFilesCommand extends Command
     private $fileLoader;
 
     /**
-     * @var \App\Component\Domain\Domain
+     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
      */
     private $domain;
 

@@ -15,7 +15,7 @@ class GoPayOnCurrentDomainFacade
     private $goPayOrderMapper;
 
     /**
-     * @var \App\Component\Domain\Domain
+     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
      */
     private $domain;
 
@@ -27,7 +27,7 @@ class GoPayOnCurrentDomainFacade
     /**
      * @param \App\Model\GoPay\GoPayClientFactory $goPayClientFactory
      * @param \App\Model\GoPay\GoPayOrderMapper $goPayOrderMapper
-     * @param \App\Component\Domain\Domain $domain
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
         GoPayClientFactory $goPayClientFactory,

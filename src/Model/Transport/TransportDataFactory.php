@@ -36,7 +36,7 @@ class TransportDataFactory extends BaseTransportDataFactory
     /**
      * @param \App\Model\Transport\TransportFacade $transportFacade
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade $vatFacade
-     * @param \App\Component\Domain\Domain $domain
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \App\Component\Image\ImageFacade $imageFacade
      * @param \App\Model\Transport\TransportPackage\TransportPackageRepository $transportPackageRepository
      * @param \App\Model\Transport\TransportPackage\TransportPackageDataFactory $transportPackageDataFactory

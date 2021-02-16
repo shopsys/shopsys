@@ -36,7 +36,7 @@ class BlogCategoryFormType extends AbstractType
     private $blogCategoryFacade;
 
     /**
-     * @var \App\Component\Domain\Domain
+     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
      */
     private $domain;
 
@@ -47,7 +47,7 @@ class BlogCategoryFormType extends AbstractType
 
     /**
      * @param \App\Model\Blog\Category\BlogCategoryFacade $blogCategoryFacade
-     * @param \App\Component\Domain\Domain $domain
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Seo\SeoSettingFacade $seoSettingFacade
      */
     public function __construct(

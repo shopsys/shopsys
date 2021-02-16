@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Controller\Front;
 
-use App\Component\Domain\Domain;
 use App\Model\Stock\StockFacade;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -17,14 +17,14 @@ class StoreController extends FrontBaseController
     private StockFacade $stockFacade;
 
     /**
-     * @var \App\Component\Domain\Domain
+     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
      */
     private Domain $domain;
 
     /**
      * StoreController constructor.
      * @param \App\Model\Stock\StockFacade $stockFacade
-     * @param \App\Component\Domain\Domain $domain
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(StockFacade $stockFacade, Domain $domain)
     {

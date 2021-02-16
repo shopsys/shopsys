@@ -27,7 +27,7 @@ use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 /**
  * @property \App\Model\Order\OrderFacade $orderFacade
  * @property \App\Model\Order\OrderDataFactory $orderDataFactory
- * @property \App\Component\Domain\Domain $domain
+ * @property \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
  */
 class OrderController extends BaseOrderController
 {

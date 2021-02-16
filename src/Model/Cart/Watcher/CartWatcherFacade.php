@@ -29,7 +29,7 @@ class CartWatcherFacade extends BaseCartWatcherFacade
     private $productAvailabilityFacade;
 
     /**
-     * @var \App\Component\Domain\Domain
+     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
      */
     protected $domain;
 
@@ -40,7 +40,7 @@ class CartWatcherFacade extends BaseCartWatcherFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
      * @param \Twig\Environment $twigEnvironment
      * @param \App\Model\Product\Availability\ProductAvailabilityFacade $productAvailabilityFacade
-     * @param \App\Component\Domain\Domain $domain
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
         FlashBagInterface $flashBag,

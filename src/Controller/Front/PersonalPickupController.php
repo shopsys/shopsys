@@ -14,7 +14,7 @@ class PersonalPickupController extends FrontBaseController
     public const SELECTED_PERSONAL_PICKUP_KEY = 'selectedPersonalPickup';
 
     /**
-     * @var \App\Component\Domain\Domain
+     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
      */
     private $domain;
 
@@ -34,7 +34,7 @@ class PersonalPickupController extends FrontBaseController
     private $productAvailabilityFacade;
 
     /**
-     * @param \App\Component\Domain\Domain $domain
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \App\Model\Stock\StockFacade $stockFacade
      * @param \App\Model\Cart\CartFacade $cartFacade
      * @param \App\Model\Product\Availability\ProductAvailabilityFacade $productAvailabilityFacade

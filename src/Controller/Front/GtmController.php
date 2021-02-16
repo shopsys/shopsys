@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Controller\Front;
 
-use App\Component\Domain\Domain;
 use App\Controller\Front\FrontBaseController as FrontFrontBaseController;
 use App\Model\Gtm\GtmContainer;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -18,7 +18,7 @@ class GtmController extends FrontFrontBaseController
     private $gtmContainer;
 
     /**
-     * @var \App\Component\Domain\Domain
+     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
      */
     private $domain;
 
@@ -30,7 +30,7 @@ class GtmController extends FrontFrontBaseController
     /**
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
      * @param \App\Model\Gtm\GtmContainer $gtmContainer
-     * @param \App\Component\Domain\Domain $domain
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(CurrencyFacade $currencyFacade, GtmContainer $gtmContainer, Domain $domain)
     {

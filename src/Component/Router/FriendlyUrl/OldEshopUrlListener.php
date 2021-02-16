@@ -5,10 +5,10 @@ declare(strict_types=1);
 
 namespace App\Component\Router\FriendlyUrl;
 
-use App\Component\Domain\Domain;
 use App\Model\Product\ProductFacade;
 use App\Model\UrlRedirect\UrlRedirectFacade;
 use App\Model\UrlRedirect\UrlRegularFacade;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Router\CurrentDomainRouter;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\Event\ExceptionEvent;
@@ -22,7 +22,7 @@ class OldEshopUrlListener
     private ProductFacade $productFacade;
 
     /**
-     * @var \App\Component\Domain\Domain
+     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
      */
     private Domain $domain;
 
@@ -46,7 +46,7 @@ class OldEshopUrlListener
     private UrlRegularFacade $urlRegularFacade;
 
     /**
-     * @param \App\Component\Domain\Domain $domain
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Component\Router\CurrentDomainRouter $router
      * @param \App\Model\Product\ProductFacade $productFacade
      * @param \App\Component\Router\FriendlyUrl\FriendlyUrlRepository $friendlyUrlRepository

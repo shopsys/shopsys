@@ -9,8 +9,8 @@ use Shopsys\FrameworkBundle\Model\Sitemap\SitemapFacade as BaseSitemapFacade;
 
 /**
  * @property \App\Model\Sitemap\SitemapRepository $sitemapRepository
- * @property \App\Component\Domain\Domain $domain
- * @method __construct(mixed $sitemapsDir, mixed $sitemapsUrlPrefix, \App\Component\Domain\Domain $domain, \Shopsys\FrameworkBundle\Model\Sitemap\SitemapDumperFactory $domainSitemapDumperFactory, \App\Model\Sitemap\SitemapRepository $sitemapRepository, \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade $pricingGroupSettingFacade)
+ * @property \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+ * @method __construct(mixed $sitemapsDir, mixed $sitemapsUrlPrefix, \Shopsys\FrameworkBundle\Component\Domain\Domain $domain, \Shopsys\FrameworkBundle\Model\Sitemap\SitemapDumperFactory $domainSitemapDumperFactory, \App\Model\Sitemap\SitemapRepository $sitemapRepository, \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade $pricingGroupSettingFacade)
  */
 class SitemapFacade extends BaseSitemapFacade
 {

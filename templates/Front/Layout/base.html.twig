@@ -65,7 +65,7 @@
         <meta name="theme-color" content="#ffb900">
     </head>
 
-    <body class="web" data-assets-url="{{ getDomain().getAssetsUrl() }}">
+    <body class="web" data-assets-url="{{ getDomain().getUrl() }}">
         {{ render(controller('App\\Controller\\Front\\GtmController:bodyAction')) }}
 
         {{ render(controller('App\\Controller\\Front\\ScriptController:embedAllPagesScriptsAction')) }}

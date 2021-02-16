@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\Component\Grid\Ordering;
 
-use App\Component\Domain\Domain;
 use App\Model\Slider\SliderItem;
 use App\Twig\Cache\TwigCacheFacade;
 use Doctrine\ORM\EntityManagerInterface;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver;
 use Shopsys\FrameworkBundle\Component\Grid\Ordering\GridOrderingFacade as BaseGridOrderingFacade;
 
@@ -23,7 +23,7 @@ class GridOrderingFacade extends BaseGridOrderingFacade
     private $twigCacheFacade;
 
     /**
-     * @var \App\Component\Domain\Domain
+     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
      */
     private $domain;
 
@@ -35,7 +35,7 @@ class GridOrderingFacade extends BaseGridOrderingFacade
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \App\Twig\Cache\TwigCacheFacade $twigCacheFacade
-     * @param \App\Component\Domain\Domain $domain
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver $entityNameResolver
      */
     public function __construct(

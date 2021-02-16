@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace App\Form\Front\Registration;
 
-use App\Component\Domain\Domain;
 use App\Component\Validator\RegexValidationRule;
 use App\Form\Type\CompanyTaxNumberFieldTrait;
 use App\Model\Customer\User\CustomerUserFacade;
 use App\Model\Customer\User\RegistrationData;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Form\TimedFormTypeExtension;
 use Shopsys\FrameworkBundle\Form\Constraints\Email;
 use Shopsys\FrameworkBundle\Form\Constraints\FieldsAreNotIdentical;
@@ -36,7 +36,7 @@ class RegistrationFormType extends AbstractType
     private const VALIDATION_GROUP_REGULAR_REGISTRATION = 'regularRegistration';
 
     /**
-     * @var \App\Component\Domain\Domain
+     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
      */
     private Domain $domain;
 
@@ -46,7 +46,7 @@ class RegistrationFormType extends AbstractType
     private CustomerUserFacade $customerUserFacade;
 
     /**
-     * @param \App\Component\Domain\Domain $domain
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \App\Model\Customer\User\CustomerUserFacade $customerUserFacade
      */
     public function __construct(Domain $domain, CustomerUserFacade $customerUserFacade)

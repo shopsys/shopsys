@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace App\Form\Admin;
 
-use App\Component\Domain\Domain;
 use App\Form\PriceToAndPriceType;
 use App\Model\Product\Type\ProductTypeFacade;
 use App\Model\Transport\Transport;
 use App\Model\Transport\TransportData;
 use App\Model\Transport\TransportFacade;
 use Shopsys\FormTypesBundle\YesNoType;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Form\Admin\Transport\TransportFormType;
 use Shopsys\FrameworkBundle\Form\GroupType;
 use Shopsys\FrameworkBundle\Form\ValidationGroup;
@@ -51,14 +51,14 @@ class TransportFormTypeExtension extends AbstractTypeExtension
     private $transport;
 
     /**
-     * @var \App\Component\Domain\Domain
+     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
      */
     private Domain $domain;
 
     /**
      * @param \App\Model\Product\Type\ProductTypeFacade $productTypeFacade
      * @param \App\Model\Transport\TransportFacade $transportFacade
-     * @param \App\Component\Domain\Domain $domain
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
         ProductTypeFacade $productTypeFacade,

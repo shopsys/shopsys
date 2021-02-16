@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace App\Model\Transport\Logistic;
 
-use App\Component\Domain\Domain;
 use App\Model\Cart\CartFacade;
 use App\Model\Product\Package\ProductPackageRepository;
 use App\Model\Product\Package\ProductPackagesCollection;
 use App\Model\Transport\Transport;
 use App\Model\Transport\TransportPackage\TransportPackage;
 use App\Model\Transport\TransportPackage\TransportPackageFacade;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 
 class TransportLogisticFacade
 {
@@ -20,7 +20,7 @@ class TransportLogisticFacade
     private CartFacade $cartFacade;
 
     /**
-     * @var \App\Component\Domain\Domain
+     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
      */
     private Domain $domain;
 
@@ -36,7 +36,7 @@ class TransportLogisticFacade
 
     /**
      * @param \App\Model\Cart\CartFacade $cartFacade
-     * @param \App\Component\Domain\Domain $domain
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \App\Model\Product\Package\ProductPackageRepository $productPackageRepository
      * @param \App\Model\Transport\TransportPackage\TransportPackageFacade $transportPackageFacade
      */

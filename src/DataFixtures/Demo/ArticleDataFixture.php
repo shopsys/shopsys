@@ -37,14 +37,14 @@ class ArticleDataFixture extends AbstractReferenceFixture
     private $articleDataFactory;
 
     /**
-     * @var \App\Component\Domain\Domain
+     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
      */
     private $domain;
 
     /**
      * @param \App\Model\Article\ArticleFacade $articleFacade
      * @param \App\Model\Article\ArticleDataFactory $articleDataFactory
-     * @param \App\Component\Domain\Domain $domain
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
         ArticleFacade $articleFacade,

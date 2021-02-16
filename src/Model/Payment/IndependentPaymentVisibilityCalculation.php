@@ -8,8 +8,8 @@ use Shopsys\FrameworkBundle\Model\Payment\IndependentPaymentVisibilityCalculatio
 use Shopsys\FrameworkBundle\Model\Payment\Payment;
 
 /**
- * @property \App\Component\Domain\Domain $domain
- * @method __construct(\App\Component\Domain\Domain $domain)
+ * @property \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+ * @method __construct(\Shopsys\FrameworkBundle\Component\Domain\Domain $domain)
  */
 class IndependentPaymentVisibilityCalculation extends BaseIndependentPaymentVisibilityCalculation
 {

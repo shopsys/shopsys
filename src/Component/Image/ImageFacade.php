@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Component\Image;
 
-use App\Component\Domain\Domain;
 use App\Model\Category\Category;
 use App\Model\Product\Brand\Brand;
 use App\Model\Product\Product;
@@ -13,6 +12,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use League\Flysystem\FilesystemInterface;
 use League\Flysystem\MountManager;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\FileUpload\FileUpload;
 use Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadData;
 use Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig;
@@ -42,19 +42,9 @@ class ImageFacade extends BaseImageFacade
     public const AKENEO_MAIN_IMAGE_TYPE = 'image_main';
 
     /**
-     * @var string|null
-     */
-    private $cdnDomain;
-
-    /**
      * @var \App\Component\Image\ImageCacheFacade
      */
     private $imageCacheFacade;
-
-    /**
-     * @var \App\Component\Domain\Domain
-     */
-    private $domain;
 
     /**
      * @param mixed $imageUrlPrefix
@@ -67,7 +57,6 @@ class ImageFacade extends BaseImageFacade
      * @param \Shopsys\FrameworkBundle\Component\Image\ImageFactoryInterface $imageFactory
      * @param \League\Flysystem\MountManager $mountManager
      * @param \App\Component\Image\ImageCacheFacade $imageCacheFacade
-     * @param \App\Component\Domain\Domain $domain
      */
     public function __construct(
         $imageUrlPrefix,
@@ -79,8 +68,7 @@ class ImageFacade extends BaseImageFacade
         ImageLocator $imageLocator,
         ImageFactoryInterface $imageFactory,
         MountManager $mountManager,
-        ImageCacheFacade $imageCacheFacade,
-        Domain $domain
+        ImageCacheFacade $imageCacheFacade
     ) {
         parent::__construct(
             $imageUrlPrefix,
@@ -94,18 +82,6 @@ class ImageFacade extends BaseImageFacade
             $mountManager
         );
         $this->imageCacheFacade = $imageCacheFacade;
-        $this->domain = $domain;
-    }
-
-    /**
-     * @param string $cdnDomain
-     */
-    public function setCdnDomain(string $cdnDomain): void
-    {
-        // When you do not want to use CDN, it is used value '//' as workaround by https://github.com/symfony/symfony/issues/28391
-        if (empty(trim($cdnDomain, '/')) === false) {
-            $this->cdnDomain = $cdnDomain;
-        }
     }
 
     /**
@@ -134,8 +110,6 @@ class ImageFacade extends BaseImageFacade
         } else {
             throw new ImageNotFoundException();
         }
-
-        $imageUrl = $this->replaceDomainUrlByCdnDomain($imageUrl, $domainConfig);
 
         $this->imageCacheFacade->setImageUrlIntoCache($imageUrl, $image->getId(), $type, $sizeName);
 
@@ -223,28 +197,6 @@ class ImageFacade extends BaseImageFacade
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @param int $id
-     * @param string $extension
-     * @param string $entityName
-     * @param string|null $type
-     * @param string|null $sizeName
-     * @return \Shopsys\FrameworkBundle\Component\Image\AdditionalImageData[]
-     */
-    public function getAdditionalImagesDataFromAttributes(
-        DomainConfig $domainConfig,
-        int $id,
-        string $extension,
-        string $entityName,
-        ?string $type,
-        ?string $sizeName = null
-    ): array {
-        $additionalImagesData = parent::getAdditionalImagesDataFromAttributes($domainConfig, $id, $extension, $entityName, $type, $sizeName);
-
-        return $this->replaceDomainUrlByCdnDomainInAdditionalImagesData($additionalImagesData, $domainConfig);
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @param int $additionalSizeIndex
      * @param \App\Component\Image\Image $image
      * @param string|null $sizeName
@@ -273,8 +225,6 @@ class ImageFacade extends BaseImageFacade
             . $this->imageUrlPrefix
             . $this->imageLocator->getRelativeAdditionalImageFilepathWithSlug($image, $additionalSizeIndex, $sizeName, $friendlyUrlSeoEntityName);
 
-        $imageUrl = $this->replaceDomainUrlByCdnDomain($imageUrl, $domainConfig);
-
         $this->imageCacheFacade->setImageUrlIntoCache(
             $imageUrl,
             $image->getId(),
@@ -284,38 +234,6 @@ class ImageFacade extends BaseImageFacade
         );
 
         return $imageUrl;
-    }
-
-    /**
-     * @param string $imageUrl
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @return string
-     */
-    private function replaceDomainUrlByCdnDomain(string $imageUrl, DomainConfig $domainConfig): string
-    {
-        if ($this->cdnDomain === null) {
-            return $imageUrl;
-        }
-
-        return str_replace($domainConfig->getUrl(), $this->cdnDomain, $imageUrl);
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Image\AdditionalImageData[] $additionalImagesData
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @return \Shopsys\FrameworkBundle\Component\Image\AdditionalImageData[]
-     */
-    private function replaceDomainUrlByCdnDomainInAdditionalImagesData(array $additionalImagesData, DomainConfig $domainConfig): array
-    {
-        if ($this->cdnDomain === null) {
-            return $additionalImagesData;
-        }
-
-        foreach ($additionalImagesData as $additionalImageData) {
-            $additionalImageData->url = $this->replaceDomainUrlByCdnDomain($additionalImageData->url, $domainConfig);
-        }
-
-        return $additionalImagesData;
     }
 
     /**
@@ -533,9 +451,7 @@ class ImageFacade extends BaseImageFacade
      */
     public function getEmptyImageUrl(string $emptyImageUrl): string
     {
-        $targetImageUrl = str_replace(ImageExtension::NOIMAGE_FILENAME, ImageExtension::OPTIMIZED_NOIMAGE_FILENAME, $emptyImageUrl);
-
-        return $this->replaceDomainUrlByCdnDomain($targetImageUrl, $this->domain->getCurrentDomainConfig());
+        return str_replace(ImageExtension::NOIMAGE_FILENAME, ImageExtension::OPTIMIZED_NOIMAGE_FILENAME, $emptyImageUrl);
     }
 
     /**
