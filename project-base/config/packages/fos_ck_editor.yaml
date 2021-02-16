@@ -1,5 +1,6 @@
 fos_ck_editor:
     default_config: default
+    autoload: false
     configs:
         default:
             entities_greek: false

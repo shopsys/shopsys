@@ -1,0 +1,51 @@
+.in-ckeditor {
+    &--with-gap {
+        padding-left: 35px;
+    }
+
+    textarea {
+        display: none;
+    }
+    
+    &__text {
+        position: relative;
+        width: 100%;
+        min-height: 92px;
+        max-height: 200px;
+        padding: 10px 14px @btn-height;
+        cursor: text;
+        overflow: hidden;
+
+        border: @input-border-size solid @color-border;
+        border-radius: @radius;
+
+        &--collapsed {
+            &:after {
+                content: "";
+                position: absolute;
+                z-index: 1;
+                bottom: @btn-height;
+                left: 0;
+                right: 0;
+                height: 50px;
+                pointer-events: none;
+
+                background: @color-f;
+                background: linear-gradient(0deg, @color-f 15%, rgba(255,255,255,0) 100%);
+            }
+        }
+    }
+
+    &__button {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+
+        border-radius: 0 0 @radius @radius;
+    }
+}
+
+.cke-textarea {
+    display: none;
+}

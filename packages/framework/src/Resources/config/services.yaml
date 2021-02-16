@@ -985,3 +985,12 @@ services:
 
     Symfony\Component\Validator\Constraints\FileValidator:
         class: Shopsys\FrameworkBundle\Form\Constraints\FileAbstractFilesystemValidator
+
+    Shopsys\FrameworkBundle\Component\CKEditor\CKEditorRendererDecorator:
+        decorates: fos_ck_editor.renderer
+        arguments: [ '@Shopsys\FrameworkBundle\Component\CKEditor\CKEditorRendererDecorator.inner' ]
+
+    Shopsys\FrameworkBundle\Twig\CKEditorExtension:
+        arguments:
+            - '@fos_ck_editor.configuration'
+            - '@fos_ck_editor.twig_extension'
