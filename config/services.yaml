@@ -130,11 +130,6 @@ services:
         tags:
             - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse }
 
-    App\Component\PromoCode\HttpBasicAuthOrByIpAccessAuthenticator:
-        arguments:
-            - '@monolog.logger.cron'
-            - "%promo_code_manage_page_config%"
-
     Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig:
         alias: App\Component\Image\Config\ImageConfig
 

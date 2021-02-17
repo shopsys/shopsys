@@ -336,15 +336,6 @@ class PromoCodeFacade extends BasePromoCodeFacade
     }
 
     /**
-     * @param \App\Model\Order\PromoCode\PromoCode $promoCode
-     */
-    public function decreaseRemainingUses(PromoCode $promoCode): void
-    {
-        $promoCode->decreaseRemainingUses();
-        $this->em->flush();
-    }
-
-    /**
      * @param int $batchId
      * @return \App\Model\Order\PromoCode\PromoCode[]|null
      */

@@ -4,7 +4,6 @@ import './CategoryPanel';
 import './cookieInit';
 import './filterAllNodes';
 import './FormField';
-import './ManagePromoCodeFrontend';
 import './pushReloadState';
 import './HoverIntent';
 import './honeyPot';
