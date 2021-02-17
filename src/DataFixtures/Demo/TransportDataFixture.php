@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\DataFixtures\Demo;
 
-use App\Component\Pricing\PriceToAndPriceData;
 use App\Model\Transport\Transport;
 use App\Model\Transport\TransportPackage\TransportPackageDataFactory;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
@@ -22,7 +21,6 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
     public const TRANSPORT_CZECH_POST = 'transport_cp';
     public const TRANSPORT_PPL = 'transport_ppl';
     public const TRANSPORT_PERSONAL = 'transport_personal';
-    public const TRANSPORT_PALLET = 'transport_pallet';
     public const TRANSPORT_OVER_LIMIT = 'transport_over_limit';
 
     /** @var \App\Model\Transport\TransportFacade */
@@ -178,59 +176,6 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
 
         $this->setPriceForAllDomains($transportData, Money::zero());
         $this->createTransport(self::TRANSPORT_PERSONAL, $transportData);
-
-        $transportData = $this->transportDataFactory->create();
-        $transportData->externalId = 4;
-        $transportData->daysUntilDelivery = 14;
-        $transportData->deliveryCode = 'D';
-        $transportData->typeOfDeliveryKey = 4;
-
-        foreach ($this->domain->getAllLocales() as $locale) {
-            $transportData->name[$locale] = t('Paletová přeprava', [], 'dataFixtures', $locale);
-            $transportData->description[$locale] = t('Dovezeme Vám  to až domů naším vlastním rozvozem.', [], 'dataFixtures', $locale);
-            $transportData->instructions[$locale] = t('Zásilku může převzít pouze osoba starší 18-ti let.', [], 'dataFixtures', $locale);
-        }
-
-        $transportData->type = Transport::TYPE_PALLET;
-        $transportData->productTypes = [
-            $productTypeCommon,
-            $productTypeOversized,
-        ];
-        $priceToAndPriceData1 = new PriceToAndPriceData();
-        $priceToAndPriceData1->priceTo = Money::create('1000');
-        $priceToAndPriceData1->price = Money::create('99');
-        $priceToAndPriceData2 = new PriceToAndPriceData();
-        $priceToAndPriceData2->priceTo = Money::create('5000');
-        $priceToAndPriceData2->price = Money::create('299');
-        $priceToAndPriceData3 = new PriceToAndPriceData();
-        $priceToAndPriceData3->priceTo = Money::create('20000');
-        $priceToAndPriceData3->price = Money::create('499');
-        $priceToAndPriceData4 = new PriceToAndPriceData();
-        $priceToAndPriceData4->priceTo = Money::create('20001');
-        $priceToAndPriceData4->price = Money::create('799');
-        $priceToAndPriceData5 = new PriceToAndPriceData();
-        $priceToAndPriceData5->priceTo = Money::create('200');
-        $priceToAndPriceData5->price = Money::create('10');
-        $priceToAndPriceData6 = new PriceToAndPriceData();
-        $priceToAndPriceData6->priceTo = Money::create('201');
-        $priceToAndPriceData6->price = Money::create('20');
-        $transportData->palletPricesByDomainId = [
-            1 => [
-                $priceToAndPriceData1,
-                $priceToAndPriceData2,
-                $priceToAndPriceData3,
-                $priceToAndPriceData4,
-            ],
-            2 => [
-                $priceToAndPriceData5,
-                $priceToAndPriceData6,
-            ],
-        ];
-
-        $transportData->personalPickup = false;
-
-        $this->setPriceForAllDomains($transportData, Money::create('399.95'));
-        $this->createTransport(self::TRANSPORT_PALLET, $transportData);
 
         $transportData = $this->transportDataFactory->create();
         $transportData->externalId = 5;

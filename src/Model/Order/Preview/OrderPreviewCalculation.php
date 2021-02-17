@@ -152,8 +152,7 @@ class OrderPreviewCalculation extends BaseOrderPreviewCalculation
                     $transport,
                     $currency,
                     $domainId,
-                    $productTypeQuantifiedProducts,
-                    $productsPrice
+                    $productTypeQuantifiedProducts
                 );
             }
         } else {

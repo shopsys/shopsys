@@ -26,7 +26,6 @@ class Transport extends BaseTransport
 {
     public const TYPE_COMMON = 'common';
     public const TYPE_PACKAGE = 'package';
-    public const TYPE_PALLET = 'pallet';
 
     /**
      * @var \App\Model\Product\Type\ProductType[]|\Doctrine\Common\Collections\ArrayCollection

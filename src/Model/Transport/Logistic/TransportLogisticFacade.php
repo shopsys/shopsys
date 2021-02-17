@@ -146,13 +146,6 @@ class TransportLogisticFacade
         $isAllowedPackageTransport = count($possiblePackageTransports) > 0;
         $isOverLimitTransport = $this->cartFacade->isCartContainsProductWithOverLimitQuantity();
         foreach ($transports as $key => $transport) {
-            if ($isAllowedPackageTransport === true
-                && $transport->getType() === Transport::TYPE_PALLET
-            ) {
-                unset($transports[$key]);
-                continue;
-            }
-
             if ($isAllowedPackageTransport === false && $transport->getType() === Transport::TYPE_PACKAGE) {
                 unset($transports[$key]);
                 continue;
