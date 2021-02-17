@@ -53,11 +53,25 @@ class IndexFacade
     }
 
     /**
+     * @deprecated Visibility of this method will be reduced to "protected" in next major version. For public access use method "migrate()" instead
      * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinition $indexDefinition
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      */
     public function create(IndexDefinition $indexDefinition, OutputInterface $output): void
     {
+        if (
+            !isset(debug_backtrace()[1]['object'])
+            || !(debug_backtrace()[1]['object'] instanceof self)
+        ) {
+            trigger_error(
+                sprintf(
+                    'Method "%s" will change its visibility from "public" to "protected" in next major version. Use method "migrate()" from same class instead.',
+                    __METHOD__
+                ),
+                E_USER_DEPRECATED
+            );
+        }
+
         $output->writeln(sprintf(
             'Creating index "%s" on domain "%s"',
             $indexDefinition->getIndexName(),
