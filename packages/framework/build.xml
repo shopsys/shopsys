@@ -532,7 +532,7 @@
         </exec>
     </target>
 
-    <target name="elasticsearch-export" description="Exports indexes data into elasticsearch.">
+    <target name="elasticsearch-export" description="Exports indexes data into elasticsearch. Creates or migrates elasticsearch structure when necessary.">
         <property name="elasticsearch.index" value=""/>
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
             <arg value="${path.bin-console}"/>
@@ -1015,7 +1015,7 @@
         </exec>
     </target>
 
-    <target name="test-elasticsearch-export" description="Exports indexes data into elasticsearch for test environment.">
+    <target name="test-elasticsearch-export" description="Exports indexes data into elasticsearch for test environment. Creates or migrates elasticsearch structure when necessary.">
         <property name="elasticsearch.index" value=""/>
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
             <arg value="${path.bin-console}"/>

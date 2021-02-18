@@ -7,8 +7,8 @@ namespace Shopsys\FrameworkBundle\Component\Elasticsearch;
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Console\ProgressBarFactory;
 use Shopsys\FrameworkBundle\Component\Doctrine\SqlLoggerFacade;
-use Shopsys\FrameworkBundle\Component\Elasticsearch\Exception\ElasticsearchAliasUsedByDifferentIndex;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\Exception\ElasticsearchIndexAlreadyExistsException;
+use Shopsys\FrameworkBundle\Component\Elasticsearch\Exception\ElasticsearchIndexException;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\Exception\ElasticsearchNoAliasException;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -80,9 +80,11 @@ class IndexFacade
 
         $alias = $indexDefinition->getIndexAlias();
         try {
-            $existingIndexName = $this->indexRepository->findCurrentIndexNameForAlias($alias);
-            if ($existingIndexName !== $indexDefinition->getVersionedIndexName()) {
-                throw new ElasticsearchAliasUsedByDifferentIndex($alias);
+            if (!$this->isIndexUpToDate($indexDefinition)) {
+                throw new ElasticsearchIndexException(sprintf(
+                    'There is an index for alias "%s" already. You have to migrate it first due to different definition.',
+                    $alias
+                ));
             }
         } catch (ElasticsearchNoAliasException $exception) {
             $output->writeln(sprintf('Alias "%s" does not exist', $alias));
@@ -121,6 +123,9 @@ class IndexFacade
         ));
 
         $this->createIndexWhenNoAliasFound($indexDefinition, $output);
+        if (!$this->isIndexUpToDate($indexDefinition)) {
+            $this->migrate($indexDefinition, $output);
+        }
 
         $this->sqlLoggerFacade->temporarilyDisableLogging();
 
@@ -333,5 +338,15 @@ class IndexFacade
         ));
 
         $this->indexRepository->createAlias($indexDefinition);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinition $indexDefinition
+     * @return bool
+     */
+    protected function isIndexUpToDate(IndexDefinition $indexDefinition): bool
+    {
+        $existingIndexName = $this->indexRepository->findCurrentIndexNameForAlias($indexDefinition->getIndexAlias());
+        return $existingIndexName === $indexDefinition->getVersionedIndexName();
     }
 }

@@ -183,6 +183,9 @@ Especially useful when you need to change the structure and don't need to have f
 #### elasticsearch-export
 Exports all data for index to Elasticsearch.
 
+!!! note
+From v9.1.1 and higher the export command also run migration for Elasticsearch structure when necessary
+
 #### elasticsearch-export-changed
 Exports only changed data for index to Elasticsearch.
 
