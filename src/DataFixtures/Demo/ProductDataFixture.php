@@ -2058,9 +2058,6 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setBrand($productData, BrandDataFixture::BRAND_SAMSUNG);
 
         $product = $this->createProduct($productData);
-        $this->setFutureProductStock($product, '800-cz', 2, (new DateTime())->modify('+5 weeks'));
-        $this->setFutureProductStock($product, '704-cz', 1, (new DateTime())->modify('+4 weeks'));
-        $this->setFutureProductStock($product, '701-cz', 1, (new DateTime())->modify('+2 weeks'));
 
         $productData = $this->productDataFactory->create();
 
@@ -2480,9 +2477,6 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->setBrand($productData, BrandDataFixture::BRAND_LG);
 
         $product = $this->createProduct($productData);
-        $this->setFutureProductStock($product, '800-cz', 2, (new DateTime())->modify('+3 weeks'));
-        $this->setFutureProductStock($product, '704-cz', 1, (new DateTime())->modify('+2 weeks'));
-        $this->setFutureProductStock($product, '706-cz', 1, (new DateTime())->modify('+1 weeks'));
 
         $productData = $this->productDataFactory->create();
 
@@ -6538,26 +6532,5 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productStockData->productQuantity = $quantity;
             $productData->stockProductData[$stock->getId()] = $productStockData;
         }
-    }
-
-    /**
-     * @param \App\Model\Product\Product $product
-     * @param string $stockExternalId
-     * @param int $futureProductQuantity
-     * @param \DateTime $dateOfStorage
-     * @param int $productQuantity
-     */
-    public function setFutureProductStock(Product $product, string $stockExternalId, int $futureProductQuantity, DateTime $dateOfStorage, int $productQuantity = 0): void
-    {
-        $productStock = $this->productStockFacade->findProductStockByProductCatnumAndStockExternalId($product->getCatnum(), $stockExternalId);
-        if ($productStock === null) {
-            return;
-        }
-
-        $productStock->setFutureProductQuantity($futureProductQuantity);
-        $productStock->setProductQuantity($productQuantity ?? 0);
-        $productStock->setDateOfStorage($dateOfStorage);
-
-        $this->em->flush();
     }
 }

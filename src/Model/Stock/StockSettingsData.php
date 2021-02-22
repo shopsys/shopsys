@@ -15,9 +15,4 @@ class StockSettingsData
      * @var int|null
      */
     public $transfer;
-
-    /**
-     * @var int|null
-     */
-    public $futureStorageReservation;
 }

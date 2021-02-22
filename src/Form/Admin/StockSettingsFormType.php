@@ -37,14 +37,6 @@ class StockSettingsFormType extends AbstractType
                     new Constraints\GreaterThanOrEqual(['value' => 0]),
                 ],
             ])
-            ->add('futureStorageReservation', TextType::class, [
-                'label' => t('Rezerva budoucího skladu'),
-                'constraints' => [
-                    new Constraints\NotBlank(),
-                    new Constraints\Regex(['pattern' => '/^\d+$/']),
-                    new Constraints\GreaterThanOrEqual(['value' => 0]),
-                ],
-            ])
             ->add('save', SubmitType::class);
     }
 

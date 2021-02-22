@@ -40,11 +40,6 @@ class ProductAvailabilityFacade
     private $productAvailabilityDomainCache;
 
     /**
-     * @var array
-     */
-    private $productFutureAvailabilityDomainCache;
-
-    /**
      * @param \App\Model\Stock\ProductStockRepository $productStockRepository
      * @param \App\Component\Setting\Setting $setting
      * @param \App\Model\Stock\ProductStockFacade $productStockFacade
@@ -58,7 +53,6 @@ class ProductAvailabilityFacade
         $this->setting = $setting;
         $this->productStockRepository = $productStockRepository;
         $this->productAvailabilityDomainCache = [];
-        $this->productFutureAvailabilityDomainCache = [];
     }
 
     /**
@@ -70,12 +64,6 @@ class ProductAvailabilityFacade
     {
         if ($this->isProductAvailableOnDomainCached($product, $domainId)) {
             return t('Skladem');
-        }
-
-        $productStocks = $this->productStockRepository->getProductStocksByProductAndDomainId($product, $domainId);
-        $closestFutureProductStock = $this->getClosestFutureProductStockByDomainId($productStocks);
-        if ($closestFutureProductStock !== null) {
-            return $this->getFutureWeeksAvailabilityByClosestFutureProductStockAndDomainId($closestFutureProductStock, $domainId);
         }
 
         if ($product->hasPreorder() === false) {
@@ -96,44 +84,11 @@ class ProductAvailabilityFacade
             return 0;
         }
 
-        $productStocks = $this->productStockRepository->getProductStocksByProductAndDomainId($product, $domainId);
-        $closestFutureProductStock = $this->getClosestFutureProductStockByDomainId($productStocks);
-        if ($closestFutureProductStock !== null) {
-            return $this->getFutureDaysByClosestFutureProductStockAndDomainId($closestFutureProductStock, $domainId);
-        }
-
         if ($product->hasPreorder() === false) {
             return null;
         }
 
         return $this->getDeliveryDaysByDomainId($product, $domainId);
-    }
-
-    /**
-     * @param \App\Model\Stock\ProductStock $closestFutureProductStock
-     * @param int $domainId
-     * @return string
-     */
-    private function getFutureWeeksAvailabilityByClosestFutureProductStockAndDomainId(ProductStock $closestFutureProductStock, int $domainId): string
-    {
-        $futureStockAvailabilityDays = $this->getFutureDaysByClosestFutureProductStockAndDomainId($closestFutureProductStock, $domainId);
-
-        return $this->getWeeksAvailabilityMessageByDays($futureStockAvailabilityDays);
-    }
-
-    /**
-     * @param \App\Model\Stock\ProductStock $closestFutureProductStock
-     * @param int $domainId
-     * @return int
-     */
-    private function getFutureDaysByClosestFutureProductStockAndDomainId(ProductStock $closestFutureProductStock, int $domainId): int
-    {
-        $futureStockAvailabilityDays = $this->getFutureStockAvailabilityDaysByDomainId($closestFutureProductStock, $domainId);
-        if ($closestFutureProductStock->getStock()->isCentralStock()) {
-            $futureStockAvailabilityDays += $this->getTransferDaysByDomainId($domainId);
-        }
-
-        return $futureStockAvailabilityDays;
     }
 
     /**
@@ -162,12 +117,6 @@ class ProductAvailabilityFacade
         $groupedStockQuantity = $this->sumProductStockQuantities($productStocks);
         if ($groupedStockQuantity >= $quantifiedProduct->getQuantity()) {
             return t('Skladem');
-        }
-        $requiredFutureProductQuantity = $quantifiedProduct->getQuantity() - $groupedStockQuantity;
-
-        $closestFutureProductStock = $this->getClosestFutureProductStockByDomainId($productStocks, $requiredFutureProductQuantity);
-        if ($closestFutureProductStock !== null) {
-            return $this->getFutureWeeksAvailabilityByClosestFutureProductStockAndDomainId($closestFutureProductStock, $domainId);
         }
 
         if ($product->hasPreorder() === false) {
@@ -278,23 +227,6 @@ class ProductAvailabilityFacade
      * @param int $domainId
      * @return bool
      */
-    public function isProductFutureAvailableOnDomainCached(Product $product, int $domainId): bool
-    {
-        $cacheKey = sprintf('product:%d-domain:%d', $product->getId(), $domainId);
-        if (array_key_exists($cacheKey, $this->productFutureAvailabilityDomainCache)) {
-            return $this->productFutureAvailabilityDomainCache[$cacheKey];
-        }
-
-        $this->productFutureAvailabilityDomainCache[$cacheKey] = $this->productStockRepository->isProductAvailableByFutureStockOnDomain($product, $domainId);
-
-        return $this->productFutureAvailabilityDomainCache[$cacheKey];
-    }
-
-    /**
-     * @param \App\Model\Product\Product $product
-     * @param int $domainId
-     * @return bool
-     */
     public function isProductExcludedOnDomain(Product $product, int $domainId): bool
     {
         return $product->getSaleExclusion($domainId) && !$this->isProductAvailableOnDomainCached(
@@ -319,26 +251,6 @@ class ProductAvailabilityFacade
     /**
      * @param \App\Model\Product\Product $product
      * @param int $domainId
-     * @return bool
-     */
-    public function isProductAvailableWithFutureStockOnDomainOrHasPreorder(Product $product, int $domainId): bool
-    {
-        return $product->hasPreorder()
-            ||
-            $this->isProductAvailableOnDomainCached(
-                $product,
-                $domainId
-            )
-            ||
-            $this->isProductFutureAvailableOnDomainCached(
-                $product,
-                $domainId
-            );
-    }
-
-    /**
-     * @param \App\Model\Product\Product $product
-     * @param int $domainId
      * @return \App\Model\Product\Availability\ProductStockAvailabilityInformation[]
      */
     public function getProductStocksAvailabilitiesInformationByDomainIdIndexedByStockId(Product $product, int $domainId): array
@@ -352,23 +264,6 @@ class ProductAvailabilityFacade
             $isOutOfStock = false;
         }
 
-        $outOfStockAvailabilityInformation = $this->getWeeksAvailabilityMessageByWeeks($weeks);
-
-        if ($product->hasPreorder() === false) {
-            $outOfStockAvailabilityInformation = t('Vyprodáno');
-        }
-
-        $closestFutureProductStock = $this->getClosestFutureProductStockByDomainId($productStocks);
-        if ($closestFutureProductStock !== null) {
-            $closestFutureStockAvailabilityWeeksForOtherStocks = $this->getClosestStockAvailabilityWeeksForOtherStocksByDomainId(
-                $this->getFutureStockAvailabilityDaysByDomainId($closestFutureProductStock, $domainId),
-                $domainId
-            );
-            $closestFutureStockAvailabilityInformationForOtherStocks = $this->getWeeksAvailabilityMessageByWeeks($closestFutureStockAvailabilityWeeksForOtherStocks);
-        } else {
-            $closestFutureStockAvailabilityInformationForOtherStocks = $outOfStockAvailabilityInformation;
-        }
-
         $productStocksAvailabilityInformationList = [];
         foreach ($productStocks as $productStock) {
             if ($productStock->getStock()->isCentralStock()) {
@@ -379,12 +274,6 @@ class ProductAvailabilityFacade
             $availabilityStatus = self::AVAILABILITY_STATUS_IN_STOCK;
 
             if ($isOutOfStock) {
-                if ($productStock->getDateOfStorage() !== null) {
-                    $futureStockAvailabilityWeeks = $this->getFutureStockAvailabilityWeeksByDomainId($productStock, $domainId);
-                    $availabilityInformation = $this->getWeeksAvailabilityMessageByWeeks($futureStockAvailabilityWeeks);
-                } else {
-                    $availabilityInformation = $closestFutureStockAvailabilityInformationForOtherStocks;
-                }
                 $availabilityStatus = self::AVAILABILITY_STATUS_OUT_OF_STOCK;
             } else {
                 if ($productStock->getProductQuantity() <= 0) {
@@ -402,72 +291,6 @@ class ProductAvailabilityFacade
         }
 
         return $productStocksAvailabilityInformationList;
-    }
-
-    /**
-     * @param \App\Model\Stock\ProductStock[] $productStocks
-     * @param int $minimalProductQuantity
-     * @return \App\Model\Stock\ProductStock|null
-     */
-    private function getClosestFutureProductStockByDomainId(array $productStocks, int $minimalProductQuantity = 0): ?ProductStock
-    {
-        $productStocksIndexedByDaysUntilStorage = [];
-        foreach ($productStocks as $productStock) {
-            if ($productStock->getDateOfStorage() !== null) {
-                $productStocksIndexedByDaysUntilStorage[$productStock->getDaysUntilStorage()] = $productStock;
-            }
-        }
-        ksort($productStocksIndexedByDaysUntilStorage);
-
-        $sumProductFutureQuantity = 0;
-        foreach ($productStocksIndexedByDaysUntilStorage as $productStock) {
-            $sumProductFutureQuantity += $productStock->getFutureProductQuantity();
-
-            if ($sumProductFutureQuantity >= $minimalProductQuantity) {
-                return $productStock;
-            }
-        }
-
-        return null;
-    }
-
-    /**
-     * @param \App\Model\Stock\ProductStock $dateOfStorage
-     * @param int $domainId
-     * @return int
-     */
-    private function getFutureStockAvailabilityWeeksByDomainId(ProductStock $dateOfStorage, int $domainId): int
-    {
-        return self::calculateDaysToWeeks($this->getFutureStockAvailabilityDaysByDomainId($dateOfStorage, $domainId));
-    }
-
-    /**
-     * @param \App\Model\Stock\ProductStock $productStock
-     * @param int $domainId
-     * @return int
-     */
-    private function getFutureStockAvailabilityDaysByDomainId(ProductStock $productStock, int $domainId): int
-    {
-        return $productStock->getDaysUntilStorage() + $this->getFutureStorageReservationByDomainId($domainId);
-    }
-
-    /**
-     * @param int $closestFutureAvailabilityDays
-     * @param int $domainId
-     * @return int
-     */
-    private function getClosestStockAvailabilityWeeksForOtherStocksByDomainId(int $closestFutureAvailabilityDays, int $domainId): int
-    {
-        return self::calculateDaysToWeeks($closestFutureAvailabilityDays + $this->getTransferDaysByDomainId($domainId));
-    }
-
-    /**
-     * @param int $days
-     * @return string
-     */
-    private function getWeeksAvailabilityMessageByDays(int $days): string
-    {
-        return $this->getWeeksAvailabilityMessageByWeeks(self::calculateDaysToWeeks($days));
     }
 
     /**
@@ -534,15 +357,6 @@ class ProductAvailabilityFacade
     }
 
     /**
-     * @param int $domainId
-     * @return int
-     */
-    private function getFutureStorageReservationByDomainId(int $domainId): int
-    {
-        return $this->setting->getForDomain(Setting::FUTURE_STORAGE_RESERVATION, $domainId);
-    }
-
-    /**
      * @param \App\Model\Product\Product $product
      * @param int $domainId
      * @return int
@@ -573,32 +387,13 @@ class ProductAvailabilityFacade
      * @param int $domainId
      * @return int
      */
-    public function getGroupedStockQuantityWithFutureByProductAndDomainId(Product $product, int $domainId): int
-    {
-        $productStocksByDomainIdIndexedByStockId = $this->productStockFacade->getProductStocksByProductAndDomainIdIndexedByStockId($product, $domainId);
-        $totalProductStocksQuantity = 0;
-        foreach ($productStocksByDomainIdIndexedByStockId as $productStock) {
-            $totalProductStocksQuantity += $productStock->getProductQuantity();
-            if ($productStock->getDateOfStorage() !== null) {
-                $totalProductStocksQuantity += $productStock->getFutureProductQuantity();
-            }
-        }
-
-        return $totalProductStocksQuantity;
-    }
-
-    /**
-     * @param \App\Model\Product\Product $product
-     * @param int $domainId
-     * @return int
-     */
     public function getMaximumOrderQuantity(Product $product, int $domainId): int
     {
         if ($product->hasPreorder()) {
             return PHP_INT_MAX;
         }
 
-        return $this->getGroupedStockQuantityWithFutureByProductAndDomainId($product, $domainId);
+        return $this->getGroupedStockQuantityByProductAndDomainId($product, $domainId);
     }
 
     /**
@@ -734,46 +529,11 @@ class ProductAvailabilityFacade
             return 0;
         }
 
-        //the product will be on the stock($productStock) in future
-        $requiredProductQuantity = $quantifiedProduct->getQuantity() - $quantityOnAllStocks;
-        $closestFutureAvailabilityDays = $this->getClosestFutureAvailabilityDaysByProductStocksAndRequiredProductQuantity(
-            $productStocks,
-            $requiredProductQuantity,
-            $productStock,
-            $domainId
-        );
-
         //we choose whether it is faster to transfer the product from other stocks
-        $minimalAvailabilityDays = min($closestFutureAvailabilityDays, $productBetweenStockTransferDays);
-        if ($minimalAvailabilityDays < PHP_INT_MAX) {
-            return $minimalAvailabilityDays;
+        if ($productBetweenStockTransferDays < PHP_INT_MAX) {
+            return $productBetweenStockTransferDays;
         }
 
         return $this->getDeliveryDaysByDomainId($product, $domainId);
-    }
-
-    /**
-     * @param array $productStocks
-     * @param int $requiredProductQuantity
-     * @param \App\Model\Stock\ProductStock $productStock
-     * @param int $domainId
-     * @return int
-     */
-    private function getClosestFutureAvailabilityDaysByProductStocksAndRequiredProductQuantity(
-        array $productStocks,
-        int $requiredProductQuantity,
-        ProductStock $productStock,
-        int $domainId
-    ): int {
-        $closestFutureProductStock = $this->getClosestFutureProductStockByDomainId($productStocks, $requiredProductQuantity);
-        $closestFutureAvailabilityDays = PHP_INT_MAX;
-        if ($closestFutureProductStock !== null) {
-            $closestFutureAvailabilityDays = $this->getFutureStockAvailabilityDaysByDomainId($closestFutureProductStock, $domainId);
-            if ($closestFutureProductStock !== $productStock) {
-                $closestFutureAvailabilityDays += $this->getTransferDaysByDomainId($domainId);
-            }
-        }
-
-        return $closestFutureAvailabilityDays;
     }
 }

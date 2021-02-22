@@ -82,7 +82,7 @@ class ProductSellingDeniedRecalculator extends BaseProductSellingDeniedRecalcula
                                     FROM product_stocks as ps
                                     JOIN stocks as s ON s.id = ps.stock_id AND s.domain_id = :domainId
                                     WHERE ps.product_id = p.id
-                                    HAVING SUM(ps.product_quantity) + SUM(COALESCE(ps.future_product_quantity, 0)) > 0
+                                    HAVING SUM(ps.product_quantity) > 0
                                 )
                             )                            
                         )
