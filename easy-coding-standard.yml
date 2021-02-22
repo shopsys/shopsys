@@ -40,8 +40,6 @@ parameters:
             - '*/src/Model/Product/Transfer/Akeneo/ProductTransferAkeneoValidator.php'
             - '*/src/Component/Akeneo/Transfer/AbstractAkeneoImportTransfer.php'
             - '*/src/Component/ScontoBridge/Transfer/AbstractScontoBridgeImportTransfer.php'
-            - '*/src/Model/Customer/Transfer/ScontoBridge/CustomerTransferScontoBridgeMapper.php'
-            - '*/src/Model/Customer/Transfer/ScontoBridge/CustomerTransferScontoBridgeValidator.php'
             - '*/src/Migrations/Version20200319113341.php'
             - '*/src/Controller/Admin/CategorySeoController.php'
             - '*/src/Form/Admin/StockFormType.php'

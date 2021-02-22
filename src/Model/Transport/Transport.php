@@ -53,12 +53,6 @@ class Transport extends BaseTransport
 
     /**
      * @var int
-     * @ORM\Column(type="integer", unique=false)
-     */
-    private int $externalId;
-
-    /**
-     * @var int
      * @ORM\Column(type="integer")
      */
     private int $daysUntilDelivery;
@@ -85,7 +79,6 @@ class Transport extends BaseTransport
         $this->personalPickup = $transportData->personalPickup;
         $this->type = $transportData->type;
         $this->isOverLimitTransport = $transportData->isOverLimitTransport;
-        $this->externalId = $transportData->externalId;
         $this->daysUntilDelivery = $transportData->daysUntilDelivery;
         $this->deliveryCode = $transportData->deliveryCode;
         $this->typeOfDeliveryKey = $transportData->typeOfDeliveryKey;
@@ -101,7 +94,6 @@ class Transport extends BaseTransport
         $this->personalPickup = $transportData->personalPickup;
         $this->type = $transportData->type;
         $this->isOverLimitTransport = $transportData->isOverLimitTransport;
-        $this->externalId = $transportData->externalId;
         $this->daysUntilDelivery = $transportData->daysUntilDelivery;
         $this->deliveryCode = $transportData->deliveryCode;
         $this->typeOfDeliveryKey = $transportData->typeOfDeliveryKey;
@@ -165,14 +157,6 @@ class Transport extends BaseTransport
     public function isOverLimitTransport(): bool
     {
         return $this->isOverLimitTransport;
-    }
-
-    /**
-     * @return int
-     */
-    public function getExternalId(): int
-    {
-        return $this->externalId;
     }
 
     /**

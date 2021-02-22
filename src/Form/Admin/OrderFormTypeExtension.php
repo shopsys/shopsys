@@ -54,12 +54,6 @@ class OrderFormTypeExtension extends AbstractTypeExtension
                 'label' => t('Typ dopravy'),
                 'data' => $order->getTransport()->getName(),
             ]);
-
-            $builderBasicInformationGroup->add('erpNumber', DisplayOnlyType::class, [
-                'label' => t('Číslo KS Moeve'),
-                'position' => ['after' => 'orderNumber'],
-                'data' => $order->getErpNumber()
-            ]);
         }
     }
 

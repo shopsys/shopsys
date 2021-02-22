@@ -78,7 +78,6 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
         $productTypeOversized = $this->getReference(ProductTypeDataFixture::TYPE_OVERSIZED);
 
         $transportData = $this->transportDataFactory->create();
-        $transportData->externalId = 1;
         $transportData->daysUntilDelivery = 5;
         $transportData->deliveryCode = 'A';
         $transportData->typeOfDeliveryKey = 1;
@@ -113,7 +112,6 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
         $this->createTransport(self::TRANSPORT_CZECH_POST, $transportData);
 
         $transportData = $this->transportDataFactory->create();
-        $transportData->externalId = 2;
         $transportData->daysUntilDelivery = 4;
         $transportData->deliveryCode = 'B';
         $transportData->typeOfDeliveryKey = 2;
@@ -155,7 +153,6 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
         $this->createTransport(self::TRANSPORT_PPL, $transportData);
 
         $transportData = $this->transportDataFactory->create();
-        $transportData->externalId = 3;
         $transportData->daysUntilDelivery = 0;
         $transportData->deliveryCode = 'C';
         $transportData->typeOfDeliveryKey = 3;
@@ -178,7 +175,6 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
         $this->createTransport(self::TRANSPORT_PERSONAL, $transportData);
 
         $transportData = $this->transportDataFactory->create();
-        $transportData->externalId = 5;
         $transportData->daysUntilDelivery = 0;
         $transportData->deliveryCode = 'E';
         $transportData->typeOfDeliveryKey = 5;

@@ -55,20 +55,6 @@ class Payment extends BasePayment
     private $isOverLimitPayment;
 
     /**
-     * @var int
-     *
-     * @ORM\Column(type="integer", unique=false)
-     */
-    private int $externalId;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(type="string", length=10)
-     */
-    private string $meanOfPayment;
-
-    /**
      * @param \App\Model\Payment\PaymentData $paymentData
      */
     public function __construct(BasePaymentData $paymentData)
@@ -79,8 +65,6 @@ class Payment extends BasePayment
         $this->setGoPayPaymentMethod($paymentData);
         $this->hiddenByGoPay = $paymentData->hiddenByGoPay;
         $this->isOverLimitPayment = $paymentData->isOverLimitPayment;
-        $this->externalId = $paymentData->externalId;
-        $this->meanOfPayment = $paymentData->meanOfPayment;
     }
 
     /**
@@ -94,8 +78,6 @@ class Payment extends BasePayment
         $this->setGoPayPaymentMethod($paymentData);
         $this->hiddenByGoPay = $paymentData->hiddenByGoPay;
         $this->isOverLimitPayment = $paymentData->isOverLimitPayment;
-        $this->externalId = $paymentData->externalId;
-        $this->meanOfPayment = $paymentData->meanOfPayment;
     }
 
     /**
@@ -146,14 +128,6 @@ class Payment extends BasePayment
     }
 
     /**
-     * @return int
-     */
-    public function getExternalId(): int
-    {
-        return $this->externalId;
-    }
-
-    /**
      * @param \App\Model\Payment\PaymentData $paymentData
      */
     private function setGoPayPaymentMethod(BasePaymentData $paymentData): void
@@ -163,14 +137,6 @@ class Payment extends BasePayment
         if ($this->type === self::TYPE_GOPAY) {
             $this->goPayPaymentMethod = $paymentData->goPayPaymentMethod;
         }
-    }
-
-    /**
-     * @return string
-     */
-    public function getMeanOfPayment(): string
-    {
-        return $this->meanOfPayment;
     }
 
     /**

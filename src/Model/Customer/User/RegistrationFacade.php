@@ -102,7 +102,6 @@ class RegistrationFacade implements RegistrationFacadeInterface
     public function registerCompany(RegistrationData $registrationData): CustomerUser
     {
         $registrationData->companyCustomer = true;
-        $registrationData->gender = '';
         return $this->register($registrationData);
     }
 

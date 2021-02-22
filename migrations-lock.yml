@@ -376,9 +376,6 @@
 20200213080642:
     class: App\Migrations\Version20200213080642
     skip: false
-20200210142710:
-    class: App\Migrations\Version20200210142710
-    skip: false
 20200214081059:
     class: App\Migrations\Version20200214081059
     skip: false
@@ -405,15 +402,6 @@
     skip: false
 20200219145345:
     class: App\Migrations\Version20200219145345
-    skip: false
-20200303101347:
-    class: App\Migrations\Version20200303101347
-    skip: false
-20200304065843:
-    class: App\Migrations\Version20200304065843
-    skip: false
-20200304112423:
-    class: App\Migrations\Version20200304112423
     skip: false
 20200226073300:
     class: App\Migrations\Version20200226073300
@@ -595,9 +583,6 @@
 20200514134336:
     class: App\Migrations\Version20200514134336
     skip: false
-20200513052823:
-    class: App\Migrations\Version20200513052823
-    skip: false
 20200520151921:
     class: App\Migrations\Version20200520151921
     skip: false
@@ -658,9 +643,6 @@
 20200623103836:
     class: App\Migrations\Version20200623103836
     skip: false
-20200701114244:
-    class: App\Migrations\Version20200701114244
-    skip: false
 20200714071640:
     class: App\Migrations\Version20200714071640
     skip: false
@@ -688,9 +670,6 @@
 20200729090755:
     class: App\Migrations\Version20200729090755
     skip: false
-20200730093849:
-    class: App\Migrations\Version20200730093849
-    skip: false
 20200716135132:
     class: App\Migrations\Version20200716135132
     skip: false
@@ -702,9 +681,6 @@
     skip: false
 20200814063510:
     class: App\Migrations\Version20200814063510
-    skip: false
-20200811103617:
-    class: App\Migrations\Version20200811103617
     skip: false
 20200723053320:
     class: App\Migrations\Version20200723053320
@@ -742,12 +718,6 @@
 20200907111826:
     class: App\Migrations\Version20200907111826
     skip: false
-20200825112115:
-    class: App\Migrations\Version20200825112115
-    skip: false
-20200828110816:
-    class: App\Migrations\Version20200828110816
-    skip: false
 20200909105747:
     class: App\Migrations\Version20200909105747
     skip: false
@@ -759,12 +729,6 @@
     skip: false
 20200914130309:
     class: App\Migrations\Version20200914130309
-    skip: false
-20200918114212:
-    class: App\Migrations\Version20200918114212
-    skip: false
-20200918183416:
-    class: App\Migrations\Version20200918183416
     skip: false
 20200914092721:
     class: App\Migrations\Version20200914092721
@@ -786,21 +750,6 @@
     skip: false
 20200924135656:
     class: App\Migrations\Version20200924135656
-    skip: false
-20200924145629:
-    class: App\Migrations\Version20200924145629
-    skip: false
-20200926142034:
-    class: App\Migrations\Version20200926142034
-    skip: false
-20200927082648:
-    class: App\Migrations\Version20200927082648
-    skip: false
-20200929044859:
-    class: App\Migrations\Version20200929044859
-    skip: false
-20200929084646:
-    class: App\Migrations\Version20200929084646
     skip: false
 20201006052634:
     class: App\Migrations\Version20201006052634

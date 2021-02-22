@@ -42,11 +42,6 @@ class CustomerUserFormTypeExtension extends AbstractTypeExtension
     {
         /** @var CustomerUser|null $customerUser */
         $customerUser = $options['customerUser'];
-        $systemData = $builder->get('systemData');
-        $systemData->add('erpCustomerNumber', DisplayOnlyType::class, [
-            'label' => t('Číslo zákazníka Moeve'),
-            'data' => $customerUser !== null ? $customerUser->getErpCustomerNumber() : '',
-        ]);
 
         $this->formBuilderHelper->disableFieldsByConfigurations($builder, self::DISABLED_FIELDS);
 

@@ -79,9 +79,7 @@ class CustomerUserDataFactory extends BaseUserDataFactory
      */
     protected function fillFromUser(BaseUserData $customerUserData, BaseUser $customerUser)
     {
-        $customerUserData->gender = $customerUser->getGender();
         $customerUserData->newsletterSubscription = $customerUser->isNewsletterSubscription();
-        $customerUserData->erpCustomerNumber = $customerUser->getErpCustomerNumber();
         parent::fillFromUser($customerUserData, $customerUser);
     }
 }

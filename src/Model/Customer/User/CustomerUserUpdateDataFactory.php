@@ -40,7 +40,6 @@ class CustomerUserUpdateDataFactory extends BaseCustomerUserUpdateDataFactory
         $customerUserData->password = $registrationData->password;
         $customerUserData->firstName = $registrationData->firstName;
         $customerUserData->telephone = $registrationData->telephone;
-        $customerUserData->gender = $registrationData->gender;
         $customerUserData->newsletterSubscription = $registrationData->newsletterSubscription;
 
         $customerUserUpdateData = $this->create();

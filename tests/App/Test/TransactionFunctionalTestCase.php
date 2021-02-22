@@ -30,20 +30,4 @@ abstract class TransactionFunctionalTestCase extends FunctionalTestCase
 
         parent::tearDown();
     }
-
-    /**
-     * @return int
-     */
-    protected function getNextPaymentExternalId(): int
-    {
-        return $this->em->createQuery('select max(p.externalId)+1 from App\Model\Payment\Payment p')->getSingleScalarResult();
-    }
-
-    /**
-     * @return int
-     */
-    protected function getNextTransportExternalId(): int
-    {
-        return $this->em->createQuery('select max(t.externalId)+1 from App\Model\Transport\Transport t')->getSingleScalarResult();
-    }
 }

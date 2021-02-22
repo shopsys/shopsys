@@ -58,7 +58,7 @@ use Shopsys\FrameworkBundle\Twig\NumberFormatterExtension;
 /**
  * @property \App\Model\Order\OrderRepository $orderRepository
  * @property \App\Model\Customer\User\CustomerUserFacade $customerUserFacade
- * @property \App\Model\Order\Status\OrderStatusRepository $orderStatusRepository
+ * @property \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusRepository $orderStatusRepository
  * @property \App\Model\Order\Mail\OrderMailFacade $orderMailFacade
  * @property \App\Component\Setting\Setting $setting
  * @property \App\Model\Administrator\Security\AdministratorFrontSecurityFacade $administratorFrontSecurityFacade
@@ -141,7 +141,7 @@ class OrderFacade extends BaseOrderFacade
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderNumberSequenceRepository $orderNumberSequenceRepository
      * @param \App\Model\Order\OrderRepository $orderRepository
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderUrlGenerator $orderUrlGenerator
-     * @param \App\Model\Order\Status\OrderStatusRepository $orderStatusRepository
+     * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusRepository $orderStatusRepository
      * @param \App\Model\Order\Mail\OrderMailFacade $orderMailFacade
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderHashGeneratorRepository $orderHashGeneratorRepository
      * @param \App\Component\Setting\Setting $setting
@@ -302,7 +302,6 @@ class OrderFacade extends BaseOrderFacade
             /** @var \App\Model\Order\Status\OrderStatus $status */
             $status = $this->orderStatusRepository->findById(OrderStatus::TYPE_OVER_LIMIT);
             $orderData->status = $status;
-            $orderData->scontoBridgeStatus = OrderScontoBridgeStatusEnum::STATUS_OVER_LIMIT;
         } else {
             /** @var \App\Model\Order\Status\OrderStatus $status */
             $status = $this->orderStatusRepository->getDefault();
@@ -495,7 +494,6 @@ class OrderFacade extends BaseOrderFacade
             $orderItemData->unitName = $product->getUnit()->getName($locale);
             $orderItemData->catnum = $product->getCatnum();
             $orderItemData->productType = $orderPreview->getProductType();
-            $orderItemData->flagCode = $product->findFirstFlagCode($order->getDomainId());
 
             $orderItem = $this->orderItemFactory->createProductByOrderItemData(
                 $orderItemData,
@@ -741,7 +739,6 @@ class OrderFacade extends BaseOrderFacade
     {
         $registrationData = $this->registrationDataFactory->createForDomainId($orderData->domainId);
 
-        $registrationData->gender = $orderData->gender;
         if ($orderData->isCompanyCustomer === true) {
             $registrationData->companyName = $orderData->companyName;
             $registrationData->companyNumber = $orderData->companyNumber;

@@ -7,8 +7,8 @@ namespace App\Form\Admin;
 use App\Model\Product\Type\ProductTypeFacade;
 use App\Model\Transport\Transport;
 use App\Model\Transport\TransportData;
-use App\Model\Transport\TransportFacade;
 use Shopsys\FormTypesBundle\YesNoType;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Form\Admin\Transport\TransportFormType;
 use Shopsys\FrameworkBundle\Form\GroupType;
 use Shopsys\FrameworkBundle\Form\ValidationGroup;
@@ -38,24 +38,20 @@ class TransportFormTypeExtension extends AbstractTypeExtension
     private $productTypeFacade;
 
     /**
-     * @var TransportFacade
+     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
      */
-    private TransportFacade $transportFacade;
+    private Domain $domain;
 
     /**
-     * @var Transport|null
-     */
-    private $transport;
-
-    /**
-     * @param \App\Model\Product\Type\ProductTypeFacade $productTypeFacade
-     * @param \App\Model\Transport\TransportFacade $transportFacade
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \App\Model\Product\Type\ProductTypeFacade $productTypeFacade
      */
-    public function __construct(ProductTypeFacade $productTypeFacade, TransportFacade $transportFacade)
-    {
+    public function __construct(
+        Domain $domain,
+        ProductTypeFacade $productTypeFacade
+    ) {
+        $this->domain = $domain;
         $this->productTypeFacade = $productTypeFacade;
-        $this->transportFacade = $transportFacade;
     }
 
     /**
@@ -63,7 +59,6 @@ class TransportFormTypeExtension extends AbstractTypeExtension
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $this->transport = $options['transport'];
         $builder->get('basicInformation')
             ->add('productTypes', ChoiceType::class, [
                 'required' => false,
@@ -91,13 +86,6 @@ class TransportFormTypeExtension extends AbstractTypeExtension
             ->add('isOverLimitTransport', YesNoType::class, [
                 'label' => t('Doprava pro nadlimitní množství'),
                 'required' => false,
-            ])
-            ->add('externalId', IntegerType::class, [
-                'label' => t('Párovací ID můstku'),
-                'required' => true,
-                'constraints' => [
-                    new NotBlank()
-                ]
             ])
             ->add('daysUntilDelivery', TextType::class, [
                 'required' => false,

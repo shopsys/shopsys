@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Model\Order;
 
-use App\Model\Stock\Stock;
 use Shopsys\FrameworkBundle\Model\Order\OrderData as BaseOrderData;
 
 /**
@@ -37,11 +36,6 @@ class OrderData extends BaseOrderData
     /**
      * @var string|null
      */
-    public $gender;
-
-    /**
-     * @var string|null
-     */
     public $password;
 
     /**
@@ -60,30 +54,14 @@ class OrderData extends BaseOrderData
     public $gtmCoupon;
 
     /**
-     * @var string
-     */
-    public $scontoBridgeStatus;
-
-    /**
      * @var bool
      */
     public $isOverLimit;
-
-    /**
-     * @var string|null
-     */
-    public $erpNumber;
-
-    /**
-     * @var Stock|null
-     */
-    public $expeditionStock;
 
     public function __construct()
     {
         parent::__construct();
 
         $this->isCompanyCustomer = false;
-        $this->scontoBridgeStatus = OrderScontoBridgeStatusEnum::STATUS_NEW;
     }
 }

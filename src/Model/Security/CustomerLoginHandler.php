@@ -76,7 +76,7 @@ class CustomerLoginHandler extends BaseCustomerLoginHandler
 
         /** @var \App\Model\Customer\User\CustomerUser $customerUser */
         $customerUser = $this->customerUserFacade->findCustomerUserByEmailAndDomain($email, $this->domain->getId());
-        if ($customerUser !== null && $customerUser->getLastLogin() === null && $customerUser->getErpCustomerNumber() !== null) {
+        if ($customerUser !== null && $customerUser->getLastLogin() === null) {
             $responseData['errorMessage'] = t('Přihlašujete se poprvé na novém e-shopu, prosím nastavte si heslo pomocí funkce “Obnovení hesla”.');
         }
     }

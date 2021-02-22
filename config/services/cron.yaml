@@ -44,22 +44,6 @@ services:
         tags:
             - { name: shopsys.cron, hours: '*', minutes: '20', instanceName: importAkeneoProduct, readableName: 'Import číselníku příznaků z Akeneo' }
 
-    App\Model\Customer\Transfer\ScontoBridge\ScontoBridgeImportCustomerCronModule:
-        tags:
-            - { name: shopsys.cron, hours: '*', minutes: '*/5', instanceName: importIM, readableName: 'Import zákazníků z IM' }
-
-    App\Model\Product\Transfer\ScontoBridge\ScontoBridgeImportProductStockCronModule:
-        tags:
-            - { name: shopsys.cron, hours: '*', minutes: '*/5', instanceName: importIM, readableName: 'Import skladovách zásob z IM' }
-
-    App\Model\Product\Transfer\ScontoBridge\ScontoBridgeImportFutureProductStockCronModule:
-        tags:
-            - { name: shopsys.cron, hours: '*', minutes: '*/5', instanceName: importIM, readableName: 'Import budoucích skladovách zásob z IM' }
-
-    App\Model\Product\Transfer\ScontoBridge\ScontoBridgeImportExposedProductCronModule:
-        tags:
-            - { name: shopsys.cron, hours: '*', minutes: '*/5', instanceName: importIM, readableName: 'Import vystavených produktů z IM' }
-
     App\Model\Transfer\Issue\TransferIssueLogCleanerCronModule:
         tags:
             - { name: shopsys.cron, hours: '23', minutes: '10', instanceName: service, readableName: 'Mazání starých problémů v přenosech' }
@@ -95,14 +79,6 @@ services:
         tags:
             - { name: shopsys.cron, hours: '21', minutes: '10', instanceName: service, readableName: 'Generate Error pages' }
 
-    App\Model\Order\Transfer\ScontoBridge\OrderTransferScontoBridgeCronModule:
+    App\Component\ScontoBridge\DummyCronModule:
         tags:
-            - { name: shopsys.cron, hours: '*', minutes: '*', instanceName: orders, readableName: 'Export objednávek do můstku' }
-
-    App\Model\Customer\Transfer\ScontoBridge\ScontoBridgeExportCustomerCronModule:
-        tags:
-            - { name: shopsys.cron, hours: '*', minutes: '*/5', instanceName: export, readableName: 'Export zákazníků do můstku' }
-
-    App\Model\Order\Transfer\ScontoBridge\OrderTransferScontoBridgeImportCronModule:
-        tags:
-            - { name: shopsys.cron, hours: '*', minutes: '*', instanceName: orders, readableName: 'Import objednávek z můstku' }
+            - { name: shopsys.cron, hours: '*', minutes: '*/5', instanceName: scontoBridgeImport, readableName: 'Dummy sconto bridge import' }

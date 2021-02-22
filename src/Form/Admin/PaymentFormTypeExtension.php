@@ -6,17 +6,11 @@ namespace App\Form\Admin;
 
 use App\Model\GoPay\PaymentMethod\GoPayPaymentMethodFacade;
 use App\Model\Payment\Payment;
-use App\Model\Payment\PaymentFacade;
 use Shopsys\FormTypesBundle\YesNoType;
 use Shopsys\FrameworkBundle\Form\Admin\Payment\PaymentFormType;
 use Symfony\Component\Form\AbstractTypeExtension;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\IntegerType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Validator\Constraints\Callback;
-use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 class PaymentFormTypeExtension extends AbstractTypeExtension
 {
@@ -26,22 +20,11 @@ class PaymentFormTypeExtension extends AbstractTypeExtension
     private $goPayPaymentMethodFacade;
 
     /**
-     * @var PaymentFacade
-     */
-    private PaymentFacade $paymentFacade;
-
-    /**
-     * @var Payment|null
-     */
-    private $payment;
-
-    /**
      * @param \App\Model\GoPay\PaymentMethod\GoPayPaymentMethodFacade $goPayPaymentMethodFacade
      */
-    public function __construct(GoPayPaymentMethodFacade $goPayPaymentMethodFacade, PaymentFacade $paymentFacade)
+    public function __construct(GoPayPaymentMethodFacade $goPayPaymentMethodFacade)
     {
         $this->goPayPaymentMethodFacade = $goPayPaymentMethodFacade;
-        $this->paymentFacade = $paymentFacade;
     }
 
     /**
@@ -49,8 +32,6 @@ class PaymentFormTypeExtension extends AbstractTypeExtension
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $this->payment = $options['payment'];
-
         $builderBasicInformationGroup = $builder->get('basicInformation');
 
         $builderBasicInformationGroup
@@ -82,20 +63,6 @@ class PaymentFormTypeExtension extends AbstractTypeExtension
             ->add('isOverLimitPayment', YesNoType::class, [
                 'label' => t('Platba pro nadlimitní množství'),
                 'required' => false,
-            ])
-            ->add('externalId', IntegerType::class, [
-                'label' => t('Párovací ID můstku'),
-                'required' => true,
-                'constraints' => [
-                    new NotBlank()
-                ]
-            ])
-            ->add('meanOfPayment', TextType::class, [
-                'label' => t('Moeve - MeanOfPayment'),
-                'required' => true,
-                'constraints' => [
-                    new NotBlank(),
-                ]
             ]);
 
         if ($options['payment'] !== null) {

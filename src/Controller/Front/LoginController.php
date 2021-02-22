@@ -117,7 +117,7 @@ class LoginController extends FrontBaseController
         }
 
         /** @var \App\Model\Customer\User\CustomerUser $user */
-        if ($user !== null && $user->getLastLogin() === null && $user->getErpCustomerNumber() !== null) {
+        if ($user !== null && $user->getLastLogin() === null) {
             $responseData['errorHeader'] = t('Vaše první přihlášení');
             $responseData['errorMessage'] = t('Přihlašujete se poprvé na novém e-shopu, prosím nastavte si heslo pomocí funkce “Obnovení hesla”.');
         }

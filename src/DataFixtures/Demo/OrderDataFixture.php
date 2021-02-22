@@ -25,7 +25,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
     public const ORDER_PREFIX = 'order_';
 
     /**
-     * @var \App\Model\Customer\User\CustomerUserRepository
+     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRepository
      */
     private $customerUserRepository;
 
@@ -60,7 +60,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
     private $currencyFacade;
 
     /**
-     * @param \App\Model\Customer\User\CustomerUserRepository $customerUserRepository
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRepository $customerUserRepository
      * @param \Faker\Generator $faker
      * @param \App\Model\Order\OrderFacade $orderFacade
      * @param \App\Model\Order\Preview\OrderPreviewFactory $orderPreviewFactory
