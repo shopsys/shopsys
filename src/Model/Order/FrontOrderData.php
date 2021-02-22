@@ -24,14 +24,9 @@ class FrontOrderData extends BaseFrontOrderData
     public $companyVatNumber;
 
     /**
-     * @var \App\Model\Transport\Transport[]|null[]
+     * @var \App\Model\Stock\Stock|null
      */
-    public $transportsByProductTypeId;
-
-    /**
-     * @var \App\Model\Stock\Stock[]|null[]
-     */
-    public $transportPersonalPickupStockByProductTypeId;
+    public $personalPickupStock;
 
     /**
      * @var \App\Model\GoPay\BankSwift\GoPayBankSwift

@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\Order\Preview;
 
-use App\Model\Product\Type\ProductType;
 use App\Model\Stock\Stock;
-use RuntimeException;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreview as BaseOrderPreview;
 use Shopsys\FrameworkBundle\Model\Payment\Payment;
@@ -15,11 +13,6 @@ use Shopsys\FrameworkBundle\Model\Transport\Transport;
 
 class OrderPreview extends BaseOrderPreview
 {
-    /**
-     * @var \App\Model\Product\Type\ProductType|null
-     */
-    private $productType;
-
     /**
      * @var \Shopsys\FrameworkBundle\Model\Pricing\Price
      */
@@ -92,7 +85,6 @@ class OrderPreview extends BaseOrderPreview
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Price|null $paymentPrice
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Price|null $roundingPrice
      * @param null $promoCodeDiscountPercent
-     * @param \App\Model\Product\Type\ProductType|null $productType
      * @param \App\Model\Stock\Stock|null $personalPickupStock
      * @param \Shopsys\FrameworkBundle\Component\Money\Money|null $restToFreeTransportPrice
      * @param int|null $percentageOfFreeTransport
@@ -117,7 +109,6 @@ class OrderPreview extends BaseOrderPreview
         ?Price $paymentPrice = null,
         ?Price $roundingPrice = null,
         $promoCodeDiscountPercent = null,
-        ?ProductType $productType = null,
         ?Stock $personalPickupStock = null,
         ?Money $restToFreeTransportPrice = null,
         ?int $percentageOfFreeTransport = null,
@@ -139,7 +130,6 @@ class OrderPreview extends BaseOrderPreview
             $promoCodeDiscountPercent
         );
 
-        $this->productType = $productType;
         $this->totalProductHighPrice = $totalProductHighPrice;
         $this->personalPickupStock = $personalPickupStock;
         $this->productsAvailability = $productsAvailability;
@@ -151,18 +141,6 @@ class OrderPreview extends BaseOrderPreview
         $this->productsFullPrice = $productsFullPrice;
         $this->totalPriceDiscount = $totalPriceDiscount;
         $this->promoCodeIdentifier = $promoCodeIdentifier;
-    }
-
-    /**
-     * @return \App\Model\Product\Type\ProductType
-     */
-    public function getProductType(): ProductType
-    {
-        if ($this->productType === null) {
-            throw new RuntimeException('Product type is null. Please create OrderPreview with this parameter for your scenario.');
-        }
-
-        return $this->productType;
     }
 
     /**

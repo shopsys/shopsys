@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Form\Admin\Transformer;
 
 use App\Model\Stock\Exception\StockNotFoundException;
+use App\Model\Stock\Stock;
 use App\Model\Stock\StockRepository;
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\Exception\TransformationFailedException;
@@ -25,43 +26,28 @@ class StockIdToStockTransformer implements DataTransformerInterface
     }
 
     /**
-     * @param \App\Model\Stock\Stock[]|null $stocksByProductTypeId
-     * @return int[]
+     * @param \App\Model\Stock\Stock|null $stock
+     * @return int|null
      */
-    public function transform($stocksByProductTypeId)
+    public function transform($stock): ?int
     {
-        $stockIds = [];
-
-        if (is_iterable($stocksByProductTypeId)) {
-            foreach ($stocksByProductTypeId as $productTypeId => $stock) {
-                $stockIds[$productTypeId] = $stock->getId();
-            }
-        }
-
-        return $stockIds;
+        return $stock !== null ? $stock->getId() : null;
     }
 
     /**
-     * @param int[]|null[] $stockIdsByProductTypeId
-     * @return \App\Model\Stock\Stock[]|null
+     * @param int|null $stockId
+     * @return \App\Model\Stock\Stock|null
      */
-    public function reverseTransform($stockIdsByProductTypeId)
+    public function reverseTransform($stockId): ?Stock
     {
-        $stocks = [];
-        if (is_array($stockIdsByProductTypeId)) {
-            foreach ($stockIdsByProductTypeId as $productTypeId => $stockId) {
-                if ($stockId === null) {
-                    continue;
-                }
-
-                try {
-                    $stocks[$productTypeId] = $this->stockRepository->getById($stockId);
-                } catch (StockNotFoundException $e) {
-                    throw new TransformationFailedException('Stock not found', 0, $e);
-                }
-            }
+        if ($stockId === null) {
+            return null;
         }
 
-        return $stocks;
+        try {
+            return $this->stockRepository->getById($stockId);
+        } catch (StockNotFoundException $e) {
+            throw new TransformationFailedException('Stock not found', 0, $e);
+        }
     }
 }

@@ -69,16 +69,14 @@ class MailTemplateFacade extends BaseMailTemplateFacade
     public function getOrderStatusTemplatesByOrder(Order $order): array
     {
         $mailTemplates = [];
-        foreach ($order->getTransports() as $transport) {
-            $mailTemplate = $this->mailTemplateRepository->findOrderStatusMailTemplate(
-                $order->getDomainId(),
-                $transport,
-                $order->getPayment(),
-                $order->getStatus()
-            );
-            if ($mailTemplate !== null) {
-                $mailTemplates[] = $mailTemplate;
-            }
+        $mailTemplate = $this->mailTemplateRepository->findOrderStatusMailTemplate(
+            $order->getDomainId(),
+            $order->getTransport(),
+            $order->getPayment(),
+            $order->getStatus()
+        );
+        if ($mailTemplate !== null) {
+            $mailTemplates[] = $mailTemplate;
         }
 
         return $mailTemplates;

@@ -100,7 +100,6 @@ class OrderItemFactory extends BaseOrderItemFactory
             $orderItemData->catnum,
             $product
         );
-        $orderItem->setProductType($orderItemData->productType);
         $orderItem->setPromoCodeIdentifier($orderItemData->promoCodeIdentifier);
         $orderItem->setRelatedOrderItem($orderItemData->relatedOrderItem);
 
@@ -123,7 +122,6 @@ class OrderItemFactory extends BaseOrderItemFactory
             $orderItemData->quantity,
             $orderItemData->payment
         );
-        $orderItem->setProductType($orderItemData->productType);
 
         return $orderItem;
     }
@@ -144,7 +142,6 @@ class OrderItemFactory extends BaseOrderItemFactory
             $orderItemData->quantity,
             $orderItemData->transport
         );
-        $orderItem->setProductType($orderItemData->productType);
         $orderItem->setPersonalPickupStock($orderItemData->personalPickupStock);
 
         return $orderItem;

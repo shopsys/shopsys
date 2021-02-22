@@ -15,5 +15,3 @@ parameters:
     test_mailer_password: ~
 
     shopsys.content_dir_name: 'content-test'
-
-    disable_form_fields_from_transfer: false

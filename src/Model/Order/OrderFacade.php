@@ -12,9 +12,6 @@ use App\Model\Customer\User\RegistrationFacade;
 use App\Model\GoPay\GoPayTransaction;
 use App\Model\Gtm\GtmHelper;
 use App\Model\Order\Item\OrderItemDataFactory;
-use App\Model\Order\Preview\OrderPreview;
-use App\Model\Order\Preview\OrderPreviewSplittingFacade;
-use App\Model\Order\Preview\SplitOrderPreview;
 use App\Model\Order\Status\OrderStatus;
 use App\Model\Payment\Payment;
 use BadMethodCallException;
@@ -31,7 +28,6 @@ use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateData;
 use Shopsys\FrameworkBundle\Model\Heureka\HeurekaFacade;
 use Shopsys\FrameworkBundle\Model\Localization\Localization;
-use Shopsys\FrameworkBundle\Model\Order\Exception\OrderHashGenerateException;
 use Shopsys\FrameworkBundle\Model\Order\FrontOrderDataMapper;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItem;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemFactoryInterface;
@@ -69,7 +65,7 @@ use Shopsys\FrameworkBundle\Twig\NumberFormatterExtension;
  * @property \App\Model\Order\Preview\OrderPreviewFactory $orderPreviewFactory
  * @property \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
  * @property \App\Model\Order\FrontOrderDataMapper $frontOrderDataMapper
- * @property \App\Model\Transport\TransportPriceCalculation $transportPriceCalculation
+ * @property \Shopsys\FrameworkBundle\Model\Transport\TransportPriceCalculation $transportPriceCalculation
  * @property \App\Model\Order\Item\OrderItemFactory $orderItemFactory
  * @method \App\Model\Order\Order createOrder(\App\Model\Order\OrderData $orderData, \Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreview $orderPreview, \App\Model\Customer\User\CustomerUser|null $customerUser)
  * @method sendHeurekaOrderInfo(\App\Model\Order\Order $order, bool $disallowHeurekaVerifiedByCustomers)
@@ -84,15 +80,12 @@ use Shopsys\FrameworkBundle\Twig\NumberFormatterExtension;
  * @method \App\Model\Order\Order getByUrlHashAndDomain(string $urlHash, int $domainId)
  * @method \App\Model\Order\Order getByOrderNumberAndUser(string $orderNumber, \App\Model\Customer\User\CustomerUser $customerUser)
  * @method setOrderDataAdministrator(\App\Model\Order\OrderData $orderData)
- * @method fillOrderItems(\App\Model\Order\Order $order, \Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreview $orderPreview)
- * @method fillOrderPayment(\App\Model\Order\Order $order, \Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreview $orderPreview, string $locale)
- * @method fillOrderTransport(\App\Model\Order\Order $order, \Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreview $orderPreview, string $locale)
- * @method fillOrderRounding(\App\Model\Order\Order $order, \Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreview $orderPreview, string $locale)
  * @method addOrderItemDiscount(\App\Model\Order\Item\OrderItem $orderItem, \Shopsys\FrameworkBundle\Model\Pricing\Price $quantifiedItemDiscount, string $locale, float $discountPercent)
  * @method refreshOrderItemsWithoutTransportAndPayment(\App\Model\Order\Order $order, \App\Model\Order\OrderData $orderData)
  * @method calculateOrderItemDataPrices(\App\Model\Order\Item\OrderItemData $orderItemData, int $domainId)
  * @method updateOrderDataWithDeliveryAddress(\App\Model\Order\OrderData $orderData, \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress|null $deliveryAddress)
  * @method updateTransportAndPaymentNamesInOrderData(\App\Model\Order\OrderData $orderData, \App\Model\Order\Order $order)
+ * @method fillOrderItems(\App\Model\Order\Order $order, \Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreview $orderPreview)
  */
 class OrderFacade extends BaseOrderFacade
 {
@@ -102,11 +95,6 @@ class OrderFacade extends BaseOrderFacade
      * @var \App\Model\Order\Item\OrderItemDataFactory
      */
     private $orderItemDataFactory;
-
-    /**
-     * @var \App\Model\Order\Preview\OrderPreviewSplittingFacade
-     */
-    private $cartSplittingFacade;
 
     /**
      * @var \App\Model\Order\OrderDataFactory
@@ -163,10 +151,9 @@ class OrderFacade extends BaseOrderFacade
      * @param \App\Model\Order\FrontOrderDataMapper $frontOrderDataMapper
      * @param \Shopsys\FrameworkBundle\Twig\NumberFormatterExtension $numberFormatterExtension
      * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentPriceCalculation $paymentPriceCalculation
-     * @param \App\Model\Transport\TransportPriceCalculation $transportPriceCalculation
+     * @param \Shopsys\FrameworkBundle\Model\Transport\TransportPriceCalculation $transportPriceCalculation
      * @param \App\Model\Order\Item\OrderItemFactory $orderItemFactory
      * @param \App\Model\Order\Item\OrderItemDataFactory $orderItemDataFactory
-     * @param \App\Model\Order\Preview\OrderPreviewSplittingFacade $cartSplittingFacade
      * @param \App\Model\Order\OrderDataFactory $orderDataFactory
      * @param \App\Model\Customer\User\RegistrationDataFactory $registrationDataFactory
      * @param \App\Model\Customer\User\RegistrationFacade $registrationFacade
@@ -202,7 +189,6 @@ class OrderFacade extends BaseOrderFacade
         TransportPriceCalculation $transportPriceCalculation,
         OrderItemFactoryInterface $orderItemFactory,
         OrderItemDataFactory $orderItemDataFactory,
-        OrderPreviewSplittingFacade $cartSplittingFacade,
         OrderDataFactory $orderDataFactory,
         RegistrationDataFactory $registrationDataFactory,
         RegistrationFacade $registrationFacade,
@@ -240,33 +226,12 @@ class OrderFacade extends BaseOrderFacade
         );
 
         $this->orderItemDataFactory = $orderItemDataFactory;
-        $this->cartSplittingFacade = $cartSplittingFacade;
         $this->orderDataFactory = $orderDataFactory;
         $this->registrationDataFactory = $registrationDataFactory;
         $this->registrationFacade = $registrationFacade;
         $this->countryFacade = $countryFacade;
         $this->gtmHelper = $gtmHelper;
         $this->customerUserUpdateDataFactory = $customerUserUpdateDataFactory;
-    }
-
-    /**
-     * @return string
-     */
-    private function getNextNumber(): string
-    {
-        $triesCount = 0;
-        do {
-            $random = substr((string)random_int(1000000, 2999999), 1);
-
-            $number = date('y') . $random;
-            $order = $this->orderRepository->findByNumber($number);
-            $triesCount++;
-            if ($triesCount > self::MAX_GENERATE_TRIES) {
-                throw new OrderHashGenerateException('Trying generate order number reached the limit.');
-            }
-        } while ($order !== null);
-
-        return $number;
     }
 
     /**
@@ -290,15 +255,9 @@ class OrderFacade extends BaseOrderFacade
             $promoCode->decreaseRemainingUses();
         }
 
-        $splitOrderPreview = $this->cartSplittingFacade->createSplitOrderPreviewForCurrentCustomer($orderData);
-
         $orderData->isOverLimit = false;
-        foreach ($splitOrderPreview->getOrderPreviews() as $orderPreview) {
-            /** @var \App\Model\Transport\Transport $transport */
-            $transport = $orderPreview->getTransport();
-            if ($transport->isOverLimitTransport() === true) {
-                $orderData->isOverLimit = true;
-            }
+        if ($orderData->transport->isOverLimitTransport() === true) {
+            $orderData->isOverLimit = true;
         }
 
         if ($orderData->isOverLimit === true) {
@@ -325,7 +284,8 @@ class OrderFacade extends BaseOrderFacade
         $promoCode = $this->currentPromoCodeFacade->getValidEnteredPromoCodeOrNull();
         $this->gtmHelper->amendGtmCouponToOrderData($orderData, $promoCode);
 
-        $order = $this->createOrderBySplitOrderPreview($orderData, $splitOrderPreview, $customerUser);
+        $orderPreview = $this->orderPreviewFactory->createForCurrentUser($orderData->transport, $orderData->payment);
+        $order = $this->createOrder($orderData, $orderPreview, $customerUser);
 
         $this->cartFacade->deleteCartOfCurrentCustomerUser();
         $this->currentPromoCodeFacade->removeEnteredPromoCode();
@@ -354,115 +314,6 @@ class OrderFacade extends BaseOrderFacade
         }
 
         return $order;
-    }
-
-    /**
-     * @param \App\Model\Order\OrderData $orderData
-     * @param \App\Model\Order\Preview\SplitOrderPreview $splitOrderPreview
-     * @param \App\Model\Customer\User\CustomerUser|null $customerUser
-     * @return \App\Model\Order\Order
-     */
-    public function createOrderBySplitOrderPreview(BaseOrderData $orderData, SplitOrderPreview $splitOrderPreview, ?CustomerUser $customerUser): Order
-    {
-        $orderNumber = $this->getNextNumber();
-        $orderUrlHash = $this->orderHashGeneratorRepository->getUniqueHash();
-        $toFlush = [];
-
-        $this->setOrderDataAdministrator($orderData);
-
-        /** @var \App\Model\Order\Order $order */
-        $order = $this->orderFactory->create(
-            $orderData,
-            $orderNumber,
-            $orderUrlHash,
-            $customerUser
-        );
-        $toFlush[] = $order;
-
-        $this->fillOrderItemsBySplitOrderPreview($order, $splitOrderPreview);
-
-        foreach ($order->getItems() as $orderItem) {
-            $this->em->persist($orderItem);
-            $toFlush[] = $orderItem;
-        }
-
-        $order->setTotalPrice(
-            $this->orderPriceCalculation->getOrderTotalPrice($order)
-        );
-
-        $this->em->persist($order);
-        $this->em->flush($toFlush);
-
-        return $order;
-    }
-
-    /**
-     * @param \App\Model\Order\Order $order
-     * @param \App\Model\Order\Preview\SplitOrderPreview $splitOrderPreview
-     */
-    protected function fillOrderItemsBySplitOrderPreview(Order $order, SplitOrderPreview $splitOrderPreview): void
-    {
-        $locale = $this->domain->getDomainConfigById($order->getDomainId())->getLocale();
-
-        foreach ($splitOrderPreview->getOrderPreviews() as $orderPreview) {
-            $this->fillOrderProducts($order, $orderPreview, $locale);
-            $this->fillOrderTransportBySplitOrderPreview($order, $orderPreview, $locale, $splitOrderPreview);
-        }
-
-        $this->fillOrderPaymentBySplitOrderPreview($order, $splitOrderPreview, $locale);
-        $this->fillOrderRoundingBySplitOrderPreview($order, $splitOrderPreview, $locale);
-    }
-
-    /**
-     * @param \App\Model\Order\Order $order
-     * @param \App\Model\Order\Preview\SplitOrderPreview $splitOrderPreview
-     * @param string $locale
-     */
-    private function fillOrderPaymentBySplitOrderPreview(Order $order, SplitOrderPreview $splitOrderPreview, string $locale): void
-    {
-        $payment = $splitOrderPreview->getPayment();
-        $paymentPrice = $splitOrderPreview->getTransportAndPaymentPricesPreview()->getPaymentPrice($payment);
-
-        $orderItemData = $this->orderItemDataFactory->create();
-        $orderItemData->name = $payment->getName($locale);
-        $orderItemData->priceWithoutVat = $paymentPrice->getPriceWithoutVat();
-        $orderItemData->priceWithVat = $paymentPrice->getPriceWithVat();
-        $orderItemData->vatPercent = $payment->getPaymentDomain($order->getDomainId())->getVat()->getPercent();
-        $orderItemData->quantity = 1;
-        $orderItemData->payment = $payment;
-        $orderItemData->productType = $splitOrderPreview->getProductTypeForCommonItems();
-        $orderPayment = $this->orderItemFactory->createPaymentByOrderItemData(
-            $orderItemData,
-            $order
-        );
-        $order->addItem($orderPayment);
-    }
-
-    /**
-     * @param \App\Model\Order\Order $order
-     * @param \App\Model\Order\Preview\SplitOrderPreview $splitOrderPreview
-     * @param string $locale
-     */
-    private function fillOrderRoundingBySplitOrderPreview(Order $order, SplitOrderPreview $splitOrderPreview, string $locale): void
-    {
-        $roundingPrice = $splitOrderPreview->getRoundingPrice();
-        if ($roundingPrice === null) {
-            return;
-        }
-
-        $orderItemData = $this->orderItemDataFactory->create();
-        $orderItemData->name = t('Rounding', [], 'messages', $locale);
-        $orderItemData->priceWithoutVat = $roundingPrice->getPriceWithoutVat();
-        $orderItemData->priceWithVat = $roundingPrice->getPriceWithVat();
-        $orderItemData->vatPercent = '0';
-        $orderItemData->quantity = 1;
-        $orderItemData->productType = $splitOrderPreview->getProductTypeForCommonItems();
-
-        $this->orderItemFactory->createProductByOrderItemData(
-            $orderItemData,
-            $order,
-            null
-        );
     }
 
     /**
@@ -497,7 +348,6 @@ class OrderFacade extends BaseOrderFacade
             $orderItemData->quantity = $quantifiedProduct->getQuantity();
             $orderItemData->unitName = $product->getUnit()->getName($locale);
             $orderItemData->catnum = $product->getCatnum();
-            $orderItemData->productType = $orderPreview->getProductType();
 
             $orderItem = $this->orderItemFactory->createProductByOrderItemData(
                 $orderItemData,
@@ -518,49 +368,6 @@ class OrderFacade extends BaseOrderFacade
             );
             $orderItem->setRelatedOrderItem($coupon);
         }
-    }
-
-    /**
-     * @param \App\Model\Order\Order $order
-     * @param \App\Model\Order\Preview\OrderPreview $orderPreview
-     * @param string $locale
-     * @param \App\Model\Order\Preview\SplitOrderPreview $splitOrderPreview
-     */
-    protected function fillOrderTransportBySplitOrderPreview(
-        Order $order,
-        OrderPreview $orderPreview,
-        string $locale,
-        SplitOrderPreview $splitOrderPreview
-    ): void {
-        /** @var \App\Model\Transport\Transport $transport */
-        $transport = $orderPreview->getTransport();
-        $transportPrice = $splitOrderPreview->getTransportAndPaymentPricesPreview()->getTransportPrice(
-            $transport,
-            $orderPreview->getProductType()
-        );
-
-        $orderItemData = $this->orderItemDataFactory->create();
-
-        $transportName = $transport->getName($locale);
-        $stock = $orderPreview->getPersonalPickupStock();
-        if ($stock !== null) {
-            $transportName = sprintf('%s %s %s %s', $transportName, $stock->getName(), $stock->getStreet(), $stock->getCity());
-            $orderItemData->personalPickupStock = $stock;
-        }
-
-        $orderItemData->name = $transportName;
-        $orderItemData->priceWithoutVat = $transportPrice->getPriceWithoutVat();
-        $orderItemData->priceWithVat = $transportPrice->getPriceWithVat();
-        $orderItemData->vatPercent = $transport->getTransportDomain($order->getDomainId())->getVat()->getPercent();
-        $orderItemData->quantity = 1;
-        $orderItemData->transport = $transport;
-        $orderItemData->productType = $orderPreview->getProductType();
-
-        $orderTransport = $this->orderItemFactory->createTransportByOrderItemData(
-            $orderItemData,
-            $order
-        );
-        $order->addItem($orderTransport);
     }
 
     /**
@@ -592,7 +399,6 @@ class OrderFacade extends BaseOrderFacade
         $orderItemData->priceWithVat = $discountPrice->getPriceWithVat();
         $orderItemData->vatPercent = $orderItem->getVatPercent();
         $orderItemData->quantity = 1;
-        $orderItemData->productType = $orderItem->getProductType();
         $orderItemData->promoCodeIdentifier = $promoCodeIdentifier;
         $orderItemData->relatedOrderItem = $orderItem;
 
@@ -613,13 +419,8 @@ class OrderFacade extends BaseOrderFacade
         $orderDetailUrl = $this->orderUrlGenerator->getOrderDetailUrl($order);
         $orderSentPageContent = $this->setting->getForDomain(Setting::ORDER_SENT_PAGE_CONTENT, $order->getDomainId());
 
-        $transportsInstructions = [];
-        foreach ($order->getTransports() as $transport) {
-            $transportsInstructions[] = $transport->getInstructions();
-        }
-
         $variables = [
-            self::VARIABLE_TRANSPORT_INSTRUCTIONS => implode('<br /> ', $transportsInstructions),
+            self::VARIABLE_TRANSPORT_INSTRUCTIONS => $order->getTransport()->getInstructions(),
             self::VARIABLE_PAYMENT_INSTRUCTIONS => $order->getPayment()->getInstructions(),
             self::VARIABLE_ORDER_DETAIL_URL => $orderDetailUrl,
             self::VARIABLE_NUMBER => $order->getNumber(),
@@ -670,7 +471,6 @@ class OrderFacade extends BaseOrderFacade
         $orderItemData->vatPercent = $payment->getPaymentDomain($order->getDomainId())->getVat()->getPercent();
         $orderItemData->quantity = 1;
         $orderItemData->payment = $payment;
-        $orderItemData->productType = $order->getOrderPayment()->getProductType();
         $orderPayment = $this->orderItemFactory->createPaymentByOrderItemData($orderItemData, $order);
 
         $orderPaymentData = $this->orderItemDataFactory->createFromOrderItem($orderPayment);
@@ -805,27 +605,6 @@ class OrderFacade extends BaseOrderFacade
             }
         }
 
-        if (count($frontOrderFormData->transportsByProductTypeId) > 0) {
-            foreach ($frontOrderFormData->transportsByProductTypeId as $key => $transportByProductTypeId) {
-                if ($transportByProductTypeId === null) {
-                    continue;
-                }
-                $transportId = $transportByProductTypeId->getId();
-                $isTransportValid = false;
-                foreach ($transports as $transport) {
-                    if ($transport->getId() === $transportId) {
-                        $isTransportValid = true;
-                        break;
-                    }
-                }
-                if ($isTransportValid !== false) {
-                    continue;
-                }
-
-                unset($frontOrderFormData->transportsByProductTypeId[$key], $frontOrderFormData->transportPersonalPickupStockByProductTypeId[$key]);
-            }
-        }
-
         return $frontOrderFormData;
     }
 
@@ -855,5 +634,99 @@ class OrderFacade extends BaseOrderFacade
             $this->customerUserFacade->editByCustomerUser($customerUser->getId(), $customerUserUpdateData);
             $this->customerUserFacade->sendActivationMail($customerUser);
         }
+    }
+
+    /**
+     * @param \App\Model\Order\Order $order
+     * @param \App\Model\Order\Preview\OrderPreview $orderPreview
+     * @param string $locale
+     */
+    protected function fillOrderPayment(BaseOrder $order, BaseOrderPreview $orderPreview, string $locale): void
+    {
+        $payment = $order->getPayment();
+        $paymentPrice = $this->paymentPriceCalculation->calculatePrice(
+            $payment,
+            $order->getCurrency(),
+            $orderPreview->getProductsPrice(),
+            $order->getDomainId()
+        );
+
+        $orderItemData = $this->orderItemDataFactory->create();
+        $orderItemData->name = $payment->getName($locale);
+        $orderItemData->priceWithoutVat = $paymentPrice->getPriceWithoutVat();
+        $orderItemData->priceWithVat = $paymentPrice->getPriceWithVat();
+        $orderItemData->vatPercent = $payment->getPaymentDomain($order->getDomainId())->getVat()->getPercent();
+        $orderItemData->quantity = 1;
+        $orderItemData->payment = $payment;
+        $orderPayment = $this->orderItemFactory->createPaymentByOrderItemData(
+            $orderItemData,
+            $order
+        );
+
+        $order->addItem($orderPayment);
+    }
+
+    /**
+     * @param \App\Model\Order\Order $order
+     * @param \App\Model\Order\Preview\OrderPreview $orderPreview
+     * @param string $locale
+     */
+    protected function fillOrderTransport(BaseOrder $order, BaseOrderPreview $orderPreview, string $locale): void
+    {
+        $transport = $order->getTransport();
+        $transportPrice = $this->transportPriceCalculation->calculatePrice(
+            $transport,
+            $order->getCurrency(),
+            $orderPreview->getProductsPrice(),
+            $order->getDomainId()
+        );
+        $orderItemData = $this->orderItemDataFactory->create();
+
+        $transportName = $transport->getName($locale);
+        $stock = $orderPreview->getPersonalPickupStock();
+        if ($stock !== null) {
+            $transportName = sprintf('%s %s %s %s', $transportName, $stock->getName(), $stock->getStreet(), $stock->getCity());
+            $orderItemData->personalPickupStock = $stock;
+        }
+
+        $orderItemData->name = $transportName;
+        $orderItemData->priceWithoutVat = $transportPrice->getPriceWithoutVat();
+        $orderItemData->priceWithVat = $transportPrice->getPriceWithVat();
+        $orderItemData->vatPercent = $transport->getTransportDomain($order->getDomainId())->getVat()->getPercent();
+        $orderItemData->quantity = 1;
+        $orderItemData->transport = $transport;
+
+        $orderTransport = $this->orderItemFactory->createTransportByOrderItemData(
+            $orderItemData,
+            $order
+        );
+
+        $order->addItem($orderTransport);
+    }
+
+    /**
+     * @param \App\Model\Order\Order $order
+     * @param \App\Model\Order\Preview\OrderPreview $orderPreview
+     * @param string $locale
+     */
+    protected function fillOrderRounding(BaseOrder $order, BaseOrderPreview $orderPreview, string $locale): void
+    {
+        $roundingPrice = $orderPreview->getRoundingPrice();
+        if ($roundingPrice === null) {
+            return;
+        }
+
+        $orderItemData = $this->orderItemDataFactory->create();
+        $orderItemData->name = t('Rounding', [], 'messages', $locale);
+        $orderItemData->priceWithoutVat = $roundingPrice->getPriceWithoutVat();
+        $orderItemData->priceWithVat = $roundingPrice->getPriceWithVat();
+        $orderItemData->vatPercent = '0';
+        $orderItemData->quantity = 1;
+
+        $this->orderItemFactory->createProductByOrderItemData(
+            $orderItemData,
+            $order,
+            null
+        );
     }
 }

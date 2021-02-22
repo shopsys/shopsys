@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace App\Model\Transport;
 
-use App\Model\Product\Type\ProductType;
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Shopsys\FrameworkBundle\Model\Transport\Transport as BaseTransport;
 use Shopsys\FrameworkBundle\Model\Transport\TransportData as BaseTransportData;
@@ -24,11 +22,8 @@ use Shopsys\FrameworkBundle\Model\Transport\TransportData as BaseTransportData;
  */
 class Transport extends BaseTransport
 {
-    /**
-     * @var \App\Model\Product\Type\ProductType[]|\Doctrine\Common\Collections\ArrayCollection
-     * @ORM\ManyToMany(targetEntity="App\Model\Product\Type\ProductType")
-     */
-    private $productTypes;
+    public const TYPE_COMMON = 'common';
+    public const TYPE_PACKAGE = 'package';
 
     /**
      * @var bool
@@ -67,7 +62,6 @@ class Transport extends BaseTransport
     {
         parent::__construct($transportData);
 
-        $this->productTypes = new ArrayCollection($transportData->productTypes);
         $this->personalPickup = $transportData->personalPickup;
         $this->isOverLimitTransport = $transportData->isOverLimitTransport;
         $this->daysUntilDelivery = $transportData->daysUntilDelivery;
@@ -82,40 +76,11 @@ class Transport extends BaseTransport
     {
         parent::edit($transportData);
 
-        $this->editProductTypes($transportData->productTypes);
         $this->personalPickup = $transportData->personalPickup;
         $this->isOverLimitTransport = $transportData->isOverLimitTransport;
         $this->daysUntilDelivery = $transportData->daysUntilDelivery;
         $this->deliveryCode = $transportData->deliveryCode;
         $this->typeOfDeliveryKey = $transportData->typeOfDeliveryKey;
-    }
-
-    /**
-     * @param \App\Model\Product\Type\ProductType[] $productTypes
-     */
-    private function editProductTypes(array $productTypes): void
-    {
-        $this->productTypes->clear();
-        foreach ($productTypes as $productType) {
-            $this->productTypes->add($productType);
-        }
-    }
-
-    /**
-     * @return \App\Model\Product\Type\ProductType[]
-     */
-    public function getProductTypes(): array
-    {
-        return $this->productTypes->toArray();
-    }
-
-    /**
-     * @param \App\Model\Product\Type\ProductType $productType
-     * @return bool
-     */
-    public function hasProductType(ProductType $productType): bool
-    {
-        return $this->productTypes->contains($productType);
     }
 
     /**

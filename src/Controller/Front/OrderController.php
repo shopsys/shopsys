@@ -21,11 +21,10 @@ use App\Model\GoPay\PaymentMethod\GoPayPaymentMethod;
 use App\Model\Gtm\GtmFacade;
 use App\Model\Order\FrontOrderData;
 use App\Model\Order\Order;
-use App\Model\Order\OrderDataFactory;
+use App\Model\Order\OrderData;
 use App\Model\Order\OrderDataMapper;
-use App\Model\Order\Preview\OrderPreviewSplittingFacade;
-use App\Model\Order\Preview\SplitOrderPreview;
-use App\Model\Order\Watcher\SplitTransportAndPaymentWatcher;
+use App\Model\Order\Preview\OrderPreview;
+use App\Model\Order\Preview\OrderPreviewFactory;
 use App\Model\Payment\Payment;
 use App\Model\Product\Availability\ProductAvailabilityFacade;
 use App\Model\Stock\StockFacade;
@@ -38,11 +37,14 @@ use Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade;
 use Shopsys\FrameworkBundle\Model\Order\Exception\OrderNotFoundException;
 use Shopsys\FrameworkBundle\Model\Order\Mail\OrderMailFacade;
 use Shopsys\FrameworkBundle\Model\Order\OrderFacade;
+use Shopsys\FrameworkBundle\Model\Order\Watcher\TransportAndPaymentWatcher;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentFacade;
+use Shopsys\FrameworkBundle\Model\Payment\PaymentPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 use Shopsys\FrameworkBundle\Model\Security\Authenticator;
 use Shopsys\FrameworkBundle\Model\Security\Roles;
 use Shopsys\FrameworkBundle\Model\Transport\TransportFacade;
+use Shopsys\FrameworkBundle\Model\Transport\TransportPriceCalculation;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -85,9 +87,14 @@ class OrderController extends FrontBaseController
     private $orderFacade;
 
     /**
-     * @var \App\Model\Order\Watcher\SplitTransportAndPaymentWatcher
+     * @var \App\Model\Order\Preview\OrderPreviewFactory
      */
-    private $splitTransportAndPaymentWatcher;
+    private $orderPreviewFactory;
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Order\Watcher\TransportAndPaymentWatcher
+     */
+    private $transportAndPaymentWatcher;
 
     /**
      * @var \App\Model\Payment\PaymentFacade
@@ -95,14 +102,24 @@ class OrderController extends FrontBaseController
     private $paymentFacade;
 
     /**
+     * @var \Shopsys\FrameworkBundle\Model\Payment\PaymentPriceCalculation
+     */
+    private $paymentPriceCalculation;
+
+    /**
      * @var \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade
      */
     private $currencyFacade;
 
     /**
-     * @var \App\Model\Transport\TransportFacade
+     * @var \Shopsys\FrameworkBundle\Model\Transport\TransportFacade
      */
     private $transportFacade;
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Transport\TransportPriceCalculation
+     */
+    private $transportPriceCalculation;
 
     /**
      * @var \Symfony\Component\HttpFoundation\Session\SessionInterface
@@ -123,16 +140,6 @@ class OrderController extends FrontBaseController
      * @var \App\Model\GoPay\GoPayOnCurrentDomainFacade
      */
     private $goPayFacadeOnCurrentDomain;
-
-    /**
-     * @var \App\Model\Order\Preview\OrderPreviewSplittingFacade
-     */
-    private $orderPreviewSplittingFacade;
-
-    /**
-     * @var \App\Model\Order\OrderDataFactory
-     */
-    private $orderDataFactory;
 
     /**
      * @var \App\Model\Stock\StockFacade
@@ -177,22 +184,23 @@ class OrderController extends FrontBaseController
     /**
      * @param \App\Model\Order\OrderFacade $orderFacade
      * @param \App\Model\Cart\CartFacade $cartFacade
+     * @param \App\Model\Order\Preview\OrderPreviewFactory $orderPreviewFactory
+     * @param \Shopsys\FrameworkBundle\Model\Transport\TransportPriceCalculation $transportPriceCalculation
+     * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentPriceCalculation $paymentPriceCalculation
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \App\Model\Transport\TransportFacade $transportFacade
+     * @param \Shopsys\FrameworkBundle\Model\Transport\TransportFacade $transportFacade
      * @param \App\Model\Payment\PaymentFacade $paymentFacade
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
      * @param \App\Model\Order\OrderDataMapper $orderDataMapper
      * @param \App\Form\Front\Order\DomainAwareOrderFlowFactory $domainAwareOrderFlowFactory
      * @param \Symfony\Component\HttpFoundation\Session\SessionInterface $session
-     * @param \App\Model\Order\Watcher\SplitTransportAndPaymentWatcher $splitTransportAndPaymentWatcher
+     * @param \Shopsys\FrameworkBundle\Model\Order\Watcher\TransportAndPaymentWatcher $transportAndPaymentWatcher
      * @param \App\Model\Order\Mail\OrderMailFacade $orderMailFacade
      * @param \Shopsys\FrameworkBundle\Model\LegalConditions\LegalConditionsFacade $legalConditionsFacade
      * @param \App\Model\GoPay\BankSwift\GoPayBankSwiftFacade $goPayBankSwiftFacade
      * @param \App\Model\GoPay\GoPayOnCurrentDomainFacade $goPayFacadeOnCurrentDomain
      * @param \App\Model\GoPay\GoPayTransactionFacade $goPayTransactionFacade
      * @param \Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade $newsletterFacade
-     * @param \App\Model\Order\Preview\OrderPreviewSplittingFacade $orderPreviewSplittingFacade
-     * @param \App\Model\Order\OrderDataFactory $orderDataFactory
      * @param \App\Model\Stock\StockFacade $stockFacade
      * @param \App\Model\Gtm\GtmFacade $gtmFacade
      * @param \Shopsys\FrameworkBundle\Model\Security\Authenticator $authenticator
@@ -203,6 +211,9 @@ class OrderController extends FrontBaseController
     public function __construct(
         OrderFacade $orderFacade,
         CartFacade $cartFacade,
+        OrderPreviewFactory $orderPreviewFactory,
+        TransportPriceCalculation $transportPriceCalculation,
+        PaymentPriceCalculation $paymentPriceCalculation,
         Domain $domain,
         TransportFacade $transportFacade,
         PaymentFacade $paymentFacade,
@@ -210,15 +221,13 @@ class OrderController extends FrontBaseController
         OrderDataMapper $orderDataMapper,
         DomainAwareOrderFlowFactory $domainAwareOrderFlowFactory,
         SessionInterface $session,
-        SplitTransportAndPaymentWatcher $splitTransportAndPaymentWatcher,
+        TransportAndPaymentWatcher $transportAndPaymentWatcher,
         OrderMailFacade $orderMailFacade,
         LegalConditionsFacade $legalConditionsFacade,
         GoPayBankSwiftFacade $goPayBankSwiftFacade,
         GoPayOnCurrentDomainFacade $goPayFacadeOnCurrentDomain,
         GoPayTransactionFacade $goPayTransactionFacade,
         NewsletterFacade $newsletterFacade,
-        OrderPreviewSplittingFacade $orderPreviewSplittingFacade,
-        OrderDataFactory $orderDataFactory,
         StockFacade $stockFacade,
         GtmFacade $gtmFacade,
         Authenticator $authenticator,
@@ -228,6 +237,9 @@ class OrderController extends FrontBaseController
     ) {
         $this->orderFacade = $orderFacade;
         $this->cartFacade = $cartFacade;
+        $this->orderPreviewFactory = $orderPreviewFactory;
+        $this->transportPriceCalculation = $transportPriceCalculation;
+        $this->paymentPriceCalculation = $paymentPriceCalculation;
         $this->domain = $domain;
         $this->transportFacade = $transportFacade;
         $this->paymentFacade = $paymentFacade;
@@ -235,13 +247,11 @@ class OrderController extends FrontBaseController
         $this->orderDataMapper = $orderDataMapper;
         $this->domainAwareOrderFlowFactory = $domainAwareOrderFlowFactory;
         $this->session = $session;
-        $this->splitTransportAndPaymentWatcher = $splitTransportAndPaymentWatcher;
+        $this->transportAndPaymentWatcher = $transportAndPaymentWatcher;
         $this->orderMailFacade = $orderMailFacade;
         $this->legalConditionsFacade = $legalConditionsFacade;
         $this->goPayBankSwiftFacade = $goPayBankSwiftFacade;
         $this->goPayFacadeOnCurrentDomain = $goPayFacadeOnCurrentDomain;
-        $this->orderPreviewSplittingFacade = $orderPreviewSplittingFacade;
-        $this->orderDataFactory = $orderDataFactory;
         $this->stockFacade = $stockFacade;
         $this->goPayTransactionFacade = $goPayTransactionFacade;
         $this->newsletterFacade = $newsletterFacade;
@@ -275,11 +285,6 @@ class OrderController extends FrontBaseController
         $frontOrderFormData->currency = $currency;
         $goPayBankSwifts = $this->goPayBankSwiftFacade->getAllByCurrencyId($currency->getId());
 
-        $frontOrderFormData->transportsByProductTypeId = [];
-        foreach ($this->orderPreviewSplittingFacade->getUsedProductTypesInCurrentCart() as $productType) {
-            $frontOrderFormData->transportsByProductTypeId[$productType->getId()] = null;
-        }
-
         $orderFlow = $this->domainAwareOrderFlowFactory->create();
 
         if ($orderFlow->isBackToCartTransition()) {
@@ -293,6 +298,12 @@ class OrderController extends FrontBaseController
         }
         $this->session->remove(LoginController::SESSION_LOGIN_IN_ORDER_SUCCESS);
         $form = $orderFlow->createForm();
+
+        $payment = $frontOrderFormData->payment;
+        $transport = $frontOrderFormData->transport;
+
+        $orderPreview = $this->orderPreviewFactory->createForCurrentUser($transport, $payment);
+
         $isValid = $orderFlow->isValid($form);
         if ($customerUser instanceof CustomerUser) {
             // Overriding of email, because form field is disabled and data in session could be overridden in another old browser tab
@@ -301,28 +312,21 @@ class OrderController extends FrontBaseController
 
         /** @var \App\Model\Payment\Payment[] $payments */
         $payments = $this->paymentFacade->getVisibleOnCurrentDomain();
-        $payments = $this->paymentFacade->filterAllowedPaymentsForCurrentCart($payments);
 
         /** @var \App\Model\Transport\Transport[] $transports */
         $transports = $this->transportFacade->getVisibleOnCurrentDomain($payments);
 
         $frontOrderFormData = $this->orderFacade->revalidatePaymentAndTransport($frontOrderFormData, $payments, $transports);
         $orderData = $this->orderDataMapper->getOrderDataFromFrontOrderData($frontOrderFormData);
-        $splitOrderPreview = $this->orderPreviewSplittingFacade->createSplitOrderPreviewForCurrentCustomer($orderData);
 
         $isCompanyCustomer = $frontOrderFormData->companyCustomer;
 
         $stocksById = $this->stockFacade->getStocksWithoutCentralByDomainIdIndexedByStockId($domainId);
 
-        $this->checkTransportAndPaymentChanges($frontOrderFormData, $splitOrderPreview);
+        $this->checkTransportAndPaymentChanges($orderData, $orderPreview, $transports, $payments);
         if ($isValid) {
             if ($orderFlow->nextStep()) {
                 $form = $orderFlow->createForm();
-            } elseif ($splitOrderPreview->areAllTransportsSet() === false) {
-                $this->addInfoFlash(
-                    t('Došlo ke změně v košíku, která vyžaduje, aby jste překontrolovali dopravu objednávky.')
-                );
-                return $this->redirectToRoute('front_order_index');
             } elseif (count($this->getErrorMessages()) === 0 && count($this->getInfoMessages()) === 0) {
                 $deliveryAddress = $orderData->deliveryAddressSameAsBillingAddress === false ? $frontOrderFormData->deliveryAddress : null;
                 $orderCreatedResult = $this->orderFacade->createOrderFromFrontWithRegistration($orderData, $deliveryAddress, $frontOrderFormData);
@@ -362,7 +366,7 @@ class OrderController extends FrontBaseController
             $form->addError(new FormError(t('Please check the correctness of all data filled.')));
         }
 
-        $this->gtmFacade->onOrderPages($splitOrderPreview, $orderFlow->getCurrentStepNumber());
+        $this->gtmFacade->onOrderPages($orderPreview, $orderFlow->getCurrentStepNumber());
 
         if (
             $orderFlow->getCurrentStepNumber() === OrderFlow::STEP_THIRD
@@ -395,8 +399,21 @@ class OrderController extends FrontBaseController
         return $this->render('Front/Content/Order/index.html.twig', [
             'form' => $form->createView(),
             'flow' => $orderFlow,
-            'splitOrderPreview' => $splitOrderPreview,
+            'transport' => $transport,
+            'payment' => $payment,
             'payments' => $payments,
+            'transportsPrices' => $this->transportPriceCalculation->getCalculatedPricesIndexedByTransportId(
+                $transports,
+                $currency,
+                $orderPreview->getProductsPrice(),
+                $domainId
+            ),
+            'paymentsPrices' => $this->paymentPriceCalculation->getCalculatedPricesIndexedByPaymentId(
+                $payments,
+                $currency,
+                $orderPreview->getProductsPrice(),
+                $domainId
+            ),
             'transports' => $transports,
             'stocksById' => $stocksById,
             'termsAndConditionsArticle' => $this->legalConditionsFacade->findTermsAndConditions($this->domain->getId()),
@@ -409,6 +426,7 @@ class OrderController extends FrontBaseController
             'stockDayAvailabilitiesByStockId' => $stockDayAvailabilitiesByStockId,
             'customerInfo' => $customerInfo,
             'customerUser' => $customerUser,
+            'orderPreview' => $orderPreview,
         ]);
     }
 
@@ -437,64 +455,68 @@ class OrderController extends FrontBaseController
      */
     public function previewAction(Request $request): Response
     {
-        $transportIdsByProductTypeId = $request->get('transportIdsByProductTypeId');
+        $transportId = $request->get('transportId');
         $paymentId = $request->get('paymentId');
         $showProducts = $request->get('showProducts', true);
         $showAdvert = $request->get('showAdvert', true);
         $showPromo = $request->get('showPromo', true);
 
-        $orderData = $this->orderDataFactory->create();
-
-        if (is_array($transportIdsByProductTypeId) === false) {
-            $transportIdsByProductTypeId = [];
-        }
-
-        $orderData->transportsByProductTypeId = [];
-        foreach ($transportIdsByProductTypeId as $productTypeId => $transportId) {
+        if ($transportId === null) {
+            $transport = null;
+        } else {
             /** @var \App\Model\Transport\Transport $transport */
             $transport = $this->transportFacade->getById($transportId);
-            $orderData->transportsByProductTypeId[$productTypeId] = $transport;
         }
 
         if ($paymentId === null) {
-            $orderData->payment = null;
+            $payment = null;
         } else {
-            /** @var \App\Model\Payment\Payment $payment */
             $payment = $this->paymentFacade->getById($paymentId);
-            $orderData->payment = $payment;
         }
 
-        $splitOrderPreview = $this->orderPreviewSplittingFacade->createSplitOrderPreviewForCurrentCustomer($orderData);
+        $orderPreview = $this->orderPreviewFactory->createForCurrentUser($transport, $payment);
 
         return $this->render('Front/Content/Order/preview.html.twig', [
             'showProducts' => $showProducts,
-            'splitOrderPreview' => $splitOrderPreview,
+            'orderPreview' => $orderPreview,
             'showAdvert' => $showAdvert,
             'showPromo' => $showPromo,
         ]);
     }
 
     /**
-     * @param \App\Model\Order\FrontOrderData $frontOrderData
-     * @param \App\Model\Order\Preview\SplitOrderPreview $splitOrderPreview
+     * @param \App\Model\Order\OrderData $orderData
+     * @param \App\Model\Order\Preview\OrderPreview $orderPreview
+     * @param \App\Model\Transport\Transport[] $transports
+     * @param \App\Model\Payment\Payment[] $payments
      */
     private function checkTransportAndPaymentChanges(
-        FrontOrderData $frontOrderData,
-        SplitOrderPreview $splitOrderPreview
-    ): void {
-        $transportAndPaymentCheckResult = $this->splitTransportAndPaymentWatcher->checkTransportsAndPaymentBySplitOrderPreview(
-            $frontOrderData,
-            $splitOrderPreview
+        OrderData $orderData,
+        OrderPreview $orderPreview,
+        array $transports,
+        array $payments
+    ) {
+        $transportAndPaymentCheckResult = $this->transportAndPaymentWatcher->checkTransportAndPayment(
+            $orderData,
+            $orderPreview,
+            $transports,
+            $payments
         );
 
         if ($transportAndPaymentCheckResult->isTransportPriceChanged()) {
-            $this->addInfoFlash(
-                t('V průběhu objednávkového procesu byla změněna cena dopravy. Prosím, překontrolujte si objednávku.')
+            $this->addInfoFlashTwig(
+                t('The price of shipping {{ transportName }} changed during ordering process. Check your order, please.'),
+                [
+                    'transportName' => $orderData->transport->getName(),
+                ]
             );
         }
         if ($transportAndPaymentCheckResult->isPaymentPriceChanged()) {
-            $this->addInfoFlash(
-                t('V průběhu objednávkového procesu byla změněna cena platby. Prosím, překontrolujte si objednávku.')
+            $this->addInfoFlashTwig(
+                t('The price of payment {{ paymentName }} changed during ordering process. Check your order, please.'),
+                [
+                    'paymentName' => $orderData->payment->getName(),
+                ]
             );
         }
     }

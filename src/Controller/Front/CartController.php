@@ -10,7 +10,6 @@ use App\Model\Category\CategoryFacade;
 use App\Model\Gtm\GtmFacade;
 use App\Model\Gtm\GtmJsPushFacade;
 use App\Model\Order\Preview\OrderPreviewFactory;
-use App\Model\Order\Preview\OrderPreviewSplittingFacade;
 use App\Model\Product\Availability\ProductAvailabilityFacade;
 use App\Model\Product\ProductFacade;
 use BadMethodCallException;
@@ -70,11 +69,6 @@ class CartController extends FrontBaseController
     private $requestStack;
 
     /**
-     * @var \App\Model\Order\Preview\OrderPreviewSplittingFacade
-     */
-    private $orderPreviewSplittingFacade;
-
-    /**
      * @var \App\Model\Product\Availability\ProductAvailabilityFacade
      */
     private $productAvailabilityFacade;
@@ -111,7 +105,6 @@ class CartController extends FrontBaseController
      * @param \Shopsys\FrameworkBundle\Component\FlashMessage\ErrorExtractor $errorExtractor
      * @param \Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFacadeInterface $listedProductViewFacade
      * @param \Symfony\Component\HttpFoundation\RequestStack $requestStack
-     * @param \App\Model\Order\Preview\OrderPreviewSplittingFacade $cartSplittingFacade
      * @param \App\Model\Product\Availability\ProductAvailabilityFacade $productAvailabilityFacade
      * @param \App\Model\Product\ProductFacade $productFacade
      * @param \App\Model\Gtm\GtmFacade $gtmFacade
@@ -126,7 +119,6 @@ class CartController extends FrontBaseController
         ErrorExtractor $errorExtractor,
         ListedProductViewFacadeInterface $listedProductViewFacade,
         RequestStack $requestStack,
-        OrderPreviewSplittingFacade $cartSplittingFacade,
         ProductAvailabilityFacade $productAvailabilityFacade,
         ProductFacade $productFacade,
         GtmFacade $gtmFacade,
@@ -140,7 +132,6 @@ class CartController extends FrontBaseController
         $this->errorExtractor = $errorExtractor;
         $this->listedProductViewFacade = $listedProductViewFacade;
         $this->requestStack = $requestStack;
-        $this->orderPreviewSplittingFacade = $cartSplittingFacade;
         $this->productAvailabilityFacade = $productAvailabilityFacade;
         $this->productFacade = $productFacade;
         $this->gtmFacade = $gtmFacade;
@@ -218,13 +209,12 @@ class CartController extends FrontBaseController
             );
         }
 
-        $splitOrderPreview = $this->orderPreviewSplittingFacade->createSplitOrderPreviewForCurrentCustomer(null);
+        $orderPreview = $this->orderPreviewFactory->createForCurrentUser();
+        $this->gtmFacade->onOrderPages($orderPreview, 1);
 
-        $this->gtmFacade->onOrderPages($splitOrderPreview, 1);
-
-        $viewParameters['splitOrderPreview'] = $splitOrderPreview;
         $viewParameters['cart'] = $cart;
         $viewParameters['form'] = $form->createView();
+        $viewParameters['orderPreview'] = $this->orderPreviewFactory->createForCurrentUser();
         $viewParameters['maximumOrderQuantity'] = $maximumOrderQuantity;
 
         return $this->render('Front/Content/Cart/index.html.twig', $viewParameters);

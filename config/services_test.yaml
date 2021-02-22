@@ -59,9 +59,6 @@ services:
     League\Flysystem\FilesystemInterface:
         alias: main_filesystem
 
-    Shopsys\FrameworkBundle\Model\MultidomainEntityClassProvider:
-        alias: App\Model\MultidomainEntityClassProvider
-
     Shopsys\FrameworkBundle\Model\Article\ArticleFactoryInterface:
         alias: Shopsys\FrameworkBundle\Model\Article\ArticleFactory
 
@@ -103,22 +100,11 @@ services:
     Shopsys\FrameworkBundle\Model\Order\OrderDataFactoryInterface:
         alias: App\Model\Order\OrderDataFactory
 
-    App\Model\Order\Preview\OrderPreviewFactory: ~
-
-    Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreviewFactory:
-        alias: App\Model\Order\Preview\OrderPreviewFactory
-
     Shopsys\FrameworkBundle\Model\Order\PromoCode\CurrentPromoCodeFacade:
         alias: App\Model\Order\PromoCode\CurrentPromoCodeFacade
 
     Shopsys\FrameworkBundle\Model\Transport\TransportDataFactoryInterface:
         alias: App\Model\Transport\TransportDataFactory
-
-    Shopsys\FrameworkBundle\Model\Transport\TransportFacade:
-        alias: App\Model\Transport\TransportFacade
-
-    Shopsys\FrameworkBundle\Model\Transport\TransportPriceCalculation:
-        alias: App\Model\Transport\TransportPriceCalculation
 
     Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityDataFactoryInterface:
         alias: Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityDataFactory
@@ -133,8 +119,6 @@ services:
 
     Shopsys\FrameworkBundle\Model\Payment\PaymentDataFactoryInterface:
         alias: App\Model\Payment\PaymentDataFactory
-
-    App\Model\Product\ProductDataFactory: ~
 
     Shopsys\FrameworkBundle\Model\Product\ProductDataFactoryInterface:
         alias: App\Model\Product\ProductDataFactory
@@ -193,8 +177,6 @@ services:
 
     Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFactory:
         alias: App\Model\Product\Listed\ListedProductViewFactory
-
-    App\Model\Order\OrderFacade: ~
 
     Shopsys\FrameworkBundle\Model\Order\OrderFacade:
         alias: App\Model\Order\OrderFacade

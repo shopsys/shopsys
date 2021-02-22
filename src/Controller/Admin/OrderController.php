@@ -20,7 +20,6 @@ use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Order\OrderDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Order\OrderFacade;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
@@ -73,21 +72,6 @@ class OrderController extends BaseOrderController
         );
 
         $this->authorizationChecker = $authorizationChecker;
-    }
-
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param mixed $id
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function editAction(Request $request, $id): Response
-    {
-        // prevent editing of order on POST request
-        if ($request->getMethod() === Request::METHOD_POST) {
-            return $this->redirectToRoute('shopsys_framework_admin_order_edit', ['id' => $id]);
-        }
-
-        return parent::editAction($request, $id);
     }
 
     /**

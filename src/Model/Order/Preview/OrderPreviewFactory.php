@@ -7,7 +7,6 @@ namespace App\Model\Order\Preview;
 use App\Model\Cart\CartFacade;
 use App\Model\Order\PromoCode\CurrentPromoCodeFacade;
 use App\Model\Order\PromoCode\PromoCodeLimitResolver;
-use App\Model\Product\Type\ProductType;
 use App\Model\Stock\Stock;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
@@ -64,13 +63,11 @@ class OrderPreviewFactory extends BaseOrderPreviewFactory
     /**
      * @param \App\Model\Transport\Transport|null $transport
      * @param \App\Model\Payment\Payment|null $payment
-     * @param \App\Model\Product\Type\ProductType|null $productType
      * @return \App\Model\Order\Preview\OrderPreview
      */
     public function createForCurrentUser(
         ?Transport $transport = null,
-        ?Payment $payment = null,
-        ?ProductType $productType = null
+        ?Payment $payment = null
     ): OrderPreview {
         $currency = $this->currencyFacade->getDomainDefaultCurrencyByDomainId($this->domain->getId());
         $validEnteredPromoCode = $this->currentPromoCodeFacade->getValidEnteredPromoCodeOrNull();
@@ -96,43 +93,39 @@ class OrderPreviewFactory extends BaseOrderPreviewFactory
             $transport,
             $payment,
             $currentCustomerUser,
-            $validEnteredPromoCodePercent,
-            $productType
+            $validEnteredPromoCodePercent
         );
     }
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
      * @param int $domainId
-     * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct[] $productTypeQuantifiedProducts
+     * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct[] $quantifiedProducts
      * @param \App\Model\Transport\Transport|null $transport
      * @param \App\Model\Payment\Payment|null $payment
      * @param \App\Model\Customer\User\CustomerUser|null $customerUser
      * @param string|null $promoCodeDiscountPercent
-     * @param \App\Model\Product\Type\ProductType|null $productType
      * @param \App\Model\Stock\Stock|null $personalPickupStock
      * @return \App\Model\Order\Preview\OrderPreview
      */
     public function create(
         Currency $currency,
         $domainId,
-        array $productTypeQuantifiedProducts,
+        array $quantifiedProducts,
         ?Transport $transport = null,
         ?Payment $payment = null,
         ?CustomerUser $customerUser = null,
         ?string $promoCodeDiscountPercent = null,
-        ?ProductType $productType = null,
         ?Stock $personalPickupStock = null
     ): OrderPreview {
         return $this->orderPreviewCalculation->calculatePreview(
             $currency,
             $domainId,
-            $productTypeQuantifiedProducts,
+            $quantifiedProducts,
             $transport,
             $payment,
             $customerUser,
             $promoCodeDiscountPercent,
-            $productType,
             $personalPickupStock
         );
     }

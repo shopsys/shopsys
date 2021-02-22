@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Component\Doctrine;
 
-use App\Model\Order\Order;
 use App\Model\Order\PromoCode\PromoCode;
 use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\Event\LoadClassMetadataEventArgs;
@@ -31,8 +30,6 @@ class RemoveMappingsSubscriber implements EventSubscriber
     public function loadClassMetadata(LoadClassMetadataEventArgs $eventArgs): void
     {
         $classMetadata = $eventArgs->getClassMetadata();
-
-        $this->removeColumnsFromEntityMappings(Order::class, ['transport'], $classMetadata);
 
         $this->removeColumnsFromEntityMappings(Parameter::class, ['visible'], $classMetadata);
 

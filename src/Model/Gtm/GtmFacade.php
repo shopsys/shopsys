@@ -8,8 +8,8 @@ use App\Model\Category\Category;
 use App\Model\Gtm\Data\DataLayerPage;
 use App\Model\Gtm\Data\DataLayerUser;
 use App\Model\Order\Order;
-use App\Model\Order\Preview\OrderPreviewSplittingFacade;
-use App\Model\Order\Preview\SplitOrderPreview;
+use App\Model\Order\Preview\OrderPreview;
+use App\Model\Order\Preview\OrderPreviewFactory;
 use App\Model\Product\Product;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
@@ -48,9 +48,9 @@ class GtmFacade
     private $currencyFacade;
 
     /**
-     * @var \App\Model\Order\Preview\OrderPreviewSplittingFacade
+     * @var \App\Model\Order\Preview\OrderPreviewFactory
      */
-    private $orderPreviewSplittingFacade;
+    private OrderPreviewFactory $orderPreviewFactory;
 
     /**
      * @param \App\Model\Gtm\GtmContainer $gtmContainer
@@ -58,7 +58,7 @@ class GtmFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomer
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
-     * @param \App\Model\Order\Preview\OrderPreviewSplittingFacade $orderPreviewSplittingFacade
+     * @param \App\Model\Order\Preview\OrderPreviewFactory $orderPreviewFactory
      */
     public function __construct(
         GtmContainer $gtmContainer,
@@ -66,14 +66,14 @@ class GtmFacade
         CurrentCustomerUser $currentCustomer,
         Domain $domain,
         CurrencyFacade $currencyFacade,
-        OrderPreviewSplittingFacade $orderPreviewSplittingFacade
+        OrderPreviewFactory $orderPreviewFactory
     ) {
         $this->gtmContainer = $gtmContainer;
         $this->dataLayerMapper = $dataLayerMapper;
         $this->currentCustomer = $currentCustomer;
         $this->domain = $domain;
         $this->currencyFacade = $currencyFacade;
-        $this->orderPreviewSplittingFacade = $orderPreviewSplittingFacade;
+        $this->orderPreviewFactory = $orderPreviewFactory;
     }
 
     /**
@@ -178,10 +178,10 @@ class GtmFacade
     }
 
     /**
-     * @param \App\Model\Order\Preview\SplitOrderPreview $splitOrderPreview
+     * @param \App\Model\Order\Preview\OrderPreview $orderPreview
      * @param int $orderStep
      */
-    public function onOrderPages(SplitOrderPreview $splitOrderPreview, int $orderStep): void
+    public function onOrderPages(OrderPreview $orderPreview, int $orderStep): void
     {
         if (!$this->gtmContainer->isEnabled()) {
             return;
@@ -203,8 +203,8 @@ class GtmFacade
                 'currencyCode' => $this->getCurrentDomainDefaultCurrencyCode(),
                 'checkout' => [
                     'actionField' => ['step' => $orderStep - 1],
-                    'products' => $this->dataLayerMapper->createDataLayerProductsFromSplitOrderPreview(
-                        $splitOrderPreview,
+                    'products' => $this->dataLayerMapper->createDataLayerProductsFromOrderPreview(
+                        $orderPreview,
                         $this->dataLayer->getLocale()
                     ),
                 ],
@@ -275,7 +275,7 @@ class GtmFacade
             return;
         }
 
-        $splitOrderPreview = $this->orderPreviewSplittingFacade->createSplitOrderPreviewForCurrentCustomer(null);
+        $orderPreview = $this->orderPreviewFactory->createForCurrentUser(null);
 
         $gtmEventData = [
             'ecommerce' => [
@@ -289,10 +289,10 @@ class GtmFacade
                 ],
             ],
             'cartContent' => [
-                'revenue' => $splitOrderPreview->getTotalPrice()->getPriceWithoutVat(),
-                'revenueWithTax' => $splitOrderPreview->getTotalPrice()->getPriceWithVat(),
-                'products' => $this->dataLayerMapper->createDataLayerProductsFromSplitOrderPreview(
-                    $splitOrderPreview,
+                'revenue' => $orderPreview->getTotalPrice()->getPriceWithoutVat(),
+                'revenueWithTax' => $orderPreview->getTotalPrice()->getPriceWithVat(),
+                'products' => $this->dataLayerMapper->createDataLayerProductsFromOrderPreview(
+                    $orderPreview,
                     $this->dataLayer->getLocale()
                 ),
             ],
@@ -311,7 +311,7 @@ class GtmFacade
             return;
         }
 
-        $splitOrderPreview = $this->orderPreviewSplittingFacade->createSplitOrderPreviewForCurrentCustomer(null);
+        $orderPreview = $this->orderPreviewFactory->createForCurrentUser(null);
 
         $gtmEventData = [
             'ecommerce' => [
@@ -325,10 +325,10 @@ class GtmFacade
                 ],
             ],
             'cartContent' => [
-                'revenue' => $splitOrderPreview->getTotalPrice()->getPriceWithoutVat(),
-                'revenueWithTax' => $splitOrderPreview->getTotalPrice()->getPriceWithVat(),
-                'products' => $this->dataLayerMapper->createDataLayerProductsFromSplitOrderPreview(
-                    $splitOrderPreview,
+                'revenue' => $orderPreview->getTotalPrice()->getPriceWithoutVat(),
+                'revenueWithTax' => $orderPreview->getTotalPrice()->getPriceWithVat(),
+                'products' => $this->dataLayerMapper->createDataLayerProductsFromOrderPreview(
+                    $orderPreview,
                     $this->dataLayer->getLocale()
                 ),
             ],

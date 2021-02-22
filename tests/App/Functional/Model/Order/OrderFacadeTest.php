@@ -7,11 +7,8 @@ namespace Tests\App\Functional\Model\Order;
 use App\DataFixtures\Demo\CountryDataFixture;
 use App\DataFixtures\Demo\CurrencyDataFixture;
 use App\DataFixtures\Demo\OrderStatusDataFixture;
-use App\DataFixtures\Demo\ProductTypeDataFixture;
 use App\Model\Order\Item\OrderItemData;
 use App\Model\Order\OrderData;
-use App\Model\Order\Preview\SplitOrderPreview;
-use App\Model\Order\Preview\TransportAndPaymentPricesPreview;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Tests\App\Test\TransactionFunctionalTestCase;
@@ -64,7 +61,7 @@ class OrderFacadeTest extends TransactionFunctionalTestCase
     private $paymentRepository;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Order\OrderDataFactoryInterface
+     * @var \App\Model\Order\OrderDataFactory
      * @inject
      */
     private $orderDataFactory;
@@ -109,36 +106,12 @@ class OrderFacadeTest extends TransactionFunctionalTestCase
         $orderData->currency = $this->getReference(CurrencyDataFixture::CURRENCY_CZK);
         $orderData->isOverLimit = false;
 
-        /** @var \App\Model\Product\Type\ProductType $productType */
-        $productType = $this->persistentReferenceFacade->getReference(ProductTypeDataFixture::TYPE_COMMON);
-
-        $orderPreview = $this->orderPreviewFactory->createForCurrentUser($transport, $payment, $productType);
-        $splitOrderPreview = new SplitOrderPreview(
-            [$orderPreview],
-            $orderData->payment,
-            $orderPreview->getTotalPrice(),
-            $orderPreview->getProductsPrice(),
-            $orderPreview->getSubHighAndLowPrice(),
-            $orderPreview->getTotalProductHighPrice(),
-            $orderPreview->getRoundingPrice(),
-            null,
-            null
-        );
-        $transportAndPaymentPricesPreview = new TransportAndPaymentPricesPreview(
-            [
-                $productType->getId() => [
-                    $orderData->transport->getId() => $orderPreview->getTransportPrice(),
-                ],
-            ],
-            [
-                $orderData->payment->getId() => $orderPreview->getPaymentPrice(),
-            ]
-        );
-        $splitOrderPreview->setTransportAndPaymentPricesPreview($transportAndPaymentPricesPreview);
-        $order = $this->orderFacade->createOrderBySplitOrderPreview($orderData, $splitOrderPreview, null);
+        $orderPreview = $this->orderPreviewFactory->createForCurrentUser($transport, $payment);
+        $order = $this->orderFacade->createOrder($orderData, $orderPreview, null);
 
         $orderFromDb = $this->orderRepository->getById($order->getId());
 
+        $this->assertSame($orderData->transport->getId(), $orderFromDb->getTransport()->getId());
         $this->assertSame($orderData->payment->getId(), $orderFromDb->getPayment()->getId());
         $this->assertSame($orderData->firstName, $orderFromDb->getFirstName());
         $this->assertSame($orderData->lastName, $orderFromDb->getLastName());

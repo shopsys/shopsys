@@ -29,8 +29,8 @@ class OrderDataMapper extends BaseOrderDataMapper
     {
         /** @var \App\Model\Order\OrderData $orderData */
         $orderData = parent::getOrderDataFromFrontOrderData($frontOrderData);
-        $orderData->transportsByProductTypeId = $frontOrderData->transportsByProductTypeId;
-        $orderData->transportPersonalPickupStockByProductTypeId = $frontOrderData->transportPersonalPickupStockByProductTypeId;
+        $orderData->transport = $frontOrderData->transport;
+        $orderData->personalPickupStock = $frontOrderData->personalPickupStock;
         $orderData->password = $frontOrderData->password;
         $orderData->isCompanyCustomer = $frontOrderData->companyCustomer;
         $orderData->companyVatNumber = $frontOrderData->companyVatNumber;

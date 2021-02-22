@@ -6,10 +6,10 @@ namespace App\Form\Admin\Mail;
 
 use App\Model\Mail\MailTemplate;
 use App\Model\Payment\PaymentFacade;
-use App\Model\Transport\TransportFacade;
 use Shopsys\FrameworkBundle\Form\Admin\Mail\MailTemplateFormType;
 use Shopsys\FrameworkBundle\Form\DomainType;
 use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusFacade;
+use Shopsys\FrameworkBundle\Model\Transport\TransportFacade;
 use Symfony\Component\Form\AbstractTypeExtension;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -19,7 +19,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 class MailTemplateFormTypeExtension extends AbstractTypeExtension
 {
     /**
-     * @var \App\Model\Transport\TransportFacade
+     * @var \Shopsys\FrameworkBundle\Model\Transport\TransportFacade
      */
     private TransportFacade $transportFacade;
 
@@ -34,7 +34,7 @@ class MailTemplateFormTypeExtension extends AbstractTypeExtension
     private OrderStatusFacade $orderStatusFacade;
 
     /**
-     * @param \App\Model\Transport\TransportFacade $transportFacade
+     * @param \Shopsys\FrameworkBundle\Model\Transport\TransportFacade $transportFacade
      * @param \App\Model\Payment\PaymentFacade $paymentFacade
      * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusFacade $orderStatusFacade
      */

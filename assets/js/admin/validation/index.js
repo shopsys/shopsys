@@ -1,2 +1,1 @@
-import './productTypeValidator';
 import './promoCodeValidator';
