@@ -24,9 +24,6 @@ use Shopsys\FrameworkBundle\Model\Transport\TransportData as BaseTransportData;
  */
 class Transport extends BaseTransport
 {
-    public const TYPE_COMMON = 'common';
-    public const TYPE_PACKAGE = 'package';
-
     /**
      * @var \App\Model\Product\Type\ProductType[]|\Doctrine\Common\Collections\ArrayCollection
      * @ORM\ManyToMany(targetEntity="App\Model\Product\Type\ProductType")
@@ -38,12 +35,6 @@ class Transport extends BaseTransport
      * @ORM\Column(type="boolean", nullable=false)
      */
     private $personalPickup;
-
-    /**
-     * @var string
-     * @ORM\Column(type="string")
-     */
-    private string $type;
 
     /**
      * @var bool
@@ -78,7 +69,6 @@ class Transport extends BaseTransport
 
         $this->productTypes = new ArrayCollection($transportData->productTypes);
         $this->personalPickup = $transportData->personalPickup;
-        $this->type = $transportData->type;
         $this->isOverLimitTransport = $transportData->isOverLimitTransport;
         $this->daysUntilDelivery = $transportData->daysUntilDelivery;
         $this->deliveryCode = $transportData->deliveryCode;
@@ -94,7 +84,6 @@ class Transport extends BaseTransport
 
         $this->editProductTypes($transportData->productTypes);
         $this->personalPickup = $transportData->personalPickup;
-        $this->type = $transportData->type;
         $this->isOverLimitTransport = $transportData->isOverLimitTransport;
         $this->daysUntilDelivery = $transportData->daysUntilDelivery;
         $this->deliveryCode = $transportData->deliveryCode;
@@ -143,14 +132,6 @@ class Transport extends BaseTransport
     protected function setData(BaseTransportData $transportData): void
     {
         parent::setData($transportData);
-    }
-
-    /**
-     * @return string
-     */
-    public function getType(): string
-    {
-        return $this->type;
     }
 
     /**

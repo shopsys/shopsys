@@ -7,10 +7,6 @@ import './order/orderDisablingForm';
 
 import './payment/payment';
 
-import './transport/transportForm';
-import './transport/transportPackages';
-import './transport/transportFormValidation';
-
 import './validation';
 import './advert/advert';
 import './../common/validation/customizeFpValidator';

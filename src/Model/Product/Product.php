@@ -202,17 +202,8 @@ class Product extends BaseProduct
             $productDomain->calcSellingPriceWithVat();
             $productDomain->setFlags($productData->flags[$domainId] ?? []);
             $productDomain->setSaleExclusion($productDomain->calcSaleExclusion($productData->flags[$domainId] ?? []));
-
-            $productDomain->setEmbeddedAccessories($productData->embeddedAccessories[$domainId]);
-            $productDomain->setPackageNotIncluded($productData->packageNotIncluded[$domainId]);
-
-            $productDomain->setMountingState($productData->mountingState[$domainId]);
-            $productDomain->setPackagingUnit($productData->packagingUnit[$domainId] !== null ? (int)$productData->packagingUnit[$domainId] : null);
-            $productDomain->setCountPackages($productData->countPackages[$domainId] !== null ? (int)$productData->countPackages[$domainId] : null);
-            $productDomain->setTotalPackageWeight($productData->totalPackageWeight[$domainId] !== null ? (float)$productData->totalPackageWeight[$domainId] : null);
             $productDomain->setDomainHidden($productData->domainHidden[$domainId] ?? false);
             $productDomain->setDomainOrderingPriority((int)$productData->domainOrderingPriority[$domainId]);
-            $productDomain->setCanBeShippedAsPackage($productData->canBeShippedAsPackage[$domainId]);
         }
     }
 
@@ -625,60 +616,6 @@ class Product extends BaseProduct
      * @param int $domainId
      * @return bool|null
      */
-    public function isMountingState(int $domainId): ?bool
-    {
-        return $this->getProductDomain($domainId)->isMountingState();
-    }
-
-    /**
-     * @param int $domainId
-     * @return string|null
-     */
-    public function getEmbeddedAccessories(int $domainId): ?string
-    {
-        return $this->getProductDomain($domainId)->getEmbeddedAccessories();
-    }
-
-    /**
-     * @param int $domainId
-     * @return int|null
-     */
-    public function getCountPackages(int $domainId): ?int
-    {
-        return $this->getProductDomain($domainId)->getCountPackages();
-    }
-
-    /**
-     * @param int $domainId
-     * @return int|null
-     */
-    public function getPackagingUnit(int $domainId): ?int
-    {
-        return $this->getProductDomain($domainId)->getPackagingUnit();
-    }
-
-    /**
-     * @param int $domainId
-     * @return string|null
-     */
-    public function getPackageNotIncluded(int $domainId): ?string
-    {
-        return $this->getProductDomain($domainId)->getPackageNotIncluded();
-    }
-
-    /**
-     * @param int $domainId
-     * @return float|null
-     */
-    public function getTotalPackageWeight(int $domainId): ?float
-    {
-        return $this->getProductDomain($domainId)->getTotalPackageWeight();
-    }
-
-    /**
-     * @param int $domainId
-     * @return bool|null
-     */
     public function isDomainHidden(int $domainId): ?bool
     {
         return $this->getProductDomain($domainId)->isDomainHidden();
@@ -855,15 +792,6 @@ class Product extends BaseProduct
     protected function setData(BaseProductData $productData): void
     {
         parent::setData($productData);
-    }
-
-    /**
-     * @param int $domainId
-     * @return bool
-     */
-    public function canBeShippedAsPackage(int $domainId): bool
-    {
-        return $this->getProductDomain($domainId)->canBeShippedAsPackage();
     }
 
     /**

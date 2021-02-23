@@ -131,36 +131,6 @@ class ProductData extends BaseProductData
     public $flags;
 
     /**
-     * @var bool[]|null[]
-     */
-    public $mountingState;
-
-    /**
-     * @var string[]|null[]
-     */
-    public $embeddedAccessories;
-
-    /**
-     * @var string[]|null[]
-     */
-    public $packageNotIncluded;
-
-    /**
-     * @var int[]|null[]
-     */
-    public $packagingUnit;
-
-    /**
-     * @var int[]|null[]
-     */
-    public $countPackages;
-
-    /**
-     * @var float[]|null[]
-     */
-    public $totalPackageWeight;
-
-    /**
      * @var \App\Model\Product\Parameter\Parameter[]
      */
     public $variantParameters;
@@ -174,11 +144,6 @@ class ProductData extends BaseProductData
      * @var int[]|null[]
      */
     public $domainOrderingPriority;
-
-    /**
-     * @var bool[]
-     */
-    public array $canBeShippedAsPackage;
 
     public function __construct()
     {
@@ -203,12 +168,8 @@ class ProductData extends BaseProductData
         $this->preorder = false;
         $this->saleExclusion = [];
         $this->flags = [];
-        $this->packagingUnit = [];
-        $this->countPackages = [];
-        $this->totalPackageWeight = [];
         $this->variantParameters = [];
         $this->domainHidden = [];
         $this->domainOrderingPriority = [];
-        $this->canBeShippedAsPackage = [];
     }
 }

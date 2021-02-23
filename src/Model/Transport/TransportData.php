@@ -27,11 +27,6 @@ class TransportData extends BaseTransportData
     public string $type;
 
     /**
-     * @var \App\Model\Transport\TransportPackage\TransportPackageData[]
-     */
-    public array $transportPackages;
-
-    /**
      * @var bool
      */
     public $isOverLimitTransport;
@@ -57,7 +52,6 @@ class TransportData extends BaseTransportData
 
         $this->productTypes = [];
         $this->personalPickup = false;
-        $this->transportPackages = [];
         $this->isOverLimitTransport = false;
     }
 }
