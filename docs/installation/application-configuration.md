@@ -32,7 +32,7 @@ You may want to set some settings in a different way (such as production, test, 
 | `DATABASE_NAME`                        | `'shopsys'`                          | ...                                                                                  |
 | `DATABASE_USER`                        | `'root'`                             | ...                                                                                  |
 | `DATABASE_PASSWORD`                    | `'root'`                             | ...                                                                                  |
-| `ELASTICSEARCH_HOST`                   | `'elasticsearch:9200'`               | host of your Elasticsearch                                                           |
+| `ELASTICSEARCH_HOST`                   | `'elasticsearch:9200'`               | host of your Elasticsearch, you can use multiple hosts like `'["elasticsearch:9200", "elasticsearch2:9200"]'` |
 | `REDIS_HOST`                           | `'redis'`                            | host of your Redis storage (credentials are not supported right now)                 |
 | `REDIS_PREFIX`                         | `''`                                 | separates more projects that use the same redis service                              |
 | `MAILER_TRANSPORT`                     | `'smtp'`                             | access data of your mail server                                                      |

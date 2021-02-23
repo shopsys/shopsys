@@ -48,25 +48,24 @@
     }
 
     &__arrow {
+        position: relative;
+        top: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         float: left;
-        line-height: @box-gallery-arrow-size;
         width: @box-gallery-arrow-size;
         height: @box-gallery-arrow-size;
-        margin-top: @box-gallery-item-height/2 - @box-gallery-arrow-size/2;
 
         cursor: pointer;
         color: @color-border;
 
         &--prev {
-            position: relative;
-            top: 3px;
-            transform: rotate(90deg);
+            transform: rotate(90deg) translateX(-50%);
         }
 
         &--next {
-            position: relative;
-            top: -3px;
-            transform: rotate(-90deg);
+            transform: rotate(-90deg) translateX(50%);
         }
 
         &.slick-disabled {

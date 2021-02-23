@@ -935,11 +935,9 @@ services:
 
     Elasticsearch\ClientBuilder:
         class: Elasticsearch\ClientBuilder
-        factory: [Elasticsearch\ClientBuilder, create]
+        factory: [Shopsys\FrameworkBundle\Component\Elasticsearch\ElasticsearchClientFactory, create]
+        arguments: ['%env(default:elasticsearch_host:ELASTICSEARCH_HOST)%']
         calls:
-            -   method: setHosts
-                arguments:
-                    - ['%elasticsearch_host%']
             -   method: setTracer
                 arguments:
                     - '@shopsys.component.elasticsearch.tracer'
@@ -985,3 +983,12 @@ services:
 
     Symfony\Component\Validator\Constraints\FileValidator:
         class: Shopsys\FrameworkBundle\Form\Constraints\FileAbstractFilesystemValidator
+
+    Shopsys\FrameworkBundle\Component\CKEditor\CKEditorRendererDecorator:
+        decorates: fos_ck_editor.renderer
+        arguments: [ '@Shopsys\FrameworkBundle\Component\CKEditor\CKEditorRendererDecorator.inner' ]
+
+    Shopsys\FrameworkBundle\Twig\CKEditorExtension:
+        arguments:
+            - '@fos_ck_editor.configuration'
+            - '@fos_ck_editor.twig_extension'

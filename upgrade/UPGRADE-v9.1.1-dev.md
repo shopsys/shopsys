@@ -37,5 +37,19 @@ There you can find links to upgrade notes for other versions too.
     - see #project-base-diff to update your project
 
 - Frontend API: correctly inherited base type in `AdvertCodeDecorator`, `AdvertImageDecorator`, `ProductPriceDecorator` types ([#2222](https://github.com/shopsys/shopsys/pull/2222))
-  - if you extended `Advert` type, you can remove duplicate definitions in `AdvertCode` and `AdvertImage` types
-  - if you extended `Price` type, you can remove duplicate definitions in `ProductPrice` type
+    - if you extended `Advert` type, you can remove duplicate definitions in `AdvertCode` and `AdvertImage` types
+    - if you extended `Price` type, you can remove duplicate definitions in `ProductPrice` type
+
+- update phpstan/phpstan to the latest version ([#2241](https://github.com/shopsys/shopsys/pull/2241))
+    - see #project-base-diff to update your project
+
+- improve acceptance test of product filter ([#2226](https://github.com/shopsys/shopsys/pull/2226))
+    - see #project-base-diff to update your project
+    - we have also improved displaying of price filter in our basic design, decide if such change is suitable for your project
+
+- initialize CKEditor after the click into appropriate field ([#2177](https://github.com/shopsys/shopsys/pull/2177))
+    - see #project-base-diff to update your project
+
+- allow multiple elasticsearch hosts ([#2240](https://github.com/shopsys/shopsys/pull/2240))
+    - now it's possible to set multiple elasticsearch hosts like `'["elasticsearch:9200", "elasticsearch2:9200"]'`
+    - `Elasticsearch\ClientBuilder` is now created with a different factory, you may want to check your overridden service definition (see PR for details)

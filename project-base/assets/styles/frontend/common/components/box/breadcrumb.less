@@ -2,21 +2,22 @@
 @box-breadcrumb-padding-vertical: 3px;
 
 .box-breadcrumb {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 0 @box-breadcrumb-padding-horizontal;
     margin-bottom: @margin-gap;
 
     font-size: 0;
 
     &__item {
-        display: inline-block;
-        vertical-align: middle;
-        padding: @box-breadcrumb-padding-vertical @box-breadcrumb-padding-horizontal;
+        display: flex;
+        padding: @box-breadcrumb-padding-vertical 0;
+        margin-right: @box-breadcrumb-padding-horizontal;
 
         font-size: @font-size;
 
         &--separator {
-            padding-left: 0;
-            padding-right: 0;
-
             font-size: 10px;
         }
 
