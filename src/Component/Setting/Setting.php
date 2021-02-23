@@ -12,5 +12,4 @@ class Setting extends BaseSetting
     public const AKENEO_TRANSFER_FLAGS_LAST_UPDATED_DATETIME = 'akeneoTransferFlagsLastUpdatedDatetime';
     public const DELIVERY_DAYS_ON_STOCK = 'deliveryDayOnStock';
     public const TRANSFER_DAYS_BETWEEN_STOCKS = 'transferDaysBetweenStocks';
-    public const FUTURE_STORAGE_RESERVATION = 'futureStorageReservation';
 }

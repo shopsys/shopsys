@@ -85,7 +85,6 @@ class SettingValueDataFixture extends AbstractReferenceFixture implements Depend
 
             $this->setting->setForDomain(Setting::DELIVERY_DAYS_ON_STOCK, 70, $domainId);
             $this->setting->setForDomain(Setting::TRANSFER_DAYS_BETWEEN_STOCKS, 7, $domainId);
-            $this->setting->setForDomain(Setting::FUTURE_STORAGE_RESERVATION, 14, $domainId);
 
             $this->setDomainDefaultCurrency($domainId);
         }
