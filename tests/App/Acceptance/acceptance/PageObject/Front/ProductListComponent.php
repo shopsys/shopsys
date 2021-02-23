@@ -51,7 +51,12 @@ class ProductListComponent extends AbstractPage
             }
         }
 
-        $message = sprintf('Unable to find product "%s" (translated to "%s") in product list component.', $productName, $translatedProductName);
+        $message = sprintf(
+            'Unable to find product "%s" (translated to "%s") in product list component.',
+            $productName,
+            $translatedProductName
+        );
+
         throw new NoSuchElementException($message);
     }
 }

@@ -86,9 +86,14 @@ class NumberFormatHelper extends Module
      */
     public function getFormattedPriceWithCurrencySymbolRoundedByCurrencyOnFrontend(Money $price): string
     {
-        $firstDomainDefaultCurrency = $this->currencyFacade->getDomainDefaultCurrencyByDomainId(Domain::FIRST_DOMAIN_ID);
+        $firstDomainDefaultCurrency = $this->currencyFacade->getDomainDefaultCurrencyByDomainId(
+            Domain::FIRST_DOMAIN_ID
+        );
         $firstDomainLocale = $this->localizationHelper->getFrontendLocale();
-        $currencyFormatter = $this->currencyFormatterFactory->createByLocaleAndCurrency($firstDomainLocale, $firstDomainDefaultCurrency);
+        $currencyFormatter = $this->currencyFormatterFactory->createByLocaleAndCurrency(
+            $firstDomainLocale,
+            $firstDomainDefaultCurrency
+        );
 
         $intlCurrency = $this->intlCurrencyRepository->get($firstDomainDefaultCurrency->getCode(), $firstDomainLocale);
 
@@ -108,9 +113,14 @@ class NumberFormatHelper extends Module
      */
     public function getFormattedPriceRoundedByCurrencyOnFrontend(Money $price): string
     {
-        $firstDomainDefaultCurrency = $this->currencyFacade->getDomainDefaultCurrencyByDomainId(Domain::FIRST_DOMAIN_ID);
+        $firstDomainDefaultCurrency = $this->currencyFacade->getDomainDefaultCurrencyByDomainId(
+            Domain::FIRST_DOMAIN_ID
+        );
         $firstDomainLocale = $this->localizationHelper->getFrontendLocale();
-        $currencyFormatter = $this->currencyFormatterFactory->createByLocaleAndCurrency($firstDomainLocale, $firstDomainDefaultCurrency);
+        $currencyFormatter = $this->currencyFormatterFactory->createByLocaleAndCurrency(
+            $firstDomainLocale,
+            $firstDomainDefaultCurrency
+        );
 
         $intlCurrency = $this->intlCurrencyRepository->get($firstDomainDefaultCurrency->getCode(), $firstDomainLocale);
 
@@ -130,7 +140,10 @@ class NumberFormatHelper extends Module
      */
     public function getPriceWithVatConvertedToDomainDefaultCurrency(string $price): string
     {
-        $money = $this->priceConverter->convertPriceWithVatToPriceInDomainDefaultCurrency(Money::create($price), Domain::FIRST_DOMAIN_ID);
+        $money = $this->priceConverter->convertPriceWithVatToPriceInDomainDefaultCurrency(
+            Money::create($price),
+            Domain::FIRST_DOMAIN_ID
+        );
 
         return $money->getAmount();
     }
@@ -151,7 +164,10 @@ class NumberFormatHelper extends Module
      */
     public function getFormattedPercentAdmin(string $number): string
     {
-        $formattedNumberWithPercentSymbol = $this->numberFormatterExtension->formatPercent($number, $this->localizationHelper->getAdminLocale());
+        $formattedNumberWithPercentSymbol = $this->numberFormatterExtension->formatPercent(
+            $number,
+            $this->localizationHelper->getAdminLocale()
+        );
 
         return $this->normalizeSpaces($formattedNumberWithPercentSymbol);
     }

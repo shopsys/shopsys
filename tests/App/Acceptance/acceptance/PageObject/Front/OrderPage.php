@@ -10,7 +10,7 @@ use Tests\FrameworkBundle\Test\Codeception\FrontCheckbox;
 
 class OrderPage extends AbstractPage
 {
-    protected const FIRST_NAME_FIELD_NAME = 'order_personal_info_form[firstName]';
+    private const FIRST_NAME_FIELD_NAME = 'order_personal_info_form[firstName]';
 
     /**
      * @param string $transportTitle
@@ -40,6 +40,7 @@ class OrderPage extends AbstractPage
             '#transport_and_payment_form_transport_' . $transportPosition
         );
         $frontCheckboxClicker->check();
+        $this->tester->waitForAjax();
     }
 
     /**
@@ -73,6 +74,7 @@ class OrderPage extends AbstractPage
             '#transport_and_payment_form_payment_' . $paymentPosition
         );
         $frontCheckboxClicker->check();
+        $this->tester->waitForAjax();
     }
 
     /**
@@ -115,15 +117,8 @@ class OrderPage extends AbstractPage
         $this->tester->fillFieldByName('order_personal_info_form[street]', $street);
         $this->tester->fillFieldByName('order_personal_info_form[city]', $city);
         $this->tester->fillFieldByName('order_personal_info_form[postcode]', $postcode);
-    }
 
-    public function acceptLegalConditions()
-    {
-        $frontCheckboxClicker = FrontCheckbox::createByCss(
-            $this->tester,
-            '#order_personal_info_form_legalConditionsAgreement'
-        );
-        $frontCheckboxClicker->check();
+        $this->tester->waitForAjax();
     }
 
     /**
@@ -134,13 +129,54 @@ class OrderPage extends AbstractPage
         $this->tester->fillFieldByName('order_personal_info_form[note]', $note);
     }
 
-    protected function scrollToPaymentForm()
+    public function acceptLegalConditions()
+    {
+        $frontCheckboxClicker = FrontCheckbox::createByCss(
+            $this->tester,
+            '#order_personal_info_form_legalConditionsAgreement'
+        );
+        $frontCheckboxClicker->check();
+        $this->tester->waitForAjax();
+        $this->tester->wait(1);
+    }
+
+    private function scrollToPaymentForm()
     {
         $this->tester->scrollTo(['css' => '#transport_and_payment_form_payment']);
     }
 
     public function clickGoToCartInPopUpWindow(): void
     {
-        $this->tester->clickByTranslationFrontend('Go to cart', 'messages', [], WebDriverBy::cssSelector('#window-main-container'));
+        $this->tester->clickByTranslationFrontend(
+            'Go to cart',
+            'messages',
+            [],
+            WebDriverBy::cssSelector('#window-main-container')
+        );
+    }
+
+    public function continueToSecondStep(): void
+    {
+        $this->tester->clickByTranslationFrontend('Order [verb]');
+    }
+
+    public function continueToThirdStep(): void
+    {
+        $this->tester->clickByTranslationFrontend('Continue in order');
+    }
+
+    public function goBackToSecondStep(): void
+    {
+        $this->tester->clickByTranslationFrontend('Back to shipping and payment selection');
+    }
+
+    public function finishOrder(): void
+    {
+        $this->tester->clickByTranslationFrontend('Finish the order');
+    }
+
+    public function checkOrderFinishedSuccessfully(): void
+    {
+        $this->tester->seeTranslationFrontend('Order sent');
     }
 }

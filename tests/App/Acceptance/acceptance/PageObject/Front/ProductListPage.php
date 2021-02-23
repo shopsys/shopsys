@@ -41,6 +41,9 @@ class ProductListPage extends AbstractPage
         $context = $this->getProductListCompomentContext();
 
         $this->productListComponent->addProductToCartByName($productName, $quantity, $context);
+
+        $this->tester->waitForAjax();
+        $this->tester->wait(1);
     }
 
     /**
