@@ -69,11 +69,6 @@ parameters:
         scope: payment-all
         timeout: 30
 
-    promo_code_manage_page_config:
-        user: 'sconto'
-        pass: 'sconto'
-        allowed_ips: ['172.18.0.1']
-
     gtm_config:
         cs:
             enabled: false
