@@ -7,7 +7,6 @@ namespace App\Model\Product\Listed;
 use App\Model\Category\CategoryFacade;
 use App\Model\Product\Availability\ProductAvailabilityFacade;
 use App\Model\Product\Flag\Flag;
-use App\Model\Product\Flag\FlagFacade;
 use App\Model\Product\Parameter\Parameter;
 use App\Model\Product\Parameter\ParameterFacade;
 use App\Model\Product\ProductFacade;
@@ -67,6 +66,7 @@ class ListedProductViewFactory extends BaseListedProductViewFactory
         ProductFacade $productFacade
     ) {
         parent::__construct($domain, $productCachedAttributesFacade);
+
         $this->productAvailabilityFacade = $productAvailabilityFacade;
         $this->parameterFacade = $parameterFacade;
         $this->categoryFacade = $categoryFacade;
@@ -77,7 +77,7 @@ class ListedProductViewFactory extends BaseListedProductViewFactory
      * @param \App\Model\Product\Product $product
      * @param \Shopsys\ReadModelBundle\Image\ImageView|null $imageView
      * @param \Shopsys\ReadModelBundle\Product\Action\ProductActionView $productActionView
-     * @return \Shopsys\ReadModelBundle\Product\Listed\ListedProductView
+     * @return \App\Model\Product\Listed\ListedProductView
      */
     public function createFromProduct(Product $product, ?ImageView $imageView, ProductActionView $productActionView): BaseListedProductView
     {
@@ -206,10 +206,12 @@ class ListedProductViewFactory extends BaseListedProductViewFactory
             foreach ($originalVariantParametersSetup['parameter_values_setup'] as $parameterValueSetup) {
                 $variantsParametersSetup[$variantId]['parameter_values_setup'][$parameterValueSetup['parameter_id']][$parameterValueSetup['parameter_value_id']] = $parameterValueSetup['parameter_value_id'];
             }
-            if (isset($originalVariantParametersSetup['extended_parameter_values_setup'])) {
-                foreach ($originalVariantParametersSetup['extended_parameter_values_setup'] as $parameterValueSetup) {
-                    $variantsParametersSetup[$variantId]['extended_parameter_values_setup'][$parameterValueSetup['parameter_id']][$parameterValueSetup['parameter_value_id']] = $parameterValueSetup['parameter_value_id'];
-                }
+            if (!isset($originalVariantParametersSetup['extended_parameter_values_setup'])) {
+                continue;
+            }
+
+            foreach ($originalVariantParametersSetup['extended_parameter_values_setup'] as $parameterValueSetup) {
+                $variantsParametersSetup[$variantId]['extended_parameter_values_setup'][$parameterValueSetup['parameter_id']][$parameterValueSetup['parameter_value_id']] = $parameterValueSetup['parameter_value_id'];
             }
         }
 

@@ -8,15 +8,17 @@ use App\Form\Front\Customer\User\CustomerUserUpdateFormType;
 use App\Model\Customer\User\CustomerUserFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressFacade;
+use Shopsys\FrameworkBundle\Model\Customer\Exception\CustomerUserNotFoundException;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactoryInterface;
+use Shopsys\FrameworkBundle\Model\Order\Exception\OrderNotFoundException;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Order\OrderFacade;
+use Shopsys\FrameworkBundle\Model\Security\Exception\LoginAsRememberedUserException;
 use Shopsys\FrameworkBundle\Model\Security\LoginAsUserFacade;
 use Shopsys\FrameworkBundle\Model\Security\Roles;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class CustomerController extends FrontBaseController
 {
@@ -56,11 +58,6 @@ class CustomerController extends FrontBaseController
     private $deliveryAddressFacade;
 
     /**
-     * @var \Symfony\Component\HttpFoundation\Session\SessionInterface
-     */
-    private $session;
-
-    /**
      * @param \App\Model\Customer\User\CustomerUserFacade $customerUserFacade
      * @param \App\Model\Order\OrderFacade $orderFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
@@ -68,7 +65,6 @@ class CustomerController extends FrontBaseController
      * @param \Shopsys\FrameworkBundle\Model\Security\LoginAsUserFacade $loginAsUserFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactoryInterface $customerUserUpdateDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressFacade $deliveryAddressFacade
-     * @param \Symfony\Component\HttpFoundation\Session\SessionInterface $session
      */
     public function __construct(
         CustomerUserFacade $customerUserFacade,
@@ -77,8 +73,7 @@ class CustomerController extends FrontBaseController
         OrderItemPriceCalculation $orderItemPriceCalculation,
         LoginAsUserFacade $loginAsUserFacade,
         CustomerUserUpdateDataFactoryInterface $customerUserUpdateDataFactory,
-        DeliveryAddressFacade $deliveryAddressFacade,
-        SessionInterface $session
+        DeliveryAddressFacade $deliveryAddressFacade
     ) {
         $this->customerUserFacade = $customerUserFacade;
         $this->orderFacade = $orderFacade;
@@ -87,7 +82,6 @@ class CustomerController extends FrontBaseController
         $this->loginAsUserFacade = $loginAsUserFacade;
         $this->customerUserUpdateDataFactory = $customerUserUpdateDataFactory;
         $this->deliveryAddressFacade = $deliveryAddressFacade;
-        $this->session = $session;
     }
 
     /**
@@ -190,7 +184,7 @@ class CustomerController extends FrontBaseController
             try {
                 /** @var \App\Model\Order\Order $order */
                 $order = $this->orderFacade->getByOrderNumberAndUser($orderNumber, $customerUser);
-            } catch (\Shopsys\FrameworkBundle\Model\Order\Exception\OrderNotFoundException $ex) {
+            } catch (OrderNotFoundException $ex) {
                 $this->addErrorFlash(t('Order not found'));
                 return $this->redirectToRoute('front_customer_orders');
             }
@@ -215,11 +209,11 @@ class CustomerController extends FrontBaseController
     {
         try {
             $this->loginAsUserFacade->loginAsRememberedUser($request);
-        } catch (\Shopsys\FrameworkBundle\Model\Customer\Exception\CustomerUserNotFoundException $e) {
+        } catch (CustomerUserNotFoundException $e) {
             $this->addErrorFlash(t('User not found.'));
 
             return $this->redirectToRoute('admin_customer_list');
-        } catch (\Shopsys\FrameworkBundle\Model\Security\Exception\LoginAsRememberedUserException $e) {
+        } catch (LoginAsRememberedUserException $e) {
             throw $this->createAccessDeniedException('', $e);
         }
 

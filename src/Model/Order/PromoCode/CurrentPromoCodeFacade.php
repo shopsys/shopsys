@@ -81,6 +81,7 @@ class CurrentPromoCodeFacade extends BaseCurrentPromoCodeFacade
             $promoCodeFacade,
             $session
         );
+
         $this->promoCodeProductRepository = $promoCodeProductRepository;
         $this->promoCodeCategoryRepository = $promoCodeCategoryRepository;
         $this->domain = $domain;
@@ -146,7 +147,7 @@ class CurrentPromoCodeFacade extends BaseCurrentPromoCodeFacade
     {
         $remainingCodeUses = $promoCode->getRemainingUses();
         if ($remainingCodeUses !== null && $remainingCodeUses === 0) {
-            throw new \Shopsys\FrameworkBundle\Model\Order\PromoCode\Exception\InvalidPromoCodeException($promoCode->getCode());
+            throw new InvalidPromoCodeException($promoCode->getCode());
         }
     }
 

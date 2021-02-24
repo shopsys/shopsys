@@ -27,6 +27,7 @@ class HomepagePage extends AbstractPage
         ProductListComponent $productListComponent
     ) {
         $this->productListComponent = $productListComponent;
+
         parent::__construct($strictWebDriver, $tester);
     }
 

@@ -9,6 +9,7 @@ use App\Model\GoPay\Exception\GoPayPaymentDownloadException;
 use App\Model\GoPay\GoPayTransactionFacade;
 use App\Model\Order\Order;
 use App\Model\Order\OrderFacade;
+use Shopsys\FrameworkBundle\Model\Order\Exception\OrderNotFoundException;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -44,15 +45,15 @@ class GoPayController extends FrontBaseController
     {
         try {
             $order = $this->orderFacade->getById($orderId);
-        } catch (\Shopsys\FrameworkBundle\Model\Order\Exception\OrderNotFoundException $e) {
+        } catch (OrderNotFoundException $e) {
             return $this->orderNotFoundRedirect();
         }
 
-        if ($order->getPayment()->isGoPay()) {
-            $this->checkOrderGoPayStatus($order);
-        } else {
+        if (!$order->getPayment()->isGoPay()) {
             return $this->orderNotFoundRedirect();
         }
+
+        $this->checkOrderGoPayStatus($order);
 
         return new Response();
     }

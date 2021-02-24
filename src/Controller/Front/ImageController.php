@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller\Front;
 
+use Exception;
 use League\Flysystem\FilesystemInterface;
 use Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig;
 use Shopsys\FrameworkBundle\Component\Image\Exception\ImageException;
@@ -109,7 +110,7 @@ class ImageController extends FrontBaseController
             };
 
             return new StreamedResponse($callback, 200, $headers);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $message = 'Response with file "' . $imageFilepath . '" failed.';
             throw $this->createNotFoundException($message, $e);
         }

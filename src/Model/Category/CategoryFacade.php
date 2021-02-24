@@ -115,6 +115,7 @@ class CategoryFacade extends BaseCategoryFacade
             $categoryWithLazyLoadedVisibleChildrenFactory,
             $categoryFactory
         );
+
         $this->categoryParameterFacade = $categoryParameterFacade;
         $this->twigCachedMenuFacade = $twigCachedMenuFacade;
         $this->twigCacheFacade = $twigCacheFacade;
@@ -162,6 +163,7 @@ class CategoryFacade extends BaseCategoryFacade
     public function editOrdering($parentIdByCategoryId)
     {
         parent::editOrdering($parentIdByCategoryId);
+
         $this->twigCachedMenuFacade->invalidateCachedMenuByCategory($this->getRootCategory());
     }
 
@@ -223,8 +225,7 @@ class CategoryFacade extends BaseCategoryFacade
      */
     public function getCategoriesInPath(Category $destinationCategory): array
     {
-        $categoriesInPathWithoutRoot = array_slice($this->categoryRepository->getPath($destinationCategory), 1);
-        return $categoriesInPathWithoutRoot;
+        return array_slice($this->categoryRepository->getPath($destinationCategory), 1);
     }
 
     /**
@@ -278,7 +279,7 @@ class CategoryFacade extends BaseCategoryFacade
     }
 
     /**
-     * @param Category|null $category
+     * @param \App\Model\Category\Category|null $category
      */
     public function saveSaleCategory(?Category $category): void
     {

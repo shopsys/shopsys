@@ -35,6 +35,7 @@ class ProductTypeDataFixture extends AbstractReferenceFixture
 
         /**
          * Default product types are created in database migrations.
+         *
          * @see \App\Migrations\Version20200214104810
          * @see \App\Migrations\Version20200403122227
          */

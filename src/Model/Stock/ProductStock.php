@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Model\Stock;
 
 use App\Model\Product\Product;
-use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -16,7 +15,6 @@ class ProductStock
 {
     /**
      * @var \App\Model\Stock\Stock
-     *
      * @ORM\Id
      * @ORM\ManyToOne(targetEntity="\App\Model\Stock\Stock")
      * @ORM\JoinColumn(name="stock_id", referencedColumnName="id", onDelete="CASCADE", nullable=false)
@@ -25,7 +23,6 @@ class ProductStock
 
     /**
      * @var \App\Model\Product\Product
-     *
      * @ORM\Id
      * @ORM\ManyToOne(targetEntity="App\Model\Product\Product")
      * @ORM\JoinColumn(name="product_id", referencedColumnName="id", onDelete="CASCADE", nullable=false )
@@ -34,14 +31,12 @@ class ProductStock
 
     /**
      * @var int
-     *
      * @ORM\Column(type="integer")
      */
     protected $productQuantity;
 
     /**
      * @var bool
-     *
      * @ORM\Column(type="boolean")
      */
     protected $productExposed;

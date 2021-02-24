@@ -6,6 +6,7 @@ namespace App\DataFixtures\Demo;
 
 use Doctrine\Persistence\ObjectManager;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
+use Shopsys\FrameworkBundle\Component\DataFixture\Exception\UnknownNameTranslationForOrderStatusReferenceNameException;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusFacade;
@@ -91,7 +92,7 @@ class OrderStatusDataFixture extends AbstractReferenceFixture
                     $orderStatusData->name[$locale] = t('Over limit', [], 'dataFixtures', $locale);
                     break;
                 default:
-                    throw new \Shopsys\FrameworkBundle\Component\DataFixture\Exception\UnknownNameTranslationForOrderStatusReferenceNameException($referenceName);
+                    throw new UnknownNameTranslationForOrderStatusReferenceNameException($referenceName);
             }
         }
         $this->orderStatusFacade->edit($orderStatusId, $orderStatusData);

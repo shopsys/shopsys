@@ -8,6 +8,9 @@ use Generator;
 
 class DummyImportTransferFacade extends AbstractScontoBridgeImportTransfer
 {
+    /**
+     * @param array $scontoBridgeData
+     */
     protected function processItem(array $scontoBridgeData): void
     {
         // TODO: Implement processItem() method.
@@ -23,16 +26,25 @@ class DummyImportTransferFacade extends AbstractScontoBridgeImportTransfer
         // TODO: Implement doAfterTransfer() method.
     }
 
+    /**
+     * @return \Generator
+     */
     protected function getData(): Generator
     {
         yield '';
     }
 
+    /**
+     * @return string
+     */
     public function getTransferName(): string
     {
         return 'Dummy transfer';
     }
 
+    /**
+     * @return string
+     */
     public function getTransferIdentifier(): string
     {
         return 'dummy_transfer';

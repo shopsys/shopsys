@@ -236,12 +236,14 @@ class GoPayPaymentMethodFacade
             }
         }
 
-        if (count($bankSwiftsBySwift) > 0) {
-            foreach ($bankSwiftsBySwift as $bankSwift) {
-                $this->em->remove($bankSwift);
-            }
-
-            $this->em->flush();
+        if (count($bankSwiftsBySwift) === 0) {
+            return;
         }
+
+        foreach ($bankSwiftsBySwift as $bankSwift) {
+            $this->em->remove($bankSwift);
+        }
+
+        $this->em->flush();
     }
 }

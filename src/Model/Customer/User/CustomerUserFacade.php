@@ -87,6 +87,7 @@ class CustomerUserFacade extends BaseCustomerUserFacade
             $billingAddressFacade,
             $customerUserRefreshTokenChainFacade
         );
+
         $this->newsletterFacade = $newsletterFacade;
         $this->hashGenerator = $hashGenerator;
     }

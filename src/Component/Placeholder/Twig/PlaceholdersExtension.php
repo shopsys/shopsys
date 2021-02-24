@@ -35,7 +35,7 @@ class PlaceholdersExtension extends AbstractExtension
 
     /**
      * @param string|null $text
-     * @param null|string[] $allowedPlaceholders
+     * @param string[]|null $allowedPlaceholders
      * @return string|null
      */
     public function convert(?string $text, ?array $allowedPlaceholders = null)

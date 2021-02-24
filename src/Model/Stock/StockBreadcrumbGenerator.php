@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-
 namespace App\Model\Stock;
 
 use Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbGeneratorInterface;
@@ -47,7 +46,7 @@ class StockBreadcrumbGenerator implements BreadcrumbGeneratorInterface
     }
 
     /**
-     * @return array|string[]
+     * @return string[]
      */
     public function getRouteNames(): array
     {

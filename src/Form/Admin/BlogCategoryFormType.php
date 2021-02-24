@@ -111,7 +111,7 @@ class BlogCategoryFormType extends AbstractType
      * @throws \Shopsys\FrameworkBundle\Component\Domain\Exception\NoDomainSelectedException
      * @return \Symfony\Component\Form\FormBuilderInterface
      */
-    private function createSettingsGroup(FormBuilderInterface $builder, array $options): \Symfony\Component\Form\FormBuilderInterface
+    private function createSettingsGroup(FormBuilderInterface $builder, array $options): FormBuilderInterface
     {
         if ($options['blogCategory'] !== null) {
             $parentChoices = $this->blogCategoryFacade->getTranslatedAllWithoutBranch($options['blogCategory'], $this->domain->getCurrentDomainConfig());
@@ -205,7 +205,7 @@ class BlogCategoryFormType extends AbstractType
      * @param array $options
      * @return \Symfony\Component\Form\FormBuilderInterface
      */
-    private function createSeoGroup(FormBuilderInterface $builder, array $options): \Symfony\Component\Form\FormBuilderInterface
+    private function createSeoGroup(FormBuilderInterface $builder, array $options): FormBuilderInterface
     {
         list($seoTitlesOptionsByDomainId, $seoMetaDescriptionsOptionsByDomainId, $seoH1OptionsByDomainId) = $this->prepareSeoData($options);
 
@@ -299,7 +299,7 @@ class BlogCategoryFormType extends AbstractType
      * @param array $options
      * @return \Symfony\Component\Form\FormBuilderInterface
      */
-    private function createImageGroup(FormBuilderInterface $builder, array $options): \Symfony\Component\Form\FormBuilderInterface
+    private function createImageGroup(FormBuilderInterface $builder, array $options): FormBuilderInterface
     {
         $builderImageGroup = $builder->create('image', GroupType::class, [
             'label' => t('Image'),

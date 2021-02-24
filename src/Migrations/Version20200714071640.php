@@ -15,13 +15,15 @@ class Version20200714071640 extends AbstractMigration
     public function up(Schema $schema): void
     {
         $isFlagProductHit = $this->sql('SELECT count(*) FROM flags WHERE akeneo_code =\'flag__product_hit\'')->fetchColumn(0);
-        if ($isFlagProductHit === 0) {
-            $this->sql('INSERT INTO flags (rgb_color, visible, akeneo_code) VALUES (\'#ffffff\', true, \'flag__product_hit\')');
-            $lastFlagsId = $this->connection->lastInsertId('flags_id_seq');
-
-            $this->sql(sprintf('INSERT INTO flag_translations (translatable_id, name, locale) VALUES (%d, \'Cenový hit\', \'cs\')', $lastFlagsId));
-            $this->sql(sprintf('INSERT INTO flag_translations (translatable_id, name, locale) VALUES (%d, \'Cenový hit\', \'sk\')', $lastFlagsId));
+        if ($isFlagProductHit !== 0) {
+            return;
         }
+
+        $this->sql('INSERT INTO flags (rgb_color, visible, akeneo_code) VALUES (\'#ffffff\', true, \'flag__product_hit\')');
+        $lastFlagsId = $this->connection->lastInsertId('flags_id_seq');
+
+        $this->sql(sprintf('INSERT INTO flag_translations (translatable_id, name, locale) VALUES (%d, \'Cenový hit\', \'cs\')', $lastFlagsId));
+        $this->sql(sprintf('INSERT INTO flag_translations (translatable_id, name, locale) VALUES (%d, \'Cenový hit\', \'sk\')', $lastFlagsId));
     }
 
     /**

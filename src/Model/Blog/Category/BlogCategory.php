@@ -15,7 +15,6 @@ use Shopsys\FrameworkBundle\Model\Localization\AbstractTranslatableEntity;
  * @Gedmo\Tree(type="nested")
  * @ORM\Table(name="blog_categories")
  * @ORM\Entity
- *
  * @method translation($locale = null): BlogCategoryTranslation
  */
 class BlogCategory extends AbstractTranslatableEntity
@@ -24,7 +23,6 @@ class BlogCategory extends AbstractTranslatableEntity
 
     /**
      * @var int
-     *
      * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
@@ -33,14 +31,12 @@ class BlogCategory extends AbstractTranslatableEntity
 
     /**
      * @var \App\Model\Blog\Category\BlogCategoryTranslation[]|\Doctrine\Common\Collections\ArrayCollection
-     *
      * @Prezent\Translations(targetEntity="App\Model\Blog\Category\BlogCategoryTranslation")
      */
     protected $translations;
 
     /**
      * @var \App\Model\Blog\Category\BlogCategory|null
-     *
      * @Gedmo\TreeParent
      * @ORM\ManyToOne(targetEntity="App\Model\Blog\Category\BlogCategory", inversedBy="children")
      * @ORM\JoinColumn(nullable=true, name="parent_id", referencedColumnName="id")
@@ -49,7 +45,6 @@ class BlogCategory extends AbstractTranslatableEntity
 
     /**
      * @var \App\Model\Blog\Category\BlogCategory[]
-     *
      * @ORM\OneToMany(targetEntity="App\Model\Blog\Category\BlogCategory", mappedBy="parent")
      * @ORM\OrderBy({"lft" = "ASC"})
      */
@@ -57,7 +52,6 @@ class BlogCategory extends AbstractTranslatableEntity
 
     /**
      * @var int
-     *
      * @Gedmo\TreeLevel
      * @ORM\Column(type="integer")
      */
@@ -65,7 +59,6 @@ class BlogCategory extends AbstractTranslatableEntity
 
     /**
      * @var int
-     *
      * @Gedmo\TreeLeft
      * @ORM\Column(type="integer")
      */
@@ -73,7 +66,6 @@ class BlogCategory extends AbstractTranslatableEntity
 
     /**
      * @var int
-     *
      * @Gedmo\TreeRight
      * @ORM\Column(type="integer")
      */
@@ -81,7 +73,6 @@ class BlogCategory extends AbstractTranslatableEntity
 
     /**
      * @var \App\Model\Blog\Category\BlogCategoryDomain[]|\Doctrine\Common\Collections\ArrayCollection
-     *
      * @ORM\OneToMany(targetEntity="App\Model\Blog\Category\BlogCategoryDomain", mappedBy="blogCategory", cascade={"persist"}, fetch="EXTRA_LAZY")
      */
     private $domains;

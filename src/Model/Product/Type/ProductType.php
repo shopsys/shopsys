@@ -16,7 +16,6 @@ use Shopsys\FrameworkBundle\Model\Localization\AbstractTranslatableEntity;
 /**
  * @ORM\Table(name="product_types")
  * @ORM\Entity
- *
  * @method \App\Model\Product\Type\ProductTypeTranslation[] getTranslations()
  * @method \App\Model\Product\Type\ProductTypeTranslation translation(?string $locale)
  */
@@ -26,7 +25,6 @@ class ProductType extends AbstractTranslatableEntity implements OrderableEntityI
 
     /**
      * @var int
-     *
      * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
@@ -35,28 +33,24 @@ class ProductType extends AbstractTranslatableEntity implements OrderableEntityI
 
     /**
      * @var \App\Model\Product\Type\ProductTypeTranslation[]|\Doctrine\Common\Collections\Collection
-     *
      * @Prezent\Translations(targetEntity="App\Model\Product\Type\ProductTypeTranslation")
      */
     protected $translations;
 
     /**
      * @var \App\Model\Product\Type\ProductTypeDomain[]|\Doctrine\Common\Collections\Collection
-     *
      * @ORM\OneToMany(targetEntity="App\Model\Product\Type\ProductTypeDomain", mappedBy="productType", cascade={"persist"}, fetch="EXTRA_LAZY")
      */
     protected $domains;
 
     /**
      * @var string
-     *
      * @ORM\Column(type="string", length=20, unique=true)
      */
     protected $akeneoCode;
 
     /**
      * @var int
-     *
      * @Gedmo\SortablePosition
      * @ORM\Column(type="integer")
      */

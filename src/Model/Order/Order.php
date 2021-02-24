@@ -9,6 +9,7 @@ use App\Model\Product\Type\ProductType;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use GoPay\Definition\Response\PaymentStatus;
+use RuntimeException;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Order\Order as BaseOrder;
 use Shopsys\FrameworkBundle\Model\Order\OrderData as BaseOrderData;
@@ -45,7 +46,6 @@ class Order extends BaseOrder
 {
     /**
      * @var \App\Model\GoPay\GoPayTransaction[]|\Doctrine\Common\Collections\ArrayCollection
-     *
      * @ORM\OneToMany(
      *     targetEntity="App\Model\GoPay\GoPayTransaction",
      *     mappedBy="order",
@@ -56,53 +56,44 @@ class Order extends BaseOrder
     private $goPayTransactions;
 
     /**
-     * REMOVED PROPERTY!
-     * This property is removed from model, because Order has more Transports.
-     *
      * @var null
-     * @deprecated
+     * @deprecated REMOVED PROPERTY! This property is removed from model, because Order has more Transports
      * @see \App\Component\Doctrine\RemoveMappingsSubscriber
      */
     protected $transport;
 
     /**
      * @var string|null
-     *
      * @ORM\Column(type="string", length=100, nullable=true)
      */
     protected $firstName;
 
     /**
      * @var string|null
-     *
      * @ORM\Column(type="string", length=100, nullable=true)
      */
     protected $lastName;
 
     /**
      * @var string|null
-     *
      * @ORM\Column(type="string", length=100, nullable=true)
      */
     protected $deliveryFirstName;
 
     /**
      * @var string|null
-     *
      * @ORM\Column(type="string", length=100, nullable=true)
      */
     protected $deliveryLastName;
 
     /**
      * @var string|null
-     *
      * @ORM\Column(type="string", length=64, nullable=true)
      */
     protected $gtmCoupon;
 
     /**
      * @var bool
-     *
      * @ORM\Column(type="boolean")
      */
     protected $isOverLimit;
@@ -241,7 +232,7 @@ class Order extends BaseOrder
      * Overriding of OrderFormType is impossible and FormExtension can not disable this calling.
      * Removing of this calling needs a lot of copy-paste code or removing order detail page in administration.
      *
-     * @deprecated
+     * @deprecated do not use this method! Order has N transports, not just exactly one
      * @internal
      * @return \App\Model\Transport\Transport
      */
@@ -253,7 +244,7 @@ class Order extends BaseOrder
             }
         }
 
-        throw new \RuntimeException('Do not use this method! Order has N transports, and this order has no one. Read comment for method Order::getTransport()');
+        throw new RuntimeException('Do not use this method! Order has N transports, and this order has no one. Read comment for method Order::getTransport()');
     }
 
     /**
@@ -299,7 +290,7 @@ class Order extends BaseOrder
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getGtmCoupon(): ?string
     {

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\Blog\Article;
 
+use App\Model\Blog\Article\Exception\BlogArticleNotFoundException;
 use App\Model\Blog\Category\BlogCategory;
 use App\Model\Product\Product;
 use DateTime;
@@ -156,7 +157,7 @@ class BlogArticleRepository
 
         if ($blogArticle === null) {
             $message = 'Blog article with ID ' . $blogArticleId . ' not found';
-            throw new \App\Model\Blog\Article\Exception\BlogArticleNotFoundException($message);
+            throw new BlogArticleNotFoundException($message);
         }
 
         return $blogArticle;
@@ -180,7 +181,7 @@ class BlogArticleRepository
 
         if ($blogArticle === null) {
             $message = 'Article with ID ' . $blogArticleId . ' not found';
-            throw new \App\Model\Blog\Article\Exception\BlogArticleNotFoundException($message);
+            throw new BlogArticleNotFoundException($message);
         }
         return $blogArticle;
     }

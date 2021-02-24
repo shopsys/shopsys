@@ -14,7 +14,6 @@ class Transfer
 {
     /**
      * @var int
-     *
      * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
@@ -29,7 +28,6 @@ class Transfer
 
     /**
      * @var string
-     *
      * @ORM\Column(type="string", length=100, nullable=false)
      */
     protected $name;

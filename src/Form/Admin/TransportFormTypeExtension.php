@@ -8,7 +8,6 @@ use App\Model\Product\Type\ProductTypeFacade;
 use App\Model\Transport\Transport;
 use App\Model\Transport\TransportData;
 use Shopsys\FormTypesBundle\YesNoType;
-use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Form\Admin\Transport\TransportFormType;
 use Shopsys\FrameworkBundle\Form\GroupType;
 use Shopsys\FrameworkBundle\Form\ValidationGroup;
@@ -38,19 +37,10 @@ class TransportFormTypeExtension extends AbstractTypeExtension
     private $productTypeFacade;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    private Domain $domain;
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \App\Model\Product\Type\ProductTypeFacade $productTypeFacade
      */
-    public function __construct(
-        Domain $domain,
-        ProductTypeFacade $productTypeFacade
-    ) {
-        $this->domain = $domain;
+    public function __construct(ProductTypeFacade $productTypeFacade)
+    {
         $this->productTypeFacade = $productTypeFacade;
     }
 
@@ -105,9 +95,9 @@ class TransportFormTypeExtension extends AbstractTypeExtension
                 'constraints' => [
                     new NotBlank(),
                     new Length([
-                        'max' => 10
-                    ])
-                ]
+                        'max' => 10,
+                    ]),
+                ],
             ])
             ->add('typeOfDeliveryKey', IntegerType::class, [
                 'label' => t('Moewe - TypeOfDeliveryKey'),
@@ -115,8 +105,8 @@ class TransportFormTypeExtension extends AbstractTypeExtension
                 'constraints' => [
                     new NotBlank(),
                     new GreaterThan(0),
-                    new LessThanOrEqual(99)
-                ]
+                    new LessThanOrEqual(99),
+                ],
             ]);
 
         $builder->add($this->createTransportPackages($builder));

@@ -7,6 +7,7 @@ namespace App\Model\Product\Search;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery as BaseFilterQuery;
+use stdClass;
 
 /**
  * @method \App\Model\Product\Search\FilterQuery applyOrdering(string $orderingModeId, \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup)
@@ -209,7 +210,6 @@ class FilterQuery extends BaseFilterQuery
      * (that have selected value and can have plus numbers)
      *
      * @see https://github.com/shopsys/shopsys/pull/1794
-     *
      * @param int $selectedParameterId
      * @param array $selectedValuesIds
      * @return array
@@ -302,7 +302,7 @@ class FilterQuery extends BaseFilterQuery
                 'query' => [
                     'bool' => [
                         'must' => [
-                            'match_all' => new \stdClass(),
+                            'match_all' => new stdClass(),
                         ],
                         'filter' => [
                             'bool' => [

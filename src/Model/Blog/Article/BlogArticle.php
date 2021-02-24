@@ -14,14 +14,12 @@ use Shopsys\FrameworkBundle\Model\Localization\AbstractTranslatableEntity;
 /**
  * @ORM\Table(name="blog_articles")
  * @ORM\Entity
- *
  * @method translation($locale = null): BlogArticleTranslation
  */
 class BlogArticle extends AbstractTranslatableEntity
 {
     /**
      * @var int
-     *
      * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
@@ -30,7 +28,6 @@ class BlogArticle extends AbstractTranslatableEntity
 
     /**
      * @var \Doctrine\Common\Collections\ArrayCollection|\App\Model\Blog\Article\BlogArticleBlogCategoryDomain[]
-     *
      * @ORM\OneToMany(
      *   targetEntity="App\Model\Blog\Article\BlogArticleBlogCategoryDomain",
      *   mappedBy="blogArticle",
@@ -42,49 +39,42 @@ class BlogArticle extends AbstractTranslatableEntity
 
     /**
      * @var \App\Model\Blog\Article\BlogArticleTranslation[]|\Doctrine\Common\Collections\ArrayCollection
-     *
      * @Prezent\Translations(targetEntity="App\Model\Blog\Article\BlogArticleTranslation")
      */
     protected $translations;
 
     /**
      * @var \App\Model\Blog\Article\BlogArticleDomain[]|\Doctrine\Common\Collections\ArrayCollection
-     *
      * @ORM\OneToMany(targetEntity="App\Model\Blog\Article\BlogArticleDomain", mappedBy="blogArticle", cascade={"persist"}, fetch="EXTRA_LAZY")
      */
     private $domains;
 
     /**
      * @var bool
-     *
      * @ORM\Column(type="boolean")
      */
     private $hidden;
 
     /**
      * @var \DateTime
-     *
      * @ORM\Column(type="datetime")
      */
     private $createdAt;
 
     /**
      * @var bool
-     *
      * @ORM\Column(type="boolean")
      */
     private $visibleOnHomepage;
 
     /**
      * @var \DateTime
-     *
      * @ORM\Column(type="date")
      */
     private $publishDate;
 
     /**
      * @var \Doctrine\Common\Collections\ArrayCollection|\App\Model\Product\Product[]
-     *
      * @ORM\ManyToMany(targetEntity="App\Model\Product\Product", fetch="EXTRA_LAZY")
      * @ORM\JoinTable(name="blog_article_products")
      */
@@ -284,6 +274,7 @@ class BlogArticle extends AbstractTranslatableEntity
     }
 
     /**;
+     *
      * @param $domainId
      * @return bool
      */
@@ -365,7 +356,7 @@ class BlogArticle extends AbstractTranslatableEntity
     }
 
     /**
-     * @return bool $visible
+     * @return bool
      */
     public function isHidden()
     {

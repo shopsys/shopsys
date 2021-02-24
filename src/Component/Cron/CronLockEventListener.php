@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-
 namespace App\Component\Cron;
 
 use App\Command\CronLockCommand;
@@ -18,6 +17,9 @@ class CronLockEventListener implements EventSubscriberInterface
      */
     private $lock;
 
+    /**
+     * @param \NinjaMutex\Lock\LockInterface $lock
+     */
     public function __construct(LockInterface $lock)
     {
         $this->lock = $lock;

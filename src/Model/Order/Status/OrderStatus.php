@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Model\Order\Status;
 
 use Doctrine\ORM\Mapping as ORM;
+use Shopsys\FrameworkBundle\Model\Order\Status\Exception\InvalidOrderStatusTypeException;
 use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus as BaseOrderStatus;
 
 /**
@@ -27,7 +28,7 @@ class OrderStatus extends BaseOrderStatus
      */
     protected function setType($type)
     {
-        if (in_array($type, [
+        if (!in_array($type, [
             self::TYPE_NEW,
             self::TYPE_IN_PROGRESS,
             self::TYPE_DONE,
@@ -41,9 +42,9 @@ class OrderStatus extends BaseOrderStatus
             self::TYPE_ERP_ORDERED,
             self::TYPE_ERP_ERROR,
         ], true)) {
-            $this->type = $type;
-        } else {
-            throw new \Shopsys\FrameworkBundle\Model\Order\Status\Exception\InvalidOrderStatusTypeException($type);
+            throw new InvalidOrderStatusTypeException($type);
         }
+
+        $this->type = $type;
     }
 }

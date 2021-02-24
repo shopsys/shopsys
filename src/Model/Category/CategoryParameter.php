@@ -15,7 +15,6 @@ class CategoryParameter
 {
     /**
      * @var \App\Model\Category\Category
-     *
      * @ORM\Id
      * @ORM\ManyToOne(targetEntity="\App\Model\Category\Category")
      * @ORM\JoinColumn(name="category_id", referencedColumnName="id", onDelete="CASCADE", nullable=false)
@@ -24,7 +23,6 @@ class CategoryParameter
 
     /**
      * @var \App\Model\Product\Parameter\Parameter
-     *
      * @ORM\Id
      * @ORM\ManyToOne(targetEntity="\App\Model\Product\Parameter\Parameter")
      * @ORM\JoinColumn(name="parameter_id", referencedColumnName="id", onDelete="CASCADE", nullable=false )
@@ -33,14 +31,12 @@ class CategoryParameter
 
     /**
      * @var bool
-     *
      * @ORM\Column(type="boolean")
      */
     private $collapsed;
 
     /**
      * @var int
-     *
      * @ORM\Column(type="integer")
      */
     private $position;

@@ -54,21 +54,21 @@ class CustomerUserFormType extends AbstractType
         }
 
         $builder->add('email', EmailType::class, [
-                'attr' => ['readonly' => true],
-                'required' => true,
-                'constraints' => [
-                    new Constraints\NotBlank(['message' => 'Please enter email']),
-                    new Constraints\Length([
-                        'max' => 64,
-                        'maxMessage' => 'Email cannot be longer than {{ limit }} characters',
-                    ]),
-                    new Email(['message' => 'Please enter valid email']),
-                    new Constraints\Regex([
-                        'pattern' => RegexValidationRule::MOEVE_DENY_CHARS,
-                        'message' => 'Prosím, nepoužívejte žádné speciální znaky. Například őűàèìòùâêîôûâêîôãñõđåæøçłßþż€£¥ƒ¢§¶ªº',
-                    ]),
-                ],
-            ])
+            'attr' => ['readonly' => true],
+            'required' => true,
+            'constraints' => [
+                new Constraints\NotBlank(['message' => 'Please enter email']),
+                new Constraints\Length([
+                    'max' => 64,
+                    'maxMessage' => 'Email cannot be longer than {{ limit }} characters',
+                ]),
+                new Email(['message' => 'Please enter valid email']),
+                new Constraints\Regex([
+                    'pattern' => RegexValidationRule::MOEVE_DENY_CHARS,
+                    'message' => 'Prosím, nepoužívejte žádné speciální znaky. Například őűàèìòùâêîôûâêîôãñõđåæøçłßþż€£¥ƒ¢§¶ªº',
+                ]),
+            ],
+        ])
             ->add('telephone', TextType::class, [
                 'required' => true,
                 'constraints' => [
@@ -112,22 +112,22 @@ class CustomerUserFormType extends AbstractType
         $resolver
             ->setRequired(['is_company_customer'])
             ->setDefaults([
-            'data_class' => CustomerUserData::class,
-            'attr' => ['novalidate' => 'novalidate'],
-            'constraints' => [
-                new FieldsAreNotIdentical([
-                    'field1' => 'email',
-                    'field2' => 'password',
-                    'errorPath' => 'password',
-                    'message' => 'Password cannot be same as email',
-                ]),
-                new NotIdenticalToEmailLocalPart([
-                    'password' => 'password',
-                    'email' => 'email',
-                    'errorPath' => 'password',
-                    'message' => 'Password cannot be same as part of email before at sign',
-                ]),
-            ],
-        ]);
+                'data_class' => CustomerUserData::class,
+                'attr' => ['novalidate' => 'novalidate'],
+                'constraints' => [
+                    new FieldsAreNotIdentical([
+                        'field1' => 'email',
+                        'field2' => 'password',
+                        'errorPath' => 'password',
+                        'message' => 'Password cannot be same as email',
+                    ]),
+                    new NotIdenticalToEmailLocalPart([
+                        'password' => 'password',
+                        'email' => 'email',
+                        'errorPath' => 'password',
+                        'message' => 'Password cannot be same as part of email before at sign',
+                    ]),
+                ],
+            ]);
     }
 }

@@ -12,14 +12,12 @@ use Shopsys\FrameworkBundle\Model\Localization\AbstractTranslatableEntity;
 /**
  * @ORM\Table(name="parameter_units")
  * @ORM\Entity
- *
  * @method \App\Model\Product\Parameter\Unit\ParameterUnitTranslation translation(?string $locale = null)
  */
 class ParameterUnit extends AbstractTranslatableEntity
 {
     /**
      * @var int
-     *
      * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
@@ -28,14 +26,12 @@ class ParameterUnit extends AbstractTranslatableEntity
 
     /**
      * @var string
-     *
      * @ORM\Column(type="string", length=100, unique=true, nullable=false)
      */
     protected $akeneoCode;
 
     /**
      * @var \App\Model\Product\Parameter\Unit\ParameterUnitTranslation[]|\Doctrine\Common\Collections\Collection
-     *
      * @Prezent\Translations(targetEntity="App\Model\Product\Parameter\Unit\ParameterUnitTranslation")
      */
     protected $translations;

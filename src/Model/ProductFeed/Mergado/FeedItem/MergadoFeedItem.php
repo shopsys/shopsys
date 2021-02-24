@@ -64,12 +64,12 @@ class MergadoFeedItem implements FeedItemInterface
     private $price;
 
     /**
-     * @var null|\App\Model\Product\Brand\Brand
+     * @var \App\Model\Product\Brand\Brand|null
      */
     private $brand;
 
     /**
-     * @var null|string
+     * @var string|null
      */
     private $imageUrl;
 
@@ -99,12 +99,12 @@ class MergadoFeedItem implements FeedItemInterface
     private $currencyCode;
 
     /**
-     * @var ProductPrice
+     * @var \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice
      */
     private ProductPrice $highProductPrice;
 
     /**
-     * @var ProductPrice
+     * @var \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice
      */
     private ProductPrice $lowProductPrice;
 

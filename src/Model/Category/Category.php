@@ -28,14 +28,12 @@ class Category extends BaseCategory
 
     /**
      * @var string|null
-     *
      * @ORM\Column(type="string", length=100, unique=true, nullable=true)
      */
     protected $akeneoCode;
 
     /**
      * @var string|null
-     *
      * @ORM\Column(type="string", length=32, nullable=true)
      */
     private $svgIcon;

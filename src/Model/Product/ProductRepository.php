@@ -8,6 +8,7 @@ use App\Model\Stock\ProductStock;
 use Doctrine\ORM\Internal\Hydration\IterableResult;
 use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
+use Exception;
 use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Product\Availability\Availability;
@@ -189,7 +190,7 @@ class ProductRepository extends BaseProductRepository
      */
     public function getProductsWithAvailability(Availability $availability): array
     {
-        throw new \Exception('Product Availability is deprecated');
+        throw new Exception('Product Availability is deprecated');
     }
 
     /**
@@ -314,7 +315,7 @@ class ProductRepository extends BaseProductRepository
     }
 
     /**
-     * @return Product[]
+     * @return \App\Model\Product\Product[]
      */
     public function getAll(): array
     {

@@ -13,6 +13,7 @@ use App\Model\UrlRedirect\UrlRedirectFacade;
 use App\Model\UrlRedirect\UrlRegularFacade;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
+use Generator;
 use League\Flysystem\FilesystemInterface;
 use Shopsys\FrameworkBundle\Component\Doctrine\SqlLoggerFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
@@ -85,6 +86,7 @@ class SingleImportUrlRedirectTableFacade implements TransferIdentificationInterf
      * @var bool
      */
     private bool $isRegular;
+
     /**
      * @var \App\Model\UrlRedirect\UrlRegularFacade
      */
@@ -99,6 +101,7 @@ class SingleImportUrlRedirectTableFacade implements TransferIdentificationInterf
      * @param \App\Component\Router\Import\SingleImportUrlRedirectTableValidator $singleImportUrlRedirectTableValidator
      * @param \App\Model\UrlRedirect\UrlRedirectDataFactory $urlRedirectDataFactory
      * @param \App\Model\UrlRedirect\UrlRedirectFacade $urlRedirectFacade
+     * @param \App\Model\UrlRedirect\UrlRegularFacade $urlRegularFacade
      */
     public function __construct(
         SqlLoggerFacade $sqlLoggerFacade,
@@ -122,7 +125,11 @@ class SingleImportUrlRedirectTableFacade implements TransferIdentificationInterf
         $this->urlRegularFacade = $urlRegularFacade;
     }
 
-
+    /**
+     * @param string $file
+     * @param string $domain
+     * @param bool $isRegular
+     */
     public function runTransfer(string $file, string $domain, bool $isRegular)
     {
         try {
@@ -135,7 +142,7 @@ class SingleImportUrlRedirectTableFacade implements TransferIdentificationInterf
             $this->doBeforeTransfer();
 
             if (strpos($this->file, '.csv')) {
-                foreach ($this->getDataFromCSV() as $item) {
+                foreach ($this->getDataFromCsv() as $item) {
                     $this->handleExceptionsOnProcessingItem($item);
                 }
             } else {
@@ -143,7 +150,6 @@ class SingleImportUrlRedirectTableFacade implements TransferIdentificationInterf
                     $this->handleExceptionsOnProcessingItem($item);
                 }
             }
-
 
             $this->sqlLoggerFacade->reenableLogging();
         } catch (RuntimeException $exception) {
@@ -251,11 +257,11 @@ class SingleImportUrlRedirectTableFacade implements TransferIdentificationInterf
     {
         $redirectString = trim($redirectString);
         $matches = [];
-        if (strpos($this->file, '.erb')) {
-            $pattern = '/^rewrite \^(?P<from>[^\(\$]*)(\(\\\\\/\)\?)?(\$)? https:\/\/<%= node\[\'krieger\'\]\[\'baseurl\'\] %>(?P<to>.*) \S+;$/m';
-        } else {
+        if (!strpos($this->file, '.erb')) {
             throw new Exception('Unexpected file type');
         }
+
+        $pattern = '/^rewrite \^(?P<from>[^\(\$]*)(\(\\\\\/\)\?)?(\$)? https:\/\/<%= node\[\'krieger\'\]\[\'baseurl\'\] %>(?P<to>.*) \S+;$/m';
 
         $results = preg_match_all($pattern, $redirectString, $matches, PREG_SET_ORDER, 0);
         if ($results !== false && $results > 0) {
@@ -279,14 +285,17 @@ class SingleImportUrlRedirectTableFacade implements TransferIdentificationInterf
     /**
      * @return \Generator
      */
-    protected function getData(): \Generator
+    protected function getData(): Generator
     {
         while (($data = fgets($this->handler)) !== false) {
             yield $data;
         }
     }
 
-    private function getDataFromCSV(): \Generator
+    /**
+     * @return \Generator
+     */
+    private function getDataFromCsv(): Generator
     {
         $keys = [];
         $isFirstLine = true;

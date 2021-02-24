@@ -7,6 +7,7 @@ namespace App\Model\Product\Parameter\Transfer\Akeneo;
 use App\Component\Akeneo\Transfer\AbstractAkeneoImportTransfer;
 use App\Component\Akeneo\Transfer\AkeneoImportTransferDependency;
 use App\Model\Product\Parameter\ParameterGroupFacade;
+use Generator;
 
 class AkeneoImportProductGroupParameterFacade extends AbstractAkeneoImportTransfer
 {
@@ -57,7 +58,7 @@ class AkeneoImportProductGroupParameterFacade extends AbstractAkeneoImportTransf
     /**
      * @inheritDoc
      */
-    protected function getData(): \Generator
+    protected function getData(): Generator
     {
         return $this->productParameterGroupTransferAkeneoFacade->getAllAttributesGroup();
     }

@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-
 namespace App\Command;
 
 use App\Component\Router\Import\SingleImportUrlRedirectTableFacade;
@@ -29,6 +28,7 @@ class SingleImportUrlRedirectTableCommand extends Command
     public function __construct(SingleImportUrlRedirectTableFacade $singleImportUrlRedirectTableFacade)
     {
         parent::__construct();
+
         $this->singleImportUrlRedirectTableFacade = $singleImportUrlRedirectTableFacade;
     }
 

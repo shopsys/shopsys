@@ -21,7 +21,6 @@ class ParameterUnitTranslation extends AbstractTranslation
 
     /**
      * @var string|null
-     *
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     protected $name;

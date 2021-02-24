@@ -54,6 +54,7 @@ class CategoryData extends BaseCategoryData
     public function __construct()
     {
         parent::__construct();
+
         $this->shortDescription = [];
         $this->parametersPosition = [];
         $this->isSaleCategory = false;

@@ -38,13 +38,13 @@ class PlaceholderConverter
 
     /**
      * @param string|null $text
-     * @param null|string[] $allowedPlaceholders
+     * @param string[]|null $allowedPlaceholders
      * @param string|null $locale
      * @return string
      */
     public function convert(?string $text, ?array $allowedPlaceholders = null, ?string $locale = null): string
     {
-        if (empty($text)) {
+        if ($text === null || $text === '') {
             return '';
         }
 

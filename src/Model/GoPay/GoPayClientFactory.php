@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Model\GoPay;
 
+use App\Model\GoPay\Exception\GoPayNotConfiguredException;
+
 class GoPayClientFactory
 {
     /**
@@ -38,7 +40,7 @@ class GoPayClientFactory
         $this->config = array_merge($this->config, $configByLocale);
 
         if ($this->config['goid'] === null) {
-            throw new \App\Model\GoPay\Exception\GoPayNotConfiguredException();
+            throw new GoPayNotConfiguredException();
         }
 
         return $this->config;

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Controller\Front;
 
-use App\Form\Front\Login\LoginFormType;
 use App\Form\Front\Order\DomainAwareOrderFlowFactory;
 use App\Form\Front\Order\OrderFlow;
 use App\Form\Front\Order\PaymentFormType;
@@ -13,6 +12,7 @@ use App\Model\Customer\User\CustomerUser;
 use App\Model\Customer\User\CustomerUserFacade;
 use App\Model\GoPay\BankSwift\GoPayBankSwift;
 use App\Model\GoPay\BankSwift\GoPayBankSwiftFacade;
+use App\Model\GoPay\Exception\GoPayException;
 use App\Model\GoPay\Exception\GoPayNotConfiguredException;
 use App\Model\GoPay\Exception\GoPayPaymentDownloadException;
 use App\Model\GoPay\GoPayOnCurrentDomainFacade;
@@ -34,6 +34,7 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\HttpFoundation\DownloadFileResponse;
 use Shopsys\FrameworkBundle\Model\Cart\CartFacade;
 use Shopsys\FrameworkBundle\Model\LegalConditions\LegalConditionsFacade;
+use Shopsys\FrameworkBundle\Model\Mail\Exception\MailException;
 use Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade;
 use Shopsys\FrameworkBundle\Model\Order\Exception\OrderNotFoundException;
 use Shopsys\FrameworkBundle\Model\Order\Mail\OrderMailFacade;
@@ -202,6 +203,8 @@ class OrderController extends FrontBaseController
      * @param \App\Model\Gtm\GtmFacade $gtmFacade
      * @param \Shopsys\FrameworkBundle\Model\Security\Authenticator $authenticator
      * @param \App\Model\Transport\Logistic\TransportLogisticFacade $transportLogisticFacade
+     * @param \App\Model\Product\Availability\ProductAvailabilityFacade $productAvailabilityFacade
+     * @param \App\Model\Cart\CartMigrationFacade $cartMigrationFacade
      * @param \App\Model\Customer\User\CustomerUserFacade $customerUserFacade
      */
     public function __construct(
@@ -353,7 +356,7 @@ class OrderController extends FrontBaseController
 
                 try {
                     $this->sendMail($order);
-                } catch (\Shopsys\FrameworkBundle\Model\Mail\Exception\MailException $e) {
+                } catch (MailException $e) {
                     $this->addErrorFlash(
                         t('Unable to send some emails, please contact us for order verification.')
                     );
@@ -380,7 +383,8 @@ class OrderController extends FrontBaseController
             return $this->redirectToRoute('front_cart');
         }
 
-        $minimalDaysAvailabilityIndexedByTransportIds = $stockDayAvailabilitiesByStockId = [];
+        $minimalDaysAvailabilityIndexedByTransportIds = [];
+        $stockDayAvailabilitiesByStockId = [];
         if ($orderFlow->getCurrentStepNumber() === OrderFlow::STEP_SECOND) {
             $stocks = $this->stockFacade->getStocksWithoutCentralByDomainIdIndexedByStockId($domainId);
             $stockDayAvailabilitiesByStockId = $this->productAvailabilityFacade->getStockDayAvailabilitiesIndexedByStockId(
@@ -414,7 +418,7 @@ class OrderController extends FrontBaseController
             'minimalDaysAvailabilityIndexedByTransportIds' => $minimalDaysAvailabilityIndexedByTransportIds,
             'stockDayAvailabilitiesByStockId' => $stockDayAvailabilitiesByStockId,
             'customerInfo' => $customerInfo,
-            'customerUser' => $customerUser
+            'customerUser' => $customerUser,
         ]);
     }
 
@@ -542,7 +546,7 @@ class OrderController extends FrontBaseController
             try {
                 $goPayData = $this->goPayFacadeOnCurrentDomain->sendPaymentToGoPay($order, $goPayBankSwift);
                 $this->goPayTransactionFacade->createNewTransactionByOrder($order, (string)$goPayData['goPayId']);
-            } catch (\App\Model\GoPay\Exception\GoPayException $e) {
+            } catch (GoPayException $e) {
                 $this->addErrorFlash(t('Connection to GoPay gateway failed.'));
             }
         }
@@ -565,7 +569,7 @@ class OrderController extends FrontBaseController
         try {
             /** @var \App\Model\Order\Order $order */
             $order = $this->orderFacade->getByUrlHashAndDomain($urlHash, $this->domain->getId());
-        } catch (\Shopsys\FrameworkBundle\Model\Order\Exception\OrderNotFoundException $e) {
+        } catch (OrderNotFoundException $e) {
             $this->addErrorFlash(t('Order not found.'));
             return $this->redirectToRoute('front_cart');
         }
@@ -591,7 +595,7 @@ class OrderController extends FrontBaseController
     {
         try {
             $order = $this->orderFacade->getByUrlHashAndDomain($urlHash, $this->domain->getId());
-        } catch (\Shopsys\FrameworkBundle\Model\Order\Exception\OrderNotFoundException $e) {
+        } catch (OrderNotFoundException $e) {
             $this->addErrorFlash(t('Order not found.'));
 
             return $this->redirectToRoute('front_cart');
@@ -622,13 +626,13 @@ class OrderController extends FrontBaseController
                 'unsuccessfulPayment' => $order->getPayment(),
                 'order' => $order,
             ]);
-        } else {
-            return $this->render('Front/Content/Order/notPaid.html.twig', [
-                'goPayBankTransferIdentifier' => GoPayPaymentMethod::IDENTIFIER_BANK_TRANSFER,
-                'urlHash' => $urlHash,
-                'order' => $order,
-            ]);
         }
+
+        return $this->render('Front/Content/Order/notPaid.html.twig', [
+            'goPayBankTransferIdentifier' => GoPayPaymentMethod::IDENTIFIER_BANK_TRANSFER,
+            'urlHash' => $urlHash,
+            'order' => $order,
+        ]);
     }
 
     /**
@@ -652,7 +656,7 @@ class OrderController extends FrontBaseController
         try {
             /** @var \App\Model\Order\Order $order */
             $order = $this->orderFacade->getByUrlHashAndDomain($urlHash, $this->domain->getId());
-        } catch (\Shopsys\FrameworkBundle\Model\Order\Exception\OrderNotFoundException $e) {
+        } catch (OrderNotFoundException $e) {
             $this->addErrorFlash(t('Objednávka nebyla nalezena.'));
 
             return $this->redirectToRoute('front_homepage');
@@ -660,13 +664,13 @@ class OrderController extends FrontBaseController
 
         $goPayData = null;
 
-        if ($order->getPayment()->isGoPay()) {
-            if ($order->isGoPayPaid()) {
-                $this->addErrorFlash(t('Objednávka je již zaplacená.'));
-                return $this->redirectToRoute('front_homepage');
-            }
-        } else {
+        if (!$order->getPayment()->isGoPay()) {
             throw $this->createNotFoundException('Objednávka nemá nastaven způsob platby prostřednictvím GoPay.');
+        }
+
+        if ($order->isGoPayPaid()) {
+            $this->addErrorFlash(t('Objednávka je již zaplacená.'));
+            return $this->redirectToRoute('front_homepage');
         }
 
         $goPayBankSwift = $this->session->get(self::SESSION_GOPAY_CHOOSEN_SWIFT, null);
@@ -674,7 +678,7 @@ class OrderController extends FrontBaseController
         try {
             $goPayData = $this->goPayFacadeOnCurrentDomain->sendPaymentToGoPay($order, $goPayBankSwift);
             $this->goPayTransactionFacade->createNewTransactionByOrder($order, (string)$goPayData['goPayId']);
-        } catch (\App\Model\GoPay\Exception\GoPayException $e) {
+        } catch (GoPayException $e) {
             $this->addErrorFlash(t('Connection to GoPay gateway failed.'));
         }
 
@@ -724,11 +728,11 @@ class OrderController extends FrontBaseController
             return $this->redirectToRoute('front_customer_order_detail_registered', [
                 'orderNumber' => $order->getNumber(),
             ]);
-        } else {
-            return $this->redirectToRoute('front_customer_order_detail_unregistered', [
-                'urlHash' => $order->getUrlHash(),
-            ]);
         }
+
+        return $this->redirectToRoute('front_customer_order_detail_unregistered', [
+            'urlHash' => $order->getUrlHash(),
+        ]);
     }
 
     /**
@@ -789,15 +793,5 @@ class OrderController extends FrontBaseController
         if ($mailTemplate->isSendMail()) {
             $this->orderMailFacade->sendEmail($order);
         }
-    }
-
-    /**
-     * @return \Symfony\Component\Form\FormInterface
-     */
-    private function getLoginForm()
-    {
-        return $this->createForm(LoginFormType::class, null, [
-            'action' => $this->generateUrl('front_login_check'),
-        ]);
     }
 }

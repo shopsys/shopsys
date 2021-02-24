@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-
 namespace App\Model\Administrator\Role;
 
 use Shopsys\FrameworkBundle\Model\Administrator\Administrator;
@@ -16,6 +15,11 @@ use Shopsys\FrameworkBundle\Model\Security\Roles;
  */
 class AdministratorRoleFacade extends BaseAdministratorRoleFacade
 {
+    /**
+     * @param \App\Model\Administrator\Administrator $administrator
+     * @param array $roles
+     * @return array
+     */
     protected function addAdminRoleIfMissing(Administrator $administrator, array $roles): array
     {
         $adminRole = null;

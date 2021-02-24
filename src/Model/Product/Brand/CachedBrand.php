@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-
 namespace App\Model\Product\Brand;
 
 use App\Model\LoadFromParentTrait;
@@ -23,6 +22,7 @@ class CachedBrand extends BrandEntity
     public function __construct(BrandEntity $brand)
     {
         parent::__construct(new BrandData());
+
         $this->loadFromParent($brand);
     }
 }

@@ -9,7 +9,6 @@ use App\Model\Product\Product;
 use App\Model\Stock\ProductStock;
 use App\Model\Stock\ProductStockFacade;
 use App\Model\Stock\ProductStockRepository;
-use Shopsys\FrameworkBundle\Component\String\TransformString;
 use Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct;
 
 class ProductAvailabilityFacade
@@ -365,9 +364,8 @@ class ProductAvailabilityFacade
     {
         if ($this->isProductAvailableOnDomainCached($product, $domainId)) {
             return $this->getTransferDaysByDomainId($domainId);
-        } else {
-            return $this->getDeliveryDaysByDomainId($product, $domainId);
         }
+        return $this->getDeliveryDaysByDomainId($product, $domainId);
     }
 
     /**

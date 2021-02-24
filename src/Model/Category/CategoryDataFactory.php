@@ -51,6 +51,7 @@ class CategoryDataFactory extends BaseCategoryDataFactory
             $domain,
             $imageFacade
         );
+
         $this->categoryParameterRepository = $categoryParameterRepository;
         $this->linkedCategoryRepository = $linkedCategoryRepository;
     }
@@ -92,6 +93,7 @@ class CategoryDataFactory extends BaseCategoryDataFactory
     protected function fillNew(BaseCategoryData $categoryData)
     {
         parent::fillNew($categoryData);
+
         $categoryData->parametersCollapsed = [];
 
         foreach ($this->domain->getAllIds() as $domainId) {

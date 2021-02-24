@@ -61,6 +61,7 @@ class GtmJsPushFacade
     /**
      * @param \App\Model\Slider\SliderItem $sliderItem
      * @param string $positionText
+     * @param mixed $index
      * @return array
      */
     public function getSliderItemClickData(SliderItem $sliderItem, $positionText, $index): array

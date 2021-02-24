@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\Advert;
 
+use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Shopsys\FrameworkBundle\Model\Advert\Advert as BaseAdvert;
@@ -17,21 +18,18 @@ class Advert extends BaseAdvert
 {
     /**
      * @var \DateTime|null
-     *
      * @ORM\Column(type="datetime",nullable=true)
      */
     protected $datetimeVisibleFrom;
 
     /**
      * @var \DateTime|null
-     *
      * @ORM\Column(type="datetime",nullable=true)
      */
     protected $datetimeVisibleTo;
 
     /**
      * @var \Doctrine\Common\Collections\ArrayCollection|\App\Model\Category\Category[]
-     *
      * @ORM\ManyToMany(targetEntity="App\Model\Category\Category", fetch="EXTRA_LAZY")
      */
     private $categories;
@@ -42,6 +40,7 @@ class Advert extends BaseAdvert
     public function __construct($advertData)
     {
         parent::__construct($advertData);
+
         $this->datetimeVisibleFrom = $advertData->datetimeVisibleFrom;
         $this->datetimeVisibleTo = $advertData->datetimeVisibleTo;
         $this->categories = new ArrayCollection($advertData->categories);
@@ -53,6 +52,7 @@ class Advert extends BaseAdvert
     public function edit($advertData): void
     {
         parent::edit($advertData);
+
         $this->datetimeVisibleFrom = $advertData->datetimeVisibleFrom;
         $this->datetimeVisibleTo = $advertData->datetimeVisibleTo;
         $this->categories = new ArrayCollection($advertData->categories);
@@ -61,7 +61,7 @@ class Advert extends BaseAdvert
     /**
      * @return \DateTime|null
      */
-    public function getDatetimeVisibleFrom(): ?\DateTime
+    public function getDatetimeVisibleFrom(): ?DateTime
     {
         return $this->datetimeVisibleFrom;
     }
@@ -69,7 +69,7 @@ class Advert extends BaseAdvert
     /**
      * @param \DateTime|null $datetimeVisibleFrom
      */
-    public function setDatetimeVisibleFrom(?\DateTime $datetimeVisibleFrom): void
+    public function setDatetimeVisibleFrom(?DateTime $datetimeVisibleFrom): void
     {
         $this->datetimeVisibleFrom = $datetimeVisibleFrom;
     }
@@ -77,7 +77,7 @@ class Advert extends BaseAdvert
     /**
      * @return \DateTime|null
      */
-    public function getDatetimeVisibleTo(): ?\DateTime
+    public function getDatetimeVisibleTo(): ?DateTime
     {
         return $this->datetimeVisibleTo;
     }
@@ -85,7 +85,7 @@ class Advert extends BaseAdvert
     /**
      * @param \DateTime|null $datetimeVisibleTo
      */
-    public function setDatetimeVisibleTo(?\DateTime $datetimeVisibleTo): void
+    public function setDatetimeVisibleTo(?DateTime $datetimeVisibleTo): void
     {
         $this->datetimeVisibleTo = $datetimeVisibleTo;
     }

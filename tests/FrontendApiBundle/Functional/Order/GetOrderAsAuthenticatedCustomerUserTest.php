@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\FrontendApiBundle\Functional\Order;
 
+use Shopsys\FrameworkBundle\Model\Order\Order;
 use Tests\FrontendApiBundle\Test\GraphQlWithLoginTestCase;
 
 class GetOrderAsAuthenticatedCustomerUserTest extends GraphQlWithLoginTestCase
@@ -88,7 +89,7 @@ class GetOrderAsAuthenticatedCustomerUserTest extends GraphQlWithLoginTestCase
     /**
      * @return \Shopsys\FrameworkBundle\Model\Order\Order
      */
-    private function getOrderOfNotCurrentlyLoggedCustomerUser(): \Shopsys\FrameworkBundle\Model\Order\Order
+    private function getOrderOfNotCurrentlyLoggedCustomerUser(): Order
     {
         return $this->orderFacade->getById(7);
     }

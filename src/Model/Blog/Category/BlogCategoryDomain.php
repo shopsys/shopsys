@@ -16,7 +16,6 @@ class BlogCategoryDomain
 {
     /**
      * @var \App\Model\Blog\Category\BlogCategory
-     *
      * @ORM\Id
      * @ORM\ManyToOne(targetEntity="App\Model\Blog\Category\BlogCategory", inversedBy="domains")
      * @ORM\JoinColumn(nullable=false, name="blog_category_id", referencedColumnName="id", onDelete="CASCADE")
@@ -25,7 +24,6 @@ class BlogCategoryDomain
 
     /**
      * @var int
-     *
      * @ORM\Id
      * @ORM\Column(type="integer")
      */
@@ -33,35 +31,30 @@ class BlogCategoryDomain
 
     /**
      * @var string|null
-     *
      * @ORM\Column(type="text", nullable=true)
      */
     private $seoTitle;
 
     /**
      * @var string|null
-     *
      * @ORM\Column(type="text", nullable=true)
      */
     private $seoMetaDescription;
 
     /**
      * @var string|null
-     *
      * @ORM\Column(type="text", nullable=true)
      */
     private $seoH1;
 
     /**
      * @var bool
-     *
      * @ORM\Column(type="boolean")
      */
     private $enabled;
 
     /**
      * @var bool
-     *
      * @ORM\Column(type="boolean")
      */
     private $visible;

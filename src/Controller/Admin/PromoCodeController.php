@@ -13,10 +13,8 @@ use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\Grid\PromoCodeGridFactory;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFacade;
-use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -37,6 +35,7 @@ class PromoCodeController extends BasePromoCodeController
      * @param \App\Model\Order\PromoCode\PromoCodeDataFactory $promoCodeDataFactory
      * @param \App\Model\Order\PromoCode\Grid\PromoCodeGridFactory $promoCodeGridFactory
      * @param \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider $breadcrumbOverrider
+     * @param \App\Model\Order\PromoCode\Grid\PromoCodeMassGeneratedBatchGridFactory $promoCodeMassGeneratedBatchGridFactory
      */
     public function __construct(
         PromoCodeFacade $promoCodeFacade,
@@ -47,6 +46,7 @@ class PromoCodeController extends BasePromoCodeController
         PromoCodeMassGeneratedBatchGridFactory $promoCodeMassGeneratedBatchGridFactory
     ) {
         parent::__construct($promoCodeFacade, $administratorGridFacade, $promoCodeDataFactory, $promoCodeGridFactory, $breadcrumbOverrider);
+
         $this->promoCodeMassGeneratedBatchGridFactory = $promoCodeMassGeneratedBatchGridFactory;
     }
 
@@ -55,8 +55,8 @@ class PromoCodeController extends BasePromoCodeController
      */
     public function listAction()
     {
+        /** @var \App\Model\Administrator\Administrator $administrator */
         $administrator = $this->getUser();
-        /* @var $administrator \App\Model\Administrator\Administrator */
 
         $grid = $this->promoCodeGridFactory->create();
         $grid->enablePaging();
@@ -122,8 +122,7 @@ class PromoCodeController extends BasePromoCodeController
     public function listMassGenerateBatchAction(Request $request): Response
     {
         $administrator = $this->getUser();
-        /* @var $administrator \App\Model\Administrator\Administrator */
-
+        /** @var \App\Model\Administrator\Administrator $administrator */
         $grid = $this->promoCodeMassGeneratedBatchGridFactory->create();
         $grid->enablePaging();
 

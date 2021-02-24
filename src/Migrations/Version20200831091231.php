@@ -27,7 +27,7 @@ class Version20200831091231 extends AbstractMigration
                         WHERE ready_category_seo_mix_id = :readyCategorySeoMixId
                         ORDER BY parameter_id, parameter_value_id',
                 [
-                    'readyCategorySeoMixId' => $categorySeoMixData['id']
+                    'readyCategorySeoMixId' => $categorySeoMixData['id'],
                 ]
             )->fetchAll();
 
@@ -50,7 +50,7 @@ class Version20200831091231 extends AbstractMigration
                         FROM ready_category_seo_mixes 
                         WHERE chose_category_seo_mix_combination_json = :combinationJson',
                 [
-                    'combinationJson' => $combinationJson
+                    'combinationJson' => $combinationJson,
                 ]
             )->fetchAll();
 
@@ -69,14 +69,14 @@ class Version20200831091231 extends AbstractMigration
                 $this->sql(
                     'DELETE FROM ready_category_seo_mix_parameter_parameter_values WHERE ready_category_seo_mix_id = :readyCategorySeoMixId',
                     [
-                    'readyCategorySeoMixId' => $categorySeoMixData['id']
-                ]
+                        'readyCategorySeoMixId' => $categorySeoMixData['id'],
+                    ]
                 );
                 $this->sql(
                     'DELETE FROM ready_category_seo_mixes WHERE id = :readyCategorySeoMixId',
                     [
-                    'readyCategorySeoMixId' => $categorySeoMixData['id']
-                ]
+                        'readyCategorySeoMixId' => $categorySeoMixData['id'],
+                    ]
                 );
             }
         }

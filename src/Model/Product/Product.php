@@ -6,12 +6,14 @@ namespace App\Model\Product;
 
 use App\Model\Product\Exception\DeprecatedAvailabilityPropertyFromProductException;
 use App\Model\Product\Exception\ProductCannotBeTransformedException;
-use App\Model\Product\Type\ProductType;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Exception;
 use Shopsys\FrameworkBundle\Component\Money\Money;
+use Shopsys\FrameworkBundle\Model\Product\Exception\MainVariantCannotBeVariantException;
+use Shopsys\FrameworkBundle\Model\Product\Exception\ProductIsAlreadyVariantException;
+use Shopsys\FrameworkBundle\Model\Product\Exception\VariantCanBeAddedOnlyToMainVariantException;
 use Shopsys\FrameworkBundle\Model\Product\Product as BaseProduct;
-use Shopsys\FrameworkBundle\Model\Product\ProductCategoryDomain;
 use Shopsys\FrameworkBundle\Model\Product\ProductData;
 use Shopsys\FrameworkBundle\Model\Product\ProductData as BaseProductData;
 
@@ -76,7 +78,6 @@ class Product extends BaseProduct
 
     /**
      * @var \App\Model\Product\Parameter\Parameter[]|\Doctrine\Common\Collections\Collection
-     *
      * @ORM\ManyToMany(targetEntity="App\Model\Product\Parameter\Parameter")
      * @ORM\JoinTable(name="product_variant_parameters",
      *     joinColumns={@ORM\JoinColumn(name="product_id", referencedColumnName="id")},
@@ -87,53 +88,42 @@ class Product extends BaseProduct
 
     /**
      * @var \App\Model\Product\Product|null
-     *
      * @ORM\OneToOne(targetEntity="Shopsys\FrameworkBundle\Model\Product\Product")
      * @ORM\JoinColumn(name="default_variant_id", referencedColumnName="id", nullable=true)
      */
     protected $defaultVariant;
 
     /**
-     * REMOVED PROPERTY! This property is removed from model, new product stock management is in ProductAvailabilityFacade.
-     *
      * @var null
-     * @deprecated
+     * @deprecated REMOVED PROPERTY! This property is removed from model, new product stock management is in ProductAvailabilityFacade
      * @see \App\Component\Doctrine\RemoveMappingsSubscriber
      */
     protected $outOfStockAction;
 
     /**
-     * REMOVED PROPERTY! This property is removed from model, new product stock management is in ProductAvailabilityFacade.
-     *
      * @var null
-     * @deprecated
+     * @deprecated REMOVED PROPERTY! This property is removed from model, new product stock management is in ProductAvailabilityFacade
      * @see \App\Component\Doctrine\RemoveMappingsSubscriber
      */
     protected $outOfStockAvailability;
 
     /**
-     * REMOVED PROPERTY! This property is removed from model, new product stock management is in ProductAvailabilityFacade.
-     *
      * @var null
-     * @deprecated
+     * @deprecated REMOVED PROPERTY! This property is removed from model, new product stock management is in ProductAvailabilityFacade
      * @see \App\Component\Doctrine\RemoveMappingsSubscriber
      */
     protected $stockQuantity;
 
     /**
-     * REMOVED PROPERTY! This property is removed from model, new product stock management is in ProductAvailabilityFacade.
-     *
      * @var bool
-     * @deprecated
+     * @deprecated REMOVED PROPERTY! This property is removed from model, new product stock management is in ProductAvailabilityFacade
      * @see \App\Component\Doctrine\RemoveMappingsSubscriber
      */
     protected $usingStock;
 
     /**
-     * REMOVED PROPERTY! This property is removed from model, new product stock management is in ProductAvailabilityFacade.
-     *
      * @var null
-     * @deprecated
+     * @deprecated REMOVED PROPERTY! This property is removed from model, new product stock management is in ProductAvailabilityFacade
      * @see \App\Component\Doctrine\RemoveMappingsSubscriber
      */
     protected $calculatedAvailability;
@@ -249,10 +239,12 @@ class Product extends BaseProduct
                 $this->setDownloadAssemblyInstructionFiles(true);
             }
 
-            if ($this->getProductTypePlanCode($domainId) !== $productFilesData->productTypePlanCode[$domainId]) {
-                $productDomain->setProductTypePlanCode($productFilesData->productTypePlanCode[$domainId]);
-                $this->setDownloadProductTypePlanFiles(true);
+            if ($this->getProductTypePlanCode($domainId) === $productFilesData->productTypePlanCode[$domainId]) {
+                continue;
             }
+
+            $productDomain->setProductTypePlanCode($productFilesData->productTypePlanCode[$domainId]);
+            $this->setDownloadProductTypePlanFiles(true);
         }
     }
 
@@ -276,25 +268,27 @@ class Product extends BaseProduct
     public function addVariant(BaseProduct $variant): void
     {
         if (!$this->isMainVariant()) {
-            throw new \Shopsys\FrameworkBundle\Model\Product\Exception\VariantCanBeAddedOnlyToMainVariantException(
+            throw new VariantCanBeAddedOnlyToMainVariantException(
                 $this->getId(),
                 $variant->getId()
             );
         }
         if ($variant->isMainVariant()) {
-            throw new \Shopsys\FrameworkBundle\Model\Product\Exception\MainVariantCannotBeVariantException($variant->getId());
+            throw new MainVariantCannotBeVariantException($variant->getId());
         }
         if ($variant->isVariant()) {
-            throw new \Shopsys\FrameworkBundle\Model\Product\Exception\ProductIsAlreadyVariantException($variant->getId());
+            throw new ProductIsAlreadyVariantException($variant->getId());
         }
 
-        if (!$this->variants->contains($variant)) {
-            $this->variants->add($variant);
-            $variant->setMainVariant($this);
-            $variant->copyProductCategoryDomains($this->productCategoryDomains->toArray());
-            if ($this->getDefaultVariant() === null) {
-                $this->setDefaultVariant($variant);
-            }
+        if ($this->variants->contains($variant)) {
+            return;
+        }
+
+        $this->variants->add($variant);
+        $variant->setMainVariant($this);
+        $variant->copyProductCategoryDomains($this->productCategoryDomains->toArray());
+        if ($this->getDefaultVariant() === null) {
+            $this->setDefaultVariant($variant);
         }
     }
 
@@ -344,13 +338,13 @@ class Product extends BaseProduct
     public function setDefaultVariant(self $variant): void
     {
         if (!$this->isMainVariant()) {
-            throw new \Shopsys\FrameworkBundle\Model\Product\Exception\VariantCanBeAddedOnlyToMainVariantException(
+            throw new VariantCanBeAddedOnlyToMainVariantException(
                 $this->getId(),
                 $variant->getId()
             );
         }
         if ($variant->isMainVariant()) {
-            throw new \Shopsys\FrameworkBundle\Model\Product\Exception\MainVariantCannotBeVariantException($variant->getId());
+            throw new MainVariantCannotBeVariantException($variant->getId());
         }
 
         $this->defaultVariant = $variant;
@@ -781,7 +775,7 @@ class Product extends BaseProduct
      */
     public function getOutOfStockAction()
     {
-        throw new \Exception('deprecated - outOfStockAction');
+        throw new Exception('deprecated - outOfStockAction');
     }
 
     /**
@@ -829,10 +823,12 @@ class Product extends BaseProduct
                 $this->productCategoryDomains->add($productCategoryDomain);
             }
         }
-        if ($this->isMainVariant()) {
-            foreach ($this->getVariants() as $variant) {
-                $variant->copyProductCategoryDomains($productCategoryDomains);
-            }
+        if (!$this->isMainVariant()) {
+            return;
+        }
+
+        foreach ($this->getVariants() as $variant) {
+            $variant->copyProductCategoryDomains($productCategoryDomains);
         }
     }
 
@@ -872,6 +868,7 @@ class Product extends BaseProduct
 
     /**
      * @param string $akeneoCode
+     * @param int $domainId
      * @return bool
      */
     public function hasFlagByAkeneoCodeForDomain(string $akeneoCode, int $domainId): bool

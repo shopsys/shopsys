@@ -16,7 +16,7 @@ use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
 class ProductAvailabilityRecalculator extends BaseProductAvailabilityRecalculator
 {
     /**
-     * @deprecated
+     * @deprecated Recalculator is disabled
      * @param \Symfony\Component\HttpKernel\Event\FilterResponseEvent $event
      */
     public function onKernelResponse(FilterResponseEvent $event)

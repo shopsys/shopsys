@@ -17,7 +17,6 @@ use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 use Shopsys\FrameworkBundle\Model\Product\Collection\ProductParametersBatchLoader;
 use Shopsys\FrameworkBundle\Model\Product\Collection\ProductUrlsBatchLoader;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser;
-use function GuzzleHttp\Psr7\_parse_request_uri;
 
 class MergadoFeedItemFactory
 {
@@ -55,6 +54,7 @@ class MergadoFeedItemFactory
      * @var \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade
      */
     private $currencyFacade;
+
     /**
      * @var \App\Model\Product\Pricing\ProductPriceCalculation
      */
@@ -68,6 +68,7 @@ class MergadoFeedItemFactory
      * @param \App\Model\Product\Pricing\ProductPriceCalculationForCustomerUser $productPriceCalculationForCustomerUser
      * @param \App\Component\Image\ImageFacade $imageFacade
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
+     * @param \App\Model\Product\Pricing\ProductPriceCalculation $productPriceCalculation
      */
     public function __construct(
         ProductUrlsBatchLoader $productUrlsBatchLoader,

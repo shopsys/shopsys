@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace App\Model\Blog\Article;
 
+use App\Model\Blog\Article\Exception\BlogArticleNotFoundException;
 use IteratorAggregate;
 use Symfony\Component\Form\DataTransformerInterface;
+use Symfony\Component\Form\Exception\TransformationFailedException;
 
 class BlogArticlesIdsToBlogArticlesTransformer implements DataTransformerInterface
 {
@@ -51,8 +53,8 @@ class BlogArticlesIdsToBlogArticlesTransformer implements DataTransformerInterfa
             foreach ($blogArticlesIds as $blogArticlesId) {
                 try {
                     $blogArticles[] = $this->blogArticleFacade->getById((int)$blogArticlesId);
-                } catch (\App\Model\Blog\Article\Exception\BlogArticleNotFoundException $e) {
-                    throw new \Symfony\Component\Form\Exception\TransformationFailedException('Blog article not found', 0, $e);
+                } catch (BlogArticleNotFoundException $e) {
+                    throw new TransformationFailedException('Blog article not found', 0, $e);
                 }
             }
         }

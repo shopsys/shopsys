@@ -7,7 +7,6 @@ namespace App\Command;
 use App\Model\Order\PromoCode\Import\SingleImportPromoCodeFacade;
 use App\Model\Order\PromoCode\PromoCode;
 use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -30,6 +29,7 @@ class SingleImportPromoCodesCommand extends Command
     public function __construct(SingleImportPromoCodeFacade $singleImportPromoCodeFacade)
     {
         parent::__construct();
+
         $this->singleImportPromoCodeFacade = $singleImportPromoCodeFacade;
     }
 

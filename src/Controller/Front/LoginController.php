@@ -7,6 +7,7 @@ namespace App\Controller\Front;
 use App\Form\Front\Login\LoginFormType;
 use Shopsys\FrameworkBundle\Model\Customer\User\FrontendCustomerUserProvider;
 use Shopsys\FrameworkBundle\Model\Security\Authenticator;
+use Shopsys\FrameworkBundle\Model\Security\Exception\LoginFailedException;
 use Shopsys\FrameworkBundle\Model\Security\Roles;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -70,7 +71,7 @@ class LoginController extends FrontBaseController
 
         try {
             $this->authenticator->checkLoginProcess($request);
-        } catch (\Shopsys\FrameworkBundle\Model\Security\Exception\LoginFailedException $e) {
+        } catch (LoginFailedException $e) {
             $form->addError(new FormError(t('This account doesn\'t exist or password is incorrect')));
         }
 
@@ -111,12 +112,12 @@ class LoginController extends FrontBaseController
         $passsword = $request->get('password');
 
         try {
+            /** @var \App\Model\Customer\User\CustomerUser $user */
             $user = $this->frontendCustomerUserProvider->loadUserByUsername($email);
         } catch (UsernameNotFoundException $e) {
             $user = null;
         }
 
-        /** @var \App\Model\Customer\User\CustomerUser $user */
         if ($user !== null && $user->getLastLogin() === null) {
             $responseData['errorHeader'] = t('Vaše první přihlášení');
             $responseData['errorMessage'] = t('Přihlašujete se poprvé na novém e-shopu, prosím nastavte si heslo pomocí funkce “Obnovení hesla”.');

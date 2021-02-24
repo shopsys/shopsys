@@ -22,7 +22,6 @@ class Administrator extends BaseAdministrator
 {
     /**
      * @var \DateTime
-     *
      * @ORM\Column(type="datetime")
      */
     protected $transferIssuesLastSeenDateTime;
@@ -33,6 +32,7 @@ class Administrator extends BaseAdministrator
     public function __construct(BaseAdministratorData $administratorData)
     {
         parent::__construct($administratorData);
+
         $this->transferIssuesLastSeenDateTime = $administratorData->transferIssuesLastSeenDateTime;
     }
 
@@ -63,7 +63,7 @@ class Administrator extends BaseAdministrator
     /**
      * @param \DateTime $transferIssuesLastSeenDateTime
      */
-    public function setTransferIssuesLastSeenDateTime(\DateTime $transferIssuesLastSeenDateTime): void
+    public function setTransferIssuesLastSeenDateTime(DateTime $transferIssuesLastSeenDateTime): void
     {
         $this->transferIssuesLastSeenDateTime = $transferIssuesLastSeenDateTime;
     }

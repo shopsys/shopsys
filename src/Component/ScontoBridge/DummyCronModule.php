@@ -28,7 +28,6 @@ class DummyCronModule implements SimpleCronModuleInterface
      */
     public function setLogger(Logger $logger): void
     {
-        return;
     }
 
     public function run(): void

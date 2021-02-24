@@ -93,11 +93,11 @@ class TransportDomainTest extends TransactionFunctionalTestCase
     }
 
     /**
-     * @return TransportData
+     * @return \App\Model\Transport\TransportData
      */
     private function createTransportData(): TransportData
     {
-        /** @var TransportData $transportData */
+        /** @var \App\Model\Transport\TransportData $transportData */
         $transportData = $this->transportDataFactory->create();
         $transportData->deliveryCode = 'A';
         $transportData->typeOfDeliveryKey = 1;

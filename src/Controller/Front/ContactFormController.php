@@ -10,6 +10,7 @@ use Shopsys\FrameworkBundle\Model\ContactForm\ContactFormData;
 use Shopsys\FrameworkBundle\Model\ContactForm\ContactFormFacade;
 use Shopsys\FrameworkBundle\Model\ContactForm\ContactFormSettingsFacade;
 use Shopsys\FrameworkBundle\Model\LegalConditions\LegalConditionsFacade;
+use Shopsys\FrameworkBundle\Model\Mail\Exception\MailException;
 use Symfony\Component\HttpFoundation\Request;
 
 class ContactFormController extends FrontBaseController
@@ -69,7 +70,7 @@ class ContactFormController extends FrontBaseController
             try {
                 $this->contactFormFacade->sendMail($contactFormData);
                 $this->addSuccessFlash(t('Thank you, your message has been sent.'));
-            } catch (\Shopsys\FrameworkBundle\Model\Mail\Exception\MailException $ex) {
+            } catch (MailException $ex) {
                 $this->addErrorFlash(t('Error occurred when sending email.'));
             }
 

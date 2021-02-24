@@ -43,6 +43,7 @@ class TransportDataFactory extends BaseTransportDataFactory
         TransportPackageDataFactory $transportPackageDataFactory
     ) {
         parent::__construct($transportFacade, $vatFacade, $domain, $imageFacade);
+
         $this->transportPackageRepository = $transportPackageRepository;
         $this->transportPackageDataFactory = $transportPackageDataFactory;
     }
@@ -72,13 +73,14 @@ class TransportDataFactory extends BaseTransportDataFactory
     protected function fillNew(BaseTransportData $transportData)
     {
         parent::fillNew($transportData);
+
         $transportData->type = Transport::TYPE_COMMON;
         $transportData->daysUntilDelivery = 0;
     }
 
     /**
      * @param \App\Model\Transport\Transport $transport
-     * @return \App\Model\Transport\TransportData $transportData
+     * @return \App\Model\Transport\TransportData
      */
     public function createFromTransport(BaseTransport $transport): BaseTransportData
     {

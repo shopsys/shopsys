@@ -11,6 +11,7 @@ use App\Model\Product\Parameter\ParameterFacade;
 use App\Model\Product\Parameter\ParameterValue;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ParameterFilterChoice;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig;
+use stdClass;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -125,7 +126,7 @@ class ParameterFilterFormType extends AbstractType implements DataTransformerInt
     ): array {
         $newParameterValues = [];
         foreach ($parameterValues as $parameterValue) {
-            $newParameterValue = new \stdClass();
+            $newParameterValue = new stdClass();
             $newParameterValue->id = $parameterValue->getId();
             $newParameterValue->text = $parameterValue->getText() . ' ' . $parameter->getParameterUnit()->getName();
             $newParameterValues[] = $newParameterValue;
@@ -276,9 +277,7 @@ class ParameterFilterFormType extends AbstractType implements DataTransformerInt
         }
 
         foreach ($parameterValues as $parameterValue) {
-            if ($parameterValue instanceof \stdClass) {
-
-                /** @var \stdClass $parameterValue */
+            if ($parameterValue instanceof stdClass) {
                 $selectedParameterValues[] = $parameterValuesIndexedByParameterId[$parameterValue->id];
             } else {
                 $selectedParameterValues[] = $parameterValue;

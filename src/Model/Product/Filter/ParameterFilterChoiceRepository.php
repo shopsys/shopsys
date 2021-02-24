@@ -95,7 +95,7 @@ class ParameterFilterChoiceRepository extends BaseParameterFilterChoiceRepositor
 
         $parametersIndexedById = [];
         foreach ($parameters as $parameter) {
-            /* @var $parameter \App\Model\Product\Parameter\Parameter */
+            /** @var \App\Model\Product\Parameter\Parameter $parameter */
             $parametersIndexedById[$parameter->getId()] = $parameter;
         }
 

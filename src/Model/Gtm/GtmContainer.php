@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\Gtm;
 
+use InvalidArgumentException;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -73,7 +74,7 @@ class GtmContainer
         $currentLocale = $this->domain->getLocale();
 
         if (!array_key_exists($this->domain->getLocale(), $this->containersConfigs)) {
-            throw new \InvalidArgumentException(sprintf('Missing GTM configuration for "%s" domain id', $currentLocale));
+            throw new InvalidArgumentException(sprintf('Missing GTM configuration for "%s" domain id', $currentLocale));
         }
 
         $config = $this->containersConfigs[$currentLocale];

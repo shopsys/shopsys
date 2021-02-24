@@ -4,9 +4,10 @@ declare(strict_types=1);
 
 namespace App\Model\Product\Exception;
 
+use Exception;
 use Shopsys\FrameworkBundle\Model\Product\Availability\Availability;
 
-class DeprecatedAvailabilityPropertyFromProductException extends \Exception
+class DeprecatedAvailabilityPropertyFromProductException extends Exception
 {
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\Availability\Availability|null

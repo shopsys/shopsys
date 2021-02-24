@@ -13,7 +13,6 @@ class PromoCodeLimit
 {
     /**
      * @var \App\Model\Order\PromoCode\PromoCode
-     *
      * @ORM\ManyToOne(targetEntity="App\Model\Order\PromoCode\PromoCode", )
      * @ORM\JoinColumn(nullable=false, onDelete="cascade")
      * @ORM\Id
@@ -22,7 +21,6 @@ class PromoCodeLimit
 
     /**
      * @var string
-     *
      * @ORM\Column(type="decimal", precision=20, scale=4)
      * @ORM\Id
      */
@@ -30,7 +28,6 @@ class PromoCodeLimit
 
     /**
      * @var string
-     *
      * @ORM\Column(type="decimal", precision=20, scale=4)
      */
     private $discount;

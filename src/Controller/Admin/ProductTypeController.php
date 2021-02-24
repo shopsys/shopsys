@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\Controller\Admin;
 
 use App\Form\Admin\Product\Type\ProductTypeFormType;
+use App\Model\Product\Type\Exception\ProductTypeIsBeingUsedException;
+use App\Model\Product\Type\Exception\ProductTypeNotFoundException;
 use App\Model\Product\Type\ProductTypeDataFactory;
 use App\Model\Product\Type\ProductTypeFacade;
 use App\Model\Product\Type\ProductTypeGridFactory;
@@ -179,9 +181,9 @@ class ProductTypeController extends AdminBaseController
                     'name' => $productType->getName(),
                 ]
             );
-        } catch (\App\Model\Product\Type\Exception\ProductTypeIsBeingUsedException $ex) {
+        } catch (ProductTypeIsBeingUsedException $ex) {
             $this->addErrorFlash(t('Zvolený typ je využíván a proto jej nelze nyní odstranit.'));
-        } catch (\App\Model\Product\Type\Exception\ProductTypeNotFoundException $ex) {
+        } catch (ProductTypeNotFoundException $ex) {
             $this->addErrorFlash(t('Zvolený typ již neexistuje.'));
         }
 

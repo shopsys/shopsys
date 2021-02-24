@@ -39,9 +39,11 @@ class BlogVisibilityRecalculationListener
             return;
         }
 
-        if ($this->blogVisibilityRecalculationScheduler->isRecalculationScheduled()) {
-            $this->blogVisibilityFacade->refreshBlogCategoriesVisibility();
-            $this->blogVisibilityFacade->refreshBlogArticlesVisibility();
+        if (!$this->blogVisibilityRecalculationScheduler->isRecalculationScheduled()) {
+            return;
         }
+
+        $this->blogVisibilityFacade->refreshBlogCategoriesVisibility();
+        $this->blogVisibilityFacade->refreshBlogArticlesVisibility();
     }
 }

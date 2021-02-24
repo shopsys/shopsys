@@ -15,7 +15,6 @@ class LinkedCategory
 {
     /**
      * @var int
-     *
      * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
@@ -24,15 +23,13 @@ class LinkedCategory
 
     /**
      * @var \App\Model\Category\Category
-     *
      * @ORM\ManyToOne(targetEntity="App\Model\Category\Category")
      * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
      */
     private Category $parentCategory;
-    
+
     /**
      * @var \App\Model\Category\Category
-     *
      * @ORM\ManyToOne(targetEntity="App\Model\Category\Category")
      * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
      */
@@ -40,7 +37,6 @@ class LinkedCategory
 
     /**
      * @var int
-     *
      * @ORM\Column(type="integer")
      */
     private int $position;

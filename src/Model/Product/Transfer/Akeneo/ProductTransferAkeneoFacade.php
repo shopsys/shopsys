@@ -12,6 +12,7 @@ use Akeneo\Pim\ApiClient\Search\SearchBuilder;
 use Akeneo\PimEnterprise\ApiClient\AkeneoPimEnterpriseClientInterface;
 use Akeneo\PimEnterprise\ApiClient\Api\PublishedProductApiInterface;
 use DateTime;
+use DateTimeZone;
 use Psr\Http\Message\ResponseInterface;
 
 class ProductTransferAkeneoFacade
@@ -98,17 +99,15 @@ class ProductTransferAkeneoFacade
      */
     public function getAllUpdatedProductsFromLastUpdate(DateTime $lastUpdatedProducts): ResourceCursorInterface
     {
-        $lastUpdatedProducts->setTimezone(new \DateTimeZone('UTC'));
+        $lastUpdatedProducts->setTimezone(new DateTimeZone('UTC'));
 
         $searchBuilder = new SearchBuilder();
         $searchBuilder->addFilter('updated', '>', $lastUpdatedProducts->format(self::API_AKENEO_DATETIME_FORMAT));
         $searchFilters = $searchBuilder->getFilters();
 
-        $publishedProducts = $this->getPublishedProductApi()->all(self::PAGE_SIZE_LIMIT, [
+        return $this->getPublishedProductApi()->all(self::PAGE_SIZE_LIMIT, [
             'search' => $searchFilters,
         ]);
-
-        return $publishedProducts;
     }
 
     /**

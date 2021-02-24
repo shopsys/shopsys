@@ -79,33 +79,37 @@ class ProductVariantFilterFacade
             if (isset($variantParameterSetup['extended_parameter_values_setup'])) {
                 $rank += $this->evaluateParameterValuesSetup($variantParameterSetup['extended_parameter_values_setup'], $productFilterData);
             }
-            if ($rank > $highestRank) {
-                $highestRank = $rank;
-                $mostValuableVariantId = $variantId;
+            if ($rank <= $highestRank) {
+                continue;
             }
+
+            $highestRank = $rank;
+            $mostValuableVariantId = $variantId;
         }
 
-        if ($mostValuableVariantId !== null) {
-            foreach ($listedProductView->getVariantsParametersSetup() as $variantId => $variantParameterSetup) {
-                if ($variantId !== $mostValuableVariantId) {
-                    $listedProductView->deleteVariantParametersSetupByVariantId($variantId);
-                } else {
-                    $listedProductView->setVariantUrl($variantParameterSetup['variant_url'] ?? null);
-                    if (isset($variantParameterSetup['variant_availability_info']['product_availability_information'])) {
-                        $listedProductView->setAvailability($variantParameterSetup['variant_availability_info']['product_availability_information']);
-                        if (array_key_exists('is_available', $variantParameterSetup['variant_availability_info'])) {
-                            $listedProductView->setIsAvailable($variantParameterSetup['variant_availability_info']['is_available']);
-                        }
+        if ($mostValuableVariantId === null) {
+            return;
+        }
+
+        foreach ($listedProductView->getVariantsParametersSetup() as $variantId => $variantParameterSetup) {
+            if ($variantId !== $mostValuableVariantId) {
+                $listedProductView->deleteVariantParametersSetupByVariantId($variantId);
+            } else {
+                $listedProductView->setVariantUrl($variantParameterSetup['variant_url'] ?? null);
+                if (isset($variantParameterSetup['variant_availability_info']['product_availability_information'])) {
+                    $listedProductView->setAvailability($variantParameterSetup['variant_availability_info']['product_availability_information']);
+                    if (array_key_exists('is_available', $variantParameterSetup['variant_availability_info'])) {
+                        $listedProductView->setIsAvailable($variantParameterSetup['variant_availability_info']['is_available']);
                     }
-                    $listedProductView->setProductAvailableStocksCountInformation(
-                        $variantParameterSetup['variant_availability_info']['product_available_stocks_count_information'] ?? null
-                    );
-                    $listedProductView->setFlagIds($variantParameterSetup['variant_flags'] ?? []);
-                    $listedProductView->setHasScontoFlag($variantParameterSetup['variant_has_sconto_flag'] ?? false);
-                    $listedProductView->setProductCountExposedInStores($variantParameterSetup['variant_availability_info']['product_count_exposed_in_stores_information'] ?? null);
-                    $imageViews = $this->imageViewFacade->getForEntityIds(Product::class, [$variantId]);
-                    $listedProductView->setImage($imageViews[$variantId] ?? null);
                 }
+                $listedProductView->setProductAvailableStocksCountInformation(
+                    $variantParameterSetup['variant_availability_info']['product_available_stocks_count_information'] ?? null
+                );
+                $listedProductView->setFlagIds($variantParameterSetup['variant_flags'] ?? []);
+                $listedProductView->setHasScontoFlag($variantParameterSetup['variant_has_sconto_flag'] ?? false);
+                $listedProductView->setProductCountExposedInStores($variantParameterSetup['variant_availability_info']['product_count_exposed_in_stores_information'] ?? null);
+                $imageViews = $this->imageViewFacade->getForEntityIds(Product::class, [$variantId]);
+                $listedProductView->setImage($imageViews[$variantId] ?? null);
             }
         }
     }

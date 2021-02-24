@@ -18,6 +18,7 @@ class SingleImportDataException extends Exception
         ?Exception $previous = null
     ) {
         $message = 'Data is not valid: ' . $this->getViolationsAsString($violations);
+
         parent::__construct($message, 0, $previous);
     }
 

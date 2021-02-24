@@ -21,7 +21,9 @@ use Shopsys\ReadModelBundle\Product\Listed\ListedProductViewElasticFacade as Bas
 
 /**
  * Class ListedProductViewElasticFacade
+ *
  * @property \App\Model\Product\ProductOnCurrentDomainElasticFacade $productOnCurrentDomainFacade
+ * @property \App\Model\Product\Listed\ListedProductViewFactory $listedProductViewFactory
  */
 class ListedProductViewElasticFacade extends BaseListedProductViewElasticFacade
 {
@@ -139,7 +141,6 @@ class ListedProductViewElasticFacade extends BaseListedProductViewElasticFacade
             if (!$this->productAvailabilityFacade->isProductExcludedOnDomain($product, $this->domain->getId())
                 && $this->productAvailabilityFacade->isProductAvailableOnDomainOrHasPreorder($product, $this->domain->getId())
             ) {
-                /** @var \App\Model\Product\Listed\ListedProductView[] $listedProductViews */
                 $listedProductViews[$productId] = $this->listedProductViewFactory->createFromProduct(
                     $product,
                     $imageViews[$productId],

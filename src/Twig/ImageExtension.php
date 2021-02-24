@@ -101,7 +101,7 @@ class ImageExtension extends BaseImageExtension
     }
 
     /**
-     * @param \App\Component\Image\Image|\Shopsys\ReadModelBundle\Image\ImageView|Object|null $imageView
+     * @param \App\Component\Image\Image|\Shopsys\ReadModelBundle\Image\ImageView|object|null $imageView
      * @param array $attributes
      * @return string
      */

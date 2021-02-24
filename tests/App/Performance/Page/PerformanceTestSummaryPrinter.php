@@ -78,10 +78,12 @@ class PerformanceTestSummaryPrinter
             '<' . $tag . '>Max query count: ' . $performanceTestSample->getQueryCount() . '</' . $tag . '>'
         );
 
-        if (!$performanceTestSample->isSuccessful()) {
-            $tag = $this->getFormatterTagForError();
-            $consoleOutput->writeln('<' . $tag . '>Wrong response status code</' . $tag . '>');
+        if ($performanceTestSample->isSuccessful()) {
+            return;
         }
+
+        $tag = $this->getFormatterTagForError();
+        $consoleOutput->writeln('<' . $tag . '>Wrong response status code</' . $tag . '>');
     }
 
     /**

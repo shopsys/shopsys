@@ -2,10 +2,8 @@
 
 declare(strict_types=1);
 
-
 namespace App\Model\UrlRedirect;
 
-use App\Model\Domain\DomainHelper;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 
 class UrlRedirectData

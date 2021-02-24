@@ -7,11 +7,13 @@ namespace App\Component\Router\FriendlyUrl;
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory;
+use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\Exception\ReachMaxUrlUniqueResolveAttemptException;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrl;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade as BaseFriendlyUrlFacade;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFactoryInterface;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRepository;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlUniqueResultFactory;
+use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 
 class FriendlyUrlFacade extends BaseFriendlyUrlFacade
 {
@@ -46,6 +48,7 @@ class FriendlyUrlFacade extends BaseFriendlyUrlFacade
             $domain,
             $friendlyUrlFactory
         );
+
         $this->friendlyUrlCacheFacade = $friendlyUrlCacheFacade;
     }
 
@@ -77,7 +80,7 @@ class FriendlyUrlFacade extends BaseFriendlyUrlFacade
         do {
             $attempt++;
             if ($attempt > static::MAX_URL_UNIQUE_RESOLVE_ATTEMPT) {
-                throw new \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\Exception\ReachMaxUrlUniqueResolveAttemptException(
+                throw new ReachMaxUrlUniqueResolveAttemptException(
                     $friendlyUrl,
                     $attempt
                 );
@@ -86,7 +89,7 @@ class FriendlyUrlFacade extends BaseFriendlyUrlFacade
             $domainRouter = $this->domainRouterFactory->getRouter($friendlyUrl->getDomainId());
             try {
                 $matchedRouteData = $domainRouter->match('/' . $friendlyUrl->getSlug());
-            } catch (\Symfony\Component\Routing\Exception\ResourceNotFoundException $e) {
+            } catch (ResourceNotFoundException $e) {
                 $matchedRouteData = null;
             }
 
@@ -102,11 +105,13 @@ class FriendlyUrlFacade extends BaseFriendlyUrlFacade
             $friendlyUrl = $friendlyUrlUniqueResult->getFriendlyUrlForPersist();
         } while (!$friendlyUrlUniqueResult->isUnique());
 
-        if ($friendlyUrl !== null) {
-            $this->em->persist($friendlyUrl);
-            $this->em->flush();
-            $this->setFriendlyUrlAsMain($friendlyUrl);
+        if ($friendlyUrl === null) {
+            return;
         }
+
+        $this->em->persist($friendlyUrl);
+        $this->em->flush();
+        $this->setFriendlyUrlAsMain($friendlyUrl);
     }
 
     /**

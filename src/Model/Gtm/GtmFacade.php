@@ -257,10 +257,12 @@ class GtmFacade
             return;
         }
 
-        if ($code === 404) {
-            $dataLayerPage = $this->getDataLayerPage();
-            $this->dataLayerMapper->setTypeToDataLayerPage($dataLayerPage, DataLayerPage::TYPE_ERROR_404);
+        if ($code !== 404) {
+            return;
         }
+
+        $dataLayerPage = $this->getDataLayerPage();
+        $this->dataLayerMapper->setTypeToDataLayerPage($dataLayerPage, DataLayerPage::TYPE_ERROR_404);
     }
 
     /**
@@ -293,7 +295,7 @@ class GtmFacade
                     $splitOrderPreview,
                     $this->dataLayer->getLocale()
                 ),
-            ]
+            ],
         ];
 
         $this->dataLayer->push(DataLayer::EVENT_NAME_PRODUCT_ADD_TO_CART, $gtmEventData);
@@ -329,7 +331,7 @@ class GtmFacade
                     $splitOrderPreview,
                     $this->dataLayer->getLocale()
                 ),
-            ]
+            ],
         ];
 
         $this->dataLayer->push(DataLayer::EVENT_NAME_PRODUCT_REMOVE_FROM_CART, $gtmEventData);

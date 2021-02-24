@@ -23,6 +23,7 @@ class AdvertDataFactory extends BaseAdvertDataFactory
     protected function fillFromAdvert(BaseAdvertData $advertData, BaseAdvert $advert): void
     {
         parent::fillFromAdvert($advertData, $advert);
+
         $advertData->image->orderedImages = $this->imageFacade->getImagesByEntityIndexedById($advert, AdvertFacade::IMAGE_TYPE_WEB);
 
         $advertData->datetimeVisibleFrom = $advert->getDatetimeVisibleFrom();

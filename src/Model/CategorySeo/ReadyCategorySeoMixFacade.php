@@ -12,6 +12,7 @@ use App\Model\CategorySeo\Exception\ReadyCategorySeoMixUrlsContainBadDomainUrlEx
 use App\Model\CategorySeo\Exception\ReadyCategorySeoMixUrlsDoNotContainMainFriendlyUrlException;
 use App\Model\CategorySeo\Exception\ReadyCategorySeoMixUrlsDoNotContainUrlForCorrectDomainException;
 use Doctrine\ORM\EntityManagerInterface;
+use RuntimeException;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\UrlListData;
 use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingModeForListFacade;
@@ -169,20 +170,22 @@ class ReadyCategorySeoMixFacade
         $this->friendlyUrlFacade->saveUrlListFormData('front_category_seo', $readyCategorySeoMix->getId(), $urlListData);
 
         $mainFriendlyUrl = $this->friendlyUrlFacade->findMainFriendlyUrl($readyCategorySeoMix->getDomainId(), 'front_category_seo', $readyCategorySeoMix->getId());
-        if ($mainFriendlyUrl === null) {
-            $readyCategoryMixAllFriendlyUrls = $this->friendlyUrlFacade->getAllByRouteNameAndEntityId('front_category_seo', $readyCategorySeoMix->getId());
-
-            if (count($readyCategoryMixAllFriendlyUrls) === 0) {
-                return;
-            }
-
-            $urlListDataForMainFriendlyUrl = new UrlListData();
-            $urlListDataForMainFriendlyUrl->mainFriendlyUrlsByDomainId = [
-                array_shift($readyCategoryMixAllFriendlyUrls),
-            ];
-
-            $this->friendlyUrlFacade->saveUrlListFormData('front_category_seo', $readyCategorySeoMix->getId(), $urlListDataForMainFriendlyUrl);
+        if ($mainFriendlyUrl !== null) {
+            return;
         }
+
+        $readyCategoryMixAllFriendlyUrls = $this->friendlyUrlFacade->getAllByRouteNameAndEntityId('front_category_seo', $readyCategorySeoMix->getId());
+
+        if (count($readyCategoryMixAllFriendlyUrls) === 0) {
+            return;
+        }
+
+        $urlListDataForMainFriendlyUrl = new UrlListData();
+        $urlListDataForMainFriendlyUrl->mainFriendlyUrlsByDomainId = [
+            array_shift($readyCategoryMixAllFriendlyUrls),
+        ];
+
+        $this->friendlyUrlFacade->saveUrlListFormData('front_category_seo', $readyCategorySeoMix->getId(), $urlListDataForMainFriendlyUrl);
     }
 
     /**
@@ -195,7 +198,7 @@ class ReadyCategorySeoMixFacade
         $hasCorrectDomainUrl = false;
         $hasMainFriendlyUrl = false;
 
-        foreach ($readyCategorySeoMixAllFriendlyUrls as $index => $friendlyUrl) {
+        foreach ($readyCategorySeoMixAllFriendlyUrls as $friendlyUrl) {
             if ($friendlyUrl->getDomainId() !== $readyCategorySeoMix->getDomainId()) {
                 throw new ReadyCategorySeoMixUrlsContainBadDomainUrlException('ReadyCategorySeoMix urls contain bad domain url');
             }
@@ -222,12 +225,14 @@ class ReadyCategorySeoMixFacade
     public function deleteAllWithParameter(Parameter $parameter): void
     {
         $readyCategorySeoMixes = $this->readyCategorySeoMixRepository->getAllWithParameter($parameter);
-        if (count($readyCategorySeoMixes) > 0) {
-            foreach ($readyCategorySeoMixes as $readyCategorySeoMix) {
-                $this->em->remove($readyCategorySeoMix);
-            }
-            $this->em->flush();
+        if (count($readyCategorySeoMixes) === 0) {
+            return;
         }
+
+        foreach ($readyCategorySeoMixes as $readyCategorySeoMix) {
+            $this->em->remove($readyCategorySeoMix);
+        }
+        $this->em->flush();
     }
 
     /**
@@ -278,7 +283,7 @@ class ReadyCategorySeoMixFacade
     {
         $request = $this->requestStack->getMasterRequest();
         if ($request === null) {
-            throw new \RuntimeException('Master request is mandatory for generating CategorySeoMix url');
+            throw new RuntimeException('Master request is mandatory for generating CategorySeoMix url');
         }
 
         return $this->productListOrderingModeForListFacade->getOrderingModeIdFromRequest($request);

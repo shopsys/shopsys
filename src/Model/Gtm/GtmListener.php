@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\Gtm;
 
+use App\Controller\Front\ErrorController;
 use Symfony\Component\HttpKernel\Event\ControllerEvent;
 
 class GtmListener
@@ -28,7 +29,7 @@ class GtmListener
     {
         if ($event->isMasterRequest()) {
             $routeName = $event->getRequest()->get('_route');
-        } elseif ($event->getController()[0] instanceof \App\Controller\Front\ErrorController) {
+        } elseif ($event->getController()[0] instanceof ErrorController) {
             $routeName = 'front_error';
         } else {
             return;

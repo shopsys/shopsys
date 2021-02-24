@@ -7,7 +7,9 @@ namespace App\Controller\Admin;
 use App\Form\Admin\BlogCategoryFormType;
 use App\Model\Blog\Category\BlogCategoryDataFactory;
 use App\Model\Blog\Category\BlogCategoryFacade;
+use App\Model\Blog\Category\Exception\BlogCategoryNotFoundException;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\Domain\Exception\InvalidDomainIdException;
 use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
 use Shopsys\FrameworkBundle\Controller\Admin\AdminBaseController;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
@@ -168,7 +170,7 @@ class BlogCategoryController extends AdminBaseController
         if ($domainId !== self::ALL_DOMAINS) {
             try {
                 $this->domain->getDomainConfigById($domainId);
-            } catch (\Shopsys\FrameworkBundle\Component\Domain\Exception\InvalidDomainIdException $ex) {
+            } catch (InvalidDomainIdException $ex) {
                 $domainId = self::ALL_DOMAINS;
             }
         }
@@ -229,7 +231,7 @@ class BlogCategoryController extends AdminBaseController
                     'name' => $fullName,
                 ]
             );
-        } catch (\App\Model\Blog\Category\Exception\BlogCategoryNotFoundException $ex) {
+        } catch (BlogCategoryNotFoundException $ex) {
             $this->addErrorFlash(t('Vybraná rubrika blogu neexistuje.'));
         }
 

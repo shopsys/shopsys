@@ -31,7 +31,7 @@ class SeoHelper
         }
 
         if ($paginationResult->getPage() > 1 && $paginationResult->getPageCount() > 1) {
-            $h1 = $h1 . ' ' . t(
+            $h1 .= ' ' . t(
                 'strana %currentPage% z %pageCount%',
                 [
                     '%currentPage%' => $paginationResult->getPage(),
@@ -55,12 +55,12 @@ class SeoHelper
         }
 
         if ($paginationResult->getPage() > 1 && $paginationResult->getPageCount() > 1) {
-            $title = $title . ' ' . t(
+            $title .= ' ' . t(
                 'strana %currentPage% z %pageCount%',
                 [
-                        '%currentPage%' => $paginationResult->getPage(),
-                        '%pageCount%' => $paginationResult->getPageCount(),
-                    ]
+                    '%currentPage%' => $paginationResult->getPage(),
+                    '%pageCount%' => $paginationResult->getPageCount(),
+                ]
             );
         }
 

@@ -1,5 +1,5 @@
 imports:
-    - { resource: '%vendor_dir%/shopsys/coding-standards/easy-coding-standard.yml', ignore_errors: true  }
+    - { resource: 'vendor/shopsys/coding-standards/easy-coding-standard.yml' }
 
 services:
     PhpCsFixer\Fixer\Strict\DeclareStrictTypesFixer: ~
@@ -81,8 +81,12 @@ parameters:
             - '*/src/Component/Akeneo/Transfer/AbstractAkeneoImportTransfer.php'
             - '*/src/Component/ScontoBridge/Transfer/AbstractScontoBridgeImportTransfer.php'
             - '*/src/Migrations/Version20200319113341.php'
+            - '*/src/Migrations/Version20200831091231.php'
             - '*/src/Controller/Admin/CategorySeoController.php'
             - '*/src/Form/Admin/StockFormType.php'
+            - '*/src/Form/Admin/TransportFormTypeExtension.php'
+            - '*/src/Form/Front/Customer/User/CustomerUserFormType.php'
+            - '*/src/Form/Front/Registration/RegistrationFormType.php'
             - '*/src/Model/Product/ProductDataFactory.php'
             - '*/src/Controller/Front/ProductController.php'
             - '*/src/Form/Admin/NotificationBarFormType.php'
@@ -99,6 +103,8 @@ parameters:
             - '*/src/DataFixtures/Demo/ProductDataFixture.php'
             - '*/tests/App/Functional/Model/Product/ProductOnCurrentDomainFacadeCountDataTest.php'
             - '*/src/Model/Product/Product.php'
+            - '*/src/Model/Order/OrderFacade.php'
+            - '*/src/Controller/Front/CartController.php'
             - '*/src/Controller/Front/OrderController.php'
             - '*/src/Controller/Front/ProductController.php'
             - '*/src/Model/Product/Transfer/Akeneo/ProductTransferAkeneoMapper.php'
@@ -110,6 +116,7 @@ parameters:
             - '*/src/DataFixtures/Demo/ProductDataFixture.php'
             - '*/src/DataFixtures/Demo/CategoryDataFixture'
             - '*/src/Controller/Front/OrderController.php'
+            - '*/src/Model/Order/OrderFacade.php'
 
         Shopsys\CodingStandards\Sniffs\ValidVariableNameSniff:
             - '*/tests/App/Functional/EntityExtension/EntityExtensionTest.php'
@@ -119,6 +126,13 @@ parameters:
         Shopsys\CodingStandards\Sniffs\ObjectIsCreatedByFactorySniff:
             - '*/tests/*'
             - '*/src/Model/Order/Preview/OrderPreviewCalculation.php'
+            # classes bellow are ignored because of actual design seems to be weird and probably need to be rewritten in future
+            - '*/src/Model/Product/Brand/CachedBrand.php'
+            - '*/src/Model/Product/Flag/CachedFlag.php'
+            - '*/src/Model/Product/Parameter/CachedParameter.php'
+            - '*/src/Model/Product/Parameter/CachedParameterGroup.php'
+            - '*/src/Model/Product/Parameter/CachedParameterValue.php'
+            - '*/src/Model/Product/Parameter/Unit/CachedParameterUnit.php'
 
         Shopsys\CodingStandards\Sniffs\ForbiddenDumpSniff:
             - '*/tests/App/Functional/Model/Cart/CartFacadeTest.php'
@@ -142,6 +156,14 @@ parameters:
 
         PHP_CodeSniffer\Standards\Squiz\Sniffs\NamingConventions\ValidVariableNameSniff.NotCamelCaps:
             - '*/tests/App/Functional/Model/Transport/Logistic/TransportLogisticFacadeTest.php'
+
+        SlevomatCodingStandard\Sniffs\Classes\UnusedPrivateElementsSniff.WriteOnlyProperty:
+            - '*/src/Model/Category/LinkedCategory/LinkedCategory.php'
+            - '*/src/Model/Order/Item/OrderItem.php'
+            - '*/src/Model/Order/PromoCode/PromoCode.php'
+
+        SlevomatCodingStandard\Sniffs\Classes\UnusedPrivateElementsSniff.UnusedProperty:
+            - '*/src/Model/Category/LinkedCategory/LinkedCategory.php'
 
         # @deprecated This will be moved from project-base to coding-standards package in next major version
         # rule is applied via `clean-code` set but we do not want to use it for now

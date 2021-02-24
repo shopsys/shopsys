@@ -195,10 +195,12 @@ class ProductFormTypeExtension extends AbstractTypeExtension
             $context->addViolation(t('Produkt s tímto katalogovým číslem již existuje'));
         }
 
-        if ($this->product !== null && $catnum !== $this->product->getCatnum()) {
-            if ($productByCatnum !== null) {
-                $context->addViolation(t('Produkt s tímto katalogovým číslem již existuje'));
-            }
+        if ($this->product === null || $catnum === $this->product->getCatnum()) {
+            return;
+        }
+
+        if ($productByCatnum !== null) {
+            $context->addViolation(t('Produkt s tímto katalogovým číslem již existuje'));
         }
     }
 
@@ -263,10 +265,10 @@ class ProductFormTypeExtension extends AbstractTypeExtension
         ]);
 
         $groupBuilder->add('mountingState', MultidomainType::class, [
-                'required' => false,
-                'entry_type' => YesNoType::class,
-                'label' => t('Smontováno'),
-            ])
+            'required' => false,
+            'entry_type' => YesNoType::class,
+            'label' => t('Smontováno'),
+        ])
             ->add('embeddedAccessories', MultidomainType::class, [
                 'required' => false,
                 'entry_type' => TextType::class,
@@ -444,13 +446,13 @@ class ProductFormTypeExtension extends AbstractTypeExtension
         }
 
         $builderPricesGroup->add('lowPriceWithVat', MultidomainType::class, [
-                'label' => t('Nižší cena s DPH'),
-                'entry_type' => MoneyType::class,
-                'entry_options' => [
-                    'scale' => 6,
-                ],
-                'required' => false,
-            ])
+            'label' => t('Nižší cena s DPH'),
+            'entry_type' => MoneyType::class,
+            'entry_options' => [
+                'scale' => 6,
+            ],
+            'required' => false,
+        ])
             ->add('lowPriceWithoutVat', MultidomainType::class, [
                 'label' => t('Nižší cena bez DPH'),
                 'entry_type' => MoneyType::class,

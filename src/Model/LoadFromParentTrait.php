@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-
 namespace App\Model;
 
 use Doctrine\Persistence\Proxy;
@@ -28,7 +27,7 @@ trait LoadFromParentTrait
                 continue;
             }
 
-            $this->$key = $value;
+            $this->{$key} = $value;
         }
     }
 }

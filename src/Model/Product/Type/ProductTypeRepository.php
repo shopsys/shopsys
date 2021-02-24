@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Model\Product\Type;
 
 use App\Model\Order\Item\OrderItem;
-use App\Model\Product\ProductDomain;
+use App\Model\Product\Type\Exception\ProductTypeNotFoundException;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 
@@ -50,7 +50,7 @@ class ProductTypeRepository
         $productType = $this->findById($productTypeId);
 
         if ($productType === null) {
-            throw new \App\Model\Product\Type\Exception\ProductTypeNotFoundException('ProductType with ID ' . $productTypeId . ' not found.');
+            throw new ProductTypeNotFoundException('ProductType with ID ' . $productTypeId . ' not found.');
         }
 
         return $productType;

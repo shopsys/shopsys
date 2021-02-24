@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-
 namespace App\Model\Customer\User;
 
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
@@ -27,6 +26,13 @@ class CustomerUserPasswordFacade extends BaseCustomerUserPasswordFacade
         }
     }
 
+    /**
+     * @param string $email
+     * @param int $domainId
+     * @param string|null $resetPasswordHash
+     * @param string $newPassword
+     * @return \App\Model\Customer\User\CustomerUser
+     */
     public function setNewPassword(string $email, int $domainId, ?string $resetPasswordHash, string $newPassword): CustomerUser
     {
         /** @var \App\Model\Customer\User\CustomerUser $customerUser */

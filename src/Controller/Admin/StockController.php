@@ -149,8 +149,8 @@ class StockController extends AdminBaseController
                     t(
                         'Nastavení %domainName% skladů uloženo.',
                         [
-                        '%domainName%' => $this->adminDomainTabsFacade->getSelectedDomainConfig()->getName(),
-                    ]
+                            '%domainName%' => $this->adminDomainTabsFacade->getSelectedDomainConfig()->getName(),
+                        ]
                     )
                 );
         }

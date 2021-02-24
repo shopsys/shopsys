@@ -24,7 +24,6 @@ class CustomerUser extends BaseUser
 {
     /**
      * @var bool
-     *
      * @ORM\Column(type="boolean")
      */
     protected $newsletterSubscription;
@@ -36,6 +35,7 @@ class CustomerUser extends BaseUser
         BaseUserData $customerUserData
     ) {
         parent::__construct($customerUserData);
+
         $this->newsletterSubscription = $customerUserData->newsletterSubscription;
     }
 
@@ -45,6 +45,7 @@ class CustomerUser extends BaseUser
     public function edit(BaseUserData $customerUserData)
     {
         parent::edit($customerUserData);
+
         $this->newsletterSubscription = $customerUserData->newsletterSubscription;
     }
 

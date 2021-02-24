@@ -34,12 +34,14 @@ class ProductExportCronModule extends BaseProductExportCronModule
         EventDispatcherInterface $eventDispatcher
     ) {
         parent::__construct($index, $indexFacade, $indexDefinitionLoader, $domain);
+
         $this->eventDispatcher = $eventDispatcher;
     }
 
     public function run()
     {
         parent::run();
+
         $this->eventDispatcher->dispatch(
             new IndexExportedEvent($this->index),
             IndexExportedEvent::INDEX_EXPORTED

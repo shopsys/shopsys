@@ -11,8 +11,11 @@ use App\Model\Order\PromoCode\PromoCodeLimitFactory;
 use App\Model\Transfer\TransferIdentificationInterface;
 use App\Model\Transfer\TransferLoggerFactory;
 use App\Model\Transfer\TransferLoggerInterface;
+use DateTime;
+use DateTimeZone;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
+use Generator;
 use League\Flysystem\FilesystemInterface;
 use League\Flysystem\MountManager;
 use Shopsys\FrameworkBundle\Component\Doctrine\SqlLoggerFacade;
@@ -86,10 +89,12 @@ class SingleImportPromoCodeFacade implements TransferIdentificationInterface
      * @var \App\Model\Order\PromoCode\PromoCodeLimitFactory
      */
     private PromoCodeLimitFactory $promoCodeLimitFactory;
+
     /**
      * @var string
      */
     private string $displayTimezone;
+
     /**
      * @var \League\Flysystem\MountManager
      */
@@ -251,20 +256,16 @@ class SingleImportPromoCodeFacade implements TransferIdentificationInterface
         if ($booleanString === null) {
             return false;
         }
-        if ($booleanString === 'yes') {
-            return true;
-        }
-
-        return false;
+        return $booleanString === 'yes';
     }
 
     /**
      * @param string|null $dateString
      * @param bool $isFrom
-     * @return \DateTime|null
      * @throws \Exception
+     * @return \DateTime|null
      */
-    private function mapDateTime(?string $dateString, bool $isFrom = true): ?\DateTime
+    private function mapDateTime(?string $dateString, bool $isFrom = true): ?DateTime
     {
         if ($dateString === null) {
             return null;
@@ -274,8 +275,8 @@ class SingleImportPromoCodeFacade implements TransferIdentificationInterface
             $timeString = '23:59:59';
         }
 
-        $datetime = new \DateTime($dateString . ' ' . $timeString, new \DateTimeZone($this->displayTimezone));
-        $datetime->setTimezone(new \DateTimeZone('UTC'));
+        $datetime = new DateTime($dateString . ' ' . $timeString, new DateTimeZone($this->displayTimezone));
+        $datetime->setTimezone(new DateTimeZone('UTC'));
 
         return $datetime;
     }
@@ -313,7 +314,7 @@ class SingleImportPromoCodeFacade implements TransferIdentificationInterface
     /**
      * @return \Generator
      */
-    protected function getData(): \Generator
+    protected function getData(): Generator
     {
         $keys = [];
         $isFirstLine = true;

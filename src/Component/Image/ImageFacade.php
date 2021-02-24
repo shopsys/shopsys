@@ -12,12 +12,11 @@ use Doctrine\ORM\EntityManagerInterface;
 use League\Flysystem\FilesystemInterface;
 use League\Flysystem\MountManager;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
-use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\FileUpload\FileUpload;
 use Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadData;
 use Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig;
 use Shopsys\FrameworkBundle\Component\Image\Exception\ImageNotFoundException;
-use Shopsys\FrameworkBundle\Component\Image\Image;
+use Shopsys\FrameworkBundle\Component\Image\Image as BaseImage;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade as BaseImageFacade;
 use Shopsys\FrameworkBundle\Component\Image\ImageFactoryInterface;
 use Shopsys\FrameworkBundle\Component\Image\ImageLocator;
@@ -25,17 +24,17 @@ use Shopsys\FrameworkBundle\Component\Image\ImageRepository;
 use Shopsys\FrameworkBundle\Component\String\TransformString;
 
 /**
+ * @property \App\Component\Image\Config\ImageConfig $imageConfig
  * @property \App\Component\Image\ImageRepository $imageRepository
+ * @property \App\Component\FileUpload\FileUpload $fileUpload
+ * @property \App\Component\Image\ImageLocator $imageLocator
+ * @method \App\Component\Image\Image[] getImagesByEntityIdAndNameIndexedById(int $entityId, string $entityName, string|null $type)
  * @method \App\Component\Image\Image[] getAllImagesByEntity(object $entity)
  * @method deleteImageFiles(\App\Component\Image\Image $image)
  * @method \Shopsys\FrameworkBundle\Component\Image\AdditionalImageData[] getAdditionalImagesData(\Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig, \App\Component\Image\Image $imageOrEntity, string|null $sizeName, string|null $type)
  * @method \App\Component\Image\Image getImageByObject(\App\Component\Image\Image|object $imageOrEntity, string|null $type)
  * @method \App\Component\Image\Image getById(int $imageId)
  * @method \App\Component\Image\Image[] getImagesByEntitiesIndexedByEntityId(int[] $entityIds, string $entityClass)
- * @property \App\Component\Image\Config\ImageConfig $imageConfig
- * @method \App\Component\Image\Image[] getImagesByEntityIdAndNameIndexedById(int $entityId, string $entityName, string|null $type)
- * @property \App\Component\FileUpload\FileUpload $fileUpload
- * @property \App\Component\Image\ImageLocator $imageLocator
  */
 class ImageFacade extends BaseImageFacade
 {
@@ -81,12 +80,13 @@ class ImageFacade extends BaseImageFacade
             $imageFactory,
             $mountManager
         );
+
         $this->imageCacheFacade = $imageCacheFacade;
     }
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @param Object|\App\Component\Image\Image $imageOrEntity
+     * @param object|\App\Component\Image\Image $imageOrEntity
      * @param string|null $sizeName
      * @param string|null $type
      * @return string
@@ -103,13 +103,13 @@ class ImageFacade extends BaseImageFacade
         $seoEntityName = $this->getSeoNameByImageAndLocale($image, $domainConfig->getLocale());
         $friendlyUrlSeoEntityName = $this->getFriendlyUrlSlug($seoEntityName);
 
-        if ($this->imageLocator->imageExists($image)) {
-            $imageUrl = $domainConfig->getUrl()
-                . $this->imageUrlPrefix
-                . $this->imageLocator->getRelativeImageFilepathWithSlug($image, $sizeName, $friendlyUrlSeoEntityName);
-        } else {
+        if (!$this->imageLocator->imageExists($image)) {
             throw new ImageNotFoundException();
         }
+
+        $imageUrl = $domainConfig->getUrl()
+            . $this->imageUrlPrefix
+            . $this->imageLocator->getRelativeImageFilepathWithSlug($image, $sizeName, $friendlyUrlSeoEntityName);
 
         $this->imageCacheFacade->setImageUrlIntoCache($imageUrl, $image->getId(), $type, $sizeName);
 
@@ -202,7 +202,7 @@ class ImageFacade extends BaseImageFacade
      * @param string|null $sizeName
      * @return string
      */
-    protected function getAdditionalImageUrl(DomainConfig $domainConfig, int $additionalSizeIndex, Image $image, ?string $sizeName)
+    protected function getAdditionalImageUrl(DomainConfig $domainConfig, int $additionalSizeIndex, BaseImage $image, ?string $sizeName)
     {
         if (!$this->imageLocator->imageExists($image)) {
             throw new ImageNotFoundException();
@@ -246,27 +246,29 @@ class ImageFacade extends BaseImageFacade
     {
         $newImage = null;
 
-        if (count($temporaryFilenames) > 0) {
-            $imageEntityConfig = $this->imageConfig->getImageEntityConfig($entity);
-            $entityName = $imageEntityConfig->getEntityName();
-            $entityId = $this->getEntityId($entity);
-            $oldImage = $this->imageRepository->findImageByEntity($entityName, $entityId, $type);
-
-            if ($oldImage !== null && $deleteOldImage === true) {
-                $this->em->remove($oldImage);
-            }
-            $this->imageCacheFacade->invalidateCacheByEntityNameAndEntityIdAndType($entityName, $entityId, $type);
-
-            $newImage = $this->imageFactory->create(
-                $imageEntityConfig->getEntityName(),
-                $entityId,
-                $type,
-                array_pop($temporaryFilenames)
-            );
-            $this->em->persist($newImage);
-
-            $this->em->flush();
+        if (count($temporaryFilenames) === 0) {
+            return;
         }
+
+        $imageEntityConfig = $this->imageConfig->getImageEntityConfig($entity);
+        $entityName = $imageEntityConfig->getEntityName();
+        $entityId = $this->getEntityId($entity);
+        $oldImage = $this->imageRepository->findImageByEntity($entityName, $entityId, $type);
+
+        if ($oldImage !== null && $deleteOldImage === true) {
+            $this->em->remove($oldImage);
+        }
+        $this->imageCacheFacade->invalidateCacheByEntityNameAndEntityIdAndType($entityName, $entityId, $type);
+
+        $newImage = $this->imageFactory->create(
+            $imageEntityConfig->getEntityName(),
+            $entityId,
+            $type,
+            array_pop($temporaryFilenames)
+        );
+        $this->em->persist($newImage);
+
+        $this->em->flush();
     }
 
     /**
@@ -299,7 +301,7 @@ class ImageFacade extends BaseImageFacade
      * @param bool $deleteOldImage
      * @return \App\Component\Image\Image|null
      */
-    public function uploadAndReturnImage($entity, $temporaryFilenames, $type, bool $deleteOldImage = true): ?\App\Component\Image\Image
+    public function uploadAndReturnImage($entity, $temporaryFilenames, $type, bool $deleteOldImage = true): ?Image
     {
         $newImage = null;
 
@@ -358,7 +360,7 @@ class ImageFacade extends BaseImageFacade
      * @param string|null $type
      * @return \App\Component\Image\Image
      */
-    public function getImageByEntity($entity, $type): Image
+    public function getImageByEntity($entity, $type): BaseImage
     {
         $entityName = $this->imageConfig->getEntityName($entity);
         $entityId = $this->getEntityId($entity);
@@ -384,7 +386,7 @@ class ImageFacade extends BaseImageFacade
      * @param string $akeneoImageType
      * @return \App\Component\Image\Image
      */
-    public function getImageByObjectAndAkeneoType(object $entity, string $akeneoImageType): Image
+    public function getImageByObjectAndAkeneoType(object $entity, string $akeneoImageType): BaseImage
     {
         $entityName = $this->imageConfig->getEntityName($entity);
         $entityId = $this->getEntityId($entity);
@@ -469,13 +471,15 @@ class ImageFacade extends BaseImageFacade
             }
         }
 
-        if ($canUpdateAkeneoType) {
-            foreach ($orderedImages as $image) {
-                if ($image->getPosition() === 0) {
-                    $image->setAkeneoImageType(self::AKENEO_MAIN_IMAGE_TYPE);
-                } elseif ($image->getAkeneoImageType() === self::AKENEO_MAIN_IMAGE_TYPE) {
-                    $image->setAkeneoImageType(null);
-                }
+        if (!$canUpdateAkeneoType) {
+            return;
+        }
+
+        foreach ($orderedImages as $image) {
+            if ($image->getPosition() === 0) {
+                $image->setAkeneoImageType(self::AKENEO_MAIN_IMAGE_TYPE);
+            } elseif ($image->getAkeneoImageType() === self::AKENEO_MAIN_IMAGE_TYPE) {
+                $image->setAkeneoImageType(null);
             }
         }
     }
@@ -494,6 +498,7 @@ class ImageFacade extends BaseImageFacade
                 $persistedImages[] = $this->getById($image->getId());
             }
         }
+
         parent::saveImageOrdering($persistedImages);
     }
 }

@@ -12,7 +12,6 @@ use App\Model\Product\Product;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\NoResultException;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRepository;
 use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade as BaseParameterFacade;
@@ -55,11 +54,6 @@ class ParameterFacade extends BaseParameterFacade
     protected $uploadedFileFacade;
 
     /**
-     * @var \App\Component\Image\ImageFacade
-     */
-    private $imageFacade;
-
-    /**
      * @var \App\Component\Router\FriendlyUrl\FriendlyUrlRepository
      */
     private $friendlyUrlRepository;
@@ -93,7 +87,6 @@ class ParameterFacade extends BaseParameterFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \App\Model\Product\Parameter\ParameterValueDataFactory $parameterValueDataFactory
      * @param \App\Component\UploadedFile\UploadedFileFacade $uploadedFileFacade
-     * @param \App\Component\Image\ImageFacade $imageFacade
      * @param \App\Component\Router\FriendlyUrl\FriendlyUrlRepository $friendlyUrlRepository
      * @param \App\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
      * @param \App\Model\Product\Availability\ProductAvailabilityFacade $productAvailabilityFacade
@@ -108,7 +101,6 @@ class ParameterFacade extends BaseParameterFacade
         Domain $domain,
         ParameterValueDataFactory $parameterValueDataFactory,
         UploadedFileFacade $uploadedFileFacade,
-        ImageFacade $imageFacade,
         FriendlyUrlRepository $friendlyUrlRepository,
         FriendlyUrlFacade $friendlyUrlFacade,
         ProductAvailabilityFacade $productAvailabilityFacade,
@@ -120,11 +112,11 @@ class ParameterFacade extends BaseParameterFacade
             $parameterFactory,
             $eventDispatcher
         );
+
         $this->readyCategorySeoMixFacade = $readyCategorySeoMixFacade;
         $this->domain = $domain;
         $this->parameterValueDataFactory = $parameterValueDataFactory;
         $this->uploadedFileFacade = $uploadedFileFacade;
-        $this->imageFacade = $imageFacade;
         $this->friendlyUrlRepository = $friendlyUrlRepository;
         $this->friendlyUrlFacade = $friendlyUrlFacade;
         $this->colorPickerParameters = null;
@@ -240,7 +232,7 @@ class ParameterFacade extends BaseParameterFacade
             $this->uploadedFileFacade->manageSingleFile($parameterValue, $parameterValueData->colourIcon);
         }
 
-        if (empty($parameterValueData->colourIcon->uploadedFilenames) && $parameterValueData->colourIcon->filesToDelete) {
+        if (count($parameterValueData->colourIcon->uploadedFilenames) === 0 && $parameterValueData->colourIcon->filesToDelete) {
             $this->uploadedFileFacade->deleteAllUploadedFilesByEntity($parameterValue);
         }
 

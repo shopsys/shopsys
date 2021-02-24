@@ -9,7 +9,6 @@ use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade;
 use Shopsys\FrameworkBundle\Model\Customer\Mail\CustomerMailFacade as BaseCustomerMailFacade;
 use Shopsys\FrameworkBundle\Model\Customer\Mail\RegistrationMail;
 use Shopsys\FrameworkBundle\Model\Mail\Mailer;
-use Shopsys\FrameworkBundle\Model\Mail\MailTemplate;
 use Shopsys\FrameworkBundle\Model\Mail\MailTemplateFacade;
 
 /**
@@ -39,6 +38,7 @@ class CustomerMailFacade extends BaseCustomerMailFacade
         CustomerActivationMail $customerActivationMail
     ) {
         parent::__construct($mailer, $mailTemplateFacade, $registrationMail, $uploadedFileFacade);
+
         $this->customerActivationMail = $customerActivationMail;
     }
 

@@ -6,6 +6,7 @@ namespace App\Model\Blog\Article;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query\ResultSetMapping;
+use Exception;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 
@@ -44,7 +45,7 @@ class BlogArticleVisibilityRepository
             }
 
             $this->em->commit();
-        } catch (\Exception $ex) {
+        } catch (Exception $ex) {
             $this->em->rollback();
             throw $ex;
         }

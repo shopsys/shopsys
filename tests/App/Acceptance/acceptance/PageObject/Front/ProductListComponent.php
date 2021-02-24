@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\App\Acceptance\acceptance\PageObject\Front;
 
+use Facebook\WebDriver\Exception\NoSuchElementException;
 use Facebook\WebDriver\WebDriverBy;
 use Facebook\WebDriver\WebDriverElement;
 use Tests\App\Acceptance\acceptance\PageObject\AbstractPage;
@@ -45,12 +46,12 @@ class ProductListComponent extends AbstractPage
                 if ($nameElement->getText() === $productName) {
                     return $item;
                 }
-            } catch (\Facebook\WebDriver\Exception\NoSuchElementException $ex) {
+            } catch (NoSuchElementException $ex) {
                 continue;
             }
         }
 
         $message = sprintf('Unable to find product "%s" (translated to "%s") in product list component.', $productName, $translatedProductName);
-        throw new \Facebook\WebDriver\Exception\NoSuchElementException($message);
+        throw new NoSuchElementException($message);
     }
 }

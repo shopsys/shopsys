@@ -6,6 +6,7 @@ namespace App\Model\Order;
 
 use App\Model\GoPay\GoPayTransaction;
 use App\Model\Payment\Payment;
+use DateTime;
 use Doctrine\ORM\Query\Expr\Join;
 use GoPay\Definition\Response\PaymentStatus;
 use Shopsys\FrameworkBundle\Model\Order\OrderRepository as BaseOrderRepository;
@@ -34,7 +35,7 @@ class OrderRepository extends BaseOrderRepository
      * @param \DateTime $fromDate
      * @return \App\Model\Order\Order[]
      */
-    public function getAllUnpaidGoPayOrders(\DateTime $fromDate): array
+    public function getAllUnpaidGoPayOrders(DateTime $fromDate): array
     {
         $queryBuilder = $this->createOrderQueryBuilder()
             ->join(Payment::class, 'p', Join::WITH, 'o.payment = p.id')

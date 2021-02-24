@@ -52,6 +52,7 @@ class MailTemplate extends BaseMailTemplate
     public function edit(BaseMailTemplateData $mailTemplateData)
     {
         parent::edit($mailTemplateData);
+
         $this->transport = $mailTemplateData->transport;
         $this->payment = $mailTemplateData->payment;
         $this->orderStatus = $mailTemplateData->orderStatus;

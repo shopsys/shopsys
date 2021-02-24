@@ -56,6 +56,7 @@ class ArticleFacade extends BaseArticleFacade
             $friendlyUrlFacade,
             $articleFactory
         );
+
         $this->twigCacheFacade = $twigCacheFacade;
     }
 
@@ -102,7 +103,7 @@ class ArticleFacade extends BaseArticleFacade
             Article::PLACEMENT_FOOTER_2,
             Article::PLACEMENT_FOOTER_3,
             Article::PLACEMENT_FOOTER_4,
-            ];
+        ];
     }
 
     /**

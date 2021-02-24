@@ -92,6 +92,7 @@ class ProductController extends BaseProductController
             $setting,
             $availabilityFacade
         );
+
         $this->productPackageRepository = $productPackageRepository;
     }
 
@@ -129,7 +130,6 @@ class ProductController extends BaseProductController
 
         $this->breadcrumbOverrider->overrideLastItem(t('Editing product - %name%', ['%name%' => $this->productExtension->getProductDisplayName($product)]));
 
-        /** @var \App\Model\Product\Product $product */
         $productPackageGridView = $this->getProductPackageGridByProduct($product)->createView();
 
         $viewParameters = [

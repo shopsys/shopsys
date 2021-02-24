@@ -24,6 +24,7 @@ class ImageConfigLoader extends BaseImageConfigLoader
         EntityNameResolver $entityNameResolver
     ) {
         parent::__construct($filesystem);
+
         $this->entityNameResolver = $entityNameResolver;
     }
 

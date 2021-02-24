@@ -22,7 +22,6 @@ class CategoryDomain extends BaseCategoryDomain
 {
     /**
      * @var string|null
-     *
      * @ORM\Column(type="text", nullable=true)
      */
     protected $shortDescription;

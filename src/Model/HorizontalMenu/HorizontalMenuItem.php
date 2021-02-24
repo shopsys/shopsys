@@ -16,7 +16,6 @@ class HorizontalMenuItem implements OrderableEntityInterface
 {
     /**
      * @var int
-     *
      * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
@@ -25,7 +24,6 @@ class HorizontalMenuItem implements OrderableEntityInterface
 
     /**
      * @var int
-     *
      * @Gedmo\SortablePosition
      * @ORM\Column(type="integer")
      */
@@ -33,21 +31,18 @@ class HorizontalMenuItem implements OrderableEntityInterface
 
     /**
      * @var string
-     *
      * @ORM\Column(type="text", nullable=false)
      */
     private $name;
 
     /**
      * @var string
-     *
      * @ORM\Column(type="text", nullable=false)
      */
     private $url;
 
     /**
      * @var int
-     *
      * @ORM\Column(type="integer", nullable=false)
      */
     private $domainId;

@@ -15,7 +15,6 @@ class NotificationBar
 {
     /**
      * @var int
-     *
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="IDENTITY")
@@ -24,42 +23,36 @@ class NotificationBar
 
     /**
      * @var int
-     *
      * @ORM\Column(type="integer")
      */
     private $domainId;
 
     /**
      * @var string
-     *
      * @ORM\Column(type="text")
      */
     private $text;
 
     /**
      * @var \DateTime|null
-     *
      * @ORM\Column(type="datetime", nullable=true)
      */
     private $validityFrom;
 
     /**
      * @var \DateTime|null
-     *
      * @ORM\Column(type="datetime", nullable=true)
      */
     private $validityTo;
 
     /**
      * @var string
-     *
      * @ORM\Column(type="string", length=7)
      */
     protected $rgbColor;
 
     /**
      * @var bool
-     *
      * @ORM\Column(type="boolean")
      */
     protected $hidden;

@@ -28,6 +28,7 @@ class ContainerConstraintValidatorFactory extends SymfonyContainerConstraintVali
     public function __construct(ContainerInterface $validatorContainer, ContainerInterface $appContainer, array $validatorClassByServiceId)
     {
         parent::__construct($validatorContainer);
+
         $this->appContainer = $appContainer;
         $this->validatorClassByServiceId = $validatorClassByServiceId;
     }

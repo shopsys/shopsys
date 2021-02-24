@@ -34,6 +34,7 @@ class FlagDataFixture extends AbstractReferenceFixture
 
     /**
      * Flags are created in database migration.
+     *
      * @see \Shopsys\FrameworkBundle\Migrations\Version20200221155940
      * @param \Doctrine\Persistence\ObjectManager $manager
      */

@@ -35,7 +35,7 @@ class GoPayTransactionDataFixture extends AbstractReferenceFixture implements De
     public function getDependencies(): array
     {
         return [
-          OrderDataFixture::class,
+            OrderDataFixture::class,
         ];
     }
 }

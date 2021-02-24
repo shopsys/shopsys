@@ -42,7 +42,7 @@ class PromoCodeProduct
     /**
      * @return \App\Model\Order\PromoCode\PromoCode
      */
-    public function getPromoCode(): \App\Model\Order\PromoCode\PromoCode
+    public function getPromoCode(): PromoCode
     {
         return $this->promoCode;
     }
@@ -50,7 +50,7 @@ class PromoCodeProduct
     /**
      * @return \App\Model\Product\Product
      */
-    public function getProduct(): \App\Model\Product\Product
+    public function getProduct(): Product
     {
         return $this->product;
     }

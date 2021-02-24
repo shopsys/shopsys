@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace App\Model\Product\Parameter\Exception;
 
-class DeprecatedParameterPropertyException extends \Exception
+use Exception;
+
+class DeprecatedParameterPropertyException extends Exception
 {
     /**
      * @param string $parameterPropertyName

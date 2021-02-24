@@ -98,9 +98,7 @@ class DataLayer
     {
         $data = $this->session->get(self::SESSION_DATA_KEY);
 
-        $value = $data[$key] ?? null;
-
-        return $value;
+        return $data[$key] ?? null;
     }
 
     /**

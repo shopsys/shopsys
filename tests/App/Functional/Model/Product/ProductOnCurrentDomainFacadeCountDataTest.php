@@ -46,6 +46,7 @@ abstract class ProductOnCurrentDomainFacadeCountDataTest extends ParameterTransa
     protected function setUp(): void
     {
         parent::setUp();
+
         $this->productOnCurrentDomainFacade = $this->getProductOnCurrentDomainFacade();
     }
 
@@ -563,7 +564,7 @@ abstract class ProductOnCurrentDomainFacadeCountDataTest extends ParameterTransa
     {
         $result = clone $countData;
         foreach ($countData->countByParameterIdAndValueId as $parameterId => $values) {
-            if (empty($values)) {
+            if (count($values) === 0) {
                 unset($result->countByParameterIdAndValueId[$parameterId]);
             }
         }

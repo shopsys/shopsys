@@ -23,7 +23,9 @@ class PaymentDataFixture extends AbstractReferenceFixture implements DependentFi
     public const PAYMENT_GOPAY = Payment::TYPE_GOPAY;
     public const PAYMENT_OVER_LIMIT = 'payment_over_limit';
 
-    /** @var \App\Model\Payment\PaymentFacade */
+    /**
+     * @var \App\Model\Payment\PaymentFacade
+     */
     private $paymentFacade;
 
     /**

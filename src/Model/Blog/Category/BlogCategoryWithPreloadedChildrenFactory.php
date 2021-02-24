@@ -75,15 +75,17 @@ class BlogCategoryWithPreloadedChildrenFactory
         $blogCategoriesIndexedByParentId = [];
 
         foreach ($blogCategories as $blogCategory) {
+            if ($blogCategory->getParent() === null) {
+                continue;
+            }
+
             $parentId = $blogCategory->getParent()->getId();
 
-            if ($parentId !== null) {
-                if (!isset($blogCategoriesIndexedByParentId[$parentId])) {
-                    $blogCategoriesIndexedByParentId[$parentId] = [];
-                }
-
-                $blogCategoriesIndexedByParentId[$parentId][] = $blogCategory;
+            if (!isset($blogCategoriesIndexedByParentId[$parentId])) {
+                $blogCategoriesIndexedByParentId[$parentId] = [];
             }
+
+            $blogCategoriesIndexedByParentId[$parentId][] = $blogCategory;
         }
 
         return $blogCategoriesIndexedByParentId;

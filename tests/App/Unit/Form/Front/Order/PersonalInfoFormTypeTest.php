@@ -117,6 +117,7 @@ class PersonalInfoFormTypeTest extends TypeTestCase
         $this->customerUserFacade = $this->createMock(CustomerUserFacade::class);
 
         $this->heurekaFacade = $this->createMock(HeurekaFacade::class);
+
         parent::setUp();
     }
 
@@ -128,11 +129,9 @@ class PersonalInfoFormTypeTest extends TypeTestCase
         $translatorMock = $this->getMockBuilder(Translator::class)->disableOriginalConstructor()->getMock();
         $translatorMock->expects($this->any())->method('trans')->willReturn('');
         Translator::injectSelf($translatorMock);
-        $personalInfoForm = $this->factory->create(PersonalInfoFormType::class, null, [
+        return $this->factory->create(PersonalInfoFormType::class, null, [
             'domain_id' => 1,
         ]);
-
-        return $personalInfoForm;
     }
 
     private function disableHeurekaShopCertification(): void

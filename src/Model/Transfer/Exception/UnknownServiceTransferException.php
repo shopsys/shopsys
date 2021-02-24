@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace App\Model\Transfer\Exception;
 
-class UnknownServiceTransferException extends \Exception
+use Exception;
+
+class UnknownServiceTransferException extends Exception
 {
     /**
      * @param string $serviceTransferIdentifier

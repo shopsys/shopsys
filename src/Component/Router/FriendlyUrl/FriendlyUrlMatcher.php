@@ -10,6 +10,7 @@ use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrl;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlMatcher as BaseFriendlyUrlMatcher;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRepository;
+use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 use Symfony\Component\Routing\RouteCollection;
 
 class FriendlyUrlMatcher extends BaseFriendlyUrlMatcher
@@ -44,19 +45,21 @@ class FriendlyUrlMatcher extends BaseFriendlyUrlMatcher
         $friendlyUrl = $this->friendlyUrlRepository->findByDomainIdAndSlug($domainConfig->getId(), $pathWithoutSlash);
 
         if ($friendlyUrl === null) {
-            throw new \Symfony\Component\Routing\Exception\ResourceNotFoundException();
+            throw new ResourceNotFoundException();
         }
 
         $route = $routeCollection->get($friendlyUrl->getRouteName());
         if ($route === null) {
-            throw new \Symfony\Component\Routing\Exception\ResourceNotFoundException();
+            throw new ResourceNotFoundException();
         }
 
         $matchedParameters = $route->getDefaults();
 
         if ($friendlyUrl->getRouteName() === 'front_category_seo' && $friendlyUrl->isMain() === false) {
             return $this->getMatchedParametersForNonMainFrontCategorySeoFriendlyUrl($friendlyUrl, $matchedParameters);
-        } elseif ($friendlyUrl->getRouteName() === 'front_category_seo') {
+        }
+
+        if ($friendlyUrl->getRouteName() === 'front_category_seo') {
             return $this->getMatchedParametersForMainFrontCategorySeoFriendlyUrl($friendlyUrl, $matchedParameters);
         }
 

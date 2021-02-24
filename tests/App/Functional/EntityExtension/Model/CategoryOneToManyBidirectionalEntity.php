@@ -13,7 +13,6 @@ class CategoryOneToManyBidirectionalEntity
 {
     /**
      * @var int
-     *
      * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
@@ -22,7 +21,6 @@ class CategoryOneToManyBidirectionalEntity
 
     /**
      * @var \Tests\App\Functional\EntityExtension\Model\ExtendedCategory
-     *
      * @ORM\ManyToOne(targetEntity="ExtendedCategory", inversedBy="oneToManyBidirectionalEntity")
      * @ORM\JoinColumn(nullable=false, name="category_id", referencedColumnName="id")
      */
@@ -30,7 +28,6 @@ class CategoryOneToManyBidirectionalEntity
 
     /**
      * @var string
-     *
      * @ORM\Column(type="string")
      */
     protected $name;

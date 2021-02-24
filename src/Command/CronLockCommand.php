@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-
 namespace App\Command;
 
 use NinjaMutex\Lock\LockInterface;
@@ -31,6 +30,7 @@ class CronLockCommand extends Command
     public function __construct(LockInterface $lock)
     {
         $this->lock = $lock;
+
         parent::__construct();
     }
 

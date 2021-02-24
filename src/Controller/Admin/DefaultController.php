@@ -71,6 +71,7 @@ class DefaultController extends BaseDefaultController
             $cronConfig,
             $cronFacade
         );
+
         $this->transferIssueFacade = $transferIssueFacade;
     }
 
@@ -80,7 +81,7 @@ class DefaultController extends BaseDefaultController
      */
     public function dashboardAction(): Response
     {
-        /* @var $administrator \App\Model\Administrator\Administrator */
+        /** @var \App\Model\Administrator\Administrator $administrator */
         $administrator = $this->getUser();
         $registeredInLastTwoWeeks = $this->statisticsFacade->getCustomersRegistrationsCountByDayInLastTwoWeeks();
         $registeredInLastTwoWeeksDates = $this->statisticsProcessingFacade->getDateTimesFormattedToLocaleFormat($registeredInLastTwoWeeks);

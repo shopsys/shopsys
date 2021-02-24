@@ -65,20 +65,22 @@ class PaymentFormTypeExtension extends AbstractTypeExtension
                 'required' => false,
             ]);
 
-        if ($options['payment'] !== null) {
-            /** @var \App\Model\Payment\Payment $payment */
-            $payment = $options['payment'];
-            if ($payment->isHiddenByGoPay()) {
-                $builderBasicInformationGroup->add('hidden', YesNoType::class, [
-                    'label' => t('Hidden'),
-                    'required' => false,
-                    'disabled' => true,
-                    'attr' => [
-                        'icon' => true,
-                        'iconTitle' => t('Tento způsob platby je skrytý systémem GoPay.'),
-                    ],
-                ]);
-            }
+        if ($options['payment'] === null) {
+            return;
+        }
+
+        /** @var \App\Model\Payment\Payment $payment */
+        $payment = $options['payment'];
+        if ($payment->isHiddenByGoPay()) {
+            $builderBasicInformationGroup->add('hidden', YesNoType::class, [
+                'label' => t('Hidden'),
+                'required' => false,
+                'disabled' => true,
+                'attr' => [
+                    'icon' => true,
+                    'iconTitle' => t('Tento způsob platby je skrytý systémem GoPay.'),
+                ],
+            ]);
         }
     }
 

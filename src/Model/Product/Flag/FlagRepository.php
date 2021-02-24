@@ -16,13 +16,11 @@ class FlagRepository extends BaseFlagRepository
     /**
      * @param string $akeneoCode
      * @throws \RuntimeException
-     * @return null|\App\Model\Product\Flag\Flag
+     * @return \App\Model\Product\Flag\Flag|null
      */
     public function findByAkeneoCode(string $akeneoCode): ?Flag
     {
-        $flag = $this->getFlagRepository()->findOneBy(['akeneoCode' => $akeneoCode]);
-
-        return $flag;
+        return $this->getFlagRepository()->findOneBy(['akeneoCode' => $akeneoCode]);
     }
 
     /**

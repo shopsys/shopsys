@@ -6,6 +6,7 @@ namespace App\Model\Order\Item;
 
 use App\Model\Order\Order;
 use App\Model\Product\Product;
+use BadMethodCallException;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItem as BaseOrderItem;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemFactory as BaseOrderItemFactory;
 use Shopsys\FrameworkBundle\Model\Order\Order as BaseOrder;
@@ -37,7 +38,7 @@ class OrderItemFactory extends BaseOrderItemFactory
         ?string $catnum,
         ?BaseProduct $product = null
     ): BaseOrderItem {
-        throw new \BadMethodCallException('Use ' . self::class . '::createProductByOrderItemData() instead of this method');
+        throw new BadMethodCallException('Use ' . self::class . '::createProductByOrderItemData() instead of this method');
     }
 
     /**
@@ -57,7 +58,7 @@ class OrderItemFactory extends BaseOrderItemFactory
         int $quantity,
         Payment $payment
     ): BaseOrderItem {
-        throw new \BadMethodCallException('Use ' . self::class . '::createPaymentByOrderItemData() instead of this method');
+        throw new BadMethodCallException('Use ' . self::class . '::createPaymentByOrderItemData() instead of this method');
     }
 
     /**
@@ -77,7 +78,7 @@ class OrderItemFactory extends BaseOrderItemFactory
         int $quantity,
         Transport $transport
     ): BaseOrderItem {
-        throw new \BadMethodCallException('Use ' . self::class . '::createTransportByOrderItemData() instead of this method');
+        throw new BadMethodCallException('Use ' . self::class . '::createTransportByOrderItemData() instead of this method');
     }
 
     /**

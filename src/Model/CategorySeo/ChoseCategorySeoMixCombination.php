@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace App\Model\CategorySeo;
 
 use App\Model\CategorySeo\Exception\ChoseCategorySeoMixCombinationIsNotValidException;
-use function GuzzleHttp\json_decode as json_decode;
-use function GuzzleHttp\json_encode as json_encode;
+use function GuzzleHttp\json_decode;
+use function GuzzleHttp\json_encode;
 
 class ChoseCategorySeoMixCombination
 {

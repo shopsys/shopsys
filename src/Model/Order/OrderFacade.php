@@ -18,6 +18,7 @@ use App\Model\Order\Preview\SplitOrderPreview;
 use App\Model\Order\Status\OrderStatus;
 use App\Model\Payment\Payment;
 use BadMethodCallException;
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use GoPay\Definition\Response\PaymentStatus;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
@@ -30,6 +31,7 @@ use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateData;
 use Shopsys\FrameworkBundle\Model\Heureka\HeurekaFacade;
 use Shopsys\FrameworkBundle\Model\Localization\Localization;
+use Shopsys\FrameworkBundle\Model\Order\Exception\OrderHashGenerateException;
 use Shopsys\FrameworkBundle\Model\Order\FrontOrderDataMapper;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItem;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemFactoryInterface;
@@ -236,6 +238,7 @@ class OrderFacade extends BaseOrderFacade
             $transportPriceCalculation,
             $orderItemFactory
         );
+
         $this->orderItemDataFactory = $orderItemDataFactory;
         $this->cartSplittingFacade = $cartSplittingFacade;
         $this->orderDataFactory = $orderDataFactory;
@@ -253,13 +256,13 @@ class OrderFacade extends BaseOrderFacade
     {
         $triesCount = 0;
         do {
-            $random = substr((string) rand(1000000, 2999999), 1);
+            $random = substr((string)random_int(1000000, 2999999), 1);
 
             $number = date('y') . $random;
             $order = $this->orderRepository->findByNumber($number);
             $triesCount++;
             if ($triesCount > self::MAX_GENERATE_TRIES) {
-                throw new \Shopsys\FrameworkBundle\Model\Order\Exception\OrderHashGenerateException('Trying generate order number reached the limit.');
+                throw new OrderHashGenerateException('Trying generate order number reached the limit.');
             }
         } while ($order !== null);
 
@@ -357,7 +360,6 @@ class OrderFacade extends BaseOrderFacade
      * @param \App\Model\Order\OrderData $orderData
      * @param \App\Model\Order\Preview\SplitOrderPreview $splitOrderPreview
      * @param \App\Model\Customer\User\CustomerUser|null $customerUser
-     *
      * @return \App\Model\Order\Order
      */
     public function createOrderBySplitOrderPreview(BaseOrderData $orderData, SplitOrderPreview $splitOrderPreview, ?CustomerUser $customerUser): Order
@@ -444,21 +446,23 @@ class OrderFacade extends BaseOrderFacade
     private function fillOrderRoundingBySplitOrderPreview(Order $order, SplitOrderPreview $splitOrderPreview, string $locale): void
     {
         $roundingPrice = $splitOrderPreview->getRoundingPrice();
-        if ($roundingPrice !== null) {
-            $orderItemData = $this->orderItemDataFactory->create();
-            $orderItemData->name = t('Rounding', [], 'messages', $locale);
-            $orderItemData->priceWithoutVat = $roundingPrice->getPriceWithoutVat();
-            $orderItemData->priceWithVat = $roundingPrice->getPriceWithVat();
-            $orderItemData->vatPercent = '0';
-            $orderItemData->quantity = 1;
-            $orderItemData->productType = $splitOrderPreview->getProductTypeForCommonItems();
-
-            $this->orderItemFactory->createProductByOrderItemData(
-                $orderItemData,
-                $order,
-                null
-            );
+        if ($roundingPrice === null) {
+            return;
         }
+
+        $orderItemData = $this->orderItemDataFactory->create();
+        $orderItemData->name = t('Rounding', [], 'messages', $locale);
+        $orderItemData->priceWithoutVat = $roundingPrice->getPriceWithoutVat();
+        $orderItemData->priceWithVat = $roundingPrice->getPriceWithVat();
+        $orderItemData->vatPercent = '0';
+        $orderItemData->quantity = 1;
+        $orderItemData->productType = $splitOrderPreview->getProductTypeForCommonItems();
+
+        $this->orderItemFactory->createProductByOrderItemData(
+            $orderItemData,
+            $order,
+            null
+        );
     }
 
     /**
@@ -501,16 +505,18 @@ class OrderFacade extends BaseOrderFacade
                 $product
             );
 
-            if ($quantifiedItemDiscount !== null) {
-                $coupon = $this->addOrderItemDiscountAndReturnIt(
-                    $orderItem,
-                    $quantifiedItemDiscount,
-                    $locale,
-                    (float)$orderPreview->getPromoCodeDiscountPercent(),
-                    $orderPreview->getPromoCodeIdentifier()
-                );
-                $orderItem->setRelatedOrderItem($coupon);
+            if ($quantifiedItemDiscount === null) {
+                continue;
             }
+
+            $coupon = $this->addOrderItemDiscountAndReturnIt(
+                $orderItem,
+                $quantifiedItemDiscount,
+                $locale,
+                (float)$orderPreview->getPromoCodeDiscountPercent(),
+                $orderPreview->getPromoCodeIdentifier()
+            );
+            $orderItem->setRelatedOrderItem($coupon);
         }
     }
 
@@ -571,7 +577,7 @@ class OrderFacade extends BaseOrderFacade
         string $locale,
         float $discountPercent,
         ?string $promoCodeIdentifier = null
-    ): \App\Model\Order\Item\OrderItem {
+    ): Item\OrderItem {
         $name = sprintf(
             '%s %s - %s',
             t('Promo code', [], 'messages', $locale),
@@ -630,7 +636,7 @@ class OrderFacade extends BaseOrderFacade
      * @param \DateTime $fromDate
      * @return \App\Model\Order\Order[]
      */
-    public function getAllUnpaidGoPayOrders(\DateTime $fromDate): array
+    public function getAllUnpaidGoPayOrders(DateTime $fromDate): array
     {
         return $this->orderRepository->getAllUnpaidGoPayOrders($fromDate);
     }
@@ -764,10 +770,10 @@ class OrderFacade extends BaseOrderFacade
     }
 
     /**
-     * @param FrontOrderData $frontOrderFormData
+     * @param \App\Model\Order\FrontOrderData $frontOrderFormData
      * @param \App\Model\Payment\Payment[] $payments
      * @param \App\Model\Transport\Transport[] $transports
-     * @return FrontOrderData
+     * @return \App\Model\Order\FrontOrderData
      */
     public function revalidatePaymentAndTransport(FrontOrderData $frontOrderFormData, array $payments, array $transports)
     {
@@ -799,7 +805,7 @@ class OrderFacade extends BaseOrderFacade
             }
         }
 
-        if (empty($frontOrderFormData->transportsByProductTypeId) === false) {
+        if (count($frontOrderFormData->transportsByProductTypeId) > 0) {
             foreach ($frontOrderFormData->transportsByProductTypeId as $key => $transportByProductTypeId) {
                 if ($transportByProductTypeId === null) {
                     continue;
@@ -812,10 +818,11 @@ class OrderFacade extends BaseOrderFacade
                         break;
                     }
                 }
-                if ($isTransportValid === false) {
-                    unset($frontOrderFormData->transportsByProductTypeId[$key]);
-                    unset($frontOrderFormData->transportPersonalPickupStockByProductTypeId[$key]);
+                if ($isTransportValid !== false) {
+                    continue;
                 }
+
+                unset($frontOrderFormData->transportsByProductTypeId[$key], $frontOrderFormData->transportPersonalPickupStockByProductTypeId[$key]);
             }
         }
 
@@ -826,7 +833,7 @@ class OrderFacade extends BaseOrderFacade
      * @param \App\Model\Order\OrderData $orderData
      * @return \App\Model\Customer\User\CustomerUser|null
      */
-    private function findCustomerForOrder(OrderData $orderData): ?\App\Model\Customer\User\CustomerUser
+    private function findCustomerForOrder(OrderData $orderData): ?CustomerUser
     {
         /** @var \App\Model\Customer\User\CustomerUser|null $customerUser */
         $customerUser = $this->currentCustomerUser->findCurrentCustomerUser();

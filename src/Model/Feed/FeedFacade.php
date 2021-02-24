@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-
 namespace App\Model\Feed;
 
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;

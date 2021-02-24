@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Command;
 
-use App\Model\Product\Product;
 use App\Model\Product\ProductRepository;
 use App\Model\Stock\ProductStockDataFactory;
 use App\Model\Stock\ProductStockFacade;
@@ -22,30 +21,30 @@ class CreateProductStocksCommand extends Command
     protected static $defaultName = 'sconto:create-product-stocks';
 
     /**
-     * @var ProductStockFacade
+     * @var \App\Model\Stock\ProductStockFacade
      */
     private ProductStockFacade $productStockFacade;
 
     /**
-     * @var ProductRepository
+     * @var \App\Model\Product\ProductRepository
      */
     private ProductRepository $productRepository;
 
     /**
-     * @var StockFacade
+     * @var \App\Model\Stock\StockFacade
      */
     private StockFacade $stockFacade;
 
     /**
-     * @var ProductStockDataFactory
+     * @var \App\Model\Stock\ProductStockDataFactory
      */
     private ProductStockDataFactory $productStockDataFactory;
 
     /**
-     * @param ProductStockFacade $productStockFacade
-     * @param ProductRepository $productRepository
-     * @param StockFacade $stockFacade
-     * @param ProductStockDataFactory $productStockDataFactory
+     * @param \App\Model\Stock\ProductStockFacade $productStockFacade
+     * @param \App\Model\Product\ProductRepository $productRepository
+     * @param \App\Model\Stock\StockFacade $stockFacade
+     * @param \App\Model\Stock\ProductStockDataFactory $productStockDataFactory
      */
     public function __construct(
         ProductStockFacade $productStockFacade,
@@ -69,11 +68,15 @@ class CreateProductStocksCommand extends Command
         $this->setDescription('Generate rows for each stock for each product if does not exist');
     }
 
+    /**
+     * @param \Symfony\Component\Console\Input\InputInterface $input
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
+     */
     public function execute(InputInterface $input, OutputInterface $output)
     {
         $stocks = $this->stockFacade->getAllStocks();
 
-        /** @var Product $product */
+        /** @var \App\Model\Product\Product $product */
         foreach ($this->productRepository->getAll() as $product) {
             $productCatnum = $product->getCatnum();
             $output->write(sprintf('Checking product %s stocks... ', $productCatnum));

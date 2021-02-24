@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-
 namespace App\Model\Security;
 
 use App\Model\Customer\User\CustomerUserFacade;
@@ -21,6 +20,7 @@ class CustomerLoginHandler extends BaseCustomerLoginHandler
      * @var \App\Model\Customer\User\CustomerUserFacade
      */
     private CustomerUserFacade $customerUserFacade;
+
     /**
      * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
      */
@@ -37,6 +37,7 @@ class CustomerLoginHandler extends BaseCustomerLoginHandler
         Domain $domain
     ) {
         parent::__construct($router);
+
         $this->customerUserFacade = $customerUserFacade;
         $this->domain = $domain;
     }
@@ -57,11 +58,10 @@ class CustomerLoginHandler extends BaseCustomerLoginHandler
             $this->checkFirstLogin($email, $responseData);
 
             return new JsonResponse($responseData);
-        } else {
-            $request->getSession()->set(Security::AUTHENTICATION_ERROR, $exception);
-
-            return new RedirectResponse($this->router->generate('front_login'));
         }
+        $request->getSession()->set(Security::AUTHENTICATION_ERROR, $exception);
+
+        return new RedirectResponse($this->router->generate('front_login'));
     }
 
     /**

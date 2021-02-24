@@ -11,6 +11,7 @@ use App\Model\Product\Parameter\Transfer\Akeneo\AkeneoImportProductGroupParamete
 use App\Model\Product\Parameter\Transfer\Akeneo\AkeneoImportProductParameterFacade;
 use App\Model\Product\ProductFacade;
 use DateTime;
+use Generator;
 use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade;
 
 class AkeneoImportProductFacade extends AbstractAkeneoImportTransfer
@@ -127,7 +128,7 @@ class AkeneoImportProductFacade extends AbstractAkeneoImportTransfer
     /**
      * @return \Generator
      */
-    protected function getData(): \Generator
+    protected function getData(): Generator
     {
         $lastProductsUpdatedAt = $this->setting->get(Setting::AKENEO_TRANSFER_PRODUCTS_LAST_UPDATED_DATETIME);
 
@@ -154,12 +155,14 @@ class AkeneoImportProductFacade extends AbstractAkeneoImportTransfer
             }
 
             $mainVariantSku = $this->productTransferAkeneoMapper->mapAkeneoProductDataToParentCatnum($akeneoProductData);
-            if ($mainVariantSku !== null) {
-                if (array_key_exists($mainVariantSku, $mainVariantSkuList) === false) {
-                    $mainVariantSkuList[$mainVariantSku] = [];
-                }
-                $mainVariantSkuList[$mainVariantSku][$akeneoProductData['identifier']] = $akeneoProductData['identifier'];
+            if ($mainVariantSku === null) {
+                continue;
             }
+
+            if (array_key_exists($mainVariantSku, $mainVariantSkuList) === false) {
+                $mainVariantSkuList[$mainVariantSku] = [];
+            }
+            $mainVariantSkuList[$mainVariantSku][$akeneoProductData['identifier']] = $akeneoProductData['identifier'];
         }
 
         if ($isAllParametersImported === false) {

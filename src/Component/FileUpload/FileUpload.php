@@ -6,9 +6,11 @@ namespace App\Component\FileUpload;
 
 use League\Flysystem\FileNotFoundException;
 use Shopsys\FrameworkBundle\Component\FileUpload\EntityFileUploadInterface;
-use Shopsys\FrameworkBundle\Component\FileUpload\FileForUpload;
+use Shopsys\FrameworkBundle\Component\FileUpload\Exception\MoveToEntityFailedException;
+use Shopsys\FrameworkBundle\Component\FileUpload\Exception\UploadFailedException;
 use Shopsys\FrameworkBundle\Component\FileUpload\FileUpload as BaseFileUpload;
 use Shopsys\FrameworkBundle\Component\String\TransformString;
+use Symfony\Component\Filesystem\Exception\IOException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class FileUpload extends BaseFileUpload
@@ -20,7 +22,7 @@ class FileUpload extends BaseFileUpload
     public function upload(UploadedFile $file)
     {
         if ($file->getError()) {
-            throw new \Shopsys\FrameworkBundle\Component\FileUpload\Exception\UploadFailedException($file->getErrorMessage());
+            throw new UploadFailedException($file->getErrorMessage());
         }
 
         $temporaryFilename = $this->getTemporaryFilename($file->getClientOriginalName());
@@ -36,7 +38,7 @@ class FileUpload extends BaseFileUpload
     {
         $filesForUpload = $entity->getTemporaryFilesForUpload();
         foreach ($filesForUpload as $fileForUpload) {
-            /* @var $fileForUpload FileForUpload */
+            /** @var \Shopsys\FrameworkBundle\Component\FileUpload\FileForUpload $fileForUpload */
             $sourceFilepath = TransformString::removeDriveLetterFromPath($this->getTemporaryFilepath($fileForUpload->getTemporaryFilename()));
             $originalFilename = $this->fileNamingConvention->getFilenameByNamingConvention(
                 $fileForUpload->getNameConventionType(),
@@ -56,9 +58,9 @@ class FileUpload extends BaseFileUpload
                 }
 
                 $this->mountManager->move('main://' . $sourceFilepath, 'main://' . $targetFilename);
-            } catch (\Symfony\Component\Filesystem\Exception\IOException $ex) {
+            } catch (IOException $ex) {
                 $message = 'Failed to rename file from temporary directory to entity';
-                throw new \Shopsys\FrameworkBundle\Component\FileUpload\Exception\MoveToEntityFailedException($message, $ex);
+                throw new MoveToEntityFailedException($message, $ex);
             }
         }
     }
@@ -69,7 +71,7 @@ class FileUpload extends BaseFileUpload
      */
     public function tryDeleteTemporaryFile($filename)
     {
-        if (!empty($filename)) {
+        if ($filename !== null && $filename !== '') {
             $filepath = $this->getTemporaryFilepath($filename);
             try {
                 $this->filesystem->delete($filepath);

@@ -2,13 +2,15 @@
 
 declare(strict_types=1);
 
-
 namespace App\Component\Router\Import;
 
 use Exception;
 
 class SingleImportIrresolvableStringException extends Exception
 {
+    /**
+     * @param string $string
+     */
     public function __construct(string $string)
     {
         $message = sprintf('String \'%s\' doesn\'t contain redirect information.', $string);

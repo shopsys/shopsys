@@ -6,6 +6,7 @@ namespace Tests\FrontendApiBundle\Functional\Login;
 
 use Shopsys\FrontendApiBundle\Model\Token\Exception\InvalidTokenUserMessageException;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
+use Throwable;
 
 class LoginTest extends GraphQlTestCase
 {
@@ -31,7 +32,7 @@ class LoginTest extends GraphQlTestCase
 
         try {
             $this->tokenFacade->getTokenByString($responseData['accessToken']);
-        } catch (\Throwable $throwable) {
+        } catch (Throwable $throwable) {
             $this->fail('Token is not valid');
         }
 

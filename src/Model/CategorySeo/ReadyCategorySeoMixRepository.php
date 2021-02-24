@@ -6,7 +6,6 @@ namespace App\Model\CategorySeo;
 
 use App\Model\Category\Category;
 use App\Model\CategorySeo\Exception\UnableToFindReadyCategorySeoMixException;
-use App\Model\Product\Filter\ProductFilterCacheFacade;
 use Doctrine\Common\Persistence\ObjectRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query\Expr\Join;
@@ -14,7 +13,7 @@ use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Localization\Localization;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter;
-use function GuzzleHttp\json_encode as json_encode;
+use function GuzzleHttp\json_encode;
 
 class ReadyCategorySeoMixRepository
 {
@@ -169,7 +168,7 @@ class ReadyCategorySeoMixRepository
     {
         $readySeoCategorySetup = $this->getReadySeoCategorySetupFromLocalCache($categoryId, $domainId);
 
-        return in_array($combinationJson, $readySeoCategorySetup);
+        return in_array($combinationJson, $readySeoCategorySetup, true);
     }
 
     /**

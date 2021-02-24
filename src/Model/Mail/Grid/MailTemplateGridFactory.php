@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Model\Mail\Grid;
 
-use App\Model\Order\Order;
 use Shopsys\FrameworkBundle\Component\Grid\DataSourceInterface;
 use Shopsys\FrameworkBundle\Component\Grid\Grid;
 use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSource;

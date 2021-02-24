@@ -29,7 +29,7 @@ class FlagTransferAkeneoMapper
 
     /**
      * @param array $akeneoFlagData
-     * @param null|\App\Model\Product\Flag\Flag $flag
+     * @param \App\Model\Product\Flag\Flag|null $flag
      * @return \App\Model\Product\Flag\FlagData
      */
     public function mapAkeneoFlagDataToFlagData(array $akeneoFlagData, ?Flag $flag): FlagData

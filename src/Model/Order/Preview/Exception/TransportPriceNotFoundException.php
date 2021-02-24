@@ -23,6 +23,7 @@ class TransportPriceNotFoundException extends Exception
             $transport->getId(),
             $productType->getId()
         );
+
         parent::__construct($message, 0, $previous);
     }
 }

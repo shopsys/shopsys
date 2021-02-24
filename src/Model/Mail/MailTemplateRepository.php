@@ -35,6 +35,7 @@ class MailTemplateRepository extends BaseMailTemplateRepository
         Localization $localization
     ) {
         parent::__construct($em);
+
         $this->localization = $localization;
     }
 

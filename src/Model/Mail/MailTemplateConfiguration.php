@@ -6,7 +6,6 @@ namespace App\Model\Mail;
 
 use App\Model\Customer\Mail\CustomerActivationMail;
 use App\Model\Order\Mail\OrderMail;
-use App\Model\Order\Status\OrderStatus;
 use Shopsys\FrameworkBundle\Model\Mail\MailTemplateConfiguration as BaseMailTemplateConfiguration;
 use Shopsys\FrameworkBundle\Model\Mail\MailTemplateVariables;
 use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusFacade;
@@ -19,6 +18,7 @@ class MailTemplateConfiguration extends BaseMailTemplateConfiguration
     public function __construct(OrderStatusFacade $orderStatusFacade)
     {
         parent::__construct($orderStatusFacade);
+
         $this->registerExtendedOrderStatusMailTemplates();
         $this->registerCustomerActivationMailTemplate();
     }
@@ -72,7 +72,7 @@ class MailTemplateConfiguration extends BaseMailTemplateConfiguration
             ->addVariable(OrderMail::VARIABLE_TRANSPORT_INSTRUCTIONS, t('Shipping instructions'), MailTemplateVariables::CONTEXT_BODY)
             ->addVariable(OrderMail::VARIABLE_PAYMENT_INSTRUCTIONS, t('Payment instructions'), MailTemplateVariables::CONTEXT_BODY);
 
-        /** @var OrderStatus[] $allOrderStatuses */
+        /** @var \App\Model\Order\Status\OrderStatus[] $allOrderStatuses */
         $allOrderStatuses = $this->orderStatusFacade->getAll();
         foreach ($allOrderStatuses as $orderStatus) {
             $this->addMailTemplateVariables(

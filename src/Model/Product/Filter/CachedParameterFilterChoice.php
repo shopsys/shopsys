@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-
 namespace App\Model\Product\Filter;
 
 use App\Model\Product\Parameter\CachedParameter;
@@ -21,7 +20,6 @@ class CachedParameterFilterChoice extends BaseParameterFilterChoice
     {
         parent::__construct($parameter, $values);
 
-        /** @var Parameter $parameter */
         $this->setParameter($parameter);
         $this->setParameterValues($values);
     }

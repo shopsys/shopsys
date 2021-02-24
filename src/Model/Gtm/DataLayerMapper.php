@@ -261,7 +261,7 @@ class DataLayerMapper
             $dataLayerProduct = new DataLayerProduct();
             $this->mapListedProductViewToDataLayerProduct($listedProductView, $dataLayerProduct, $index++, $list);
 
-            if (!is_null($position)) {
+            if ($position !== null) {
                 $dataLayerProduct->setPosition($position);
             }
 

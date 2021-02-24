@@ -22,14 +22,12 @@ class GoPayTransaction
 
     /**
      * @var string|null
-     *
      * @ORM\Column(type="string", length=30, nullable=true)
      */
     private $goPayStatus;
 
     /**
      * @var \App\Model\Order\Order
-     *
      * @ORM\ManyToOne(targetEntity="App\Model\Order\Order", inversedBy="goPayTransactions")
      * @ORM\JoinColumn(name="order_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
      */
