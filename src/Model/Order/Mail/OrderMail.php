@@ -66,7 +66,7 @@ class OrderMail extends BaseOrderMail
      */
     protected function getBillingAddressHtmlTable(Order $order)
     {
-        return $this->twig->render('Mail/Order/billingAddress.html.twig', [
+        return $this->twig->render('Front/Mail/Order/billingAddress.html.twig', [
             'order' => $order,
             'orderLocale' => $this->getDomainLocaleByOrder($order),
             'domain' => $this->domain,

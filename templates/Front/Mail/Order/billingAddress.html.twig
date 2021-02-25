@@ -5,9 +5,6 @@
         <th>{% trans into orderLocale %}Company{% endtrans %}</th>
         <th>{% trans into orderLocale %}Company number{% endtrans %}</th>
         <th>{% trans into orderLocale %}Vat number{% endtrans %}</th>
-        {% if domain.id == 2 %}
-            <th>{% trans into orderLocale %}Tax number{% endtrans %}</th>
-        {% endif %}
         <th>{% trans into orderLocale %}Street{% endtrans %}</th>
         <th>{% trans into orderLocale %}City{% endtrans %}</th>
         <th>{% trans into orderLocale %}Postcode{% endtrans %}</th>
@@ -17,10 +14,7 @@
         <td>{{ order.lastName }}</td>
         <td>{{ order.companyName }}</td>
         <td>{{ order.companyNumber }}</td>
-        <td>{{ order.companyVatNumber }}</td>
-        {% if domain.id == 2 %}
-            <td>{{ order.companyTaxNumber }}</td>
-        {% endif %}
+        <td>{{ order.companyTaxNumber }}</td>
         <td>{{ order.street }}</td>
         <td>{{ order.city }}</td>
         <td>{{ order.postcode }}</td>
