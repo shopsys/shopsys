@@ -57,3 +57,17 @@ There you can find links to upgrade notes for other versions too.
 - unify logo rendering on homepage and subpages ([#2048](https://github.com/shopsys/shopsys/pull/2048))
     - on homepage is no longer H1 element, consider adding it in your custom design
     - see #project-base-diff to update your project
+
+- replace deprecated functionality ([#2233](https://github.com/shopsys/shopsys/pull/2233))
+    - replace method by throwing specific exception
+        - `Shopsys\FrameworkBundle\Component\Elasticsearch\Exception\ElasticsearchIndexException::indexAlreadyExists()`
+            - you should throw `Shopsys\FrameworkBundle\Component\Elasticsearch\Exception\ElasticsearchIndexAlreadyExistsException` directly
+    - replace usage of console command and phing targets
+        - usage of command `shopsys:elasticsearch:indexes-create` must be replaced by `shopsys:elasticsearch:indexes-migrate`
+        - usage of phing target `elasticsearch-index-create` must be replaced by `elasticsearch-index-migrate`
+        - usage of phing target `test-elasticsearch-index-create` must be replaced by `test-elasticsearch-index-migrate`
+    - replace using of deprecated method
+        - calling the method `Shopsys\FrameworkBundle\Component\Elasticsearch\IndexFacade::create()` should be replaced by `Shopsys\FrameworkBundle\Component\Elasticsearch\IndexFacade::migrate()`
+            - method will change its visibility from `public` to `protected` 
+    - avoid using class `Shopsys\FrameworkBundle\Command\Elasticsearch\ElasticsearchIndexesCreateCommand`
+        - class was deprecated and will me removed in next major version

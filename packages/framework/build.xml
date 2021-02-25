@@ -532,7 +532,7 @@
         </exec>
     </target>
 
-    <target name="elasticsearch-export" description="Exports indexes data into elasticsearch.">
+    <target name="elasticsearch-export" description="Exports indexes data into elasticsearch. Creates or migrates elasticsearch structure when necessary.">
         <property name="elasticsearch.index" value=""/>
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
             <arg value="${path.bin-console}"/>
@@ -551,6 +551,7 @@
     </target>
 
     <target name="elasticsearch-index-create" description="Creates indexes into elasticsearch." hidden="true">
+        <echo level="warning" message="Phing target elasticsearch-index-create is deprecated and will be removed in next major version. Use elasticsearch-index-migrate instead"/>
         <property name="elasticsearch.index" value=""/>
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
             <arg value="${path.bin-console}"/>
@@ -577,7 +578,7 @@
         </exec>
     </target>
 
-    <target name="elasticsearch-index-recreate" depends="production-protection, elasticsearch-index-delete, elasticsearch-index-create" description="Recreates indexes into elasticsearch (deletes existing indexes and creates new one)"/>
+    <target name="elasticsearch-index-recreate" depends="production-protection, elasticsearch-index-delete, elasticsearch-index-migrate" description="Recreates indexes into elasticsearch (deletes existing indexes and creates new one)"/>
 
     <target name="environment-change" depends="production-protection" description="Change application environment and install composer dev-dependencies when development environment is selected.">
         <input propertyName="change.environment" validArgs="dev, prod, test, acc" defaultValue="prod" message="Select environment you want to change to"/>
@@ -1014,7 +1015,7 @@
         </exec>
     </target>
 
-    <target name="test-elasticsearch-export" description="Exports indexes data into elasticsearch for test environment.">
+    <target name="test-elasticsearch-export" description="Exports indexes data into elasticsearch for test environment. Creates or migrates elasticsearch structure when necessary.">
         <property name="elasticsearch.index" value=""/>
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
             <arg value="${path.bin-console}"/>
@@ -1025,6 +1026,7 @@
     </target>
 
     <target name="test-elasticsearch-index-create" description="Creates indexes into elasticsearch for test environment." hidden="true">
+        <echo level="warning" message="Phing target test-elasticsearch-index-create is deprecated and will be removed in next major version. Use test-elasticsearch-index-migrate instead"/>
         <property name="elasticsearch.index" value=""/>
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
             <arg value="${path.bin-console}"/>
@@ -1044,7 +1046,17 @@
         </exec>
     </target>
 
-    <target name="test-elasticsearch-index-recreate" depends="production-protection,test-elasticsearch-index-delete,test-elasticsearch-index-create" description="Recreates structure for searching via elasticsearch in test environment (deletes existing structure and creates new one)"/>
+    <target name="test-elasticsearch-index-migrate" description="Creates new indexes, reindex them from old one, deletes old indexes and add alias to the new one for test environment.">
+        <property name="elasticsearch.index" value=""/>
+        <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
+            <arg value="${path.bin-console}"/>
+            <arg value="--env=test"/>
+            <arg value="shopsys:elasticsearch:indexes-migrate"/>
+            <arg value="${elasticsearch.index}"/>
+        </exec>
+    </target>
+
+    <target name="test-elasticsearch-index-recreate" depends="production-protection,test-elasticsearch-index-delete,test-elasticsearch-index-migrate" description="Recreates structure for searching via elasticsearch in test environment (deletes existing structure and creates new one)"/>
 
     <target name="test-friendly-urls-generate" depends="production-protection" description="Generates friendly urls for supported entities when missing in test DB." hidden="true">
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">

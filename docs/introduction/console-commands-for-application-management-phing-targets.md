@@ -155,11 +155,13 @@ Drops all data in the test database and creates a new one with demo data and exp
     All database related targets `db-*` have their `test-db-*` variant for the test database.
 
 #### elasticsearch-index-recreate
+
 Recreates Elasticsearch indexes structure.
 Consists of two sub-tasks that can be run independently:
 
 * `elasticsearch-index-delete` - deletes existing indexes structure
-* `elasticsearch-index-create` - creates new indexes structure by json definitions stored in the resources directory `src/Resources/definition`
+* `elasticsearch-index-create` - (version v9.1.0 and lower) creates new indexes structure by json definitions stored in the resources directory `src/Resources/definition`
+* `elasticsearch-index-migrate` - (version v9.1.1 and higher) creates and migrate (when necessary) new indexes structure by json definitions stored in the resources directory `src/Resources/definition`
 
 #### elasticsearch-index-migrate
 Migrates Elasticsearch indexes if there is change between currently used structure and the one in `*.json`.
@@ -180,6 +182,9 @@ Especially useful when you need to change the structure and don't need to have f
 
 #### elasticsearch-export
 Exports all data for index to Elasticsearch.
+
+!!! note
+From v9.1.1 and higher the export command also run migration for Elasticsearch structure when necessary
 
 #### elasticsearch-export-changed
 Exports only changed data for index to Elasticsearch.
