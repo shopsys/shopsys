@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\GoPay;
 
+use App\Model\GoPay\Exception\GoPayNotConfiguredException;
 use App\Model\GoPay\Exception\GoPayPaymentDownloadException;
 use GoPay\Definition\RequestMethods;
 use GoPay\GoPay;
@@ -56,7 +57,7 @@ class GoPayClient
     private function sendApiRequest(string $urlPath, string $contentType, string $method, ?array $data = null): Response
     {
         if ($this->config['goid'] === null) {
-            throw new \App\Model\GoPay\Exception\GoPayNotConfiguredException();
+            throw new GoPayNotConfiguredException();
         }
 
         $token = $this->oAuth->authorize();
@@ -81,12 +82,12 @@ class GoPayClient
     public function sendPaymentToGoPay(array $rawPayment): Response
     {
         $payment = $rawPayment + [
-                'target' => [
-                    'type' => 'ACCOUNT',
-                    'goid' => (string)$this->goPay->getConfig('goid'),
-                ],
-                'lang' => $this->goPay->getConfig('language'),
-            ];
+            'target' => [
+                'type' => 'ACCOUNT',
+                'goid' => (string)$this->goPay->getConfig('goid'),
+            ],
+            'lang' => $this->goPay->getConfig('language'),
+        ];
 
         return $this->sendApiRequest(
             'payments/payment',

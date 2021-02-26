@@ -17,7 +17,6 @@ class HorizontalMenuItemCategory implements OrderableEntityInterface
 {
     /**
      * @var \App\Model\HorizontalMenu\HorizontalMenuItem
-     *
      * @ORM\Id
      * @ORM\ManyToOne(targetEntity="App\Model\HorizontalMenu\HorizontalMenuItem")
      * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
@@ -26,7 +25,6 @@ class HorizontalMenuItemCategory implements OrderableEntityInterface
 
     /**
      * @var int
-     *
      * @ORM\Id
      * @ORM\Column(type="integer")
      */
@@ -34,7 +32,6 @@ class HorizontalMenuItemCategory implements OrderableEntityInterface
 
     /**
      * @var int
-     *
      * @Gedmo\SortablePosition
      * @ORM\Column(type="integer")
      */
@@ -42,7 +39,6 @@ class HorizontalMenuItemCategory implements OrderableEntityInterface
 
     /**
      * @var \App\Model\Category\Category
-     *
      * @ORM\Id
      * @ORM\ManyToOne(targetEntity="App\Model\Category\Category")
      * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")

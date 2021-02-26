@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller\Admin;
 
+use RuntimeException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
 use Shopsys\FrameworkBundle\Controller\Admin\FlagController as BaseFlagController;
@@ -22,6 +23,6 @@ class FlagController extends BaseFlagController
      */
     public function deleteAction($id)
     {
-        throw new \RuntimeException('deleteAction() should never be called.');
+        throw new RuntimeException('deleteAction() should never be called.');
     }
 }

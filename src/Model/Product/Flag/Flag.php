@@ -10,7 +10,6 @@ use Shopsys\FrameworkBundle\Model\Product\Flag\FlagData;
 
 /**
  * @property \App\Model\Product\Flag\FlagData $flagData
- *
  * @ORM\Table(name="flags")
  * @ORM\Entity
  * @method setTranslations(\App\Model\Product\Flag\FlagData $flagData)
@@ -29,28 +28,24 @@ class Flag extends BaseFlag
 
     /**
      * @var bool
-     *
-     * @ORM\Column(type="boolean", options={"default"=false})
+     * @ORM\Column(type="boolean")
      */
     protected $sale;
 
     /**
      * @var string
-     *
      * @ORM\Column(type="string", length=255)
      */
     private $akeneoCode;
 
     /**
      * @var string|null
-     *
      * @ORM\Column(type="string", length=8, nullable=true)
      */
     private $noticeLowPrice;
 
     /**
      * @var string|null
-     *
      * @ORM\Column(type="string", length=8, nullable=true)
      */
     private $noticeHighPrice;
@@ -97,7 +92,7 @@ class Flag extends BaseFlag
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getNoticeLowPrice(): ?string
     {
@@ -105,7 +100,7 @@ class Flag extends BaseFlag
     }
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getNoticeHighPrice(): ?string
     {

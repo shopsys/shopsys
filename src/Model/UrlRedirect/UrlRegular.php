@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-
 namespace App\Model\UrlRedirect;
 
 use Doctrine\ORM\Mapping as ORM;

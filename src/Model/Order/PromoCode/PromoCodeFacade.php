@@ -100,6 +100,7 @@ class PromoCodeFacade extends BasePromoCodeFacade
         PromoCodeLimitFactory $promoCodeLimitFactory
     ) {
         parent::__construct($em, $promoCodeRepository, $promoCodeFactory);
+
         $this->domain = $domain;
         $this->dateTimeHelper = $dateTimeHelper;
         $this->promoCodeProductRepository = $promoCodeProductRepository;
@@ -177,30 +178,34 @@ class PromoCodeFacade extends BasePromoCodeFacade
             $promoCodeDataForCreate = clone $promoCodeData;
             $code = $promoCodeDataForCreate->prefix . strtoupper($this->hashGenerator->generateHashWithoutConfusingCharacters(PromoCode::MASS_GENERATED_CODE_LENGTH));
 
-            if (!in_array($code, $existingPromoCodeCodes, true)) {
-                $promoCodeDataForCreate->code = $code;
-
-                $promoCodeDataForCreate->limits = [];
-                foreach ($promoCodeData->limits as $promoCodeLimit) {
-                    $promoCodeDataForCreate->limits[] = $this->promoCodeLimitFactory->create(
-                        $promoCodeLimit->getFromPriceWithVat(),
-                        $promoCodeLimit->getDiscount()
-                    );
-                }
-
-                $promoCode = $this->create($promoCodeDataForCreate);
-                $this->em->persist($promoCode);
-
-                $existingPromoCodeCodes[] = $code;
-                $generatedPromoCodeCount++;
-
-                if ($generatedPromoCodeCount % self::MASS_CREATE_BATCH_SIZE === 0) {
-                    $this->em->flush();
-                    $this->em->clear(PromoCodeCategory::class);
-                    $this->em->clear(PromoCodeLimit::class);
-                    $this->em->clear(PromoCode::class);
-                }
+            if (in_array($code, $existingPromoCodeCodes, true)) {
+                continue;
             }
+
+            $promoCodeDataForCreate->code = $code;
+
+            $promoCodeDataForCreate->limits = [];
+            foreach ($promoCodeData->limits as $promoCodeLimit) {
+                $promoCodeDataForCreate->limits[] = $this->promoCodeLimitFactory->create(
+                    $promoCodeLimit->getFromPriceWithVat(),
+                    $promoCodeLimit->getDiscount()
+                );
+            }
+
+            $promoCode = $this->create($promoCodeDataForCreate);
+            $this->em->persist($promoCode);
+
+            $existingPromoCodeCodes[] = $code;
+            $generatedPromoCodeCount++;
+
+            if ($generatedPromoCodeCount % self::MASS_CREATE_BATCH_SIZE !== 0) {
+                continue;
+            }
+
+            $this->em->flush();
+            $this->em->clear(PromoCodeCategory::class);
+            $this->em->clear(PromoCodeLimit::class);
+            $this->em->clear(PromoCode::class);
         }
 
         $this->em->flush();

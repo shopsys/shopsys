@@ -15,7 +15,7 @@ class AkeneoAttributeHelper
      */
     public static function mapLocalizedDataString(array $attributeData, ?array $akeneoData): array
     {
-        foreach ($attributeData as $key => $value) {
+        foreach (array_keys($attributeData) as $key) {
             $attributeData[$key] = null;
         }
 

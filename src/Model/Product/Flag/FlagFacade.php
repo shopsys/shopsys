@@ -19,7 +19,7 @@ class FlagFacade extends BaseFlagFacade
 {
     /**
      * @param string $akeneoCode
-     * @return null|\App\Model\Product\Flag\Flag
+     * @return \App\Model\Product\Flag\Flag|null
      */
     public function findByAkeneoCode(string $akeneoCode): ?Flag
     {

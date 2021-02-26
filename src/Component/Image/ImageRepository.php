@@ -24,7 +24,7 @@ class ImageRepository extends BaseImageRepository
      */
     public function findImageByEntityForAkeneoImageType(string $entityName, int $entityId, string $akeneoImageType): ?Image
     {
-        $image = $this->getImageRepository()->findOneBy(
+        return $this->getImageRepository()->findOneBy(
             [
                 'entityName' => $entityName,
                 'entityId' => $entityId,
@@ -35,8 +35,6 @@ class ImageRepository extends BaseImageRepository
                 'id' => 'asc',
             ]
         );
-
-        return $image;
     }
 
     /**

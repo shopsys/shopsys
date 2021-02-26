@@ -13,7 +13,6 @@ class ProductOneToManyBidirectionalEntity
 {
     /**
      * @var int
-     *
      * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
@@ -22,7 +21,6 @@ class ProductOneToManyBidirectionalEntity
 
     /**
      * @var \Tests\App\Functional\EntityExtension\Model\ExtendedProduct
-     *
      * @ORM\ManyToOne(targetEntity="ExtendedProduct", inversedBy="oneToManyBidirectionalEntity")
      * @ORM\JoinColumn(nullable=false, name="product_id", referencedColumnName="id")
      */
@@ -30,7 +28,6 @@ class ProductOneToManyBidirectionalEntity
 
     /**
      * @var string
-     *
      * @ORM\Column(type="string")
      */
     protected $name;

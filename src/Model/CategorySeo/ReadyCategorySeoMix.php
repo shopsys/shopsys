@@ -23,7 +23,6 @@ class ReadyCategorySeoMix
 {
     /**
      * @var int
-     *
      * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
@@ -32,21 +31,18 @@ class ReadyCategorySeoMix
 
     /**
      * @var int
-     *
      * @ORM\Column(type="integer")
      */
     private $domainId;
 
     /**
      * @var string
-     *
      * @ORM\Column(type="text")
      */
     private $choseCategorySeoMixCombinationJson;
 
     /**
      * @var \App\Model\Category\Category
-     *
      * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Category\Category")
      * @ORM\JoinColumn(nullable=false, name="category_id", referencedColumnName="id")
      */
@@ -54,7 +50,6 @@ class ReadyCategorySeoMix
 
     /**
      * @var \App\Model\Product\Flag\Flag|null
-     *
      * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Product\Flag\Flag")
      * @ORM\JoinColumn(nullable=true, name="flag_id", referencedColumnName="id", onDelete="CASCADE")
      */
@@ -62,56 +57,48 @@ class ReadyCategorySeoMix
 
     /**
      * @var string
-     *
      * @ORM\Column(type="string", length=255, nullable=false)
      */
     private $ordering;
 
     /**
      * @var \App\Model\CategorySeo\ReadyCategorySeoMixParameterParameterValue[]|\Doctrine\Common\Collections\Collection
-     *
      * @ORM\OneToMany(targetEntity="App\Model\CategorySeo\ReadyCategorySeoMixParameterParameterValue", mappedBy="readyCategorySeoMix", cascade={"persist" ,"remove"}, fetch="EXTRA_LAZY")
      */
     private $readyCategorySeoMixParameterParameterValues;
 
     /**
      * @var string
-     *
      * @ORM\Column(type="text", nullable=false)
      */
     private $h1;
 
     /**
      * @var string|null
-     *
      * @ORM\Column(type="text", nullable=true)
      */
     private $shortDescription;
 
     /**
      * @var string|null
-     *
      * @ORM\Column(type="text", nullable=true)
      */
     private $description;
 
     /**
      * @var string|null
-     *
      * @ORM\Column(type="text", nullable=true)
      */
     private $title;
 
     /**
      * @var string|null
-     *
      * @ORM\Column(type="text", nullable=true)
      */
     private $metaDescription;
 
     /**
      * @var bool
-     *
      * @ORM\Column(type="boolean")
      */
     private $showInCategory;

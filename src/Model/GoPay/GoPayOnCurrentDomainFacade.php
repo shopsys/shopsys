@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\GoPay;
 
+use App\Model\GoPay\Exception\GoPaySendPaymentException;
 use App\Model\Order\Order;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 
@@ -58,7 +59,7 @@ class GoPayOnCurrentDomainFacade
             ];
         }
 
-        throw new \App\Model\GoPay\Exception\GoPaySendPaymentException();
+        throw new GoPaySendPaymentException();
     }
 
     /**

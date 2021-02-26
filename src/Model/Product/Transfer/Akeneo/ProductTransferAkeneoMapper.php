@@ -171,7 +171,7 @@ class ProductTransferAkeneoMapper
             $productData = $this->productDataFactory->createFromProduct($product);
         }
 
-        $productData->hidden = ($akeneoProductData['enabled'] ?? true) ? false : true;
+        $productData->hidden = $akeneoProductData['enabled'] ?? true ? false : true;
         $productData->domainHidden = AkeneoProductHelper::mapDomainDataString($productData->domainHidden, $akeneoProductData['values']['domain_hidden'] ?? null);
 
         $productData->ean = AkeneoProductHelper::mapDataString($akeneoProductData['values']['ean'] ?? null);
@@ -395,15 +395,17 @@ class ProductTransferAkeneoMapper
             $height = $akeneoProductData['values']['package_height_' . $i][0]['data']['amount'] ?? null;
             $weight = $akeneoProductData['values']['package_weight_' . $i][0]['data']['amount'] ?? null;
 
-            if ($position !== null) {
-                $productPackageData = $this->productPackageDataFactory->create();
-                $productPackageData->position = $position;
-                $productPackageData->length = AkeneoProductHelper::convertStringToType($length, AkeneoProductHelper::TYPE_INT);
-                $productPackageData->height = AkeneoProductHelper::convertStringToType($height, AkeneoProductHelper::TYPE_INT);
-                $productPackageData->width = AkeneoProductHelper::convertStringToType($width, AkeneoProductHelper::TYPE_INT);
-                $productPackageData->weight = AkeneoProductHelper::convertStringToType($weight, AkeneoProductHelper::TYPE_FLOAT);
-                $productPackageDataList[$position] = $productPackageData;
+            if ($position === null) {
+                continue;
             }
+
+            $productPackageData = $this->productPackageDataFactory->create();
+            $productPackageData->position = $position;
+            $productPackageData->length = AkeneoProductHelper::convertStringToType($length, AkeneoProductHelper::TYPE_INT);
+            $productPackageData->height = AkeneoProductHelper::convertStringToType($height, AkeneoProductHelper::TYPE_INT);
+            $productPackageData->width = AkeneoProductHelper::convertStringToType($width, AkeneoProductHelper::TYPE_INT);
+            $productPackageData->weight = AkeneoProductHelper::convertStringToType($weight, AkeneoProductHelper::TYPE_FLOAT);
+            $productPackageDataList[$position] = $productPackageData;
         }
 
         return $productPackageDataList;

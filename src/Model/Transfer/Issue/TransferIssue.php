@@ -27,7 +27,6 @@ class TransferIssue
 
     /**
      * @var int
-     *
      * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
@@ -36,7 +35,6 @@ class TransferIssue
 
     /**
      * @var \App\Model\Transfer\Transfer
-     *
      * @ORM\ManyToOne(targetEntity="App\Model\Transfer\Transfer")
      * @ORM\JoinColumn(name="transfer_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
      */
@@ -44,28 +42,24 @@ class TransferIssue
 
     /**
      * @var string
-     *
      * @ORM\Column(type="string", length=10, nullable=false)
      */
     private $severity;
 
     /**
      * @var string
-     *
      * @ORM\Column(type="text", nullable=false)
      */
     private $message;
 
     /**
      * @var \DateTime
-     *
      * @ORM\Column(type="datetime", nullable=false)
      */
     private $createdAt;
 
     /**
      * @var \DateTime|null
-     *
      * @ORM\Column(name="deleted_at", type="datetime", nullable=true)
      */
     private $deletedAt;
@@ -117,7 +111,7 @@ class TransferIssue
     /**
      * @return \DateTime
      */
-    public function getCreatedAt(): \DateTime
+    public function getCreatedAt(): DateTime
     {
         return $this->createdAt;
     }
@@ -125,7 +119,7 @@ class TransferIssue
     /**
      * @return \DateTime|null
      */
-    public function getDeletedAt(): ?\DateTime
+    public function getDeletedAt(): ?DateTime
     {
         return $this->deletedAt;
     }

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Model\Product;
 
-use App\Model\Product\Type\ProductType;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Shopsys\FrameworkBundle\Component\Money\Money;
@@ -17,7 +16,6 @@ use Shopsys\FrameworkBundle\Model\Product\ProductDomain as BaseProductDomain;
  *         @ORM\UniqueConstraint(name="product_domain", columns={"product_id", "domain_id"})
  *     }
  * )
- *
  * @ORM\Entity
  * @property \App\Model\Product\Product $product
  */
@@ -27,77 +25,66 @@ class ProductDomain extends BaseProductDomain
 
     /**
      * @var string|null
-     *
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     protected $shortDescriptionUsp1;
 
     /**
      * @var string|null
-     *
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     protected $shortDescriptionUsp2;
 
     /**
      * @var string|null
-     *
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     protected $shortDescriptionUsp3;
 
     /**
      * @var string|null
-     *
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     protected $shortDescriptionUsp4;
 
     /**
      * @var string|null
-     *
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     protected $shortDescriptionUsp5;
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\Money\Money|null
-     *
      * @ORM\Column(type="money", precision=20, scale=6, nullable=true)
      */
     protected $lowPriceWithVat;
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\Money\Money|null
-     *
      * @ORM\Column(type="money", precision=20, scale=6, nullable=true)
      */
     protected $highPriceWithVat;
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\Money\Money
-     *
      * @ORM\Column(type="money", precision=20, scale=6, nullable=false)
      */
     protected $sellingPriceWithVat;
 
     /**
      * @var string|null
-     *
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     protected $assemblyInstructionCode;
 
     /**
      * @var string|null
-     *
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     protected $productTypePlanCode;
 
     /**
      * @var \App\Model\Product\Flag\Flag[]|\Doctrine\Common\Collections\ArrayCollection
-     *
      * @ORM\ManyToMany(targetEntity="App\Model\Product\Flag\Flag")
      * @ORM\JoinTable(name="product_domain_flags")
      */
@@ -159,7 +146,6 @@ class ProductDomain extends BaseProductDomain
 
     /**
      * @var int
-     *
      * @ORM\Column(type="integer")
      */
     protected $domainOrderingPriority;

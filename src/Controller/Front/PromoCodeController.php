@@ -8,7 +8,6 @@ use App\Model\Order\PromoCode\CurrentPromoCodeFacade;
 use App\Model\Order\PromoCode\Exception\NoLongerValidPromoCodeDateTimeException;
 use App\Model\Order\PromoCode\Exception\NotYetValidPromoCodeDateTimeException;
 use App\Model\Order\PromoCode\Exception\PromoCodeWithoutRelationWithAnyProductFromCurrentCartException;
-use App\Model\Order\PromoCode\PromoCodeFacade;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\Exception\InvalidPromoCodeException;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -23,20 +22,11 @@ class PromoCodeController extends FrontBaseController
     private $currentPromoCodeFacade;
 
     /**
-     * @var \App\Model\Order\PromoCode\PromoCodeFacade
-     */
-    private $promoCodeFacade;
-
-    /**
      * @param \App\Model\Order\PromoCode\CurrentPromoCodeFacade $currentPromoCodeFacade
-     * @param \App\Model\Order\PromoCode\PromoCodeFacade $promoCodeFacade
      */
-    public function __construct(
-        CurrentPromoCodeFacade $currentPromoCodeFacade,
-        PromoCodeFacade $promoCodeFacade
-    ) {
+    public function __construct(CurrentPromoCodeFacade $currentPromoCodeFacade)
+    {
         $this->currentPromoCodeFacade = $currentPromoCodeFacade;
-        $this->promoCodeFacade = $promoCodeFacade;
     }
 
     public function indexAction()

@@ -61,9 +61,9 @@ class NotificationBarFormType extends AbstractType
                 'constraints' => [
                     new NotBlank(['message' => 'Please enter flag color']),
                     new Length([
-                       'max' => 7,
-                       'maxMessage' => 'Flag color in must be in valid hexadecimal code e.g. #3333ff',
-                   ]),
+                        'max' => 7,
+                        'maxMessage' => 'Flag color in must be in valid hexadecimal code e.g. #3333ff',
+                    ]),
                 ],
             ])
             ->add('validityFrom', DatePickerType::class, [
@@ -122,7 +122,7 @@ class NotificationBarFormType extends AbstractType
                 'data_class' => NotificationBarData::class,
                 'attr' => ['novalidate' => 'novalidate'],
                 'constraints' => [
-                  new Callback([$this, 'checkDateValidity']),
+                    new Callback([$this, 'checkDateValidity']),
                 ],
             ]);
     }

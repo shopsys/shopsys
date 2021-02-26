@@ -8,7 +8,6 @@ use App\Component\Locale\LocaleHelper;
 use App\Model\Category\CategoryFacade;
 use App\Model\HorizontalMenu\HorizontalMenuItem;
 use App\Model\HorizontalMenu\HorizontalMenuItemData;
-use Shopsys\FormTypesBundle\YesNoType;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Form\DomainType;
 use Shopsys\FrameworkBundle\Form\SortableValuesType;
@@ -64,7 +63,6 @@ class HorizontalMenuItemFormType extends AbstractType
 
     /**
      * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
-     *
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      */
@@ -102,9 +100,9 @@ class HorizontalMenuItemFormType extends AbstractType
             ->setRequired('horizontalMenuItem')
             ->setAllowedTypes('horizontalMenuItem', [HorizontalMenuItem::class, 'null'])
             ->setDefaults([
-            'data_class' => HorizontalMenuItemData::class,
-            'attr' => ['novalidate' => 'novalidate'],
-        ]);
+                'data_class' => HorizontalMenuItemData::class,
+                'attr' => ['novalidate' => 'novalidate'],
+            ]);
     }
 
     /**

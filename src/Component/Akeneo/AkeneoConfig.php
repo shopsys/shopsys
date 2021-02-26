@@ -46,13 +46,13 @@ class AkeneoConfig
         $optionsResolver = new OptionsResolver();
 
         $optionsResolver->setRequired([
-              'enabled',
-              'base_uri',
-              'client_id',
-              'secret',
-              'user',
-              'password',
-                                          ]);
+            'enabled',
+            'base_uri',
+            'client_id',
+            'secret',
+            'user',
+            'password',
+        ]);
 
         $optionsResolver->setAllowedTypes(
             'enabled',

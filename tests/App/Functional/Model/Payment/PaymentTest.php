@@ -5,9 +5,7 @@ declare(strict_types=1);
 namespace Tests\App\Functional\Model\Payment;
 
 use App\Model\Payment\Payment;
-use App\Model\Payment\PaymentData;
 use App\Model\Transport\Transport;
-use App\Model\Transport\TransportData;
 use Tests\App\Test\TransactionFunctionalTestCase;
 use Zalas\Injector\PHPUnit\Symfony\TestCase\SymfonyTestContainer;
 
@@ -35,14 +33,14 @@ class PaymentTest extends TransactionFunctionalTestCase
 
     public function testRemoveTransportFromPaymentAfterDelete()
     {
-        /** @var TransportData $transportData */
+        /** @var \App\Model\Transport\TransportData $transportData */
         $transportData = $this->transportDataFactory->create();
         $transportData->name['cs'] = 'name';
         $transportData->deliveryCode = 'A';
         $transportData->typeOfDeliveryKey = 1;
         $transport = new Transport($transportData);
 
-        /** @var PaymentData $paymentData */
+        /** @var \App\Model\Payment\PaymentData $paymentData */
         $paymentData = $this->paymentDataFactory->create();
         $paymentData->name['cs'] = 'name';
 

@@ -12,7 +12,6 @@ use Shopsys\FrameworkBundle\Model\Localization\AbstractTranslatableEntity;
 /**
  * @ORM\Table(name="parameter_groups")
  * @ORM\Entity
- *
  * @method translation($locale = null): ParameterGroupTranslation
  */
 class ParameterGroup extends AbstractTranslatableEntity
@@ -21,7 +20,6 @@ class ParameterGroup extends AbstractTranslatableEntity
 
     /**
      * @var int
-     *
      * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
@@ -30,21 +28,18 @@ class ParameterGroup extends AbstractTranslatableEntity
 
     /**
      * @var \App\Model\Product\Parameter\ParameterGroupTranslation[]|\Doctrine\Common\Collections\Collection
-     *
      * @Prezent\Translations(targetEntity="App\Model\Product\Parameter\ParameterGroupTranslation")
      */
     protected $translations;
 
     /**
      * @var string
-     *
      * @ORM\Column(type="string", length=100, unique=true)
      */
     protected $akeneoCode;
 
     /**
      * @var int
-     *
      * @ORM\Column(type="integer")
      */
     protected $orderingPriority;

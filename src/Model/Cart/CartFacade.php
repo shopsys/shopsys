@@ -14,6 +14,7 @@ use Shopsys\FrameworkBundle\Component\FlashMessage\FlashMessage;
 use Shopsys\FrameworkBundle\Model\Cart\CartFacade as BaseCartFacade;
 use Shopsys\FrameworkBundle\Model\Cart\CartFactory;
 use Shopsys\FrameworkBundle\Model\Cart\CartRepository;
+use Shopsys\FrameworkBundle\Model\Cart\Exception\InvalidQuantityException;
 use Shopsys\FrameworkBundle\Model\Cart\Item\CartItemFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Cart\Watcher\CartWatcherFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
@@ -106,6 +107,7 @@ class CartFacade extends BaseCartFacade
             $cartRepository,
             $cartWatcherFacade
         );
+
         $this->productAvailabilityFacade = $productAvailabilityFacade;
         $this->flashBag = $flashBag;
         $this->twigEnvironment = $twigEnvironment;
@@ -133,7 +135,7 @@ class CartFacade extends BaseCartFacade
         $overLimitQuantity = $this->categoryFacade->getOverLimitQuantity($product, $this->domain->getId());
 
         if (!is_int($quantity) || $quantity <= 0) {
-            throw new \Shopsys\FrameworkBundle\Model\Cart\Exception\InvalidQuantityException($quantity);
+            throw new InvalidQuantityException($quantity);
         }
 
         foreach ($cart->getItems() as $item) {
@@ -241,11 +243,7 @@ class CartFacade extends BaseCartFacade
             return false;
         }
 
-        if ($quantity >= $quantityLimit) {
-            return true;
-        }
-
-        return false;
+        return $quantity >= $quantityLimit;
     }
 
     /**
@@ -274,7 +272,7 @@ class CartFacade extends BaseCartFacade
     }
 
     /**
-     * @param Product $product
+     * @param \App\Model\Product\Product $product
      * @param int $quantity
      */
     public function changeQuantity(Product $product, int $quantity): void

@@ -45,6 +45,7 @@ class AddProductResult extends BaseAddProductResult
         $isQuantityOverLimit
     ) {
         parent::__construct($cartItem, $isNew, $addedQuantity);
+
         $this->notOnStockQuantity = $notOnStockQuantity;
         $this->overLimitQuantity = $overLimitQuantity;
         $this->isQuantityOverLimit = $isQuantityOverLimit;

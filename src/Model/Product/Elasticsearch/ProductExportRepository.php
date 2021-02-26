@@ -99,6 +99,7 @@ class ProductExportRepository extends BaseProductExportRepository
             $productVisibilityRepository,
             $friendlyUrlFacade
         );
+
         $this->productAvailabilityFacade = $productAvailabilityFacade;
         $this->parameterFacade = $parameterFacade;
         $this->productRepository = $productRepository;
@@ -223,9 +224,8 @@ class ProductExportRepository extends BaseProductExportRepository
             }
 
             return trim(implode(' ', array_unique($variantCatnums)));
-        } else {
-            return $product->getCatnum() ?? '';
         }
+        return $product->getCatnum() ?? '';
     }
 
     /**
@@ -242,9 +242,8 @@ class ProductExportRepository extends BaseProductExportRepository
             }
 
             return trim(implode(' ', array_unique($variantEans)));
-        } else {
-            return $product->getEan() ?? '';
         }
+        return $product->getEan() ?? '';
     }
 
     /**
@@ -261,9 +260,8 @@ class ProductExportRepository extends BaseProductExportRepository
             }
 
             return trim(implode(' ', array_unique($variantEans)));
-        } else {
-            return $product->getPartno() ?? '';
         }
+        return $product->getPartno() ?? '';
     }
 
     /**
@@ -277,15 +275,14 @@ class ProductExportRepository extends BaseProductExportRepository
             $variantNames = $product->getFullname($locale);
             foreach ($product->getVariants() as $variant) {
                 $variantFullName = $variant->getFullname($locale);
-                if (!empty($variantFullName) && strpos($variantNames, $variantFullName) === false) {
+                if ($variantFullName !== '' && strpos($variantNames, $variantFullName) === false) {
                     $variantNames .= ' ' . $variantFullName;
                 }
             }
 
             return trim($variantNames);
-        } else {
-            return $product->getFullname($locale);
         }
+        return $product->getFullname($locale);
     }
 
     /**
@@ -299,15 +296,14 @@ class ProductExportRepository extends BaseProductExportRepository
             $variantDescriptions = $product->getDescription($domainId) ?? '';
             foreach ($product->getVariants() as $variant) {
                 $variantDescription = $variant->getDescription($domainId);
-                if (!empty($variantDescription) && strpos($variantDescriptions, $variantDescription) === false) {
+                if ($variantDescription !== null && $variantDescription !== '' && strpos($variantDescriptions, $variantDescription) === false) {
                     $variantDescriptions .= ' ' . $variantDescription;
                 }
             }
 
             return trim($variantDescriptions);
-        } else {
-            return $product->getDescription($domainId) ?? '';
         }
+        return $product->getDescription($domainId) ?? '';
     }
 
     /**
@@ -321,15 +317,14 @@ class ProductExportRepository extends BaseProductExportRepository
             $variantDescriptions = $product->getShortDescription($domainId) ?? '';
             foreach ($product->getVariants() as $variant) {
                 $variantDescription = $variant->getShortDescription($domainId);
-                if (!empty($variantDescription) && strpos($variantDescriptions, $variantDescription) === false) {
+                if ($variantDescription !== null && $variantDescription !== '' && strpos($variantDescriptions, $variantDescription) === false) {
                     $variantDescriptions .= ' ' . $variantDescription;
                 }
             }
 
             return trim($variantDescriptions);
-        } else {
-            return $product->getShortDescription($domainId) ?? '';
         }
+        return $product->getShortDescription($domainId) ?? '';
     }
 
     /**

@@ -17,13 +17,13 @@ class CustomerUserUpdateFormTypeExtension extends AbstractTypeExtension
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('billingAddressData', BillingAddressFormType::class, [
-                'customerUser' => $options['customerUser'],
-                'domain_id' => $options['domain_id'],
-                'render_form_row' => false,
-                'attr' => [
-                    'class' => 'wrap-divider',
-                ],
-            ]);
+            'customerUser' => $options['customerUser'],
+            'domain_id' => $options['domain_id'],
+            'render_form_row' => false,
+            'attr' => [
+                'class' => 'wrap-divider',
+            ],
+        ]);
     }
 
     /**

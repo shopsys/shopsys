@@ -6,6 +6,7 @@ namespace App\Model\Order\Preview;
 
 use App\Model\Product\Type\ProductType;
 use App\Model\Stock\Stock;
+use RuntimeException;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreview as BaseOrderPreview;
 use Shopsys\FrameworkBundle\Model\Payment\Payment;
@@ -158,7 +159,7 @@ class OrderPreview extends BaseOrderPreview
     public function getProductType(): ProductType
     {
         if ($this->productType === null) {
-            throw new \RuntimeException('Product type is null. Please create OrderPreview with this parameter for your scenario.');
+            throw new RuntimeException('Product type is null. Please create OrderPreview with this parameter for your scenario.');
         }
 
         return $this->productType;
@@ -267,13 +268,11 @@ class OrderPreview extends BaseOrderPreview
     public function hasAnyProductCommonPrice(int $domainId): bool
     {
         foreach ($this->quantifiedProductsByIndex as $quantifiedproduct) {
-            /**
-             * @var \App\Model\Product\Product
-             */
+            /** @var \App\Model\Product\Product $product */
             $product = $quantifiedproduct->getProduct();
             $highPrice = $product->getHighPriceWithVat($domainId);
 
-            if (!is_null($highPrice)
+            if ($highPrice !== null
                 && $highPrice->isGreaterThan(Money::zero())
                 && $highPrice->isGreaterThan($product->getSellingPriceWithVat($domainId))
             ) {

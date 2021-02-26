@@ -721,7 +721,6 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
             $customerUser
         );
 
-        /** @var \App\Model\Customer\User\CustomerUser $customerUser */
         $orderData = $this->orderDataFactory->create();
         $orderData->transport = $this->getReference(TransportDataFixture::TRANSPORT_PERSONAL);
         $orderData->payment = $this->getReference(PaymentDataFixture::PAYMENT_CASH);
@@ -827,8 +826,8 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
         );
         $splitOrderPreview->setTransportAndPaymentPricesPreview($transportAndPaymentPricesPreview);
 
+        /** @var \App\Model\Order\Order $order */
         $order = $this->orderFacade->createOrderBySplitOrderPreview($orderData, $splitOrderPreview, $customerUser);
-        /* @var $order \App\Model\Order\Order */
 
         $referenceName = self::ORDER_PREFIX . $order->getId();
         $this->addReference($referenceName, $order);

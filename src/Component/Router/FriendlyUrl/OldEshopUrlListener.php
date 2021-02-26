@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-
 namespace App\Component\Router\FriendlyUrl;
 
 use App\Model\Product\ProductFacade;
@@ -32,14 +31,10 @@ class OldEshopUrlListener
     private CurrentDomainRouter $router;
 
     /**
-     * @var \App\Component\Router\FriendlyUrl\FriendlyUrlRepository
-     */
-    private FriendlyUrlRepository $friendlyUrlRepository;
-
-    /**
      * @var \App\Model\UrlRedirect\UrlRedirectFacade
      */
     private UrlRedirectFacade $urlRedirectFacade;
+
     /**
      * @var \App\Model\UrlRedirect\UrlRegularFacade
      */
@@ -49,21 +44,19 @@ class OldEshopUrlListener
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Component\Router\CurrentDomainRouter $router
      * @param \App\Model\Product\ProductFacade $productFacade
-     * @param \App\Component\Router\FriendlyUrl\FriendlyUrlRepository $friendlyUrlRepository
      * @param \App\Model\UrlRedirect\UrlRedirectFacade $urlRedirectFacade
+     * @param \App\Model\UrlRedirect\UrlRegularFacade $urlRegularFacade
      */
     public function __construct(
         Domain $domain,
         CurrentDomainRouter $router,
         ProductFacade $productFacade,
-        FriendlyUrlRepository $friendlyUrlRepository,
         UrlRedirectFacade $urlRedirectFacade,
         UrlRegularFacade $urlRegularFacade
     ) {
         $this->productFacade = $productFacade;
         $this->domain = $domain;
         $this->router = $router;
-        $this->friendlyUrlRepository = $friendlyUrlRepository;
         $this->urlRedirectFacade = $urlRedirectFacade;
         $this->urlRegularFacade = $urlRegularFacade;
     }
@@ -94,6 +87,7 @@ class OldEshopUrlListener
     /**
      * @param string $pathInfo
      * @param \Symfony\Component\HttpKernel\Event\ExceptionEvent $event
+     * @return bool
      */
     private function resolveByUrlRegular(string $pathInfo, ExceptionEvent $event): bool
     {
@@ -116,6 +110,7 @@ class OldEshopUrlListener
     /**
      * @param string $pathInfo
      * @param \Symfony\Component\HttpKernel\Event\ExceptionEvent $event
+     * @return bool
      */
     private function resolveUrlRedirectByDotHtmlPattern(string $pathInfo, ExceptionEvent $event): bool
     {
@@ -135,6 +130,7 @@ class OldEshopUrlListener
     /**
      * @param string $pathInfo
      * @param \Symfony\Component\HttpKernel\Event\ExceptionEvent $event
+     * @return bool
      */
     private function resolveUrlRedirectByMatchingTable(string $pathInfo, ExceptionEvent $event): bool
     {
@@ -152,6 +148,7 @@ class OldEshopUrlListener
     /**
      * @param string $pathInfo
      * @param \Symfony\Component\HttpKernel\Event\ExceptionEvent $event
+     * @return bool
      */
     private function resolveProductOldUrlByPath(string $pathInfo, ExceptionEvent $event): bool
     {
@@ -165,7 +162,7 @@ class OldEshopUrlListener
             return false;
         }
 
-        $product = $this->productFacade->findByCatnum((string) $urlParts[1]);
+        $product = $this->productFacade->findByCatnum((string)$urlParts[1]);
         if ($product !== null) {
             $url = $this->router->generate('front_product_detail', ['id' => $product->getId()]);
             $event->setResponse(new RedirectResponse($url, 301));

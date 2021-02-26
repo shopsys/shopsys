@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-
 namespace App\Model\Product\Parameter\Unit;
 
 use App\Model\LoadFromParentTrait;

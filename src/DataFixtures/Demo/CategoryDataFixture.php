@@ -62,6 +62,7 @@ class CategoryDataFixture extends AbstractReferenceFixture
     {
         /**
          * Root category is created in database migration.
+         *
          * @see \Shopsys\FrameworkBundle\Migrations\Version20180603135345
          * @var \App\Model\Category\Category
          */
@@ -173,7 +174,6 @@ class CategoryDataFixture extends AbstractReferenceFixture
                 . 'or stimulate growth.', [], 'dataFixtures', $locale);
         }
         $categoryFood = $this->createCategory($categoryData, self::CATEGORY_FOOD);
-
 
         $categoryData = $this->categoryDataFactory->createFromCategory($categoryElectronics);
         $categoryData->linkedCategories[] = $categoryFood;

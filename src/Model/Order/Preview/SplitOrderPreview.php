@@ -6,6 +6,7 @@ namespace App\Model\Order\Preview;
 
 use App\Model\Payment\Payment;
 use App\Model\Product\Type\ProductType;
+use RuntimeException;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
 
 class SplitOrderPreview
@@ -147,7 +148,7 @@ class SplitOrderPreview
     public function getPayment(): Payment
     {
         if ($this->payment === null) {
-            throw new \RuntimeException('Payment is not set. Please set it for this scenario');
+            throw new RuntimeException('Payment is not set. Please set it for this scenario');
         }
 
         return $this->payment;
@@ -185,10 +186,12 @@ class SplitOrderPreview
         $transportIdsByProductTypeId = [];
         foreach ($this->orderPreviews as $orderPreview) {
             $transport = $orderPreview->getTransport();
-            if ($transport !== null) {
-                $productType = $orderPreview->getProductType();
-                $transportIdsByProductTypeId[$productType->getId()] = $transport->getId();
+            if ($transport === null) {
+                continue;
             }
+
+            $productType = $orderPreview->getProductType();
+            $transportIdsByProductTypeId[$productType->getId()] = $transport->getId();
         }
 
         return $transportIdsByProductTypeId;
@@ -209,7 +212,7 @@ class SplitOrderPreview
     {
         $firstOrderPreview = reset($this->orderPreviews);
         if ($firstOrderPreview === false) {
-            throw new \RuntimeException('In this scenario has to be set least one OrderPreview to getting common ProductType.');
+            throw new RuntimeException('In this scenario has to be set least one OrderPreview to getting common ProductType.');
         }
 
         return $firstOrderPreview->getProductType();
@@ -221,7 +224,7 @@ class SplitOrderPreview
     public function getTransportAndPaymentPricesPreview(): TransportAndPaymentPricesPreview
     {
         if ($this->transportAndPaymentPricesPreview === null) {
-            throw new \RuntimeException('TransportAndPaymentPricesPreview is not set. Please set it for this scenario');
+            throw new RuntimeException('TransportAndPaymentPricesPreview is not set. Please set it for this scenario');
         }
 
         return $this->transportAndPaymentPricesPreview;
@@ -233,7 +236,7 @@ class SplitOrderPreview
     public function setTransportAndPaymentPricesPreview(TransportAndPaymentPricesPreview $transportAndPaymentPricesPreview): void
     {
         if ($this->transportAndPaymentPricesPreview !== null) {
-            throw new \RuntimeException('TransportAndPaymentPricesPreview is already set. It cannot be changed');
+            throw new RuntimeException('TransportAndPaymentPricesPreview is already set. It cannot be changed');
         }
 
         $this->transportAndPaymentPricesPreview = $transportAndPaymentPricesPreview;

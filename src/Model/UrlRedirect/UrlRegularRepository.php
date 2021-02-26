@@ -2,12 +2,10 @@
 
 declare(strict_types=1);
 
-
 namespace App\Model\UrlRedirect;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
-use Doctrine\Persistence\ObjectRepository;
 
 class UrlRegularRepository
 {
@@ -49,14 +47,11 @@ class UrlRegularRepository
     public function getAllByDomainId(int $domainId): array
     {
         $queryBuider = $this->em->createQueryBuilder();
-        $results = $queryBuider->select('ur.regular, ur.newUrl  ')
+        return $queryBuider->select('ur.regular, ur.newUrl  ')
             ->from(UrlRegular::class, 'ur')
             ->where('ur.domainId = :domainId')
             ->setParameter('domainId', $domainId)
             ->getQuery()
-            ->getScalarResult()
-        ;
-
-        return $results;
+            ->getScalarResult();
     }
 }

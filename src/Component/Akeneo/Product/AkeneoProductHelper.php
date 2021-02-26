@@ -39,7 +39,7 @@ class AkeneoProductHelper
      */
     public static function mapLocalizedDataString(array $productData, ?array $akeneoData): array
     {
-        foreach ($productData as $key => $value) {
+        foreach (array_keys($productData) as $key) {
             $productData[$key] = null;
         }
 
@@ -64,7 +64,7 @@ class AkeneoProductHelper
      */
     public static function mapDomainDataString(array $productData, ?array $akeneoData): array
     {
-        foreach ($productData as $key => $value) {
+        foreach (array_keys($productData) as $key) {
             $productData[$key] = null;
         }
 
@@ -90,7 +90,7 @@ class AkeneoProductHelper
      */
     public static function mapDomainDataBool(array $productData, ?array $akeneoData, bool $default): array
     {
-        foreach ($productData as $key => $value) {
+        foreach (array_keys($productData) as $key) {
             $productData[$key] = $default;
         }
 
@@ -115,7 +115,7 @@ class AkeneoProductHelper
      */
     public static function mapDomainDataInt(array $productData, array $akeneoData): array
     {
-        foreach ($productData as $key => $value) {
+        foreach (array_keys($productData) as $key) {
             $productData[$key] = null;
         }
 
@@ -136,7 +136,7 @@ class AkeneoProductHelper
      */
     public static function mapDomainDataPrices(array $productData, ?array $akeneoData): array
     {
-        foreach ($productData as $key => $value) {
+        foreach (array_keys($productData) as $key) {
             $productData[$key] = null;
         }
 
@@ -163,7 +163,7 @@ class AkeneoProductHelper
      */
     public static function mapDomainDataArray(array $productData, ?array $akeneoData): array
     {
-        foreach ($productData as $key => $value) {
+        foreach (array_keys($productData) as $key) {
             $productData[$key] = null;
         }
 
@@ -188,7 +188,7 @@ class AkeneoProductHelper
      */
     public static function mapDataToAllDomains(array $productData, $akeneoData): array
     {
-        foreach ($productData as $key => $value) {
+        foreach (array_keys($productData) as $key) {
             $productData[$key] = null;
         }
 
@@ -196,7 +196,7 @@ class AkeneoProductHelper
             return $productData;
         }
 
-        foreach ($productData as $key => $value) {
+        foreach (array_keys($productData) as $key) {
             $productData[$key] = $akeneoData;
         }
 

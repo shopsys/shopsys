@@ -35,6 +35,7 @@ class ElFinderPostInstallCommand extends Command
     public function __construct(Filesystem $filesystem, ParameterBagInterface $parameterBag)
     {
         parent::__construct();
+
         $this->filesystem = $filesystem;
         $this->parameterBag = $parameterBag;
     }
@@ -60,9 +61,9 @@ class ElFinderPostInstallCommand extends Command
         if ($this->filesystem->exists($webDir . '/css')) {
             $output->writeln('<fg=green>elFinder assets successfully POST installed</fg=green>');
             return CommandResultCodes::RESULT_OK;
-        } else {
-            $output->writeln('<fg=red>elFinder POST install FAILED</fg=red>');
-            return CommandResultCodes::RESULT_FAIL;
         }
+
+        $output->writeln('<fg=red>elFinder POST install FAILED</fg=red>');
+        return CommandResultCodes::RESULT_FAIL;
     }
 }

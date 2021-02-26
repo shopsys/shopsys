@@ -87,7 +87,7 @@ class CategoryController extends FrontBaseController
         }
 
         return $this->render('Front/Content/Category/mobileSlidingMenu.html.twig', [
-            'menuItems' => $menuItems
+            'menuItems' => $menuItems,
         ]);
     }
 
@@ -122,17 +122,19 @@ class CategoryController extends FrontBaseController
             /** @var \App\Model\Category\Category $category */
             $category = $categoryWithLazyLoadedVisibleChildren->getCategory();
 
-            if ($category->getAkeneoCode() === 'eshop__nabytek') {
-                $mattressesAndSlatsCategoryWithLazyLoadedVisibleChildrenForParent = $this->getMattressesAndSlatsCategoryWithLazyLoadedVisibleChildrenForParent($category);
-                $filteredCategoriesWithLazyLoadedVisibleChildren[] = $categoryWithLazyLoadedVisibleChildren;
+            if ($category->getAkeneoCode() !== 'eshop__nabytek') {
+                continue;
             }
+
+            $mattressesAndSlatsCategoryWithLazyLoadedVisibleChildrenForParent = $this->getMattressesAndSlatsCategoryWithLazyLoadedVisibleChildrenForParent($category);
+            $filteredCategoriesWithLazyLoadedVisibleChildren[] = $categoryWithLazyLoadedVisibleChildren;
         }
 
         return $this->render('Front/Content/Category/mobilePanelMenu.html.twig', [
             'categoriesWithLazyLoadedVisibleChildren' => $filteredCategoriesWithLazyLoadedVisibleChildren,
             'isFirstLevel' => true,
             'saleCategory' => $this->categoryFacade->findSaleCategory(),
-            'mattressesAndSlatsCategoryWithLazyLoadedVisibleChildrenForParent' => $mattressesAndSlatsCategoryWithLazyLoadedVisibleChildrenForParent
+            'mattressesAndSlatsCategoryWithLazyLoadedVisibleChildrenForParent' => $mattressesAndSlatsCategoryWithLazyLoadedVisibleChildrenForParent,
         ]);
     }
 

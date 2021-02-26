@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Form\Admin\Mail;
 
 use App\Model\Mail\MailTemplate;
-use App\Model\Order\Order;
 use App\Model\Payment\PaymentFacade;
 use App\Model\Transport\TransportFacade;
 use Shopsys\FrameworkBundle\Form\Admin\Mail\MailTemplateFormType;

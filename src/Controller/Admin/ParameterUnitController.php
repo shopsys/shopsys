@@ -116,9 +116,9 @@ class ParameterUnitController extends AdminBaseController
             $this->addSuccessFlashTwig(
                 t('Měrná jednotka <strong><a href="{{ url }}">{{ parameterUnit.name }}</a></strong> je úspěšně upravena.'),
                 [
-                        'parameterUnit' => $parameterUnit,
-                        'url' => $this->generateUrl('admin_parameterunit_edit', ['id' => $parameterUnit->getId()]),
-                    ]
+                    'parameterUnit' => $parameterUnit,
+                    'url' => $this->generateUrl('admin_parameterunit_edit', ['id' => $parameterUnit->getId()]),
+                ]
             );
             return $this->redirectToRoute('admin_parameterunit_list');
         }

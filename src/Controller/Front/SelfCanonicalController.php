@@ -69,7 +69,7 @@ class SelfCanonicalController extends FrontBaseController
             return true;
         }
 
-        if (empty($requestParametersKeys) === false) {
+        if (count($requestParametersKeys) > 0) {
             if (in_array('product_filter_form', $requestParametersKeys, true) === false
                 && isset($requestParameters['page']) === false
             ) {

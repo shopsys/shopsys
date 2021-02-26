@@ -15,6 +15,7 @@ use App\Model\Product\ProductData;
 use App\Model\Product\ProductFacade;
 use App\Model\Transfer\TransferLoggerInterface;
 use Doctrine\ORM\EntityManagerInterface;
+use Generator;
 use League\Flysystem\FilesystemInterface;
 use Shopsys\FrameworkBundle\Component\FileUpload\FileUpload;
 
@@ -221,9 +222,8 @@ class TransferredProductProcessor
     {
         if ($isMainVariant) {
             return $this->productFacade->findMainVariantByCatnum($identifier);
-        } else {
-            return $this->productFacade->findOneByCatnumExcludeMainVariants($identifier);
         }
+        return $this->productFacade->findOneByCatnumExcludeMainVariants($identifier);
     }
 
     /**
@@ -425,7 +425,7 @@ class TransferredProductProcessor
      * @param array $akeneoProductData
      * @return \Generator
      */
-    private function getGalleryImagesForProduct(array $akeneoProductData): \Generator
+    private function getGalleryImagesForProduct(array $akeneoProductData): Generator
     {
         $imageCodes = $akeneoProductData['values']['image_galery'][0]['data'] ?? [];
 
@@ -442,7 +442,7 @@ class TransferredProductProcessor
     {
         $akeneoProductParameters = $this->productTransferAkeneoMapper->getParametersFromAkeneoData($akeneoProductData);
 
-        foreach ($akeneoProductParameters as $akeneoParameterCode => $parameterValue) {
+        foreach (array_keys($akeneoProductParameters) as $akeneoParameterCode) {
             $parameter = $this->parameterFacade->findParameterByAkeneoCode($akeneoParameterCode);
             if ($parameter === null) {
                 return false;

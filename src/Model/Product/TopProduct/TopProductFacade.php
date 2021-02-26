@@ -33,6 +33,7 @@ class TopProductFacade extends BaseTopProductFacade
         TwigCacheFacade $twigCacheFacade
     ) {
         parent::__construct($em, $topProductRepository, $topProductFactory);
+
         $this->twigCacheFacade = $twigCacheFacade;
     }
 
@@ -44,6 +45,7 @@ class TopProductFacade extends BaseTopProductFacade
     public function saveTopProductsForDomain($domainId, array $products): void
     {
         parent::saveTopProductsForDomain($domainId, $products);
+
         $this->twigCacheFacade->invalidateByKey($this->twigCacheFacade::SLIGHTLY_CHANGING_PARTS_ON_HOMEPAGE, $domainId);
     }
 }

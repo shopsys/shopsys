@@ -37,7 +37,6 @@ class Parameter extends BaseParameter
 
     /**
      * @var \App\Model\Product\Parameter\ParameterGroup|null
-     *
      * @ORM\ManyToOne(targetEntity="App\Model\Product\Parameter\ParameterGroup")
      * @ORM\JoinColumn(nullable=true, name="group_id", referencedColumnName="id", onDelete="CASCADE")
      */
@@ -45,28 +44,24 @@ class Parameter extends BaseParameter
 
     /**
      * @var string|null
-     *
      * @ORM\Column(type="string", length=100, unique=true, nullable=true)
      */
     protected $akeneoCode;
 
     /**
      * @var string|null
-     *
      * @ORM\Column(type="string", length=100, nullable=true)
      */
     protected $akeneoType;
 
     /**
      * @var int
-     *
      * @ORM\Column(type="integer")
      */
     protected $orderingPriority;
 
     /**
      * @var \App\Model\Product\Parameter\Unit\ParameterUnit|null
-     *
      * @ORM\ManyToOne(targetEntity="App\Model\Product\Parameter\Unit\ParameterUnit")
      * @ORM\JoinColumn(nullable=true, name="parameter_unit_id", referencedColumnName="id")
      */
@@ -74,7 +69,6 @@ class Parameter extends BaseParameter
 
     /**
      * @var string
-     *
      * @ORM\Column(type="string", length=100, nullable=false)
      */
     protected $parameterType;
@@ -150,7 +144,7 @@ class Parameter extends BaseParameter
     }
 
     /**
-     * @deprecated
+     * @deprecated Visibility of parameters is not used on this project
      * @throws \App\Model\Product\Parameter\Exception\DeprecatedParameterPropertyException
      */
     public function isVisible()

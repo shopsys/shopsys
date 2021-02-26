@@ -18,7 +18,6 @@ class BlogArticleBlogCategoryDomain
 {
     /**
      * @var \App\Model\Blog\Article\BlogArticle
-     *
      * @ORM\Id
      * @ORM\ManyToOne(targetEntity="App\Model\Blog\Article\BlogArticle", inversedBy="blogArticleBlogCategoryDomains")
      * @ORM\JoinColumn(name="blog_article_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
@@ -27,7 +26,6 @@ class BlogArticleBlogCategoryDomain
 
     /**
      * @var \App\Model\Blog\Category\BlogCategory
-     *
      * @ORM\Id
      * @ORM\ManyToOne(targetEntity="App\Model\Blog\Category\BlogCategory")
      * @ORM\JoinColumn(name="blog_category_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
@@ -36,7 +34,6 @@ class BlogArticleBlogCategoryDomain
 
     /**
      * @var int
-     *
      * @ORM\Id
      * @ORM\Column(type="integer")
      */

@@ -15,14 +15,12 @@ class ProductTranslation extends BaseProductTranslation
 {
     /**
      * @var string|null
-     *
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     protected $namePrefix;
 
     /**
      * @var string|null
-     *
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     protected $nameSufix;

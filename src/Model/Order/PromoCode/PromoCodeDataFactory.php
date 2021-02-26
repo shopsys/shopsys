@@ -6,6 +6,7 @@ namespace App\Model\Order\PromoCode;
 
 use App\Component\DateTimeHelper\DateTimeHelper;
 use DateTime;
+use DateTimeZone;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode as BasePromoCode;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeData as BasePromoCodeData;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeDataFactory as BasePromoCodeDataFactory;
@@ -113,7 +114,7 @@ class PromoCodeDataFactory extends BasePromoCodeDataFactory
     private function switchDateFromDatabaseTimeZoneToViewTimezone(?DateTime $dateTime = null): ?DateTime
     {
         if ($dateTime !== null) {
-            return new DateTime($dateTime->format('Y-m-d H:i:s'), new \DateTimeZone(DateTimeHelper::UTC_TIMEZONE));
+            return new DateTime($dateTime->format('Y-m-d H:i:s'), new DateTimeZone(DateTimeHelper::UTC_TIMEZONE));
         }
 
         return null;

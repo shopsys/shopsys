@@ -8,6 +8,7 @@ use App\Model\Category\CategoryParameterFacade;
 use App\Model\Product\Parameter\ParameterRepository;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
+use ReflectionClass;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 
@@ -40,7 +41,7 @@ class CategoryParameterDataFixture extends AbstractReferenceFixture implements D
      */
     public function load(ObjectManager $manager)
     {
-        $categoryDataFixtureClassReflection = new \ReflectionClass(CategoryDataFixture::class);
+        $categoryDataFixtureClassReflection = new ReflectionClass(CategoryDataFixture::class);
         foreach ($categoryDataFixtureClassReflection->getConstants() as $constant) {
             /** @var \App\Model\Category\Category $category */
             $category = $this->getReference($constant);

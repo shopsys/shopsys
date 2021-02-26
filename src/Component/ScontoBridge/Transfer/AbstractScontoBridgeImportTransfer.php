@@ -171,7 +171,7 @@ abstract class AbstractScontoBridgeImportTransfer implements TransferIdentificat
     /**
      * @return \Generator
      */
-    abstract protected function getData(): \Generator;
+    abstract protected function getData(): Generator;
 
     /**
      * @return string

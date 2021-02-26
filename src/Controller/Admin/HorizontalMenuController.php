@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Controller\Admin;
 
 use App\Form\Admin\HorizontalMenu\HorizontalMenuItemFormType;
+use App\Model\HorizontalMenu\Exception\HorizontalMenuItemNotFoundException;
 use App\Model\HorizontalMenu\HorizontalMenuItem;
 use App\Model\HorizontalMenu\HorizontalMenuItemDataFactory;
 use App\Model\HorizontalMenu\HorizontalMenuItemFacade;
@@ -174,7 +175,7 @@ class HorizontalMenuController extends AdminBaseController
                     'name' => $fullName,
                 ]
             );
-        } catch (\App\Model\HorizontalMenu\Exception\HorizontalMenuItemNotFoundException $ex) {
+        } catch (HorizontalMenuItemNotFoundException $ex) {
             $this->addErrorFlash(t('Zvolená položka menu neexistuje.'));
         }
 

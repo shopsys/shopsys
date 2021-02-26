@@ -95,7 +95,7 @@ class CategorySeoFacade
      * @param \App\Model\CategorySeo\CategorySeoFiltersData $categorySeoFiltersData
      * @param int $domainId
      * @param string $locale
-     * @return \App\Model\CategorySeo\CategorySeoMix[]|array
+     * @return \App\Model\CategorySeo\CategorySeoMix[]
      */
     private function getSeoCategoryMixesFromParameters(
         array $categorySeoMixes,
@@ -127,7 +127,7 @@ class CategorySeoFacade
     /**
      * @param \App\Model\CategorySeo\CategorySeoMix[] $categorySeoMixes
      * @param \App\Model\CategorySeo\CategorySeoFiltersData $categorySeoFiltersData
-     * @return \App\Model\CategorySeo\CategorySeoMix[]|array
+     * @return \App\Model\CategorySeo\CategorySeoMix[]
      */
     private function getSeoCategoryMixesFromFlags(
         array $categorySeoMixes,
@@ -149,7 +149,7 @@ class CategorySeoFacade
     /**
      * @param \App\Model\CategorySeo\CategorySeoMix[] $categorySeoMixes
      * @param \App\Model\CategorySeo\CategorySeoFiltersData $categorySeoFiltersData
-     * @return \App\Model\CategorySeo\CategorySeoMix[]|array
+     * @return \App\Model\CategorySeo\CategorySeoMix[]
      */
     private function getSeoCategoryMixesFromOrderings(
         array $categorySeoMixes,

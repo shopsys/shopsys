@@ -16,6 +16,9 @@ class SideMenuConfigurationSubscriber implements EventSubscriberInterface
      */
     private AuthorizationCheckerInterface $authorizationChecker;
 
+    /**
+     * @param \Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface $authorizationChecker
+     */
     public function __construct(AuthorizationCheckerInterface $authorizationChecker)
     {
         $this->authorizationChecker = $authorizationChecker;

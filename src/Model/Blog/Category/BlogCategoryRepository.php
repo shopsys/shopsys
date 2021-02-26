@@ -6,6 +6,7 @@ namespace App\Model\Blog\Category;
 
 use App\Model\Blog\Article\BlogArticle;
 use App\Model\Blog\Article\BlogArticleBlogCategoryDomain;
+use App\Model\Blog\Category\Exception\BlogCategoryNotFoundException;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query\Expr\Join;
@@ -31,6 +32,7 @@ class BlogCategoryRepository extends NestedTreeRepository
         $this->em = $em;
 
         $classMetadata = $this->em->getClassMetadata(BlogCategory::class);
+
         parent::__construct($this->em, $classMetadata);
     }
 
@@ -96,9 +98,7 @@ class BlogCategoryRepository extends NestedTreeRepository
      */
     public function getRootBlogCategory(): BlogCategory
     {
-        $rootCategory = $this->getBlogCategoryRepository()->findOneBy(['parent' => null]);
-
-        return $rootCategory;
+        return $this->getBlogCategoryRepository()->findOneBy(['parent' => null]);
     }
 
     /**
@@ -144,7 +144,7 @@ class BlogCategoryRepository extends NestedTreeRepository
 
         if ($blogCategory === null) {
             $message = 'BlogCategory with ID ' . $blogCategoryId . ' not found.';
-            throw new \App\Model\Blog\Category\Exception\BlogCategoryNotFoundException($message);
+            throw new BlogCategoryNotFoundException($message);
         }
 
         return $blogCategory;
@@ -300,7 +300,7 @@ class BlogCategoryRepository extends NestedTreeRepository
         $blogArticleMainBlogCategory = $this->findBlogArticleMainBlogCategoryOnDomain($product, $domainId);
 
         if ($blogArticleMainBlogCategory === null) {
-            throw new \App\Model\Blog\Category\Exception\BlogCategoryNotFoundException();
+            throw new BlogCategoryNotFoundException();
         }
 
         return $blogArticleMainBlogCategory;

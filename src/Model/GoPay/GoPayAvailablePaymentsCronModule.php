@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace App\Model\GoPay;
 
+use App\Model\GoPay\Exception\GoPayNotConfiguredException;
 use App\Model\GoPay\Exception\GoPayPaymentDownloadException;
 use App\Model\GoPay\PaymentMethod\GoPayPaymentMethodFacade;
 use Doctrine\ORM\EntityManagerInterface;
+use Exception;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\Plugin\Cron\SimpleCronModuleInterface;
 use Symfony\Bridge\Monolog\Logger;
@@ -73,9 +75,9 @@ class GoPayAvailablePaymentsCronModule implements SimpleCronModuleInterface
             $this->em->beginTransaction();
             $this->downloadAndUpdatePaymentMethodsForAllDomains();
             $this->em->commit();
-        } catch (\App\Model\GoPay\Exception\GoPayNotConfiguredException $exception) {
+        } catch (GoPayNotConfiguredException $exception) {
             $this->logger->addAlert('GoPay configuration is not set.');
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             $this->logger->addError($exception->getMessage(), ['exception' => $exception]);
             $this->em->rollback();
             throw $exception;

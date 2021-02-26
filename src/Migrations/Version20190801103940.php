@@ -144,10 +144,12 @@ class Version20190801103940 extends AbstractMigration
                 $this->sql('INSERT INTO friendly_urls (domain_id, slug, route_name, entity_id, main) VALUES (' . $domainId . ', \'blog/\', \'front_blogcategory_detail\', 2, true)');
 
                 $locale = $this->getDomainLocale($domainId);
-                if (!in_array($locale, $categoryTranslationsCreated, true)) {
-                    $this->sql('INSERT INTO blog_category_translations (translatable_id, name, locale) VALUES (2, \'Hlavní stránka blogu - ' . $locale . '\', \'' . $locale . '\')');
-                    $categoryTranslationsCreated[] = $locale;
+                if (in_array($locale, $categoryTranslationsCreated, true)) {
+                    continue;
                 }
+
+                $this->sql('INSERT INTO blog_category_translations (translatable_id, name, locale) VALUES (2, \'Hlavní stránka blogu - ' . $locale . '\', \'' . $locale . '\')');
+                $categoryTranslationsCreated[] = $locale;
             }
         }
 

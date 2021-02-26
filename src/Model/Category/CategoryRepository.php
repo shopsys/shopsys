@@ -8,6 +8,7 @@ use App\Model\Category\LinkedCategory\LinkedCategory;
 use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Model\Category\CategoryRepository as BaseCategoryRepository;
+use Shopsys\FrameworkBundle\Model\Category\Exception\CategoryNotFoundException;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\ProductCategoryDomain;
@@ -46,8 +47,8 @@ class CategoryRepository extends BaseCategoryRepository
      */
     public function findByAkeneoCode(string $akeneoCode): ?Category
     {
+        /** @var \App\Model\Category\Category $category */
         $category = $this->getCategoryRepository()->findOneBy(['akeneoCode' => $akeneoCode]);
-        /* @var $category \App\Model\Category\Category */
 
         if ($category !== null && $category->getParent() === null) {
             // Copies logic from getAllQueryBuilder() - excludes root category
@@ -63,12 +64,12 @@ class CategoryRepository extends BaseCategoryRepository
      */
     public function getByAkeneoCode(string $akeneoCode): Category
     {
+        /** @var \App\Model\Category\Category|null $category */
         $category = $this->getCategoryRepository()->findOneBy(['akeneoCode' => $akeneoCode]);
-        /* @var $category \App\Model\Category\Category */
 
         if ($category === null) {
             $message = 'Category with Akeneo code ' . $akeneoCode . ' not found.';
-            throw new \Shopsys\FrameworkBundle\Model\Category\Exception\CategoryNotFoundException($message);
+            throw new CategoryNotFoundException($message);
         }
 
         return $category;
@@ -232,7 +233,6 @@ class CategoryRepository extends BaseCategoryRepository
             ->orderBy('lc.position', 'asc')
             ->setParameter('excludeCategories', $excludeCategories)
             ->setParameter('parentCategory', $parentCategory);
-
 
         return $queryBuilder->getQuery()->execute();
     }

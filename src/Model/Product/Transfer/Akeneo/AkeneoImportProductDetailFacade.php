@@ -6,6 +6,8 @@ namespace App\Model\Product\Transfer\Akeneo;
 
 use App\Component\Akeneo\Transfer\AbstractAkeneoImportTransfer;
 use App\Component\Akeneo\Transfer\AkeneoImportTransferDependency;
+use Generator;
+use RuntimeException;
 
 class AkeneoImportProductDetailFacade extends AbstractAkeneoImportTransfer
 {
@@ -35,6 +37,7 @@ class AkeneoImportProductDetailFacade extends AbstractAkeneoImportTransfer
         TransferredProductProcessor $transferredProductProcessor
     ) {
         parent::__construct($akeneoImportTransferDependency);
+
         $this->productTransferAkeneoFacade = $productTransferAkeneoFacade;
         $this->transferredProductProcessor = $transferredProductProcessor;
     }
@@ -51,12 +54,12 @@ class AkeneoImportProductDetailFacade extends AbstractAkeneoImportTransfer
     /**
      * @return \Generator
      */
-    protected function getData(): \Generator
+    protected function getData(): Generator
     {
         foreach ($this->productIdentifierList as $productIdentifier) {
             try {
                 yield $this->productTransferAkeneoFacade->getProductByIdentifier($productIdentifier);
-            } catch (\RuntimeException $exception) {
+            } catch (RuntimeException $exception) {
                 $this->logger->addError($exception->getMessage());
             }
         }

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\Slider;
 
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Shopsys\FrameworkBundle\Model\Slider\SliderItem as BaseSliderItem;
 
@@ -18,42 +19,36 @@ class SliderItem extends BaseSliderItem
 {
     /**
      * @var \DateTime|null
-     *
      * @ORM\Column(type="datetime",nullable=true)
      */
     protected $datetimeVisibleFrom;
 
     /**
      * @var \DateTime|null
-     *
      * @ORM\Column(type="datetime",nullable=true)
      */
     protected $datetimeVisibleTo;
 
     /**
      * @var string|null
-     *
      * @ORM\Column(type="text",nullable=true)
      */
     protected $sliderExtendedText;
 
     /**
      * @var string|null
-     *
      * @ORM\Column(type="text",nullable=true)
      */
     protected $sliderExtendedTextLink;
 
     /**
      * @var string|null
-     *
      * @ORM\Column(type="text",nullable=false)
      */
     protected $gtmId;
 
     /**
      * @var string|null
-     *
      * @ORM\Column(type="text",nullable=true)
      */
     protected $gtmCreative;
@@ -64,6 +59,7 @@ class SliderItem extends BaseSliderItem
     public function __construct($sliderItemData)
     {
         parent::__construct($sliderItemData);
+
         $this->datetimeVisibleFrom = $sliderItemData->datetimeVisibleFrom;
         $this->datetimeVisibleTo = $sliderItemData->datetimeVisibleTo;
         $this->sliderExtendedText = $sliderItemData->sliderExtendedText;
@@ -78,6 +74,7 @@ class SliderItem extends BaseSliderItem
     public function edit($sliderItemData)
     {
         parent::edit($sliderItemData);
+
         $this->datetimeVisibleFrom = $sliderItemData->datetimeVisibleFrom;
         $this->datetimeVisibleTo = $sliderItemData->datetimeVisibleTo;
         $this->sliderExtendedText = $sliderItemData->sliderExtendedText;
@@ -89,7 +86,7 @@ class SliderItem extends BaseSliderItem
     /**
      * @return \DateTime|null
      */
-    public function getDatetimeVisibleFrom(): ?\DateTime
+    public function getDatetimeVisibleFrom(): ?DateTime
     {
         return $this->datetimeVisibleFrom;
     }
@@ -97,7 +94,7 @@ class SliderItem extends BaseSliderItem
     /**
      * @param \DateTime|null $datetimeVisibleFrom
      */
-    public function setDatetimeVisibleFrom(?\DateTime $datetimeVisibleFrom): void
+    public function setDatetimeVisibleFrom(?DateTime $datetimeVisibleFrom): void
     {
         $this->datetimeVisibleFrom = $datetimeVisibleFrom;
     }
@@ -105,7 +102,7 @@ class SliderItem extends BaseSliderItem
     /**
      * @return \DateTime|null
      */
-    public function getDatetimeVisibleTo(): ?\DateTime
+    public function getDatetimeVisibleTo(): ?DateTime
     {
         return $this->datetimeVisibleTo;
     }
@@ -113,7 +110,7 @@ class SliderItem extends BaseSliderItem
     /**
      * @param \DateTime|null $datetimeVisibleTo
      */
-    public function setDatetimeVisibleTo(?\DateTime $datetimeVisibleTo): void
+    public function setDatetimeVisibleTo(?DateTime $datetimeVisibleTo): void
     {
         $this->datetimeVisibleTo = $datetimeVisibleTo;
     }

@@ -92,12 +92,12 @@ class StockFormType extends AbstractType
             'street',
             TextType::class,
             [
-                    'required' => false,
-                    'label' => t('Ulice a č. popisné'),
-                    'constraints' => [
-                        new Constraints\Length(['max' => 100, 'maxMessage' => 'Ulice nesmí být delší než {{ limit }} znaků']),
-                    ],
-                ]
+                'required' => false,
+                'label' => t('Ulice a č. popisné'),
+                'constraints' => [
+                    new Constraints\Length(['max' => 100, 'maxMessage' => 'Ulice nesmí být delší než {{ limit }} znaků']),
+                ],
+            ]
         )->add(
             'city',
             TextType::class,
@@ -168,41 +168,41 @@ class StockFormType extends AbstractType
             'image',
             ImageUploadType::class,
             [
-               'required' => false,
-               'image_entity_class' => Stock::class,
-               'image_type' => 'main',
-               'file_constraints' => [
-                   new Image([
-                       'mimeTypes' => ['image/png', 'image/jpg', 'image/jpeg', 'image/gif'],
-                       'mimeTypesMessage' => 'Image can be only in JPG, GIF or PNG format',
-                       'maxSize' => '15M',
-                       'maxSizeMessage' => 'Uploaded image is to large ({{ size }} {{ suffix }}). '
-                         . 'Maximum size of an image is {{ limit }} {{ suffix }}.',
-                   ]),
-               ],
-               'entity' => $options['stock'],
-               'label' => t('Upload new image'),
-               'info_text' => t('You can upload following formats: PNG, JPG, GIF'),
+                'required' => false,
+                'image_entity_class' => Stock::class,
+                'image_type' => 'main',
+                'file_constraints' => [
+                    new Image([
+                        'mimeTypes' => ['image/png', 'image/jpg', 'image/jpeg', 'image/gif'],
+                        'mimeTypesMessage' => 'Image can be only in JPG, GIF or PNG format',
+                        'maxSize' => '15M',
+                        'maxSizeMessage' => 'Uploaded image is to large ({{ size }} {{ suffix }}). '
+                          . 'Maximum size of an image is {{ limit }} {{ suffix }}.',
+                    ]),
+                ],
+                'entity' => $options['stock'],
+                'label' => t('Upload new image'),
+                'info_text' => t('You can upload following formats: PNG, JPG, GIF'),
             ]
         )->add(
             'imageGallery',
             ImageUploadType::class,
             [
-               'required' => false,
-               'image_entity_class' => Stock::class,
-               'image_type' => 'gallery',
-               'file_constraints' => [
-                   new Image([
-                       'mimeTypes' => ['image/png', 'image/jpg', 'image/jpeg', 'image/gif'],
-                       'mimeTypesMessage' => 'Image can be only in JPG, GIF or PNG format',
-                       'maxSize' => '15M',
-                       'maxSizeMessage' => 'Uploaded image is to large ({{ size }} {{ suffix }}). '
-                         . 'Maximum size of an image is {{ limit }} {{ suffix }}.',
-                   ]),
-               ],
-               'entity' => $options['stock'],
-               'label' => t('Nahrát nový obrázek galerie'),
-               'info_text' => t('You can upload following formats: PNG, JPG, GIF'),
+                'required' => false,
+                'image_entity_class' => Stock::class,
+                'image_type' => 'gallery',
+                'file_constraints' => [
+                    new Image([
+                        'mimeTypes' => ['image/png', 'image/jpg', 'image/jpeg', 'image/gif'],
+                        'mimeTypesMessage' => 'Image can be only in JPG, GIF or PNG format',
+                        'maxSize' => '15M',
+                        'maxSizeMessage' => 'Uploaded image is to large ({{ size }} {{ suffix }}). '
+                          . 'Maximum size of an image is {{ limit }} {{ suffix }}.',
+                    ]),
+                ],
+                'entity' => $options['stock'],
+                'label' => t('Nahrát nový obrázek galerie'),
+                'info_text' => t('You can upload following formats: PNG, JPG, GIF'),
             ]
         );
 

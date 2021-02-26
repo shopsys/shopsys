@@ -6,6 +6,7 @@ namespace Tests\App\Functional\Model\Customer;
 
 use App\DataFixtures\Demo\PricingGroupDataFixture;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Model\Customer\Exception\DuplicateEmailException;
 use Tests\App\Test\TransactionFunctionalTestCase;
 use Zalas\Injector\PHPUnit\Symfony\TestCase\SymfonyTestContainer;
 
@@ -45,9 +46,7 @@ class UserFacadeTest extends TransactionFunctionalTestCase
     public function testCreateNotDuplicateEmail()
     {
         $customerUserUpdateData = $this->customerUserUpdateDataFactory->create();
-        /**
-         * @var \App\Model\Customer\User\CustomerUserData
-         */
+        /** @var \App\Model\Customer\User\CustomerUserData $customerUserData */
         $customerUserData = $customerUserUpdateData->customerUserData;
         $customerUserData->pricingGroup = $this->getReferenceForDomain(
             PricingGroupDataFixture::PRICING_GROUP_ORDINARY,
@@ -72,7 +71,7 @@ class UserFacadeTest extends TransactionFunctionalTestCase
         );
         $customerUserUpdateData = $this->customerUserUpdateDataFactory->createFromCustomerUser($customerUser);
         $customerUserUpdateData->customerUserData->password = 'password';
-        $this->expectException(\Shopsys\FrameworkBundle\Model\Customer\Exception\DuplicateEmailException::class);
+        $this->expectException(DuplicateEmailException::class);
 
         $this->customerUserFacade->create($customerUserUpdateData);
     }
@@ -86,7 +85,7 @@ class UserFacadeTest extends TransactionFunctionalTestCase
         $customerUserUpdateData = $this->customerUserUpdateDataFactory->createFromCustomerUser($customerUser);
         $customerUserUpdateData->customerUserData->password = 'password';
         $customerUserUpdateData->customerUserData->email = mb_strtoupper(self::EXISTING_EMAIL_ON_DOMAIN_1);
-        $this->expectException(\Shopsys\FrameworkBundle\Model\Customer\Exception\DuplicateEmailException::class);
+        $this->expectException(DuplicateEmailException::class);
 
         $this->customerUserFacade->create($customerUserUpdateData);
     }

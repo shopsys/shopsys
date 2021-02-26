@@ -80,6 +80,7 @@ class NumberFormatHelper extends Module
 
     /**
      * Inspired by formatCurrency() method, {@see \Shopsys\FrameworkBundle\Twig\PriceExtension}
+     *
      * @param \Shopsys\FrameworkBundle\Component\Money\Money $price
      * @return string
      */
@@ -101,6 +102,7 @@ class NumberFormatHelper extends Module
 
     /**
      * Inspired by formatCurrency() method, {@see \Shopsys\FrameworkBundle\Twig\PriceExtension}
+     *
      * @param \Shopsys\FrameworkBundle\Component\Money\Money $price
      * @return string
      */
@@ -122,6 +124,7 @@ class NumberFormatHelper extends Module
 
     /**
      * It is not possible to use this method for converting total prices of an order or in cart (because of the price calculation)
+     *
      * @param string $price
      * @return string
      */

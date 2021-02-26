@@ -111,20 +111,22 @@ class CategorySeoMixFriendlyUrlListener
     {
         $request = $event->getRequest();
 
-        if ($request->attributes->get('_route') === 'front_product_list'
-            && $request->attributes->has('readyCategorySeoMixId') === false
-            && $request->isXmlHttpRequest() === false
+        if ($request->attributes->get('_route') !== 'front_product_list'
+            || $request->attributes->has('readyCategorySeoMixId') !== false
+            || $request->isXmlHttpRequest() !== false
         ) {
-            try {
-                $url = $this->categorySeoMixUrlGenerator->tryGenerateCategorySeoMixUrl(
-                    $request->attributes->get('id'),
-                    $request->query->all(),
-                    UrlGeneratorInterface::ABSOLUTE_URL
-                );
-                $event->setResponse(new RedirectResponse($url, 301));
-            } catch (UnableToFindReadyCategorySeoMixException $exception) {
-                // It is okay, current url is common product_list without CategorySeoMix
-            }
+            return;
+        }
+
+        try {
+            $url = $this->categorySeoMixUrlGenerator->tryGenerateCategorySeoMixUrl(
+                $request->attributes->get('id'),
+                $request->query->all(),
+                UrlGeneratorInterface::ABSOLUTE_URL
+            );
+            $event->setResponse(new RedirectResponse($url, 301));
+        } catch (UnableToFindReadyCategorySeoMixException $exception) {
+            // It is okay, current url is common product_list without CategorySeoMix
         }
     }
 }

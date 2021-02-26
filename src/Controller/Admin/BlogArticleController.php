@@ -11,9 +11,11 @@ use App\Model\Blog\Article\BlogArticleGridFactory;
 use Shopsys\FrameworkBundle\Component\ConfirmDelete\ConfirmDeleteResponseFactory;
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\Domain\Exception\InvalidDomainIdException;
 use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
 use Shopsys\FrameworkBundle\Controller\Admin\AdminBaseController;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
+use Shopsys\FrameworkBundle\Model\Article\Exception\ArticleNotFoundException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
@@ -114,7 +116,7 @@ class BlogArticleController extends AdminBaseController
         if ($domainId !== self::ALL_DOMAINS) {
             try {
                 $this->domain->getDomainConfigById($domainId);
-            } catch (\Shopsys\FrameworkBundle\Component\Domain\Exception\InvalidDomainIdException $ex) {
+            } catch (InvalidDomainIdException $ex) {
                 $domainId = self::ALL_DOMAINS;
             }
         }
@@ -228,7 +230,7 @@ class BlogArticleController extends AdminBaseController
                     'name' => $fullName,
                 ]
             );
-        } catch (\Shopsys\FrameworkBundle\Model\Article\Exception\ArticleNotFoundException $ex) {
+        } catch (ArticleNotFoundException $ex) {
             $this->addErrorFlash(t('Vybraný článek blogu neexistuje.'));
         }
 

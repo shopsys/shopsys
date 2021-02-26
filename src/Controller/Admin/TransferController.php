@@ -65,7 +65,7 @@ class TransferController extends AdminBaseController
      */
     public function listAction(Request $request): Response
     {
-        /* @var $administrator \App\Model\Administrator\Administrator */
+        /** @var \App\Model\Administrator\Administrator $administrator */
         $administrator = $this->getUser();
 
         $this->administratorFacade->setAdministratorTransferIssuesLastSeenDateTime($administrator);

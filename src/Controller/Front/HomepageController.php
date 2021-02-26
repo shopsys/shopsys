@@ -10,7 +10,6 @@ use App\Model\Category\CategoryFacade;
 use App\Model\Gtm\DataLayer;
 use App\Model\Gtm\GtmJsPushFacade;
 use App\Model\Product\Filter\ProductVariantFilterFacade;
-use App\Model\Product\Listed\ListedProductViewElasticFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Category\TopCategory\TopCategoryFacade;
 use Shopsys\FrameworkBundle\Model\Seo\SeoSettingFacade;
@@ -34,11 +33,6 @@ class HomepageController extends FrontBaseController
      * @var \App\Model\Slider\SliderItemFacade
      */
     private $sliderItemFacade;
-
-    /**
-     * @var \App\Model\Product\Listed\ListedProductViewElasticFacade
-     */
-    private $listedProductViewElasticFacade;
 
     /**
      * @var \Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFacadeInterface
@@ -74,18 +68,17 @@ class HomepageController extends FrontBaseController
      * @param \Shopsys\FrameworkBundle\Model\Seo\SeoSettingFacade $seoSettingFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \App\Model\Slider\SliderItemFacade $sliderItemFacade
-     * @param \App\Model\Product\Listed\ListedProductViewElasticFacade $listedProductViewElasticFacade
      * @param \Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFacadeInterface $listedProductViewFacade
      * @param \App\Model\Category\TopCategory\TopCategoryFacade $topCategoryFacade
      * @param \App\Model\Blog\Article\BlogArticleFacade $blogArticleFacade
      * @param \App\Model\Product\Filter\ProductVariantFilterFacade $productVariantFilterFacade
      * @param \App\Model\Gtm\GtmJsPushFacade $gtmJsPushFacade
+     * @param \App\Model\Category\CategoryFacade $categoryFacade
      */
     public function __construct(
         SeoSettingFacade $seoSettingFacade,
         Domain $domain,
         SliderItemFacade $sliderItemFacade,
-        ListedProductViewElasticFacade $listedProductViewElasticFacade,
         ListedProductViewFacadeInterface $listedProductViewFacade,
         TopCategoryFacade $topCategoryFacade,
         BlogArticleFacade $blogArticleFacade,
@@ -96,7 +89,6 @@ class HomepageController extends FrontBaseController
         $this->seoSettingFacade = $seoSettingFacade;
         $this->domain = $domain;
         $this->sliderItemFacade = $sliderItemFacade;
-        $this->listedProductViewElasticFacade = $listedProductViewElasticFacade;
         $this->topCategoryFacade = $topCategoryFacade;
         $this->blogArticleFacade = $blogArticleFacade;
         $this->productVariantFilterFacade = $productVariantFilterFacade;

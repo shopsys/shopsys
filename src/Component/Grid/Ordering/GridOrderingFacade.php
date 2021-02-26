@@ -45,6 +45,7 @@ class GridOrderingFacade extends BaseGridOrderingFacade
         EntityNameResolver $entityNameResolver
     ) {
         parent::__construct($em);
+
         $this->twigCacheFacade = $twigCacheFacade;
         $this->domain = $domain;
         $this->entityNameResolver = $entityNameResolver;
@@ -63,6 +64,7 @@ class GridOrderingFacade extends BaseGridOrderingFacade
                 $this->twigCacheFacade->invalidateByKey(self::ENTITY_TO_CLEAR_CACHE_CONST_PAIRING[$normalizedEntityClass], $domainId);
             }
         }
+
         parent::saveOrdering($entityClass, $rowIds);
     }
 }

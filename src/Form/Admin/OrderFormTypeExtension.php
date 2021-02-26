@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Form\Admin;
 
-use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Form\Admin\Order\OrderFormType;
 use Shopsys\FrameworkBundle\Form\DisplayOnlyType;
 use Symfony\Component\Form\AbstractTypeExtension;
@@ -18,12 +17,8 @@ class OrderFormTypeExtension extends AbstractTypeExtension
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        /* @var $customerUser \App\Model\Customer\User\CustomerUser */
-        $orderData = $options['data'];
-
-        $domainId = Domain::SECOND_DOMAIN_ID;
-        if ($orderData !== null) {
-            $domainId = $orderData->domainId;
+        if ($options['order'] === null) {
+            return;
         }
 
         /** @var \App\Model\Order\Order $order */
@@ -34,27 +29,26 @@ class OrderFormTypeExtension extends AbstractTypeExtension
             ->remove('orderTransport');
 
         $builderBasicInformationGroup = $builder->get('basicInformationGroup');
-        if ($order !== null) {
-            $builderBasicInformationGroup
-                ->add('payment', DisplayOnlyType::class, [
-                    'label' => t('Typ platby'),
-                    'data' => $order->getPayment()->getName(),
-                ]);
 
-            if ($order->getPayment()->isGoPay() === true) {
-                $transactions = $order->getGoPayTransactions();
-                $builderBasicInformationGroup
-                    ->add('gopayStatus', DisplayOnlyType::class, [
-                        'label' => t('Stav platby GoPay'),
-                        'data' => t(end($transactions)->getGoPayStatus()),
-                    ]);
-            }
-
-            $builderBasicInformationGroup->add('transport', DisplayOnlyType::class, [
-                'label' => t('Typ dopravy'),
-                'data' => $order->getTransport()->getName(),
+        $builderBasicInformationGroup
+            ->add('payment', DisplayOnlyType::class, [
+                'label' => t('Typ platby'),
+                'data' => $order->getPayment()->getName(),
             ]);
+
+        if ($order->getPayment()->isGoPay() === true) {
+            $transactions = $order->getGoPayTransactions();
+            $builderBasicInformationGroup
+                ->add('gopayStatus', DisplayOnlyType::class, [
+                    'label' => t('Stav platby GoPay'),
+                    'data' => t(end($transactions)->getGoPayStatus()),
+                ]);
         }
+
+        $builderBasicInformationGroup->add('transport', DisplayOnlyType::class, [
+            'label' => t('Typ dopravy'),
+            'data' => $order->getTransport()->getName(),
+        ]);
     }
 
     /**

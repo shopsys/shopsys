@@ -7,6 +7,7 @@ namespace App\Form\Admin\Transformer;
 use App\Model\Stock\Exception\StockNotFoundException;
 use App\Model\Stock\StockRepository;
 use Symfony\Component\Form\DataTransformerInterface;
+use Symfony\Component\Form\Exception\TransformationFailedException;
 
 class StockIdToStockTransformer implements DataTransformerInterface
 {
@@ -56,7 +57,7 @@ class StockIdToStockTransformer implements DataTransformerInterface
                 try {
                     $stocks[$productTypeId] = $this->stockRepository->getById($stockId);
                 } catch (StockNotFoundException $e) {
-                    throw new \Symfony\Component\Form\Exception\TransformationFailedException('Stock not found', 0, $e);
+                    throw new TransformationFailedException('Stock not found', 0, $e);
                 }
             }
         }

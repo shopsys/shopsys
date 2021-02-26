@@ -69,7 +69,7 @@ class AkeneoHelper
      */
     public static function mapLocalizedLabels(array $itemData, ?array $akeneoData): array
     {
-        foreach ($itemData as $key => $value) {
+        foreach (array_keys($itemData) as $key) {
             $itemData[$key] = null;
         }
 

@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-
 namespace App\Controller\Admin;
 
 use App\Model\Security\Roles;
@@ -80,6 +79,7 @@ class CustomerController extends BaseCustomerController
             $domainRouterFactory,
             $customerUserUpdateDataFactory
         );
+
         $this->authorizationChecker = $authorizationChecker;
     }
 

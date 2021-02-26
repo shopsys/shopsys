@@ -79,6 +79,7 @@ class TransportFacade extends BaseTransportFacade
             $transportFactory,
             $transportPriceFactory
         );
+
         $this->transportPackageFacade = $transportPackageFacade;
     }
 
@@ -102,6 +103,7 @@ class TransportFacade extends BaseTransportFacade
     public function edit(BaseTransport $transport, TransportData $transportData)
     {
         parent::edit($transport, $transportData);
+
         $this->transportPackageFacade->updateTransportPackages($transport, $transportData);
     }
 }

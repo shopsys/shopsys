@@ -15,7 +15,6 @@ class ExtendedOrderItem extends OrderItem
 {
     /**
      * @var string|null
-     *
      * @ORM\Column(type="string", nullable=true)
      */
     protected $stringField;

@@ -24,7 +24,7 @@ class ProductAvailabilityCalculation extends BaseProductAvailabilityCalculation
     protected $productSellingDeniedRecalculator;
 
     /**
-     * @deprecated
+     * @deprecated Calculated availability always return default availability
      * @param \App\Model\Product\Product $product
      * @return \Shopsys\FrameworkBundle\Model\Product\Availability\Availability
      */

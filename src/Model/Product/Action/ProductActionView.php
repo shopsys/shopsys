@@ -23,6 +23,7 @@ class ProductActionView extends BaseProductActionView
     public function __construct(int $id, bool $sellingDenied, bool $isMainVariant, string $detailUrl, ?int $stockQuantity)
     {
         parent::__construct($id, $sellingDenied, $isMainVariant, $detailUrl);
+
         $this->stockQuantity = $stockQuantity;
     }
 

@@ -17,14 +17,12 @@ class BillingAddress extends BaseBillingAddress
 {
     /**
      * @var string|null
-     *
      * @ORM\Column(type="string", length=100, nullable=true)
      */
     protected $companyVatNumber;
 
     /**
      * @var bool
-     *
      * @ORM\Column(type="boolean")
      */
     private bool $activated;
@@ -35,6 +33,7 @@ class BillingAddress extends BaseBillingAddress
     public function __construct(BillingAddressData $billingAddressData)
     {
         parent::__construct($billingAddressData);
+
         if ($this->companyCustomer) {
             $this->companyVatNumber = $billingAddressData->companyVatNumber;
         }
@@ -47,6 +46,7 @@ class BillingAddress extends BaseBillingAddress
     public function edit(BillingAddressData $billingAddressData): void
     {
         parent::edit($billingAddressData);
+
         if ($this->companyCustomer) {
             $this->companyVatNumber = $billingAddressData->companyVatNumber;
         }

@@ -49,12 +49,19 @@ class ImportPoFilesCommand extends Command
      */
     protected static $defaultName = 'translation:import';
 
+    /**
+     * @param \Shopsys\FrameworkBundle\Component\Translation\PoFileLoader $fileLoader
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     * @param \Shopsys\FrameworkBundle\Component\Translation\PoDumper $poDumper
+     * @param \Symfony\Component\Filesystem\Filesystem $filesystem
+     */
     public function __construct(PoFileLoader $fileLoader, Domain $domain, PoDumper $poDumper, Filesystem $filesystem)
     {
         $this->domain = $domain;
         $this->fileLoader = new SymfonyLoaderAdapter($fileLoader);
         $this->poDumper = $poDumper;
         $this->filesystem = $filesystem;
+
         parent::__construct();
     }
 
@@ -86,20 +93,22 @@ class ImportPoFilesCommand extends Command
                 $targetFileName = $targetDir . $inputFile . '.' . $locale . '.' . self::TYPE;
                 $sourceTranslationFileName = $input->getArgument(self::SOURCE_TRANSLATION_DIR) . $inputFile . '.' . $locale . '.' . self::TYPE;
 
-                if (file_exists($sourceTranslationFileName) && file_exists($targetFileName)) {
-                    $sourceFileResource = new FileResource($sourceTranslationFileName);
-                    $targetFileResource = new FileResource($targetFileName);
-                    $sourceTranslationCatalog = $this->fileLoader->load($sourceFileResource, $locale);
-                    $translationCatalog = $this->fileLoader->load($targetFileResource, $locale);
-
-                    // If all messages (msgstr) are empty in the source translations, we will skip
-                    if (count($sourceTranslationCatalog->getDomains()) !== 0) {
-                        $sourceTranslationCatalog->merge($translationCatalog);
-                        $fileWriter->write($sourceTranslationCatalog, 'messages', $targetFileResource->getResource(), self::TYPE);
-                        $output->writeln('<fg=green> Translations messages in : ' . $targetFileName . ' was updated </fg=green>');
-                    }
-                    $this->filesystem->remove($sourceTranslationFileName);
+                if (!file_exists($sourceTranslationFileName) || !file_exists($targetFileName)) {
+                    continue;
                 }
+
+                $sourceFileResource = new FileResource($sourceTranslationFileName);
+                $targetFileResource = new FileResource($targetFileName);
+                $sourceTranslationCatalog = $this->fileLoader->load($sourceFileResource, $locale);
+                $translationCatalog = $this->fileLoader->load($targetFileResource, $locale);
+
+                // If all messages (msgstr) are empty in the source translations, we will skip
+                if (count($sourceTranslationCatalog->getDomains()) !== 0) {
+                    $sourceTranslationCatalog->merge($translationCatalog);
+                    $fileWriter->write($sourceTranslationCatalog, 'messages', $targetFileResource->getResource(), self::TYPE);
+                    $output->writeln('<fg=green> Translations messages in : ' . $targetFileName . ' was updated </fg=green>');
+                }
+                $this->filesystem->remove($sourceTranslationFileName);
             }
         }
 

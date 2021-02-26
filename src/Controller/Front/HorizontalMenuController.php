@@ -22,13 +22,14 @@ class HorizontalMenuController extends FrontBaseController
     private $domain;
 
     /**
-     * @var CategoryFacade $categoryFacade
+     * @var \App\Model\Category\CategoryFacade
      */
     private $categoryFacade;
 
     /**
      * @param \App\Model\HorizontalMenu\HorizontalMenuItemFacade $horizontalMenuItemFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     * @param \App\Model\Category\CategoryFacade $categoryFacade
      */
     public function __construct(
         HorizontalMenuItemFacade $horizontalMenuItemFacade,

@@ -5,8 +5,9 @@ declare(strict_types=1);
 namespace App\Component\Placeholder\Exception;
 
 use App\Component\Placeholder\PlaceholderInterface;
+use Exception;
 
-class PlaceholderConversionErrorException extends \Exception implements PlaceholderException
+class PlaceholderConversionErrorException extends Exception implements PlaceholderException
 {
     public const MAX_TEXT_LENGTH = 255;
 

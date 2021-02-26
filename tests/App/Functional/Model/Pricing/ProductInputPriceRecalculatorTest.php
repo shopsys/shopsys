@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Tests\App\Functional\Model\Pricing;
 
 use App\DataFixtures\Demo\PricingGroupDataFixture;
-use App\DataFixtures\Demo\ProductTypeDataFixture;
 use App\DataFixtures\Demo\UnitDataFixture;
 use App\Model\Product\Product;
 use App\Model\Product\ProductData;

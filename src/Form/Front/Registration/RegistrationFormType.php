@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Form\Front\Registration;
 
 use App\Component\Validator\RegexValidationRule;
-use App\Form\Type\CompanyTaxNumberFieldTrait;
 use App\Model\Customer\User\CustomerUserFacade;
 use App\Model\Customer\User\RegistrationData;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
@@ -207,7 +206,7 @@ class RegistrationFormType extends AbstractType
                     ]),
                 ],
             ]);
-    
+
         if ($options['domain_id'] === Domain::SECOND_DOMAIN_ID) {
             $builder->add('companyTaxNumber', TextType::class, [
                 'required' => true,
@@ -275,24 +274,24 @@ class RegistrationFormType extends AbstractType
     protected function buildBillingAddressFormPart(FormBuilderInterface $builder, array $options): void
     {
         $builder->add('street', TextType::class, [
-                'required' => true,
-                'constraints' => [
-                    new Constraints\NotBlank(['message' => 'Prosím zadejte vaší ulici']),
-                    new Constraints\Length(['max' => 30, 'maxMessage' => 'Street cannot be longer than {{ limit }} characters']),
-                    new Constraints\Regex([
-                        'pattern' => RegexValidationRule::MOEVE_DENY_CHARS,
-                        'message' => 'Prosím, nepoužívejte žádné speciální znaky. Například őűàèìòùâêîôûâêîôãñõđåæøçłßþż€£¥ƒ¢§¶ªº',
-                    ]),
-                    new Constraints\Regex([
-                        'pattern' => RegexValidationRule::STREET_NUMBER_REGEX,
-                        'message' => 'Ulice musí obsahovat číslo',
-                    ]),
-                    new Constraints\Regex([
-                        'pattern' => RegexValidationRule::STREET_ALPHABET_REGEX,
-                        'message' => 'Ulice musí obsahovat písmena',
-                    ]),
-                ],
-            ])
+            'required' => true,
+            'constraints' => [
+                new Constraints\NotBlank(['message' => 'Prosím zadejte vaší ulici']),
+                new Constraints\Length(['max' => 30, 'maxMessage' => 'Street cannot be longer than {{ limit }} characters']),
+                new Constraints\Regex([
+                    'pattern' => RegexValidationRule::MOEVE_DENY_CHARS,
+                    'message' => 'Prosím, nepoužívejte žádné speciální znaky. Například őűàèìòùâêîôûâêîôãñõđåæøçłßþż€£¥ƒ¢§¶ªº',
+                ]),
+                new Constraints\Regex([
+                    'pattern' => RegexValidationRule::STREET_NUMBER_REGEX,
+                    'message' => 'Ulice musí obsahovat číslo',
+                ]),
+                new Constraints\Regex([
+                    'pattern' => RegexValidationRule::STREET_ALPHABET_REGEX,
+                    'message' => 'Ulice musí obsahovat písmena',
+                ]),
+            ],
+        ])
             ->add('city', TextType::class, [
                 'required' => true,
                 'constraints' => [

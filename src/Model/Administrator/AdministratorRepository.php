@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-
 namespace App\Model\Administrator;
 
 use App\Model\Security\Roles;
@@ -23,7 +22,6 @@ class AdministratorRepository extends BaseAdministratorRepository
             ->join('a.roles', 'ar')
             ->where('ar.role IN (:roles)')
             ->setParameter('roles', array_values(Roles::AVAILABLE_ADMINISTRATOR_ROLES))
-            ->groupBy('a')
-            ;
+            ->groupBy('a');
     }
 }

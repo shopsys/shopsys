@@ -62,6 +62,7 @@ class BlogArticleFacade
      * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
      */
     private $domain;
+
     /**
      * @var \App\Model\Blog\Category\BlogCategoryFacade
      */
@@ -77,6 +78,7 @@ class BlogArticleFacade
      * @param \App\Model\Blog\BlogVisibilityRecalculationScheduler $blogVisibilityRecalculationScheduler
      * @param \App\Twig\Cache\TwigCacheFacade $twigCacheFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     * @param \App\Model\Blog\Category\BlogCategoryFacade $blogCategoryFacade
      */
     public function __construct(
         EntityManagerInterface $em,

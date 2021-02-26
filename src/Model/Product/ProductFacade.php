@@ -27,7 +27,7 @@ use Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueFactory
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductManualInputPriceFacade;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceRecalculationScheduler;
-use Shopsys\FrameworkBundle\Model\Product\Product;
+use Shopsys\FrameworkBundle\Model\Product\Product as BaseProduct;
 use Shopsys\FrameworkBundle\Model\Product\ProductCategoryDomainFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Product\ProductData;
 use Shopsys\FrameworkBundle\Model\Product\ProductFacade as BaseProductFacade;
@@ -39,6 +39,13 @@ use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade;
 use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFactoryInterface;
 
 /**
+ * @property \App\Model\Product\ProductRepository $productRepository
+ * @property \App\Model\Product\Parameter\ParameterRepository $parameterRepository
+ * @property \App\Component\Image\ImageFacade $imageFacade
+ * @property \App\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
+ * @property \App\Model\Product\ProductHiddenRecalculator $productHiddenRecalculator
+ * @property \App\Model\Product\ProductSellingDeniedRecalculator $productSellingDeniedRecalculator
+ * @property \App\Model\Product\Availability\AvailabilityFacade $availabilityFacade
  * @property \App\Model\Product\Pricing\ProductPriceCalculation $productPriceCalculation
  * @method \App\Model\Product\Product getById(int $productId)
  * @method \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductSellingPrice[][] getAllProductSellingPricesIndexedByDomainId(\App\Model\Product\Product $product)
@@ -47,22 +54,13 @@ use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFactoryInterface;
  * @method createProductVisibilities(\App\Model\Product\Product $product)
  * @method \App\Model\Product\Product getOneByCatnumExcludeMainVariants(string $productCatnum)
  * @method \App\Model\Product\Product getByUuid(string $uuid)
+ * @method \App\Model\Product\Product getSellableByUuid(string $uuid, int $domainId, \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup)
  * @method markProductsForExport(\App\Model\Product\Product[] $products)
  * @method \App\Model\Product\Product[] getProductsWithAvailability(\Shopsys\FrameworkBundle\Model\Product\Availability\Availability $availability)
  * @method \App\Model\Product\Product[] getProductsWithParameter(\App\Model\Product\Parameter\Parameter $parameter)
  * @method \App\Model\Product\Product[] getProductsWithBrand(\App\Model\Product\Brand\Brand $brand)
  * @method \App\Model\Product\Product[] getProductsWithFlag(\App\Model\Product\Flag\Flag $flag)
  * @method \App\Model\Product\Product[] getProductsWithUnit(\Shopsys\FrameworkBundle\Model\Product\Unit\Unit $unit)
- * @property \App\Model\Product\Parameter\ParameterRepository $parameterRepository
- * @property \App\Model\Product\ProductRepository $productRepository
- * @property \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator $em
- * @property \App\Model\Product\ProductHiddenRecalculator $productHiddenRecalculator
- * @property \App\Model\Product\ProductSellingDeniedRecalculator $productSellingDeniedRecalculator
- * @property \App\Model\Product\Availability\AvailabilityFacade $availabilityFacade
- * @property \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
- * @property \App\Component\Image\ImageFacade $imageFacade
- * @method \App\Model\Product\Product getSellableByUuid(string $uuid, int $domainId, \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup)
- * @property \App\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
  * @method createFriendlyUrlsWhenRenamed(\App\Model\Product\Product $product, array $originalNames)
  * @method array getChangedNamesByLocale(\App\Model\Product\Product $product, array $originalNames)
  */
@@ -85,6 +83,7 @@ class ProductFacade extends BaseProductFacade
      * @var string
      */
     private $productFilesUrlPrefix;
+
     /**
      * @var \App\Component\Router\FriendlyUrl\FriendlyUrlRepository
      */
@@ -117,6 +116,7 @@ class ProductFacade extends BaseProductFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductExportScheduler $productExportScheduler
      * @param \App\Model\Stock\ProductStockFacade $productStockFacade
      * @param \App\Model\Stock\StockFacade $stockFacade
+     * @param \App\Component\Router\FriendlyUrl\FriendlyUrlRepository $friendlyUrlRepository
      */
     public function __construct(
         string $productFilesUrlPrefix,
@@ -172,6 +172,7 @@ class ProductFacade extends BaseProductFacade
             $productPriceCalculation,
             $productExportScheduler
         );
+
         $this->stockFacade = $stockFacade;
         $this->productStockFacade = $productStockFacade;
         $this->productFilesUrlPrefix = $productFilesUrlPrefix;
@@ -201,7 +202,7 @@ class ProductFacade extends BaseProductFacade
      * @param string $productCatnum
      * @return \App\Model\Product\Product|null
      */
-    public function findOneByCatnumExcludeMainVariants($productCatnum): ?Product
+    public function findOneByCatnumExcludeMainVariants($productCatnum): ?BaseProduct
     {
         try {
             /** @var \App\Model\Product\Product $product */
@@ -264,7 +265,7 @@ class ProductFacade extends BaseProductFacade
      * @param \App\Model\Product\Product $product
      * @param \App\Model\Product\ProductData $productData
      */
-    private function generateOldEshopUrlForProduct(Product $product, ProductData $productData): void
+    private function generateOldEshopUrlForProduct(BaseProduct $product, ProductData $productData): void
     {
         foreach ($this->domain->getAll() as $domainConfig) {
             $path = 'article/' . $product->getCatnum();
@@ -297,7 +298,7 @@ class ProductFacade extends BaseProductFacade
     /**
      * @param \App\Model\Product\Product $product
      */
-    private function storeUrls(Product $product): void
+    private function storeUrls(BaseProduct $product): void
     {
         foreach ($this->domain->getAll() as $domainConfig) {
             if ($product->getName($domainConfig->getLocale()) !== null) {
@@ -318,7 +319,7 @@ class ProductFacade extends BaseProductFacade
      * @param \App\Model\Product\Product $product
      * @param \App\Model\Product\ProductFilesData $productFilesData
      */
-    public function editProductFileAttributes(Product $product, ProductFilesData $productFilesData): void
+    public function editProductFileAttributes(BaseProduct $product, ProductFilesData $productFilesData): void
     {
         $product->editFileAttributes($productFilesData);
         $this->em->flush();
@@ -328,7 +329,7 @@ class ProductFacade extends BaseProductFacade
      * @param \App\Model\Product\Product $product
      * @param \App\Model\Product\ProductData $productData
      */
-    public function setAdditionalDataAfterCreate(Product $product, ProductData $productData)
+    public function setAdditionalDataAfterCreate(BaseProduct $product, ProductData $productData)
     {
         // Persist of ProductCategoryDomain requires known primary key of Product
         // @see https://github.com/doctrine/doctrine2/issues/4869
@@ -367,14 +368,14 @@ class ProductFacade extends BaseProductFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @return array
      */
-    public function getDownloadFilesForProductByDomain(Product $product, Domain $domain): array
+    public function getDownloadFilesForProductByDomain(BaseProduct $product, Domain $domain): array
     {
         $downloadFileUrls = [];
         if ($product->isDownloadAssemblyInstructionFiles() === false && $product->getAssemblyInstructionCode($domain->getId()) !== null) {
             $url = $this->getProductTransferredFileUrl(
                 $product->getProductFileNameByType(
                     $domain->getId(),
-                    \App\Model\Product\Product::FILE_IDENTIFICATOR_ASSEMBLY_INSTRUCTION_TYPE
+                    Product::FILE_IDENTIFICATOR_ASSEMBLY_INSTRUCTION_TYPE
                 ),
                 $domain->getUrl(),
                 $product->getAssemblyInstructionCode($domain->getId())
@@ -389,7 +390,7 @@ class ProductFacade extends BaseProductFacade
             $url = $this->getProductTransferredFileUrl(
                 $product->getProductFileNameByType(
                     $domain->getId(),
-                    \App\Model\Product\Product::FILE_IDENTIFICATOR_PRODUCT_TYPE_PLAN_TYPE
+                    Product::FILE_IDENTIFICATOR_PRODUCT_TYPE_PLAN_TYPE
                 ),
                 $domain->getUrl(),
                 $product->getProductTypePlanCode($domain->getId())
@@ -408,7 +409,7 @@ class ProductFacade extends BaseProductFacade
      * @param int $domainId
      * @return string
      */
-    public function getAssemblyInstructionFilename(Product $product, int $domainId): string
+    public function getAssemblyInstructionFilename(BaseProduct $product, int $domainId): string
     {
         return $product->getAssemblyInstructionCode($domainId) . self::ASSETS_FILE_TYPE;
     }
@@ -418,7 +419,7 @@ class ProductFacade extends BaseProductFacade
      * @param int $domainId
      * @return string
      */
-    public function getProductTypePlanFilename(Product $product, int $domainId): string
+    public function getProductTypePlanFilename(BaseProduct $product, int $domainId): string
     {
         return $product->getProductTypePlanCode($domainId) . self::ASSETS_FILE_TYPE;
     }
@@ -427,7 +428,7 @@ class ProductFacade extends BaseProductFacade
      * @param \App\Model\Product\Product $product
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueData[] $productParameterValuesData
      */
-    protected function saveParameters(Product $product, array $productParameterValuesData)
+    protected function saveParameters(BaseProduct $product, array $productParameterValuesData)
     {
 
         // Doctrine runs INSERTs before DELETEs in UnitOfWork. In case of UNIQUE constraint
@@ -466,7 +467,7 @@ class ProductFacade extends BaseProductFacade
      * @param string $catnum
      * @return \App\Model\Product\Product|null
      */
-    public function findMainVariantByCatnum(string $catnum): ?Product
+    public function findMainVariantByCatnum(string $catnum): ?BaseProduct
     {
         return $this->productRepository->findMainVariantByCatnum($catnum);
     }
@@ -475,7 +476,7 @@ class ProductFacade extends BaseProductFacade
      * @param string $catnum
      * @return \App\Model\Product\Product|null
      */
-    public function findByCatnum(string $catnum): ?Product
+    public function findByCatnum(string $catnum): ?BaseProduct
     {
         return $this->productRepository->findByCatnum($catnum);
     }
@@ -484,7 +485,7 @@ class ProductFacade extends BaseProductFacade
      * @param \App\Model\Product\ProductData $productData
      * @return \App\Model\Product\Product
      */
-    public function createProductAsMainVariant(ProductData $productData): Product
+    public function createProductAsMainVariant(ProductData $productData): BaseProduct
     {
         $product = $this->create($productData);
         $product->setAsMainVariant();
@@ -497,7 +498,7 @@ class ProductFacade extends BaseProductFacade
      * @param \App\Model\Product\Product $product
      * @param \App\Model\Product\Product[] $accessories
      */
-    public function refreshProductAccessories(Product $product, array $accessories): void
+    public function refreshProductAccessories(BaseProduct $product, array $accessories): void
     {
         parent::refreshProductAccessories($product, $accessories);
     }
@@ -506,7 +507,7 @@ class ProductFacade extends BaseProductFacade
      * @param \App\Model\Product\Product $product
      * @param \App\Model\Product\Product $variant
      */
-    public function setDefaultVariant(Product $product, Product $variant): void
+    public function setDefaultVariant(BaseProduct $product, BaseProduct $variant): void
     {
         $product->setDefaultVariant($variant);
         $this->em->flush();
@@ -517,16 +518,16 @@ class ProductFacade extends BaseProductFacade
      * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Component\Money\Money|null
      */
-    public function getNonSellingPriceByProductAndDomainId(Product $product, int $domainId): ?Money
+    public function getNonSellingPriceByProductAndDomainId(BaseProduct $product, int $domainId): ?Money
     {
         if ($product->isMainVariant()) {
+            /** @var \App\Model\Product\Product[] $variants */
             $variants = $this->productRepository->getAllSellableVariantsByMainVariant(
                 $product,
                 $domainId,
                 null
             );
 
-            /** @var \App\Model\Product\Product[] $variants */
             if (count($variants) === 0) {
                 return null;
             }
@@ -535,11 +536,11 @@ class ProductFacade extends BaseProductFacade
             $sellingVariantMoney = null;
             foreach ($variants as $variant) {
                 $variantSellingPriceWithVat = $variant->getSellingPriceWithVat($domainId);
+                /** @var \Shopsys\FrameworkBundle\Component\Money\Money|null $variantHighPriceWithVat */
                 $variantHighPriceWithVat = $variant->getHighPriceWithVat($domainId);
                 if ($variantHighPriceWithVat === null) {
                     return null;
                 }
-                /** @var \Shopsys\FrameworkBundle\Component\Money\Money $variantHighPriceWithVat */
                 if ($nonSellingVariantMoney === null) {
                     $sellingVariantMoney = $variantSellingPriceWithVat;
                     $nonSellingVariantMoney = $variantHighPriceWithVat;

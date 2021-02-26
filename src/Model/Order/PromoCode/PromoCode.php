@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Model\Order\PromoCode;
 
 use App\Model\Product\Parameter\Exception\DeprecatedParameterPropertyException;
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode as BasePromoCode;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeData;
@@ -32,21 +33,18 @@ class PromoCode extends BasePromoCode
 
     /**
      * @var string
-     *
      * @ORM\Column(type="text",unique=false)
      */
     protected $code;
 
     /**
      * @var \DateTime|null
-     *
      * @ORM\Column(type="datetime",nullable=true)
      */
     protected $datetimeValidFrom;
 
     /**
      * @var \DateTime|null
-     *
      * @ORM\Column(type="datetime",nullable=true)
      */
     protected $datetimeValidTo;
@@ -59,77 +57,66 @@ class PromoCode extends BasePromoCode
 
     /**
      * @var string
-     *
      * @ORM\Column(type="text")
      */
     protected $identifier;
 
     /**
      * @var bool
-     *
      * @ORM\Column(type="boolean")
      */
     private $massGenerate;
 
     /**
      * @var string
-     *
      * @ORM\Column(type="string", nullable=true)
      */
     private $prefix;
 
     /**
      * @var int|null
-     *
      * @ORM\Column(type="integer", nullable=true)
      */
     private $massGenerateBatchId;
 
     /**
      * @var bool
-     *
      * @ORM\Column(type="boolean")
      */
     protected $applyOnSecondProduct;
 
     /**
      * @var bool
-     *
      * @ORM\Column(type="boolean")
      */
     private $onSale;
 
     /**
      * @var bool
-     *
      * @ORM\Column(type="boolean")
      */
     private $inAction;
 
     /**
      * @var bool
-     *
      * @ORM\Column(type="boolean")
      */
     private $scontoPrice;
 
     /**
      * @var bool
-     *
      * @ORM\Column(type="boolean")
      */
     private $withoutLowPrice;
 
     /**
      * @var int
-     *
      * @ORM\Column(type="integer")
      */
     private $discountType;
 
     /**
      * @var bool
-     *
      * @ORM\Column(type="boolean")
      */
     private $priceHit;
@@ -140,6 +127,7 @@ class PromoCode extends BasePromoCode
     public function __construct(PromoCodeData $promoCodeData)
     {
         parent::__construct($promoCodeData);
+
         $this->domainId = $promoCodeData->domainId;
         $this->datetimeValidFrom = $promoCodeData->datetimeValidFrom;
         $this->datetimeValidTo = $promoCodeData->datetimeValidTo;
@@ -163,6 +151,7 @@ class PromoCode extends BasePromoCode
     public function edit(PromoCodeData $promoCodeData): void
     {
         parent::edit($promoCodeData);
+
         $this->domainId = $promoCodeData->domainId;
         $this->datetimeValidFrom = $promoCodeData->datetimeValidFrom;
         $this->datetimeValidTo = $promoCodeData->datetimeValidTo;
@@ -191,7 +180,7 @@ class PromoCode extends BasePromoCode
     /**
      * @return \DateTime|null
      */
-    public function getDatetimeValidFrom(): ?\DateTime
+    public function getDatetimeValidFrom(): ?DateTime
     {
         return $this->datetimeValidFrom;
     }
@@ -199,7 +188,7 @@ class PromoCode extends BasePromoCode
     /**
      * @return \DateTime|null
      */
-    public function getDatetimeValidTo(): ?\DateTime
+    public function getDatetimeValidTo(): ?DateTime
     {
         return $this->datetimeValidTo;
     }
@@ -292,7 +281,7 @@ class PromoCode extends BasePromoCode
     }
 
     /**
-     * @deprecated
+     * @deprecated original implementation is not used
      * @throws \App\Model\Product\Parameter\Exception\DeprecatedParameterPropertyException
      * @return string
      */

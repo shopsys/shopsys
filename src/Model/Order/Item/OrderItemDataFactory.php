@@ -41,6 +41,7 @@ class OrderItemDataFactory extends BaseOrderItemDataFactory
     protected function fillFromOrderItem(BaseOrderItemData $orderItemData, BaseOrderItem $orderItem)
     {
         parent::fillFromOrderItem($orderItemData, $orderItem);
+
         $orderItemData->promoCodeIdentifier = $orderItem->getPromoCodeIdentifier();
     }
 }

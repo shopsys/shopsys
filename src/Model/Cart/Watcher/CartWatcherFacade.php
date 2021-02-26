@@ -52,6 +52,7 @@ class CartWatcherFacade extends BaseCartWatcherFacade
         Domain $domain
     ) {
         parent::__construct($flashBag, $em, $cartWatcher, $currentCustomerUser, $twigEnvironment);
+
         $this->productAvailabilityFacade = $productAvailabilityFacade;
         $this->domain = $domain;
     }
@@ -71,17 +72,19 @@ class CartWatcherFacade extends BaseCartWatcherFacade
                 $cartItemsToDelete[] = $item;
             }
 
-            if ($maximumOrderQuantity > 0 && $item->getQuantity() > $maximumOrderQuantity) {
-                $item->changeQuantity($maximumOrderQuantity);
-                $item->changeAddedAt(new DateTime());
-                $this->em->persist($item);
-                $this->em->flush();
-
-                $messageTemplate = $this->twigEnvironment->createTemplate(
-                    t('Množství zboží <strong>{{ name }}</strong> ve Vašem košíku bylo upraveno z důvodu změny dostupnosti. Prosím zkontrolujte si svojí objednávku.')
-                );
-                $this->flashBag->add(FlashMessage::KEY_INFO, $messageTemplate->render(['name' => $product->getName()]));
+            if ($maximumOrderQuantity <= 0 || $item->getQuantity() <= $maximumOrderQuantity) {
+                continue;
             }
+
+            $item->changeQuantity($maximumOrderQuantity);
+            $item->changeAddedAt(new DateTime());
+            $this->em->persist($item);
+            $this->em->flush();
+
+            $messageTemplate = $this->twigEnvironment->createTemplate(
+                t('Množství zboží <strong>{{ name }}</strong> ve Vašem košíku bylo upraveno z důvodu změny dostupnosti. Prosím zkontrolujte si svojí objednávku.')
+            );
+            $this->flashBag->add(FlashMessage::KEY_INFO, $messageTemplate->render(['name' => $product->getName()]));
         }
         return $cartItemsToDelete;
     }

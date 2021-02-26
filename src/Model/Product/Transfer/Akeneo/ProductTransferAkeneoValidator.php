@@ -265,7 +265,7 @@ class ProductTransferAkeneoValidator
                         ]),
                     ]),
                 ],
-        ])
+            ])
         ));
     }
 
@@ -318,7 +318,6 @@ class ProductTransferAkeneoValidator
      */
     private function findNotBlankAssert(array $asserts): ?Assert\NotBlank
     {
-        $notBlankAssert = null;
         foreach ($asserts as $assert) {
             if ($assert instanceof Assert\NotBlank) {
                 return $assert;

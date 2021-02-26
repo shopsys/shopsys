@@ -181,7 +181,7 @@ class ProductController extends FrontBaseController
      * @var \App\Model\Product\Filter\ProductVariantFilterFacade
      */
     private $productVariantFilterFacade;
-    
+
     /**
      * @var \App\Model\Product\Filter\ProductFilterCacheFacade
      */
@@ -290,7 +290,9 @@ class ProductController extends FrontBaseController
 
         if ($productVariant->isMainVariant()) {
             return $this->redirectToRoute('front_product_detail', ['id' => $productVariant->getDefaultVariant()->getId()], 301);
-        } elseif ($productVariant->isVariant()) {
+        }
+
+        if ($productVariant->isVariant()) {
             $product = $productVariant->getMainVariant();
         } else {
             $product = $productVariant;
@@ -342,7 +344,7 @@ class ProductController extends FrontBaseController
      */
     public function similarProductsAction(Request $request): Response
     {
-        $id = (int) $request->get('id');
+        $id = (int)$request->get('id');
 
         $requestPage = $request->get(self::PAGE_QUERY_PARAMETER);
         if (!$this->isRequestPageValid($requestPage)) {
@@ -378,7 +380,7 @@ class ProductController extends FrontBaseController
                     DataLayer::LIST_NAME_PRODUCT_SIMILAR_PRODUCTS,
                     ($page - 1) * self::SIMILAR_PRODUCTS_PER_PAGE + 1
                 ),
-                'gtmList' => DataLayer::LIST_NAME_PRODUCT_SIMILAR_PRODUCTS
+                'gtmList' => DataLayer::LIST_NAME_PRODUCT_SIMILAR_PRODUCTS,
             ]
         );
     }
@@ -389,11 +391,11 @@ class ProductController extends FrontBaseController
      */
     public function variantParametersAction(Product $product): Response
     {
-        if ($product->isVariant()) {
-            $mainProduct = $product->getMainVariant();
-        } else {
+        if (!$product->isVariant()) {
             return new Response();
         }
+
+        $mainProduct = $product->getMainVariant();
 
         $currentVariantParameterValuesIndexedByParameterId = $this->parameterFacade
             ->getParameterValuesIndexedByParameterIdForProductVariant($product, $mainProduct->getVariantParameters(), $this->domain->getLocale());
@@ -470,7 +472,7 @@ class ProductController extends FrontBaseController
             );
         }
 
-        $productFilterFormRequestData = ($request->query->has('product_filter_form')) ? $request->query->get('product_filter_form') : [];
+        $productFilterFormRequestData = $request->query->has('product_filter_form') ? $request->query->get('product_filter_form') : [];
         $productFilterSetup = $this->productFilterFacade->getProductFilterSetupByProductFilterFormRequestData($productFilterFormRequestData);
 
         $nextIndex = ($page - 1) * self::PRODUCTS_PER_PAGE + 1;
@@ -522,26 +524,25 @@ class ProductController extends FrontBaseController
             }
 
             return $this->render('Front/Content/Product/ajaxList.html.twig', $viewParameters);
-        } else {
-            $response = $this->render('Front/Content/Product/list.html.twig', $viewParameters);
-
-            // Direct access on SeoMixUrl with ordering lost ordering after change in filter - This prevent it
-            if ($readyCategorySeoMix !== null) {
-                // The cookie must have httpOnly=false, because It is edited by JS
-                $cookie = Cookie::create(
-                    $productListOrderingConfig->getCookieName(),
-                    $readyCategorySeoMix->getOrdering(),
-                    0,
-                    '/',
-                    null,
-                    null,
-                    false
-                );
-                $response->headers->setCookie($cookie);
-            }
-
-            return $response;
         }
+        $response = $this->render('Front/Content/Product/list.html.twig', $viewParameters);
+
+        // Direct access on SeoMixUrl with ordering lost ordering after change in filter - This prevent it
+        if ($readyCategorySeoMix !== null) {
+            // The cookie must have httpOnly=false, because It is edited by JS
+            $cookie = Cookie::create(
+                $productListOrderingConfig->getCookieName(),
+                $readyCategorySeoMix->getOrdering(),
+                0,
+                '/',
+                null,
+                null,
+                false
+            );
+            $response->headers->setCookie($cookie);
+        }
+
+        return $response;
     }
 
     /**
@@ -587,9 +588,9 @@ class ProductController extends FrontBaseController
 
         if ($request->isXmlHttpRequest()) {
             return $this->render('Front/Content/Product/ajaxListByBrand.html.twig', $viewParameters);
-        } else {
-            return $this->render('Front/Content/Product/listByBrand.html.twig', $viewParameters);
         }
+
+        return $this->render('Front/Content/Product/listByBrand.html.twig', $viewParameters);
     }
 
     /**
@@ -637,7 +638,7 @@ class ProductController extends FrontBaseController
             );
         }
 
-        $productFilterFormRequestData = ($request->query->has('product_filter_form')) ? $request->query->get('product_filter_form') : [];
+        $productFilterFormRequestData = $request->query->has('product_filter_form') ? $request->query->get('product_filter_form') : [];
         $productFilterSetup = $this->productFilterFacade->getProductFilterSetupByProductFilterFormRequestData($productFilterFormRequestData);
 
         $nextIndex = ($page - 1) * self::PRODUCTS_PER_PAGE + 1;
@@ -662,7 +663,7 @@ class ProductController extends FrontBaseController
             'productFilterSetup' => $productFilterSetup,
             'orderModeName' => $orderModeName,
             'gtmList' => DataLayer::LIST_NAME_SEARCH_STANDARD,
-            'nextIndex' => $nextIndex
+            'nextIndex' => $nextIndex,
         ];
 
         $viewParameters = array_merge(
@@ -673,17 +674,17 @@ class ProductController extends FrontBaseController
             )
         );
 
-        if ($request->isXmlHttpRequest()) {
-            $viewParameters['gtmEvent'] = $this->gtmContainer->getDataLayer()->getData();
-            if (!($viewParameters['gtmEvent']['ecommerce']['impressions'] ?? false)) {
-                $viewParameters['gtmEvent'] = $this->gtmJsPushFacade->getEmptyFilterResult();
-            }
-
-            return $this->render('Front/Content/Product/ajaxSearch.html.twig', $viewParameters);
-        } else {
+        if (!$request->isXmlHttpRequest()) {
             $viewParameters['foundCategories'] = $this->searchCategories($searchText);
             return $this->render('Front/Content/Product/search.html.twig', $viewParameters);
         }
+
+        $viewParameters['gtmEvent'] = $this->gtmContainer->getDataLayer()->getData();
+        if (!($viewParameters['gtmEvent']['ecommerce']['impressions'] ?? false)) {
+            $viewParameters['gtmEvent'] = $this->gtmJsPushFacade->getEmptyFilterResult();
+        }
+
+        return $this->render('Front/Content/Product/ajaxSearch.html.twig', $viewParameters);
     }
 
     /**
@@ -970,7 +971,7 @@ class ProductController extends FrontBaseController
                     ($page - 1) * self::SALE_PRODUCTS_PER_PAGE + 1
                 ),
                 'gtmList' => DataLayer::LIST_NAME_HOME_SALE_PRODUCTS,
-                'pageItemsCount' => self::SALE_PRODUCTS_PER_PAGE
+                'pageItemsCount' => self::SALE_PRODUCTS_PER_PAGE,
             ]
         );
     }

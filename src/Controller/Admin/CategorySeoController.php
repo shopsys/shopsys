@@ -11,6 +11,7 @@ use App\Model\Category\CategoryFacade;
 use App\Model\CategorySeo\CategorySeoFacade;
 use App\Model\CategorySeo\CategorySeoFiltersData;
 use App\Model\CategorySeo\ChoseCategorySeoMixCombination;
+use App\Model\CategorySeo\Exception\ReadyCategorySeoMixNotFoundException;
 use App\Model\CategorySeo\Exception\ReadyCategorySeoMixUrlsContainBadDomainUrlException;
 use App\Model\CategorySeo\Exception\ReadyCategorySeoMixUrlsDoNotContainUrlForCorrectDomainException;
 use App\Model\CategorySeo\ReadyCategorySeoMixDataFactory;
@@ -350,7 +351,7 @@ class CategorySeoController extends AdminBaseController
                     '{{ ReadyCategorySeoMixId }}' => $id,
                 ])
             );
-        } catch (\App\Model\CategorySeo\Exception\ReadyCategorySeoMixNotFoundException $readyCategorySeoMixNotFoundException) {
+        } catch (ReadyCategorySeoMixNotFoundException $readyCategorySeoMixNotFoundException) {
             $this->addSuccessFlashTwig(
                 t('SEO kombinace kategorie s ID {{ ReadyCategorySeoMixId }} nebyla smazána, protože nebyla nalezena', [
                     '{{ ReadyCategorySeoMixId }}' => $id,

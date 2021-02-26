@@ -34,6 +34,7 @@ class PromoCodeGridFactory extends BasePromoCodeGridFactory
     public function __construct(EntityManagerInterface $em, GridFactory $gridFactory, AdminDomainTabsFacade $adminDomainTabsFacade, PromoCodeLimitRepository $promoCodeLimitRepository)
     {
         parent::__construct($em, $gridFactory);
+
         $this->adminDomainTabsFacade = $adminDomainTabsFacade;
         $this->promoCodeLimitRepository = $promoCodeLimitRepository;
     }

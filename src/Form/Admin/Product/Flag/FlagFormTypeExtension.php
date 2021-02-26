@@ -37,6 +37,7 @@ class FlagFormTypeExtension extends AbstractTypeExtension
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         parent::buildForm($builder, $options);
+
         $builder->add('sale', CheckboxType::class, ['required' => false]);
 
         $builder->add('noticeLowPrice', TextType::class, [

@@ -22,9 +22,16 @@ class CartMigrationFacade extends BaseCartMigrationFacade
      */
     private bool $cartChanged;
 
+    /**
+     * @param \Doctrine\ORM\EntityManagerInterface $em
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifierFactory $customerUserIdentifierFactory
+     * @param \Shopsys\FrameworkBundle\Model\Cart\Item\CartItemFactoryInterface $cartItemFactory
+     * @param \App\Model\Cart\CartFacade $cartFacade
+     */
     public function __construct(EntityManagerInterface $em, CustomerUserIdentifierFactory $customerUserIdentifierFactory, CartItemFactoryInterface $cartItemFactory, CartFacade $cartFacade)
     {
         parent::__construct($em, $customerUserIdentifierFactory, $cartItemFactory, $cartFacade);
+
         $this->cartChanged = false;
     }
 

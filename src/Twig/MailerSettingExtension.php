@@ -22,6 +22,7 @@ class MailerSettingExtension extends BaseMailerSettingExtension
     public function __construct(ContainerInterface $container, Environment $twigEnvironment)
     {
         parent::__construct($container, $twigEnvironment);
+
         $this->showMailRestrictionInfoBar = (bool)$this->container->getParameter('show_mail_restriction_info_bar');
     }
 

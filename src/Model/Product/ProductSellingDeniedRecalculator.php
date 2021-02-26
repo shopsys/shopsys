@@ -21,9 +21,14 @@ class ProductSellingDeniedRecalculator extends BaseProductSellingDeniedRecalcula
      */
     private Domain $domain;
 
+    /**
+     * @param \Doctrine\ORM\EntityManagerInterface $entityManager
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     */
     public function __construct(EntityManagerInterface $entityManager, Domain $domain)
     {
         parent::__construct($entityManager);
+
         $this->domain = $domain;
     }
 
@@ -150,6 +155,7 @@ class ProductSellingDeniedRecalculator extends BaseProductSellingDeniedRecalcula
     protected function propagateMainVariantSellingDeniedToVariants(array $products)
     {
         parent::propagateMainVariantSellingDeniedToVariants($products);
+
         $this->propagateMainVariantSellingDeniedToVariantsCalculatedSaleExclusion($products);
         $this->propagateMainVariantCalculateSaleExclusionToVariantsCalculatedSaleExclusion($products);
     }
@@ -220,6 +226,7 @@ class ProductSellingDeniedRecalculator extends BaseProductSellingDeniedRecalcula
     protected function propagateVariantsSellingDeniedToMainVariant(array $products)
     {
         parent::propagateVariantsSellingDeniedToMainVariant($products);
+
         $this->propagateVariantsSaleExclusionToMainVariantCalculateSaleExclusion($products);
         $this->propagateVariantsSaleExclusionToMainVariantCalculateSellingDenied($products);
     }

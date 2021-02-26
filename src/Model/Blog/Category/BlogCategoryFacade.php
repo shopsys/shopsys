@@ -7,6 +7,7 @@ namespace App\Model\Blog\Category;
 use App\Component\Image\ImageFacade;
 use App\Model\Blog\Article\BlogArticle;
 use App\Model\Blog\BlogVisibilityRecalculationScheduler;
+use App\Model\Blog\Category\Exception\BlogCategoryNotFoundException;
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
@@ -53,6 +54,7 @@ class BlogCategoryFacade
      * @var \App\Model\Blog\BlogVisibilityRecalculationScheduler
      */
     private $blogVisibilityRecalculationScheduler;
+
     /**
      * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
      */
@@ -66,6 +68,7 @@ class BlogCategoryFacade
      * @param \App\Model\Blog\Category\BlogCategoryFactory $blogCategoryFactory
      * @param \App\Model\Blog\Category\BlogCategoryWithPreloadedChildrenFactory $blogCategoryWithPreloadedChildrenFactory
      * @param \App\Model\Blog\BlogVisibilityRecalculationScheduler $blogVisibilityRecalculationScheduler
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
         EntityManagerInterface $em,
@@ -238,9 +241,7 @@ class BlogCategoryFacade
      */
     public function getAllBlogCategoriesOfCollapsedTree(array $selectedCategories): array
     {
-        $blogCategories = $this->blogCategoryRepository->getAllBlogCategoriesOfCollapsedTree($selectedCategories);
-
-        return $blogCategories;
+        return $this->blogCategoryRepository->getAllBlogCategoriesOfCollapsedTree($selectedCategories);
     }
 
     /**
@@ -250,9 +251,7 @@ class BlogCategoryFacade
     public function getAllBlogCategoriesWithPreloadedChildren(string $locale): array
     {
         $blogCategories = $this->blogCategoryRepository->getPreOrderTreeTraversalForAllBlogCategories($locale);
-        $blogCategoriesWithPreloadedChildren = $this->blogCategoryWithPreloadedChildrenFactory->createBlogCategoriesWithPreloadedChildren($blogCategories);
-
-        return $blogCategoriesWithPreloadedChildren;
+        return $this->blogCategoryWithPreloadedChildrenFactory->createBlogCategoriesWithPreloadedChildren($blogCategories);
     }
 
     /**
@@ -264,9 +263,7 @@ class BlogCategoryFacade
     {
         $blogCategories = $this->blogCategoryRepository->getPreOrderTreeTraversalForVisibleBlogCategoriesOnDomain($domainId, $locale);
 
-        $blogCategoriesWithPreloadedChildren = $this->blogCategoryWithPreloadedChildrenFactory->createBlogCategoriesWithPreloadedChildren($blogCategories);
-
-        return $blogCategoriesWithPreloadedChildren;
+        return $this->blogCategoryWithPreloadedChildrenFactory->createBlogCategoriesWithPreloadedChildren($blogCategories);
     }
 
     /**
@@ -318,7 +315,7 @@ class BlogCategoryFacade
 
         if (!$blogCategory->isVisible($domainId)) {
             $message = 'Blog category ID ' . $blogCategoryId . ' is not visible on domain ID ' . $domainId;
-            throw new \App\Model\Blog\Category\Exception\BlogCategoryNotFoundException($message);
+            throw new BlogCategoryNotFoundException($message);
         }
 
         return $blogCategory;

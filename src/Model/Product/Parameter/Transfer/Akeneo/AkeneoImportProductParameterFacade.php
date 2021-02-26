@@ -10,6 +10,7 @@ use App\Model\Product\Parameter\ParameterFacade;
 use App\Model\Product\Parameter\Unit\ParameterUnit;
 use App\Model\Product\Parameter\Unit\ParameterUnitDataFactory;
 use App\Model\Product\Parameter\Unit\ParameterUnitFacade;
+use Generator;
 
 class AkeneoImportProductParameterFacade extends AbstractAkeneoImportTransfer
 {
@@ -88,7 +89,7 @@ class AkeneoImportProductParameterFacade extends AbstractAkeneoImportTransfer
     /**
      * @inheritDoc
      */
-    protected function getData(): \Generator
+    protected function getData(): Generator
     {
         return $this->productParameterTransferAkeneoFacade->getAllAttributes();
     }

@@ -16,6 +16,7 @@ use Twig\TwigFunction;
 
 /**
  * Class ProductExtension
+ *
  * @property \App\Model\Product\ProductCachedAttributesFacade $productCachedAttributesFacade
  */
 class ProductExtension extends BaseProductExtension
@@ -39,6 +40,7 @@ class ProductExtension extends BaseProductExtension
             $categoryFacade,
             $productCachedAttributesFacade
         );
+
         $this->productListOrderingModeForListFacade = $productListOrderingModeForListFacade;
     }
 

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Model\Product\Parameter;
 
 use Doctrine\ORM\Mapping as ORM;
+use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileData;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue as BaseParameterValue;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueData;
 
@@ -16,7 +17,6 @@ class ParameterValue extends BaseParameterValue
 {
     /**
      * @var string|null
-     *
      * @ORM\Column(type="string", length=10, nullable=true)
      */
     protected $rgbHex;
@@ -28,7 +28,6 @@ class ParameterValue extends BaseParameterValue
 
     /**
      * @var string
-     *
      * @ORM\Column(type="text")
      */
     protected $text;
@@ -39,6 +38,7 @@ class ParameterValue extends BaseParameterValue
     public function __construct(ParameterValueData $parameterData)
     {
         parent::__construct($parameterData);
+
         $this->rgbHex = $parameterData->rgbHex;
         $this->colourIcon = $parameterData->colourIcon;
     }
@@ -49,6 +49,7 @@ class ParameterValue extends BaseParameterValue
     public function edit(ParameterValueData $parameterData)
     {
         parent::edit($parameterData);
+
         $this->rgbHex = $parameterData->rgbHex;
     }
 
@@ -63,7 +64,7 @@ class ParameterValue extends BaseParameterValue
     /**
      * @return \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileData
      */
-    public function getColourIcon(): \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileData
+    public function getColourIcon(): UploadedFileData
     {
         return $this->colourIcon;
     }

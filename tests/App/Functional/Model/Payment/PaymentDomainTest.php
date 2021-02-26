@@ -94,9 +94,12 @@ class PaymentDomainTest extends TransactionFunctionalTestCase
         return $this->em->getRepository(Payment::class)->find($paymentId);
     }
 
+    /**
+     * @return \App\Model\Payment\PaymentData
+     */
     private function createPaymentData(): PaymentData
     {
-        /** @var PaymentData $paymentData */
+        /** @var \App\Model\Payment\PaymentData $paymentData */
         $paymentData = $this->paymentDataFactory->create();
 
         return $paymentData;

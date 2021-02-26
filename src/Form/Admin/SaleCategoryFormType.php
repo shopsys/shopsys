@@ -43,7 +43,7 @@ class SaleCategoryFormType extends AbstractType
                 'required' => false,
                 'choices' => $categoryPaths,
                 'choice_label' => function (Category $category) {
-                    $padding = str_repeat("-", ($category->getLevel() - 1) * 2);
+                    $padding = str_repeat('-', ($category->getLevel() - 1) * 2);
                     return $padding . $category->getName();
                 },
                 'choice_value' => 'id',

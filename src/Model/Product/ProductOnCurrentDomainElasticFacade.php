@@ -82,6 +82,7 @@ class ProductOnCurrentDomainElasticFacade extends BaseProductOnCurrentDomainElas
             $filterQueryFactory,
             $indexDefinitionLoader
         );
+
         $this->productFilterCacheFacade = $productFilterCacheFacade;
     }
 
@@ -156,7 +157,6 @@ class ProductOnCurrentDomainElasticFacade extends BaseProductOnCurrentDomainElas
         $filterQuery = $this->createFilterQueryWithProductFilterData($productFilterData, $orderingModeId, $page, $limit)
             ->search($searchText);
 
-        /** @var \App\Model\Product\Search\FilterQuery $filterQuery */
         $filterQuery->filterNotExcludeOrInStock();
 
         return $filterQuery;
@@ -207,7 +207,7 @@ class ProductOnCurrentDomainElasticFacade extends BaseProductOnCurrentDomainElas
 
     /**
      * @param int $productId
-     * @return Product
+     * @return \App\Model\Product\Product
      */
     public function getProductById(int $productId): Product
     {

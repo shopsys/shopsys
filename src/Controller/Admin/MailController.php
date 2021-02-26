@@ -26,6 +26,8 @@ class MailController extends baseMailController
 {
     /**
      * @Route("/mail/create", requirements={"id" = "\d+"})
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function createTemplateAction(Request $request): Response
     {

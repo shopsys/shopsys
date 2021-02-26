@@ -6,13 +6,13 @@ namespace App\DataFixtures\Demo;
 
 use App\Model\Product\Package\ProductPackageDataFactory;
 use App\Model\Product\Package\ProductPackageFacade;
+use App\Model\Product\Parameter\Parameter;
 use App\Model\Product\Parameter\ParameterDataFactory;
 use App\Model\Product\Parameter\ParameterGroupDataFactory;
 use App\Model\Product\Parameter\ParameterGroupFacade;
 use App\Model\Product\Product;
 use App\Model\Product\ProductData;
 use App\Model\Stock\ProductStockDataFactory;
-use App\Model\Stock\ProductStockFacade;
 use App\Model\Stock\StockRepository;
 use DateTime;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
@@ -24,7 +24,7 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\PriceConverter;
-use Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter;
+use Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter as BaseParameter;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueDataFactory;
@@ -131,11 +131,6 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
     private $productPackageFacade;
 
     /**
-     * @var \App\Model\Stock\ProductStockFacade
-     */
-    private $productStockFacade;
-
-    /**
      * @param \App\Model\Product\ProductFacade $productFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade $pricingGroupFacade
@@ -153,7 +148,6 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \App\Model\Product\Package\ProductPackageDataFactory $productPackageDataFactory
      * @param \App\Model\Product\Package\ProductPackageFacade $productPackageFacade
-     * @param \App\Model\Stock\ProductStockFacade $productStockFacade
      */
     public function __construct(
         ProductFacade $productFacade,
@@ -172,8 +166,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         ProductStockDataFactory $productStockDataFactory,
         EntityManagerInterface $em,
         ProductPackageDataFactory $productPackageDataFactory,
-        ProductPackageFacade $productPackageFacade,
-        ProductStockFacade $productStockFacade
+        ProductPackageFacade $productPackageFacade
     ) {
         $this->productFacade = $productFacade;
         $this->domain = $domain;
@@ -192,7 +185,6 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->em = $em;
         $this->productPackageDataFactory = $productPackageDataFactory;
         $this->productPackageFacade = $productPackageFacade;
-        $this->productStockFacade = $productStockFacade;
     }
 
     /**
@@ -2057,7 +2049,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $productData->preorder = true;
         $this->setBrand($productData, BrandDataFixture::BRAND_SAMSUNG);
 
-        $product = $this->createProduct($productData);
+        $this->createProduct($productData);
 
         $productData = $this->productDataFactory->create();
 
@@ -2476,7 +2468,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $productData->preorder = true;
         $this->setBrand($productData, BrandDataFixture::BRAND_LG);
 
-        $product = $this->createProduct($productData);
+        $this->createProduct($productData);
 
         $productData = $this->productDataFactory->create();
 
@@ -6226,7 +6218,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
      * @param string[]|null $parameterGroupNamesByLocale
      * @return \App\Model\Product\Parameter\Parameter
      */
-    private function findParameterByNamesOrCreateNew(array $parameterNamesByLocale, ?array $parameterGroupNamesByLocale): Parameter
+    private function findParameterByNamesOrCreateNew(array $parameterNamesByLocale, ?array $parameterGroupNamesByLocale): BaseParameter
     {
         /** @var \App\Model\Product\Parameter\Parameter|null $parameter */
         $parameter = $this->parameterFacade->findParameterByNames($parameterNamesByLocale);
@@ -6241,7 +6233,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $parameterData->name = $parameterNamesByLocale;
             $parameterData->group = $parameterGroup;
             if ($parameterNamesByLocale['cs'] === 'Barva') {
-                $parameterData->akeneoCode = \App\Model\Product\Parameter\Parameter::COLOR_PARAMETER_AKENEO_CODE;
+                $parameterData->akeneoCode = Parameter::COLOR_PARAMETER_AKENEO_CODE;
             }
 
             /** @var \App\Model\Product\Parameter\Parameter|null $parameter */
@@ -6487,7 +6479,6 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
     /**
      * @param array $productCatnumsByMainVariantCatnum
-     *
      * @return string[]
      */
     private function getAllVariantCatnumsFromAssociativeArray(array $productCatnumsByMainVariantCatnum): array

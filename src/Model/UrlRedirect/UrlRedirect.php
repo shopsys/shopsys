@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-
 namespace App\Model\UrlRedirect;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -32,7 +31,6 @@ class UrlRedirect
      * @ORM\Column(type="integer")
      */
     private int $domainId;
-
 
     /**
      * @param \App\Model\UrlRedirect\UrlRedirectData $urlRedirectData

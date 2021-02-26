@@ -36,6 +36,18 @@ class OrderController extends BaseOrderController
      */
     private AuthorizationCheckerInterface $authorizationChecker;
 
+    /**
+     * @param \App\Model\Order\OrderFacade $orderFacade
+     * @param \Shopsys\FrameworkBundle\Model\AdvancedSearchOrder\AdvancedSearchOrderFacade $advancedSearchOrderFacade
+     * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemPriceCalculation $orderItemPriceCalculation
+     * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorGridFacade $administratorGridFacade
+     * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
+     * @param \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider $breadcrumbOverrider
+     * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemFacade $orderItemFacade
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     * @param \App\Model\Order\OrderDataFactory $orderDataFactory
+     * @param \Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface $authorizationChecker
+     */
     public function __construct(
         OrderFacade $orderFacade,
         AdvancedSearchOrderFacade $advancedSearchOrderFacade,
@@ -59,6 +71,7 @@ class OrderController extends BaseOrderController
             $domain,
             $orderDataFactory
         );
+
         $this->authorizationChecker = $authorizationChecker;
     }
 

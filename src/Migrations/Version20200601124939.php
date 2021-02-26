@@ -6,6 +6,8 @@ namespace App\Migrations;
 
 use Doctrine\DBAL\Schema\Schema;
 use Shopsys\MigrationBundle\Component\Doctrine\Migrations\AbstractMigration;
+use function GuzzleHttp\json_decode;
+use function GuzzleHttp\json_encode;
 
 class Version20200601124939 extends AbstractMigration
 {
@@ -16,12 +18,12 @@ class Version20200601124939 extends AbstractMigration
     {
         $data = $this->sql('SELECT id, chose_category_seo_mix_combination_json FROM ready_category_seo_mixes');
         foreach ($data->fetchAll() as $row) {
-            $seoMixCombination = \GuzzleHttp\json_decode($row['chose_category_seo_mix_combination_json'], true);
+            $seoMixCombination = json_decode($row['chose_category_seo_mix_combination_json'], true);
             ksort($seoMixCombination['parameterValueIdsByParameterIds']);
             $this->sql(
                 'UPDATE ready_category_seo_mixes SET chose_category_seo_mix_combination_json = :json WHERE id = :id',
                 [
-                    'json' => \GuzzleHttp\json_encode($seoMixCombination),
+                    'json' => json_encode($seoMixCombination),
                     'id' => $row['id'],
                 ]
             );

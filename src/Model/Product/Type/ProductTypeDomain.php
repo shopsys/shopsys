@@ -14,14 +14,12 @@ use Shopsys\FrameworkBundle\Component\Money\Money;
  *         @ORM\UniqueConstraint(name="product_type_domain", columns={"product_type_id", "domain_id"})
  *     }
  * )
- *
  * @ORM\Entity
  */
 class ProductTypeDomain
 {
     /**
      * @var int
-     *
      * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
@@ -30,7 +28,6 @@ class ProductTypeDomain
 
     /**
      * @var \App\Model\Product\Type\ProductType
-     *
      * @ORM\ManyToOne(targetEntity="App\Model\Product\Type\ProductType", inversedBy="domains")
      * @ORM\JoinColumn(nullable=false, name="product_type_id", referencedColumnName="id", onDelete="CASCADE")
      */
@@ -38,14 +35,12 @@ class ProductTypeDomain
 
     /**
      * @var int
-     *
      * @ORM\Column(type="integer")
      */
     private $domainId;
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\Money\Money|null
-     *
      * @ORM\Column(type="money", precision=20, scale=6, nullable=true)
      */
     private $freeTransportMinimalPrice;

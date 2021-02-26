@@ -61,8 +61,8 @@ class StockDataFactory
     }
 
     /**
-     * @param StockData $stockData
-     * @param Stock $stock
+     * @param \App\Model\Stock\StockData $stockData
+     * @param \App\Model\Stock\Stock $stock
      */
     public function fillFromStock(StockData $stockData, Stock $stock): void
     {

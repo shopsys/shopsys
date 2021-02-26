@@ -28,14 +28,12 @@ class Payment extends BasePayment
 
     /**
      * @var string
-     *
      * @ORM\Column(type="string")
      */
     private $type;
 
     /**
      * @var \App\Model\GoPay\PaymentMethod\GoPayPaymentMethod|null
-     *
      * @ORM\ManyToOne(targetEntity="App\Model\GoPay\PaymentMethod\GoPayPaymentMethod")
      * @ORM\JoinColumn(nullable=true, onDelete="SET NULL")
      */
@@ -43,7 +41,6 @@ class Payment extends BasePayment
 
     /**
      * @var bool
-     *
      * @ORM\Column(type="boolean")
      */
     private $hiddenByGoPay;

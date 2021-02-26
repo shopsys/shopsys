@@ -18,7 +18,6 @@ class Stock implements OrderableEntityInterface
 
     /**
      * @var int
-     *
      * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
@@ -27,77 +26,66 @@ class Stock implements OrderableEntityInterface
 
     /**
      * @var int
-     *
      * @ORM\Column(type="integer")
      */
     protected $domainId;
 
     /**
      * @var string
-     *
      * @ORM\Column(type="string", length=255)
      */
     protected $name;
 
     /**
      * @var bool
-     *
      * @ORM\Column(type="boolean")
      */
     protected $centralStock;
 
     /**
      * @var string
-     *
      * @ORM\Column(type="string", length=255, unique=true)
      */
     protected $externalId;
 
     /**
      * @var string|null
-     *
      * @ORM\Column(type="string", length=100, nullable=true)
      */
     protected $street;
 
     /**
      * @var string|null
-     *
      * @ORM\Column(type="string", length=100, nullable=true)
      */
     protected $city;
 
     /**
      * @var string|null
-     *
      * @ORM\Column(type="text", nullable=true)
      */
     protected $openingHours;
 
     /**
      * @var string|null
-     *
      * @ORM\Column(type="text", nullable=true)
      */
     protected $extraordinaryOpeningHours;
 
     /**
      * @var string|null
-     *
      * @ORM\Column(type="string", length=100, nullable=true)
      */
     protected $contactText1;
 
     /**
      * @var string|null
-     *
      * @ORM\Column(type="string", length=100, nullable=true)
      */
     protected $contactText2;
 
     /**
      * @var string|null
-     *
      * @ORM\Column(type="text", nullable=true)
      */
     protected $contactInfo;
@@ -107,21 +95,18 @@ class Stock implements OrderableEntityInterface
 
     /**
      * @var string|null
-     *
      * @ORM\Column(type="decimal", precision=16, scale=13, nullable=true)
      */
     protected $locationLat;
 
     /**
      * @var string|null
-     *
      * @ORM\Column(type="decimal", precision=16, scale=13, nullable=true)
      */
     protected $locationLng;
 
     /**
      * @var int
-     *
      * @Gedmo\SortablePosition
      * @ORM\Column(type="integer")
      */
@@ -286,7 +271,6 @@ class Stock implements OrderableEntityInterface
     {
         return $this->position;
     }
-
 
     /**
      * @inheritDoc

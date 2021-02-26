@@ -59,12 +59,12 @@ class PromoCodeLimitType extends AbstractType
             'groups' => [PromoCodeFormTypeExtension::VALIDATION_GROUP_TYPE_NOMINAL],
         ]);
         $options['constraints'][] = new Constraints\GreaterThanOrEqual([
-                'groups' => [PromoCodeFormTypeExtension::VALIDATION_GROUP_TYPE_NOMINAL],
-                'value' => 1,
+            'groups' => [PromoCodeFormTypeExtension::VALIDATION_GROUP_TYPE_NOMINAL],
+            'value' => 1,
         ]);
         $options['constraints'][] = new Constraints\Regex([
-                'groups' => PromoCodeFormTypeExtension::VALIDATION_GROUP_TYPE_NOMINAL,
-                'pattern' => '/^\d+$/',
+            'groups' => PromoCodeFormTypeExtension::VALIDATION_GROUP_TYPE_NOMINAL,
+            'pattern' => '/^\d+$/',
         ]);
         $options['scale'] = 3;
         $builder->add(

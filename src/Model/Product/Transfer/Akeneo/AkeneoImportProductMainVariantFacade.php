@@ -13,6 +13,8 @@ use App\Model\Product\Parameter\Transfer\Akeneo\AkeneoImportProductParameterFaca
 use App\Model\Product\Product;
 use App\Model\Product\ProductDataFactory;
 use App\Model\Product\ProductFacade;
+use Generator;
+use RuntimeException;
 
 class AkeneoImportProductMainVariantFacade extends AbstractAkeneoImportTransfer
 {
@@ -32,11 +34,6 @@ class AkeneoImportProductMainVariantFacade extends AbstractAkeneoImportTransfer
      * @var \App\Model\Product\Transfer\Akeneo\TransferredProductProcessor
      */
     private $transferredProductProcessor;
-
-    /**
-     * @var \App\Model\Product\Transfer\Akeneo\ProductTransferAkeneoMapper
-     */
-    private $productTransferAkeneoMapper;
 
     /**
      * @var \App\Model\Product\Parameter\Transfer\Akeneo\AkeneoImportProductParameterFacade
@@ -67,7 +64,6 @@ class AkeneoImportProductMainVariantFacade extends AbstractAkeneoImportTransfer
      * @param \App\Component\Akeneo\Transfer\AkeneoImportTransferDependency $akeneoImportTransferDependency
      * @param \App\Model\Product\Transfer\Akeneo\ProductTransferAkeneoFacade $productTransferAkeneoFacade
      * @param \App\Model\Product\Transfer\Akeneo\TransferredProductProcessor $transferredProductProcessor
-     * @param \App\Model\Product\Transfer\Akeneo\ProductTransferAkeneoMapper $productTransferAkeneoMapper
      * @param \App\Model\Product\Parameter\Transfer\Akeneo\AkeneoImportProductParameterFacade $akeneoImportProductParameterFacade
      * @param \App\Model\Product\Parameter\Transfer\Akeneo\AkeneoImportProductGroupParameterFacade $akeneoImportProductGroupParameterFacade
      * @param \App\Model\Product\Parameter\ParameterFacade $parameterFacade
@@ -78,7 +74,6 @@ class AkeneoImportProductMainVariantFacade extends AbstractAkeneoImportTransfer
         AkeneoImportTransferDependency $akeneoImportTransferDependency,
         ProductTransferAkeneoFacade $productTransferAkeneoFacade,
         TransferredProductProcessor $transferredProductProcessor,
-        ProductTransferAkeneoMapper $productTransferAkeneoMapper,
         AkeneoImportProductParameterFacade $akeneoImportProductParameterFacade,
         AkeneoImportProductGroupParameterFacade $akeneoImportProductGroupParameterFacade,
         ParameterFacade $parameterFacade,
@@ -86,9 +81,9 @@ class AkeneoImportProductMainVariantFacade extends AbstractAkeneoImportTransfer
         ProductFacade $productFacade
     ) {
         parent::__construct($akeneoImportTransferDependency);
+
         $this->productTransferAkeneoFacade = $productTransferAkeneoFacade;
         $this->transferredProductProcessor = $transferredProductProcessor;
-        $this->productTransferAkeneoMapper = $productTransferAkeneoMapper;
         $this->akeneoImportProductParameterFacade = $akeneoImportProductParameterFacade;
         $this->akeneoImportProductGroupParameterFacade = $akeneoImportProductGroupParameterFacade;
         $this->parameterFacade = $parameterFacade;
@@ -117,17 +112,19 @@ class AkeneoImportProductMainVariantFacade extends AbstractAkeneoImportTransfer
             }
         }
 
-        if ($isAllParametersImported === false) {
-            $this->logger->addInfo('Transfer missing parameters from Akeneo');
-            $this->akeneoImportProductGroupParameterFacade->runTransfer();
-            $this->akeneoImportProductParameterFacade->runTransfer();
+        if ($isAllParametersImported !== false) {
+            return;
         }
+
+        $this->logger->addInfo('Transfer missing parameters from Akeneo');
+        $this->akeneoImportProductGroupParameterFacade->runTransfer();
+        $this->akeneoImportProductParameterFacade->runTransfer();
     }
 
     /**
      * @return \Generator
      */
-    protected function getData(): \Generator
+    protected function getData(): Generator
     {
         foreach ($this->mainVariantSkuList as $code => $identifiers) {
             try {
@@ -140,7 +137,7 @@ class AkeneoImportProductMainVariantFacade extends AbstractAkeneoImportTransfer
                         implode(', ', $identifiers)
                     )
                 );
-            } catch (\RuntimeException $exception) {
+            } catch (RuntimeException $exception) {
                 $this->logger->addError($exception->getMessage());
             }
         }

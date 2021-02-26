@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Component\Image\Config;
 
 use Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver;
+use Shopsys\FrameworkBundle\Component\Image\Config\Exception\ImageEntityConfigNotFoundException;
 use Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig as BaseImageConfig;
 
 /**
@@ -47,6 +48,6 @@ class ImageConfig extends BaseImageConfig
             return $this->imageEntityConfigsByClass[$normalizedClass];
         }
 
-        throw new \Shopsys\FrameworkBundle\Component\Image\Config\Exception\ImageEntityConfigNotFoundException($class);
+        throw new ImageEntityConfigNotFoundException($class);
     }
 }

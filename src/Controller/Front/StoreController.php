@@ -6,7 +6,6 @@ namespace App\Controller\Front;
 
 use App\Model\Stock\StockFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Response;
 
 class StoreController extends FrontBaseController
@@ -23,6 +22,7 @@ class StoreController extends FrontBaseController
 
     /**
      * StoreController constructor.
+     *
      * @param \App\Model\Stock\StockFacade $stockFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */

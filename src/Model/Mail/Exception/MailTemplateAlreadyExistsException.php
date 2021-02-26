@@ -5,8 +5,10 @@ declare(strict_types=1);
 namespace App\Model\Mail\Exception;
 
 use App\Model\Mail\MailTemplate;
+use Exception;
+use Throwable;
 
-class MailTemplateAlreadyExistsException extends \Exception
+class MailTemplateAlreadyExistsException extends Exception
 {
     /**
      * @var \App\Model\Mail\MailTemplate
@@ -17,16 +19,16 @@ class MailTemplateAlreadyExistsException extends \Exception
      * @param \App\Model\Mail\MailTemplate $mailTemplate
      * @param \Throwable|null $previous
      */
-    public function __construct(MailTemplate $mailTemplate, ?\Throwable $previous = null)
+    public function __construct(MailTemplate $mailTemplate, ?Throwable $previous = null)
     {
         $this->mailTemplate = $mailTemplate;
         $message = sprintf(
             'Mail template already exists (name=`%s`, domainId=`%s`, transportId=`%s`, paymentId=`%s`, orderStatus=`%s`)',
             $mailTemplate->getName(),
             $mailTemplate->getDomainId(),
-            $mailTemplate->getTransport() === null ? "null" : $mailTemplate->getTransport()->getId(),
-            $mailTemplate->getPayment() === null ? "null" : $mailTemplate->getPayment()->getId(),
-            $mailTemplate->getOrderStatus() === null ? "null" : $mailTemplate->getOrderStatus()->getId()
+            $mailTemplate->getTransport() === null ? 'null' : $mailTemplate->getTransport()->getId(),
+            $mailTemplate->getPayment() === null ? 'null' : $mailTemplate->getPayment()->getId(),
+            $mailTemplate->getOrderStatus() === null ? 'null' : $mailTemplate->getOrderStatus()->getId()
         );
 
         parent::__construct($message, 0, $previous);

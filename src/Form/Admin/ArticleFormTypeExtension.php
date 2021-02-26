@@ -105,8 +105,8 @@ class ArticleFormTypeExtension extends AbstractTypeExtension
                 'validation_groups' => function (FormInterface $form) {
                     $validationGroups = [ValidationGroup::VALIDATION_GROUP_DEFAULT];
 
+                    /** @var \App\Model\Article\ArticleData $articleData */
                     $articleData = $form->getData();
-                    /* @var $articleData \App\Model\Article\ArticleData */
 
                     if ($articleData->type === Article::TYPE_SITE) {
                         $validationGroups[] = static::VALIDATION_GROUP_TYPE_SITE;
@@ -127,10 +127,10 @@ class ArticleFormTypeExtension extends AbstractTypeExtension
             'required' => true,
             'choices' => [
                 t('in upper menu') => Article::PLACEMENT_TOP_MENU,
-                (t('Articles in footer') . ' 1') => Article::PLACEMENT_FOOTER_1,
-                (t('Articles in footer') . ' 2') => Article::PLACEMENT_FOOTER_2,
-                (t('Articles in footer') . ' 3') => Article::PLACEMENT_FOOTER_3,
-                (t('Articles in footer') . ' 4') => Article::PLACEMENT_FOOTER_4,
+                t('Articles in footer') . ' 1' => Article::PLACEMENT_FOOTER_1,
+                t('Articles in footer') . ' 2' => Article::PLACEMENT_FOOTER_2,
+                t('Articles in footer') . ' 3' => Article::PLACEMENT_FOOTER_3,
+                t('Articles in footer') . ' 4' => Article::PLACEMENT_FOOTER_4,
                 t('without positioning') => Article::PLACEMENT_NONE,
             ],
             'placeholder' => t('-- Choose article position --'),

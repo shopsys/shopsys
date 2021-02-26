@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Model\Product\Parameter\Transfer\Akeneo;
 
 use Akeneo\PimEnterprise\ApiClient\AkeneoPimEnterpriseClientInterface;
+use Generator;
 
 class ProductParameterGroupTransferAkeneoFacade
 {
@@ -26,7 +27,7 @@ class ProductParameterGroupTransferAkeneoFacade
     /**
      * @return \Generator|null
      */
-    public function getAllAttributesGroup(): ?\Generator
+    public function getAllAttributesGroup(): ?Generator
     {
         foreach ($this->akeneoClient->getAttributeGroupApi()->all(self::PAGE_SIZE_LIMIT) as $itemAkeneoGroup) {
             yield $itemAkeneoGroup;

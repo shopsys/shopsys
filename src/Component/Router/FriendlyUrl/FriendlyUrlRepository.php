@@ -22,6 +22,7 @@ class FriendlyUrlRepository extends BaseFriendlyUrlRepository
     public function __construct(EntityManagerInterface $em, FriendlyUrlCacheFacade $friendlyUrlCacheFacade)
     {
         parent::__construct($em);
+
         $this->friendlyUrlCacheFacade = $friendlyUrlCacheFacade;
     }
 

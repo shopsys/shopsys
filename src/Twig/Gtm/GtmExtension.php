@@ -8,6 +8,7 @@ use App\Model\Gtm\DataLayer;
 use App\Model\Gtm\GtmJsPushFacade;
 use App\Model\Product\Listed\ListedProductView;
 use App\Model\Slider\SliderItem;
+use App\Twig\Gtm\Exception\InvalidProductObjectTypeException;
 use Twig\Environment;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
@@ -64,7 +65,7 @@ class GtmExtension extends AbstractExtension
                 $position
             );
         } else {
-            throw new \App\Twig\Gtm\Exception\InvalidProductObjectTypeException(get_class($element));
+            throw new InvalidProductObjectTypeException(get_class($element));
         }
 
         return $this->twigEnvironment->render(

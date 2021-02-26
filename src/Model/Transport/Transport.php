@@ -75,6 +75,7 @@ class Transport extends BaseTransport
     public function __construct(BaseTransportData $transportData)
     {
         parent::__construct($transportData);
+
         $this->productTypes = new ArrayCollection($transportData->productTypes);
         $this->personalPickup = $transportData->personalPickup;
         $this->type = $transportData->type;
@@ -90,6 +91,7 @@ class Transport extends BaseTransport
     public function edit(BaseTransportData $transportData)
     {
         parent::edit($transportData);
+
         $this->editProductTypes($transportData->productTypes);
         $this->personalPickup = $transportData->personalPickup;
         $this->type = $transportData->type;

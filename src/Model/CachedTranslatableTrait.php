@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-
 namespace App\Model;
 
 use Doctrine\Common\Collections\ArrayCollection;
@@ -22,7 +21,7 @@ trait CachedTranslatableTrait
             $this->translations = new ArrayCollection($translations);
         }
 
-        /** @var ArrayCollection $translations */
+        /** @var \Doctrine\Common\Collections\ArrayCollection $translations */
         $translations = $this->translations;
 
         return $translations;

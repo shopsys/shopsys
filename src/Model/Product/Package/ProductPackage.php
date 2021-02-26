@@ -14,14 +14,12 @@ use Doctrine\ORM\Mapping as ORM;
  *         @ORM\UniqueConstraint(name="product_package", columns={"product_id", "position"})
  *     }
  * )
- *
  * @ORM\Entity
  */
 class ProductPackage
 {
     /**
      * @var int
-     *
      * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
@@ -30,7 +28,6 @@ class ProductPackage
 
     /**
      * @var \App\Model\Product\Product
-     *
      * @ORM\ManyToOne(targetEntity="App\Model\Product\Product", inversedBy="domains")
      * @ORM\JoinColumn(nullable=false, name="product_id", referencedColumnName="id", onDelete="CASCADE")
      */

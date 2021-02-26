@@ -35,6 +35,7 @@ class TopCategoryFacade extends BaseTopCategoryFacade
         TwigCacheFacade $twigCacheFacade
     ) {
         parent::__construct($em, $topCategoryRepository, $topCategoryFactory);
+
         $this->twigCacheFacade = $twigCacheFacade;
     }
 
@@ -45,6 +46,7 @@ class TopCategoryFacade extends BaseTopCategoryFacade
     public function saveTopCategoriesForDomain($domainId, array $categories)
     {
         parent::saveTopCategoriesForDomain($domainId, $categories);
+
         $this->twigCacheFacade->invalidateByKey($this->twigCacheFacade::SLIGHTLY_CHANGING_PARTS_ON_HOMEPAGE, $domainId);
     }
 }

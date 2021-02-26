@@ -47,6 +47,7 @@ class SliderItemFacade extends BaseSliderItemFacade
         TwigCacheFacade $twigCacheFacade
     ) {
         parent::__construct($em, $sliderItemRepository, $imageFacade, $domain, $sliderItemFactory);
+
         $this->twigCacheFacade = $twigCacheFacade;
     }
 

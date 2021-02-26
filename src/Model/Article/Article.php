@@ -27,28 +27,24 @@ class Article extends BaseArticle
 
     /**
      * @var \DateTime
-     *
      * @ORM\Column(type="datetime")
      */
     private $createdAt;
 
     /**
      * @var bool
-     *
      * @ORM\Column(type="boolean")
      */
     protected $external;
 
     /**
      * @var string
-     *
      * @ORM\Column(type="string")
      */
     protected $type;
 
     /**
      * @var string
-     *
      * @ORM\Column(type="string")
      */
     protected $url;
@@ -85,9 +81,9 @@ class Article extends BaseArticle
     protected function setData(BaseArticleData $articleData): void
     {
         parent::setData($articleData);
+
         $this->createdAt = $articleData->createdAt ?? new DateTime();
     }
-
 
     /**
      * @return \DateTime

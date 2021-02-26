@@ -10,6 +10,9 @@ use Shopsys\MigrationBundle\Component\Doctrine\Migrations\AbstractMigration;
 
 final class Version20200924135656 extends AbstractMigration
 {
+    /**
+     * @param \Doctrine\DBAL\Schema\Schema $schema
+     */
     public function up(Schema $schema): void
     {
         $this->createOrderStatusWithEnglishAndCzechTranslations(6, 'IM - odesláno');
@@ -22,9 +25,9 @@ final class Version20200924135656 extends AbstractMigration
     }
 
     /**
-    * @param int $orderStatusType
-    * @param string $orderStatusCzechName
-    */
+     * @param int $orderStatusType
+     * @param string $orderStatusCzechName
+     */
     private function createOrderStatusWithEnglishAndCzechTranslations(
         $orderStatusType,
         $orderStatusCzechName
@@ -46,6 +49,9 @@ final class Version20200924135656 extends AbstractMigration
         }
     }
 
+    /**
+     * @param \Doctrine\DBAL\Schema\Schema $schema
+     */
     public function down(Schema $schema): void
     {
     }
@@ -59,7 +65,7 @@ final class Version20200924135656 extends AbstractMigration
     {
         $mailTemplateCount = $this->sql('SELECT count(*) FROM mail_templates WHERE name = :mailTemplateName AND domain_id = :domainId', [
             'mailTemplateName' => $mailTemplateName,
-            'domainId' => $domainId
+            'domainId' => $domainId,
         ])->fetchColumn(0);
 
         if ($mailTemplateCount <= 0) {

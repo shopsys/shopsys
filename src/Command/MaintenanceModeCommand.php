@@ -35,6 +35,7 @@ class MaintenanceModeCommand extends Command
     public function __construct(CacheProvider $cacheProvider)
     {
         parent::__construct();
+
         $this->cacheProvider = $cacheProvider;
     }
 

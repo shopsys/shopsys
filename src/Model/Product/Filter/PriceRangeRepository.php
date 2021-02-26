@@ -44,6 +44,7 @@ class PriceRangeRepository extends BasePriceRangeRepository
         QueryBuilderExtender $queryBuilderExtender
     ) {
         parent::__construct($productRepository, $queryBuilderExtender);
+
         $this->currencyFacade = $currencyFacade;
         $this->domain = $domain;
     }

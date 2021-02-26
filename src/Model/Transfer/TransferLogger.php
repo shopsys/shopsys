@@ -49,11 +49,13 @@ class TransferLogger implements TransferLoggerInterface
     public function persistAllLoggedTransferIssues(): void
     {
         $transferIssuesCount = count($this->transferIssueDataList);
-        if ($transferIssuesCount > 0) {
-            $this->transferIssueFacade->saveTransferIssues($this->transferIssueDataList, $this->serviceTransferIdentifier);
-            $this->transferIssueDataList = [];
-            $this->addInfo('Transfer logger saves ' . $transferIssuesCount . ' to database');
+        if ($transferIssuesCount === 0) {
+            return;
         }
+
+        $this->transferIssueFacade->saveTransferIssues($this->transferIssueDataList, $this->serviceTransferIdentifier);
+        $this->transferIssueDataList = [];
+        $this->addInfo('Transfer logger saves ' . $transferIssuesCount . ' to database');
     }
 
     /**

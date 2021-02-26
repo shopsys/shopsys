@@ -101,9 +101,7 @@ class CartTest extends TransactionFunctionalTestCase
         $productData->name = ['cs' => 'Any name'];
         $productData->highPriceWithVat = [1 => Money::zero(), 2 => Money::zero()];
         $this->setVats($productData);
-        $product = Product::create($productData);
-
-        return $product;
+        return Product::create($productData);
     }
 
     /**

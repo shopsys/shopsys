@@ -23,7 +23,9 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
     public const TRANSPORT_PERSONAL = 'transport_personal';
     public const TRANSPORT_OVER_LIMIT = 'transport_over_limit';
 
-    /** @var \App\Model\Transport\TransportFacade */
+    /**
+     * @var \App\Model\Transport\TransportFacade
+     */
     private $transportFacade;
 
     /**

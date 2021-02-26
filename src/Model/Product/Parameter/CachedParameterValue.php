@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-
 namespace App\Model\Product\Parameter;
 
 use App\Model\LoadFromParentTrait;
@@ -23,6 +22,7 @@ class CachedParameterValue extends ParameterValueEntity
     public function __construct(ParameterValueEntity $parameterValue)
     {
         parent::__construct(new ParameterValueData());
+
         $this->loadFromParent($parameterValue);
     }
 }

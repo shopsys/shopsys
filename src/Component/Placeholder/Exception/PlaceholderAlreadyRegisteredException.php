@@ -5,8 +5,9 @@ declare(strict_types=1);
 namespace App\Component\Placeholder\Exception;
 
 use App\Component\Placeholder\PlaceholderInterface;
+use Exception;
 
-class PlaceholderAlreadyRegisteredException extends \Exception implements PlaceholderException
+class PlaceholderAlreadyRegisteredException extends Exception implements PlaceholderException
 {
     /**
      * @param \App\Component\Placeholder\PlaceholderInterface $placeholder

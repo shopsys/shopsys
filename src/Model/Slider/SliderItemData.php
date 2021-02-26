@@ -47,6 +47,7 @@ class SliderItemData extends BaseSliderItemData
     public function __construct()
     {
         parent::__construct();
+
         $this->mobileImage = new ImageUploadData();
     }
 }

@@ -36,6 +36,7 @@ class LoginListener extends BaseLoginListener
         SessionInterface $session
     ) {
         parent::__construct($em, $orderFlowFacade, $administratorActivityFacade);
+
         $this->session = $session;
     }
 

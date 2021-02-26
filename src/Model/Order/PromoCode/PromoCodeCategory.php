@@ -42,7 +42,7 @@ class PromoCodeCategory
     /**
      * @return \App\Model\Order\PromoCode\PromoCode
      */
-    public function getPromoCode(): \App\Model\Order\PromoCode\PromoCode
+    public function getPromoCode(): PromoCode
     {
         return $this->promoCode;
     }
@@ -50,7 +50,7 @@ class PromoCodeCategory
     /**
      * @return \App\Model\Category\Category
      */
-    public function getCategory(): \App\Model\Category\Category
+    public function getCategory(): Category
     {
         return $this->category;
     }

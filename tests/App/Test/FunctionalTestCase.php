@@ -6,6 +6,7 @@ namespace Tests\App\Test;
 
 use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerInterface;
+use ReflectionClass;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Environment\EnvironmentType;
 use Shopsys\FrameworkBundle\Component\Money\Money;
@@ -50,6 +51,7 @@ abstract class FunctionalTestCase extends WebTestCase implements ServiceContaine
     protected function setUp(): void
     {
         parent::setUp();
+
         $this->setUpDomain();
     }
 
@@ -66,7 +68,7 @@ abstract class FunctionalTestCase extends WebTestCase implements ServiceContaine
         if (self::$phpUnitTestCaseProperties === null) {
             self::$phpUnitTestCaseProperties = [];
 
-            $testCaseReflectionClass = new \ReflectionClass(TestCase::class);
+            $testCaseReflectionClass = new ReflectionClass(TestCase::class);
             $properties = $testCaseReflectionClass->getProperties();
             foreach ($properties as $property) {
                 self::$phpUnitTestCaseProperties[] = $property->getName();
@@ -80,7 +82,7 @@ abstract class FunctionalTestCase extends WebTestCase implements ServiceContaine
     {
         parent::tearDown();
 
-        $reflectionClass = new \ReflectionClass($this);
+        $reflectionClass = new ReflectionClass($this);
         $properties = $reflectionClass->getProperties();
         $excludedProperties = self::getPhpUnitTestCaseProperties();
         foreach ($properties as $property) {
@@ -174,6 +176,7 @@ abstract class FunctionalTestCase extends WebTestCase implements ServiceContaine
 
     /**
      * We can use the shorthand here as $this->domain->switchDomainById(1) is called in setUp()
+     *
      * @return string
      */
     protected function getFirstDomainLocale(): string

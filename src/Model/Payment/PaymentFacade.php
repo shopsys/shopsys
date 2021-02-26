@@ -40,10 +40,23 @@ use Shopsys\FrameworkBundle\Model\Transport\TransportRepository;
 class PaymentFacade extends BasePaymentFacade
 {
     /**
-     * @var CartFacade
+     * @var \App\Model\Cart\CartFacade
      */
     private $cartFacade;
 
+    /**
+     * @param \Doctrine\ORM\EntityManagerInterface $em
+     * @param \App\Model\Payment\PaymentRepository $paymentRepository
+     * @param \Shopsys\FrameworkBundle\Model\Transport\TransportRepository $transportRepository
+     * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentVisibilityCalculation $paymentVisibilityCalculation
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     * @param \App\Component\Image\ImageFacade $imageFacade
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
+     * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentPriceCalculation $paymentPriceCalculation
+     * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentFactoryInterface $paymentFactory
+     * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentPriceFactoryInterface $paymentPriceFactory
+     * @param \App\Model\Cart\CartFacade $cartFacade
+     */
     public function __construct(
         EntityManagerInterface $em,
         PaymentRepository $paymentRepository,

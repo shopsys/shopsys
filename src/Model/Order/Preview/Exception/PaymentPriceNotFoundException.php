@@ -17,6 +17,7 @@ class PaymentPriceNotFoundException extends Exception
     public function __construct(Payment $payment, ?Throwable $previous = null)
     {
         $message = sprintf('Price for Payment (ID=`%s`) was not found.', $payment->getId());
+
         parent::__construct($message, 0, $previous);
     }
 }

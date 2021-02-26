@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-
 namespace App\Component\Router;
 
 use Psr\Container\ContainerInterface;
@@ -58,6 +57,7 @@ class DomainRouterFactory extends BaseDomainRouterFactory
             $domain,
             $requestStack
         );
+
         $this->container = $container;
         $this->cacheDir = $cacheDir;
     }

@@ -10,9 +10,11 @@ use App\Component\Akeneo\Transfer\MediaFiles\MediaFilesTransferAkeneoFacade;
 use App\Model\Product\Product;
 use App\Model\Product\ProductRepository;
 use App\Model\Product\Transfer\Akeneo\Exception\FileSaveFailedException;
+use Generator;
 use League\Flysystem\FileExistsException;
 use League\Flysystem\FileNotFoundException;
 use League\Flysystem\FilesystemInterface;
+use Throwable;
 
 class AkeneoImportProductTypePlanProductFilesFacade extends AbstractAkeneoImportTransfer
 {
@@ -58,6 +60,7 @@ class AkeneoImportProductTypePlanProductFilesFacade extends AbstractAkeneoImport
         FilesystemInterface $localFilesystem
     ) {
         parent::__construct($akeneoImportTransferDependency);
+
         $this->productRepository = $productRepository;
         $this->productFilesDir = $productFilesDir;
         $this->mediaFilesTransferAkeneoFacade = $mediaFilesTransferAkeneoFacade;
@@ -67,7 +70,7 @@ class AkeneoImportProductTypePlanProductFilesFacade extends AbstractAkeneoImport
     /**
      * @return \Generator
      */
-    protected function getData(): \Generator
+    protected function getData(): Generator
     {
         foreach ($this->productRepository->getProductsWithoutProductTypePlanFilesIterator() as $row) {
             $this->product = $row[0];
@@ -123,7 +126,7 @@ class AkeneoImportProductTypePlanProductFilesFacade extends AbstractAkeneoImport
             }
 
             $this->storeFile($fileName, $content);
-        } catch (\Throwable $exception) {
+        } catch (Throwable $exception) {
             throw new FileSaveFailedException($exception->getMessage(), $this->productFilesDir, $fileName, 0, $exception);
         }
     }

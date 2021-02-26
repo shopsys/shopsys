@@ -46,11 +46,9 @@ class HorizontalMenuItemDetailFactory
         $categoriesByColumnNumber = $this->horizontalMenuItemCategoryFacade
             ->getSortedVisibledCategoriesIndexedByColumnNumberForHorizontalMenuItem($horizontalMenuItem, $domainId);
 
-        $detail = new HorizontalMenuItemDetail(
+        return new HorizontalMenuItemDetail(
             $horizontalMenuItem,
             $categoriesByColumnNumber
         );
-
-        return $detail;
     }
 }

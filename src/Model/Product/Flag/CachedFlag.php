@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-
 namespace App\Model\Product\Flag;
 
 use App\Model\LoadFromParentTrait;

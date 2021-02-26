@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-
 namespace App\Model\Order\PromoCode\Grid;
 
 use App\Model\Order\PromoCode\PromoCode;
@@ -25,6 +24,7 @@ class PromoCodeMassGeneratedBatchGridFactory
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
+     * @param \Doctrine\ORM\EntityManagerInterface $em
      */
     public function __construct(
         GridFactory $gridFactory,

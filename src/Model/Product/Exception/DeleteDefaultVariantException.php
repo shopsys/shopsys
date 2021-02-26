@@ -5,8 +5,9 @@ declare(strict_types=1);
 namespace App\Model\Product\Exception;
 
 use App\Model\Product\Product;
+use Exception;
 
-class DeleteDefaultVariantException extends \Exception
+class DeleteDefaultVariantException extends Exception
 {
     /**
      * @param \App\Model\Product\Product $product
@@ -14,6 +15,7 @@ class DeleteDefaultVariantException extends \Exception
     public function __construct(Product $product)
     {
         $message = sprintf('Unable to delete default variant (product id %d). First, set another variation as the default. (available in Akeneo)', $product->getId());
+
         parent::__construct($message);
     }
 }

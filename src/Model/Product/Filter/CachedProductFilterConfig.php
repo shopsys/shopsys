@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-
 namespace App\Model\Product\Filter;
 
 use App\Model\Product\Brand\CachedBrand;
@@ -24,7 +23,7 @@ class CachedProductFilterConfig extends BaseProductFilterConfig
         /** @var \App\Model\Product\Brand\Brand[] $brandChoices */
         $brandChoices = $productFilterConfig->getBrandChoices();
         $this->setBrandChoices($brandChoices);
-        
+
         $this->priceRange = $productFilterConfig->getPriceRange();
     }
 

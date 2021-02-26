@@ -44,7 +44,7 @@ class Version20200921071900 extends AbstractMigration
     {
         $mailTemplateCount = $this->sql('SELECT count(*) FROM mail_templates WHERE name = :mailTemplateName AND domain_id = :domainId', [
             'mailTemplateName' => $mailTemplateName,
-            'domainId' => $domainId
+            'domainId' => $domainId,
         ])->fetchColumn(0);
 
         if ($mailTemplateCount <= 0) {

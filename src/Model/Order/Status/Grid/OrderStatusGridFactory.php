@@ -12,8 +12,8 @@ use Shopsys\FrameworkBundle\Model\Order\Status\Grid\OrderStatusGridFactory as Ba
 class OrderStatusGridFactory extends BaseGridOrderStatusGridFactory
 {
     /**
-    * @return \Shopsys\FrameworkBundle\Component\Grid\Grid
-    */
+     * @return \Shopsys\FrameworkBundle\Component\Grid\Grid
+     */
     public function create()
     {
         $queryBuilder = $this->em->createQueryBuilder();
@@ -34,11 +34,11 @@ class OrderStatusGridFactory extends BaseGridOrderStatusGridFactory
            ->setAjaxConfirm();
 
         $grid->setTheme('Admin/Content/OrderStatus/listGrid.html.twig', [
-           'TYPE_NEW' => OrderStatus::TYPE_NEW,
-           'TYPE_DONE' => OrderStatus::TYPE_DONE,
-           'TYPE_CANCELED' => OrderStatus::TYPE_CANCELED,
-           'TYPE_OVER_LIMIT' => OrderStatus::TYPE_OVER_LIMIT,
-       ]);
+            'TYPE_NEW' => OrderStatus::TYPE_NEW,
+            'TYPE_DONE' => OrderStatus::TYPE_DONE,
+            'TYPE_CANCELED' => OrderStatus::TYPE_CANCELED,
+            'TYPE_OVER_LIMIT' => OrderStatus::TYPE_OVER_LIMIT,
+        ]);
 
         return $grid;
     }

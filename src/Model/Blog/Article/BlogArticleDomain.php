@@ -16,7 +16,6 @@ class BlogArticleDomain
 {
     /**
      * @var \App\Model\Blog\Article\BlogArticle
-     *
      * @ORM\Id
      * @ORM\ManyToOne(targetEntity="App\Model\Blog\Article\BlogArticle", inversedBy="domains")
      * @ORM\JoinColumn(nullable=false, name="blog_article_id", referencedColumnName="id", onDelete="CASCADE")
@@ -25,7 +24,6 @@ class BlogArticleDomain
 
     /**
      * @var int
-     *
      * @ORM\Id
      * @ORM\Column(type="integer")
      */
@@ -33,28 +31,24 @@ class BlogArticleDomain
 
     /**
      * @var string|null
-     *
      * @ORM\Column(type="text", nullable=true)
      */
     private $seoTitle;
 
     /**
      * @var string|null
-     *
      * @ORM\Column(type="text", nullable=true)
      */
     private $seoMetaDescription;
 
     /**
      * @var string|null
-     *
      * @ORM\Column(type="text", nullable=true)
      */
     private $seoH1;
 
     /**
      * @var bool
-     *
      * @ORM\Column(type="boolean")
      */
     private $visible;

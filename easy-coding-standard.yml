@@ -1,14 +1,51 @@
 imports:
-    - { resource: '%vendor_dir%/shopsys/coding-standards/easy-coding-standard.yml', ignore_errors: true  }
+    - { resource: 'vendor/shopsys/coding-standards/easy-coding-standard.yml' }
 
 services:
     PhpCsFixer\Fixer\Strict\DeclareStrictTypesFixer: ~
     # @deprecated This will be moved from project-base to coding-standards package in next major version
     SlevomatCodingStandard\Sniffs\Operators\DisallowEqualOperatorsSniff: ~
+    # @deprecated This will be moved from project-base to coding-standards package in next major version
+    PHP_CodeSniffer\Standards\Squiz\Sniffs\Classes\ValidClassNameSniff: ~
+    # @deprecated This will be moved from project-base to coding-standards package in next major version
+    PhpCsFixer\Fixer\ControlStructure\NoUselessElseFixer: ~
+    # @deprecated This will be moved from project-base to coding-standards package in next major version
+    PHP_CodeSniffer\Standards\Generic\Sniffs\CodeAnalysis\AssignmentInConditionSniff: ~
+    # @deprecated This will be moved from project-base to coding-standards package in next major version
+    SlevomatCodingStandard\Sniffs\ControlStructures\DisallowEmptySniff: ~
+    # @deprecated This will be moved from project-base to coding-standards package in next major version
+    SlevomatCodingStandard\Sniffs\ControlStructures\EarlyExitSniff:
+        ignoreStandaloneIfInScope: true
+        ignoreOneLineTrailingIf: true
+        ignoreTrailingIfWithOneInstruction: true
+    # @deprecated This will be moved from project-base to coding-standards package in next major version
+    SlevomatCodingStandard\Sniffs\Classes\ParentCallSpacingSniff:
+        linesCountBeforeParentCall: 1
+        linesCountAfterParentCall: 1
+    # @deprecated This will be moved from project-base to coding-standards package in next major version
+    SlevomatCodingStandard\Sniffs\Namespaces\ReferenceUsedNamesOnlySniff:
+        allowPartialUses: true
+    # @deprecated This will be moved from project-base to coding-standards package in next major version
+    SlevomatCodingStandard\Sniffs\Commenting\DeprecatedAnnotationDeclarationSniff: ~
+    # @deprecated This will be moved from project-base to coding-standards package in next major version
+    SlevomatCodingStandard\Sniffs\Commenting\DocCommentSpacingSniff:
+        linesCountBetweenDifferentAnnotationsTypes: 0
+    # @deprecated This will be moved from project-base to coding-standards package in next major version
+    SlevomatCodingStandard\Sniffs\ControlStructures\UselessIfConditionWithReturnSniff: ~
 
 parameters:
     sets:
+        - 'php70'
+        - 'php71'
         - 'psr12'
+        - 'dead-code'
+        - 'clean-code'
+        - 'array'
+        - 'comments'
+        - 'control-structures'
+        - 'docblock'
+        - 'namespaces'
+        - 'strict'
     exclude_files:
         - '*/tests/App/Test/Codeception/_generated/AcceptanceTesterActions.php'
         - '*/var/cache/*'
@@ -29,20 +66,27 @@ parameters:
             - '*/tests/App/Functional/Model/Order/OrderFacadeTest.php'
             - '*/tests/App/Functional/Model/Order/Preview/OrderPreviewCalculationTest.php'
             - '*/tests/App/Functional/Model/Pricing/InputPriceRecalculationSchedulerTest.php'
+            - '*/tests/App/Smoke/BackendApiCreateProductTest.php'
             - '*/tests/App/Smoke/Http/RouteConfigCustomization.php'
             - '*/tests/App/Functional/Model/Product/ProductOnCurrentDomainFacadeCountDataTest.php'
             - '*/tests/App/Functional/Model/Product/Availability/ProductAvailabilityFacadeTest.php'
             - '*/tests/App/Functional/Model/Cart/CartMigrationFacadeTest.php'
+            - '*/tests/FrontendApiBundle/Functional/Article/GetArticlesTest.php'
             - '*/tests/FrontendApiBundle/Functional/Image/ProductImagesTest.php'
             - '*/tests/FrontendApiBundle/Functional/Payment/PaymentsTest.php'
             - '*/tests/FrontendApiBundle/Functional/Transport/TransportsTest.php'
             - '*/tests/FrontendApiBundle/Functional/Order/MultipleProductsInOrderTest.php'
+            - '*/tests/FrontendApiBundle/Functional/Product/ProductVariantTest.php'
             - '*/src/Model/Product/Transfer/Akeneo/ProductTransferAkeneoValidator.php'
             - '*/src/Component/Akeneo/Transfer/AbstractAkeneoImportTransfer.php'
             - '*/src/Component/ScontoBridge/Transfer/AbstractScontoBridgeImportTransfer.php'
             - '*/src/Migrations/Version20200319113341.php'
+            - '*/src/Migrations/Version20200831091231.php'
             - '*/src/Controller/Admin/CategorySeoController.php'
             - '*/src/Form/Admin/StockFormType.php'
+            - '*/src/Form/Admin/TransportFormTypeExtension.php'
+            - '*/src/Form/Front/Customer/User/CustomerUserFormType.php'
+            - '*/src/Form/Front/Registration/RegistrationFormType.php'
             - '*/src/Model/Product/ProductDataFactory.php'
             - '*/src/Controller/Front/ProductController.php'
             - '*/src/Form/Admin/NotificationBarFormType.php'
@@ -59,6 +103,8 @@ parameters:
             - '*/src/DataFixtures/Demo/ProductDataFixture.php'
             - '*/tests/App/Functional/Model/Product/ProductOnCurrentDomainFacadeCountDataTest.php'
             - '*/src/Model/Product/Product.php'
+            - '*/src/Model/Order/OrderFacade.php'
+            - '*/src/Controller/Front/CartController.php'
             - '*/src/Controller/Front/OrderController.php'
             - '*/src/Controller/Front/ProductController.php'
             - '*/src/Model/Product/Transfer/Akeneo/ProductTransferAkeneoMapper.php'
@@ -70,6 +116,7 @@ parameters:
             - '*/src/DataFixtures/Demo/ProductDataFixture.php'
             - '*/src/DataFixtures/Demo/CategoryDataFixture'
             - '*/src/Controller/Front/OrderController.php'
+            - '*/src/Model/Order/OrderFacade.php'
 
         Shopsys\CodingStandards\Sniffs\ValidVariableNameSniff:
             - '*/tests/App/Functional/EntityExtension/EntityExtensionTest.php'
@@ -79,6 +126,13 @@ parameters:
         Shopsys\CodingStandards\Sniffs\ObjectIsCreatedByFactorySniff:
             - '*/tests/*'
             - '*/src/Model/Order/Preview/OrderPreviewCalculation.php'
+            # classes bellow are ignored because of actual design seems to be weird and probably need to be rewritten in future
+            - '*/src/Model/Product/Brand/CachedBrand.php'
+            - '*/src/Model/Product/Flag/CachedFlag.php'
+            - '*/src/Model/Product/Parameter/CachedParameter.php'
+            - '*/src/Model/Product/Parameter/CachedParameterGroup.php'
+            - '*/src/Model/Product/Parameter/CachedParameterValue.php'
+            - '*/src/Model/Product/Parameter/Unit/CachedParameterUnit.php'
 
         Shopsys\CodingStandards\Sniffs\ForbiddenDumpSniff:
             - '*/tests/App/Functional/Model/Cart/CartFacadeTest.php'
@@ -102,3 +156,46 @@ parameters:
 
         PHP_CodeSniffer\Standards\Squiz\Sniffs\NamingConventions\ValidVariableNameSniff.NotCamelCaps:
             - '*/tests/App/Functional/Model/Transport/Logistic/TransportLogisticFacadeTest.php'
+
+        SlevomatCodingStandard\Sniffs\Classes\UnusedPrivateElementsSniff.WriteOnlyProperty:
+            - '*/src/Model/Category/LinkedCategory/LinkedCategory.php'
+            - '*/src/Model/Order/Item/OrderItem.php'
+            - '*/src/Model/Order/PromoCode/PromoCode.php'
+
+        SlevomatCodingStandard\Sniffs\Classes\UnusedPrivateElementsSniff.UnusedProperty:
+            - '*/src/Model/Category/LinkedCategory/LinkedCategory.php'
+
+        # @deprecated This will be moved from project-base to coding-standards package in next major version
+        # rule is applied via `clean-code` set but we do not want to use it for now
+        # some variables exist just because of the right annotation
+        PhpCsFixer\Fixer\ReturnNotation\ReturnAssignmentFixer: ~
+
+        # @deprecated This will be moved from project-base to coding-standards package in next major version
+        # rule is applied via `control-structures` set but we do not want to use it for now
+        PhpCsFixer\Fixer\ClassNotation\OrderedClassElementsFixer: ~
+
+        # @deprecated This will be moved from project-base to coding-standards package in next major version
+        # rule is applied via `docblock` set but we do not want to use it for now
+        # remove variable name from @var and @type annotations
+        PhpCsFixer\Fixer\Phpdoc\PhpdocVarWithoutNameFixer: ~
+
+        # @deprecated This will be moved from project-base to coding-standards package in next major version
+        # rule is applied via `docblock` set but we do not want to use it for now
+        #remove inheritdoc
+        PhpCsFixer\Fixer\Phpdoc\NoSuperfluousPhpdocTagsFixer: ~
+
+        # @deprecated This will be moved from project-base to coding-standards package in next major version
+        # rule is applied via `php70` set but we cannot use it until next major because of possible BC breaks
+        SlevomatCodingStandard\Sniffs\Exceptions\ReferenceThrowableOnlySniff: ~
+
+        # @deprecated This will be moved from project-base to coding-standards package in next major version
+        # rule is applied via `php71` set but we cannot use it until next major because of possible BC breaks
+        PhpCsFixer\Fixer\FunctionNotation\VoidReturnFixer: ~
+
+        # @deprecated File is excluded as the comments are already missing and deprecated methods will not be in next major
+        SlevomatCodingStandard\Sniffs\Commenting\DeprecatedAnnotationDeclarationSniff:
+            - '*/tests/App/Test/Codeception/Module/StrictWebDriver.php'
+
+        # @deprecated This will be moved from project-base to coding-standards package in next major version
+        # rule breaks jms/translation-budle as it fails on this usage: `[, $b] = $var`
+        PhpCsFixer\Fixer\ListNotation\ListSyntaxFixer: ~

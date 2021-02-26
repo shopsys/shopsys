@@ -8,8 +8,8 @@ use App\Component\Form\FormBuilderHelper;
 use App\Form\Admin\SaleCategoryFormType;
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\Domain\Exception\InvalidDomainIdException;
 use Shopsys\FrameworkBundle\Controller\Admin\CategoryController as BaseCategoryController;
-use Shopsys\FrameworkBundle\Form\Admin\Category\TopCategory\TopCategoriesFormType;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
 use Shopsys\FrameworkBundle\Model\Category\CategoryDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
@@ -41,6 +41,7 @@ class CategoryController extends BaseCategoryController
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider $breadcrumbOverrider
      * @param \App\Component\Form\FormBuilderHelper $formBuilderHelper
+     * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade $adminDomainTabsFacade
      */
     public function __construct(
         CategoryFacade $categoryFacade,
@@ -58,6 +59,7 @@ class CategoryController extends BaseCategoryController
             $domain,
             $breadcrumbOverrider
         );
+
         $this->formBuilderHelper = $formBuilderHelper;
         $this->adminDomainTabsFacade = $adminDomainTabsFacade;
     }
@@ -81,7 +83,7 @@ class CategoryController extends BaseCategoryController
         if ($domainId !== static::ALL_DOMAINS) {
             try {
                 $this->domain->getDomainConfigById($domainId);
-            } catch (\Shopsys\FrameworkBundle\Component\Domain\Exception\InvalidDomainIdException $ex) {
+            } catch (InvalidDomainIdException $ex) {
                 $domainId = static::ALL_DOMAINS;
             }
         }
@@ -114,7 +116,7 @@ class CategoryController extends BaseCategoryController
         ];
 
         $form = $this->createForm(SaleCategoryFormType::class, $formData, [
-            'domain_id' => $domainId
+            'domain_id' => $domainId,
         ]);
 
         $form->handleRequest($request);

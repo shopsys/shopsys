@@ -2,10 +2,8 @@
 
 declare(strict_types=1);
 
-
 namespace App\Model\UrlRedirect;
 
-use App\Model\Stock\Stock;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 

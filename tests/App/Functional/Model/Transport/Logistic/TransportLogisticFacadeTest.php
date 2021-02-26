@@ -258,6 +258,7 @@ class TransportLogisticFacadeTest extends TransactionFunctionalTestCase
 
     /**
      * self::assertContains() dumps whole entities on fail and it is too long
+     *
      * @param \App\Model\Transport\Transport $needle
      * @param \App\Model\Transport\Transport[] $haystack
      */
@@ -271,6 +272,7 @@ class TransportLogisticFacadeTest extends TransactionFunctionalTestCase
 
     /**
      * self::assertNotContains() dumps whole entities on fail and it is too long
+     *
      * @param \App\Model\Transport\Transport $needle
      * @param \App\Model\Transport\Transport[] $haystack
      */

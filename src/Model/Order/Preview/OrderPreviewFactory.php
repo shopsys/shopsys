@@ -57,6 +57,7 @@ class OrderPreviewFactory extends BaseOrderPreviewFactory
             $cartFacade,
             $currentPromoCodeFacade
         );
+
         $this->promoCodeLimitResolver = $promoCodeLimitResolver;
     }
 

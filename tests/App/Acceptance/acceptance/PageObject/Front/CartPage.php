@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\App\Acceptance\acceptance\PageObject\Front;
 
+use Facebook\WebDriver\Exception\NoSuchElementException;
 use Facebook\WebDriver\WebDriverBy;
 use Facebook\WebDriver\WebDriverKeys;
 use Shopsys\FrameworkBundle\Component\Money\Money;
@@ -111,13 +112,13 @@ class CartPage extends AbstractPage
                 if ($nameCell->getText() === $translatedProductName) {
                     return $row;
                 }
-            } catch (\Facebook\WebDriver\Exception\NoSuchElementException $ex) {
+            } catch (NoSuchElementException $ex) {
                 continue;
             }
         }
 
         $message = sprintf('Unable to find row containing product "%s" (translated to "%s") in cart.', $productName, $translatedProductName);
-        throw new \Facebook\WebDriver\Exception\NoSuchElementException($message);
+        throw new NoSuchElementException($message);
     }
 
     /**

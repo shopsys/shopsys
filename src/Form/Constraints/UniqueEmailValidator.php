@@ -33,6 +33,7 @@ class UniqueEmailValidator extends BaseUniqueEmailValidator
         Domain $domain
     ) {
         parent::__construct($customerUserFacade, $domain);
+
         $this->customerUserFacade = $customerUserFacade;
         $this->domain = $domain;
     }

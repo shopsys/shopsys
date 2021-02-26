@@ -73,7 +73,7 @@ class AdvertRepository extends BaseAdvertRepository
         return $this->getAdvertByPositionQueryBuilder($positionName, $domainId)
             ->join('a.categories', 'ac', Join::WITH, 'ac = :category')
             ->setParameter('category', $category)
-            ->setFirstResult(rand(0, $count - 1))
+            ->setFirstResult(random_int(0, $count - 1))
             ->setMaxResults(1)
             ->getQuery()->getSingleResult();
     }

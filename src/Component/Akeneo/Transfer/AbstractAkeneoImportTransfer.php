@@ -11,6 +11,7 @@ use App\Component\Akeneo\Transfer\Exception\TransferInvalidDataAdministratorNonC
 use App\Model\Product\Transfer\Akeneo\Exception\FileSaveFailedException;
 use App\Model\Transfer\TransferIdentificationInterface;
 use Exception;
+use Generator;
 use Symfony\Component\Validator\Validator\TraceableValidator;
 
 abstract class AbstractAkeneoImportTransfer implements TransferIdentificationInterface
@@ -164,7 +165,7 @@ abstract class AbstractAkeneoImportTransfer implements TransferIdentificationInt
     /**
      * @return \Generator
      */
-    abstract protected function getData(): \Generator;
+    abstract protected function getData(): Generator;
 
     /**
      * @return string

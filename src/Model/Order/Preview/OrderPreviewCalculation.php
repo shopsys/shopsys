@@ -73,6 +73,7 @@ class OrderPreviewCalculation extends BaseOrderPreviewCalculation
             $paymentPriceCalculation,
             $orderPriceCalculation
         );
+
         $this->currentPromoCodeFacade = $currentPromoCodeFacade;
         $this->productPriceCalculation = $productPriceCalculation;
         $this->productAvailabilityFacade = $productAvailabilityFacade;

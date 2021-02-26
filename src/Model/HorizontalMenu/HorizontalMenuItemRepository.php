@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\HorizontalMenu;
 
+use App\Model\HorizontalMenu\Exception\HorizontalMenuItemNotFoundException;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
@@ -49,7 +50,7 @@ class HorizontalMenuItemRepository
         $item = $this->findById($id);
 
         if ($item === null) {
-            throw new \App\Model\HorizontalMenu\Exception\HorizontalMenuItemNotFoundException(
+            throw new HorizontalMenuItemNotFoundException(
                 sprintf('Horizontal menu iten with ID %s not found', $id)
             );
         }

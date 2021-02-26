@@ -8,7 +8,6 @@ use App\Model\Customer\Mail\CustomerActivationMail;
 use App\Model\Mail\MailTemplate;
 use App\Model\Mail\MailTemplateData;
 use App\Model\Mail\MailTemplateDataFactory;
-use App\Model\Order\Order;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;

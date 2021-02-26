@@ -24,7 +24,6 @@ class QuantifiedProductPriceCalculation extends BaseQuantifiedProductPriceCalcul
      * @param int $domainId
      * @param \App\Model\Customer\User\CustomerUser|null $customerUser
      * @param \App\Model\Order\PromoCode\PromoCode|null $promoCode
-     *
      * @return \App\Model\Order\Item\QuantifiedItemPrice
      */
     public function calculatePrice(QuantifiedProduct $quantifiedProduct, int $domainId, ?CustomerUser $customerUser = null, ?PromoCode $promoCode = null): BaseQuantifiedItemPrice
@@ -79,7 +78,6 @@ class QuantifiedProductPriceCalculation extends BaseQuantifiedProductPriceCalcul
      * @param int $domainId
      * @param \App\Model\Customer\User\CustomerUser|null $customerUser
      * @param \App\Model\Order\PromoCode\PromoCode[] $promoCodePerProduct
-     *
      * @return \App\Model\Order\Item\QuantifiedItemPrice[]
      */
     public function calculatePrices(array $quantifiedProducts, int $domainId, ?CustomerUser $customerUser = null, array $promoCodePerProduct = []): array
@@ -98,7 +96,6 @@ class QuantifiedProductPriceCalculation extends BaseQuantifiedProductPriceCalcul
      * @param int $domainId
      * @param \App\Model\Customer\User\CustomerUser|null $customerUser
      * @param \App\Model\Order\PromoCode\PromoCode[] $promoCodePerProduct
-     *
      * @return \App\Model\Order\Item\QuantifiedItemPrice[]
      */
     public function calculatePromoCodeApplicablePrices(array $quantifiedProducts, int $domainId, ?CustomerUser $customerUser, array $promoCodePerProduct): array

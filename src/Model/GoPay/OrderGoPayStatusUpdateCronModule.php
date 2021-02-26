@@ -105,10 +105,12 @@ class OrderGoPayStatusUpdateCronModule implements SimpleCronModuleInterface
                 }
             }
 
-            if ($oldIsOrderPaid !== $order->isGoPayPaid()) {
-                $this->logger->info('Sending order e-mail.');
-                $this->orderMailFacade->sendEmail($order);
+            if ($oldIsOrderPaid === $order->isGoPayPaid()) {
+                continue;
             }
+
+            $this->logger->info('Sending order e-mail.');
+            $this->orderMailFacade->sendEmail($order);
         }
 
         $this->em->flush();

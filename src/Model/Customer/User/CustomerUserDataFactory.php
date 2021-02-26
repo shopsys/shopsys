@@ -38,7 +38,6 @@ class CustomerUserDataFactory extends BaseUserDataFactory
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\Customer $customer
-     *
      * @return \App\Model\Customer\User\CustomerUserData
      */
     public function createForCustomer(Customer $customer): BaseUserData
@@ -50,7 +49,6 @@ class CustomerUserDataFactory extends BaseUserDataFactory
 
     /**
      * @param int $domainId
-     *
      * @return \App\Model\Customer\User\CustomerUserData
      */
     public function createForDomainId(int $domainId): BaseUserData
@@ -63,7 +61,6 @@ class CustomerUserDataFactory extends BaseUserDataFactory
 
     /**
      * @param \App\Model\Customer\User\CustomerUser $customerUser
-     *
      * @return \App\Model\Customer\User\CustomerUserData
      */
     public function createFromCustomerUser(BaseUser $customerUser): BaseUserData
@@ -80,6 +77,7 @@ class CustomerUserDataFactory extends BaseUserDataFactory
     protected function fillFromUser(BaseUserData $customerUserData, BaseUser $customerUser)
     {
         $customerUserData->newsletterSubscription = $customerUser->isNewsletterSubscription();
+
         parent::fillFromUser($customerUserData, $customerUser);
     }
 }

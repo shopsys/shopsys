@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Twig\Cache;
 
+use App\Twig\Cache\Exception\InvalidCacheLifetimeException;
 use Asm89\Twig\CacheExtension\CacheStrategyInterface;
 use Doctrine\Common\Cache\CacheProvider;
 
@@ -47,7 +48,7 @@ class CurrentDomainLifetimeCacheStrategy implements CacheStrategyInterface
         } elseif (is_numeric($value)) {
             $lifetime = $value;
         } else {
-            throw new \App\Twig\Cache\Exception\InvalidCacheLifetimeException($value);
+            throw new InvalidCacheLifetimeException($value);
         }
 
         return [
