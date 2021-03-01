@@ -233,14 +233,14 @@
         </exec>
     </target>
 
-    <target name="db-check-mapping" depends="clean-redis" description="Checks if ORM mapping is valid." hidden="true">
+    <target name="db-check-mapping" depends="clean-cache" description="Checks if ORM mapping is valid." hidden="true">
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
             <arg value="${path.bin-console}"/>
             <arg value="shopsys:migrations:check-mapping"/>
         </exec>
     </target>
 
-    <target name="db-check-schema" depends="clean-redis,db-check-mapping" description="Checks if database schema is satisfying ORM and returns a list of suggestions to fix it." hidden="true">
+    <target name="db-check-schema" depends="clean-cache,db-check-mapping" description="Checks if database schema is satisfying ORM and returns a list of suggestions to fix it." hidden="true">
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
             <arg value="${path.bin-console}"/>
             <arg value="shopsys:migrations:check-schema"/>
@@ -290,7 +290,7 @@
         </exec>
     </target>
 
-    <target name="db-migrations-generate" depends="clean-redis,db-check-mapping" description="Generates migration file when DB schema is not satisfying ORM.">
+    <target name="db-migrations-generate" depends="clean-cache,db-check-mapping" description="Generates migration file when DB schema is not satisfying ORM.">
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
             <arg value="${path.bin-console}"/>
             <arg value="shopsys:migrations:generate"/>
