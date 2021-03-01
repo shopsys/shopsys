@@ -66,7 +66,6 @@ use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFactoryInterface;
 class ProductFacade extends BaseProductFacade
 {
     public const ASSETS_FILE_TYPE = '.pdf';
-    public const PRODUCT_PATH_PREFIX = 'produkt';
 
     /**
      * @var \App\Model\Stock\StockFacade
@@ -239,7 +238,7 @@ class ProductFacade extends BaseProductFacade
         $this->productHiddenRecalculator->calculateHiddenForProduct($product);
         $this->generateOldEshopUrlForProduct($product, $productData);
         $this->friendlyUrlFacade->saveUrlListFormData('front_product_detail', $product->getId(), $productData->urls);
-        $this->storeUrls($product);
+        $this->friendlyUrlFacade->createFriendlyUrls('front_product_detail', $product->getId(), $product->getFullnames());
 
         $this->pluginCrudExtensionFacade->saveAllData('product', $product->getId(), $productData->pluginData);
 
@@ -281,26 +280,6 @@ class ProductFacade extends BaseProductFacade
 
     /**
      * @param \App\Model\Product\Product $product
-     */
-    private function storeUrls(BaseProduct $product): void
-    {
-        foreach ($this->domain->getAll() as $domainConfig) {
-            if ($product->getName($domainConfig->getLocale()) !== null) {
-                $productUriName = $product->getFullname($domainConfig->getLocale()) . '-' . $product->getCatnum();
-
-                $this->friendlyUrlFacade->createFriendlyUrlForDomain(
-                    'front_product_detail',
-                    $product->getId(),
-                    $productUriName,
-                    $domainConfig->getId(),
-                    [self::PRODUCT_PATH_PREFIX]
-                );
-            }
-        }
-    }
-
-    /**
-     * @param \App\Model\Product\Product $product
      * @param \App\Model\Product\ProductFilesData $productFilesData
      */
     public function editProductFileAttributes(BaseProduct $product, ProductFilesData $productFilesData): void
@@ -329,7 +308,7 @@ class ProductFacade extends BaseProductFacade
 
         $this->generateOldEshopUrlForProduct($product, $productData);
         $this->friendlyUrlFacade->saveUrlListFormData('front_product_detail', $product->getId(), $productData->urls);
-        $this->storeUrls($product);
+        $this->friendlyUrlFacade->createFriendlyUrls('front_product_detail', $product->getId(), $product->getNames());
 
         $this->productAvailabilityRecalculationScheduler->scheduleProductForImmediateRecalculation($product);
         $this->productVisibilityFacade->refreshProductsVisibilityForMarkedDelayed();
