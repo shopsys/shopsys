@@ -58,10 +58,6 @@ class ProductParameterValueToProductParameterValuesLocalizedTransformer implemen
                 $normValue[$parameterId]->valueTextsByLocale = [];
             }
 
-            if (array_key_exists($locale, $normValue[$parameterId]->valueTextsByLocale)) {
-                throw new TransformationFailedException('Duplicate parameter');
-            }
-
             $normValue[$parameterId]->valueTextsByLocale[$locale] = $productParameterValueData->parameterValueData->text;
         }
 

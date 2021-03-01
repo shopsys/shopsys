@@ -883,10 +883,9 @@ class ProductFormType extends AbstractType
                 'entry_type' => ProductParameterValueFormType::class,
                 'constraints' => [
                     new UniqueProductParameters([
-                        'message' => 'Each parameter can be used only once',
+                        'message' => 'Parameter {{ parameterName }} is used more than once',
                     ]),
                 ],
-                'invalid_message' => 'Each parameter can be used only once',
                 'error_bubbling' => false,
                 'render_form_row' => false,
             ])
