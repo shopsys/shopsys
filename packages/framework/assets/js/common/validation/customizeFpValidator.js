@@ -128,7 +128,9 @@ FpJsFormValidator.getElementValue = function (element) {
 
 FpJsFormValidator._getInputValue = FpJsFormValidator.getInputValue;
 FpJsFormValidator.getInputValue = function (element) {
-    if (element.type === constant('\\FOS\\CKEditorBundle\\Form\\Type\\CKEditorType::class')) {
+    if (element.type === constant('\\FOS\\CKEditorBundle\\Form\\Type\\CKEditorType::class')
+        && CKEDITOR.instances[element.id]
+    ) {
         return CKEDITOR.instances[element.id].getData();
     }
     if (element.type === constant('\\Shopsys\\FrameworkBundle\\Form\\FileUploadType::class') || element.type === constant('\\Shopsys\\FrameworkBundle\\Form\\ImageUploadType::class')) {
