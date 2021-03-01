@@ -889,7 +889,7 @@ class ProductFormType extends AbstractType
                 'error_bubbling' => false,
                 'render_form_row' => false,
             ])
-                ->addViewTransformer($this->productParameterValueToProductParameterValuesLocalizedTransformer));
+               ->addModelTransformer($this->productParameterValueToProductParameterValuesLocalizedTransformer));
 
         return $builderParametersGroup;
     }

@@ -33,48 +33,48 @@ class ProductParameterValueToProductParameterValuesLocalizedTransformer implemen
     }
 
     /**
-     * @param mixed $normData
+     * @param mixed $value
      * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValuesLocalizedData[]|null
      */
-    public function transform($normData)
+    public function transform($value)
     {
-        if ($normData === null) {
+        if ($value === null) {
             return null;
         }
 
-        if (!is_array($normData)) {
+        if (!is_array($value)) {
             throw new TransformationFailedException('Invalid value');
         }
 
-        $normValue = [];
+        $normData = [];
         /** @var \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueData $productParameterValueData */
-        foreach ($normData as $productParameterValueData) {
+        foreach ($value as $productParameterValueData) {
             $parameterId = $productParameterValueData->parameter->getId();
             $locale = $productParameterValueData->parameterValueData->locale;
 
-            if (!array_key_exists($parameterId, $normValue)) {
-                $normValue[$parameterId] = new ProductParameterValuesLocalizedData();
-                $normValue[$parameterId]->parameter = $productParameterValueData->parameter;
-                $normValue[$parameterId]->valueTextsByLocale = [];
+            if (!array_key_exists($parameterId, $normData)) {
+                $normData[$parameterId] = new ProductParameterValuesLocalizedData();
+                $normData[$parameterId]->parameter = $productParameterValueData->parameter;
+                $normData[$parameterId]->valueTextsByLocale = [];
             }
 
-            $normValue[$parameterId]->valueTextsByLocale[$locale] = $productParameterValueData->parameterValueData->text;
+            $normData[$parameterId]->valueTextsByLocale[$locale] = $productParameterValueData->parameterValueData->text;
         }
 
-        return array_values($normValue);
+        return array_values($normData);
     }
 
     /**
-     * @param mixed $viewData
+     * @param mixed $value
      * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueData[]
      */
-    public function reverseTransform($viewData)
+    public function reverseTransform($value)
     {
-        if (is_array($viewData)) {
-            $normData = [];
+        if (is_array($value)) {
+            $modelData = [];
 
             /** @var \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValuesLocalizedData $productParameterValuesLocalizedData */
-            foreach ($viewData as $productParameterValuesLocalizedData) {
+            foreach ($value as $productParameterValuesLocalizedData) {
                 foreach ($productParameterValuesLocalizedData->valueTextsByLocale as $locale => $valueText) {
                     if ($valueText !== null) {
                         $productParameterValueData = $this->productParameterValueDataFactory->create();
@@ -84,12 +84,12 @@ class ProductParameterValueToProductParameterValuesLocalizedTransformer implemen
                         $parameterValueData->locale = $locale;
                         $productParameterValueData->parameterValueData = $parameterValueData;
 
-                        $normData[] = $productParameterValueData;
+                        $modelData[] = $productParameterValueData;
                     }
                 }
             }
 
-            return $normData;
+            return $modelData;
         }
 
         throw new TransformationFailedException('Invalid value');
