@@ -26,7 +26,6 @@ use App\Model\Product\Filter\ProductFilterData;
 use App\Model\Product\Filter\ProductFilterFacade;
 use App\Model\Product\Filter\ProductVariantFilterFacade;
 use App\Model\Product\Listed\ListedProductViewElasticFacade;
-use App\Model\Product\Package\ProductPackageFacade;
 use App\Model\Product\Parameter\ParameterFacade;
 use App\Model\Product\Product;
 use App\Model\Product\ProductFacade;
@@ -138,11 +137,6 @@ class ProductController extends FrontBaseController
     private $categoryParameterFacade;
 
     /**
-     * @var \App\Model\Product\Package\ProductPackageFacade
-     */
-    private $productPackageFacade;
-
-    /**
      * @var \App\Component\Router\CategorySeoMix\CategorySeoMixUrlGenerator
      */
     private $categorySeoMixUrlGenerator;
@@ -209,7 +203,6 @@ class ProductController extends FrontBaseController
      * @param \App\Model\CategorySeo\ReadyCategorySeoMixFacade $readyCategorySeoMixFacade
      * @param \Shopsys\FrameworkBundle\Model\Seo\SeoSettingFacade $seoSettingFacade
      * @param \App\Model\Category\CategoryParameterFacade $categoryParameterFacade
-     * @param \App\Model\Product\Package\ProductPackageFacade $productPackageFacade
      * @param \App\Component\Router\CategorySeoMix\CategorySeoMixUrlGenerator $categorySeoMixUrlGenerator
      * @param \App\Component\UploadedFile\UploadedFileFacade $uploadedFileFacade
      * @param \App\Component\SeoHelper\SeoHelper $seoHelper
@@ -238,7 +231,6 @@ class ProductController extends FrontBaseController
         ReadyCategorySeoMixFacade $readyCategorySeoMixFacade,
         SeoSettingFacade $seoSettingFacade,
         CategoryParameterFacade $categoryParameterFacade,
-        ProductPackageFacade $productPackageFacade,
         CategorySeoMixUrlGenerator $categorySeoMixUrlGenerator,
         UploadedFileFacade $uploadedFileFacade,
         SeoHelper $seoHelper,
@@ -266,7 +258,6 @@ class ProductController extends FrontBaseController
         $this->readyCategorySeoMixFacade = $readyCategorySeoMixFacade;
         $this->seoSettingFacade = $seoSettingFacade;
         $this->categoryParameterFacade = $categoryParameterFacade;
-        $this->productPackageFacade = $productPackageFacade;
         $this->categorySeoMixUrlGenerator = $categorySeoMixUrlGenerator;
         $this->uploadedFileFacade = $uploadedFileFacade;
         $this->seoHelper = $seoHelper;
@@ -298,7 +289,6 @@ class ProductController extends FrontBaseController
             $product = $productVariant;
         }
         //parts build from variant
-        $productPackages = $this->productPackageFacade->getProductPackagesByProduct($productVariant);
         $downloadFiles = $this->productFacade->getDownloadFilesForProductByDomain($productVariant, $this->domain);
         $productAvailabilityInformation = $this->productAvailabilityFacade->getProductAvailabilityInformationByDomainId($productVariant, $this->domain->getId());
         $productAvailabilityStatus = $this->productAvailabilityFacade->getProductAvailabilityStatusByDomainId($productVariant, $this->domain->getId());
@@ -329,7 +319,6 @@ class ProductController extends FrontBaseController
             'productAvailableStocksCountInformation' => $productAvailableStocksCountInformation,
             'productCountExposedInStores' => $productCountExposedInStores,
             'downloadFiles' => $downloadFiles,
-            'productPackages' => $productPackages,
             'productMainVariantId' => $product->getId(),
             'gtmAccessoriesScrollEvent' => $this->gtmJsPushFacade->getListedProductViewsScrollData(
                 $accessories,

@@ -93,7 +93,6 @@ parameters:
             - '*/tests/App/Functional/Model/Product/Elasticsearch/ProductExportRepositoryTest.php'
             - '*/src/Model/Product/Elasticsearch/ProductExportRepository.php'
             - '*/src/Model/Product/Availability/ProductAvailabilityFacade.php'
-            - '*/src/Form/Admin/TransportPackageFormType.php'
             - '*/src/Model/Product/Parameter/ParameterFacade.php'
             - '*/src/Controller/Front/CartController.php'
 

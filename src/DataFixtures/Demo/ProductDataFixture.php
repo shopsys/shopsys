@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace App\DataFixtures\Demo;
 
-use App\Model\Product\Package\ProductPackageDataFactory;
-use App\Model\Product\Package\ProductPackageFacade;
 use App\Model\Product\Parameter\Parameter;
 use App\Model\Product\Parameter\ParameterDataFactory;
 use App\Model\Product\Parameter\ParameterGroupDataFactory;
@@ -121,16 +119,6 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
     private $em;
 
     /**
-     * @var \App\Model\Product\Package\ProductPackageDataFactory
-     */
-    private $productPackageDataFactory;
-
-    /**
-     * @var \App\Model\Product\Package\ProductPackageFacade
-     */
-    private $productPackageFacade;
-
-    /**
      * @param \App\Model\Product\ProductFacade $productFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade $pricingGroupFacade
@@ -146,8 +134,6 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
      * @param \App\Model\Stock\StockRepository $stockRepository
      * @param \App\Model\Stock\ProductStockDataFactory $productStockDataFactory
      * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \App\Model\Product\Package\ProductPackageDataFactory $productPackageDataFactory
-     * @param \App\Model\Product\Package\ProductPackageFacade $productPackageFacade
      */
     public function __construct(
         ProductFacade $productFacade,
@@ -164,9 +150,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         ParameterGroupFacade $parameterGroupFacade,
         StockRepository $stockRepository,
         ProductStockDataFactory $productStockDataFactory,
-        EntityManagerInterface $em,
-        ProductPackageDataFactory $productPackageDataFactory,
-        ProductPackageFacade $productPackageFacade
+        EntityManagerInterface $em
     ) {
         $this->productFacade = $productFacade;
         $this->domain = $domain;
@@ -183,8 +167,6 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->stockRepository = $stockRepository;
         $this->productStockDataFactory = $productStockDataFactory;
         $this->em = $em;
-        $this->productPackageDataFactory = $productPackageDataFactory;
-        $this->productPackageFacade = $productPackageFacade;
     }
 
     /**
@@ -6113,56 +6095,13 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
     /**
      * @param \App\Model\Product\ProductData $productData
-     */
-    private function setDefaultPackagesInformationForAlDomains(ProductData $productData): void
-    {
-        static $mountingState = true;
-        $mountingState = !$mountingState;
-
-        foreach ($this->domain->getAllIncludingDomainConfigsWithoutDataCreated() as $domainConfig) {
-            $productData->embeddedAccessories[$domainConfig->getId()] = t('Nožičky', [], 'dataFixtures', $domainConfig->getLocale());
-            $productData->packageNotIncluded[$domainConfig->getId()] = t('šroubovák', [], 'dataFixtures', $domainConfig->getLocale());
-            $productData->packagingUnit[$domainConfig->getId()] = 2;
-            $productData->countPackages[$domainConfig->getId()] = 3;
-            $productData->totalPackageWeight[$domainConfig->getId()] = 15.5;
-            $productData->mountingState[$domainConfig->getId()] = $mountingState;
-        }
-    }
-
-    /**
-     * @param \App\Model\Product\Product $product
-     */
-    private function setDetailProductPackagesInformation(Product $product): void
-    {
-        $productPackageData1 = $this->productPackageDataFactory->create();
-        $productPackageData1->position = 1;
-        $productPackageData1->length = 150;
-        $productPackageData1->width = 50;
-        $productPackageData1->height = 20;
-        $productPackageData1->weight = 10.5;
-
-        $productPackageData2 = $this->productPackageDataFactory->create();
-        $productPackageData2->position = 2;
-        $productPackageData2->length = 100;
-        $productPackageData2->width = 30;
-        $productPackageData2->height = 10;
-        $productPackageData2->weight = 5;
-
-        $this->productPackageFacade->updateProductPackages($product, [$productPackageData1, $productPackageData2]);
-    }
-
-    /**
-     * @param \App\Model\Product\ProductData $productData
      * @return \App\Model\Product\Product
      */
     private function createProduct(ProductData $productData): Product
     {
-        $this->setDefaultPackagesInformationForAlDomains($productData);
-
         /** @var \App\Model\Product\Product $product */
         $product = $this->productFacade->create($productData);
 
-        $this->setDetailProductPackagesInformation($product);
         $this->addProductReference($product);
 
         return $product;

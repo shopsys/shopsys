@@ -8,7 +8,6 @@ use App\Component\Image\Config\ImageConfig;
 use App\Component\Image\Image;
 use App\Component\Image\ImageCacheFacade;
 use App\Component\Image\ImageFacade;
-use App\Model\Product\Package\ProductPackageFacade;
 use App\Model\Product\Parameter\ParameterFacade;
 use App\Model\Product\Product;
 use App\Model\Product\ProductData;
@@ -56,11 +55,6 @@ class TransferredProductProcessor
     private $em;
 
     /**
-     * @var \App\Model\Product\Package\ProductPackageFacade
-     */
-    private $productPackageFacade;
-
-    /**
      * @var \App\Component\Image\ImageFacade
      */
     private $imageFacade;
@@ -105,7 +99,6 @@ class TransferredProductProcessor
      * @param \App\Model\Product\Transfer\Akeneo\ProductTransferAkeneoMapper $productTransferAkeneoMapper
      * @param \App\Model\Product\Transfer\Akeneo\ProductTransferAkeneoValidator $productTransferAkeneoValidator
      * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \App\Model\Product\Package\ProductPackageFacade $productPackageFacade
      * @param \App\Component\Image\ImageFacade $imageFacade
      * @param \App\Model\Product\Transfer\Akeneo\ProductTransferAkeneoFacade $productTransferAkeneoFacade
      * @param \App\Model\Product\Transfer\Akeneo\AssetTransferAkeneoFacade $assetTransferAkeneoFacade
@@ -120,7 +113,6 @@ class TransferredProductProcessor
         ProductTransferAkeneoMapper $productTransferAkeneoMapper,
         ProductTransferAkeneoValidator $productTransferAkeneoValidator,
         EntityManagerInterface $em,
-        ProductPackageFacade $productPackageFacade,
         ImageFacade $imageFacade,
         ProductTransferAkeneoFacade $productTransferAkeneoFacade,
         AssetTransferAkeneoFacade $assetTransferAkeneoFacade,
@@ -134,7 +126,6 @@ class TransferredProductProcessor
         $this->productTransferAkeneoMapper = $productTransferAkeneoMapper;
         $this->productTransferAkeneoValidator = $productTransferAkeneoValidator;
         $this->em = $em;
-        $this->productPackageFacade = $productPackageFacade;
         $this->imageFacade = $imageFacade;
         $this->productTransferAkeneoFacade = $productTransferAkeneoFacade;
         $this->assetTransferAkeneoFacade = $assetTransferAkeneoFacade;
@@ -172,7 +163,6 @@ class TransferredProductProcessor
 
         $this->setProductForImportFiles($product, $akeneoProductData);
         $this->setProductImages($product, $akeneoProductData);
-        $this->setProductPackageDetailInformationFormProduct($product, $akeneoProductData);
         $this->setProductAsVariant($product, $akeneoProductData, $isMainVariant);
         $this->setProductAsDefaultVariant($product, $akeneoProductData);
 
@@ -326,16 +316,6 @@ class TransferredProductProcessor
     {
         $productFilesData = $this->productTransferAkeneoMapper->mapAkeneoProductDataToProductFilesData($akeneoProductData, $product);
         $this->productFacade->editProductFileAttributes($product, $productFilesData);
-    }
-
-    /**
-     * @param \App\Model\Product\Product $product
-     * @param array $akeneoProductData
-     */
-    private function setProductPackageDetailInformationFormProduct(Product $product, array $akeneoProductData): void
-    {
-        $productPackageDataList = $this->productTransferAkeneoMapper->mapAkeneoProductPackageDetailInformationToProductPackageDataList($akeneoProductData);
-        $this->productPackageFacade->updateProductPackages($product, $productPackageDataList);
     }
 
     /**

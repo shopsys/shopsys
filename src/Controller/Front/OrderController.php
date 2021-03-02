@@ -29,7 +29,6 @@ use App\Model\Order\Watcher\SplitTransportAndPaymentWatcher;
 use App\Model\Payment\Payment;
 use App\Model\Product\Availability\ProductAvailabilityFacade;
 use App\Model\Stock\StockFacade;
-use App\Model\Transport\Logistic\TransportLogisticFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\HttpFoundation\DownloadFileResponse;
 use Shopsys\FrameworkBundle\Model\Cart\CartFacade;
@@ -156,11 +155,6 @@ class OrderController extends FrontBaseController
     private $authenticator;
 
     /**
-     * @var \App\Model\Transport\Logistic\TransportLogisticFacade
-     */
-    private TransportLogisticFacade $transportLogisticFacade;
-
-    /**
      * @var \App\Model\Product\Availability\ProductAvailabilityFacade
      */
     private ProductAvailabilityFacade $productAvailabilityFacade;
@@ -202,7 +196,6 @@ class OrderController extends FrontBaseController
      * @param \App\Model\Stock\StockFacade $stockFacade
      * @param \App\Model\Gtm\GtmFacade $gtmFacade
      * @param \Shopsys\FrameworkBundle\Model\Security\Authenticator $authenticator
-     * @param \App\Model\Transport\Logistic\TransportLogisticFacade $transportLogisticFacade
      * @param \App\Model\Product\Availability\ProductAvailabilityFacade $productAvailabilityFacade
      * @param \App\Model\Cart\CartMigrationFacade $cartMigrationFacade
      * @param \App\Model\Customer\User\CustomerUserFacade $customerUserFacade
@@ -229,7 +222,6 @@ class OrderController extends FrontBaseController
         StockFacade $stockFacade,
         GtmFacade $gtmFacade,
         Authenticator $authenticator,
-        TransportLogisticFacade $transportLogisticFacade,
         ProductAvailabilityFacade $productAvailabilityFacade,
         CartMigrationFacade $cartMigrationFacade,
         CustomerUserFacade $customerUserFacade
@@ -255,7 +247,6 @@ class OrderController extends FrontBaseController
         $this->newsletterFacade = $newsletterFacade;
         $this->gtmFacade = $gtmFacade;
         $this->authenticator = $authenticator;
-        $this->transportLogisticFacade = $transportLogisticFacade;
         $this->productAvailabilityFacade = $productAvailabilityFacade;
         $this->cartMigrationFacade = $cartMigrationFacade;
         $this->customerUserFacade = $customerUserFacade;
@@ -314,7 +305,6 @@ class OrderController extends FrontBaseController
 
         /** @var \App\Model\Transport\Transport[] $transports */
         $transports = $this->transportFacade->getVisibleOnCurrentDomain($payments);
-        $transports = $this->transportLogisticFacade->filterAllowedTransportsForCurrentCart($transports);
 
         $frontOrderFormData = $this->orderFacade->revalidatePaymentAndTransport($frontOrderFormData, $payments, $transports);
         $orderData = $this->orderDataMapper->getOrderDataFromFrontOrderData($frontOrderFormData);
