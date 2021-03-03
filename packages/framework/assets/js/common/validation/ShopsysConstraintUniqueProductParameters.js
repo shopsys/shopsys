@@ -9,7 +9,7 @@
          */
         this.validate = function (value) {
             const uniqueCollectionValidator = new ShopsysFrameworkBundleFormConstraintsUniqueCollection();
-            uniqueCollectionValidator.message = this.message;
+            uniqueCollectionValidator.message = this.message.replace('{{ parameterName }}', '');
             uniqueCollectionValidator.fields = ['parameter', 'locale'];
             uniqueCollectionValidator.allowEmpty = false;
 
