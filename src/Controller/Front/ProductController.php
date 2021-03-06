@@ -286,7 +286,6 @@ class ProductController extends FrontBaseController
             'variants' => $variants,
             'productMainCategory' => $productMainCategory,
             'categoryList' => $categoryList,
-            'domain' => $this->domain,
             'productAvailabilityInformation' => $productAvailabilityInformation,
             'productAvailabilityStatus' => $productAvailabilityStatus,
             'productStocksAvailabilitiesInformation' => $productStocksAvailabilitiesInformation,
