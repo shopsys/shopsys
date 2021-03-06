@@ -73,7 +73,6 @@ class ProductExportRepositoryTest extends TransactionFunctionalTestCase
             'is_sale_exclusion',
             'product_available_stocks_count_information',
             'product_count_exposed_in_stores',
-            'variants_parameters_setup',
             'searching_names',
             'searching_descriptions',
             'searching_catnums',

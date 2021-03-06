@@ -37,29 +37,9 @@ class ListedProductView extends BaseListedProductView
     private $productCountExposedInStores;
 
     /**
-     * @var array|null
-     */
-    private $variantsParametersSetup;
-
-    /**
-     * @var string|null
-     */
-    private $variantUrl;
-
-    /**
      * @var string
      */
     private $mainCategoryPath;
-
-    /**
-     * @var int
-     */
-    private $countColorsInVariants;
-
-    /**
-     * @var int
-     */
-    private $countDifferentVariants;
 
     /**
      * @var bool
@@ -85,10 +65,7 @@ class ListedProductView extends BaseListedProductView
      * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice|null $nonSellingPrice
      * @param string $productAvailableStocksCountInformation
      * @param string $productCountExposedInStores
-     * @param array|null $variantsParametersSetup
      * @param string $mainCategoryPath
-     * @param int $countColorsInVariants
-     * @param int $countDifferentVariants
      * @param bool $hasScontoFlag
      * @param bool $isAvailable
      */
@@ -106,10 +83,7 @@ class ListedProductView extends BaseListedProductView
         ?ProductPrice $nonSellingPrice,
         string $productAvailableStocksCountInformation,
         string $productCountExposedInStores,
-        ?array $variantsParametersSetup,
         string $mainCategoryPath,
-        int $countColorsInVariants,
-        int $countDifferentVariants,
         bool $hasScontoFlag,
         bool $isAvailable
     ) {
@@ -120,10 +94,7 @@ class ListedProductView extends BaseListedProductView
         $this->nonSellingPrice = $nonSellingPrice;
         $this->productAvailableStocksCountInformation = $productAvailableStocksCountInformation;
         $this->productCountExposedInStores = $productCountExposedInStores;
-        $this->variantsParametersSetup = $variantsParametersSetup;
         $this->mainCategoryPath = $mainCategoryPath;
-        $this->countColorsInVariants = $countColorsInVariants;
-        $this->countDifferentVariants = $countDifferentVariants;
         $this->hasScontoFlag = $hasScontoFlag;
         $this->isAvailable = $isAvailable;
     }
@@ -169,46 +140,6 @@ class ListedProductView extends BaseListedProductView
     }
 
     /**
-     * @param string|null $productCountExposedInStores
-     */
-    public function setProductCountExposedInStores(?string $productCountExposedInStores): void
-    {
-        $this->productCountExposedInStores = $productCountExposedInStores;
-    }
-
-    /**
-     * @return array|null
-     */
-    public function getVariantsParametersSetup(): ?array
-    {
-        return $this->variantsParametersSetup;
-    }
-
-    /**
-     * @param int $variantId
-     */
-    public function deleteVariantParametersSetupByVariantId(int $variantId): void
-    {
-        unset($this->variantsParametersSetup[$variantId]);
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getVariantUrl(): ?string
-    {
-        return $this->variantUrl;
-    }
-
-    /**
-     * @param string|null $variantUrl
-     */
-    public function setVariantUrl(?string $variantUrl): void
-    {
-        $this->variantUrl = $variantUrl;
-    }
-
-    /**
      * @return string
      */
     public function getFullName(): string
@@ -225,22 +156,6 @@ class ListedProductView extends BaseListedProductView
     }
 
     /**
-     * @return int
-     */
-    public function getCountColorsInVariants(): int
-    {
-        return $this->countColorsInVariants;
-    }
-
-    /**
-     * @return int
-     */
-    public function getCountDifferentVariants(): int
-    {
-        return $this->countDifferentVariants;
-    }
-
-    /**
      * @return bool
      */
     public function hasScontoFlag(): bool
@@ -249,58 +164,10 @@ class ListedProductView extends BaseListedProductView
     }
 
     /**
-     * @param bool $hasScontoFlag
-     */
-    public function setHasScontoFlag(bool $hasScontoFlag): void
-    {
-        $this->hasScontoFlag = $hasScontoFlag;
-    }
-
-    /**
-     * @param string|null $productAvailableStocksCountInformation
-     */
-    public function setProductAvailableStocksCountInformation(?string $productAvailableStocksCountInformation): void
-    {
-        $this->productAvailableStocksCountInformation = $productAvailableStocksCountInformation;
-    }
-
-    /**
-     * @param string $availability
-     */
-    public function setAvailability(string $availability): void
-    {
-        $this->availability = $availability;
-    }
-
-    /**
-     * @param int[] $flagIds
-     */
-    public function setFlagIds(array $flagIds): void
-    {
-        $this->flagIds = $flagIds;
-    }
-
-    /**
-     * @param \Shopsys\ReadModelBundle\Image\ImageView|null $image
-     */
-    public function setImage(?ImageView $image): void
-    {
-        $this->image = $image;
-    }
-
-    /**
      * @return bool
      */
     public function isAvailable(): bool
     {
         return $this->isAvailable;
-    }
-
-    /**
-     * @param bool $isAvailable
-     */
-    public function setIsAvailable(bool $isAvailable): void
-    {
-        $this->isAvailable = $isAvailable;
     }
 }

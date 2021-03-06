@@ -9,7 +9,6 @@ use App\Model\Blog\Category\BlogCategoryFacade;
 use App\Model\Category\CategoryFacade;
 use App\Model\Gtm\DataLayer;
 use App\Model\Gtm\GtmJsPushFacade;
-use App\Model\Product\Filter\ProductVariantFilterFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Category\TopCategory\TopCategoryFacade;
 use Shopsys\FrameworkBundle\Model\Seo\SeoSettingFacade;
@@ -45,11 +44,6 @@ class HomepageController extends FrontBaseController
     private $topCategoryFacade;
 
     /**
-     * @var \App\Model\Product\Filter\ProductVariantFilterFacade
-     */
-    private ProductVariantFilterFacade $productVariantFilterFacade;
-
-    /**
      * @var \App\Model\Blog\Article\BlogArticleFacade
      */
     private $blogArticleFacade;
@@ -71,7 +65,6 @@ class HomepageController extends FrontBaseController
      * @param \Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFacadeInterface $listedProductViewFacade
      * @param \App\Model\Category\TopCategory\TopCategoryFacade $topCategoryFacade
      * @param \App\Model\Blog\Article\BlogArticleFacade $blogArticleFacade
-     * @param \App\Model\Product\Filter\ProductVariantFilterFacade $productVariantFilterFacade
      * @param \App\Model\Gtm\GtmJsPushFacade $gtmJsPushFacade
      * @param \App\Model\Category\CategoryFacade $categoryFacade
      */
@@ -82,7 +75,6 @@ class HomepageController extends FrontBaseController
         ListedProductViewFacadeInterface $listedProductViewFacade,
         TopCategoryFacade $topCategoryFacade,
         BlogArticleFacade $blogArticleFacade,
-        ProductVariantFilterFacade $productVariantFilterFacade,
         GtmJsPushFacade $gtmJsPushFacade,
         CategoryFacade $categoryFacade
     ) {
@@ -91,7 +83,6 @@ class HomepageController extends FrontBaseController
         $this->sliderItemFacade = $sliderItemFacade;
         $this->topCategoryFacade = $topCategoryFacade;
         $this->blogArticleFacade = $blogArticleFacade;
-        $this->productVariantFilterFacade = $productVariantFilterFacade;
         $this->listedProductViewFacade = $listedProductViewFacade;
         $this->gtmJsPushFacade = $gtmJsPushFacade;
         $this->categoryFacade = $categoryFacade;
@@ -115,7 +106,6 @@ class HomepageController extends FrontBaseController
 
         /** @var \App\Model\Product\Listed\ListedProductView[] $topProducts */
         $topProducts = $this->listedProductViewFacade->getAllTop();
-        $this->productVariantFilterFacade->setupDefaultVariantsInListedProductViews($topProducts);
 
         $mainCategory = $blogCategoryFacade->getVisibleOnDomainById($this->domain->getId(), BlogArticleController::MAIN_BLOG_CATEGORY_ID);
 

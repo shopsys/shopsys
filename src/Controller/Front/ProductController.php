@@ -24,7 +24,6 @@ use App\Model\Product\Filter\CachedProductFilterConfig;
 use App\Model\Product\Filter\ProductFilterCacheFacade;
 use App\Model\Product\Filter\ProductFilterData;
 use App\Model\Product\Filter\ProductFilterFacade;
-use App\Model\Product\Filter\ProductVariantFilterFacade;
 use App\Model\Product\Listed\ListedProductViewElasticFacade;
 use App\Model\Product\ProductFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
@@ -165,11 +164,6 @@ class ProductController extends FrontBaseController
     private $gtmJsPushFacade;
 
     /**
-     * @var \App\Model\Product\Filter\ProductVariantFilterFacade
-     */
-    private $productVariantFilterFacade;
-
-    /**
      * @var \App\Model\Product\Filter\ProductFilterCacheFacade
      */
     private ProductFilterCacheFacade $productFilterCacheFacade;
@@ -202,7 +196,6 @@ class ProductController extends FrontBaseController
      * @param \App\Model\Product\Filter\ProductFilterFacade $productFilterFacade
      * @param \App\Model\Gtm\GtmFacade $gtmFacade
      * @param \App\Model\Gtm\GtmJsPushFacade $gtmJsPushFacade
-     * @param \App\Model\Product\Filter\ProductVariantFilterFacade $productVariantFilterFacade
      * @param \App\Model\Product\Filter\ProductFilterCacheFacade $productFilterCacheFacade
      * @param \App\Model\Gtm\GtmContainer $gtmContainer
      */
@@ -229,7 +222,6 @@ class ProductController extends FrontBaseController
         ProductFilterFacade $productFilterFacade,
         GtmFacade $gtmFacade,
         GtmJsPushFacade $gtmJsPushFacade,
-        ProductVariantFilterFacade $productVariantFilterFacade,
         ProductFilterCacheFacade $productFilterCacheFacade,
         GtmContainer $gtmContainer
     ) {
@@ -255,7 +247,6 @@ class ProductController extends FrontBaseController
         $this->productFilterFacade = $productFilterFacade;
         $this->gtmFacade = $gtmFacade;
         $this->gtmJsPushFacade = $gtmJsPushFacade;
-        $this->productVariantFilterFacade = $productVariantFilterFacade;
         $this->productFilterCacheFacade = $productFilterCacheFacade;
         $this->gtmContainer = $gtmContainer;
     }
@@ -285,7 +276,6 @@ class ProductController extends FrontBaseController
         //parts build from main product
         /** @var \App\Model\Product\Listed\ListedProductView[] $accessories */
         $accessories = $this->listedProductViewFacade->getAllAccessories($product->getId());
-        $this->productVariantFilterFacade->setupDefaultVariantsInListedProductViews($accessories);
         $variants = $this->productOnCurrentDomainFacade->getVariantsForProduct($product);
         $productMainCategory = $this->categoryFacade->getProductMainCategoryByDomainId($product, $this->domain->getId());
         $categoryList = $this->categoryFacade->getAllProductCategoriesByProductAndDomainId($product, $this->domain->getId());
@@ -339,8 +329,6 @@ class ProductController extends FrontBaseController
             $page,
             self::SIMILAR_PRODUCTS_PER_PAGE
         );
-
-        $this->productVariantFilterFacade->setupDefaultVariantsInPaginationResult($paginatedSimilarProducts);
 
         return $this->render(
             'Front/Content/Product/similarProducts.html.twig',
@@ -398,8 +386,6 @@ class ProductController extends FrontBaseController
             $page,
             self::PRODUCTS_PER_PAGE
         );
-
-        $this->productVariantFilterFacade->setupMostValuableVariantsInPaginationResultByProductFilterData($paginationResult, $productFilterData);
 
         $productFilterCountData = null;
         if ($this->moduleFacade->isEnabled(ModuleList::PRODUCT_FILTER_COUNTS)) {
@@ -565,8 +551,6 @@ class ProductController extends FrontBaseController
             $page,
             self::PRODUCTS_PER_PAGE
         );
-
-        $this->productVariantFilterFacade->setupMostValuableVariantsInPaginationResultByProductFilterData($paginationResult, $productFilterData);
 
         $productFilterCountData = null;
         if ($this->moduleFacade->isEnabled(ModuleList::PRODUCT_FILTER_COUNTS)) {
@@ -897,8 +881,6 @@ class ProductController extends FrontBaseController
             $page,
             self::SALE_PRODUCTS_PER_PAGE
         );
-
-        $this->productVariantFilterFacade->setupDefaultVariantsInPaginationResult($paginatedSaleProducts);
 
         return $this->render(
             'Front/Content/Product/productsInSaleOnHomePage.html.twig',

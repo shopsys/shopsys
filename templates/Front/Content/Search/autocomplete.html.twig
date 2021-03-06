@@ -14,13 +14,7 @@
 
     {% for productView in productsPaginationResult.results %}
         <li class="search__hint__item">
-            <a href="
-                {% if productView.variantUrl is null %}
-                    {{ productView.action.detailUrl }}
-                {% else %}
-                    {{ productView.variantUrl }}
-                {% endif %}
-                "
+            <a href="{{ productView.action.detailUrl }}"
                 class="search__hint__item__link">
                 <span class="search__hint__image">
                      {{ image(productView.image, { size: 'thumbnailSearch', alt: productView.name, lazy: false }) }}
