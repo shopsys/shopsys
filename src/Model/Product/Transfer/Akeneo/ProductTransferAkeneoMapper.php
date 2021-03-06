@@ -122,30 +122,6 @@ class ProductTransferAkeneoMapper
 
     /**
      * @param array $akeneoProductData
-     * @return int|null
-     */
-    public function mapAkeneoProductDataToParentCatnum(array $akeneoProductData): ?int
-    {
-        $associationArticleCatnum = $akeneoProductData['values']['association_article'][0]['data'] ?? null;
-
-        return $associationArticleCatnum !== null && $associationArticleCatnum !== 0 ? $associationArticleCatnum : null;
-    }
-
-    /**
-     * @param array $akeneoProductData
-     * @return string|null
-     */
-    public function mapAkeneoProductDataToDefaultVariantCatnum(array $akeneoProductData): ?string
-    {
-        $mainVariantCatnum = $akeneoProductData['values']['main_variant_sku'][0]['data'] ?? null;
-        if (is_numeric($mainVariantCatnum)) {
-            $mainVariantCatnum = (int)$mainVariantCatnum;
-        }
-        return $mainVariantCatnum !== null ? (string)$mainVariantCatnum : null;
-    }
-
-    /**
-     * @param array $akeneoProductData
      * @param \App\Model\Product\Product|null $product
      * @param \App\Model\Transfer\TransferLoggerInterface $transferLogger
      * @return \App\Model\Product\ProductData
@@ -209,15 +185,6 @@ class ProductTransferAkeneoMapper
     public function getProductAccessoryCatnumListFromAkeneoProductData(array $akeneoProductData): array
     {
         return $akeneoProductData['associations']['accessories']['products'] ?? [];
-    }
-
-    /**
-     * @param array $akeneoProductData
-     * @return string[]
-     */
-    public function getMainVariantAccessoryCatnumListFromAkeneoProductData(array $akeneoProductData): array
-    {
-        return $akeneoProductData['associations']['accessories']['product_models'] ?? [];
     }
 
     /**

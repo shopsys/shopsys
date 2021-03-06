@@ -292,31 +292,6 @@ class ParameterRepository extends BaseParameterRepository
 
     /**
      * @param \App\Model\Product\Product $product
-     * @param \App\Model\Product\Parameter\Parameter $parameter
-     * @param string $locale
-     * @return \App\Model\Product\Parameter\ParameterValue[]
-     */
-    public function getParameterValuesForVariantsByMainProductAndParameter(Product $product, Parameter $parameter, string $locale): array
-    {
-        return $this->getParameterValueRepository()
-            ->createQueryBuilder('pv')
-            ->select('pv')
-            ->join(ProductParameterValue::class, 'ppv', Join::WITH, 'pv = ppv.value and pv.locale = :locale')
-            ->join('ppv.product', 'p', Join::WITH, 'p.mainVariant = :product')
-            ->where('ppv.parameter = :parameter')
-            ->groupBy('pv')
-            ->orderBy('pv.text')
-            ->setParameters([
-                'locale' => $locale,
-                'product' => $product,
-                'parameter' => $parameter,
-            ])
-            ->getQuery()
-            ->execute();
-    }
-
-    /**
-     * @param \App\Model\Product\Product $product
      * @param string $locale
      * @return \App\Model\Product\Parameter\ParameterValuesViewData[]
      */

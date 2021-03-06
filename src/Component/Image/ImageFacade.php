@@ -152,28 +152,6 @@ class ImageFacade extends BaseImageFacade
     }
 
     /**
-     * @param int $productId
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @param string|null $sizeName
-     * @param string|null $type
-     * @return string
-     */
-    public function getProductImageUrlByProductId(int $productId, DomainConfig $domainConfig, ?string $sizeName = null, ?string $type = null): string
-    {
-        $image = $this->imageCacheFacade->findCachedImageEntityByEntityNameAndEntityIdAndType(Product::class, $productId, $type);
-        if ($image === null) {
-            $image = $this->imageRepository->getImageByEntity(
-                'product',
-                $productId,
-                $type
-            );
-            $this->imageCacheFacade->setImageEntityIntoCacheByEntityNameAndEntityIdAndType(Product::class, $productId, $type, $image);
-        }
-
-        return $this->getImageUrl($domainConfig, $image, $sizeName, $type);
-    }
-
-    /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @param int $id
      * @param string $extension

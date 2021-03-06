@@ -30,28 +30,11 @@ class ImageExtension extends BaseImageExtension
     {
         $twigFunctions = parent::getFunctions();
 
-        $twigFunctions[] = new TwigFunction('productImageUrl', [$this, 'getProductImageUrl']);
-
         $twigFunctions[] = new TwigFunction('productImageByAkeneoType', [$this, 'getProductImageHtmlByAkeneoType'], ['is_safe' => ['html']]);
 
         $twigFunctions[] = new TwigFunction('existProductImageByAkeneoType', [$this, 'isProductImageHtmlByAkeneoType']);
 
         return $twigFunctions;
-    }
-
-    /**
-     * @param int $productId
-     * @param string|null $sizeName
-     * @param string|null $type
-     * @return string
-     */
-    public function getProductImageUrl(int $productId, ?string $sizeName = null, ?string $type = null): string
-    {
-        try {
-            return $this->imageFacade->getProductImageUrlByProductId($productId, $this->domain->getCurrentDomainConfig(), $sizeName, $type);
-        } catch (ImageNotFoundException $e) {
-            return $this->getEmptyImageUrl();
-        }
     }
 
     /**

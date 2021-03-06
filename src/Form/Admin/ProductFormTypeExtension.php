@@ -12,13 +12,11 @@ use Shopsys\FormTypesBundle\MultidomainType;
 use Shopsys\FormTypesBundle\YesNoType;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Form\Admin\Product\ProductFormType;
-use Shopsys\FrameworkBundle\Form\DisplayOnlyUrlType;
 use Shopsys\FrameworkBundle\Form\FormRenderingConfigurationExtension;
 use Shopsys\FrameworkBundle\Form\GroupType;
 use Shopsys\FrameworkBundle\Form\LocalizedFullWidthType;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade;
 use Symfony\Component\Form\AbstractTypeExtension;
-use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
@@ -157,7 +155,6 @@ class ProductFormTypeExtension extends AbstractTypeExtension
             'position' => ['before' => 'partno'],
         ]);
 
-        $this->setVariantGroup($builder, $this->product);
         $this->setBasicInformationGroup($builder);
         $this->setSeoGroup($builder);
         $this->setShortDescriptionsUspGroup($builder, $options);
@@ -193,56 +190,6 @@ class ProductFormTypeExtension extends AbstractTypeExtension
 
         if ($productByCatnum !== null) {
             $context->addViolation(t('Produkt s tímto katalogovým číslem již existuje'));
-        }
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param \App\Model\Product\Product|null $product
-     */
-    private function setVariantGroup(FormBuilderInterface $builder, ?Product $product)
-    {
-        if ($this->isProductMainVariant($product)) {
-            $variantGroup = $builder->get('variantGroup');
-
-            $variantGroup->add('defaultVariantUrl', DisplayOnlyUrlType::class, [
-                'label' => t('Defaultní variant varianta produktu'),
-                'route' => 'admin_product_edit',
-                'route_params' => [
-                    'id' => $product->getDefaultVariant()->getId(),
-                ],
-                'route_label' => sprintf('%s (catcum: %s)', $product->getDefaultVariant()->getName(), $product->getDefaultVariant()->getCatnum()),
-            ]);
-
-            $variantGroup->add('variantParameters', CollectionType::class, [
-                'required' => false,
-                'disabled' => true,
-                'label' => t('Parametry variant'),
-                'label_attr' => ['style' => 'display: none;'],
-                'entry_type' => TextType::class,
-                'entry_options' => [
-                    'disabled' => true,
-                ],
-            ]);
-
-            $variantGroup->get('variantParameters')->addModelTransformer(new CallbackTransformer(
-                /**
-                 * @param \App\Model\Product\Parameter\Parameter[] $variantParameters
-                 * @return string[]
-                 */
-                function (array $variantParameters) {
-                    $counter = 1;
-                    $parameterNames = [];
-                    foreach ($variantParameters as $variantParameter) {
-                        $key = t('Parametr_%counter%', ['%counter%' => $counter++]);
-                        $parameterNames[$key] = $variantParameter->getName();
-                    }
-                    return $parameterNames;
-                },
-                function ($parameterNames) {
-                    return $parameterNames;
-                }
-            ));
         }
     }
 

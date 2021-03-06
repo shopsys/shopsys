@@ -139,14 +139,13 @@ class TransferredProductProcessor
     /**
      * @param array $akeneoProductData
      * @param \App\Model\Transfer\TransferLoggerInterface $logger
-     * @param bool $isMainVariant
      * @return \App\Model\Product\Product
      */
-    public function processProduct(array $akeneoProductData, TransferLoggerInterface $logger, bool $isMainVariant = false): Product
+    public function processProduct(array $akeneoProductData, TransferLoggerInterface $logger): Product
     {
-        $this->productTransferAkeneoValidator->validate($akeneoProductData, $isMainVariant);
+        $this->productTransferAkeneoValidator->validate($akeneoProductData);
 
-        $product = $this->findProductByIdentifier((string)$akeneoProductData['identifier'], $isMainVariant);
+        $product = $this->findProductByIdentifier((string)$akeneoProductData['identifier']);
         if ($product !== null) {
             $entityName = $this->imageConfig->getEntityName($product);
             $entityId = $product->getId();
@@ -155,7 +154,7 @@ class TransferredProductProcessor
         $productData = $this->productTransferAkeneoMapper->mapAkeneoProductDataToProductData($akeneoProductData, $product, $logger);
 
         if ($product === null) {
-            $product = $this->createProduct($productData, $isMainVariant, $logger);
+            $product = $this->createProduct($productData, $logger);
         } else {
             $logger->addInfo(sprintf('Updating product catnum: %s', $product->getCatnum()));
             $product = $this->productFacade->edit($product->getId(), $productData);
@@ -163,8 +162,6 @@ class TransferredProductProcessor
 
         $this->setProductForImportFiles($product, $akeneoProductData);
         $this->setProductImages($product, $akeneoProductData);
-        $this->setProductAsVariant($product, $akeneoProductData, $isMainVariant);
-        $this->setProductAsDefaultVariant($product, $akeneoProductData);
 
         return $product;
     }
@@ -172,13 +169,12 @@ class TransferredProductProcessor
     /**
      * @param array $akeneoProductDetailData
      * @param \App\Model\Transfer\TransferLoggerInterface $logger
-     * @param bool $isMainVariant
      */
-    public function processProductDetail(array $akeneoProductDetailData, TransferLoggerInterface $logger, bool $isMainVariant = false): void
+    public function processProductDetail(array $akeneoProductDetailData, TransferLoggerInterface $logger): void
     {
         $this->productTransferAkeneoValidator->validateIdentifier($akeneoProductDetailData);
 
-        $product = $this->findProductByIdentifier((string)$akeneoProductDetailData['identifier'], $isMainVariant);
+        $product = $this->findProductByIdentifier((string)$akeneoProductDetailData['identifier']);
         if ($product !== null) {
             $this->setProductAccessoriesByAkeneoProductDetailData($product, $akeneoProductDetailData, $logger);
         }
@@ -186,93 +182,23 @@ class TransferredProductProcessor
 
     /**
      * @param \App\Model\Product\ProductData $productData
-     * @param bool $isMainVariant
      * @param \App\Model\Transfer\TransferLoggerInterface $logger
      * @return \App\Model\Product\Product
      */
-    private function createProduct(ProductData $productData, bool $isMainVariant, TransferLoggerInterface $logger): Product
+    private function createProduct(ProductData $productData, TransferLoggerInterface $logger): Product
     {
-        if ($isMainVariant) {
-            $logger->addInfo(sprintf('Creating product main variant catnum: %s', $productData->catnum));
-            $product = $this->productFacade->createProductAsMainVariant($productData);
-        } else {
-            $logger->addInfo(sprintf('Creating product catnum: %s', $productData->catnum));
-            $product = $this->productFacade->create($productData);
-        }
+        $logger->addInfo(sprintf('Creating product catnum: %s', $productData->catnum));
 
-        return $product;
+        return $this->productFacade->create($productData);
     }
 
     /**
      * @param string $identifier
-     * @param bool $isMainVariant
      * @return \App\Model\Product\Product|null
      */
-    private function findProductByIdentifier(string $identifier, bool $isMainVariant): ?Product
+    private function findProductByIdentifier(string $identifier): ?Product
     {
-        if ($isMainVariant) {
-            return $this->productFacade->findMainVariantByCatnum($identifier);
-        }
         return $this->productFacade->findOneByCatnumExcludeMainVariants($identifier);
-    }
-
-    /**
-     * @param \App\Model\Product\Product $product
-     * @param array $akeneoProductData
-     * @param bool $isMainVariant
-     */
-    private function setProductAsVariant(Product $product, array $akeneoProductData, bool $isMainVariant): void
-    {
-        if ($isMainVariant) {
-            return;
-        }
-
-        if ($product->isVariant() || $product->isMainVariant()) {
-            return;
-        }
-
-        $mainVariantCatnum = $this->productTransferAkeneoMapper->mapAkeneoProductDataToParentCatnum($akeneoProductData);
-        if ($mainVariantCatnum === null) {
-            return;
-        }
-
-        $mainVariantProduct = $this->findProductByIdentifier((string)$mainVariantCatnum, true);
-        if ($mainVariantProduct === null) {
-            return;
-        }
-
-        $mainVariantProduct->addVariant($product);
-        $this->em->flush();
-    }
-
-    /**
-     * @param \App\Model\Product\Product $product
-     * @param array $akeneoProductData
-     */
-    private function setProductAsDefaultVariant(Product $product, array $akeneoProductData): void
-    {
-        if ($product->isMainVariant()) {
-            return;
-        }
-
-        if (!$product->isVariant()) {
-            return;
-        }
-
-        $mainVariantCatnum = $this->productTransferAkeneoMapper->mapAkeneoProductDataToParentCatnum($akeneoProductData);
-        if ($mainVariantCatnum === null) {
-            return;
-        }
-
-        $mainVariantProduct = $this->findProductByIdentifier((string)$mainVariantCatnum, true);
-        if ($mainVariantProduct === null) {
-            return;
-        }
-
-        $defaultVariantCatnum = $this->productTransferAkeneoMapper->mapAkeneoProductDataToDefaultVariantCatnum($akeneoProductData);
-        if ($defaultVariantCatnum !== null && $defaultVariantCatnum === $product->getCatnum()) {
-            $this->productFacade->setDefaultVariant($mainVariantProduct, $product);
-        }
     }
 
     /**
@@ -283,8 +209,6 @@ class TransferredProductProcessor
     private function setProductAccessoriesByAkeneoProductDetailData(Product $product, array $akeneoProductDetailData, TransferLoggerInterface $logger): void
     {
         $accessoryCatnums = $this->productTransferAkeneoMapper->getProductAccessoryCatnumListFromAkeneoProductData($akeneoProductDetailData);
-        $mainVariantCatnums = $this->productTransferAkeneoMapper->getMainVariantAccessoryCatnumListFromAkeneoProductData($akeneoProductDetailData);
-        $accessoryCatnums = array_unique(array_merge($accessoryCatnums, $mainVariantCatnums));
         $accessories = $this->getAccessoriesByCatnums($accessoryCatnums);
         $this->productFacade->refreshProductAccessories($product, $accessories);
         $accessoriesCount = count($accessories);
