@@ -110,10 +110,6 @@
                                 </ul>
                             </div>
 
-                            {% if not product.isMainVariant %}
-                                {{ render(controller('App\\Controller\\Front\\ProductController:variantParametersAction', {product: product} )) }}
-                            {% endif %}
-
                             <div class="box-detail__info__availability box-detail__info__availability--{{ productAvailabilityStatus }}">
                                 <div class="box-detail__info__availability__value">
                                     <span class="box-detail__avail box-detail__avail--{{ productAvailabilityStatus }}">{{ productAvailabilityInformation }}</span>
@@ -265,9 +261,13 @@
                                         {% endif %}
                                     </td>
                                     <td class="table-variants__cell">
-                                        {% if variant.calculatedAvailability %}
-                                            {{ variant.calculatedAvailability.name }}
-                                        {% endif %}
+                                        <span class="js-not-implemented-yet">
+                                            {# TODO - Availability si modified and probably it will be reverted. It has to be resolve after revert of availability. Original template: #}
+                                            {#% if variant.calculatedAvailability %}
+                                                {{ variant.calculatedAvailability.name }}
+                                            {% endif %#}
+                                            {{ 'Skladem'|trans }}
+                                        </span>
                                     </td>
                                     <td class="table-variants__cell table-variants__cell--price">
                                         {{ getProductSellingPrice(variant).priceWithVat|price }}
@@ -494,8 +494,8 @@
                     </div>
                 {% endif %}
 
-                {% cache 'products_similar_id_'~productMainVariantId {lifetime:60*60, domainId:getDomain().id} %}
-                    {{ render(controller('App\\Controller\\Front\\ProductController:similarProductsAction', {id: productMainVariantId} ))|spaceless }}
+                {% cache 'products_similar_id_' ~ product.id {lifetime:60*60, domainId:getDomain().id} %}
+                    {{ render(controller('App\\Controller\\Front\\ProductController:similarProductsAction', {id: product.id} ))|spaceless }}
                 {% endcache %}
             </div>
         </div>

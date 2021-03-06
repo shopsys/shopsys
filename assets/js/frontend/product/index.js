@@ -7,4 +7,3 @@ import './productList';
 import './fancybox';
 import './MaximumOrderQuantity';
 import './ProductListReadyCategorySeoMix';
-import './VariantParameters';
