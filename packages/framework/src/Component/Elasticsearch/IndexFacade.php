@@ -184,6 +184,15 @@ class IndexFacade
             return;
         }
 
+        try {
+            $this->resolveExistingIndexName($indexDefinition);
+        } catch (ElasticsearchNoAliasException $exception) {
+            throw new ElasticsearchIndexException(sprintf(
+                'Can\'t found any index with alias "%s". You have to migrate elasticsearch structure first.',
+                $indexDefinition->getIndexAlias()
+            ));
+        }
+
         $output->writeln(sprintf(
             'Exporting changed data of "%s" on domain "%s"',
             $indexDefinition->getIndexName(),
