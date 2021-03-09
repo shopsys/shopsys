@@ -162,14 +162,8 @@ services:
 
     App\Component\Router\FriendlyUrl\FriendlyUrlFactory: ~
 
-    App\Component\Router\FriendlyUrl\FriendlyUrlFactoryInterface:
-        alias: App\Component\Router\FriendlyUrl\FriendlyUrlFactory
-
     Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFactoryInterface:
         alias: App\Component\Router\FriendlyUrl\FriendlyUrlFactory
-
-    Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlUniqueResultFactory:
-        class: App\Component\Router\FriendlyUrl\FriendlyUrlUniqueResultFactory
 
     Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRepository:
         alias: App\Component\Router\FriendlyUrl\FriendlyUrlRepository
