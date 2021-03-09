@@ -94,9 +94,6 @@ services:
     App\Model\Cart\CartFacade:
         lazy: true
 
-    Shopsys\FrameworkBundle\Model\MultidomainEntityClassProvider:
-        alias: App\Model\MultidomainEntityClassProvider
-
     Shopsys\FrameworkBundle\Component\Doctrine\QueryBuilderExtender:
         alias: App\Component\Doctrine\QueryBuilderExtender
 
@@ -216,8 +213,6 @@ services:
     Shopsys\FrameworkBundle\Model\Order\Status\Grid\OrderStatusGridFactory:
         alias: App\Model\Order\Status\Grid\OrderStatusGridFactory
 
-    App\Model\Order\Watcher\SplitTransportAndPaymentWatcher: ~
-
     Shopsys\FrameworkBundle\Model\Article\ArticleDataFactoryInterface:
         alias: App\Model\Article\ArticleDataFactory
 
@@ -280,10 +275,10 @@ services:
     Shopsys\FrameworkBundle\Model\Order\Item\OrderItemDataFactoryInterface:
         alias: App\Model\Order\Item\OrderItemDataFactory
 
-    Shopsys\FrameworkBundle\Model\Order\Item\OrderItemFactory:
+    Shopsys\FrameworkBundle\Model\Order\Item\OrderItemFactoryInterface:
         alias: App\Model\Order\Item\OrderItemFactory
 
-    Shopsys\FrameworkBundle\Model\Order\Item\OrderItemFactoryInterface:
+    Shopsys\FrameworkBundle\Model\Order\Item\OrderItemFactory:
         alias: App\Model\Order\Item\OrderItemFactory
 
     App\Model\Order\OrderDataMapper: ~
@@ -293,12 +288,6 @@ services:
 
     Shopsys\FrameworkBundle\Model\Transport\TransportDataFactoryInterface:
         alias: App\Model\Transport\TransportDataFactory
-
-    Shopsys\FrameworkBundle\Model\Transport\TransportFacade:
-        alias: App\Model\Transport\TransportFacade
-
-    Shopsys\FrameworkBundle\Model\Transport\TransportPriceCalculation:
-        alias: App\Model\Transport\TransportPriceCalculation
 
     Shopsys\FrameworkBundle\Model\Payment\PaymentDataFactoryInterface:
         alias: App\Model\Payment\PaymentDataFactory

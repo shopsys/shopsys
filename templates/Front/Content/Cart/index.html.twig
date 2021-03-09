@@ -48,51 +48,20 @@
                             {{ 'Doprava a platba'|trans }}
                         </button>
                     </div>
-                    {% if splitOrderPreview.morePreviews %}
-                        <div class="box-cart-message-box">
-                            <img class="box-cart-message-box__img" loading="lazy" data-src="{{ asset('public/frontend/images/wide_delivery.svg') }}" alt="{{ 'Doprava zdarma'|trans }}">
-                            <div class="box-cart-message-box__content">
-                                <strong class="box-cart-message-box__title">{{ 'V košíku máte nadrozměrnou položku'|trans }}</strong>
-                                <p class="box-cart-message-box__desc">{{ 'Tohle zboží má kvůli svým rozměrům a náročnosti manipulace jiné požadavky na dopravu. Proto jsme váš nákup rozdělili na víc zásilek.'|trans }}</p>
+                    <div class="box-cart__col box-cart__col--info">
+                        <div class="box-cart-card box-cart-card--info">
+                            {{ cartItemsTableMacro.table(form, orderPreview, maximumOrderQuantity) }}
+                            <div class="box-cart-card__bottom">
+                                {{ cartFreeTransportMacro.progressBar(orderPreview) }}
                             </div>
                         </div>
-                    {% endif %}
-                    <div class="box-cart__col box-cart__col--info">
-                        {% set previewNumber = 0 %}
-                        {% for orderPreview in splitOrderPreview.orderPreviews %}
-                            {% set previewNumber = previewNumber + 1 %}
-                            {% if loop.first and not splitOrderPreview.morePreviews %}
-                                <div class="box-cart-card box-cart-card--info">
-                                    {{ cartItemsTableMacro.table(form, orderPreview, maximumOrderQuantity) }}
-                                    <div class="box-cart-card__bottom">
-                                        {{ cartFreeTransportMacro.progressBar(orderPreview) }}
-                                    </div>
-                                </div>
-                            {% endif %}
-                            {% if splitOrderPreview.morePreviews %}
-                                <div class="box-cart-card box-cart-card--info box-cart-card--{{ previewNumber }}">
-                                    <div class="box-cart-card__top">
-                                        <h2 class="box-cart-card__title box-cart-card__title--no-margin">
-                                            {{ 'Zásilka č. %number%'|trans({ '%number%': previewNumber }) }}
-                                            -
-                                            {{ orderPreview.productType.name }}
-                                        </h2>
-                                    </div>
-                                    {{ cartItemsTableMacro.table(form, orderPreview, maximumOrderQuantity) }}
-                                    <div class="box-cart-card__bottom">
-                                        {{ cartFreeTransportMacro.progressBar(orderPreview, loop) }}
-                                    </div>
-                                </div>
-                            {% endif %}
-                        {% endfor %}
                     </div>
                     <div class="box-cart__col box-cart__col--preview box-cart__col--preview-step-1">
                         <div class="box-cart-card-preview-wrap">
                             <div class="box-cart-card box-cart-card--preview box-cart-card--preview">
                                 <div id="js-order-preview" data-url="{{ url('front_order_preview') }}">
                                     {{ render(controller('App\\Controller\\Front\\OrderController:previewAction', {
-                                        transportIdsByProductTypeId: splitOrderPreview.transportIdsIndexedByProductTypeId,
-                                        paymentId: splitOrderPreview.hasPayment() ? splitOrderPreview.payment.id : null,
+                                        paymentId: orderPreview.payment is null ? null : orderPreview.payment.id,
                                         showProducts: false,
                                         showAdvert: true,
                                         showPromo: true

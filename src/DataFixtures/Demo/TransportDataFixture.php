@@ -22,7 +22,7 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
     public const TRANSPORT_OVER_LIMIT = 'transport_over_limit';
 
     /**
-     * @var \App\Model\Transport\TransportFacade
+     * @var \Shopsys\FrameworkBundle\Model\Transport\TransportFacade
      */
     private $transportFacade;
 
@@ -42,7 +42,7 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
     private $priceConverter;
 
     /**
-     * @param \App\Model\Transport\TransportFacade $transportFacade
+     * @param \Shopsys\FrameworkBundle\Model\Transport\TransportFacade $transportFacade
      * @param \App\Model\Transport\TransportDataFactory $transportDataFactory
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceConverter $priceConverter
@@ -64,11 +64,6 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
      */
     public function load(ObjectManager $manager)
     {
-        /** @var \App\Model\Product\Type\ProductType $productTypeCommon */
-        $productTypeCommon = $this->getReference(ProductTypeDataFixture::TYPE_COMMON);
-        /** @var \App\Model\Product\Type\ProductType $productTypeOversized */
-        $productTypeOversized = $this->getReference(ProductTypeDataFixture::TYPE_OVERSIZED);
-
         $transportData = $this->transportDataFactory->create();
         $transportData->daysUntilDelivery = 5;
         $transportData->deliveryCode = 'A';
@@ -78,9 +73,6 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
             $transportData->name[$locale] = t('Czech post', [], 'dataFixtures', $locale);
         }
 
-        $transportData->productTypes = [
-            $productTypeCommon,
-        ];
         $this->setPriceForAllDomains($transportData, Money::create('99.95'));
         $this->createTransport(self::TRANSPORT_CZECH_POST, $transportData);
 
@@ -93,10 +85,6 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
             $transportData->name[$locale] = t('PPL', [], 'dataFixtures', $locale);
         }
 
-        $transportData->productTypes = [
-            $productTypeCommon,
-            $productTypeOversized,
-        ];
         $this->setPriceForAllDomains($transportData, Money::create('199.95'));
         $this->createTransport(self::TRANSPORT_PPL, $transportData);
 
@@ -110,11 +98,6 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
             $transportData->description[$locale] = t('You will be welcomed by friendly staff!', [], 'dataFixtures', $locale);
             $transportData->instructions[$locale] = t('We are looking forward to your visit.', [], 'dataFixtures', $locale);
         }
-
-        $transportData->productTypes = [
-            $productTypeCommon,
-            $productTypeOversized,
-        ];
 
         $transportData->personalPickup = true;
 
@@ -131,10 +114,6 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
             $transportData->description[$locale] = t('Máš to moc velké... takže tě víc zkásnem', [], 'dataFixtures', $locale);
             $transportData->instructions[$locale] = t('Očekávej to koncem příštího měsíce', [], 'dataFixtures', $locale);
         }
-
-        $transportData->productTypes = [
-            $productTypeOversized,
-        ];
 
         $transportData->personalPickup = false;
 
@@ -178,7 +157,6 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
             VatDataFixture::class,
             CurrencyDataFixture::class,
             SettingValueDataFixture::class,
-            ProductTypeDataFixture::class,
         ];
     }
 }

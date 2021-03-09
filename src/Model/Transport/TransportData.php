@@ -12,11 +12,6 @@ use Shopsys\FrameworkBundle\Model\Transport\TransportData as BaseTransportData;
 class TransportData extends BaseTransportData
 {
     /**
-     * @var \App\Model\Product\Type\ProductType[]
-     */
-    public $productTypes;
-
-    /**
      * @var bool
      */
     public $personalPickup;
@@ -50,7 +45,6 @@ class TransportData extends BaseTransportData
     {
         parent::__construct();
 
-        $this->productTypes = [];
         $this->personalPickup = false;
         $this->isOverLimitTransport = false;
     }

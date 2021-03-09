@@ -149,19 +149,7 @@
 
             <h2 class="heading heading--primary heading--secondary-subpage">{{ 'Váš nákup'|trans }}</h2>
 
-            {% set allUsedProductTypes = order.allUsedProductTypes %}
-            {% if allUsedProductTypes|length > 1 %}
-                {% for productType in allUsedProductTypes %}
-                    <div class="wrap-box wrap-box--small-spacing wrap-box--heading">
-                        <div class="wrap-box__in wrap-box__in--no-spacing">
-                            <h2 class="wrap-box__title wrap-box__title--spaced">{{ 'Zásilka'|trans }} - {{ productType.name }}</h2>
-                            {{ orderItemsTableMacro.table(order.itemsByProductType(productType), orderItemTotalPricesById, order.currency) }}
-                        </div>
-                    </div>
-                {% endfor %}
-            {% else %}
-                {{ orderItemsTableMacro.table(order.items, orderItemTotalPricesById, order.currency) }}
-            {% endif %}
+            {{ orderItemsTableMacro.table(order.items, orderItemTotalPricesById, order.currency) }}
         </div>
     </div>
 {% endblock %}

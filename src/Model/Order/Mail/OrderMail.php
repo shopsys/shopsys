@@ -6,7 +6,6 @@ namespace App\Model\Order\Mail;
 
 use Shopsys\FrameworkBundle\Model\Order\Mail\OrderMail as BaseOrderMail;
 use Shopsys\FrameworkBundle\Model\Order\Order;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 /**
  * @property \App\Component\Setting\Setting $setting
@@ -23,43 +22,10 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
  * @method static \App\Model\Mail\MailTemplate|null findMailTemplateForOrderStatus(\App\Model\Mail\MailTemplate[] $mailTemplates, \App\Model\Order\Status\OrderStatus $orderStatus)
  * @method __construct(\App\Component\Setting\Setting $setting, \App\Component\Router\DomainRouterFactory $domainRouterFactory, \Twig\Environment $twig, \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemPriceCalculation $orderItemPriceCalculation, \Shopsys\FrameworkBundle\Component\Domain\Domain $domain, \App\Twig\PriceExtension $priceExtension, \Shopsys\FrameworkBundle\Twig\DateTimeFormatterExtension $dateTimeFormatterExtension, \Shopsys\FrameworkBundle\Model\Order\OrderUrlGenerator $orderUrlGenerator)
  * @method static string getMailTemplateNameByStatus(\App\Model\Order\Status\OrderStatus $orderStatus)
+ * @method array getVariablesReplacementsForBody(\App\Model\Order\Order $order)
  */
 class OrderMail extends BaseOrderMail
 {
-    /**
-     * @param \App\Model\Order\Order $order
-     * @return string[]
-     */
-    protected function getVariablesReplacementsForBody(Order $order)
-    {
-        $router = $this->domainRouterFactory->getRouter($order->getDomainId());
-        $orderDomainConfig = $this->domain->getDomainConfigById($order->getDomainId());
-
-        $payment = $order->getPayment();
-        $paymentInstructions = $payment->getInstructions($orderDomainConfig->getLocale());
-
-        $transportsInstructions = [];
-        foreach ($order->getTransports() as $transport) {
-            $transportsInstructions[] = $transport->getInstructions($orderDomainConfig->getLocale());
-        }
-
-        return [
-            self::VARIABLE_NUMBER => htmlspecialchars($order->getNumber(), ENT_QUOTES),
-            self::VARIABLE_DATE => $this->getFormattedDateTime($order),
-            self::VARIABLE_URL => $router->generate('front_homepage', [], UrlGeneratorInterface::ABSOLUTE_URL),
-            self::VARIABLE_TRANSPORT => htmlspecialchars($order->getTransportName(), ENT_QUOTES),
-            self::VARIABLE_PAYMENT => htmlspecialchars($order->getPaymentName(), ENT_QUOTES),
-            self::VARIABLE_TOTAL_PRICE => $this->getFormattedPrice($order),
-            self::VARIABLE_BILLING_ADDRESS => $this->getBillingAddressHtmlTable($order),
-            self::VARIABLE_DELIVERY_ADDRESS => $this->getDeliveryAddressHtmlTable($order),
-            self::VARIABLE_NOTE => htmlspecialchars((string)$order->getNote(), ENT_QUOTES),
-            self::VARIABLE_PRODUCTS => $this->getProductsHtmlTable($order),
-            self::VARIABLE_ORDER_DETAIL_URL => $this->orderUrlGenerator->getOrderDetailUrl($order),
-            self::VARIABLE_TRANSPORT_INSTRUCTIONS => implode('<br /> ', $transportsInstructions),
-            self::VARIABLE_PAYMENT_INSTRUCTIONS => $paymentInstructions,
-        ];
-    }
-
     /**
      * @param \App\Model\Order\Order $order
      * @return string

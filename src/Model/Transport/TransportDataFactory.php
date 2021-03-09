@@ -47,7 +47,6 @@ class TransportDataFactory extends BaseTransportDataFactory
     {
         $transportData = $this->createInstance();
         $this->fillFromTransport($transportData, $transport);
-        $transportData->productTypes = $transport->getProductTypes();
         $transportData->personalPickup = $transport->isPersonalPickup();
 
         $transportData->isOverLimitTransport = $transport->isOverLimitTransport();

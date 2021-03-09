@@ -13,7 +13,7 @@ use App\Model\Gtm\Data\DataLayerSliderItem;
 use App\Model\Gtm\Data\DataLayerUser;
 use App\Model\Order\Item\OrderItem;
 use App\Model\Order\Order;
-use App\Model\Order\Preview\SplitOrderPreview;
+use App\Model\Order\Preview\OrderPreview;
 use App\Model\Product\Availability\ProductAvailabilityFacade;
 use App\Model\Product\Listed\ListedProductView;
 use App\Model\Product\Product;
@@ -426,26 +426,24 @@ class DataLayerMapper
     }
 
     /**
-     * @param \App\Model\Order\Preview\SplitOrderPreview $splitOrderPreview
+     * @param \App\Model\Order\Preview\OrderPreview $orderPreview
      * @param string $locale
      * @return \App\Model\Gtm\Data\DataLayerProduct[]
      */
-    public function createDataLayerProductsFromSplitOrderPreview(SplitOrderPreview $splitOrderPreview, string $locale): array
+    public function createDataLayerProductsFromOrderPreview(OrderPreview $orderPreview, string $locale): array
     {
         $dataLayerProducts = [];
-        foreach ($splitOrderPreview->getOrderPreviews() as $orderPreview) {
-            foreach ($orderPreview->getQuantifiedProducts() as $quantifiedProduct) {
-                $dataLayerProduct = new DataLayerProduct();
-                /** @var \App\Model\Product\Product $product */
-                $product = $quantifiedProduct->getProduct();
-                $this->mapProductWithQuantityToDataLayerProduct(
-                    $product,
-                    $dataLayerProduct,
-                    $locale,
-                    $quantifiedProduct->getQuantity()
-                );
-                $dataLayerProducts[] = $dataLayerProduct;
-            }
+        foreach ($orderPreview->getQuantifiedProducts() as $quantifiedProduct) {
+            $dataLayerProduct = new DataLayerProduct();
+            /** @var \App\Model\Product\Product $product */
+            $product = $quantifiedProduct->getProduct();
+            $this->mapProductWithQuantityToDataLayerProduct(
+                $product,
+                $dataLayerProduct,
+                $locale,
+                $quantifiedProduct->getQuantity()
+            );
+            $dataLayerProducts[] = $dataLayerProduct;
         }
 
         return $dataLayerProducts;

@@ -1,5 +1,4 @@
 import Register from 'framework/common/utils/Register';
-// import PaymentTransportChooser from './PaymentTransportChooser.js';
 
 export default class GoPaySelection {
 
@@ -49,8 +48,6 @@ export default class GoPaySelection {
         } else {
             $(event.currentTarget).closest('label.box-chooser__item').removeClass('box-chooser__item--active');
         }
-
-        // PaymentTransportChooser.updateTransports();
     };
 
 }

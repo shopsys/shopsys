@@ -128,8 +128,7 @@
             <div class="box-cart__col box-cart__col--preview box-cart__col--preview-step-3">
                 <div id="js-order-preview" class="box-cart-card box-cart-card--preview" data-url="{{ url('front_order_preview') }}">
                     {{ render(controller('App\\Controller\\Front\\OrderController:previewAction', {
-                        transportIdsByProductTypeId: splitOrderPreview.transportIdsIndexedByProductTypeId,
-                        paymentId: splitOrderPreview.hasPayment() ? splitOrderPreview.payment.id : null,
+                        paymentId: orderPreview.hasPayment() ? orderPreview.payment.id : null,
                         showAdvert: false,
                         showPromo: false
                     })) }}

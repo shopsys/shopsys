@@ -7,7 +7,6 @@ namespace App\Model\Product\Transfer\Akeneo;
 use App\Component\Akeneo\AkeneoHelper;
 use App\Component\Akeneo\Product\AkeneoProductHelper;
 use App\Component\Akeneo\Transfer\Exception\TransferException;
-use App\Component\Akeneo\Transfer\Exception\TransferInvalidDataException;
 use App\Model\Category\CategoryFacade;
 use App\Model\Product\Flag\FlagRepository;
 use App\Model\Product\Parameter\Parameter;
@@ -475,14 +474,14 @@ class ProductTransferAkeneoMapper
                 $akeneoParameterValueCode
             );
             if (array_key_exists($locale, $valueTextsByLocale) === false || $valueTextsByLocale[$locale] === null) {
-                throw TransferInvalidDataException::createWithViolation(
+                throw new TransferException(
                     sprintf(
                         'Parameter value `%s` for parameter code `%s` does not have localized `%s` label',
                         $akeneoParameterValueCode,
                         $parameter->getAkeneoCode(),
                         $locale
                     ),
-                    ''
+                    0
                 );
             }
 

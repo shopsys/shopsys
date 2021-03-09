@@ -8,7 +8,6 @@ use Shopsys\FrameworkBundle\Form\Admin\Order\OrderFormType;
 use Shopsys\FrameworkBundle\Form\DisplayOnlyType;
 use Symfony\Component\Form\AbstractTypeExtension;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class OrderFormTypeExtension extends AbstractTypeExtension
 {
@@ -23,10 +22,6 @@ class OrderFormTypeExtension extends AbstractTypeExtension
 
         /** @var \App\Model\Order\Order $order */
         $order = $options['order'];
-
-        $builder->get('orderItems')
-            ->remove('orderPayment')
-            ->remove('orderTransport');
 
         $builderBasicInformationGroup = $builder->get('basicInformationGroup');
 
@@ -49,17 +44,6 @@ class OrderFormTypeExtension extends AbstractTypeExtension
             'label' => t('Typ dopravy'),
             'data' => $order->getTransport()->getName(),
         ]);
-    }
-
-    /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     */
-    public function configureOptions(OptionsResolver $resolver)
-    {
-        $resolver
-            ->setDefaults([
-                'disabled' => true,
-            ]);
     }
 
     /**

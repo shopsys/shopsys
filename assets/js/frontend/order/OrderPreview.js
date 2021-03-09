@@ -1,21 +1,19 @@
 import 'framework/common/components';
 import Ajax from 'framework/common/utils/Ajax';
 import Register from 'framework/common/utils/Register';
-import Timeout from 'framework/common/utils/Timeout';
 
 export default class OrderPreview {
 
     static loadOrderPreview () {
         const $orderPreview = $('#js-order-preview');
-        const $checkedTransports = $('.js-order-transport-input:checked');
+        const $checkedTransport = $('.js-order-transport-input:checked');
         const $checkedPayment = $('.js-order-payment-input:checked');
         const data = {};
 
-        data['transportIdsByProductTypeId'] = {};
-        $checkedTransports.each(function () {
-            const productTypeId = $(this).closest('.js-payment-transport-group').data('product-type-id');
-            data['transportIdsByProductTypeId'][productTypeId] = $(this).data('id');
-        });
+        if ($checkedTransport.length > 0) {
+            data['transportId'] = $checkedTransport.data('id');
+        }
+
         if ($checkedPayment.length > 0) {
             data['paymentId'] = $checkedPayment.data('id');
         }
@@ -32,21 +30,10 @@ export default class OrderPreview {
         });
     }
 
-    static littleDelayedLoadOrderPreview () {
-        Timeout.setTimeoutAndClearPrevious(
-            'OrderPreviewLoad',
-            () => {
-                OrderPreview.loadOrderPreview();
-            },
-            20
-        );
-    }
-
     static init ($container) {
         $container
             .filterAllNodes('.js-order-transport-input, .js-order-payment-input')
-            .bind('change', OrderPreview.loadOrderPreview)
-            .bind('orderPreview.littleDelayedLoadOrderPreview', OrderPreview.loadOrderPreview);
+            .change(OrderPreview.loadOrderPreview);
     }
 }
 

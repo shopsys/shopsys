@@ -1,5 +1,5 @@
 {% macro progressBar(orderPreview, loop) %}
-    {% if orderPreview.productType.isFreeTransport(getDomain().id) %}
+    {% if orderPreview.isTransportForFree() %}
         {% set restForFreeTransportPriceAmount = orderPreview.getRestToFreeTransportPrice().getAmount() %}
         {% set restForFreeTransportPrice = orderPreview.getRestToFreeTransportPrice()|price %}
         {% set percentageOfFreeTransport = orderPreview.getPercentageOfFreeTransport() %}

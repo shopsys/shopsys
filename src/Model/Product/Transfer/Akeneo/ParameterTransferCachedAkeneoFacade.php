@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Model\Product\Transfer\Akeneo;
 
 use App\Component\Akeneo\AkeneoHelper;
-use App\Component\Akeneo\Transfer\Exception\TransferInvalidDataAdministratorNonCriticalException;
+use App\Component\Akeneo\Transfer\Exception\TransferException;
 use App\Model\Product\Parameter\Transfer\Akeneo\ProductParameterTransferAkeneoFacade;
 
 class ParameterTransferCachedAkeneoFacade
@@ -55,13 +55,13 @@ class ParameterTransferCachedAkeneoFacade
         $parameterValueTextsByAkeneoCodeAndLocale = $this->getAllParameterOptionLocalizedLabels($parameterAkeneoCode);
 
         if (array_key_exists($akeneoParameterValueCode, $parameterValueTextsByAkeneoCodeAndLocale) === false) {
-            throw TransferInvalidDataAdministratorNonCriticalException::createWithViolation(
+            throw new TransferException(
                 sprintf(
                     'Parameter value %s for attribute code %s does not exist',
                     $akeneoParameterValueCode,
                     $parameterAkeneoCode
                 ),
-                ''
+                0
             );
         }
 

@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Model\Order\Item;
 
 use App\Model\Order\Item\Exception\OrderItemRelatedException;
-use App\Model\Product\Type\ProductType;
 use App\Model\Stock\Stock;
 use Doctrine\ORM\Mapping as ORM;
 use Shopsys\FrameworkBundle\Component\Money\Money;
@@ -31,13 +30,6 @@ use Shopsys\FrameworkBundle\Model\Pricing\Price;
  */
 class OrderItem extends BaseOrderItem
 {
-    /**
-     * @var \App\Model\Product\Type\ProductType
-     * @ORM\ManyToOne(targetEntity="App\Model\Product\Type\ProductType")
-     * @ORM\JoinColumn(name="product_type_id", referencedColumnName="id", nullable=false)
-     */
-    private $productType;
-
     /**
      * @var \App\Model\Stock\Stock|null
      * @ORM\ManyToOne(targetEntity="App\Model\Stock\Stock")
@@ -88,22 +80,6 @@ class OrderItem extends BaseOrderItem
             $unitName,
             $catnum
         );
-    }
-
-    /**
-     * @return \App\Model\Product\Type\ProductType
-     */
-    public function getProductType(): ProductType
-    {
-        return $this->productType;
-    }
-
-    /**
-     * @param \App\Model\Product\Type\ProductType $productType
-     */
-    public function setProductType(ProductType $productType): void
-    {
-        $this->productType = $productType;
     }
 
     /**

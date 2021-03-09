@@ -7,13 +7,13 @@ namespace App\Form\Front\Order;
 use App\Form\Admin\Transformer\StockIdToStockTransformer;
 use App\Model\GoPay\BankSwift\GoPayBankSwiftFacade;
 use App\Model\Order\FrontOrderData;
+use App\Model\Transport\Transport;
 use Shopsys\FrameworkBundle\Form\SingleCheckboxChoiceType;
 use Shopsys\FrameworkBundle\Model\Payment\Payment;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 use Shopsys\FrameworkBundle\Model\Transport\TransportFacade;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -24,7 +24,7 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
 class TransportAndPaymentFormType extends AbstractType
 {
     /**
-     * @var \App\Model\Transport\TransportFacade
+     * @var \Shopsys\FrameworkBundle\Model\Transport\TransportFacade
      */
     private $transportFacade;
 
@@ -49,7 +49,7 @@ class TransportAndPaymentFormType extends AbstractType
     private $stockIdToStockTransformer;
 
     /**
-     * @param \App\Model\Transport\TransportFacade $transportFacade
+     * @param \Shopsys\FrameworkBundle\Model\Transport\TransportFacade $transportFacade
      * @param \App\Model\Payment\PaymentFacade $paymentFacade
      * @param \App\Form\Admin\Transformer\StockIdToStockTransformer $stockIdToStockTransformer
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
@@ -80,25 +80,16 @@ class TransportAndPaymentFormType extends AbstractType
         $currency = $this->currencyFacade->getDomainDefaultCurrencyByDomainId($options['domain_id']);
 
         $builder
-            ->add('transportsByProductTypeId', CollectionType::class, [
-                'entry_type' => SingleCheckboxChoiceType::class,
-                'allow_add' => true,
-                'allow_delete' => true,
-                'entry_options' => [
-                    'choices' => $transports,
-                    'choice_label' => 'name',
-                    'choice_value' => 'id',
-                    'constraints' => [
-                        new Constraints\NotNull(['message' => 'Please choose shipping type']),
-                    ],
-                    'invalid_message' => 'Please choose shipping type',
+            ->add('transport', SingleCheckboxChoiceType::class, [
+                'choices' => $transports,
+                'choice_label' => 'name',
+                'choice_value' => 'id',
+                'constraints' => [
+                    new Constraints\NotNull(['message' => 'Please choose shipping type']),
                 ],
+                'invalid_message' => 'Please choose shipping type',
             ])
-            ->add('transportPersonalPickupStockByProductTypeId', CollectionType::class, [
-                'entry_type' => HiddenType::class,
-                'allow_add' => true,
-                'allow_delete' => true,
-            ])
+            ->add('personalPickupStock', HiddenType::class)
             ->add('payment', SingleCheckboxChoiceType::class, [
                 'choices' => $payments,
                 'choice_label' => 'name',
@@ -115,7 +106,7 @@ class TransportAndPaymentFormType extends AbstractType
             ])
             ->add('save', SubmitType::class);
 
-        $builder->get('transportPersonalPickupStockByProductTypeId')->addModelTransformer($this->stockIdToStockTransformer);
+        $builder->get('personalPickupStock')->addModelTransformer($this->stockIdToStockTransformer);
     }
 
     /**
@@ -135,27 +126,23 @@ class TransportAndPaymentFormType extends AbstractType
     }
 
     /**
-     * @param \App\Model\Order\FrontOrderData $orderData
+     * @param \App\Model\Order\FrontOrderData $frontOrderData
      * @param \Symfony\Component\Validator\Context\ExecutionContextInterface $context
      */
-    public function validateTransportPaymentRelation(FrontOrderData $orderData, ExecutionContextInterface $context): void
+    public function validateTransportPaymentRelation(FrontOrderData $frontOrderData, ExecutionContextInterface $context)
     {
-        $payment = $orderData->payment;
-        $transports = array_filter($orderData->transportsByProductTypeId); // filter NULL values
+        $payment = $frontOrderData->payment;
+        $transport = $frontOrderData->transport;
 
         $relationExists = false;
-        if ($payment instanceof Payment && count($transports) > 0) {
-            $relationExists = true;
-            foreach ($transports as $transport) {
-                if (in_array($transport, $payment->getTransports(), true) === false) {
-                    $relationExists = false;
-                    break;
-                }
+        if ($payment instanceof Payment && $transport instanceof Transport) {
+            if (in_array($transport, $payment->getTransports(), true)) {
+                $relationExists = true;
             }
         }
 
-        if ($relationExists === false) {
-            $context->addViolation('Please choose a valid combination of transports and payment');
+        if (!$relationExists) {
+            $context->addViolation('Please choose a valid combination of transport and payment');
         }
     }
 }

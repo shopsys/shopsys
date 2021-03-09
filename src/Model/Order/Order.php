@@ -4,12 +4,9 @@ declare(strict_types=1);
 
 namespace App\Model\Order;
 
-use App\Model\Order\Item\OrderItem;
-use App\Model\Product\Type\ProductType;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use GoPay\Definition\Response\PaymentStatus;
-use RuntimeException;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Order\Order as BaseOrder;
 use Shopsys\FrameworkBundle\Model\Order\OrderData as BaseOrderData;
@@ -41,6 +38,8 @@ use Shopsys\FrameworkBundle\Model\Order\OrderEditResult;
  * @property \App\Model\Order\Status\OrderStatus $status
  * @method setStatus(\App\Model\Order\Status\OrderStatus $status)
  * @method \App\Model\Order\Status\OrderStatus getStatus()
+ * @method \App\Model\Transport\Transport getTransport()
+ * @method \App\Model\Order\Item\OrderItem[] getTransportAndPaymentItems()
  */
 class Order extends BaseOrder
 {
@@ -54,13 +53,6 @@ class Order extends BaseOrder
      * @ORM\OrderBy({"goPayId" = "ASC"})
      */
     private $goPayTransactions;
-
-    /**
-     * @var null
-     * @deprecated REMOVED PROPERTY! This property is removed from model, because Order has more Transports
-     * @see \App\Component\Doctrine\RemoveMappingsSubscriber
-     */
-    protected $transport;
 
     /**
      * @var string|null
@@ -196,97 +188,6 @@ class Order extends BaseOrder
         }
 
         return false;
-    }
-
-    /**
-     * @return \App\Model\Product\Type\ProductType[]
-     */
-    public function getAllUsedProductTypes(): array
-    {
-        $productTypes = [];
-        foreach ($this->items as $item) {
-            $productType = $item->getProductType();
-            $productTypes[$productType->getId()] = $productType;
-        }
-        usort($productTypes, static function (ProductType $productType1, ProductType $productType2) {
-            return $productType1->getPosition() <=> $productType2->getPosition();
-        });
-
-        return $productTypes;
-    }
-
-    /**
-     * @param \App\Model\Product\Type\ProductType $productType
-     * @return \App\Model\Order\Item\OrderItem[]
-     */
-    public function getItemsByProductType(ProductType $productType): array
-    {
-        return array_filter($this->getItems(), function (OrderItem $orderItem) use ($productType) {
-            return $orderItem->getProductType() === $productType;
-        });
-    }
-
-    /**
-     * Do not use this method! Order has N transports, not just exactly one.
-     * However this method has to return valid value, because it is called in OrderFormType in vendor.
-     * Overriding of OrderFormType is impossible and FormExtension can not disable this calling.
-     * Removing of this calling needs a lot of copy-paste code or removing order detail page in administration.
-     *
-     * @deprecated do not use this method! Order has N transports, not just exactly one
-     * @internal
-     * @return \App\Model\Transport\Transport
-     */
-    public function getTransport()
-    {
-        foreach ($this->getItems() as $item) {
-            if ($item->isTypeTransport() === true) {
-                return $item->getTransport();
-            }
-        }
-
-        throw new RuntimeException('Do not use this method! Order has N transports, and this order has no one. Read comment for method Order::getTransport()');
-    }
-
-    /**
-     * @return \App\Model\Transport\Transport[]
-     */
-    public function getTransports(): array
-    {
-        $transports = [];
-        foreach ($this->getItems() as $item) {
-            if ($item->isTypeTransport() === true) {
-                $transport = $item->getTransport();
-                $transports[$transport->getId()] = $transport;
-            }
-        }
-
-        return $transports;
-    }
-
-    /**
-     * @return \App\Model\Order\Item\OrderItem[]
-     */
-    public function getUniqTransportItems(): array
-    {
-        $transportItems = [];
-        foreach ($this->getItems() as $item) {
-            if ($item->isTypeTransport() === true) {
-                $transportItems[$item->getTransport()->getId()] = $item;
-            }
-        }
-
-        return $transportItems;
-    }
-
-    /**
-     * @return \App\Model\Order\Item\OrderItem[]
-     */
-    public function getTransportAndPaymentItems(): array
-    {
-        // make public this method
-        /** @var \App\Model\Order\Item\OrderItem[] $transportAndPaymentItems */
-        $transportAndPaymentItems = parent::getTransportAndPaymentItems();
-        return $transportAndPaymentItems;
     }
 
     /**

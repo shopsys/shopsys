@@ -44,16 +44,12 @@
                                     <td class="box-table__item text-right">{{ order.createdAt|formatDate }}</td>
                                     <td class="box-table__item box-table__item--orders-count text-right">{{ order.productItemsCount }}</td>
                                     <td class="box-table__item box-table__item--transports">
-                                        {% for transportItem in order.getTransports %}
-                                            {% if imageExists(transportItem) %}
-                                                <span class="box-table__item__img box-table__item__img--{{ loop.index }}">
-                                                    {{ image(transportItem) }}
-                                                </span>
-                                            {% endif %}
-                                        {% endfor %}
-                                        {% for uniqTransportItem in order.uniqTransportItems %}
-                                            <span class="box-table__item__transport box-table__item__transport--{{ loop.index }}">{{ uniqTransportItem.name }}</span>
-                                        {% endfor %}
+                                        {% if imageExists(order.transport) %}
+                                            <span class="box-table__item__img box-table__item__img--{{ loop.index }}">
+                                                {{ image(order.transport) }}
+                                            </span>
+                                        {% endif %}
+                                        <span class="box-table__item__transport box-table__item__transport--0">{{ order.transport.name }}</span>
                                     </td>
                                     <td class="box-table__item box-table__item--payment-name">
                                         {{ order.paymentName }}
