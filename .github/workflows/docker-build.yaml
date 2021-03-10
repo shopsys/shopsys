@@ -65,7 +65,7 @@ jobs:
                     docker run -d --name php-fpm ${{ secrets.DOCKER_USERNAME }}/php-fpm:${DOCKER_PHP_FPM_IMAGE_TAG}
                     docker cp ./ php-fpm:/var/www/html
                     docker exec php-fpm composer install --optimize-autoloader --no-interaction
-                    docker exec php-fpm php phing dirs-create test-dirs-create assets npm build-version-generate
+                    docker exec php-fpm php phing dirs-create test-dirs-create assets npm build-version-generate backend-api-install composer-dev backend-api-oauth-keys-generate
             -   name: Push branch specific PHP-FPM image to Docker Hub
                 run: |
                     docker commit -m="Include Composer and NPM files" php-fpm ${{ secrets.DOCKER_USERNAME }}/php-fpm:${DOCKER_PHP_FPM_IMAGE_TAG}-${{ github.sha }}
@@ -203,7 +203,7 @@ jobs:
                     docker-compose up -d
                     docker cp ./ shopsys-framework-php-fpm:/var/www/html
                     docker-compose exec -T php-fpm composer install --optimize-autoloader --no-interaction
-                    docker-compose exec -T php-fpm php phing dirs-create test-dirs-create assets npm build-version-generate db-create test-db-create db-demo elasticsearch-index-recreate elasticsearch-export error-pages-generate test-db-demo test-elasticsearch-index-recreate test-elasticsearch-export tests-acceptance-build
+                    docker-compose exec -T php-fpm php phing dirs-create test-dirs-create assets npm build-version-generate backend-api-install composer-dev backend-api-oauth-keys-generate db-create test-db-create db-demo elasticsearch-index-recreate elasticsearch-export error-pages-generate test-db-demo test-elasticsearch-index-recreate test-elasticsearch-export tests-acceptance-build
             -   name: Check standards
                 run: docker-compose exec -T php-fpm php phing standards
             -   name: Run tests
