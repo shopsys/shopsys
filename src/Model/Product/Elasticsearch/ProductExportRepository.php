@@ -7,7 +7,6 @@ namespace App\Model\Product\Elasticsearch;
 use App\Model\Category\CategoryFacade;
 use App\Model\Product\Availability\ProductAvailabilityFacade;
 use App\Model\Product\Flag\Flag;
-use App\Model\Product\Parameter\ParameterFacade;
 use App\Model\Product\Product;
 use App\Model\Product\ProductRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -43,11 +42,6 @@ class ProductExportRepository extends BaseProductExportRepository
     private $productAvailabilityFacade;
 
     /**
-     * @var \App\Model\Product\Parameter\ParameterFacade
-     */
-    private $parameterFacade;
-
-    /**
      * @var \App\Model\Product\ProductRepository
      */
     private $productRepository;
@@ -71,7 +65,6 @@ class ProductExportRepository extends BaseProductExportRepository
      * @param \App\Model\Product\ProductVisibilityRepository $productVisibilityRepository
      * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
      * @param \App\Model\Product\Availability\ProductAvailabilityFacade $productAvailabilityFacade
-     * @param \App\Model\Product\Parameter\ParameterFacade $parameterFacade
      * @param \App\Model\Product\ProductRepository $productRepository
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade $pricingGroupSettingFacade
      * @param \App\Model\Category\CategoryFacade $categoryFacade
@@ -85,7 +78,6 @@ class ProductExportRepository extends BaseProductExportRepository
         ProductVisibilityRepository $productVisibilityRepository,
         FriendlyUrlFacade $friendlyUrlFacade,
         ProductAvailabilityFacade $productAvailabilityFacade,
-        ParameterFacade $parameterFacade,
         ProductRepository $productRepository,
         PricingGroupSettingFacade $pricingGroupSettingFacade,
         CategoryFacade $categoryFacade
@@ -101,7 +93,6 @@ class ProductExportRepository extends BaseProductExportRepository
         );
 
         $this->productAvailabilityFacade = $productAvailabilityFacade;
-        $this->parameterFacade = $parameterFacade;
         $this->productRepository = $productRepository;
         $this->pricingGroupSettingFacade = $pricingGroupSettingFacade;
         $this->categoryFacade = $categoryFacade;
@@ -124,7 +115,6 @@ class ProductExportRepository extends BaseProductExportRepository
         $detailUrl = $this->extractDetailUrl($domainId, $product);
         $variantIds = $this->extractVariantIds($product);
         $nonSellingPrice = $this->productFacade->getNonSellingPriceByProductAndDomainId($product, $domainId);
-        $variantsParametersSetup = $product->isMainVariant() ? $this->parameterFacade->getVariantsSetupForElasticByMainProduct($product, $locale, $domainId) : null;
         $searchingNames = $this->extractSearchingNames($product, $locale);
         $searchingDescriptions = $this->extractSearchingDescriptions($product, $domainId);
         $searchingCatnums = $this->extractSearchingCatnums($product);
@@ -162,14 +152,13 @@ class ProductExportRepository extends BaseProductExportRepository
             'stock_quantity' => $this->productAvailabilityFacade->getGroupedStockQuantityByProductAndDomainId($product, $domainId),
             'variants' => $variantIds,
             'main_variant_id' => $product->isVariant() ? $product->getMainVariant()->getId() : null,
-            'name_prefix' => $product->isMainVariant() ? $product->getDefaultVariant()->getNamePrefix($locale) : $product->getNamePrefix($locale),
-            'name_sufix' => $product->isMainVariant() ? '' : $product->getNameSufix($locale),
+            'name_prefix' => $product->getNamePrefix($locale),
+            'name_sufix' => $product->getNameSufix($locale),
             'non_selling_price' => $nonSellingPrice === null ? null : $nonSellingPrice->getAmount(),
             'is_in_sale' => $product->isProductInSale($domainId) && !$product->getCalculatedSaleExclusion($domainId),
             'is_sale_exclusion' => $product->getSaleExclusion($domainId),
             'product_available_stocks_count_information' => $this->productAvailabilityFacade->getProductAvailableStocksCountInformationByDomainId($product, $domainId),
             'product_count_exposed_in_stores' => $this->productAvailabilityFacade->getProductCountExposedInStocksInformationByDomainId($product, $domainId),
-            'variants_parameters_setup' => $variantsParametersSetup,
             'searching_names' => $searchingNames,
             'searching_descriptions' => $searchingDescriptions,
             'searching_catnums' => $searchingCatnums,

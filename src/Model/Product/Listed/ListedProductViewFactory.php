@@ -7,8 +7,6 @@ namespace App\Model\Product\Listed;
 use App\Model\Category\CategoryFacade;
 use App\Model\Product\Availability\ProductAvailabilityFacade;
 use App\Model\Product\Flag\Flag;
-use App\Model\Product\Parameter\Parameter;
-use App\Model\Product\Parameter\ParameterFacade;
 use App\Model\Product\ProductFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
@@ -30,19 +28,9 @@ class ListedProductViewFactory extends BaseListedProductViewFactory
     private $productAvailabilityFacade;
 
     /**
-     * @var \App\Model\Product\Parameter\ParameterFacade
-     */
-    private ParameterFacade $parameterFacade;
-
-    /**
      * @var \App\Model\Category\CategoryFacade
      */
     private $categoryFacade;
-
-    /**
-     * @var mixed
-     */
-    private $cachedColorParameterId = true;
 
     /**
      * @var \App\Model\Product\ProductFacade
@@ -53,7 +41,6 @@ class ListedProductViewFactory extends BaseListedProductViewFactory
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \App\Model\Product\ProductCachedAttributesFacade $productCachedAttributesFacade
      * @param \App\Model\Product\Availability\ProductAvailabilityFacade $productAvailabilityFacade
-     * @param \App\Model\Product\Parameter\ParameterFacade $parameterFacade
      * @param \App\Model\Category\CategoryFacade $categoryFacade
      * @param \App\Model\Product\ProductFacade $productFacade
      */
@@ -61,14 +48,12 @@ class ListedProductViewFactory extends BaseListedProductViewFactory
         Domain $domain,
         ProductCachedAttributesFacade $productCachedAttributesFacade,
         ProductAvailabilityFacade $productAvailabilityFacade,
-        ParameterFacade $parameterFacade,
         CategoryFacade $categoryFacade,
         ProductFacade $productFacade
     ) {
         parent::__construct($domain, $productCachedAttributesFacade);
 
         $this->productAvailabilityFacade = $productAvailabilityFacade;
-        $this->parameterFacade = $parameterFacade;
         $this->categoryFacade = $categoryFacade;
         $this->productFacade = $productFacade;
     }
@@ -81,18 +66,7 @@ class ListedProductViewFactory extends BaseListedProductViewFactory
      */
     public function createFromProduct(Product $product, ?ImageView $imageView, ProductActionView $productActionView): BaseListedProductView
     {
-        $variantsParametersSetup = [];
         $domainId = $this->domain->getId();
-        if ($product->isMainVariant()) {
-            $variantsParametersSetup = $this->parameterFacade->getVariantsSetupForElasticByMainProduct(
-                $product,
-                $this->domain->getLocale(),
-                $domainId
-            );
-        }
-        $variantsParametersSetup = $this->prepareVariantsParametersSetup($variantsParametersSetup);
-        list($countColorsInVariants, $countDifferentVariants) = $this->getParametersValuesInformation($variantsParametersSetup);
-
         $flagIds = $this->getFlagIdsForProductForDomain($product, $domainId);
 
         return new ListedProductView(
@@ -104,18 +78,15 @@ class ListedProductViewFactory extends BaseListedProductViewFactory
             $flagIds,
             $productActionView,
             $imageView,
-            $product->isMainVariant() ? $product->getDefaultVariant()->getNamePrefix() : $product->getNamePrefix(),
-            $product->isMainVariant() ? '' : $product->getNameSufix(),
+            $product->getNamePrefix(),
+            $product->getNameSufix(),
             $this->getProductPriceWithVatByMoney($this->productFacade->getNonSellingPriceByProductAndDomainId($product, $domainId) ?? Money::zero()),
             $this->productAvailabilityFacade->getProductAvailableStocksCountInformationByDomainId($product, $domainId),
             $this->productAvailabilityFacade->getProductCountExposedInStocksInformationByDomainId($product, $domainId),
-            $variantsParametersSetup,
             $this->categoryFacade->getCategoriesNamesInPathAsString(
                 $this->categoryFacade->getProductMainCategoryByDomainId($product, $domainId),
                 $this->domain->getLocale()
             ),
-            $countColorsInVariants,
-            $countDifferentVariants,
             $product->hasFlagByAkeneoCodeForDomain(Flag::AKENEO_CODE_SCONTO, $domainId),
             $this->productAvailabilityFacade->isProductAvailableOnDomainCached($product, $domainId),
         );
@@ -130,9 +101,6 @@ class ListedProductViewFactory extends BaseListedProductViewFactory
      */
     public function createFromArray(array $productArray, ?ImageView $imageView, ProductActionView $productActionView, PricingGroup $pricingGroup): BaseListedProductView
     {
-        $variantsParametersSetup = $this->prepareVariantsParametersSetup($productArray['variants_parameters_setup'] ?? []);
-        list($countColorsInVariants, $countDifferentVariants) = $this->getParametersValuesInformation($variantsParametersSetup);
-
         return new ListedProductView(
             $productArray['id'],
             $productArray['name'],
@@ -147,75 +115,10 @@ class ListedProductViewFactory extends BaseListedProductViewFactory
             $this->getProductPriceWithVatByMoney($productArray['non_selling_price'] === null ? Money::zero() : Money::create((string)$productArray['non_selling_price'])),
             $productArray['product_available_stocks_count_information'],
             $productArray['product_count_exposed_in_stores'],
-            $variantsParametersSetup,
             $productArray['main_category_path'],
-            $countColorsInVariants,
-            $countDifferentVariants,
             array_key_exists('has_sconto_flag', $productArray) ? $productArray['has_sconto_flag'] : false,
             array_key_exists('is_available', $productArray) ? $productArray['is_available'] : true,
         );
-    }
-
-    /**
-     * @param array $variantsParametersSetup
-     * @return array
-     */
-    private function getParametersValuesInformation(array $variantsParametersSetup): array
-    {
-        if ($this->cachedColorParameterId === true) {
-            $colorParameter = $this->parameterFacade->findParameterByAkeneoCode(Parameter::COLOR_PARAMETER_AKENEO_CODE);
-            if ($colorParameter !== null) {
-                $this->cachedColorParameterId = $colorParameter->getId();
-            } else {
-                $this->cachedColorParameterId = false;
-            }
-        }
-
-        $colorParameterValueIds = [];
-        $differentParameterValueIds = [];
-        foreach ($variantsParametersSetup as $variantParametersSetup) {
-            foreach ($variantParametersSetup['parameter_values_setup'] as $parameterId => $parameterValuesSetup) {
-                if ($parameterId === $this->cachedColorParameterId) {
-                    $colorParameterValueIds = array_merge($colorParameterValueIds, $parameterValuesSetup);
-                } else {
-                    $differentParameterValueIds = array_merge($differentParameterValueIds, $parameterValuesSetup);
-                }
-            }
-        }
-        $colorParameterValueIds = array_unique($colorParameterValueIds);
-        $countDifferentColorsInVariants = count($colorParameterValueIds);
-
-        $differentParameterValueIds = array_unique($differentParameterValueIds);
-        $countDifferentVariants = count($differentParameterValueIds);
-
-        return [$countDifferentColorsInVariants, $countDifferentVariants];
-    }
-
-    /**
-     * @param array $originalVariantsParametersSetup
-     * @return array
-     */
-    private function prepareVariantsParametersSetup(array $originalVariantsParametersSetup): array
-    {
-        $variantsParametersSetup = [];
-        foreach ($originalVariantsParametersSetup as $originalVariantParametersSetup) {
-            $variantId = $originalVariantParametersSetup['variant_id'];
-            $variantsParametersSetup[$variantId] = $originalVariantParametersSetup;
-            unset($variantsParametersSetup[$variantId]['parameter_values_setup'], $variantsParametersSetup[$variantId]['extended_parameter_values_setup']);
-
-            foreach ($originalVariantParametersSetup['parameter_values_setup'] as $parameterValueSetup) {
-                $variantsParametersSetup[$variantId]['parameter_values_setup'][$parameterValueSetup['parameter_id']][$parameterValueSetup['parameter_value_id']] = $parameterValueSetup['parameter_value_id'];
-            }
-            if (!isset($originalVariantParametersSetup['extended_parameter_values_setup'])) {
-                continue;
-            }
-
-            foreach ($originalVariantParametersSetup['extended_parameter_values_setup'] as $parameterValueSetup) {
-                $variantsParametersSetup[$variantId]['extended_parameter_values_setup'][$parameterValueSetup['parameter_id']][$parameterValueSetup['parameter_value_id']] = $parameterValueSetup['parameter_value_id'];
-            }
-        }
-
-        return $variantsParametersSetup;
     }
 
     /**

@@ -204,13 +204,4 @@ class ProductOnCurrentDomainElasticFacade extends BaseProductOnCurrentDomainElas
 
         return $productFilterCountData;
     }
-
-    /**
-     * @param int $productId
-     * @return \App\Model\Product\Product
-     */
-    public function getProductById(int $productId): Product
-    {
-        return $this->productRepository->getById($productId);
-    }
 }

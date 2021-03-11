@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Model\Product;
 
 use App\Component\Router\FriendlyUrl\FriendlyUrlRepository;
-use App\Model\Product\Exception\DeleteDefaultVariantException;
 use App\Model\Stock\ProductStockFacade;
 use App\Model\Stock\StockFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
@@ -281,21 +280,6 @@ class ProductFacade extends BaseProductFacade
     }
 
     /**
-     * @param int $productId
-     */
-    public function delete($productId): void
-    {
-        $product = $this->productRepository->getById($productId);
-        if ($product->isVariant()) {
-            if ($product->getMainVariant()->getDefaultVariant() === $product) {
-                throw new DeleteDefaultVariantException($product);
-            }
-        }
-
-        parent::delete($productId);
-    }
-
-    /**
      * @param \App\Model\Product\Product $product
      */
     private function storeUrls(BaseProduct $product): void
@@ -482,35 +466,12 @@ class ProductFacade extends BaseProductFacade
     }
 
     /**
-     * @param \App\Model\Product\ProductData $productData
-     * @return \App\Model\Product\Product
-     */
-    public function createProductAsMainVariant(ProductData $productData): BaseProduct
-    {
-        $product = $this->create($productData);
-        $product->setAsMainVariant();
-        $this->em->flush();
-
-        return $product;
-    }
-
-    /**
      * @param \App\Model\Product\Product $product
      * @param \App\Model\Product\Product[] $accessories
      */
     public function refreshProductAccessories(BaseProduct $product, array $accessories): void
     {
         parent::refreshProductAccessories($product, $accessories);
-    }
-
-    /**
-     * @param \App\Model\Product\Product $product
-     * @param \App\Model\Product\Product $variant
-     */
-    public function setDefaultVariant(BaseProduct $product, BaseProduct $variant): void
-    {
-        $product->setDefaultVariant($variant);
-        $this->em->flush();
     }
 
     /**

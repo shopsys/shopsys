@@ -131,11 +131,6 @@ class ProductData extends BaseProductData
     public $flags;
 
     /**
-     * @var \App\Model\Product\Parameter\Parameter[]
-     */
-    public $variantParameters;
-
-    /**
      * @var bool[]|null[]
      */
     public $domainHidden;
@@ -168,7 +163,6 @@ class ProductData extends BaseProductData
         $this->preorder = false;
         $this->saleExclusion = [];
         $this->flags = [];
-        $this->variantParameters = [];
         $this->domainHidden = [];
         $this->domainOrderingPriority = [];
     }

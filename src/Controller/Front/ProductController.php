@@ -24,10 +24,7 @@ use App\Model\Product\Filter\CachedProductFilterConfig;
 use App\Model\Product\Filter\ProductFilterCacheFacade;
 use App\Model\Product\Filter\ProductFilterData;
 use App\Model\Product\Filter\ProductFilterFacade;
-use App\Model\Product\Filter\ProductVariantFilterFacade;
 use App\Model\Product\Listed\ListedProductViewElasticFacade;
-use App\Model\Product\Parameter\ParameterFacade;
-use App\Model\Product\Product;
 use App\Model\Product\ProductFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Paginator\PaginationResult;
@@ -152,11 +149,6 @@ class ProductController extends FrontBaseController
     private $seoHelper;
 
     /**
-     * @var \App\Model\Product\Parameter\ParameterFacade
-     */
-    private $parameterFacade;
-
-    /**
      * @var \App\Model\Product\Filter\ProductFilterFacade
      */
     private $productFilterFacade;
@@ -170,11 +162,6 @@ class ProductController extends FrontBaseController
      * @var \App\Model\Gtm\GtmJsPushFacade
      */
     private $gtmJsPushFacade;
-
-    /**
-     * @var \App\Model\Product\Filter\ProductVariantFilterFacade
-     */
-    private $productVariantFilterFacade;
 
     /**
      * @var \App\Model\Product\Filter\ProductFilterCacheFacade
@@ -206,11 +193,9 @@ class ProductController extends FrontBaseController
      * @param \App\Component\Router\CategorySeoMix\CategorySeoMixUrlGenerator $categorySeoMixUrlGenerator
      * @param \App\Component\UploadedFile\UploadedFileFacade $uploadedFileFacade
      * @param \App\Component\SeoHelper\SeoHelper $seoHelper
-     * @param \App\Model\Product\Parameter\ParameterFacade $parameterFacade
      * @param \App\Model\Product\Filter\ProductFilterFacade $productFilterFacade
      * @param \App\Model\Gtm\GtmFacade $gtmFacade
      * @param \App\Model\Gtm\GtmJsPushFacade $gtmJsPushFacade
-     * @param \App\Model\Product\Filter\ProductVariantFilterFacade $productVariantFilterFacade
      * @param \App\Model\Product\Filter\ProductFilterCacheFacade $productFilterCacheFacade
      * @param \App\Model\Gtm\GtmContainer $gtmContainer
      */
@@ -234,11 +219,9 @@ class ProductController extends FrontBaseController
         CategorySeoMixUrlGenerator $categorySeoMixUrlGenerator,
         UploadedFileFacade $uploadedFileFacade,
         SeoHelper $seoHelper,
-        ParameterFacade $parameterFacade,
         ProductFilterFacade $productFilterFacade,
         GtmFacade $gtmFacade,
         GtmJsPushFacade $gtmJsPushFacade,
-        ProductVariantFilterFacade $productVariantFilterFacade,
         ProductFilterCacheFacade $productFilterCacheFacade,
         GtmContainer $gtmContainer
     ) {
@@ -261,11 +244,9 @@ class ProductController extends FrontBaseController
         $this->categorySeoMixUrlGenerator = $categorySeoMixUrlGenerator;
         $this->uploadedFileFacade = $uploadedFileFacade;
         $this->seoHelper = $seoHelper;
-        $this->parameterFacade = $parameterFacade;
         $this->productFilterFacade = $productFilterFacade;
         $this->gtmFacade = $gtmFacade;
         $this->gtmJsPushFacade = $gtmJsPushFacade;
-        $this->productVariantFilterFacade = $productVariantFilterFacade;
         $this->productFilterCacheFacade = $productFilterCacheFacade;
         $this->gtmContainer = $gtmContainer;
     }
@@ -276,50 +257,41 @@ class ProductController extends FrontBaseController
      */
     public function detailAction(Request $request, $id)
     {
-        /** @var \App\Model\Product\Product $productVariant */
-        $productVariant = $this->productOnCurrentDomainFacade->getVisibleProductById($id);
+        /** @var \App\Model\Product\Product $product */
+        $product = $this->productOnCurrentDomainFacade->getVisibleProductById($id);
 
-        if ($productVariant->isMainVariant()) {
-            return $this->redirectToRoute('front_product_detail', ['id' => $productVariant->getDefaultVariant()->getId()], 301);
+        if ($product->isVariant()) {
+            return $this->redirectToRoute('front_product_detail', ['id' => $product->getMainVariant()->getId()]);
         }
 
-        if ($productVariant->isVariant()) {
-            $product = $productVariant->getMainVariant();
-        } else {
-            $product = $productVariant;
-        }
-        //parts build from variant
-        $downloadFiles = $this->productFacade->getDownloadFilesForProductByDomain($productVariant, $this->domain);
-        $productAvailabilityInformation = $this->productAvailabilityFacade->getProductAvailabilityInformationByDomainId($productVariant, $this->domain->getId());
-        $productAvailabilityStatus = $this->productAvailabilityFacade->getProductAvailabilityStatusByDomainId($productVariant, $this->domain->getId());
-        $productAvailableStocksCountInformation = $this->productAvailabilityFacade->getProductAvailableStocksCountInformationByDomainId($productVariant, $this->domain->getId());
-        $productCountExposedInStores = $this->productAvailabilityFacade->getProductCountExposedInStocksInformationByDomainId($productVariant, $this->domain->getId());
-        $productStocksAvailabilitiesInformation = $this->productAvailabilityFacade->getProductStocksAvailabilitiesInformationByDomainIdIndexedByStockId($productVariant, $this->domain->getId());
+        $downloadFiles = $this->productFacade->getDownloadFilesForProductByDomain($product, $this->domain);
+        $productAvailabilityInformation = $this->productAvailabilityFacade->getProductAvailabilityInformationByDomainId($product, $this->domain->getId());
+        $productAvailabilityStatus = $this->productAvailabilityFacade->getProductAvailabilityStatusByDomainId($product, $this->domain->getId());
+        $productAvailableStocksCountInformation = $this->productAvailabilityFacade->getProductAvailableStocksCountInformationByDomainId($product, $this->domain->getId());
+        $productCountExposedInStores = $this->productAvailabilityFacade->getProductCountExposedInStocksInformationByDomainId($product, $this->domain->getId());
+        $productStocksAvailabilitiesInformation = $this->productAvailabilityFacade->getProductStocksAvailabilitiesInformationByDomainIdIndexedByStockId($product, $this->domain->getId());
 
-        $this->gtmFacade->onProductDetailPage($productVariant);
+        $this->gtmFacade->onProductDetailPage($product);
 
         //parts build from main product
         /** @var \App\Model\Product\Listed\ListedProductView[] $accessories */
         $accessories = $this->listedProductViewFacade->getAllAccessories($product->getId());
-        $this->productVariantFilterFacade->setupDefaultVariantsInListedProductViews($accessories);
         $variants = $this->productOnCurrentDomainFacade->getVariantsForProduct($product);
         $productMainCategory = $this->categoryFacade->getProductMainCategoryByDomainId($product, $this->domain->getId());
         $categoryList = $this->categoryFacade->getAllProductCategoriesByProductAndDomainId($product, $this->domain->getId());
 
         return $this->render('Front/Content/Product/detail.html.twig', [
-            'product' => $productVariant,
+            'product' => $product,
             'accessories' => $accessories,
             'variants' => $variants,
             'productMainCategory' => $productMainCategory,
             'categoryList' => $categoryList,
-            'domain' => $this->domain,
             'productAvailabilityInformation' => $productAvailabilityInformation,
             'productAvailabilityStatus' => $productAvailabilityStatus,
             'productStocksAvailabilitiesInformation' => $productStocksAvailabilitiesInformation,
             'productAvailableStocksCountInformation' => $productAvailableStocksCountInformation,
             'productCountExposedInStores' => $productCountExposedInStores,
             'downloadFiles' => $downloadFiles,
-            'productMainVariantId' => $product->getId(),
             'gtmAccessoriesScrollEvent' => $this->gtmJsPushFacade->getListedProductViewsScrollData(
                 $accessories,
                 DataLayer::LIST_NAME_PRODUCT_ACCESSORIES
@@ -357,8 +329,6 @@ class ProductController extends FrontBaseController
             self::SIMILAR_PRODUCTS_PER_PAGE
         );
 
-        $this->productVariantFilterFacade->setupDefaultVariantsInPaginationResult($paginatedSimilarProducts);
-
         return $this->render(
             'Front/Content/Product/similarProducts.html.twig',
             [
@@ -372,39 +342,6 @@ class ProductController extends FrontBaseController
                 'gtmList' => DataLayer::LIST_NAME_PRODUCT_SIMILAR_PRODUCTS,
             ]
         );
-    }
-
-    /**
-     * @param \App\Model\Product\Product $product
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function variantParametersAction(Product $product): Response
-    {
-        if (!$product->isVariant()) {
-            return new Response();
-        }
-
-        $mainProduct = $product->getMainVariant();
-
-        $currentVariantParameterValuesIndexedByParameterId = $this->parameterFacade
-            ->getParameterValuesIndexedByParameterIdForProductVariant($product, $mainProduct->getVariantParameters(), $this->domain->getLocale());
-        $currentVariantSetup = $this->parameterFacade->getParameterValueIdIndexedByParameterId($currentVariantParameterValuesIndexedByParameterId);
-        $currentVariantSetupKey = $this->parameterFacade->getVariantSetupKey($currentVariantParameterValuesIndexedByParameterId);
-
-        $variantSetupKeyMap = $this->parameterFacade->getVariantSetupKeyMapByMainProduct($mainProduct, $this->domain->getLocale(), $this->domain->getId());
-
-        $parameterValuesIndexedByParameterId = $this->parameterFacade
-            ->getParameterValuesIndexedByParameterIdForMainProduct($mainProduct, $this->domain->getLocale());
-
-        return $this->render('Front/Content/Product/variantParameters.html.twig', [
-            'mainProduct' => $mainProduct,
-            'variant' => $product,
-            'parameterValuesIndexedByParameterId' => $parameterValuesIndexedByParameterId,
-            'variantParameterValuesIndexedByParameterId' => $currentVariantParameterValuesIndexedByParameterId,
-            'currentVariantSetup' => $currentVariantSetup,
-            'currentVariantSetupKey' => $currentVariantSetupKey,
-            'variantSetupKeyMap' => $variantSetupKeyMap,
-        ]);
     }
 
     /**
@@ -448,8 +385,6 @@ class ProductController extends FrontBaseController
             $page,
             self::PRODUCTS_PER_PAGE
         );
-
-        $this->productVariantFilterFacade->setupMostValuableVariantsInPaginationResultByProductFilterData($paginationResult, $productFilterData);
 
         $productFilterCountData = null;
         if ($this->moduleFacade->isEnabled(ModuleList::PRODUCT_FILTER_COUNTS)) {
@@ -615,8 +550,6 @@ class ProductController extends FrontBaseController
             $page,
             self::PRODUCTS_PER_PAGE
         );
-
-        $this->productVariantFilterFacade->setupMostValuableVariantsInPaginationResultByProductFilterData($paginationResult, $productFilterData);
 
         $productFilterCountData = null;
         if ($this->moduleFacade->isEnabled(ModuleList::PRODUCT_FILTER_COUNTS)) {
@@ -947,8 +880,6 @@ class ProductController extends FrontBaseController
             $page,
             self::SALE_PRODUCTS_PER_PAGE
         );
-
-        $this->productVariantFilterFacade->setupDefaultVariantsInPaginationResult($paginatedSaleProducts);
 
         return $this->render(
             'Front/Content/Product/productsInSaleOnHomePage.html.twig',

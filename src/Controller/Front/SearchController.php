@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Controller\Front;
 
 use App\Model\Product\Filter\ProductFilterData;
-use App\Model\Product\Filter\ProductVariantFilterFacade;
 use App\Model\Product\Listed\ListedProductViewElasticFacade;
 use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
 use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingConfig;
@@ -22,27 +21,19 @@ class SearchController extends FrontBaseController
     private $categoryFacade;
 
     /**
-     * @var \App\Model\Product\Filter\ProductVariantFilterFacade
-     */
-    private $productVariantFilterFacade;
-
-    /**
      * @var \App\Model\Product\Listed\ListedProductViewElasticFacade
      */
     private $listedProductViewFacade;
 
     /**
      * @param \App\Model\Category\CategoryFacade $categoryFacade
-     * @param \App\Model\Product\Filter\ProductVariantFilterFacade $productVariantFilterFacade
      * @param \App\Model\Product\Listed\ListedProductViewElasticFacade $listedProductViewFacade
      */
     public function __construct(
         CategoryFacade $categoryFacade,
-        ProductVariantFilterFacade $productVariantFilterFacade,
         ListedProductViewElasticFacade $listedProductViewFacade
     ) {
         $this->categoryFacade = $categoryFacade;
-        $this->productVariantFilterFacade = $productVariantFilterFacade;
         $this->listedProductViewFacade = $listedProductViewFacade;
     }
 
@@ -66,8 +57,6 @@ class SearchController extends FrontBaseController
             1,
             self::AUTOCOMPLETE_PRODUCT_LIMIT
         );
-
-        $this->productVariantFilterFacade->setupMostValuableVariantsInPaginationResultByProductFilterData($productsPaginationResult, $productFilterData);
 
         return $this->render('Front/Content/Search/autocomplete.html.twig', [
             'searchUrl' => $searchUrl,

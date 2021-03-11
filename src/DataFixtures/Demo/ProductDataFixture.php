@@ -2970,8 +2970,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $this->addParameterTranslations($parameterTranslations, t('USB', [], 'dataFixtures', $locale), t('Yes', [], 'dataFixtures', $locale), $locale, $i);
             $this->addParameterTranslations($parameterTranslations, t('HDMI', [], 'dataFixtures', $locale), t('No', [], 'dataFixtures', $locale), $locale, $i);
         }
-
-        $this->setVariantParametersByTranslations($productData, $parameterTranslations);
+        $this->setParametersByTranslations($productData, $parameterTranslations);
 
         $this->setPriceForAllPricingGroups($productData, '9173.5');
 
@@ -3501,8 +3500,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $this->addParameterTranslations($parameterTranslations, t('USB', [], 'dataFixtures', $locale), t('Yes', [], 'dataFixtures', $locale), $locale, $i);
             $this->addParameterTranslations($parameterTranslations, t('HDMI', [], 'dataFixtures', $locale), t('Yes', [], 'dataFixtures', $locale), $locale, $i);
         }
-
-        $this->setVariantParametersByTranslations($productData, $parameterTranslations);
+        $this->setParametersByTranslations($productData, $parameterTranslations);
 
         $this->setPriceForAllPricingGroups($productData, '9173.5');
 
@@ -3539,8 +3537,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
             $this->addParameterTranslations($parameterTranslations, t('Screen size', [], 'dataFixtures', $locale), t('22"', [], 'dataFixtures', $locale), $locale, $i);
         }
-
-        $this->setVariantParametersByTranslations($productData, $parameterTranslations, 1);
+        $this->setParametersByTranslations($productData, $parameterTranslations);
 
         $this->setPriceForAllPricingGroups($productData, '5999');
 
@@ -6139,7 +6136,6 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $variantCatnumsByMainVariantCatnum = self::getVariantCatnumsByMainVariantCatnum();
 
         foreach ($variantCatnumsByMainVariantCatnum as $mainVariantCatnum => $variantsCatnums) {
-            /** @var \App\Model\Product\Product $mainProduct */
             $mainProduct = $this->getProductFromCacheByCatnum($mainVariantCatnum);
             $mainProduct->setAsMainVariant();
             $this->em->flush();
@@ -6200,24 +6196,6 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
                 $productParameterValueData->parameter = $parameter;
 
                 $productData->parameters[] = $productParameterValueData;
-            }
-        }
-    }
-
-    /**
-     * @param \App\Model\Product\ProductData $productData
-     * @param array $parametersTranslations
-     * @param int $countVariantParams
-     */
-    private function setVariantParametersByTranslations(ProductData $productData, array $parametersTranslations, int $countVariantParams = 2): void
-    {
-        $count = 0;
-        foreach ($parametersTranslations as $parameterTranslations) {
-            $count++;
-            $parameter = $this->findParameterByNamesOrCreateNew($parameterTranslations['names'], $parameterTranslations['group_name']);
-            $productData->variantParameters[$parameter->getId()] = $parameter;
-            if ($count === $countVariantParams) {
-                break;
             }
         }
     }

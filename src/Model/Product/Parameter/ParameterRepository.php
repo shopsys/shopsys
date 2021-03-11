@@ -19,7 +19,6 @@ use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueFactoryInterfa
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValue;
 use Shopsys\FrameworkBundle\Model\Product\Product as BaseProduct;
 use Shopsys\FrameworkBundle\Model\Product\ProductCategoryDomain;
-use Shopsys\FrameworkBundle\Model\Product\ProductVisibility;
 
 /**
  * @property \App\Model\Product\Parameter\ParameterValueDataFactory $parameterValueDataFactory
@@ -293,84 +292,6 @@ class ParameterRepository extends BaseParameterRepository
 
     /**
      * @param \App\Model\Product\Product $product
-     * @param \App\Model\Product\Parameter\Parameter $parameter
-     * @param string $locale
-     * @return \App\Model\Product\Parameter\ParameterValue[]
-     */
-    public function getParameterValuesForVariantsByMainProductAndParameter(Product $product, Parameter $parameter, string $locale): array
-    {
-        return $this->getParameterValueRepository()
-            ->createQueryBuilder('pv')
-            ->select('pv')
-            ->join(ProductParameterValue::class, 'ppv', Join::WITH, 'pv = ppv.value and pv.locale = :locale')
-            ->join('ppv.product', 'p', Join::WITH, 'p.mainVariant = :product')
-            ->where('ppv.parameter = :parameter')
-            ->groupBy('pv')
-            ->orderBy('pv.text')
-            ->setParameters([
-                'locale' => $locale,
-                'product' => $product,
-                'parameter' => $parameter,
-            ])
-            ->getQuery()
-            ->execute();
-    }
-
-    /**
-     * @param \App\Model\Product\Product $product
-     * @param \App\Model\Product\Parameter\Parameter $parameter
-     * @param string $locale
-     * @return \App\Model\Product\Parameter\ParameterValue
-     */
-    public function getParameterValueForVariantByProductVariantAndParameter(Product $product, Parameter $parameter, string $locale): ParameterValue
-    {
-        return $this->getParameterValueRepository()
-            ->createQueryBuilder('pv')
-            ->select('pv')
-            ->join(ProductParameterValue::class, 'ppv', Join::WITH, 'pv = ppv.value and pv.locale = :locale')
-            ->where('ppv.product = :product')
-            ->andWhere('ppv.parameter = :parameter')
-            ->addOrderBy('pv.id', 'ASC')
-            ->setParameters([
-                'locale' => $locale,
-                'product' => $product,
-                'parameter' => $parameter,
-            ])
-            ->getQuery()
-            ->getSingleResult();
-    }
-
-    /**
-     * @param \App\Model\Product\Product $product
-     * @param string $locale
-     * @param int $domainId
-     * @param \App\Model\Product\Parameter\Parameter[] $parameters
-     * @return array
-     */
-    public function getVariantProductParameterValuesData(Product $product, string $locale, int $domainId, array $parameters): array
-    {
-        return $this->getProductParameterValueRepository()
-            ->createQueryBuilder('ppv')
-            ->distinct()
-            ->join('ppv.product', 'p', Join::WITH, 'p.mainVariant = :product')
-            ->join('p.domains', 'pd', Join::WITH, 'pd.domainId = :domainId AND pd.calculatedSaleExclusion = FALSE')
-            ->join('ppv.value', 'pv', Join::WITH, 'pv.locale = :locale')
-            ->join(ProductVisibility::class, 'pvis', Join::WITH, 'p = pvis.product AND pvis.visible = TRUE AND pvis.domainId = :domainId')
-            ->where('ppv.parameter IN (:variantParameters)')
-            ->addOrderBy('IDENTITY(ppv.parameter)', 'ASC')
-            ->addOrderBy('IDENTITY(ppv.value)', 'ASC')
-            ->setParameters([
-                'product' => $product,
-                'variantParameters' => $parameters,
-                'locale' => $locale,
-                'domainId' => $domainId,
-            ])
-            ->getQuery()
-            ->getScalarResult();
-    }
-
-    /**
-     * @param \App\Model\Product\Product $product
      * @param string $locale
      * @return \App\Model\Product\Parameter\ParameterValuesViewData[]
      */
@@ -461,22 +382,6 @@ class ParameterRepository extends BaseParameterRepository
             ])
             ->getQuery()
             ->execute();
-    }
-
-    /**
-     * @return \App\Model\Product\Parameter\Parameter[]
-     */
-    public function getColorPickerParameters(): array
-    {
-        $queryBuilder = $this->em->createQueryBuilder()
-            ->select('p')
-            ->from(Parameter::class, 'p')
-            ->where('p.parameterType = :parameter_type')
-            ->setParameters([
-                'parameter_type' => Parameter::PARAMETER_TYPE_COLOR,
-            ]);
-
-        return $queryBuilder->getQuery()->execute();
     }
 
     /**

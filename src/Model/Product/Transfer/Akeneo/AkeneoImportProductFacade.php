@@ -62,11 +62,6 @@ class AkeneoImportProductFacade extends AbstractAkeneoImportTransfer
     private $akeneoImportProductGroupParameterFacade;
 
     /**
-     * @var \App\Model\Product\Transfer\Akeneo\AkeneoImportProductMainVariantFacade
-     */
-    private $akeneoImportProductMainVariantFacade;
-
-    /**
      * @var \App\Model\Product\Transfer\Akeneo\TransferredProductProcessor
      */
     private $transferredProductProcessor;
@@ -91,7 +86,6 @@ class AkeneoImportProductFacade extends AbstractAkeneoImportTransfer
      * @param \App\Component\Setting\Setting $setting
      * @param \App\Model\Product\Parameter\Transfer\Akeneo\AkeneoImportProductParameterFacade $akeneoImportProductParameterFacade
      * @param \App\Model\Product\Parameter\Transfer\Akeneo\AkeneoImportProductGroupParameterFacade $akeneoImportProductGroupParameterFacade
-     * @param \App\Model\Product\Transfer\Akeneo\AkeneoImportProductMainVariantFacade $akeneoImportProductMainVariantFacade
      * @param \App\Model\Product\Transfer\Akeneo\TransferredProductProcessor $transferredProductProcessor
      * @param \App\Model\Product\Transfer\Akeneo\AkeneoImportProductDetailFacade $akeneoImportProductDetailFacade
      */
@@ -105,7 +99,6 @@ class AkeneoImportProductFacade extends AbstractAkeneoImportTransfer
         Setting $setting,
         AkeneoImportProductParameterFacade $akeneoImportProductParameterFacade,
         AkeneoImportProductGroupParameterFacade $akeneoImportProductGroupParameterFacade,
-        AkeneoImportProductMainVariantFacade $akeneoImportProductMainVariantFacade,
         TransferredProductProcessor $transferredProductProcessor,
         AkeneoImportProductDetailFacade $akeneoImportProductDetailFacade
     ) {
@@ -119,7 +112,6 @@ class AkeneoImportProductFacade extends AbstractAkeneoImportTransfer
         $this->setting = $setting;
         $this->akeneoImportProductParameterFacade = $akeneoImportProductParameterFacade;
         $this->akeneoImportProductGroupParameterFacade = $akeneoImportProductGroupParameterFacade;
-        $this->akeneoImportProductMainVariantFacade = $akeneoImportProductMainVariantFacade;
         $this->transferredProductProcessor = $transferredProductProcessor;
         $this->processedProductIdentifierList = [];
         $this->akeneoImportProductDetailFacade = $akeneoImportProductDetailFacade;
@@ -148,36 +140,19 @@ class AkeneoImportProductFacade extends AbstractAkeneoImportTransfer
         $akeneoProductsData = $this->getData();
 
         $isAllParametersImported = true;
-        $mainVariantSkuList = [];
         foreach ($akeneoProductsData as $akeneoProductData) {
             if ($isAllParametersImported === true) {
                 $isAllParametersImported = $this->transferredProductProcessor->checkIsAllParametersExistFromAkeneoData($akeneoProductData);
             }
-
-            $mainVariantSku = $this->productTransferAkeneoMapper->mapAkeneoProductDataToParentCatnum($akeneoProductData);
-            if ($mainVariantSku === null) {
-                continue;
-            }
-
-            if (array_key_exists($mainVariantSku, $mainVariantSkuList) === false) {
-                $mainVariantSkuList[$mainVariantSku] = [];
-            }
-            $mainVariantSkuList[$mainVariantSku][$akeneoProductData['identifier']] = $akeneoProductData['identifier'];
         }
 
-        if ($isAllParametersImported === false) {
-            $this->logger->addInfo('Transfer missing parameters from Akeneo');
-            $this->akeneoImportProductGroupParameterFacade->runTransfer();
-            $this->akeneoImportProductParameterFacade->runTransfer();
+        if ($isAllParametersImported !== false) {
+            return;
         }
 
-        $removeSingleVariantProducts = static function ($variants) {
-            return count($variants) > 1;
-        };
-        $mainVariantSkuList = array_filter($mainVariantSkuList, $removeSingleVariantProducts);
-        if (count($mainVariantSkuList) > 0) {
-            $this->akeneoImportProductMainVariantFacade->downloadMainVariantsBySkuList($mainVariantSkuList);
-        }
+        $this->logger->addInfo('Transfer missing parameters from Akeneo');
+        $this->akeneoImportProductGroupParameterFacade->runTransfer();
+        $this->akeneoImportProductParameterFacade->runTransfer();
     }
 
     /**

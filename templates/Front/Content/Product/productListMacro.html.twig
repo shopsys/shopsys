@@ -5,7 +5,7 @@
         {% for productView in productViews %}
             <div class="list-products__item js-list-products-item">
                 <div class="list-products__item__in">
-                    <a href="{{ productView.variantUrl is null ? productView.action.detailUrl : productView.variantUrl }}"
+                    <a href="{{ productView.action.detailUrl }}"
                        class="list-products__item__block" {{ gtm(productView, nextIndex + loop.index0, { 'list': gtmList }) }}>
                         <div class="list-products__item__image dont-print">
                             {{ image(productView.image, { size: 'list', alt: productView.name }) }}
@@ -15,44 +15,6 @@
                             {% endif %}
                         </div>
 
-                        <div class="list-products__item__variants-wrap">
-                            {% if productView.countColorsInVariants > 0 or productView.countDifferentVariants > 0 %}
-                                <div
-                                    class="list-products__item__variants
-                                    {{ productView.countColorsInVariants > 0 and productView.countDifferentVariants > 0 ? ' list-products__item__variants--multiple' }}">
-                                    {% if productView.countColorsInVariants > 0 %}
-                                        <div class="list-products__item__variants__item list-products__item__variants__item--color">
-                                            <img
-                                                class="list-products__item__variants__item__icon list-products__item__variants__item__icon--color"
-                                                loading="lazy"
-                                                data-src="{{ asset('public/frontend/images/variant-icon-color-2.svg') }}"
-                                                alt="{{ 'Barva'|trans }}"
-                                            >
-                                            {% transchoice productView.countColorsInVariants with { '%itemsCount%': productView.countColorsInVariants } %}
-                                                {1} 1 barva
-                                                |{2, 3, 4} %itemsCount% barvy
-                                                |]4,Inf[ %itemsCount% barev
-                                            {% endtranschoice %}
-                                        </div>
-                                    {% endif %}
-                                    {% if productView.countDifferentVariants > 0 %}
-                                        <div class="list-products__item__variants__item list-products__item__variants__item--variant">
-                                            <img
-                                                class="list-products__item__variants__item__icon list-products__item__variants__item__icon--variant"
-                                                loading="lazy"
-                                                data-src="{{ asset('public/frontend/images/variant-icon.svg') }}"
-                                                alt="{{ 'Varianty'|trans }}"
-                                            >
-                                            {% transchoice productView.countDifferentVariants with { '%itemsCount%': productView.countDifferentVariants } %}
-                                                {1} 1 varianta
-                                                |{2, 3, 4} %itemsCount% varianty
-                                                |]4,Inf[ %itemsCount% variant
-                                            {% endtranschoice %}
-                                        </div>
-                                    {% endif %}
-                                </div>
-                            {% endif %}
-                        </div>
                         <{{ productHeadingTagName|default('h2') }} class="list-products__item__title js-list-products-item-title">
                             {% if productView.namePrefix is not empty %}
                                 <span class="list-products__item__title__prefix">{{ productView.namePrefix }}</span>

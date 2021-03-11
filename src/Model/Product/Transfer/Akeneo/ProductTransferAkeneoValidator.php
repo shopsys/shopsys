@@ -27,9 +27,8 @@ class ProductTransferAkeneoValidator
 
     /**
      * @param array $akeneoProductData
-     * @param bool $isMainVariant
      */
-    public function validate(array $akeneoProductData, bool $isMainVariant): void
+    public function validate(array $akeneoProductData): void
     {
         $fieldsValidationSetup = [
             'identifier' => [
@@ -48,21 +47,10 @@ class ProductTransferAkeneoValidator
                 new Assert\NotBlank(),
                 new Assert\Type(['type' => 'array']),
             ],
-        ];
-        if ($isMainVariant === false) {
-            $fieldsValidationSetup['enabled'] = [
+            'enabled' => [
                 new Assert\Type(['type' => 'bool']),
-            ];
-        } else {
-            $fieldsValidationSetup['family'] = [
-                new Assert\NotBlank(),
-                new Assert\Type(['type' => 'string']),
-            ];
-            $fieldsValidationSetup['family_variant'] = [
-                new Assert\NotBlank(),
-                new Assert\Type(['type' => 'string']),
-            ];
-        }
+            ],
+        ];
 
         $violations = $this->validator->validate($akeneoProductData, new Assert\Collection([
             'allowExtraFields' => true,
