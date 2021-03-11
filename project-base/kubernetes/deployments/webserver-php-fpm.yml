@@ -57,11 +57,11 @@ spec:
                         -   name: parameters
                             mountPath: "{{PATH_CONFIG_DIRECTORY}}/parameters.yaml"
                             subPath: parameters.yaml
-                -   name: initialize-database
+                -   name: initialize
                     image: "{{DOCKER_PHP_FPM_IMAGE}}"
                     securityContext:
                         runAsUser: 33
-                    command: ["sh", "-c", "cd /var/www/html && ./phing -D production.confirm.action=y db-create dirs-create db-demo elasticsearch-index-recreate elasticsearch-export error-pages-generate warmup"]
+                    command: ["sh", "-c", "cd /var/www/html && ./phing -D production.confirm.action=y backend-api-install backend-api-oauth-keys-generate frontend-api-enable db-create dirs-create db-demo elasticsearch-index-recreate elasticsearch-export error-pages-generate warmup"]
                     volumeMounts:
                         -   name: source-codes
                             mountPath: /var/www/html
