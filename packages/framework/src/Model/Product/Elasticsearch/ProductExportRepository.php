@@ -446,7 +446,7 @@ class ProductExportRepository
     protected function extractParameters(string $locale, Product $product): array
     {
         $parameters = [];
-        $productParameterValues = $this->parameterRepository->getProductParameterValuesByProductSortedByName(
+        $productParameterValues = $this->parameterRepository->getVisibleProductParameterValuesByProductSortedByName(
             $product,
             $locale
         );
