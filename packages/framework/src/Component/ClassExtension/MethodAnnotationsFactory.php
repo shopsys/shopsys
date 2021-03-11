@@ -64,24 +64,29 @@ class MethodAnnotationsFactory
     ): string {
         foreach ($this->annotationsReplacementsMap->getPatterns() as $frameworkClassPattern) {
             $methodName = $reflectionMethodFromFrameworkClass->getName();
+
             if ($this->isMethodImplementedInClass($methodName, $projectClassBetterReflection)) {
                 continue;
             }
 
-            if ($this->methodReturningTypeIsExtendedInProject(
+            $methodReturnTypeIsExtended = $this->methodReturningTypeIsExtendedInProject(
                 $frameworkClassPattern,
                 $reflectionMethodFromFrameworkClass->getDocBlockReturnTypes()
-            )
-                || $this->methodParameterTypeIsExtendedInProject(
-                    $frameworkClassPattern,
-                    $reflectionMethodFromFrameworkClass->getParameters()
-                )) {
+            );
+
+            $methodParameterTypeIsExtended = $this->methodParameterTypeIsExtendedInProject(
+                $frameworkClassPattern,
+                $reflectionMethodFromFrameworkClass->getParameters()
+            );
+
+            if ($methodReturnTypeIsExtended || $methodParameterTypeIsExtended) {
                 $optionalStaticKeyword = $reflectionMethodFromFrameworkClass->isStatic() ? 'static ' : '';
-                $returnType = $this->annotationsReplacer->replaceInMethodReturnType(
+
+                $replaceReturnType = $this->annotationsReplacer->replaceInMethodReturnType(
                     $reflectionMethodFromFrameworkClass
-                ) !== '' ? $this->annotationsReplacer->replaceInMethodReturnType(
-                    $reflectionMethodFromFrameworkClass
-                ) . ' ' : '';
+                );
+
+                $returnType = $replaceReturnType !== '' ? $replaceReturnType . ' ' : '';
                 $parameterNamesWithTypes = $this->getMethodParameterNamesWithTypes(
                     $reflectionMethodFromFrameworkClass
                 );
