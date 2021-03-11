@@ -79,7 +79,7 @@ class ProductCachedAttributesFacade
         }
         $locale = $this->localization->getLocale();
 
-        $productParameterValues = $this->parameterRepository->getProductParameterValuesByProductSortedByName(
+        $productParameterValues = $this->parameterRepository->getVisibleProductParameterValuesByProductSortedByName(
             $product,
             $locale
         );

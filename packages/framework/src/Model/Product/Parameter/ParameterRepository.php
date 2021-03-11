@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Shopsys\FrameworkBundle\Model\Product\Parameter;
 
 use Doctrine\ORM\EntityManagerInterface;
@@ -343,5 +345,18 @@ class ParameterRepository
         }
 
         return $parameterValuesByUuid;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
+     * @param string $locale
+     * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValue[]
+     */
+    public function getVisibleProductParameterValuesByProductSortedByName(Product $product, string $locale): array
+    {
+        $queryBuilder = $this->getProductParameterValuesByProductSortedByNameQueryBuilder($product, $locale);
+        $queryBuilder->andWhere('p.visible = true');
+
+        return $queryBuilder->getQuery()->execute();
     }
 }
