@@ -118,17 +118,23 @@ class Transport extends AbstractTranslatableEntity implements OrderableEntityInt
     /**
      * @param \Shopsys\FrameworkBundle\Model\Transport\TransportData $transportData
      */
-    protected function setTranslations(TransportData $transportData)
+    protected function setTranslations(TransportData $transportData): void
     {
-        foreach ($transportData->name as $locale => $name) {
-            $this->translation($locale)->setName($name);
+        /** @var \Shopsys\FrameworkBundle\Model\Transport\TransportTranslation $translation */
+        foreach ($this->translations->getValues() as $translation) {
+            $this->setTranslation($transportData, $translation->getLocale());
         }
-        foreach ($transportData->description as $locale => $description) {
-            $this->translation($locale)->setDescription($description);
-        }
-        foreach ($transportData->instructions as $locale => $instructions) {
-            $this->translation($locale)->setInstructions($instructions);
-        }
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Transport\TransportData $transportData
+     * @param string $locale
+     */
+    protected function setTranslation(TransportData $transportData, string $locale): void
+    {
+        $this->translation($locale)->setName($transportData->name[$locale] ?? null);
+        $this->translation($locale)->setDescription($transportData->description[$locale] ?? null);
+        $this->translation($locale)->setInstructions($transportData->instructions[$locale] ?? null);
     }
 
     /**

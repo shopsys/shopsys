@@ -882,14 +882,22 @@ class Product extends AbstractTranslatableEntity
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductData $productData
      */
-    protected function setTranslations(ProductData $productData)
+    protected function setTranslations(ProductData $productData): void
     {
-        foreach ($productData->name as $locale => $name) {
-            $this->translation($locale)->setName($name);
+        /** @var \Shopsys\FrameworkBundle\Model\Product\ProductTranslation $translation */
+        foreach ($this->translations->getValues() as $translation) {
+            $this->setTranslation($productData, $translation->getLocale());
         }
-        foreach ($productData->variantAlias as $locale => $variantAlias) {
-            $this->translation($locale)->setVariantAlias($variantAlias);
-        }
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\ProductData $productData
+     * @param string $locale
+     */
+    protected function setTranslation(ProductData $productData, string $locale): void
+    {
+        $this->translation($locale)->setName($productData->name[$locale] ?? null);
+        $this->translation($locale)->setVariantAlias($productData->variantAlias[$locale] ?? null);
     }
 
     /**

@@ -171,17 +171,23 @@ class Payment extends AbstractTranslatableEntity implements OrderableEntityInter
     /**
      * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentData $paymentData
      */
-    protected function setTranslations(PaymentData $paymentData)
+    protected function setTranslations(PaymentData $paymentData): void
     {
-        foreach ($paymentData->name as $locale => $name) {
-            $this->translation($locale)->setName($name);
+        /** @var \Shopsys\FrameworkBundle\Model\Payment\PaymentTranslation $translation */
+        foreach ($this->translations->getValues() as $translation) {
+            $this->setTranslation($paymentData, $translation->getLocale());
         }
-        foreach ($paymentData->description as $locale => $description) {
-            $this->translation($locale)->setDescription($description);
-        }
-        foreach ($paymentData->instructions as $locale => $instructions) {
-            $this->translation($locale)->setInstructions($instructions);
-        }
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentData $paymentData
+     * @param string $locale
+     */
+    protected function setTranslation(PaymentData $paymentData, string $locale): void
+    {
+        $this->translation($locale)->setName($paymentData->name[$locale] ?? null);
+        $this->translation($locale)->setDescription($paymentData->description[$locale] ?? null);
+        $this->translation($locale)->setInstructions($paymentData->instructions[$locale] ?? null);
     }
 
     /**

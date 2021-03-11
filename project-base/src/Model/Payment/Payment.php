@@ -19,6 +19,7 @@ use Shopsys\FrameworkBundle\Model\Payment\PaymentData as BasePaymentData;
  * @method setTranslations(\App\Model\Payment\PaymentData $paymentData)
  * @method setDomains(\App\Model\Payment\PaymentData $paymentData)
  * @method createDomains(\App\Model\Payment\PaymentData $paymentData)
+ * @method setTranslation(\App\Model\Payment\PaymentData $paymentData, string $locale)
  */
 class Payment extends BasePayment
 {

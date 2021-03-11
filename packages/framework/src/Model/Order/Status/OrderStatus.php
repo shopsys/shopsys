@@ -88,11 +88,21 @@ class OrderStatus extends AbstractTranslatableEntity
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusData $orderStatusData
      */
-    protected function setTranslations(OrderStatusData $orderStatusData)
+    protected function setTranslations(OrderStatusData $orderStatusData): void
     {
-        foreach ($orderStatusData->name as $locale => $name) {
-            $this->translation($locale)->setName($name);
+        /** @var \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusTranslation $translation */
+        foreach ($this->translations->getValues() as $translation) {
+            $this->setTranslation($orderStatusData, $translation->getLocale());
         }
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusData $orderStatusData
+     * @param string $locale
+     */
+    protected function setTranslation(OrderStatusData $orderStatusData, string $locale): void
+    {
+        $this->translation($locale)->setName($orderStatusData->name[$locale] ?? null);
     }
 
     /**

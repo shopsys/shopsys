@@ -104,11 +104,21 @@ class Parameter extends AbstractTranslatableEntity
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterData $parameterData
      */
-    protected function setTranslations(ParameterData $parameterData)
+    protected function setTranslations(ParameterData $parameterData): void
     {
-        foreach ($parameterData->name as $locale => $name) {
-            $this->translation($locale)->setName($name);
+        /** @var \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterTranslation $translation */
+        foreach ($this->translations->getValues() as $translation) {
+            $this->setTranslation($parameterData, $translation->getLocale());
         }
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterData $parameterData
+     * @param string $locale
+     */
+    protected function setTranslation(ParameterData $parameterData, string $locale): void
+    {
+        $this->translation($locale)->setName($parameterData->name[$locale] ?? null);
     }
 
     /**

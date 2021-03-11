@@ -71,3 +71,6 @@ There you can find links to upgrade notes for other versions too.
             - method will change its visibility from `public` to `protected` 
     - avoid using class `Shopsys\FrameworkBundle\Command\Elasticsearch\ElasticsearchIndexesCreateCommand`
         - class was deprecated and will me removed in next major version
+
+- add annotations for new methods in translated entities ([#2267](https://github.com/shopsys/shopsys/pull/2267))
+    - see #project-base-diff to update your project

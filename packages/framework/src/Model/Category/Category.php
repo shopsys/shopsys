@@ -218,11 +218,21 @@ class Category extends AbstractTranslatableEntity
     /**
      * @param \Shopsys\FrameworkBundle\Model\Category\CategoryData $categoryData
      */
-    protected function setTranslations(CategoryData $categoryData)
+    protected function setTranslations(CategoryData $categoryData): void
     {
-        foreach ($categoryData->name as $locale => $name) {
-            $this->translation($locale)->setName($name);
+        /** @var \Shopsys\FrameworkBundle\Model\Category\CategoryTranslation $translation */
+        foreach ($this->translations->getValues() as $translation) {
+            $this->setTranslation($categoryData, $translation->getLocale());
         }
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Category\CategoryData $categoryData
+     * @param string $locale
+     */
+    protected function setTranslation(CategoryData $categoryData, string $locale): void
+    {
+        $this->translation($locale)->setName($categoryData->name[$locale] ?? null);
     }
 
     /**

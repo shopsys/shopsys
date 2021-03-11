@@ -77,9 +77,19 @@ class Country extends AbstractTranslatableEntity
      */
     protected function setTranslations(CountryData $countryData): void
     {
-        foreach ($countryData->names as $locale => $name) {
-            $this->translation($locale)->setName($name);
+        /** @var \Shopsys\FrameworkBundle\Model\Country\CountryTranslation $translation */
+        foreach ($this->translations->getValues() as $translation) {
+            $this->setTranslation($countryData, $translation->getLocale());
         }
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Country\CountryData $countryData
+     * @param string $locale
+     */
+    protected function setTranslation(CountryData $countryData, string $locale): void
+    {
+        $this->translation($locale)->setName($countryData->names[$locale] ?? null);
     }
 
     /**

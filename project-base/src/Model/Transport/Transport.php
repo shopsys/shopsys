@@ -19,6 +19,7 @@ use Shopsys\FrameworkBundle\Model\Transport\TransportData as BaseTransportData;
  * @method addPayment(\App\Model\Payment\Payment $payment)
  * @method setPayments(\App\Model\Payment\Payment[] $payments)
  * @method removePayment(\App\Model\Payment\Payment $payment)
+ * @method setTranslation(\App\Model\Transport\TransportData $transportData, string $locale)
  */
 class Transport extends BaseTransport
 {

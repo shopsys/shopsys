@@ -261,13 +261,21 @@ class Brand extends AbstractTranslatableEntity
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Brand\BrandData $brandData
      */
-    protected function setTranslations(BrandData $brandData)
+    protected function setTranslations(BrandData $brandData): void
     {
-        foreach ($brandData->descriptions as $locale => $description) {
-            $brandTranslation = $this->translation($locale);
-            /* @var $brandTranslation \Shopsys\FrameworkBundle\Model\Product\Brand\BrandTranslation */
-            $brandTranslation->setDescription($description);
+        /** @var \Shopsys\FrameworkBundle\Model\Product\Brand\BrandTranslation $translation */
+        foreach ($this->translations->getValues() as $translation) {
+            $this->setTranslation($brandData, $translation->getLocale());
         }
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Brand\BrandData $brandData
+     * @param string $locale
+     */
+    protected function setTranslation(BrandData $brandData, string $locale): void
+    {
+        $this->translation($locale)->setDescription($brandData->descriptions[$locale] ?? null);
     }
 
     /**

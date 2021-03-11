@@ -120,11 +120,21 @@ class Flag extends AbstractTranslatableEntity
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Flag\FlagData $flagData
      */
-    protected function setTranslations(FlagData $flagData)
+    protected function setTranslations(FlagData $flagData): void
     {
-        foreach ($flagData->name as $locale => $name) {
-            $this->translation($locale)->setName($name);
+        /** @var \Shopsys\FrameworkBundle\Model\Product\Flag\FlagTranslation $translation */
+        foreach ($this->translations->getValues() as $translation) {
+            $this->setTranslation($flagData, $translation->getLocale());
         }
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Flag\FlagData $flagData
+     * @param string $locale
+     */
+    protected function setTranslation(FlagData $flagData, string $locale): void
+    {
+        $this->translation($locale)->setName($flagData->name[$locale] ?? null);
     }
 
     /**
