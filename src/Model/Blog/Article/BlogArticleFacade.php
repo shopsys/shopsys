@@ -7,7 +7,6 @@ namespace App\Model\Blog\Article;
 use App\Component\Image\ImageFacade;
 use App\Model\Blog\BlogVisibilityRecalculationScheduler;
 use App\Model\Blog\Category\BlogCategory;
-use App\Model\Blog\Category\BlogCategoryFacade;
 use App\Twig\Cache\TwigCacheFacade;
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
@@ -64,11 +63,6 @@ class BlogArticleFacade
     private $domain;
 
     /**
-     * @var \App\Model\Blog\Category\BlogCategoryFacade
-     */
-    private BlogCategoryFacade $blogCategoryFacade;
-
-    /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \App\Model\Blog\Article\BlogArticleRepository $blogArticleRepository
      * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
@@ -78,7 +72,6 @@ class BlogArticleFacade
      * @param \App\Model\Blog\BlogVisibilityRecalculationScheduler $blogVisibilityRecalculationScheduler
      * @param \App\Twig\Cache\TwigCacheFacade $twigCacheFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \App\Model\Blog\Category\BlogCategoryFacade $blogCategoryFacade
      */
     public function __construct(
         EntityManagerInterface $em,
@@ -89,8 +82,7 @@ class BlogArticleFacade
         ImageFacade $imageFacade,
         BlogVisibilityRecalculationScheduler $blogVisibilityRecalculationScheduler,
         TwigCacheFacade $twigCacheFacade,
-        Domain $domain,
-        BlogCategoryFacade $blogCategoryFacade
+        Domain $domain
     ) {
         $this->em = $em;
         $this->blogArticleRepository = $blogArticleRepository;
@@ -101,7 +93,6 @@ class BlogArticleFacade
         $this->blogVisibilityRecalculationScheduler = $blogVisibilityRecalculationScheduler;
         $this->twigCacheFacade = $twigCacheFacade;
         $this->domain = $domain;
-        $this->blogCategoryFacade = $blogCategoryFacade;
     }
 
     /**
@@ -156,7 +147,7 @@ class BlogArticleFacade
         $blogArticle->setCategories($this->blogArticleBlogCategoryDomainFactory, $blogArticleData->blogCategoriesByDomainId);
         $blogArticle->createDomains($blogArticleData);
 
-        $this->storeFriendlyUrls($blogArticle);
+        $this->friendlyUrlFacade->createFriendlyUrls('front_blogarticle_detail', $blogArticle->getId(), $blogArticle->getNames());
 
         $this->imageFacade->uploadImage($blogArticle, $blogArticleData->image->uploadedFiles, null);
         $this->blogVisibilityRecalculationScheduler->scheduleRecalculation();
@@ -184,7 +175,7 @@ class BlogArticleFacade
         $this->em->flush();
 
         $this->friendlyUrlFacade->saveUrlListFormData('front_blogarticle_detail', $blogArticle->getId(), $blogArticleData->urls);
-        $this->storeFriendlyUrls($blogArticle);
+        $this->friendlyUrlFacade->createFriendlyUrls('front_blogarticle_detail', $blogArticleId, $blogArticle->getNames());
 
         $this->imageFacade->uploadImage($blogArticle, $blogArticleData->image->uploadedFiles, null);
         $this->blogVisibilityRecalculationScheduler->scheduleRecalculation();
@@ -222,26 +213,6 @@ class BlogArticleFacade
     public function getAllByDomainId(int $domainId): array
     {
         return $this->blogArticleRepository->getAllByDomainId($domainId);
-    }
-
-    /**
-     * @param \App\Model\Blog\Article\BlogArticle $blogArticle
-     */
-    private function storeFriendlyUrls(BlogArticle $blogArticle): void
-    {
-        $domains = $this->domain->getAll();
-        foreach ($domains as $domain) {
-
-            /** @var \App\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade */
-            $friendlyUrlFacade = $this->friendlyUrlFacade;
-            $friendlyUrlFacade->createFriendlyUrlForDomain(
-                'front_blogarticle_detail',
-                $blogArticle->getId(),
-                $blogArticle->getName($domain->getLocale()),
-                $domain->getId(),
-                [$this->blogCategoryFacade->getBaseFriendlyUrlForDomain($domain)]
-            );
-        }
     }
 
     /**

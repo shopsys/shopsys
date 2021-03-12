@@ -7,13 +7,11 @@ namespace App\Component\Router\FriendlyUrl;
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory;
-use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\Exception\ReachMaxUrlUniqueResolveAttemptException;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrl;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade as BaseFriendlyUrlFacade;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFactoryInterface;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRepository;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlUniqueResultFactory;
-use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 
 class FriendlyUrlFacade extends BaseFriendlyUrlFacade
 {
@@ -50,68 +48,6 @@ class FriendlyUrlFacade extends BaseFriendlyUrlFacade
         );
 
         $this->friendlyUrlCacheFacade = $friendlyUrlCacheFacade;
-    }
-
-    /**
-     * @param string $routeName
-     * @param int $entityId
-     * @param string $entityName
-     * @param int $domainId
-     * @param string[] $prefixes
-     */
-    public function createFriendlyUrlForDomain($routeName, $entityId, $entityName, $domainId, $prefixes = [])
-    {
-        /** @var \App\Component\Router\FriendlyUrl\FriendlyUrlFactory $friendlyUrlFactory */
-        $friendlyUrlFactory = $this->friendlyUrlFactory;
-        $friendlyUrl = $friendlyUrlFactory->createFromPartsIfValid($routeName, $entityId, (string)$entityName, $domainId, null, $prefixes);
-        if ($friendlyUrl !== null) {
-            $this->resolveUniquenessOfFriendlyUrlAndFlush($friendlyUrl, $entityName, $prefixes);
-        }
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrl $friendlyUrl
-     * @param string $entityName
-     * @param string[] $prefixes
-     */
-    protected function resolveUniquenessOfFriendlyUrlAndFlush(FriendlyUrl $friendlyUrl, $entityName, $prefixes = [])
-    {
-        $attempt = 0;
-        do {
-            $attempt++;
-            if ($attempt > static::MAX_URL_UNIQUE_RESOLVE_ATTEMPT) {
-                throw new ReachMaxUrlUniqueResolveAttemptException(
-                    $friendlyUrl,
-                    $attempt
-                );
-            }
-
-            $domainRouter = $this->domainRouterFactory->getRouter($friendlyUrl->getDomainId());
-            try {
-                $matchedRouteData = $domainRouter->match('/' . $friendlyUrl->getSlug());
-            } catch (ResourceNotFoundException $e) {
-                $matchedRouteData = null;
-            }
-
-            /** @var \App\Component\Router\FriendlyUrl\FriendlyUrlUniqueResultFactory $friendlyUrlUniqueResultFactory */
-            $friendlyUrlUniqueResultFactory = $this->friendlyUrlUniqueResultFactory;
-            $friendlyUrlUniqueResult = $friendlyUrlUniqueResultFactory->create(
-                $attempt,
-                $friendlyUrl,
-                (string)$entityName,
-                $matchedRouteData,
-                $prefixes
-            );
-            $friendlyUrl = $friendlyUrlUniqueResult->getFriendlyUrlForPersist();
-        } while (!$friendlyUrlUniqueResult->isUnique());
-
-        if ($friendlyUrl === null) {
-            return;
-        }
-
-        $this->em->persist($friendlyUrl);
-        $this->em->flush();
-        $this->setFriendlyUrlAsMain($friendlyUrl);
     }
 
     /**
