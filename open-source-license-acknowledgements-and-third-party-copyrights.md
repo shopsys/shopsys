@@ -159,11 +159,6 @@ License: Artistic License 2.0
 https://www.npmjs.com/policies/npm-license  
 Copyright (c) 2000-2006, The Perl Foundation
 
-### prestissimo (composer plugin)
-License: MIT  
-https://github.com/hirak/prestissimo/blob/master/LICENSE  
-Copyright (c) 2017 Hiraku NAKANO
-
 ### libicu-dev
 License: ICU License  
 https://metadata.ftp-master.debian.org/changelogs/main/i/icu/icu_57.1-6+deb9u2_copyright  
