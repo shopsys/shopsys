@@ -155,9 +155,10 @@
                                                     rowClass: 'form-line-block form-line-block--small-width js-form-field'
                                                 }) }}
                                             </div>
-                                            <div class="hidden">
-                                            {{ form_row(form.country, { label: 'Country'|trans }) }}
-                                            </div>
+                                            {{ form_row(form.country, {
+                                                label: 'Country'|trans,
+                                                rowClass: 'form-line-block js-form-field'
+                                            }) }}
                                         </div>
                                         <div class="box-chooser-check-wrap js-delivery-address-form">
                                             {% set hasEmptyAddresses = true %}
@@ -220,7 +221,7 @@
                                                                 label: 'Ulice a č. popisné'|trans,
                                                                 rowClass: 'form-line-block js-form-field'
                                                             }) }}
-                                                            <div class="form-line-block-section__grid form-line-block-section__grid--last-child">
+                                                            <div class="form-line-block-section__grid">
                                                                 {{ form_row(form.deliveryCity, {
                                                                     label: 'City'|trans,
                                                                     rowClass: 'form-line-block form-line-block--full-width form-line-block--first js-form-field'
@@ -230,11 +231,10 @@
                                                                     rowClass: 'form-line-block form-line-block--small-width js-form-field'
                                                                 }) }}
                                                             </div>
-                                                            <div class="hidden">
                                                             {{ form_row(form.deliveryCountry, {
-                                                                label: 'Country'|trans
+                                                                label: 'Country'|trans,
+                                                                rowClass: 'form-line-block js-form-field'
                                                             }) }}
-                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>

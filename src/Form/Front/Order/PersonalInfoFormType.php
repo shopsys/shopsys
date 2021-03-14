@@ -89,7 +89,7 @@ class PersonalInfoFormType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $countries = [$this->countryFacade->getCountryOnCurrentDomain()];
+        $countries = $this->countryFacade->getAllEnabledOnDomain($options['domain_id']);
         $currentCustomerUser = $this->currentCustomerUser->findCurrentCustomerUser();
 
         $builder
