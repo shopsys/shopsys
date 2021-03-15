@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Model\Order;
 
-use App\Model\Country\CountryFacade;
 use App\Model\Customer\User\CustomerUser;
 use App\Model\Customer\User\CustomerUserUpdateDataFactory;
 use App\Model\Customer\User\RegistrationDataFactory;
@@ -112,11 +111,6 @@ class OrderFacade extends BaseOrderFacade
     private $registrationFacade;
 
     /**
-     * @var \App\Model\Country\CountryFacade
-     */
-    private $countryFacade;
-
-    /**
      * @var \App\Model\Gtm\GtmHelper
      */
     private $gtmHelper;
@@ -157,7 +151,6 @@ class OrderFacade extends BaseOrderFacade
      * @param \App\Model\Order\OrderDataFactory $orderDataFactory
      * @param \App\Model\Customer\User\RegistrationDataFactory $registrationDataFactory
      * @param \App\Model\Customer\User\RegistrationFacade $registrationFacade
-     * @param \App\Model\Country\CountryFacade $countryFacade
      * @param \App\Model\Gtm\GtmHelper $gtmHelper
      * @param \App\Model\Customer\User\CustomerUserUpdateDataFactory $customerUserUpdateDataFactory
      */
@@ -192,7 +185,6 @@ class OrderFacade extends BaseOrderFacade
         OrderDataFactory $orderDataFactory,
         RegistrationDataFactory $registrationDataFactory,
         RegistrationFacade $registrationFacade,
-        CountryFacade $countryFacade,
         GtmHelper $gtmHelper,
         CustomerUserUpdateDataFactory $customerUserUpdateDataFactory
     ) {
@@ -229,7 +221,6 @@ class OrderFacade extends BaseOrderFacade
         $this->orderDataFactory = $orderDataFactory;
         $this->registrationDataFactory = $registrationDataFactory;
         $this->registrationFacade = $registrationFacade;
-        $this->countryFacade = $countryFacade;
         $this->gtmHelper = $gtmHelper;
         $this->customerUserUpdateDataFactory = $customerUserUpdateDataFactory;
     }
@@ -508,6 +499,7 @@ class OrderFacade extends BaseOrderFacade
         $billingAddressData->street = $frontOrderData->street;
         $billingAddressData->city = $frontOrderData->city;
         $billingAddressData->postcode = $frontOrderData->postcode;
+        $billingAddressData->country = $frontOrderData->country;
         $billingAddressData->activated = true;
 
         /** @var \App\Model\Customer\User\CustomerUserData $customerUserData */
@@ -559,7 +551,7 @@ class OrderFacade extends BaseOrderFacade
         $registrationData->street = $orderData->street;
         $registrationData->city = $orderData->city;
         $registrationData->postcode = $orderData->postcode;
-        $registrationData->country = $this->countryFacade->getCountryOnCurrentDomain();
+        $registrationData->country = $orderData->country;
         $registrationData->domainId = $orderData->domainId;
         $registrationData->password = $frontOrderData->register ? $orderData->password : ''; // Empty string means non-active user without valid password
         $registrationData->companyCustomer = $orderData->isCompanyCustomer;

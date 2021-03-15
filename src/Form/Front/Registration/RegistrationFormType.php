@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Form\Front\Registration;
 
 use App\Component\Validator\RegexValidationRule;
+use App\Model\Country\CountryFacade;
 use App\Model\Customer\User\CustomerUserFacade;
 use App\Model\Customer\User\RegistrationData;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
@@ -18,6 +19,7 @@ use Shopsys\FrameworkBundle\Form\ValidationGroup;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserPasswordFacade;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
@@ -45,13 +47,23 @@ class RegistrationFormType extends AbstractType
     private CustomerUserFacade $customerUserFacade;
 
     /**
+     * @var \App\Model\Country\CountryFacade
+     */
+    private CountryFacade $countryFacade;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \App\Model\Customer\User\CustomerUserFacade $customerUserFacade
+     * @param \App\Model\Country\CountryFacade $countryFacade
      */
-    public function __construct(Domain $domain, CustomerUserFacade $customerUserFacade)
-    {
+    public function __construct(
+        Domain $domain,
+        CustomerUserFacade $customerUserFacade,
+        CountryFacade $countryFacade
+    ) {
         $this->domain = $domain;
         $this->customerUserFacade = $customerUserFacade;
+        $this->countryFacade = $countryFacade;
     }
 
     /**
@@ -254,6 +266,8 @@ class RegistrationFormType extends AbstractType
      */
     protected function buildBillingAddressFormPart(FormBuilderInterface $builder, array $options): void
     {
+        $countries = $this->countryFacade->getAllEnabledOnDomain($options['domain_id']);
+
         $builder->add('street', TextType::class, [
             'required' => true,
             'constraints' => [
@@ -281,6 +295,14 @@ class RegistrationFormType extends AbstractType
                 'constraints' => [
                     new Constraints\NotBlank(['message' => 'Prosím zadejte vaše poštovní směrovací číslo']),
                     new Constraints\Length(['max' => 5, 'maxMessage' => 'Postcode cannot be longer than {{ limit }} characters']),
+                ],
+            ])
+            ->add('country', ChoiceType::class, [
+                'choices' => $countries,
+                'choice_label' => 'name',
+                'choice_value' => 'id',
+                'constraints' => [
+                    new Constraints\NotBlank(['message' => 'Please choose country']),
                 ],
             ]);
     }

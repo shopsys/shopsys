@@ -4,29 +4,22 @@ declare(strict_types=1);
 
 namespace App\Model\Customer\User;
 
-use App\Model\Country\CountryFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Administrator\Exception\DuplicateUserNameException;
-use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateData;
 use Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade;
 
 class RegistrationFacade implements RegistrationFacadeInterface
 {
     /**
-     * @var \App\Model\Country\CountryFacade
-     */
-    private $countryFacade;
-
-    /**
      * @var \App\Model\Customer\User\CustomerUserUpdateDataFactory
      */
-    private $customerUserUpdateDataFactory;
+    private CustomerUserUpdateDataFactory $customerUserUpdateDataFactory;
 
     /**
      * @var \App\Model\Customer\User\CustomerUserFacade
      */
-    private $customerUserFacade;
+    private CustomerUserFacade $customerUserFacade;
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
@@ -39,20 +32,17 @@ class RegistrationFacade implements RegistrationFacadeInterface
     private NewsletterFacade $newsletterFacade;
 
     /**
-     * @param \App\Model\Country\CountryFacade $countryFacade
      * @param \App\Model\Customer\User\CustomerUserUpdateDataFactory $customerUserUpdateDataFactory
      * @param \App\Model\Customer\User\CustomerUserFacade $customerUserFacade
      * @param \Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade $newsletterFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
-        CountryFacade $countryFacade,
         CustomerUserUpdateDataFactory $customerUserUpdateDataFactory,
         CustomerUserFacade $customerUserFacade,
         NewsletterFacade $newsletterFacade,
         Domain $domain
     ) {
-        $this->countryFacade = $countryFacade;
         $this->customerUserUpdateDataFactory = $customerUserUpdateDataFactory;
         $this->customerUserFacade = $customerUserFacade;
         $this->newsletterFacade = $newsletterFacade;
@@ -80,10 +70,7 @@ class RegistrationFacade implements RegistrationFacadeInterface
             return $customerUser;
         }
 
-        $country = $this->countryFacade->getCountryOnCurrentDomain();
-
         $customerUserUpdateData = $this->customerUserUpdateDataFactory->createFromRegistrationData($registrationData);
-        $customerUserUpdateData->billingAddressData->country = $country;
 
         /** @var \App\Model\Customer\User\CustomerUser $customerUser */
         $customerUser = $this->customerUserFacade->create($customerUserUpdateData);
@@ -133,6 +120,7 @@ class RegistrationFacade implements RegistrationFacadeInterface
         $billingAddressData->street = $registrationData->street;
         $billingAddressData->city = $registrationData->city;
         $billingAddressData->postcode = $registrationData->postcode;
+        $billingAddressData->country = $registrationData->country;
 
         /** @var \App\Model\Customer\User\CustomerUserData $customerUserData */
         $customerUserData = $customerUserUpdateData->customerUserData;
