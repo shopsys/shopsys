@@ -57,12 +57,6 @@ class ProductDomain extends BaseProductDomain
      * @var \Shopsys\FrameworkBundle\Component\Money\Money|null
      * @ORM\Column(type="money", precision=20, scale=6, nullable=true)
      */
-    protected $lowPriceWithVat;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Money\Money|null
-     * @ORM\Column(type="money", precision=20, scale=6, nullable=true)
-     */
     protected $highPriceWithVat;
 
     /**
@@ -209,22 +203,6 @@ class ProductDomain extends BaseProductDomain
     /**
      * @return \Shopsys\FrameworkBundle\Component\Money\Money|null
      */
-    public function getLowPriceWithVat(): ?Money
-    {
-        return $this->lowPriceWithVat;
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Money\Money|null $lowPriceWithVat
-     */
-    public function setLowPriceWithVat(?Money $lowPriceWithVat): void
-    {
-        $this->lowPriceWithVat = $lowPriceWithVat;
-    }
-
-    /**
-     * @return \Shopsys\FrameworkBundle\Component\Money\Money|null
-     */
     public function getHighPriceWithVat(): ?Money
     {
         return $this->highPriceWithVat;
@@ -248,9 +226,7 @@ class ProductDomain extends BaseProductDomain
 
     public function calcSellingPriceWithVat(): void
     {
-        if ($this->lowPriceWithVat !== null && $this->lowPriceWithVat->getAmount() > 0) {
-            $this->sellingPriceWithVat = $this->lowPriceWithVat;
-        } elseif ($this->highPriceWithVat !== null && $this->highPriceWithVat->getAmount() > 0) {
+        if ($this->highPriceWithVat !== null && $this->highPriceWithVat->getAmount() > 0) {
             $this->sellingPriceWithVat = $this->highPriceWithVat;
         } else {
             $this->sellingPriceWithVat = Money::zero();

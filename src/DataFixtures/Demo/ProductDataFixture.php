@@ -6229,7 +6229,6 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             }
             $highPrice = 2 * (int)$price;
 
-            $productData->lowPriceWithVat[$domain->getId()] = Money::create((string)round($price / $currencyRate, 2));
             $productData->highPriceWithVat[$domain->getId()] = Money::create((string)round($highPrice / $currencyRate, 2));
         }
     }

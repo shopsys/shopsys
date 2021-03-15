@@ -133,7 +133,6 @@ class ProductVisibilityRepositoryTest extends TransactionFunctionalTestCase
         $productData->manualInputPricesByPricingGroupId = $manualInputPrices;
 
         foreach ($this->domain->getAll() as $domainConfig) {
-            $productData->lowPriceWithVat[$domainConfig->getId()] = $price;
             $productData->highPriceWithVat[$domainConfig->getId()] = $price;
         }
     }
@@ -427,52 +426,6 @@ class ProductVisibilityRepositoryTest extends TransactionFunctionalTestCase
         $productVisibility = $this->em->getRepository(ProductVisibility::class)->findOneBy([
             'product' => $product,
             'pricingGroup' => $pricingGroup->getId(),
-            'domainId' => Domain::FIRST_DOMAIN_ID,
-        ]);
-
-        $this->assertFalse($productVisibility->isVisible());
-    }
-
-    public function testIsNotVisibleWhenZeroAkeneoLowPrice()
-    {
-        $productData = $this->getDefaultProductData();
-        $this->setPriceForAllDomains($productData, Money::zero());
-
-        $product = $this->productFacade->create($productData);
-        $this->productPriceRecalculator->runImmediateRecalculations();
-        $this->createImage('product', $product->getId());
-        $this->em->clear();
-
-        $this->productVisibilityRepository->refreshProductsVisibility();
-
-        /** @var \Shopsys\FrameworkBundle\Model\Product\ProductVisibility $productVisibility */
-        $productVisibility = $this->em->getRepository(ProductVisibility::class)->findOneBy([
-            'product' => $product,
-            'domainId' => Domain::FIRST_DOMAIN_ID,
-        ]);
-
-        $this->assertFalse($productVisibility->isVisible());
-    }
-
-    public function testIsNotVisibleWhenNullAkeneoLowPrice()
-    {
-        $productData = $this->getDefaultProductData();
-
-        foreach ($this->domain->getAll() as $domainConfig) {
-            $productData->lowPriceWithVat[$domainConfig->getId()] = null;
-            $productData->highPriceWithVat[$domainConfig->getId()] = Money::zero();
-        }
-
-        $product = $this->productFacade->create($productData);
-        $this->productPriceRecalculator->runImmediateRecalculations();
-        $this->createImage('product', $product->getId());
-        $this->em->clear();
-
-        $this->productVisibilityRepository->refreshProductsVisibility();
-
-        /** @var \Shopsys\FrameworkBundle\Model\Product\ProductVisibility $productVisibility */
-        $productVisibility = $this->em->getRepository(ProductVisibility::class)->findOneBy([
-            'product' => $product,
             'domainId' => Domain::FIRST_DOMAIN_ID,
         ]);
 

@@ -20,8 +20,6 @@ class Version20200616093504 extends AbstractMigration
         $this->sql('ALTER TABLE promo_codes ALTER in_action DROP DEFAULT');
         $this->sql('ALTER TABLE promo_codes ADD sconto_price BOOLEAN NOT NULL DEFAULT FALSE');
         $this->sql('ALTER TABLE promo_codes ALTER sconto_price DROP DEFAULT');
-        $this->sql('ALTER TABLE promo_codes ADD without_low_price BOOLEAN NOT NULL DEFAULT FALSE');
-        $this->sql('ALTER TABLE promo_codes ALTER without_low_price DROP DEFAULT');
     }
 
     /**

@@ -31,8 +31,6 @@
         <URL>{{ item.url }}</URL>
         <PRICE>{{ item.highProductPrice.priceWithoutVat|moneyFormat(2, '.') }}</PRICE>
         <PRICE_VAT>{{ item.highProductPrice.priceWithVat|moneyFormat(2, '.') }}</PRICE_VAT>
-        <PRICE_RETAIL>{{ item.lowProductPrice.priceWithoutVat|moneyFormat(2, '.') }}</PRICE_RETAIL>
-        <PRICE_RETAIL_VAT>{{ item.lowProductPrice.priceWithVat|moneyFormat(2, '.') }}</PRICE_RETAIL_VAT>
         {% for parameterName, parameterValue in item.parameters %}
             <PARAM>
                 <NAME>{{ parameterName }}</NAME>

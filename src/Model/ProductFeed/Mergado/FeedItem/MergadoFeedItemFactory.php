@@ -103,11 +103,6 @@ class MergadoFeedItemFactory
             throw new MissingRequiredInformationException('Product high price isn\'t set');
         }
         $highProductPrice = $this->productPriceCalculation->getProductPrice($product->getHighPriceWithVat($domainId), $product->getVatForDomain($domainId), $domainId);
-        if ($product->getLowPriceWithVat($domainId) === null) {
-            throw new MissingRequiredInformationException('Product low price isn\'t set');
-        }
-        $lowProductPrice = $this->productPriceCalculation->getProductPrice($product->getLowPriceWithVat($domainId), $product->getVatForDomain($domainId), $domainId);
-
         $availability = $this->availabilityFacade->getProductAvailabilityDaysByDomainId($product, $domainId);
         $flags = $this->extractProductFlags($product, $domainId);
 
@@ -128,7 +123,6 @@ class MergadoFeedItemFactory
             $this->productUrlsBatchLoader->getProductImageUrl($product, $domainConfig),
             $product->isVariant() ? $product->getMainVariant()->getId() : null,
             $highProductPrice,
-            $lowProductPrice,
             $flags,
             $availability
         );
