@@ -74,3 +74,10 @@ There you can find links to upgrade notes for other versions too.
 
 - improve docker-sync reliability on MacOS ([#2264](https://github.com/shopsys/shopsys/pull/2264))
     - see #project-base-diff to update your project
+
+- replace deprecated functionality for migrations ([#2270](https://github.com/shopsys/shopsys/pull/2270))
+    - you have to update all migrations using MultidomainMigrationTrait
+        - remove trait from all multi-domain migrations
+        - replace parent class `Shopsys\MigrationBundle\Component\Doctrine\Migrations\AbstractMigration` by `Shopsys\FrameworkBundle\Migrations\AbstractMigration`
+            - when your migrations is dependent on already running domains (from `setting_values.baseUrl`) you need to use method `getCreatedDomainIds()` instead of `getAllDomainIds()`
+            - `getAllDomainIds()` provides all domains IDs configured in `domains.yaml` and should be use in case of filling new data for all domains
