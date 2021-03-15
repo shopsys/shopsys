@@ -28,7 +28,6 @@ class CustomerUserUpdateDataFactory extends BaseCustomerUserUpdateDataFactory
         $billingAddressData->companyName = $registrationData->companyName;
         $billingAddressData->companyNumber = $registrationData->companyNumber;
         $billingAddressData->companyTaxNumber = $registrationData->companyTaxNumber;
-        $billingAddressData->companyVatNumber = $registrationData->companyVatNumber;
         $billingAddressData->activated = $registrationData->activated;
 
         /** @var \App\Model\Customer\User\CustomerUserData $customerUserData */

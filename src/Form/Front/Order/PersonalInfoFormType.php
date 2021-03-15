@@ -185,17 +185,16 @@ class PersonalInfoFormType extends AbstractType
                     ]),
                 ],
             ])
-            ->add('companyVatNumber', TextType::class, [
+            ->add('companyTaxNumber', TextType::class, [
                 'required' => false,
                 'constraints' => [
                     new Constraints\Length([
-                        'min' => 12,
-                        'max' => 12,
-                        'groups' => [self::VALIDATION_GROUP_COMPANY_CUSTOMER],
+                        'max' => 50,
+                        'maxMessage' => 'Tax number cannot be longer than {{ limit }} characters',
                     ]),
                     new Constraints\Regex([
-                        'pattern' => RegexValidationRule::COMPANY_VAT_NUMBER_REGEX,
-                        'message' => 'Musí obsahovat pouze pouze čísla a velká písmena',
+                        'pattern' => RegexValidationRule::COMPANY_TAX_NUMBER_REGEX,
+                        'message' => 'Please check Tax number format',
                         'groups' => [self::VALIDATION_GROUP_COMPANY_CUSTOMER],
                     ]),
                 ],
@@ -407,24 +406,6 @@ class PersonalInfoFormType extends AbstractType
                     ],
                 ],
                 'invalid_message' => 'Passwords do not match',
-            ]);
-        }
-
-        if ($options['domain_id'] === Domain::SECOND_DOMAIN_ID) {
-            $builder->add('companyTaxNumber', TextType::class, [
-                'required' => true,
-                'constraints' => [
-                    new Constraints\Length(['min' => 10, 'max' => 10]),
-                    new Constraints\NotBlank([
-                        'message' => 'Vyplňte prosím DIČ-2',
-                        'groups' => [self::VALIDATION_GROUP_COMPANY_CUSTOMER],
-                    ]),
-                    new Constraints\Regex([
-                        'pattern' => RegexValidationRule::COMPANY_TAX_NUMBER_REGEX,
-                        'message' => 'Prosím, zadávejte pouze čísla',
-                        'groups' => [self::VALIDATION_GROUP_COMPANY_CUSTOMER],
-                    ]),
-                ],
             ]);
         }
 
