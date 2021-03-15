@@ -3,12 +3,9 @@
 namespace Shopsys\FrameworkBundle\Migrations;
 
 use Doctrine\DBAL\Schema\Schema;
-use Shopsys\MigrationBundle\Component\Doctrine\Migrations\AbstractMigration;
 
 class Version20160512152113 extends AbstractMigration
 {
-    use MultidomainMigrationTrait;
-
     private const COUNTRIES_SEQUENCE_NAME = 'countries_id_seq';
 
     /**

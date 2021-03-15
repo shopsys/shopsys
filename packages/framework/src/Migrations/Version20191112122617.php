@@ -5,12 +5,9 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Migrations;
 
 use Doctrine\DBAL\Schema\Schema;
-use Shopsys\MigrationBundle\Component\Doctrine\Migrations\AbstractMigration;
 
 class Version20191112122617 extends AbstractMigration
 {
-    use MultidomainMigrationTrait;
-
     /**
      * @param \Doctrine\DBAL\Schema\Schema $schema
      */
@@ -95,7 +92,7 @@ class Version20191112122617 extends AbstractMigration
 
     private function migratePaymentsPrices(): void
     {
-        foreach ($this->getAllDomainIds() as $domainId) {
+        foreach ($this->getCreatedDomainIds() as $domainId) {
             $priceCreated = [];
 
             $defaultCurrencyForDomain = $this->sql(
@@ -174,7 +171,7 @@ class Version20191112122617 extends AbstractMigration
 
     private function migrateTransportPrices(): void
     {
-        foreach ($this->getAllDomainIds() as $domainId) {
+        foreach ($this->getCreatedDomainIds() as $domainId) {
             $priceCreated = [];
 
             $defaultCurrencyForDomain = $this->sql(

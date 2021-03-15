@@ -5,12 +5,9 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Migrations;
 
 use Doctrine\DBAL\Schema\Schema;
-use Shopsys\MigrationBundle\Component\Doctrine\Migrations\AbstractMigration;
 
 class Version20191108140919 extends AbstractMigration
 {
-    use MultidomainMigrationTrait;
-
     /**
      * @param \Doctrine\DBAL\Schema\Schema $schema
      */
@@ -40,7 +37,7 @@ class Version20191108140919 extends AbstractMigration
     {
         $currentProductsIdWithVat = $this->sql('SELECT id, vat_id FROM products')->fetchAll();
 
-        foreach ($this->getAllDomainIds() as $domainId) {
+        foreach ($this->getCreatedDomainIds() as $domainId) {
             foreach ($currentProductsIdWithVat as $currentProductIdWithVat) {
                 $newVatId = $currentProductIdWithVat['vat_id'];
                 if ($domainId > 1) {

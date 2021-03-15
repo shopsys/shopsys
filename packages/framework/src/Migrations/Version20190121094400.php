@@ -5,12 +5,9 @@ namespace Shopsys\FrameworkBundle\Migrations;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Schema\Schema;
 use Shopsys\FrameworkBundle\Migrations\DataModifiers\CountryDataModifierVersion20190121094400;
-use Shopsys\MigrationBundle\Component\Doctrine\Migrations\AbstractMigration;
 
 class Version20190121094400 extends AbstractMigration
 {
-    use MultidomainMigrationTrait;
-
     /**
      * @param \Doctrine\DBAL\Schema\Schema $schema
      */
@@ -56,7 +53,7 @@ class Version20190121094400 extends AbstractMigration
 
         $transformer = new CountryDataModifierVersion20190121094400($countries);
 
-        foreach ($this->getAllDomainIds() as $domainId) {
+        foreach ($this->getCreatedDomainIds() as $domainId) {
             foreach ($transformer->getAllIds() as $oldId) {
                 $newId = $transformer->getNewId($oldId);
 

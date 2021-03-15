@@ -5,18 +5,15 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Migrations;
 
 use Doctrine\DBAL\Schema\Schema;
-use Shopsys\MigrationBundle\Component\Doctrine\Migrations\AbstractMigration;
 
 class Version20191121145700 extends AbstractMigration
 {
-    use MultidomainMigrationTrait;
-
     /**
      * @param \Doctrine\DBAL\Schema\Schema $schema
      */
     public function up(Schema $schema): void
     {
-        foreach ($this->getAllDomainIds() as $domainId) {
+        foreach ($this->getCreatedDomainIds() as $domainId) {
             $contactFormMainTextCount = $this->sql(
                 'SELECT COUNT(*) FROM setting_values WHERE name = \'contactFormMainText\' AND domain_id = :domainId;',
                 [

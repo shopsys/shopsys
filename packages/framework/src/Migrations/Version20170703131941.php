@@ -3,12 +3,9 @@
 namespace Shopsys\FrameworkBundle\Migrations;
 
 use Doctrine\DBAL\Schema\Schema;
-use Shopsys\MigrationBundle\Component\Doctrine\Migrations\AbstractMigration;
 
 class Version20170703131941 extends AbstractMigration
 {
-    use MultidomainMigrationTrait;
-
     /**
      * @param \Doctrine\DBAL\Schema\Schema $schema
      */
@@ -30,7 +27,7 @@ class Version20170703131941 extends AbstractMigration
             ADD
                 CONSTRAINT FK_6B401AE644F5D008 FOREIGN KEY (brand_id) REFERENCES brands (id) ON DELETE CASCADE NOT DEFERRABLE INITIALLY IMMEDIATE');
 
-        $allDomainIds = $this->getAllDomainIds();
+        $allDomainIds = $this->getCreatedDomainIds();
         foreach ($allDomainIds as $domainId) {
             $this->sql(
                 'INSERT INTO brand_domains (brand_id, domain_id)

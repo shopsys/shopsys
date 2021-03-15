@@ -3,12 +3,9 @@
 namespace Shopsys\FrameworkBundle\Migrations;
 
 use Doctrine\DBAL\Schema\Schema;
-use Shopsys\MigrationBundle\Component\Doctrine\Migrations\AbstractMigration;
 
 class Version20180216091004 extends AbstractMigration
 {
-    use MultidomainMigrationTrait;
-
     /**
      * @param \Doctrine\DBAL\Schema\Schema $schema
      */
@@ -24,7 +21,7 @@ class Version20180216091004 extends AbstractMigration
 
         $newsletterSubscribers = $this->sql('SELECT email, created_at FROM newsletter_subscribers')->fetchAll();
         foreach ($newsletterSubscribers as $newsletterSubscriber) {
-            foreach ($this->getAllDomainIds() as $domainId) {
+            foreach ($this->getCreatedDomainIds() as $domainId) {
                 $this->sql(
                     'INSERT INTO newsletter_subscribers(email, created_at, domain_id) 
                       VALUES (:email, :created_at, :domainId)',

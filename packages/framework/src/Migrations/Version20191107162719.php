@@ -5,12 +5,9 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Migrations;
 
 use Doctrine\DBAL\Schema\Schema;
-use Shopsys\MigrationBundle\Component\Doctrine\Migrations\AbstractMigration;
 
 class Version20191107162719 extends AbstractMigration
 {
-    use MultidomainMigrationTrait;
-
     /**
      * @param \Doctrine\DBAL\Schema\Schema $schema
      */
@@ -40,7 +37,7 @@ class Version20191107162719 extends AbstractMigration
             'SELECT id, name, percent, replace_with_id FROM vats WHERE domain_id = 1'
         )->fetchAll();
 
-        foreach ($this->getAllDomainIds() as $domainId) {
+        foreach ($this->getCreatedDomainIds() as $domainId) {
             foreach ($currentVats as $currentVat) {
                 if ($domainId === 1) {
                     $this->sql(
@@ -96,7 +93,7 @@ class Version20191107162719 extends AbstractMigration
             0
         );
 
-        foreach ($this->getAllDomainIds() as $domainId) {
+        foreach ($this->getCreatedDomainIds() as $domainId) {
             $newVatId = $this
                 ->sql('SELECT id FROM vats where tmp_original_id = :tmpOriginalId and domain_id = :domainId', [
                     'tmpOriginalId' => $currentDefaultVat,

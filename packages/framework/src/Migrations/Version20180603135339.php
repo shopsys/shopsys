@@ -3,12 +3,9 @@
 namespace Shopsys\FrameworkBundle\Migrations;
 
 use Doctrine\DBAL\Schema\Schema;
-use Shopsys\MigrationBundle\Component\Doctrine\Migrations\AbstractMigration;
 
 class Version20180603135339 extends AbstractMigration
 {
-    use MultidomainMigrationTrait;
-
     /**
      * @param \Doctrine\DBAL\Schema\Schema $schema
      */
@@ -25,7 +22,7 @@ class Version20180603135339 extends AbstractMigration
         $this->sql('CREATE UNIQUE INDEX transport_domain ON transport_domains (transport_id, domain_id)');
 
         // Because there is a compound unique key for transport and domain we can insert the remaining records
-        foreach ($this->getAllDomainIds() as $domainId) {
+        foreach ($this->getCreatedDomainIds() as $domainId) {
             $this->sql(
                 'INSERT INTO transport_domains (transport_id, domain_id, enabled) 
                     SELECT id, :domainId, FALSE FROM transports
