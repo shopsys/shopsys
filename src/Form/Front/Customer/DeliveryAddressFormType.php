@@ -58,11 +58,6 @@ class DeliveryAddressFormType extends AbstractType
                         'maxMessage' => 'Company name cannot be longer than {{ limit }} characters',
                         'groups' => [self::VALIDATION_GROUP_DIFFERENT_DELIVERY_ADDRESS],
                     ]),
-                    new Constraints\Regex([
-                        'pattern' => RegexValidationRule::MOEVE_DENY_CHARS,
-                        'message' => 'Prosím, nepoužívejte žádné speciální znaky. Například őűàèìòùâêîôûâêîôãñõđåæøçłßþż€£¥ƒ¢§¶ªº',
-                        'groups' => [self::VALIDATION_GROUP_DIFFERENT_DELIVERY_ADDRESS],
-                    ]),
                 ],
             ])
             ->add('firstName', TextType::class, [
@@ -77,11 +72,6 @@ class DeliveryAddressFormType extends AbstractType
                         'maxMessage' => 'First name of contact person cannot be longer than {{ limit }} characters',
                         'groups' => [self::VALIDATION_GROUP_DIFFERENT_DELIVERY_ADDRESS],
                     ]),
-                    new Constraints\Regex([
-                        'pattern' => RegexValidationRule::MOEVE_DENY_CHARS,
-                        'message' => 'Prosím, nepoužívejte žádné speciální znaky. Například őűàèìòùâêîôûâêîôãñõđåæøçłßþż€£¥ƒ¢§¶ªº',
-                        'groups' => [self::VALIDATION_GROUP_DIFFERENT_DELIVERY_ADDRESS],
-                    ]),
                 ],
             ])
             ->add('lastName', TextType::class, [
@@ -94,11 +84,6 @@ class DeliveryAddressFormType extends AbstractType
                     new Constraints\Length([
                         'max' => 30,
                         'maxMessage' => 'Last name of contact person cannot be longer than {{ limit }} characters',
-                        'groups' => [self::VALIDATION_GROUP_DIFFERENT_DELIVERY_ADDRESS],
-                    ]),
-                    new Constraints\Regex([
-                        'pattern' => RegexValidationRule::MOEVE_DENY_CHARS,
-                        'message' => 'Prosím, nepoužívejte žádné speciální znaky. Například őűàèìòùâêîôûâêîôãñõđåæøçłßþż€£¥ƒ¢§¶ªº',
                         'groups' => [self::VALIDATION_GROUP_DIFFERENT_DELIVERY_ADDRESS],
                     ]),
                 ],
@@ -131,11 +116,6 @@ class DeliveryAddressFormType extends AbstractType
                         'groups' => [self::VALIDATION_GROUP_DIFFERENT_DELIVERY_ADDRESS],
                     ]),
                     new Constraints\Regex([
-                        'pattern' => RegexValidationRule::MOEVE_DENY_CHARS,
-                        'message' => 'Prosím, nepoužívejte žádné speciální znaky. Například őűàèìòùâêîôûâêîôãñõđåæøçłßþż€£¥ƒ¢§¶ªº',
-                        'groups' => [self::VALIDATION_GROUP_DIFFERENT_DELIVERY_ADDRESS],
-                    ]),
-                    new Constraints\Regex([
                         'pattern' => RegexValidationRule::STREET_ALPHABET_REGEX,
                         'message' => 'Ulice musí obsahovat písmena',
                         'groups' => [self::VALIDATION_GROUP_DIFFERENT_DELIVERY_ADDRESS],
@@ -159,11 +139,6 @@ class DeliveryAddressFormType extends AbstractType
                         'maxMessage' => 'City name cannot be longer than {{ limit }} characters',
                         'groups' => [self::VALIDATION_GROUP_DIFFERENT_DELIVERY_ADDRESS],
                     ]),
-                    new Constraints\Regex([
-                        'pattern' => RegexValidationRule::MOEVE_DENY_CHARS,
-                        'message' => 'Prosím, nepoužívejte žádné speciální znaky. Například őűàèìòùâêîôûâêîôãñõđåæøçłßþż€£¥ƒ¢§¶ªº',
-                        'groups' => [self::VALIDATION_GROUP_DIFFERENT_DELIVERY_ADDRESS],
-                    ]),
                 ],
             ])
             ->add('postcode', TextType::class, [
@@ -176,11 +151,6 @@ class DeliveryAddressFormType extends AbstractType
                     new Constraints\Length([
                         'max' => 5,
                         'maxMessage' => 'Zip code cannot be longer than {{ limit }} characters',
-                        'groups' => [self::VALIDATION_GROUP_DIFFERENT_DELIVERY_ADDRESS],
-                    ]),
-                    new Constraints\Regex([
-                        'pattern' => RegexValidationRule::MOEVE_DENY_CHARS,
-                        'message' => 'Prosím, nepoužívejte žádné speciální znaky. Například őűàèìòùâêîôûâêîôãñõđåæøçłßþż€£¥ƒ¢§¶ªº',
                         'groups' => [self::VALIDATION_GROUP_DIFFERENT_DELIVERY_ADDRESS],
                     ]),
                 ],

@@ -118,11 +118,6 @@ class RegistrationFormType extends AbstractType
                         'maxMessage' => 'First name cannot be longer than {{ limit }} characters',
                         'groups' => [self::VALIDATION_GROUP_COMMON_CUSTOMER],
                     ]),
-                    new Constraints\Regex([
-                        'pattern' => RegexValidationRule::MOEVE_DENY_CHARS,
-                        'message' => 'Prosím, nepoužívejte žádné speciální znaky. Například őűàèìòùâêîôûâêîôãñõđåæøçłßþż€£¥ƒ¢§¶ªº',
-                        'groups' => [self::VALIDATION_GROUP_COMMON_CUSTOMER],
-                    ]),
                 ],
             ])
             ->add('lastName', TextType::class, [
@@ -134,11 +129,6 @@ class RegistrationFormType extends AbstractType
                     new Constraints\Length([
                         'max' => 30,
                         'maxMessage' => 'Last name cannot be longer than {{ limit }} characters',
-                        'groups' => [self::VALIDATION_GROUP_COMMON_CUSTOMER],
-                    ]),
-                    new Constraints\Regex([
-                        'pattern' => RegexValidationRule::MOEVE_DENY_CHARS,
-                        'message' => 'Prosím, nepoužívejte žádné speciální znaky. Například őűàèìòùâêîôûâêîôãñõđåæøçłßþż€£¥ƒ¢§¶ªº',
                         'groups' => [self::VALIDATION_GROUP_COMMON_CUSTOMER],
                     ]),
                 ],
@@ -161,11 +151,6 @@ class RegistrationFormType extends AbstractType
                     ]),
                     new Constraints\Length([
                         'max' => 30,
-                        'groups' => [self::VALIDATION_GROUP_COMPANY_CUSTOMER],
-                    ]),
-                    new Constraints\Regex([
-                        'pattern' => RegexValidationRule::MOEVE_DENY_CHARS,
-                        'message' => 'Prosím, nepoužívejte žádné speciální znaky. Například őűàèìòùâêîôûâêîôãñõđåæøçłßþż€£¥ƒ¢§¶ªº',
                         'groups' => [self::VALIDATION_GROUP_COMPANY_CUSTOMER],
                     ]),
                 ],
@@ -259,10 +244,6 @@ class RegistrationFormType extends AbstractType
                     new Email(['message' => 'Please enter valid email']),
                     new Constraints\Length(['max' => 64, 'maxMessage' => 'Email cannot be longer than {{ limit }} characters']),
                     new UniqueEmail(['message' => 'This email is already registered']),
-                    new Constraints\Regex([
-                        'pattern' => RegexValidationRule::MOEVE_DENY_CHARS,
-                        'message' => 'Prosím, nepoužívejte žádné speciální znaky. Například őűàèìòùâêîôûâêîôãñõđåæøçłßþż€£¥ƒ¢§¶ªº',
-                    ]),
                 ],
             ]);
     }
@@ -279,10 +260,6 @@ class RegistrationFormType extends AbstractType
                 new Constraints\NotBlank(['message' => 'Prosím zadejte vaší ulici']),
                 new Constraints\Length(['max' => 30, 'maxMessage' => 'Street cannot be longer than {{ limit }} characters']),
                 new Constraints\Regex([
-                    'pattern' => RegexValidationRule::MOEVE_DENY_CHARS,
-                    'message' => 'Prosím, nepoužívejte žádné speciální znaky. Například őűàèìòùâêîôûâêîôãñõđåæøçłßþż€£¥ƒ¢§¶ªº',
-                ]),
-                new Constraints\Regex([
                     'pattern' => RegexValidationRule::STREET_NUMBER_REGEX,
                     'message' => 'Ulice musí obsahovat číslo',
                 ]),
@@ -297,10 +274,6 @@ class RegistrationFormType extends AbstractType
                 'constraints' => [
                     new Constraints\NotBlank(['message' => 'Prosím zadejte vaše město']),
                     new Constraints\Length(['max' => 30, 'maxMessage' => 'City cannot be longer than {{ limit }} characters']),
-                    new Constraints\Regex([
-                        'pattern' => RegexValidationRule::MOEVE_DENY_CHARS,
-                        'message' => 'Prosím, nepoužívejte žádné speciální znaky. Například őűàèìòùâêîôûâêîôãñõđåæøçłßþż€£¥ƒ¢§¶ªº',
-                    ]),
                 ],
             ])
             ->add('postcode', TextType::class, [
@@ -308,10 +281,6 @@ class RegistrationFormType extends AbstractType
                 'constraints' => [
                     new Constraints\NotBlank(['message' => 'Prosím zadejte vaše poštovní směrovací číslo']),
                     new Constraints\Length(['max' => 5, 'maxMessage' => 'Postcode cannot be longer than {{ limit }} characters']),
-                    new Constraints\Regex([
-                        'pattern' => RegexValidationRule::MOEVE_DENY_CHARS,
-                        'message' => 'Prosím, nepoužívejte žádné speciální znaky. Například őűàèìòùâêîôûâêîôãñõđåæøçłßþż€£¥ƒ¢§¶ªº',
-                    ]),
                 ],
             ]);
     }

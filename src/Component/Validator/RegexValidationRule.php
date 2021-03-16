@@ -6,8 +6,6 @@ namespace App\Component\Validator;
 
 class RegexValidationRule
 {
-    public const MOEVE_DENY_CHARS = '/^[^őűàèìòùâêîôûâêîôãñõđåæøçłßþż€£¥ƒ¢§¶ªº]*$/u';
-
     public const STREET_ALPHABET_REGEX = '/[a-žA-Ž]+/';
     public const STREET_NUMBER_REGEX = '/[0-9]+/';
 
