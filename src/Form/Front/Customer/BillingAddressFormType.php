@@ -55,11 +55,6 @@ class BillingAddressFormType extends AbstractType
                         'maxMessage' => 'Company name cannot be longer than {{ limit }} characters',
                         'groups' => [self::VALIDATION_GROUP_COMPANY_CUSTOMER],
                     ]),
-                    new Constraints\Regex([
-                        'pattern' => RegexValidationRule::MOEVE_DENY_CHARS,
-                        'message' => 'Prosím, nepoužívejte žádné speciální znaky. Například őűàèìòùâêîôûâêîôãñõđåæøçłßþż€£¥ƒ¢§¶ªº',
-                        'groups' => [self::VALIDATION_GROUP_COMPANY_CUSTOMER],
-                    ]),
                 ],
             ])
             ->add('companyNumber', TextType::class, [
@@ -107,10 +102,6 @@ class BillingAddressFormType extends AbstractType
                         'maxMessage' => 'Street name cannot be longer than {{ limit }} characters',
                     ]),
                     new Constraints\Regex([
-                        'pattern' => RegexValidationRule::MOEVE_DENY_CHARS,
-                        'message' => 'Prosím, nepoužívejte žádné speciální znaky. Například őűàèìòùâêîôûâêîôãñõđåæøçłßþż€£¥ƒ¢§¶ªº',
-                    ]),
-                    new Constraints\Regex([
                         'pattern' => RegexValidationRule::STREET_NUMBER_REGEX,
                         'message' => 'Ulice musí obsahovat číslo',
                     ]),
@@ -130,10 +121,6 @@ class BillingAddressFormType extends AbstractType
                         'max' => 30,
                         'maxMessage' => 'City name cannot be longer than {{ limit }} characters',
                     ]),
-                    new Constraints\Regex([
-                        'pattern' => RegexValidationRule::MOEVE_DENY_CHARS,
-                        'message' => 'Prosím, nepoužívejte žádné speciální znaky. Například őűàèìòùâêîôûâêîôãñõđåæøçłßþż€£¥ƒ¢§¶ªº',
-                    ]),
                 ],
             ])
             ->add('postcode', TextType::class, [
@@ -145,10 +132,6 @@ class BillingAddressFormType extends AbstractType
                     new Constraints\Length([
                         'max' => 5,
                         'maxMessage' => 'Zip code cannot be longer than {{ limit }} characters',
-                    ]),
-                    new Constraints\Regex([
-                        'pattern' => RegexValidationRule::MOEVE_DENY_CHARS,
-                        'message' => 'Prosím, nepoužívejte žádné speciální znaky. Například őűàèìòùâêîôûâêîôãñõđåæøçłßþż€£¥ƒ¢§¶ªº',
                     ]),
                 ],
             ])

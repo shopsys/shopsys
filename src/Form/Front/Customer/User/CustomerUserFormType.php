@@ -35,20 +35,12 @@ class CustomerUserFormType extends AbstractType
                     'constraints' => [
                         new Constraints\NotBlank(['message' => 'Please enter first name']),
                         new Constraints\Length(['max' => 30, 'maxMessage' => 'First name cannot be longer than {{ limit }} characters']),
-                        new Constraints\Regex([
-                            'pattern' => RegexValidationRule::MOEVE_DENY_CHARS,
-                            'message' => 'Prosím, nepoužívejte žádné speciální znaky. Například őűàèìòùâêîôûâêîôãñõđåæøçłßþż€£¥ƒ¢§¶ªº',
-                        ]),
                     ],
                 ])
                 ->add('lastName', TextType::class, [
                     'constraints' => [
                         new Constraints\NotBlank(['message' => 'Please enter last name']),
                         new Constraints\Length(['max' => 30, 'maxMessage' => 'Last name cannot be longer than {{ limit }} characters']),
-                        new Constraints\Regex([
-                            'pattern' => RegexValidationRule::MOEVE_DENY_CHARS,
-                            'message' => 'Prosím, nepoužívejte žádné speciální znaky. Například őűàèìòùâêîôûâêîôãñõđåæøçłßþż€£¥ƒ¢§¶ªº',
-                        ]),
                     ],
                 ]);
         }
@@ -63,10 +55,6 @@ class CustomerUserFormType extends AbstractType
                     'maxMessage' => 'Email cannot be longer than {{ limit }} characters',
                 ]),
                 new Email(['message' => 'Please enter valid email']),
-                new Constraints\Regex([
-                    'pattern' => RegexValidationRule::MOEVE_DENY_CHARS,
-                    'message' => 'Prosím, nepoužívejte žádné speciální znaky. Například őűàèìòùâêîôûâêîôãñõđåæøçłßþż€£¥ƒ¢§¶ªº',
-                ]),
             ],
         ])
             ->add('telephone', TextType::class, [
