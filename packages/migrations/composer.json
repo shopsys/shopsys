@@ -24,7 +24,7 @@
         "php": "^7.2",
         "doctrine/dbal": "^2.5",
         "doctrine/doctrine-migrations-bundle": "^1.3",
-        "doctrine/migrations": "^1.6.0",
+        "doctrine/migrations": "^1.8.1",
         "doctrine/orm": "^2.5",
         "jdorn/sql-formatter": "^1.2",
         "symfony/config": "^3.4|^4.0",
