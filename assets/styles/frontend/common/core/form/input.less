@@ -24,7 +24,7 @@
     color: @color-primary;
     background-color: @input-background;
     border-radius: @input-border-radius;
-    caret-color: @color-add-secondary;
+    caret-color: @color-add-light;
     font-size: 16px;
     // iOS ugly appearance fix
     -webkit-appearance: none !important;
@@ -60,7 +60,7 @@
     }
 
     &.form-input-error + label {
-        font-family: @font-quartenary;
+        font-family: @font-base;
         color: @color-alert;
     }
 
@@ -149,9 +149,9 @@
 }
 
 .is-focused .input:focus {
-    border-color: @color-add-secondary;
+    border-color: @color-add-light;
     background-color: @color-f;
-    box-shadow: 0 0 0 3px rgba(@color-add-secondary, .25);
+    box-shadow: 0 0 0 3px rgba(@color-add-light, .25);
 }
 
 .is-focused-error .input:focus {

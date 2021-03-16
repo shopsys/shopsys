@@ -25,7 +25,7 @@
     background: @btn-bg;
     cursor: pointer;
     text-decoration: none;
-    font-family: @font-tertiary;
+    font-family: @font-base;
     font-size: 13px;
     outline: 0;
     text-transform: uppercase;
@@ -106,7 +106,7 @@
             padding: 0 20px;
 
             font-size: 14px;
-            font-family: @font-quartenary;
+            font-family: @font-base;
             letter-spacing: 0;
 
             @media @query-md {
@@ -153,7 +153,7 @@
 
             text-transform: none;
             font-size: 15px;
-            font-family: @font-quartenary;
+            font-family: @font-base;
             letter-spacing: 0;
         }
     }
@@ -181,7 +181,7 @@
         font-size: 15px;
         border: @btn-outline-border;
         background-color: @btn-outline-bg;
-        font-family: @font-quartenary;
+        font-family: @font-base;
         color: @color-primary-light;
         letter-spacing: 0;
 
@@ -192,7 +192,7 @@
         &--slider {
             text-transform: none;
             font-size: 15px;
-            font-family: @font-quartenary;
+            font-family: @font-base;
             color: @color-primary-light;
             letter-spacing: 0;
 
@@ -212,7 +212,7 @@
         }
 
         &.btn--disabled {
-            border-color: @color-border-light;
+            border-color: @color-primary;
 
             &:hover {
                 background-color: transparent;
@@ -228,7 +228,7 @@
         text-transform: none;
         background-color: @color-add;
         color: @color-primary-light;
-        font-family: @font-quartenary;
+        font-family: @font-base;
         letter-spacing: 0;
 
         &:hover {
@@ -280,7 +280,7 @@
     &--very-large {
         padding: @btn-very-large-padding;
 
-        font-family: @font-quartenary;
+        font-family: @font-base;
         font-size: 15px;
 
         @media @query-md {
@@ -312,7 +312,7 @@
     }
 
     &--next {
-        font-family: @font-quartenary;
+        font-family: @font-base;
         font-size: 15px;
         text-transform: none;
         text-align: left;
@@ -326,7 +326,7 @@
         }
 
         &:hover {
-            color: @color-add-secondary;
+            color: @color-add-light;
         }
     }
 
@@ -337,7 +337,7 @@
     @btn-secondary-font-size: 15px;
 
     &--secondary {
-        font-family: @font-quartenary;
+        font-family: @font-base;
         font-size: @btn-secondary-font-size;
         background-color: @btn-secondary-bg;
         color: @btn-secondary-color;
@@ -394,13 +394,13 @@
             margin-right: 5px;
 
             transform: scaleX(-1);
-            color: @color-add-secondary;
+            color: @color-add-light;
             font-size: 20px;
         }
     }
 
     &--prev {
-        font-family: @font-quartenary;
+        font-family: @font-base;
         text-transform: none;
         font-size: 15px;
         letter-spacing: 0;
@@ -420,7 +420,7 @@
         align-items: center;
         padding: 16px 25px 15px;
 
-        font-family: @font-quartenary;
+        font-family: @font-base;
         font-size: 15px;
         letter-spacing: 0;
         text-transform: none;
@@ -446,7 +446,7 @@
         align-items: center;
         padding: 16px 25px 15px;
 
-        font-family: @font-quartenary;
+        font-family: @font-base;
         font-size: 15px;
         letter-spacing: 0;
         text-transform: none;
@@ -535,7 +535,7 @@
 
     &--checkout-prev {
         text-transform: uppercase;
-        font-family: @font-tertiary;
+        font-family: @font-base;
         font-size: 14px;
 
         &:hover {
@@ -555,7 +555,7 @@
         padding: 16px 25px 15px;
         height: 65px;
 
-        font-family: @font-quartenary;
+        font-family: @font-base;
         font-size: 15px;
         letter-spacing: 0;
         text-transform: none;
@@ -622,7 +622,7 @@
         letter-spacing: 0;
         text-transform: none;
         color: @color-primary-light;
-        font-family: @font-quartenary;
+        font-family: @font-base;
 
         @media @query-md {
             font-size: 15px;
@@ -633,7 +633,7 @@
         padding-top: 1.25rem;
         padding-bottom: 1.25rem;
 
-        font-family: @font-quartenary;
+        font-family: @font-base;
         font-weight: 400;
     }
 
@@ -648,7 +648,7 @@
     }
 
     &--ghost {
-        font-family: @font-quartenary;
+        font-family: @font-base;
         color: @color-primary-light;
         text-transform: none;
         letter-spacing: 0;
@@ -729,7 +729,7 @@
     background-color: @color-f;
     border-radius: @radius;
     border: 1px solid #dae1e4;
-    font-family: @font-quartenary;
+    font-family: @font-base;
     font-size: 13px;
     text-transform: none;
     letter-spacing: 0;
@@ -754,10 +754,10 @@
         }
 
         &.selected {
-            border-color: @color-add-secondary;
+            border-color: @color-add-light;
 
             &:hover {
-                background-color: @color-add-secondary;
+                background-color: @color-add-light;
                 color: @color-f;
             }
         }

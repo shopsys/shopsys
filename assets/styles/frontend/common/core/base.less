@@ -1,11 +1,5 @@
 // Settings for default elements
 
-// TODO: Fonts would be fetched with async approach (in first site access) in the future (before production).
-.font-face("BasierCircleRegular", "BasierCircleRegular", @font-weight: '400', @font-style: 'normal');
-.font-face("BasierCircleSemiBold", "BasierCircleSemiBold", @font-weight: '400', @font-style: 'normal');
-.font-face("BasierCircleBold", "BasierCircleBold", @font-weight: '400', @font-style: 'normal');
-.font-face("BasierCircleMedium", "BasierCircleMedium", @font-weight: '400', @font-style: 'normal');
-
 *, *::before, *::after {
     box-sizing: border-box;
 }
@@ -76,7 +70,7 @@ table {
         }
 
         tr {
-            border-bottom: 1px solid @color-border-lighter;
+            border-bottom: 1px solid @color-border;
         }
 
         thead {
@@ -101,55 +95,52 @@ p {
 }
 
 h1, h2, h3, h4, h5, h6 {
-    color: @color-primary;
-    font-family: @font-secondary;
-    font-weight: 400;
-    line-height: 1.3em;
+    color: @color-base;
+    font-family: @font-base;
+    font-weight: 700;
+    line-height: 1.15em;
     text-rendering: optimizelegibility;
     word-wrap: break-word;
-    text-transform: uppercase;
 }
 
 h1 {
     margin: 0 0 10px 0;
 
-    font-size: 29px;
-    font-weight: normal;
+    font-size: 26px;
 
     @media @query-md {
-        font-size: 31px;
+        font-size: 28px;
     }
 
     @media @query-lg {
         margin-bottom: 15px;
 
-        font-size: 34px;
+        font-size: 30px;
     }
 
     @media @query-vl {
-        font-size: 36px;
+        font-size: 32px;
     }
 }
 
 h2 {
     margin: 0 0 10px 0;
 
-    font-size: 28px;
+    font-size: 22px;
 
     @media @query-md {
-        font-size: 29px;
+        font-size: 23px;
     }
 
     @media @query-lg {
-        font-size: 30px;
+        font-size: 24px;
     }
 }
 
 h3 {
     margin: 0 0 10px 0;
 
-    font-size: 24px;
-    font-weight: normal;
+    font-size: 18px;
 
     @media @query-lg {
         margin-bottom: 15px;
@@ -159,57 +150,18 @@ h3 {
 h4 {
     margin: 0 0 10px 0;
 
-    font-size: 19px;
-    font-weight: bold;
-
-    @media @query-md {
-        font-size: 20px;
-    }
-
-    @media @query-lg {
-        font-size: 21px;
-    }
-
-    @media @query-vl {
-        margin-bottom: 20px;
-
-        font-size: 21px;
-    }
+    font-size: @font-size;
 }
 
-h5 {
+h5, h6 {
     margin: 0 0 10px 0;
 
     font-size: @font-size-mobile;
-    text-transform: uppercase;
-    font-weight: bold;
-
-    @media @query-lg {
-        margin-bottom: 15px;
-
-        font-size: 15px;
-    }
-
-    @media @query-vl {
-        margin-bottom: 20px;
-
-        font-size: 16px;
-    }
-}
-
-h6 {
-    margin: 0 0 10px 0;
-
-    font-size: @font-size-mobile;
-    font-weight: bold;
-
-    @media @query-lg {
-        font-size: @font-size;
-    }
+    font-weight: normal;
 }
 
 a {
-    text-decoration: none;
+    text-decoration: underline;
     color: @color-link;
     cursor: pointer;
     outline: none;

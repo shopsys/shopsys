@@ -44,7 +44,7 @@
         width: calc(50% - 10px);
         text-align: center;
         border-radius: 6px;
-        border: 2px solid @color-border-lighter;
+        border: 2px solid @color-border;
 
         @media @query-md {
             margin: 0 0 25px 0;
@@ -77,13 +77,13 @@
             @media @query-md {
                 flex-direction: row;
                 border-radius: 6px;
-                border: 2px solid @color-border-lighter;
+                border: 2px solid @color-border;
                 transition: box-shadow @transition;
                 padding: 0 12px 0 0;
                 height: @list-categories-item-min-height;
 
                 &:hover {
-                    box-shadow: 0 5px 10px 0 @color-border-lighter;
+                    box-shadow: 0 5px 10px 0 @color-border;
                 }
             }
         }
@@ -111,7 +111,7 @@
             margin: 0;
             padding: @list-categories-item-name-spacing;
 
-            font-family: @font-quartenary;
+            font-family: @font-base;
             font-size: @list-categories-item-name-font-size;
             text-transform: none;
 

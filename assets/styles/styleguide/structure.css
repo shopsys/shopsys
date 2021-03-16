@@ -2033,3 +2033,9 @@ pre[class*='language-']>code[data-language] {
     color: #D8000C;
     background-color: #FFD2D2;
 }
+
+/* custom style for components in the styleguide */
+.styleguide-iframe-wrapper .in-message {
+    position: static;
+    margin: 0 0 15px 0;
+}

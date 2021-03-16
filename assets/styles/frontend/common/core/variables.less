@@ -3,22 +3,78 @@
 
 // Paths
 @path-design: '/public/frontend/images';
-@path-font: '/public/frontend/fonts/Basier';
+@path-font: '/public/frontend/fonts/dm-sans';
+
+/* latin-ext */
+@font-face {
+    font-family: 'DM Sans';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url('@{path-font}/DmSans400-ext.woff2') format('woff2');
+    unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+/* latin */
+@font-face {
+    font-family: 'DM Sans';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url('@{path-font}/DmSans400.woff2') format('woff2');
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* latin-ext */
+@font-face {
+    font-family: 'DM Sans';
+    font-style: normal;
+    font-weight: 500;
+    font-display: swap;
+    src: url('@{path-font}/DmSans500-ext.woff2') format('woff2');
+    unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+/* latin */
+@font-face {
+    font-family: 'DM Sans';
+    font-style: normal;
+    font-weight: 500;
+    font-display: swap;
+    src: url('@{path-font}/DmSans500.woff2') format('woff2');
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* latin-ext */
+@font-face {
+    font-family: 'DM Sans';
+    font-style: normal;
+    font-weight: 700;
+    font-display: swap;
+    src: url('@{path-font}/DmSans700-ext.woff2') format('woff2');
+    unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+/* latin */
+@font-face {
+    font-family: 'DM Sans';
+    font-style: normal;
+    font-weight: 700;
+    font-display: swap;
+    src: url('@{path-font}/DmSans700.woff2') format('woff2');
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
 
 // Fonts
-@font-base: "BasierCircleRegular", Arial, Helvetica, sans-serif;
-@font: @font-base;
-@font-secondary: "BasierCircleBold", Arial, Helvetica, sans-serif;
-@font-tertiary: "BasierCircleSemiBold", Arial, Helvetica, sans-serif;
-@font-quartenary: "BasierCircleMedium", Arial, Helvetica, sans-serif;
+@font-base: "DM Sans", Arial, Helvetica, sans-serif;
 
-@font-size: 15px;
+@font-size: 16px;
 @font-size-mobile: 14px;
 @line-height: 1.7;
 @line-height-mobile: 1.6;
 
 // Layout
-@web-width: 1450px;
+@web-width: 1240px;
 @web-padding: 20px;
 @web-padding-small: 15px;
 @web-panel-width-lg: 315px;
@@ -32,7 +88,7 @@
 
 // Colors
 //// Gray scale
-@color-0: #000;
+@color-0: #0D0D0D;
 @color-1: #111;
 @color-2: #222;
 @color-3: #333;
@@ -47,55 +103,54 @@
 @color-c: #ccc;
 @color-d: #ddd;
 @color-e: #eee;
-@color-f: #fff;
+@color-f: #FEFEFE;
 
 //// Classic colors of design
-@color-blue: #009BD9;
-@color-green: #a0c519;
-@color-orange: #FFA200;
-@color-red: #D60000;
+@color-blue: #4C5BFD;
+@color-blue-dark: #000862;
+@color-blue-light: #F2F2FF;
+@color-orange: #ECB200;
+@color-orange-light: #FFF0C4;
+@color-grey: #414353;
+@color-grey-light: #A4A7C1;
+@color-green: #00ECB1;
+@color-red: #EC5353;
 
 //// Context colors
 ////// Base color of text
-@color-base: #626268;
+@color-base: @color-0;
 
 ////// Base color of text - lighter
-@color-base-lighter: #5b5b61;
-
-////// Secondary base color
-@color-base-secondary: #7a929d;
+@color-base-lighter: @color-grey-light;
 
 ////// Color, which is main in design (used in titles or links, other significant places)
-@color-primary: #202330;
+@color-primary: @color-blue;
 
 ////// Color, which is second to main in design
-@color-primary-light: #15161e;
+@color-primary-light: @color-blue-light;
 
 ////// Color, which is additional in design (second main color)
-@color-add: #FFD700;
+@color-add: @color-orange;
 
 ////// Color, which is additional in design (third main color)
-@color-add-secondary: #ffad00;
+@color-add-light: @color-orange-light;
 
 ////// Color, which is the most used grey in design
-@color-light: #f0f3f4;
+@color-light: @color-grey-light;
 
 ////// Color, which is the second to most used grey in design
-@color-light-secondary: #f0f3f4;
-
-////// Color, which is the third to most used grey in design
-@color-light-tertiary: #8a8B8f;
+@color-light-secondary: @color-blue-light;
 
 ////// Color for common prices
-@color-price: #aabbc3;
+@color-price: @color-primary;
 
 ////// Color for more visible prices (main price)
 @color-price-main: @color-primary;
 
-@color-price-sale: #ff7a00;
+@color-price-sale: @color-primary;
 
 ////// Color for main links and its hover color
-@color-link: @color-primary;
+@color-link: @color-grey;
 @color-link-hover: @color-primary;
 
 ////// Special colors
@@ -106,18 +161,13 @@
 ////// Color for inactive text (muted)
 @color-inactive: @color-a;
 ////// Base color of border
-@color-border: @color-d;
-////// Light color of border
-@color-border-light: lighten(@color-border, 5%);
-////// Lighter color of border
-@color-border-lighter: #e7ebed;
+@color-border: @color-grey-light;
 ////// Secondary border color
-@color-border-secondary: #b0bec5;
+@color-border-secondary: @color-primary;
 ////// Tertiary border color
-@color-border-tertiary: #d7dee2;
+@color-border-tertiary: #4F505C;
 ////// Base color for background of components
 @color-box: @color-light;
-
 
 // Other
 //// Forms
@@ -129,10 +179,12 @@
 @transition: @transition-time @transition-type;
 
 //// Default border radius value
-@radius: 4px;
+@radius: 11px;
+@radius-medium: 4px;
+@radius-small: 2px;
 
 //// Global shadow hover item effect
-@hover-shadow: 0 6px 9px 0 darken(@color-light, 5%);
+@hover-shadow: 0 2px 7px 0 darken(@color-light, 5%);
 
 //// Default postfixes for responsive helpers generator
 @postfixes: -tablet, -mobile, -mobile-small;

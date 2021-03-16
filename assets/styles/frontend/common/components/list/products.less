@@ -82,18 +82,18 @@
 
             background-color: @color-f;
             border-radius: @radius;
-            border: 1px solid @color-border-lighter;
+            border: 1px solid @color-border;
             transition: all @transition;
             will-change: transform;
 
             &:hover {
                 @media @query-vl {
                     transform: translateY(-4px);
-                    box-shadow: 0 10px 20px 5px @color-border-lighter;
+                    box-shadow: 0 10px 20px 5px @color-border;
                 }
 
                 .slick-slide & {
-                    box-shadow: 0 10px 20px 5px @color-border-lighter;
+                    box-shadow: 0 10px 20px 5px @color-border;
                 }
             }
         }
@@ -117,7 +117,7 @@
             margin-bottom: 12px;
             line-height: @list-products-item-title-line-height;
 
-            font-family: @font-quartenary;
+            font-family: @font-base;
             font-size: 16px;
             font-weight: normal;
             color: @color-link;
@@ -209,7 +209,7 @@
                     color: @color-price;
 
                     &--main {
-                        font-family: @font-quartenary;
+                        font-family: @font-base;
                         font-size: 18px;
                         color: @color-price-main;
                         line-height: 1;
@@ -257,7 +257,7 @@
 
                     &--primary {
                         color: @list-products-availability-primary-color;
-                        font-family: @font-quartenary;
+                        font-family: @font-base;
                         font-weight: 400;
                         font-size: 13px;
                         line-height: 1;
@@ -489,7 +489,7 @@
                 display: block;
                 margin-top: 6px;
 
-                font-family: @font-quartenary;
+                font-family: @font-base;
                 font-weight: 400;
                 font-size: 15px;
                 color: @color-primary;
@@ -516,7 +516,7 @@
                 margin-top: 10px;
 
                 font-size: 14px;
-                font-family: @font-quartenary;
+                font-family: @font-base;
                 font-weight: 400;
 
                 @media @query-md {

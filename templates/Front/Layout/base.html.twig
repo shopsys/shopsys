@@ -22,10 +22,12 @@
         {% endif %}
         {% block prev_next_links %}{% endblock %}
 
-        {% set entryDirectory = 'frontend-style-' ~ getDomain().currentDomainConfig.stylesDirectory %}
-        {{ encore_entry_link_tags( entryDirectory ) }}
-        {% set entryDirectoryPrint = 'frontend-print-style-' ~ getDomain().currentDomainConfig.stylesDirectory %}
-        {{ encore_entry_link_tags( entryDirectoryPrint ) }}
+        {% block pageStyles %}
+            {% set entryDirectory = 'frontend-style-' ~ getDomain().currentDomainConfig.stylesDirectory %}
+            {{ encore_entry_link_tags( entryDirectory ) }}
+            {% set entryDirectoryPrint = 'frontend-print-style-' ~ getDomain().currentDomainConfig.stylesDirectory %}
+            {{ encore_entry_link_tags( entryDirectoryPrint ) }}
+        {% endblock %}
 
         {{ render(controller('App\\Controller\\Front\\HeurekaController:embedWidgetAction')) }}
         {{ render(controller('App\\Controller\\Front\\SelfCanonicalController:getSelfCanonicalLink')) }}

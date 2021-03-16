@@ -7,7 +7,7 @@
 @box-filter-width-xl: @web-panel-width-xl;
 @box-filter-z-index: 10001;
 @box-filter-background: @color-f;
-@box-filter-delimiter-color: @color-border-lighter;
+@box-filter-delimiter-color: @color-border;
 @box-filter-arrow-size: 12px;
 @box-filter-title-font-size: 16px;
 @box-filter-title-color: #242d3B;
@@ -23,7 +23,7 @@
 
     background-color: @box-filter-background;
     border-radius: @radius;
-    border: 2px solid @color-border-lighter;
+    border: 2px solid @color-border;
 
     @media @query-lg {
         display: block;
@@ -49,7 +49,7 @@
     &__heading {
         margin-bottom: 0;
 
-        font-family: @font-quartenary;
+        font-family: @font-base;
         font-size: 18px;
         text-transform: none;
     }
@@ -88,7 +88,7 @@
         margin-bottom: 1.5rem;
 
         background-color: @color-f;
-        border: 2px solid @color-border-lighter;
+        border: 2px solid @color-border;
         border-radius: @radius;
 
         &::after {
@@ -99,7 +99,7 @@
             height: 100%;
             content: '';
 
-            background-color: @color-border-lighter;
+            background-color: @color-border;
         }
 
         @media @query-lg {
@@ -117,7 +117,7 @@
             background-color: transparent;
             text-transform: none;
             font-size: 16px;
-            font-family: @font-quartenary;
+            font-family: @font-base;
             border-radius: 0;
 
             &__text {
@@ -134,7 +134,7 @@
             }
 
             &__info {
-                color: @color-add-secondary;
+                color: @color-add-light;
 
                 &--sort {
                     display: block;
@@ -263,7 +263,7 @@
             position: relative;
             padding-right: 20px;
 
-            font-family: @font-quartenary;
+            font-family: @font-base;
             font-size: @box-filter-title-font-size;
             color: @box-filter-title-color;
 
@@ -336,7 +336,7 @@
                         content: '';
 
                         border-radius: 100%;
-                        border: 1px solid @color-border-light;
+                        border: 1px solid @color-primary;
                         pointer-events: none;
                         opacity: 0;
                     }

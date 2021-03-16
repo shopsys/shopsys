@@ -2,8 +2,9 @@
 
 {% block title %}Shopsys Framework styleguide{% endblock %}
 
-{% block meta_robots %}
+{% block pageStyles %}
     {{ encore_entry_link_tags('styleguide-style') }}
+    {{ parent() }}
 {% endblock %}
 
 {% block html_body %}
