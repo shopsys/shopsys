@@ -447,7 +447,7 @@
         "version": "2.16.1"
     },
     "php": {
-        "version": "7.4"
+        "version": "7.4.1"
     },
     "php-cs-fixer/diff": {
         "version": "v1.3.0"
@@ -634,6 +634,9 @@
     },
     "sensio/framework-extra-bundle": {
         "version": "v3.0.29"
+    },
+    "shopsys/cdn": {
+        "version": "1.0.3"
     },
     "shopsys/coding-standards": {
         "version": "dev-mg-weird-flex-but-ok"
@@ -846,6 +849,9 @@
             "src/Controller/.gitignore",
             "src/Kernel.php"
         ]
+    },
+    "symfony/http-client-contracts": {
+        "version": "v2.3.1"
     },
     "symfony/http-foundation": {
         "version": "v3.4.33"
