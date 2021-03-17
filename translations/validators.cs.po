@@ -259,9 +259,6 @@ msgstr ""
 msgid "Vyplňte prosím DIČ kratší než {{ limit }} znaků."
 msgstr ""
 
-msgid "Vyplňte prosím DIČ/Ič DPH kratší než {{ limit }} znaků."
-msgstr ""
-
 msgid "Vyplňte prosím IČ"
 msgstr ""
 

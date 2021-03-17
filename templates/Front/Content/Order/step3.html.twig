@@ -126,16 +126,10 @@
                                                     label: 'Company number'|trans,
                                                     rowClass: 'form-line-block js-form-field'
                                                 }) }}
-                                                {{ form_row(form.companyVatNumber, {
-                                                    label: 'Vat number'|trans,
+                                                {{ form_row(form.companyTaxNumber, {
+                                                    label: 'Tax number'|trans,
                                                     rowClass: 'form-line-block js-form-field'
                                                 }) }}
-                                                {% if getDomain().id == 2 %}
-                                                   {{ form_row(form.companyTaxNumber, {
-                                                        label: 'Tax number'|trans,
-                                                        rowClass: 'form-line-block js-form-field'
-                                                    }) }}
-                                                {% endif %}
                                             </div>
                                         </div>
 

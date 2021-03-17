@@ -142,7 +142,7 @@ class OrderFacade extends BaseOrderFacade
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderFactoryInterface $orderFactory
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderPriceCalculation $orderPriceCalculation
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemPriceCalculation $orderItemPriceCalculation
-     * @param \App\Model\Order\FrontOrderDataMapper $frontOrderDataMapper
+     * @param \Shopsys\FrameworkBundle\Model\Order\FrontOrderDataMapper $frontOrderDataMapper
      * @param \Shopsys\FrameworkBundle\Twig\NumberFormatterExtension $numberFormatterExtension
      * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentPriceCalculation $paymentPriceCalculation
      * @param \Shopsys\FrameworkBundle\Model\Transport\TransportPriceCalculation $transportPriceCalculation
@@ -488,12 +488,10 @@ class OrderFacade extends BaseOrderFacade
         if ($frontOrderData->companyCustomer === true) {
             $billingAddressData->companyName = $frontOrderData->companyName;
             $billingAddressData->companyNumber = $frontOrderData->companyNumber;
-            $billingAddressData->companyVatNumber = $frontOrderData->companyVatNumber;
             $billingAddressData->companyTaxNumber = $frontOrderData->companyTaxNumber;
         } else {
             $billingAddressData->companyName = null;
             $billingAddressData->companyNumber = null;
-            $billingAddressData->companyVatNumber = null;
             $billingAddressData->companyTaxNumber = null;
         }
         $billingAddressData->street = $frontOrderData->street;
@@ -540,7 +538,6 @@ class OrderFacade extends BaseOrderFacade
         if ($orderData->isCompanyCustomer === true) {
             $registrationData->companyName = $orderData->companyName;
             $registrationData->companyNumber = $orderData->companyNumber;
-            $registrationData->companyVatNumber = $orderData->companyVatNumber;
             $registrationData->companyTaxNumber = $orderData->companyTaxNumber;
         } else {
             $registrationData->firstName = $orderData->firstName;

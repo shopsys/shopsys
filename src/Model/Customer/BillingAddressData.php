@@ -9,11 +9,6 @@ use Shopsys\FrameworkBundle\Model\Customer\BillingAddressData as BaseBillingAddr
 class BillingAddressData extends BaseBillingAddressData
 {
     /**
-     * @var string|null
-     */
-    public $companyVatNumber;
-
-    /**
      * @var bool
      */
     public $activated = true;

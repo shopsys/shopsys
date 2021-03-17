@@ -42,11 +42,6 @@ class RegistrationData
     public $companyTaxNumber;
 
     /**
-     * @var string|null
-     */
-    public $companyVatNumber;
-
-    /**
      * @var bool|null
      */
     public $newsletterSubscription = false;

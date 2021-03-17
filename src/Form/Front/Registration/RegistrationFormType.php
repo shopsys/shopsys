@@ -186,45 +186,20 @@ class RegistrationFormType extends AbstractType
                     ]),
                 ],
             ])
-            ->add('companyVatNumber', TextType::class, [
+            ->add('companyTaxNumber', TextType::class, [
                 'required' => false,
                 'constraints' => [
                     new Constraints\Length([
-                        'min' => 12,
-                        'max' => 12,
-                        'groups' => [self::VALIDATION_GROUP_COMPANY_CUSTOMER],
-                    ]),
-                    new Constraints\Regex([
-                        'pattern' => $options['domain_id'] === Domain::FIRST_DOMAIN_ID
-                            ? RegexValidationRule::COMPANY_CZ_VAT_NUMBER_REGEX
-                            : RegexValidationRule::COMPANY_SK_VAT_NUMBER_REGEX,
-                        'message' => 'Musí obsahovat pouze čísla a velká písmena',
-                        'groups' => [self::VALIDATION_GROUP_COMPANY_CUSTOMER],
-                    ]),
-                ],
-            ]);
-
-        if ($options['domain_id'] === Domain::SECOND_DOMAIN_ID) {
-            $builder->add('companyTaxNumber', TextType::class, [
-                'required' => true,
-                'constraints' => [
-                    new Constraints\NotBlank([
-                        'message' => 'Vyplňte prosím DIČ-2',
-                        'groups' => [self::VALIDATION_GROUP_COMPANY_CUSTOMER],
-                    ]),
-                    new Constraints\Length([
-                        'min' => 10,
-                        'max' => 10,
-                        'groups' => [self::VALIDATION_GROUP_COMPANY_CUSTOMER],
+                        'max' => 50,
+                        'maxMessage' => 'Tax number cannot be longer than {{ limit }} characters',
                     ]),
                     new Constraints\Regex([
                         'pattern' => RegexValidationRule::COMPANY_TAX_NUMBER_REGEX,
-                        'message' => 'Prosím, zadávejte pouze čísla',
+                        'message' => 'Please check Tax number format',
                         'groups' => [self::VALIDATION_GROUP_COMPANY_CUSTOMER],
                     ]),
                 ],
             ]);
-        }
     }
 
     /**
@@ -359,6 +334,6 @@ class RegistrationFormType extends AbstractType
                 return $validationGroups;
             },
         ])
-        ->addAllowedTypes('domain_id', 'int');
+            ->addAllowedTypes('domain_id', 'int');
     }
 }

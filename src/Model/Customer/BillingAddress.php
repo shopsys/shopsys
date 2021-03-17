@@ -12,15 +12,10 @@ use Shopsys\FrameworkBundle\Model\Customer\BillingAddressData;
  * @ORM\Table(name="billing_addresses")
  * @ORM\Entity
  * @method setData(\App\Model\Customer\BillingAddressData $billingAddressData)
+ * @method edit(\App\Model\Customer\BillingAddressData $billingAddressData)
  */
 class BillingAddress extends BaseBillingAddress
 {
-    /**
-     * @var string|null
-     * @ORM\Column(type="string", length=100, nullable=true)
-     */
-    protected $companyVatNumber;
-
     /**
      * @var bool
      * @ORM\Column(type="boolean")
@@ -34,30 +29,7 @@ class BillingAddress extends BaseBillingAddress
     {
         parent::__construct($billingAddressData);
 
-        if ($this->companyCustomer) {
-            $this->companyVatNumber = $billingAddressData->companyVatNumber;
-        }
         $this->activated = $billingAddressData->activated;
-    }
-
-    /**
-     * @param \App\Model\Customer\BillingAddressData $billingAddressData
-     */
-    public function edit(BillingAddressData $billingAddressData): void
-    {
-        parent::edit($billingAddressData);
-
-        if ($this->companyCustomer) {
-            $this->companyVatNumber = $billingAddressData->companyVatNumber;
-        }
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getCompanyVatNumber(): ?string
-    {
-        return $this->companyVatNumber;
     }
 
     /**

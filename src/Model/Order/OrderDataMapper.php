@@ -33,7 +33,6 @@ class OrderDataMapper extends BaseOrderDataMapper
         $orderData->personalPickupStock = $frontOrderData->personalPickupStock;
         $orderData->password = $frontOrderData->password;
         $orderData->isCompanyCustomer = $frontOrderData->companyCustomer;
-        $orderData->companyVatNumber = $frontOrderData->companyVatNumber;
 
         return $orderData;
     }

@@ -1723,9 +1723,6 @@ msgstr ""
 msgid "Tax number"
 msgstr "DIČ"
 
-msgid "Vat number"
-msgstr "DIČ"
-
 msgid "Technical parameters"
 msgstr "Technické parametry"
 

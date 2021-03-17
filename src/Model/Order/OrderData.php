@@ -41,11 +41,6 @@ class OrderData extends BaseOrderData
     /**
      * @var string|null
      */
-    public $companyVatNumber;
-
-    /**
-     * @var string|null
-     */
     public $gtmCoupon;
 
     /**

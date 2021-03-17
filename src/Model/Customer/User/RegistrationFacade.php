@@ -109,12 +109,10 @@ class RegistrationFacade implements RegistrationFacadeInterface
         if ($registrationData->companyCustomer === true) {
             $billingAddressData->companyName = $registrationData->companyName;
             $billingAddressData->companyNumber = $registrationData->companyNumber;
-            $billingAddressData->companyVatNumber = $registrationData->companyVatNumber;
             $billingAddressData->companyTaxNumber = $registrationData->companyTaxNumber;
         } else {
             $billingAddressData->companyName = null;
             $billingAddressData->companyNumber = null;
-            $billingAddressData->companyVatNumber = null;
             $billingAddressData->companyTaxNumber = null;
         }
         $billingAddressData->street = $registrationData->street;
