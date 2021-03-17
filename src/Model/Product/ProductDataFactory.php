@@ -187,9 +187,7 @@ class ProductDataFactory extends BaseProductDataFactory
             $productData->shortDescriptionUsp3[$domainId] = null;
             $productData->shortDescriptionUsp4[$domainId] = null;
             $productData->shortDescriptionUsp5[$domainId] = null;
-            $productData->lowPriceWithVat[$domainId] = null;
             $productData->highPriceWithVat[$domainId] = null;
-            $productData->lowPriceWithoutVat[$domainId] = null;
             $productData->highPriceWithoutVat[$domainId] = null;
             $productData->assemblyInstructionFileUrl[$domainId] = null;
             $productData->productTypePlanFileUrl[$domainId] = null;
@@ -292,12 +290,6 @@ class ProductDataFactory extends BaseProductDataFactory
     private function fillPricesFromProductByDomain(ProductData $productData, Product $product, int $domainId): void
     {
         $currency = $this->currencyFacade->getDomainDefaultCurrencyByDomainId($domainId);
-        $lowPrice = $this->basePriceCalculation->calculateBasePriceRoundedByCurrency(
-            $product->getLowPriceWithVat($domainId) ?? Money::zero(),
-            PricingSetting::INPUT_PRICE_TYPE_WITH_VAT,
-            $product->getVatForDomain($domainId),
-            $currency
-        );
 
         $highPrice = $this->basePriceCalculation->calculateBasePriceRoundedByCurrency(
             $product->getHighPriceWithVat($domainId) ?? Money::zero(),
@@ -313,10 +305,7 @@ class ProductDataFactory extends BaseProductDataFactory
             $currency
         );
 
-        $productData->lowPriceWithVat[$domainId] = $lowPrice->getPriceWithVat();
         $productData->highPriceWithVat[$domainId] = $highPrice->getPriceWithVat();
-
-        $productData->lowPriceWithoutVat[$domainId] = $lowPrice->getPriceWithoutVat();
         $productData->highPriceWithoutVat[$domainId] = $highPrice->getPriceWithoutVat();
 
         $productData->sellingPriceWithVat[$domainId] = $sellingPrice->getPriceWithVat();

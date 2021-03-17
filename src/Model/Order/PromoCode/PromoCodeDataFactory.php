@@ -102,7 +102,6 @@ class PromoCodeDataFactory extends BasePromoCodeDataFactory
         $promoCodeData->onSale = $promoCode->isOnSale();
         $promoCodeData->inAction = $promoCode->isInAction();
         $promoCodeData->scontoPrice = $promoCode->isScontoPrice();
-        $promoCodeData->withoutLowPrice = $promoCode->isWithoutLowPrice();
         $promoCodeData->priceHit = $promoCode->isPriceHit();
         $promoCodeData->discountType = $promoCode->getDiscountType();
     }

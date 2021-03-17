@@ -153,7 +153,6 @@ class ProductTransferAkeneoMapper
 
         $productData->domainOrderingPriority = AkeneoProductHelper::mapDomainDataInt($productData->domainOrderingPriority, $akeneoProductData['values']['product_priority'] ?? []);
 
-        $productData->lowPriceWithVat = AkeneoProductHelper::mapDomainDataPrices($productData->lowPriceWithVat, $akeneoProductData['values']['low_price_vat'] ?? null);
         $productData->highPriceWithVat = AkeneoProductHelper::mapDomainDataPrices($productData->highPriceWithVat, $akeneoProductData['values']['high_price_vat'] ?? null);
 
         $this->fixMandatoryPrices($productData);
@@ -463,11 +462,6 @@ class ProductTransferAkeneoMapper
      */
     private function fixMandatoryPrices(ProductData $productData): void
     {
-        foreach ($productData->lowPriceWithVat as $domainId => $lowPriceWithVat) {
-            if ($lowPriceWithVat === null) {
-                $productData->lowPriceWithVat[$domainId] = Money::zero();
-            }
-        }
         foreach ($productData->highPriceWithVat as $domainId => $highPriceWithVat) {
             if ($highPriceWithVat === null) {
                 $productData->highPriceWithVat[$domainId] = Money::zero();

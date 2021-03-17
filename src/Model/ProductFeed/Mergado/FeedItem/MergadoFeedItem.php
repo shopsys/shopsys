@@ -104,11 +104,6 @@ class MergadoFeedItem implements FeedItemInterface
     private ProductPrice $highProductPrice;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice
-     */
-    private ProductPrice $lowProductPrice;
-
-    /**
      * @var string[]
      */
     private array $flags;
@@ -135,7 +130,6 @@ class MergadoFeedItem implements FeedItemInterface
      * @param string|null $imageUrl
      * @param int|null $mainVariantId
      * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice $highProductPrice
-     * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice $lowProductPrice
      * @param string[] $flags
      * @param int|null $availability
      */
@@ -156,7 +150,6 @@ class MergadoFeedItem implements FeedItemInterface
         ?string $imageUrl,
         ?int $mainVariantId,
         ProductPrice $highProductPrice,
-        ProductPrice $lowProductPrice,
         array $flags,
         ?int $availability
     ) {
@@ -176,7 +169,6 @@ class MergadoFeedItem implements FeedItemInterface
         $this->currencyCode = $currencyCode;
         $this->mainVariantId = $mainVariantId;
         $this->highProductPrice = $highProductPrice;
-        $this->lowProductPrice = $lowProductPrice;
         $this->flags = $flags;
         $this->availability = $availability;
     }
@@ -315,14 +307,6 @@ class MergadoFeedItem implements FeedItemInterface
     public function getHighProductPrice(): ProductPrice
     {
         return $this->highProductPrice;
-    }
-
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice
-     */
-    public function getLowProductPrice(): ProductPrice
-    {
-        return $this->lowProductPrice;
     }
 
     /**

@@ -43,7 +43,7 @@ class AutomaticBestsellingProductRepository extends BaseAutomaticBestsellingProd
             ->andWhere('o.createdAt >= :createdAt')
             ->setParameter('createdAt', $ordersCreatedAtLimit)
             ->orderBy('orderCount', 'DESC')
-            ->addOrderBy('pd.lowPriceWithVat', 'DESC')
+            ->addOrderBy('pd.highPriceWithVat', 'DESC')
             ->groupBy('p.id, pd.product, pd.domainId')
             ->setMaxResults($maxResults);
 

@@ -14,7 +14,7 @@ class Version20200515071025 extends AbstractMigration
      */
     public function up(Schema $schema): void
     {
-        $this->sql('UPDATE product_domains SET high_price_with_vat = COALESCE(high_price_with_vat, low_price_with_vat, 0)');
+        $this->sql('UPDATE product_domains SET high_price_with_vat = COALESCE(high_price_with_vat, 0)');
         $this->sql('ALTER TABLE product_domains ALTER high_price_with_vat SET NOT NULL');
     }
 
