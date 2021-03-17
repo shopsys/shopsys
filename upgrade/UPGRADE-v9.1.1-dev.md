@@ -74,3 +74,8 @@ There you can find links to upgrade notes for other versions too.
 
 - improve docker-sync reliability on MacOS ([#2264](https://github.com/shopsys/shopsys/pull/2264))
     - see #project-base-diff to update your project
+
+- use WSL 2 instead of docker-sync on Windows ([#2272](https://github.com/shopsys/shopsys/pull/2272))
+    - if you are developing on Windows machine, we recommend you to update your installation to our new one using WSL 2. 
+      Read [Installation Using Docker on Windows 10](https://github.com/shopsys/shopsys/blob/9.1/docs/installation/installation-using-docker-windows-10.md) article for more information.
+    - see #project-base-diff to update your project
