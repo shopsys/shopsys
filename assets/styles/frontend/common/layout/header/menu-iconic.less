@@ -3,6 +3,7 @@
 @menu-iconic-icon-size: 24px;
 
 .menu-iconic {
+    .reset-ul();
     display: none;
 
     &__item__link {
@@ -28,10 +29,12 @@
                 padding: @menu-iconic-link-padding;
 
                 font-size: @menu-iconic-link-font-size;
+                color: @color-f;
                 text-decoration: none;
 
                 &:hover {
                     text-decoration: underline;
+                    color: @color-f;
                 }
 
                 &--button {
@@ -124,10 +127,6 @@
         &__item,
         &__item__link {
             height: 100%;
-        }
-
-        &__sub {
-            top: @header-height-vl + 1px;
         }
 
         &__item--sub {

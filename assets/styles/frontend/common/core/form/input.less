@@ -1,4 +1,4 @@
-@input-height: 54px;
+@input-height: 48px;
 @input-textarea-height: @input-height * 3;
 @input-width: 210px;
 @input-padding-horizontal: 10px;
@@ -10,7 +10,6 @@
 @input-disabled-background: #eff1f2;
 @input-border-radius: 4px;
 
-@input-label-font-size: 15px;
 @input-label-color: @color-base-lighter;
 
 .input {
@@ -24,14 +23,9 @@
     color: @color-primary;
     background-color: @input-background;
     border-radius: @input-border-radius;
-    caret-color: @color-add-light;
-    font-size: 16px;
+    font-size: @font-size;
     // iOS ugly appearance fix
     -webkit-appearance: none !important;
-
-    @media @query-md {
-        font-size: 14px;
-    }
 
     &--textarea {
         height: @input-textarea-height;
@@ -158,7 +152,6 @@
     border-color: @input-error-border-color;
     background-color: @input-error-background;
     box-shadow: 0 0 0 3px rgba(@input-error-border-color, .25);
-    caret-color: @color-alert;
 }
 
 .is-focused {
@@ -183,7 +176,7 @@
 }
 
 label {
-    font-size: @input-label-font-size;
+    font-size: @font-size;
     color: @input-label-color;
 }
 
