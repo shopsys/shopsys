@@ -122,13 +122,8 @@ class RegistrationFacade implements RegistrationFacadeInterface
 
         /** @var \App\Model\Customer\User\CustomerUserData $customerUserData */
         $customerUserData = $customerUserUpdateData->customerUserData;
-        if ($registrationData->companyCustomer === false) {
-            $customerUserData->firstName = $registrationData->firstName;
-            $customerUserData->lastName = $registrationData->lastName;
-        } else {
-            $customerUserData->firstName = null;
-            $customerUserData->lastName = null;
-        }
+        $customerUserData->firstName = $registrationData->firstName;
+        $customerUserData->lastName = $registrationData->lastName;
         $customerUserData->telephone = $registrationData->telephone;
 
         return $customerUserUpdateData;

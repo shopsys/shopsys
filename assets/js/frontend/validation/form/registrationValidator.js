@@ -11,8 +11,6 @@ export default function registrationValidator ($container) {
 
             if ($registrationForm.find('#registration_form_companyCustomer').is(':checked')) {
                 groups.push(constant('\\App\\Form\\Front\\Registration\\RegistrationFormType::VALIDATION_GROUP_COMPANY_CUSTOMER'));
-            } else {
-                groups.push(constant('\\App\\Form\\Front\\Registration\\RegistrationFormType::VALIDATION_GROUP_COMMON_CUSTOMER'));
             }
 
             const registrationForm = $registrationForm.data('registration-form-instance');

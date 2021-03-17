@@ -99,8 +99,7 @@
                                                 rowClass: 'form-line-block js-form-field'
                                             }) }}
                                         </div>
-                                        <div class="in-tab__content__item in-tab__content__item--no-spacing js-tabs-content  {{ commonTabActiveClass }}"
-                                            data-tab-id="common-customer">
+                                        <div class="in-tab__content__item in-tab__content__item--no-spacing js-tabs-content active">
                                             <div class="form-line-block-section">
                                                 {{ form_row(form.firstName, {
                                                     label: 'First name'|trans,
@@ -114,6 +113,7 @@
                                         </div>
                                         <div class="in-tab__content__item in-tab__content__item--no-padding js-tabs-content  {{ companyTabActiveClass }}"
                                             data-tab-id="company-customer">
+                                            <h2 class="form-line-block-section__heading">{{ 'Company data'|trans }}</h2>
                                             <div class="hidden">
                                                 {{ form_row(form.companyCustomer) }}
                                             </div>

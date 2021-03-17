@@ -103,7 +103,6 @@ class CustomerController extends FrontBaseController
 
         $form = $this->createForm(CustomerUserUpdateFormType::class, $customerUserUpdateData, [
             'domain_id' => $this->domain->getId(),
-            'is_company_customer' => $isCompanyCustomer,
         ]);
 
         $form->handleRequest($request);

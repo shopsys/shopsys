@@ -33,7 +33,6 @@ class PersonalInfoFormType extends AbstractType
 {
     public const VALIDATION_GROUP_COMPANY_CUSTOMER = 'companyCustomer';
     public const VALIDATION_GROUP_DIFFERENT_DELIVERY_ADDRESS = 'differentDeliveryAddress';
-    public const VALIDATION_GROUP_COMMON_CUSTOMER = 'ordinaryCustomer';
     public const VALIDATION_GROUP_REGISTRATION = 'registration';
     public const VALIDATION_GROUP_REGISTRATION_WITH_PASSWORD = 'registrationWithPassword';
 
@@ -97,12 +96,10 @@ class PersonalInfoFormType extends AbstractType
                 'constraints' => [
                     new Constraints\NotBlank([
                         'message' => 'Please enter first name',
-                        'groups' => [self::VALIDATION_GROUP_COMMON_CUSTOMER],
                     ]),
                     new Constraints\Length([
                         'max' => 30,
                         'maxMessage' => 'First name cannot be longer than {{ limit }} characters',
-                        'groups' => [self::VALIDATION_GROUP_COMMON_CUSTOMER],
                     ]),
                 ],
             ])
@@ -110,12 +107,10 @@ class PersonalInfoFormType extends AbstractType
                 'constraints' => [
                     new Constraints\NotBlank([
                         'message' => 'Please enter last name',
-                        'groups' => [self::VALIDATION_GROUP_COMMON_CUSTOMER],
                     ]),
                     new Constraints\Length([
                         'max' => 30,
                         'maxMessage' => 'Last name cannot be longer than {{ limit }} characters',
-                        'groups' => [self::VALIDATION_GROUP_COMMON_CUSTOMER],
                     ]),
                 ],
             ]);
@@ -444,8 +439,6 @@ class PersonalInfoFormType extends AbstractType
 
                     if ($orderData->companyCustomer) {
                         $validationGroups[] = self::VALIDATION_GROUP_COMPANY_CUSTOMER;
-                    } else {
-                        $validationGroups[] = self::VALIDATION_GROUP_COMMON_CUSTOMER;
                     }
 
                     if (!$orderData->deliveryAddressSameAsBillingAddress && $orderData->deliveryAddress === null) {

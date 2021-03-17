@@ -29,21 +29,19 @@ class CustomerUserFormType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        if (!$options['is_company_customer']) {
-            $builder
-                ->add('firstName', TextType::class, [
-                    'constraints' => [
-                        new Constraints\NotBlank(['message' => 'Please enter first name']),
-                        new Constraints\Length(['max' => 30, 'maxMessage' => 'First name cannot be longer than {{ limit }} characters']),
-                    ],
-                ])
-                ->add('lastName', TextType::class, [
-                    'constraints' => [
-                        new Constraints\NotBlank(['message' => 'Please enter last name']),
-                        new Constraints\Length(['max' => 30, 'maxMessage' => 'Last name cannot be longer than {{ limit }} characters']),
-                    ],
-                ]);
-        }
+        $builder
+            ->add('firstName', TextType::class, [
+                'constraints' => [
+                    new Constraints\NotBlank(['message' => 'Please enter first name']),
+                    new Constraints\Length(['max' => 30, 'maxMessage' => 'First name cannot be longer than {{ limit }} characters']),
+                ],
+            ])
+            ->add('lastName', TextType::class, [
+                'constraints' => [
+                    new Constraints\NotBlank(['message' => 'Please enter last name']),
+                    new Constraints\Length(['max' => 30, 'maxMessage' => 'Last name cannot be longer than {{ limit }} characters']),
+                ],
+            ]);
 
         $builder->add('email', EmailType::class, [
             'attr' => ['readonly' => true],
@@ -98,7 +96,6 @@ class CustomerUserFormType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver
-            ->setRequired(['is_company_customer'])
             ->setDefaults([
                 'data_class' => CustomerUserData::class,
                 'attr' => ['novalidate' => 'novalidate'],

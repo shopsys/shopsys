@@ -32,7 +32,6 @@ use Symfony\Component\Validator\Constraints;
 
 class RegistrationFormType extends AbstractType
 {
-    private const VALIDATION_GROUP_COMMON_CUSTOMER = 'commonCustomer';
     private const VALIDATION_GROUP_COMPANY_CUSTOMER = 'companyCustomer';
     private const VALIDATION_GROUP_REGULAR_REGISTRATION = 'regularRegistration';
 
@@ -123,12 +122,10 @@ class RegistrationFormType extends AbstractType
                 'constraints' => [
                     new Constraints\NotBlank([
                         'message' => 'Please enter first name',
-                        'groups' => [self::VALIDATION_GROUP_COMMON_CUSTOMER],
                     ]),
                     new Constraints\Length([
                         'max' => 30,
                         'maxMessage' => 'First name cannot be longer than {{ limit }} characters',
-                        'groups' => [self::VALIDATION_GROUP_COMMON_CUSTOMER],
                     ]),
                 ],
             ])
@@ -136,12 +133,10 @@ class RegistrationFormType extends AbstractType
                 'constraints' => [
                     new Constraints\NotBlank([
                         'message' => 'Please enter last name',
-                        'groups' => [self::VALIDATION_GROUP_COMMON_CUSTOMER],
                     ]),
                     new Constraints\Length([
                         'max' => 30,
                         'maxMessage' => 'Last name cannot be longer than {{ limit }} characters',
-                        'groups' => [self::VALIDATION_GROUP_COMMON_CUSTOMER],
                     ]),
                 ],
             ]);
@@ -323,8 +318,6 @@ class RegistrationFormType extends AbstractType
 
                 if ($companyCustomer) {
                     $validationGroups[] = self::VALIDATION_GROUP_COMPANY_CUSTOMER;
-                } else {
-                    $validationGroups[] = self::VALIDATION_GROUP_COMMON_CUSTOMER;
                 }
 
                 if ($customerInfo['exists'] === false) {
