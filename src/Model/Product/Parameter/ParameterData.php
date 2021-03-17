@@ -40,6 +40,7 @@ class ParameterData extends BaseParameterData
 
     public function __construct()
     {
+        // parent::__construct not called intentionally to avoid setting parameter visibility
         $this->name = [];
     }
 }

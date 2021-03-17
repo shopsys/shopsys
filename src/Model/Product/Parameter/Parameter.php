@@ -6,7 +6,6 @@ namespace App\Model\Product\Parameter;
 
 use App\Model\Product\Parameter\Exception\DeprecatedParameterPropertyException;
 use App\Model\Product\Parameter\Unit\ParameterUnit;
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter as BaseParameter;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterData as BaseParameterData;
@@ -15,7 +14,6 @@ use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterData as BaseParamet
  * @ORM\Table(name="parameters")
  * @ORM\Entity
  * @method setTranslations(\App\Model\Product\Parameter\ParameterData $parameterData)
- * @method setData(\App\Model\Product\Parameter\ParameterData $parameterData)
  */
 class Parameter extends BaseParameter
 {
@@ -76,25 +74,11 @@ class Parameter extends BaseParameter
     /**
      * @param \App\Model\Product\Parameter\ParameterData $parameterData
      */
-    public function __construct(BaseParameterData $parameterData)
+    protected function setData(BaseParameterData $parameterData): void
     {
-        $this->translations = new ArrayCollection();
+        // parent method not called intentionally to avoid setting parameter visibility
         $this->setTranslations($parameterData);
 
-        $this->group = $parameterData->group;
-        $this->akeneoCode = $parameterData->akeneoCode;
-        $this->akeneoType = $parameterData->akeneoType;
-        $this->orderingPriority = $parameterData->orderingPriority;
-        $this->parameterUnit = $parameterData->parameterUnit;
-        $this->parameterType = $parameterData->parameterType;
-    }
-
-    /**
-     * @param \App\Model\Product\Parameter\ParameterData $parameterData
-     */
-    public function edit(BaseParameterData $parameterData)
-    {
-        $this->setTranslations($parameterData);
         $this->group = $parameterData->group;
         $this->akeneoCode = $parameterData->akeneoCode;
         $this->akeneoType = $parameterData->akeneoType;
@@ -144,8 +128,8 @@ class Parameter extends BaseParameter
     }
 
     /**
-     * @deprecated Visibility of parameters is not used on this project
      * @throws \App\Model\Product\Parameter\Exception\DeprecatedParameterPropertyException
+     * @deprecated Visibility of parameters is not used on this project
      */
     public function isVisible()
     {
