@@ -1,4 +1,0 @@
-Category:
-    type: object
-    inherits:
-        - 'CategoryDecorator'

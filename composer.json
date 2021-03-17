@@ -87,7 +87,6 @@
         "shopsys/doctrine-orm": "^2.7.2",
         "shopsys/form-types-bundle": "9.1.0",
         "shopsys/framework": "9.1.0",
-        "shopsys/frontend-api": "9.1.0",
         "shopsys/google-cloud-bundle": "9.1.0",
         "shopsys/migrations": "9.1.0",
         "shopsys/plugin-interface": "9.1.0",

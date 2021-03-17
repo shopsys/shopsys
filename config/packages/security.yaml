@@ -14,9 +14,6 @@ security:
         user_identities:
             id: Shopsys\FrameworkBundle\Model\Customer\User\FrontendCustomerUserProvider
 
-        frontend_api_user_identities:
-            id: Shopsys\FrontendApiBundle\Model\User\FrontendApiUserProvider
-
     firewalls:
         # see Shopsys\FrameworkBundle\Model\Administrator\Security\AdministratorFrontSecurityFacade
         administration:
@@ -40,14 +37,6 @@ security:
                 csrf_token_generator: security.csrf.token_manager
                 csrf_token_id: admin_logout
                 invalidate_session: false
-        frontend_api:
-            pattern: ^/graphql
-            provider: frontend_api_user_identities
-            stateless: true
-            anonymous: true
-            guard:
-                authenticators:
-                    - Shopsys\FrontendApiBundle\Model\Token\TokenAuthenticator
         frontend:
             pattern: ^/
             anonymous: ~

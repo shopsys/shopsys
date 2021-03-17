@@ -1,4 +1,0 @@
-PaymentInput:
-    type: input-object
-    inherits:
-        - 'PaymentInputDecorator'

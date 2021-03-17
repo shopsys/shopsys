@@ -1,6 +1,0 @@
-ProductConnection:
-    type: relay-connection
-    config:
-        nodeType: Product
-    inherits:
-        - 'ProductConnectionDecorator'

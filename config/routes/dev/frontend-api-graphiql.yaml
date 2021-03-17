@@ -1,3 +1,0 @@
-shopsys_frontend_api_graphiql:
-    resource: "@ShopsysFrontendApiBundle/Resources/config/routing_dev.yaml"
-    prefix: /graphql
