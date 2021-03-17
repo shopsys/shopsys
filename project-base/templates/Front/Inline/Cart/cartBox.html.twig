@@ -13,7 +13,7 @@
         <a {% if cart is not null %}href="{{ url('front_cart') }}"{% endif %}
             class="cart__block {% if cart is null %} empty no-hover{% endif %}">
             <span class="cart__icon">
-                <i class="svg svg-cart"></i>
+                {{ icon('cart') }}
             </span>
             <div class="cart__info test-cart-info">
                 {% if cart is null %}
@@ -55,7 +55,7 @@
 
     <div class="cart-mobile header__mobile-button">
         <a href="{{ url('front_cart') }}" class="header__mobile-button__in">
-            <i class="svg svg-cart"></i>
+            {{ icon('cart') }}
             {% if cart is not null %}
                 <span class="header__mobile-button__in__info">
                     {{ cart.itemsCount }}

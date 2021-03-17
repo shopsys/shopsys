@@ -91,7 +91,7 @@
                                             href="{{ url('front_cart_delete', {cartItemId: cartItem.id, _token: csrf_token('front_cart_delete_' ~ cartItem.id)}) }}"
                                             class="test-cart-item-remove-button"
                                         >
-                                            <i class="svg svg-remove"></i>
+                                            {{ icon('remove') }}
                                         </a>
                                     </td>
                                 </tr>

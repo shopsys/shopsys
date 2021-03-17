@@ -15,7 +15,7 @@
         <div class="box-filter__choice box-filter__choice--without-border js-product-filter-box" data-product-filter-box-id="product_filter_box_price">
             <span class="box-filter__choice__title active js-product-filter-box-label">
                 {{ 'Price'|trans }}
-                <i class="svg svg-arrow cursor-pointer js-product-filter-box-arrow"></i>
+                {{ icon('arrow', { class: ' cursor-pointer js-product-filter-box-arrow'}) }}
             </span>
             <div class="box-filter__choice__content" id="product_filter_box_price">
                 <div class="box-filter__price">
@@ -49,7 +49,7 @@
         <div class="box-filter__choice js-product-filter-box" data-product-filter-box-id="product_filter_box_availability">
             <span class="box-filter__choice__title active js-product-filter-box-label">
                 {{ 'Availability'|trans }}
-                <i class="svg svg-arrow cursor-pointer js-product-filter-box-arrow"></i>
+                {{ icon('arrow', { class: ' cursor-pointer js-product-filter-box-arrow'}) }}
             </span>
             <div id="product_filter_box_availability" class="box-filter__choice__content">
                 <div class="form-choice form-choice--block">
@@ -75,7 +75,7 @@
             <div class="box-filter__choice js-product-filter-box" data-product-filter-box-id="{{ filterForm.flags.vars.id }}">
                 <span class="box-filter__choice__title active js-product-filter-box-label">
                     {{ 'Flags'|trans }}
-                    <i class="svg svg-arrow cursor-pointer js-product-filter-box-arrow"></i>
+                    {{ icon('arrow', { class: ' cursor-pointer js-product-filter-box-arrow'}) }}
                 </span>
                 <div id="{{ filterForm.flags.vars.id }}" class="box-filter__choice__content">
                     {% for flagForm in filterForm.flags %}
@@ -107,7 +107,7 @@
             <div class="box-filter__choice js-product-filter-box" data-product-filter-box-id="{{ filterForm.brands.vars.id }}">
                 <span class="box-filter__choice__title active js-product-filter-box-label">
                     {{ 'Brand'|trans }}
-                    <i class="svg svg-arrow cursor-pointer js-product-filter-box-arrow"></i>
+                    {{ icon('arrow', { class: ' cursor-pointer js-product-filter-box-arrow' }) }}
                 </span>
                 <div id="{{ filterForm.brands.vars.id }}" class="box-filter__choice__content">
                     {% for brandForm in filterForm.brands %}
@@ -142,7 +142,7 @@
                         <div class="box-filter__choice test-product-filter-parameter js-product-filter-box" data-product-filter-box-id="{{ parameterForm.vars.id }}">
                             <span class="box-filter__choice__title active js-product-filter-box-label test-product-filter-parameter-label">
                                 {{ parameterForm.vars.label }}
-                                <i class="svg svg-arrow cursor-pointer js-product-filter-box-arrow"></i>
+                                {{ icon('arrow', { class: ' cursor-pointer js-product-filter-box-arrow' }) }}
                             </span>
                             <div id="{{ parameterForm.vars.id }}" class="box-filter__choice__content">
                                 {% for parameterValueForm in parameterForm %}

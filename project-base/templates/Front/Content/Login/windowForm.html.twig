@@ -15,10 +15,11 @@
                 {{ form_widget(form.rememberMe, { attr: { class: "css-checkbox" } }) }}
                 <label class="css-checkbox__image form-choice__label" for="{{ form.rememberMe.vars.id }}">
                     {{ 'Remember my login'|trans }}
-                    <i class="svg svg-info in-icon in-icon--info js-tooltip"
-                        data-toggle="tooltip" data-placement="right"
-                        title="{{ 'We will remember your login on this computer for 30 days.'|trans }}"
-                     ></i>
+                    {{ icon('info', {
+                        class: 'in-icon in-icon--info js-tooltip',
+                        title: 'We will remember your login on this computer for 30 days.'|trans,
+                        data: { toggle: 'tooltip', placement: 'right' }
+                    } ) }}
                 </label>
             </div>
         </div>
