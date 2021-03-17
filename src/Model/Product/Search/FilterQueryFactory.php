@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\Product\Search;
 
+use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData;
 use Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery as BaseFilterQuery;
 use Shopsys\FrameworkBundle\Model\Product\Search\FilterQueryFactory as BaseFilterQueryFactory;
 
@@ -13,7 +14,6 @@ use Shopsys\FrameworkBundle\Model\Product\Search\FilterQueryFactory as BaseFilte
  * @method \App\Model\Product\Search\FilterQuery createListableProductsByCategoryId(\App\Model\Product\Filter\ProductFilterData $productFilterData, string $orderingModeId, int $page, int $limit, int $categoryId)
  * @method \App\Model\Product\Search\FilterQuery createWithProductFilterData(\App\Model\Product\Filter\ProductFilterData $productFilterData, string $orderingModeId, int $page, int $limit)
  * @method \App\Model\Product\Search\FilterQuery createListableProductsByBrandId(\App\Model\Product\Filter\ProductFilterData $productFilterData, string $orderingModeId, int $page, int $limit, int $brandId)
- * @method \App\Model\Product\Search\FilterQuery createListableProductsBySearchText(\App\Model\Product\Filter\ProductFilterData $productFilterData, string $orderingModeId, int $page, int $limit, string $searchText)
  * @method \App\Model\Product\Search\FilterQuery createListable()
  * @method \App\Model\Product\Search\FilterQuery createVisible()
  * @method \App\Model\Product\Search\FilterQuery createListableProductsByCategoryIdWithPriceAndStockFilter(int $categoryId, \App\Model\Product\Filter\ProductFilterData $productFilterData)
@@ -36,5 +36,23 @@ class FilterQueryFactory extends BaseFilterQueryFactory
     public function create(string $indexName): BaseFilterQuery
     {
         return new FilterQuery($indexName);
+    }
+
+    /**
+     * @param \App\Model\Product\Filter\ProductFilterData $productFilterData
+     * @param string $orderingModeId
+     * @param int $page
+     * @param int $limit
+     * @param string $searchText
+     * @return \App\Model\Product\Search\FilterQuery
+     */
+    public function createListableProductsBySearchText(ProductFilterData $productFilterData, string $orderingModeId, int $page, int $limit, string $searchText): BaseFilterQuery
+    {
+        /** @var \App\Model\Product\Search\FilterQuery $filterQuery */
+        $filterQuery = parent::createListableProductsBySearchText($productFilterData, $orderingModeId, $page, $limit, $searchText);
+
+        $filterQuery = $filterQuery->filterNotExcludeOrInStock();
+
+        return $filterQuery;
     }
 }
