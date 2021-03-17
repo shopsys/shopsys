@@ -16,7 +16,7 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 /**
  * @property \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
- * @property \App\Component\Router\DomainRouterFactory $domainRouterFactory
+ * @property \Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory $domainRouterFactory
  */
 class ErrorPagesFacade extends BaseErrorPagesFacade
 {
@@ -28,7 +28,7 @@ class ErrorPagesFacade extends BaseErrorPagesFacade
     /**
      * @param string $errorPagesDir
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \App\Component\Router\DomainRouterFactory $domainRouterFactory
+     * @param \Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory $domainRouterFactory
      * @param \Symfony\Component\Filesystem\Filesystem $filesystem
      * @param \League\Flysystem\FilesystemInterface $abstractFilesystem
      * @param \Shopsys\FrameworkBundle\Component\Error\ErrorIdProvider|null $errorIdProvider

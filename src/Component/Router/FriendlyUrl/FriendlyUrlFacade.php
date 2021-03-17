@@ -22,7 +22,7 @@ class FriendlyUrlFacade extends BaseFriendlyUrlFacade
 
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \App\Component\Router\DomainRouterFactory $domainRouterFactory
+     * @param \Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory $domainRouterFactory
      * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlUniqueResultFactory $friendlyUrlUniqueResultFactory
      * @param \App\Component\Router\FriendlyUrl\FriendlyUrlRepository $friendlyUrlRepository
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain

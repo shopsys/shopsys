@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Model\Customer\Mail;
 
-use App\Component\Router\DomainRouterFactory;
 use App\Component\Setting\Setting;
+use Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Mail\MailTemplate;
 use Shopsys\FrameworkBundle\Model\Mail\MessageData;
@@ -16,7 +16,6 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 class CustomerActivationMail implements MessageFactoryInterface
 {
     public const CUSTOMER_ACTIVATION_NAME = 'customer_activation';
-
     public const VARIABLE_EMAIL = '{email}';
     public const VARIABLE_ACTIVATION_URL = '{activation_url}';
 
@@ -26,13 +25,13 @@ class CustomerActivationMail implements MessageFactoryInterface
     private Setting $setting;
 
     /**
-     * @var \App\Component\Router\DomainRouterFactory
+     * @var \Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory
      */
     private DomainRouterFactory $domainRouterFactory;
 
     /**
      * @param \App\Component\Setting\Setting $setting
-     * @param \App\Component\Router\DomainRouterFactory $domainRouterFactory
+     * @param \Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory $domainRouterFactory
      */
     public function __construct(
         Setting $setting,

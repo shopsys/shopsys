@@ -828,14 +828,6 @@ services:
     Shopsys\FrameworkBundle\Model\Product\Pricing\ProductInputPriceFacade:
         alias: App\Model\Product\Pricing\ProductInputPriceFacade
 
-    Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory:
-        alias: App\Component\Router\DomainRouterFactory
-
-    App\Component\Router\DomainRouterFactory:
-        arguments:
-            $routerConfiguration: '%router.resource%'
-            $cacheDir: '%kernel.cache_dir%'
-
     Shopsys\FrameworkBundle\Model\Feed\FeedFacade:
         alias: App\Model\Feed\FeedFacade
 

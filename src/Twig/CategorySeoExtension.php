@@ -20,7 +20,7 @@ class CategorySeoExtension extends AbstractExtension
     private $parameterFacade;
 
     /**
-     * @var \App\Component\Router\DomainRouterFactory
+     * @var \Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory
      */
     private $domainRouterFactory;
 
@@ -31,7 +31,7 @@ class CategorySeoExtension extends AbstractExtension
 
     /**
      * @param \App\Model\Product\Parameter\ParameterFacade $parameterFacade
-     * @param \App\Component\Router\DomainRouterFactory $domainRouterFactory
+     * @param \Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory $domainRouterFactory
      * @param \App\Model\CategorySeo\ReadyCategorySeoMixFacade $readyCategorySeoMixFacade
      */
     public function __construct(

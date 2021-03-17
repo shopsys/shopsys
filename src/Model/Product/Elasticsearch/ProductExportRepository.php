@@ -14,6 +14,8 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRepository;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade;
+use Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryFacade;
+use Shopsys\FrameworkBundle\Model\Product\Brand\BrandCachedFacade;
 use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductExportRepository as BaseProductExportRepository;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice;
@@ -52,11 +54,6 @@ class ProductExportRepository extends BaseProductExportRepository
     private $pricingGroupSettingFacade;
 
     /**
-     * @var \App\Model\Category\CategoryFacade
-     */
-    private $categoryFacade;
-
-    /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \App\Model\Product\Parameter\ParameterRepository $parameterRepository
      * @param \App\Model\Product\ProductFacade $productFacade
@@ -68,6 +65,8 @@ class ProductExportRepository extends BaseProductExportRepository
      * @param \App\Model\Product\ProductRepository $productRepository
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade $pricingGroupSettingFacade
      * @param \App\Model\Category\CategoryFacade $categoryFacade
+     * @param \Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryFacade $productAccessoryFacade
+     * @param \Shopsys\FrameworkBundle\Model\Product\Brand\BrandCachedFacade $brandCachedFacade
      */
     public function __construct(
         EntityManagerInterface $em,
@@ -80,7 +79,9 @@ class ProductExportRepository extends BaseProductExportRepository
         ProductAvailabilityFacade $productAvailabilityFacade,
         ProductRepository $productRepository,
         PricingGroupSettingFacade $pricingGroupSettingFacade,
-        CategoryFacade $categoryFacade
+        CategoryFacade $categoryFacade,
+        ProductAccessoryFacade $productAccessoryFacade,
+        BrandCachedFacade $brandCachedFacade
     ) {
         parent::__construct(
             $em,
@@ -89,13 +90,15 @@ class ProductExportRepository extends BaseProductExportRepository
             $friendlyUrlRepository,
             $domain,
             $productVisibilityRepository,
-            $friendlyUrlFacade
+            $friendlyUrlFacade,
+            $categoryFacade,
+            $productAccessoryFacade,
+            $brandCachedFacade
         );
 
         $this->productAvailabilityFacade = $productAvailabilityFacade;
         $this->productRepository = $productRepository;
         $this->pricingGroupSettingFacade = $pricingGroupSettingFacade;
-        $this->categoryFacade = $categoryFacade;
     }
 
     /**
@@ -337,7 +340,7 @@ class ProductExportRepository extends BaseProductExportRepository
             $flagIds = array_merge($flagIds, $variant->getFlagsIdsForDomain($domainId));
         }
 
-        return  array_values(array_unique($flagIds));
+        return array_values(array_unique($flagIds));
     }
 
     /**
