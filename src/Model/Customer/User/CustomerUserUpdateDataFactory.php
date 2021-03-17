@@ -23,6 +23,7 @@ class CustomerUserUpdateDataFactory extends BaseCustomerUserUpdateDataFactory
         $billingAddressData->city = $registrationData->city;
         $billingAddressData->street = $registrationData->street;
         $billingAddressData->postcode = $registrationData->postcode;
+        $billingAddressData->country = $registrationData->country;
         $billingAddressData->companyCustomer = $registrationData->companyCustomer;
         $billingAddressData->companyName = $registrationData->companyName;
         $billingAddressData->companyNumber = $registrationData->companyNumber;
