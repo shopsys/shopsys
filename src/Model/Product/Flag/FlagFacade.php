@@ -14,6 +14,9 @@ use Shopsys\FrameworkBundle\Model\Product\Flag\FlagFacade as BaseFlagFacade;
  * @method \App\Model\Product\Flag\Flag edit(int $flagId, \App\Model\Product\Flag\FlagData $flagData)
  * @method \App\Model\Product\Flag\Flag[] getAll()
  * @method dispatchFlagEvent(\App\Model\Product\Flag\Flag $flag, string $eventType)
+ * @method \App\Model\Product\Flag\Flag[] getByIds(int[] $flagIds)
+ * @method \App\Model\Product\Flag\Flag getByUuid(string $uuid)
+ * @method \App\Model\Product\Flag\Flag[] getByUuids(string[] $uuids)
  */
 class FlagFacade extends BaseFlagFacade
 {

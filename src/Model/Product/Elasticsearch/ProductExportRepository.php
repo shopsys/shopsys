@@ -35,6 +35,10 @@ use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityRepository;
  * @property \App\Component\Router\FriendlyUrl\FriendlyUrlRepository $friendlyUrlRepository
  * @property \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
  * @method array extractParameters(string $locale, \App\Model\Product\Product $product)
+ * @property \App\Model\Category\CategoryFacade $categoryFacade
+ * @method setCategoryFacade(\App\Model\Category\CategoryFacade $categoryFacade)
+ * @method string getBrandUrlForDomainByProduct(\App\Model\Product\Product $product, int $domainId)
+ * @method array extractAccessoriesIds(\App\Model\Product\Product $product)
  */
 class ProductExportRepository extends BaseProductExportRepository
 {

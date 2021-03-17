@@ -15,6 +15,8 @@ use Shopsys\FrameworkBundle\Model\Product\Flag\Flag;
  * @property \App\Model\Product\ProductRepository $productRepository
  * @method __construct(\App\Model\Product\ProductRepository $productRepository)
  * @method \App\Model\Product\Flag\Flag[] getVisibleFlagsByProductsQueryBuilder(\Doctrine\ORM\QueryBuilder $productsQueryBuilder, string $locale)
+ * @method \App\Model\Product\Flag\Flag[] getFlagFilterChoicesForBrand(int $domainId, \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup, string $locale, \App\Model\Product\Brand\Brand $brand)
+ * @method \App\Model\Product\Flag\Flag[] getFlagFilterChoicesForAll(int $domainId, \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup, string $locale)
  */
 class FlagFilterChoiceRepository extends BaseFlagFilterChoiceRepository
 {

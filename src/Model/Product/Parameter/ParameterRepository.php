@@ -32,6 +32,10 @@ use Shopsys\FrameworkBundle\Model\Product\ProductCategoryDomain;
  * @method string[][] getParameterValuesIndexedByProductIdAndParameterNameForProducts(\App\Model\Product\Product[] $products, string $locale)
  * @method \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValue[] getProductParameterValuesByParameter(\App\Model\Product\Parameter\Parameter $parameter)
  * @method \App\Model\Product\Parameter\Parameter|null findParameterByNames(string[] $namesByLocale)
+ * @method \App\Model\Product\Parameter\Parameter getByUuid(string $uuid)
+ * @method \App\Model\Product\Parameter\ParameterValue getParameterValueByUuid(string $uuid)
+ * @method \App\Model\Product\Parameter\Parameter[] getParametersByUuids(string[] $uuids)
+ * @method \App\Model\Product\Parameter\ParameterValue[] getParameterValuesByUuids(string[] $uuids)
  */
 class ParameterRepository extends BaseParameterRepository
 {

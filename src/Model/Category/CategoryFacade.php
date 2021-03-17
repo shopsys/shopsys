@@ -48,6 +48,9 @@ use Shopsys\FrameworkBundle\Model\Category\CategoryWithPreloadedChildrenFactory;
  * @method \App\Model\Category\Category[] getAllTranslatedWithoutBranch(\App\Model\Category\Category $category, string $locale)
  * @method createFriendlyUrlsWhenRenamed(\App\Model\Category\Category $category, array $originalNames)
  * @method array getChangedNamesByLocale(\App\Model\Category\Category $category, array $originalNames)
+ * @method \App\Model\Category\Category[] getByIds(int[] $categoryIds)
+ * @method \App\Model\Category\Category getVisibleOnDomainByUuid(int $domainId, string $categoryUuid)
+ * @method \App\Model\Category\Category getProductMainCategoryOnCurrentDomain(\App\Model\Product\Product $product)
  */
 class CategoryFacade extends BaseCategoryFacade
 {

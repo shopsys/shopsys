@@ -35,6 +35,7 @@ use Shopsys\FrameworkBundle\Component\String\TransformString;
  * @method \App\Component\Image\Image getImageByObject(\App\Component\Image\Image|object $imageOrEntity, string|null $type)
  * @method \App\Component\Image\Image getById(int $imageId)
  * @method \App\Component\Image\Image[] getImagesByEntitiesIndexedByEntityId(int[] $entityIds, string $entityClass)
+ * @method \App\Component\Image\Image[] getImagesByEntityId(int $id, string $entityClass)
  */
 class ImageFacade extends BaseImageFacade
 {

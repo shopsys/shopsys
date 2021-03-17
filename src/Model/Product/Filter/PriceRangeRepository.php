@@ -18,6 +18,7 @@ use Shopsys\FrameworkBundle\Model\Product\Filter\PriceRangeRepository as BasePri
 /**
  * @property \App\Component\Doctrine\QueryBuilderExtender $queryBuilderExtender
  * @property \App\Model\Product\ProductRepository $productRepository
+ * @method \Shopsys\FrameworkBundle\Model\Product\Filter\PriceRange getPriceRangeForBrand(int $domainId, \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup, \App\Model\Product\Brand\Brand $brand)
  */
 class PriceRangeRepository extends BasePriceRangeRepository
 {

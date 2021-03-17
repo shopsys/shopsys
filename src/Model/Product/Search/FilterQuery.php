@@ -22,6 +22,9 @@ use stdClass;
  * @method \App\Model\Product\Search\FilterQuery setPage(int $page)
  * @method \App\Model\Product\Search\FilterQuery setLimit(int $limit)
  * @method \App\Model\Product\Search\FilterQuery setFrom(int $from)
+ * @method \App\Model\Product\Search\FilterQuery filterByProductIds(int[] $productIds)
+ * @method \App\Model\Product\Search\FilterQuery filterByProductUuids(string[] $productUuids)
+ * @method \App\Model\Product\Search\FilterQuery filterOutVariants()
  */
 class FilterQuery extends BaseFilterQuery
 {

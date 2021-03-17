@@ -23,6 +23,10 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
  * @method \App\Model\Product\Parameter\Parameter edit(int $parameterId, \App\Model\Product\Parameter\ParameterData $parameterData)
  * @method \App\Model\Product\Parameter\ParameterValue getParameterValueByValueTextAndLocale(string $valueText, string $locale)
  * @method dispatchParameterEvent(\App\Model\Product\Parameter\Parameter $parameter, string $eventType)
+ * @method \App\Model\Product\Parameter\Parameter getByUuid(string $uuid)
+ * @method \App\Model\Product\Parameter\ParameterValue getParameterValueByUuid(string $uuid)
+ * @method \App\Model\Product\Parameter\Parameter[] getParametersByUuids(string[] $uuids)
+ * @method \App\Model\Product\Parameter\ParameterValue[] getParameterValuesByUuids(string[] $uuids)
  */
 class ParameterFacade extends BaseParameterFacade
 {
