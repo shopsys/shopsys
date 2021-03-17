@@ -61,12 +61,6 @@ class Transport extends BaseTransport
     public function __construct(BaseTransportData $transportData)
     {
         parent::__construct($transportData);
-
-        $this->personalPickup = $transportData->personalPickup;
-        $this->isOverLimitTransport = $transportData->isOverLimitTransport;
-        $this->daysUntilDelivery = $transportData->daysUntilDelivery;
-        $this->deliveryCode = $transportData->deliveryCode;
-        $this->typeOfDeliveryKey = $transportData->typeOfDeliveryKey;
     }
 
     /**
@@ -75,6 +69,14 @@ class Transport extends BaseTransport
     public function edit(BaseTransportData $transportData)
     {
         parent::edit($transportData);
+    }
+
+    /**
+     * @param \App\Model\Transport\TransportData $transportData
+     */
+    protected function setData(BaseTransportData $transportData): void
+    {
+        parent::setData($transportData);
 
         $this->personalPickup = $transportData->personalPickup;
         $this->isOverLimitTransport = $transportData->isOverLimitTransport;
@@ -89,14 +91,6 @@ class Transport extends BaseTransport
     public function isPersonalPickup(): bool
     {
         return $this->personalPickup;
-    }
-
-    /**
-     * @param \App\Model\Transport\TransportData $transportData
-     */
-    protected function setData(BaseTransportData $transportData): void
-    {
-        parent::setData($transportData);
     }
 
     /**

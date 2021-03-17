@@ -74,6 +74,22 @@ class Parameter extends BaseParameter
     /**
      * @param \App\Model\Product\Parameter\ParameterData $parameterData
      */
+    public function __construct(BaseParameterData $parameterData)
+    {
+        parent::__construct($parameterData);
+    }
+
+    /**
+     * @param \App\Model\Product\Parameter\ParameterData $parameterData
+     */
+    public function edit(BaseParameterData $parameterData)
+    {
+        parent::edit($parameterData);
+    }
+
+    /**
+     * @param \App\Model\Product\Parameter\ParameterData $parameterData
+     */
     protected function setData(BaseParameterData $parameterData): void
     {
         // parent method not called intentionally to avoid setting parameter visibility

@@ -57,11 +57,6 @@ class Payment extends BasePayment
     public function __construct(BasePaymentData $paymentData)
     {
         parent::__construct($paymentData);
-
-        $this->type = $paymentData->type;
-        $this->setGoPayPaymentMethod($paymentData);
-        $this->hiddenByGoPay = $paymentData->hiddenByGoPay;
-        $this->isOverLimitPayment = $paymentData->isOverLimitPayment;
     }
 
     /**
@@ -70,6 +65,14 @@ class Payment extends BasePayment
     public function edit(BasePaymentData $paymentData): void
     {
         parent::edit($paymentData);
+    }
+
+    /**
+     * @param \App\Model\Payment\PaymentData $paymentData
+     */
+    protected function setData(BasePaymentData $paymentData): void
+    {
+        parent::setData($paymentData);
 
         $this->type = $paymentData->type;
         $this->setGoPayPaymentMethod($paymentData);
@@ -134,14 +137,6 @@ class Payment extends BasePayment
         if ($this->type === self::TYPE_GOPAY) {
             $this->goPayPaymentMethod = $paymentData->goPayPaymentMethod;
         }
-    }
-
-    /**
-     * @param \App\Model\Payment\PaymentData $paymentData
-     */
-    protected function setData(BasePaymentData $paymentData): void
-    {
-        parent::setData($paymentData);
     }
 
     /**

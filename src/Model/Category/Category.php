@@ -58,8 +58,6 @@ class Category extends BaseCategory
         parent::__construct($categoryData);
 
         $this->akeneoCode = $categoryData->akeneoCode;
-        $this->svgIcon = $categoryData->svgIcon;
-        $this->overLimitQuantity = $categoryData->overLimitQuantity;
         $this->isSaleCategory = $categoryData->isSaleCategory;
     }
 
@@ -69,6 +67,14 @@ class Category extends BaseCategory
     public function edit(BaseCategoryData $categoryData)
     {
         parent::edit($categoryData);
+    }
+
+    /**
+     * @param \App\Model\Category\CategoryData $categoryData
+     */
+    protected function setData(BaseCategoryData $categoryData): void
+    {
+        parent::setData($categoryData);
 
         $this->svgIcon = $categoryData->svgIcon;
         $this->overLimitQuantity = $categoryData->overLimitQuantity;
@@ -153,14 +159,6 @@ class Category extends BaseCategory
     public function getCategoryDomains()
     {
         return $this->domains;
-    }
-
-    /**
-     * @param \App\Model\Category\CategoryData $categoryData
-     */
-    protected function setData(BaseCategoryData $categoryData): void
-    {
-        parent::setData($categoryData);
     }
 
     /**

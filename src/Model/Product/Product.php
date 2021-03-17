@@ -119,10 +119,6 @@ class Product extends BaseProduct
     {
         parent::__construct($productData, $variants);
 
-        $this->downloadAssemblyInstructionFiles = $productData->downloadAssemblyInstructionFiles;
-        $this->downloadProductTypePlanFiles = $productData->downloadProductTypePlanFiles;
-        $this->preorder = $productData->preorder;
-        $this->vendorDeliveryDate = $productData->vendorDeliveryDate;
         $this->flags = new ArrayCollection();
     }
 
@@ -134,11 +130,20 @@ class Product extends BaseProduct
     {
         parent::edit($productCategoryDomains, $productData);
 
+        $this->markForExport();
+    }
+
+    /**
+     * @param \App\Model\Product\ProductData $productData
+     */
+    protected function setData(BaseProductData $productData): void
+    {
+        parent::setData($productData);
+
         $this->downloadAssemblyInstructionFiles = $productData->downloadAssemblyInstructionFiles;
         $this->downloadProductTypePlanFiles = $productData->downloadProductTypePlanFiles;
         $this->preorder = $productData->preorder;
         $this->vendorDeliveryDate = $productData->vendorDeliveryDate;
-        $this->markForExport();
     }
 
     /**
@@ -707,14 +712,6 @@ class Product extends BaseProduct
     public function getCatnum(): string
     {
         return $this->catnum;
-    }
-
-    /**
-     * @param \App\Model\Product\ProductData $productData
-     */
-    protected function setData(BaseProductData $productData): void
-    {
-        parent::setData($productData);
     }
 
     /**
