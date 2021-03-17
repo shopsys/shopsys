@@ -147,7 +147,8 @@
         "zalas/phpunit-injector": "^1.4"
     },
     "conflict": {
-        "symfony/symfony": "*"
+        "symfony/symfony": "*",
+        "symfony/dependency-injection": ">=4.4.19"
     },
     "scripts": {
         "post-install-cmd": [

@@ -1102,9 +1102,6 @@
     "vasek-purchart/console-errors-bundle": {
         "version": "1.0.1"
     },
-    "webimpress/safe-writer": {
-        "version": "2.0.1"
-    },
     "webmozart/assert": {
         "version": "1.5.0"
     },
