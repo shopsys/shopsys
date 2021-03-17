@@ -44,7 +44,7 @@
                         <button
                             type="submit"
                             name="cart_form[submit]"
-                            class="btn btn--checkout-step js-no-validate-button">
+                            class="btn js-no-validate-button">
                             {{ 'Doprava a platba'|trans }}
                         </button>
                     </div>
@@ -70,14 +70,14 @@
                             </div>
                             <div class="box-cart__buttons">
                                 <div class="box-cart__buttons__back">
-                                    <a href="{{ url('front_homepage') }}" class="btn btn--prev btn--checkout-prev btn-no-style btn--arrow btn--arrow-prev">
+                                    <a href="{{ url('front_homepage') }}" class="btn btn-no-style btn--arrow btn--arrow-prev">
                                         <i class="btn__icon svg svg-chevron svg-fw-bold"></i>
                                         {{ 'Zpět do obchodu'|trans }}
                                     </a>
                                 </div>
                                 {% if cart.itemsCount > 0 %}
                                     <div class="box-cart__buttons__next">
-                                        {{ form_row(form.submit, { label: 'Doprava a platba'|trans, attr: { class: 'btn btn--checkout-step'}}) }}
+                                        {{ form_row(form.submit, { label: 'Doprava a platba'|trans, attr: { class: 'btn'}}) }}
                                     </div>
                                 {% endif %}
                             </div>
@@ -98,7 +98,7 @@
                 <div class="box-cart-empty">
                     <div class="box-cart-empty__text">
                         <h1 class="box-cart-empty__heading">{{ 'Váš nákupní košík je prázdný.'|trans }}</h1>
-                        <a href="{{ url('front_homepage') }}" class="box-cart-empty__btn btn btn--outline">
+                        <a href="{{ url('front_homepage') }}" class="box-cart-empty__btn btn">
                             {{ 'Přejít do e-shopu'|trans }}
                         </a>
                     </div>

@@ -35,7 +35,7 @@
                                                     <label>{{ 'Vaše heslo'|trans }}</label>
                                                     <input type="password" class="input js-order-form-login-password" />
                                                 </div>
-                                                <button class="window-popup__actions__btn window-popup__actions__btn--continue window-button-continue btn btn--primary js-order-form-login-submit">
+                                                <button class="window-popup__actions__btn window-popup__actions__btn--continue window-button-continue btn js-order-form-login-submit">
                                                     {{ 'Přihlásit'|trans }}
                                                 </button>
                                                 <a class="window-popup__link" href="{{ url('front_registration_reset_password') }}">{{ 'Zapomněli jste vaše heslo?'|trans }}</a>
@@ -241,7 +241,7 @@
                     </div>
                     <div class="box-cart__buttons box-cart__buttons--final">
                         <div class="box-cart__buttons__back">
-                            <button type="submit" name="{{ flow.getFormTransitionKey() }}" value="back" class="btn btn--prev btn--checkout-prev btn-no-style btn--arrow btn--arrow-prev js-no-validate-button">
+                            <button type="submit" name="{{ flow.getFormTransitionKey() }}" value="back" class="btn btn-no-style btn--arrow btn--arrow-prev js-no-validate-button">
                                 <i class="btn__icon svg svg-chevron"></i>
                                 {{ 'Zpět na Dopravu a platbu'|trans }}
                             </button>
@@ -263,7 +263,7 @@
                                 {% endif %}
                             </span>
                             {{ form_row(form.newsletterSubscription, { label: 'I want to subscribe to the newsletter'|trans }) }}
-                            {{ form_widget(form.save, { label: 'Odeslat objednávku'|trans, attr: { class: 'btn btn--checkout-send' } }) }}
+                            {{ form_widget(form.save, { label: 'Odeslat objednávku'|trans, attr: { class: 'btn' } }) }}
                         </div>
                     </div>
                 </div>

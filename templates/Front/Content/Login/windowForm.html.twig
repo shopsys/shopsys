@@ -23,7 +23,7 @@
             </div>
             <div class="box-login__buttons">
                 <div class="box-login__item box-login__item--submit">
-                    {{ form_widget(form.login, { label: 'Přihlásit'|trans, attr: { 'class': 'btn--outline btn--login' }}) }}
+                    {{ form_widget(form.login, { label: 'Přihlásit'|trans }) }}
                 </div>
                 <div class="box-login__alert">
                     <img class="box-login__alert__icon" src="{{ asset('public/frontend/images/warning.svg') }}" alt="{{ 'Forgot your password?'|trans }}">
@@ -46,7 +46,7 @@
             <p class="box-login__message">
                 {{ 'Nebudete muset dokola vyplňovat adresy a uvidíte přehled všech objednávek.'|trans }}
             </p>
-            <a href="{{ url('front_registration_register') }}" class="btn btn--secondary btn--full-width btn--registration js-registration-link-desktop">{{ 'Registrujte se'|trans }}</a>
+            <a href="{{ url('front_registration_register') }}" class="btn js-registration-link-desktop">{{ 'Registrujte se'|trans }}</a>
         </div>
     </div>
 

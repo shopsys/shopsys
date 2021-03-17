@@ -180,7 +180,7 @@
 {% endmacro %}
 
 {% macro loadMoreButton(paginationResult, url = '', pageQueryParameter = 'page') %}
-    <input type="button" class="btn btn--secondary btn--wide js-load-more-button btn"
+    <input type="button" class="btn js-load-more-button btn"
            data-page="{{ paginationResult.page }}"
            data-page-size="{{ paginationResult.pageSize }}"
            data-pagination-to-item="{{ paginationResult.toItem }}"

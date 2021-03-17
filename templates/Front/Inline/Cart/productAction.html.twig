@@ -1,7 +1,7 @@
-{% set buttonSizeClass = (type == 'large' ? ' btn--larger ' : ' ') %}
+{% set buttonSizeClass = (type == 'large' ? ' ' : ' ') %}
 
 {% if productActionView.mainVariant %}
-    <a href="{{ productActionView.detailUrl }}" class="btn btn--success {{ buttonSizeClass }}">
+    <a href="{{ productActionView.detailUrl }}" class="btn {{ buttonSizeClass }}">
         {{- 'Choose variant'|trans -}}
     </a>
 {% elseif productActionView.sellingDenied %}

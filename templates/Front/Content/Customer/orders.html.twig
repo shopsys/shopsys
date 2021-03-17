@@ -19,7 +19,7 @@
             {% if orders|length == 0 %}
                 <div class="wrap-box wrap-box--v2 wrap-box--empty">
                     <h2 class="wrap-box__heading">{{ 'No order so far.'|trans }}</h2>
-                    <a class="btn btn--success-v2" href="{{ url('front_homepage') }}">
+                    <a class="btn" href="{{ url('front_homepage') }}">
                         {{ 'Zpět do obchodu'|trans }}
                     </a>
                 </div>
@@ -54,7 +54,7 @@
                                     <td class="box-table__item box-table__item--payment-name">
                                         {{ order.paymentName }}
                                         {% if order.payment.goPay is same as (true) and order.gopayPaid == false %}
-                                            <a class="btn btn--success-v2 btn--mini btn--in-text box-table__btn" href="{{ url('front_order_repeat_gopay_payment', { urlHash: order.urlHash }) }}">
+                                            <a class="btn btn--mini btn--in-text box-table__btn" href="{{ url('front_order_repeat_gopay_payment', { urlHash: order.urlHash }) }}">
                                                 {{ 'Zaplatit'|trans }}
                                             </a>
                                         {% endif %}

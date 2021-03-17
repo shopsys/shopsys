@@ -22,7 +22,7 @@
 
                 {% if order.payment.goPay is same as (true) and order.gopayPaid == false %}
                     <div class="wrap-box-top">
-                        <a class="btn btn btn--inline-block btn--success-v2" href="{{ url('front_order_repeat_gopay_payment', { urlHash: order.urlHash }) }}">
+                        <a class="btn" href="{{ url('front_order_repeat_gopay_payment', { urlHash: order.urlHash }) }}">
                             {{ 'Opakovat platbu'|trans }}
                         </a>
                     </div>

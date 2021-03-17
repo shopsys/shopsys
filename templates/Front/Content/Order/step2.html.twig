@@ -9,7 +9,7 @@
                         <button
                             type="submit"
                             name="transport_and_payment_form[save]"
-                            class="btn btn--checkout-step js-no-validate-button js-transport_and_payment_form_save">
+                            class="btn js-no-validate-button js-transport_and_payment_form_save">
                             {{ 'Vaše údaje'|trans }}
                         </button>
                     </div>
@@ -283,13 +283,13 @@
                         </div>
                         <div class="box-cart__buttons">
                             <div class="box-cart__buttons__back">
-                                <button type="submit" name="{{ flow.getFormTransitionKey() }}" value="back" class="btn btn--prev btn--checkout-prev btn-no-style btn--arrow btn--arrow-prev js-no-validate-button">
+                                <button type="submit" name="{{ flow.getFormTransitionKey() }}" value="back" class="btn btn-no-style btn--arrow btn--arrow-prev js-no-validate-button">
                                     <i class="btn__icon svg svg-chevron"></i>
                                     {{ 'Back to cart'|trans }}
                                 </button>
                             </div>
                             <div class="box-cart__buttons__next">
-                                {{ form_widget(form.save, { label: 'Vaše údaje'|trans, attr: { class: 'btn btn--checkout-step js-no-validate-button js-transport_and_payment_form_save' } }) }}
+                                {{ form_widget(form.save, { label: 'Vaše údaje'|trans, attr: { class: 'btn js-no-validate-button js-transport_and_payment_form_save' } }) }}
                             </div>
                         </div>
                     </div>

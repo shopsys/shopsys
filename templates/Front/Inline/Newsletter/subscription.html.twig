@@ -13,7 +13,7 @@
                     {{ form_widget(form.email, { attr: {placeholder: 'Váš e-mail'|trans, class: 'footer__newsletter__form__input'} }) }}
                     {{ form_errors(form.email) }}
                 </div>
-                {{ form_widget(form.send, { label: 'Odeslat'|trans, attr: { class: "btn btn--primary btn--newsletter footer__newsletter__form__btn" }}) }}
+                {{ form_widget(form.send, { label: 'Odeslat'|trans, attr: { class: "btn footer__newsletter__form__btn" }}) }}
             </div>
             <div class="form-choice">
                 {{ form_widget(form.privacyPolicyAgreement, { attr: { class: "css-checkbox" } }) }}

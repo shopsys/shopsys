@@ -35,8 +35,7 @@ export default class AddProduct {
                 textContinue: Translator.trans('Do košíku'),
                 urlContinue: buttonContinueUrl,
                 buttonCancel: true,
-                textCancel: Translator.trans('Back to shop'),
-                cssClassContinue: 'btn--success'
+                textCancel: Translator.trans('Back to shop')
             });
 
             if (diffOfSpinMaxAndAddedQuantity >= 0) {
@@ -50,8 +49,7 @@ export default class AddProduct {
                 content: data,
                 cssClass: cssClass,
                 buttonCancel: true,
-                textCancel: Translator.trans('Close'),
-                cssClassCancel: 'btn--success'
+                textCancel: Translator.trans('Close')
             });
         }
     }

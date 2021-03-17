@@ -8,7 +8,7 @@
         <div class="box-promo-code__wrap form-line-block js-form-field">
             <label>{{ 'Slevový kód'|trans }}</label>
             <input type="text" value="" id="js-promo-code-input" class="input box-promo-code__input" data-apply-code-url="{{ url('front_promo_code_apply') }}"/>
-            <button type="button" id="js-promo-code-submit-button" class="btn btn--primary box-promo-code__btn">{{ 'Apply'|trans }}</button>
+            <button type="button" id="js-promo-code-submit-button" class="btn box-promo-code__btn">{{ 'Apply'|trans }}</button>
         </div>
         <p class="box-cart__promo__desc">
             {{ 'Nemáte slevový kód? Prohlédněte si seznam našich<br><a class="box-cart__promo__desc__link" href="%url%">aktuálně platných akcí</a>.'|transHtml({'%url%': promoDescUrl}) }}

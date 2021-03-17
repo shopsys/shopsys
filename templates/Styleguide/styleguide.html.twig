@@ -318,30 +318,26 @@
                         <h2 class="styleguide-module__title">Buttons</h2>
 
                         <a href="#buttons" class="btn">Primary button</a> &nbsp;
-                        <a href="#buttons" class="btn btn--success">Success button</a> &nbsp;
-                        <a href="#buttons" class="btn btn--success"><i class="svg svg-arrow"></i>Go to cart</a> &nbsp;
-                        <a href="#buttons" class="window-popup__actions__btn--continue window-button-continue btn btn--success">Go to cart <i class="svg svg-arrow"></i></a> &nbsp;
+                        <a href="#buttons" class="btn btn--secondary">Secondary button</a> &nbsp;
+                        <a href="#buttons" class="btn btn--with-icon btn--with-icon--right svg svg-arrow">Button with icon on the right side</a> &nbsp;
+                        <a href="#buttons" class="btn btn--with-icon btn--with-icon--left svg svg-arrow">Button with icon on the left side</a> &nbsp;
                         <a href="#buttons" class="btn btn--disabled">Disabled</a> &nbsp;
-                        <a href="#buttons" class="btn btn--outline">Outline</a> &nbsp;
                         <a href="#buttons" class="btn-no-style">No style</a> &nbsp;
                         <br><br>
                         <a href="#buttons" class="btn btn--small">Primary small</a> &nbsp;
                         <a href="#buttons" class="btn">Primary</a> &nbsp;
-                        <a href="#buttons" class="btn btn--large">Primary large</a> &nbsp;
 
                         <div class="styleguide-module__editor">
                             <textarea class="codemirror-html" id="html-buttons">
 <a href="#" class="btn">Primary button</a>
-<a href="#" class="btn btn--success">Success button</a>
-<a href="#" class="btn btn--success"><i class="svg svg-arrow"></i>Go to cart</a>
-<a href="#" class="window-popup__actions__btn--continue window-button-continue btn btn--success">Go to cart <i class="svg svg-arrow"></i></a>
+<a href="#" class="btn btn--secondary">Secondary button</a>
+<a href="#" class="btn btn--with-icon btn--with-icon--right svg svg-arrow">Button with icon on the right side</a>
+<a href="#" class="btn btn--with-icon btn--with-icon--left svg svg-arrow">Button with icon on the left side</a>
 <a href="#" class="btn btn--disabled">Disabled</a>
-<a href="#" class="btn btn--outline">Outline</a>
 <a href="#" class="btn-no-style">No style</a>
 
 <a href="#" class="btn btn--small">Primary small</a>
 <a href="#" class="btn">Primary</a>
-<a href="#" class="btn btn--large">Primary large</a>
                             </textarea>
                         </div>
                     </section>
@@ -692,7 +688,7 @@
                                     class="btn-no-style form-input-spinbox__btn form-input-spinbox__btn--minus js-spinbox-minus">-</button>
                         </span>
                         <button type="submit" name="add_product_form[add]"
-                                class="btn--success  btn id__add_product_form_add">Add to cart
+                                class="btn id__add_product_form_add">Add to cart
                         </button>
                         <input type="hidden" name="add_product_form[productId]"
                                class="input id__add_product_form_productId" value="1">
@@ -779,14 +775,14 @@
                         <h2 class="styleguide-module__title">Toggle</h2>
 
                         <h3 class="styleguide-module__title--small">Responsive toggle</h3>
-                        <a href="#toggle" class="btn btn--success js-responsive-toggle" data-element="hidden-div"
+                        <a href="#toggle" class="btn js-responsive-toggle" data-element="hidden-div"
                            data-element="hide-on-click-out">Toggle Button</a>
 
                         <div id="hidden-div" class="display-none">This is hidden div content</div>
 
                         <div class="styleguide-module__editor">
                             <textarea class="codemirror-html" id="html-list-simple">
-<a href="#toggle" class="btn btn--success js-responsive-toggle" data-element="hidden-div"
+<a href="#toggle" class="btn js-responsive-toggle" data-element="hidden-div"
    data-hide-on-click-out="true">Toggle Button</a>
 
 <div id="hidden-div" class="display-none">This is hidden div content</div>
@@ -815,7 +811,7 @@
 
                         <div class="styleguide-module__editor">
                             <textarea class="codemirror-html" id="html-list-simple">
-<a href="#toggle" class="btn btn--success js-checkbox-toggle"
+<a href="#toggle" class="btn js-checkbox-toggle"
    data-checkbox-toggle-container-class="js-checkbox-show-hide-this">Toggle Button</a>
 
 <div class="js-checkbox-show-hide-this display-none">This is checbox show hide element content</div>
@@ -1086,7 +1082,7 @@
 
                         <div class="in-paging__control" style="padding-top: 20px;">
                             <div class="in-paging__button-more text-center">
-                                <input class="js-load-more-button btn btn--success btn--large" data-page="1"
+                                <input class="js-load-more-button btn" data-page="1"
                                        data-total-count="4" data-page-size="12" data-pagination-to-item="4"
                                        value="Load next 20 products" type="button">
                             </div>
