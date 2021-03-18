@@ -8,7 +8,6 @@
 
 @menu-horizontal-height: 46px;
 @menu-horizontal-item-padding: 18px;
-@menu-horizontal-item-font-size: 15px;
 @menu-horizontal-sub-padding: 20px;
 @menu-horizontal-sub-image-size: 52px;
 @menu-horizontal-flags-bar-height: 30px;
@@ -16,7 +15,6 @@
 @menu-horizontal-brand-height: 32px;
 @menu-horizontal-brand-image-width: 60px;
 
-@menu-horizontal-font-color: @color-f;
 @menu-horizontal-font-hover-color: @color-primary;
 
 @menu-horizontal-item-image-width: 280px;
@@ -35,7 +33,6 @@
 @menu-horizontal-item-sale-size: 24px;
 
 .menu-horizontal {
-
     .reset-ul();
     display: none;
     width: 100%;
@@ -83,12 +80,8 @@
         height: @menu-horizontal-height;
         overflow: hidden;
 
-        font-size: @menu-horizontal-item-font-size - 1;
-
         @media @query-vl {
             margin-right: 1.5rem;
-
-            font-size: @menu-horizontal-item-font-size;
         }
 
         @media @query-xl {
@@ -107,34 +100,13 @@
             border: 1px solid transparent;
 
             &:hover {
-                border-color: @color-add-light;
-                box-shadow: 0 0 0 3px rgba(255, 173, 0, 0.25);
-
                 > .menu-horizontal__item__link::before {
                     visibility: visible;
                 }
 
                 .menu-horizontal__sub {
                     opacity: 1;
-                    transform: scale(1);
                     pointer-events: auto;
-                }
-            }
-
-            > .menu-horizontal__item__link {
-                position: relative;
-
-                &::before {
-                    position: absolute;
-                    left: 0;
-                    bottom: -4px;
-                    height: 8px;
-                    width: 100%;
-                    content: '';
-                    z-index: 101;
-                    visibility: hidden;
-
-                    background-color: @color-f;
                 }
             }
         }
@@ -207,60 +179,23 @@
             height: @menu-horizontal-height;
             line-height: @menu-horizontal-height;
 
-            font-size: @menu-horizontal-item-font-size - 1;
-            font-family: @font-base;
-            color: @menu-horizontal-font-color;
-            transition: none;
+            font-size: @font-size-mobile;
+            font-weight: 700;
+            color: @color-f;
+            text-transform: uppercase;
+            text-decoration: none;
 
             @media @query-sl {
                 padding: 0 15px;
             }
 
             @media @query-vl {
-                font-size: @menu-horizontal-item-font-size;
+                font-size: @font-size;
             }
 
             &:hover {
-                color: @menu-horizontal-font-color;
-                text-decoration: underline;
-            }
-
-            .svg {
-                padding-left: 3px;
-
-                font-size: 10px;
-            }
-
-            &--icon {
-                margin-left: 0;
-            }
-
-            &--cats {
-                display: none;
-
-                @media @query-lg {
-                    display: flex;
-                    align-items: center;
-                    position: absolute;
-                    left: 1rem;
-                    top: 0;
-                    padding: 0 0.5rem 0 0;
-                    height: 100%;
-
-                    .svg {
-                        margin-top: 3px;
-
-                        font-size: 32px;
-                    }
-                }
-
-                .menu-horizontal__item__link__text {
-                    display: none;
-
-                    @media @query-sl {
-                        display: inline-block;
-                    }
-                }
+                color: @color-f;
+                text-decoration: none;
             }
 
             &--sale {
@@ -316,16 +251,9 @@
         margin-left: @menu-horizontal-submenu-move;
         padding: 20px 9px 9px @menu-horizontal-sub-padding;
 
-        border-bottom-left-radius: @radius;
-        border-bottom-right-radius: @radius;
-        border: 1px solid @color-add-light;
         background: @color-f;
-        transition: none;
-        will-change: transform;
-        box-shadow: 0 0 0 3px rgba(255, 173, 0, .25);
+        box-shadow: 0 5px 10px 0 rgba(164, 167, 193, 0.34);
         opacity: 0;
-        transform: scale(0.9);
-        transform-origin: top left;
         pointer-events: none;
 
         &__wrap {
@@ -416,13 +344,14 @@
                     margin: 0 0 25px 15px;
                     padding-right: 12px;
 
-                    font-size: 16px;
-                    font-family: @font-base;
+                    font-size: @font-size;
+                    font-weight: 700;
                     line-height: 1.4;
-                    color: @color-primary-light;
+                    color: @color-base;
+                    text-decoration: none;
 
                     &:hover {
-                        color: @color-add-light;
+                        color: @color-base;
                     }
                 }
 
@@ -433,7 +362,6 @@
                     a {
                         font-size: 15px;
                         display: block;
-                        color: @color-primary;
                     }
 
                     li ul {
@@ -454,15 +382,9 @@
                                 display: block;
                                 width: auto;
 
-                                font-family: @font-base;
                                 font-weight: 400;
                                 font-size: 15px;
-                                color: @color-base-lighter;
                                 transition: none;
-
-                                &:hover {
-                                    color: @color-add-light;
-                                }
                             }
 
                             .btn {
@@ -661,7 +583,6 @@
                 }
 
                 &__name {
-                    font-family: @font-base;
                     font-size: 14px;
                     font-weight: 400;
                 }

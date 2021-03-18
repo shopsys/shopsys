@@ -60,10 +60,8 @@
                 padding-right: 35px;
                 width: 100%;
 
-                font-family: @font-base;
                 font-size: 13px;
                 line-height: 1.4;
-                color: @color-primary;
                 text-decoration: none;
 
                 &__prefix {
@@ -77,15 +75,13 @@
                 min-width: 140px;
                 padding-right: 15px;
 
-                color: @color-primary;
-                font-family: @font-base;
+                color: @color-price;
                 text-align: right;
                 line-height: 1.3;
 
                 &--high {
                     display: block;
 
-                    font-family: @font-base;
                     font-size: 13px;
                     line-height: 1;
                     text-decoration: line-through;
@@ -121,7 +117,7 @@
                 text-decoration: none;
 
                 .svg {
-                    color: @color-add-light;
+                    color: @color-add;
                 }
             }
 
@@ -129,7 +125,7 @@
                 position: relative;
                 top: 3px;
                 font-size: @cart-detail-remove-size;
-                color: @color-primary;
+                color: @color-base;
             }
 
             &:hover {
@@ -146,9 +142,8 @@
 
         background-color: @color-f;
         border: 1px solid @color-border;
-        border-radius: @radius;
-        font-family: @font-base;
-        color: @color-primary;
+        border-radius: @radius-medium;
+        color: @color-base;
 
         &__text {
             text-align: left;
@@ -161,13 +156,14 @@
             text-align: right;
 
             font-size: 18px;
+            font-weight: 700;
+            color: @color-price;
             line-height: 1;
 
             &__previous {
                 margin-right: 20px;
 
                 font-size: 13px;
-                font-family: @font-base;
                 text-decoration: line-through;
             }
         }

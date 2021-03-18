@@ -25,7 +25,6 @@
                 flex-direction: row;
                 justify-content: center;
                 align-items: center;
-                padding: @menu-iconic-link-padding;
 
                 font-size: @menu-iconic-link-font-size;
                 color: @color-f;
@@ -101,7 +100,6 @@
                     display: block;
                     padding: 12px 20px;
 
-                    font-family: @font-base;
                     color: @color-primary;
 
                     &:hover {
@@ -117,7 +115,11 @@
         height: 100%;
 
         &__item {
-            margin: 0 5px;
+            margin-right: 32px;
+
+            &:last-child {
+                margin-right: 0;
+            }
         }
 
         &__item,
