@@ -1,15 +1,5 @@
 -   pathsToCheck:
-        - ./**/*.{yaml,yml}
-    excludedPaths:
-        - ./vendor/**/*.{yaml,yml}
-        - ./node_modules/**/*.{yaml,yml}
-        - ./config/domains_urls.yaml
-        - ./config/oauth2/parameters_oauth.yaml.dist
-        - ./kubernetes/horizontalPodAutoscaler/webserver-php-fpm.yaml
-        - ./kubernetes/deployments/cron.yaml
-        - ./storefront/**/*.{yaml,yml}
-        - ./storefront/*.{yaml,yml}
-        - ./var/deployment/**/*.{yaml,yml} #this is ignored because of wrong formatting in devops/kubernetes-deployment
+        - ./*.{yml,yaml,yml.dist,yaml.dist}
     checkers:
         -   pathToChecker: YamlStandards\Model\YamlIndent\YamlIndentChecker
             parameters:
@@ -18,3 +8,20 @@
             parameters:
                 { serviceAliasingType: long, indents: 4 }
         -   pathToChecker: YamlStandards\Model\YamlEmptyLineAtEnd\YamlEmptyLineAtEndChecker
+        -   pathToChecker: YamlStandards\Model\YamlAlphabetical\YamlAlphabeticalChecker
+            parameters:
+                depth: 3
+                prioritizedKeys: [ imports, _defaults::exact, resolverMaps::exact ]
+    excludedPaths:
+        - ./**/*.types.{yaml,yml}
+        - ./**/docker*
+        - ./**/gitlab*
+        - ./**/monolog.{yaml,yml}
+        - ./**/routing*.{yaml,yml}
+        - ./config/cron.yaml
+        - ./config/packages/security.yaml
+        - ./docker*
+        - ./migrations-lock.{yaml,yml}
+        - ./node_modules/*
+        - ./var/*
+        - ./vendor/*
