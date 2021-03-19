@@ -18,7 +18,7 @@ variables:
     COMPOSE_PROJECT_NAME: ${CI_PROJECT_NAME}__${CI_COMMIT_REF_SLUG}
 
 before_script:
-    - docker login -u ${CI_REGISTRY_USER} -p ${CI_REGISTRY_PASSWORD} ${CI_REGISTRY}
+    - echo ${CI_REGISTRY_PASSWORD} | docker login -u ${CI_REGISTRY_USER} ${CI_REGISTRY} --password-stdin
 
 build:
     stage: build
@@ -43,25 +43,22 @@ test:functional:
         - cp -f ./gitlab/docker-compose-ci.yml ./docker-compose.yml
         - docker-compose up -d
         - docker-compose exec -T php-fpm /bin/bash -c "mv PRODUCTION DEVELOPMENT; php phing composer-dev db-create test-db-create build-demo-dev-quick error-pages-generate tests"
-#####
-# test:acceptance is temporarily disabled as it is not configured well
-###
-#test:acceptance:
-#    image: tmaier/docker-compose:latest
-#    stage: test
-#    <<: *only-default
-#    artifacts:
-#        paths:
-#            - codeception/
-#        when: on_failure
-#        expire_in: 1 day
-#    script:
-#        - cp -f ./gitlab/docker-compose-ci.yml ./docker-compose.yml
-#        - docker-compose up -d
-#        - docker-compose exec -T php-fpm /bin/bash -c "mv PRODUCTION DEVELOPMENT; php phing composer-dev db-create test-db-create build-demo-dev-quick error-pages-generate test-db-demo test-elasticsearch-index-recreate test-elasticsearch-export tests-acceptance-build tests-acceptance"
-#    after_script:
-#        - mkdir -p codeception/
-#        - docker cp shopsys-framework-php-fpm:/var/www/html/var/log/codeception/ ./
+test:acceptance:
+    image: tmaier/docker-compose:latest
+    stage: test
+    <<: *only-default
+    artifacts:
+        paths:
+            - codeception/
+        when: on_failure
+        expire_in: 1 day
+    script:
+        - cp -f ./gitlab/docker-compose-ci.yml ./docker-compose.yml
+        - docker-compose up -d
+        - docker-compose exec -T php-fpm /bin/bash -c "mv PRODUCTION DEVELOPMENT; php phing composer-dev db-create test-db-create build-demo-dev-quick error-pages-generate test-db-demo test-elasticsearch-index-recreate test-elasticsearch-export tests-acceptance-build tests-acceptance"
+    after_script:
+        - mkdir -p codeception/
+        - docker cp shopsys-framework-php-fpm:/var/www/html/var/log/codeception/ ./
 
 review:
     stage: review
