@@ -21,7 +21,7 @@ security:
             user_checker: Shopsys\FrameworkBundle\Model\Security\AdministratorChecker
             anonymous: ~
             provider: administrators
-            access_denied_url: "/admin/access-denied/"
+            access_denied_url: "/%admin_url%/access-denied/"
             form_login:
                 check_path: admin_login_check
                 login_path: admin_login

@@ -6,7 +6,8 @@ paths:
     data: ../tests/App/Acceptance/data
     support: ../tests/App/Test/Codeception
 params:
-    - ../config/parameters_test.yaml
+    - ../.env
+    - ../.env.test
 settings:
     colors: true
     memory_limit: 1024M

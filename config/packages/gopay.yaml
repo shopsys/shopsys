@@ -1,0 +1,15 @@
+parameters:
+    gopay_config:
+        cs:
+            goid: '%env(GOPAY_CS_GOID)%'
+            clientId: '%env(GOPAY_CS_CLIENTID)%'
+            clientSecret: '%env(GOPAY_CS_CLIENTSECRET)%'
+            language: CS
+        sk:
+            goid: '%env(GOPAY_SK_GOID)%'
+            clientId: '%env(GOPAY_SK_CLIENTID)%'
+            clientSecret: '%env(GOPAY_SK_CLIENTSECRET)%'
+            language: SK
+        isProductionMode: '%env(bool:GOPAY_IS_PRODUCTION_MODE)%'
+        scope: payment-all
+        timeout: 30

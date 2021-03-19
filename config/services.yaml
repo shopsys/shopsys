@@ -584,7 +584,7 @@ services:
 
     App\Component\Form\FormBuilderHelper:
         arguments:
-            $disableFields: '%disable_form_fields_from_transfer%'
+            $disableFields: '%env(bool:DISABLE_FORM_FIELDS_FROM_TRANSFER)%'
 
     App\Model\Sitemap\SitemapListener:
         tags:
