@@ -194,6 +194,10 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->descriptions[$domain->getId()] = t('Television LED, 55 cm diagonal, 1920x1080 Full HD, DVB-T MPEG4 tuner with USB recording and playback (DivX, XviD, MP3, WMA, JPEG), HDMI, SCART, VGA, pink execution, energ. Class B', [], 'dataFixtures', $domain->getLocale());
             $productData->shortDescriptions[$domain->getId()] = t('Television LED, 55 cm diagonal, 1920x1080 Full HD, DVB-T MPEG4 tuner with USB recording and playback', [], 'dataFixtures', $domain->getLocale());
 
+            $productData->seoH1s[$domain->getId()] = t('Hello Kitty Television', [], 'dataFixtures', $domain->getLocale());
+            $productData->seoTitles[$domain->getId()] = t('Hello Kitty TV', [], 'dataFixtures', $domain->getLocale());
+            $productData->seoMetaDescriptions[$domain->getId()] = t('Hello Kitty TV, LED, 55 cm diagonal, 1920x1080 Full HD.', [], 'dataFixtures', $domain->getLocale());
+
             $i = 0;
             $this->addParameterTranslations($parameterTranslations, t('Screen size', [], 'dataFixtures', $locale), t('27"', [], 'dataFixtures', $locale), $locale, $i, t('Hlavní údaje', [], 'dataFixtures', $locale));
             $this->addParameterTranslations($parameterTranslations, t('Technology', [], 'dataFixtures', $locale), t('LED', [], 'dataFixtures', $locale), $locale, $i, t('Hlavní údaje', [], 'dataFixtures', $locale));
@@ -3076,6 +3080,10 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->name[$locale] = t('100 Czech crowns ticket', [], 'dataFixtures', $locale);
             $productData->descriptions[$domain->getId()] = t('Coupon valued to 100 Czech crowns. You can cash it at any exchange office', [], 'dataFixtures', $domain->getLocale());
             $productData->shortDescriptions[$domain->getId()] = t('Coupon valued to 100 Czech crowns. You can cash it at any exchange office', [], 'dataFixtures', $domain->getLocale());
+
+            $productData->seoH1s[$domain->getId()] = t('Ticket for 100 Czech crowns', [], 'dataFixtures', $domain->getLocale());
+            $productData->seoTitles[$domain->getId()] = t('Ticket for 100 CZK', [], 'dataFixtures', $domain->getLocale());
+            $productData->seoMetaDescriptions[$domain->getId()] = t('Coupon valued to 100 Czech crowns.', [], 'dataFixtures', $domain->getLocale());
         }
 
         $this->setPriceForAllPricingGroups($productData, '100');
