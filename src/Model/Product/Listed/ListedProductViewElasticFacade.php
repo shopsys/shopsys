@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Model\Product\Listed;
 
 use App\Model\Category\CategoryFacade;
+use App\Model\Product\Action\ProductActionViewFactory;
 use App\Model\Product\Availability\ProductAvailabilityFacade;
 use App\Model\Product\Filter\ProductFilterData;
 use App\Model\Product\Product;
@@ -12,6 +13,7 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Paginator\PaginationResult;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryFacade;
+use Shopsys\FrameworkBundle\Model\Product\ProductElasticsearchProvider;
 use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
 use Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainFacadeInterface;
 use Shopsys\FrameworkBundle\Model\Product\TopProduct\TopProductFacade;
@@ -49,6 +51,8 @@ class ListedProductViewElasticFacade extends BaseListedProductViewElasticFacade
      * @param \Shopsys\ReadModelBundle\Product\Action\ProductActionViewFacade $productActionViewFacade
      * @param \Shopsys\ReadModelBundle\Image\ImageViewFacade $imageViewFacade
      * @param \App\Model\Product\Availability\ProductAvailabilityFacade $productAvailabilityFacade
+     * @param \App\Model\Product\Action\ProductActionViewFactory $productActionViewFactory
+     * @param \Shopsys\FrameworkBundle\Model\Product\ProductElasticsearchProvider $productElasticsearchProvider
      */
     public function __construct(
         ProductFacade $productFacade,
@@ -61,7 +65,9 @@ class ListedProductViewElasticFacade extends BaseListedProductViewElasticFacade
         ListedProductViewFactory $listedProductViewFactory,
         ProductActionViewFacade $productActionViewFacade,
         ImageViewFacade $imageViewFacade,
-        ProductAvailabilityFacade $productAvailabilityFacade
+        ProductAvailabilityFacade $productAvailabilityFacade,
+        ProductActionViewFactory $productActionViewFactory,
+        ProductElasticsearchProvider $productElasticsearchProvider
     ) {
         parent::__construct(
             $productFacade,
@@ -72,7 +78,9 @@ class ListedProductViewElasticFacade extends BaseListedProductViewElasticFacade
             $productOnCurrentDomainFacade,
             $listedProductViewFactory,
             $productActionViewFacade,
-            $imageViewFacade
+            $imageViewFacade,
+            $productActionViewFactory,
+            $productElasticsearchProvider
         );
 
         $this->categoryFacade = $categoryFacade;
