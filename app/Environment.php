@@ -35,12 +35,11 @@ class Environment
     }
 
     /**
-     * @param bool $console
      * @return string
      */
-    public static function getEnvironment($console)
+    public static function getEnvironment(): string
     {
-        return self::getEnvironmentFileSetting()->getEnvironment($console);
+        return self::getEnvironmentFileSetting()->getEnvironment();
     }
 
     /**
@@ -48,7 +47,7 @@ class Environment
      */
     public static function printEnvironmentInfo(IOInterface $io)
     {
-        $io->write("\nEnvironment is <info>" . self::getEnvironment(false) . "</info>\n");
+        $io->write("\nEnvironment is <info>" . self::getEnvironment() . "</info>\n");
     }
 
     /**

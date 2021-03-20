@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\App\Smoke;
 
 use App\DataFixtures\Demo\UnitDataFixture;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\FlashMessage\FlashMessage;
 use Shopsys\FrameworkBundle\Form\Admin\Product\ProductFormType;
 use Symfony\Component\DomCrawler\Form;
@@ -24,7 +25,7 @@ class NewProductTest extends FunctionalTestCase
      */
     public function testCreateOrEditProduct($relativeUrl)
     {
-        $domainUrl = $this->getContainer()->getParameter('overwrite_domain_url');
+        $domainUrl = $this->domain->getDomainConfigById(Domain::FIRST_DOMAIN_ID)->getUrl();
         $server = [
             'HTTP_HOST' => sprintf('%s:%d', parse_url($domainUrl, PHP_URL_HOST), parse_url($domainUrl, PHP_URL_PORT)),
         ];
