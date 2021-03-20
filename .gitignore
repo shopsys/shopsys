@@ -8,6 +8,7 @@
 /var/*
 !/var/.gitkeep
 /vendor
+/ACCEPTANCE
 /DEVELOPMENT
 /PRODUCTION
 /TEST
