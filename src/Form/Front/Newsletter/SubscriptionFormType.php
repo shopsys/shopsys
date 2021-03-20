@@ -28,6 +28,9 @@ class SubscriptionFormType extends AbstractType
                 'required' => true,
                 'constraints' => [
                     new Constraints\NotBlank(),
+                    new Constraints\Length(
+                        ['max' => 255, 'maxMessage' => 'Email cannot be longer than {{ limit }} characters']
+                    ),
                     new Email(),
                 ],
             ])
