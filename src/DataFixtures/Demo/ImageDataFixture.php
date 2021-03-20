@@ -5,9 +5,10 @@ declare(strict_types=1);
 namespace App\DataFixtures\Demo;
 
 use App\Model\Slider\SliderItemFacade;
+use DateTimeImmutable;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\Query\ResultSetMapping;
 use Doctrine\Persistence\ObjectManager;
 use League\Flysystem\FilesystemInterface;
 use League\Flysystem\MountManager;
@@ -19,7 +20,6 @@ use Symfony\Component\Finder\Finder;
 class ImageDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
 {
     public const IMAGES_TABLE_NAME = 'images';
-
     public const IMAGE_TYPE = 'jpg';
 
     /**
@@ -278,22 +278,30 @@ class ImageDataFixture extends AbstractReferenceFixture implements DependentFixt
      */
     private function saveImageIntoDb(int $entityId, string $entityName, int $imageId, ?string $type = null, ?string $akeneoImageType = null)
     {
-        $query = $this->em->createNativeQuery(
-            'INSERT INTO images (id, entity_name, entity_id, type, extension, position, modified_at, akeneo_image_type)
+        $this->em->getConnection()->executeStatement(
+            'INSERT INTO images ( id, entity_name, entity_id, type, extension, position, modified_at, akeneo_image_type)
             VALUES (:id, :entity_name, :entity_id, :type, :extension, :position, :modified_at, :akeneo_image_type)',
-            new ResultSetMapping()
+            [
+                'id' => $imageId,
+                'entity_name' => $entityName,
+                'entity_id' => $entityId,
+                'type' => $type,
+                'extension' => self::IMAGE_TYPE,
+                'position' => null,
+                'modified_at' => new DateTimeImmutable('2015-04-16 11:36:06'),
+                'akeneo_image_type' => $akeneoImageType,
+            ],
+            [
+                'id' => Types::INTEGER,
+                'entity_name' => Types::STRING,
+                'entity_id' => Types::INTEGER,
+                'type' => Types::STRING,
+                'extension' => Types::STRING,
+                'position' => Types::STRING,
+                'modified_at' => Types::DATETIME_IMMUTABLE,
+                'akeneo_image_type' => Types::STRING,
+            ]
         );
-
-        $query->execute([
-            'id' => $imageId,
-            'entity_name' => $entityName,
-            'entity_id' => $entityId,
-            'type' => $type,
-            'extension' => self::IMAGE_TYPE,
-            'position' => null,
-            'modified_at' => '2015-04-16 11:36:06',
-            'akeneo_image_type' => $akeneoImageType,
-        ]);
     }
 
     /**
@@ -322,12 +330,12 @@ class ImageDataFixture extends AbstractReferenceFixture implements DependentFixt
 
     private function truncateImagesFromDb()
     {
-        $this->em->createNativeQuery('TRUNCATE TABLE ' . self::IMAGES_TABLE_NAME, new ResultSetMapping())->execute();
+        $this->em->getConnection()->executeStatement('TRUNCATE TABLE ' . self::IMAGES_TABLE_NAME);
     }
 
     private function restartImagesIdsDbSequence()
     {
-        $this->em->createNativeQuery('SELECT SETVAL(pg_get_serial_sequence(\'images\', \'id\'), COALESCE((SELECT MAX(id) FROM images) + 1, 1), false)', new ResultSetMapping())->execute();
+        $this->em->getConnection()->executeStatement('SELECT SETVAL(pg_get_serial_sequence(\'images\', \'id\'), COALESCE((SELECT MAX(id) FROM images) + 1, 1), false)');
     }
 
     /**

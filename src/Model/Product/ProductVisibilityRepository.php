@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Model\Product;
 
-use DateTime;
-use Doctrine\ORM\Query\ResultSetMapping;
+use DateTimeImmutable;
+use Doctrine\DBAL\Types\Types;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityRepository as BaseProductVisibilityRepository;
 
@@ -23,15 +23,14 @@ class ProductVisibilityRepository extends BaseProductVisibilityRepository
      */
     protected function calculateIndependentVisibility($onlyMarkedProducts)
     {
-        $now = new DateTime();
+        $now = new DateTimeImmutable();
         if ($onlyMarkedProducts) {
             $onlyMarkedProductsCondition = ' AND p.recalculate_visibility = TRUE';
         } else {
             $onlyMarkedProductsCondition = '';
         }
 
-        $query = $this->em->createNativeQuery(
-            'UPDATE product_visibilities AS pv
+        $query = 'UPDATE product_visibilities AS pv
             SET visible = CASE
                     WHEN (
                         p.calculated_hidden = FALSE
@@ -95,18 +94,26 @@ class ProductVisibilityRepository extends BaseProductVisibilityRepository
             WHERE p.id = pv.product_id
                 AND pv.domain_id = :domainId
                 AND pv.domain_id = pd.domain_id
-            ' . $onlyMarkedProductsCondition,
-            new ResultSetMapping()
-        );
+            ' . $onlyMarkedProductsCondition;
 
         foreach ($this->domain->getAll() as $domain) {
-            $query->execute([
-                'now' => $now,
-                'locale' => $domain->getLocale(),
-                'domainId' => $domain->getId(),
-                'variantTypeMain' => Product::VARIANT_TYPE_MAIN,
-                'variantTypeVariant' => Product::VARIANT_TYPE_VARIANT,
-            ]);
+            $this->em->getConnection()->executeStatement(
+                $query,
+                [
+                    'now' => $now,
+                    'locale' => $domain->getLocale(),
+                    'domainId' => $domain->getId(),
+                    'variantTypeMain' => Product::VARIANT_TYPE_MAIN,
+                    'variantTypeVariant' => Product::VARIANT_TYPE_VARIANT,
+                ],
+                [
+                    'now' => Types::DATETIME_IMMUTABLE,
+                    'locale' => Types::STRING,
+                    'domainId' => Types::INTEGER,
+                    'variantTypeMain' => Types::STRING,
+                    'variantTypeVariant' => Types::STRING,
+                ]
+            );
         }
     }
 }

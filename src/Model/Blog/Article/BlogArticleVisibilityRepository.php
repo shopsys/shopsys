@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Model\Blog\Article;
 
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\Query\ResultSetMapping;
 use Exception;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
@@ -56,7 +56,7 @@ class BlogArticleVisibilityRepository
      */
     private function refreshBlogArticlesVisibilityOnDomain(DomainConfig $domainConfig): void
     {
-        $query = $this->em->createNativeQuery(
+        $this->em->getConnection()->executeStatement(
             'UPDATE blog_article_domains AS bad
                 SET visible = CASE
                     WHEN (
@@ -84,12 +84,14 @@ class BlogArticleVisibilityRepository
             FROM blog_articles AS ba
             WHERE ba.id = bad.blog_article_id
                 AND bad.domain_id = :domainId',
-            new ResultSetMapping()
+            [
+                'locale' => $domainConfig->getLocale(),
+                'domainId' => $domainConfig->getId(),
+            ],
+            [
+                'locale' => Types::STRING,
+                'domainId' => Types::INTEGER,
+            ]
         );
-
-        $query->execute([
-            'locale' => $domainConfig->getLocale(),
-            'domainId' => $domainConfig->getId(),
-        ]);
     }
 }
