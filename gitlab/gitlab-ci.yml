@@ -140,14 +140,11 @@ security:check:
     script:
         - docker create -ti --name image ${TAG} bash
         - docker cp image:/var/www/html/var/ ./
-        - mkdir -p /root/.kube/ && echo "${KUBE_CONFIG}" > /root/.kube/config
         - chmod +x ./deploy/deploy-project.sh && ./deploy/deploy-project.sh deploy
 
 deploy:production:
     <<: *deploy
     resource_group: deploy_production
-    variables:
-        KUBE_CONFIG: ${KUBE_CONFIG_PROD}
     needs:
         - build
     rules:
@@ -159,12 +156,12 @@ deploy:production:
     environment:
         name: production
         url: https://${DOMAIN_HOSTNAME_1}
+        kubernetes:
+            namespace: ${PROJECT_NAME}
 
 deploy:devel:
     <<: *deploy
     resource_group: deploy_devel
-    variables:
-        KUBE_CONFIG: ${KUBE_CONFIG_DEVEL}
     needs:
         - build
         - test:standards
@@ -177,3 +174,5 @@ deploy:devel:
     environment:
         name: devel
         url: https://${DOMAIN_HOSTNAME_1}
+        kubernetes:
+            namespace: ${PROJECT_NAME}
