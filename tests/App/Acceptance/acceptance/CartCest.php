@@ -7,7 +7,6 @@ namespace Tests\App\Acceptance\acceptance;
 use Tests\App\Acceptance\acceptance\PageObject\Front\CartBoxPage;
 use Tests\App\Acceptance\acceptance\PageObject\Front\CartPage;
 use Tests\App\Acceptance\acceptance\PageObject\Front\FloatingWindowPage;
-use Tests\App\Acceptance\acceptance\PageObject\Front\HomepagePage;
 use Tests\App\Acceptance\acceptance\PageObject\Front\ProductDetailPage;
 use Tests\App\Test\Codeception\AcceptanceTester;
 
@@ -42,33 +41,6 @@ class CartCest
         $me->amOnLocalizedRoute('front_cart');
 
         $cartPage->assertProductQuantity('22" Sencor SLE 22F46DM4 HELLO KITTY', 6);
-    }
-
-    /**
-     * @param \Tests\App\Acceptance\acceptance\PageObject\Front\CartPage $cartPage
-     * @param \Tests\App\Acceptance\acceptance\PageObject\Front\HomepagePage $homepagePage
-     * @param \Tests\App\Acceptance\acceptance\PageObject\Front\CartBoxPage $cartBoxPage
-     * @param \Tests\App\Test\Codeception\AcceptanceTester $me
-     * @param \Tests\App\Acceptance\acceptance\PageObject\Front\FloatingWindowPage $floatingWindowPage
-     */
-    public function testAddToCartFromHomepage(
-        CartPage $cartPage,
-        HomepagePage $homepagePage,
-        CartBoxPage $cartBoxPage,
-        AcceptanceTester $me,
-        FloatingWindowPage $floatingWindowPage
-    ) {
-        $me->wantTo('add product to cart from homepage');
-        $me->amOnPage('/');
-
-        $productName = '22" Sencor SLE 22F46DM4 HELLO KITTY';
-        $homepagePage->addTopProductToCartByName($productName);
-        $cartPage->seeSuccessMessageForAddedProducts($productName, 1);
-
-        $floatingWindowPage->closeFloatingWindow();
-        $cartBoxPage->seeCountAndPriceRoundedByCurrencyInCartBox(1, '3499');
-        $me->amOnLocalizedRoute('front_cart');
-        $cartPage->assertProductPriceRoundedByCurrency($productName, '3499');
     }
 
     /**
