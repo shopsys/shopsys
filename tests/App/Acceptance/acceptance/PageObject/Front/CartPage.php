@@ -246,19 +246,24 @@ class CartPage extends AbstractPage
 
     /**
      * @param string $productName
+     * @param string $productNamePrefix
      * @param int $quantity
      */
-    public function seeSuccessMessageForAddedProducts(string $productName, int $quantity): void
+    public function seeSuccessMessageForAddedProducts(string $productName, string $productNamePrefix, int $quantity): void
     {
         $productName = t($productName, [], 'dataFixtures', $this->tester->getFrontendLocale());
-        $this->tester->seeTranslationFrontend(
-            'Product <strong>{{ name }}</strong> ({{ quantity|formatNumber }} {{ unitName }}) added to the cart',
-            'messages',
-            [
-                '{{ name }}' => $productName,
-                '{{ quantity|formatNumber }}' => $quantity,
-                '{{ unitName }}' => $this->tester->getDefaultUnitName(),
-            ]
+        $this->tester->seeTranslationFrontend('Skvělá volba! Vaše zboží jsme přidali do košíku', 'messages');
+        $this->tester->seeTranslationFrontendInCss(
+            '%quantity%x - %productNamePrefix%',
+            '.js-window-popup-quantity-with-name-prefix',
+            'dataFixtures',
+            ['%quantity%' => $quantity, '%productNamePrefix%' => $productNamePrefix]
+        );
+
+        $this->tester->seeTranslationFrontendInCss(
+            $productName,
+            '.js-window-popup-name',
+            'dataFixtures'
         );
     }
 }

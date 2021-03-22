@@ -64,7 +64,8 @@ class CartCest
         $productDetailPage->addProductIntoCart(3);
 
         $productName = '22" Sencor SLE 22F46DM4 HELLO KITTY';
-        $cartPage->seeSuccessMessageForAddedProducts($productName, 3);
+        $productNamePrefix = 'Televize';
+        $cartPage->seeSuccessMessageForAddedProducts($productName, $productNamePrefix, 3);
 
         $floatingWindowPage->closeFloatingWindow();
         $cartBoxPage->seeCountAndPriceRoundedByCurrencyInCartBox(1, '10497');
