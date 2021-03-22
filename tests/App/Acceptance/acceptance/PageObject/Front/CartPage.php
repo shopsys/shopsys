@@ -12,6 +12,8 @@ use Tests\App\Acceptance\acceptance\PageObject\AbstractPage;
 
 class CartPage extends AbstractPage
 {
+    public const GO_TO_CART_TRANSLATION_CONSTANT = 'Do košíku';
+
     /**
      * @param string $productName
      * @param int $quantity
@@ -45,8 +47,7 @@ class CartPage extends AbstractPage
             Money::create($price)
         );
         $orderPriceCell = $this->getTotalProductsPriceCell();
-        $message = t('Total price including VAT', [], 'messages', $this->tester->getFrontendLocale());
-        $this->tester->seeInElement($message . ': ' . $formattedPriceWithCurrency, $orderPriceCell);
+        $this->tester->seeInElement($formattedPriceWithCurrency, $orderPriceCell);
     }
 
     /**
@@ -237,7 +238,7 @@ class CartPage extends AbstractPage
     public function clickGoToCartInPopUpWindow(): void
     {
         $this->tester->clickByTranslationFrontend(
-            'Go to cart',
+            self::GO_TO_CART_TRANSLATION_CONSTANT,
             'messages',
             [],
             WebDriverBy::cssSelector('#window-main-container')

@@ -148,7 +148,7 @@ class OrderPage extends AbstractPage
     public function clickGoToCartInPopUpWindow(): void
     {
         $this->tester->clickByTranslationFrontend(
-            'Go to cart',
+            CartPage::GO_TO_CART_TRANSLATION_CONSTANT,
             'messages',
             [],
             WebDriverBy::cssSelector('#window-main-container')
