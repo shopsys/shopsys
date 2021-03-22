@@ -77,7 +77,7 @@ class CartPage extends AbstractPage
     public function assertProductIsInCartByName($productName)
     {
         $translatedProductName = t($productName, [], 'dataFixtures', $this->tester->getFrontendLocale());
-        $this->tester->see($translatedProductName, WebDriverBy::cssSelector('.js-cart-item-name'));
+        $this->tester->see($translatedProductName, WebDriverBy::cssSelector('.js-cart-item-name-text'));
     }
 
     /**
@@ -86,7 +86,7 @@ class CartPage extends AbstractPage
     public function assertProductIsNotInCartByName($productName)
     {
         $translatedProductName = t($productName, [], 'dataFixtures', $this->tester->getFrontendLocale());
-        $this->tester->dontSee($translatedProductName, WebDriverBy::cssSelector('.js-cart-item-name'));
+        $this->tester->dontSee($translatedProductName, WebDriverBy::cssSelector('.js-cart-item-name-text'));
     }
 
     /**
@@ -112,8 +112,9 @@ class CartPage extends AbstractPage
         foreach ($rows as $row) {
             try {
                 $nameCell = $row->findElement(WebDriverBy::cssSelector('.js-cart-item-name'));
+                $textSpan = $nameCell->findElement(WebDriverBy::cssSelector('.js-cart-item-name-text'));
 
-                if ($nameCell->getText() === $translatedProductName) {
+                if ($textSpan->getText() === $translatedProductName) {
                     return $row;
                 }
             } catch (NoSuchElementException $ex) {

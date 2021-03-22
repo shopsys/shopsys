@@ -60,7 +60,7 @@ class CartCest
         $me->wantTo('add product to cart from product detail');
         // 22-sencor-sle-22f46dm4-hello-kitty
         $me->amOnLocalizedRoute('front_product_detail', ['id' => 1]);
-        $me->seeTranslationFrontend('Add to cart');
+        $me->seeTranslationFrontend(ProductDetailPage::ADD_TO_CART_TRANSLATION_CONSTANT);
         $productDetailPage->addProductIntoCart(3);
 
         $productName = '22" Sencor SLE 22F46DM4 HELLO KITTY';
@@ -86,7 +86,7 @@ class CartCest
 
         // 22-sencor-sle-22f46dm4-hello-kitty
         $me->amOnLocalizedRoute('front_product_detail', ['id' => 1]);
-        $me->seeTranslationFrontend('Add to cart');
+        $me->seeTranslationFrontend(ProductDetailPage::ADD_TO_CART_TRANSLATION_CONSTANT);
         $productDetailPage->addProductIntoCart(3);
         $cartPage->clickGoToCartInPopUpWindow();
 
