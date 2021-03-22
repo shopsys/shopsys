@@ -22,7 +22,7 @@ class ProductDetailPage extends AbstractPage
             (string)$quantity
         );
         $this->tester->clickByTranslationFrontend(
-            'Add to cart',
+            'Přidat do košíku',
             'messages',
             [],
             WebDriverBy::cssSelector(self::PRODUCT_DETAIL_MAIN_WRAPPER)
