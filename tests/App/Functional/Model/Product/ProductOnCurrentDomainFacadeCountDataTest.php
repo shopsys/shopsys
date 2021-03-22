@@ -243,43 +243,46 @@ abstract class ProductOnCurrentDomainFacadeCountDataTest extends ParameterTransa
 
         $countData = new ProductFilterCountData();
 
-        $countData->countInStock = 5;
+        $countData->countInStock = 6;
         $countData->countByBrandId = [];
         $countData->countByFlagId = [
-            4 => 1,
-            2 => 1,
+            4 => 2,
+            2 => 2,
         ];
         $countData->countByParameterIdAndValueId = [
             32 => [
-                $this->getParameterValueIdForFirstDomain('Yes') => 5,
+                $this->getParameterValueIdForFirstDomain('Yes') => 6,
             ],
             11 => [
-                $this->getParameterValueIdForFirstDomain('449x304x152 mm') => 5,
+                $this->getParameterValueIdForFirstDomain('449x304x152 mm') => 4,
+                $this->getParameterValueIdForFirstDomain('426x306x145 mm') => 2,
+
             ],
             30 => [
-                $this->getParameterValueIdForFirstDomain('Yes') => 3,
+                $this->getParameterValueIdForFirstDomain('Yes') => 4,
                 $this->getParameterValueIdForFirstDomain('No') => 2,
             ],
             29 => [
-                $this->getParameterValueIdForFirstDomain('A3') => 3,
-                $this->getParameterValueIdForFirstDomain('A4') => 2,
+                $this->getParameterValueIdForFirstDomain('A3') => 5,
+                $this->getParameterValueIdForFirstDomain('A4') => 1,
             ],
             31 => [
-                $this->getParameterValueIdForFirstDomain('4800x1200') => 1,
+                $this->getParameterValueIdForFirstDomain('4800x1200') => 2,
                 $this->getParameterValueIdForFirstDomain('2400x600') => 4,
             ],
             28 => [
-                $this->getParameterValueIdForFirstDomain('inkjet') => 5,
+                $this->getParameterValueIdForFirstDomain('inkjet') => 6,
             ],
             4 => [
-                $this->getParameterValueIdForFirstDomain('Yes') => 5,
+                $this->getParameterValueIdForFirstDomain('Yes') => 6,
             ],
             10 => [
-                $this->getParameterValueIdForFirstDomain('3.5 kg') => 4,
+                $this->getParameterValueIdForFirstDomain('3.5 kg') => 5,
                 $this->getParameterValueIdForFirstDomain('5.4 kg') => 1,
             ],
             33 => [
-                $this->getParameterValueIdForFirstDomain('Yes') => 5,
+                $this->getParameterValueIdForFirstDomain('Yes') => 4,
+                $this->getParameterValueIdForFirstDomain('No') => 2,
             ],
         ];
 
