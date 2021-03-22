@@ -38,19 +38,14 @@ class RegistrationPage extends AbstractPage
      * @param string $firstPassword
      * @param string $secondPassword
      */
-    public function register($firstName, $lastName, $email, $firstPassword, $secondPassword)
-    {
-        $this->tester->fillFieldByName('registration_form[firstName]', $firstName);
-        $this->tester->fillFieldByName('registration_form[lastName]', $lastName);
-        $this->tester->fillFieldByName('registration_form[email]', $email);
-        $this->tester->fillFieldByName('registration_form[password][first]', $firstPassword);
-        $this->tester->fillFieldByName('registration_form[password][second]', $secondPassword);
-
-        $frontCheckboxClicker = FrontCheckbox::createByCss(
-            $this->tester,
-            '#registration_form_privacyPolicy'
-        );
-        $frontCheckboxClicker->check();
+    public function register(
+        string $firstName,
+        string $lastName,
+        string $email,
+        string $firstPassword,
+        string $secondPassword
+    ): void {
+        $this->fillRegistrationForm($firstName, $lastName, $email, $firstPassword, $secondPassword);
 
         $this->tester->wait(TimedFormTypeExtension::MINIMUM_FORM_FILLING_SECONDS);
         $this->tester->clickByName('registration_form[save]');
@@ -94,5 +89,32 @@ class RegistrationPage extends AbstractPage
         $this->tester->wait(self::MINIMUM_FORM_SUBMIT_WAIT_TIME);
         $this->tester->seeTranslationFrontend('You have been successfully registered.');
         $this->loginPage->checkUserLogged($fullName);
+    }
+
+    /**
+     * @param string $firstName
+     * @param string $lastName
+     * @param string $email
+     * @param string $firstPassword
+     * @param string $secondPassword
+     */
+    public function fillRegistrationForm(
+        string $firstName,
+        string $lastName,
+        string $email,
+        string $firstPassword,
+        string $secondPassword
+    ): void {
+        $this->tester->fillFieldByName('registration_form[firstName]', $firstName);
+        $this->tester->fillFieldByName('registration_form[lastName]', $lastName);
+        $this->tester->fillFieldByName('registration_form[email]', $email);
+        $this->tester->fillFieldByName('registration_form[password][first]', $firstPassword);
+        $this->tester->fillFieldByName('registration_form[password][second]', $secondPassword);
+
+        $frontCheckboxClicker = FrontCheckbox::createByCss(
+            $this->tester,
+            '#registration_form_privacyPolicy'
+        );
+        $frontCheckboxClicker->check();
     }
 }

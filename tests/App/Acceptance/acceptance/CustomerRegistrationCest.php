@@ -70,7 +70,7 @@ class CustomerRegistrationCest
     {
         $me->wantTo('use mismatching passwords while registration');
         $me->amOnLocalizedRoute('front_registration_register');
-        $registrationPage->register(
+        $registrationPage->fillRegistrationForm(
             self::DEFAULT_USER_FIRST_NAME,
             self::DEFAULT_USER_LAST_NAME,
             self::DEFAULT_USER_EMAIL,
