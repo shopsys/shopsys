@@ -17,6 +17,7 @@ class LayoutPage extends AbstractPage
 
     public function clickOnRegistration()
     {
+        $this->openLoginPopup();
         $this->tester->clickByCss('.js-registration-link-desktop');
     }
 

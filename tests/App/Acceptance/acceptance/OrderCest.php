@@ -202,11 +202,13 @@ class OrderCest
             CustomerRegistrationCest::DEFAULT_USER_LAST_NAME,
             CustomerRegistrationCest::DEFAULT_USER_EMAIL,
             CustomerRegistrationCest::DEFAULT_USER_PASSWORD,
-            CustomerRegistrationCest::DEFAULT_USER_PASSWORD
+            CustomerRegistrationCest::DEFAULT_USER_PASSWORD,
+            CustomerRegistrationCest::DEFAULT_USER_STREET,
+            CustomerRegistrationCest::DEFAULT_USER_CITY,
+            CustomerRegistrationCest::DEFAULT_USER_POSTCODE,
+            CustomerRegistrationCest::DEFAULT_USER_TELEPHONE
         );
-        $registrationPage->checkRegistrationSuccessful(
-            CustomerRegistrationCest::DEFAULT_USER_FIRST_NAME . ' ' . CustomerRegistrationCest::DEFAULT_USER_LAST_NAME
-        );
+        $registrationPage->checkRegistrationSuccessful();
 
         // tv-audio
         $me->amOnLocalizedRoute('front_product_list', ['id' => 3]);

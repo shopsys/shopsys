@@ -14,6 +14,10 @@ class CustomerRegistrationCest
     public const DEFAULT_USER_LAST_NAME = 'Štěpánek';
     public const DEFAULT_USER_PASSWORD = 'user123';
     public const DEFAULT_USER_EMAIL = 'no-reply.16@shopsys.com';
+    public const DEFAULT_USER_STREET = 'Koksární 1096/10';
+    public const DEFAULT_USER_CITY = 'Ostrava';
+    public const DEFAULT_USER_POSTCODE = '70200';
+    public const DEFAULT_USER_TELEPHONE = '777111222';
 
     /**
      * @param \Tests\App\Acceptance\acceptance\PageObject\Front\RegistrationPage $registrationPage
@@ -36,12 +40,14 @@ class CustomerRegistrationCest
             self::DEFAULT_USER_LAST_NAME,
             self::DEFAULT_USER_EMAIL,
             self::DEFAULT_USER_PASSWORD,
-            self::DEFAULT_USER_PASSWORD
+            self::DEFAULT_USER_PASSWORD,
+            self::DEFAULT_USER_STREET,
+            self::DEFAULT_USER_CITY,
+            self::DEFAULT_USER_POSTCODE,
+            self::DEFAULT_USER_TELEPHONE
         );
 
-        $registrationPage->checkRegistrationSuccessful(
-            self::DEFAULT_USER_FIRST_NAME . ' ' . self::DEFAULT_USER_LAST_NAME
-        );
+        $registrationPage->checkRegistrationSuccessful();
     }
 
     /**
@@ -57,7 +63,11 @@ class CustomerRegistrationCest
             self::DEFAULT_USER_LAST_NAME,
             'no-reply@shopsys.com',
             self::DEFAULT_USER_PASSWORD,
-            self::DEFAULT_USER_PASSWORD
+            self::DEFAULT_USER_PASSWORD,
+            self::DEFAULT_USER_STREET,
+            self::DEFAULT_USER_CITY,
+            self::DEFAULT_USER_POSTCODE,
+            self::DEFAULT_USER_TELEPHONE
         );
         $registrationPage->seeEmailError('This email is already registered');
     }
@@ -75,7 +85,11 @@ class CustomerRegistrationCest
             self::DEFAULT_USER_LAST_NAME,
             self::DEFAULT_USER_EMAIL,
             self::DEFAULT_USER_PASSWORD,
-            'missmatchingPassword'
+            'missmatchingPassword',
+            self::DEFAULT_USER_STREET,
+            self::DEFAULT_USER_CITY,
+            self::DEFAULT_USER_POSTCODE,
+            self::DEFAULT_USER_TELEPHONE
         );
         $registrationPage->seePasswordError('Passwords do not match');
     }

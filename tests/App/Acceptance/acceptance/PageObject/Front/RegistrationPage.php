@@ -6,8 +6,6 @@ namespace Tests\App\Acceptance\acceptance\PageObject\Front;
 
 use Shopsys\FrameworkBundle\Component\Form\TimedFormTypeExtension;
 use Tests\App\Acceptance\acceptance\PageObject\AbstractPage;
-use Tests\App\Test\Codeception\AcceptanceTester;
-use Tests\App\Test\Codeception\Module\StrictWebDriver;
 use Tests\FrameworkBundle\Test\Codeception\FrontCheckbox;
 
 class RegistrationPage extends AbstractPage
@@ -15,37 +13,38 @@ class RegistrationPage extends AbstractPage
     private const MINIMUM_FORM_SUBMIT_WAIT_TIME = 10;
 
     /**
-     * @var \Tests\App\Acceptance\acceptance\PageObject\Front\LoginPage
-     */
-    private $loginPage;
-
-    /**
-     * @param \Tests\App\Test\Codeception\Module\StrictWebDriver $strictWebDriver
-     * @param \Tests\App\Test\Codeception\AcceptanceTester $tester
-     * @param \Tests\App\Acceptance\acceptance\PageObject\Front\LoginPage $loginPage
-     */
-    public function __construct(StrictWebDriver $strictWebDriver, AcceptanceTester $tester, LoginPage $loginPage)
-    {
-        $this->loginPage = $loginPage;
-
-        parent::__construct($strictWebDriver, $tester);
-    }
-
-    /**
      * @param string $firstName
      * @param string $lastName
      * @param string $email
      * @param string $firstPassword
      * @param string $secondPassword
+     * @param string $street
+     * @param string $city
+     * @param string $postcode
+     * @param string $telephone
      */
     public function register(
         string $firstName,
         string $lastName,
         string $email,
         string $firstPassword,
-        string $secondPassword
+        string $secondPassword,
+        string $street,
+        string $city,
+        string $postcode,
+        string $telephone
     ): void {
-        $this->fillRegistrationForm($firstName, $lastName, $email, $firstPassword, $secondPassword);
+        $this->fillRegistrationForm(
+            $firstName,
+            $lastName,
+            $email,
+            $firstPassword,
+            $secondPassword,
+            $street,
+            $city,
+            $postcode,
+            $telephone
+        );
 
         $this->tester->wait(TimedFormTypeExtension::MINIMUM_FORM_FILLING_SECONDS);
         $this->tester->clickByName('registration_form[save]');
@@ -81,14 +80,10 @@ class RegistrationPage extends AbstractPage
         $this->tester->seeTranslationFrontend($text, 'validators');
     }
 
-    /**
-     * @param string|null $fullName
-     */
-    public function checkRegistrationSuccessful(?string $fullName = null): void
+    public function checkRegistrationSuccessful(): void
     {
         $this->tester->wait(self::MINIMUM_FORM_SUBMIT_WAIT_TIME);
         $this->tester->seeTranslationFrontend('You have been successfully registered.');
-        $this->loginPage->checkUserLogged($fullName);
     }
 
     /**
@@ -97,19 +92,31 @@ class RegistrationPage extends AbstractPage
      * @param string $email
      * @param string $firstPassword
      * @param string $secondPassword
+     * @param string $street
+     * @param string $city
+     * @param string $postcode
+     * @param string $telephone
      */
     public function fillRegistrationForm(
         string $firstName,
         string $lastName,
         string $email,
         string $firstPassword,
-        string $secondPassword
+        string $secondPassword,
+        string $street,
+        string $city,
+        string $postcode,
+        string $telephone
     ): void {
         $this->tester->fillFieldByName('registration_form[firstName]', $firstName);
         $this->tester->fillFieldByName('registration_form[lastName]', $lastName);
         $this->tester->fillFieldByName('registration_form[email]', $email);
         $this->tester->fillFieldByName('registration_form[password][first]', $firstPassword);
         $this->tester->fillFieldByName('registration_form[password][second]', $secondPassword);
+        $this->tester->fillFieldByName('registration_form[street]', $street);
+        $this->tester->fillFieldByName('registration_form[city]', $city);
+        $this->tester->fillFieldByName('registration_form[postcode]', $postcode);
+        $this->tester->fillFieldByName('registration_form[telephone]', $telephone);
 
         $frontCheckboxClicker = FrontCheckbox::createByCss(
             $this->tester,
