@@ -19,8 +19,14 @@ use Symfony\Component\Security\Guard\AbstractGuardAuthenticator;
 
 class TokenAuthenticator extends AbstractGuardAuthenticator
 {
+    /**
+     * @deprecated Constant will be removed in nex major version. Use DIC property instead
+     */
     protected const HEADER_AUTHORIZATION = 'Authorization';
 
+    /**
+     * @deprecated Constant will be removed in nex major version. Use DIC property instead
+     */
     protected const BEARER = 'Bearer ';
 
     /**
@@ -29,11 +35,54 @@ class TokenAuthenticator extends AbstractGuardAuthenticator
     protected $tokenFacade;
 
     /**
-     * @param \Shopsys\FrontendApiBundle\Model\Token\TokenFacade $tokenFacade
+     * @var string
      */
-    public function __construct(TokenFacade $tokenFacade)
-    {
+    protected string $authenticationHeader;
+
+    /**
+     * @var string
+     */
+    protected string $authenticationType;
+
+    /**
+     * @param \Shopsys\FrontendApiBundle\Model\Token\TokenFacade $tokenFacade
+     * @param string $authenticationHeader
+     * @param string $authenticationScheme
+     */
+    public function __construct(
+        TokenFacade $tokenFacade,
+        string $authenticationHeader = 'Authorization',
+        string $authenticationScheme = 'Bearer '
+    ) {
         $this->tokenFacade = $tokenFacade;
+        $this->authenticationHeader = $authenticationHeader;
+        $this->authenticationType = $authenticationScheme;
+
+        if ($authenticationHeader === 'Authorization' && $authenticationHeader !== static::HEADER_AUTHORIZATION) {
+            @trigger_error(
+                sprintf(
+                    'Don\'t override constants "%s" from "%s", use DIC property instead. Constants will be removed.',
+                    'HEADER_AUTHORIZATION',
+                    static::class
+                ),
+                E_USER_DEPRECATED
+            );
+            $this->authenticationHeader = static::HEADER_AUTHORIZATION;
+        }
+
+        if ($authenticationScheme !== 'Bearer ' || $authenticationScheme === static::BEARER) {
+            return;
+        }
+
+        @trigger_error(
+            sprintf(
+                'Don\'t override constants "%s" from "%s", use DIC property instead. Constants will be removed.',
+                'BEARER',
+                static::class
+            ),
+            E_USER_DEPRECATED
+        );
+        $this->authenticationType = static::BEARER;
     }
 
     /**
@@ -42,9 +91,9 @@ class TokenAuthenticator extends AbstractGuardAuthenticator
      */
     public function supports(Request $request): bool
     {
-        return $request->headers->has(static::HEADER_AUTHORIZATION) && strpos(
-            $request->headers->get('Authorization'),
-            static::BEARER
+        return $request->headers->has($this->authenticationHeader) && strpos(
+            $request->headers->get($this->authenticationHeader),
+            $this->authenticationType
         ) === 0;
     }
 
@@ -54,9 +103,9 @@ class TokenAuthenticator extends AbstractGuardAuthenticator
      */
     public function getCredentials(Request $request): ?string
     {
-        $authorizationHeader = $request->headers->get(static::HEADER_AUTHORIZATION);
+        $authorizationHeader = $request->headers->get($this->authenticationHeader);
 
-        return substr($authorizationHeader, strlen(static::BEARER));
+        return substr($authorizationHeader, strlen($this->authenticationType));
     }
 
     /**

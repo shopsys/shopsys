@@ -26,3 +26,18 @@ There you can find links to upgrade notes for other versions too.
         +   {{ icon('question') }}
         ```
     - for more information read our article [Icon function](https://docs.shopsys.com/en/9.1/frontend/icon-function/)
+
+- replace deprecated authentication constants in Frontend API ([#2279](https://github.com/shopsys/shopsys/pull/2279))
+    - this step is necessary only when you are using Frontend API and you have overridden constants from `Shopsys\FrontendApiBundle\Model\Token\TokenAuthenticator`
+        - update your `services.yaml` by adding arguments to `TokenAuthenticator`
+            
+            ```diff
+            +   Shopsys\FrontendApiBundle\Model\Token\TokenAuthenticator:
+            +       arguments:
+            +           $authenticationHeader: '%env(FRONTEND_API_AUTHENTICATION_HEADER)%'
+            +           $authenticationScheme: '%env(FRONTEND_API_AUTHENTICATION_SCHEME)%'
+            ```
+
+        - following constants are deprecated and should be replaced by environment variables:
+            - replace `HEADER_AUTHORIZATION` by an environment variable `FRONTEND_API_AUTHENTICATION_HEADER` 
+            - replace `BEARER` by an environment variable `FRONTEND_API_AUTHENTICATION_SCHEME` 

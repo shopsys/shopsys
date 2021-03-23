@@ -50,6 +50,14 @@ You may want to set some settings in a different way (such as production, test, 
 | `SHOPSYS_CONTENT_DIR_NAME`             | `'content-test'`                     | web/content-test/ directory is used instead of web/content/ during the tests         |
 | `TRUSTED_PROXIES`                      | `'127.0.0.1'`                        | proxies that are trusted to pass traffic, used mainly for production (set as text separated by comma for multiple values) |
 
+### Shopsys Frontend API
+
+These variables are specific for [shopsys/frontend-api](https://github.com/shopsys/frontend-api)
+
+| Name                                    | Default             | Description                            |
+| --------------------------------------- | ------------------- | -------------------------------------- |
+| `FRONTEND_API_AUTHENTICATION_HEADER`    | `'Authorization'`   | defines HTTP Authentication Header     |
+| `FRONTEND_API_AUTHENTICATION_SCHEME`    | `'Bearer '`         | defines HTTP Authentication Scheme     |
 
 ### Google Cloud Bundle
 

@@ -24,7 +24,10 @@ services:
         tags:
             - { name: kernel.event_listener, event: kernel.exception, method: onKernelException, priority: 20}
 
-    Shopsys\FrontendApiBundle\Model\Token\TokenAuthenticator:  ~
+    Shopsys\FrontendApiBundle\Model\Token\TokenAuthenticator:
+        arguments:
+            $authenticationHeader: '%env(FRONTEND_API_AUTHENTICATION_HEADER)%'
+            $authenticationScheme: '%env(FRONTEND_API_AUTHENTICATION_SCHEME)%'
 
     Shopsys\FrontendApiBundle\Model\User\FrontendApiUserProvider: ~
 
