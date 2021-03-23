@@ -14,8 +14,8 @@
                         <span class="search__hint__products__item__name js-search-autocomplete-item-label">
                             {{ productView.fullName }}
                         </span>
-                        <span class="search__hint__products__item__price js-not-implemented-yet">
-                            4 599 Kč
+                        <span class="search__hint__products__item__price">
+                            {{ productView.sellingPrice.priceWithVat|price }}
                         </span>
                     </a>
                 </li>
