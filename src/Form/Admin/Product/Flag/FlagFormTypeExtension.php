@@ -56,15 +56,6 @@ class FlagFormTypeExtension extends AbstractTypeExtension
             ],
         ]);
 
-        $builder->add('code', TextType::class, [
-            'required' => false,
-            'label' => false,
-            'constraints' => [
-                new Constraints\Length(['min' => 2, 'max' => 2, 'exactMessage' => 'Kód musí mít přesně {{ limit }} znaků']),
-                new Constraints\Regex(['pattern' => '/^\d+$/', 'message' => 'Kód musí být pouze dvouciferné číslo']),
-            ],
-        ]);
-
         $this->formBuilderHelper->disableFieldsByConfigurations($builder, self::DISABLED_FIELDS);
     }
 
