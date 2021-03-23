@@ -24,6 +24,6 @@ class LoginAsCustomerCest
         $me->switchToLastOpenedWindow();
         $me->seeCurrentPageEquals('/');
         $me->seeTranslationFrontend('Attention! You are administrator logged in as the customer.');
-        $frontendLoginPage->checkUserLogged('Igor Anpilogov');
+        $frontendLoginPage->checkUserLogged();
     }
 }

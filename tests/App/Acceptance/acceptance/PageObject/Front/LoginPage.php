@@ -8,7 +8,6 @@ use Tests\App\Acceptance\acceptance\PageObject\AbstractPage;
 
 class LoginPage extends AbstractPage
 {
-    private const DEFAULT_USER_NAME = 'Jaromír Jágr';
     private const DEFAULT_USER_EMAIL = 'no-reply@shopsys.com';
     private const DEFAULT_USER_PASSWORD = 'user123';
 
@@ -20,12 +19,9 @@ class LoginPage extends AbstractPage
         $this->tester->waitForAjax();
     }
 
-    /**
-     * @param string|null $fullName
-     */
-    public function checkUserLogged(?string $fullName = null): void
+    public function checkUserLogged(): void
     {
-        $this->tester->see($fullName ?? self::DEFAULT_USER_NAME);
-        $this->tester->seeTranslationFrontend('Log out');
+        $this->tester->clickByTranslationFrontend('Můj účet');
+        $this->tester->seeTranslationFrontend('Odhlásit');
     }
 }
