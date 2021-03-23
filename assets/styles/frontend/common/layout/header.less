@@ -16,7 +16,6 @@
     position: relative;
     display: flex;
     flex-wrap: wrap;
-    align-items: center;
     justify-content: space-between;
     padding: @header-padding;
 
@@ -26,11 +25,11 @@
 
     &__logo {
         display: flex;
-        align-items: center;
         margin-right: 8px;
 
         @media @query-lg {
             margin-right: @header-item-gap;
+            align-self: flex-end;
         }
     }
 
@@ -74,7 +73,7 @@
 
     &__links {
         display: flex;
-        align-items: center;
+        align-self: center;
 
         @media @query-vl {
             height: 100%;

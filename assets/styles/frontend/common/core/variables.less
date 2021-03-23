@@ -87,6 +87,15 @@
 @web-scrollbar-size: 17px;
 @box-component-bottom-spacing: 30px;
 
+@calc-base: 99.99%;
+
+// Z-index level
+@z-index-under: -1;
+@z-index-normal: 0;
+@z-index-above: 1;
+@z-index-menu: 500;
+@z-index-overlay: 1000;
+
 // Colors
 //// Gray scale
 @color-0: #0d0d0d;
@@ -127,9 +136,6 @@
 ////// Color, which is main in design (used in titles or links, other significant places)
 @color-primary: @color-blue;
 
-////// Color, which is second to main in design
-@color-primary-light: @color-blue-light;
-
 ////// Color, which is additional in design (second main color)
 @color-add: @color-orange;
 
@@ -164,7 +170,7 @@
 ////// Base color of border
 @color-border: #e2e3eb;
 ////// Secondary border color
-@color-border-secondary: @color-primary;
+@color-border-secondary: #c4c9ff;
 ////// Tertiary border color
 @color-border-tertiary: @color-grey-light;
 ////// Base color for background of components

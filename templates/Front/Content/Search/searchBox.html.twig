@@ -1,5 +1,5 @@
 <div class="search" id="js-search-autocomplete">
-    <form action="{{ url('front_product_search') }}" method="get">
+    <form class="search__in" action="{{ url('front_product_search') }}" method="get">
         <div class="search__form">
             <div class="search__form__input">
                 <input
@@ -12,6 +12,9 @@
                     autocomplete="off"
                     data-autocomplete-url="{{ url('front_search_autocomplete') }}"
                 />
+                <div class="search__form__hide" id="js-search-autocomplete-hide">
+                    <i class="svg svg-remove"></i>
+                </div>
                 <button class="search__form__icon" type="submit" title="{{ 'Vyhledat'|trans }}"></button>
             </div>
         </div>

@@ -89,12 +89,12 @@
             additionalSizes:
                 - {width: 180, height: ~, media: "only screen and (-webkit-min-device-pixel-ratio: 1.5)"}
         -   name: thumbnailSearch
-            width: 32
-            height: ~
+            width: 72
+            height: 48
             crop: false
             occurrence: 'Front-end: Preview in autocomplete for search'
             additionalSizes:
-                - {width: 64, height: ~, media: "only screen and (-webkit-min-device-pixel-ratio: 1.5)"}
+                - {width: 144, height: 96, media: "only screen and (-webkit-min-device-pixel-ratio: 1.5)"}
 
 -   name: sliderItem
     class: Shopsys\FrameworkBundle\Model\Slider\SliderItem
