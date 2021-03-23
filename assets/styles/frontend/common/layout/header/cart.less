@@ -13,6 +13,7 @@
                 .cart__block {
                     border-radius: @radius @radius 0 0;
                     box-shadow: 0 10px 20px 0 rgba(@color-0, .15);
+                    background-color: @color-f;
 
                     & + .cart__detail--empty {
                         opacity: 1;
@@ -31,6 +32,7 @@
             .cart {
                 &__block {
                     border-radius: @radius @radius 0 0;
+                    background-color: @color-f;
                 }
 
                 &__detail {
@@ -48,11 +50,14 @@
         text-decoration: none;
         background-color: @color-orange-light;
         color: @color-base;
-        transition: all @transition;
         border-radius: @radius;
 
         @media @query-lg {
             display: flex;
+        }
+
+        .cart--empty & {
+            transition: all @transition;
         }
 
         &:hover {
@@ -113,9 +118,9 @@
             right: 0;
             z-index: 6000;
 
-            box-shadow: 0 20px 20px 0 rgba(@color-0, .15);
-            border-bottom-left-radius: @radius;
-            border-bottom-right-radius: @radius;
+            box-shadow: 0 5px 10px 0 rgba(164,167,193,0.34);
+            border-radius: @radius 0 @radius @radius;
+            background-color: @color-f;
         }
 
         &--empty {
@@ -123,7 +128,6 @@
             min-width: 400px;
             max-width: 400px;
 
-            background-color: @color-add-light;
             transition: all .2s ease-in-out;
             will-change: transform;
             opacity: 0;

@@ -4,29 +4,32 @@
     {% set nonSellingPriceWithVat = getProductNonSellingPrice(product).priceWithVat %}
     <li class="cart-detail__item">
         <div class="cart-detail__item__image">
-            {{ image(product) }}
+            {{ image(product, { size: 'thumbnailSmall' }) }}
         </div>
         <div class="cart-detail__item__content">
             <a class="cart-detail__item__content__title" href="{{ url('front_product_detail', {'id': product.id}) }}" title="{{ product.name }}">
                 {% if product.namePrefix is not empty %}
-                    <span class="cart-detail__item__content__title__prefix">{{ cartItem.quantity }}x {{ product.namePrefix }}</span>
+                    <span class="cart-detail__item__content__title__prefix">{{ product.namePrefix }}</span>
                 {% endif %}
+
                 <span class="cart-detail__item__content__title__name">
-                    {% if product.namePrefix is empty %}
-                        <span class="cart-detail__item__content__quantity">{{ cartItem.quantity }}x </span>
-                    {% endif %}
                     {{ product.name }}
                 </span>
+
                 {% if product.nameSufix is not empty %}
                     <span class="cart-detail__item__content__title__sufix">, {{ product.nameSufix }}</span>
                 {% endif %}
             </a>
+
+            <span class="cart-detail__item__content__quantity">{{ cartItem.quantity }}ks </span>
+
             <span class="cart-detail__item__content__price">
                 {% if nonSellingPriceWithVat.isGreaterThan(sellingPriceWithVat) %}
                     <span class="cart-detail__item__content__price--high">{{ nonSellingPriceWithVat|price }}</span>
                 {% endif %}
                 {{ cartItem.watchedPrice|price}}
             </span>
+
             <a
             class="cart-detail__item__remove js-cart-box-item-remove-button"
             href="{{ url('front_cart_delete_ajax', {cartItemId: cartItem.id, _token: csrf_token('front_cart_delete_' ~ cartItem.id)}) }}"

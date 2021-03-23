@@ -88,6 +88,13 @@
             occurrence: 'Front-end: preview in cart during ordering process'
             additionalSizes:
                 - {width: 180, height: ~, media: "only screen and (-webkit-min-device-pixel-ratio: 1.5)"}
+        -   name: thumbnailSmall
+            width: 43
+            height: 28
+            crop: false
+            occurrence: 'Front-end: preview in dropdown cart'
+            additionalSizes:
+                - {width: 86, height: 56, media: "only screen and (-webkit-min-device-pixel-ratio: 1.5)"}
         -   name: thumbnailSearch
             width: 72
             height: 48

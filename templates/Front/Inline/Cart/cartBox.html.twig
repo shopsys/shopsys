@@ -54,21 +54,10 @@
                             {{ cartBoxItem.item(cartItem) }}
                         {% endfor %}
                     </ul>
-                    <div class="cart-detail__total">
-                        <div class="cart-detail__total__text">
-                            {{ 'Celkem zaplatíte'|trans }}
-                        </div>
-                        <div class="cart-detail__total__price">
-                            {% if productsHighPrice.priceWithVat.isGreaterThan(productsPrice.priceWithVat) %}
-                                <span class="cart-detail__total__price__previous">{{ productsHighPrice.priceWithVat|price }}</span>
-                            {% endif %}
-                            {{ productsPrice.priceWithVat|price }}
-                        </div>
-                    </div>
                 </div>
                 <div class="cart-detail__bottom">
                     <div class="cart-detail__bottom__button">
-                        <a href="{{ url('front_cart') }}" class="btn">{{ 'Go to cart'|trans }}</a>
+                        <a href="{{ url('front_cart') }}" class="btn btn--small">{{ 'Go to cart'|trans }}</a>
                     </div>
                 </div>
             {% endif %}
