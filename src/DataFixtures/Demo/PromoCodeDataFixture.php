@@ -80,6 +80,10 @@ class PromoCodeDataFixture extends AbstractReferenceFixture implements Dependent
         $promoCodeData->code = 'test';
         $promoCodeData->domainId = Domain::FIRST_DOMAIN_ID;
         $promoCodeData->identifier = 'GG';
+        $promoCodeData->onSale = false;
+        $promoCodeData->inAction = false;
+        $promoCodeData->scontoPrice = false;
+        $promoCodeData->priceHit = false;
         $promoCode = $this->promoCodeFacade->create($promoCodeData);
 
         /** @var \App\Model\Product\Product $product */
@@ -88,6 +92,10 @@ class PromoCodeDataFixture extends AbstractReferenceFixture implements Dependent
 
         /** @var \App\Model\Category\Category $category */
         $category = $this->getReference(CategoryDataFixture::CATEGORY_FOOD);
+        $this->promoCodeCategoryFactory->create($promoCode, $category);
+
+        /** @var \App\Model\Category\Category $category */
+        $category = $this->getReference(CategoryDataFixture::CATEGORY_BOOKS);
         $this->promoCodeCategoryFactory->create($promoCode, $category);
 
         $promoCodeLimit = $this->promoCodeLimitFactory->create('1.0', '10');
