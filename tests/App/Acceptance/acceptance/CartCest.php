@@ -128,13 +128,7 @@ class CartCest
         $cartPage->assertProductIsNotInCartByName('JURA Impressa J9 TFT Carbon');
 
         $cartPage->removeProductFromCart('PANASONIC DMC FT5EP');
-        $me->seeTranslationFrontend(
-            'Your cart is unfortunately empty. To create order, you have to <a href="%url%">choose</a> some product first',
-            'messages',
-            [
-                '%url%' => '',
-            ]
-        );
+        $me->seeTranslationFrontend('Váš nákupní košík je prázdný.', 'messages');
     }
 
     /**
