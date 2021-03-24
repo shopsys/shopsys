@@ -52,8 +52,8 @@ class VatInlineEditCest
         $inlineEditPage->delete($newRowId);
 
         $inlineEditPage->assertDontSeeRow($newRowId);
-        $me->seeTranslationAdmin('VAT <strong>%name%</strong> deleted', 'messages', [
-            '%name%' => 'test created',
+        $me->seeTranslationAdmin('VAT <strong>{{ name }}</strong> deleted', 'messages', [
+            '{{ name }}' => 'test created',
         ]);
     }
 }
