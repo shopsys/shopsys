@@ -199,7 +199,7 @@ jobs:
                 run: "sed -i \"s#elasticsearch-image#${DOCKER_USERNAME}/elasticsearch:${DOCKER_ELASTICSEARCH_IMAGE_TAG}#\" ./docker-compose.yml"
             -   name: Build application
                 run: |
-                    docker-compose pull --parallel webserver postgres elasticsearch redis php-fpm selenium-server
+                    docker-compose pull --parallel webserver postgres redis selenium-server
                     docker-compose up -d
                     docker cp ./ shopsys-framework-php-fpm:/var/www/html
                     docker-compose exec -T php-fpm composer install --optimize-autoloader --no-interaction
