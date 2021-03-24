@@ -8,7 +8,6 @@ use App\Model\Category\Category;
 use App\Model\Category\CategoryFacade;
 use App\Model\Category\CurrentCategoryResolver;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\Model\Category\CategoryWithLazyLoadedVisibleChildren;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -65,16 +64,11 @@ class CategoryController extends FrontBaseController
 
         $menuItems = [];
         foreach ($topCategories as $category) {
-            if ($category->getAkeneoCode() === 'eshop__nabytek') {
-                $menuItems[] = $this->buildSlidingMenuSetup('front_product_list', $category->getId(), $category->getName($this->domain->getCurrentDomainConfig()->getLocale()));
-
-                $mattressesAndSlatsCategoryWithLazyLoadedVisibleChildrenForParent = $this->getMattressesAndSlatsCategoryWithLazyLoadedVisibleChildrenForParent($category);
-                $menuItems[] = $this->buildSlidingMenuSetup(
-                    'front_product_list',
-                    $mattressesAndSlatsCategoryWithLazyLoadedVisibleChildrenForParent->getCategory()->getId(),
-                    $mattressesAndSlatsCategoryWithLazyLoadedVisibleChildrenForParent->getCategory()->getName($this->domain->getCurrentDomainConfig()->getLocale())
-                );
-            }
+            $menuItems[] = $this->buildSlidingMenuSetup(
+                'front_product_list',
+                $category->getId(),
+                $category->getName($this->domain->getCurrentDomainConfig()->getLocale())
+            );
         }
 
         $saleCategory = $this->categoryFacade->findSaleCategory();
@@ -116,49 +110,11 @@ class CategoryController extends FrontBaseController
             $this->domain->getCurrentDomainConfig()
         );
 
-        $mattressesAndSlatsCategoryWithLazyLoadedVisibleChildrenForParent = null;
-        $filteredCategoriesWithLazyLoadedVisibleChildren = [];
-        foreach ($categoriesWithLazyLoadedVisibleChildren as $categoryWithLazyLoadedVisibleChildren) {
-            /** @var \App\Model\Category\Category $category */
-            $category = $categoryWithLazyLoadedVisibleChildren->getCategory();
-
-            if ($category->getAkeneoCode() !== 'eshop__nabytek') {
-                continue;
-            }
-
-            $mattressesAndSlatsCategoryWithLazyLoadedVisibleChildrenForParent = $this->getMattressesAndSlatsCategoryWithLazyLoadedVisibleChildrenForParent($category);
-            $filteredCategoriesWithLazyLoadedVisibleChildren[] = $categoryWithLazyLoadedVisibleChildren;
-        }
-
         return $this->render('Front/Content/Category/mobilePanelMenu.html.twig', [
-            'categoriesWithLazyLoadedVisibleChildren' => $filteredCategoriesWithLazyLoadedVisibleChildren,
+            'categoriesWithLazyLoadedVisibleChildren' => $categoriesWithLazyLoadedVisibleChildren,
             'isFirstLevel' => true,
             'saleCategory' => $this->categoryFacade->findSaleCategory(),
-            'mattressesAndSlatsCategoryWithLazyLoadedVisibleChildrenForParent' => $mattressesAndSlatsCategoryWithLazyLoadedVisibleChildrenForParent,
         ]);
-    }
-
-    /**
-     * @param \App\Model\Category\Category $furnitureCategory
-     * @return \Shopsys\FrameworkBundle\Model\Category\CategoryWithLazyLoadedVisibleChildren|null
-     */
-    private function getMattressesAndSlatsCategoryWithLazyLoadedVisibleChildrenForParent(Category $furnitureCategory): ?CategoryWithLazyLoadedVisibleChildren
-    {
-        $categoriesWithLazyLoadedVisibleChildren = $this->categoryFacade->getCategoriesWithLazyLoadedVisibleChildrenForParent(
-            $furnitureCategory,
-            $this->domain->getCurrentDomainConfig()
-        );
-
-        foreach ($categoriesWithLazyLoadedVisibleChildren as $categoryWithLazyLoadedVisibleChildren) {
-            /** @var \App\Model\Category\Category $category */
-            $category = $categoryWithLazyLoadedVisibleChildren->getCategory();
-
-            if ($category->getAkeneoCode() === 'eshop__matrace_a_rosty') {
-                return $categoryWithLazyLoadedVisibleChildren;
-            }
-        }
-
-        return null;
     }
 
     /**

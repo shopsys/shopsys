@@ -50,22 +50,6 @@
             </li>
         {% endfor %}
         {% if isFirstLevel %}
-            {% if mattressesAndSlatsCategoryWithLazyLoadedVisibleChildrenForParent is not null %}
-                <li class="mobile-menu__item js-mobile-menu-item">
-                    <a
-                            href="{{ url('front_product_list', { id: mattressesAndSlatsCategoryWithLazyLoadedVisibleChildrenForParent.category.id }) }}"
-                            class="mobile-menu__item__link{{ mattressesAndSlatsCategoryWithLazyLoadedVisibleChildrenForParent.hasChildren ? ' mobile-menu__item__link--has-children js-mobile-menu-item-link js-mobile-menu-expand-control' }}"
-                            {% if mattressesAndSlatsCategoryWithLazyLoadedVisibleChildrenForParent.hasChildren %}
-                                data-child-menu-id="#js-mobile-menu-list-{{ mattressesAndSlatsCategoryWithLazyLoadedVisibleChildrenForParent.category.id }}"
-                            {% endif %}
-                    >
-                        <span class="mobile-menu__item__link__text">{{ mattressesAndSlatsCategoryWithLazyLoadedVisibleChildrenForParent.category.name }}</span>
-                        {% if mattressesAndSlatsCategoryWithLazyLoadedVisibleChildrenForParent.hasChildren %}
-                            <i class="mobile-menu__item__control svg svg-chevron"></i>
-                        {% endif %}
-                    </a>
-                </li>
-            {% endif %}
             {% if saleCategory is not null %}
                 <li class="mobile-menu__item mobile-menu__item--sale">
                     <a
