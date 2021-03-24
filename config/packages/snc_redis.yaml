@@ -12,12 +12,12 @@ snc_redis:
             dsn: 'redis://%redis_host%'
             options:
                 prefix: '%env(REDIS_PREFIX)%%build-version%:cache:doctrine:query:'
-        friendly_url:
+        main_friendly_url_slugs:
             type: 'phpredis'
-            alias: 'friendly_url'
+            alias: 'main_friendly_url_slugs'
             dsn: 'redis://%redis_host%'
             options:
-                prefix: '%env(REDIS_PREFIX)%%build-version%:cache:friendly_url:'
+                prefix: '%env(REDIS_PREFIX)%%build-version%:cache:main_friendly_url_slugs:'
         global:
             type: 'phpredis'
             alias: 'global'

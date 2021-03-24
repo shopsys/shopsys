@@ -154,9 +154,6 @@ services:
         tags:
             - { name: kernel.event_listener, event: kernel.exception, method: onKernelException }
 
-    Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade:
-        class: App\Component\Router\FriendlyUrl\FriendlyUrlFacade
-
     Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFactory:
         class: App\Component\Router\FriendlyUrl\FriendlyUrlFactory
 
@@ -164,18 +161,6 @@ services:
 
     Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFactoryInterface:
         alias: App\Component\Router\FriendlyUrl\FriendlyUrlFactory
-
-    Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRepository:
-        alias: App\Component\Router\FriendlyUrl\FriendlyUrlRepository
-
-    shopsys.shop.component.friendly_url.cache_provider:
-        class: Doctrine\Common\Cache\RedisCache
-        calls:
-            - { method: setRedis, arguments: ['@snc_redis.friendly_url'] }
-
-    App\Component\Router\FriendlyUrl\FriendlyUrlCacheFacade:
-        arguments:
-            - '@shopsys.shop.component.friendly_url.cache_provider'
 
     App\Form\Front\Order\DomainAwareOrderFlowFactory: ~
 
@@ -857,3 +842,9 @@ services:
     App\Model\Cart\CartMigrationFacade:
         tags:
             - { name: kernel.event_listener, event: kernel.controller, method: onKernelController }
+
+    Shopsys\ReadModelBundle\Product\Detail\ProductDetailViewFacadeInterface:
+        class: Shopsys\ReadModelBundle\Product\Detail\ProductDetailViewElasticsearchFacade
+
+    Shopsys\ReadModelBundle\Product\Detail\ProductDetailViewElasticsearchFactory:
+        alias: App\Model\Product\Detail\ProductDetailViewElasticsearchFactory

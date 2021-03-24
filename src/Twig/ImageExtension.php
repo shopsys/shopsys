@@ -30,26 +30,25 @@ class ImageExtension extends BaseImageExtension
     {
         $twigFunctions = parent::getFunctions();
 
-        $twigFunctions[] = new TwigFunction('productImageByAkeneoType', [$this, 'getProductImageHtmlByAkeneoType'], ['is_safe' => ['html']]);
+        $twigFunctions[] = new TwigFunction('productImageByIdAndAkeneoType', [$this, 'getProductImageHtmlByIdAndAkeneoType'], ['is_safe' => ['html']]);
 
-        $twigFunctions[] = new TwigFunction('existProductImageByAkeneoType', [$this, 'isProductImageHtmlByAkeneoType']);
+        $twigFunctions[] = new TwigFunction('existProductImageByIdAndAkeneoType', [$this, 'isProductImageHtmlByIdAndAkeneoType']);
 
         return $twigFunctions;
     }
 
     /**
-     * @param \App\Model\Product\Product $entity
+     * @param int $productId
      * @param string $akeneoImageType
      * @param array $attributes
      * @return string
      */
-    public function getProductImageHtmlByAkeneoType(Product $entity, string $akeneoImageType, array $attributes = [])
+    public function getProductImageHtmlByIdAndAkeneoType(int $productId, string $akeneoImageType, array $attributes = [])
     {
         $this->preventDefault($attributes);
 
         try {
-            /** @var \App\Component\Image\Image $image */
-            $image = $this->imageFacade->getImageByObjectAndAkeneoType($entity, $akeneoImageType);
+            $image = $this->imageFacade->getImageByEntityIdAndAkeneoType($productId, Product::class, $akeneoImageType);
             $entityName = $image->getEntityName();
             $attributes['src'] = $this->getImageUrl($image, $attributes['size'], $attributes['type']);
             $additionalImagesData = $this->imageFacade->getAdditionalImagesData($this->domain->getCurrentDomainConfig(), $image, $attributes['size'], $attributes['type']);
@@ -61,14 +60,14 @@ class ImageExtension extends BaseImageExtension
     }
 
     /**
-     * @param \App\Model\Product\Product $entity
+     * @param int $productId
      * @param string $akeneoImageType
      * @return bool
      */
-    public function isProductImageHtmlByAkeneoType(Product $entity, string $akeneoImageType): bool
+    public function isProductImageHtmlByIdAndAkeneoType(int $productId, string $akeneoImageType): bool
     {
         try {
-            $this->imageFacade->getImageByObjectAndAkeneoType($entity, $akeneoImageType);
+            $this->imageFacade->getImageByEntityIdAndAkeneoType($productId, Product::class, $akeneoImageType);
             return true;
         } catch (ImageNotFoundException $e) {
             return false;

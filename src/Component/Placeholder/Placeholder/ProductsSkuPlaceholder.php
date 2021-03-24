@@ -8,6 +8,7 @@ use App\Model\Product\Availability\ProductAvailabilityFacade;
 use App\Model\Product\Listed\ListedProductViewFactory;
 use App\Model\Product\ProductOnCurrentDomainFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\ReadModelBundle\Image\ImageViewFacade;
 use Shopsys\ReadModelBundle\Product\Action\ProductActionViewFacade;
 use Twig\Environment;
@@ -110,9 +111,7 @@ final class ProductsSkuPlaceholder extends AbstractPlaceholder
             return '';
         }
 
-        //this has to be here, because framework bug https://github.com/shopsys/shopsys/issues/1693
-        $productClassName = 'Shopsys\FrameworkBundle\Model\Product\Product';
-        $imageViews = $this->imageViewFacade->getForEntityIds($productClassName, $this->getIdsForProducts($products));
+        $imageViews = $this->imageViewFacade->getMainImagesByEntityIds(Product::class, $this->getIdsForProducts($products));
         $productActionViews = $this->productActionViewFacade->getForProducts($products);
 
         $listedProductViews = [];

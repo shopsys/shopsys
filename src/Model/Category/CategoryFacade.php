@@ -196,22 +196,6 @@ class CategoryFacade extends BaseCategoryFacade
         return $this->categoryRepository->getAllAkeneoCategoryIds();
     }
 
-    /*
-     * @param \App\Model\Product\Product $product
-     * @param int $domainId
-     * @return \App\Model\Category\Category[]
-     */
-
-    /**
-     * @param \App\Model\Product\Product $product
-     * @param int $domainId
-     * @return array
-     */
-    public function getAllProductCategoriesByProductAndDomainId(Product $product, int $domainId): array
-    {
-        return $this->categoryRepository->getAllProductCategoriesOnDomain($product, $domainId);
-    }
-
     /**
      * @param \App\Model\Category\Category $parentCategory
      * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig

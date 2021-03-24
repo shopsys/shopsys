@@ -361,15 +361,14 @@ class ImageFacade extends BaseImageFacade
     }
 
     /**
-     * @param object $entity
+     * @param int $entityId
+     * @param string $entityClass
      * @param string $akeneoImageType
      * @return \App\Component\Image\Image
      */
-    public function getImageByObjectAndAkeneoType(object $entity, string $akeneoImageType): BaseImage
+    public function getImageByEntityIdAndAkeneoType(int $entityId, string $entityClass, string $akeneoImageType): Image
     {
-        $entityName = $this->imageConfig->getEntityName($entity);
-        $entityId = $this->getEntityId($entity);
-
+        $entityName = $this->imageConfig->getImageEntityConfigByClass($entityClass)->getEntityName();
         $image = $this->imageCacheFacade->findCachedImageEntityByEntityNameAndEntityIdAndType($entityName, $entityId, $akeneoImageType);
 
         if ($image !== null) {

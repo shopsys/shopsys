@@ -22,8 +22,6 @@ use Shopsys\ReadModelBundle\Product\Action\ProductActionViewFacade;
 use Shopsys\ReadModelBundle\Product\Listed\ListedProductViewElasticFacade as BaseListedProductViewElasticFacade;
 
 /**
- * Class ListedProductViewElasticFacade
- *
  * @property \App\Model\Product\ProductOnCurrentDomainElasticFacade $productOnCurrentDomainFacade
  * @property \App\Model\Product\Listed\ListedProductViewFactory $listedProductViewFactory
  */
@@ -131,32 +129,5 @@ class ListedProductViewElasticFacade extends BaseListedProductViewElasticFacade
         $paginationResult = $this->productOnCurrentDomainFacade->getPaginatedProductsInSale($productFilterData, $page, $limit);
 
         return $this->createPaginationResultWithArray($paginationResult);
-    }
-
-    /**
-     * @param \App\Model\Product\Product[] $products
-     * @return \App\Model\Product\Listed\ListedProductView[]
-     */
-    protected function createFromProducts(array $products): array
-    {
-        $productClassName = 'Shopsys\FrameworkBundle\Model\Product\Product';
-        $imageViews = $this->imageViewFacade->getForEntityIds($productClassName, $this->getIdsForProducts($products));
-        $productActionViews = $this->productActionViewFacade->getForProducts($products);
-
-        $listedProductViews = [];
-        foreach ($products as $product) {
-            $productId = $product->getId();
-            if (!$this->productAvailabilityFacade->isProductExcludedOnDomain($product, $this->domain->getId())
-                && $this->productAvailabilityFacade->isProductAvailableOnDomainOrHasPreorder($product, $this->domain->getId())
-            ) {
-                $listedProductViews[$productId] = $this->listedProductViewFactory->createFromProduct(
-                    $product,
-                    $imageViews[$productId],
-                    $productActionViews[$productId]
-                );
-            }
-        }
-
-        return $listedProductViews;
     }
 }

@@ -40,6 +40,7 @@ use Shopsys\FrameworkBundle\Model\Product\Search\ProductFilterCountDataElasticse
  * @method \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData getProductFilterCountDataForBrand(int $brandId, \App\Model\Product\Filter\ProductFilterData $productFilterData)
  * @method \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData getProductFilterCountDataForAll(\App\Model\Product\Filter\ProductFilterData $productFilterData)
  * @method \App\Model\Product\Search\FilterQuery createListableProductsInCategoryFilterQuery(\App\Model\Product\Filter\ProductFilterData $productFilterData, string $orderingModeId, int $page, int $limit, int $categoryId)
+ * @method \App\Model\Product\Search\FilterQuery createListableProductsForSearchTextFilterQuery(\App\Model\Product\Filter\ProductFilterData $productFilterData, string $orderingModeId, int $page, int $limit, string|null $searchText)
  */
 class ProductOnCurrentDomainElasticFacade extends BaseProductOnCurrentDomainElasticFacade
 {

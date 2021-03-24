@@ -4,15 +4,16 @@ declare(strict_types=1);
 
 namespace App\Model\Product;
 
-use App\Component\Router\FriendlyUrl\FriendlyUrlRepository;
 use App\Model\Stock\ProductStockFacade;
 use App\Model\Stock\StockFacade;
+use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Component\Plugin\PluginCrudExtensionFacade;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
+use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRepository;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\UrlListData;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupRepository;
 use Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryFactoryInterface;
@@ -41,7 +42,7 @@ use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFactoryInterface;
  * @property \App\Model\Product\ProductRepository $productRepository
  * @property \App\Model\Product\Parameter\ParameterRepository $parameterRepository
  * @property \App\Component\Image\ImageFacade $imageFacade
- * @property \App\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
+ * @property \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
  * @property \App\Model\Product\ProductHiddenRecalculator $productHiddenRecalculator
  * @property \App\Model\Product\ProductSellingDeniedRecalculator $productSellingDeniedRecalculator
  * @property \App\Model\Product\Availability\AvailabilityFacade $availabilityFacade
@@ -83,7 +84,7 @@ class ProductFacade extends BaseProductFacade
     private $productFilesUrlPrefix;
 
     /**
-     * @var \App\Component\Router\FriendlyUrl\FriendlyUrlRepository
+     * @var \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRepository
      */
     private FriendlyUrlRepository $friendlyUrlRepository;
 
@@ -114,7 +115,7 @@ class ProductFacade extends BaseProductFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductExportScheduler $productExportScheduler
      * @param \App\Model\Stock\ProductStockFacade $productStockFacade
      * @param \App\Model\Stock\StockFacade $stockFacade
-     * @param \App\Component\Router\FriendlyUrl\FriendlyUrlRepository $friendlyUrlRepository
+     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRepository $friendlyUrlRepository
      */
     public function __construct(
         string $productFilesUrlPrefix,
@@ -328,20 +329,20 @@ class ProductFacade extends BaseProductFacade
 
     /**
      * @param \App\Model\Product\Product $product
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @return array
      */
-    public function getDownloadFilesForProductByDomain(BaseProduct $product, Domain $domain): array
+    public function getDownloadFilesForProductByDomainConfig(BaseProduct $product, DomainConfig $domainConfig): array
     {
         $downloadFileUrls = [];
-        if ($product->isDownloadAssemblyInstructionFiles() === false && $product->getAssemblyInstructionCode($domain->getId()) !== null) {
+        if ($product->isDownloadAssemblyInstructionFiles() === false && $product->getAssemblyInstructionCode($domainConfig->getId()) !== null) {
             $url = $this->getProductTransferredFileUrl(
                 $product->getProductFileNameByType(
-                    $domain->getId(),
+                    $domainConfig->getId(),
                     Product::FILE_IDENTIFICATOR_ASSEMBLY_INSTRUCTION_TYPE
                 ),
-                $domain->getUrl(),
-                $product->getAssemblyInstructionCode($domain->getId())
+                $domainConfig->getUrl(),
+                $product->getAssemblyInstructionCode($domainConfig->getId())
             );
             $downloadFileUrls[] = [
                 'anchor_text' => t('Instalační manuál'),
@@ -349,14 +350,14 @@ class ProductFacade extends BaseProductFacade
             ];
         }
 
-        if ($product->isDownloadProductTypePlanFiles() === false && $product->getProductTypePlanCode($domain->getId()) !== null) {
+        if ($product->isDownloadProductTypePlanFiles() === false && $product->getProductTypePlanCode($domainConfig->getId()) !== null) {
             $url = $this->getProductTransferredFileUrl(
                 $product->getProductFileNameByType(
-                    $domain->getId(),
+                    $domainConfig->getId(),
                     Product::FILE_IDENTIFICATOR_PRODUCT_TYPE_PLAN_TYPE
                 ),
-                $domain->getUrl(),
-                $product->getProductTypePlanCode($domain->getId())
+                $domainConfig->getUrl(),
+                $product->getProductTypePlanCode($domainConfig->getId())
             );
             $downloadFileUrls[] = [
                 'anchor_text' => t('Typový plán'),

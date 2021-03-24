@@ -349,6 +349,28 @@ class Product extends BaseProduct
 
     /**
      * @param int $domainId
+     * @return string[]
+     */
+    public function getAllNonEmptyShortDescriptionUsp(int $domainId): array
+    {
+        $usps = [
+            $this->getShortDescriptionUsp1($domainId),
+            $this->getShortDescriptionUsp2($domainId),
+            $this->getShortDescriptionUsp3($domainId),
+            $this->getShortDescriptionUsp4($domainId),
+            $this->getShortDescriptionUsp5($domainId),
+        ];
+
+        return array_values(array_filter(
+            $usps,
+            static function ($value) {
+                return $value !== null && $value !== '';
+            }
+        ));
+    }
+
+    /**
+     * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Component\Money\Money|null
      */
     public function getHighPriceWithVat(int $domainId): ?Money
