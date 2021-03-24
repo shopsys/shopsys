@@ -23,8 +23,6 @@ export default function orderValidator ($container) {
             }
             if ($orderPersonalInfoForm.find('#order_personal_info_form_companyCustomer').is(':checked')) {
                 groups.push(constant('\\App\\Form\\Front\\Customer\\BillingAddressFormType::VALIDATION_GROUP_COMPANY_CUSTOMER'));
-            } else {
-                groups.push(constant('\\App\\Form\\Front\\Customer\\BillingAddressFormType::VALIDATION_GROUP_COMMON_CUSTOMER'));
             }
             if ($orderPersonalInfoForm.find('#order_personal_info_form_register').is(':checked')) {
                 groups.push(constant('\\App\\Form\\Front\\Order\\PersonalInfoFormType::VALIDATION_REGISTRATION'));

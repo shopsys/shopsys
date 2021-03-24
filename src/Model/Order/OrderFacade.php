@@ -539,10 +539,9 @@ class OrderFacade extends BaseOrderFacade
             $registrationData->companyName = $orderData->companyName;
             $registrationData->companyNumber = $orderData->companyNumber;
             $registrationData->companyTaxNumber = $orderData->companyTaxNumber;
-        } else {
-            $registrationData->firstName = $orderData->firstName;
-            $registrationData->lastName = $orderData->lastName;
         }
+        $registrationData->firstName = $orderData->firstName;
+        $registrationData->lastName = $orderData->lastName;
         $registrationData->email = $orderData->email;
         $registrationData->telephone = $orderData->telephone;
         $registrationData->street = $orderData->street;

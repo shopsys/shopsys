@@ -34,9 +34,7 @@ class CustomerUserUpdateFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('customerUserData', CustomerUserFormType::class, [
-                'is_company_customer' => $options['is_company_customer'],
-            ])
+            ->add('customerUserData', CustomerUserFormType::class)
             ->add('billingAddressData', BillingAddressFormType::class, [
                 'domain_id' => $options['domain_id'],
             ])
@@ -52,7 +50,7 @@ class CustomerUserUpdateFormType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver
-            ->setRequired(['domain_id', 'is_company_customer'])
+            ->setRequired(['domain_id'])
             ->addAllowedTypes('domain_id', 'int')
             ->setDefaults([
                 'empty_data' => $this->customerUserUpdateDataFactory->create(),
