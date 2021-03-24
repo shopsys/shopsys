@@ -1,63 +1,54 @@
 <ul class="menu-horizontal js-menuHorizontal dont-print" data-hovered="false">
 	{% for itemDetail in itemDetails %}
-		<li class="menu-horizontal__item js-menu-horizontal-item
-			{{ itemDetail.categoryDetailsByColumnNumber is not empty ? ' menu-horizontal__item--drop' }}">
+		{% set hasChildren = itemDetail.categoryDetailsByColumnNumber is not empty %}
+		
+		<li class="menu-horizontal__item js-menu-horizontal-item">
 			{% if itemDetail.horizontalMenuItem.url %}
 				<a href="{{ itemDetail.horizontalMenuItem.url }}" class="menu-horizontal__item__link">
 					{{ itemDetail.horizontalMenuItem.name }}
+					{% if hasChildren %}
+						<i class="menu-horizontal__item__arrow svg svg-arrow"></i>
+					{% endif %}
 				</a>
 			{% else %}
 				<span class="menu-horizontal__item__link">
 					{{ itemDetail.horizontalMenuItem.name }}
 				</span>
 			{% endif %}
-			{% if itemDetail.categoryDetailsByColumnNumber is not empty %}
+			{% if hasChildren %}
 				<div class="menu-horizontal__sub js-menu-horizontal-item-content">
-					<div class="menu-horizontal__sub__wrap">
-						<ul class="menu-horizontal__sub__columns js-menu-horizontal-sub-columns">
-							{% for categories in itemDetail.categoryDetailsByColumnNumber %}
-								<li class="menu-horizontal__sub__columns__column js-menu-horizontal-item-container">
-									<ul class="js-menu-horizontal-items">
-										{% for category in categories %}
-												<li>
-													<a href="{{ url('front_product_list', { id: category.id }) }}" class="menu-horizontal__sub__columns__column__title">
-														<div class="menu-horizontal__sub__columns__column__icon">
-															<i class="svg-categories{% if category.svgIcon %} svg-{{ category.svgIcon }}{% endif	 %} js-menu-horizontal-icon"></i>
-														</div>
-														<div class="menu-horizontal__sub__columns__column__image">
-															{{ image(category) }}
-														</div>
-														<span class="menu-horizontal__sub__columns__column__title">
-															{{ category.name }}
-														</span>
-													</a>
-													{% set subCategories = getCategoriesLookingLikeChildren(category) %}
-													{% if subCategories|length > 0 %}
-														<ul class="menu-horizontal__sub__columns__children js-menu-horizontal-ul js-menu-horizontal-items">
-															{% for childCategory in subCategories|slice(0,4) %}
-																<li class="menu-horizontal__sub__columns__children__item">
-																	<a class="menu-horizontal__sub__columns__children__item__link" href="{{ url('front_product_list', { id: childCategory.id }) }}">
-																		<span>{{ childCategory.name }}</span>
-																	</a>
-																</li>
-															{% endfor %}
-															{% if subCategories|length > 4 %}
-																<li>
-																	<a class="btn btn-no-style" href="{{ url('front_product_list', { id: category.id }) }}">
-																		<span class="btm__text">{{ 'Více'|trans }}</span>
-																		<i class="btn__icon svg svg-chevron"></i>
-																	</a>
-																</li>
-															{% endif %}
-														</ul>
-													{% endif %}
-												</li>
-										{% endfor %}
-									</ul>
-								</li>
-							{% endfor %}
-						</ul>
-					</div>
+					<ul class="menu-horizontal__sub__list js-menu-horizontal-sub-columns">
+						{% for categories in itemDetail.categoryDetailsByColumnNumber %}
+							<li class="menu-horizontal__sub__list__item js-menu-horizontal-item-container">
+								<ul class="js-menu-horizontal-items">
+									{% for category in categories %}
+										<li>
+											<a href="{{ url('front_product_list', { id: category.id }) }}" class="menu-horizontal__sub__columns__column__title">
+												<div class="menu-horizontal__sub__columns__column__image">
+													{{ image(category) }}
+												</div>
+												<span class="menu-horizontal__sub__columns__column__title">
+													{{ category.name }}
+												</span>
+											</a>
+											{% set subCategories = getCategoriesLookingLikeChildren(category) %}
+											{% if subCategories|length > 0 %}
+												<ul class="menu-horizontal__sub__columns__children js-menu-horizontal-ul js-menu-horizontal-items">
+													{% for childCategory in subCategories %}
+														<li class="menu-horizontal__sub__columns__children__item">
+															<a class="menu-horizontal__sub__columns__children__item__link" href="{{ url('front_product_list', { id: childCategory.id }) }}">
+																<span>{{ childCategory.name }}</span>
+															</a>
+														</li>
+													{% endfor %}
+												</ul>
+											{% endif %}
+										</li>
+									{% endfor %}
+								</ul>
+							</li>
+						{% endfor %}
+					</ul>
 				</div>
 			{% endif %}
 		</li>
@@ -79,22 +70,3 @@
 		</a>
 	</li>
 </ul>
-
-<div id="js-menu-mobile-wrapper" class="menu-horizontal-mobile display-none">
-	<div class="menu-horizontal-mobile__in js-menu-mobile-template display-none">
-		<div class="js-menu-mobile-link-back display-none menu-horizontal-mobile__back">
-			<a><i class="svg svg-arrow-right"></i>{{ 'Zpět'|trans }}</a>
-			<span class="js-menu-mobile-parent-name menu-horizontal-mobile__back__title"></span>
-		</div>
-		<div class="js-menu-mobile-link-back-home display-none menu-horizontal-mobile__back menu-horizontal-mobile__back--home">
-			<a href="{{ url('front_homepage') }}"><i class="svg svg-home"></i></a>
-			<span class="menu-horizontal-mobile__back__title">Menu</span>
-		</div>
-		<ul class="menu-horizontal-mobile__wrap js-menu-mobile-list">
-			<li class="js-menu-mobile-link-template menu-horizontal-mobile__item display-none">
-				<a href=""></a>
-				<i class="svg svg-arrow-right with-border display-none js-menu-mobile-next"></i>
-			</li>
-		</ul>
-	</div>
-</div>

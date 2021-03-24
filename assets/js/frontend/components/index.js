@@ -7,7 +7,6 @@ import './FormField';
 import './pushReloadState';
 import './HoverIntent';
 import './honeyPot';
-import './HorizontalMenu';
 import './InMessage';
 import './lazyLoadInit';
 import './legalConditions';
