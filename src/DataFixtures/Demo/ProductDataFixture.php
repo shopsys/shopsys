@@ -6342,8 +6342,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
      */
     private function setBrand(ProductData $productData, ?string $brandReference): void
     {
-        // real product data does not have brand
-        $productData->brand = null;
+        /** @var \App\Model\Product\Brand\Brand|null $brand */
+        $brand = $brandReference === null ? null : $this->persistentReferenceFacade->getReference($brandReference);
+        $productData->brand = $brand;
     }
 
     /**
