@@ -6,7 +6,6 @@ namespace Tests\App\Acceptance\acceptance\PageObject\Front;
 
 use Facebook\WebDriver\WebDriverBy;
 use Tests\App\Acceptance\acceptance\PageObject\AbstractPage;
-use Tests\FrameworkBundle\Test\Codeception\FrontCheckbox;
 
 class OrderPage extends AbstractPage
 {
@@ -121,7 +120,10 @@ class OrderPage extends AbstractPage
         $this->tester->fillFieldByName('order_personal_info_form[city]', $city);
         $this->tester->fillFieldByName('order_personal_info_form[postcode]', $postcode);
 
+        $this->tester->clickByName('order_personal_info_form[city]');
+
         $this->tester->waitForAjax();
+        $this->tester->wait(1);
     }
 
     /**
@@ -130,17 +132,6 @@ class OrderPage extends AbstractPage
     public function fillNote($note)
     {
         $this->tester->fillFieldByName('order_personal_info_form[note]', $note);
-    }
-
-    public function acceptLegalConditions()
-    {
-        $frontCheckboxClicker = FrontCheckbox::createByCss(
-            $this->tester,
-            '#order_personal_info_form_legalConditionsAgreement'
-        );
-        $frontCheckboxClicker->check();
-        $this->tester->waitForAjax();
-        $this->tester->wait(1);
     }
 
     private function scrollToPaymentForm()

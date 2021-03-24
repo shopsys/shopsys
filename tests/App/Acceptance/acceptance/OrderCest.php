@@ -7,6 +7,7 @@ namespace Tests\App\Acceptance\acceptance;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Script\ScriptFacade;
 use Tests\App\Acceptance\acceptance\PageObject\Front\LayoutPage;
+use Tests\App\Acceptance\acceptance\PageObject\Front\LoginPage;
 use Tests\App\Acceptance\acceptance\PageObject\Front\OrderPage;
 use Tests\App\Acceptance\acceptance\PageObject\Front\ProductListPage;
 use Tests\App\Acceptance\acceptance\PageObject\Front\RegistrationPage;
@@ -24,9 +25,9 @@ class OrderCest
 
     private const DEFAULT_BILLING_STREET = 'Koksární 10';
     private const DEFAULT_BILLING_CITY = 'Ostrava';
-    private const DEFAULT_BILLING_POSTCODE = '702 00';
+    private const DEFAULT_BILLING_POSTCODE = '70200';
     private const DEFAULT_PHONE = '123456789';
-    const DEFAULT_EMAIL = 'no-reply@google.com';
+    public const DEFAULT_EMAIL = 'no-reply@example.com';
 
     /**
      * @param \Tests\App\Acceptance\acceptance\PageObject\Front\ProductListPage $productListPage
@@ -174,7 +175,6 @@ class OrderCest
             self::DEFAULT_BILLING_CITY,
             self::DEFAULT_BILLING_POSTCODE
         );
-        $orderPage->acceptLegalConditions();
 
         $orderPage->finishOrder();
 
@@ -187,13 +187,15 @@ class OrderCest
      * @param \Tests\App\Test\Codeception\AcceptanceTester $me
      * @param \Tests\App\Acceptance\acceptance\PageObject\Front\RegistrationPage $registrationPage
      * @param \Tests\App\Acceptance\acceptance\PageObject\Front\LayoutPage $layoutPage
+     * @param \Tests\App\Acceptance\acceptance\PageObject\Front\LoginPage $loginPage
      */
     public function testOrderCanBeCompletedAsLoggedCustomer(
         ProductListPage $productListPage,
         OrderPage $orderPage,
         AcceptanceTester $me,
         RegistrationPage $registrationPage,
-        LayoutPage $layoutPage
+        LayoutPage $layoutPage,
+        LoginPage $loginPage
     ) {
         $me->wantTo('Send order as logged customer');
 
@@ -211,6 +213,7 @@ class OrderCest
             CustomerRegistrationCest::DEFAULT_USER_TELEPHONE
         );
         $registrationPage->checkRegistrationSuccessful();
+        $loginPage->checkUserLogged();
 
         // tv-audio
         $me->amOnLocalizedRoute('front_product_list', ['id' => 3]);
@@ -224,18 +227,11 @@ class OrderCest
 
         $orderPage->continueToThirdStep();
 
-        $orderPage->fillPersonalInfo(
-            CustomerRegistrationCest::DEFAULT_USER_FIRST_NAME,
-            CustomerRegistrationCest::DEFAULT_USER_LAST_NAME,
-            CustomerRegistrationCest::DEFAULT_USER_EMAIL,
-            self::DEFAULT_PHONE
-        );
         $orderPage->fillBillingAddress(
             self::DEFAULT_BILLING_STREET,
             self::DEFAULT_BILLING_CITY,
             self::DEFAULT_BILLING_POSTCODE
         );
-        $orderPage->acceptLegalConditions();
 
         $orderPage->finishOrder();
 
