@@ -124,7 +124,7 @@ class EntityExtensionTest extends TransactionFunctionalTestCase
 
     /**
      * @param string[] $entities
-     * @return \Doctrine\ORM\Mapping\ClassMetadata[]
+     * @return \Doctrine\Persistence\Mapping\ClassMetadata[]
      */
     public function getMetadata(array $entities): array
     {
@@ -134,7 +134,7 @@ class EntityExtensionTest extends TransactionFunctionalTestCase
     }
 
     /**
-     * @param \Doctrine\ORM\Mapping\ClassMetadata[] $metadata
+     * @param \Doctrine\Persistence\Mapping\ClassMetadata[] $metadata
      */
     public function generateProxies(array $metadata): void
     {
@@ -142,7 +142,7 @@ class EntityExtensionTest extends TransactionFunctionalTestCase
     }
 
     /**
-     * @param \Doctrine\ORM\Mapping\ClassMetadata[] $metadata
+     * @param \Doctrine\Persistence\Mapping\ClassMetadata[] $metadata
      */
     public function updateDatabaseSchema(array $metadata): void
     {

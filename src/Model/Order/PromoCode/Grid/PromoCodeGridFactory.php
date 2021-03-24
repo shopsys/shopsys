@@ -81,7 +81,7 @@ class PromoCodeGridFactory extends BasePromoCodeGridFactory
 
     /**
      * @param int $id
-     * @return int[]
+     * @return string[]|null[]
      */
     private function getLimitsByPromoCodeId(int $id): array
     {
