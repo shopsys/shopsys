@@ -4,6 +4,15 @@
         {% set routeParams = getAllRequestParams() %}
         {% set pageCount = paginationResult.pageCount %}
 
+        <div class="display-none">
+            <strong class="in-paging__info">
+                {{ 'Displaying'|trans }} {{ entityName|default('records'|trans)|trim }}
+                {{ paginationResult.fromItem }} - <span class="js-pagination-to-item">{{ paginationResult.toItem }}</span>
+                {{ 'from'|trans }}
+                <span class="js-paging-total-count">{{ paginationResult.totalCount }}</span>
+            </strong>
+        </div>
+
         <div class="in-paging__control">
             {% if pageCount > 1 %}
                 {% if paginationResult.page > 1 %}
