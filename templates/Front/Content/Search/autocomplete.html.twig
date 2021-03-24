@@ -23,24 +23,21 @@
         </ul>
     {% endif %}
 
-    <div class="js-not-implemented-yet display-none">
+    {% if brandsPaginationResult.results|length > 0 %}
         <p class="search__hint__title">
-            {{ 'Značky'|trans }} (9)
+            {{ 'Značky'|trans }} ({{ brandsPaginationResult.results|length }})
         </p>
 
         <ul class="search__hint__list">
-            <li class="search__hint__list__item">
-                <a href="#" class="search__hint__list__item__link js-search-autocomplete-item-label">
-                    Meno značky
-                </a>
-            </li>
-            <li class="search__hint__item">
-                <a href="#" class="search__hint__list__item__link js-search-autocomplete-item-label">
-                    Meno značky
-                </a>
-            </li>
+            {% for brand in brandsPaginationResult.results %}
+                <li class="search__hint__list__item">
+                    <a href="{{ url('front_brand_detail', { id: brand.id }) }}" class="search__hint__list__item__link js-search-autocomplete-item-label">
+                        {{ brand.name }}
+                    </a>
+                </li>
+            {% endfor %}
         </ul>
-    </div>
+    {% endif %}
 
     {% if categoriesPaginationResult.results|length > 0 %}
         <p class="search__hint__title">
@@ -58,7 +55,7 @@
         </ul>
     {% endif %}
 
-    {% if productsPaginationResult.totalCount <= 0 and categoriesPaginationResult.totalCount <= 0 %}
+    {% if productsPaginationResult.totalCount <= 0 and categoriesPaginationResult.totalCount <= 0 and brandsPaginationResult.totalCount <= 0 %}
         <div class="search__hint__no-result">
             <picture class="search__hint__no-result__image">
                 <source srcset=" {{ asset('public/frontend/images/warning2x.png') }} 2x, {{ asset('public/frontend/images/warning.png') }} 1x" />
