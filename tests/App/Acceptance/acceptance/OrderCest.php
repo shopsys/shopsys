@@ -26,6 +26,7 @@ class OrderCest
     private const DEFAULT_BILLING_CITY = 'Ostrava';
     private const DEFAULT_BILLING_POSTCODE = '702 00';
     private const DEFAULT_PHONE = '123456789';
+    const DEFAULT_EMAIL = 'no-reply@google.com';
 
     /**
      * @param \Tests\App\Acceptance\acceptance\PageObject\Front\ProductListPage $productListPage
@@ -108,6 +109,7 @@ class OrderCest
         $orderPage->selectPayment(self::PAYMENT_CACHE_ON_DELIVERY);
         $orderPage->continueToThirdStep();
 
+        $orderPage->fillEmail(self::DEFAULT_EMAIL);
         $orderPage->fillFirstName('Jan');
         $orderPage->goBackToSecondStep();
 
@@ -166,7 +168,7 @@ class OrderCest
         $orderPage->selectPayment(self::PAYMENT_CACHE_ON_DELIVERY);
         $orderPage->continueToThirdStep();
 
-        $orderPage->fillPersonalInfo('Karel', 'Novák', 'no-reply@shopsys.com', self::DEFAULT_PHONE);
+        $orderPage->fillPersonalInfo('Karel', 'Novák', self::DEFAULT_EMAIL, self::DEFAULT_PHONE);
         $orderPage->fillBillingAddress(
             self::DEFAULT_BILLING_STREET,
             self::DEFAULT_BILLING_CITY,

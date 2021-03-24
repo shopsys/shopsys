@@ -73,7 +73,18 @@ class OrderPage extends AbstractPage
      */
     public function fillFirstName($firstName)
     {
+        $this->selectCommonCustomer();
         $this->tester->fillFieldByName(self::FIRST_NAME_FIELD_NAME, $firstName);
+    }
+
+    /**
+     * @param string $email
+     */
+    public function fillEmail(string $email): void
+    {
+        $this->tester->fillFieldByName('order_personal_info_form[email]', $email);
+        $this->tester->waitForAjax();
+        $this->tester->wait(1);
     }
 
     /**
@@ -92,9 +103,10 @@ class OrderPage extends AbstractPage
      */
     public function fillPersonalInfo($firstName, $lastName, $email, $telephone)
     {
+        $this->fillEmail($email);
+        $this->selectCommonCustomer();
         $this->fillFirstName($firstName);
         $this->tester->fillFieldByName('order_personal_info_form[lastName]', $lastName);
-        $this->tester->fillFieldByName('order_personal_info_form[email]', $email);
         $this->tester->fillFieldByName('order_personal_info_form[telephone]', $telephone);
     }
 
@@ -169,5 +181,10 @@ class OrderPage extends AbstractPage
     public function checkOrderFinishedSuccessfully(): void
     {
         $this->tester->seeTranslationFrontend('Děkujeme za vaši objednávku');
+    }
+
+    public function selectCommonCustomer(): void
+    {
+        $this->tester->clickByCss('.js-tabs-button[data-tab-id="common-customer"]');
     }
 }
