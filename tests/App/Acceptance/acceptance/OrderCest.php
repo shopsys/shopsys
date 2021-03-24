@@ -15,7 +15,7 @@ use Tests\App\Test\Codeception\Helper\SymfonyHelper;
 
 class OrderCest
 {
-    private const TRANSPORT_CZECH_POST_POSITION = 0;
+    private const TRANSPORT_CZECH_POST_POSITION = 1;
     private const PAYMENT_CACHE_ON_DELIVERY = 1;
 
     private const DEFAULT_TRANSPORT_NAME = 'Czech post';

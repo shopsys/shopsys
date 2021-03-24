@@ -35,11 +35,7 @@ class OrderPage extends AbstractPage
      */
     public function selectTransport($transportPosition)
     {
-        $frontCheckboxClicker = FrontCheckbox::createByCss(
-            $this->tester,
-            '#transport_and_payment_form_transport_' . $transportPosition
-        );
-        $frontCheckboxClicker->check();
+        $this->tester->clickByCss('label[for=transport_and_payment_form_transport_' . $transportPosition . ']');
         $this->tester->waitForAjax();
     }
 
@@ -68,12 +64,7 @@ class OrderPage extends AbstractPage
      */
     public function selectPayment($paymentPosition)
     {
-        $this->scrollToPaymentForm();
-        $frontCheckboxClicker = FrontCheckbox::createByCss(
-            $this->tester,
-            '#transport_and_payment_form_payment_' . $paymentPosition
-        );
-        $frontCheckboxClicker->check();
+        $this->tester->clickByCss('label[for=transport_and_payment_form_payment_' . $paymentPosition . ']');
         $this->tester->waitForAjax();
     }
 
@@ -157,26 +148,26 @@ class OrderPage extends AbstractPage
 
     public function continueToSecondStep(): void
     {
-        $this->tester->clickByTranslationFrontend('Order [verb]');
+        $this->tester->clickByTranslationFrontend('Doprava a platba');
     }
 
     public function continueToThirdStep(): void
     {
-        $this->tester->clickByTranslationFrontend('Continue in order');
+        $this->tester->clickByTranslationFrontend('Vaše údaje');
     }
 
     public function goBackToSecondStep(): void
     {
-        $this->tester->clickByTranslationFrontend('Back to shipping and payment selection');
+        $this->tester->clickByTranslationFrontend('Zpět na Dopravu a platbu');
     }
 
     public function finishOrder(): void
     {
-        $this->tester->clickByTranslationFrontend('Finish the order');
+        $this->tester->clickByTranslationFrontend('Odeslat objednávku');
     }
 
     public function checkOrderFinishedSuccessfully(): void
     {
-        $this->tester->seeTranslationFrontend('Order sent');
+        $this->tester->seeTranslationFrontend('Děkujeme za vaši objednávku');
     }
 }

@@ -6,6 +6,7 @@ namespace Tests\App\Test\Codeception\Module;
 
 use Codeception\Module\WebDriver;
 use Codeception\Util\Locator;
+use Facebook\WebDriver\Exception\ElementNotInteractableException;
 use Facebook\WebDriver\Interactions\WebDriverActions;
 use Facebook\WebDriver\WebDriverBy;
 use Facebook\WebDriver\WebDriverElement;
@@ -91,7 +92,7 @@ class StrictWebDriver extends WebDriver
     {
         $locateBy = $this->getWebDriverByText($text);
 
-        $clickable = $this->getElementBySelectorAndContext($locateBy, $contextSelector);
+        $clickable = $this->getDisplayedElementBySelectorAndContext($locateBy, $contextSelector);
         $this->moveMouseOverByElement($clickable);
 
         $clickable->click();
@@ -122,17 +123,29 @@ class StrictWebDriver extends WebDriver
      * @param \Facebook\WebDriver\WebDriverBy|\Facebook\WebDriver\WebDriverElement|null $contextSelector
      * @return \Facebook\WebDriver\Remote\RemoteWebElement|\Facebook\WebDriver\WebDriverElement
      */
-    private function getElementBySelectorAndContext(WebDriverBy $locateBy, $contextSelector = null): WebDriverElement
+    private function getDisplayedElementBySelectorAndContext(WebDriverBy $locateBy, $contextSelector = null): WebDriverElement
     {
         if ($contextSelector instanceof WebDriverBy) {
-            return $this->webDriver->findElement($contextSelector)->findElement($locateBy);
+            $elements = $this->webDriver->findElement($contextSelector)->findElements($locateBy);
+        } elseif ($contextSelector instanceof WebDriverElement) {
+            $elements = $contextSelector->findElements($locateBy);
+        } else {
+            $elements = $this->webDriver->findElements($locateBy);
         }
 
-        if ($contextSelector instanceof WebDriverElement) {
-            return $contextSelector->findElement($locateBy);
+        if (count($elements) === 1) {
+            return reset($elements);
         }
 
-        return $this->webDriver->findElement($locateBy);
+        foreach ($elements as $element) {
+            $this->moveMouseOverByElement($element);
+
+            if ($element->isDisplayed()) {
+                return $element;
+            }
+        }
+
+        throw new ElementNotInteractableException('Element searched for by "' . $locateBy->getValue() . '" is not visible or does not exist.');
     }
 
     /**
@@ -141,7 +154,7 @@ class StrictWebDriver extends WebDriver
      */
     public function clickByName(string $name, $contextSelector = null): void
     {
-        $element = $this->getElementBySelectorAndContext(WebDriverBy::name($name), $contextSelector);
+        $element = $this->getDisplayedElementBySelectorAndContext(WebDriverBy::name($name), $contextSelector);
 
         $this->clickAndWaitByElement($element);
     }
@@ -152,7 +165,7 @@ class StrictWebDriver extends WebDriver
      */
     public function clickByCss(string $css, $contextSelector = null): void
     {
-        $element = $this->getElementBySelectorAndContext(WebDriverBy::cssSelector($css), $contextSelector);
+        $element = $this->getDisplayedElementBySelectorAndContext(WebDriverBy::cssSelector($css), $contextSelector);
 
         $this->clickAndWaitByElement($element);
     }
