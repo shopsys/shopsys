@@ -95,11 +95,11 @@
             occurrence: 'Front-end: preview in dropdown cart'
             additionalSizes:
                 - {width: 86, height: 56, media: "only screen and (-webkit-min-device-pixel-ratio: 1.5)"}
-        -   name: thumbnailSearch
+        -   name: thumbnailMedium
             width: 72
             height: 48
             crop: false
-            occurrence: 'Front-end: Preview in autocomplete for search'
+            occurrence: 'Front-end: Preview in autocomplete for search, category image in horizontal menu'
             additionalSizes:
                 - {width: 144, height: 96, media: "only screen and (-webkit-min-device-pixel-ratio: 1.5)"}
 
