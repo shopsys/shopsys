@@ -735,8 +735,13 @@ services:
     Shopsys\FrameworkBundle\Component\Image\ImageFacade:
         alias: App\Component\Image\ImageFacade
 
+    Shopsys\Cdn\Component\Image\ImageFacade:
+        alias: App\Component\Image\ImageFacade
+
     App\Component\Image\ImageFacade:
         arguments: ['%shopsys.image_url_prefix%']
+        calls:
+            - { method: setCdnDomain, arguments: [ '%env(CDN_DOMAIN)%' ] }
 
     Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRouterFactory:
         class: App\Component\Router\FriendlyUrl\FriendlyUrlRouterFactory

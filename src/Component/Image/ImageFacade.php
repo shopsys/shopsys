@@ -14,6 +14,7 @@ use League\Flysystem\MountManager;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\FileUpload\FileUpload;
 use Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadData;
+use Shopsys\FrameworkBundle\Component\Image\AdditionalImageData;
 use Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig;
 use Shopsys\FrameworkBundle\Component\Image\Exception\ImageNotFoundException;
 use Shopsys\FrameworkBundle\Component\Image\Image as BaseImage;
@@ -24,6 +25,9 @@ use Shopsys\FrameworkBundle\Component\Image\ImageRepository;
 use Shopsys\FrameworkBundle\Component\String\TransformString;
 
 /**
+ * class don't inherit from \Shopsys\Cdn\Component\Image\ImageFacade and implement replacing manually until
+ * https://gitlab.shopsys.cz/ss6-projects/cdn/-/merge_requests/3 is resolved
+ *
  * @property \App\Component\Image\Config\ImageConfig $imageConfig
  * @property \App\Component\Image\ImageRepository $imageRepository
  * @property \App\Component\FileUpload\FileUpload $fileUpload
@@ -45,6 +49,11 @@ class ImageFacade extends BaseImageFacade
      * @var \App\Component\Image\ImageCacheFacade
      */
     private $imageCacheFacade;
+
+    /**
+     * @var string|null
+     */
+    private $cdnDomain;
 
     /**
      * @param mixed $imageUrlPrefix
@@ -86,6 +95,17 @@ class ImageFacade extends BaseImageFacade
     }
 
     /**
+     * @param string $cdnDomain
+     */
+    public function setCdnDomain(string $cdnDomain): void
+    {
+        // When you do not want to use CDN, it is used value '//' as workaround by https://github.com/symfony/symfony/issues/28391
+        if (trim($cdnDomain, '/') !== '') {
+            $this->cdnDomain = $cdnDomain;
+        }
+    }
+
+    /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @param object|\App\Component\Image\Image $imageOrEntity
      * @param string|null $sizeName
@@ -111,6 +131,8 @@ class ImageFacade extends BaseImageFacade
         $imageUrl = $domainConfig->getUrl()
             . $this->imageUrlPrefix
             . $this->imageLocator->getRelativeImageFilepathWithSlug($image, $sizeName, $friendlyUrlSeoEntityName);
+
+        $imageUrl = $this->replaceDomainUrlByCdnDomain($imageUrl, $domainConfig);
 
         $this->imageCacheFacade->setImageUrlIntoCache($imageUrl, $image->getId(), $type, $sizeName);
 
@@ -176,6 +198,37 @@ class ImageFacade extends BaseImageFacade
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
+     * @param int $id
+     * @param string $extension
+     * @param string $entityName
+     * @param string|null $type
+     * @param string|null $sizeName
+     * @return \Shopsys\FrameworkBundle\Component\Image\AdditionalImageData[]
+     */
+    public function getAdditionalImagesDataFromAttributes(
+        DomainConfig $domainConfig,
+        int $id,
+        string $extension,
+        string $entityName,
+        ?string $type,
+        ?string $sizeName = null
+    ): array {
+        $entityConfig = $this->imageConfig->getEntityConfigByEntityName($entityName);
+        $sizeConfig = $entityConfig->getSizeConfigByType($type, $sizeName);
+
+        $result = [];
+        foreach ($sizeConfig->getAdditionalSizes() as $additionalSizeIndex => $additionalSizeConfig) {
+            $image = $this->imageRepository->getById($id);
+            $imageUrl = $this->getAdditionalImageUrl($domainConfig, $additionalSizeIndex, $image, $sizeName);
+
+            $result[] = new AdditionalImageData($additionalSizeConfig->getMedia(), $imageUrl);
+        }
+
+        return $result;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @param int $additionalSizeIndex
      * @param \App\Component\Image\Image $image
      * @param string|null $sizeName
@@ -203,6 +256,8 @@ class ImageFacade extends BaseImageFacade
         $imageUrl = $domainConfig->getUrl()
             . $this->imageUrlPrefix
             . $this->imageLocator->getRelativeAdditionalImageFilepathWithSlug($image, $additionalSizeIndex, $sizeName, $friendlyUrlSeoEntityName);
+
+        $imageUrl = $this->replaceDomainUrlByCdnDomain($imageUrl, $domainConfig);
 
         $this->imageCacheFacade->setImageUrlIntoCache(
             $imageUrl,
@@ -478,5 +533,19 @@ class ImageFacade extends BaseImageFacade
         }
 
         parent::saveImageOrdering($persistedImages);
+    }
+
+    /**
+     * @param string $imageUrl
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
+     * @return string
+     */
+    private function replaceDomainUrlByCdnDomain(string $imageUrl, DomainConfig $domainConfig): string
+    {
+        if ($this->cdnDomain === null) {
+            return $imageUrl;
+        }
+
+        return str_replace($domainConfig->getUrl(), $this->cdnDomain, $imageUrl);
     }
 }
