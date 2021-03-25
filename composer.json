@@ -31,7 +31,6 @@
     "require": {
         "php": "^7.4",
         "ext-bcmath": "*",
-        "ext-calendar": "*",
         "ext-ctype": "*",
         "ext-curl": "*",
         "ext-fileinfo": "*",
