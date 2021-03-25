@@ -11,8 +11,17 @@ services:
         autoconfigure: true
         public: true
 
-    Shopsys\FrameworkBundle\Component\Domain\DomainFactory:
-        class: Shopsys\FrameworkBundle\Component\Domain\DomainFactoryOverwritingDomainUrl
+    Shopsys\FrameworkBundle\Component\Domain\Domain: '@Shopsys\Cdn\Component\Domain\Domain'
+
+    Shopsys\Cdn\Component\Domain\Domain:
+        factory: ['@Shopsys\Cdn\Component\Domain\DomainFactoryOverwritingDomainUrl', create]
+        arguments:
+            - '%shopsys.domain_config_filepath%'
+            - '%shopsys.domain_urls_config_filepath%'
+        lazy: true
+
+    Shopsys\Cdn\Component\Domain\DomainFactoryOverwritingDomainUrl:
+        class: Shopsys\Cdn\Component\Domain\DomainFactoryOverwritingDomainUrl
         arguments:
             - '%env(OVERWRITE_DOMAIN_URL)%'
 

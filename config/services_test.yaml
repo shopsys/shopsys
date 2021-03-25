@@ -271,3 +271,14 @@ services:
     App\Command\ExtendedClassesAnnotationsCommand:
         arguments:
             - '%shopsys.root_dir%'
+
+    Shopsys\Cdn\Component\Domain\Domain:
+        factory: [ '@Shopsys\Cdn\Component\Domain\DomainFactory', createWithCdn ]
+        arguments:
+            - '%shopsys.domain_config_filepath%'
+            - '%shopsys.domain_urls_config_filepath%'
+            - '%env(CDN_DOMAIN)%'
+        lazy: true
+
+    Shopsys\Cdn\Component\Domain\DomainFactoryOverwritingDomainUrl:
+        class: Shopsys\Cdn\Component\Domain\DomainFactory
