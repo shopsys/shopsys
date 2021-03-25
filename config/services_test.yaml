@@ -45,11 +45,6 @@ services:
 
     Shopsys\ReadModelBundle\Product\Action\ProductActionViewFacade: ~
 
-    App\Component\Image\Config\ImageConfig:
-        factory: ['@App\Component\Image\Config\ImageConfigLoader', loadFromYaml]
-        arguments:
-            - '%shopsys.image_config_filepath%'
-
     Shopsys\FrameworkBundle\Component\Image\ImageLocator:
         alias: App\Component\Image\ImageLocator
 

@@ -10,7 +10,6 @@ use Shopsys\FrameworkBundle\Component\Image\Image;
 use Shopsys\FrameworkBundle\Component\Image\ImageLocator as BaseImageLocator;
 
 /**
- * @property \App\Component\Image\Config\ImageConfig $imageConfig
  * @method string getRelativeImageFilepath(\App\Component\Image\Image $image, string|null $sizeName)
  * @method string getAbsoluteImageFilepath(\App\Component\Image\Image $image, string|null $sizeName)
  * @method string getAbsoluteAdditionalImageFilepath(\App\Component\Image\Image $image, int $additionalIndex, string|null $sizeName)
@@ -23,7 +22,7 @@ class ImageLocator extends BaseImageLocator
 
     /**
      * @param string $imageDir
-     * @param \App\Component\Image\Config\ImageConfig $imageConfig
+     * @param \Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig $imageConfig
      * @param \League\Flysystem\FilesystemInterface $filesystem
      */
     public function __construct($imageDir, ImageConfig $imageConfig, FilesystemInterface $filesystem)

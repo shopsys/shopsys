@@ -11,7 +11,7 @@ use Tests\App\Test\FunctionalTestCase;
 class ImageConfigTest extends FunctionalTestCase
 {
     /**
-     * @var \App\Component\Image\Config\ImageConfig
+     * @var \Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig
      * @inject
      */
     private $imageConfig;

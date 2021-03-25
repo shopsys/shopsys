@@ -28,7 +28,6 @@ use Shopsys\FrameworkBundle\Component\String\TransformString;
  * class don't inherit from \Shopsys\Cdn\Component\Image\ImageFacade and implement replacing manually until
  * https://gitlab.shopsys.cz/ss6-projects/cdn/-/merge_requests/3 is resolved
  *
- * @property \App\Component\Image\Config\ImageConfig $imageConfig
  * @property \App\Component\Image\ImageRepository $imageRepository
  * @property \App\Component\FileUpload\FileUpload $fileUpload
  * @property \App\Component\Image\ImageLocator $imageLocator
@@ -58,7 +57,7 @@ class ImageFacade extends BaseImageFacade
     /**
      * @param mixed $imageUrlPrefix
      * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \App\Component\Image\Config\ImageConfig $imageConfig
+     * @param \Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig $imageConfig
      * @param \App\Component\Image\ImageRepository $imageRepository
      * @param \League\Flysystem\FilesystemInterface $filesystem
      * @param \App\Component\FileUpload\FileUpload $fileUpload

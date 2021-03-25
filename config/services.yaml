@@ -127,17 +127,6 @@ services:
         tags:
             - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse }
 
-    Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig:
-        alias: App\Component\Image\Config\ImageConfig
-
-    Shopsys\FrameworkBundle\Component\Image\Config\ImageConfigLoader:
-        alias: App\Component\Image\Config\ImageConfigLoader
-
-    App\Component\Image\Config\ImageConfig:
-        factory: ['@App\Component\Image\Config\ImageConfigLoader', loadFromYaml]
-        arguments:
-            - '%shopsys.image_config_filepath%'
-
     Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade:
         alias: App\Component\UploadedFile\UploadedFileFacade
 
