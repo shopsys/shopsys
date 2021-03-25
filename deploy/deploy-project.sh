@@ -29,6 +29,7 @@ function deploy() {
         ["S3_API_BUCKET_NAME"]=${PROJECT_NAME}
         ["REDIS_PREFIX"]=${PROJECT_NAME}
         ["ELASTIC_SEARCH_INDEX_PREFIX"]=${PROJECT_NAME}
+        ["CDN_DOMAIN"]=${CDN_DOMAIN}
     )
 
     declare -A CRON_INSTANCES=(
@@ -44,6 +45,7 @@ function deploy() {
     source "${DEPLOY_TARGET_PATH}/functions.sh"
     source "${DEPLOY_TARGET_PATH}/parts/parameters.sh"
     source "${DEPLOY_TARGET_PATH}/parts/domains.sh"
+    source "${BASE_PATH}/deploy/parts/whitelist-ip.sh"
     source "${DEPLOY_TARGET_PATH}/parts/environment-variables.sh"
     source "${DEPLOY_TARGET_PATH}/parts/kubernetes-variables.sh"
     source "${DEPLOY_TARGET_PATH}/parts/cron.sh"
@@ -54,6 +56,7 @@ function deploy() {
 function merge() {
     source "${BASE_PATH}/vendor/devops/kubernetes-deployment/deploy/functions.sh"
     merge_configuration
+    source "${BASE_PATH}/vendor/shopsys/cdn/deploymentPatch/cdnPatch.sh"
 }
 
 case "$1" in
