@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1e633a85ed7efa6a46c48b3a6e0a3d80",
+    "content-hash": "8990e064f40c04a02001d707a5624a6b",
     "packages": [
         {
             "name": "adoy/fastcgi-client",
@@ -7222,6 +7222,46 @@
                 "controllers"
             ],
             "time": "2020-08-25T19:10:18+00:00"
+        },
+        {
+            "name": "shopsys/cdn",
+            "version": "1.0.3",
+            "source": {
+                "type": "git",
+                "url": "https://gitlab+deploy-token-23:r3JFL4v-MPmhxEmzu3ZL@gitlab.shopsys.cz/ss6-projects/cdn.git",
+                "reference": "a797d4e763850e71da8557d524f63d689d45e1b8"
+            },
+            "require": {
+                "php": "^7.1",
+                "shopsys/framework": "^9.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Shopsys\\Cdn\\": "src"
+                },
+                "classmap": [
+                    "src"
+                ]
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Petr Kadlec",
+                    "email": "petr.kadlec@shopsys.com",
+                    "homepage": "http://shopsys.com"
+                }
+            ],
+            "description": "This bundle provides easy way to using CDN",
+            "keywords": [
+                "cdn",
+                "framework",
+                "shopsys",
+                "symfony"
+            ],
+            "time": "2020-12-11T20:59:57+00:00"
         },
         {
             "name": "shopsys/doctrine-orm",
