@@ -11,7 +11,8 @@ services:
         autoconfigure: true
         public: true
 
-    Shopsys\FrameworkBundle\Component\Domain\Domain: '@Shopsys\Cdn\Component\Domain\Domain'
+    Shopsys\FrameworkBundle\Component\Domain\Domain:
+        alias: Shopsys\Cdn\Component\Domain\Domain
 
     Shopsys\Cdn\Component\Domain\Domain:
         factory: ['@Shopsys\Cdn\Component\Domain\DomainFactoryOverwritingDomainUrl', create]

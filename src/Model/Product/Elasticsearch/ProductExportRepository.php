@@ -165,6 +165,7 @@ class ProductExportRepository extends BaseProductExportRepository
             'unit' => $product->getUnit()->getName($locale),
             'is_using_stock' => $product->isUsingStock(),
             'stock_quantity' => $this->productAvailabilityFacade->getGroupedStockQuantityByProductAndDomainId($product, $domainId),
+            'has_preorder' => $product->hasPreorder(),
             'variants' => $variantIds,
             'main_variant_id' => $product->isVariant() ? $product->getMainVariant()->getId() : null,
             'seo_h1' => $product->getSeoH1($domainId),

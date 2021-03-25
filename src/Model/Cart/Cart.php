@@ -52,6 +52,21 @@ class Cart extends BaseCart
     }
 
     /**
+     * @param int $productId
+     * @return \App\Model\Cart\Item\CartItem|null
+     */
+    public function findCartItemByProductId(int $productId): ?CartItem
+    {
+        foreach ($this->items as $item) {
+            if ($item->getProduct()->getId() === $productId) {
+                return $item;
+            }
+        }
+
+        return null;
+    }
+
+    /**
      * @param \App\Model\Product\Product $product
      * @param int $quantity
      */

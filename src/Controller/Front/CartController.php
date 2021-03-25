@@ -11,7 +11,6 @@ use App\Model\Gtm\GtmFacade;
 use App\Model\Gtm\GtmJsPushFacade;
 use App\Model\Order\Preview\OrderPreviewFactory;
 use App\Model\Product\Availability\ProductAvailabilityFacade;
-use App\Model\Product\ProductFacade;
 use BadMethodCallException;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\FlashMessage\ErrorExtractor;
@@ -74,11 +73,6 @@ class CartController extends FrontBaseController
     private $productAvailabilityFacade;
 
     /**
-     * @var \App\Model\Product\ProductFacade
-     */
-    private $productFacade;
-
-    /**
      * @var \App\Model\Gtm\GtmFacade
      */
     private $gtmFacade;
@@ -106,7 +100,6 @@ class CartController extends FrontBaseController
      * @param \Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFacadeInterface $listedProductViewFacade
      * @param \Symfony\Component\HttpFoundation\RequestStack $requestStack
      * @param \App\Model\Product\Availability\ProductAvailabilityFacade $productAvailabilityFacade
-     * @param \App\Model\Product\ProductFacade $productFacade
      * @param \App\Model\Gtm\GtmFacade $gtmFacade
      * @param \App\Model\Gtm\GtmJsPushFacade $gtmJsPushFacade
      * @param \Shopsys\FrameworkBundle\Model\Module\ModuleFacade|null $moduleFacade
@@ -120,7 +113,6 @@ class CartController extends FrontBaseController
         ListedProductViewFacadeInterface $listedProductViewFacade,
         RequestStack $requestStack,
         ProductAvailabilityFacade $productAvailabilityFacade,
-        ProductFacade $productFacade,
         GtmFacade $gtmFacade,
         GtmJsPushFacade $gtmJsPushFacade,
         ?ModuleFacade $moduleFacade = null,
@@ -133,7 +125,6 @@ class CartController extends FrontBaseController
         $this->listedProductViewFacade = $listedProductViewFacade;
         $this->requestStack = $requestStack;
         $this->productAvailabilityFacade = $productAvailabilityFacade;
-        $this->productFacade = $productFacade;
         $this->gtmFacade = $gtmFacade;
         $this->gtmJsPushFacade = $gtmJsPushFacade;
         $this->moduleFacade = $moduleFacade;
@@ -292,7 +283,7 @@ class CartController extends FrontBaseController
     }
 
     /**
-     * @param \Shopsys\ReadModelBundle\Product\Action\ProductActionView $productActionView
+     * @param \App\Model\Product\Action\ProductActionView $productActionView
      * @param string $type
      */
     public function productActionAction(ProductActionView $productActionView, $type = 'normal')
@@ -301,18 +292,22 @@ class CartController extends FrontBaseController
             'action' => $this->generateUrl('front_cart_add_product'),
         ]);
 
-        $product = $this->productFacade->getById($productActionView->getId());
-
-        $productAvailable = $this->productAvailabilityFacade->isProductAvailableOnDomainOrHasPreorder(
-            $product,
-            $this->domain->getId()
-        );
+        $availableAddQuantity = $productActionView->getMaximumOrderQuantity();
+        if (!$productActionView->hasPreorder()) {
+            $cart = $this->cartFacade->findCartOfCurrentCustomerUser();
+            if ($cart) {
+                $cartItem = $cart->findCartItemByProductId($productActionView->getId());
+                if ($cartItem !== null) {
+                    $availableAddQuantity -= $cartItem->getQuantity();
+                }
+            }
+        }
 
         return $this->render('Front/Inline/Cart/productAction.html.twig', [
             'form' => $form->createView(),
             'productActionView' => $productActionView,
             'type' => $type,
-            'productAvailable' => $productAvailable,
+            'availableAddQuantity' => $availableAddQuantity,
         ]);
     }
 
