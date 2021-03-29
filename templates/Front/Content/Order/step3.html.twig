@@ -271,6 +271,7 @@
                     <div class="box-cart-card-preview-wrap">
                         <div id="js-order-preview" class="box-cart-card box-cart-card--preview box-cart-card--preview-step-3" data-url="{{ url('front_order_preview') }}">
                             {{ render(controller('App\\Controller\\Front\\OrderController:previewAction', {
+                                transportId: orderPreview.transport is not null ? orderPreview.transport.id : null,
                                 paymentId: orderPreview.payment is not null ? orderPreview.payment.id : null,
                                 showAdvert: false,
                                 showPromo: false
