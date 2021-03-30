@@ -36,11 +36,11 @@ services:
             - "35729:35729"
 
     redis:
-        image: redis:4.0-alpine
+        image: redis:5.0-alpine
         container_name: shopsys-framework-redis
 
     selenium-server:
-        image: selenium/standalone-chrome:3.11
+        image: selenium/standalone-chrome:3.141.5
         container_name: shopsys-framework-acceptance-tests
         ports:
             - "4400:4444"
