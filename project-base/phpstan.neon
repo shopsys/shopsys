@@ -23,6 +23,10 @@ parameters:
             message: '#^PHPDoc tag @throws with type .+ is not subtype of Throwable$#'
             path: %currentWorkingDirectory%/tests/App/Test/Codeception/_generated/AcceptanceTesterActions.php
         -
+            # Ignore annotations in generated code
+            message: '#^PHPDoc tag @param for parameter \$function with type callable is not subtype of native type Closure.$#'
+            path: %currentWorkingDirectory%/project-base/tests/App/Test/Codeception/_generated/AcceptanceTesterActions.php
+        -
             # phpstan-symfony extension cannot work right with symfony test container at the moment https://github.com/phpstan/phpstan-symfony/issues/27
             message: '#^Service "[^"]+" is private.$#'
             path: %currentWorkingDirectory%/tests/*

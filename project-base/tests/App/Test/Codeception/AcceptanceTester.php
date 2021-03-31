@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\App\Test\Codeception;
 
+use Closure;
 use Codeception\Actor;
 use Facebook\WebDriver\Remote\RemoteWebDriver;
 use Tests\App\Test\Codeception\_generated\AcceptanceTesterActions;
@@ -36,11 +37,13 @@ class AcceptanceTester extends Actor implements ActorInterface
         // workaround for a race condition when windows get enumerated before the new window is opened
         $this->wait(1);
 
-        $this->executeInSelenium(function (RemoteWebDriver $webdriver) {
+        $closure = Closure::fromCallable(function (RemoteWebDriver $webdriver) {
             $handles = $webdriver->getWindowHandles();
             $lastWindow = end($handles);
             $this->switchToWindow($lastWindow);
         });
+
+        $this->executeInSelenium($closure);
         $this->waitForElement('body', self::WAIT_TIMEOUT_SEC);
     }
 

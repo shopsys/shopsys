@@ -4,6 +4,10 @@ declare(strict_types=1);
 
 namespace Tests\FrameworkBundle\Test\Codeception;
 
+use Closure;
+use Codeception\TestInterface;
+use Facebook\WebDriver\WebDriverElement;
+
 interface ActorInterface
 {
     public function acceptPopup();
@@ -55,18 +59,18 @@ interface ActorInterface
     /**
      * @param string $checkboxId
      */
-    public function canSeeCheckboxIsCheckedById($checkboxId);
+    public function canSeeCheckboxIsCheckedById(string $checkboxId): void;
 
     /**
      * @param string $label
      */
-    public function canSeeCheckboxIsCheckedByLabel($label);
+    public function canSeeCheckboxIsCheckedByLabel(string $label): void;
 
     /**
      * @param string $cookie
      * @param array $params
      */
-    public function canSeeCookie($cookie, $params = null);
+    public function canSeeCookie($cookie, array $params = []);
 
     /**
      * @param string $page
@@ -87,19 +91,19 @@ interface ActorInterface
      * @param array|string $selector
      * @param array $attributes
      */
-    public function canSeeElement($selector, $attributes = null);
+    public function canSeeElement($selector, $attributes = []);
 
     /**
      * @param array|string $selector
      * @param array $attributes
      */
-    public function canSeeElementInDOM($selector, $attributes = null);
+    public function canSeeElementInDOM($selector, $attributes = []);
 
     /**
      * @param string $text
      * @param string $css
      */
-    public function canSeeInCss($text, $css);
+    public function canSeeInCss(string $text, string $css): void;
 
     /**
      * @param string $uri
@@ -116,25 +120,25 @@ interface ActorInterface
      * @param string $text
      * @param \Facebook\WebDriver\WebDriverElement $element
      */
-    public function canSeeInElement($text, $element);
+    public function canSeeInElement(string $text, WebDriverElement $element);
 
     /**
      * @param string $value
      * @param \Facebook\WebDriver\WebDriverElement $element
      */
-    public function canSeeInFieldByElement($value, $element);
+    public function canSeeInFieldByElement(string $value, WebDriverElement $element): void;
 
     /**
      * @param string $value
      * @param string $fieldName
      */
-    public function canSeeInFieldByName($value, $fieldName);
+    public function canSeeInFieldByName(string $value, string $fieldName): void;
 
     /**
      * @param array|string $formSelector
      * @param array $params
      */
-    public function canSeeInFormFields($formSelector, $params);
+    public function canSeeInFormFields($formSelector, array $params);
 
     /**
      * @param string $text
@@ -167,7 +171,7 @@ interface ActorInterface
      * @param string $table Table name
      * @param array $criteria Search criteria [Optional]
      */
-    public function canSeeNumRecords($expectedNumber, $table, $criteria = null);
+    public function canSeeNumRecords($expectedNumber, $table, array $criteria = []);
 
     /**
      * @param array|string $selector
@@ -198,18 +202,18 @@ interface ActorInterface
     /**
      * @param string $checkboxId
      */
-    public function cantSeeCheckboxIsCheckedById($checkboxId);
+    public function cantSeeCheckboxIsCheckedById(string $checkboxId): void;
 
     /**
      * @param string $label
      */
-    public function cantSeeCheckboxIsCheckedByLabel($label);
+    public function cantSeeCheckboxIsCheckedByLabel(string $label): void;
 
     /**
      * @param string $cookie
      * @param array $params
      */
-    public function cantSeeCookie($cookie, $params = null);
+    public function cantSeeCookie($cookie, array $params = []);
 
     /**
      * @param string $uri
@@ -225,13 +229,13 @@ interface ActorInterface
      * @param array|string $selector
      * @param array $attributes
      */
-    public function cantSeeElement($selector, $attributes = null);
+    public function cantSeeElement($selector, $attributes = []);
 
     /**
      * @param array|string $selector
      * @param array $attributes
      */
-    public function cantSeeElementInDOM($selector, $attributes = null);
+    public function cantSeeElementInDOM($selector, $attributes = []);
 
     /**
      * @param string $uri
@@ -242,7 +246,7 @@ interface ActorInterface
      * @param string $table
      * @param array $criteria
      */
-    public function cantSeeInDatabase($table, $criteria = null);
+    public function cantSeeInDatabase($table, $criteria = []);
 
     /**
      * @param string $field
@@ -254,7 +258,7 @@ interface ActorInterface
      * @param array|string $formSelector
      * @param array $params
      */
-    public function cantSeeInFormFields($formSelector, $params);
+    public function cantSeeInFormFields($formSelector, array $params);
 
     /**
      * @param string $text
@@ -291,12 +295,12 @@ interface ActorInterface
     /**
      * @param string $optionId
      */
-    public function checkOptionById($optionId);
+    public function checkOptionById(string $optionId): void;
 
     /**
      * @param string $label
      */
-    public function checkOptionByLabel($label);
+    public function checkOptionByLabel(string $label): void;
 
     public function cleanup();
 
@@ -307,26 +311,27 @@ interface ActorInterface
 
     /**
      * @param string $css
+     * @param mixed|null $contextSelector
      */
-    public function clickByCss($css);
+    public function clickByCss(string $css, $contextSelector = null): void;
 
     /**
      * @param \Facebook\WebDriver\WebDriverElement $element
      * @return \Facebook\WebDriver\WebDriverElement
      */
-    public function clickByElement($element);
+    public function clickByElement(WebDriverElement $element): WebDriverElement;
 
     /**
      * @param string $name
      * @param \Facebook\WebDriver\WebDriverBy|\Facebook\WebDriver\WebDriverElement|null $contextSelector
      */
-    public function clickByName($name, $contextSelector = null);
+    public function clickByName(string $name, $contextSelector = null): void;
 
     /**
      * @param string $text
      * @param \Facebook\WebDriver\WebDriverBy|\Facebook\WebDriver\WebDriverElement|null $contextSelector
      */
-    public function clickByText($text, $contextSelector = null);
+    public function clickByText(string $text, $contextSelector = null): void;
 
     /**
      * @param string $cssOrXPath css or xpath of the web element (body by default)
@@ -348,12 +353,12 @@ interface ActorInterface
      * @param string $css
      * @return int
      */
-    public function countVisibleByCss($css);
+    public function countVisibleByCss(string $css): int;
 
     /**
      * @param \Codeception\TestInterface $test
      */
-    public function debugWebDriverLogs($test = null);
+    public function debugWebDriverLogs(?TestInterface $test = null);
 
     /**
      * @param string $name
@@ -369,18 +374,18 @@ interface ActorInterface
     /**
      * @param string $checkboxId
      */
-    public function dontSeeCheckboxIsCheckedById($checkboxId);
+    public function dontSeeCheckboxIsCheckedById(string $checkboxId): void;
 
     /**
      * @param string $label
      */
-    public function dontSeeCheckboxIsCheckedByLabel($label);
+    public function dontSeeCheckboxIsCheckedByLabel(string $label): void;
 
     /**
      * @param string $cookie
      * @param array $params
      */
-    public function dontSeeCookie($cookie, $params = null);
+    public function dontSeeCookie($cookie, array $params = []);
 
     /**
      * @param string $uri
@@ -396,13 +401,13 @@ interface ActorInterface
      * @param array|string $selector
      * @param array $attributes
      */
-    public function dontSeeElement($selector, $attributes = null);
+    public function dontSeeElement($selector, $attributes = []);
 
     /**
      * @param array|string $selector
      * @param array $attributes
      */
-    public function dontSeeElementInDOM($selector, $attributes = null);
+    public function dontSeeElementInDOM($selector, $attributes = []);
 
     /**
      * @param string $uri
@@ -413,7 +418,7 @@ interface ActorInterface
      * @param string $table
      * @param array $criteria
      */
-    public function dontSeeInDatabase($table, $criteria = null);
+    public function dontSeeInDatabase($table, $criteria = []);
 
     /**
      * @param string $field
@@ -425,7 +430,7 @@ interface ActorInterface
      * @param array|string $formSelector
      * @param array $params
      */
-    public function dontSeeInFormFields($formSelector, $params);
+    public function dontSeeInFormFields($formSelector, array $params);
 
     /**
      * @param string $text
@@ -480,19 +485,19 @@ interface ActorInterface
      * @param array $arguments
      * @return mixed
      */
-    public function executeAsyncJS($script, $arguments = null);
+    public function executeAsyncJS($script, array $arguments = []);
 
     /**
-     * @param callable $function
+     * @param \Closure $function
      */
-    public function executeInSelenium($function);
+    public function executeInSelenium(Closure $function);
 
     /**
      * @param string $script
      * @param array $arguments
      * @return mixed
      */
-    public function executeJS($script, $arguments = null);
+    public function executeJS($script, array $arguments = []);
 
     /**
      * @param string $prediction
@@ -508,19 +513,19 @@ interface ActorInterface
      * @param string $css
      * @param string $value
      */
-    public function fillFieldByCss($css, $value);
+    public function fillFieldByCss(string $css, string $value): void;
 
     /**
      * @param \Facebook\WebDriver\WebDriverElement $element
      * @param string $value
      */
-    public function fillFieldByElement($element, $value);
+    public function fillFieldByElement(WebDriverElement $element, string $value): void;
 
     /**
      * @param string $fieldName
      * @param string $value
      */
-    public function fillFieldByName($fieldName, $value);
+    public function fillFieldByName(string $fieldName, string $value): void;
 
     /**
      * @param string $cssOrXpath
@@ -535,14 +540,14 @@ interface ActorInterface
      * @param array $criteria
      * @return array
      */
-    public function grabColumnFromDatabase($table, $column, $criteria = null);
+    public function grabColumnFromDatabase($table, $column, array $criteria = []);
 
     /**
      * @param string $cookie
      * @param array $params
      * @return mixed
      */
-    public function grabCookie($cookie, $params = null);
+    public function grabCookie($cookie, array $params = []);
 
     /**
      * @param string $uri optional
@@ -556,7 +561,7 @@ interface ActorInterface
      * @param array $criteria
      * @return mixed
      */
-    public function grabFromDatabase($table, $column, $criteria = null);
+    public function grabFromDatabase($table, $column, $criteria = []);
 
     /**
      * @param string $cssOrXpath
@@ -570,7 +575,7 @@ interface ActorInterface
      * @param array $criteria Search criteria [Optional]
      * @return int
      */
-    public function grabNumRecords($table, $criteria = null);
+    public function grabNumRecords($table, array $criteria = []);
 
     /**
      * @return string current page source code
@@ -600,7 +605,7 @@ interface ActorInterface
      * @param array $data
      * @return int
      */
-    public function haveInDatabase($table, $data);
+    public function haveInDatabase($table, array $data);
 
     /**
      * @param string $name
@@ -631,7 +636,7 @@ interface ActorInterface
      * @param int|null $offsetX
      * @param int|null $offsetY
      */
-    public function moveMouseOverByCss($css, $offsetX = null, $offsetY = null);
+    public function moveMouseOverByCss(string $css, ?int $offsetX = null, ?int $offsetY = null): void;
 
     public function openNewTab();
 
@@ -648,13 +653,13 @@ interface ActorInterface
      * @param array $actions
      * @param int $timeout
      */
-    public function performOn($element, $actions, $timeout = null);
+    public function performOn($element, $actions, $timeout = 10);
 
     /**
      * @param \Facebook\WebDriver\WebDriverElement $element
      * @param string|string[] $keys
      */
-    public function pressKeysByElement($element, $keys);
+    public function pressKeysByElement(WebDriverElement $element, $keys): void;
 
     public function reloadPage();
 
@@ -663,7 +668,7 @@ interface ActorInterface
      * @param array $params
      * @return mixed
      */
-    public function resetCookie($cookie, $params = null);
+    public function resetCookie($cookie, array $params = []);
 
     /**
      * @param int $width
@@ -693,18 +698,18 @@ interface ActorInterface
     /**
      * @param string $checkboxId
      */
-    public function seeCheckboxIsCheckedById($checkboxId);
+    public function seeCheckboxIsCheckedById(string $checkboxId): void;
 
     /**
      * @param string $label
      */
-    public function seeCheckboxIsCheckedByLabel($label);
+    public function seeCheckboxIsCheckedByLabel(string $label): void;
 
     /**
      * @param string $cookie
      * @param array $params
      */
-    public function seeCookie($cookie, $params = null);
+    public function seeCookie($cookie, array $params = []);
 
     /**
      * @param string $page
@@ -725,19 +730,19 @@ interface ActorInterface
      * @param array|string $selector
      * @param array $attributes
      */
-    public function seeElement($selector, $attributes = null);
+    public function seeElement($selector, $attributes = []);
 
     /**
      * @param array|string $selector
      * @param array $attributes
      */
-    public function seeElementInDOM($selector, $attributes = null);
+    public function seeElementInDOM($selector, $attributes = []);
 
     /**
      * @param string $text
      * @param string $css
      */
-    public function seeInCss($text, $css);
+    public function seeInCss(string $text, string $css);
 
     /**
      * @param string $uri
@@ -748,31 +753,31 @@ interface ActorInterface
      * @param string $table
      * @param array $criteria
      */
-    public function seeInDatabase($table, $criteria = null);
+    public function seeInDatabase($table, $criteria = []);
 
     /**
      * @param string $text
      * @param \Facebook\WebDriver\WebDriverElement $element
      */
-    public function seeInElement($text, $element);
+    public function seeInElement(string $text, WebDriverElement $element): void;
 
     /**
      * @param string $value
      * @param \Facebook\WebDriver\WebDriverElement $element
      */
-    public function seeInFieldByElement($value, $element);
+    public function seeInFieldByElement(string $value, WebDriverElement $element): void;
 
     /**
      * @param string $value
      * @param string $fieldName
      */
-    public function seeInFieldByName($value, $fieldName);
+    public function seeInFieldByName(string $value, string $fieldName): void;
 
     /**
      * @param array|string $formSelector
      * @param array $params
      */
-    public function seeInFormFields($formSelector, $params);
+    public function seeInFormFields($formSelector, array $params);
 
     /**
      * @param string $text
@@ -805,7 +810,7 @@ interface ActorInterface
      * @param string $table Table name
      * @param array $criteria Search criteria [Optional]
      */
-    public function seeNumRecords($expectedNumber, $table, $criteria = null);
+    public function seeNumRecords($expectedNumber, $table, array $criteria = []);
 
     /**
      * @param array|string $selector
@@ -835,22 +840,23 @@ interface ActorInterface
      * @param string $selectCss
      * @param string $optionValue
      */
-    public function selectOptionByCssAndValue($selectCss, $optionValue);
+    public function selectOptionByCssAndValue(string $selectCss, string $optionValue);
 
     /**
      * @param string $cookie
      * @param string $value
      * @param array $params
+     * @param mixed $showDebug
      * @return mixed
      */
-    public function setCookie($cookie, $value, $params = null);
+    public function setCookie($cookie, $value, array $params = [], $showDebug = true);
 
     /**
      * @param array|string $selector
      * @param array $params
      * @param string $button
      */
-    public function submitForm($selector, $params, $button = null);
+    public function submitForm($selector, array $params, $button = null);
 
     /**
      * @param string|null $name
@@ -862,12 +868,12 @@ interface ActorInterface
     /**
      * @param int $offset 1
      */
-    public function switchToNextTab($offset = null);
+    public function switchToNextTab($offset = 1);
 
     /**
      * @param int $offset 1
      */
-    public function switchToPreviousTab($offset = null);
+    public function switchToPreviousTab($offset = 1);
 
     /**
      * @param string|null $name
@@ -895,7 +901,7 @@ interface ActorInterface
      * @param array $data
      * @param array $criteria
      */
-    public function updateInDatabase($table, $data, $criteria = null);
+    public function updateInDatabase($table, array $data, array $criteria = []);
 
     /**
      * @param int|float $timeout secs
@@ -918,7 +924,7 @@ interface ActorInterface
      * @param \Closure $callback
      * @param int $timeout seconds
      */
-    public function waitForElementChange($element, $callback, $timeout = null);
+    public function waitForElementChange($element, Closure $callback, $timeout = null);
 
     /**
      * @param \Facebook\WebDriver\WebDriverElement $element
