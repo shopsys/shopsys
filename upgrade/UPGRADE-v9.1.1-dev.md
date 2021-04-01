@@ -83,3 +83,7 @@ There you can find links to upgrade notes for other versions too.
 - update your composer.json ([#2285](https://github.com/shopsys/shopsys/pull/2285))
     - add conflict for `codeception/codeception` versions 4.1.19 and higher
     - see #project-base-diff to update your project
+
+- improve image lazy loading ([#2268](https://github.com/shopsys/shopsys/pull/2268))
+    - supported browsers now use native lazy loading
+    - see #project-base-diff to update your project

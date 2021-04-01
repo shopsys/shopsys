@@ -4,10 +4,13 @@ declare(strict_types=1);
 
 namespace Tests\ReadModelBundle\Functional\Twig;
 
+use App\Twig\ImageExtension;
+use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Image\AdditionalImageData;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
+use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\ReadModelBundle\Image\ImageView;
-use Shopsys\ReadModelBundle\Twig\ImageExtension;
 use Tests\App\Test\FunctionalTestCase;
 
 class ImageExtensionTest extends FunctionalTestCase
@@ -23,6 +26,11 @@ class ImageExtensionTest extends FunctionalTestCase
      * @inject
      */
     private $imageLocator;
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
+     */
+    private Domain $domainMock;
 
     public function testGetImageHtmlWithMockedImageFacade(): void
     {
@@ -72,7 +80,7 @@ class ImageExtensionTest extends FunctionalTestCase
             $this->getCurrentUrl()
         );
         $expected .= sprintf(
-            '    <img alt="" class="image-product" itemprop="image" data-src="%s/content-test/images/product/default/1.jpg" title="" src="" loading="lazy"/>',
+            '    <img alt="" class="image-product" itemprop="image" data-src="%s/content-test/images/product/default/1.jpg" title="" src="%1$s/content-test/images/product/default/1.jpg" loading="lazy"/>',
             $this->getCurrentUrl()
         );
         $expected .= '</picture>';
@@ -117,7 +125,7 @@ class ImageExtensionTest extends FunctionalTestCase
 
         $expected = '<picture>';
         $expected .= sprintf(
-            '    <img alt="" class="image-noimage" title=""  itemprop="image" data-src="%s/noimage.png" src="" loading="lazy"/>',
+            '    <img alt="" class="image-noimage" title=""  itemprop="image" src="%s/noimage.png"/>',
             $this->getCurrentUrl()
         );
         $expected .= '</picture>';
@@ -136,7 +144,7 @@ class ImageExtensionTest extends FunctionalTestCase
 
         $expected = '<picture>';
         $expected .= sprintf(
-            '    <img alt="" class="image-noimage" title=""  itemprop="image" data-src="%s%snoimage.png" src="" loading="lazy"/>',
+            '    <img alt="" class="image-noimage" title=""  itemprop="image" src="%s%snoimage.png"/>',
             $this->getCurrentUrl(),
             $defaultFrontDesignImageUrlPrefix
         );
@@ -152,14 +160,14 @@ class ImageExtensionTest extends FunctionalTestCase
      */
     private function getCurrentUrl(): string
     {
-        return $this->domain->getCurrentDomainConfig()->getUrl();
+        return $this->createOrGetDomainMock()->getCurrentDomainConfig()->getUrl();
     }
 
     /**
      * @param string $frontDesignImageUrlPrefix
      * @param \Shopsys\FrameworkBundle\Component\Image\ImageFacade|null $imageFacade
      * @param bool $enableLazyLoad
-     * @return \Shopsys\ReadModelBundle\Twig\ImageExtension
+     * @return \App\Twig\ImageExtension
      */
     private function createImageExtension(
         string $frontDesignImageUrlPrefix = '',
@@ -171,11 +179,29 @@ class ImageExtensionTest extends FunctionalTestCase
 
         return new ImageExtension(
             $frontDesignImageUrlPrefix,
-            $this->domain,
+            $this->createOrGetDomainMock(),
             $this->imageLocator,
             $imageFacade,
             $templating,
             $enableLazyLoad
         );
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Component\Domain\Domain
+     */
+    private function createOrGetDomainMock(): Domain
+    {
+        if (isset($this->domainMock)) {
+            return $this->domainMock;
+        }
+
+        $settingMock = $this->getMockBuilder(Setting::class)->disableOriginalConstructor()->getMock();
+
+        $domainConfig = new DomainConfig(Domain::FIRST_DOMAIN_ID, 'http://webserver:8080', 'webserver', 'en');
+        $this->domainMock = new Domain([$domainConfig], $settingMock);
+        $this->domainMock->switchDomainById(Domain::FIRST_DOMAIN_ID);
+
+        return $this->domainMock;
     }
 }
