@@ -182,7 +182,8 @@
     },
     "conflict": {
         "symfony/symfony": "*",
-        "symfony/dependency-injection": ">=4.4.19"
+        "symfony/dependency-injection": ">=4.4.19",
+        "codeception/codeception": ">=4.1.19"
     },
     "scripts": {
         "post-install-cmd": [
