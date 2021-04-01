@@ -2,7 +2,8 @@
 Lazyload for images and iframes are implemented with [Minilazyload library](https://www.npmjs.com/package/minilazyload).
 
 All images are lazy loaded by default. Default selector for lazyload is `[loading=lazy]`.
-Native lazy load is overrided - we are waiting for bigger browser support.
+Supported browsers use native lazy load.
+Browsers without native image lazy load support rely on the Minilazyload library and a placeholder image is rendered in a `src` attribute to prevent an actual image from loading until necessary.
 
 ## Disable lazyload
 Lazyload might be disabled or enabled globally by defining parameter `shopsys.image.enable_lazy_load` in [`parameters_common.yaml`](https://github.com/shopsys/shopsys/blob/master/project-base/app/config/parameters_common.yaml)
@@ -12,19 +13,3 @@ Slick component is used as homepage slider for cycling through images. We don't 
 ```twig
 {{ image(item, { lazy: false }) }}
 ```
-
-### Manual lazyload call
-If you need lazy loading in some situations (like popup menu with images) call lazyload function manually, or if you want load images on ajax content, you can use function:
-
-```js
-(new Register()).registerNewContent($container);
-```
-
-or
-
-```javascript
-import { lazyLoadInit } from './lazyLoadInit';
-lazyLoadInit($container);
-```
-
-As container variable use CSS selector for container with images. All images in this container will be loaded after function call.
