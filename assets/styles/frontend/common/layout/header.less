@@ -2,14 +2,14 @@
 @header-mobile-button-border: 1px solid #e7ebed;
 @header-mobile-button-border-radius: 5px;
 @header-mobile-button-font-size: 27px;
-@header-mobile-button-search-bg: #f0f3f4;
 @header-mobile-button-dropdown-position: 75px;
 
 @header-padding: 15px 0;
 
-@header-middle-width-lg: 280px;
-@header-middle-width-vl: 400px;
+@header-middle-width-vl: 232px;
+@header-middle-width-xl: 400px;
 
+@header-item-gap-small: 20px;
 @header-item-gap: 32px;
 
 .header {
@@ -24,12 +24,17 @@
     }
 
     &__logo {
+        order: 1;
         display: flex;
         margin-right: 8px;
 
         @media @query-lg {
-            margin-right: @header-item-gap;
+            margin-right: @header-item-gap-small;
+        }
+
+        @media @query-xl {
             align-self: flex-end;
+            margin-right: @header-item-gap;
         }
     }
 
@@ -38,24 +43,53 @@
         order: 6;
 
         @media @query-lg {
-            order: 0;
-            width: @header-middle-width-lg;
-            margin-left: auto;
+            order: 4;
         }
 
         @media @query-vl {
-            width: @header-middle-width-vl;
+            order: 2;
+            width: auto;
+            flex: 1;
+            margin-left: auto;
+            margin-right: @header-item-gap-small;
+        }
+
+        @media @query-xl {
+            flex: none;
+            width: @header-middle-width-xl;
+            margin-right: @header-item-gap;
+        }
+    }
+
+    &__links {
+        order: 2;
+        display: flex;
+
+        @media @query-lg {
+            margin-right: @header-item-gap-small;
+        }
+
+        @media @query-vl {
+            order: 3;
+        }
+
+        @media @query-xl {
             margin-right: @header-item-gap;
         }
     }
 
     &__cart {
+        order: 3;
         position: relative;
         display: flex;
         margin-left: 4px;
 
         @media @query-lg {
             margin-left: 0;
+        }
+
+        @media @query-vl {
+            order: 4;
         }
 
         .in-overlay {
@@ -68,16 +102,6 @@
 
         .cart.in-overlay {
             position: relative !important;
-        }
-    }
-
-    &__links {
-        display: flex;
-        align-self: center;
-
-        @media @query-vl {
-            height: 100%;
-            margin-right: @header-item-gap;
         }
     }
 
@@ -100,10 +124,12 @@
 
             &--menu {
                 position: relative;
-                order: 2;
+                order: 4;
             }
 
             &--login {
+                order: 2;
+
                 font-size: 24px;
             }
 
