@@ -79,3 +79,7 @@ There you can find links to upgrade notes for other versions too.
     - if you are developing on Windows machine, we recommend you to update your installation to our new one using WSL 2. 
       Read [Installation Using Docker on Windows 10](https://github.com/shopsys/shopsys/blob/9.1/docs/installation/installation-using-docker-windows-10.md) article for more information.
     - see #project-base-diff to update your project
+
+- update your composer.json ([#2285](https://github.com/shopsys/shopsys/pull/2285))
+    - add conflict for `codeception/codeception` versions 4.1.19 and higher
+    - see #project-base-diff to update your project

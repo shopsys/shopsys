@@ -121,7 +121,8 @@
         "zalas/phpunit-injector": "^1.4"
     },
     "conflict": {
-        "symfony/symfony": "*"
+        "symfony/symfony": "*",
+        "codeception/codeception": ">=4.1.19"
     },
     "scripts": {
         "post-install-cmd": [
