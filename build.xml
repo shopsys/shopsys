@@ -226,7 +226,6 @@
                     <arg value="${path.bin-console}"/>
                     <arg value="app:extended-classes:annotations"/>
                     <arg value="--dry-run"/>
-                    <arg value="--env=test"/>
                 </exec>
             </then>
             <else>
