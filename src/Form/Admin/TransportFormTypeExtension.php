@@ -26,7 +26,7 @@ class TransportFormTypeExtension extends AbstractTypeExtension
         $builder->get('basicInformation')
             ->add('personalPickup', YesNoType::class, [
                 'required' => false,
-                'label' => t('Osobní odběr SCONTO'),
+                'label' => t('Osobní odběr Commerce Cloud'),
             ])
             ->add('isOverLimitTransport', YesNoType::class, [
                 'label' => t('Doprava pro nadlimitní množství'),

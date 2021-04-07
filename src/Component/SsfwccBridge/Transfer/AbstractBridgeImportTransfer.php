@@ -2,17 +2,17 @@
 
 declare(strict_types=1);
 
-namespace App\Component\ScontoBridge\Transfer;
+namespace App\Component\SsfwccBridge\Transfer;
 
-use App\Component\ScontoBridge\Transfer\Exception\TransferException;
-use App\Component\ScontoBridge\Transfer\Exception\TransferInvalidDataAdministratorCriticalException;
-use App\Component\ScontoBridge\Transfer\Exception\TransferInvalidDataAdministratorNonCriticalException;
+use App\Component\SsfwccBridge\Transfer\Exception\TransferException;
+use App\Component\SsfwccBridge\Transfer\Exception\TransferInvalidDataAdministratorCriticalException;
+use App\Component\SsfwccBridge\Transfer\Exception\TransferInvalidDataAdministratorNonCriticalException;
 use App\Model\Transfer\TransferIdentificationInterface;
 use Exception;
 use Generator;
 use Symfony\Component\Validator\Validator\TraceableValidator;
 
-abstract class AbstractScontoBridgeImportTransfer implements TransferIdentificationInterface
+abstract class AbstractBridgeImportTransfer implements TransferIdentificationInterface
 {
     /**
      * @var \Doctrine\ORM\EntityManagerInterface
@@ -35,9 +35,9 @@ abstract class AbstractScontoBridgeImportTransfer implements TransferIdentificat
     protected $validator;
 
     /**
-     * @var \App\Component\ScontoBridge\ScontoBridgeConfig
+     * @var \App\Component\SsfwccBridge\BridgeConfig
      */
-    private $scontoBridgeConfig;
+    private $bridgeConfig;
 
     /**
      * @var int|null
@@ -45,15 +45,15 @@ abstract class AbstractScontoBridgeImportTransfer implements TransferIdentificat
     public $cronBatchSize = null;
 
     /**
-     * @param \App\Component\ScontoBridge\Transfer\ScontoBridgeImportTransferDependency $scontoBridgeImportTransferDependency
+     * @param \App\Component\SsfwccBridge\Transfer\BridgeImportTransferDependency $bridgeImportTransferDependency
      */
-    public function __construct(ScontoBridgeImportTransferDependency $scontoBridgeImportTransferDependency)
+    public function __construct(BridgeImportTransferDependency $bridgeImportTransferDependency)
     {
-        $this->sqlLoggerFacade = $scontoBridgeImportTransferDependency->getSqlLoggerFacade();
-        $this->em = $scontoBridgeImportTransferDependency->getEm();
-        $this->logger = $scontoBridgeImportTransferDependency->getTransferLoggerFactory()->getTransferLoggerByIdentifier($this);
-        $this->validator = $scontoBridgeImportTransferDependency->getValidator();
-        $this->scontoBridgeConfig = $scontoBridgeImportTransferDependency->getScontoBridgeConfig();
+        $this->sqlLoggerFacade = $bridgeImportTransferDependency->getSqlLoggerFacade();
+        $this->em = $bridgeImportTransferDependency->getEm();
+        $this->logger = $bridgeImportTransferDependency->getTransferLoggerFactory()->getTransferLoggerByIdentifier($this);
+        $this->validator = $bridgeImportTransferDependency->getValidator();
+        $this->bridgeConfig = $bridgeImportTransferDependency->getBridgeConfig();
     }
 
     /**
@@ -61,15 +61,15 @@ abstract class AbstractScontoBridgeImportTransfer implements TransferIdentificat
      */
     public function runTransfer(): bool
     {
-        if (!$this->scontoBridgeConfig->isEnabled()) {
-            $this->logger->addWarning('Skipping transfer, sconto bridge is disabled from parameters.yml');
+        if (!$this->bridgeConfig->isEnabled()) {
+            $this->logger->addWarning('Skipping transfer, SSFWCC bridge is disabled from parameters.yml');
             return false;
         }
 
         $this->doBeforeTransfer();
 
-        $scontoBridgeData = $this->getData();
-        $runNextIteration = $this->processItems($scontoBridgeData);
+        $bridgeData = $this->getData();
+        $runNextIteration = $this->processItems($bridgeData);
 
         $this->doAfterTransfer();
         $this->logger->persistAllLoggedTransferIssues();
@@ -78,15 +78,15 @@ abstract class AbstractScontoBridgeImportTransfer implements TransferIdentificat
     }
 
     /**
-     * @param \Generator $scontoBridgeData
+     * @param \Generator $bridgeData
      * @return bool
      */
-    protected function processItems(Generator $scontoBridgeData): bool
+    protected function processItems(Generator $bridgeData): bool
     {
         $this->sqlLoggerFacade->temporarilyDisableLogging();
         $processed = 1;
 
-        foreach ($scontoBridgeData as $item) {
+        foreach ($bridgeData as $item) {
             try {
                 $this->em->beginTransaction();
                 $this->processItem($item);
@@ -160,9 +160,9 @@ abstract class AbstractScontoBridgeImportTransfer implements TransferIdentificat
     }
 
     /**
-     * @param array $scontoBridgeData
+     * @param array $bridgeData
      */
-    abstract protected function processItem(array $scontoBridgeData): void;
+    abstract protected function processItem(array $bridgeData): void;
 
     abstract protected function doBeforeTransfer(): void;
 
@@ -178,6 +178,6 @@ abstract class AbstractScontoBridgeImportTransfer implements TransferIdentificat
      */
     public function getServiceIdentifier(): string
     {
-        return 'ScontoBridge';
+        return 'SsfwccBridge';
     }
 }

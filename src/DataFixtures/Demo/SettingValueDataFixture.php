@@ -81,7 +81,7 @@ class SettingValueDataFixture extends AbstractReferenceFixture implements Depend
                 $domainId
             );
             $this->setting->setForDomain(SeoSettingFacade::SEO_TITLE_MAIN_PAGE, t('Shopsys Framework - Title page', [], 'dataFixtures', $locale), $domainId);
-            $this->setting->setForDomain(SeoSettingFacade::SEO_TITLE_ADD_ON, t('| Sconto', [], 'dataFixtures', $locale), $domainId);
+            $this->setting->setForDomain(SeoSettingFacade::SEO_TITLE_ADD_ON, t('| Commerce Cloud', [], 'dataFixtures', $locale), $domainId);
 
             $this->setting->setForDomain(Setting::DELIVERY_DAYS_ON_STOCK, 70, $domainId);
             $this->setting->setForDomain(Setting::TRANSFER_DAYS_BETWEEN_STOCKS, 7, $domainId);

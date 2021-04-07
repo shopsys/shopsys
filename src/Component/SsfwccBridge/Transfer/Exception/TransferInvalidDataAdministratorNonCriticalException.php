@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Component\ScontoBridge\Transfer\Exception;
+namespace App\Component\SsfwccBridge\Transfer\Exception;
 
 class TransferInvalidDataAdministratorNonCriticalException extends TransferInvalidDataException
 {

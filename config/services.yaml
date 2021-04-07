@@ -603,11 +603,11 @@ services:
         arguments:
             - '@monolog.logger.cron'
 
-    App\Component\ScontoBridge\ScontoBridgeConfig:
+    App\Component\SsfwccBridge\BridgeConfig:
         arguments:
-            $scontoBridgeConfig: "%sconto_bridge_config%"
+            $bridgeConfig: "%ssfwcc_bridge_config%"
 
-    App\Component\ScontoBridge\Transfer\ScontoBridgeImportTransferDependency: ~
+    App\Component\SsfwccBridge\Transfer\BridgeImportTransferDependency: ~
 
     App\Component\Placeholder\:
         resource: '../src/Component/Placeholder/**/*{Extension,Placeholder,Validator}.php'

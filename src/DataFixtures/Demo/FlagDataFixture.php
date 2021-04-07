@@ -12,7 +12,7 @@ class FlagDataFixture extends AbstractReferenceFixture
 {
     public const FLAG_PRODUCT_SALE = 'product_sale';
     public const FLAG_PRODUCT_ACTION = 'product_action';
-    public const FLAG_PRODUCT_SCONTO = 'product_sconto';
+    public const FLAG_PRODUCT_SSFWCC = 'product_ssfwcc';
     public const FLAG_PRODUCT_NEW = 'product_new';
     public const FLAG_PRODUCT_MADEIN_CZ = 'product_madein_cz';
     public const FLAG_PRODUCT_MADEIN_SK = 'product_madein_sk';
@@ -42,7 +42,7 @@ class FlagDataFixture extends AbstractReferenceFixture
     {
         $this->createFlag(1, self::FLAG_PRODUCT_SALE);
         $this->createFlag(2, self::FLAG_PRODUCT_ACTION);
-        $this->createFlag(3, self::FLAG_PRODUCT_SCONTO);
+        $this->createFlag(3, self::FLAG_PRODUCT_SSFWCC);
         $this->createFlag(4, self::FLAG_PRODUCT_NEW);
         $this->createFlag(5, self::FLAG_PRODUCT_MADEIN_CZ);
         $this->createFlag(6, self::FLAG_PRODUCT_MADEIN_SK);

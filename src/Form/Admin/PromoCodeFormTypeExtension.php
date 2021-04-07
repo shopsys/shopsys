@@ -173,9 +173,9 @@ class PromoCodeFormTypeExtension extends AbstractTypeExtension
             'required' => false,
             'label' => t('Produkt v akci'),
         ])
-        ->add('scontoPrice', YesNoType::class, [
+        ->add('ssfwccPrice', YesNoType::class, [
             'required' => false,
-            'label' => t('Produkt se sconto cenou'),
+            'label' => t('Produkt s Commerce Cloud cenou'),
         ])
         ->add('priceHit', YesNoType::class, [
             'required' => false,

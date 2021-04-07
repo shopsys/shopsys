@@ -23,12 +23,12 @@
                 <div class="box-media__wrap">
                     <div class="box-media__picture">
                         <picture>
-                            <source srcset="{{ asset('public/frontend/images/kreslo_sconto2x.png') }} 2x, {{ asset('public/frontend/images/kreslo_sconto.png') }} 1x" />
+                            <source srcset="{{ asset('public/frontend/images/kreslo_2x.png') }} 2x, {{ asset('public/frontend/images/kreslo.png') }} 1x" />
                             <img
                                 class="box-media__img"
                                 loading="lazy"
                                 src="{{ imgLazyloadPlaceholder }}"
-                                data-src="{{ asset('public/frontend/images/kreslo_sconto.png') }}"
+                                data-src="{{ asset('public/frontend/images/kreslo.png') }}"
                                 alt="{{ 'Máme pro vás volné místo'|trans }}">
                         </picture>
                     </div>
@@ -40,7 +40,7 @@
                         </p>
                         <a
                             class="btn btn--outline"
-                            href="{{ domain.id == 1 ? 'https://sconto.jobs.cz/' : 'https://www.profesia.sk/praca/sconto-nabytok/C62574' }}"
+                            href="https://jobs.shopsys.com/"
                             target="_blank"
                         >
                             {{ 'Prohlédnout nabídky'|trans }}

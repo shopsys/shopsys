@@ -18,7 +18,7 @@ class CreateProductStocksCommand extends Command
     /**
      * @var string
      */
-    protected static $defaultName = 'sconto:create-product-stocks';
+    protected static $defaultName = 'ssfwcc:create-product-stocks';
 
     /**
      * @var \App\Model\Stock\ProductStockFacade

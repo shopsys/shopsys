@@ -1,10 +1,10 @@
 domains:
     -   id: 1
-        name: sconto.cz
+        name: ssfwcc.cz
         locale: cs
         styles_directory: common
 
     -   id: 2
-        name: sconto.sk
+        name: ssfwcc.sk
         locale: sk
         styles_directory: sk

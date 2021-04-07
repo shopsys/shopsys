@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace App\Component\ScontoBridge\Transfer;
+namespace App\Component\SsfwccBridge\Transfer;
 
-use App\Component\ScontoBridge\ScontoBridgeConfig;
+use App\Component\SsfwccBridge\BridgeConfig;
 use App\Model\Transfer\TransferLoggerFactory;
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Doctrine\SqlLoggerFacade;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
-class ScontoBridgeImportTransferDependency
+class BridgeImportTransferDependency
 {
     /**
      * @var \Doctrine\ORM\EntityManagerInterface
@@ -28,9 +28,9 @@ class ScontoBridgeImportTransferDependency
     protected $validator;
 
     /**
-     * @var \App\Component\ScontoBridge\ScontoBridgeConfig
+     * @var \App\Component\SsfwccBridge\BridgeConfig
      */
-    private $scontoBridgeConfig;
+    private $bridgeConfig;
 
     /**
      * @var \App\Model\Transfer\TransferLoggerFactory
@@ -42,19 +42,19 @@ class ScontoBridgeImportTransferDependency
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \App\Model\Transfer\TransferLoggerFactory $transferLoggerFactory
      * @param \Symfony\Component\Validator\Validator\ValidatorInterface $validator
-     * @param \App\Component\ScontoBridge\ScontoBridgeConfig $scontoBridgeConfig
+     * @param \App\Component\SsfwccBridge\BridgeConfig $bridgeConfig
      */
     public function __construct(
         SqlLoggerFacade $sqlLoggerFacade,
         EntityManagerInterface $em,
         TransferLoggerFactory $transferLoggerFactory,
         ValidatorInterface $validator,
-        ScontoBridgeConfig $scontoBridgeConfig
+        BridgeConfig $bridgeConfig
     ) {
         $this->em = $em;
         $this->sqlLoggerFacade = $sqlLoggerFacade;
         $this->validator = $validator;
-        $this->scontoBridgeConfig = $scontoBridgeConfig;
+        $this->bridgeConfig = $bridgeConfig;
         $this->transferLoggerFactory = $transferLoggerFactory;
     }
 
@@ -83,11 +83,11 @@ class ScontoBridgeImportTransferDependency
     }
 
     /**
-     * @return \App\Component\ScontoBridge\ScontoBridgeConfig
+     * @return \App\Component\SsfwccBridge\BridgeConfig
      */
-    public function getScontoBridgeConfig(): ScontoBridgeConfig
+    public function getBridgeConfig(): BridgeConfig
     {
-        return $this->scontoBridgeConfig;
+        return $this->bridgeConfig;
     }
 
     /**

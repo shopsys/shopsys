@@ -1714,9 +1714,6 @@ msgstr ""
 msgid "white"
 msgstr ""
 
-msgid "| Sconto"
-msgstr ""
-
 msgid "šroubovák"
 msgstr ""
 

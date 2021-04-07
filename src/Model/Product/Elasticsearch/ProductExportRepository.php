@@ -128,7 +128,7 @@ class ProductExportRepository extends BaseProductExportRepository
         $searchingEans = $this->extractSearchingEans($product);
         $searchingPartnos = $this->extractSearchingPartnos($product);
         $searchingShortDescriptions = $this->extractSearchingShortDescriptions($product, $domainId);
-        $hasScontoFlag = $product->hasFlagByAkeneoCodeForDomain(Flag::AKENEO_CODE_SCONTO, $domainId);
+        $hasSsfwccFlag = $product->hasFlagByAkeneoCodeForDomain(Flag::AKENEO_CODE_SSFWCC, $domainId);
 
         return [
             'id' => $product->getId(),
@@ -188,7 +188,7 @@ class ProductExportRepository extends BaseProductExportRepository
             'searching_eans' => $searchingEans,
             'searching_partnos' => $searchingPartnos,
             'searching_short_descriptions' => $searchingShortDescriptions,
-            'has_sconto_flag' => $hasScontoFlag,
+            'has_ssfwcc_flag' => $hasSsfwccFlag,
         ];
     }
 

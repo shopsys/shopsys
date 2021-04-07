@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace App\Component\ScontoBridge\Transfer;
+namespace App\Component\SsfwccBridge\Transfer;
 
 use Generator;
 
-class DummyImportTransferFacade extends AbstractScontoBridgeImportTransfer
+class DummyImportTransferFacade extends AbstractBridgeImportTransfer
 {
     /**
-     * @param array $scontoBridgeData
+     * @param array $bridgeData
      */
-    protected function processItem(array $scontoBridgeData): void
+    protected function processItem(array $bridgeData): void
     {
         // TODO: Implement processItem() method.
     }

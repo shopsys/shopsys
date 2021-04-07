@@ -10,9 +10,6 @@ msgstr "%quantity%x - %productNamePrefix%"
 msgid "(If I buy on the company behalf)"
 msgstr "(Pokud nakupuji na firmu)"
 
-msgid "*Sconto Nábytek nakládá s osobními údaji v souladu s GDPR. Více se dozvíte v potvrzovacím e-mailu nebo na <a href=\"%url%\">našem webu</a>. Slevy se počítají z původních cen a vztahují se pouze na zboží, u kterého jsou tyto ceny uvedeny. Nevztahují se na zboží v aktuálním akčním letáku a označené jako výprodej nebo cenový hit. Akce se vztahuje pouze na nově uzavřené kupní smlouvy. Slevy nelze sčítat."
-msgstr "*Sconto Nábytok nakladá s osobnými údajmi v súlade s GDPR. Viac sa dozviete v potvrdzovacom e-maile alebo na <a href=\"%url%\">našom webe</a>. Zľavy sa počítajú z pôvodných cien a vzťahujú sa len na tovar, pri ktorom sú tieto ceny uvedené. Nevzťahujú sa na tovar v aktuálnom akciovom letáku a označené ako výpredaj alebo cenový hit. Akcia sa vzťahuje len na novouzatvorené kúpne zmluvy. Zľavy nie je možné sčítať."
-
 msgid "*akční cena s 15% DPH, bez elektrospotřebičů a příslušenství"
 msgstr "*akciová cena s 15 % DPH, bez elektrospotrebičov a príslušenstva"
 
@@ -250,8 +247,8 @@ msgstr "3463 €"
 msgid "95 002 Kč"
 msgstr "3569 €"
 
-msgid "<p class=\"window-popup__in__desc\">Odkaz pro vyresetování hesla vám byl odeslán. Instrukce naleznete na své e-mailové adrese <strong>%email%</strong>. Vaše Sconto.</p>"
-msgstr "<p class=\"window-popup__in__desc\">Odkaz na vyresetovanie hesla vám bol odeslaný. Inštrukcie nájdete na svojej e-mailovej adrese <strong>%email%</strong>. Vaše Sconto.</p>"
+msgid "<p class=\"window-popup__in__desc\">Odkaz pro vyresetování hesla vám byl odeslán. Instrukce naleznete na své e-mailové adrese <strong>%email%</strong>. Váš Comerce Cloud.</p>"
+msgstr "<p class=\"window-popup__in__desc\">Odkaz na vyresetovanie hesla vám bol odeslaný. Inštrukcie nájdete na svojej e-mailovej adrese <strong>%email%</strong>. Váš Comerce Cloud.</p>"
 
 msgid "<span class=\"cart__count\">%itemsCount%</span> <span class=\"cart__state cart__state--active\">%priceWithVat%</span>|[2,Inf] <span class=\"cart__count\">%itemsCount%</span> <span class=\"cart__state cart__state--active\">%priceWithVat%</span>"
 msgstr "<span class=\"cart__count\">%itemsCount%</span> <span class=\"cart__state cart__state--active\">%priceWithVat%</span>|[2,Inf] <span class=\"cart__count\">%itemsCount%</span> <span class=\"cart__state cart__state--active\">%priceWithVat%</span>"
@@ -504,9 +501,6 @@ msgstr "Cookies"
 
 msgid "Copyright"
 msgstr "Copyright"
-
-msgid "Copyright Sconto Nábytek, s.r.o."
-msgstr "Copyright Sconto Nábytok, s.r.o."
 
 msgid "Country"
 msgstr "Krajina"
@@ -832,9 +826,6 @@ msgstr "\nKamenná sivá"
 msgid "Kartáčovaná ocel"
 msgstr "Brúsená oceľ"
 
-msgid "Když pro kuchyni, tak do Sconta"
-msgstr "Keď pre kuchyňu, tak do Sconto"
-
 msgid "Ke stažení"
 msgstr "Na stiahnutie"
 
@@ -861,9 +852,6 @@ msgstr "Kliknite tu na zopakovanie úhrady objednávky"
 
 msgid "Kombinujte otevřené regálové systémy a vnitřní rozdělovače tak jak se Vám líbí. Nabízejí prostor a vypadají skvěle."
 msgstr "Kombinujte otvorené regálové systémy a vnútorné rozdeľovače tak, ako sa vám páči. Ponúkajú priestor a vyzerajú skvele."
-
-msgid "Kompetentní poradenství v kuchyňském studiu SCONTO"
-msgstr "Kompetentné poradenstvo v kuchynskom štúdiu SCONTO"
 
 msgid "Koncový zákazník"
 msgstr "Koncový zákazník"
@@ -915,9 +903,6 @@ msgstr "Kuchyňa <strong>FLASH</strong> na vás zapôsobí svojím elegantným p
 
 msgid "Kuchyň <strong>STRUCTURA</strong> vyniká povrchovou úpravou s působivou imitací dubového dřeva. Vybrat si můžete z několika různých dekorů od světlé po černou. Široká nabídka úchytek a dekorů pracovní desky vám umožní vybrat si přesně takovou kuchyni, o které sníte. Potřebujete-li více úložného prostoru, můžete si zvolit korpusy generace XL."
 msgstr "Kuchyňa <strong>STRUCTURA</strong> vyniká povrchovou úpravou s pôsobivou imitáciou dubového dreva. Vybrať si môžete z niekoľkých rôznych dekorov od svetlej po čiernu. Široká ponuka úchytiek a dekorov pracovnej dosky vám umožní vybrať si presne takú kuchyňu, o ktorej snívate. Ak potrebujete viac úložného priestoru, môžete si zvoliť korpusy generácie XL."
-
-msgid "Kuchyň je středobodem každého domova. Představuje místo, kde společně jíme, mluvíme, žijeme, diskutujeme, ale také odpočíváme. Kuchyň by proto měla být vždy navržena především tak, abychom se v ní cítili příjemně a rádi zde trávili svůj čas. Existuje celá řada možností, jak se k nákupu nové kuchyně postavit. Nejen proto se vyplatí poradit se s odborníkem, například v jednom z 8 kuchyňských studií SCONTO. V průběhu plánování kuchyně je totiž třeba dbát na řadu věcí: funkčnost, správně zvolené spotřebiče, přesné přizpůsobení disponibilnímu prostoru a mnoho dalšího. Naši vyškolení a zkušení poradci vás na cestě k vysněné kuchyni rádi posunou dále."
-msgstr "Kuchyňa je stredobodom každého domova. Predstavuje miesto, kde spoločne jeme, hovoríme, žijeme, diskutujeme, ale aj odpočívame. Kuchyňa by preto mala byť vždy navrhnutá predovšetkým tak, aby sme sa v nej cítili príjemne a radi tu trávili svoj čas. Existuje veľa možností, ako sa k nákupu novej kuchyne postaviť. Nielen preto sa oplatí poradiť sa s odborníkom, napríklad v jednom zo 4 kuchynských štúdií SCONTO. V priebehu plánovania kuchyne je totiž potrebné dbať na veľa vecí: funkčnosť, správne zvolené spotrebiče, presné prispôsobenie disponibilnému priestoru a mnoho ďalšieho. Naši vyškolení a skúsení poradcovia vás na ceste k vysnívanej kuchyni radi posunú ďalej."
 
 msgid "Kuchyň pořizujeme na mnoho let, a proto by měla přesně sloužit našim požadavkům. Začíná to už při výběru kuchyňských skříněk a spotřebičů, pokračuje přes design a končí u příslušenství, případně bezpečností pro naše ratolesti. Kromě toho bychom měli přemýšlet také o tom, zda je kuchyňský prostor zároveň jídelnou, kam by se měly vejít ještě stůl a židle. Jak vidíte, je toho hodně, co je třeba patřičně zvážit. Také proto je tu pro Vás připraven náš ochotný personál, který nabídne různé možnosti, z nichž si určitě vyberete."
 msgstr "Kuchyňu si kupujeme na mnoho rokov, a preto by mala presne slúžiť našim požiadavkám. Začína to už pri výbere kuchynských skriniek a spotrebičov, pokračuje cez dizajn a končí pri príslušenstve, prípadne bezpečnosťou pre naše ratolesti. Okrem toho by sme mali premýšľať aj o tom, či je kuchynský priestor zároveň jedálňou, kam by sa mali zmestiť ešte stôl a stoličky. Ako vidíte, je toho veľa, čo treba riadne zvážiť. Aj preto je tu pre vás pripravený náš ochotný personál, ktorý ponúkne rôzne možnosti, z ktorých si určite vyberiete."
@@ -1462,9 +1447,6 @@ msgstr "\nPre úspešné dokončenie objednávky č. <strong>%orderNumber%</stro
 msgid "Prodejny"
 msgstr "Predajne"
 
-msgid "Prodejny Sconto"
-msgstr "Predajne Sconto"
-
 msgid "Product <strong>{{ name }}</strong> ({{ quantity|formatNumber }} {{ unitName }}) added to the cart"
 msgstr "Produkt <strong>{{ name }}</strong> ({{ quantity|formatNumber }} {{ unitName }}) bol pridaný do košíka"
 
@@ -1786,15 +1768,6 @@ msgstr "Rustikálne kuchyne"
 msgid "Rákos"
 msgstr "Trstina"
 
-msgid "SCONTO"
-msgstr "SCONTO"
-
-msgid "SCONTO Nábytek"
-msgstr "SCONTO Nábytok"
-
-msgid "SCONTO Nábytek s.r.o. je součástí německého<br>koncernu Höffner, který patří k největším<br>prodejcům nábytku v Evropě již od roku 1990."
-msgstr "SCONTO Nábytok s. r. o., je súčasťou nemeckého koncernu Höffner, ktorý patrí k najväčším predajcom nábytku v Európe už od roku 1990."
-
 msgid "SPEED"
 msgstr "SPEED"
 
@@ -1809,18 +1782,6 @@ msgstr "SYLT"
 
 msgid "Sbalit"
 msgstr "Zbaliť"
-
-msgid "Sconto Nábytek, s.r.o.<br> Jeremiášova 947<br> 155 00 Praha 5 - Stodůlky"
-msgstr "SCONTO Nábytok, s. r. o.\nNová ul. 8144/10\n917 01 Trnava"
-
-msgid "Sconto Nábytek, s.r.o.<br> Jeremiášova 947<br> 155 00 Praha 5 - Stodůlky<br> IČ: 25723944<br> DIČ: CZ25723944"
-msgstr "SCONTO Nábytok, s. r. o.\nNová ul. 8144/10\n917 01 Trnava"
-
-msgid "Sconto Nábytek, s.r.o.<br> Oregon House Zličín<br> Řevnická 170/4<br> 155 21 Praha - Zličín"
-msgstr "SCONTO Nábytok, s. r. o.\nNová ul. 8144/10\n917 01 Trnava"
-
-msgid "Sconto profil"
-msgstr "\nSconto profil"
 
 msgid "Sdílet"
 msgstr "Zdieľať"
