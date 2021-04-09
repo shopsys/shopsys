@@ -1,4 +1,0 @@
-ProductPrice:
-    type: object
-    inherits:
-        - 'ProductPriceDecorator'

@@ -1,0 +1,12 @@
+parameters:
+    gtm_config:
+        cs:
+            enabled: '%env(bool:GTM_CS_ENABLED)%'
+            container_id: '%env(GTM_CS_CONTAINER_ID)%'
+            container_environment: null
+            data_layer_locale: cs
+        sk:
+            enabled: '%env(bool:GTM_SK_ENABLED)%'
+            container_id: '%env(GTM_SK_CONTAINER_ID)%'
+            container_environment: null
+            data_layer_locale: sk

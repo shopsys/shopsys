@@ -4,9 +4,11 @@
 /nbproject
 /node_modules
 /node_modules/
+/.npm-global
 /var/*
 !/var/.gitkeep
 /vendor
+/ACCEPTANCE
 /DEVELOPMENT
 /PRODUCTION
 /TEST

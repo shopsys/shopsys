@@ -33,13 +33,6 @@ class ScriptController extends FrontBaseController
         $this->domain = $domain;
     }
 
-    public function embedAllPagesScriptsAction()
-    {
-        return $this->render('Front/Inline/MeasuringScript/scripts.html.twig', [
-            'scriptsCodes' => $this->scriptFacade->getAllPagesScriptCodes(),
-        ]);
-    }
-
     public function embedAllPagesGoogleAnalyticsScriptAction()
     {
         if (!$this->scriptFacade->isGoogleAnalyticsActivated($this->domain->getId())) {
@@ -48,16 +41,6 @@ class ScriptController extends FrontBaseController
 
         return $this->render('Front/Inline/MeasuringScript/googleAnalytics.html.twig', [
             'trackingId' => $this->scriptFacade->getGoogleAnalyticsTrackingId($this->domain->getId()),
-        ]);
-    }
-
-    /**
-     * @param \App\Model\Order\Order $order
-     */
-    public function embedOrderSentPageScriptsAction(Order $order)
-    {
-        return $this->render('Front/Inline/MeasuringScript/scripts.html.twig', [
-            'scriptsCodes' => $this->scriptFacade->getOrderSentPageScriptCodesWithReplacedVariables($order),
         ]);
     }
 

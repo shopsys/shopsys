@@ -1,6 +1,3 @@
-parameters:
-    fp_js_form_validator.twig_extension.class: 'App\Twig\JsFormValidatorTwigExtension'
-
 services:
     _defaults:
         autowire: true
@@ -9,7 +6,6 @@ services:
 
     App\Twig\:
         resource: '../../src/Twig/'
-        exclude: '../../src/Twig/{JsFormValidatorTwigExtension.php}'
 
     App\Twig\PriceExtension: ~
 
@@ -20,6 +16,10 @@ services:
         arguments:
             $frontDesignImageUrlPrefix: '%shopsys.front_design_image_url_prefix%'
             $isLazyLoadEnabled: '%shopsys.image.enable_lazy_load%'
+
+    App\Twig\MailerSettingExtension:
+        arguments:
+            $showMailRestrictionInfoBar: '%env(bool:SHOW_MAIL_RESTRICTION_INFO_BAR)%'
 
     Shopsys\ReadModelBundle\Twig\ImageExtension:
         alias: App\Twig\ImageExtension

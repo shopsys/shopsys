@@ -55,11 +55,6 @@ class Article extends BaseArticle
     public function __construct(BaseArticleData $articleData)
     {
         parent::__construct($articleData);
-
-        $this->createdAt = $articleData->createdAt ?? new DateTime();
-        $this->external = $articleData->external;
-        $this->type = $articleData->type;
-        $this->url = $articleData->url ?? self::EMPTY_STRING;
     }
 
     /**
@@ -68,11 +63,6 @@ class Article extends BaseArticle
     public function edit(BaseArticleData $articleData)
     {
         parent::edit($articleData);
-
-        $this->createdAt = $articleData->createdAt ?? new DateTime();
-        $this->external = $articleData->external;
-        $this->type = $articleData->type;
-        $this->url = $articleData->url ?? self::EMPTY_STRING;
     }
 
     /**
@@ -83,6 +73,9 @@ class Article extends BaseArticle
         parent::setData($articleData);
 
         $this->createdAt = $articleData->createdAt ?? new DateTime();
+        $this->external = $articleData->external;
+        $this->type = $articleData->type;
+        $this->url = $articleData->url ?? self::EMPTY_STRING;
     }
 
     /**

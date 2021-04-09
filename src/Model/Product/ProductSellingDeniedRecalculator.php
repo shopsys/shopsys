@@ -4,8 +4,9 @@ declare(strict_types=1);
 
 namespace App\Model\Product;
 
+use Doctrine\DBAL\Connection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\Query\ResultSetMapping;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\ProductSellingDeniedRecalculator as BaseProductSellingDeniedRecalculator;
@@ -64,8 +65,7 @@ class ProductSellingDeniedRecalculator extends BaseProductSellingDeniedRecalcula
      */
     private function calculatePerDomain(array $products)
     {
-        $query = $this->em->createNativeQuery(
-            'UPDATE product_domains AS pd
+        $query = 'UPDATE product_domains AS pd
             SET calculated_sale_exclusion = CASE
                     WHEN (
                         p.calculated_selling_denied = TRUE
@@ -103,9 +103,7 @@ class ProductSellingDeniedRecalculator extends BaseProductSellingDeniedRecalcula
             FROM products AS p
             WHERE p.id = pd.product_id
                 AND pd.domain_id = :domainId
-            ' . (count($products) > 0 ? ' AND p.id IN (:productIds)' : ''),
-            new ResultSetMapping()
-        );
+            ' . (count($products) > 0 ? ' AND p.id IN (:productIds)' : '');
 
         $productIds = [];
         foreach ($products as $product) {
@@ -118,7 +116,16 @@ class ProductSellingDeniedRecalculator extends BaseProductSellingDeniedRecalcula
 
         foreach ($this->domain->getAll() as $domain) {
             $params['domainId'] = $domain->getId();
-            $query->execute($params);
+
+            $this->em->getConnection()->executeStatement(
+                $query,
+                $params,
+                [
+                    'productIds' => Connection::PARAM_INT_ARRAY,
+                    'variantTypeMain' => Types::STRING,
+                    'domainId' => Types::INTEGER,
+                ]
+            );
         }
     }
 
@@ -127,8 +134,7 @@ class ProductSellingDeniedRecalculator extends BaseProductSellingDeniedRecalcula
      */
     private function propagateCalculatedSaleExclusionToCalculatedSellingDenied(array $products): void
     {
-        $query = $this->em->createNativeQuery(
-            'UPDATE products as p
+        $query = 'UPDATE products as p
                 SET calculated_selling_denied = TRUE
                 WHERE p.calculated_selling_denied = FALSE
                 AND NOT EXISTS (
@@ -137,16 +143,18 @@ class ProductSellingDeniedRecalculator extends BaseProductSellingDeniedRecalcula
                     WHERE pd.product_id = p.id
                         AND pd.calculated_sale_exclusion = FALSE
                 )
-            ' . (count($products) > 0 ? ' AND p.id IN (:productIds)' : ''),
-            new ResultSetMapping()
-        );
+            ' . (count($products) > 0 ? ' AND p.id IN (:productIds)' : '');
 
         $productIds = [];
         foreach ($products as $product) {
             $productIds[] = $product->getId();
         }
 
-        $query->execute(['productIds' => $productIds]);
+        $this->em->getConnection()->executeStatement(
+            $query,
+            ['productIds' => $productIds],
+            ['productIds' => Connection::PARAM_INT_ARRAY],
+        );
     }
 
     /**
@@ -165,8 +173,7 @@ class ProductSellingDeniedRecalculator extends BaseProductSellingDeniedRecalcula
      */
     private function propagateMainVariantSellingDeniedToVariantsCalculatedSaleExclusion(array $products): void
     {
-        $query = $this->em->createNativeQuery(
-            'UPDATE product_domains as pd
+        $query = 'UPDATE product_domains as pd
                 SET calculated_sale_exclusion = TRUE
                 FROM products as p
                 JOIN products as m ON p.main_variant_id = m.id
@@ -174,19 +181,24 @@ class ProductSellingDeniedRecalculator extends BaseProductSellingDeniedRecalcula
                 AND pd.product_id = p.id
                 AND pd.calculated_sale_exclusion = FALSE
                 AND p.calculated_selling_denied = TRUE
-            ' . (count($products) > 0 ? ' AND m.id IN (:productIds)' : ''),
-            new ResultSetMapping()
-        );
+            ' . (count($products) > 0 ? ' AND m.id IN (:productIds)' : '');
 
         $productIds = [];
         foreach ($products as $product) {
             $productIds[] = $product->getId();
         }
 
-        $query->execute([
-            'productIds' => $productIds,
-            'variantTypeMain' => Product::VARIANT_TYPE_MAIN,
-        ]);
+        $this->em->getConnection()->executeStatement(
+            $query,
+            [
+                'productIds' => $productIds,
+                'variantTypeMain' => Product::VARIANT_TYPE_MAIN,
+            ],
+            [
+                'productIds' => Connection::PARAM_INT_ARRAY,
+                'variantTypeMain' => Types::STRING,
+            ],
+        );
     }
 
     /**
@@ -194,8 +206,7 @@ class ProductSellingDeniedRecalculator extends BaseProductSellingDeniedRecalcula
      */
     private function propagateMainVariantCalculateSaleExclusionToVariantsCalculatedSaleExclusion(array $products): void
     {
-        $query = $this->em->createNativeQuery(
-            'UPDATE product_domains as pd
+        $query = 'UPDATE product_domains as pd
                 SET calculated_sale_exclusion = TRUE
                 FROM products as p
                 JOIN products as m ON p.main_variant_id = m.id
@@ -205,19 +216,24 @@ class ProductSellingDeniedRecalculator extends BaseProductSellingDeniedRecalcula
                 AND pdm.domain_id = pd.domain_id
                 AND pd.calculated_sale_exclusion = FALSE
                 AND pdm.calculated_sale_exclusion = TRUE
-            ' . (count($products) > 0 ? ' AND m.id IN (:productIds)' : ''),
-            new ResultSetMapping()
-        );
+            ' . (count($products) > 0 ? ' AND m.id IN (:productIds)' : '');
 
         $productIds = [];
         foreach ($products as $product) {
             $productIds[] = $product->getId();
         }
 
-        $query->execute([
-            'productIds' => $productIds,
-            'variantTypeMain' => Product::VARIANT_TYPE_MAIN,
-        ]);
+        $this->em->getConnection()->executeStatement(
+            $query,
+            [
+                'productIds' => $productIds,
+                'variantTypeMain' => Product::VARIANT_TYPE_MAIN,
+            ],
+            [
+                'productIds' => Connection::PARAM_INT_ARRAY,
+                'variantTypeMain' => Types::STRING,
+            ],
+        );
     }
 
     /**
@@ -236,8 +252,7 @@ class ProductSellingDeniedRecalculator extends BaseProductSellingDeniedRecalcula
      */
     private function propagateVariantsSaleExclusionToMainVariantCalculateSaleExclusion(array $products): void
     {
-        $query = $this->em->createNativeQuery(
-            'UPDATE product_domains as pd
+        $query = 'UPDATE product_domains as pd
                 SET calculated_sale_exclusion = TRUE
                 FROM products as p 
                 WHERE p.variant_type = :variantTypeMain
@@ -250,19 +265,24 @@ class ProductSellingDeniedRecalculator extends BaseProductSellingDeniedRecalcula
                     WHERE v.main_variant_id = p.id
                         AND pdv.calculated_sale_exclusion = FALSE
                 )
-            ' . (count($products) > 0 ? ' AND p.id IN (:productIds)' : ''),
-            new ResultSetMapping()
-        );
+            ' . (count($products) > 0 ? ' AND p.id IN (:productIds)' : '');
 
         $productIds = [];
         foreach ($products as $product) {
             $productIds[] = $product->getId();
         }
 
-        $query->execute([
-            'productIds' => $productIds,
-            'variantTypeMain' => Product::VARIANT_TYPE_MAIN,
-        ]);
+        $this->em->getConnection()->executeStatement(
+            $query,
+            [
+                'productIds' => $productIds,
+                'variantTypeMain' => Product::VARIANT_TYPE_MAIN,
+            ],
+            [
+                'productIds' => Connection::PARAM_INT_ARRAY,
+                'variantTypeMain' => Types::STRING,
+            ]
+        );
     }
 
     /**
@@ -270,8 +290,7 @@ class ProductSellingDeniedRecalculator extends BaseProductSellingDeniedRecalcula
      */
     private function propagateVariantsSaleExclusionToMainVariantCalculateSellingDenied(array $products): void
     {
-        $query = $this->em->createNativeQuery(
-            'UPDATE products as p
+        $query = 'UPDATE products as p
                 SET calculated_selling_denied = TRUE
                 WHERE p.variant_type = :variantTypeMain
                 AND p.calculated_selling_denied = FALSE
@@ -282,18 +301,23 @@ class ProductSellingDeniedRecalculator extends BaseProductSellingDeniedRecalcula
                     WHERE v.main_variant_id = p.id
                         AND pdv.calculated_sale_exclusion = FALSE
                 )
-            ' . (count($products) > 0 ? ' AND p.id IN (:productIds)' : ''),
-            new ResultSetMapping()
-        );
+            ' . (count($products) > 0 ? ' AND p.id IN (:productIds)' : '');
 
         $productIds = [];
         foreach ($products as $product) {
             $productIds[] = $product->getId();
         }
 
-        $query->execute([
-            'productIds' => $productIds,
-            'variantTypeMain' => Product::VARIANT_TYPE_MAIN,
-        ]);
+        $this->em->getConnection()->executeStatement(
+            $query,
+            [
+                'productIds' => $productIds,
+                'variantTypeMain' => Product::VARIANT_TYPE_MAIN,
+            ],
+            [
+                'productIds' => Connection::PARAM_INT_ARRAY,
+                'variantTypeMain' => Types::STRING,
+            ]
+        );
     }
 }

@@ -13,7 +13,7 @@ use Shopsys\FrameworkBundle\Model\Sitemap\SitemapListener as BaseSitemapListener
 /**
  * @property \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
  * @property \App\Model\Sitemap\SitemapFacade $sitemapFacade
- * @property \App\Component\Router\DomainRouterFactory $domainRouterFactory
+ * @property \Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory $domainRouterFactory
  */
 class SitemapListener extends BaseSitemapListener
 {
@@ -27,7 +27,7 @@ class SitemapListener extends BaseSitemapListener
     /**
      * @param \App\Model\Sitemap\SitemapFacade $sitemapFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \App\Component\Router\DomainRouterFactory $domainRouterFactory
+     * @param \Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory $domainRouterFactory
      * @param \App\Model\Sitemap\SitemapRepository $sitemapRepository
      */
     public function __construct(

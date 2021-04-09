@@ -1,4 +1,0 @@
-Query:
-    type: object
-    inherits:
-        - 'QueryDecorator'

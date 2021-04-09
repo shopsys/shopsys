@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\DataFixtures\Demo;
 
+use DateTime;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
-use Faker\Generator;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
@@ -26,11 +26,6 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
      * @var \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRepository
      */
     private $customerUserRepository;
-
-    /**
-     * @var \Faker\Generator
-     */
-    private $faker;
 
     /**
      * @var \App\Model\Order\OrderFacade
@@ -59,7 +54,6 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRepository $customerUserRepository
-     * @param \Faker\Generator $faker
      * @param \App\Model\Order\OrderFacade $orderFacade
      * @param \App\Model\Order\Preview\OrderPreviewFactory $orderPreviewFactory
      * @param \App\Model\Order\OrderDataFactory $orderDataFactory
@@ -68,7 +62,6 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
      */
     public function __construct(
         CustomerUserRepository $customerUserRepository,
-        Generator $faker,
         OrderFacade $orderFacade,
         OrderPreviewFactory $orderPreviewFactory,
         OrderDataFactoryInterface $orderDataFactory,
@@ -76,7 +69,6 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
         CurrencyFacade $currencyFacade
     ) {
         $this->customerUserRepository = $customerUserRepository;
-        $this->faker = $faker;
         $this->orderFacade = $orderFacade;
         $this->orderPreviewFactory = $orderPreviewFactory;
         $this->orderDataFactory = $orderDataFactory;
@@ -124,7 +116,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
         $orderData->deliveryAddressSameAsBillingAddress = true;
         $orderData->domainId = $domainId;
         $orderData->currency = $domainDefaultCurrency;
-        $orderData->createdAt = $this->faker->dateTimeBetween('-2 week', 'now');
+        $orderData->createdAt = (new DateTime('now -3 day'))->setTime(12, 40, 22);
         $orderData->isOverLimit = false;
         $this->createOrder(
             $orderData,
@@ -150,7 +142,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
         $orderData->deliveryAddressSameAsBillingAddress = true;
         $orderData->domainId = $domainId;
         $orderData->currency = $domainDefaultCurrency;
-        $orderData->createdAt = $this->faker->dateTimeBetween('-2 week', 'now');
+        $orderData->createdAt = (new DateTime('now -11 day'))->setTime(4, 34, 19);
         $orderData->createdAsAdministrator = $this->getReference(AdministratorDataFixture::ADMINISTRATOR);
         $orderData->isOverLimit = false;
         $this->createOrder(
@@ -179,7 +171,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
         $orderData->deliveryAddressSameAsBillingAddress = true;
         $orderData->domainId = $domainId;
         $orderData->currency = $domainDefaultCurrency;
-        $orderData->createdAt = $this->faker->dateTimeBetween('-2 week', 'now');
+        $orderData->createdAt = (new DateTime('now -3 day'))->setTime(18, 27, 36);
         $orderData->isOverLimit = false;
         $this->createOrder(
             $orderData,
@@ -205,7 +197,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
         $orderData->deliveryAddressSameAsBillingAddress = true;
         $orderData->domainId = $domainId;
         $orderData->currency = $domainDefaultCurrency;
-        $orderData->createdAt = $this->faker->dateTimeBetween('-2 week', 'now');
+        $orderData->createdAt = (new DateTime('now -1 day'))->setTime(18, 30, 01);
         $orderData->isOverLimit = false;
         $this->createOrder(
             $orderData,
@@ -230,7 +222,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
         $orderData->deliveryAddressSameAsBillingAddress = true;
         $orderData->domainId = $domainId;
         $orderData->currency = $domainDefaultCurrency;
-        $orderData->createdAt = $this->faker->dateTimeBetween('-2 week', 'now');
+        $orderData->createdAt = (new DateTime('now -2 day'))->setTime(1, 46, 6);
         $orderData->createdAsAdministrator = $this->getReference(AdministratorDataFixture::SUPERADMINISTRATOR);
         $orderData->isOverLimit = false;
         $this->createOrder(
@@ -258,7 +250,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
         $orderData->deliveryAddressSameAsBillingAddress = true;
         $orderData->domainId = $domainId;
         $orderData->currency = $domainDefaultCurrency;
-        $orderData->createdAt = $this->faker->dateTimeBetween('-2 week', 'now');
+        $orderData->createdAt = (new DateTime('now -12 day'))->setTime(0, 49, 0);
         $orderData->isOverLimit = false;
         $this->createOrder(
             $orderData,
@@ -288,7 +280,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
         $orderData->deliveryAddressSameAsBillingAddress = true;
         $orderData->domainId = $domainId;
         $orderData->currency = $domainDefaultCurrency;
-        $orderData->createdAt = $this->faker->dateTimeBetween('-2 week', 'now');
+        $orderData->createdAt = (new DateTime('now -13 day'))->setTime(23, 35, 15);
         $orderData->isOverLimit = false;
         $this->createOrder(
             $orderData,
@@ -314,7 +306,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
         $orderData->deliveryAddressSameAsBillingAddress = true;
         $orderData->domainId = $domainId;
         $orderData->currency = $domainDefaultCurrency;
-        $orderData->createdAt = $this->faker->dateTimeBetween('-2 week', 'now');
+        $orderData->createdAt = (new DateTime('now -5 day'))->setTime(9, 11, 59);
         $orderData->createdAsAdministrator = $this->getReference(AdministratorDataFixture::SUPERADMINISTRATOR);
         $orderData->isOverLimit = false;
         $this->createOrder(
@@ -341,7 +333,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
         $orderData->deliveryAddressSameAsBillingAddress = true;
         $orderData->domainId = $domainId;
         $orderData->currency = $domainDefaultCurrency;
-        $orderData->createdAt = $this->faker->dateTimeBetween('-2 week', 'now');
+        $orderData->createdAt = (new DateTime('now -14 day'))->setTime(12, 54, 07);
         $orderData->isOverLimit = false;
         $this->createOrder(
             $orderData,
@@ -366,7 +358,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
         $orderData->deliveryAddressSameAsBillingAddress = true;
         $orderData->domainId = $domainId;
         $orderData->currency = $domainDefaultCurrency;
-        $orderData->createdAt = $this->faker->dateTimeBetween('-2 week', 'now');
+        $orderData->createdAt = (new DateTime('now -7 day'))->setTime(7, 2, 31);
         $orderData->isOverLimit = false;
         $this->createOrder(
             $orderData,
@@ -390,7 +382,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
         $orderData->deliveryAddressSameAsBillingAddress = true;
         $orderData->domainId = $domainId;
         $orderData->currency = $domainDefaultCurrency;
-        $orderData->createdAt = $this->faker->dateTimeBetween('-2 week', 'now');
+        $orderData->createdAt = (new DateTime('now -7 day'))->setTime(11, 28, 20);
         $orderData->isOverLimit = false;
         $this->createOrder(
             $orderData,
@@ -416,7 +408,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
         $orderData->deliveryAddressSameAsBillingAddress = true;
         $orderData->domainId = $domainId;
         $orderData->currency = $domainDefaultCurrency;
-        $orderData->createdAt = $this->faker->dateTimeBetween('-2 week', 'now');
+        $orderData->createdAt = (new DateTime('now -10 day'))->setTime(18, 3, 36);
         $orderData->isOverLimit = false;
         $this->createOrder(
             $orderData,
@@ -441,7 +433,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
         $orderData->deliveryAddressSameAsBillingAddress = true;
         $orderData->domainId = $domainId;
         $orderData->currency = $domainDefaultCurrency;
-        $orderData->createdAt = $this->faker->dateTimeBetween('-2 week', 'now');
+        $orderData->createdAt = (new DateTime('now -10 day'))->setTime(23, 47, 11);
         $orderData->createdAsAdministrator = $this->getReference(AdministratorDataFixture::ADMINISTRATOR);
         $orderData->isOverLimit = false;
         $this->createOrder(
@@ -467,7 +459,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
         $orderData->deliveryAddressSameAsBillingAddress = true;
         $orderData->domainId = $domainId;
         $orderData->currency = $domainDefaultCurrency;
-        $orderData->createdAt = $this->faker->dateTimeBetween('-2 week', 'now');
+        $orderData->createdAt = (new DateTime('now -10 day'))->setTime(8, 14, 8);
         $orderData->isOverLimit = false;
         $this->createOrder(
             $orderData,
@@ -494,7 +486,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
         $orderData->deliveryAddressSameAsBillingAddress = true;
         $orderData->domainId = $domainId;
         $orderData->currency = $domainDefaultCurrency;
-        $orderData->createdAt = $this->faker->dateTimeBetween('-2 week', 'now');
+        $orderData->createdAt = (new DateTime('now -11 day'))->setTime(4, 43, 25);
         $orderData->isOverLimit = false;
         $this->createOrder(
             $orderData,
@@ -523,7 +515,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
         $orderData->note = 'Doufám, že vše dorazí v pořádku a co nejdříve :)';
         $orderData->domainId = $domainId;
         $orderData->currency = $domainDefaultCurrency;
-        $orderData->createdAt = $this->faker->dateTimeBetween('-2 week', 'now');
+        $orderData->createdAt = (new DateTime('now -5 day'))->setTime(3, 3, 12);
         $orderData->isOverLimit = false;
         $this->createOrder(
             $orderData,
@@ -562,7 +554,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
         $orderData->note = 'Doufám, že vše dorazí v pořádku a co nejdříve :)';
         $orderData->domainId = $domainId;
         $orderData->currency = $domainDefaultCurrency;
-        $orderData->createdAt = $this->faker->dateTimeBetween('-2 week', 'now');
+        $orderData->createdAt = (new DateTime('now -13 day'))->setTime(17, 34, 40);
         $orderData->createdAsAdministrator = $this->getReference(AdministratorDataFixture::ADMINISTRATOR);
         $orderData->isOverLimit = false;
         $this->createOrder(
@@ -604,7 +596,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
         $orderData->note = 'Doufám, že vše dorazí v pořádku a co nejdříve :)';
         $orderData->domainId = $domainId;
         $orderData->currency = $domainDefaultCurrency;
-        $orderData->createdAt = $this->faker->dateTimeBetween('-2 week', 'now');
+        $orderData->createdAt = (new DateTime('now -6 day'))->setTime(5, 7, 38);
         $orderData->isOverLimit = false;
         $this->createOrder(
             $orderData,
@@ -641,7 +633,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
         $orderData->deliveryAddressSameAsBillingAddress = true;
         $orderData->domainId = $domainId;
         $orderData->currency = $domainDefaultCurrency;
-        $orderData->createdAt = $this->faker->dateTimeBetween('-1 week', 'now');
+        $orderData->createdAt = (new DateTime('now -1 day'))->setTime(22, 51, 55);
         $orderData->isOverLimit = false;
         $this->createOrder(
             $orderData,
@@ -679,7 +671,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
         $orderData->note = 'Prosím o dodání do pátku. Děkuji.';
         $orderData->domainId = $domainId;
         $orderData->currency = $domainDefaultCurrency;
-        $orderData->createdAt = $this->faker->dateTimeBetween('-1 week', 'now');
+        $orderData->createdAt = (new DateTime('now -4 day'))->setTime(21, 23, 5);
         $orderData->isOverLimit = false;
         $this->createOrder(
             $orderData,
@@ -707,7 +699,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
         $orderData->deliveryAddressSameAsBillingAddress = true;
         $orderData->domainId = $domainId;
         $orderData->currency = $domainDefaultCurrency;
-        $orderData->createdAt = $this->faker->dateTimeBetween('-1 week', 'now');
+        $orderData->createdAt = (new DateTime('now -4 day'))->setTime(11, 14, 2);
         $orderData->isOverLimit = false;
         $this->createOrder(
             $orderData,
@@ -733,7 +725,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
         $orderData->deliveryAddressSameAsBillingAddress = true;
         $orderData->domainId = $domainId;
         $orderData->currency = $domainDefaultCurrency;
-        $orderData->createdAt = $this->faker->dateTimeBetween('-1 week', 'now');
+        $orderData->createdAt = (new DateTime('now -7 day'))->setTime(11, 10, 47);
         $orderData->isOverLimit = false;
         $this->createOrder(
             $orderData,
@@ -757,7 +749,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
         $orderData->deliveryAddressSameAsBillingAddress = true;
         $orderData->domainId = $domainId;
         $orderData->currency = $domainDefaultCurrency;
-        $orderData->createdAt = $this->faker->dateTimeBetween('-1 week', 'now');
+        $orderData->createdAt = (new DateTime('now -7 day'))->setTime(11, 10, 47);
         $orderData->isOverLimit = true;
         $this->createOrder(
             $orderData,

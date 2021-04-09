@@ -119,10 +119,6 @@ class Product extends BaseProduct
     {
         parent::__construct($productData, $variants);
 
-        $this->downloadAssemblyInstructionFiles = $productData->downloadAssemblyInstructionFiles;
-        $this->downloadProductTypePlanFiles = $productData->downloadProductTypePlanFiles;
-        $this->preorder = $productData->preorder;
-        $this->vendorDeliveryDate = $productData->vendorDeliveryDate;
         $this->flags = new ArrayCollection();
     }
 
@@ -134,11 +130,20 @@ class Product extends BaseProduct
     {
         parent::edit($productCategoryDomains, $productData);
 
+        $this->markForExport();
+    }
+
+    /**
+     * @param \App\Model\Product\ProductData $productData
+     */
+    protected function setData(BaseProductData $productData): void
+    {
+        parent::setData($productData);
+
         $this->downloadAssemblyInstructionFiles = $productData->downloadAssemblyInstructionFiles;
         $this->downloadProductTypePlanFiles = $productData->downloadProductTypePlanFiles;
         $this->preorder = $productData->preorder;
         $this->vendorDeliveryDate = $productData->vendorDeliveryDate;
-        $this->markForExport();
     }
 
     /**
@@ -340,6 +345,28 @@ class Product extends BaseProduct
     public function getShortDescriptionUsp5(int $domainId): ?string
     {
         return $this->getProductDomain($domainId)->getShortDescriptionUsp5();
+    }
+
+    /**
+     * @param int $domainId
+     * @return string[]
+     */
+    public function getAllNonEmptyShortDescriptionUsp(int $domainId): array
+    {
+        $usps = [
+            $this->getShortDescriptionUsp1($domainId),
+            $this->getShortDescriptionUsp2($domainId),
+            $this->getShortDescriptionUsp3($domainId),
+            $this->getShortDescriptionUsp4($domainId),
+            $this->getShortDescriptionUsp5($domainId),
+        ];
+
+        return array_values(array_filter(
+            $usps,
+            static function ($value) {
+                return $value !== null && $value !== '';
+            }
+        ));
     }
 
     /**
@@ -707,14 +734,6 @@ class Product extends BaseProduct
     public function getCatnum(): string
     {
         return $this->catnum;
-    }
-
-    /**
-     * @param \App\Model\Product\ProductData $productData
-     */
-    protected function setData(BaseProductData $productData): void
-    {
-        parent::setData($productData);
     }
 
     /**

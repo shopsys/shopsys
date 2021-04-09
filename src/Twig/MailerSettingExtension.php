@@ -18,12 +18,13 @@ class MailerSettingExtension extends BaseMailerSettingExtension
     /**
      * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
      * @param \Twig\Environment $twigEnvironment
+     * @param bool $showMailRestrictionInfoBar
      */
-    public function __construct(ContainerInterface $container, Environment $twigEnvironment)
+    public function __construct(ContainerInterface $container, Environment $twigEnvironment, bool $showMailRestrictionInfoBar)
     {
         parent::__construct($container, $twigEnvironment);
 
-        $this->showMailRestrictionInfoBar = (bool)$this->container->getParameter('show_mail_restriction_info_bar');
+        $this->showMailRestrictionInfoBar = $showMailRestrictionInfoBar;
     }
 
     public function isMailerSettingUnusual()

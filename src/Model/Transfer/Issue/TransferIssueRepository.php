@@ -6,10 +6,11 @@ namespace App\Model\Transfer\Issue;
 
 use App\Model\Transfer\Transfer;
 use DateTime;
+use DateTimeImmutable;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query\Expr\Join;
-use Doctrine\ORM\Query\ResultSetMapping;
 use Doctrine\ORM\QueryBuilder;
 
 class TransferIssueRepository
@@ -89,13 +90,11 @@ class TransferIssueRepository
 
     public function deleteOldTransferIssues(): void
     {
-        $query = $this->em->createNativeQuery(
-            'DELETE FROM transfer_issues
-                WHERE created_at < :removeIssuesOfOlderDate',
-            new ResultSetMapping()
+        $removeIssuesOfOlderDate = new DateTimeImmutable('- ' . self::TRANSFER_ISSUES_KEEP_DAYS_LIMIT . ' days midnight');
+        $this->em->getConnection()->executeStatement(
+            'DELETE FROM transfer_issues WHERE created_at < :removeIssuesOfOlderDate',
+            ['removeIssuesOfOlderDate' => $removeIssuesOfOlderDate],
+            ['removeIssuesOfOlderDate' => Types::DATETIME_IMMUTABLE]
         );
-
-        $removeIssuesOfOlderDate = new DateTime('- ' . self::TRANSFER_ISSUES_KEEP_DAYS_LIMIT . ' days midnight');
-        $query->execute(['removeIssuesOfOlderDate' => $removeIssuesOfOlderDate]);
     }
 }

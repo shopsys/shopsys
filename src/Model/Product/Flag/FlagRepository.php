@@ -10,6 +10,9 @@ use Shopsys\FrameworkBundle\Model\Product\Flag\FlagRepository as BaseFlagReposit
  * @method \App\Model\Product\Flag\Flag|null findById(int $flagId)
  * @method \App\Model\Product\Flag\Flag getById(int $flagId)
  * @method \App\Model\Product\Flag\Flag[] getAll()
+ * @method \App\Model\Product\Flag\Flag[] getByIds(int[] $flagIds)
+ * @method \App\Model\Product\Flag\Flag getByUuid(string $uuid)
+ * @method \App\Model\Product\Flag\Flag[] getByUuids(string[] $uuids)
  */
 class FlagRepository extends BaseFlagRepository
 {

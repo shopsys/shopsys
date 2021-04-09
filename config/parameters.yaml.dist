@@ -1,80 +1,22 @@
+# @deprecated
+# This file is kept to provide a backward compatibility for parameters set in services.
+# All values should be set with ENV variables exclusively.
+# This file will be removed in the next major, when all occurrences of parameters will be replaced.
+
 parameters:
-    admin_url: admin
-    database_host: postgres
-    database_port: ~
-    database_name: shopsys
-    database_user: root
-    database_password: root
-
-    elasticsearch_host: elasticsearch:9200
-
-    redis_host: redis
-
-    mailer_transport: smtp
-    mailer_host: smtp-server
-    mailer_user: ~
-    mailer_password: ~
+    database_host: '%env(DATABASE_HOST)%'
+    database_port: '%env(DATABASE_PORT)%'
+    database_name: '%env(DATABASE_NAME)%'
+    database_user: '%env(DATABASE_USER)%'
+    database_password: '%env(DATABASE_PASSWORD)%'
+    elasticsearch_host: '%env(ELASTICSEARCH_HOST)%'
+    redis_host: '%env(REDIS_HOST)%'
+    mailer_transport: '%env(MAILER_TRANSPORT)%'
+    mailer_host: '%env(MAILER_HOST)%'
+    mailer_user: '%env(MAILER_USER)%'
+    mailer_password: '%env(MAILER_PASSWORD)%'
     mailer_disable_delivery: false
     mailer_master_email_address: no-reply@shopsys.com
     mailer_delivery_whitelist:
         - /@shopsys\.com$/
-
-    secret: ThisTokenIsNotSoSecretChangeIt
-    trusted_proxies:
-        - "127.0.0.1"
-    env(REDIS_PREFIX): ''
-    env(ELASTIC_SEARCH_INDEX_PREFIX): ''
-
-    env(S3_API_HOST): ''
-    env(S3_API_USERNAME): ''
-    env(S3_API_PASSWORD): ''
-    env(S3_API_BUCKET_NAME): ''
-
-    akeneo_config:
-        enabled: false
-        base_uri: 'https://pim.example.com/'
-        client_id: ''
-        secret: ''
-        user: ''
-        password: ''
-
-    disable_form_fields_from_transfer: false
-
-    sconto_bridge_config:
-        enabled: false
-        base_uri: 'https://api.example.com/api/'
-        user: ''
-        password: ''
-
-    svg_icon_path: '%kernel.root_dir%/../src/Shopsys/ShopBundle/Resources/svg'
-
-    gopay_config:
-        cs:
-            goid: 1234567890
-            clientId: 1234567890
-            clientSecret: abcDEFGH
-            language: CS
-        sk:
-            goid: 1234567890
-            clientId: 1234567890
-            clientSecret: abcDEFGH
-            language: SK
-        isProductionMode: false
-        scope: payment-all
-        timeout: 30
-
-    gtm_config:
-        cs:
-            enabled: false
-            container_id: GTM-AB1C23D
-            container_environment: null
-            data_layer_locale: cs
-        sk:
-            enabled: false
-            container_id: GTM-AB1C23D
-            container_environment: null
-            data_layer_locale: sk
-
-    show_mail_restriction_info_bar: true
-
-    google_map_api_key: ''
+    secret: '%env(APP_SECRET)%'

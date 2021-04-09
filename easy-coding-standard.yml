@@ -54,7 +54,6 @@ parameters:
         ObjectCalisthenics\Sniffs\Files\FunctionLengthSniff:
             - '*/src/Migrations/Version20190801103940.php'
             - '*/src/DataFixtures/*/*DataFixture.php'
-            - '*/src/DataFixtures/Demo/ProductDataFixtureLoader.php'
             - '*/src/Controller/Front/OrderController.php'
             - '*/src/Form/Front/Customer/BillingAddressFormType.php'
             - '*/src/Form/Front/Customer/DeliveryAddressFormType.php'
@@ -66,17 +65,10 @@ parameters:
             - '*/tests/App/Functional/Model/Order/OrderFacadeTest.php'
             - '*/tests/App/Functional/Model/Order/Preview/OrderPreviewCalculationTest.php'
             - '*/tests/App/Functional/Model/Pricing/InputPriceRecalculationSchedulerTest.php'
-            - '*/tests/App/Smoke/BackendApiCreateProductTest.php'
             - '*/tests/App/Smoke/Http/RouteConfigCustomization.php'
             - '*/tests/App/Functional/Model/Product/ProductOnCurrentDomainFacadeCountDataTest.php'
             - '*/tests/App/Functional/Model/Product/Availability/ProductAvailabilityFacadeTest.php'
             - '*/tests/App/Functional/Model/Cart/CartMigrationFacadeTest.php'
-            - '*/tests/FrontendApiBundle/Functional/Article/GetArticlesTest.php'
-            - '*/tests/FrontendApiBundle/Functional/Image/ProductImagesTest.php'
-            - '*/tests/FrontendApiBundle/Functional/Payment/PaymentsTest.php'
-            - '*/tests/FrontendApiBundle/Functional/Transport/TransportsTest.php'
-            - '*/tests/FrontendApiBundle/Functional/Order/MultipleProductsInOrderTest.php'
-            - '*/tests/FrontendApiBundle/Functional/Product/ProductVariantTest.php'
             - '*/src/Model/Product/Transfer/Akeneo/ProductTransferAkeneoValidator.php'
             - '*/src/Component/Akeneo/Transfer/AbstractAkeneoImportTransfer.php'
             - '*/src/Component/ScontoBridge/Transfer/AbstractScontoBridgeImportTransfer.php'
@@ -95,6 +87,7 @@ parameters:
             - '*/src/Model/Product/Availability/ProductAvailabilityFacade.php'
             - '*/src/Model/Product/Parameter/ParameterFacade.php'
             - '*/src/Controller/Front/CartController.php'
+            - '*/src/Model/Product/ProductSellingDeniedRecalculator.php'
 
         ObjectCalisthenics\Sniffs\Files\ClassTraitAndInterfaceLengthSniff:
             - '*/tests/App/Functional/Model/Product/ProductVisibilityRepositoryTest.php'
@@ -109,18 +102,16 @@ parameters:
             - '*/src/Model/Product/Transfer/Akeneo/ProductTransferAkeneoMapper.php'
             - '*/src/Form/Admin/ProductFormTypeExtension.php'
             - '*/src/Model/Product/Availability/ProductAvailabilityFacade.php'
-            - '*/tests/App/Functional/Model/Transport/Logistic/TransportLogisticFacadeTest.php'
 
         PHP_CodeSniffer\Standards\Generic\Sniffs\Metrics\CyclomaticComplexitySniff:
             - '*/src/DataFixtures/Demo/ProductDataFixture.php'
-            - '*/src/DataFixtures/Demo/CategoryDataFixture'
+            - '*/src/DataFixtures/Demo/CategoryDataFixture.php'
             - '*/src/Controller/Front/OrderController.php'
             - '*/src/Model/Order/OrderFacade.php'
 
         Shopsys\CodingStandards\Sniffs\ValidVariableNameSniff:
             - '*/tests/App/Functional/EntityExtension/EntityExtensionTest.php'
             - '*/tests/App/Test/Codeception/_generated/AcceptanceTesterActions.php'
-            - '*/tests/App/Functional/Model/Transport/Logistic/TransportLogisticFacadeTest.php'
 
         Shopsys\CodingStandards\Sniffs\ObjectIsCreatedByFactorySniff:
             - '*/tests/*'
@@ -152,9 +143,6 @@ parameters:
 
         ObjectCalisthenics\Sniffs\Metrics\PropertyPerClassLimitSniff:
             - '*/src/Model/Product/ProductData.php'
-
-        PHP_CodeSniffer\Standards\Squiz\Sniffs\NamingConventions\ValidVariableNameSniff.NotCamelCaps:
-            - '*/tests/App/Functional/Model/Transport/Logistic/TransportLogisticFacadeTest.php'
 
         SlevomatCodingStandard\Sniffs\Classes\UnusedPrivateElementsSniff.WriteOnlyProperty:
             - '*/src/Model/Category/LinkedCategory/LinkedCategory.php'

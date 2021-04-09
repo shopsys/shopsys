@@ -31,7 +31,6 @@
     "require": {
         "php": "^7.4",
         "ext-bcmath": "*",
-        "ext-calendar": "*",
         "ext-ctype": "*",
         "ext-curl": "*",
         "ext-fileinfo": "*",
@@ -69,7 +68,6 @@
         "helios-ag/fm-elfinder-bundle": "^10.0.4",
         "heureka/overeno-zakazniky": "^2.0.6",
         "http-interop/http-factory-guzzle": "^1.0",
-        "incenteev/composer-parameter-handler": "^2.1.3",
         "intervention/image": "^2.3.14",
         "jms/serializer-bundle": "^2.4",
         "jms/translation-bundle": "1.4.4",
@@ -85,18 +83,17 @@
         "sensio/framework-extra-bundle": "^5.2",
         "shopsys/cdn": "^1.0",
         "shopsys/doctrine-orm": "^2.7.2",
-        "shopsys/form-types-bundle": "9.1.x-dev",
-        "shopsys/framework": "9.1.x-dev",
-        "shopsys/frontend-api": "9.1.x-dev",
-        "shopsys/google-cloud-bundle": "9.1.x-dev",
-        "shopsys/migrations": "9.1.x-dev",
-        "shopsys/plugin-interface": "9.1.x-dev",
+        "shopsys/form-types-bundle": "9.1.0",
+        "shopsys/framework": "9.1.0",
+        "shopsys/google-cloud-bundle": "9.1.0",
+        "shopsys/migrations": "9.1.0",
+        "shopsys/plugin-interface": "9.1.0",
         "shopsys/postgres-search-bundle": "^0.2",
-        "shopsys/product-feed-google": "9.1.x-dev",
-        "shopsys/product-feed-heureka": "9.1.x-dev",
-        "shopsys/product-feed-heureka-delivery": "9.1.x-dev",
-        "shopsys/product-feed-zbozi": "9.1.x-dev",
-        "shopsys/read-model": "9.1.x-dev",
+        "shopsys/product-feed-google": "9.1.0",
+        "shopsys/product-feed-heureka": "9.1.0",
+        "shopsys/product-feed-heureka-delivery": "9.1.0",
+        "shopsys/product-feed-zbozi": "9.1.0",
+        "shopsys/read-model": "9.1.0",
         "snc/redis-bundle": "^3.2.2",
         "stof/doctrine-extensions-bundle": "^1.3.0",
         "symfony-cmf/routing": "^2.0.3",
@@ -140,24 +137,27 @@
         "phpstan/phpstan-symfony": "^0.12",
         "phpunit/phpunit": "^8.0",
         "psr/event-dispatcher": "^1.0.0",
-        "shopsys/coding-standards": "9.1.x-dev",
-        "shopsys/http-smoke-testing": "9.1.x-dev",
+        "shopsys/coding-standards": "9.1.0",
+        "shopsys/http-smoke-testing": "9.1.0",
         "sspooky13/yaml-standards": "^5.0.0",
         "symfony/var-dumper": "^4.4.0",
         "symfony/browser-kit": "^4.4.0",
         "zalas/phpunit-injector": "^1.4"
     },
     "conflict": {
-        "symfony/symfony": "*"
+        "symfony/symfony": "*",
+        "symfony/dependency-injection": ">=4.4.19"
     },
     "scripts": {
         "post-install-cmd": [
-            "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
+            "cp -n config/parameters.yaml.dist config/parameters.yaml || echo '[skiped] parameters.yaml exists'",
+            "cp -n config/parameters_test.yaml.dist config/parameters_test.yaml || echo '[skiped] parameters_test.yaml exists'",
             "App\\Environment::checkEnvironment",
             "@auto-scripts"
         ],
         "post-update-cmd": [
-            "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
+            "cp -n config/parameters.yaml.dist config/parameters.yaml || echo '[skiped] parameters.yaml exists'",
+            "cp -n config/parameters_test.yaml.dist config/parameters_test.yaml || echo '[skiped] parameters_test.yaml exists'",
             "App\\Environment::checkEnvironment",
             "@auto-scripts",
             "@security-check"
@@ -174,7 +174,7 @@
         "component-dir": "web/components",
         "sort-packages": true,
         "platform": {
-            "php": "7.4"
+            "php": "7.4.1"
         }
     },
     "extra": {
@@ -184,21 +184,11 @@
         "var-dir": "var",
         "public-dir": "web",
         "branch-alias": {
-            "dev-master": "9.1.x-dev"
+            "dev-master": "9.1.0"
         },
         "symfony": {
             "allow-contrib": true,
             "require": "^4.4"
-        },
-        "incenteev-parameters": [
-            {
-                "file": "config/parameters.yaml",
-                "keep-outdated": true
-            },
-            {
-                "file": "config/parameters_test.yaml",
-                "keep-outdated": true
-            }
-        ]
+        }
     }
 }

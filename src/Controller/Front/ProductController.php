@@ -18,14 +18,12 @@ use App\Model\Gtm\DataLayer;
 use App\Model\Gtm\GtmContainer;
 use App\Model\Gtm\GtmFacade;
 use App\Model\Gtm\GtmJsPushFacade;
-use App\Model\Product\Availability\ProductAvailabilityFacade;
 use App\Model\Product\Brand\Brand;
 use App\Model\Product\Filter\CachedProductFilterConfig;
 use App\Model\Product\Filter\ProductFilterCacheFacade;
 use App\Model\Product\Filter\ProductFilterData;
 use App\Model\Product\Filter\ProductFilterFacade;
 use App\Model\Product\Listed\ListedProductViewElasticFacade;
-use App\Model\Product\ProductFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Paginator\PaginationResult;
 use Shopsys\FrameworkBundle\Model\Module\ModuleFacade;
@@ -39,6 +37,7 @@ use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingModeForSear
 use Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainFacadeInterface;
 use Shopsys\FrameworkBundle\Model\Seo\SeoSettingFacade;
 use Shopsys\FrameworkBundle\Twig\RequestExtension;
+use Shopsys\ReadModelBundle\Product\Detail\ProductDetailViewFacadeInterface;
 use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -109,16 +108,6 @@ class ProductController extends FrontBaseController
     private $listedProductViewFacade;
 
     /**
-     * @var \App\Model\Product\Availability\ProductAvailabilityFacade
-     */
-    private $productAvailabilityFacade;
-
-    /**
-     * @var \App\Model\Product\ProductFacade
-     */
-    private $productFacade;
-
-    /**
      * @var \App\Model\CategorySeo\ReadyCategorySeoMixFacade
      */
     private $readyCategorySeoMixFacade;
@@ -174,6 +163,11 @@ class ProductController extends FrontBaseController
     private $gtmContainer;
 
     /**
+     * @var \Shopsys\ReadModelBundle\Product\Detail\ProductDetailViewFacadeInterface
+     */
+    protected ProductDetailViewFacadeInterface $productDetailViewFacade;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Twig\RequestExtension $requestExtension
      * @param \App\Model\Category\CategoryFacade $categoryFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
@@ -185,8 +179,6 @@ class ProductController extends FrontBaseController
      * @param \Shopsys\FrameworkBundle\Model\Module\ModuleFacade $moduleFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade $brandFacade
      * @param \App\Model\Product\Listed\ListedProductViewElasticFacade $listedProductViewFacade
-     * @param \App\Model\Product\Availability\ProductAvailabilityFacade $productAvailabilityFacade
-     * @param \App\Model\Product\ProductFacade $productFacade
      * @param \App\Model\CategorySeo\ReadyCategorySeoMixFacade $readyCategorySeoMixFacade
      * @param \Shopsys\FrameworkBundle\Model\Seo\SeoSettingFacade $seoSettingFacade
      * @param \App\Model\Category\CategoryParameterFacade $categoryParameterFacade
@@ -198,6 +190,7 @@ class ProductController extends FrontBaseController
      * @param \App\Model\Gtm\GtmJsPushFacade $gtmJsPushFacade
      * @param \App\Model\Product\Filter\ProductFilterCacheFacade $productFilterCacheFacade
      * @param \App\Model\Gtm\GtmContainer $gtmContainer
+     * @param \Shopsys\ReadModelBundle\Product\Detail\ProductDetailViewFacadeInterface $productDetailViewFacade
      */
     public function __construct(
         RequestExtension $requestExtension,
@@ -211,8 +204,6 @@ class ProductController extends FrontBaseController
         ModuleFacade $moduleFacade,
         BrandFacade $brandFacade,
         ListedProductViewElasticFacade $listedProductViewFacade,
-        ProductAvailabilityFacade $productAvailabilityFacade,
-        ProductFacade $productFacade,
         ReadyCategorySeoMixFacade $readyCategorySeoMixFacade,
         SeoSettingFacade $seoSettingFacade,
         CategoryParameterFacade $categoryParameterFacade,
@@ -223,7 +214,8 @@ class ProductController extends FrontBaseController
         GtmFacade $gtmFacade,
         GtmJsPushFacade $gtmJsPushFacade,
         ProductFilterCacheFacade $productFilterCacheFacade,
-        GtmContainer $gtmContainer
+        GtmContainer $gtmContainer,
+        ProductDetailViewFacadeInterface $productDetailViewFacade
     ) {
         $this->requestExtension = $requestExtension;
         $this->domain = $domain;
@@ -236,8 +228,6 @@ class ProductController extends FrontBaseController
         $this->brandFacade = $brandFacade;
         $this->listedProductViewFacade = $listedProductViewFacade;
         $this->categoryFacade = $categoryFacade;
-        $this->productAvailabilityFacade = $productAvailabilityFacade;
-        $this->productFacade = $productFacade;
         $this->readyCategorySeoMixFacade = $readyCategorySeoMixFacade;
         $this->seoSettingFacade = $seoSettingFacade;
         $this->categoryParameterFacade = $categoryParameterFacade;
@@ -249,6 +239,7 @@ class ProductController extends FrontBaseController
         $this->gtmJsPushFacade = $gtmJsPushFacade;
         $this->productFilterCacheFacade = $productFilterCacheFacade;
         $this->gtmContainer = $gtmContainer;
+        $this->productDetailViewFacade = $productDetailViewFacade;
     }
 
     /**
@@ -257,43 +248,19 @@ class ProductController extends FrontBaseController
      */
     public function detailAction(Request $request, $id)
     {
-        /** @var \App\Model\Product\Product $product */
-        $product = $this->productOnCurrentDomainFacade->getVisibleProductById($id);
+        /** @var \App\Model\Product\Detail\ProductDetailView $productDetailView */
+        $productDetailView = $this->productDetailViewFacade->getVisibleProductDetail($id);
 
-        if ($product->isVariant()) {
-            return $this->redirectToRoute('front_product_detail', ['id' => $product->getMainVariant()->getId()]);
+        if ($productDetailView->getMainVariantId() !== null) {
+            return $this->redirectToRoute('front_product_detail', ['id' => $productDetailView->getMainVariantId()]);
         }
 
-        $downloadFiles = $this->productFacade->getDownloadFilesForProductByDomain($product, $this->domain);
-        $productAvailabilityInformation = $this->productAvailabilityFacade->getProductAvailabilityInformationByDomainId($product, $this->domain->getId());
-        $productAvailabilityStatus = $this->productAvailabilityFacade->getProductAvailabilityStatusByDomainId($product, $this->domain->getId());
-        $productAvailableStocksCountInformation = $this->productAvailabilityFacade->getProductAvailableStocksCountInformationByDomainId($product, $this->domain->getId());
-        $productCountExposedInStores = $this->productAvailabilityFacade->getProductCountExposedInStocksInformationByDomainId($product, $this->domain->getId());
-        $productStocksAvailabilitiesInformation = $this->productAvailabilityFacade->getProductStocksAvailabilitiesInformationByDomainIdIndexedByStockId($product, $this->domain->getId());
-
-        $this->gtmFacade->onProductDetailPage($product);
-
-        //parts build from main product
-        /** @var \App\Model\Product\Listed\ListedProductView[] $accessories */
-        $accessories = $this->listedProductViewFacade->getAllAccessories($product->getId());
-        $variants = $this->productOnCurrentDomainFacade->getVariantsForProduct($product);
-        $productMainCategory = $this->categoryFacade->getProductMainCategoryByDomainId($product, $this->domain->getId());
-        $categoryList = $this->categoryFacade->getAllProductCategoriesByProductAndDomainId($product, $this->domain->getId());
+        $this->gtmFacade->onProductDetailPage($productDetailView);
 
         return $this->render('Front/Content/Product/detail.html.twig', [
-            'product' => $product,
-            'accessories' => $accessories,
-            'variants' => $variants,
-            'productMainCategory' => $productMainCategory,
-            'categoryList' => $categoryList,
-            'productAvailabilityInformation' => $productAvailabilityInformation,
-            'productAvailabilityStatus' => $productAvailabilityStatus,
-            'productStocksAvailabilitiesInformation' => $productStocksAvailabilitiesInformation,
-            'productAvailableStocksCountInformation' => $productAvailableStocksCountInformation,
-            'productCountExposedInStores' => $productCountExposedInStores,
-            'downloadFiles' => $downloadFiles,
+            'productView' => $productDetailView,
             'gtmAccessoriesScrollEvent' => $this->gtmJsPushFacade->getListedProductViewsScrollData(
-                $accessories,
+                $productDetailView->getAccessories(),
                 DataLayer::LIST_NAME_PRODUCT_ACCESSORIES
             ),
         ]);

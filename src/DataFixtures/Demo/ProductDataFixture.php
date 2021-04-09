@@ -182,6 +182,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $productData->catnum = '9177759';
         $productData->partno = 'SLE 22F46DM4';
         $productData->ean = '8845781245930';
+        $productData->orderingPriority = 1;
 
         $parameterTranslations = [];
 
@@ -192,6 +193,10 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->nameSufix[$locale] = t('plazmová', [], 'dataFixtures', $locale);
             $productData->descriptions[$domain->getId()] = t('Television LED, 55 cm diagonal, 1920x1080 Full HD, DVB-T MPEG4 tuner with USB recording and playback (DivX, XviD, MP3, WMA, JPEG), HDMI, SCART, VGA, pink execution, energ. Class B', [], 'dataFixtures', $domain->getLocale());
             $productData->shortDescriptions[$domain->getId()] = t('Television LED, 55 cm diagonal, 1920x1080 Full HD, DVB-T MPEG4 tuner with USB recording and playback', [], 'dataFixtures', $domain->getLocale());
+
+            $productData->seoH1s[$domain->getId()] = t('Hello Kitty Television', [], 'dataFixtures', $domain->getLocale());
+            $productData->seoTitles[$domain->getId()] = t('Hello Kitty TV', [], 'dataFixtures', $domain->getLocale());
+            $productData->seoMetaDescriptions[$domain->getId()] = t('Hello Kitty TV, LED, 55 cm diagonal, 1920x1080 Full HD.', [], 'dataFixtures', $domain->getLocale());
 
             $i = 0;
             $this->addParameterTranslations($parameterTranslations, t('Screen size', [], 'dataFixtures', $locale), t('27"', [], 'dataFixtures', $locale), $locale, $i, t('Hlavní údaje', [], 'dataFixtures', $locale));
@@ -2326,8 +2331,8 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         foreach ($this->domain->getAllIncludingDomainConfigsWithoutDataCreated() as $domain) {
             $locale = $domain->getLocale();
             $productData->name[$locale] = t('36" Philips 32PFL4308', [], 'dataFixtures', $locale);
-            $productData->namePrefix[$locale] = t('Defaultní varianta - prefix', [], 'dataFixture', $locale);
-            $productData->nameSufix[$locale] = t('Defaultní varianta - suffix', [], 'dataFixture', $locale);
+            $productData->namePrefix[$locale] = t('Defaultní varianta - prefix', [], 'dataFixtures', $locale);
+            $productData->nameSufix[$locale] = t('Defaultní varianta - suffix', [], 'dataFixtures', $locale);
             $productData->descriptions[$domain->getId()] = t('TV LED, 100Hz, diagonal 80cm 100Hz, Full HD 1920 x 1080, DVB-T / C, 2x HDMI, USB, CI +, VGA, SCART, speakers 16W, energy. Class A + ', [], 'dataFixtures', $domain->getLocale());
             $productData->shortDescriptions[$domain->getId()] = t('TV LED, 100Hz, diagonal 80cm 100Hz, Full HD 1920 x 1080, DVB-T / C, 2x HDMI, USB, CI +, VGA, SCART, speakers 16W, energy. Class A + ', [], 'dataFixtures', $domain->getLocale());
 
@@ -3068,12 +3073,17 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $productData->catnum = '9176544MS';
         $productData->partno = 'TIC100';
         $productData->ean = '8845781243207';
+        $productData->orderingPriority = 2;
 
         foreach ($this->domain->getAllIncludingDomainConfigsWithoutDataCreated() as $domain) {
             $locale = $domain->getLocale();
             $productData->name[$locale] = t('100 Czech crowns ticket', [], 'dataFixtures', $locale);
             $productData->descriptions[$domain->getId()] = t('Coupon valued to 100 Czech crowns. You can cash it at any exchange office', [], 'dataFixtures', $domain->getLocale());
             $productData->shortDescriptions[$domain->getId()] = t('Coupon valued to 100 Czech crowns. You can cash it at any exchange office', [], 'dataFixtures', $domain->getLocale());
+
+            $productData->seoH1s[$domain->getId()] = t('Ticket for 100 Czech crowns', [], 'dataFixtures', $domain->getLocale());
+            $productData->seoTitles[$domain->getId()] = t('Ticket for 100 CZK', [], 'dataFixtures', $domain->getLocale());
+            $productData->seoMetaDescriptions[$domain->getId()] = t('Coupon valued to 100 Czech crowns.', [], 'dataFixtures', $domain->getLocale());
         }
 
         $this->setPriceForAllPricingGroups($productData, '100');
@@ -3186,6 +3196,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $productData->catnum = '9176578';
         $productData->partno = 'T27D590EY';
         $productData->ean = '8845781243205';
+        $productData->orderingPriority = 1;
 
         $parameterTranslations = [];
 
@@ -3274,6 +3285,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $productData->catnum = '7700769';
         $productData->partno = '22MT44D';
         $productData->ean = '8845781245931';
+        $productData->orderingPriority = 1;
 
         $parameterTranslations = [];
 
@@ -3396,6 +3408,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $productData->catnum = '8981537';
         $productData->partno = 'T27D590EY';
         $productData->ean = '8845781245939';
+        $productData->orderingPriority = 1;
 
         $parameterTranslations = [];
 
@@ -3440,6 +3453,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $productData->catnum = '8981538';
         $productData->partno = 'T27D590EZ';
         $productData->ean = '8845781245940';
+        $productData->orderingPriority = 1;
 
         $parameterTranslations = [];
 

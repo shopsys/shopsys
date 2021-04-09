@@ -10,6 +10,7 @@ use App\Model\Gtm\Data\DataLayerUser;
 use App\Model\Order\Order;
 use App\Model\Order\Preview\OrderPreview;
 use App\Model\Order\Preview\OrderPreviewFactory;
+use App\Model\Product\Detail\ProductDetailView;
 use App\Model\Product\Product;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
@@ -154,22 +155,22 @@ class GtmFacade
     }
 
     /**
-     * @param \App\Model\Product\Product $product
+     * @param \App\Model\Product\Detail\ProductDetailView $productDetailView
      */
-    public function onProductDetailPage(Product $product): void
+    public function onProductDetailPage(ProductDetailView $productDetailView): void
     {
         if (!$this->gtmContainer->isEnabled()) {
             return;
         }
 
         $dataLayerPage = $this->getDataLayerPage();
-        $this->dataLayerMapper->mapProductToDataLayerPage($product, $dataLayerPage, $this->dataLayer->getLocale());
+        $this->dataLayerMapper->mapProductDetailViewToDataLayerPage($productDetailView, $dataLayerPage, $this->dataLayer->getLocale());
 
         $gtmEventData = [
             'ecommerce' => [
                 'currencyCode' => $this->getCurrentDomainDefaultCurrencyCode(),
                 'detail' => [
-                    'products' => $this->dataLayerMapper->createDataLayerProductsFromProducts([$product], $this->dataLayer->getLocale()),
+                    'products' => $this->dataLayerMapper->createDataLayerProductsFromProductDetailViews([$productDetailView], $this->dataLayer->getLocale()),
                 ],
             ],
         ];

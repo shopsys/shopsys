@@ -46,7 +46,8 @@
                                         data-form-id="{{ flagForm.vars.id }}"
                                     >
                                         {% if not flagForm.vars.checked %}
-                                            ({% if filterForm.flags.vars.data is not empty %}+{% endif %}{{ productFilterCountData.countByFlagId[flagForm.vars.value]|default(0) }})
+                                            {% set flagsCount = productFilterCountData.countByFlagId[flagForm.vars.value]|default(0) %}
+                                            ({% if filterForm.flags.vars.data is not empty and flagsCount > 0 %}+{% endif %}{{ flagsCount }})
                                         {% endif %}
                                     </span>
                                 {% endif %}

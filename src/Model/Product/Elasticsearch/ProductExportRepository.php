@@ -14,6 +14,8 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRepository;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade;
+use Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryFacade;
+use Shopsys\FrameworkBundle\Model\Product\Brand\BrandCachedFacade;
 use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductExportRepository as BaseProductExportRepository;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice;
@@ -30,9 +32,13 @@ use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityRepository;
  * @method array extractVisibility(int $domainId, \App\Model\Product\Product $product)
  * @property \App\Model\Product\Parameter\ParameterRepository $parameterRepository
  * @property \App\Model\Product\ProductVisibilityRepository $productVisibilityRepository
- * @property \App\Component\Router\FriendlyUrl\FriendlyUrlRepository $friendlyUrlRepository
+ * @property \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRepository $friendlyUrlRepository
  * @property \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
  * @method array extractParameters(string $locale, \App\Model\Product\Product $product)
+ * @property \App\Model\Category\CategoryFacade $categoryFacade
+ * @method setCategoryFacade(\App\Model\Category\CategoryFacade $categoryFacade)
+ * @method string getBrandUrlForDomainByProduct(\App\Model\Product\Product $product, int $domainId)
+ * @method array extractAccessoriesIds(\App\Model\Product\Product $product)
  */
 class ProductExportRepository extends BaseProductExportRepository
 {
@@ -52,15 +58,10 @@ class ProductExportRepository extends BaseProductExportRepository
     private $pricingGroupSettingFacade;
 
     /**
-     * @var \App\Model\Category\CategoryFacade
-     */
-    private $categoryFacade;
-
-    /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \App\Model\Product\Parameter\ParameterRepository $parameterRepository
      * @param \App\Model\Product\ProductFacade $productFacade
-     * @param \App\Component\Router\FriendlyUrl\FriendlyUrlRepository $friendlyUrlRepository
+     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRepository $friendlyUrlRepository
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \App\Model\Product\ProductVisibilityRepository $productVisibilityRepository
      * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
@@ -68,6 +69,8 @@ class ProductExportRepository extends BaseProductExportRepository
      * @param \App\Model\Product\ProductRepository $productRepository
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade $pricingGroupSettingFacade
      * @param \App\Model\Category\CategoryFacade $categoryFacade
+     * @param \Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryFacade $productAccessoryFacade
+     * @param \Shopsys\FrameworkBundle\Model\Product\Brand\BrandCachedFacade $brandCachedFacade
      */
     public function __construct(
         EntityManagerInterface $em,
@@ -80,7 +83,9 @@ class ProductExportRepository extends BaseProductExportRepository
         ProductAvailabilityFacade $productAvailabilityFacade,
         ProductRepository $productRepository,
         PricingGroupSettingFacade $pricingGroupSettingFacade,
-        CategoryFacade $categoryFacade
+        CategoryFacade $categoryFacade,
+        ProductAccessoryFacade $productAccessoryFacade,
+        BrandCachedFacade $brandCachedFacade
     ) {
         parent::__construct(
             $em,
@@ -89,13 +94,15 @@ class ProductExportRepository extends BaseProductExportRepository
             $friendlyUrlRepository,
             $domain,
             $productVisibilityRepository,
-            $friendlyUrlFacade
+            $friendlyUrlFacade,
+            $categoryFacade,
+            $productAccessoryFacade,
+            $brandCachedFacade
         );
 
         $this->productAvailabilityFacade = $productAvailabilityFacade;
         $this->productRepository = $productRepository;
         $this->pricingGroupSettingFacade = $pricingGroupSettingFacade;
-        $this->categoryFacade = $categoryFacade;
     }
 
     /**
@@ -132,8 +139,14 @@ class ProductExportRepository extends BaseProductExportRepository
             'description' => $product->getDescription($domainId),
             'short_description' => $product->getShortDescription($domainId),
             'brand' => $product->getBrand() ? $product->getBrand()->getId() : '',
+            'brand_name' => $product->getBrand() ? $product->getBrand()->getName() : '',
+            'brand_url' => $this->getBrandUrlForDomainByProduct($product, $domainId),
             'flags' => $flagIds,
             'categories' => $categoryIds,
+            'main_category_id' => $this->categoryFacade->getProductMainCategoryByDomainId(
+                $product,
+                $domainId
+            )->getId(),
             'main_category_path' => $this->categoryFacade->getCategoriesNamesInPathAsString($mainCategory, $locale),
             'in_stock' => $this->productAvailabilityFacade->isProductAvailableOnDomainOrHasPreorder($product, $domainId),
             'is_available' => $this->productAvailabilityFacade->isProductAvailableOnDomainCached($product, $domainId),
@@ -143,22 +156,32 @@ class ProductExportRepository extends BaseProductExportRepository
             'calculated_selling_denied' => $product->getCalculatedSaleExclusion($domainId),
             'selling_denied' => $product->isSellingDenied(),
             'availability' => $this->productAvailabilityFacade->getProductAvailabilityInformationByDomainId($product, $domainId),
+            'availability_status' => $this->productAvailabilityFacade->getProductAvailabilityStatusByDomainId($product, $domainId),
             'is_main_variant' => $product->isMainVariant(),
+            'is_variant' => $product->isVariant(),
             'detail_url' => $detailUrl,
             'visibility' => $visibility,
             'uuid' => $product->getUuid(),
             'unit' => $product->getUnit()->getName($locale),
             'is_using_stock' => $product->isUsingStock(),
             'stock_quantity' => $this->productAvailabilityFacade->getGroupedStockQuantityByProductAndDomainId($product, $domainId),
+            'has_preorder' => $product->hasPreorder(),
             'variants' => $variantIds,
             'main_variant_id' => $product->isVariant() ? $product->getMainVariant()->getId() : null,
+            'seo_h1' => $product->getSeoH1($domainId),
+            'seo_title' => $product->getSeoTitle($domainId),
+            'seo_meta_description' => $product->getSeoMetaDescription($domainId),
+            'accessories' => $this->extractAccessoriesIds($product),
             'name_prefix' => $product->getNamePrefix($locale),
             'name_sufix' => $product->getNameSufix($locale),
-            'non_selling_price' => $nonSellingPrice === null ? null : $nonSellingPrice->getAmount(),
+            'non_selling_price_with_vat' => $nonSellingPrice === null ? null : $nonSellingPrice->getAmount(),
             'is_in_sale' => $product->isProductInSale($domainId) && !$product->getCalculatedSaleExclusion($domainId),
             'is_sale_exclusion' => $product->getSaleExclusion($domainId),
             'product_available_stocks_count_information' => $this->productAvailabilityFacade->getProductAvailableStocksCountInformationByDomainId($product, $domainId),
             'product_count_exposed_in_stores' => $this->productAvailabilityFacade->getProductCountExposedInStocksInformationByDomainId($product, $domainId),
+            'stock_availabilities_information' => $this->extractStockAvailabilitiesInformation($product, $domainId),
+            'files' => $this->productFacade->getDownloadFilesForProductByDomainConfig($product, $this->domain->getDomainConfigById($domainId)),
+            'usps' => $product->getAllNonEmptyShortDescriptionUsp($domainId),
             'searching_names' => $searchingNames,
             'searching_descriptions' => $searchingDescriptions,
             'searching_catnums' => $searchingCatnums,
@@ -337,7 +360,7 @@ class ProductExportRepository extends BaseProductExportRepository
             $flagIds = array_merge($flagIds, $variant->getFlagsIdsForDomain($domainId));
         }
 
-        return  array_values(array_unique($flagIds));
+        return array_values(array_unique($flagIds));
     }
 
     /**
@@ -359,5 +382,28 @@ class ProductExportRepository extends BaseProductExportRepository
         $products[] = $product;
 
         return $this->parameterRepository->getProductParameterValuesDataByProducts($products, $locale);
+    }
+
+    /**
+     * @param \App\Model\Product\Product $product
+     * @param int $domainId
+     * @return array
+     */
+    private function extractStockAvailabilitiesInformation(Product $product, int $domainId): array
+    {
+        $stockAvailabilitiesInformation = $this->productAvailabilityFacade->getProductStocksAvailabilitiesInformationByDomainIdIndexedByStockId($product, $domainId);
+
+        $result = [];
+        foreach ($stockAvailabilitiesInformation as $item) {
+            $result[] = [
+                'stock_name' => $item->getStockName(),
+                'stock_id' => $item->getStockId(),
+                'availability_information' => $item->getAvailabilityInformation(),
+                'exposed' => $item->isExposedProduct(),
+                'availability_status' => $item->getAvailabilityStatus(),
+            ];
+        }
+
+        return $result;
     }
 }

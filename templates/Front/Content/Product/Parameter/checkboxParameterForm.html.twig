@@ -28,12 +28,13 @@
                             data-form-id="{{ parameterValueForm.vars.id }}"
                         >
                             {% if not parameterValueForm.vars.checked %}
+                                {% set parameterValueCount = productFilterCountData.countByParameterIdAndValueId[parameterId][parameterValueForm.vars.value]|default(0) %}
                                 (
                                 {%- if parameterForm.vars.data is not empty
-                                    and productFilterCountData.countByParameterIdAndValueId[parameterId][parameterValueForm.vars.value] ?? false
+                                    and parameterValueCount > 0
                                     and parameterForm.vars.attr.canShowPlus
                                 %}+{% endif -%}
-                                {{- productFilterCountData.countByParameterIdAndValueId[parameterId][parameterValueForm.vars.value]|default(0) -}}
+                                {{- parameterValueCount -}}
                                 )
                             {% endif %}
                         </span>

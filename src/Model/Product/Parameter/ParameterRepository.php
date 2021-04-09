@@ -32,6 +32,10 @@ use Shopsys\FrameworkBundle\Model\Product\ProductCategoryDomain;
  * @method string[][] getParameterValuesIndexedByProductIdAndParameterNameForProducts(\App\Model\Product\Product[] $products, string $locale)
  * @method \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValue[] getProductParameterValuesByParameter(\App\Model\Product\Parameter\Parameter $parameter)
  * @method \App\Model\Product\Parameter\Parameter|null findParameterByNames(string[] $namesByLocale)
+ * @method \App\Model\Product\Parameter\Parameter getByUuid(string $uuid)
+ * @method \App\Model\Product\Parameter\ParameterValue getParameterValueByUuid(string $uuid)
+ * @method \App\Model\Product\Parameter\Parameter[] getParametersByUuids(string[] $uuids)
+ * @method \App\Model\Product\Parameter\ParameterValue[] getParameterValuesByUuids(string[] $uuids)
  */
 class ParameterRepository extends BaseParameterRepository
 {
@@ -369,16 +373,26 @@ class ParameterRepository extends BaseParameterRepository
         }
 
         return $this->em->createQueryBuilder()
-            ->select('p.id as parameter_id, pv.id as parameter_value_id')
+            ->select(
+                'p.id as parameter_id,
+                pv.id as parameter_value_id,
+                p.uuid as parameter_uuid,
+                pt.name as parameter_name,
+                pv.uuid as parameter_value_uuid,
+                pv.text as parameter_value_text,
+                CASE WHEN pg.akeneoCode = :akeneoCodeDimensions THEN TRUE ELSE FALSE END as parameter_is_dimensional'
+            )
             ->distinct()
             ->from(ProductParameterValue::class, 'ppv')
             ->join('ppv.parameter', 'p')
             ->join('p.translations', 'pt', Join::WITH, 'pt.locale = :locale AND pt.name IS NOT NULL')
+            ->leftjoin('p.group', 'pg')
             ->join('ppv.value', 'pv', Join::WITH, 'pv.locale = :locale')
             ->where('ppv.product IN (:products)')
             ->setParameters([
                 'products' => $products,
                 'locale' => $locale,
+                'akeneoCodeDimensions' => ParameterGroup::AKENEO_CODE_DIMENSIONS,
             ])
             ->getQuery()
             ->execute();

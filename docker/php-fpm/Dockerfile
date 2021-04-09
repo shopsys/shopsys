@@ -1,4 +1,4 @@
-FROM pk16011990/shopsys-framework:9.0-dev5 as base
+FROM shopsys/ssfw-base-image:v9.1 as base
 
 USER www-data
 

@@ -28,7 +28,7 @@ use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 /**
  * @property \App\Model\Customer\User\CustomerUserDataFactory $customerUserDataFactory
  * @property \App\Model\Order\OrderFacade $orderFacade
- * @property \App\Component\Router\DomainRouterFactory $domainRouterFactory
+ * @property \Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory $domainRouterFactory
  * @method string getSsoLoginAsCustomerUserUrl(\App\Model\Customer\User\CustomerUser $customerUser)
  */
 class CustomerController extends BaseCustomerController
@@ -48,7 +48,7 @@ class CustomerController extends BaseCustomerController
      * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade $adminDomainTabsFacade
      * @param \App\Model\Order\OrderFacade $orderFacade
      * @param \Shopsys\FrameworkBundle\Model\Security\LoginAsUserFacade $loginAsUserFacade
-     * @param \App\Component\Router\DomainRouterFactory $domainRouterFactory
+     * @param \Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory $domainRouterFactory
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactoryInterface $customerUserUpdateDataFactory
      * @param \Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface $authorizationChecker
      */

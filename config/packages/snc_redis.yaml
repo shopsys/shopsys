@@ -6,30 +6,18 @@ snc_redis:
             dsn: 'redis://%redis_host%'
             options:
                 prefix: '%env(REDIS_PREFIX)%%build-version%:cache:bestselling_products:'
-        doctrine_metadata:
-            type: 'phpredis'
-            alias: 'doctrine_metadata'
-            dsn: 'redis://%redis_host%'
-            options:
-                prefix: '%env(REDIS_PREFIX)%%build-version%:cache:doctrine:metadata:'
         doctrine_query:
             type: 'phpredis'
             alias: 'doctrine_query'
             dsn: 'redis://%redis_host%'
             options:
                 prefix: '%env(REDIS_PREFIX)%%build-version%:cache:doctrine:query:'
-        framework_annotations:
+        main_friendly_url_slugs:
             type: 'phpredis'
-            alias: 'framework_annotations'
+            alias: 'main_friendly_url_slugs'
             dsn: 'redis://%redis_host%'
             options:
-                prefix: '%env(REDIS_PREFIX)%%build-version%:cache:framework:annotations:'
-        friendly_url:
-            type: 'phpredis'
-            alias: 'friendly_url'
-            dsn: 'redis://%redis_host%'
-            options:
-                prefix: '%env(REDIS_PREFIX)%%build-version%:cache:friendly_url:'
+                prefix: '%env(REDIS_PREFIX)%%build-version%:cache:main_friendly_url_slugs:'
         global:
             type: 'phpredis'
             alias: 'global'

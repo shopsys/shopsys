@@ -18,7 +18,6 @@ use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData;
 use Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainElasticFacade as BaseProductOnCurrentDomainElasticFacade;
-use Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery;
 use Shopsys\FrameworkBundle\Model\Product\Search\ProductFilterCountDataElasticsearchRepository;
 
 /**
@@ -38,7 +37,10 @@ use Shopsys\FrameworkBundle\Model\Product\Search\ProductFilterCountDataElasticse
  * @method \Shopsys\FrameworkBundle\Component\Paginator\PaginationResult getPaginatedProductsInCategory(\App\Model\Product\Filter\ProductFilterData $productFilterData, string $orderingModeId, int $page, int $limit, int $categoryId)
  * @method \App\Model\Product\Search\FilterQuery createFilterQueryWithProductFilterData(\App\Model\Product\Filter\ProductFilterData $productFilterData, string $orderingModeId, int $page, int $limit)
  * @method \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData getProductFilterCountDataInCategory(int $categoryId, \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig $productFilterConfig, \App\Model\Product\Filter\ProductFilterData $productFilterData)
+ * @method \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData getProductFilterCountDataForBrand(int $brandId, \App\Model\Product\Filter\ProductFilterData $productFilterData)
+ * @method \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData getProductFilterCountDataForAll(\App\Model\Product\Filter\ProductFilterData $productFilterData)
  * @method \App\Model\Product\Search\FilterQuery createListableProductsInCategoryFilterQuery(\App\Model\Product\Filter\ProductFilterData $productFilterData, string $orderingModeId, int $page, int $limit, int $categoryId)
+ * @method \App\Model\Product\Search\FilterQuery createListableProductsForSearchTextFilterQuery(\App\Model\Product\Filter\ProductFilterData $productFilterData, string $orderingModeId, int $page, int $limit, string|null $searchText)
  */
 class ProductOnCurrentDomainElasticFacade extends BaseProductOnCurrentDomainElasticFacade
 {
@@ -103,7 +105,7 @@ class ProductOnCurrentDomainElasticFacade extends BaseProductOnCurrentDomainElas
         int $categoryId,
         int $productId
     ): PaginationResult {
-        $filterQuery = $this->createListableProductsInCategoryFilterQuery($productFilterData, $orderingModeId, $page, $limit, $categoryId);
+        $filterQuery = $this->filterQueryFactory->createListableProductsByCategoryId($productFilterData, $orderingModeId, $page, $limit, $categoryId);
         /** @var \App\Model\Product\Search\FilterQuery $filterQuery */
         $filterQuery = $filterQuery->excludeProductByProductId($productId);
 
@@ -123,7 +125,7 @@ class ProductOnCurrentDomainElasticFacade extends BaseProductOnCurrentDomainElas
         int $page,
         int $limit
     ): PaginationResult {
-        $baseFilterQuery = $this->filterQueryFactory->create($this->getIndexName())
+        $baseFilterQuery = $this->filterQueryFactory->create($this->filterQueryFactory->getIndexName())
             ->filterOnlyInSale()
             ->setLimit($limit)
             ->setPage($page)
@@ -135,31 +137,6 @@ class ProductOnCurrentDomainElasticFacade extends BaseProductOnCurrentDomainElas
         $productsResult = $this->productElasticsearchRepository->getSortedProductsResultByFilterQuery($baseFilterQuery);
 
         return new PaginationResult($page, $limit, $productsResult->getTotal(), $productsResult->getHits());
-    }
-
-    /**
-     * @param \App\Model\Product\Filter\ProductFilterData $productFilterData
-     * @param string $orderingModeId
-     * @param int $page
-     * @param int $limit
-     * @param string|null $searchText
-     * @return \App\Model\Product\Search\FilterQuery
-     */
-    protected function createListableProductsForSearchTextFilterQuery(
-        ProductFilterData $productFilterData,
-        string $orderingModeId,
-        int $page,
-        int $limit,
-        ?string $searchText
-    ): FilterQuery {
-        $searchText = $searchText ?? '';
-
-        $filterQuery = $this->createFilterQueryWithProductFilterData($productFilterData, $orderingModeId, $page, $limit)
-            ->search($searchText);
-
-        $filterQuery->filterNotExcludeOrInStock();
-
-        return $filterQuery;
     }
 
     /**

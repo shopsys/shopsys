@@ -132,7 +132,7 @@ class ErrorController extends FrontBaseController
 
         return $this->render($this->getTemplatePath($code, $format), [
             'status_code' => $code,
-            'status_text' => isset(Response::$statusTexts[$code]) ? Response::$statusTexts[$code] : '',
+            'status_text' => Response::$statusTexts[$code] ?? '',
             'exception' => $exception,
             'logger' => $logger,
         ]);
@@ -225,7 +225,7 @@ class ErrorController extends FrontBaseController
         $url = $request->getSchemeAndHttpHost() . $request->getBasePath();
         $content = sprintf("You are trying to access an unknown domain '%s'.", $url);
 
-        if ($this->environment === EnvironmentType::TEST) {
+        if ($this->environment === EnvironmentType::ACCEPTANCE) {
             $overwriteDomainUrl = $this->getParameter('overwrite_domain_url');
             $content .= sprintf(" TEST environment is active, current domain url is '%s'.", $overwriteDomainUrl);
         }

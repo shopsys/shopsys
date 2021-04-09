@@ -127,17 +127,6 @@ services:
         tags:
             - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse }
 
-    Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig:
-        alias: App\Component\Image\Config\ImageConfig
-
-    Shopsys\FrameworkBundle\Component\Image\Config\ImageConfigLoader:
-        alias: App\Component\Image\Config\ImageConfigLoader
-
-    App\Component\Image\Config\ImageConfig:
-        factory: ['@App\Component\Image\Config\ImageConfigLoader', loadFromYaml]
-        arguments:
-            - '%shopsys.image_config_filepath%'
-
     Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade:
         alias: App\Component\UploadedFile\UploadedFileFacade
 
@@ -154,9 +143,6 @@ services:
         tags:
             - { name: kernel.event_listener, event: kernel.exception, method: onKernelException }
 
-    Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade:
-        class: App\Component\Router\FriendlyUrl\FriendlyUrlFacade
-
     Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFactory:
         class: App\Component\Router\FriendlyUrl\FriendlyUrlFactory
 
@@ -164,18 +150,6 @@ services:
 
     Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFactoryInterface:
         alias: App\Component\Router\FriendlyUrl\FriendlyUrlFactory
-
-    Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRepository:
-        alias: App\Component\Router\FriendlyUrl\FriendlyUrlRepository
-
-    shopsys.shop.component.friendly_url.cache_provider:
-        class: Doctrine\Common\Cache\RedisCache
-        calls:
-            - { method: setRedis, arguments: ['@snc_redis.friendly_url'] }
-
-    App\Component\Router\FriendlyUrl\FriendlyUrlCacheFacade:
-        arguments:
-            - '@shopsys.shop.component.friendly_url.cache_provider'
 
     App\Form\Front\Order\DomainAwareOrderFlowFactory: ~
 
@@ -584,7 +558,7 @@ services:
 
     App\Component\Form\FormBuilderHelper:
         arguments:
-            $disableFields: '%disable_form_fields_from_transfer%'
+            $disableFields: '%env(bool:DISABLE_FORM_FIELDS_FROM_TRANSFER)%'
 
     App\Model\Sitemap\SitemapListener:
         tags:
@@ -750,8 +724,13 @@ services:
     Shopsys\FrameworkBundle\Component\Image\ImageFacade:
         alias: App\Component\Image\ImageFacade
 
+    Shopsys\Cdn\Component\Image\ImageFacade:
+        alias: App\Component\Image\ImageFacade
+
     App\Component\Image\ImageFacade:
         arguments: ['%shopsys.image_url_prefix%']
+        calls:
+            - { method: setCdnDomain, arguments: [ '%env(CDN_DOMAIN)%' ] }
 
     Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRouterFactory:
         class: App\Component\Router\FriendlyUrl\FriendlyUrlRouterFactory
@@ -828,14 +807,6 @@ services:
     Shopsys\FrameworkBundle\Model\Product\Pricing\ProductInputPriceFacade:
         alias: App\Model\Product\Pricing\ProductInputPriceFacade
 
-    Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory:
-        alias: App\Component\Router\DomainRouterFactory
-
-    App\Component\Router\DomainRouterFactory:
-        arguments:
-            $routerConfiguration: '%router.resource%'
-            $cacheDir: '%kernel.cache_dir%'
-
     Shopsys\FrameworkBundle\Model\Feed\FeedFacade:
         alias: App\Model\Feed\FeedFacade
 
@@ -865,3 +836,9 @@ services:
     App\Model\Cart\CartMigrationFacade:
         tags:
             - { name: kernel.event_listener, event: kernel.controller, method: onKernelController }
+
+    Shopsys\ReadModelBundle\Product\Detail\ProductDetailViewFacadeInterface:
+        class: Shopsys\ReadModelBundle\Product\Detail\ProductDetailViewElasticsearchFacade
+
+    Shopsys\ReadModelBundle\Product\Detail\ProductDetailViewElasticsearchFactory:
+        alias: App\Model\Product\Detail\ProductDetailViewElasticsearchFactory

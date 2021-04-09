@@ -1,4 +1,0 @@
-Flag:
-    type: object
-    inherits:
-        - 'FlagDecorator'

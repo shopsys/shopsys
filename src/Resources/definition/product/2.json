@@ -229,6 +229,12 @@
       "brand": {
         "type": "integer"
       },
+      "brand_name": {
+        "type": "text"
+      },
+      "brand_url": {
+        "type": "text"
+      },
       "categories": {
         "type": "integer"
       },
@@ -258,6 +264,9 @@
           }
         }
       },
+      "non_selling_price_with_vat": {
+        "type": "float"
+      },
       "in_stock": {
         "type": "boolean"
       },
@@ -270,8 +279,23 @@
           "parameter_id": {
             "type": "integer"
           },
+          "parameter_uuid": {
+            "type": "keyword"
+          },
+          "parameter_name": {
+            "type": "text"
+          },
           "parameter_value_id": {
             "type": "integer"
+          },
+          "parameter_value_uuid": {
+            "type": "keyword"
+          },
+          "parameter_value_text": {
+            "type": "text"
+          },
+          "parameter_is_dimensional": {
+            "type": "boolean"
           }
         }
       },
@@ -286,6 +310,12 @@
       },
       "availability": {
         "type": "text"
+      },
+      "availability_status": {
+        "type": "text"
+      },
+      "is_variant": {
+        "type": "boolean"
       },
       "is_main_variant": {
         "type": "boolean"
@@ -305,7 +335,7 @@
         }
       },
       "uuid": {
-        "type": "text"
+        "type": "keyword"
       },
       "unit": {
         "type": "text"
@@ -316,11 +346,23 @@
       "stock_quantity": {
         "type": "integer"
       },
+      "has_preorder": {
+        "type": "boolean"
+      },
       "variants": {
         "type": "integer"
       },
       "main_variant_id": {
         "type": "integer"
+      },
+      "seo_h1": {
+        "type": "text"
+      },
+      "seo_title": {
+        "type": "text"
+      },
+      "seo_meta_description": {
+        "type": "text"
       },
       "is_sale_exclusion": {
         "type": "boolean"
@@ -330,6 +372,43 @@
       },
       "product_count_exposed_in_stores": {
         "type": "text"
+      },
+      "stock_availabilities_information": {
+        "type": "nested",
+        "properties": {
+          "stock_name": {
+            "type": "text"
+          },
+          "stock_id": {
+            "type": "integer"
+          },
+          "availability_information": {
+            "type": "text"
+          },
+          "exposed": {
+            "type": "boolean"
+          },
+          "availability_status": {
+            "type": "text"
+          }
+        }
+      },
+      "files": {
+        "type": "nested",
+        "properties": {
+          "anchor_text": {
+            "type": "text"
+          },
+          "url":{
+            "type": "text"
+          }
+        }
+      },
+      "usps": {
+        "type": "text"
+      },
+      "main_category_id": {
+        "type": "integer"
       },
       "main_category_path": {
         "type": "text"

@@ -1,4 +1,0 @@
-Money:
-    type: custom-scalar
-    inherits:
-        - 'MoneyDecorator'

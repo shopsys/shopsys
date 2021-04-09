@@ -10,13 +10,18 @@ use App\Model\Product\Flag\Flag;
 use App\Model\Product\ProductFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
+use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
+use Shopsys\FrameworkBundle\Model\Product\Pricing\PriceFactory;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\ProductCachedAttributesFacade;
 use Shopsys\ReadModelBundle\Image\ImageView;
+use Shopsys\ReadModelBundle\Image\ImageViewFacadeInterface;
 use Shopsys\ReadModelBundle\Product\Action\ProductActionView;
+use Shopsys\ReadModelBundle\Product\Action\ProductActionViewFacadeInterface;
+use Shopsys\ReadModelBundle\Product\Action\ProductActionViewFactory;
 use Shopsys\ReadModelBundle\Product\Listed\ListedProductView as BaseListedProductView;
 use Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFactory as BaseListedProductViewFactory;
 
@@ -43,15 +48,33 @@ class ListedProductViewFactory extends BaseListedProductViewFactory
      * @param \App\Model\Product\Availability\ProductAvailabilityFacade $productAvailabilityFacade
      * @param \App\Model\Category\CategoryFacade $categoryFacade
      * @param \App\Model\Product\ProductFacade $productFacade
+     * @param \Shopsys\ReadModelBundle\Image\ImageViewFacadeInterface $imageViewFacade
+     * @param \Shopsys\ReadModelBundle\Product\Action\ProductActionViewFacadeInterface $productActionViewFacade
+     * @param \Shopsys\ReadModelBundle\Product\Action\ProductActionViewFactory $productActionViewFactory
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
+     * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\PriceFactory $priceFactory
      */
     public function __construct(
         Domain $domain,
         ProductCachedAttributesFacade $productCachedAttributesFacade,
         ProductAvailabilityFacade $productAvailabilityFacade,
         CategoryFacade $categoryFacade,
-        ProductFacade $productFacade
+        ProductFacade $productFacade,
+        ImageViewFacadeInterface $imageViewFacade,
+        ProductActionViewFacadeInterface $productActionViewFacade,
+        ProductActionViewFactory $productActionViewFactory,
+        CurrentCustomerUser $currentCustomerUser,
+        PriceFactory $priceFactory
     ) {
-        parent::__construct($domain, $productCachedAttributesFacade);
+        parent::__construct(
+            $domain,
+            $productCachedAttributesFacade,
+            $imageViewFacade,
+            $productActionViewFacade,
+            $productActionViewFactory,
+            $currentCustomerUser,
+            $priceFactory
+        );
 
         $this->productAvailabilityFacade = $productAvailabilityFacade;
         $this->categoryFacade = $categoryFacade;
@@ -106,19 +129,48 @@ class ListedProductViewFactory extends BaseListedProductViewFactory
             $productArray['name'],
             $productArray['short_description'],
             $productArray['availability'],
-            $this->getProductPriceFromArrayByPricingGroup($productArray['prices'], $pricingGroup),
+            $this->priceFactory->createProductPriceFromArrayByPricingGroup($productArray['prices'], $pricingGroup),
             $productArray['flags'],
             $productActionView,
             $imageView,
             $productArray['name_prefix'],
             $productArray['name_sufix'],
-            $this->getProductPriceWithVatByMoney($productArray['non_selling_price'] === null ? Money::zero() : Money::create((string)$productArray['non_selling_price'])),
+            $this->getProductPriceWithVatByMoney($productArray['non_selling_price_with_vat'] === null ? Money::zero() : Money::create((string)$productArray['non_selling_price_with_vat'])),
             $productArray['product_available_stocks_count_information'],
             $productArray['product_count_exposed_in_stores'],
             $productArray['main_category_path'],
             array_key_exists('has_sconto_flag', $productArray) ? $productArray['has_sconto_flag'] : false,
             array_key_exists('is_available', $productArray) ? $productArray['is_available'] : true,
         );
+    }
+
+    /**
+     * @param \App\Model\Product\Product[] $products
+     * @return \App\Model\Product\Listed\ListedProductView[]
+     */
+    public function createFromProducts(array $products): array
+    {
+        $imageViews = $this->imageViewFacade->getMainImagesByEntityIds(
+            Product::class,
+            $this->getIdsForProducts($products)
+        );
+        $productActionViews = $this->productActionViewFacade->getForProducts($products);
+
+        $listedProductViews = [];
+        foreach ($products as $product) {
+            $productId = $product->getId();
+            if (!$this->productAvailabilityFacade->isProductExcludedOnDomain($product, $this->domain->getId())
+                && $this->productAvailabilityFacade->isProductAvailableOnDomainOrHasPreorder($product, $this->domain->getId())
+            ) {
+                $listedProductViews[$productId] = $this->createFromProduct(
+                    $product,
+                    $imageViews[$productId],
+                    $productActionViews[$productId]
+                );
+            }
+        }
+
+        return $listedProductViews;
     }
 
     /**

@@ -75,9 +75,15 @@ class CategoryDataFixture extends AbstractReferenceFixture
             $categoryData->descriptions[$domainConfig->getId()] = t('Our electronics include devices used for entertainment (flat screen TVs, DVD players, DVD movies, iPods, '
                 . 'video games, remote control cars, etc.), communications (telephones, cell phones, email-capable laptops, etc.) '
                 . 'and home office activities (e.g., desktop computers, printers, paper shredders, etc.).', [], 'dataFixtures', $locale);
+
+            $categoryData->seoH1s[$domainConfig->getId()] = t('Electronic devices', [], 'dataFixtures', $locale);
+            $categoryData->seoTitles[$domainConfig->getId()] = t('Electronic stuff', [], 'dataFixtures', $locale);
+            $categoryData->seoMetaDescriptions[$domainConfig->getId()] = t('All kind of electronic devices.', [], 'dataFixtures', $locale);
         }
         $categoryData->parent = $rootCategory;
         $this->createCategory($categoryData, self::CATEGORY_ELECTRONICS);
+
+        $categoryData = $this->categoryDataFactory->create();
 
         foreach ($this->domain->getAll() as $domainConfig) {
             $locale = $domainConfig->getLocale();

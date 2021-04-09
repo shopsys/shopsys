@@ -8,13 +8,11 @@
     <property name="path.vendor" value="${path.root}/vendor"/>
     <property name="path.framework" value="${path.vendor}/shopsys/framework"/>
     <property name="path.framework.assets" value="${path.root}/node_modules/@shopsys/framework"/>
-    <property name="path.frontend-api" value="${path.vendor}/shopsys/frontend-api"/>
 
     <property name="phpstan.level" value="5"/>
 
     <import file="${path.vendor}/devops/kubernetes-deployment/build.xml"/>
     <import file="${path.framework}/build.xml"/>
-    <import file="${path.frontend-api}/build.xml"/>
 
 
     <!-- Remove dependency `clean-redis-old` because old redis is used by live container during deployment. -->
@@ -228,7 +226,6 @@
                     <arg value="${path.bin-console}"/>
                     <arg value="app:extended-classes:annotations"/>
                     <arg value="--dry-run"/>
-                    <arg value="--env=test"/>
                 </exec>
             </then>
             <else>

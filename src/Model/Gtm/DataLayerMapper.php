@@ -15,6 +15,8 @@ use App\Model\Order\Item\OrderItem;
 use App\Model\Order\Order;
 use App\Model\Order\Preview\OrderPreview;
 use App\Model\Product\Availability\ProductAvailabilityFacade;
+use App\Model\Product\Detail\ProductDetailView;
+use App\Model\Product\Flag\Flag;
 use App\Model\Product\Listed\ListedProductView;
 use App\Model\Product\Product;
 use App\Model\Product\ProductCachedAttributesFacade;
@@ -23,12 +25,12 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Administrator\Security\AdministratorFrontSecurityFacade;
 use Shopsys\FrameworkBundle\Model\Security\Roles;
+use Shopsys\ReadModelBundle\Flag\FlagsProvider;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 class DataLayerMapper
 {
     private const PRICE_SCALE = 3;
-
     private const ROUTE_NAMES_TO_PAGE_TYPE = [
         'front_homepage' => DataLayerPage::TYPE_HOME,
         'front_article_detail' => DataLayerPage::TYPE_ARTICLE,
@@ -77,12 +79,18 @@ class DataLayerMapper
     private $productAvailabilityFacade;
 
     /**
+     * @var \Shopsys\ReadModelBundle\Flag\FlagsProvider
+     */
+    protected FlagsProvider $flagsProvider;
+
+    /**
      * @param \App\Model\Category\CategoryFacade $categoryFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface $authorizationChecker
      * @param \App\Model\Product\ProductCachedAttributesFacade $productCachedAttributesFacade
      * @param \App\Model\Administrator\Security\AdministratorFrontSecurityFacade $administratorFrontSecurityFacade
      * @param \App\Model\Product\Availability\ProductAvailabilityFacade $productAvailabilityFacade
+     * @param \Shopsys\ReadModelBundle\Flag\FlagsProvider $flagsProvider
      */
     public function __construct(
         CategoryFacade $categoryFacade,
@@ -90,7 +98,8 @@ class DataLayerMapper
         AuthorizationCheckerInterface $authorizationChecker,
         ProductCachedAttributesFacade $productCachedAttributesFacade,
         AdministratorFrontSecurityFacade $administratorFrontSecurityFacade,
-        ProductAvailabilityFacade $productAvailabilityFacade
+        ProductAvailabilityFacade $productAvailabilityFacade,
+        FlagsProvider $flagsProvider
     ) {
         $this->categoryFacade = $categoryFacade;
         $this->domain = $domain;
@@ -98,6 +107,7 @@ class DataLayerMapper
         $this->productCachedAttributesFacade = $productCachedAttributesFacade;
         $this->administratorFrontSecurityFacade = $administratorFrontSecurityFacade;
         $this->productAvailabilityFacade = $productAvailabilityFacade;
+        $this->flagsProvider = $flagsProvider;
     }
 
     /**
@@ -180,33 +190,15 @@ class DataLayerMapper
     }
 
     /**
-     * @param \App\Model\Product\Product $product
+     * @param \App\Model\Product\Detail\ProductDetailView $productDetailView
      * @param \App\Model\Gtm\Data\DataLayerPage $dataLayerPage
      * @param string $locale
      */
-    public function mapProductToDataLayerPage(Product $product, DataLayerPage $dataLayerPage, string $locale): void
+    public function mapProductDetailViewToDataLayerPage(ProductDetailView $productDetailView, DataLayerPage $dataLayerPage, string $locale): void
     {
-        /** @var \App\Model\Category\Category $productMainCategory */
-        $productMainCategory = $this->categoryFacade->getProductMainCategoryByDomainId($product, $this->domain->getId());
+        $productMainCategory = $this->categoryFacade->getById($productDetailView->getMainCategoryId());
 
         $this->mapCategoryToDataLayerPageCategory($productMainCategory, $dataLayerPage, $locale);
-    }
-
-    /**
-     * @param \App\Model\Product\Product[] $products
-     * @param string $locale
-     * @return \App\Model\Gtm\Data\DataLayerProduct[]
-     */
-    public function createDataLayerProductsFromProducts(array $products, string $locale): array
-    {
-        $dataLayerProducts = [];
-        foreach ($products as $product) {
-            $dataLayerProduct = new DataLayerProduct();
-            $this->mapProductToDataLayerProduct($product, $dataLayerProduct, $locale);
-            $dataLayerProducts[] = $dataLayerProduct;
-        }
-
-        return $dataLayerProducts;
     }
 
     /**
@@ -227,7 +219,6 @@ class DataLayerMapper
             $dataLayerProduct->setPriceWithTax($sellingPrice->getPriceWithVat()->getAmount());
         }
 
-        /** @var \App\Model\Category\Category $productMainCategory */
         $productMainCategory = $this->categoryFacade->getProductMainCategoryByDomainId($product, $this->domain->getId());
         $dataLayerProduct->setCategory($this->categoryFacade->getCategoriesNamesInPathAsString($productMainCategory, $locale));
         $dataLayerProduct->setAvailability(
@@ -237,10 +228,69 @@ class DataLayerMapper
             )
         );
 
-        $dataLayerProduct->setTags(array_map(function ($flag) use ($locale) {
-            /** @var \App\Model\Product\Flag\Flag $flag */
-            return $flag->getName($locale);
-        }, $product->getFlagsForDomain($this->domain->getId())));
+        $dataLayerProduct->setTags(
+            array_map(
+                static function (Flag $flag) use ($locale) {
+                    return $flag->getName($locale);
+                },
+                $product->getFlagsForDomain($this->domain->getId())
+            )
+        );
+    }
+
+    /**
+     * @param \App\Model\Product\Detail\ProductDetailView[] $productViews
+     * @param string $locale
+     * @return \App\Model\Gtm\Data\DataLayerProduct[]
+     */
+    public function createDataLayerProductsFromProductDetailViews(array $productViews, string $locale): array
+    {
+        $dataLayerProducts = [];
+        foreach ($productViews as $productView) {
+            $dataLayerProduct = new DataLayerProduct();
+            $this->mapProductDetailViewToDataLayerProduct($productView, $dataLayerProduct, $locale);
+            $dataLayerProducts[] = $dataLayerProduct;
+        }
+
+        return $dataLayerProducts;
+    }
+
+    /**
+     * @param \App\Model\Product\Detail\ProductDetailView $productView
+     * @param \App\Model\Gtm\Data\DataLayerProduct $dataLayerProduct
+     * @param string $locale
+     */
+    public function mapProductDetailViewToDataLayerProduct(ProductDetailView $productView, DataLayerProduct $dataLayerProduct, string $locale): void
+    {
+        $dataLayerProduct->setName($productView->fullname);
+        $dataLayerProduct->setId((string)$productView->getId());
+
+        $sellingPrice = $productView->getSellingPrice();
+
+        if ($sellingPrice !== null) {
+            $dataLayerProduct->setPrice($sellingPrice->getPriceWithoutVat()->getAmount());
+            $dataLayerProduct->setTax($sellingPrice->getVatAmount()->getAmount());
+            $dataLayerProduct->setPriceWithTax($sellingPrice->getPriceWithVat()->getAmount());
+        }
+
+        $dataLayerProduct->setCategory($productView->mainCategoryPath);
+        $dataLayerProduct->setAvailability($productView->getAvailability());
+        $dataLayerProduct->setTags($this->getFlagNamesFromIds($productView->getFlagIds(), $locale));
+    }
+
+    /**
+     * @param int[] $flagIds
+     * @param string $locale
+     * @return string[]
+     */
+    private function getFlagNamesFromIds(array $flagIds, string $locale): array
+    {
+        return array_map(
+            static function (Flag $flag) use ($locale) {
+                return $flag->getName($locale);
+            },
+            $this->flagsProvider->getFlagsByIds($flagIds)
+        );
     }
 
     /**

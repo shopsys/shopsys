@@ -1,6 +1,4 @@
 {% extends 'Front/Layout/layoutWithoutPanel.html.twig' %}
-{% import 'Front/Inline/Product/productFlagsMacro.html.twig' as productFlags %}
-{% import 'Front/Inline/Product/productFlagAsteriskMacro.html.twig' as asterisk %}
 {% import 'Front/Content/Product/productListMacro.html.twig' as productList %}
 {% import 'Front/Inline/Product/productDiscountMacro.html.twig' as discount %}
 
@@ -8,15 +6,15 @@
 {% set descriptionHeadline = 'Product information'|trans %}
 {% set parametersHeadline = 'Technical parameters'|trans %}
 {% set accessoriesHeadline = 'Accessories'|trans %}
-{% set sellingPriceWithVat = getProductSellingPrice(product).priceWithVat %}
-{% set nonSellingPriceWithVat = getProductNonSellingPrice(product).priceWithVat %}
+{% set sellingPriceWithVat = productView.sellingPrice.priceWithVat %}
+{% set nonSellingPriceWithVat = productView.nonSellingPriceWithVat %}
 
 {% block meta_description %}
-    {{- product.getSeoMetaDescription(domain.id)|default(getSeoMetaDescription()) -}}
+    {{- productView.seoMetaDescription -}}
 {% endblock %}
 
 {% block title %}
-    {{ product.getSeoTitle(domain.id)|default(product.fullname) }}
+    {{ productView.seoPageTitle }}
 {% endblock %}
 
 {% block breadcrumb %}
@@ -29,45 +27,44 @@
     <div itemscope itemtype="http://schema.org/Product">
         <div class="web__line">
             <div class="web__container">
-                {% set galleryImages = getImages(product) %}
-                {% set showGallery = galleryImages|length > 1 %}
+                {% set showGallery = productView.galleryImageViews|length > 1 %}
                 <div class="box-detail box-detail--primary{{ showGallery ? '' : ' box-detail--no-gallery' }}">
                     <h1 class="box-detail__heading" itemprop="name">
-                        <span class="box-detail__heading__prefix">{{ product.nameFirstLine }}</span>
-                        {{ product.nameSecondLine }}
+                        <span class="box-detail__heading__prefix">{{ productView.nameFirstLine }}</span>
+                        {{ productView.nameSecondLine }}
                     </h1>
                     <div class="box-detail__wrap">
                         <div class="box-detail__image">
                             <div class="box-detail__image__wrap js-main-image-carousel">
                                 <div class="box-detail__image__main js-gallery-wrap">
-                                    {% for galleryImage in galleryImages %}
+                                    {% for galleryImage in productView.galleryImageViews %}
                                         <div class="box-detail__image__main__item">
-                                            {% if imageExists(product) %}
+                                            {% if productView.mainImageView %}
                                                 <a
                                                     data-fancybox="products-gallery"
-                                                    data-caption="{{ product.name }}"
+                                                    data-caption="{{ productView.name }}"
                                                     href="{{ imageUrl(galleryImage, 'original') }}"
                                                     class="box-detail__image__main__item__link">
-                                                    {{ image(galleryImage, {lazy: false, alt: product.fullname ~ ' ' ~ loop.index}) }}
+                                                    {{ image(galleryImage, {lazy: false, alt: productView.fullname ~ ' ' ~ loop.index}) }}
                                                 </a>
                                             {% else %}
-                                                {{ noimage({ alt: product.fullname }) }}
+                                                {{ noimage({ alt: productView.fullname }) }}
                                             {% endif %}
                                         </div>
                                     {% endfor %}
                                 </div>
-                                {{ productFlags.list(product.getFlagsForDomain(domain.id)) }}
+                                {{ renderFlagsByIds(productView.flagIds) }}
                             </div>
 
                             {% if showGallery %}
-                                {% set galleryImagesCount = galleryImages|length %}
+                                {% set galleryImagesCount = productView.galleryImageViews|length %}
                                 <div class="box-gallery dont-print js-gallery{{ galleryImagesCount > 1 ? ' js-gallery-slick-carousel' }}">
                                     <div class="box-gallery__in{{ galleryImagesCount <= 4 ? ' box-gallery__in--centered' }} js-gallery-wrap">
-                                        {% for galleryImage in galleryImages %}
+                                        {% for galleryImage in productView.galleryImageViews %}
                                             <button class="box-gallery__item">
                                                 <span
                                                     class="box-gallery__item__link">
-                                                    {{ image(galleryImage, {size: 'galleryThumbnail', lazy: false, alt: product.fullname ~ ' ' ~ loop.index}) }}
+                                                    {{ image(galleryImage, {size: 'galleryThumbnail', lazy: false, alt: productView.fullname ~ ' ' ~ loop.index}) }}
                                                 </span>
                                             </button>
                                         {% endfor %}
@@ -78,13 +75,13 @@
                         <div class="box-detail__info">
                             {% apply spaceless %}
                                 <dl class="box-detail__info__params">
-                                    {% if not product.isMainVariant %}
-                                        {% if product.catnum %}
+                                    {% if not productView.isMainVariant %}
+                                        {% if productView.catnum %}
                                             <dt>
                                                 {{ 'č. produktu:'|trans }}
                                             </dt>
                                             <dd>
-                                                {{ product.catnum }}
+                                                {{ productView.catnum }}
                                             </dd>
                                         {% endif %}
                                     {% endif %}
@@ -93,14 +90,10 @@
 
                             <div class="box-detail__info__desc">
                                 <ul class="box-detail-list box-detail-list--columns">
-                                    {% for usp in 1..5 %}
-                                        {% set uspMethod = 'shortDescriptionUsp'~usp %}
-                                        {% set uspValue = attribute(product, uspMethod, [domain.id]) %}
-                                        {% if uspValue is not empty %}
-                                            <li class="box-detail-list__item">{{ uspValue }}</li>
-                                        {% endif %}
+                                    {% for usp in productView.usps %}
+                                        <li class="box-detail-list__item">{{ usp }}</li>
                                     {% endfor %}
-                                    {% if product.getDescription(domain.id)%}
+                                    {% if productView.description %}
                                         <li class="box-detail-list__item box-detail-list__item--anchor">
                                             <a class="box-detail__info__anchor js-smooth-scroll-anchor" href="#product-desc">
                                                 <span class="box-detail__info__anchor__underline">{{ 'Celý popis'|trans }}</span>
@@ -110,19 +103,19 @@
                                 </ul>
                             </div>
 
-                            <div class="box-detail__info__availability box-detail__info__availability--{{ productAvailabilityStatus }}">
+                            <div class="box-detail__info__availability box-detail__info__availability--{{ productView.availabilityStatus }}">
                                 <div class="box-detail__info__availability__value">
-                                    <span class="box-detail__avail box-detail__avail--{{ productAvailabilityStatus }}">{{ productAvailabilityInformation }}</span>
-                                    {% if productAvailabilityStatus == "in-stock" %}
-                                        {% if productAvailableStocksCountInformation is not empty %}
-                                            <span class="box-detail__avail__text">{{ productAvailableStocksCountInformation|raw }}</span>
+                                    <span class="box-detail__avail box-detail__avail--{{ productView.availabilityStatus }}">{{ productView.availability }}</span>
+                                    {% if productView.availabilityStatus == "in-stock" %}
+                                        {% if productView.availableStocksCountInformation is not empty %}
+                                            <span class="box-detail__avail__text">{{ productView.availableStocksCountInformation|raw }}</span>
                                         {% endif %}
-                                        {% if productCountExposedInStores is not empty %}
-                                            <span class="box-detail__avail__text">{{ productCountExposedInStores|raw }}</span>
+                                        {% if productView.countExposedInStores is not empty %}
+                                            <span class="box-detail__avail__text">{{ productView.countExposedInStores|raw }}</span>
                                         {% endif %}
                                     {% endif %}
-                                    <span class="box-detail__avail__icon box-detail__avail__icon--{{ productAvailabilityStatus }}">
-                                        {% if productAvailabilityStatus == "in-stock" %}
+                                    <span class="box-detail__avail__icon box-detail__avail__icon--{{ productView.availabilityStatus }}">
+                                        {% if productView.availabilityStatus == "in-stock" %}
                                             <picture>
                                                 <source
                                                     srcset="{{ asset('public/frontend/images/package-in-stock2x.png') }} 2x, {{ asset('public/frontend/images/package-in-stock.png') }} 1x"
@@ -149,7 +142,7 @@
                                         {% endif %}
                                     </span>
                                 </div>
-                                {% if productAvailabilityStatus != "out-of-stock" %}
+                                {% if productView.availabilityStatus != "out-of-stock" %}
                                     <div class="box-detail__info__availability__anchor">
                                         <a class="box-detail__info__anchor js-smooth-scroll-anchor" href="#stocks-availabilities">
                                             {{ 'Dostupnost'|trans }}
@@ -159,9 +152,9 @@
                                 {% endif %}
                             </div>
 
-                            {% if not product.isMainVariant %}
+                            {% if not productView.isMainVariant %}
                                 <div class="js-product-detail-main-add-to-cart-wrapper box-detail-add">
-                                     {% if not product.calculatedSaleExclusion(domain.id) %}
+                                     {% if productView.inStock %}
                                         <div class="box-detail-add__info">
                                             <div itemprop="offers"
                                                 itemscope
@@ -172,34 +165,34 @@
                                                     <div class="box-detail-add__prices__wrap">
                                                         <div class="box-detail-add__prices__item box-detail-add__prices__item--high-price">
                                                             {{ nonSellingPriceWithVat|price }}
-                                                            {{ asterisk.nonSellingPrice(product.getFlagsForDomain(domain.id)) }}
+                                                            {{ renderAsterisk(productView.flagIds, 'nonSellingPrice') }}
                                                         </div>
                                                         <div class="box-detail-add__prices__item box-detail-add__prices__item--main">
                                                             {{ sellingPriceWithVat|price }}
-                                                            {{ asterisk.sellingPrice(product.getFlagsForDomain(domain.id)) }}
+                                                            {{ renderAsterisk(productView.flagIds, 'sellingPrice') }}
                                                         </div>
                                                     </div>
                                                 {% else %}
                                                     <div class="box-detail-add__prices__item box-detail-add__prices__item--main">
                                                         {{ sellingPriceWithVat|price }}
-                                                        {{ asterisk.sellingPrice(product.getFlagsForDomain(domain.id)) }}
+                                                        {{ renderAsterisk(productView.flagIds, 'sellingPrice') }}
                                                     </div>
                                                 {% endif %}
                                                 <meta itemprop="priceCurrency"
                                                     content="{{ currencyCode(domain.id) }}"
                                                 >
                                                 <meta itemprop="price"
-                                                    content="{{ getProductSellingPrice(product).priceWithVat|moneyFormat }}"
+                                                    content="{{ productView.sellingPrice.priceWithVat|moneyFormat }}"
                                                 >
                                                 <link itemprop="availability"
-                                                    href="{{ product.calculatedSaleExclusion(domain.id) ? 'http://schema.org/OutOfStock' : 'http://schema.org/InStock' }}"
+                                                    href="{{ productView.isInStock ? 'http://schema.org/InStock' : 'http://schema.org/OutOfStock' }}"
                                                 >
                                             </div>
-                                            {{ render(controller('App\\Controller\\Front\\CartController:addProductFormAction', {product: product, type: 'large'})) }}
+                                            {{ render(controller('App\\Controller\\Front\\CartController:productActionAction', { productActionView: productView.actionView, type: 'large'} )) }}
                                         </div>
                                     {% else %}
                                         <div>
-                                            {{ 'This product is no longer available for purchase. Have a look at similar products <a href="%url%">here</a>.'|transHtml({"%url%": url('front_product_list', { id: productMainCategory.id })}) }}
+                                            {{ 'This product is no longer available for purchase. Have a look at similar products <a href="%url%">here</a>.'|transHtml({"%url%": url('front_product_list', { id: productView.mainCategoryId })}) }}
                                         </div>
                                     {% endif %}
                                 </div>
@@ -211,8 +204,8 @@
         </div>
         <div class="web__line">
             <div class="web__container">
-                {% if product.isMainVariant and not product.calculatedSellingDenied %}
-                    <table {% if getProductSellingPrice(product) is not null %}itemprop="offers"
+                {% if productView.isMainVariant and not productView.isSellingDenied %}
+                    <table {% if productView.sellingPrice is not null %}itemprop="offers"
                         itemscope
                         itemtype="http://schema.org/AggregateOffer" {% endif %}
                         class="table-variants"
@@ -224,15 +217,15 @@
                                 <th class="table-variants__cell">{{ 'Availability'|trans }}</th>
                                 <th class="table-variants__cell table-variants__cell--price">
                                     {{ 'Price including VAT'|trans }}
-                                    {% if getProductSellingPrice(product) is not null %}
+                                    {% if productView.sellingPrice is not null %}
                                         <meta itemprop="priceCurrency"
                                             content="{{ currencyCode(domain.id) }}"
                                         >
                                         <meta itemprop="lowPrice"
-                                            content="{{ getProductSellingPrice(product).priceWithVat|moneyFormat }}"
+                                            content="{{ productView.sellingPrice.priceWithVat|moneyFormat }}"
                                         >
                                         <link itemprop="availability"
-                                            href="{{ product.calculatedSellingDenied ? 'http://schema.org/OutOfStock' : 'http://schema.org/InStock' }}"
+                                            href="{{ productView.isSellingDenied ? 'http://schema.org/OutOfStock' : 'http://schema.org/InStock' }}"
                                         >
                                     {% endif %}
                                 </th>
@@ -240,13 +233,13 @@
                             </tr>
                         </thead>
                         <tbody>
-                            {% for variant in variants %}
+                            {% for variant in productView.variants %}
                                 <tr class="table-variants__row">
                                     <td class="table-variants__cell table-variants__cell--image">
                                         <div class="table-variants__cell__image">
-                                            {% if imageExists(variant) %}
-                                                <a href="{{ imageUrl(variant, 'original') }}" class="js-popup-image">
-                                                    {{ image(variant, { size: 'thumbnail' }) }}
+                                            {% if variant.image %}
+                                                <a href="{{ imageUrl(variant.image, 'original') }}" class="js-popup-image">
+                                                    {{ image(variant.image, { size: 'thumbnail' }) }}
                                                 </a>
                                             {% else %}
                                                 {{ noimage() }}
@@ -254,11 +247,7 @@
                                         </div>
                                     </td>
                                     <td class="table-variants__cell table-variants__cell--name">
-                                        {% if variant.variantAlias is not null %}
-                                            {{ variant.variantAlias }}
-                                        {% else %}
-                                            {{ variant.name }}
-                                        {% endif %}
+                                        {{ variant.name }}
                                     </td>
                                     <td class="table-variants__cell">
                                         <span class="js-not-implemented-yet">
@@ -270,10 +259,10 @@
                                         </span>
                                     </td>
                                     <td class="table-variants__cell table-variants__cell--price">
-                                        {{ getProductSellingPrice(variant).priceWithVat|price }}
+                                        {{ variant.sellingPrice.priceWithVat|price }}
                                     </td>
                                     <td class="table-variants__cell table-variants__cell--action">
-                                        {{ render(controller('App\\Controller\\Front\\CartController:addProductFormAction', {product: variant})) }}
+                                        {{ render(controller('App\\Controller\\Front\\CartController:productActionAction', {productActionView: variant.action})) }}
                                     </td>
                                 </tr>
                             {% endfor %}
@@ -281,9 +270,9 @@
                     </table>
                 {% endif %}
 
-                {% set parameterValuesViewsData = getProductNonDimensionParameterValuesViewsData(product) %}
+                {% set parameterValuesViewsData = productView.nonDimensionParameterViews %}
 
-                {% if product.getDescription(domain.id)%}
+                {% if productView.description %}
                     <div class="box-accordion js-accordion js-accordion-closed-on-mobile is-opened" id="product-desc">
                         <a class="box-accordion__header js-accordion-header" href="#">
                             <strong class="box-accordion__heading">{{ 'Popis a parametry'|trans }}</strong>
@@ -300,7 +289,7 @@
                         </a>
                         <div class="box-accordion__body{% if parameterValuesViewsData > 0 %} box-accordion__body--cols{% endif %} js-accordion-body">
                             <div class="box-accordion__body__content box-accordion__body__content--desc">
-                                {{ product.getDescription(domain.id)|raw }}
+                                {{ productView.description|raw }}
                             </div>
                             {% if parameterValuesViewsData > 0 %}
                                 <div class="box-accordion__body__content box-accordion__body__content--params">
@@ -336,8 +325,8 @@
                     </div>
                 {% endif %}
 
-                {% set dimensionParameterValuesViewsData = getProductDimensionParameterValuesViewsData(product) %}
-                {% if existProductImageByAkeneoType(product, 'image_dimensions') or dimensionParameterValuesViewsData|length > 0 %}
+                {% set dimensionParameterValuesViewsData = productView.dimensionParameterViews %}
+                {% if existProductImageByIdAndAkeneoType(productView.id, 'image_dimensions') or dimensionParameterValuesViewsData|length > 0 %}
                     <div class="box-accordion js-accordion">
                         <a class="box-accordion__header js-accordion-header" href="#">
                             <strong class="box-accordion__heading">{{ 'Rozměry'|trans }}</strong>
@@ -370,12 +359,12 @@
                                     </tbody>
                                 </table>
                             </div>
-                            <div class="box-accordion__body__content box-accordion__body__content--img">{{ productImageByAkeneoType(product, 'image_dimensions', { itemprop: 'image', alt: 'Rozměry'|trans }) }}</div>
+                            <div class="box-accordion__body__content box-accordion__body__content--img">{{ productImageByIdAndAkeneoType(productView.id, 'image_dimensions', { itemprop: 'image', alt: 'Rozměry'|trans }) }}</div>
                         </div>
                     </div>
                 {% endif %}
 
-                {% if downloadFiles|length > 0 %}
+                {% if productView.productFileViews|length > 0 %}
                     <div class="box-accordion js-accordion">
                         <a class="box-accordion__header js-accordion-header" href="#">
                             <strong class="box-accordion__heading">{{ 'Ke stažení'|trans }}</strong>
@@ -392,9 +381,9 @@
                         </a>
                         <div class="box-accordion__body box-accordion__body--cols js-accordion-body">
                             <div class="box-detail-files">
-                                {% for downloadFile in downloadFiles %}
-                                    <a target="_blank" class="box-detail-files__item" href="{{ downloadFile['url'] }}">
-                                        <span class="box-detail-files__item__name">{{ downloadFile['anchor_text']|trans }}</span>
+                                {% for productFileView in productView.productFileViews %}
+                                    <a target="_blank" class="box-detail-files__item" href="{{ productFileView.url }}">
+                                        <span class="box-detail-files__item__name">{{ productFileView.anchorText|trans }}</span>
                                         <span class="box-detail-files__item__download">
                                             {{ 'Stáhnout'|trans }}<i class="box-detail-files__item__download__icon svg svg-download"></i>
                                         </span>
@@ -405,7 +394,7 @@
                     </div>
                 {% endif %}
 
-                {% if productStocksAvailabilitiesInformation|length > 0 %}
+                {% if productView.stocksAvailabilitiesInformation|length > 0 %}
                     <div class="box-accordion box-accordion--opened js-accordion js-accordion-mobile" id="stocks-availabilities">
                         <div class="box-accordion__header box-accordion__header--with-desc">
                             <strong class="box-accordion__heading">{{ 'Dostupnost na prodejnách'|trans }}</strong>
@@ -416,7 +405,7 @@
                         <div class="box-accordion__body box-accordion__body--no-spacing">
                             <div class="box-accordion__grid-table box-accordion__grid-table--mobile-accords">
                                 <div class="box-accordion__grid-table__body">
-                                {% for productStockAvailabilityInformation in productStocksAvailabilitiesInformation %}
+                                {% for productStockAvailabilityInformation in productView.stocksAvailabilitiesInformation %}
                                     <div class="box-accordion__grid-table__row">
                                         <div class="box-accordion__grid-table__col box-accordion__grid-table__col--mobile-accord-header js-accordion-mobile-header">
                                             <strong class="box-accordion__grid-table__title">{{ productStockAvailabilityInformation.stockName }}</strong>
@@ -485,31 +474,31 @@
                     </div>
                 {% endif %}
 
-                {% if accessories|length > 0 %}
+                {% if productView.accessories|length > 0 %}
                     <div class="box-detail box-detail--accessories gtm-scroll" data-gtm-event="{{ gtmAccessoriesScrollEvent|json_encode() }}">
                         <h2 class="box-detail__title">{{ 'Můžete si dokoupit'|trans }}</h2>
                         <div class="box-products-accessories js-products-slick-carousel-cols">
-                            {{ productList.list(accessories, null, null, constant('App\\Model\\Gtm\\DataLayer::LIST_NAME_PRODUCT_ACCESSORIES')) }}
+                            {{ productList.list(productView.accessories, null, null, constant('App\\Model\\Gtm\\DataLayer::LIST_NAME_PRODUCT_ACCESSORIES')) }}
                         </div>
                     </div>
                 {% endif %}
 
-                {% cache 'products_similar_id_' ~ product.id {lifetime:60*60, domainId:getDomain().id} %}
-                    {{ render(controller('App\\Controller\\Front\\ProductController:similarProductsAction', {id: product.id} ))|spaceless }}
+                {% cache 'products_similar_id_' ~ productView.id {lifetime:60*60, domainId:getDomain().id} %}
+                    {{ render(controller('App\\Controller\\Front\\ProductController:similarProductsAction', {id: productView.id} ))|spaceless }}
                 {% endcache %}
             </div>
         </div>
 
-        {% if categoryList %}
+        {% if productView.categoryViews %}
             <div class="web__line web__line--spacing--big">
                 <div class="web__container">
                     <div class="box-detail-cats">
                         <h2 class="box-detail-cats__heading">{{ 'Zařazeno v kategoriích:'|trans }}</h2>
                         <div class="box-detail-cats__wrap">
-                            {% for category in categoryList %}
-                                <a class="box-detail-cats__item" href="{{ url('front_product_list', { id: category.id }) }}">
-                                    <img class="box-detail-cats__item__icon" loading="lazy" data-src="{{ asset('public/frontend/images/category_icon.svg') }}" alt="{{ category.name }}">
-                                    {{ category.name }}
+                            {% for categoryView in productView.categoryViews %}
+                                <a class="box-detail-cats__item" href="{{ categoryView.url }}">
+                                    <img class="box-detail-cats__item__icon" loading="lazy" data-src="{{ asset('public/frontend/images/category_icon.svg') }}" alt="{{ categoryView.name }}">
+                                    {{ categoryView.name }}
                                 </a>
                             {% endfor %}
                         </div>

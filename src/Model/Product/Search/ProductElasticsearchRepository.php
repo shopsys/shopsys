@@ -14,6 +14,7 @@ use Shopsys\FrameworkBundle\Model\Product\Search\ProductElasticsearchRepository 
  * @method \Shopsys\FrameworkBundle\Model\Product\Search\ProductIdsResult getSortedProductIdsByFilterQuery(\App\Model\Product\Search\FilterQuery $filterQuery)
  * @method \Shopsys\FrameworkBundle\Model\Product\Search\ProductsResult getSortedProductsResultByFilterQuery(\App\Model\Product\Search\FilterQuery $filterQuery)
  * @method int getProductsCountByFilterQuery(\App\Model\Product\Search\FilterQuery $filterQuery)
+ * @method array getProductsByFilterQuery(\App\Model\Product\Search\FilterQuery $filterQuery)
  */
 class ProductElasticsearchRepository extends BaseProductElasticsearchRepository
 {

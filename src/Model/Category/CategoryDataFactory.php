@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace App\Model\Category;
 
-use App\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use App\Model\Category\LinkedCategory\LinkedCategory;
 use App\Model\Category\LinkedCategory\LinkedCategoryRepository;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
 use Shopsys\FrameworkBundle\Component\Plugin\PluginCrudExtensionFacade;
+use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use Shopsys\FrameworkBundle\Model\Category\Category as BaseCategory;
 use Shopsys\FrameworkBundle\Model\Category\CategoryData as BaseCategoryData;
 use Shopsys\FrameworkBundle\Model\Category\CategoryDataFactory as BaseCategoryDataFactory;
@@ -29,7 +29,7 @@ class CategoryDataFactory extends BaseCategoryDataFactory
     /**
      * @param \App\Model\Category\CategoryRepository $categoryRepository
      * @param \App\Model\Category\CategoryParameterRepository $categoryParameterRepository
-     * @param \App\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
+     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
      * @param \Shopsys\FrameworkBundle\Component\Plugin\PluginCrudExtensionFacade $pluginCrudExtensionFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \App\Component\Image\ImageFacade $imageFacade

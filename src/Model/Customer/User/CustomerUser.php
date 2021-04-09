@@ -31,12 +31,9 @@ class CustomerUser extends BaseUser
     /**
      * @param \App\Model\Customer\User\CustomerUserData $customerUserData
      */
-    public function __construct(
-        BaseUserData $customerUserData
-    ) {
+    public function __construct(BaseUserData $customerUserData)
+    {
         parent::__construct($customerUserData);
-
-        $this->newsletterSubscription = $customerUserData->newsletterSubscription;
     }
 
     /**
@@ -45,6 +42,14 @@ class CustomerUser extends BaseUser
     public function edit(BaseUserData $customerUserData)
     {
         parent::edit($customerUserData);
+    }
+
+    /**
+     * @param \App\Model\Customer\User\CustomerUserData $customerUserData
+     */
+    protected function setData(BaseUserData $customerUserData): void
+    {
+        parent::setData($customerUserData);
 
         $this->newsletterSubscription = $customerUserData->newsletterSubscription;
     }
@@ -55,14 +60,6 @@ class CustomerUser extends BaseUser
     public function isNewsletterSubscription(): bool
     {
         return $this->newsletterSubscription;
-    }
-
-    /**
-     * @param \App\Model\Customer\User\CustomerUserData $customerUserData
-     */
-    protected function setData(BaseUserData $customerUserData): void
-    {
-        parent::setData($customerUserData);
     }
 
     /**
