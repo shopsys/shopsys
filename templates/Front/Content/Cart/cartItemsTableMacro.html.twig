@@ -50,7 +50,9 @@
                         {% if product.namePrefix is not empty %}
                             <span class="table-cart__cell__product-name__prefix">{{ product.namePrefix }}</span>
                         {% endif %}
-                        {{ product.name }}
+                        <span class="js-cart-item-name-text">
+                            {{ product.name }}
+                        </span>
                     </a>
                     <div class="table-cart__cell__price-mobile">
                         {{ cartItemPrice.totalPrice.priceWithVat|price }}

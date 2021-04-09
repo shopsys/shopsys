@@ -10,26 +10,41 @@ use Tests\FrameworkBundle\Test\Codeception\FrontCheckbox;
 
 class RegistrationPage extends AbstractPage
 {
+    private const MINIMUM_FORM_SUBMIT_WAIT_TIME = 10;
+
     /**
      * @param string $firstName
      * @param string $lastName
      * @param string $email
      * @param string $firstPassword
      * @param string $secondPassword
+     * @param string $street
+     * @param string $city
+     * @param string $postcode
+     * @param string $telephone
      */
-    public function register($firstName, $lastName, $email, $firstPassword, $secondPassword)
-    {
-        $this->tester->fillFieldByName('registration_form[firstName]', $firstName);
-        $this->tester->fillFieldByName('registration_form[lastName]', $lastName);
-        $this->tester->fillFieldByName('registration_form[email]', $email);
-        $this->tester->fillFieldByName('registration_form[password][first]', $firstPassword);
-        $this->tester->fillFieldByName('registration_form[password][second]', $secondPassword);
-
-        $frontCheckboxClicker = FrontCheckbox::createByCss(
-            $this->tester,
-            '#registration_form_privacyPolicy'
+    public function register(
+        string $firstName,
+        string $lastName,
+        string $email,
+        string $firstPassword,
+        string $secondPassword,
+        string $street,
+        string $city,
+        string $postcode,
+        string $telephone
+    ): void {
+        $this->fillRegistrationForm(
+            $firstName,
+            $lastName,
+            $email,
+            $firstPassword,
+            $secondPassword,
+            $street,
+            $city,
+            $postcode,
+            $telephone
         );
-        $frontCheckboxClicker->check();
 
         $this->tester->wait(TimedFormTypeExtension::MINIMUM_FORM_FILLING_SECONDS);
         $this->tester->clickByName('registration_form[save]');
@@ -63,5 +78,50 @@ class RegistrationPage extends AbstractPage
         $this->tester->moveMouseOverByCss($fieldClass);
 
         $this->tester->seeTranslationFrontend($text, 'validators');
+    }
+
+    public function checkRegistrationSuccessful(): void
+    {
+        $this->tester->wait(self::MINIMUM_FORM_SUBMIT_WAIT_TIME);
+        $this->tester->seeTranslationFrontend('You have been successfully registered.');
+    }
+
+    /**
+     * @param string $firstName
+     * @param string $lastName
+     * @param string $email
+     * @param string $firstPassword
+     * @param string $secondPassword
+     * @param string $street
+     * @param string $city
+     * @param string $postcode
+     * @param string $telephone
+     */
+    public function fillRegistrationForm(
+        string $firstName,
+        string $lastName,
+        string $email,
+        string $firstPassword,
+        string $secondPassword,
+        string $street,
+        string $city,
+        string $postcode,
+        string $telephone
+    ): void {
+        $this->tester->fillFieldByName('registration_form[firstName]', $firstName);
+        $this->tester->fillFieldByName('registration_form[lastName]', $lastName);
+        $this->tester->fillFieldByName('registration_form[email]', $email);
+        $this->tester->fillFieldByName('registration_form[password][first]', $firstPassword);
+        $this->tester->fillFieldByName('registration_form[password][second]', $secondPassword);
+        $this->tester->fillFieldByName('registration_form[street]', $street);
+        $this->tester->fillFieldByName('registration_form[city]', $city);
+        $this->tester->fillFieldByName('registration_form[postcode]', $postcode);
+        $this->tester->fillFieldByName('registration_form[telephone]', $telephone);
+
+        $frontCheckboxClicker = FrontCheckbox::createByCss(
+            $this->tester,
+            '#registration_form_privacyPolicy'
+        );
+        $frontCheckboxClicker->check();
     }
 }

@@ -10,12 +10,11 @@ use Facebook\WebDriver\WebDriverKeys;
 use Tests\App\Acceptance\acceptance\PageObject\AbstractPage;
 use Tests\App\Test\Codeception\AcceptanceTester;
 use Tests\App\Test\Codeception\Module\StrictWebDriver;
-use Tests\FrameworkBundle\Test\Codeception\FrontCheckbox;
 
 class ProductFilterPage extends AbstractPage
 {
     // Product filter waits for more requests before evaluation
-    protected const PRE_EVALUATION_WAIT = 2;
+    private const PRE_EVALUATION_WAIT = 2;
 
     /**
      * @param \Tests\App\Test\Codeception\Module\StrictWebDriver $strictWebDriver
@@ -51,11 +50,8 @@ class ProductFilterPage extends AbstractPage
      */
     public function filterByBrand($brandPosition)
     {
-        $frontCheckboxClicker = FrontCheckbox::createByCss(
-            $this->tester,
-            '#product_filter_form_brands_' . $brandPosition
-        );
-        $frontCheckboxClicker->check();
+        $this->tester->clickByCss('label[for=product_filter_form_brands_' . $brandPosition . ']');
+
         $this->waitForFilter();
     }
 
@@ -67,7 +63,7 @@ class ProductFilterPage extends AbstractPage
     {
         $parameterElement = $this->findParameterElementByLabel($parameterLabel);
         $labelElement = $this->getLabelElementByParameterValueText($parameterElement, $valueLabel);
-        $labelElement->click();
+        $this->tester->clickByElement($labelElement);
         $this->waitForFilter();
     }
 
@@ -100,7 +96,12 @@ class ProductFilterPage extends AbstractPage
             }
         }
 
-        $message = sprintf('Unable to find parameter with label "%s" (translated to "%s") in product filter.', $parameterLabel, $translatedParameterLabel);
+        $message = sprintf(
+            'Unable to find parameter with label "%s" (translated to "%s") in product filter.',
+            $parameterLabel,
+            $translatedParameterLabel
+        );
+
         throw new NoSuchElementException($message);
     }
 
@@ -112,10 +113,13 @@ class ProductFilterPage extends AbstractPage
     private function getLabelElementByParameterValueText($parameterElement, $parameterValueText)
     {
         $translatedParameterValueText = t($parameterValueText, [], 'dataFixtures', $this->tester->getFrontendLocale());
-        $labelElements = $parameterElement->findElements(WebDriverBy::cssSelector('.js-product-filter-parameter-value'));
+        $parameterValueDivs = $parameterElement->findElements(
+            WebDriverBy::cssSelector('.js-product-filter-parameter-value')
+        );
 
-        foreach ($labelElements as $labelElement) {
+        foreach ($parameterValueDivs as $parameterValueDiv) {
             try {
+                $labelElement = $parameterValueDiv->findElement(WebDriverBy::cssSelector('label'));
                 if (stripos($labelElement->getText(), $translatedParameterValueText) !== false) {
                     return $labelElement;
                 }
@@ -124,7 +128,12 @@ class ProductFilterPage extends AbstractPage
             }
         }
 
-        $message = sprintf('Unable to find parameter value with label "%s" (translated to %s) in product filter.', $parameterValueText, $translatedParameterValueText);
+        $message = sprintf(
+            'Unable to find parameter value with label "%s" (translated to %s) in product filter.',
+            $parameterValueText,
+            $translatedParameterValueText
+        );
+
         throw new NoSuchElementException($message);
     }
 }

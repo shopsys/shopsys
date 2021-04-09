@@ -7,6 +7,7 @@ namespace Tests\App\Acceptance\acceptance;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Script\ScriptFacade;
 use Tests\App\Acceptance\acceptance\PageObject\Front\LayoutPage;
+use Tests\App\Acceptance\acceptance\PageObject\Front\LoginPage;
 use Tests\App\Acceptance\acceptance\PageObject\Front\OrderPage;
 use Tests\App\Acceptance\acceptance\PageObject\Front\ProductListPage;
 use Tests\App\Acceptance\acceptance\PageObject\Front\RegistrationPage;
@@ -15,9 +16,18 @@ use Tests\App\Test\Codeception\Helper\SymfonyHelper;
 
 class OrderCest
 {
-    protected const MINIMUM_FORM_SUBMIT_WAIT_TIME = 10;
-    private const TRANSPORT_CZECH_POST_POSITION = 0;
+    private const TRANSPORT_CZECH_POST_POSITION = 1;
     private const PAYMENT_CACHE_ON_DELIVERY = 1;
+
+    private const DEFAULT_TRANSPORT_NAME = 'Czech post';
+    private const DEFAULT_PAYMENT_NAME = 'Cash on delivery';
+    private const DEFAULT_PRODUCT_NAME = 'Defender 2.0 SPK-480';
+
+    private const DEFAULT_BILLING_STREET = 'Koksární 10';
+    private const DEFAULT_BILLING_CITY = 'Ostrava';
+    private const DEFAULT_BILLING_POSTCODE = '70200';
+    private const DEFAULT_PHONE = '123456789';
+    public const DEFAULT_EMAIL = 'no-reply@example.com';
 
     /**
      * @param \Tests\App\Acceptance\acceptance\PageObject\Front\ProductListPage $productListPage
@@ -33,22 +43,23 @@ class OrderCest
 
         // tv-audio
         $me->amOnLocalizedRoute('front_product_list', ['id' => 3]);
-        $productListPage->addProductToCartByName('Defender 2.0 SPK-480');
-        $me->waitForAjax();
+        $productListPage->addProductToCartByName(self::DEFAULT_PRODUCT_NAME);
+
         $orderPage->clickGoToCartInPopUpWindow();
-        $me->clickByTranslationFrontend('Order [verb]');
 
-        $orderPage->assertTransportIsNotSelected('Czech post');
+        $orderPage->continueToSecondStep();
+
+        $orderPage->assertTransportIsNotSelected(self::DEFAULT_TRANSPORT_NAME);
         $orderPage->selectTransport(self::TRANSPORT_CZECH_POST_POSITION);
-        $me->waitForAjax();
-        $orderPage->assertPaymentIsNotSelected('Cash on delivery');
+        $orderPage->assertPaymentIsNotSelected(self::DEFAULT_PAYMENT_NAME);
         $orderPage->selectPayment(self::PAYMENT_CACHE_ON_DELIVERY);
-        $me->waitForAjax();
-        $me->clickByTranslationFrontend('Continue in order');
-        $me->clickByTranslationFrontend('Back to shipping and payment selection');
 
-        $orderPage->assertTransportIsSelected('Czech post');
-        $orderPage->assertPaymentIsSelected('Cash on delivery');
+        $orderPage->continueToThirdStep();
+
+        $orderPage->goBackToSecondStep();
+
+        $orderPage->assertTransportIsSelected(self::DEFAULT_TRANSPORT_NAME);
+        $orderPage->assertPaymentIsSelected(self::DEFAULT_PAYMENT_NAME);
     }
 
     /**
@@ -65,21 +76,19 @@ class OrderCest
 
         // tv-audio
         $me->amOnLocalizedRoute('front_product_list', ['id' => 3]);
-        $productListPage->addProductToCartByName('Defender 2.0 SPK-480');
+        $productListPage->addProductToCartByName(self::DEFAULT_PRODUCT_NAME);
         $orderPage->clickGoToCartInPopUpWindow();
-        $me->clickByTranslationFrontend('Order [verb]');
+        $orderPage->continueToSecondStep();
 
-        $orderPage->assertTransportIsNotSelected('Czech post');
+        $orderPage->assertTransportIsNotSelected(self::DEFAULT_TRANSPORT_NAME);
         $orderPage->selectTransport(self::TRANSPORT_CZECH_POST_POSITION);
-        $me->waitForAjax();
-        $orderPage->assertPaymentIsNotSelected('Cash on delivery');
+        $orderPage->assertPaymentIsNotSelected(self::DEFAULT_PAYMENT_NAME);
         $orderPage->selectPayment(self::PAYMENT_CACHE_ON_DELIVERY);
-        $me->waitForAjax();
-        $me->clickByTranslationFrontend('Continue in order');
-        $me->amOnLocalizedRoute('front_order_index');
+        $orderPage->continueToThirdStep();
 
-        $orderPage->assertTransportIsSelected('Czech post');
-        $orderPage->assertPaymentIsSelected('Cash on delivery');
+        $me->amOnLocalizedRoute('front_order_index');
+        $orderPage->assertTransportIsSelected(self::DEFAULT_TRANSPORT_NAME);
+        $orderPage->assertPaymentIsSelected(self::DEFAULT_PAYMENT_NAME);
     }
 
     /**
@@ -93,19 +102,20 @@ class OrderCest
 
         // tv-audio
         $me->amOnLocalizedRoute('front_product_list', ['id' => 3]);
-        $productListPage->addProductToCartByName('Defender 2.0 SPK-480');
+        $productListPage->addProductToCartByName(self::DEFAULT_PRODUCT_NAME);
         $orderPage->clickGoToCartInPopUpWindow();
-        $me->clickByTranslationFrontend('Order [verb]');
-        $orderPage->selectTransport(self::TRANSPORT_CZECH_POST_POSITION);
-        $me->waitForAjax();
-        $orderPage->selectPayment(self::PAYMENT_CACHE_ON_DELIVERY);
-        $me->waitForAjax();
-        $me->clickByTranslationFrontend('Continue in order');
+        $orderPage->continueToSecondStep();
 
+        $orderPage->selectTransport(self::TRANSPORT_CZECH_POST_POSITION);
+        $orderPage->selectPayment(self::PAYMENT_CACHE_ON_DELIVERY);
+        $orderPage->continueToThirdStep();
+
+        $orderPage->fillEmail(self::DEFAULT_EMAIL);
         $orderPage->fillFirstName('Jan');
-        $me->clickByTranslationFrontend('Back to shipping and payment selection');
+        $orderPage->goBackToSecondStep();
+
         $me->amOnLocalizedRoute('front_order_index');
-        $me->clickByTranslationFrontend('Continue in order');
+        $orderPage->continueToThirdStep();
 
         $orderPage->assertFirstNameIsFilled('Jan');
     }
@@ -151,23 +161,24 @@ class OrderCest
     ) {
         // tv-audio
         $me->amOnLocalizedRoute('front_product_list', ['id' => 3]);
-        $productListPage->addProductToCartByName('Defender 2.0 SPK-480');
+        $productListPage->addProductToCartByName(self::DEFAULT_PRODUCT_NAME);
         $orderPage->clickGoToCartInPopUpWindow();
-        $me->clickByTranslationFrontend('Order [verb]');
+        $orderPage->continueToSecondStep();
 
         $orderPage->selectTransport(self::TRANSPORT_CZECH_POST_POSITION);
-        $me->waitForAjax();
         $orderPage->selectPayment(self::PAYMENT_CACHE_ON_DELIVERY);
-        $me->waitForAjax();
-        $me->clickByTranslationFrontend('Continue in order');
+        $orderPage->continueToThirdStep();
 
-        $orderPage->fillPersonalInfo('Karel', 'Novák', 'no-reply@shopsys.com', '123456789');
-        $orderPage->fillBillingAddress('Koksární 10', 'Ostrava', '702 00');
-        $me->waitForAjax();
+        $orderPage->fillPersonalInfo('Karel', 'Novák', self::DEFAULT_EMAIL, self::DEFAULT_PHONE);
+        $orderPage->fillBillingAddress(
+            self::DEFAULT_BILLING_STREET,
+            self::DEFAULT_BILLING_CITY,
+            self::DEFAULT_BILLING_POSTCODE
+        );
 
-        $me->clickByTranslationFrontend('Finish the order');
+        $orderPage->finishOrder();
 
-        $me->seeTranslationFrontend('Order sent');
+        $orderPage->checkOrderFinishedSuccessfully();
     }
 
     /**
@@ -176,44 +187,54 @@ class OrderCest
      * @param \Tests\App\Test\Codeception\AcceptanceTester $me
      * @param \Tests\App\Acceptance\acceptance\PageObject\Front\RegistrationPage $registrationPage
      * @param \Tests\App\Acceptance\acceptance\PageObject\Front\LayoutPage $layoutPage
+     * @param \Tests\App\Acceptance\acceptance\PageObject\Front\LoginPage $loginPage
      */
     public function testOrderCanBeCompletedAsLoggedCustomer(
         ProductListPage $productListPage,
         OrderPage $orderPage,
         AcceptanceTester $me,
         RegistrationPage $registrationPage,
-        LayoutPage $layoutPage
+        LayoutPage $layoutPage,
+        LoginPage $loginPage
     ) {
         $me->wantTo('Send order as logged customer');
 
         $me->amOnPage('/');
         $layoutPage->clickOnRegistration();
-        $registrationPage->register('Roman', 'Štěpánek', 'no-reply.16@shopsys.com', 'user123', 'user123');
-        $me->wait(self::MINIMUM_FORM_SUBMIT_WAIT_TIME);
-        $me->seeTranslationFrontend('You have been successfully registered.');
-        $me->see('Roman Štěpánek');
-        $me->seeTranslationFrontend('Log out');
+        $registrationPage->register(
+            CustomerRegistrationCest::DEFAULT_USER_FIRST_NAME,
+            CustomerRegistrationCest::DEFAULT_USER_LAST_NAME,
+            CustomerRegistrationCest::DEFAULT_USER_EMAIL,
+            CustomerRegistrationCest::DEFAULT_USER_PASSWORD,
+            CustomerRegistrationCest::DEFAULT_USER_PASSWORD,
+            CustomerRegistrationCest::DEFAULT_USER_STREET,
+            CustomerRegistrationCest::DEFAULT_USER_CITY,
+            CustomerRegistrationCest::DEFAULT_USER_POSTCODE,
+            CustomerRegistrationCest::DEFAULT_USER_TELEPHONE
+        );
+        $registrationPage->checkRegistrationSuccessful();
+        $loginPage->checkUserLogged();
 
         // tv-audio
         $me->amOnLocalizedRoute('front_product_list', ['id' => 3]);
 
-        $productListPage->addProductToCartByName('Defender 2.0 SPK-480');
+        $productListPage->addProductToCartByName(self::DEFAULT_PRODUCT_NAME);
         $orderPage->clickGoToCartInPopUpWindow();
-        $me->clickByTranslationFrontend('Order [verb]');
+        $orderPage->continueToSecondStep();
 
         $orderPage->selectTransport(self::TRANSPORT_CZECH_POST_POSITION);
-        $me->waitForAjax();
         $orderPage->selectPayment(self::PAYMENT_CACHE_ON_DELIVERY);
-        $me->waitForAjax();
-        $me->clickByTranslationFrontend('Continue in order');
 
-        $orderPage->fillPersonalInfo('Roman', 'Štěpánek', 'no-reply.16@shopsys.com', '123456789');
-        $orderPage->fillBillingAddress('Koksární 10', 'Ostrava', '702 00');
-        $me->waitForAjax();
-        $orderPage->acceptLegalConditions();
+        $orderPage->continueToThirdStep();
 
-        $me->clickByTranslationFrontend('Finish the order');
+        $orderPage->fillBillingAddress(
+            self::DEFAULT_BILLING_STREET,
+            self::DEFAULT_BILLING_CITY,
+            self::DEFAULT_BILLING_POSTCODE
+        );
 
-        $me->seeTranslationFrontend('Order sent');
+        $orderPage->finishOrder();
+
+        $orderPage->checkOrderFinishedSuccessfully();
     }
 }

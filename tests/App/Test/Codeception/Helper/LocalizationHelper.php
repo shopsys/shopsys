@@ -68,6 +68,18 @@ class LocalizationHelper extends Module
 
     /**
      * @param string $id
+     * @param string $css
+     * @param string $domain
+     * @param array $parameters
+     */
+    public function seeTranslationFrontendInCss(string $id, string $css, string $domain = 'messages', array $parameters = [])
+    {
+        $translatedMessage = t($id, $parameters, $domain, $this->getFrontendLocale());
+        $this->webDriver->seeInCss(strip_tags($translatedMessage), $css);
+    }
+
+    /**
+     * @param string $id
      * @param string $domain
      * @param array $parameters
      */

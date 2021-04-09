@@ -138,7 +138,7 @@
                 <span class="cart-price-caption cart-price-caption--primary cart-price-caption--small">{{ 'Zaplatíte'|trans }}</span>
             </td>
             <td class="table-cart-preview__cell table-cart-preview__cell--no-spacing table-cart-preview__cell--price">
-                <strong class="cart-price cart-price--primary cart-price--big">{{ orderPreview.totalPrice.priceWithVat|price }}</strong>
+                <strong class="cart-price cart-price--primary cart-price--big js-cart-total-price">{{ orderPreview.totalPrice.priceWithVat|price }}</strong>
                 <span class="cart-price cart-price--secondary cart-price--secondary-2">{{ orderPreview.totalPrice.priceWithoutVat|price }} {{ 'bez DPH'|trans }}</span>
             </td>
         </tr>

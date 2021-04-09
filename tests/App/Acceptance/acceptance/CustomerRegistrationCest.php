@@ -10,7 +10,14 @@ use Tests\App\Test\Codeception\AcceptanceTester;
 
 class CustomerRegistrationCest
 {
-    protected const MINIMUM_FORM_SUBMIT_WAIT_TIME = 10;
+    public const DEFAULT_USER_FIRST_NAME = 'Roman';
+    public const DEFAULT_USER_LAST_NAME = 'Štěpánek';
+    public const DEFAULT_USER_PASSWORD = 'user123';
+    public const DEFAULT_USER_EMAIL = 'no-reply.16@shopsys.com';
+    public const DEFAULT_USER_STREET = 'Koksární 1096/10';
+    public const DEFAULT_USER_CITY = 'Ostrava';
+    public const DEFAULT_USER_POSTCODE = '70200';
+    public const DEFAULT_USER_TELEPHONE = '777111222';
 
     /**
      * @param \Tests\App\Acceptance\acceptance\PageObject\Front\RegistrationPage $registrationPage
@@ -25,11 +32,22 @@ class CustomerRegistrationCest
         $me->wantTo('successfully register new customer');
         $me->amOnPage('/');
         $layoutPage->clickOnRegistration();
-        $registrationPage->register('Roman', 'Štěpánek', 'no-reply.16@shopsys.com', 'user123', 'user123');
-        $me->wait(self::MINIMUM_FORM_SUBMIT_WAIT_TIME);
-        $me->seeTranslationFrontend('You have been successfully registered.');
-        $me->see('Roman Štěpánek');
-        $me->seeTranslationFrontend('Log out');
+
+        $me->reloadPage();
+
+        $registrationPage->register(
+            self::DEFAULT_USER_FIRST_NAME,
+            self::DEFAULT_USER_LAST_NAME,
+            self::DEFAULT_USER_EMAIL,
+            self::DEFAULT_USER_PASSWORD,
+            self::DEFAULT_USER_PASSWORD,
+            self::DEFAULT_USER_STREET,
+            self::DEFAULT_USER_CITY,
+            self::DEFAULT_USER_POSTCODE,
+            self::DEFAULT_USER_TELEPHONE
+        );
+
+        $registrationPage->checkRegistrationSuccessful();
     }
 
     /**
@@ -40,7 +58,17 @@ class CustomerRegistrationCest
     {
         $me->wantTo('use already used email while registration');
         $me->amOnLocalizedRoute('front_registration_register');
-        $registrationPage->register('Roman', 'Štěpánek', 'no-reply@shopsys.com', 'user123', 'user123');
+        $registrationPage->register(
+            self::DEFAULT_USER_FIRST_NAME,
+            self::DEFAULT_USER_LAST_NAME,
+            'no-reply@shopsys.com',
+            self::DEFAULT_USER_PASSWORD,
+            self::DEFAULT_USER_PASSWORD,
+            self::DEFAULT_USER_STREET,
+            self::DEFAULT_USER_CITY,
+            self::DEFAULT_USER_POSTCODE,
+            self::DEFAULT_USER_TELEPHONE
+        );
         $registrationPage->seeEmailError('This email is already registered');
     }
 
@@ -52,7 +80,17 @@ class CustomerRegistrationCest
     {
         $me->wantTo('use mismatching passwords while registration');
         $me->amOnLocalizedRoute('front_registration_register');
-        $registrationPage->register('Roman', 'Štěpánek', 'no-reply.16@shopsys.com', 'user123', 'missmatchingPassword');
+        $registrationPage->fillRegistrationForm(
+            self::DEFAULT_USER_FIRST_NAME,
+            self::DEFAULT_USER_LAST_NAME,
+            self::DEFAULT_USER_EMAIL,
+            self::DEFAULT_USER_PASSWORD,
+            'missmatchingPassword',
+            self::DEFAULT_USER_STREET,
+            self::DEFAULT_USER_CITY,
+            self::DEFAULT_USER_POSTCODE,
+            self::DEFAULT_USER_TELEPHONE
+        );
         $registrationPage->seePasswordError('Passwords do not match');
     }
 }

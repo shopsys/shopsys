@@ -14,6 +14,15 @@
     <import file="${path.vendor}/devops/kubernetes-deployment/build.xml"/>
     <import file="${path.framework}/build.xml"/>
 
+    <target name="acceptance-elasticsearch-export" description="Exports indexes data into elasticsearch for acceptance environment.">
+        <property name="elasticsearch.index" value=""/>
+        <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
+            <arg value="${path.bin-console}"/>
+            <arg value="--env=acc"/>
+            <arg value="shopsys:elasticsearch:data-export"/>
+            <arg value="${elasticsearch.index}"/>
+        </exec>
+    </target>
 
     <!-- Remove dependency `clean-redis-old` because old redis is used by live container during deployment. -->
     <target name="build-deploy-part-2-db-dependent" depends="elasticsearch-index-migrate,redis-check,db-migrations,domains-data-create,friendly-urls-generate,domains-urls-replace,error-pages-generate,warmup" description="Second part of application build for production preserving your DB (must be run with maintenance page when containing DB migrations)."/>
@@ -173,6 +182,31 @@
     <target name="clean-redis" depends="redis-check" description="Cleans up redis cache">
         <phingcall target="test-clean-redis"/>
         <phingcall target="shopsys_framework.clean-redis"/>
+    </target>
+
+    <target name="tests-acceptance-after" description="Actions necessary to run after acceptance tests." hidden="true">
+        <available file="${path.env.acc}" type="file" property="path.env.acc.existed"/>
+        <if>
+            <equals arg1="${path.env.acc.existed}" arg2="true"/>
+            <then>
+                <delete file="${path.root}/ACCEPTANCE"/>
+            </then>
+        </if>
+        <phingcall target="test-elasticsearch-export"/>
+    </target>
+
+    <target name="tests-acceptance-before" description="Actions necessary to run before acceptance tests." hidden="true">
+        <available file="${path.env.acc}" type="file" property="path.env.acc.existed"/>
+        <if>
+            <not>
+                <equals arg1="${path.env.acc.existed}" arg2="true"/>
+            </not>
+            <then>
+                <touch file="${path.root}/ACCEPTANCE"/>
+            </then>
+        </if>
+        <phingcall target="test-db-dump"/>
+        <phingcall target="acceptance-elasticsearch-export"/>
     </target>
 
     <target name="test-clean-redis" depends="redis-check" description="Cleans up redis cache">

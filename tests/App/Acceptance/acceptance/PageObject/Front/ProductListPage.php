@@ -41,6 +41,9 @@ class ProductListPage extends AbstractPage
         $context = $this->getProductListCompomentContext();
 
         $this->productListComponent->addProductToCartByName($productName, $quantity, $context);
+
+        $this->tester->waitForAjax();
+        $this->tester->wait(1);
     }
 
     /**
@@ -50,7 +53,7 @@ class ProductListPage extends AbstractPage
     {
         $totalCountElement = $this->getProductListCompomentContext()
             ->findElement(WebDriverBy::cssSelector('.js-paging-total-count'));
-        $actualCount = (int)trim($totalCountElement->getText());
+        $actualCount = (int)trim($totalCountElement->getAttribute('innerHTML'));
 
         $message = 'Product list expects ' . $expectedCount . ' products but contains ' . $actualCount . '.';
         Assert::assertSame($expectedCount, $actualCount, $message);
@@ -61,6 +64,6 @@ class ProductListPage extends AbstractPage
      */
     private function getProductListCompomentContext()
     {
-        return $this->webDriver->findElement(WebDriverBy::cssSelector('.web__main__content'));
+        return $this->webDriver->findElement(WebDriverBy::cssSelector('.box-list__body'));
     }
 }

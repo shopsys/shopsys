@@ -8,9 +8,31 @@ use Facebook\WebDriver\Exception\NoSuchElementException;
 use Facebook\WebDriver\WebDriverBy;
 use Facebook\WebDriver\WebDriverElement;
 use Tests\App\Acceptance\acceptance\PageObject\AbstractPage;
+use Tests\App\Test\Codeception\AcceptanceTester;
+use Tests\App\Test\Codeception\Module\StrictWebDriver;
 
 class ProductListComponent extends AbstractPage
 {
+    /**
+     * @var \Tests\App\Acceptance\acceptance\PageObject\Front\ProductDetailPage
+     */
+    private ProductDetailPage $productDetailPage;
+
+    /**
+     * @param \Tests\App\Test\Codeception\Module\StrictWebDriver $strictWebDriver
+     * @param \Tests\App\Test\Codeception\AcceptanceTester $tester
+     * @param \Tests\App\Acceptance\acceptance\PageObject\Front\ProductDetailPage $productDetailPage
+     */
+    public function __construct(
+        StrictWebDriver $strictWebDriver,
+        AcceptanceTester $tester,
+        ProductDetailPage $productDetailPage
+    ) {
+        parent::__construct($strictWebDriver, $tester);
+
+        $this->productDetailPage = $productDetailPage;
+    }
+
     /**
      * @param string $productName
      * @param int $quantity
@@ -19,14 +41,9 @@ class ProductListComponent extends AbstractPage
     public function addProductToCartByName($productName, $quantity, WebDriverElement $context)
     {
         $productItemElement = $this->findProductListItemByName($productName, $context);
+        $this->tester->clickByElement($productItemElement);
 
-        $quantityElement = $productItemElement->findElement(WebDriverBy::name('add_product_form[quantity]'));
-        $addButtonElement = $productItemElement->findElement(WebDriverBy::name('add_product_form[add]'));
-
-        $this->tester->fillFieldByElement($quantityElement, (string)$quantity);
-        $this->tester->clickByElement($addButtonElement);
-        $this->tester->waitForAjax();
-        $this->tester->wait(1); // animation of popup window
+        $this->productDetailPage->addProductIntoCart($quantity);
     }
 
     /**
@@ -51,7 +68,12 @@ class ProductListComponent extends AbstractPage
             }
         }
 
-        $message = sprintf('Unable to find product "%s" (translated to "%s") in product list component.', $productName, $translatedProductName);
+        $message = sprintf(
+            'Unable to find product "%s" (translated to "%s") in product list component.',
+            $productName,
+            $translatedProductName
+        );
+
         throw new NoSuchElementException($message);
     }
 }

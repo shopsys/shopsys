@@ -21,6 +21,7 @@ use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade;
+use Shopsys\FrameworkBundle\Model\Pricing\PriceCalculation;
 use Shopsys\FrameworkBundle\Model\Pricing\PriceConverter;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter as BaseParameter;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade;
@@ -119,6 +120,11 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
     private $em;
 
     /**
+     * @var \Shopsys\FrameworkBundle\Model\Pricing\PriceCalculation
+     */
+    private PriceCalculation $priceCalculation;
+
+    /**
      * @param \App\Model\Product\ProductFacade $productFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade $pricingGroupFacade
@@ -134,6 +140,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
      * @param \App\Model\Stock\StockRepository $stockRepository
      * @param \App\Model\Stock\ProductStockDataFactory $productStockDataFactory
      * @param \Doctrine\ORM\EntityManagerInterface $em
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceCalculation $priceCalculation
      */
     public function __construct(
         ProductFacade $productFacade,
@@ -150,7 +157,8 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         ParameterGroupFacade $parameterGroupFacade,
         StockRepository $stockRepository,
         ProductStockDataFactory $productStockDataFactory,
-        EntityManagerInterface $em
+        EntityManagerInterface $em,
+        PriceCalculation $priceCalculation
     ) {
         $this->productFacade = $productFacade;
         $this->domain = $domain;
@@ -167,6 +175,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->stockRepository = $stockRepository;
         $this->productStockDataFactory = $productStockDataFactory;
         $this->em = $em;
+        $this->priceCalculation = $priceCalculation;
     }
 
     /**
@@ -6220,30 +6229,27 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
      */
     private function setPriceForAllPricingGroups(ProductData $productData, string $price): void
     {
-        $fakePrice = 1;
         foreach ($this->pricingGroupFacade->getAll() as $pricingGroup) {
-            $money = $this->priceConverter->convertPriceWithoutVatToPriceInDomainDefaultCurrency(Money::create($fakePrice), $pricingGroup->getDomainId());
-
-            $productData->manualInputPricesByPricingGroupId[$pricingGroup->getId()] = $money;
+            $moneyWithoutVat = $this->priceConverter->convertPriceWithoutVatToPriceInDomainDefaultCurrency(
+                Money::create($price),
+                $pricingGroup->getDomainId()
+            );
+            $productData->manualInputPricesByPricingGroupId[$pricingGroup->getId()] = $moneyWithoutVat;
         }
-
-        $this->setLowAndHighPricesForDomains($productData, $price);
     }
 
     /**
      * @param \App\Model\Product\ProductData $productData
-     * @param string $price
      */
-    private function setLowAndHighPricesForDomains(ProductData $productData, string $price): void
+    private function setHighPriceForAllPricingGroups(ProductData $productData): void
     {
-        foreach ($this->domain->getAllIncludingDomainConfigsWithoutDataCreated() as $domain) {
-            $currencyRate = 1;
-            if ($domain->getId() !== Domain::FIRST_DOMAIN_ID) {
-                $currencyRate = $domain->getId() * 10;
-            }
-            $highPrice = 2 * (int)$price;
-
-            $productData->highPriceWithVat[$domain->getId()] = Money::create((string)round($highPrice / $currencyRate, 2));
+        foreach ($this->pricingGroupFacade->getAll() as $pricingGroup) {
+            $moneyWithoutVat = $productData->manualInputPricesByPricingGroupId[$pricingGroup->getId()];
+            $moneyWithVat = $this->priceCalculation->applyVatPercent(
+                $moneyWithoutVat,
+                $productData->vatsIndexedByDomainId[$pricingGroup->getDomainId()]
+            );
+            $productData->highPriceWithVat[$pricingGroup->getDomainId()] = $moneyWithVat;
         }
     }
 
@@ -6336,8 +6342,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
      */
     private function setBrand(ProductData $productData, ?string $brandReference): void
     {
-        // real product data does not have brand
-        $productData->brand = null;
+        /** @var \App\Model\Product\Brand\Brand|null $brand */
+        $brand = $brandReference === null ? null : $this->persistentReferenceFacade->getReference($brandReference);
+        $productData->brand = $brand;
     }
 
     /**
@@ -6354,6 +6361,8 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             }
         }
         $productData->vatsIndexedByDomainId = $productVatsIndexedByDomainId;
+
+        $this->setHighPriceForAllPricingGroups($productData);
     }
 
     /**
