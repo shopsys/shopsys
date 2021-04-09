@@ -27,9 +27,12 @@ Follow the instructions in the [monorepo upgrade guide](upgrade/upgrading-monore
     * run `docker-compose build --no-cache --pull` to build your images without cache and with latest version
     * run `docker-compose up -d --force-recreate --remove-orphans` to start the application again
     * update the `shopsys/*` dependencies in `composer.json` to version you are upgrading to
-        eg. `"shopsys/framework": "v7.0.0"`
+        * eg. `"shopsys/framework": "v7.0.0"`
     * follow upgrade notes in the *Composer dependencies* section (related with `composer.json`)
     * run `composer update shopsys/* --with-dependencies`
+    * update the `@shopsys/framework` package in your `package.json` (in "dependencies" section) to the version you are upgrading to
+        * eg. `"@shopsys/framework": "9.0.4",`
+    * run `npm install` to update the NPM dependencies
     * follow all upgrade notes you have not done yet
     * run `php phing clean`
     * run `php phing db-migrations` to run the database migrations
