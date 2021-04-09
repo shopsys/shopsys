@@ -21,7 +21,6 @@
         "object-calisthenics/phpcs-calisthenics-rules": "^3.1",
         "slevomat/coding-standard": "^6.3.5",
         "squizlabs/php_codesniffer": "^3.5.0",
-        "symplify/package-builder": "^7.3.18",
         "symplify/easy-coding-standard": "^7.3.18",
         "symfony/finder": "^4.4|^5.0"
     },
