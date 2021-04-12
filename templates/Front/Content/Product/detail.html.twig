@@ -165,17 +165,14 @@
                                                     <div class="box-detail-add__prices__wrap">
                                                         <div class="box-detail-add__prices__item box-detail-add__prices__item--high-price">
                                                             {{ nonSellingPriceWithVat|price }}
-                                                            {{ renderAsterisk(productView.flagIds, 'nonSellingPrice') }}
                                                         </div>
                                                         <div class="box-detail-add__prices__item box-detail-add__prices__item--main">
                                                             {{ sellingPriceWithVat|price }}
-                                                            {{ renderAsterisk(productView.flagIds, 'sellingPrice') }}
                                                         </div>
                                                     </div>
                                                 {% else %}
                                                     <div class="box-detail-add__prices__item box-detail-add__prices__item--main">
                                                         {{ sellingPriceWithVat|price }}
-                                                        {{ renderAsterisk(productView.flagIds, 'sellingPrice') }}
                                                     </div>
                                                 {% endif %}
                                                 <meta itemprop="priceCurrency"
