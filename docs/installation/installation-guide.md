@@ -13,7 +13,7 @@ That means that you can normally use your IDE to edit the code while it is runni
 
 - [Linux](installation-using-docker-linux.md)
 - [MacOS](installation-using-docker-macos.md)
-- [Windows 10 Pro and higher](installation-using-docker-windows-10-pro-higher.md)
+- [Windows 10](installation-using-docker-windows-10.md)
 
 ## Installation without Docker
 

@@ -248,7 +248,8 @@ When client request any Product related field, `ProductResolverMap` check the ty
  - `ProductEntityFieldMapper` if resolver returns the entity `Product`
  - `ProductArrayFieldMapper` if resolver returns array of values
 
-Value for the field is resolved by one of previously mentioned field mapper class, with the one of methods with the specific name: 
+Value for the field is resolved by one of previously mentioned field mapper class, with the one of methods with the specific name:
+
  - `get<FieldName>` – field `sellingDenied` use the method named `getSellingDenied()`
  - `is<FieldName>` – field `sellingDenied` use the method named `isSellingDenied()`
  - `<fieldName>` – field `sellingDenied` use the method named `sellingDenied()`

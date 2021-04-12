@@ -21,6 +21,9 @@ parameters:
             - '*/src/DataFixtures/HeurekaProductDataFixture.php'
             - '*/tests/Unit/HeurekaFeedTest.php'
 
+        PHP_CodeSniffer\Standards\Squiz\Sniffs\NamingConventions\ValidVariableNameSniff.MemberNotCamelCaps:
+            - '*/src/Model/HeurekaCategory/HeurekaCategoryDownloader.php'
+
         PHP_CodeSniffer\Standards\Squiz\Sniffs\NamingConventions\ValidVariableNameSniff.NotCamelCaps:
             - '*/src/Model/HeurekaCategory/HeurekaCategoryDownloader.php'
 

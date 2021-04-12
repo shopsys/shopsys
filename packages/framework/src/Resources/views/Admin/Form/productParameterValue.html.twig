@@ -35,11 +35,13 @@
             </div>
             <div class="js-parameters" data-prototype="{{ self.parameterRow(form.vars.prototype)|escape }}" data-index="{{ form|length }}">
 
-            {% for key, parameter in form %}
-                {{ self.parameterRow(parameter, key) }}
-            {% else %}
-                {% do form.setRendered %}
-            {% endfor %}
+                {{ form_errors(form) }}
+
+                {% for key, parameter in form %}
+                    {{ self.parameterRow(parameter, key) }}
+                {% else %}
+                    {% do form.setRendered %}
+                {% endfor %}
 
                 <div class="js-parameters-empty-item table-params__row">
                     <div class="table-params__cell">{{ 'Add some parameters'|trans }}</div>

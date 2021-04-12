@@ -53,3 +53,37 @@ There you can find links to upgrade notes for other versions too.
 - allow multiple elasticsearch hosts ([#2240](https://github.com/shopsys/shopsys/pull/2240))
     - now it's possible to set multiple elasticsearch hosts like `'["elasticsearch:9200", "elasticsearch2:9200"]'`
     - `Elasticsearch\ClientBuilder` is now created with a different factory, you may want to check your overridden service definition (see PR for details)
+
+- unify logo rendering on homepage and subpages ([#2048](https://github.com/shopsys/shopsys/pull/2048))
+    - on homepage is no longer H1 element, consider adding it in your custom design
+    - see #project-base-diff to update your project
+
+- replace deprecated functionality ([#2233](https://github.com/shopsys/shopsys/pull/2233))
+    - replace method by throwing specific exception
+        - `Shopsys\FrameworkBundle\Component\Elasticsearch\Exception\ElasticsearchIndexException::indexAlreadyExists()`
+            - you should throw `Shopsys\FrameworkBundle\Component\Elasticsearch\Exception\ElasticsearchIndexAlreadyExistsException` directly
+    - replace usage of console command and phing targets
+        - usage of command `shopsys:elasticsearch:indexes-create` must be replaced by `shopsys:elasticsearch:indexes-migrate`
+        - usage of phing target `elasticsearch-index-create` must be replaced by `elasticsearch-index-migrate`
+        - usage of phing target `test-elasticsearch-index-create` must be replaced by `test-elasticsearch-index-migrate`
+    - replace using of deprecated method
+        - calling the method `Shopsys\FrameworkBundle\Component\Elasticsearch\IndexFacade::create()` should be replaced by `Shopsys\FrameworkBundle\Component\Elasticsearch\IndexFacade::migrate()`
+            - method will change its visibility from `public` to `protected` 
+    - avoid using class `Shopsys\FrameworkBundle\Command\Elasticsearch\ElasticsearchIndexesCreateCommand`
+        - class was deprecated and will me removed in next major version
+
+- improve docker-sync reliability on MacOS ([#2264](https://github.com/shopsys/shopsys/pull/2264))
+    - see #project-base-diff to update your project
+
+- use WSL 2 instead of docker-sync on Windows ([#2272](https://github.com/shopsys/shopsys/pull/2272))
+    - if you are developing on Windows machine, we recommend you to update your installation to our new one using WSL 2. 
+      Read [Installation Using Docker on Windows 10](https://github.com/shopsys/shopsys/blob/9.1/docs/installation/installation-using-docker-windows-10.md) article for more information.
+    - see #project-base-diff to update your project
+
+- update your composer.json ([#2285](https://github.com/shopsys/shopsys/pull/2285))
+    - add conflict for `codeception/codeception` versions 4.1.19 and higher
+    - see #project-base-diff to update your project
+
+- improve image lazy loading ([#2268](https://github.com/shopsys/shopsys/pull/2268))
+    - supported browsers now use native lazy loading
+    - see #project-base-diff to update your project

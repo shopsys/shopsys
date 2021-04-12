@@ -140,8 +140,12 @@ There you can find links to upgrade notes for other versions too.
     - see [project-base-diff](https://github.com/shopsys/project-base/commit/a15ca000c86133fa1c63d2c9638b8a2a69d18da2) to update your project
 
 - added more coding standards ([#2035](https://github.com/shopsys/shopsys/pull/2035), [#2052](https://github.com/shopsys/shopsys/pull/2052), [#2173](https://github.com/shopsys/shopsys/pull/2173))
+    - update your `easy-coding-standard.yml` with following change sets
+        - see [project-base-diff](https://github.com/shopsys/project-base/commit/68280e3c10a148845beb68e5785cde0653bba19f#diff-31c98d10b924ed403cc1cb79eb1c870a44aa489e6656a2543d36efb15eb5a1cd) of changes in `easy-coding-standard.yml`
+        - see [project-base-diff](https://github.com/shopsys/project-base/commit/ce280b837abb27e8b4ed1b4ad0ce9977bdf5a23d#diff-31c98d10b924ed403cc1cb79eb1c870a44aa489e6656a2543d36efb15eb5a1cd) of changes in `easy-coding-standard.yml`
+        - see [project-base-diff](https://github.com/shopsys/project-base/commit/2a243b0aae79fdb3e6376fb669d11e372375e299#diff-31c98d10b924ed403cc1cb79eb1c870a44aa489e6656a2543d36efb15eb5a1cd) of changes in `easy-coding-standard.yml`
     - the most of the rules have their own fixer, run `php phing ecs-fix` to resolve them
-        - you need to run `ecs-fix` multiple times unless it is OK, because of the amount of changes
+        - you need to run `ecs-fix` multiple times until it is OK, because of the amount of changes
     - disallowed usage of `empty()` is one which must be fixed manually
         - first of all, you should keep in mind the `empty` ignores undefined offsets and is typed weak - this state should be probably kept
         - when your part of code has not been strictly typed yet, you should resolve it first otherwise you will be hacking a new `empty` function by yourself and this rule will have no benefit for you

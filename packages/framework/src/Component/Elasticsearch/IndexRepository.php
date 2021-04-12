@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Component\Elasticsearch;
 
 use Elasticsearch\Client;
+use Shopsys\FrameworkBundle\Component\Elasticsearch\Exception\ElasticsearchIndexAlreadyExistsException;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\Exception\ElasticsearchIndexException;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\Exception\ElasticsearchNoAliasException;
 
@@ -32,7 +33,7 @@ class IndexRepository
         $indexes = $this->elasticsearchClient->indices();
 
         if ($indexes->exists(['index' => $indexName])) {
-            throw ElasticsearchIndexException::indexAlreadyExists($indexName);
+            throw new ElasticsearchIndexAlreadyExistsException($indexName);
         }
 
         $result = $indexes->create([

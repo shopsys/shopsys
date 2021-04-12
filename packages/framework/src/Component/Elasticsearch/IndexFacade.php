@@ -7,6 +7,8 @@ namespace Shopsys\FrameworkBundle\Component\Elasticsearch;
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Console\ProgressBarFactory;
 use Shopsys\FrameworkBundle\Component\Doctrine\SqlLoggerFacade;
+use Shopsys\FrameworkBundle\Component\Elasticsearch\Exception\ElasticsearchIndexAlreadyExistsException;
+use Shopsys\FrameworkBundle\Component\Elasticsearch\Exception\ElasticsearchIndexException;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\Exception\ElasticsearchNoAliasException;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -51,19 +53,45 @@ class IndexFacade
     }
 
     /**
+     * @deprecated Visibility of this method will be reduced to "protected" in next major version. For public access use method "migrate()" instead
      * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinition $indexDefinition
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      */
     public function create(IndexDefinition $indexDefinition, OutputInterface $output): void
     {
+        if (
+            !isset(debug_backtrace()[1]['object'])
+            || !(debug_backtrace()[1]['object'] instanceof self)
+        ) {
+            trigger_error(
+                sprintf(
+                    'Method "%s" will change its visibility from "public" to "protected" in next major version. Use method "migrate()" from same class instead.',
+                    __METHOD__
+                ),
+                E_USER_DEPRECATED
+            );
+        }
+
         $output->writeln(sprintf(
             'Creating index "%s" on domain "%s"',
             $indexDefinition->getIndexName(),
             $indexDefinition->getDomainId()
         ));
 
-        $this->indexRepository->createIndex($indexDefinition);
-        $this->indexRepository->createAlias($indexDefinition);
+        $alias = $indexDefinition->getIndexAlias();
+        try {
+            if (!$this->isIndexUpToDate($indexDefinition)) {
+                throw new ElasticsearchIndexException(sprintf(
+                    'There is an index for alias "%s" already. You have to migrate it first due to different definition.',
+                    $alias
+                ));
+            }
+        } catch (ElasticsearchNoAliasException $exception) {
+            $output->writeln(sprintf('Alias "%s" does not exist', $alias));
+        }
+
+        $this->createIndexWhenNeeded($indexDefinition, $output);
+        $this->createAlias($indexDefinition, $output);
     }
 
     /**
@@ -94,9 +122,13 @@ class IndexFacade
             $indexDefinition->getDomainId()
         ));
 
+        $this->createIndexWhenNoAliasFound($indexDefinition, $output);
+        if (!$this->isIndexUpToDate($indexDefinition)) {
+            $this->migrate($indexDefinition, $output);
+        }
+
         $this->sqlLoggerFacade->temporarilyDisableLogging();
 
-        $indexAlias = $indexDefinition->getIndexAlias();
         $domainId = $indexDefinition->getDomainId();
         $progressBar = $this->progressBarFactory->create(
             $output,
@@ -119,7 +151,7 @@ class IndexFacade
                 break;
             }
 
-            $this->indexRepository->bulkUpdate($indexAlias, $currentBatchData);
+            $this->indexRepository->bulkUpdate($indexDefinition->getIndexAlias(), $currentBatchData);
             $progressBar->advance($currentBatchSize);
 
             $exportedIds = array_merge($exportedIds, array_keys($currentBatchData));
@@ -150,6 +182,15 @@ class IndexFacade
             );
 
             return;
+        }
+
+        try {
+            $this->resolveExistingIndexName($indexDefinition);
+        } catch (ElasticsearchNoAliasException $exception) {
+            throw new ElasticsearchIndexException(sprintf(
+                'Can\'t found any index with alias "%s". You have to migrate elasticsearch structure first.',
+                $indexDefinition->getIndexAlias()
+            ));
         }
 
         $output->writeln(sprintf(
@@ -189,13 +230,11 @@ class IndexFacade
         $domainId = $indexDefinition->getDomainId();
 
         try {
-            $existingIndexName = $this->indexRepository->findCurrentIndexNameForAlias(
-                $indexDefinition->getIndexAlias()
-            );
+            $existingIndexName = $this->resolveExistingIndexName($indexDefinition);
         } catch (ElasticsearchNoAliasException $exception) {
-            $existingIndexName = $this->indexRepository->findCurrentIndexNameForAlias(
-                $indexDefinition->getLegacyIndexAlias()
-            );
+            $output->writeln(sprintf('No index for alias "%s" was not found on domain "%s"', $indexName, $domainId));
+            $this->create($indexDefinition, $output);
+            return;
         }
 
         if ($existingIndexName === $indexDefinition->getVersionedIndexName()) {
@@ -204,9 +243,10 @@ class IndexFacade
         }
 
         $output->writeln(sprintf('Migrating index "%s" on domain "%s"', $indexName, $domainId));
-        $this->indexRepository->createIndex($indexDefinition);
+
+        $this->createIndexWhenNeeded($indexDefinition, $output);
         $this->indexRepository->reindex($existingIndexName, $indexDefinition->getVersionedIndexName());
-        $this->indexRepository->createAlias($indexDefinition);
+        $this->createAlias($indexDefinition, $output);
         $this->indexRepository->deleteIndex($existingIndexName);
     }
 
@@ -240,5 +280,82 @@ class IndexFacade
         }
 
         $this->sqlLoggerFacade->reenableLogging();
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinition $indexDefinition
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
+     */
+    protected function createIndexWhenNoAliasFound(IndexDefinition $indexDefinition, OutputInterface $output): void
+    {
+        try {
+            $this->indexRepository->findCurrentIndexNameForAlias($indexDefinition->getIndexAlias());
+        } catch (ElasticsearchNoAliasException $exception) {
+            $output->writeln(sprintf(
+                'Index "%s" does not exist on domain "%s"',
+                $indexDefinition->getIndexName(),
+                $indexDefinition->getDomainId()
+            ));
+            $this->create($indexDefinition, $output);
+        }
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinition $indexDefinition
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
+     */
+    protected function createIndexWhenNeeded(IndexDefinition $indexDefinition, OutputInterface $output): void
+    {
+        try {
+            $this->indexRepository->createIndex($indexDefinition);
+        } catch (ElasticsearchIndexAlreadyExistsException $exception) {
+            $output->writeln(sprintf(
+                'Index "%s" was not created on domain "%s" because it already exists',
+                $indexDefinition->getIndexName(),
+                $indexDefinition->getDomainId()
+            ));
+        }
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinition $indexDefinition
+     * @return string
+     */
+    protected function resolveExistingIndexName(IndexDefinition $indexDefinition): string
+    {
+        try {
+            return $this->indexRepository->findCurrentIndexNameForAlias(
+                $indexDefinition->getIndexAlias()
+            );
+        } catch (ElasticsearchNoAliasException $exception) {
+            return $this->indexRepository->findCurrentIndexNameForAlias(
+                $indexDefinition->getLegacyIndexAlias()
+            );
+        }
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinition $indexDefinition
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
+     */
+    protected function createAlias(IndexDefinition $indexDefinition, OutputInterface $output): void
+    {
+        $output->writeln(sprintf(
+            'Creating alias for index "%s" on domain "%s"',
+            $indexDefinition->getIndexName(),
+            $indexDefinition->getDomainId()
+        ));
+
+        $this->indexRepository->createAlias($indexDefinition);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinition $indexDefinition
+     * @return bool
+     */
+    protected function isIndexUpToDate(IndexDefinition $indexDefinition): bool
+    {
+        $existingIndexName = $this->indexRepository->findCurrentIndexNameForAlias($indexDefinition->getIndexAlias());
+        return $existingIndexName === $indexDefinition->getVersionedIndexName();
     }
 }

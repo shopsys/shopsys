@@ -13,7 +13,7 @@ As a result, found row IDs are returned from Elasticsearch and then the row data
 Elasticsearch [index](https://www.elastic.co/blog/what-is-an-elasticsearch-index) is a logical namespace, you can imagine single index as a single database in terms of relational databases.
 
 The Elasticsearch indexes are created during application build.
-You can also create or delete indexes manually using Phing targets `elasticsearch-index-create`, and `elasticsearch-index-delete` respectively, or you can use `elasticsearch-index-recreate` that encapsulates the previous two.
+You can also create or delete indexes manually using Phing targets `elasticsearch-index-migrate`, and `elasticsearch-index-delete` respectively, or you can use `elasticsearch-index-recreate` that encapsulates the previous two.
 
 !!! hint
     More information about what Phing targets are and how they work can be found in [Console Commands for Application Management (Phing Targets)](../introduction/console-commands-for-application-management-phing-targets.md)
@@ -25,7 +25,7 @@ The directory is configured using `%shopsys.elasticsearch.structure_dir%` parame
 
 #### Available elasticsearch phing targets
 
-- elasticsearch-index-create
+- elasticsearch-index-create (deprecated from v9.1.1, use elasticsearch-index-migrate instead)
 - elasticsearch-index-delete
 - elasticsearch-index-recreate
 - elasticsearch-index-migrate
