@@ -51,6 +51,11 @@ services:
         calls:
             - [seed, ['%faker.seed%']]
 
+    FM\ElfinderBundle\Controller\ElFinderController:
+        class: Shopsys\FrameworkBundle\Controller\ElFinder\ElfinderController
+        calls:
+            - { method: setContainer, arguments: [ '@service_container' ] }
+
     fragment.handler:
         class: Shopsys\FrameworkBundle\Component\HttpFoundation\FragmentHandler
         arguments:

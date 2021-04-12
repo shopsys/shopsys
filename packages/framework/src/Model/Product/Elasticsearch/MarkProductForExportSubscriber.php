@@ -100,6 +100,7 @@ class MarkProductForExportSubscriber implements EventSubscriberInterface
     {
         return [
             ParameterEvent::DELETE => 'markAffectedByParameter',
+            ParameterEvent::UPDATE => 'markAffectedByParameter',
             BrandEvent::DELETE => 'markAffectedByBrand',
             AvailabilityEvent::UPDATE => 'markAffectedByAvailability',
             AvailabilityEvent::DELETE => 'markAffectedByAvailability',

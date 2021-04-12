@@ -220,12 +220,17 @@ public static function getName(): string
 ```
 
 So far it is the most minimalistic implementation.
-Now we are able to create an index in Elasticsearch by running `./phing elasticsearch-index-create -D elasticsearch.index=category`.
+Now we are able to create an index in Elasticsearch by running `./phing elasticsearch-index-migrate -D elasticsearch.index=category`.
+
+!!! warning
+    If you are using version v9.1.0 or lower you have to use command `./phing elasticsearch-index-create -D elasticsearch.index=category` for creating index.
+
+
 Also we can use `./phing elasticsearch-index-recreate` or `./phing elasticsearch-index-delete`.
 
 !!! note
-    Command `./phing elasticsearch-index-create -D elasticsearch.index=category` (notice the parameter -D) create Elasticsearch index only for our CategoryIndex.
-    Using `./phing elasticsearch-index-create` (without `-D` flag) will create Elasticsearch indexes for all registered ones in your project (product, category, and so on).
+    Command `./phing elasticsearch-index-migrate -D elasticsearch.index=category` (notice the parameter -D) create Elasticsearch index only for our CategoryIndex.
+    Using `./phing elasticsearch-index-migrate` (without `-D` flag) will create Elasticsearch indexes for all registered ones in your project (product, category, and so on).
 
 ## Export data into Elasticsearch
 

@@ -1,7 +1,7 @@
 #!/bin/bash
 numberRegex="^[0-9]+([.][0-9]+)?$"
 operatingSystem=""
-allowedValues=(1 2 3)
+allowedValues=(1 2)
 projectPathPrefix=""
 echo This is installation script that will install demo Shopsys Framework application on docker with all required containers and with demo database created.
 
@@ -15,9 +15,8 @@ set -e
 
 echo "Start with specifying your operating system: \
 
-    1) Linux
+    1) Linux or Windows with WSL 2
     2) Mac
-    3) Windows
     "
 
 while [[ 1 -eq 1 ]]
@@ -64,13 +63,6 @@ case "$operatingSystem" in
         fi
 
         mkdir -p ${projectPathPrefix}var/postgres-data ${projectPathPrefix}var/elasticsearch-data vendor
-        docker-sync start
-        ;;
-    "3")
-        cp -f docker/conf/docker-compose-win.yml.dist docker-compose.yml
-        cp -f docker/conf/docker-sync-win.yml.dist docker-sync.yml
-
-        mkdir -p "${projectPathPrefix}var/postgres-data" "${projectPathPrefix}var/elasticsearch-data" vendor
         docker-sync start
         ;;
 esac

@@ -74,6 +74,7 @@
         "psr/log": "^1.0",
         "ramsey/uuid": "^3.8",
         "roave/better-reflection": "^3.5",
+        "sinergi/browser-detector": "^6.1",
         "shopsys/doctrine-orm": "^2.7.2",
         "shopsys/form-types-bundle": "9.2.x-dev",
         "shopsys/migrations": "9.2.x-dev",
