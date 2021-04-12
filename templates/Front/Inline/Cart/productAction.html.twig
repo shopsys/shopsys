@@ -1,11 +1,9 @@
-{% set buttonSizeClass = (type == 'large' ? ' ' : ' ') %}
-
 {% if productActionView.mainVariant %}
-    <a href="{{ productActionView.detailUrl }}" class="btn {{ buttonSizeClass }}">
+    <a href="{{ productActionView.detailUrl }}" class="btn">
         {{- 'Choose variant'|trans -}}
     </a>
 {% elseif productActionView.sellingDenied %}
-    <a href="{{ productActionView.detailUrl }}" class="btn {{ buttonSizeClass }}">
+    <a href="{{ productActionView.detailUrl }}" class="btn">
         {{- 'Product no longer on sale'|trans -}}
     </a>
 {% else %}
@@ -20,19 +18,9 @@
         </button>
     </span>
     {% if productActionView.isProductAvailable == true %}
-        {{ form_widget(form.add,
-            {
-                label: 'Přidat do košíku'|trans,
-                attr: {class: 'btn--success btn--success--cart' ~ (type is same as('large') ? ' btn--very-large')}
-            }
-        )}}
+        {{ form_widget(form.add, { label: 'Přidat do košíku'|trans } )}}
     {% else %}
-        {{ form_widget(form.add,
-            {
-                label: 'Temporarily sold out'|trans,
-                attr: {class: 'btn--disabled' ~ (type is same as('large') ? ' btn--large')},
-                disabled: 'disabled'}
-        )}}
+        {{ form_widget(form.add, { label: 'Temporarily sold out'|trans, disabled: 'disabled'} )}}
     {% endif %}
     {{ form_end(form) }}
 

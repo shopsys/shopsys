@@ -1,8 +1,9 @@
 @search-form-width: 270px;
 @search-form-icon-size: 20px;
 @search-form-bg-color: @color-f;
-@search-form-extended-width: calc(~"100% + 176px");
+@search-form-extended-width: 576px;
 @search-hint-products-item-gap: 18px;
+@search-hint-products-item-content-gap: 10px;
 
 .search {
     position: relative;
@@ -17,7 +18,11 @@
             }
 
             &__form {
-                width: @search-form-extended-width;
+                width: 100%;
+
+                @media @query-vl {
+                    width: @search-form-extended-width;
+                }
 
                 &__input {
                     .input {
@@ -138,7 +143,7 @@
         box-shadow: 0 5px 10px 0 rgba(164,167,193,0.34);
 
         &__title {
-            margin: 0 0 6px 0;
+            margin: 0;
 
             font-size: 13px;
             color: @color-base-lighter;
@@ -155,10 +160,6 @@
             &__item {
                 border-bottom: 1px solid @color-border;
     
-                &:last-child {
-                    border-bottom: 0;
-                }
-    
                 &__link {
                     .clearfix();
                     display: flex;
@@ -170,32 +171,41 @@
                     font-size: @font-size-small;
                     color: @color-0;
                 }
-    
-                &:last-child {
-                    border-radius: 0 0 @radius @radius;
-                }
             }
         }
 
         &__products {
             .reset-ul();
             display: flex;
+            flex-wrap: wrap;
             flex-direction: row;
             margin-left: -@search-hint-products-item-gap;
-            margin-bottom: 30px;
+            margin-bottom: 30px - @search-hint-products-item-gap;
 
             &__item {
-                width: 20%;
+                width: 100%;
                 padding-left: @search-hint-products-item-gap;
+                margin-bottom: @search-hint-products-item-gap / 2;
 
                 font-size: @font-size-small;
 
+                @media @query-lg {
+                    width: 20%;
+                    margin-bottom: @search-hint-products-item-gap;
+                }
+
                 &__link {
                     display: flex;
-                    flex-direction: column;
+                    align-items: center;
+                    flex-direction: row;
                     line-height: 18px;
 
                     text-decoration: none;
+
+                    @media @query-lg {
+                        flex-direction: column;
+                        align-items: flex-start;
+                    }
 
                     &:hover {
                         text-decoration: none;
@@ -207,18 +217,28 @@
                 }
 
                 &__image {
-                    picture {
-                        display: flex;
-                        justify-content: center;
-                        align-items: center;
-                        height: 48px;
-                        width: 100%;
-                        margin-bottom: 10px;
+                    position: relative;
+                    width: 72px;
+                    height: 48px;
+                    margin-right: @search-hint-products-item-content-gap;
+
+                    @media @query-lg {
+                        margin-right: 0;
+                    }
+
+                    img {
+                        .center-image();
                     }
                 }
 
                 &__name {
-                    margin-bottom: 5px;
+                    flex: 1;
+                    margin-right: @search-hint-products-item-content-gap;
+
+                    @media @query-lg {
+                        margin-bottom: 5px;
+                        margin-right: 0;
+                    }
                 }
 
                 &__price {
@@ -256,12 +276,16 @@
     &__autocomplete {
         position: relative;
         z-index: 10;
-        width: @search-form-extended-width;
+        width: 100%;
 
         opacity: 0;
         transform: scaleY(0.9);
         pointer-events: none;
         transition: all @transition;
         transform-origin: center top;
+                
+        @media @query-vl {
+            width: @search-form-extended-width;
+        }
     }
 }

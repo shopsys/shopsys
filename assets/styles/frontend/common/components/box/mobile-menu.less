@@ -1,179 +1,137 @@
-@mobile-menu-zi: 100;
-@mobile-menu-bg-color: @color-f;
-@mobile-menu-padding: 25px 15px 20px 15px;
 @mobile-menu-item-control-width: 45px;
-@mobile-menu-item-border-radius: 6px;
+@mobile-menu-item-gap: 30px;
 
 .mobile-menu-wrap {
     display: block;
     position: absolute;
-    left: 0;
-    top: 65px;
-    width: 100%;
-    z-index: @mobile-menu-zi;
+    left: 10px;
+    right: 10px;
+    top: 0;
+    margin-bottom: 10px;
+    z-index: @z-index-menu;
 
     &__container {
         position: relative;
         width: 100%;
         overflow: hidden;
 
-        background-color: @mobile-menu-bg-color;
-        box-shadow: 0 50px 50px 0 rgba(@color-0, .15);
+        background-color: @color-f;
+    }
 
-        .mobile-menu {
-            position: absolute;
-            left: 100%;
-            top: 0;
-            width: 100%;
-            padding: @mobile-menu-padding;
+    .show-position {
+        position: relative;
+        left: 0;
+    }
+}
+
+.mobile-menu {
+    .reset-ul();
+    position: absolute;
+    left: 100%;
+    top: 0;
+    width: 100%;
+    padding-top: 48px;
+    margin: 0;
+
+    &__item {
+        margin: 0 @mobile-menu-item-gap;
+
+        border-bottom: 1px solid @color-border;
+
+        .mobile-menu--level-0 & {
             margin: 0;
 
-            &__item {
-                display: block;
+            text-transform: uppercase;
+        }
 
-                list-style: none;
-                border: 1px solid @color-border;
-                border-bottom: 0;
+        &--head {
+            padding: 0 @mobile-menu-item-gap;
+            margin: -30px 0 0;
+        }
 
-                &:first-child {
-                    border-top-left-radius: @mobile-menu-item-border-radius;
-                    border-top-right-radius: @mobile-menu-item-border-radius;
-                }
+        &--current {
+            margin-bottom: 15px;
 
-                &:last-child {
-                    border-bottom: 1px solid @color-border;
-                    border-bottom-left-radius: @mobile-menu-item-border-radius;
-                    border-bottom-right-radius: @mobile-menu-item-border-radius;
-                }
+            border: 1px solid @color-border;
+        }
 
-                &--head {
-                    display: flex;
-                    justify-content: space-between;
-                    width: 100%;
-                    margin: 10px 0 15px;
+        &--small {
+            border-bottom: 0;
+        }
 
-                    border: 0;
-                }
+        &__control {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: absolute;
+            right: 0;
+            width: @mobile-menu-item-control-width;
+            height: 100%;
+            transform: rotate(-90deg);
 
-                &--blog {
-                    border-bottom: 1px solid @color-border;
-                    border-bottom-left-radius: @mobile-menu-item-border-radius;
-                    border-bottom-right-radius: @mobile-menu-item-border-radius;
-                }
+            font-size: 18px;
+            color: @color-base;
+        }
 
-                &--current {
-                    margin-bottom: 15px;
+        &__back-control {
+            display: inline-flex;
+            align-items: center;
+            line-height: 10px;
+            margin-top: -26px;
+            margin-bottom: 26px;
 
-                    border: 1px solid @color-border;
-                    border-radius: @mobile-menu-item-border-radius;
+            cursor: pointer;
+            text-transform: uppercase;
+            font-size: 10px;
+            color: @color-base;
 
-                    & + .mobile-menu__item {
-                        border-top-left-radius: @mobile-menu-item-border-radius;
-                        border-top-right-radius: @mobile-menu-item-border-radius;
-                    }
-                }
+            &__icon {
+                margin-right: 9px;
+                margin-top: -2px;
+                transform: rotate(90deg);
 
-                &--stores {
-                    margin-top: 16px;
-
-                    border-radius: @mobile-menu-item-border-radius;
-
-                    .svg {
-                        margin: 0 10px 0 -3px;
-
-                        font-size: 25px;
-                    }
-                }
-
-                &__control {
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    position: absolute;
-                    right: 0;
-                    width: @mobile-menu-item-control-width;
-                    height: 100%;
-
-                    font-size: 20px;
-                    color: @color-primary;
-                }
-
-                &__back-control {
-                    position: relative;
-                    top: 2px;
-                    min-width: 100px;
-
-                    font-size: 15px;
-                    color: @color-primary;
-
-                    &__icon {
-                        margin-right: 5px;
-                        transform: scaleX(-1);
-
-                        font-size: 20px;
-                        pointer-events: none;
-                    }
-                }
-
-                &__category {
-                    text-align: right;
-
-                    font-size: 18px;
-                    line-height: 1.4;
-                    color: @color-primary;
-                }
-
-                &__link {
-                    position: relative;
-                    display: flex;
-                    width: 100%;
-                    align-items: center;
-                    padding: 10px @mobile-menu-item-control-width 8px 15px;
-
-                    font-size: 15px;
-
-                    &:hover {
-                        text-decoration: none;
-                    }
-
-                    &--sale {
-                        width: 100%;
-                        right: auto;
-
-                        &::before {
-                            margin-right: 6px;
-                        }
-                    }
-
-                    &--blog {
-                        width: 100%;
-                    }
-
-                    &--stores {
-                        align-items: flex-end;
-                    }
-
-                    &__text {
-                        flex-grow: 1;
-                        white-space: nowrap;
-                        text-overflow: ellipsis;
-                        overflow: hidden;
-                    }
-                }
-
-                &--sale {
-                    width: 100%;
-                }
-
-                &--blog {
-                    width: 100%;
-                }
+                font-size: 14px;
             }
         }
 
-        .show-position {
+        &__category {
+            margin-bottom: 18px;
+
+            text-transform: uppercase;
+            font-size: @font-size;
+            font-weight: 700;
+            color: @color-base;
+        }
+
+        &__link {
             position: relative;
-            left: 0;
+            display: flex;
+            width: 100%;
+            align-items: center;
+            padding: 10px @mobile-menu-item-control-width 8px 0;
+
+            font-weight: 700;
+            font-size: @font-size;
+            text-decoration: none;
+
+            .mobile-menu--level-0 & {
+                padding: 20px @mobile-menu-item-control-width 18px @mobile-menu-item-gap;
+            }
+
+            .mobile-menu__item--small & {
+                padding: 10px @mobile-menu-item-gap 8px @mobile-menu-item-gap;
+
+                font-weight: 400;
+                font-size: @font-size-small;
+                text-transform: initial;
+            }
+
+            &__text {
+                flex-grow: 1;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                overflow: hidden;
+            }
         }
     }
 }

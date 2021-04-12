@@ -31,7 +31,7 @@
                                     {{ blogArticle.perex|slice(0,165) }}{% if blogArticle.perex|length > 165 %}&hellip;{% endif %}
                                 </div>
                                 <a href="{{ url('front_blogarticle_detail', {'id': blogArticle.id}) }}" class="btn btn-no-style dont-print" title="{{ blogArticle.name }}">
-                                    {{ "Číst dál"|trans }} <i class="btn__icon svg svg-chevron"></i>
+                                    {{ "Číst dál"|trans }} <i class="btn__icon svg svg-arrow"></i>
                                 </a>
                             </div>
                         {% endfor %}

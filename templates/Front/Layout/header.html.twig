@@ -35,7 +35,7 @@
                 <a
                     href="{{ url('front_login') }}"
                     data-url="{{ url('front_login_window_form') }}"
-                    class="js-login-button menu-iconic__item__link"
+                    class="header__mobile-button__in js-login-button"
                 >
                     <i class="svg svg-user"></i>
                 </a>
@@ -54,15 +54,19 @@
                 {% endif %}
             </div>
         </div>
+
         <div class="header__mobile-button header__mobile-button--menu">
-            <span class="header__mobile-button__in js-responsive-toggle" data-element="js-mobile-menu" data-hide-on-click-out="true">
+            <span class="header__mobile-button__in js-responsive-toggle js-mobile-menu-button" data-element="js-mobile-menu">
                 <i class="svg svg-burger-menu"></i>
                 <span class="header__mobile-button__placeholder">
                     <span class="header__mobile-button__placeholder__line header__mobile-button__placeholder__line--left"></span>
                     <span class="header__mobile-button__placeholder__line header__mobile-button__placeholder__line--right"></span>
                 </span>
+                <span class="header__mobile-button__text header__mobile-button__text--open">{{ 'Menu'|trans }}</span>
+                <span class="header__mobile-button__text header__mobile-button__text--close">{{ 'Zavřít'|trans }}</span>
             </span>
         </div>
+
         <div class="header__links dont-print">
             <ul class="menu-iconic">
                 <li class="menu-iconic__item">

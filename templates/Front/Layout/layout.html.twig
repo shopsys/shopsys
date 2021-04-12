@@ -44,6 +44,7 @@
         {% block footer %}
             {% embed 'Front/Layout/footer.html.twig' with { 'showNewsletter' : true } %}{% endembed %}
         {% endblock %}
+        <div class="web__overlay"></div>
     </div>
     {% if not isCookiesConsentGiven() %}
         {% set cookiesArticle = findCookiesArticleByDomainId(getDomain().id) %}

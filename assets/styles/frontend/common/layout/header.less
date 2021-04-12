@@ -1,13 +1,7 @@
-@header-mobile-button-size: 50px;
-@header-mobile-button-border: 1px solid #e7ebed;
-@header-mobile-button-border-radius: 5px;
-@header-mobile-button-font-size: 27px;
+@header-mobile-button-size: 40px;
 @header-mobile-button-dropdown-position: 75px;
-
-@header-padding: 15px 0;
-
-@header-middle-width-vl: 232px;
-@header-middle-width-xl: 400px;
+@header-padding: 15px;
+@header-mobile-button-icon-size: 18px;
 
 @header-item-gap-small: 20px;
 @header-item-gap: 32px;
@@ -16,24 +10,32 @@
     position: relative;
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
-    padding: @header-padding;
+    padding: 8px 0 11px;
+
+    @media @query-lg {
+        padding: @header-padding 0 0;
+    }
 
     @media @query-vl {
-        padding: 23px 0 17px;
+        padding: 23px 0 16px;
     }
 
     &__logo {
         order: 1;
+        flex: 1;
         display: flex;
-        margin-right: 8px;
+        margin-right: auto;
 
         @media @query-lg {
+            align-self: flex-end;
+        }
+
+        @media @query-vl {
+            flex: none;
             margin-right: @header-item-gap-small;
         }
 
         @media @query-xl {
-            align-self: flex-end;
             margin-right: @header-item-gap;
         }
     }
@@ -41,22 +43,24 @@
     &__middle {
         width: 100%;
         order: 6;
+        margin-top: 11px;
 
         @media @query-lg {
             order: 4;
+            margin-top: 20px;
         }
 
         @media @query-vl {
             order: 2;
-            width: auto;
+            max-width: 400px;
             flex: 1;
+            margin-top: 0;
             margin-left: auto;
             margin-right: @header-item-gap-small;
         }
 
         @media @query-xl {
             flex: none;
-            width: @header-middle-width-xl;
             margin-right: @header-item-gap;
         }
     }
@@ -67,10 +71,12 @@
 
         @media @query-lg {
             margin-right: @header-item-gap-small;
+            margin-left: auto;
         }
 
         @media @query-vl {
             order: 3;
+            margin-left: 0;
         }
 
         @media @query-xl {
@@ -82,11 +88,6 @@
         order: 3;
         position: relative;
         display: flex;
-        margin-left: 4px;
-
-        @media @query-lg {
-            margin-left: 0;
-        }
 
         @media @query-vl {
             order: 4;
@@ -116,21 +117,23 @@
             height: @header-mobile-button-size;
             margin-left: 4px;
 
-            border: @header-mobile-button-border;
-            border-radius: @header-mobile-button-border-radius;
             outline: 0;
             cursor: pointer;
-            font-size: @header-mobile-button-font-size;
+            font-size: @header-mobile-button-icon-size;
 
             &--menu {
                 position: relative;
+                width: auto;
                 order: 4;
+                margin-left: 16px;
+                z-index: @z-index-menu + 1;
+
+                background-color: @color-orange-light;
+                border-radius: @radius;
             }
 
             &--login {
                 order: 2;
-
-                font-size: 24px;
             }
 
             &__in {
@@ -142,13 +145,21 @@
                 width: 100%;
                 height: 100%;
 
-                color: @color-base;
+                color: @color-f;
                 text-decoration: none;
 
-                &.active {
-                    color: @color-primary;
+                &:hover {
                     text-decoration: none;
+                    color: @color-f;
+                }
 
+                .header__mobile-button--menu & {
+                    margin: 0 10px;
+                    
+                    color: @color-0;
+                }
+
+                &.active {
                     .header__mobile-button__placeholder {
                         transform: scale(1);
                         opacity: 1;
@@ -165,17 +176,26 @@
                 }
             }
 
-            .svg {
-                display: flex;
+            &__text {
+                width: 29px;
+                margin-left: 4px;
 
-                color: @color-f;
+                font-size: 11px;
 
-                &-chat {
-                    font-size: 25px;
+                &--open {
+                    display: inline;
+
+                    .active & {
+                        display: none;
+                    }
                 }
 
-                &-burger-menu {
-                    font-size: 35px;
+                &--close {
+                    display: none;
+
+                    .active & {
+                        display: inline;
+                    }
                 }
             }
 
@@ -222,50 +242,34 @@
         &__placeholder {
             display: none;
 
-            @media @query-mobile {
+            @media @query-tablet {
                 display: flex;
-                align-items: center;
-                justify-content: center;
                 position: absolute;
                 left: 0;
                 top: 0;
-                width: 100%;
+                width: @header-mobile-button-icon-size;
                 height: 100%;
-                z-index: 101;
+                z-index: @z-index-above;
 
                 opacity: 0;
                 visibility: hidden;
                 transform: scale(0.5);
-                background-color: @color-primary;
-                border-radius: @radius;
                 transition: all @transition;
-
-                &::after {
-                    position: absolute;
-                    left: 50%;
-                    top: 100%;
-                    width: 0;
-                    height: 0;
-                    content: '';
-                    transform: translateX(-50%);
-
-                    border-style: solid;
-                    border-width: 8px 6px 0 6px;
-                    border-color: @color-primary transparent transparent transparent;
-                }
+                background-color: @color-orange-light;
             }
 
             &__line {
-                @media @query-mobile {
+                @media @query-tablet {
                     display: block;
                     position: absolute;
                     left: 50%;
                     top: 50%;
-                    width: 24px;
+                    margin-top: -1px;
+                    width: @header-mobile-button-icon-size;
                     height: 2px;
-                    margin-left: -12px;
+                    margin-left: -@header-mobile-button-icon-size / 2;
 
-                    background-color: @color-f;
+                    background-color: @color-0;
                     transition: all @transition;
                 }
             }
