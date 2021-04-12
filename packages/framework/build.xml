@@ -904,6 +904,14 @@
         </exec>
     </target>
 
+    <target name="test-clean-redis" depends="redis-check" description="Cleans up redis cache for test environment">
+        <exec executable="${path.php.executable}" passthru="true" checkreturn="true" output="${dev.null}">
+            <arg value="${path.bin-console}"/>
+            <arg value="--env=test"/>
+            <arg value="shopsys:redis:clean-cache"/>
+        </exec>
+    </target>
+
     <target name="test-db-create" depends="production-protection" description="Creates test database for application with required configuration.">
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
             <arg value="${path.bin-console}"/>
@@ -912,7 +920,7 @@
         </exec>
     </target>
 
-    <target name="test-db-demo" depends="production-protection,clean,clean-redis,test-db-wipe-public-schema,test-db-import-basic-structure,test-db-migrations,test-domains-data-create,test-db-fixtures-demo,test-friendly-urls-generate,test-plugin-demo-data-load,test-domains-urls-replace" description="Drops all data in test database and creates a new one with demo data." hidden="true"/>
+    <target name="test-db-demo" depends="production-protection,clean,test-clean-redis,test-db-wipe-public-schema,test-db-import-basic-structure,test-db-migrations,test-domains-data-create,test-db-fixtures-demo,test-friendly-urls-generate,test-plugin-demo-data-load,test-domains-urls-replace" description="Drops all data in test database and creates a new one with demo data." hidden="true"/>
 
     <target name="test-db-dump" depends="production-protection" description="Dumps current test database into a file to be used in acceptance tests." hidden="true">
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
@@ -1076,7 +1084,7 @@
 
     <target name="tests" depends="npm-install-dependencies,test-db-demo,test-elasticsearch-index-recreate,test-elasticsearch-export,error-pages-generate,tests-unit,tests-functional,tests-smoke" description="Runs unit, functional and smoke tests. Builds new test database in the process."/>
 
-    <target name="tests-acceptance" depends="production-protection,clean,clean-redis" description="Runs acceptance tests. Running Selenium server is required (Selenium is always running in Docker setup).">
+    <target name="tests-acceptance" depends="production-protection,clean,test-clean-redis" description="Runs acceptance tests. Running Selenium server is required (Selenium is always running in Docker setup).">
         <phingcall target="tests-acceptance-before"/>
         <trycatch>
             <try>
@@ -1121,7 +1129,7 @@
         </exec>
     </target>
 
-    <target name="tests-acceptance-single" depends="production-protection,clean,clean-redis" description="Runs single suite or test depending on user input.">
+    <target name="tests-acceptance-single" depends="production-protection,clean,test-clean-redis" description="Runs single suite or test depending on user input.">
         <if>
             <not><isset property="test"/></not>
             <then>
@@ -1150,7 +1158,7 @@
         </trycatch>
     </target>
 
-    <target name="tests-functional" depends="production-protection,clean,clean-redis,domains-info-load" description="Runs functional tests.">
+    <target name="tests-functional" depends="production-protection,clean,test-clean-redis,domains-info-load" description="Runs functional tests.">
         <if>
             <istrue value="${domains-info.is-multidomain}"/>
             <then>
@@ -1178,7 +1186,7 @@
         </if>
     </target>
 
-    <target name="tests-performance" depends="production-protection,clean,clean-redis" description="Runs performance tests (assuming test DB has been filled with performance data and warmed up, see 'tests-performance-run').">
+    <target name="tests-performance" depends="production-protection,clean,test-clean-redis" description="Runs performance tests (assuming test DB has been filled with performance data and warmed up, see 'tests-performance-run').">
         <exec executable="${path.phpunit.executable}" logoutput="true" passthru="true" checkreturn="true">
             <arg value="--colors=always"/>
             <arg value="--testsuite"/>
@@ -1190,7 +1198,7 @@
         </exec>
     </target>
 
-    <target name="tests-performance-run" depends="production-protection,clean,clean-redis,test-db-performance,test-elasticsearch-index-recreate,test-elasticsearch-export,tests-performance-warmup,tests-performance" description="Runs performance tests. Builds new test database with performance data in the process."/>
+    <target name="tests-performance-run" depends="production-protection,clean,test-clean-redis,test-db-performance,test-elasticsearch-index-recreate,test-elasticsearch-export,tests-performance-warmup,tests-performance" description="Runs performance tests. Builds new test database with performance data in the process."/>
 
     <target name="tests-performance-warmup" description="Warms up cache for performance tests.">
         <exec executable="${path.phpunit.executable}" logoutput="true" passthru="true" checkreturn="true">
@@ -1204,7 +1212,7 @@
         </exec>
     </target>
 
-    <target name="tests-smoke" depends="production-protection,clean,clean-redis,domains-info-load" description="Runs smoke tests.">
+    <target name="tests-smoke" depends="production-protection,clean,test-clean-redis,domains-info-load" description="Runs smoke tests.">
         <if>
             <istrue value="${domains-info.is-multidomain}"/>
             <then>
