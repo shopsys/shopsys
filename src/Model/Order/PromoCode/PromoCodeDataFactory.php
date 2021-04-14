@@ -101,7 +101,7 @@ class PromoCodeDataFactory extends BasePromoCodeDataFactory
         $promoCodeData->applyOnSecondProduct = $promoCode->isApplyOnSecondProduct();
         $promoCodeData->onSale = $promoCode->isOnSale();
         $promoCodeData->inAction = $promoCode->isInAction();
-        $promoCodeData->scontoPrice = $promoCode->isScontoPrice();
+        $promoCodeData->ssfwccPrice = $promoCode->isSsfwccPrice();
         $promoCodeData->priceHit = $promoCode->isPriceHit();
         $promoCodeData->discountType = $promoCode->getDiscountType();
     }

@@ -110,7 +110,7 @@ class ListedProductViewFactory extends BaseListedProductViewFactory
                 $this->categoryFacade->getProductMainCategoryByDomainId($product, $domainId),
                 $this->domain->getLocale()
             ),
-            $product->hasFlagByAkeneoCodeForDomain(Flag::AKENEO_CODE_SCONTO, $domainId),
+            $product->hasFlagByAkeneoCodeForDomain(Flag::AKENEO_CODE_SSFWCC, $domainId),
             $this->productAvailabilityFacade->isProductAvailableOnDomainCached($product, $domainId),
         );
     }
@@ -139,7 +139,7 @@ class ListedProductViewFactory extends BaseListedProductViewFactory
             $productArray['product_available_stocks_count_information'],
             $productArray['product_count_exposed_in_stores'],
             $productArray['main_category_path'],
-            array_key_exists('has_sconto_flag', $productArray) ? $productArray['has_sconto_flag'] : false,
+            array_key_exists('has_ssfwcc_flag', $productArray) ? $productArray['has_ssfwcc_flag'] : false,
             array_key_exists('is_available', $productArray) ? $productArray['is_available'] : true,
         );
     }

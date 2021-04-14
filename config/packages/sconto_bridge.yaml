@@ -1,6 +1,6 @@
 parameters:
-    sconto_bridge_config:
-        enabled: '%env(bool:SCONTO_BRIDGE_ENABLED)%'
-        base_uri: '%env(SCONTO_BRIDGE_BASE_URI)%'
-        user: '%env(SCONTO_BRIDGE_USER)%'
-        password: '%env(SCONTO_BRIDGE_PASSWORD)%'
+    ssfwcc_bridge_config:
+        enabled: '%env(bool:SSFWCC_BRIDGE_ENABLED)%'
+        base_uri: '%env(SSFWCC_BRIDGE_BASE_URI)%'
+        user: '%env(SSFWCC_BRIDGE_USER)%'
+        password: '%env(SSFWCC_BRIDGE_PASSWORD)%'

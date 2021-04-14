@@ -12,7 +12,7 @@ class ProductPromoCodeFiller
 {
     private const BIT_ON_SALE = 1;
     private const BIT_IN_ACTION = 2;
-    private const BIT_SCONTO_PRICE = 4;
+    private const BIT_SSFWCC_PRICE = 4;
     private const BIT_PRICE_HIT = 16;
 
     /**
@@ -128,13 +128,13 @@ class ProductPromoCodeFiller
         $filterMask = 0;
         $filterMask += $validEnteredPromoCode->isOnSale() ? self::BIT_ON_SALE : 0;
         $filterMask += $validEnteredPromoCode->isInAction() ? self::BIT_IN_ACTION : 0;
-        $filterMask += $validEnteredPromoCode->isScontoPrice() ? self::BIT_SCONTO_PRICE : 0;
+        $filterMask += $validEnteredPromoCode->isSsfwccPrice() ? self::BIT_SSFWCC_PRICE : 0;
         $filterMask += $validEnteredPromoCode->isPriceHit() ? self::BIT_PRICE_HIT : 0;
 
         $productSetup = 0;
         $productSetup += $product->hasFlagByAkeneoCodeForDomain(Flag::AKENEO_CODE_SALE, $this->domain->getId()) ? self::BIT_ON_SALE : 0;
         $productSetup += $product->hasFlagByAkeneoCodeForDomain(Flag::AKENEO_CODE_ACTION, $this->domain->getId()) ? self::BIT_IN_ACTION : 0;
-        $productSetup += $product->hasFlagByAkeneoCodeForDomain(Flag::AKENEO_CODE_SCONTO, $this->domain->getId()) ? self::BIT_SCONTO_PRICE : 0;
+        $productSetup += $product->hasFlagByAkeneoCodeForDomain(Flag::AKENEO_CODE_SSFWCC, $this->domain->getId()) ? self::BIT_SSFWCC_PRICE : 0;
         $productSetup += $product->hasFlagByAkeneoCodeForDomain(Flag::AKENEO_CODE_HIT, $this->domain->getId()) ? self::BIT_PRICE_HIT : 0;
 
         if (($filterMask & $productSetup ^ $filterMask) === 0) {

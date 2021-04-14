@@ -413,7 +413,7 @@
       "main_category_path": {
         "type": "text"
       },
-      "has_sconto_flag": {
+      "has_ssfwcc_flag": {
         "type": "boolean"
       }
     }

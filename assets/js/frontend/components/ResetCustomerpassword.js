@@ -23,7 +23,7 @@ export default class ResetCustomerpassword {
         let message = '';
         if (data.success === true) {
             message = Translator.trans(
-                '<p class="window-popup__in__desc">Odkaz pro vyresetování hesla vám byl odeslán. Instrukce naleznete na své e-mailové adrese <strong>%email%</strong>. Vaše Sconto.</p>', { 'email': data.email });
+                '<p class="window-popup__in__desc">Odkaz pro vyresetování hesla vám byl odeslán. Instrukce naleznete na své e-mailové adrese <strong>%email%</strong>. Váš Comerce Cloud.</p>', { 'email': data.email });
         } else {
             message = Translator.trans(
                 'Bohužel zadaný e-mail <strong>%email%</strong> neexistuje.', { 'email': data.email });

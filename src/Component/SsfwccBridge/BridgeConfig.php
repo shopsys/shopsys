@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Component\ScontoBridge;
+namespace App\Component\SsfwccBridge;
 
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class ScontoBridgeConfig
+class BridgeConfig
 {
     /**
      * @var bool
@@ -29,9 +29,9 @@ class ScontoBridgeConfig
     private $password;
 
     /**
-     * @param array $scontoBridgeConfig
+     * @param array $bridgeConfig
      */
-    public function __construct(array $scontoBridgeConfig)
+    public function __construct(array $bridgeConfig)
     {
         $optionsResolver = new OptionsResolver();
 
@@ -59,12 +59,12 @@ class ScontoBridgeConfig
             ['string']
         );
 
-        $optionsResolver->resolve($scontoBridgeConfig);
+        $optionsResolver->resolve($bridgeConfig);
 
-        $this->enabled = $scontoBridgeConfig['enabled'];
-        $this->baseUri = $scontoBridgeConfig['base_uri'];
-        $this->user = $scontoBridgeConfig['user'];
-        $this->password = $scontoBridgeConfig['password'];
+        $this->enabled = $bridgeConfig['enabled'];
+        $this->baseUri = $bridgeConfig['base_uri'];
+        $this->user = $bridgeConfig['user'];
+        $this->password = $bridgeConfig['password'];
     }
 
     /**

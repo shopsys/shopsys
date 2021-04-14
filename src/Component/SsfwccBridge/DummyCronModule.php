@@ -2,21 +2,21 @@
 
 declare(strict_types=1);
 
-namespace App\Component\ScontoBridge;
+namespace App\Component\SsfwccBridge;
 
-use App\Component\ScontoBridge\Transfer\DummyImportTransferFacade;
+use App\Component\SsfwccBridge\Transfer\DummyImportTransferFacade;
 use Shopsys\Plugin\Cron\SimpleCronModuleInterface;
 use Symfony\Bridge\Monolog\Logger;
 
 class DummyCronModule implements SimpleCronModuleInterface
 {
     /**
-     * @var \App\Component\ScontoBridge\Transfer\DummyImportTransferFacade
+     * @var \App\Component\SsfwccBridge\Transfer\DummyImportTransferFacade
      */
     private DummyImportTransferFacade $dummyImportTransfer;
 
     /**
-     * @param \App\Component\ScontoBridge\Transfer\DummyImportTransferFacade $dummyImportTransfer
+     * @param \App\Component\SsfwccBridge\Transfer\DummyImportTransferFacade $dummyImportTransfer
      */
     public function __construct(DummyImportTransferFacade $dummyImportTransfer)
     {

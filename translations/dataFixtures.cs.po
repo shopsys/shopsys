@@ -1753,9 +1753,6 @@ msgstr "bílá"
 msgid "| Demo eshop"
 msgstr "| Demo obchod"
 
-msgid "| Sconto"
-msgstr ""
-
 msgid "šroubovák"
 msgstr ""
 

@@ -45,30 +45,30 @@ class SliderItemDataFixture extends AbstractReferenceFixture
         $sliderItemData->hidden = false;
         $sliderItemData->gtmId = 'sliderItemTest';
         $sliderItemData->sliderExtendedText = 'Pravidla akce';
-        $sliderItemData->sliderExtendedTextLink = 'https://www.sconto.cz';
+        $sliderItemData->sliderExtendedTextLink = 'https://www.shopsys.cz';
 
         $sliderItemData->name = '40% SLEVA NA ÚLOŽNÉ PROSTORY';
-        $sliderItemData->link = 'https://www.sconto.cz/skrine-a-komody';
+        $sliderItemData->link = 'https://www.shopsys.cz';
 
         $this->sliderItemFacade->create($sliderItemData);
 
         $sliderItemData->name = '40% SLEVA NA POSTELE, MATRACE A ROŠTY';
-        $sliderItemData->link = 'https://prod.scontodev.cz/matrace-a-rosty';
+        $sliderItemData->link = 'https://shopsys.cz';
 
         $this->sliderItemFacade->create($sliderItemData);
 
         $sliderItemData->name = 'SLEVA 20% + 21% DPH NAVÍC';
-        $sliderItemData->link = 'https://prod.scontodev.cz/';
+        $sliderItemData->link = 'https://shopsys.cz';
 
         $this->sliderItemFacade->create($sliderItemData);
 
         $sliderItemData->name = '40% na jídelní stoly a židle';
-        $sliderItemData->link = 'https://prod.scontodev.cz/jidelni-sety-zidle-a-stul';
+        $sliderItemData->link = 'https://shopsys.cz';
 
         $this->sliderItemFacade->create($sliderItemData);
 
         $sliderItemData->name = 'Informace o otevírací době';
-        $sliderItemData->link = 'https://prod.eshop.scontodev.sk/';
+        $sliderItemData->link = 'https://shopsys.cz';
         $sliderItemData->domainId = Domain::SECOND_DOMAIN_ID;
 
         $this->sliderItemFacade->create($sliderItemData);

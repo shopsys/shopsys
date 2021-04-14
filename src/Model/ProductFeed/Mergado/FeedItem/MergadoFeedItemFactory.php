@@ -145,7 +145,7 @@ class MergadoFeedItemFactory
         if ($product->hasFlagByAkeneoCodeForDomain(Flag::AKENEO_CODE_NEW, $domainId) === false) {
             unset($flags[3]);
         }
-        if ($product->hasFlagByAkeneoCodeForDomain(Flag::AKENEO_CODE_SCONTO, $domainId) === false) {
+        if ($product->hasFlagByAkeneoCodeForDomain(Flag::AKENEO_CODE_SSFWCC, $domainId) === false) {
             unset($flags[4]);
         }
         if ($product->hasFlagByAkeneoCodeForDomain(Flag::AKENEO_CODE_SALE, $domainId) === false) {

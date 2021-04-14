@@ -25,9 +25,9 @@ final class Version20200221155940 extends AbstractMigration
         $this->sql('INSERT INTO flag_translations (id, translatable_id, name, locale) VALUES (3, 2, \'Akce\', \'cs\')');
         $this->sql('INSERT INTO flag_translations (id, translatable_id, name, locale) VALUES (4, 2, \'Akcia\', \'sk\')');
 
-        $this->sql('INSERT INTO flags (id, rgb_color, visible, akeneo_code) VALUES (3, \'#ffffff\', true, \'flag__product_sconto\')');
-        $this->sql('INSERT INTO flag_translations (id, translatable_id, name, locale) VALUES (5, 3, \'Sconto cena\', \'cs\')');
-        $this->sql('INSERT INTO flag_translations (id, translatable_id, name, locale) VALUES (6, 3, \'Sconto cena\', \'sk\')');
+        $this->sql('INSERT INTO flags (id, rgb_color, visible, akeneo_code) VALUES (3, \'#ffffff\', true, \'flag__product_ssfwcc\')');
+        $this->sql('INSERT INTO flag_translations (id, translatable_id, name, locale) VALUES (5, 3, \'Commerce Cloud cena\', \'cs\')');
+        $this->sql('INSERT INTO flag_translations (id, translatable_id, name, locale) VALUES (6, 3, \'Commerce Cloud cena\', \'sk\')');
 
         $this->sql('INSERT INTO flags (id, rgb_color, visible, akeneo_code) VALUES (4, \'#ffffff\', true, \'flag__product_new\')');
         $this->sql('INSERT INTO flag_translations (id, translatable_id, name, locale) VALUES (7, 4, \'Novinka\', \'cs\')');

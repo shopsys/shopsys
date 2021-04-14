@@ -44,7 +44,7 @@ class ListedProductView extends BaseListedProductView
     /**
      * @var bool
      */
-    private $hasScontoFlag;
+    private $hasSsfwccFlag;
 
     /**
      * @var bool
@@ -66,7 +66,7 @@ class ListedProductView extends BaseListedProductView
      * @param string $productAvailableStocksCountInformation
      * @param string $productCountExposedInStores
      * @param string $mainCategoryPath
-     * @param bool $hasScontoFlag
+     * @param bool $hasSsfwccFlag
      * @param bool $isAvailable
      */
     public function __construct(
@@ -84,7 +84,7 @@ class ListedProductView extends BaseListedProductView
         string $productAvailableStocksCountInformation,
         string $productCountExposedInStores,
         string $mainCategoryPath,
-        bool $hasScontoFlag,
+        bool $hasSsfwccFlag,
         bool $isAvailable
     ) {
         parent::__construct($id, $name, $shortDescription, $availability, $sellingPrice, $flagIds, $action, $image);
@@ -95,7 +95,7 @@ class ListedProductView extends BaseListedProductView
         $this->productAvailableStocksCountInformation = $productAvailableStocksCountInformation;
         $this->productCountExposedInStores = $productCountExposedInStores;
         $this->mainCategoryPath = $mainCategoryPath;
-        $this->hasScontoFlag = $hasScontoFlag;
+        $this->hasSsfwccFlag = $hasSsfwccFlag;
         $this->isAvailable = $isAvailable;
     }
 
@@ -158,9 +158,9 @@ class ListedProductView extends BaseListedProductView
     /**
      * @return bool
      */
-    public function hasScontoFlag(): bool
+    public function hasSsfwccFlag(): bool
     {
-        return $this->hasScontoFlag;
+        return $this->hasSsfwccFlag;
     }
 
     /**

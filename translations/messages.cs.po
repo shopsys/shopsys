@@ -250,9 +250,6 @@ msgstr ""
 msgid "Copyright"
 msgstr ""
 
-msgid "Copyright Sconto Nábytek, s.r.o."
-msgstr ""
-
 msgid "Country"
 msgstr "Stát"
 
@@ -1105,9 +1102,6 @@ msgstr "Objednávky"
 msgid "Oslovení"
 msgstr ""
 
-msgid "Osobní odběr SCONTO"
-msgstr ""
-
 msgid "Otevírací doba"
 msgstr ""
 
@@ -1301,9 +1295,6 @@ msgid "Problém v přenosu byl označen jako vyřešený"
 msgstr ""
 
 msgid "Obchodní domy"
-msgstr ""
-
-msgid "Prodejny Sconto"
 msgstr ""
 
 msgid "Prodejní cena s DPH"
@@ -1532,18 +1523,6 @@ msgid "Rubrika blogu <strong>{{ name }}</strong> byla smazána"
 msgstr ""
 
 msgid "Rubriky blogu"
-msgstr ""
-
-msgid "SCONTO"
-msgstr ""
-
-msgid "SCONTO Nábytek"
-msgstr ""
-
-msgid "SCONTO Nábytek s.r.o. je součástí německého koncernu Höffner, který patří k největším prodejcům nábytku v Evropě již od roku 1990."
-msgstr ""
-
-msgid "SCONTO Nábytek s.r.o. je součástí německého<br>koncernu Höffner, který patří k největším<br>producentům nábytku v Evropě již od roku 1990."
 msgstr ""
 
 msgid "SEO kombinace kategorie s ID {{ ReadyCategorySeoMixId }} byla smazána"
