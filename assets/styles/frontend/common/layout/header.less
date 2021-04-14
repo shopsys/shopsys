@@ -1,5 +1,4 @@
 @header-mobile-button-size: 40px;
-@header-mobile-button-dropdown-position: 75px;
 @header-padding: 15px;
 @header-mobile-button-icon-size: 18px;
 
@@ -158,22 +157,6 @@
                     
                     color: @color-0;
                 }
-
-                &.active {
-                    .header__mobile-button__placeholder {
-                        transform: scale(1);
-                        opacity: 1;
-                        visibility: visible;
-
-                        .header__mobile-button__placeholder__line--left {
-                            transform: rotate(-45deg);
-                        }
-
-                        .header__mobile-button__placeholder__line--right {
-                            transform: rotate(45deg);
-                        }
-                    }
-                }
             }
 
             &__text {
@@ -202,7 +185,7 @@
             &__menu {
                 display: none;
                 position: absolute;
-                top: @header-mobile-button-dropdown-position;
+                top: 59px;
                 left: -@web-padding;
                 right: -@web-padding;
                 z-index: 10;
@@ -216,10 +199,8 @@
                     padding: 10px 15px 8px;
 
                     font-size: 15px;
-                    color: @color-primary;
                     border: 1px solid @color-border;
                     border-top: 0;
-                    text-decoration: none;
 
                     &:first-child {
                         border-top: 1px solid @color-border;

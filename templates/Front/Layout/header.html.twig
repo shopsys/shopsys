@@ -26,10 +26,6 @@
             {% if is_granted('ROLE_LOGGED_CUSTOMER') %}
                 <span class="header__mobile-button__in js-responsive-toggle" data-element="js-user-menu" data-hide-on-click-out="true">
                     <i class="svg svg-user"></i>
-                    <span class="header__mobile-button__placeholder">
-                        <span class="header__mobile-button__placeholder__line header__mobile-button__placeholder__line--left"></span>
-                        <span class="header__mobile-button__placeholder__line header__mobile-button__placeholder__line--right"></span>
-                    </span>
                 </span>
             {% else %}
                 <a
@@ -57,11 +53,12 @@
 
         <div class="header__mobile-button header__mobile-button--menu">
             <span class="header__mobile-button__in js-responsive-toggle js-mobile-menu-button" data-element="js-mobile-menu">
-                <i class="svg svg-burger-menu"></i>
-                <span class="header__mobile-button__placeholder">
-                    <span class="header__mobile-button__placeholder__line header__mobile-button__placeholder__line--left"></span>
-                    <span class="header__mobile-button__placeholder__line header__mobile-button__placeholder__line--right"></span>
-                </span>
+                <div class="in-hamburger-icon">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
                 <span class="header__mobile-button__text header__mobile-button__text--open">{{ 'Menu'|trans }}</span>
                 <span class="header__mobile-button__text header__mobile-button__text--close">{{ 'Zavřít'|trans }}</span>
             </span>
