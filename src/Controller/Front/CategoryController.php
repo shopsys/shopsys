@@ -55,54 +55,6 @@ class CategoryController extends FrontBaseController
     /**
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function mobileSlidingMenuAction(): Response
-    {
-        $topCategories = $this->categoryFacade->getTranslatedVisibleSubcategoriesByDomain(
-            $this->categoryFacade->getRootCategory(),
-            $this->domain->getCurrentDomainConfig()
-        );
-
-        $menuItems = [];
-        foreach ($topCategories as $category) {
-            $menuItems[] = $this->buildSlidingMenuSetup(
-                'front_product_list',
-                $category->getId(),
-                $category->getName($this->domain->getCurrentDomainConfig()->getLocale())
-            );
-        }
-
-        $saleCategory = $this->categoryFacade->findSaleCategory();
-        if ($saleCategory !== null) {
-            $menuItems[] = $this->buildSlidingMenuSetup(
-                'front_product_list',
-                $saleCategory->getId(),
-                $saleCategory->getName($this->domain->getCurrentDomainConfig()->getLocale())
-            );
-        }
-
-        return $this->render('Front/Content/Category/mobileSlidingMenu.html.twig', [
-            'menuItems' => $menuItems,
-        ]);
-    }
-
-    /**
-     * @param string $route
-     * @param int|null $id
-     * @param string $name
-     * @return array
-     */
-    private function buildSlidingMenuSetup(string $route, ?int $id, string $name): array
-    {
-        return [
-            'route' => $route,
-            'id' => $id,
-            'name' => $name,
-        ];
-    }
-
-    /**
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
     public function mobilePanelMenuAction(): Response
     {
         $categoriesWithLazyLoadedVisibleChildren = $this->categoryFacade->getCategoriesWithLazyLoadedVisibleChildrenForParent(

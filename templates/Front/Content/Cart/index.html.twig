@@ -32,9 +32,6 @@
 
     {% if cart is not null %}
 
-        {% block mobileMenu %}
-        {% endblock %}
-
         {% include 'Front/Inline/OrderProgress/index.html.twig' with {step: 1} only %}
         <div class="web__line web__line--cart">
             <div class="web__container">
