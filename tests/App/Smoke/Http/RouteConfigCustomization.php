@@ -10,6 +10,7 @@ use App\DataFixtures\Demo\OrderDataFixture;
 use App\DataFixtures\Demo\PersonalDataAccessRequestDataFixture;
 use App\DataFixtures\Demo\UnitDataFixture;
 use App\DataFixtures\Demo\VatDataFixture;
+use App\Model\Administrator\Administrator;
 use Shopsys\FrameworkBundle\Component\DataFixture\PersistentReferenceFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Router\Security\RouteCsrfProtector;
@@ -316,6 +317,22 @@ class RouteConfigCustomization
             ->customizeByRouteName('admin_mail_deletetemplate', function (RouteConfig $config) {
                 $config->changeDefaultRequestDataSet('MailTemplate can be deleted only if it is OrderStock type')
                     ->setParameter('id', 17)
+                    ->setExpectedStatusCode(302);
+            })
+            ->customizeByRouteName('admin_administrator_enable-two-factor-authentication', function (RouteConfig $config) {
+                $config->changeDefaultRequestDataSet('Standard admin is not allowed to edit superadmin (with ID 1)')
+                    ->setParameter('twoFactorAuthenticationType', Administrator::TWO_FACTOR_AUTHENTICATION_TYPE_GOOGLE_AUTH)
+                    ->setExpectedStatusCode(302);
+                $config->addExtraRequestDataSet('Editing normal administrator (with ID 2) should be OK.')
+                    ->setParameter('id', 2)
+                    ->setParameter('twoFactorAuthenticationType', Administrator::TWO_FACTOR_AUTHENTICATION_TYPE_GOOGLE_AUTH)
+                    ->setExpectedStatusCode(200);
+            })
+            ->customizeByRouteName('admin_administrator_disable-two-factor-authentication', function (RouteConfig $config) {
+                $config->changeDefaultRequestDataSet('Standard admin is not allowed to edit superadmin (with ID 1)')
+                    ->setExpectedStatusCode(302);
+                $config->addExtraRequestDataSet('Two factor authentication is not enabled for normal administrator (with ID 2).')
+                    ->setParameter('id', 2)
                     ->setExpectedStatusCode(302);
             });
     }

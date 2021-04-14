@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\DataFixtures\Demo;
 
+use App\Model\Administrator\Mail\TwoFactorAuthenticationMail;
 use App\Model\Customer\Mail\CustomerActivationMail;
 use App\Model\Mail\MailTemplate;
 use App\Model\Mail\MailTemplateData;
@@ -150,6 +151,10 @@ team of {domain}
             $mailTemplateData->transport = null;
             $mailTemplateData->payment = null;
             $mailTemplateData->orderStatus = null;
+
+            $mailTemplateData->subject = t('Authentication code', [], 'dataFixtures', $locale);
+            $mailTemplateData->body = t('Authentication code for two factor authentication: {authentication_code}', [], 'dataFixtures', $locale);
+            $this->createMailTemplate($manager, TwoFactorAuthenticationMail::TWO_FACTOR_AUTHENTICATION_CODE, $mailTemplateData, $domainId);
         }
     }
 
