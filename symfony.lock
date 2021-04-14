@@ -17,8 +17,14 @@
     "aws/aws-sdk-php": {
         "version": "3.133.16"
     },
+    "bacon/bacon-qr-code": {
+        "version": "2.0.3"
+    },
     "barryvdh/elfinder-flysystem-driver": {
         "version": "v0.2.1"
+    },
+    "beberlei/assert": {
+        "version": "v3.3.0"
     },
     "behat/gherkin": {
         "version": "v4.6.0"
@@ -88,6 +94,9 @@
     },
     "craue/formflow-bundle": {
         "version": "3.2.1"
+    },
+    "dasprid/enum": {
+        "version": "1.0.3"
     },
     "dealerdirect/phpcodesniffer-composer-installer": {
         "version": "v0.7.0"
@@ -197,6 +206,9 @@
     },
     "elasticsearch/elasticsearch": {
         "version": "v6.7.2"
+    },
+    "endroid/qr-code": {
+        "version": "3.9.6"
     },
     "enlightn/security-checker": {
         "version": "v1.5.0"
@@ -342,6 +354,9 @@
     "justinrainbow/json-schema": {
         "version": "5.2.9"
     },
+    "khanamiryan/qrcode-detector-decoder": {
+        "version": "1.0.4"
+    },
     "knplabs/knp-menu": {
         "version": "2.6.0"
     },
@@ -387,6 +402,9 @@
     "myclabs/deep-copy": {
         "version": "1.9.3"
     },
+    "myclabs/php-enum": {
+        "version": "1.8.0"
+    },
     "nette/finder": {
         "version": "v2.5.1"
     },
@@ -404,6 +422,9 @@
     },
     "ocramius/proxy-manager": {
         "version": "2.2.3"
+    },
+    "paragonie/constant_time_encoding": {
+        "version": "v2.4.0"
     },
     "paragonie/random_compat": {
         "version": "v9.99.99"
@@ -561,6 +582,28 @@
     "roave/signature": {
         "version": "1.0.0"
     },
+    "scheb/2fa-bundle": {
+        "version": "5.0",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "master",
+            "version": "5.0",
+            "ref": "95d9da4bffdc29417c209141cae8292e40d6af19"
+        },
+        "files": [
+            "config/packages/scheb_2fa.yaml",
+            "config/routes/scheb_2fa.yaml"
+        ]
+    },
+    "scheb/2fa-email": {
+        "version": "v5.7.0"
+    },
+    "scheb/2fa-google-authenticator": {
+        "version": "v5.7.0"
+    },
+    "scheb/2fa-qr-code": {
+        "version": "v5.7.0"
+    },
     "sebastian/code-unit-reverse-lookup": {
         "version": "1.0.1"
     },
@@ -668,6 +711,9 @@
         "files": [
             "config/packages/snc_redis.yaml"
         ]
+    },
+    "spomky-labs/otphp": {
+        "version": "v10.0.1"
     },
     "squizlabs/php_codesniffer": {
         "version": "3.0",
@@ -1074,6 +1120,9 @@
     },
     "symplify/smart-file-system": {
         "version": "v7.2.3"
+    },
+    "thecodingmachine/safe": {
+        "version": "v1.3.3"
     },
     "theseer/tokenizer": {
         "version": "1.1.3"

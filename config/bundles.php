@@ -36,4 +36,5 @@ return [
     Symfony\WebpackEncoreBundle\WebpackEncoreBundle::class => ['all' => true],
     DevOps\KubernetesDeployment\DevOpsKubernetesDeploymentBundle::class => ['all' => true],
     Shopsys\Cdn\CdnBundle::class => ['all' => true],
+    Scheb\TwoFactorBundle\SchebTwoFactorBundle::class => ['all' => true],
 ];

@@ -37,6 +37,9 @@ security:
                 csrf_token_generator: security.csrf.token_manager
                 csrf_token_id: admin_logout
                 invalidate_session: false
+            two_factor:
+                auth_form_path: 2fa_login    # The route name you have used in the routes.yaml
+                check_path: 2fa_login_check  # The route name you have used in the routes.yaml
         frontend:
             pattern: ^/
             anonymous: ~
@@ -65,6 +68,11 @@ security:
                 invalidate_session: false
 
     access_control:
+        # This makes the logout route accessible during two-factor authentication. Allows the user to
+        # cancel two-factor authentication, if they need to.
+        - { path: ^/%admin_url%/logout, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        # This ensures that the form can only be accessed when two-factor authentication is in progress.
+        - { path: ^/%admin_url%/2fa, role: IS_AUTHENTICATED_2FA_IN_PROGRESS }
         # same pattern must be in routing_front.yaml
         - { path: ^/login-as-remembered-user/$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/%admin_url%/superadmin/, roles: ROLE_SUPER_ADMIN }

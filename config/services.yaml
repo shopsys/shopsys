@@ -341,6 +341,9 @@ services:
             - '%shopsys.domain_images_dir%'
         tags: ['doctrine.fixture.orm']
 
+    Shopsys\FrameworkBundle\Controller\Admin\AdministratorController:
+        class: 'App\Controller\Admin\AdministratorController'
+
     Shopsys\FrameworkBundle\Controller\Admin\CategoryController:
         class: 'App\Controller\Admin\CategoryController'
 
@@ -842,3 +845,7 @@ services:
 
     Shopsys\ReadModelBundle\Product\Detail\ProductDetailViewElasticsearchFactory:
         alias: App\Model\Product\Detail\ProductDetailViewElasticsearchFactory
+
+    Endroid\QrCode\Writer\PngWriter: ~
+
+    App\Model\Administrator\Mail\TwoFactorAuthenticationMail: ~

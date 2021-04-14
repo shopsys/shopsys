@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\Mail;
 
+use App\Model\Administrator\Mail\TwoFactorAuthenticationMail;
 use App\Model\Customer\Mail\CustomerActivationMail;
 use App\Model\Order\Mail\OrderMail;
 use Shopsys\FrameworkBundle\Model\Mail\MailTemplateConfiguration as BaseMailTemplateConfiguration;
@@ -21,6 +22,7 @@ class MailTemplateConfiguration extends BaseMailTemplateConfiguration
 
         $this->registerExtendedOrderStatusMailTemplates();
         $this->registerCustomerActivationMailTemplate();
+        $this->registerTwoFactorAuthenticationCodeMailTemplate();
     }
 
     private function registerExtendedOrderStatusMailTemplates(): void
@@ -80,5 +82,18 @@ class MailTemplateConfiguration extends BaseMailTemplateConfiguration
                 $orderStatusMailTemplate->withNewName($orderStatus->getName())
             );
         }
+    }
+
+    private function registerTwoFactorAuthenticationCodeMailTemplate(): void
+    {
+        $mailTemplate = new MailTemplateVariables(t('Two factor authentication code'));
+        $mailTemplate->addVariable(
+            TwoFactorAuthenticationMail::VARIABLE_AUTHENTICATION_CODE,
+            t('Authentication code'),
+            MailTemplateVariables::CONTEXT_BODY,
+            MailTemplateVariables::REQUIRED_BODY
+        );
+
+        $this->addMailTemplateVariables(TwoFactorAuthenticationMail::TWO_FACTOR_AUTHENTICATION_CODE, $mailTemplate);
     }
 }

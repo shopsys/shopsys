@@ -1,0 +1,38 @@
+{% extends '@ShopsysFramework/Admin/Layout/layoutWithPanel.html.twig' %}
+
+{% block title %}- {{ 'Administrator'|trans }}{% endblock %}
+{% block h1 %}{{ 'Administrator'|trans }}{% endblock %}
+
+{% block main_content %}
+    {% if administrator is defined and app.user.id == administrator.id %}
+        <div class="wrap-divider">
+            <h2>Two factor authentication</h2>
+            <div>
+                {% if administrator.enabledTwoFactorAuth %}
+                    Two factor authentication is enabled
+                    <a href="{{ url('admin_administrator_disable-two-factor-authentication', {'id': administrator.id}) }}" class="btn-link-style">{{ 'Disable two factor authentication'|trans }}</a>
+                {% else %}
+                    Two factor authentication is disabled
+                    <a href="{{ url('admin_administrator_enable-two-factor-authentication', {'id': administrator.id, 'twoFactorAuthenticationType': 'email'}) }}" class="btn-link-style">{{ 'Enable two factor authentication by email'|trans }}</a>
+                    <a href="{{ url('admin_administrator_enable-two-factor-authentication', {'id': administrator.id, 'twoFactorAuthenticationType': 'google_auth'}) }}" class="btn-link-style">{{ 'Enable two factor authentication by Google Authenticator'|trans }}</a>
+                {% endif %}
+
+            </div>
+        </div>
+    {% endif %}
+
+    <div class="wrap-divider">
+        {{ form_start(form) }}
+            {{ form_errors(form) }}
+
+            {% embed '@ShopsysFramework/Admin/Inline/FixedBar/fixedBar.html.twig' %}
+                {% block fixed_bar_content %}
+                    <a href="{{ url('admin_administrator_list') }}" class="btn-link-style">{{ 'Back to overview'|trans }}</a>
+                    {{ form_save(administrator|default(null), form) }}
+                {% endblock %}
+            {% endembed %}
+        {{ form_end(form) }}
+    </div>
+
+    {% block admin_log %}{% endblock %}
+{% endblock %}
