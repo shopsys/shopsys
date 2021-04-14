@@ -1,4 +1,5 @@
 # Changelog
+
 All notable changes, that change in some way the behavior of any of our packages that are maintained by monorepo repository.
 
 There is a list of all the repositories maintained by monorepo:
@@ -26,9 +27,97 @@ Packages are formatted by release version. You can see all the changes done to p
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html) as explained in the [Backward Compatibility Promise](https://docs.shopsys.com/en/latest/contributing/backward-compatibility-promise/).
 
-The changelog is generated during the release process using [ChangelogLinker](https://github.com/symplify/changeloglinker) since `v7.0.0-alpha6` release.
+The changelog is generated during the release process using [Github Changelog Generator](https://github.com/github-changelog-generator/github-changelog-generator) since `v9.1.1` release.
 
-<!-- changelog-linker -->
+## [v9.1.1](https://github.com/shopsys/shopsys/compare/v9.1.0...v9.1.1) (2021-04-19)
+
+:sparkles: Enhancements and features
+
+- \[framework\] allow multiple elasticsearch hosts [\#2240](https://github.com/shopsys/shopsys/pull/2240) ([grossmannmartin](https://github.com/grossmannmartin))
+- \[framework\] improve elasticsearch commands reliability [\#2233](https://github.com/shopsys/shopsys/pull/2233) ([s3tezsky](https://github.com/s3tezsky))
+- \[coding-standards\] added support for symfony5 [\#2183](https://github.com/shopsys/shopsys/pull/2183) ([pesektomas](https://github.com/pesektomas))
+
+:bug: Bug fixes
+
+- \[product-feed-heureka\] ignored errors reported by new squizlabs/php\_codesniffer version 3.6.0 [\#2287](https://github.com/shopsys/shopsys/pull/2287) ([TomasLudvik](https://github.com/TomasLudvik))
+- \[framework\] fixed cleaning redis in test environment [\#2286](https://github.com/shopsys/shopsys/pull/2286) ([grossmannmartin](https://github.com/grossmannmartin))
+- \[shopsys\] locked version of codeception/codeception to not install version 4.1.19 or higher [\#2285](https://github.com/shopsys/shopsys/pull/2285) ([s3tezsky](https://github.com/s3tezsky))
+- \[framework\] ElFinder abort exception is now muted [\#2259](https://github.com/shopsys/shopsys/pull/2259) ([grossmannmartin](https://github.com/grossmannmartin))
+- \[framework\] disallow partial export when elasticsearch structure is not created [\#2258](https://github.com/shopsys/shopsys/pull/2258) ([s3tezsky](https://github.com/s3tezsky))
+- \[framework\] changing parameter name now affects product detail [\#2251](https://github.com/shopsys/shopsys/pull/2251) ([grossmannmartin](https://github.com/grossmannmartin))
+- \[framework\] clean annotation cache before generating db migrations [\#2250](https://github.com/shopsys/shopsys/pull/2250) ([grossmannmartin](https://github.com/grossmannmartin))
+- \[framework\] fixed product parameters saving [\#2249](https://github.com/shopsys/shopsys/pull/2249) ([grossmannmartin](https://github.com/grossmannmartin))
+- \[framework\] prevent buying product with zero price [\#2239](https://github.com/shopsys/shopsys/pull/2239) ([s3tezsky](https://github.com/s3tezsky))
+- \[framework\] transform twig exception to proper 404 [\#2236](https://github.com/shopsys/shopsys/pull/2236) ([grossmannmartin](https://github.com/grossmannmartin))
+- \[framework\] elFinder: thumbnail is only removed when some thumbnail exists [\#2229](https://github.com/shopsys/shopsys/pull/2229) ([TomasLudvik](https://github.com/TomasLudvik))
+- \[framework\] fixed javascript validation for radiobuttons [\#2223](https://github.com/shopsys/shopsys/pull/2223) ([grossmannmartin](https://github.com/grossmannmartin))
+- \[frontend-api\] decorators inherits from base type instead of decorator [\#2222](https://github.com/shopsys/shopsys/pull/2222) ([s3tezsky](https://github.com/s3tezsky))
+- \[frontend-api\] fixed creating order with no products [\#2221](https://github.com/shopsys/shopsys/pull/2221) ([s3tezsky](https://github.com/s3tezsky))
+- \[framework\] updated elfinder installer to be compatible with helios-ag/fm-elfinder-bundle v10.1 [\#2217](https://github.com/shopsys/shopsys/pull/2217) ([grossmannmartin](https://github.com/grossmannmartin))
+- \[project-base\] smoke test for new product now work with HTTPS domain [\#2214](https://github.com/shopsys/shopsys/pull/2214) ([grossmannmartin](https://github.com/grossmannmartin))
+- \[coding-standards\] hotfix: prevent coding-standards of failing with symfony/dependency-injection in v5 [\#2212](https://github.com/shopsys/shopsys/pull/2212) ([s3tezsky](https://github.com/s3tezsky))
+- \[coding-standards\] hotfix: exclude version of symfony/dependency-injection which breaks ECS [\#2210](https://github.com/shopsys/shopsys/pull/2210) ([s3tezsky](https://github.com/s3tezsky))
+- \[framework\] empty strings are stored as null if possible [\#2206](https://github.com/shopsys/shopsys/pull/2206) ([s3tezsky](https://github.com/s3tezsky))
+- \[shopsys\] entities are refreshed after product visibility recalculations [\#2202](https://github.com/shopsys/shopsys/pull/2202) ([grossmannmartin](https://github.com/grossmannmartin))
+- \[frontend-api\] Payment price is required [\#2201](https://github.com/shopsys/shopsys/pull/2201) ([stanoMilan](https://github.com/stanoMilan))
+- \[shopsys\] prevent to pass null to not-nullable argument to ListedProductViewFactory::createFromArray\(\) [\#2200](https://github.com/shopsys/shopsys/pull/2200) ([s3tezsky](https://github.com/s3tezsky))
+- \[shopsys\] fixed interfaces reported by phpstan [\#2197](https://github.com/shopsys/shopsys/pull/2197) ([s3tezsky](https://github.com/s3tezsky))
+- \[framework\] set CountryDomain as multi domain entity [\#2191](https://github.com/shopsys/shopsys/pull/2191) ([stanoMilan](https://github.com/stanoMilan))
+- \[project-base\] search text is now trimmed [\#2187](https://github.com/shopsys/shopsys/pull/2187) ([s3tezsky](https://github.com/s3tezsky))
+- \[framework\] script name \(index.php\) in URL now always returns 404 [\#2186](https://github.com/shopsys/shopsys/pull/2186) ([grossmannmartin](https://github.com/grossmannmartin))
+- \[framework\] fixed cart when one of cart item is not sellable [\#2185](https://github.com/shopsys/shopsys/pull/2185) ([s3tezsky](https://github.com/s3tezsky))
+- \[framework\] removed validation of DisplayOnlyType [\#2184](https://github.com/shopsys/shopsys/pull/2184) ([s3tezsky](https://github.com/s3tezsky))
+- \[framework\] product visibility is now recalculated, when their category is removed [\#2180](https://github.com/shopsys/shopsys/pull/2180) ([TomasLudvik](https://github.com/TomasLudvik))
+- \[framework\] admin: customer user form: customer user with not existing email can be saved [\#2178](https://github.com/shopsys/shopsys/pull/2178) ([sspooky13](https://github.com/sspooky13))
+- \[framework\] admin: fixed displaying remove button for urls [\#2176](https://github.com/shopsys/shopsys/pull/2176) ([TomasLudvik](https://github.com/TomasLudvik))
+- \[project-base\] validate search text is printable [\#2174](https://github.com/shopsys/shopsys/pull/2174) ([s3tezsky](https://github.com/s3tezsky))
+- \[framework\] fixed box-upload white line overlapping box [\#2093](https://github.com/shopsys/shopsys/pull/2093) ([CarabineSK](https://github.com/CarabineSK))
+
+:hammer: Developer experience and refactoring
+
+- \[coding-standards\] removed direct dependency symplify/package-builder [\#2288](https://github.com/shopsys/shopsys/pull/2288) ([TomasLudvik](https://github.com/TomasLudvik))
+- \[shopsys\] bumped version of doctrine/migrations [\#2275](https://github.com/shopsys/shopsys/pull/2275) ([s3tezsky](https://github.com/s3tezsky))
+- \[framework\] improved readibility of MethodAnnotationsFactory::getMethodAnnotationLine\(\) method [\#2265](https://github.com/shopsys/shopsys/pull/2265) ([TomasLudvik](https://github.com/TomasLudvik))
+- \[project-base\] improved docker-sync reliability on MacOS [\#2264](https://github.com/shopsys/shopsys/pull/2264) ([TomasLudvik](https://github.com/TomasLudvik))
+- \[frontend-api\] TokenAuthenicator: use HEADER\_AUTHORIZATION consistently [\#2260](https://github.com/shopsys/shopsys/pull/2260) ([PetrHeinz](https://github.com/PetrHeinz))
+- \[coding-standards\] allowed installing coding-standards with symfony 5 and higher [\#2255](https://github.com/shopsys/shopsys/pull/2255) ([s3tezsky](https://github.com/s3tezsky))
+- \[shopsys\] updated phpstan/phpstan and phpstan/phpstan-symfony [\#2241](https://github.com/shopsys/shopsys/pull/2241) ([grossmannmartin](https://github.com/grossmannmartin))
+- \[product-feed-google\] removed unnecessary annotation [\#2228](https://github.com/shopsys/shopsys/pull/2228) ([grossmannmartin](https://github.com/grossmannmartin))
+- \[shopsys\] replaced sensiolabs/security-checker with enlightn/security-checker [\#2211](https://github.com/shopsys/shopsys/pull/2211) ([grossmannmartin](https://github.com/grossmannmartin))
+- \[framework\] CustomerUserFacade.php: assign customer to delivery address when changed only [\#2199](https://github.com/shopsys/shopsys/pull/2199) ([s3tezsky](https://github.com/s3tezsky))
+- \[frontend-api\] product decorators inherit all fields from product type [\#2195](https://github.com/shopsys/shopsys/pull/2195) ([malyMiso](https://github.com/malyMiso))
+- \[framework\] added info about default ordering in elasticsearch [\#2194](https://github.com/shopsys/shopsys/pull/2194) ([grossmannmartin](https://github.com/grossmannmartin))
+
+:book: Documentation
+
+- \[monorepo\] UPGRADE.md: info about updating NPM dependencies [\#2281](https://github.com/shopsys/shopsys/pull/2281) ([vitek-rostislav](https://github.com/vitek-rostislav))
+- \[project-base\] updated windows installation guide to omit docker-sync and use WSL 2 instead [\#2272](https://github.com/shopsys/shopsys/pull/2272) ([TomasLudvik](https://github.com/TomasLudvik))
+- \[shopsys\] removed prestissimo from open source license acknowledgements [\#2269](https://github.com/shopsys/shopsys/pull/2269) ([grossmannmartin](https://github.com/grossmannmartin))
+- \[docs\] improved formatting in FE API introduction [\#2253](https://github.com/shopsys/shopsys/pull/2253) ([grossmannmartin](https://github.com/grossmannmartin))
+- \[monorepo\] improve upgrade notes for upgrading ECS in v9.1.0 [\#2248](https://github.com/shopsys/shopsys/pull/2248) ([s3tezsky](https://github.com/s3tezsky))
+- \[docs\] Update page-layout-design.md [\#2238](https://github.com/shopsys/shopsys/pull/2238) ([abecko47](https://github.com/abecko47))
+- \[docs\] Update hover-intent.md [\#2237](https://github.com/shopsys/shopsys/pull/2237) ([abecko47](https://github.com/abecko47))
+- \[docs\] use `CategoryResolverMap` as an example of `ResolverMap` in FE API introduction [\#2196](https://github.com/shopsys/shopsys/pull/2196) ([malyMiso](https://github.com/malyMiso))
+- \[shopsys\] New year for license files [\#2190](https://github.com/shopsys/shopsys/pull/2190) ([sspooky13](https://github.com/sspooky13))
+
+:art: Design & appearance
+
+- \[project-base\] fix price-slider and small refactoring of filter [\#2226](https://github.com/shopsys/shopsys/pull/2226) ([Srnka392](https://github.com/Srnka392))
+- \[project-base\] logo on homepage is link and is not wrapped in H1  [\#2048](https://github.com/shopsys/shopsys/pull/2048) ([grossmannmartin](https://github.com/grossmannmartin))
+
+:rocket: Performance
+
+- \[shopsys\] improved image lazy loading [\#2268](https://github.com/shopsys/shopsys/pull/2268) ([Srnka392](https://github.com/Srnka392))
+- \[shopsys\] ckeditor is now inicialized after click [\#2177](https://github.com/shopsys/shopsys/pull/2177) ([grossmannmartin](https://github.com/grossmannmartin))
+
+:cloud: Infrastructure
+
+- \[monorepo\] do not pull elasticsearch and php-fpm image as they can be built locally [\#2280](https://github.com/shopsys/shopsys/pull/2280) ([TomasLudvik](https://github.com/TomasLudvik))
+- \[monorepo\] fixed CI builds [\#2262](https://github.com/shopsys/shopsys/pull/2262) ([TomasLudvik](https://github.com/TomasLudvik))
+- \[shopsys\] removed travis from monorepo [\#2246](https://github.com/shopsys/shopsys/pull/2246) ([grossmannmartin](https://github.com/grossmannmartin))
+- \[monorepo\] added github actions configs for all packages [\#2225](https://github.com/shopsys/shopsys/pull/2225) ([TomasLudvik](https://github.com/TomasLudvik))
+- \[monorepo\] updated Github actions to build right fork pull requests [\#2219](https://github.com/shopsys/shopsys/pull/2219) ([TomasLudvik](https://github.com/TomasLudvik))
+- \[monorepo\] github actions with persisted docker images [\#2193](https://github.com/shopsys/shopsys/pull/2193) ([TomasLudvik](https://github.com/TomasLudvik))
 
 ## [v9.1.0](https://github.com/shopsys/shopsys/compare/v9.0.4...v9.1.0) - 2021-01-06
 
