@@ -34,3 +34,9 @@ services:
         class: Twig\Loader\FilesystemLoader
         arguments:
             - ['upgrade/template']
+
+    Symplify\MonorepoBuilder\Release\Command\ReleaseCommand:
+        class: Shopsys\Releaser\Command\ReleaseCommand
+
+    Symplify\MonorepoBuilder\Release\ReleaseWorkerProvider:
+        class: Shopsys\Releaser\ReleaseWorker\ReleaseWorkerProvider
