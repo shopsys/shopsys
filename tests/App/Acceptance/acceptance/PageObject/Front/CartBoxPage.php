@@ -23,5 +23,6 @@ class CartBoxPage extends AbstractPage
         );
 
         $this->tester->seeInCss((string)$expectedCount, '.js-cart-count');
+        $this->tester->seeInCss($expectedFormattedPriceWithCurrency, '.js-cart-price-with-vat');
     }
 }

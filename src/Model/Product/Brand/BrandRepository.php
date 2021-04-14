@@ -10,6 +10,12 @@ use Shopsys\FrameworkBundle\Component\Paginator\QueryPaginator;
 use Shopsys\FrameworkBundle\Component\String\DatabaseSearching;
 use Shopsys\FrameworkBundle\Model\Product\Brand\BrandRepository as BaseBrandRepository;
 
+/**
+ * @method \App\Model\Product\Brand\Brand getById(int $brandId)
+ * @method \App\Model\Product\Brand\Brand[] getAll()
+ * @method \App\Model\Product\Brand\Brand getOneByUuid(string $uuid)
+ * @method \App\Model\Product\Brand\Brand[] getByUuids(string[] $uuids)
+ */
 class BrandRepository extends BaseBrandRepository
 {
     /**

@@ -22,7 +22,7 @@
             {% if cart is null %}
                 0 {{ currencySymbolByDomainId(getDomain().id) }}
             {% else %}
-                {{ productsPrice.priceWithVat|price }}
+                <span class="js-cart-price-with-vat">{{ productsPrice.priceWithVat|price }}</span>
             {% endif %}
         </span>
     </a>

@@ -31,7 +31,7 @@ export default class SearchAutocomplete {
         });
 
         $(document).click((event) => SearchAutocomplete.onDocumentClickHideAutocompleteResults(event, searchAutocomplete));
-        $('#js-search-autocomplete-hide').click(function() {
+        $('#js-search-autocomplete-remove').click(function () {
             searchAutocomplete.$searchAutocompleteResults.closest('#js-search-autocomplete').removeClass(searchAutocomplete.activeClass);
         });
     }
