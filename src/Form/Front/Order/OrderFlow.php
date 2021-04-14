@@ -13,6 +13,9 @@ class OrderFlow extends FormFlow
     public const STEP_SECOND = 2;
     public const STEP_THIRD = 3;
 
+    public const ROUTE_NAME_STEP_TRANSPORT_PAYMENT = 'front_order_step_transport_payment';
+    public const ROUTE_NAME_STEP_PERSONAL_INFO = 'front_order_step_personal_info';
+
     /**
      * @var bool
      */
@@ -106,7 +109,7 @@ class OrderFlow extends FormFlow
     /**
      * @return bool
      */
-    public function isBackToCartTransition()
+    public function isBackToCartTransition(): bool
     {
         return $this->getRequestedStepNumber() === 2
             && $this->getRequestedTransition() === self::TRANSITION_BACK;
@@ -175,6 +178,35 @@ class OrderFlow extends FormFlow
         $request = $this->getRequest()->request;
         $requestParameters = $request->all();
         $requestParameters['flow_order_step'] = $step->getNumber();
+        $requestParameters[$step->getFormType()] = $stepData;
+        $request->replace($requestParameters);
+    }
+
+    /**
+     * @return bool
+     */
+    public function isBackToTransportAndPaymentTransition(): bool
+    {
+        return $this->getRequestedStepNumber() === 3
+            && $this->getRequestedTransition() === self::TRANSITION_BACK;
+    }
+
+    /**
+     * @param int $stepNumber
+     */
+    public function setStep(int $stepNumber): void
+    {
+        $step = $this->getStep($stepNumber);
+        $stepsData = $this->retrieveStepData();
+        if (array_key_exists($step->getNumber(), $stepsData)) {
+            $stepData = $stepsData[$step->getNumber()];
+        } else {
+            $stepData = [];
+        }
+
+        $request = $this->getRequest()->request;
+        $requestParameters = $request->all();
+        $requestParameters[$this->dynamicStepNavigationStepParameter] = $step->getNumber();
         $requestParameters[$step->getFormType()] = $stepData;
         $request->replace($requestParameters);
     }

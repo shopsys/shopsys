@@ -10,6 +10,7 @@ use App\DataFixtures\Demo\OrderDataFixture;
 use App\DataFixtures\Demo\PersonalDataAccessRequestDataFixture;
 use App\DataFixtures\Demo\UnitDataFixture;
 use App\DataFixtures\Demo\VatDataFixture;
+use App\Form\Front\Order\OrderFlow;
 use App\Model\Administrator\Administrator;
 use Shopsys\FrameworkBundle\Component\DataFixture\PersistentReferenceFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
@@ -357,11 +358,18 @@ class RouteConfigCustomization
                     ->setAuth(new BasicHttpAuth('no-reply@shopsys.com', 'user123'))
                     ->setExpectedStatusCode(302);
             })
-            ->customizeByRouteName(['front_order_index', 'front_order_sent'], function (RouteConfig $config) {
-                $debugNote = 'Order page should redirect by 302 as the cart is empty by default.';
-                $config->changeDefaultRequestDataSet($debugNote)
-                    ->setExpectedStatusCode(302);
-            })
+            ->customizeByRouteName(
+                [
+                    OrderFlow::ROUTE_NAME_STEP_TRANSPORT_PAYMENT,
+                    OrderFlow::ROUTE_NAME_STEP_PERSONAL_INFO,
+                    'front_order_sent',
+                ],
+                function (RouteConfig $config) {
+                    $debugNote = 'Order page should redirect by 302 as the cart is empty by default.';
+                    $config->changeDefaultRequestDataSet($debugNote)
+                        ->setExpectedStatusCode(302);
+                }
+            )
             ->customizeByRouteName(['front_order_paid', 'front_order_not_paid'], function (RouteConfig $config) {
                 $debugNote = 'Order paid and not paid URLs needs urlHash as parameter.';
                 $config->changeDefaultRequestDataSet($debugNote)

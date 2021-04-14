@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\App\Acceptance\acceptance;
 
+use App\Form\Front\Order\OrderFlow;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Script\ScriptFacade;
 use Tests\App\Acceptance\acceptance\PageObject\Front\LayoutPage;
@@ -86,7 +87,7 @@ class OrderCest
         $orderPage->selectPayment(self::PAYMENT_CACHE_ON_DELIVERY);
         $orderPage->continueToThirdStep();
 
-        $me->amOnLocalizedRoute('front_order_index');
+        $me->amOnLocalizedRoute(OrderFlow::ROUTE_NAME_STEP_TRANSPORT_PAYMENT);
         $orderPage->assertTransportIsSelected(self::DEFAULT_TRANSPORT_NAME);
         $orderPage->assertPaymentIsSelected(self::DEFAULT_PAYMENT_NAME);
     }
@@ -114,7 +115,7 @@ class OrderCest
         $orderPage->fillFirstName('Jan');
         $orderPage->goBackToSecondStep();
 
-        $me->amOnLocalizedRoute('front_order_index');
+        $me->amOnLocalizedRoute(OrderFlow::ROUTE_NAME_STEP_TRANSPORT_PAYMENT);
         $orderPage->continueToThirdStep();
 
         $orderPage->assertFirstNameIsFilled('Jan');

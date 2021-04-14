@@ -30,8 +30,12 @@ front_logout:
     # controller's action is unnecessary, because firewall processes whole request
     path: /odhlasit/{_csrf_token}
 
-front_order_index:
-    path: /objednavka
+front_order_step_transport_payment:
+    path: /objednavka/doprava-a-platba
+    defaults: { _controller: App\Controller\Front\OrderController:indexAction }
+
+front_order_step_personal_info:
+    path: /objednavka/kontaktne-udaje
     defaults: { _controller: App\Controller\Front\OrderController:indexAction }
 
 front_order_paid:
