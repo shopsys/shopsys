@@ -1,6 +1,4 @@
 @header-mobile-button-size: 40px;
-@header-padding: 15px;
-@header-mobile-button-icon-size: 18px;
 
 @header-item-gap-small: 20px;
 @header-item-gap: 32px;
@@ -12,7 +10,7 @@
     padding: 8px 0 11px;
 
     @media @query-lg {
-        padding: @header-padding 0 0;
+        padding: 15px 0 0;
     }
 
     @media @query-vl {
@@ -118,7 +116,7 @@
 
             outline: 0;
             cursor: pointer;
-            font-size: @header-mobile-button-icon-size;
+            font-size: 18px;
 
             &--menu {
                 position: relative;
@@ -153,7 +151,7 @@
                 }
 
                 .header__mobile-button--menu & {
-                    margin: 0 10px;
+                    padding: 0 10px;
                     
                     color: @color-0;
                 }
@@ -218,42 +216,6 @@
 
         @media @query-lg {
             display: none;
-        }
-
-        &__placeholder {
-            display: none;
-
-            @media @query-tablet {
-                display: flex;
-                position: absolute;
-                left: 0;
-                top: 0;
-                width: @header-mobile-button-icon-size;
-                height: 100%;
-                z-index: @z-index-above;
-
-                opacity: 0;
-                visibility: hidden;
-                transform: scale(0.5);
-                transition: all @transition;
-                background-color: @color-orange-light;
-            }
-
-            &__line {
-                @media @query-tablet {
-                    display: block;
-                    position: absolute;
-                    left: 50%;
-                    top: 50%;
-                    margin-top: -1px;
-                    width: @header-mobile-button-icon-size;
-                    height: 2px;
-                    margin-left: -@header-mobile-button-icon-size / 2;
-
-                    background-color: @color-0;
-                    transition: all @transition;
-                }
-            }
         }
     }
 
