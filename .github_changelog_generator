@@ -1,0 +1,6 @@
+user=shopsys
+project=shopsys
+base=CHANGELOG.md
+issues=false
+filter-by-milestone=false
+configure-sections={ "enhancements": { "prefix": ":sparkles: Enhancements and features", "labels": [ "Enhancement" ] }, "bugs": { "prefix": ":bug: Bug Fixes", "labels": [ "Bug" ] }, "refactor": { "prefix": ":hammer: Developer experience and refactoring", "labels": [ "DX & Refactoring" ] }, "docs": { "prefix": ":book: Documentation", "labels": [ "Documentation" ] }, "design": { "prefix": ":art: Design & appearance", "labels": [ "Design & Appearance" ] }, "performance": { "prefix": ":rocket: Performance", "labels": [ "Performance" ] }, "infrastructure": { "prefix": ":cloud: Infrastructure", "labels": [ "Infrastructure" ] }, "security": { "prefix": ":warning: Security", "labels": [ "Security" ] } }
