@@ -7,26 +7,9 @@ namespace Shopsys\Releaser\ReleaseWorker\ReleaseCandidate;
 use PharIo\Version\Version;
 use Shopsys\Releaser\ReleaseWorker\AbstractShopsysReleaseWorker;
 use Shopsys\Releaser\Stage;
-use Symplify\MonorepoBuilder\Split\Git\GitManager;
 
 final class UpdateChangelogReleaseWorker extends AbstractShopsysReleaseWorker
 {
-    private const GITHUB_COMPANY_NAME = 'shopsys';
-    private const GITHUB_PROJECT_NAME = 'shopsys';
-
-    /**
-     * @var \Symplify\MonorepoBuilder\Split\Git\GitManager
-     */
-    private $gitManager;
-
-    /**
-     * @param \Symplify\MonorepoBuilder\Split\Git\GitManager $gitManager
-     */
-    public function __construct(GitManager $gitManager)
-    {
-        $this->gitManager = $gitManager;
-    }
-
     /**
      * @param \PharIo\Version\Version $version
      * @return string
@@ -61,13 +44,11 @@ final class UpdateChangelogReleaseWorker extends AbstractShopsysReleaseWorker
         $this->symfonyStyle->note('In order to generate new changelog entries you need to run this command outside of container:');
         $this->symfonyStyle->write(
             sprintf(
-                'docker run -it --rm -v "$(pwd)":/usr/local/src/your-app ferrarimarco/github-changelog-generator github_changelog_generator -u %s -p %s --token %s --base CHANGELOG.md --no-issues --since-tag %s --future-release %s --no-filter-by-milestone --configure-sections \'%s\'',
-                self::GITHUB_COMPANY_NAME,
-                self::GITHUB_PROJECT_NAME,
+                'docker run -it --rm -v "$(pwd)":/usr/local/src/your-app ferrarimarco/github-changelog-generator github_changelog_generator --token %s --release-branch %s --since-tag %s --future-release %s',
                 $githubToken,
-                $lastVersionOnCurrentBranch,
+                $this->initialBranchName,
+                trim($lastVersionOnCurrentBranch),
                 $version->getVersionString(),
-                $this->getSectionsDefinition(),
             )
         );
 
@@ -87,64 +68,5 @@ final class UpdateChangelogReleaseWorker extends AbstractShopsysReleaseWorker
     public function getStage(): string
     {
         return Stage::RELEASE_CANDIDATE;
-    }
-
-    /**
-     * @return string
-     */
-    private function getSectionsDefinition(): string
-    {
-        $sectionsDefinition = [
-            'enhancements' => [
-                'prefix' => ':sparkles: Enhancements and features',
-                'labels' => [
-                    'Enhancement',
-                ],
-            ],
-            'bugs' => [
-                'prefix' => ':bug: Bug fixes',
-                'labels' => [
-                    'Bug',
-                ],
-            ],
-            'refactor' => [
-                'prefix' => ':hammer: Developer experience and refactoring',
-                'labels' => [
-                    'DX & Refactoring',
-                ],
-            ],
-            'docs' => [
-                'prefix' => ':book: Documentation',
-                'labels' => [
-                    'Documentation',
-                ],
-            ],
-            'design' => [
-                'prefix' => ':art: Design & appearance',
-                'labels' => [
-                    'Design & Appearance',
-                ],
-            ],
-            'performance' => [
-                'prefix' => ':rocket: Performance',
-                'labels' => [
-                    'Performance',
-                ],
-            ],
-            'infrastructure' => [
-                'prefix' => ':cloud: Infrastructure',
-                'labels' => [
-                    'Infrastructure',
-                ],
-            ],
-            'security' => [
-                'prefix' => ':warning: Security',
-                'labels' => [
-                    'Security',
-                ],
-            ],
-        ];
-
-        return json_encode($sectionsDefinition);
     }
 }
