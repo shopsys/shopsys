@@ -12,10 +12,25 @@
                     autocomplete="off"
                     data-autocomplete-url="{{ url('front_search_autocomplete') }}"
                 />
-                <div class="search__form__remove" id="js-search-autocomplete-remove">
+                
+                <div class="search__form__remove js-search-autocomplete-remove">
                     <i class="svg svg-remove"></i>
                 </div>
+                
                 <button class="search__form__icon" type="submit" title="{{ 'Vyhledat'|trans }}"></button>
+                
+                <div class="search__form__button-hide js-search-autocomplete-remove">
+                    <div class="in-hamburger in-hamburger--active">
+                        <div class="in-hamburger__icon">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+                        <span class="in-hamburger__text in-hamburger__text--open">{{ 'Menu'|trans }}</span>
+                        <span class="in-hamburger__text in-hamburger__text--close">{{ 'Zavřít'|trans }}</span>
+                    </div>
+                </div>
             </div>
         </div>
         <div id="js-search-autocomplete-results" class="search__autocomplete"></div>

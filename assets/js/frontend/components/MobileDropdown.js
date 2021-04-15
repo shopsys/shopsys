@@ -1,12 +1,13 @@
 import Register from 'framework/common/utils/Register';
+import Overlay from '../utils/overlay';
 
 export default class MobileDropdown {
     constructor () {
         this.dropdownWrapper = '.js-mobile-dropdown';
         this.dropdownButton = '.js-mobile-dropdown-button';
         this.dropdownContainer = '.js-mobile-dropdown-container';
-        this.overlay = '.web__overlay';
         this.isToggleFinished = true;
+        this.isDropdownOpen = false;
     }
 
     static toggleDropdown (event, mobileDropdown) {
@@ -15,7 +16,15 @@ export default class MobileDropdown {
             mobileDropdown.isToggleFinished = false;
             
             event.stopPropagation(); 
-            $(mobileDropdown.overlay).fadeToggle();
+            
+            if (mobileDropdown.isDropdownOpen) {
+                Overlay.hideOverlay();
+                mobileDropdown.isDropdownOpen = !mobileDropdown.isDropdownOpen;
+            } else {
+                Overlay.showOverlay();
+                mobileDropdown.isDropdownOpen = !mobileDropdown.isDropdownOpen;
+            }
+
             currentContainer.slideToggle(function(){
                 mobileDropdown.isToggleFinished = true;
             });
@@ -30,12 +39,13 @@ export default class MobileDropdown {
         $(document).click(function(){
             if ($(mobileDropdown.dropdownContainer).is(":visible")) {
                 $(mobileDropdown.dropdownContainer).slideUp();
-                $(mobileDropdown.overlay).fadeOut();
+                Overlay.hideOverlay();
+                mobileDropdown.isDropdownOpen = !mobileDropdown.isDropdownOpen;
             }
         })
 
-        $(mobileDropdown.dropdownContainer).click(function(e){
-            e.stopPropagation(); 
+        $(mobileDropdown.dropdownContainer).click(function(event){
+            event.stopPropagation(); 
         });
     }
 }

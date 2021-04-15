@@ -2,6 +2,7 @@ import { KeyCodes } from 'framework/common/utils/KeyCodes';
 import Timeout from 'framework/common/utils/Timeout';
 import Translator from 'bazinga-translator';
 import Register from 'framework/common/utils/Register';
+import Overlay from '../utils/overlay';
 
 const defaults = {
     content: '',
@@ -71,7 +72,7 @@ export default class Window {
         const _this = this;
         this.$window.bind('windowClose', function () {
             _this.$window.removeClass('window-popup--active');
-            Window.hideOverlay();
+            Overlay.hideOverlay();
 
             setTimeout(function () {
                 _this.$activeWindow.trigger('windowFastClose');
@@ -80,7 +81,7 @@ export default class Window {
 
         this.$window.bind('windowFastClose', function () {
             $(this).remove();
-            Window.hideOverlay();
+            Overlay.hideOverlay();
             this.$activeWindow = null;
         });
 
@@ -172,9 +173,9 @@ export default class Window {
 
     show () {
         const _this = this;
-        Window.showOverlay();
+        Overlay.showOverlay();
         if (_this.options.closeOnBgClick) {
-            Window.getOverlay().click(function () {
+            Overlay.getOverlay().click(function () {
                 _this.options.eventClose.apply(_this.$window);
                 _this.$window.trigger('windowClose');
                 return false;
@@ -215,36 +216,6 @@ export default class Window {
             $('body').append($mainContainer);
         }
         return $mainContainer;
-    }
-
-    static getOverlay () {
-        let $overlay = $('#js-overlay');
-        if ($overlay.length === 0) {
-            $overlay = $('<div class="window-popup__overlay" id="js-overlay"></div>');
-        }
-        return $overlay;
-    }
-
-    static showOverlay () {
-        let $overlay = Window.getOverlay();
-        $('body').addClass('web--window-activated').append($overlay);
-
-        // timeout 0 to asynchronous run to fix css animation fade
-        setTimeout(function () {
-            $overlay.addClass('window-popup__overlay--active');
-        }, 0);
-    }
-
-    static hideOverlay () {
-        let $overlay = $('#js-overlay');
-        $('body').removeClass('web--window-activated');
-        $overlay.removeClass('window-popup__overlay--active');
-
-        if ($overlay.length !== 0) {
-            setTimeout(function () {
-                $overlay.remove();
-            }, Window.animationTime);
-        }
     }
 }
 

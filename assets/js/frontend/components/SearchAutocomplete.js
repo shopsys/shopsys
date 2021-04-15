@@ -1,5 +1,6 @@
 import Ajax from 'framework/common/utils/Ajax';
 import Register from 'framework/common/utils/Register';
+import Overlay from '../utils/overlay';
 
 export default class SearchAutocomplete {
 
@@ -27,13 +28,18 @@ export default class SearchAutocomplete {
         searchAutocomplete.$input.on('focus', function () {
             if (searchAutocomplete.resultExists) {
                 searchAutocomplete.$searchAutocompleteResults.closest('#js-search-autocomplete').addClass(searchAutocomplete.activeClass);
+                searchAutocomplete.$searchAutocompleteResults.find('#js-search-autocomplete-list').slideDown();
+                Overlay.showOverlay();
             }
         });
 
-        $(document).click((event) => SearchAutocomplete.onDocumentClickHideAutocompleteResults(event, searchAutocomplete));
-        $('#js-search-autocomplete-remove').click(function () {
+        $('.js-search-autocomplete-remove').click(function () {
             searchAutocomplete.$searchAutocompleteResults.closest('#js-search-autocomplete').removeClass(searchAutocomplete.activeClass);
+            searchAutocomplete.$searchAutocompleteResults.find('#js-search-autocomplete-list').slideUp();
+            Overlay.hideOverlay();
         });
+
+        $(document).click((event) => SearchAutocomplete.onDocumentClickHideAutocompleteResults(event, searchAutocomplete));
     }
 
     static onInputChange (event, searchAutocomplete) {
@@ -54,6 +60,8 @@ export default class SearchAutocomplete {
         const $autocompleteElements = searchAutocomplete.$input.add(searchAutocomplete.$searchAutocompleteResults);
         if (searchAutocomplete.resultExists && $(event.target).closest($autocompleteElements).length === 0) {
             searchAutocomplete.$searchAutocompleteResults.closest('#js-search-autocomplete').removeClass(searchAutocomplete.activeClass);
+            searchAutocomplete.$searchAutocompleteResults.find('#js-search-autocomplete-list').slideUp();
+            Overlay.hideOverlay();
         }
     }
 
@@ -69,6 +77,8 @@ export default class SearchAutocomplete {
         } else {
             searchAutocomplete.resultExists = false;
             searchAutocomplete.$searchAutocompleteResults.closest('#js-search-autocomplete').removeClass(searchAutocomplete.activeClass);
+            searchAutocomplete.$searchAutocompleteResults.find('#js-search-autocomplete-list').slideUp();
+            Overlay.hideOverlay();
         }
     }
 
@@ -95,6 +105,8 @@ export default class SearchAutocomplete {
         this.resultExists = $response.find('li').length > 0;
 
         this.$searchAutocompleteResults.closest('#js-search-autocomplete').addClass(this.activeClass);
+        this.$searchAutocompleteResults.find('#js-search-autocomplete-list').slideDown();
+        Overlay.showOverlay();
         this.$searchAutocompleteResults.html(responseHtml);
     }
 }

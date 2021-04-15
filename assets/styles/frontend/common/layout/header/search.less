@@ -6,19 +6,25 @@
 @search-hint-products-item-content-gap: 10px;
 
 .search {
-    position: relative;
     height: 48px;
+
+    @media @query-lg {
+        position: relative;
+    }
 
     &.is-active {
         .search {
             &__autocomplete {
-                opacity: 1;
-                transform: scaleY(1);
-                pointer-events: auto;
+                @media @query-lg {
+                    transform: scaleY(1);
+                    opacity: 1;
+                    pointer-events: auto;
+                }
             }
 
             &__form {
                 width: 100%;
+                z-index: @z-index-menu + 1;
 
                 @media @query-vl {
                     width: @search-form-extended-width;
@@ -33,26 +39,34 @@
                 &__remove {
                     display: flex;
                 }
+
+                &__button-hide {
+                    @media @query-tablet {
+                        display: block;
+                    }
+                }
             }
         }
     }
 
     &__in {
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: 100%;
-        z-index: @z-index-above;
+        @media @query-lg {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            z-index: @z-index-above;
+        }
     }
 
     &__form {
+        position: relative;
         display: flex;
         width: 100%;
 
         transition: all @transition;
 
         &__input {
-            position: relative;
             width: 100%;
 
             .input {
@@ -82,6 +96,13 @@
             &:hover {
                 background-color: darken(@color-light-secondary,3%);
             }
+        }
+
+        &__button-hide {
+            display: none;
+            position: absolute;
+            top: -51px;
+            right: 0;
         }
 
         &__icon {
@@ -132,15 +153,24 @@
 
     &__hint {
         position: absolute;
-        top: 12px;
-        left: 0;
-        width: 100%;
-        z-index: 10;
-        padding: 32px;
+        top: 0;
+        left: 10px;
+        right: 10px;
+        
+        z-index: @z-index-menu;
+        padding: 120px 30px 25px;
 
         background: @color-f;
-        border-radius: @radius;
         box-shadow: 0 5px 10px 0 rgba(164,167,193,0.34);
+
+        @media @query-lg {
+            top: 12px;
+            left: 0;
+            right: auto;
+            padding: 32px;
+
+            border-radius: @radius;
+        }
 
         &__title {
             margin: 0;
@@ -155,10 +185,14 @@
 
         &__list {
             .reset-ul();
-            margin-bottom: 30px;
-
+            margin-bottom: 10px;
+            
             &__item {
                 border-bottom: 1px solid @color-border;
+
+                &:last-child {
+                    border-bottom: 0
+                }
     
                 &__link {
                     .clearfix();
@@ -274,15 +308,14 @@
     }
 
     &__autocomplete {
-        position: relative;
-        z-index: 10;
-        width: 100%;
-
-        opacity: 0;
-        transform: scaleY(0.9);
-        pointer-events: none;
-        transition: all @transition;
-        transform-origin: center top;
+        @media @query-lg {
+            opacity: 0;
+            pointer-events: none;
+            position: relative;
+            transform: scaleY(0.9);
+            transition: all @transition;
+            transform-origin: center top;
+        }
                 
         @media @query-vl {
             width: @search-form-extended-width;
