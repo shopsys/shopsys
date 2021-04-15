@@ -56,7 +56,7 @@ final class UpdateChangelogReleaseWorker extends AbstractShopsysReleaseWorker
             'Please enter no-scope Github token (https://github.com/settings/tokens/new)'
         );
 
-        $mostRecentVersion = new Version($this->gitManager->getMostRecentTag(getcwd()));
+        $lastVersionOnCurrentBranch = $this->processRunner->run('git describe --tags --abbrev=0');
 
         $this->symfonyStyle->note('In order to generate new changelog entries you need to run this command outside of container:');
         $this->symfonyStyle->write(
@@ -65,7 +65,7 @@ final class UpdateChangelogReleaseWorker extends AbstractShopsysReleaseWorker
                 self::GITHUB_COMPANY_NAME,
                 self::GITHUB_PROJECT_NAME,
                 $githubToken,
-                $mostRecentVersion->getVersionString(),
+                $lastVersionOnCurrentBranch,
                 $version->getVersionString(),
                 $this->getSectionsDefinition(),
             )
