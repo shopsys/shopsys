@@ -119,14 +119,9 @@
             font-size: 18px;
 
             &--menu {
-                position: relative;
                 width: auto;
                 order: 4;
                 margin-left: 16px;
-                z-index: @z-index-menu + 1;
-
-                background-color: @color-orange-light;
-                border-radius: @radius;
             }
 
             &--login {
@@ -148,35 +143,6 @@
                 &:hover {
                     text-decoration: none;
                     color: @color-f;
-                }
-
-                .header__mobile-button--menu & {
-                    padding: 0 10px;
-                    
-                    color: @color-0;
-                }
-            }
-
-            &__text {
-                width: 29px;
-                margin-left: 4px;
-
-                font-size: 11px;
-
-                &--open {
-                    display: inline;
-
-                    .active & {
-                        display: none;
-                    }
-                }
-
-                &--close {
-                    display: none;
-
-                    .active & {
-                        display: inline;
-                    }
                 }
             }
 

@@ -18,8 +18,8 @@
     </div>
 
     <div class="display-none display-block-tablet">
-        {% cache constant('App\\Component\\Cache\\TwigCachedMenuFacade::MOBILE_PANEL_MENU') {lifetime:60*60*24, domainId:getDomain().id} %}
+            
             {{ render(controller('App\\Controller\\Front\\CategoryController:mobilePanelMenuAction'))|spaceless }}
-        {% endcache %}
+    
     </div>
 {% endblock %}

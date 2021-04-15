@@ -29,4 +29,5 @@ import './ResetCustomerpassword';
 import './spinbox';
 import './popup';
 import './MobileMenu';
+import './MobileDropdown';
 import './SaleProductsOnHomePageCarousel';

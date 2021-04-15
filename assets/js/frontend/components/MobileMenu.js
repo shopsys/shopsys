@@ -33,8 +33,6 @@ export default class MobileMenu {
     }
 
     static init ($container) {
-        $container.filterAllNodes('.js-mobile-menu-button').on('click', () => $('.web__overlay').fadeToggle());
-
         $container.filterAllNodes('.js-mobile-menu-expand-control')
             .on('click', (event) => MobileMenu.onCategoryExpandControlClick(event));
 
