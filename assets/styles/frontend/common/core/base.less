@@ -104,19 +104,11 @@ h1, h2, h3, h4, h5, h6 {
 h1 {
     margin: 0 0 10px 0;
 
-    font-size: 26px;
-
-    @media @query-md {
-        font-size: 28px;
-    }
+    font-size: 24px;
 
     @media @query-lg {
         margin-bottom: 15px;
 
-        font-size: 30px;
-    }
-
-    @media @query-vl {
         font-size: 32px;
     }
 }
@@ -124,11 +116,7 @@ h1 {
 h2 {
     margin: 0 0 10px 0;
 
-    font-size: 22px;
-
-    @media @query-md {
-        font-size: 23px;
-    }
+    font-size: 18px;
 
     @media @query-lg {
         font-size: 24px;
@@ -138,24 +126,33 @@ h2 {
 h3 {
     margin: 0 0 10px 0;
 
-    font-size: 18px;
+    font-size: @font-size;
 
     @media @query-lg {
         margin-bottom: 15px;
+
+        font-size: 18px;
     }
 }
 
 h4 {
     margin: 0 0 10px 0;
 
-    font-size: @font-size;
+    font-size: @font-size-mobile;
+
+    @media @query-lg {
+        font-size: @font-size;
+    }
 }
 
 h5, h6 {
     margin: 0 0 10px 0;
 
-    font-size: @font-size-mobile;
-    font-weight: normal;
+    font-size: @font-size;
+
+    @media @query-lg {
+        font-size: @font-size;
+    }
 }
 
 a {
