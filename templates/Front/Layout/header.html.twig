@@ -22,9 +22,9 @@
             {{ render(controller('App\\Controller\\Front\\SearchController:boxAction')) }}
         </div>
 
-        <div class="header__mobile-button header__mobile-button--login">
+        <div class="header__mobile-button header__mobile-button--login js-mobile-dropdown">
             {% if is_granted('ROLE_LOGGED_CUSTOMER') %}
-                <span class="header__mobile-button__in js-responsive-toggle" data-element="js-user-menu" data-hide-on-click-out="true">
+                <span class="header__mobile-button__in js-mobile-dropdown-button">
                     <i class="svg svg-user"></i>
                 </span>
             {% else %}
@@ -36,22 +36,37 @@
                     <i class="svg svg-user"></i>
                 </a>
             {% endif %}
-            <div class="header__mobile-button__menu" id="js-user-menu">
+            <div class="in-mobile-dropdown js-mobile-dropdown-container">
+                <div class="in-mobile-dropdown__button">
+                    <div class="in-hamburger in-hamburger--active js-mobile-dropdown-button">
+                        <div class="in-hamburger__icon">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+                        <span class="in-hamburger__text in-hamburger__text--open">{{ 'Menu'|trans }}</span>
+                        <span class="in-hamburger__text in-hamburger__text--close">{{ 'Zavřít'|trans }}</span>
+                    </div>
+                </div>
+
                 {% if is_granted('ROLE_LOGGED_CUSTOMER') %}
-                    <a href="{{ url('front_customer_edit') }}">
-                        {{ 'Personal data'|trans }}
-                    </a>
-                    <a href="{{ url('front_customer_orders') }}">
-                        {{ 'Orders'|trans }}
-                    </a>
-                    <a href="{{ url('front_logout', { _csrf_token: csrf_token('frontend_logout')}) }}">
-                        {{ 'Log out'|trans }}
-                    </a>
+                    <div class="header__mobile-button__menu">
+                        <a class="header__mobile-button__menu__item" href="{{ url('front_customer_edit') }}">
+                            {{ 'Personal data'|trans }}
+                        </a>
+                        <a class="header__mobile-button__menu__item" href="{{ url('front_customer_orders') }}">
+                            {{ 'Orders'|trans }}
+                        </a>
+                        <a class="header__mobile-button__menu__item" href="{{ url('front_logout', { _csrf_token: csrf_token('frontend_logout')}) }}">
+                            {{ 'Log out'|trans }}
+                        </a>
+                    </div>
                 {% endif %}
             </div>
         </div>
 
-        <div class="header__mobile-button header__mobile-button--menu">
+        <div class="header__mobile-button header__mobile-button--menu js-mobile-dropdown">
             <div class="in-hamburger js-mobile-dropdown-button">
                 <div class="in-hamburger__icon">
                     <span></span>
@@ -62,6 +77,8 @@
                 <span class="in-hamburger__text in-hamburger__text--open">{{ 'Menu'|trans }}</span>
                 <span class="in-hamburger__text in-hamburger__text--close">{{ 'Zavřít'|trans }}</span>
             </div>
+
+            {{ render(controller('App\\Controller\\Front\\CategoryController:mobilePanelMenuAction'))|spaceless }}
         </div>
 
         <div class="header__links dont-print">

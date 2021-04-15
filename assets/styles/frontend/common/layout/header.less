@@ -4,7 +4,6 @@
 @header-item-gap: 32px;
 
 .header {
-    position: relative;
     display: flex;
     flex-wrap: wrap;
     padding: 8px 0 11px;
@@ -147,34 +146,18 @@
             }
 
             &__menu {
-                display: none;
-                position: absolute;
-                top: 59px;
-                left: -@web-padding;
-                right: -@web-padding;
-                z-index: 10;
-                padding: 15px 15px 20px;
-
-                background: @color-f;
-                box-shadow: 0 15px 15px rgba(0,0,0, 0.2);
-
-                a {
+                &__item {
                     display: block;
-                    padding: 10px 15px 8px;
+                    padding: 20px 30px 18px 30px;
 
-                    font-size: 15px;
-                    border: 1px solid @color-border;
-                    border-top: 0;
-
-                    &:first-child {
-                        border-top: 1px solid @color-border;
-                        border-top-left-radius: @radius;
-                        border-top-right-radius: @radius;
-                    }
+                    border-bottom: 1px solid @color-border;
+                    font-weight: 700;
+                    text-decoration: none;
+                    font-size: @font-size;
+                    text-transform: uppercase;
 
                     &:last-child {
-                        border-bottom-left-radius: @radius;
-                        border-bottom-right-radius: @radius;
+                        border-bottom: 0;
                     }
                 }
             }
