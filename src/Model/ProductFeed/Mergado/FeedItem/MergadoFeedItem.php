@@ -16,11 +16,10 @@ class MergadoFeedItem implements FeedItemInterface
         1 => 'Akce',
         2 => 'Cenový HIT',
         3 => 'Novinka',
-        4 => 'Commerce Cloud cena',
-        5 => 'Výprodej',
-        6 => 'Vyrobeno v CZ',
-        7 => 'Vyrobeno v DE',
-        8 => 'Vyrobeno v SK',
+        4 => 'Výprodej',
+        5 => 'Vyrobeno v CZ',
+        6 => 'Vyrobeno v DE',
+        7 => 'Vyrobeno v SK',
     ];
 
     /**

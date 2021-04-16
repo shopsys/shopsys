@@ -31,7 +31,7 @@ class FlagFilterChoiceRepositoryTest extends TransactionFunctionalTestCase
     public function testFlagFilterChoicesFromCategoryWithFlags(): void
     {
         $flagFilterChoices = $this->getChoicesForCategoryReference(CategoryDataFixture::CATEGORY_ELECTRONICS);
-        $this->assertCount(2, $flagFilterChoices);
+        $this->assertCount(1, $flagFilterChoices);
 
         $ids = array_map(
             static function (Flag $flag) {
@@ -41,7 +41,6 @@ class FlagFilterChoiceRepositoryTest extends TransactionFunctionalTestCase
         );
 
         $this->assertContains(2, $ids);
-        $this->assertContains(3, $ids);
     }
 
     public function testGetFlagFilterChoicesForSearchPhone(): void

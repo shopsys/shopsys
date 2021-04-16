@@ -92,7 +92,6 @@ class ProductExportRepositoryTest extends TransactionFunctionalTestCase
             'searching_eans',
             'searching_partnos',
             'searching_short_descriptions',
-            'has_ssfwcc_flag',
         ];
     }
 }

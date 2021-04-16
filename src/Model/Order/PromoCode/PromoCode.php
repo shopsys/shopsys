@@ -98,12 +98,6 @@ class PromoCode extends BasePromoCode
     private $inAction;
 
     /**
-     * @var bool
-     * @ORM\Column(type="boolean")
-     */
-    private $ssfwccPrice;
-
-    /**
      * @var int
      * @ORM\Column(type="integer")
      */
@@ -133,7 +127,6 @@ class PromoCode extends BasePromoCode
         $this->applyOnSecondProduct = $promoCodeData->applyOnSecondProduct;
         $this->onSale = $promoCodeData->onSale;
         $this->inAction = $promoCodeData->inAction;
-        $this->ssfwccPrice = $promoCodeData->ssfwccPrice;
         $this->priceHit = $promoCodeData->priceHit;
         $this->discountType = $promoCodeData->discountType;
     }
@@ -156,7 +149,6 @@ class PromoCode extends BasePromoCode
         $this->applyOnSecondProduct = $promoCodeData->applyOnSecondProduct;
         $this->onSale = $promoCodeData->onSale;
         $this->inAction = $promoCodeData->inAction;
-        $this->ssfwccPrice = $promoCodeData->ssfwccPrice;
         $this->priceHit = $promoCodeData->priceHit;
         $this->discountType = $promoCodeData->discountType;
     }
@@ -246,14 +238,6 @@ class PromoCode extends BasePromoCode
     public function isInAction(): bool
     {
         return $this->inAction;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isSsfwccPrice(): bool
-    {
-        return $this->ssfwccPrice;
     }
 
     /**

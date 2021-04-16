@@ -25,25 +25,21 @@ final class Version20200221155940 extends AbstractMigration
         $this->sql('INSERT INTO flag_translations (id, translatable_id, name, locale) VALUES (3, 2, \'Akce\', \'cs\')');
         $this->sql('INSERT INTO flag_translations (id, translatable_id, name, locale) VALUES (4, 2, \'Akcia\', \'sk\')');
 
-        $this->sql('INSERT INTO flags (id, rgb_color, visible, akeneo_code) VALUES (3, \'#ffffff\', true, \'flag__product_ssfwcc\')');
-        $this->sql('INSERT INTO flag_translations (id, translatable_id, name, locale) VALUES (5, 3, \'Commerce Cloud cena\', \'cs\')');
-        $this->sql('INSERT INTO flag_translations (id, translatable_id, name, locale) VALUES (6, 3, \'Commerce Cloud cena\', \'sk\')');
+        $this->sql('INSERT INTO flags (id, rgb_color, visible, akeneo_code) VALUES (3, \'#ffffff\', true, \'flag__product_new\')');
+        $this->sql('INSERT INTO flag_translations (id, translatable_id, name, locale) VALUES (5, 3, \'Novinka\', \'cs\')');
+        $this->sql('INSERT INTO flag_translations (id, translatable_id, name, locale) VALUES (6, 3, \'Novinka\', \'sk\')');
 
-        $this->sql('INSERT INTO flags (id, rgb_color, visible, akeneo_code) VALUES (4, \'#ffffff\', true, \'flag__product_new\')');
-        $this->sql('INSERT INTO flag_translations (id, translatable_id, name, locale) VALUES (7, 4, \'Novinka\', \'cs\')');
-        $this->sql('INSERT INTO flag_translations (id, translatable_id, name, locale) VALUES (8, 4, \'Novinka\', \'sk\')');
+        $this->sql('INSERT INTO flags (id, rgb_color, visible, akeneo_code) VALUES (4, \'#ffffff\', true, \'flag__product_made_in_cz\')');
+        $this->sql('INSERT INTO flag_translations (id, translatable_id, name, locale) VALUES (7, 4, \'Vyrobeno v ČR\', \'cs\')');
+        $this->sql('INSERT INTO flag_translations (id, translatable_id, name, locale) VALUES (8, 4, \'Vyrobeno v ČR\', \'sk\')');
 
-        $this->sql('INSERT INTO flags (id, rgb_color, visible, akeneo_code) VALUES (5, \'#ffffff\', true, \'flag__product_made_in_cz\')');
-        $this->sql('INSERT INTO flag_translations (id, translatable_id, name, locale) VALUES (9, 5, \'Vyrobeno v ČR\', \'cs\')');
-        $this->sql('INSERT INTO flag_translations (id, translatable_id, name, locale) VALUES (10, 5, \'Vyrobeno v ČR\', \'sk\')');
+        $this->sql('INSERT INTO flags (id, rgb_color, visible, akeneo_code) VALUES (5, \'#ffffff\', true, \'flag__product_made_in_sk\')');
+        $this->sql('INSERT INTO flag_translations (id, translatable_id, name, locale) VALUES (9, 5, \'Vyrobeno v SK\', \'cs\')');
+        $this->sql('INSERT INTO flag_translations (id, translatable_id, name, locale) VALUES (10, 5, \'Vyrobeno v SK\', \'sk\')');
 
-        $this->sql('INSERT INTO flags (id, rgb_color, visible, akeneo_code) VALUES (6, \'#ffffff\', true, \'flag__product_made_in_sk\')');
-        $this->sql('INSERT INTO flag_translations (id, translatable_id, name, locale) VALUES (11, 6, \'Vyrobeno v SK\', \'cs\')');
-        $this->sql('INSERT INTO flag_translations (id, translatable_id, name, locale) VALUES (12, 6, \'Vyrobeno v SK\', \'sk\')');
-
-        $this->sql('INSERT INTO flags (id, rgb_color, visible, akeneo_code) VALUES (7, \'#ffffff\', true, \'flag__product_made_in_de\')');
-        $this->sql('INSERT INTO flag_translations (id, translatable_id, name, locale) VALUES (13, 7, \'Vyrobeno v DE\', \'cs\')');
-        $this->sql('INSERT INTO flag_translations (id, translatable_id, name, locale) VALUES (14, 7, \'Vyrobeno v DE\', \'sk\')');
+        $this->sql('INSERT INTO flags (id, rgb_color, visible, akeneo_code) VALUES (6, \'#ffffff\', true, \'flag__product_made_in_de\')');
+        $this->sql('INSERT INTO flag_translations (id, translatable_id, name, locale) VALUES (11, 6, \'Vyrobeno v DE\', \'cs\')');
+        $this->sql('INSERT INTO flag_translations (id, translatable_id, name, locale) VALUES (12, 6, \'Vyrobeno v DE\', \'sk\')');
     }
 
     /**
