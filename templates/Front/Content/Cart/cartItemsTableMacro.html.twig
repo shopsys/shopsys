@@ -88,13 +88,13 @@
                 </td>
 
                 <td class="table-cart__cell table-cart__cell--amount">
-                    <span class="form-input-spinbox form-input-spinbox--light form-input-spinbox--mini js-spinbox">
-                        {{ form_widget(form.quantities[index], { attr: { class: 'form-input-spinbox__input input-no-style js-spinbox-input', 'data-spinbox-min': 1, 'data-spinbox-max': dataSpinboxMax}}) }}
-                        <button type="button" class="btn-no-style form-input-spinbox__btn form-input-spinbox__btn--plus js-spinbox-plus">
-                            <i class="form-input-spinbox__btn__icon form-input-spinbox__btn__icon--plus svg svg-arrow"></i>
+                    <span class="form-input-spinbox js-spinbox">
+                        <button type="button" class="btn-no-style form-input-spinbox__btn js-spinbox-minus">
+                            <i class="svg svg-minus"></i>
                         </button>
-                        <button type="button" class="btn-no-style form-input-spinbox__btn form-input-spinbox__btn--minus js-spinbox-minus">
-                            <i class="form-input-spinbox__btn__icon svg svg-arrow"></i>
+                        {{ form_widget(form.quantities[index], { attr: { class: 'form-input-spinbox__input input-no-style js-spinbox-input', 'data-spinbox-min': 1, 'data-spinbox-max': dataSpinboxMax}}) }}
+                        <button type="button" class="btn-no-style form-input-spinbox__btn js-spinbox-plus">
+                            <i class="svg svg-plus"></i>
                         </button>
                     </span>
                 </td>
