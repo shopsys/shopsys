@@ -7,6 +7,7 @@ namespace App\Controller\Front;
 use App\Model\Product\Brand\BrandFacade;
 use App\Model\Product\Filter\ProductFilterData;
 use App\Model\Product\Listed\ListedProductViewElasticFacade;
+use Shopsys\FrameworkBundle\Component\String\TransformString;
 use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
 use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingConfig;
 use Symfony\Component\HttpFoundation\Request;
@@ -88,7 +89,9 @@ class SearchController extends FrontBaseController
      */
     public function boxAction(Request $request)
     {
-        $searchText = $request->query->get(ProductController::SEARCH_TEXT_PARAMETER);
+        $searchText = TransformString::replaceInvalidUtf8CharactersByQuestionMark(
+            (string)$request->query->get(ProductController::SEARCH_TEXT_PARAMETER)
+        );
 
         return $this->render('Front/Content/Search/searchBox.html.twig', [
             'searchText' => $searchText,

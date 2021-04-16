@@ -26,6 +26,7 @@ use App\Model\Product\Filter\ProductFilterFacade;
 use App\Model\Product\Listed\ListedProductViewElasticFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Paginator\PaginationResult;
+use Shopsys\FrameworkBundle\Component\String\TransformString;
 use Shopsys\FrameworkBundle\Model\Module\ModuleFacade;
 use Shopsys\FrameworkBundle\Model\Module\ModuleList;
 use Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade;
@@ -46,6 +47,7 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 class ProductController extends FrontBaseController
 {
     public const SEARCH_TEXT_PARAMETER = 'q';
+    private const SEARCH_TEXT_DEFAULT_VALUE = '';
     public const PAGE_QUERY_PARAMETER = 'page';
     public const PRODUCTS_PER_PAGE = 36;
     public const SIMILAR_PRODUCTS_PER_PAGE = 8;
@@ -489,7 +491,9 @@ class ProductController extends FrontBaseController
      */
     public function searchAction(Request $request)
     {
-        $searchText = $request->query->get(self::SEARCH_TEXT_PARAMETER, '');
+        $searchText = TransformString::replaceInvalidUtf8CharactersByQuestionMark(
+            (string)$request->query->get(self::SEARCH_TEXT_PARAMETER, self::SEARCH_TEXT_DEFAULT_VALUE)
+        );
 
         $requestPage = $request->get(self::PAGE_QUERY_PARAMETER);
         if (!$this->isRequestPageValid($requestPage)) {
