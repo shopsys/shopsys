@@ -1,7 +1,8 @@
 // Core
 @import "core/variables.less";
 @import "core/mixin/base.less";
-
+@import "core/reset.less";
+@import "core/base.less";
 @import "core/typography.less";
 
 //// Forms
@@ -9,11 +10,48 @@
 @import "core/form/btn.less";
 
 // Components
+//// in
+@import "components/in/user-text.less";
 
 // pregenerated helpers at the end
 @import "helpers.less";
 
+@wysiwyg-ul-point-size: 6px;
+
 // Padding to wysiwyg window
 body {
     padding: 20px;
+}
+
+.cke_editable {
+    ul {
+        .reset-ul();
+        margin-bottom: @margin-gap;
+
+        li {
+            position: relative;
+            padding-left: 15px;
+            line-height: 18px;
+            margin-bottom: 5px;
+
+            &:after {
+                position: absolute;
+                content: '';
+                top: @wysiwyg-ul-point-size;
+                left: 0;
+                width: @wysiwyg-ul-point-size;
+                height: @wysiwyg-ul-point-size;
+
+                background: @color-green;
+            }
+        }
+
+        ul {
+            margin: 5px 0 0 15px;
+        }
+    }
+
+    img {
+        height: auto !important;
+    }
 }
