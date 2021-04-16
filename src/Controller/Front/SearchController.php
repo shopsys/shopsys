@@ -53,7 +53,7 @@ class SearchController extends FrontBaseController
      */
     public function autocompleteAction(Request $request)
     {
-        $searchText = $request->get('searchText');
+        $searchText = trim($request->get('searchText'));
         $searchUrl = $this->generateUrl('front_product_search', [ProductController::SEARCH_TEXT_PARAMETER => $searchText]);
 
         $categoriesPaginationResult = $this->categoryFacade->getSearchAutocompleteCategories(
@@ -90,7 +90,7 @@ class SearchController extends FrontBaseController
     public function boxAction(Request $request)
     {
         $searchText = TransformString::replaceInvalidUtf8CharactersByQuestionMark(
-            (string)$request->query->get(ProductController::SEARCH_TEXT_PARAMETER)
+            trim((string)$request->query->get(ProductController::SEARCH_TEXT_PARAMETER))
         );
 
         return $this->render('Front/Content/Search/searchBox.html.twig', [
