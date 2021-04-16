@@ -93,7 +93,7 @@ class ProductVisibilityRepositoryTest extends TransactionFunctionalTestCase
     private function setDescriptionForAllDomain(ProductData $productData): void
     {
         foreach ($this->domain->getAllIds() as $domainId) {
-            if (($productData->descriptions[$domainId] ?? false) === false || $productData->descriptions[$domainId] === null || $productData->descriptions[$domainId] === '') {
+            if (!array_key_exists($domainId, $productData->descriptions) || $productData->descriptions[$domainId] === null || $productData->descriptions[$domainId] === '') {
                 $productData->descriptions[$domainId] = 'description';
             }
         }
