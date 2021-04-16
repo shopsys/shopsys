@@ -12,9 +12,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 class FlagFormTypeExtension extends AbstractTypeExtension
 {
-    public const DISABLED_FIELDS = [
-        'name',
-    ];
+    public const DISABLED_FIELDS = [];
 
     /**
      * @var \App\Component\Form\FormBuilderHelper
