@@ -117,13 +117,6 @@ parameters:
         Shopsys\CodingStandards\Sniffs\ObjectIsCreatedByFactorySniff:
             - '*/tests/*'
             - '*/src/Model/Order/Preview/OrderPreviewCalculation.php'
-            # classes bellow are ignored because of actual design seems to be weird and probably need to be rewritten in future
-            - '*/src/Model/Product/Brand/CachedBrand.php'
-            - '*/src/Model/Product/Flag/CachedFlag.php'
-            - '*/src/Model/Product/Parameter/CachedParameter.php'
-            - '*/src/Model/Product/Parameter/CachedParameterGroup.php'
-            - '*/src/Model/Product/Parameter/CachedParameterValue.php'
-            - '*/src/Model/Product/Parameter/Unit/CachedParameterUnit.php'
 
         Shopsys\CodingStandards\Sniffs\ForbiddenDumpSniff:
             - '*/tests/App/Functional/Model/Cart/CartFacadeTest.php'
