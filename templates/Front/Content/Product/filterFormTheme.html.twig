@@ -22,8 +22,8 @@
             {% for child in form %}
                 <div class="form-choice">
                     <label{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
-                        {{ form_widget(child, { attr: {class: 'form-choice__input'} }) }}
-                        <span class="form-choice__label">
+                        {{ form_widget(child) }}
+                        <span>
                             {{ child.vars.label }}
                         </span>
                     </label>

@@ -12,8 +12,8 @@ export default class RegistrationForm {
         this.$passwordContainer = $form.find('#js-registration-form-password-container');
         this.$activationInfo = $form.find('#js-registration-form-activation-info');
         this.$customerTypeSelector = $form.find('.js-registration-form-customer-type-selector');
-        this.$commonCustomerButton = this.$customerTypeSelector.find('a[data-tab-id="common-customer"]:first');
-        this.$companyCustomerButton = this.$customerTypeSelector.find('a[data-tab-id="company-customer"]:first');
+        this.$commonCustomerButton = this.$customerTypeSelector.find('[data-tab-id="common-customer"]:first');
+        this.$companyCustomerButton = this.$customerTypeSelector.find('[data-tab-id="company-customer"]:first');
         this.lastCheckedEmail = this.$emailInput.val();
 
         this.customerInfo = $form.data('customer-info');

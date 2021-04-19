@@ -21,65 +21,6 @@
         position: relative;
         z-index: 2;
         margin-bottom: 15px;
-
-        &__item {
-            display: inline-flex;
-            align-items: center;
-            position: relative;
-            flex-grow: 1;
-            margin-right: 30px;
-
-            color: @color-primary;
-            font-size: 15px;
-
-            &::before {
-                top: 0;
-                width: @box-chooser-check-size;
-                height: @box-chooser-check-size;
-                content: '';
-
-                background-image: none;
-                background-color: @color-f;
-                border-radius: 100%;
-                border: 1px solid @box-chooser-check-border-color;
-                transition: border-color @transition;
-            }
-
-            &::after {
-                position: absolute;
-                left: 5px;
-                top: 8px;
-                width: 10px;
-                height: 10px;
-                content: '';
-
-                border-radius: 100%;
-                background-color: @color-add-light;
-                opacity: 0;
-                transform: scale(0.5);
-                transition: all @transition;
-            }
-
-            &.active,
-            &:hover {
-                text-decoration: none;
-
-                &::before {
-                    border-color: @box-chooser-check-border-color-active;
-                }
-
-                &::after {
-                    opacity: 1;
-                    transform: scale(1);
-                }
-            }
-
-            &__text {
-                position: relative;
-                z-index: 1;
-                margin-left: 10px;
-            }
-        }
     }
 
     &__content {
@@ -88,26 +29,6 @@
 
             &-small {
                 padding-top: 15px;
-            }
-        }
-
-        &__title {
-            display: none;
-
-            .svg {
-                position: absolute;
-                top: 13px;
-                right: 10px;
-
-                font-size: 10px;
-            }
-
-            &.active {
-                color: @color-primary;
-
-                .svg {
-                    transform: rotate(180deg);
-                }
             }
         }
 

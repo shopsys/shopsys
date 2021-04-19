@@ -78,18 +78,14 @@
                                         </h2>
                                     {% endif %}
                                     <div class="in-tab__head dont-print {{ isUserLogged ? 'display-none' }}" id="js-order-form-customer-type-selector">
-                                        <a href="#" class="in-tab__head__item js-tabs-button  {{ commonTabActiveClass }}"
-                                        data-tab-id="common-customer">
-                                            <span class="in-tab__head__item__text">
-                                                {{ "Soukromá osoba"|trans }}
-                                            </span>
-                                        </a>
-                                        <a href="#" class="in-tab__head__item js-tabs-button  {{ companyTabActiveClass }}"
-                                        data-tab-id="company-customer">
-                                            <span class="in-tab__head__item__text">
-                                                {{ "Firma"|trans }}
-                                            </span>
-                                        </a>
+                                        <input type="checkbox" class="css-radio"></input>
+                                        <label class="css-radio__image js-tabs-button" data-tab-id="common-customer">
+                                            {{ "Soukromá osoba"|trans }}
+                                        </label>
+                                        <input type="checkbox" class="css-radio"></input>
+                                        <label class="css-radio__image js-tabs-button" data-tab-id="company-customer">
+                                            {{ "Firma"|trans }}
+                                        </label>
                                     </div>
                                     <div class="in-tab__content in-tab__content--spaced in-tab__content--spaced-small personal-info-order-form">
                                         <h2 class="form-line-block-section__heading">{{ 'Základní údaje'|trans }}</h2>
