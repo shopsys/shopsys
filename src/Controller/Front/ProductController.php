@@ -19,6 +19,7 @@ use App\Model\Gtm\GtmContainer;
 use App\Model\Gtm\GtmFacade;
 use App\Model\Gtm\GtmJsPushFacade;
 use App\Model\Product\Brand\Brand;
+use App\Model\Product\Filter\Elasticsearch\ProductFilterConfigFactory;
 use App\Model\Product\Filter\ProductFilterData;
 use App\Model\Product\Filter\ProductFilterFacade;
 use App\Model\Product\Listed\ListedProductViewElasticFacade;
@@ -29,7 +30,6 @@ use Shopsys\FrameworkBundle\Model\Module\ModuleFacade;
 use Shopsys\FrameworkBundle\Model\Module\ModuleList;
 use Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig;
-use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfigFactory;
 use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingConfig;
 use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingModeForBrandFacade;
 use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingModeForListFacade;
@@ -54,7 +54,7 @@ class ProductController extends FrontBaseController
     public const SALE_PRODUCTS_PER_PAGE = 8;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfigFactory
+     * @var \App\Model\Product\Filter\Elasticsearch\ProductFilterConfigFactory
      */
     private $productFilterConfigFactory;
 
@@ -168,7 +168,7 @@ class ProductController extends FrontBaseController
      * @param \App\Model\Category\CategoryFacade $categoryFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \App\Model\Product\ProductOnCurrentDomainElasticFacade $productOnCurrentDomainFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfigFactory $productFilterConfigFactory
+     * @param \App\Model\Product\Filter\Elasticsearch\ProductFilterConfigFactory $productFilterConfigFactory
      * @param \App\Model\Product\Listing\ProductListOrderingModeForListFacade $productListOrderingModeForListFacade
      * @param \App\Model\Product\Listing\ProductListOrderingModeForBrandFacade $productListOrderingModeForBrandFacade
      * @param \App\Model\Product\Listing\ProductListOrderingModeForSearchFacade $productListOrderingModeForSearchFacade
@@ -662,11 +662,7 @@ class ProductController extends FrontBaseController
      */
     private function createProductFilterConfigForCategory(Category $category): ProductFilterConfig
     {
-        return $this->productFilterConfigFactory->createForCategory(
-            $this->domain->getId(),
-            $this->domain->getLocale(),
-            $category
-        );
+        return $this->productFilterConfigFactory->createForCategory($this->domain->getLocale(), $category);
     }
 
     /**
@@ -675,11 +671,7 @@ class ProductController extends FrontBaseController
      */
     private function createProductFilterConfigForSearch($searchText)
     {
-        return $this->productFilterConfigFactory->createForSearch(
-            $this->domain->getId(),
-            $this->domain->getLocale(),
-            $searchText
-        );
+        return $this->productFilterConfigFactory->createForSearch($this->domain->getLocale(), $searchText);
     }
 
     /**

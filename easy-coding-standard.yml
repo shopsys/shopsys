@@ -117,6 +117,7 @@ parameters:
         Shopsys\CodingStandards\Sniffs\ObjectIsCreatedByFactorySniff:
             - '*/tests/*'
             - '*/src/Model/Order/Preview/OrderPreviewCalculation.php'
+            - '*/src/Model/Product/Filter/Elasticsearch/ProductFilterConfigFactory.php'
 
         Shopsys\CodingStandards\Sniffs\ForbiddenDumpSniff:
             - '*/tests/App/Functional/Model/Cart/CartFacadeTest.php'

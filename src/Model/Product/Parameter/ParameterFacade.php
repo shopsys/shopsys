@@ -4,10 +4,13 @@ declare(strict_types=1);
 
 namespace App\Model\Product\Parameter;
 
+use App\Model\Category\Category;
+use App\Model\Category\CategoryParameterRepository;
 use App\Model\CategorySeo\ReadyCategorySeoMixFacade;
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade;
+use Shopsys\FrameworkBundle\Model\Product\Filter\ParameterFilterChoice;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade as BaseParameterFacade;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository;
@@ -51,6 +54,11 @@ class ParameterFacade extends BaseParameterFacade
     protected $uploadedFileFacade;
 
     /**
+     * @var \App\Model\Category\CategoryParameterRepository
+     */
+    private CategoryParameterRepository $categoryParameterRepository;
+
+    /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \App\Model\Product\Parameter\ParameterRepository $parameterRepository
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFactoryInterface $parameterFactory
@@ -59,6 +67,7 @@ class ParameterFacade extends BaseParameterFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \App\Model\Product\Parameter\ParameterValueDataFactory $parameterValueDataFactory
      * @param \App\Component\UploadedFile\UploadedFileFacade $uploadedFileFacade
+     * @param \App\Model\Category\CategoryParameterRepository $categoryParameterRepository
      */
     public function __construct(
         EntityManagerInterface $em,
@@ -68,7 +77,8 @@ class ParameterFacade extends BaseParameterFacade
         ReadyCategorySeoMixFacade $readyCategorySeoMixFacade,
         Domain $domain,
         ParameterValueDataFactory $parameterValueDataFactory,
-        UploadedFileFacade $uploadedFileFacade
+        UploadedFileFacade $uploadedFileFacade,
+        CategoryParameterRepository $categoryParameterRepository
     ) {
         parent::__construct(
             $em,
@@ -81,6 +91,7 @@ class ParameterFacade extends BaseParameterFacade
         $this->domain = $domain;
         $this->parameterValueDataFactory = $parameterValueDataFactory;
         $this->uploadedFileFacade = $uploadedFileFacade;
+        $this->categoryParameterRepository = $categoryParameterRepository;
     }
 
     /**
@@ -198,5 +209,52 @@ class ParameterFacade extends BaseParameterFacade
         $this->em->flush();
 
         return $parameterValue;
+    }
+
+    /**
+     * @param int[][] $parameterValueIdsIndexedByParameterId
+     * @param string $locale
+     * @return \Shopsys\FrameworkBundle\Model\Product\Filter\ParameterFilterChoice[]
+     */
+    public function getParameterFilterChoicesByIds(array $parameterValueIdsIndexedByParameterId, string $locale): array
+    {
+        $parameterValueIds = array_reduce($parameterValueIdsIndexedByParameterId, 'array_merge', []);
+        $allParameters = $this->parameterRepository->getVisibleParametersByIds(
+            array_keys($parameterValueIdsIndexedByParameterId),
+            $locale
+        );
+        $allParameterValues = $this->parameterRepository->getParameterValuesByIds($parameterValueIds);
+
+        $parameterFilterChoices = [];
+
+        foreach ($allParameters as $parameter) {
+            $valueIdsForParameter = $parameterValueIdsIndexedByParameterId[$parameter->getId()];
+            $parameterValues = array_intersect_key($allParameterValues, array_flip($valueIdsForParameter));
+
+            uasort($parameterValues, function (ParameterValue $first, ParameterValue $second) {
+                return strcmp($first->getText(), $second->getText());
+            });
+
+            $parameterFilterChoices[] = new ParameterFilterChoice(
+                $parameter,
+                $parameterValues
+            );
+        }
+
+        return $parameterFilterChoices;
+    }
+
+    /**
+     * @param \App\Model\Category\Category $category
+     * @return int[]
+     */
+    public function getParametersIdsSortedByPositionFilteredByCategory(Category $category): array
+    {
+        return array_map(
+            function ($categoryParameter) {
+                return $categoryParameter->getParameter()->getId();
+            },
+            $this->categoryParameterRepository->getCategoryParametersByCategorySortedByPosition($category)
+        );
     }
 }

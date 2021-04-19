@@ -171,41 +171,6 @@ class FilterQuery extends BaseFilterQuery
     }
 
     /**
-     * Applies all filters and calculate standard (non pluses) numbers
-     * For flags, brands, stock, parameters
-     * Parameters aggregation have nested structure in result [parameter_id][parameter_value_id]
-     *
-     * @return array
-     */
-    public function getAbsoluteNumbersWithParametersQuery(): array
-    {
-        $query = $this->getAbsoluteNumbersAggregationQuery();
-        $query['body']['aggs']['parameters'] = [
-            'nested' => [
-                'path' => 'parameters',
-            ],
-            'aggs' => [
-                'by_parameters' => [
-                    'terms' => [
-                        'field' => 'parameters.parameter_id',
-                        'size' => static::MAXIMUM_REASONABLE_AGGREGATION_BUCKET_COUNT,
-                    ],
-                    'aggs' => [
-                        'by_value' => [
-                            'terms' => [
-                                'field' => 'parameters.parameter_value_id',
-                                'size' => static::MAXIMUM_REASONABLE_AGGREGATION_BUCKET_COUNT,
-                            ],
-                        ],
-                    ],
-                ],
-            ],
-        ];
-
-        return $query;
-    }
-
-    /**
      * Answers question "If I add this parameter value, how many products will be added?"
      * We are looking for count of products that meet all filters and don't have already selected parameter value
      *
@@ -333,5 +298,65 @@ class FilterQuery extends BaseFilterQuery
         ];
 
         return $clone;
+    }
+
+    /**
+     * Applies all filters for filter
+     * For flags, brands, stock, parameters, min and max price
+     * Parameters aggregation have nested structure in result [parameter_id][parameter_value_id]
+     *
+     * @param int $pricingGroupId
+     * @return array
+     */
+    public function getAggregationQueryForProductFilterConfig(int $pricingGroupId): array
+    {
+        $query = $this->getAbsoluteNumbersWithParametersQuery();
+
+        $query['body']['aggs']['prices'] = [
+            'nested' => [
+                'path' => 'prices',
+            ],
+            'aggs' => [
+                'filter_pricing_group' => [
+                    'filter' => [
+                        'term' => [
+                            'prices.pricing_group_id' => $pricingGroupId,
+                        ],
+                    ],
+                    'aggs' => [
+                        'min_price' => [
+                            'min' => [
+                                'field' => 'prices.price_with_vat',
+                            ],
+                        ],
+                        'max_price' => [
+                            'max' => [
+                                'field' => 'prices.price_with_vat',
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+
+        ];
+
+        return $query;
+    }
+
+    /**
+     * Applies all filters for filter
+     * For flags, brands, stock, min and max price
+     *
+     * @param int $pricingGroupId
+     * @return array
+     */
+    public function getAggregationQueryForProductFilterConfigWithoutParameters(int $pricingGroupId): array
+    {
+        $query = $this->getAggregationQueryForProductFilterConfig($pricingGroupId);
+
+        // Remove parameters from filter
+        unset($query['body']['aggs']['parameters']);
+
+        return $query;
     }
 }
