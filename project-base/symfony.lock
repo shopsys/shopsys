@@ -426,9 +426,6 @@
     "object-calisthenics/phpcs-calisthenics-rules": {
         "version": "v3.4.0"
     },
-    "ocramius/proxy-manager": {
-        "version": "2.2.3"
-    },
     "overblog/graphiql-bundle": {
         "version": "0.1",
         "recipe": {
@@ -1151,9 +1148,6 @@
     },
     "vasek-purchart/console-errors-bundle": {
         "version": "1.0.1"
-    },
-    "webimpress/safe-writer": {
-        "version": "2.1.0"
     },
     "webmozart/assert": {
         "version": "1.5.0"

@@ -19,6 +19,7 @@
         "@babel/plugin-proposal-object-rest-spread": "^7.9.5",
         "@babel/preset-env": "^7.9.0",
         "@babel/traverse": "^7.9.0",
+        "@shopsys/framework": "file:vendor/shopsys/framework/assets",
         "@symfony/webpack-encore": "^0.28.0",
         "autoprefixer": "^9.4.4",
         "babel-jest": "^25.1.0",
