@@ -1,7 +1,11 @@
 import Responsive from '../utils/Responsive';
 
 export default class Overlay {
-    static getOverlay () {
+    constructor (onlyMobile = false) {
+        this.onlyMobile = onlyMobile;
+    }
+
+    getOverlay () {
         let $overlay = $('.js-web-overlay');
         if ($overlay.length === 0) {
             $overlay = $('<div class="web__overlay js-web-overlay"></div>');
@@ -9,8 +13,31 @@ export default class Overlay {
         return $overlay;
     }
 
-    static showOverlay () {
-        let $overlay = Overlay.getOverlay();
+    showOverlay () {
+        const _this = this;
+        if (this.onlyMobile) {
+            if (Responsive.isTabletVersion()) {
+                _this.showOverlayInit();
+            }
+        } else {
+            _this.showOverlayInit();
+        };
+    }
+
+    hideOverlay () {
+        const _this = this;
+        if (this.onlyMobile) {
+            if (Responsive.isTabletVersion()) {
+                _this.hideOverlayInit();
+            }
+        } else {
+            _this.hideOverlayInit();
+        };
+    }
+
+    showOverlayInit () {
+        const _this = this;
+        let $overlay = _this.getOverlay();
         $('body').append($overlay);
 
         // timeout 0 to asynchronous run to fix css animation fade
@@ -19,7 +46,7 @@ export default class Overlay {
         }, 0);
     }
 
-    static hideOverlay () {
+    hideOverlayInit () {
         let $overlay = $('.js-web-overlay');
         $overlay.removeClass('web__overlay--active');
 

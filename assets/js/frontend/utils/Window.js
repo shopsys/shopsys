@@ -40,6 +40,7 @@ export default class Window {
      * urlContinue (string)
      */
     constructor (inputOptions) {
+        const $overlay = new Overlay();
         this.$activeWindow = null;
 
         this.options = { textContinue: Translator.trans('Yes'), textCancel: Translator.trans('No'), ...defaults, ...inputOptions };
@@ -72,7 +73,7 @@ export default class Window {
         const _this = this;
         this.$window.bind('windowClose', function () {
             _this.$window.removeClass('window-popup--active');
-            Overlay.hideOverlay();
+            $overlay.hideOverlay();
 
             setTimeout(function () {
                 _this.$activeWindow.trigger('windowFastClose');
@@ -81,7 +82,7 @@ export default class Window {
 
         this.$window.bind('windowFastClose', function () {
             $(this).remove();
-            Overlay.hideOverlay();
+            $overlay.hideOverlay();
             this.$activeWindow = null;
         });
 
@@ -150,7 +151,7 @@ export default class Window {
             this.$window.append($windowActions);
         }
 
-        this.show();
+        this.show($overlay);
         $(window).resize(function () {
             Timeout.setTimeoutAndClearPrevious('window.window.resize', function () {
                 _this.fixVerticalAlign();
@@ -171,11 +172,11 @@ export default class Window {
         }
     }
 
-    show () {
+    show ($overlay) {
         const _this = this;
-        Overlay.showOverlay();
+        $overlay.showOverlay();
         if (_this.options.closeOnBgClick) {
-            Overlay.getOverlay().click(function () {
+            $overlay.getOverlay().click(function () {
                 _this.options.eventClose.apply(_this.$window);
                 _this.$window.trigger('windowClose');
                 return false;

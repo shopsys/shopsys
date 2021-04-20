@@ -2,50 +2,58 @@ import Register from 'framework/common/utils/Register';
 import Overlay from '../utils/overlay';
 
 export default class MobileDropdown {
-    constructor () {
-        this.dropdownWrapper = '.js-mobile-dropdown';
-        this.dropdownButton = '.js-mobile-dropdown-button';
-        this.dropdownContainer = '.js-mobile-dropdown-container';
+    constructor ($dropdownButton, overlay) {
+        this.$dropdownButton = $dropdownButton;
+        this.$dropdownWrapper = $dropdownButton.closest('.js-mobile-dropdown');
+        this.$dropdownContainer = this.$dropdownWrapper.find('.js-mobile-dropdown-container');
+        this.overlay = overlay;
         this.isToggleFinished = true;
-        this.isDropdownOpen = false;
+
+        this.$dropdownButton.on('click', (event) => this.toggleDropdown(event));
+
+        $(document).click(() => this.close());
+
+        $(this.$dropdownContainer).click(function (event) {
+            event.stopPropagation();
+        });
     }
 
-    static toggleDropdown (event, mobileDropdown) {
-        if (mobileDropdown.isToggleFinished) {
-            const currentContainer = $(event.currentTarget).closest(mobileDropdown.dropdownWrapper).find(mobileDropdown.dropdownContainer);
-            mobileDropdown.isToggleFinished = false;
-            
-            event.stopPropagation(); 
-            
-            if (mobileDropdown.isDropdownOpen) {
-                Overlay.hideOverlay();
-                mobileDropdown.isDropdownOpen = !mobileDropdown.isDropdownOpen;
+    toggleDropdown (event) {
+        if (this.isToggleFinished) {
+            this.isToggleFinished = false;
+            event.stopPropagation();
+
+            if (this.isDropdownOpen()) {
+                this.overlay.hideOverlay();
             } else {
-                Overlay.showOverlay();
-                mobileDropdown.isDropdownOpen = !mobileDropdown.isDropdownOpen;
+                this.overlay.showOverlay();
             }
 
-            currentContainer.slideToggle(function(){
-                mobileDropdown.isToggleFinished = true;
-            });
+            this.$dropdownContainer.slideToggle(() => this.afterToggle());
+        }
+    }
+
+    afterToggle () {
+        this.isToggleFinished = true;
+    }
+
+    isDropdownOpen () {
+        return this.$dropdownContainer.is(':visible');
+    }
+
+    close () {
+        if (this.isDropdownOpen()) {
+            this.$dropdownContainer.slideUp();
+            this.overlay.hideOverlay();
         }
     }
 
     static init ($container) {
-        const mobileDropdown = new MobileDropdown($(this));
+        const overlay = new Overlay();
 
-        $container.filterAllNodes(mobileDropdown.dropdownButton).on('click', (event) => MobileDropdown.toggleDropdown(event, mobileDropdown));
-
-        $(document).click(function(){
-            if ($(mobileDropdown.dropdownContainer).is(":visible")) {
-                $(mobileDropdown.dropdownContainer).slideUp();
-                Overlay.hideOverlay();
-                mobileDropdown.isDropdownOpen = !mobileDropdown.isDropdownOpen;
-            }
-        })
-
-        $(mobileDropdown.dropdownContainer).click(function(event){
-            event.stopPropagation(); 
+        $container.filterAllNodes('.js-mobile-dropdown-button').each(function () {
+            // eslint-disable-next-line no-new
+            new MobileDropdown($(this), overlay);
         });
     }
 }
