@@ -210,6 +210,9 @@
             ".php_cs.dist"
         ]
     },
+    "friendsofphp/proxy-manager-lts": {
+        "version": "v1.0.3"
+    },
     "friendsofsymfony/ckeditor-bundle": {
         "version": "2.0",
         "recipe": {
@@ -1022,9 +1025,6 @@
     },
     "symplify/autowire-array-parameter": {
         "version": "v7.2.3"
-    },
-    "symplify/changelog-linker": {
-        "version": "v7.2.2"
     },
     "symplify/coding-standard": {
         "version": "v5.4.16"

@@ -122,6 +122,9 @@
     "doctrine/dbal": {
         "version": "v2.10.0"
     },
+    "doctrine/deprecations": {
+        "version": "v0.5.3"
+    },
     "doctrine/doctrine-bundle": {
         "version": "1.6",
         "recipe": {
@@ -426,9 +429,6 @@
     "object-calisthenics/phpcs-calisthenics-rules": {
         "version": "v3.4.0"
     },
-    "ocramius/proxy-manager": {
-        "version": "2.2.3"
-    },
     "overblog/graphiql-bundle": {
         "version": "0.1",
         "recipe": {
@@ -688,6 +688,9 @@
     },
     "shopsys/read-model": {
         "version": "dev-mg-weird-flex-but-ok"
+    },
+    "sinergi/browser-detector": {
+        "version": "6.1.3"
     },
     "slam/php-cs-fixer-extensions": {
         "version": "v1.19.1"
@@ -1151,9 +1154,6 @@
     },
     "vasek-purchart/console-errors-bundle": {
         "version": "1.0.1"
-    },
-    "webimpress/safe-writer": {
-        "version": "2.1.0"
     },
     "webmozart/assert": {
         "version": "1.5.0"

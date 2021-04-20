@@ -19,6 +19,7 @@
         "@babel/plugin-proposal-object-rest-spread": "^7.9.5",
         "@babel/preset-env": "^7.9.0",
         "@babel/traverse": "^7.9.0",
+        "@shopsys/framework": "file:vendor/shopsys/framework/assets",
         "@symfony/webpack-encore": "^0.28.0",
         "autoprefixer": "^9.4.4",
         "babel-jest": "^25.1.0",
@@ -50,7 +51,7 @@
         "webpack-notifier": "^1.6.0"
     },
     "dependencies": {
-        "@shopsys/framework": "9.1.0",
+        "@shopsys/framework": "9.1.1",
         "codemirror": "^5.49.2",
         "jquery-ui": "^1.12.1",
         "jquery-ui-touch-punch": "^0.2.3",
