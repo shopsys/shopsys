@@ -13,7 +13,6 @@ use Shopsys\FrameworkBundle\Model\Product\Flag\FlagData;
  * @ORM\Table(name="flags")
  * @ORM\Entity
  * @method setTranslations(\App\Model\Product\Flag\FlagData $flagData)
- * @method setData(\App\Model\Product\Flag\FlagData $flagData)
  */
 class Flag extends BaseFlag
 {
@@ -39,28 +38,13 @@ class Flag extends BaseFlag
     private $akeneoCode;
 
     /**
-     * @var string|null
-     * @ORM\Column(type="string", length=8, nullable=true)
-     */
-    private $noticeLowPrice;
-
-    /**
-     * @var string|null
-     * @ORM\Column(type="string", length=8, nullable=true)
-     */
-    private $noticeHighPrice;
-
-    /**
      * @param \App\Model\Product\Flag\FlagData $flagData
      */
     public function __construct(FlagData $flagData)
     {
         parent::__construct($flagData);
 
-        $this->sale = $flagData->sale;
         $this->akeneoCode = $flagData->akeneoCode ?? '';
-        $this->noticeLowPrice = $flagData->noticeLowPrice;
-        $this->noticeHighPrice = $flagData->noticeHighPrice;
     }
 
     /**
@@ -69,10 +53,16 @@ class Flag extends BaseFlag
     public function edit(FlagData $flagData): void
     {
         parent::edit($flagData);
+    }
+
+    /**
+     * @param \App\Model\Product\Flag\FlagData $flagData
+     */
+    public function setData(FlagData $flagData): void
+    {
+        parent::setData($flagData);
 
         $this->sale = $flagData->sale;
-        $this->noticeLowPrice = $flagData->noticeLowPrice;
-        $this->noticeHighPrice = $flagData->noticeHighPrice;
     }
 
     /**
@@ -89,21 +79,5 @@ class Flag extends BaseFlag
     public function getAkeneoCode(): ?string
     {
         return $this->akeneoCode;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getNoticeLowPrice(): ?string
-    {
-        return $this->noticeLowPrice;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getNoticeHighPrice(): ?string
-    {
-        return $this->noticeHighPrice;
     }
 }

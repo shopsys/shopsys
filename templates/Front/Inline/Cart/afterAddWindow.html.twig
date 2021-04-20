@@ -1,7 +1,6 @@
 {% if not maxStockAmountAlreadyReached %}
     {{ render(controller('App\\Controller\\Front\\GtmController:pushesAction')) }}
 
-    {% import 'Front/Inline/Product/productFlagAsteriskMacro.html.twig' as asterisk %}
     <div>
         <h2 class="window-popup__heading window-popup__heading--cart">
             <svg class="window-popup__checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
@@ -42,12 +41,10 @@
                     {% if nonSellingPriceWithVat.isGreaterThan(sellingPriceWithVat) %}
                         <span class="window-popup__cart__content__price window-popup__cart__content__price--legacy">
                             {{ nonSellingPriceWithVat.multiply(addedQuantity)|price }}
-                            {{ asterisk.nonSellingPrice(product.getFlagsForDomain(domain.id)) }}
                         </span>
                     {% endif %}
                     <strong class="window-popup__cart__content__price window-popup__cart__content__price--main">
                         {{ sellingPriceWithVat.multiply(addedQuantity)|price }}
-                        {{ asterisk.sellingPrice(product.getFlagsForDomain(domain.id)) }}
                     </strong>
                 </div>
             </div>

@@ -78,12 +78,12 @@
                     {% if orderPreview.hasAnyProductCommonPrice(getDomain().id) %}
                         {% if product.getHighPriceWithVat(getDomain().id).isGreaterThan(cartItemPrice.unitPrice.priceWithVat) %}
                             <span class="line-through">
-                                {{ product.getHighPriceWithVat(getDomain().id)|price }} {{ renderAsterisk(product.getFlagsIdsForDomain(getDomain().id), 'nonSellingPrice') }}
+                                {{ product.getHighPriceWithVat(getDomain().id)|price }}
                             </span>
                         {% endif %}
                     {% endif %}
                     <strong class="cart-price cart-price--secondary {{ priceFlag }}">
-                        {{ cartItemPrice.unitPrice.priceWithVat|price }} {{ renderAsterisk(product.getFlagsIdsForDomain(getDomain().id), 'sellingPrice') }}
+                        {{ cartItemPrice.unitPrice.priceWithVat|price }}
                     </strong>
                 </td>
 
@@ -112,7 +112,7 @@
                     {% endif %}
                     {% if canShowNonSellingPrice and product.getHighPriceWithVat(getDomain().id).isGreaterThan(cartItemPrice.unitPrice.priceWithVat) %}
                         <span class="line-through">
-                            {{ product.getHighPriceWithVat(getDomain().id).multiply(quantifiedProduct.quantity)|price }} {{ renderAsterisk(product.getFlagsIdsForDomain(getDomain().id), 'nonSellingPrice') }}
+                            {{ product.getHighPriceWithVat(getDomain().id).multiply(quantifiedProduct.quantity)|price }}
                         </span>
                     {% endif %}
                     {% if cartItemDiscount is not null %}
@@ -120,7 +120,7 @@
                         <strong class="cart-tag cart-tag--promo cart-tag--promo-in-table">{{ orderPreview.promoCodeCode }}</strong>
                     {% else %}
                         <strong class="cart-price cart-price--primary {{ priceFlag }}">
-                            {{ cartItemPrice.totalPrice.priceWithVat|price }} {{ renderAsterisk(product.getFlagsIdsForDomain(getDomain().id), 'sellingPrice') }}
+                            {{ cartItemPrice.totalPrice.priceWithVat|price }}
                         </strong>
                     {% endif %}
                     <div class="in-flag in-flag--in-checkout">

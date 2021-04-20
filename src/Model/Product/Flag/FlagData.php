@@ -18,16 +18,6 @@ class FlagData extends BaseFlagData
      */
     public $akeneoCode;
 
-    /**
-     * @var string|null
-     */
-    public $noticeLowPrice;
-
-    /**
-     * @var string|null
-     */
-    public $noticeHighPrice;
-
     public function __construct()
     {
         parent::__construct();
