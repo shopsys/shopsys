@@ -11,11 +11,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 class BillingAddressFormTypeExtension extends AbstractTypeExtension
 {
-    private const DISABLED_FIELDS = [
-        'companyCustomer',
-        'companyFields',
-        'address',
-    ];
+    private const DISABLED_FIELDS = [];
 
     /**
      * @var \App\Component\Form\FormBuilderHelper

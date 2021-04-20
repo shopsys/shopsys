@@ -11,10 +11,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 class DeliveryAddressFormTypeExtension extends AbstractTypeExtension
 {
-    private const DISABLED_FIELDS = [
-        'addressFilled',
-        'deliveryAddressFields',
-    ];
+    private const DISABLED_FIELDS = [];
 
     /**
      * @var \App\Component\Form\FormBuilderHelper

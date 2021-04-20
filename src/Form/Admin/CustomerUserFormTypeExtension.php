@@ -12,12 +12,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 class CustomerUserFormTypeExtension extends AbstractTypeExtension
 {
-    private const DISABLED_FIELDS = [
-        'email',
-        'firstName',
-        'lastName',
-        'telephone',
-    ];
+    private const DISABLED_FIELDS = [];
 
     /**
      * @var \App\Component\Form\FormBuilderHelper

@@ -29,35 +29,7 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 class ProductFormTypeExtension extends AbstractTypeExtension
 {
-    public const DISABLED_FIELDS = [
-        'descriptions',
-        'catnum',
-        'ean',
-        'name',
-        'namePrefix',
-        'nameSufix',
-        'descriptions',
-        'shortDescriptionUsp1',
-        'shortDescriptionUsp2',
-        'shortDescriptionUsp3',
-        'shortDescriptionUsp4',
-        'shortDescriptionUsp5',
-        'pricesGroup',
-        'categoriesByDomainId',
-        'transferredFilesGroup',
-        'productTypePlanFileUrl',
-        'assemblyInstructionFileUrl',
-        'accessories',
-        'preorder',
-        'saleExclusion',
-        'vendorDeliveryDate',
-        'flags',
-        'images',
-        'urls',
-        'sellingPriceWithVat',
-        'stockProductData',
-        'sellingDenied',
-    ];
+    public const DISABLED_FIELDS = [];
 
     /**
      * @var \App\Component\Form\FormBuilderHelper
@@ -146,6 +118,7 @@ class ProductFormTypeExtension extends AbstractTypeExtension
         $builder->get('basicInformationGroup')->add('catnum', TextType::class, [
             'required' => true,
             'constraints' => [
+                new Constraints\NotBlank(),
                 new Constraints\Length(['max' => 100, 'maxMessage' => 'Catalog number cannot be longer than {{ limit }} characters']),
                 new Constraints\Callback([$this, 'validateUniqueCatnum']),
             ],

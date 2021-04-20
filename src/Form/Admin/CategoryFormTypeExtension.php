@@ -26,10 +26,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 class CategoryFormTypeExtension extends AbstractTypeExtension
 {
-    public const DISABLED_FIELDS = [
-        'name',
-        'parent',
-    ];
+    public const DISABLED_FIELDS = [];
 
     /**
      * @var \App\Model\Svg\SvgProvider
