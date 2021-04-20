@@ -207,11 +207,15 @@ class CustomerUserFormType extends AbstractType
     }
 
     /**
-     * @param string $email
+     * @param string|null $email
      * @param \Symfony\Component\Validator\Context\ExecutionContextInterface $context
      */
-    public function validateUniqueEmail(string $email, ExecutionContextInterface $context): void
+    public function validateUniqueEmail(?string $email, ExecutionContextInterface $context): void
     {
+        if ($email === null) {
+            return;
+        }
+
         /** @var \Symfony\Component\Form\Form $form */
         $form = $context->getRoot();
         /** @var \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserData $customerUserData */
