@@ -263,9 +263,10 @@ class OrderController extends FrontBaseController
     }
 
     /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function indexAction(): Response
+    public function indexAction(Request $request): Response
     {
         $cart = $this->cartFacade->findCartOfCurrentCustomerUser();
         if ($cart === null) {
@@ -290,6 +291,13 @@ class OrderController extends FrontBaseController
         if ($orderFlow->isBackToCartTransition()) {
             return $this->redirectToRoute('front_cart');
         }
+
+        if ($orderFlow->isBackToTransportAndPaymentTransition()) {
+            return $this->redirectToRoute(OrderFlow::ROUTE_NAME_STEP_TRANSPORT_PAYMENT);
+        }
+
+        $this->moveOrderFlowByCurrentRequest($request, $orderFlow);
+
         $orderFlow->bind($frontOrderFormData);
         $orderFlow->saveSentStepData();
 
@@ -324,6 +332,11 @@ class OrderController extends FrontBaseController
         $stocksById = $this->stockFacade->getStocksWithoutCentralByDomainIdIndexedByStockId($domainId);
 
         $this->checkTransportAndPaymentChanges($orderData, $orderPreview, $transports, $payments);
+
+        if ($orderFlow->getCurrentStep() === 3 && !$this->isTransportAndPaymentFilledInOrder($orderData, $orderPreview)) {
+            return $this->redirectToRoute(OrderFlow::ROUTE_NAME_STEP_TRANSPORT_PAYMENT);
+        }
+
         if ($isValid) {
             if ($orderFlow->nextStep()) {
                 $form = $orderFlow->createForm();
@@ -428,6 +441,41 @@ class OrderController extends FrontBaseController
             'customerUser' => $customerUser,
             'orderPreview' => $orderPreview,
         ]);
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param \App\Form\Front\Order\OrderFlow $orderFlow
+     */
+    private function moveOrderFlowByCurrentRequest(Request $request, OrderFlow $orderFlow): void
+    {
+        $routeName = $request->get('_route');
+        if ($routeName === OrderFlow::ROUTE_NAME_STEP_PERSONAL_INFO) {
+            $orderFlow->setStep(3);
+        }
+        if ($routeName === OrderFlow::ROUTE_NAME_STEP_TRANSPORT_PAYMENT) {
+            $orderFlow->setStep(2);
+        }
+    }
+
+    /**
+     * @param \App\Model\Order\OrderData $orderData
+     * @param \App\Model\Order\Preview\OrderPreview $orderPreview
+     * @return bool
+     */
+    private function isTransportAndPaymentFilledInOrder(OrderData $orderData, OrderPreview $orderPreview): bool
+    {
+        if ($orderData->transport === null || $orderPreview->getTransport() === null) {
+            $this->addErrorFlashTwig(t('Shipping is not filled in the order. Please check your order.'));
+            return false;
+        }
+
+        if ($orderData->payment === null || $orderPreview->getPayment() === null) {
+            $this->addErrorFlashTwig(t('The payment method is not filled in the order. Please check your order.'));
+            return false;
+        }
+
+        return true;
     }
 
     /**

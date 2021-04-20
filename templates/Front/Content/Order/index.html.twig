@@ -25,13 +25,16 @@
 
     {% include 'Front/Inline/OrderProgress/index.html.twig' with {step: flow.getCurrentStepNumber()} only %}
 
-    {{ form_start(form, { attr: {
-        id: "js-order-form",
-        'data-ajax-save-url': url('front_order_save_form'),
-        'data-email-check-url': url('front_customer_email_check'),
-        'data-login-url': url('front_login_in_order_ajax'),
-        'data-customer-info': customerInfo|json_encode
-    }}) }}
+    {{ form_start(form, {
+        action: path('front_order_step_personal_info'),
+        attr: {
+            id: "js-order-form",
+            'data-ajax-save-url': url('front_order_save_form'),
+            'data-email-check-url': url('front_customer_email_check'),
+            'data-login-url': url('front_login_in_order_ajax'),
+            'data-customer-info': customerInfo|json_encode
+        }
+    }) }}
         <div class="web__line">
             <div class="web__container">
                 {{ form_errors(form) }}

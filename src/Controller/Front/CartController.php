@@ -6,6 +6,7 @@ namespace App\Controller\Front;
 
 use App\Form\Front\Cart\AddProductFormType;
 use App\Form\Front\Cart\CartFormType;
+use App\Form\Front\Order\OrderFlow;
 use App\Model\Category\CategoryFacade;
 use App\Model\Gtm\GtmFacade;
 use App\Model\Gtm\GtmJsPushFacade;
@@ -35,7 +36,13 @@ class CartController extends FrontBaseController
 
     public const RECALCULATE_ONLY_PARAMETER_NAME = 'recalculateOnly';
 
-    public const PAGES_WITH_DISABLED_CART_HOVER = ['front_cart', 'front_error_page', 'front_order_index', 'front_order_sent'];
+    public const PAGES_WITH_DISABLED_CART_HOVER = [
+        'front_cart',
+        'front_error_page',
+        OrderFlow::ROUTE_NAME_STEP_TRANSPORT_PAYMENT,
+        OrderFlow::ROUTE_NAME_STEP_PERSONAL_INFO,
+        'front_order_sent',
+    ];
 
     /**
      * @var \App\Model\Cart\CartFacade
@@ -185,7 +192,7 @@ class CartController extends FrontBaseController
                 }
 
                 if (!$request->get(self::RECALCULATE_ONLY_PARAMETER_NAME, false)) {
-                    return $this->redirectToRoute('front_order_index');
+                    return $this->redirectToRoute(OrderFlow::ROUTE_NAME_STEP_TRANSPORT_PAYMENT);
                 }
             } catch (InvalidQuantityException $ex) {
                 $invalidCart = true;

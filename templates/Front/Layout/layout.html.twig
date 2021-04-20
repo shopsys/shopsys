@@ -18,7 +18,7 @@
            {% endif %}
         </div>
     {% endif %}
-    {% if getRoute() != 'front_cart' and getRoute() != 'front_order_index' %}
+    {% if getRoute() not in ['front_cart', 'front_order_step_transport_payment', 'front_order_step_personal_info'] %}
         {{ render(controller('App\\Controller\\Front\\NotificationBarController:infoAction')) }}
     {% endif %}
     <div class="web__in">
