@@ -145,20 +145,17 @@ class MergadoFeedItemFactory
         if ($product->hasFlagByAkeneoCodeForDomain(Flag::AKENEO_CODE_NEW, $domainId) === false) {
             unset($flags[3]);
         }
-        if ($product->hasFlagByAkeneoCodeForDomain(Flag::AKENEO_CODE_SSFWCC, $domainId) === false) {
+        if ($product->hasFlagByAkeneoCodeForDomain(Flag::AKENEO_CODE_SALE, $domainId) === false) {
             unset($flags[4]);
         }
-        if ($product->hasFlagByAkeneoCodeForDomain(Flag::AKENEO_CODE_SALE, $domainId) === false) {
+        if ($product->hasFlagByAkeneoCodeForDomain(Flag::AKENEO_CODE_MADE_IN_CZ, $domainId) === false) {
             unset($flags[5]);
         }
-        if ($product->hasFlagByAkeneoCodeForDomain(Flag::AKENEO_CODE_MADE_IN_CZ, $domainId) === false) {
+        if ($product->hasFlagByAkeneoCodeForDomain(Flag::AKENEO_CODE_MADE_IN_DE, $domainId) === false) {
             unset($flags[6]);
         }
-        if ($product->hasFlagByAkeneoCodeForDomain(Flag::AKENEO_CODE_MADE_IN_DE, $domainId) === false) {
-            unset($flags[7]);
-        }
         if ($product->hasFlagByAkeneoCodeForDomain(Flag::AKENEO_CODE_MADE_IN_SK, $domainId) === false) {
-            unset($flags[8]);
+            unset($flags[7]);
         }
 
         return $flags;

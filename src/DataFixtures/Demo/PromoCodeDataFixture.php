@@ -82,7 +82,6 @@ class PromoCodeDataFixture extends AbstractReferenceFixture implements Dependent
         $promoCodeData->identifier = 'GG';
         $promoCodeData->onSale = false;
         $promoCodeData->inAction = false;
-        $promoCodeData->ssfwccPrice = false;
         $promoCodeData->priceHit = false;
         $promoCode = $this->promoCodeFacade->create($promoCodeData);
 

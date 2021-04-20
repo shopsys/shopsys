@@ -124,9 +124,6 @@ class ProductFilterExtension extends AbstractExtension
             case Flag::AKENEO_CODE_NEW:
                 $class = 'flag-icon--new';
                 break;
-            case Flag::AKENEO_CODE_SSFWCC:
-                $class = 'flag-icon--ssfwcc';
-                break;
             case Flag::AKENEO_CODE_ACTION:
                 $class = 'flag-icon--action';
                 break;

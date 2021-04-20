@@ -101,11 +101,6 @@ class PromoCodeData extends BasePromoCodeData
     /**
      * @var bool
      */
-    public $ssfwccPrice = true;
-
-    /**
-     * @var bool
-     */
     public $priceHit = true;
 
     /**
