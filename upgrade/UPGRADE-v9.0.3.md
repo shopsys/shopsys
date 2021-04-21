@@ -10,11 +10,11 @@ There you can find links to upgrade notes for other versions too.
 
 - ProductOnCurrentDomainElasticFacade has been refactored ([#2036](https://github.com/shopsys/shopsys/pull/2036))
     - these methods are now deprecated:
-        - `ProductOnCurrentDomainElasticFacade::createListableProductsInCategoryFilterQuery()` use `ProductFilterQueryFactory::createListableProductsByCategoryId()` instead
-        - `ProductOnCurrentDomainElasticFacade::createListableProductsForBrandFilterQuery()` use `ProductFilterQueryFactory::createListableProductsByBrandId()` instead
-        - `ProductOnCurrentDomainElasticFacade::createListableProductsForSearchTextFilterQuery()` use `ProductFilterQueryFactory::createListableProductsBySearchText()` instead
-        - `ProductOnCurrentDomainElasticFacade::createFilterQueryWithProductFilterData()` use `ProductFilterQueryFactory::createWithProductFilterData()` instead
-        - `ProductOnCurrentDomainElasticFacade::getIndexName()` use `ProductFilterQueryFactory::getIndexName()` instead
+        - `ProductOnCurrentDomainElasticFacade::createListableProductsInCategoryFilterQuery()` use `FilterQueryFactory::createListableProductsByCategoryId()` instead
+        - `ProductOnCurrentDomainElasticFacade::createListableProductsForBrandFilterQuery()` use `FilterQueryFactory::createListableProductsByBrandId()` instead
+        - `ProductOnCurrentDomainElasticFacade::createListableProductsForSearchTextFilterQuery()` use `FilterQueryFactory::createListableProductsBySearchText()` instead
+        - `ProductOnCurrentDomainElasticFacade::createFilterQueryWithProductFilterData()` use `FilterQueryFactory::createWithProductFilterData()` instead
+        - `ProductOnCurrentDomainElasticFacade::getIndexName()` use `FilterQueryFactory::getIndexName()` instead
 
 - remove FE API only dependencies from framework ([#2041](https://github.com/shopsys/shopsys/pull/2041))
     - these methods have been marked as deprecated and will be removed in next major version:

@@ -311,7 +311,7 @@ class ProductOnCurrentDomainElasticFacade implements ProductOnCurrentDomainFacad
      * @param int $limit
      * @param int $categoryId
      * @return \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery
-     * @deprecated This method will be removed in next major version. Use \Shopsys\FrameworkBundle\Model\Product\Search\ProductFilterQueryFactory::createListableProductsByCategoryId() instead.
+     * @deprecated This method will be removed in next major version. Use \Shopsys\FrameworkBundle\Model\Product\Search\FilterQueryFactory::createListableProductsByCategoryId() instead.
      */
     protected function createListableProductsInCategoryFilterQuery(
         ProductFilterData $productFilterData,
@@ -336,7 +336,7 @@ class ProductOnCurrentDomainElasticFacade implements ProductOnCurrentDomainFacad
      * @param int $limit
      * @param int $brandId
      * @return \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery
-     * @deprecated This method will be removed in next major version. Use \Shopsys\FrameworkBundle\Model\Product\Search\ProductFilterQueryFactory::createListableProductsByBrandId() instead.
+     * @deprecated This method will be removed in next major version. Use \Shopsys\FrameworkBundle\Model\Product\Search\FilterQueryFactory::createListableProductsByBrandId() instead.
      */
     protected function createListableProductsForBrandFilterQuery(
         ProductFilterData $productFilterData,
@@ -361,7 +361,7 @@ class ProductOnCurrentDomainElasticFacade implements ProductOnCurrentDomainFacad
      * @param int $limit
      * @param string|null $searchText
      * @return \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery
-     * @deprecated This method will be removed in next major version. Use \Shopsys\FrameworkBundle\Model\Product\Search\ProductFilterQueryFactory::createListableProductsBySearchText() instead.
+     * @deprecated This method will be removed in next major version. Use \Shopsys\FrameworkBundle\Model\Product\Search\FilterQueryFactory::createListableProductsBySearchText() instead.
      */
     protected function createListableProductsForSearchTextFilterQuery(
         ProductFilterData $productFilterData,
@@ -387,7 +387,7 @@ class ProductOnCurrentDomainElasticFacade implements ProductOnCurrentDomainFacad
      * @param int $page
      * @param int $limit
      * @return \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery
-     * @deprecated This method will be removed in next major version. Use \Shopsys\FrameworkBundle\Model\Product\Search\ProductFilterQueryFactory::createWithProductFilterData() instead.
+     * @deprecated This method will be removed in next major version. Use \Shopsys\FrameworkBundle\Model\Product\Search\FilterQueryFactory::createWithProductFilterData() instead.
      */
     protected function createFilterQueryWithProductFilterData(
         ProductFilterData $productFilterData,
@@ -405,7 +405,7 @@ class ProductOnCurrentDomainElasticFacade implements ProductOnCurrentDomainFacad
 
     /**
      * @return string
-     * @deprecated This method will be removed in next major version. Use \Shopsys\FrameworkBundle\Model\Product\Search\ProductFilterQueryFactory::getIndexName() instead.
+     * @deprecated This method will be removed in next major version. Use \Shopsys\FrameworkBundle\Model\Product\Search\FilterQueryFactory::getIndexName() instead.
      */
     protected function getIndexName(): string
     {
