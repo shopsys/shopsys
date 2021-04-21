@@ -85,22 +85,6 @@
                 text-decoration: none;
             }
         }
-
-        .in-message--error {
-            padding: 0.5rem;
-            margin-bottom: 1rem;
-
-            border-width: 1px;
-            box-shadow: 0 0 0 3px rgba(@in-message-error-color, .25);
-
-            h2 {
-                margin-bottom: 0;
-            }
-
-            p {
-                margin: 0;
-            }
-        }
     }
 
     &--login {
@@ -114,14 +98,6 @@
             left: 50%;
             width: @window-popup-login-width;
             margin-left: -@window-popup-login-width / 2;
-        }
-
-        .in-message.in-message--alert {
-            position: relative;
-            left: auto;
-            top: auto;
-            z-index: 1;
-            display: none;
         }
     }
 
@@ -591,32 +567,6 @@
                     color: @color-alert;
                 }
             }
-        }
-    }
-
-    .in-message {
-        position: static;
-        height: auto;
-        margin: 0;
-        padding: 0;
-        width: auto;
-
-        pointer-events: none;
-        border-width: 0;
-        box-shadow: none;
-
-        &::before {
-            display: none;
-        }
-    }
-
-    &--login {
-        .in-message--alert {
-            padding: 0.5rem;
-            margin-bottom: 1rem;
-
-            border-width: 1px;
-            box-shadow: 0 0 0 3px rgba(@in-message-error-color, .25);
         }
     }
 }
