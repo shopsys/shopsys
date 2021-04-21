@@ -241,31 +241,51 @@
 
                     <section id="flags" class="styleguide-module anchor clearfix">
                         <h2 class="styleguide-module__title">Flags</h2>
-                        <p class="styleguide-module__paragraph">Flag colors are loaded from administration as inline style. But you can override it by class modification.</p>
-                        <div style="position: relative; height: 100px;">
-                            <div class="in-flag in-flag--in-list">
-                                <span class="in-flag__item" style="background-color: #d6fffa;">
-                                    TOP
+                        <p class="styleguide-module__paragraph">Flag colors are defined by a class modification that is created in the php.</p>
+                        <div style="position: relative; height: 30px;">
+                            <div class="in-flag in-flag--big">
+                                <span class="in-flag__item flag__product_made_in_cz">
+                                    Tipy & triky
                                 </span>
-                                <span class="in-flag__item in-flag__item--sales" style="background-color: #f9ffd6;">
-                                    Action
+                                <span class="in-flag__item flag__product_made_in_sk">
+                                    Cyklo rady
                                 </span>
-                                <span class="in-flag__item in-flag__item--news" style="background-color: #efd6ff;">
-                                    New
+                            </div>
+                        </div>
+
+                        <div style="position: relative; height: 30px;">
+                            <div class="in-flag">
+                                <span class="in-flag__item flag__product_action">
+                                    % Výprodej
+                                </span>
+                                <span class="in-flag__item flag__product_sale">
+                                    -15%
+                                </span>
+                                <span class="in-flag__item flag__product_new">
+                                    NOvinka
                                 </span>
                             </div>
                         </div>
                         <div class="styleguide-module__editor">
                             <textarea class="codemirror-html" id="html-flags">
-<div class="in-flag in-flag--in-list">
-    <span class="in-flag__item" style="background-color: #d6fffa;">
-        TOP
+<div class="in-flag in-flag--big">
+    <span class="in-flag__item flag__product_made_in_cz">
+        Tipy & triky
     </span>
-    <span class="in-flag__item in-flag__item--sales" style="background-color: #f9ffd6;">
-        Action
+    <span class="in-flag__item flag__product_made_in_sk">
+        Cyklo rady
     </span>
-    <span class="in-flag__item in-flag__item--news" style="background-color: #efd6ff;">
-        New
+</div>
+
+ <div class="in-flag">
+    <span class="in-flag__item flag__product_action">
+        % Výprodej
+    </span>
+    <span class="in-flag__item flag__product_sale">
+        -15%
+    </span>
+    <span class="in-flag__item flag__product_new">
+        NOvinka
     </span>
 </div>
                             </textarea>
