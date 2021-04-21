@@ -6,9 +6,9 @@ export default class Overlay {
     }
 
     getOverlay () {
-        let $overlay = $('.js-web-overlay');
+        let $overlay = $('#js-web-overlay');
         if ($overlay.length === 0) {
-            $overlay = $('<div class="web__overlay js-web-overlay"></div>');
+            $overlay = $('<div class="web__overlay" id="js-web-overlay"></div>');
         }
         return $overlay;
     }
@@ -47,7 +47,7 @@ export default class Overlay {
     }
 
     hideOverlayInit () {
-        let $overlay = $('.js-web-overlay');
+        let $overlay = $('#js-web-overlay');
         $overlay.removeClass('web__overlay--active');
 
         if ($overlay.length !== 0) {
