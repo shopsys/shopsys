@@ -6,7 +6,6 @@ namespace Tests\App\Acceptance\acceptance\PageObject\Front;
 
 use Shopsys\FrameworkBundle\Component\Form\TimedFormTypeExtension;
 use Tests\App\Acceptance\acceptance\PageObject\AbstractPage;
-use Tests\FrameworkBundle\Test\Codeception\FrontCheckbox;
 
 class RegistrationPage extends AbstractPage
 {
@@ -118,10 +117,6 @@ class RegistrationPage extends AbstractPage
         $this->tester->fillFieldByName('registration_form[postcode]', $postcode);
         $this->tester->fillFieldByName('registration_form[telephone]', $telephone);
 
-        $frontCheckboxClicker = FrontCheckbox::createByCss(
-            $this->tester,
-            '#registration_form_privacyPolicy'
-        );
-        $frontCheckboxClicker->check();
+        $this->tester->clickWithLeftButton(['css' => 'label[for="registration_form_privacyPolicy"]'], 10, 10);
     }
 }
