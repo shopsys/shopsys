@@ -27,23 +27,6 @@ class Version20200113143308 extends AbstractMigration
                 gopay_transactions
             ADD
                 CONSTRAINT FK_B8436D28D9F6D38 FOREIGN KEY (order_id) REFERENCES orders (id) NOT DEFERRABLE INITIALLY IMMEDIATE');
-
-        $this->createDataForExistingTransactions();
-    }
-
-    private function createDataForExistingTransactions()
-    {
-        $data = $this->sql('SELECT id, go_pay_id, go_pay_status FROM orders WHERE go_pay_id IS NOT NULL');
-        foreach ($data->fetchAll() as $row) {
-            $this->sql(
-                'INSERT INTO gopay_transactions (go_pay_id, order_id, go_pay_status) VALUES (:go_pay_id, :order_id, :go_pay_status)',
-                [
-                    'go_pay_id' => $row['go_pay_id'],
-                    'order_id' => $row['id'],
-                    'go_pay_status' => $row['go_pay_status'],
-                ]
-            );
-        }
     }
 
     /**

@@ -54,17 +54,17 @@ class Version20200319113341 extends AbstractMigration
             ALTER TABLE
                 ready_category_seo_mix_parameter_parameter_values
             ADD
-                CONSTRAINT FK_428D0DF07C7FCEDE FOREIGN KEY (ready_category_seo_mix_id) REFERENCES ready_category_seo_mixes (id) NOT DEFERRABLE INITIALLY IMMEDIATE');
+                CONSTRAINT FK_428D0DF07C7FCEDE FOREIGN KEY (ready_category_seo_mix_id) REFERENCES ready_category_seo_mixes (id) ON DELETE CASCADE NOT DEFERRABLE INITIALLY IMMEDIATE');
         $this->sql('
             ALTER TABLE
                 ready_category_seo_mix_parameter_parameter_values
             ADD
-                CONSTRAINT FK_428D0DF07C56DBD6 FOREIGN KEY (parameter_id) REFERENCES parameters (id) NOT DEFERRABLE INITIALLY IMMEDIATE');
+                CONSTRAINT FK_428D0DF07C56DBD6 FOREIGN KEY (parameter_id) REFERENCES parameters (id) ON DELETE CASCADE NOT DEFERRABLE INITIALLY IMMEDIATE');
         $this->sql('
             ALTER TABLE
                 ready_category_seo_mix_parameter_parameter_values
             ADD
-                CONSTRAINT FK_428D0DF01452663E FOREIGN KEY (parameter_value_id) REFERENCES parameter_values (id) NOT DEFERRABLE INITIALLY IMMEDIATE');
+                CONSTRAINT FK_428D0DF01452663E FOREIGN KEY (parameter_value_id) REFERENCES parameter_values (id) ON DELETE CASCADE NOT DEFERRABLE INITIALLY IMMEDIATE');
         $this->sql('
             ALTER TABLE
                 ready_category_seo_mixes
@@ -74,7 +74,7 @@ class Version20200319113341 extends AbstractMigration
             ALTER TABLE
                 ready_category_seo_mixes
             ADD
-                CONSTRAINT FK_74803E8F919FE4E5 FOREIGN KEY (flag_id) REFERENCES flags (id) NOT DEFERRABLE INITIALLY IMMEDIATE');
+                CONSTRAINT FK_74803E8F919FE4E5 FOREIGN KEY (flag_id) REFERENCES flags (id) ON DELETE CASCADE NOT DEFERRABLE INITIALLY IMMEDIATE');
     }
 
     /**

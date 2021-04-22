@@ -52,9 +52,6 @@ class Version20200428122812 extends AbstractMigration
                 CONSTRAINT FK_B3CF6BD538248176 FOREIGN KEY (currency_id) REFERENCES currencies (id) ON DELETE
             SET
                 NULL NOT DEFERRABLE INITIALLY IMMEDIATE');
-        $this->sql('ALTER TABLE orders ADD go_pay_id VARCHAR(20) DEFAULT NULL');
-        $this->sql('ALTER TABLE orders ADD go_pay_status VARCHAR(30) DEFAULT NULL');
-        $this->sql('ALTER TABLE orders ADD go_pay_fik VARCHAR(39) DEFAULT NULL');
         $this->sql('ALTER TABLE payments ADD go_pay_payment_method_id INT DEFAULT NULL');
         $this->sql('ALTER TABLE payments ADD type VARCHAR(255) NOT NULL DEFAULT \'basic\'');
         $this->sql('ALTER TABLE payments ALTER type DROP DEFAULT');

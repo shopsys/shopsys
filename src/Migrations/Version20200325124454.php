@@ -14,8 +14,8 @@ class Version20200325124454 extends AbstractMigration
      */
     public function up(Schema $schema): void
     {
-        $this->sql('CREATE TABLE parameter_units (id SERIAL NOT NULL, unit VARCHAR(100) NOT NULL, PRIMARY KEY(id))');
-        $this->sql('CREATE UNIQUE INDEX UNIQ_99758EC5DCBB0C53 ON parameter_units (unit)');
+        $this->sql('CREATE TABLE parameter_units (id SERIAL NOT NULL, akeneo_code VARCHAR(100) NOT NULL, PRIMARY KEY(id))');
+        $this->sql('CREATE UNIQUE INDEX UNIQ_99758EC5CC7118A2 ON parameter_units (akeneo_code)');
         $this->sql('
             CREATE TABLE parameter_unit_translations (
                 id SERIAL NOT NULL,
