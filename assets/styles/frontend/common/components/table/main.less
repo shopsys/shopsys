@@ -1,19 +1,41 @@
 .table-main {
+    display: block;
+
+    tbody {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+
     tr {
         background: @color-f;
 
-        &:nth-child(2n+1) {
-            background: @color-light;
+        &:nth-child(2n) {
+            background: @color-light-secondary;
         }
     }
 
     td, th {
-        padding: 10px;
+        padding: 15px;
     }
 
     th {
-        text-align: left;
+        padding: 6px 15px;
+        line-height: 17px;
+        vertical-align: bottom;
 
-        font-weight: bold;
+        color: @color-base-lighter;
+        font-size: 13px;
+        font-weight: 400;
+    }
+
+    td {
+        line-height: 18px;
+
+        font-size: @font-size-small;
+    }
+
+    .max-width {
+        width: 100%;
     }
 }
