@@ -76,6 +76,7 @@ parameters:
             - '*/src/Migrations/Version20200831091231.php'
             - '*/src/Controller/Admin/CategorySeoController.php'
             - '*/src/Form/Admin/StockFormType.php'
+            - '*/src/Form/Admin/Store/StoreFormType.php'
             - '*/src/Form/Admin/TransportFormTypeExtension.php'
             - '*/src/Form/Front/Customer/User/CustomerUserFormType.php'
             - '*/src/Form/Front/Registration/RegistrationFormType.php'
