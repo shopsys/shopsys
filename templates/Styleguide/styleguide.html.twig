@@ -688,51 +688,25 @@
                                class="input id__add_product_form_productId" value="1">
 
                         <h3 class="styleguide-module__title--small">Price Slider</h3>
-                        <div class="box-filter__price">
-                            <dl class="form-line">
-                                <dt>
-                                    <label for="product_filter_form_minimalPrice">
-                                        Price from:
-                                    </label>
-                                </dt>
-                                <dd>
-                                    <input type="text" id="product_filter_form_minimalPrice"
-                                           name="product_filter_form[minimalPrice]" placeholder="319.00"
-                                           class="js-product-filter-call-change-after-reset input">
-
-                                    <span class="js-validation-errors-list js-validation-error-list-product_filter_form_minimalPrice form-error form-error--line display-none"><span
-                                                class="form-error__icon"><i class="svg svg-warning"></i></span>
-                                        <ul class="form-error__list"></ul>
-                                    </span>
-                                    CZK
-                                </dd>
-                            </dl>
-
-                            <dl class="form-line">
-                                <dt>
-                                    <label for="product_filter_form_maximalPrice">
-                                        Price to:
-                                    </label>
-                                </dt>
-                                <dd>
-                                    <input type="text" id="product_filter_form_maximalPrice"
-                                           name="product_filter_form[maximalPrice]" placeholder="21590.00"
-                                           class="js-product-filter-call-change-after-reset input">
-
-                                    <span class="js-validation-errors-list js-validation-error-list-product_filter_form_maximalPrice form-error form-error--line display-none"><span
-                                                class="form-error__icon"><i class="svg svg-warning"></i></span>
-                                        <ul class="form-error__list"></ul>
-                                    </span>
-                                    CZK
-                                </dd>
-                            </dl>
-                            <div
-                                class="js-range-slider"
-                                data-minimum-input-id="product_filter_form_minimalPrice"
-                                data-minimal-value="319.000000"
-                                data-maximum-input-id="product_filter_form_maximalPrice"
-                                data-maximal-value="21590.000000"
-                            ></div>
+                        <div class="box-price-slider" id="product_filter_box_price">
+                            <div class="js-range-slider ui-slider ui-corner-all ui-slider-horizontal ui-widget ui-widget-content" data-minimum-input-id="product_filter_form_minimalPrice" data-minimal-value="118.00" data-maximum-input-id="product_filter_form_maximalPrice" data-maximal-value="169990.00" data-decimals="2">
+                            <span tabindex="0" class="ui-slider-handle ui-corner-all ui-state-default" style="left: 0%;"></span>
+                            <span tabindex="0" class="ui-slider-handle ui-corner-all ui-state-default" style="left: 100%;"></span>
+                            </div>
+                            <div class="box-price-slider__form">
+                                <div class="box-price-slider__form__item">
+                                    <div class="form-line-block is-focused">
+                                        <input type="text" id="product_filter_form_minimalPrice" name="product_filter_form[minimalPrice]" class="js-product-filter-call-change-after-reset input" placeholder="118,00&nbsp;Kč">
+                                        <label>od</label>
+                                    </div>
+                                </div>
+                                <div class="box-price-slider__form__item">
+                                    <div class="form-line-block is-focused">
+                                        <input type="text" id="product_filter_form_maximalPrice" name="product_filter_form[maximalPrice]" class="js-product-filter-call-change-after-reset input" placeholder="169&nbsp;990,00&nbsp;Kč">
+                                        <label>do</label>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </section>
 

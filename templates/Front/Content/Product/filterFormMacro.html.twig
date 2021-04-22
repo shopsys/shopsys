@@ -86,32 +86,38 @@
             </div>
         {% endif %}
 
-        <div class="box-filter__content js-product-filter-box" data-product-filter-box-id="product_filter_box_price">
+        <div class="box-filter__choice js-product-filter-box" data-product-filter-box-id="product_filter_box_price">
             <span class="box-filter__choice__title active cursor-pointer js-product-filter-box-label js-product-filter-box-arrow">
                 {{ 'Price'|trans }}
                 <i class="svg svg-arrow"></i>
             </span>
-            <div id="product_filter_box_price" class="box-filter__slider__wrap">
-                <div class="ui-slider-wrap">
-                    <div
-                        class="box-filter__slider__wrap__range js-range-slider"
-                        data-minimum-input-id="{{ filterForm.minimalPrice.vars.id }}"
-                        data-minimal-value="{{ priceRange.minimalPrice|moneyFormat }}"
-                        data-maximum-input-id="{{ filterForm.maximalPrice.vars.id }}"
-                        data-maximal-value="{{ priceRange.maximalPrice|moneyFormat }}"
-                        data-decimals="{{ decimalsByDomainId(getDomain().id) }}"
-                    ></div>
-                </div>
-                <div class="box-filter__content__item__wrap">
-                    <div class="box-filter__content__item">
-                        {{ form_widget(filterForm.minimalPrice, {
-                            attr: { class: 'js-product-filter-call-change-after-reset', placeholder: priceRange.minimalPrice|priceWithoutCurrency }
-                        }) }} {{ currencySymbolByDomainId(getDomain().id) }}
+            <div class="box-price-slider" id="product_filter_box_price">
+                <div
+                    class="js-range-slider"
+                    data-minimum-input-id="{{ filterForm.minimalPrice.vars.id }}"
+                    data-minimal-value="{{ priceRange.minimalPrice|moneyFormat }}"
+                    data-maximum-input-id="{{ filterForm.maximalPrice.vars.id }}"
+                    data-maximal-value="{{ priceRange.maximalPrice|moneyFormat }}"
+                    data-decimals="{{ decimalsByDomainId(getDomain().id) }}"
+                ></div>
+                <div class="box-price-slider__form">
+                    <div class="box-price-slider__form__item">
+                        <div class="form-line-block is-focused">
+                            {{ form_widget(filterForm.minimalPrice, {
+                                symbolAfterInput: currencySymbolByDomainId(getDomain().id),
+                                attr: { class: 'js-product-filter-call-change-after-reset', placeholder: priceRange.minimalPrice|price }
+                            }) }}
+                            <label>{{ 'od'|trans }}</label>
+                        </div>
                     </div>
-                    <div class="box-filter__content__item box-filter__content__item--right">
-                        {{ form_widget(filterForm.maximalPrice, {
-                            attr: { class: 'js-product-filter-call-change-after-reset', placeholder: priceRange.maximalPrice|priceWithoutCurrency }
-                        }) }} {{ currencySymbolByDomainId(getDomain().id) }}
+                    <div class="box-price-slider__form__item">
+                        <div class="form-line-block is-focused">
+                            {{ form_widget(filterForm.maximalPrice, {
+                                symbolAfterInput: currencySymbolByDomainId(getDomain().id),
+                                attr: { class: 'js-product-filter-call-change-after-reset', placeholder:priceRange.maximalPrice|price }
+                            }) }}
+                            <label>{{ 'do'|trans }}</label>
+                        </div>
                     </div>
                 </div>
             </div>

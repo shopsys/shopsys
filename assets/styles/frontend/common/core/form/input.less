@@ -10,7 +10,7 @@
 @input-disabled-background: #eff1f2;
 @input-border-radius: 4px;
 
-@input-label-color: @color-base-lighter;
+@input-label-color: #555764;
 
 .input {
     width: @input-width;
@@ -139,18 +139,6 @@
     .input + label {
         color: @color-alert;
     }
-}
-
-.is-focused .input:focus {
-    border-color: @color-add-light;
-    background-color: @color-f;
-    box-shadow: 0 0 0 3px rgba(@color-add-light, .25);
-}
-
-.is-focused-error .input:focus {
-    border-color: @input-error-border-color;
-    background-color: @input-error-background;
-    box-shadow: 0 0 0 3px rgba(@input-error-border-color, .25);
 }
 
 .is-focused {
