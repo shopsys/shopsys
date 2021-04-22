@@ -37,13 +37,6 @@
                     {{ childCategoryName|slice(0,40) }}{% if childCategoryName|length > 40 %}&hellip;{% endif %}
                 </div>
             </li>
-            <li class="mobile-menu__item mobile-menu__item--current">
-                <a
-                    href="{{ url('front_product_list', { id: currentMenuListId }) }}"
-                    class="mobile-menu__item__link">
-                    <span class="mobile-menu__item__link__text">{{ 'Zobrazit všechno'|trans }}</span>
-                </a>
-            </li>
         {% endif %}
 
         {% for categoryWithLazyLoadedVisibleChildren in categoriesWithLazyLoadedVisibleChildren %}
@@ -64,22 +57,20 @@
         {% endfor %}
 
         {% if isFirstLevel %}
-            <li class="mobile-menu__item mobile-menu__item--small">
-                <a class="mobile-menu__item__link js-not-implemented-yet" href="">
-                    {{ "Zákaznický servis"|trans }}
-                </a>
-            </li>
-
-            <li class="mobile-menu__item mobile-menu__item--small">
-                <a class="mobile-menu__item__link js-not-implemented-yet" href="">
-                    {{ "Prodejny"|trans }}
-                </a>
-            </li>
-
-            <li class="mobile-menu__item mobile-menu__item--small">
-                <a class="mobile-menu__item__link js-not-implemented-yet" href="">
-                    {{ "Přihlásit se"|trans }}
-                </a>
+            <li class="mobile-menu__item">
+                <div class="mobile-menu__item__submenu">
+                    <a class="mobile-menu__item__submenu__item js-not-implemented-yet" href="">
+                        {{ "Zákaznický servis"|trans }}
+                    </a>
+                
+                    <a class="mobile-menu__item__submenu__item js-not-implemented-yet" href="">
+                        {{ "Prodejny"|trans }}
+                    </a>
+                
+                    <a class="mobile-menu__item__submenu__item js-not-implemented-yet" href="">
+                        {{ "Přihlásit se"|trans }}
+                    </a>
+                </div>
             </li>
         {% endif %}
     </ul>
