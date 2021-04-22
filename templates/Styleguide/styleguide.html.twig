@@ -734,35 +734,6 @@
                                 data-maximal-value="21590.000000"
                             ></div>
                         </div>
-
-                        <h3 class="styleguide-module__title--small">Newsletter form error</h3>
-                        <div class="footer__newsletter">
-                            <div class="footer__newsletter__form">
-                                <div class="footer__newsletter__form__wrap">
-                                    <div class="footer__newsletter__form__in">
-                                                <input type="email" id="subscription_form_email" name="subscription_form[email]" required="required" placeholder="Enter email" class="footer__newsletter__input input">
-
-                                                <span class="js-validation-errors-list js-validation-error-list-subscription_form_email form-error  display-none"><span class="form-error__icon"><i class="svg svg-warning"></i></span><ul class="form-error__list"></ul></span>
-                                    </div>
-                                        <button type="submit" id="subscription_form_send" name="subscription_form[send]" class="footer__newsletter__form__btn btn">Log in</button>
-
-                                </div>
-                                <span class="js-validation-errors-list js-validation-error-list-subscription_form in-message in-message--alert display-none">
-                                    <ul class="in-message__list"></ul>
-                                </span>
-                                <div class="form-choice">
-                                    <div class="form-choice__input">
-                                        <input type="checkbox" id="subscription_form_privacyPolicyAgreement" name="subscription_form[privacyPolicyAgreement]" required="required" value="1">
-                                    </div>
-                                    <div class="form-choice__label">
-                                        <label for="subscription_form_privacyPolicyAgreement">
-                                            I agree with <a href="#" target="_blank">privacy policy</a>.
-                                        </label>
-                                        <span class="js-validation-errors-list js-validation-error-list-subscription_form_privacyPolicyAgreement form-error form-error--choice display-none"><span class="form-error__icon"><i class="svg svg-warning"></i></span><ul class="form-error__list"></ul></span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                     </section>
 
                     <section id="toggle" class="styleguide-module anchor clearfix">
@@ -913,76 +884,85 @@
                     <section id="popup" class="styleguide-module anchor clearfix">
                         <h2 class="styleguide-module__title">Popup</h2>
                         <div style="position: relative; display: block;">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
                             labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
                             laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
                             voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-                            cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                            <div class="window-popup__overlay window-popup__overlay--active" id="js-overlay"
-                                 style="position: absolute;"></div>
-                            <div id="window-main-container" style="padding-bottom: 20px;">
-                                <div class="window-popup window-popup--standard window-popup--active" id="js-window"
-                                     style="position: relative;">
+                            cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.<br><br></p>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+                            labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+                            laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
+                            voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
+                            cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.<br><br></p>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+                            labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+                            laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
+                            voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
+                            cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                            <div style="position: absolute" class="web__overlay web__overlay--active" id="js-web-overlay"></div>
+                            <div id="window-main-container">
+                                <div class="window-popup window-popup--login window-popup--active" id="js-window" style="position: absolute;top: 50%;transform: translateY(-50%);">
                                     <div class="js-window-content window-popup__in">
-                                        <form name="front_login_form" method="post" action="/login/check/"
-                                              novalidate="novalidate" class="js-front-login-window" role="form">
-                                            <span class="js-validation-errors-list js-validation-error-list-front_login_form in-message  display-none">
-                                                <ul class="in-message__list"></ul>
-                                            </span>
-                                            <div class="box-login">
-                                                <h3 class="box-login__title">Login</h3>
-                                                <div class="js-front-login-window-message in-message in-message--alert display-none"></div>
+                                        <h2 class="window-popup__heading">Přihlášení</h2>
+                                        <div class="box-login">
+                                            <div class="box-login__col box-login__col--left">
                                                 <div class="box-login__item">
-                                                    <input name="front_login_form[email]" required="required"
-                                                           placeholder="Email" class="input id__front_login_form_email"
-                                                           type="text">
-                                                    <span class="js-validation-errors-list js-validation-error-list-front_login_form_email form-error  display-none">
-                                                        <span class="form-error__icon"><i
-                                                                    class="svg svg-warning"></i></span>
-                                                        <ul class="form-error__list"></ul>
-                                                    </span>
-                                                </div>
-                                                <div class="box-login__item">
-                                                    <span class="js-validation-errors-list js-validation-error-list-front_login_form_password form-error  display-none">
-                                                        <span class="form-error__icon"><i
-                                                                    class="svg svg-warning"></i></span>
-                                                        <ul class="form-error__list"></ul>
-                                                    </span>
-                                                    <input name="front_login_form[password]" required="required"
-                                                           placeholder="Password"
-                                                           class="input id__front_login_form_password" type="password">
-                                                </div>
-                                                <div class="box-login__item box-login__item--checkbox">
-                                                    <label class="form-choice">
-                                                    <span class="form-choice__input">
-                                                    <input name="front_login_form[rememberMe]"
-                                                           class="id__front_login_form_rememberMe" value="1"
-                                                           type="checkbox">
-                                                    </span>
-                                                        <span class="form-choice__label">
-                                                    Remember my login
-                                                    <i class="svg svg-info in-icon in-icon--info js-tooltip"
-                                                       data-toggle="tooltip" data-placement="right" title=""
-                                                       data-original-title="We will remember your login on this computer for 30 days."></i>
-                                                    </span>
+                                                    <div class="form-line-block js-form-field">
+                                                    <input type="text" id="front_login_form_email" name="front_login_form[email]" required="required" class="input">
+                                                    <label for="front_login_form_email" class="required">
+                                                        E-mail
+                                                        <span class="form-input-required">*</span>
                                                     </label>
                                                 </div>
-                                                <div class="box-login__item box-login__item--submit">
-                                                    <button type="submit" name="front_login_form[login]"
-                                                            class="btn id__front_login_form_login">Log in
-                                                    </button>
+                                            </div>
+                                                <div class="box-login__item">
+                                                    <div class="form-line-block js-form-field">
+                                                        <input type="password" id="front_login_form_password" name="front_login_form[password]" required="required" class="input">
+                                                        <label for="front_login_form_password" class="required">
+                                                            Heslo
+                                                            <span class="form-input-required">*</span>
+                                                        </label>
+                                                    </div>
                                                 </div>
-                                                <div class="box-login__item box-login__item--info">
-                                                    <a href="#popup">Forgot your password?</a>
+                                                <div class="box-login__item box-login__item--checkbox">
+                                                    <div class="form-choice">
+                                                        <input type="checkbox" id="front_login_form_rememberMe" name="front_login_form[rememberMe]" class="css-checkbox" value="1">
+                                                        <label class="css-checkbox__image" for="front_login_form_rememberMe">
+                                                            Zapamatuj si mé přihlášení
+                                                            <i class="svg svg-info in-icon in-icon--info js-tooltip" data-toggle="tooltip" data-placement="right" title="" data-original-title="Zapamatujeme si vaše přihlášení na tomto počítači po dobu 30 dní."></i>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div class="box-login__buttons">
+                                                    <div class="box-login__item box-login__item--submit">
+                                                        <button type="submit" id="front_login_form_login" name="front_login_form[login]" class="btn">Přihlásit</button>
+                                                    </div>
+                                                    <div class="box-login__alert">
+                                                        <img class="box-login__alert__icon" src="/public/frontend/images/warning.svg" alt="Zapomněli jste své heslo?">
+                                                        <span class="box-login__alert__text">Zapomněli jste své heslo?</span>
+                                                        <a class="box-login__alert__link box-login__alert__link--secondary" href="http://127.0.0.1:8000/zapomenute-heslo">Zapomněli jste heslo?</a>
+                                                        <a class="box-login__alert__link box-login__alert__link--primary" href="http://127.0.0.1:8000/zapomenute-heslo">Obnovte si ho</a>
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <input name="front_login_form[_token]"
-                                                   class="input id__front_login_form__token"
-                                                   value="" type="hidden">
-                                        </form>
+                                            <div class="box-login__col box-login__col--right">
+                                                <div class="box-login__profile">
+                                                    <strong class="box-login__profile__text">Nemáte ješte účet?<br>Registrujte se.</strong>
+                                                    <div class="box-login__profile__icon">
+                                                        <picture>
+                                                            <source srcset="/public/frontend/images/qmark2x.png 2x, /public/frontend/images/qmark.png 1x">
+                                                            <img class="box-login__profile__icon__img loaded" loading="lazy" src="/public/frontend/images/qmark.png" data-src="/public/frontend/images/qmark.png" alt="Profil">
+                                                        </picture>
+                                                    </div>
+                                                </div>
+                                                <p class="box-login__message">
+                                                    Nebudete muset dokola vyplňovat adresy a uvidíte přehled všech objednávek.
+                                                </p>
+                                                <a href="http://127.0.0.1:8000/registrace" class="btn js-registration-link-desktop">Registrujte se</a>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <a href="#popup" class="window-button-close window-popup__close js-window-button-close"
-                                       title="Close (Esc)"><i class="svg svg-remove"></i></a>
+                                    <a href="#" class="window-button-close window-popup__close js-window-button-close" title="Zavřít (Esc)"><i class="svg svg-remove"></i></a>
                                 </div>
                             </div>
                         </div>
@@ -1033,52 +1013,24 @@
                     <section id="paging" class="styleguide-module anchor clearfix">
                         <h2 class="styleguide-module__title">Paging</h2>
 
-                        <div class="in-paging__control">
-                            <span class="in-paging__control__item in-paging__control__item--arrow in-paging__control__item--inactive">
-                                <i class="svg svg-arrow-left"></i>
-                                <span class="in-paging__control__item__arrow-text">
-                                    Preview
+                        <div class="in-paging">
+                            <div class="in-paging__control">
+                                <span class="in-paging__control__item in-paging__control__item--prev in-paging__control__item--inactive">
+                                    <i class="svg svg-arrow"></i>
                                 </span>
-                            </span>
+                                <span class="in-paging__control__item in-paging__control__item in-paging__control__item--active">1</span>
+                                <a class="in-paging__control__item" href="/televize-audio?page=2" rel="next">2</a>
+                                <a class="in-paging__control__item" href="/televize-audio?page=3">3</a>
 
-                            <span class="in-paging__control__item in-paging__control__item--num in-paging__control__item--num--active">1</span>
-                            <a class="in-paging__control__item in-paging__control__item--num" href="#paging">2</a>
-                            <a class="in-paging__control__item in-paging__control__item--num" href="#paging">3</a>
-                            <a class="in-paging__control__item in-paging__control__item--num" href="#paging">4</a>
-                            <a class="in-paging__control__item in-paging__control__item--num" href="#paging">5</a>
-                            <a class="in-paging__control__item in-paging__control__item--num" href="#paging">6</a>
-                            <a class="in-paging__control__item in-paging__control__item--num" href="#paging">7</a>
-                            <a class="in-paging__control__item in-paging__control__item--num" href="#paging">8</a>
-                            <a class="in-paging__control__item in-paging__control__item--num" href="#paging">9</a>
-                            <a class="in-paging__control__item in-paging__control__item--num" href="#paging">10</a>
-                            <a class="in-paging__control__item in-paging__control__item--num" href="#paging">11</a>
-                            <a class="in-paging__control__item in-paging__control__item--num" href="#paging">12</a>
-                            <a class="in-paging__control__item in-paging__control__item--num" href="#paging">13</a>
-                            <a class="in-paging__control__item in-paging__control__item--num" href="#paging">14</a>
-                            <a class="in-paging__control__item in-paging__control__item--num" href="#paging">15</a>
-                            <a class="in-paging__control__item in-paging__control__item--num" href="#paging">16</a>
-                            <a class="in-paging__control__item in-paging__control__item--num" href="#paging">17</a>
-                            <a class="in-paging__control__item in-paging__control__item--num" href="#paging">18</a>
-                            <a class="in-paging__control__item in-paging__control__item--num" href="#paging">19</a>
-                            <a class="in-paging__control__item in-paging__control__item--num" href="#paging">...</a>
-                            <a class="in-paging__control__item in-paging__control__item--num" href="#paging">100</a>
-                            <a class="in-paging__control__item in-paging__control__item--num" href="#paging">...</a>
-                            <a class="in-paging__control__item in-paging__control__item--num" href="#paging">1000</a>
-
-                            <a class="in-paging__control__item in-paging__control__item--arrow in-paging__control__item--right"
-                               href="#paging">
-                                <span class="in-paging__control__item__arrow-text">
-                                    Next
+                                <span class="in-paging__control__item in-paging__control__item--separate">
+                                    <span class="in-paging__control__item__separate">...</span>
                                 </span>
-                                <i class="svg svg-arrow-left"></i>
-                            </a>
-                        </div>
 
-                        <div class="in-paging__control" style="padding-top: 20px;">
-                            <div class="in-paging__button-more text-center">
-                                <input class="js-load-more-button btn" data-page="1"
-                                       data-total-count="4" data-page-size="12" data-pagination-to-item="4"
-                                       value="Load next 20 products" type="button">
+                                <a class="in-paging__control__item" href="#">14</a>
+
+                                <a class="in-paging__control__item in-paging__control__item in-paging__control__item--next" href="/televize-audio?page=2" rel="next">
+                                    <i class="svg svg-arrow"></i>
+                                </a>
                             </div>
                         </div>
                     </section>
