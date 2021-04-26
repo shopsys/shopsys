@@ -132,7 +132,7 @@ class RouteConfigCustomization
                 }
             })
             ->customize(function (RouteConfig $config, RouteInfo $info) {
-                if (preg_match('~(_delete$)|(^admin_mail_deletetemplate$)~', $info->getRouteName())) {
+                if (preg_match('~(_delete$)|(^admin_mail_deletetemplate$)|(^admin_stock_setdefault$)~', $info->getRouteName())) {
                     $debugNote = 'Add CSRF token for any delete action during test execution. '
                         . '(Routes are protected by RouteCsrfProtector.)';
                     $config->changeDefaultRequestDataSet($debugNote)

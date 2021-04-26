@@ -4,6 +4,15 @@
 {% block h1 %}{{ 'Sklad'|trans }}{% endblock %}
 
 {% block main_content %}
+
+    {% if stock is defined %}
+        <div class="wrap-bar__buttons">
+            <a href="{{ protectedUrl('admin_stock_setdefault', { id: stock.id }) }}" class="btn btn--light wrap-bar__btn">
+                {{ 'Set as default'|trans }}
+            </a>
+        </div>
+    {% endif %}
+
     {{ form_start(form) }}
         {{ form_errors(form) }}
 
