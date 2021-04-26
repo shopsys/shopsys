@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Model\Stock;
 
+use App\Model\Stock\Exception\StockDomainNotFoundException;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Shopsys\FrameworkBundle\Component\Grid\Ordering\OrderableEntityInterface;
@@ -22,134 +24,74 @@ class Stock implements OrderableEntityInterface
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    protected $id;
+    protected int $id;
 
     /**
-     * @var int
-     * @ORM\Column(type="integer")
+     * @var \App\Model\Stock\StockDomain[]|\Doctrine\Common\Collections\Collection
+     * @ORM\OneToMany(targetEntity="App\Model\Stock\StockDomain", mappedBy="stock", cascade={"persist"})
      */
-    protected $domainId;
+    protected $domains;
 
     /**
      * @var string
      * @ORM\Column(type="string", length=255)
      */
-    protected $name;
-
-    /**
-     * @var bool
-     * @ORM\Column(type="boolean")
-     */
-    protected $centralStock;
+    protected string $name;
 
     /**
      * @var string
      * @ORM\Column(type="string", length=255, unique=true)
      */
-    protected $externalId;
+    protected string $externalId;
 
     /**
-     * @var string|null
-     * @ORM\Column(type="string", length=100, nullable=true)
+     * @var bool
+     * @ORM\Column(type="boolean")
      */
-    protected $street;
-
-    /**
-     * @var string|null
-     * @ORM\Column(type="string", length=100, nullable=true)
-     */
-    protected $city;
+    protected bool $isDefault;
 
     /**
      * @var string|null
      * @ORM\Column(type="text", nullable=true)
      */
-    protected $openingHours;
-
-    /**
-     * @var string|null
-     * @ORM\Column(type="text", nullable=true)
-     */
-    protected $extraordinaryOpeningHours;
-
-    /**
-     * @var string|null
-     * @ORM\Column(type="string", length=100, nullable=true)
-     */
-    protected $contactText1;
-
-    /**
-     * @var string|null
-     * @ORM\Column(type="string", length=100, nullable=true)
-     */
-    protected $contactText2;
-
-    /**
-     * @var string|null
-     * @ORM\Column(type="text", nullable=true)
-     */
-    protected $contactInfo;
-
-    //longitude - zeměpisná délka
-    //latitude - zeměpisná šířka
-
-    /**
-     * @var string|null
-     * @ORM\Column(type="decimal", precision=16, scale=13, nullable=true)
-     */
-    protected $locationLat;
-
-    /**
-     * @var string|null
-     * @ORM\Column(type="decimal", precision=16, scale=13, nullable=true)
-     */
-    protected $locationLng;
+    protected ?string $note;
 
     /**
      * @var int
      * @Gedmo\SortablePosition
      * @ORM\Column(type="integer")
      */
-    protected $position;
+    protected int $position;
 
     /**
      * @param \App\Model\Stock\StockData $stockData
      */
     public function __construct(StockData $stockData)
     {
-        $this->domainId = $stockData->domainId;
-        $this->name = $stockData->name;
-        $this->centralStock = $stockData->centralStock;
-        $this->externalId = $stockData->externalId;
-        $this->street = $stockData->street;
-        $this->city = $stockData->city;
-        $this->openingHours = $stockData->openingHours;
-        $this->extraordinaryOpeningHours = $stockData->extraordinaryOpeningHours;
-        $this->contactText1 = $stockData->contactText1;
-        $this->contactText2 = $stockData->contactText2;
-        $this->contactInfo = $stockData->contactInfo;
-        $this->locationLat = $stockData->locationLat;
-        $this->locationLng = $stockData->locationLng;
+        $this->domains = new ArrayCollection();
         $this->position = static::GEDMO_SORTABLE_LAST_POSITION;
+        $this->createDomains($stockData);
+        $this->setData($stockData);
     }
 
     /**
      * @param \App\Model\Stock\StockData $stockData
      */
-    public function edit(StockData $stockData)
+    public function edit(StockData $stockData): void
+    {
+        $this->setDomains($stockData);
+        $this->setData($stockData);
+    }
+
+    /**
+     * @param \App\Model\Stock\StockData $stockData
+     */
+    public function setData(StockData $stockData): void
     {
         $this->name = $stockData->name;
-        $this->centralStock = $stockData->centralStock;
         $this->externalId = $stockData->externalId;
-        $this->street = $stockData->street;
-        $this->city = $stockData->city;
-        $this->openingHours = $stockData->openingHours;
-        $this->extraordinaryOpeningHours = $stockData->extraordinaryOpeningHours;
-        $this->contactText1 = $stockData->contactText1;
-        $this->contactText2 = $stockData->contactText2;
-        $this->contactInfo = $stockData->contactInfo;
-        $this->locationLat = $stockData->locationLat;
-        $this->locationLng = $stockData->locationLng;
+        $this->isDefault = $stockData->isDefault;
+        $this->note = $stockData->note;
     }
 
     /**
@@ -158,14 +100,6 @@ class Stock implements OrderableEntityInterface
     public function getId(): int
     {
         return $this->id;
-    }
-
-    /**
-     * @return int
-     */
-    public function getDomainId(): int
-    {
-        return $this->domainId;
     }
 
     /**
@@ -179,9 +113,26 @@ class Stock implements OrderableEntityInterface
     /**
      * @return bool
      */
-    public function isCentralStock(): bool
+    public function isDefault(): bool
     {
-        return $this->centralStock;
+        return $this->isDefault;
+    }
+
+    /**
+     * @return string
+     */
+    public function getNote(): ?string
+    {
+        return $this->note;
+    }
+
+    /**
+     * @param int $domainId
+     * @return bool
+     */
+    public function isEnabled(int $domainId): bool
+    {
+        return $this->getStockDomain($domainId)->isEnabled();
     }
 
     /**
@@ -192,91 +143,65 @@ class Stock implements OrderableEntityInterface
         return $this->externalId;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getStreet(): ?string
+    public function setDefault(): void
     {
-        return $this->street;
+        $this->isDefault = true;
     }
 
     /**
-     * @return string|null
+     * @return int|null
      */
-    public function getCity(): ?string
-    {
-        return $this->city;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getOpeningHours(): ?string
-    {
-        return $this->openingHours;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getExtraordinaryOpeningHours(): ?string
-    {
-        return $this->extraordinaryOpeningHours;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getContactText1(): ?string
-    {
-        return $this->contactText1;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getContactText2(): ?string
-    {
-        return $this->contactText2;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getContactInfo(): ?string
-    {
-        return $this->contactInfo;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getLocationLat(): ?string
-    {
-        return $this->locationLat;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getLocationLng(): ?string
-    {
-        return $this->locationLng;
-    }
-
-    /**
-     * @return int
-     */
-    public function getPosition(): int
+    public function getPosition(): ?int
     {
         return $this->position;
     }
 
     /**
-     * @inheritDoc
+     * @param int $position
      */
-    public function setPosition($position)
+    public function setPosition($position): void
     {
         $this->position = $position;
+    }
+
+    /**
+     * @param \App\Model\Stock\StockData $stockData
+     */
+    protected function createDomains(StockData $stockData): void
+    {
+        $domainIds = array_keys($stockData->isEnabledByDomain);
+
+        foreach ($domainIds as $domainId) {
+            $stockDomain = new StockDomain($this, $domainId);
+            $this->domains->add($stockDomain);
+        }
+
+        $this->setDomains($stockData);
+    }
+
+    /**
+     * @param \App\Model\Stock\StockData $stockData
+     */
+    protected function setDomains(StockData $stockData): void
+    {
+        foreach ($this->domains as $stockDomain) {
+            $domainId = $stockDomain->getDomainId();
+            $stockDomain->setEnabled($stockData->isEnabledByDomain[$domainId]);
+        }
+    }
+
+    /**
+     * @param int $domainId
+     * @return \App\Model\Stock\StockDomain
+     */
+    public function getStockDomain(int $domainId): StockDomain
+    {
+        foreach ($this->domains as $stockDomain) {
+            if ($stockDomain->getDomainId() === $domainId) {
+                return $stockDomain;
+            }
+        }
+
+        throw new StockDomainNotFoundException($this->id, $domainId);
     }
 }

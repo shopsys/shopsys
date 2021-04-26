@@ -150,10 +150,7 @@ class ProductAvailabilityFacade
 
         $count = 0;
         foreach ($productStocks as $productStock) {
-            if ($productStock->getStock()->getDomainId() === $domainId
-                && $productStock->getStock()->isCentralStock() === false
-                && $productStock->getProductQuantity() > 0
-            ) {
+            if ($productStock->getProductQuantity() > 0 && $productStock->getStock()->isEnabled($domainId)) {
                 $count++;
             }
         }
@@ -176,9 +173,7 @@ class ProductAvailabilityFacade
 
         $count = 0;
         foreach ($productStocks as $productStock) {
-            if ($productStock->getStock()->isCentralStock() === false
-                && $productStock->isProductExposed()
-            ) {
+            if ($productStock->isProductExposed()) {
                 $count++;
             }
         }
@@ -265,10 +260,6 @@ class ProductAvailabilityFacade
 
         $productStocksAvailabilityInformationList = [];
         foreach ($productStocks as $productStock) {
-            if ($productStock->getStock()->isCentralStock()) {
-                continue;
-            }
-
             $availabilityInformation = t('<strong class="is-in-stock">Ihned</strong> k odběru');
             $availabilityStatus = self::AVAILABILITY_STATUS_IN_STOCK;
 

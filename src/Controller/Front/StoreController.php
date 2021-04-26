@@ -38,7 +38,7 @@ class StoreController extends FrontBaseController
     public function indexAction(): Response
     {
         return $this->render('Front/Content/Store/store.html.twig', [
-            'stores' => $this->stockFacade->getStocksWithoutCentralByDomainIdIndexedByStockId($this->domain->getId()),
+            'stores' => $this->stockFacade->getStocksEnabledOnDomainIndexedByStockId($this->domain->getId()),
         ]);
     }
 

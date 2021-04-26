@@ -64,7 +64,7 @@ class ProductStockFacade
     {
         $productStocksById = [];
         foreach ($this->getProductStocksByProductIndexedByStockId($product) as $id => $productStock) {
-            if ($productStock->getStock()->getDomainId() === $domainId) {
+            if ($productStock->getStock()->isEnabled($domainId)) {
                 $productStocksById[$id] = $productStock;
             }
         }

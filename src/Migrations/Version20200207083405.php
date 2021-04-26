@@ -26,10 +26,10 @@ class Version20200207083405 extends AbstractMigration
         $this->sql('
             CREATE TABLE stocks (
                 id SERIAL NOT NULL,
-                domain_id INT NOT NULL,
                 name VARCHAR(255) NOT NULL,
-                central_stock BOOLEAN NOT NULL,
+                is_default BOOLEAN NOT NULL,
                 external_id VARCHAR(255) NOT NULL,
+                note TEXT DEFAULT NULL,
                 PRIMARY KEY(id)
             )');
         $this->sql('CREATE UNIQUE INDEX UNIQ_56F798059F75D7B0 ON stocks (external_id)');
@@ -43,6 +43,22 @@ class Version20200207083405 extends AbstractMigration
                 product_stocks
             ADD
                 CONSTRAINT FK_348BD9A14584665A FOREIGN KEY (product_id) REFERENCES products (id) ON DELETE CASCADE NOT DEFERRABLE INITIALLY IMMEDIATE');
+
+        $this->sql('
+            CREATE TABLE stock_domains (
+                id SERIAL NOT NULL,
+                stock_id INT NOT NULL,
+                domain_id INT NOT NULL,
+                is_enabled BOOLEAN NOT NULL,
+                PRIMARY KEY(id)
+            )');
+        $this->sql('CREATE INDEX IDX_95DDAF3EDCD6110 ON stock_domains (stock_id)');
+        $this->sql('CREATE UNIQUE INDEX stock_domain ON stock_domains (stock_id, domain_id)');
+        $this->sql('
+            ALTER TABLE
+                stock_domains
+            ADD
+                CONSTRAINT FK_95DDAF3EDCD6110 FOREIGN KEY (stock_id) REFERENCES stocks (id) ON DELETE CASCADE NOT DEFERRABLE INITIALLY IMMEDIATE');
     }
 
     /**

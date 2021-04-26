@@ -7,6 +7,7 @@ namespace App\Model\Stock;
 use App\Model\Stock\Exception\StockNotFoundException;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
 
 class StockRepository
@@ -36,7 +37,7 @@ class StockRepository
      * @param int $stockId
      * @return \App\Model\Stock\Stock
      */
-    public function getById($stockId): Stock
+    public function getById(int $stockId): Stock
     {
         $stock = $this->getStockRepository()->find($stockId);
         if ($stock === null) {
@@ -56,38 +57,33 @@ class StockRepository
     }
 
     /**
+     * @param int $domainId
+     * @return \App\Model\Stock\Stock[]
+     */
+    public function getStocksEnabledOnDomain(int $domainId): array
+    {
+        return $this->getQueryBuilder()
+            ->join(StockDomain::class, 'sd', Join::WITH, 's.id = sd.stock AND sd.isEnabled = TRUE AND sd.domainId = :domainId')
+            ->setParameter('domainId', $domainId)
+            ->getQuery()
+            ->execute();
+    }
+
+    /**
      * @return \App\Model\Stock\Stock[]
      */
     public function getAllStocks(): array
     {
-        return $this->getStockRepository()->findBy([], ['domainId' => 'ASC', 'position' => 'ASC']);
+        return $this->getStockRepository()->findBy([], ['position' => 'ASC']);
     }
 
     /**
-     * @param int $domainId
      * @return \Doctrine\ORM\QueryBuilder
      */
-    public function getQueryBuilderByDomain(int $domainId): QueryBuilder
+    public function getAllStocksQueryBuilder(): QueryBuilder
     {
         return $this->getQueryBuilder()
-            ->where('s.domainId = :domainId')
-            ->orderBy('s.domainId', 'ASC')
-            ->orderBy('s.position', 'ASC')
-            ->setParameter('domainId', $domainId);
-    }
-
-    /**
-     * @param string $name
-     * @param int $domainId
-     * @return \App\Model\Stock\Stock|null
-     */
-    public function findStockByNameAndDomainId(string $name, int $domainId): ?Stock
-    {
-        return $this->getQueryBuilderByDomain($domainId)
-            ->andWhere('s.name = :name')
-            ->setParameter('name', $name)
-            ->getQuery()
-            ->getOneOrNullResult();
+            ->orderBy('s.position', 'ASC');
     }
 
     /**
@@ -100,25 +96,17 @@ class StockRepository
     }
 
     /**
-     * @param int $domainId
-     * @return \App\Model\Stock\Stock[]
+     * @param \App\Model\Stock\Stock $stock
      */
-    public function getStocksByDomainId(int $domainId): array
+    public function changeDefaultStock(Stock $stock): void
     {
-        return $this->getQueryBuilderByDomain($domainId)
+        $this->em->createQueryBuilder()
+            ->update(Stock::class, 's')
+            ->set('s.isDefault', 'FALSE')
             ->getQuery()
             ->execute();
-    }
 
-    /**
-     * @param int $domainId
-     * @return \App\Model\Stock\Stock[]
-     */
-    public function getStocksWithoutCentralByDomainId(int $domainId): array
-    {
-        return $this->getQueryBuilderByDomain($domainId)
-            ->andWhere('s.centralStock = false')
-            ->getQuery()
-            ->execute();
+        $stock->setDefault();
+        $this->em->flush();
     }
 }

@@ -177,7 +177,8 @@ class ProductRepository extends BaseProductRepository
         $subquery = $queryBuilder->getEntityManager()->createQueryBuilder()
             ->select('1')
             ->from(ProductStock::class, 'ps')
-            ->join('ps.stock', 's', Join::WITH, 's.domainId = :domainId')
+            ->join('ps.stock', 's')
+            ->join('s.domains', 'sd', Join::WITH, 's.id = sd.stock AND sd.domainId = :domainId AND sd.isEnabled = TRUE')
             ->where('ps.product = p')
             ->setParameter('domainId', $domainId)
             ->having('SUM(ps.productQuantity) > 0');

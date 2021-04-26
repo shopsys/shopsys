@@ -329,7 +329,7 @@ class OrderController extends FrontBaseController
 
         $isCompanyCustomer = $frontOrderFormData->companyCustomer;
 
-        $stocksById = $this->stockFacade->getStocksWithoutCentralByDomainIdIndexedByStockId($domainId);
+        $stocksById = $this->stockFacade->getStocksEnabledOnDomainIndexedByStockId($domainId);
 
         $this->checkTransportAndPaymentChanges($orderData, $orderPreview, $transports, $payments);
 
@@ -393,7 +393,7 @@ class OrderController extends FrontBaseController
         $minimalDaysAvailabilityIndexedByTransportIds = [];
         $stockDayAvailabilitiesByStockId = [];
         if ($orderFlow->getCurrentStepNumber() === OrderFlow::STEP_SECOND) {
-            $stocks = $this->stockFacade->getStocksWithoutCentralByDomainIdIndexedByStockId($domainId);
+            $stocks = $this->stockFacade->getStocksEnabledOnDomainIndexedByStockId($domainId);
             $stockDayAvailabilitiesByStockId = $this->productAvailabilityFacade->getStockDayAvailabilitiesIndexedByStockId(
                 $domainId,
                 $stocks,
