@@ -458,10 +458,12 @@
                                             {% endif %}
                                         </div>
                                         <div class="box-accordion__grid-table__col box-accordion__grid-table__col--showrooms box-accordion__grid-table__col--mobile-accord-content js-accordion-mobile-section">
+                                            {# @todo: implement after stores
                                             <a class="box-detail__info__anchor" href="{{ url('front_stores_detail', { id: productStockAvailabilityInformation.stockId }) }}">
                                                 {{ 'Detail prodejny'|trans }}
                                                 <i class="box-detail__info__anchor__icon box-detail__info__anchor__icon--spaced svg svg-arrow"></i>
                                             </a>
+                                            #}
                                         </div>
                                     </div>
                                 {% endfor %}
