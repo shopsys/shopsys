@@ -853,3 +853,6 @@ services:
     Endroid\QrCode\Writer\PngWriter: ~
 
     App\Model\Administrator\Mail\TwoFactorAuthenticationMail: ~
+
+    Shopsys\FrameworkBundle\Model\Product\Elasticsearch\MarkProductForExportSubscriber:
+        alias: App\Model\Product\Elasticsearch\MarkProductForExportSubscriber

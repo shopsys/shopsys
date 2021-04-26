@@ -6,6 +6,7 @@ namespace App\Model\Stock;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class StockFacade
 {
@@ -20,18 +21,23 @@ class StockFacade
     private $em;
 
     /**
+     * @var \Symfony\Component\EventDispatcher\EventDispatcherInterface
      */
+    protected EventDispatcherInterface $eventDispatcher;
 
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \App\Model\Stock\StockRepository $stockRepository
+     * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher
      */
     public function __construct(
         EntityManagerInterface $em,
         StockRepository $stockRepository,
+        EventDispatcherInterface $eventDispatcher
     ) {
         $this->stockRepository = $stockRepository;
         $this->em = $em;
+        $this->eventDispatcher = $eventDispatcher;
     }
 
     /**
@@ -69,6 +75,9 @@ class StockFacade
     public function delete(int $stockId): void
     {
         $stock = $this->getById($stockId);
+
+        $this->eventDispatcher->dispatch(new StockEvent($stock), StockEvent::DELETE);
+
         $this->em->remove($stock);
         $this->em->flush();
     }
