@@ -4,9 +4,11 @@
 {% block h1 %}{{ 'Přehled skladů'|trans }}{% endblock %}
 
 {% block btn %}
-    <a href="{{ url('admin_stock_new') }}" class="btn btn--plus wrap-bar__btn">
-        <i class="btn__icon">+</i>{{ 'Vytvořit nový sklad'|trans }}
-    </a>
+    <div class="wrap-bar__buttons">
+        <a href="{{ url('admin_stock_new') }}" class="btn btn--plus wrap-bar__btn">
+            <i class="btn__icon">+</i>{{ 'Vytvořit nový sklad'|trans }}
+        </a>
+    </div>
 {% endblock %}
 
 {% block main_content %}
