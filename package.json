@@ -52,7 +52,7 @@
     },
     "dependencies": {
         "@fancyapps/fancybox": "^3.5.7",
-        "@shopsys/framework": "9.1.0",
+        "@shopsys/framework": "9.1.1",
         "codemirror": "^5.60.0",
         "intersection-observer": "^0.11.0",
         "jquery-ui": "^1.12.1",

@@ -15,9 +15,9 @@ set -e
 
 echo "Start with specifying your operating system: \
 
-    1) Linux
+    1) Linux or Windows with WSL 2
     2) Mac
-    3) Windows
+    3) Windows with docker-sync
     "
 
 while [[ 1 -eq 1 ]]

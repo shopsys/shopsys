@@ -5,20 +5,20 @@
                 <input
                     type="text"
                     name="{{ SEARCH_TEXT_PARAMETER }}"
-                    value="{{ searchText|escape('html_attr') }}"
+                    value="{{ searchText|trim|escape('html_attr') }}"
                     placeholder="{{ 'Napište co hledáte '|trans }}"
                     class="input search__input"
                     id="js-search-autocomplete-input"
                     autocomplete="off"
                     data-autocomplete-url="{{ url('front_search_autocomplete') }}"
                 />
-                
+
                 <div class="search__form__remove js-search-autocomplete-remove">
                     <i class="svg svg-remove"></i>
                 </div>
-                
+
                 <button class="search__form__icon" type="submit" title="{{ 'Vyhledat'|trans }}"></button>
-                
+
                 <div class="search__form__button-hide js-search-autocomplete-remove">
                     <div class="in-menu in-menu--active">
                         <div class="in-menu__icon">

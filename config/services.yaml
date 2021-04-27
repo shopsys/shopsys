@@ -782,8 +782,6 @@ services:
 
     App\Command\CreateProductStocksCommand: ~
 
-    App\Command\ElFinderPostInstallCommand: ~
-
     App\Command\CronLockCommand: ~
 
     App\Command\CronWatcherCommand: ~
