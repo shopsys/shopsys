@@ -13,11 +13,11 @@
                     {{ form_widget(form.email, { attr: {placeholder: 'Váš e-mail'|trans, class: 'footer__newsletter__form__input'} }) }}
                     {{ form_errors(form.email) }}
                 </div>
-                {{ form_widget(form.send, { label: 'Odeslat'|trans, attr: { class: "btn btn--primary btn--newsletter footer__newsletter__form__btn" }}) }}
+                {{ form_widget(form.send, { label: 'Odeslat'|trans, attr: { class: "btn footer__newsletter__form__btn" }}) }}
             </div>
             <div class="form-choice">
                 {{ form_widget(form.privacyPolicyAgreement, { attr: { class: "css-checkbox" } }) }}
-                <label class="css-checkbox__image form-choice__label" for="{{ form.privacyPolicyAgreement.vars.id }}">
+                <label class="css-checkbox__image" for="{{ form.privacyPolicyAgreement.vars.id }}">
                     {% if privacyPolicyArticle is not null %}
                         {% set articleUrl = url('front_article_detail', {'id': privacyPolicyArticle.id}) %}
                         {{ "I agree with <a href=\"%url%\" target=\"_blank\">privacy policy</a>."|trans({'%url%': articleUrl})|raw }}

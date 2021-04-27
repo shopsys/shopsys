@@ -17,23 +17,23 @@
         </div>
     </div>
 {% else %}
-    <div class="in-message in-message--default{{ category is defined and not filterFormSubmitted ? ' in-message--transparent' }}">
+    <div class="box-list__content__message">
         {% if (filterFormSubmitted) %}
-            <strong class="in-message__heading">{{ 'No results matching filter'|trans }}</strong>
-            <p class="in-message__text">
+            <strong>{{ 'No results matching filter'|trans }}</strong>
+            <p class="box-list__content__message__text">
                 {{ 'Pro vaše přesné vyhledávání momentálně nemáme žádné výsledky.<br>
                 Zkuste být více specifičtí, nebo se podívejte, jestli jste nevyfiltrovali neexistující údaje.'|transHtml }}
             </p>
         {% elseif searchText is defined %}
-            <strong class="in-message__heading">{{ 'Search didn\'t find any products.'|trans }}</strong>
+            <strong>{{ 'Search didn\'t find any products.'|trans }}</strong>
         {% elseif category is defined %}
-            <strong class="in-message__heading">{{ 'This category contains no products.'|trans }}</strong>
-            <p class="in-message__text">
+            <strong>{{ 'This category contains no products.'|trans }}</strong>
+            <p class="box-list__content__message__text">
                 {{ 'Na jejím naplnění intenzivně pracujeme. Do té doby si můžete prohlédnout jiné kategorie plné doplňků a nábytku.'|trans }}
             </p>
-            <a class="btn btn--primary btn--primary--v2" href="{{ url('front_homepage') }}">{{ 'Zpět do e-shopu'|trans }}</a>
+            <a class="btn" href="{{ url('front_homepage') }}">{{ 'Zpět do e-shopu'|trans }}</a>
         {% else %}
-            <strong class="in-message__heading">{{ 'No products found for this brand'|trans }}</strong>
+            <strong>{{ 'No products found for this brand'|trans }}</strong>
         {% endif %}
     </div>
 {% endif %}

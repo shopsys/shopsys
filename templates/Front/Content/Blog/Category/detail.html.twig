@@ -63,7 +63,7 @@
                                                     {{ blogArticle.perex|slice(0,200) }}{% if blogArticle.perex|length > 200 %}&hellip;{% endif %}
                                                 </div>
                                                 <div class="list-articles__item__content__text">
-                                                    <a href="{{ url('front_blogarticle_detail', {'id': blogArticle.id}) }}" class="btn btn--next btn-no-style dont-print" title="{{ blogArticle.name }}">
+                                                    <a href="{{ url('front_blogarticle_detail', {'id': blogArticle.id}) }}" class="btn btn-no-style dont-print" title="{{ blogArticle.name }}">
                                                         {{ "Číst dál"|trans }} <i class="btn__icon svg svg-long-arrow-right"></i>
                                                     </a>
                                                 </div>

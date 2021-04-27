@@ -69,7 +69,7 @@
                             {% endif %}
 
                             <a
-                                class="btn btn--success box-stores__store__link"
+                                class="btn box-stores__store__link"
                                 href="{{ url('front_stores_detail', {id: store.id}) }}"
                             >
                                 {{ 'Detail prodejny'|trans }}
@@ -86,11 +86,11 @@
                 {% for store in stores %}
                     <div class="box-stores-list__item">
                         <a class="box-stores-list__item__link" href="{{ url('front_stores_detail', {id: store.id}) }}">
-                            <i class="box-stores-list__item__icon svg svg-marker svg-fw-bold"></i>
+                            <i class="box-stores-list__item__icon svg svg-marker"></i>
                             <strong class="box-stores-list__item__name">{{ store.name }}</strong>
                             <span class="box-stores-list__item__to-detail">
                                 <span class="box-stores-list__item__to-detail__text">{{ 'Detail prodejny'|trans }}</span>
-                                <i class="svg svg-chevron"></i>
+                                <i class="svg svg-arrow"></i>
                             </span>
                         </a>
                     </div>

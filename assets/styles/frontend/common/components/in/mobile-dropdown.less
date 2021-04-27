@@ -1,0 +1,25 @@
+.in-mobile-dropdown {
+    display: none;
+    position: absolute;
+    left: 10px;
+    right: 10px;
+    top: 0;
+    z-index: @z-index-menu;
+    overflow: hidden;
+    padding-top: 48px;
+
+    background-color: @color-f;
+    box-shadow: 0 5px 10px 0 rgba(164,167,193,0.34);
+
+    &__button {
+        top: 8px;
+        right: 10px;
+        position: absolute;
+        z-index: @z-index-above;
+    }
+
+    .show-position {
+        position: relative;
+        left: 0;
+    }
+}

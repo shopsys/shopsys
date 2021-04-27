@@ -2,86 +2,70 @@
 
 <div id="js-cart-box"
     {% if cart is not null and isCartHoverEnable %}
-        class="cart-box js-hover-intent{% if isIntentActive %} active{% endif %}"
+        class="cart js-hover-intent{% if isIntentActive %} active{% endif %}"
         data-hover-intent-class-for-open="active"
         data-after-callback-url="{{ url('front_cart_box_detail') }}"
         data-after-replace-selector="#js-cart-box"
     {% endif %}
-    {% if cart is null %}
-        class="cart-box cart-box--empty"
-    {% endif %}
+    {% if cart is null %}class="cart cart--empty"{% endif %}
     data-reload-url="{{ url('front_cart_box') }}">
-    <div class="cart">
-        <a class="cart__block" href="{{ url('front_cart') }}">
-            <span class="cart__info js-cart-info">
-                {% if cart is null %}
-                    <span class="cart__state">0 {{ currencySymbolByDomainId(getDomain().id) }}</span>
-                    <span class="cart__count">0</span>
-                {% else %}
-                    {% transchoice cart.itemsCount with { '%itemsCount%': cart.itemsCount, '%priceWithVat%': productsPrice.priceWithVat|price } %}
-                         <span class="cart__count js-cart-count">%itemsCount%</span>
-                         <span class="cart__state cart__state--active js-cart-price-with-vat">%priceWithVat%</span>|[2,Inf]
-                         <span class="cart__count js-cart-count">%itemsCount%</span>
-                         <span class="cart__state cart__state--active js-cart-price-with-vat">%priceWithVat%</span>
-                    {% endtranschoice %}
-                {% endif %}
-            </span>
-            <span class="cart__icon">
-                <i class="svg svg-cart svg-fw-bold"></i>
-            </span>
-        </a>
-        {% if loadItems %}
-            <div id="js-cart-box-content" class="cart__detail">
-                {% if cart is not null %}
-                    <div class="cart-detail__wrap">
-                        <ul class="cart-detail">
-                            {% for cartItem in cart.items %}
-                                {{ cartBoxItem.item(cartItem) }}
-                            {% endfor %}
-                        </ul>
-                        <div class="cart-detail__total">
-                            <div class="cart-detail__total__text">
-                                {{ 'Celkem zaplatíte'|trans }}
-                            </div>
-                            <div class="cart-detail__total__price">
-                                {% if productsHighPrice.priceWithVat.isGreaterThan(productsPrice.priceWithVat) %}
-                                    <span class="cart-detail__total__price__previous">{{ productsHighPrice.priceWithVat|price }}</span>
-                                {% endif %}
-                                {{ productsPrice.priceWithVat|price }}
-                            </div>
-                        </div>
-                    </div>
-                    <div class="cart-detail__bottom">
-                        <div class="cart-detail__bottom__button">
-                            <a href="{{ url('front_cart') }}" class="btn btn--full-width btn--larger btn--secondary">{{ 'Go to cart'|trans }}</a>
-                        </div>
-                    </div>
-                {% endif %}
-            </div>
-        {% endif %}
-        {% if cart is null %}
-            <div class="cart__detail cart__detail--empty">
-                <div class="cart__detail__figure">
-                    <strong class="cart__detail__figure__text">{{ 'Váš košík je zatím prázdný.'|trans }}</strong>
-                    <div class="cart__detail__figure__image">
-                        <picture>
-                            <source srcset="{{ asset('public/frontend/images/empty-cart-small2x.png') }} 2x, {{ asset('public/frontend/images/empty-cart-small.png') }} 1x" />
-                            <img
-                                class="cart__detail__figure__img"
-                                loading="lazy"
-                                src="{{ imgLazyloadPlaceholder }}"
-                                data-src="{{ asset('public/frontend/images/empty-cart-small.png') }}"
-                                alt="{{ 'Empty cart'|trans }}"
-                            >
-                        </picture>
-                    </div>
+    <a class="cart__block js-cart-info" href="{{ url('front_cart') }}">
+        <span class="cart__icon">
+            <i class="svg svg-cart"></i>
+            {% if cart is null %}
+                <span class="cart__count js-cart-count">0</span>
+            {% else %}
+                <span class="cart__count js-cart-count">{{ cart.itemsCount }}</span>
+            {% endif %}
+        </span>
+        <span class="cart__state">
+            {% if cart is null %}
+                0 {{ currencySymbolByDomainId(getDomain().id) }}
+            {% else %}
+                <span class="js-cart-price-with-vat">{{ productsPrice.priceWithVat|price }}</span>
+            {% endif %}
+        </span>
+    </a>
+    {% if cart is null %}
+        <div class="cart__detail cart__detail--empty">
+            <div class="cart__detail__figure">
+                <strong class="cart__detail__figure__text">{{ 'Váš košík je zatím prázdný.'|trans }}</strong>
+                <div class="cart__detail__figure__image">
+                    <picture>
+                        <source srcset="{{ asset('public/frontend/images/empty-cart-small2x.png') }} 2x, {{ asset('public/frontend/images/empty-cart-small.png') }} 1x" />
+                        <img
+                            class="cart__detail__figure__img"
+                            loading="lazy"
+                            src="{{ imgLazyloadPlaceholder }}"
+                            data-src="{{ asset('public/frontend/images/empty-cart-small.png') }}"
+                            alt="{{ 'Empty cart'|trans }}"
+                        >
+                    </picture>
                 </div>
             </div>
-        {% endif %}
-    </div>
-    <div class="cart-mobile header__mobile-button">
+        </div>
+    {% endif %}
+    {% if loadItems %}
+        <div id="js-cart-box-content" class="cart__detail">
+            {% if cart is not null %}
+                <div class="cart-detail__wrap">
+                    <ul class="cart-detail">
+                        {% for cartItem in cart.items %}
+                            {{ cartBoxItem.item(cartItem) }}
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div class="cart-detail__bottom">
+                    <div class="cart-detail__bottom__button">
+                        <a href="{{ url('front_cart') }}" class="btn btn--small">{{ 'Go to cart'|trans }}</a>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    {% endif %}
+    <div class="header__mobile-button">
         <a href="{{ url('front_cart') }}" class="header__mobile-button__in">
-            <i class="svg svg-cart svg-fw-bold"></i>
+            <i class="svg svg-cart"></i>
             {% if cart is not null %}
                 <span class="cart__count">{{ cart.itemsCount }}</span>
             {% else %}

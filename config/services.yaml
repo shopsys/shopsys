@@ -287,6 +287,12 @@ services:
     Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityFacade:
         alias: App\Model\Product\Availability\AvailabilityFacade
 
+    Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade:
+        alias: App\Model\Product\Brand\BrandFacade
+
+    Shopsys\FrameworkBundle\Model\Product\Brand\BrandRepository:
+        alias: App\Model\Product\Brand\BrandRepository
+
     Shopsys\FrameworkBundle\Model\Product\Flag\FlagData:
         alias: App\Model\Product\Flag\FlagData
 

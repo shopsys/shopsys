@@ -20,8 +20,8 @@ img {
         display: block;
     }
 
-    &--window-activated {
-        overflow-x: hidden;
+    &__header {
+        background-color: @color-primary;
     }
 
     &__in {
@@ -43,7 +43,7 @@ img {
         }
 
         &--top-border {
-            border-top: 2px solid @color-border-lighter;
+            border-top: 2px solid @color-border;
         }
 
         &--spacing {
@@ -139,11 +139,7 @@ img {
     }
 
     &__container {
-        padding: 0 @web-padding-small;
-
-        @media @query-vl {
-            padding: 0 @web-padding;
-        }
+        padding: 0 @web-padding;
 
         @media @query-xl {
             width: @web-width;
@@ -185,7 +181,7 @@ img {
         }
 
         &--with-panel {
-            padding: 0 @web-padding-small;
+            padding: 0 @web-padding;
 
             @media @query-lg {
                 display: flex;
@@ -225,6 +221,21 @@ img {
             @media @query-md {
                 padding-bottom: @web-footer-with-cookies-margin-bottom-md;
             }
+        }
+    }
+
+    &__overlay {
+        position: fixed;
+        right: 0;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        z-index: @z-index-menu - 1;
+        background-color: transparent;
+        transition: all @transition;
+
+        &--active {
+            background-color: rgba(0, 0, 0, 0.6);
         }
     }
 }

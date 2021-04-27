@@ -1,38 +1,26 @@
-{% set buttonSizeClass = (type == 'large' ? ' btn--larger ' : ' ') %}
-
 {% if productActionView.mainVariant %}
-    <a href="{{ productActionView.detailUrl }}" class="btn btn--success {{ buttonSizeClass }}">
+    <a href="{{ productActionView.detailUrl }}" class="btn">
         {{- 'Choose variant'|trans -}}
     </a>
 {% elseif productActionView.sellingDenied %}
-    <a href="{{ productActionView.detailUrl }}" class="btn {{ buttonSizeClass }}">
+    <a href="{{ productActionView.detailUrl }}" class="btn">
         {{- 'Product no longer on sale'|trans -}}
     </a>
 {% else %}
     {{ form_start(form, {attr: {class: 'js-add-product dont-print box-detail-add__info__actions', 'data-ajax-url': url('front_cart_add_product_ajax'), 'multipleForm': true}}) }}
-    <span class="form-input-spinbox form-input-spinbox--light form-input-spinbox--big js-spinbox {% if productActionView.isProductAvailable == false %}disabled{% endif %}">
+    <span class="form-input-spinbox js-spinbox {% if productActionView.isProductAvailable == false %}disabled{% endif %}">
+        <button type="button" class="btn-no-style form-input-spinbox__btn js-spinbox-minus">
+            <i class="svg svg-minus"></i>
+        </button>
         {{ form_widget(form.quantity, { attr: { class: 'form-input-spinbox__input input-no-style js-spinbox-input', 'data-spinbox-min': 1, 'data-spinbox-max': availableAddQuantity}}) }}
         <button type="button" class="btn-no-style form-input-spinbox__btn js-spinbox-plus">
-            <i class="form-input-spinbox__btn__icon form-input-spinbox__btn__icon--plus svg svg-arrow"></i>
-        </button>
-        <button type="button" class="btn-no-style form-input-spinbox__btn form-input-spinbox__btn--minus js-spinbox-minus">
-            <i class="form-input-spinbox__btn__icon svg svg-arrow"></i>
+            <i class="svg svg-plus"></i>
         </button>
     </span>
     {% if productActionView.isProductAvailable == true %}
-        {{ form_widget(form.add,
-            {
-                label: 'Přidat do košíku'|trans,
-                attr: {class: 'btn--success btn--success--cart' ~ (type is same as('large') ? ' btn--very-large')}
-            }
-        )}}
+        {{ form_widget(form.add, { label: 'Přidat do košíku'|trans } )}}
     {% else %}
-        {{ form_widget(form.add,
-            {
-                label: 'Temporarily sold out'|trans,
-                attr: {class: 'btn--disabled' ~ (type is same as('large') ? ' btn--large')},
-                disabled: 'disabled'}
-        )}}
+        {{ form_widget(form.add, { label: 'Temporarily sold out'|trans, disabled: 'disabled'} )}}
     {% endif %}
     {{ form_end(form) }}
 

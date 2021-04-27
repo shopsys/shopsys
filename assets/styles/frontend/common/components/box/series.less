@@ -3,8 +3,8 @@
 
 .box-series {
     position: relative;
-    margin: 1rem -@web-padding-small 2.5rem;
-    padding: 2rem 0 0 @web-padding-small;
+    margin: 1rem -@web-padding 2.5rem;
+    padding: 2rem 0 0 @web-padding;
 
     outline: 0;
 
@@ -78,7 +78,7 @@
     &::before {
         position: absolute;
         top: 0;
-        right: @web-padding-small;
+        right: @web-padding;
         width: 70%;
         height: 350px;
         content: "";
@@ -100,7 +100,7 @@
     &__left {
         position: relative;
         z-index: 1;
-        padding-right: @web-padding-small;
+        padding-right: @web-padding;
 
         @media @query-lg {
             width: 420px;
@@ -313,7 +313,7 @@
                     margin-bottom: 10px;
 
                     font-size: 15px;
-                    color: @color-base-secondary;
+                    color: @color-base-lighter;
 
                     @media @query-lg {
                         margin: 0;
@@ -324,7 +324,6 @@
                     display: block;
 
                     color: @color-primary;
-                    font-family: @font-quartenary;
                     font-size: 15px;
                 }
             }

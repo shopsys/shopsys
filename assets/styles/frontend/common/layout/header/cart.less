@@ -1,44 +1,20 @@
-@cart-box-border: 2px solid @color-border-tertiary;
-@cart-box-border-radius: 6px;
-@cart-box-color: #909194;
-@cart-box-items-count-size: 17px;
-@cart-box-items-count-font-size: 12px;
+@cart-items-count-size: 15px;
 
 .cart {
-    display: none;
     position: relative;
 
     @media @query-lg {
-        display: block;
-    }
+        display: flex;
 
-    &-box {
-        @media @query-lg {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            right: -10px;
-            top: auto;
-            height: 85px;
-            padding: 0 10px;
+        &--empty {
+            transition: all @transition;
 
-            cursor: pointer;
-
-            &--empty {
-                transition: all @transition;
-
-                &:hover {
+            &:hover {
+                .cart__block {
+                    border-radius: @radius @radius 0 0;
                     box-shadow: 0 10px 20px 0 rgba(@color-0, .15);
+                    background-color: @color-f;
 
-                    .cart__detail--empty {
-                        opacity: 1;
-                        transform: scale(1);
-                        pointer-events: auto;
-                    }
-                }
-
-                .cart__block:hover {
                     & + .cart__detail--empty {
                         opacity: 1;
                         transform: scale(1);
@@ -49,83 +25,64 @@
         }
     }
 
-    &-box.active {
+    &.active {
         @media @query-lg {
             box-shadow: 0 10px 20px 0 rgba(@color-0, .15);
 
-            .cart__detail {
-                display: block;
+            .cart {
+                &__block {
+                    border-radius: @radius @radius 0 0;
+                    background-color: @color-f;
+                }
+
+                &__detail {
+                    display: block;
+                }
             }
         }
     }
 
     &__block {
-        display: flex;
+        display: none;
         align-items: center;
+        padding: 15px 7px 15px 15px;
 
         text-decoration: none;
+        background-color: @color-orange-light;
+        color: @color-base;
+        border-radius: @radius;
+
+        @media @query-lg {
+            display: flex;
+        }
+
+        .cart--empty & {
+            transition: all @transition;
+        }
 
         &:hover {
             text-decoration: none;
+            color: @color-base;
         }
     }
 
     &__icon {
-        font-size: 26px;
-        line-height: 1;
+        position: relative;
+        display: flex;
 
-        @media @query-lg {
-            position: relative;
-            top: -2px;
-        }
-    }
-
-    &__info {
-        @media @query-lg {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 0.75rem 0.75rem 0.75rem 1.15rem;
-            margin-right: 0.8rem;
-            min-width: 65px;
-            text-align: right;
-
-            border: @cart-box-border;
-            border-radius: @cart-box-border-radius;
-            color: @cart-box-color;
-        }
-
-        &:hover {
-            border-color: @color-border;
-        }
-
-        &::after {
-            @media @query-lg {
-                position: absolute;
-                right: 30px;
-                top: 22px;
-                width: 8px;
-                height: 8px;
-                content: '';
-
-                background-color: @color-f;
-                border-right: @cart-box-border;
-                border-top: @cart-box-border;
-                transform: rotate(45deg);
-            }
-        }
+        font-size: 18px;
     }
 
     &__state {
         display: none;
+        margin-left: 15px;
+        line-height: 18px;
+
+        font-size: @font-size-small;
+        font-weight: 700;
 
         @media @query-lg {
             display: block;
-        }
-
-        &--active {
-            font-family: @font-quartenary;
-            color: @color-primary;
         }
     }
 
@@ -136,61 +93,51 @@
         position: absolute;
         right: 3px;
         top: 4px;
-        width: @cart-box-items-count-size;
-        height: @cart-box-items-count-size;
+        width: @cart-items-count-size;
+        height: @cart-items-count-size;
 
         border-radius: 100%;
-        background-color: @color-add;
-        background: linear-gradient(to bottom, #ffb300 40%, @color-add);
+        background-color: @color-primary;
         color: @color-f;
-        font-family: @font-tertiary;
-        font-size: @cart-box-items-count-font-size;
-        line-height: 1;
+        font-weight: 700;
+        font-size: 10px;
 
         @media @query-lg {
-            top: 6px;
-            right: -12px;
+            top: -7px;
+            right: -8px;
         }
     }
 
     &__detail {
         display: none;
-        box-shadow: 0 20px 20px 0 rgba(@color-0, .15);
-        border-bottom-left-radius: @radius;
-        border-bottom-right-radius: @radius;
 
         @media @query-lg {
             position: absolute;
             min-width: 510px;
-            top: calc(100% + 16px);
-            right: -10px;
+            top: 100%;
+            right: 0;
             z-index: 6000;
 
-            &::after {
-                position: absolute;
-                right: 0;
-                top: -4px;
-                width: 173px;
-                height: 8px;
-
-                background-color: @color-f;
-                content: '';
-            }
+            box-shadow: 0 5px 10px 0 rgba(164,167,193,0.34);
+            border-radius: @radius 0 @radius @radius;
+            background-color: @color-f;
         }
 
         &--empty {
-            display: block;
             padding: 15px 0 15px 15px;
             min-width: 400px;
             max-width: 400px;
 
-            background-color: @color-f;
             transition: all .2s ease-in-out;
             will-change: transform;
             opacity: 0;
             transform-origin: right top;
             transform: scaleY(0.5) scaleX(0.75);
             pointer-events: none;
+
+            @media @query-lg {
+                display: block;
+            }
 
             &::after {
                 width: 120px;
@@ -204,7 +151,7 @@
                 padding: 0 20px;
                 height: 80px;
 
-                background-color: @color-light-secondary;
+                background-color: @color-f;
                 border-top-left-radius: @radius;
                 border-bottom-left-radius: @radius;
 
@@ -213,8 +160,7 @@
 
                     font-size: 16px;
                     line-height: 1.2;
-                    font-family: @font-quartenary;
-                    color: @color-primary;
+                    color: @color-base;
                     font-weight: 400;
                 }
 

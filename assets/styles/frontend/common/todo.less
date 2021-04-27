@@ -7,7 +7,6 @@
     .tooltip-inner {
         border: 2px solid @not-implemented-bg-color;
         background-color: lighten(@not-implemented-bg-color, 10%);
-        font-family: @font-tertiary;
         color: @color-f;
         font-size: 15px;
         padding: 8px 12px;
@@ -25,23 +24,6 @@
 
 .svg-kose:before {
     content: "\f10f";
-}
-
-.form-input-spinbox {
-    &.disabled {
-        opacity: 0.5;
-        cursor: no-drop;
-
-        &:after {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.1);
-        }
-    }
 }
 
 .box-cart-info {
@@ -76,12 +58,6 @@
     font-size: 70%;
     color: grey;
     display: block;
-}
-
-.in-message--danger {
-    color: red;
-    border: 1px solid red;
-    background: #f6fbe2;
 }
 
 .hidden {

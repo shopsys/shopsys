@@ -98,7 +98,7 @@ class ProductController extends FrontBaseController
     private $moduleFacade;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade
+     * @var \App\Model\Product\Brand\BrandFacade
      */
     private $brandFacade;
 
@@ -177,7 +177,7 @@ class ProductController extends FrontBaseController
      * @param \App\Model\Product\Listing\ProductListOrderingModeForBrandFacade $productListOrderingModeForBrandFacade
      * @param \App\Model\Product\Listing\ProductListOrderingModeForSearchFacade $productListOrderingModeForSearchFacade
      * @param \Shopsys\FrameworkBundle\Model\Module\ModuleFacade $moduleFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade $brandFacade
+     * @param \App\Model\Product\Brand\BrandFacade $brandFacade
      * @param \App\Model\Product\Listed\ListedProductViewElasticFacade $listedProductViewFacade
      * @param \App\Model\CategorySeo\ReadyCategorySeoMixFacade $readyCategorySeoMixFacade
      * @param \Shopsys\FrameworkBundle\Model\Seo\SeoSettingFacade $seoSettingFacade

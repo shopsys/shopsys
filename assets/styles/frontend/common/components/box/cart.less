@@ -80,7 +80,7 @@
         background-color: @box-cart-card-bg;
         border-radius: @radius * 2;
         transition: all @transition;
-        border: 2px solid @color-border-lighter;
+        border: 2px solid @color-border;
 
         &-preview-wrap {
             @media @query-vl {
@@ -101,7 +101,7 @@
                 padding: 0 @box-cart-card-padding;
 
                 border-radius: @radius * 2;
-                border: 2px solid @color-border-lighter;
+                border: 2px solid @color-border;
             }
         }
 
@@ -218,7 +218,6 @@
         &__title {
             margin-bottom: 10px;
 
-            font-family: @font-quartenary;
             font-size: 18px;
             text-transform: none;
             color: @color-primary;
@@ -271,7 +270,6 @@
             &__title {
                 margin-bottom: 15px;
 
-                font-family: @font-tertiary;
                 font-size: 20px;
                 font-weight: 400;
                 text-transform: none;
@@ -470,7 +468,6 @@
             margin-bottom: 4px;
             text-align: left;
 
-            font-family: @font-quartenary;
             line-height: 1.3;
             font-size: 15px;
         }
@@ -491,12 +488,11 @@
 .cart-price {
     display: block;
 
-    color: @color-primary-light;
+    color: @color-light-secondary;
     font-weight: 400;
     -webkit-font-smoothing: antialiased;
 
     &--primary {
-        font-family: @font-quartenary;
         font-size: 17px;
         color: @color-primary;
         line-height: 1;
@@ -557,7 +553,6 @@
         font-weight: 400;
 
         &--primary {
-            font-family: @font-quartenary;
             line-height: 1.2;
 
             @media @query-xl {
@@ -586,7 +581,6 @@
         display: inline-block;
         padding: 5px 6px 3px;
 
-        font-family: @font-quartenary;
         font-size: 13px;
         line-height: 1;
         text-transform: uppercase;

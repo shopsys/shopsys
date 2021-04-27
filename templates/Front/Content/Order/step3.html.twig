@@ -28,14 +28,14 @@
                                         <div class="in-tab__password-box" id="js-order-form-login-container">
                                             <h2 class="in-tab__password-box__heading">{{ 'Vítejte zpět ve Scontu'|trans }}</h2>
                                             {{ '<button type="button" class="btn-no-style link-style in-tab__password-box__link" id="js-order-form-login-button">Přihlaste se a všechny vaše údaje vyplníme za vás</button>'|transHtml }}
-                                            <i class="in-tab__password-box__icon svg svg-chevron"></i>
+                                            <i class="in-tab__password-box__icon svg svg-arrow"></i>
                                             <div class="display-none" id="js-order-form-login-window-content">
                                                 <div class="in-message--error display-none js-order-form-login-error"></div>
                                                 <div class="form-line-block js-form-field">
                                                     <label>{{ 'Vaše heslo'|trans }}</label>
                                                     <input type="password" class="input js-order-form-login-password" />
                                                 </div>
-                                                <button class="window-popup__actions__btn window-popup__actions__btn--continue window-button-continue btn btn--primary js-order-form-login-submit">
+                                                <button class="window-popup__actions__btn window-popup__actions__btn--continue window-button-continue btn js-order-form-login-submit">
                                                     {{ 'Přihlásit'|trans }}
                                                 </button>
                                                 <a class="window-popup__link" href="{{ url('front_registration_reset_password') }}">{{ 'Zapomněli jste vaše heslo?'|trans }}</a>
@@ -78,18 +78,14 @@
                                         </h2>
                                     {% endif %}
                                     <div class="in-tab__head dont-print {{ isUserLogged ? 'display-none' }}" id="js-order-form-customer-type-selector">
-                                        <a href="#" class="in-tab__head__item js-tabs-button  {{ commonTabActiveClass }}"
-                                        data-tab-id="common-customer">
-                                            <span class="in-tab__head__item__text">
-                                                {{ "Soukromá osoba"|trans }}
-                                            </span>
-                                        </a>
-                                        <a href="#" class="in-tab__head__item js-tabs-button  {{ companyTabActiveClass }}"
-                                        data-tab-id="company-customer">
-                                            <span class="in-tab__head__item__text">
-                                                {{ "Firma"|trans }}
-                                            </span>
-                                        </a>
+                                        <input type="checkbox" class="css-radio"></input>
+                                        <label class="css-radio__image js-tabs-button" data-tab-id="common-customer">
+                                            {{ "Soukromá osoba"|trans }}
+                                        </label>
+                                        <input type="checkbox" class="css-radio"></input>
+                                        <label class="css-radio__image js-tabs-button" data-tab-id="company-customer">
+                                            {{ "Firma"|trans }}
+                                        </label>
                                     </div>
                                     <div class="in-tab__content in-tab__content--spaced in-tab__content--spaced-small personal-info-order-form">
                                         <h2 class="form-line-block-section__heading">{{ 'Základní údaje'|trans }}</h2>
@@ -241,8 +237,8 @@
                     </div>
                     <div class="box-cart__buttons box-cart__buttons--final">
                         <div class="box-cart__buttons__back">
-                            <button type="submit" name="{{ flow.getFormTransitionKey() }}" value="back" class="btn btn--prev btn--checkout-prev btn-no-style btn--arrow btn--arrow-prev js-no-validate-button">
-                                <i class="btn__icon svg svg-chevron"></i>
+                            <button type="submit" name="{{ flow.getFormTransitionKey() }}" value="back" class="btn btn-no-style btn--arrow btn--arrow-prev js-no-validate-button">
+                                <i class="btn__icon svg svg-arrow"></i>
                                 {{ 'Zpět na Dopravu a platbu'|trans }}
                             </button>
                         </div>
@@ -263,7 +259,7 @@
                                 {% endif %}
                             </span>
                             {{ form_row(form.newsletterSubscription, { label: 'I want to subscribe to the newsletter'|trans }) }}
-                            {{ form_widget(form.save, { label: 'Odeslat objednávku'|trans, attr: { class: 'btn btn--checkout-send' } }) }}
+                            {{ form_widget(form.save, { label: 'Odeslat objednávku'|trans, attr: { class: 'btn' } }) }}
                         </div>
                     </div>
                 </div>

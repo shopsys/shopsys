@@ -88,13 +88,20 @@
             occurrence: 'Front-end: preview in cart during ordering process'
             additionalSizes:
                 - {width: 180, height: ~, media: "only screen and (-webkit-min-device-pixel-ratio: 1.5)"}
-        -   name: thumbnailSearch
-            width: 32
-            height: ~
+        -   name: thumbnailSmall
+            width: 43
+            height: 28
             crop: false
-            occurrence: 'Front-end: Preview in autocomplete for search'
+            occurrence: 'Front-end: preview in dropdown cart'
             additionalSizes:
-                - {width: 64, height: ~, media: "only screen and (-webkit-min-device-pixel-ratio: 1.5)"}
+                - {width: 86, height: 56, media: "only screen and (-webkit-min-device-pixel-ratio: 1.5)"}
+        -   name: thumbnailMedium
+            width: 72
+            height: 48
+            crop: false
+            occurrence: 'Front-end: Preview in autocomplete for search, category image in horizontal menu'
+            additionalSizes:
+                - {width: 144, height: 96, media: "only screen and (-webkit-min-device-pixel-ratio: 1.5)"}
 
 -   name: sliderItem
     class: Shopsys\FrameworkBundle\Model\Slider\SliderItem

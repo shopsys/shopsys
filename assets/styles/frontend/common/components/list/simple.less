@@ -1,26 +1,45 @@
-@list-simple-dot-size: 8px;
-@list-simple-dot-space: 20px;
-@list-simple-line-height: 20px;
-@list-simple-item-margin: 3px;
+@list-simple-dot-size: 5px;
 
 .list-simple {
     .reset-ul();
 
     &__item {
         position: relative;
-        padding-left: @list-simple-dot-space;
-        line-height: @list-simple-line-height;
-        margin-bottom: @list-simple-item-margin;
+        padding-left: 15px;
+        line-height: 21px;
+        margin-bottom: 12px;
+        
+        font-size: @font-size-mobile;
 
-        &:after {
+        @media @query-lg {
+            font-size: @font-size;
+        }
+
+        .list-simple--numbers & {
+            counter-increment: list-simple-numbers-counter;
+            padding-left: 20px;
+        }
+
+        &:before {
+            content: '';
             position: absolute;
-            top: @list-simple-line-height/2 - @list-simple-dot-size/2;
+            top: 8px;
             left: 0;
             width: @list-simple-dot-size;
             height: @list-simple-dot-size;
-            content: '';
 
-            background: @color-add;
+            background-color: @color-primary;
+            border-radius: 100%;
+
+            .list-simple--numbers & {
+                content: counter(list-simple-numbers-counter) ". ";
+                width: auto;
+                height: auto;
+                top: 0;
+
+                background-color: transparent;
+                font-weight: 700;
+            }
         }
     }
 }

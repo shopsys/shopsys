@@ -27,9 +27,11 @@
 
     label {
         position: absolute;
-        left: 10px;
-        top: 15px;
+        left: 12px;
+        top: 50%;
+        transform: translateY(-50%);
         z-index: 1;
+        line-height: 14px;
 
         transition: all .2s ease-in-out;
         transform-origin: top left;
@@ -38,8 +40,9 @@
 
     &.is-focused {
         label {
-            transform: translateY(-10px);
-            font-size: 12px;
+            transform: translateY(0);
+            top: 9px;
+            font-size: 11px;
         }
 
         .input {
@@ -82,7 +85,6 @@
             margin-bottom: 0.75rem;
 
             font-size: 18px;
-            font-family: @font-quartenary;
             font-weight: 400;
             text-transform: none;
 
@@ -93,7 +95,6 @@
             &--mini {
                 margin: -15px 0 15px 35px;
 
-                font-family: @font-base;
                 color: @color-primary;
                 font-size: 15px;
                 line-height: 1.4;

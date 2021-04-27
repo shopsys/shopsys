@@ -2,6 +2,7 @@ import { KeyCodes } from 'framework/common/utils/KeyCodes';
 import Timeout from 'framework/common/utils/Timeout';
 import Translator from 'bazinga-translator';
 import Register from 'framework/common/utils/Register';
+import Overlay from '../utils/overlay';
 
 const defaults = {
     content: '',
@@ -39,6 +40,7 @@ export default class Window {
      * urlContinue (string)
      */
     constructor (inputOptions) {
+        const $overlay = new Overlay();
         this.$activeWindow = null;
 
         this.options = { textContinue: Translator.trans('Yes'), textCancel: Translator.trans('No'), ...defaults, ...inputOptions };
@@ -71,7 +73,7 @@ export default class Window {
         const _this = this;
         this.$window.bind('windowClose', function () {
             _this.$window.removeClass('window-popup--active');
-            Window.hideOverlay();
+            $overlay.hideOverlay();
 
             setTimeout(function () {
                 _this.$activeWindow.trigger('windowFastClose');
@@ -80,7 +82,7 @@ export default class Window {
 
         this.$window.bind('windowFastClose', function () {
             $(this).remove();
-            Window.hideOverlay();
+            $overlay.hideOverlay();
             this.$activeWindow = null;
         });
 
@@ -112,7 +114,7 @@ export default class Window {
         }
 
         if (this.options.buttonContinue) {
-            const $windowButtonContinue = $('<a href="" class="window-popup__actions__btn window-popup__actions__btn--continue window-button-continue btn"><i class="svg svg-chevron"></i></a>');
+            const $windowButtonContinue = $('<a href="" class="window-popup__actions__btn window-popup__actions__btn--continue window-button-continue btn"><i class="svg svg-arrow"></i></a>');
             $windowButtonContinue
                 .append(document.createTextNode(this.options.textContinue))
                 .addClass(this.options.cssClassContinue)
@@ -131,7 +133,7 @@ export default class Window {
         }
 
         if (this.options.buttonCancel) {
-            const $windowButtonCancel = $('<a href="#" class="window-popup__actions__btn window-popup__actions__btn--cancel window-button-cancel btn"><i class="svg svg-chevron"></i></a>');
+            const $windowButtonCancel = $('<a href="#" class="window-popup__actions__btn window-popup__actions__btn--cancel window-button-cancel btn"><i class="svg svg-arrow"></i></a>');
 
             $windowButtonCancel
                 .append(document.createTextNode(this.options.textCancel))
@@ -149,7 +151,7 @@ export default class Window {
             this.$window.append($windowActions);
         }
 
-        this.show();
+        this.show($overlay);
         $(window).resize(function () {
             Timeout.setTimeoutAndClearPrevious('window.window.resize', function () {
                 _this.fixVerticalAlign();
@@ -170,11 +172,11 @@ export default class Window {
         }
     }
 
-    show () {
+    show ($overlay) {
         const _this = this;
-        Window.showOverlay();
+        $overlay.showOverlay();
         if (_this.options.closeOnBgClick) {
-            Window.getOverlay().click(function () {
+            $overlay.getOverlay().click(function () {
                 _this.options.eventClose.apply(_this.$window);
                 _this.$window.trigger('windowClose');
                 return false;
@@ -215,36 +217,6 @@ export default class Window {
             $('body').append($mainContainer);
         }
         return $mainContainer;
-    }
-
-    static getOverlay () {
-        let $overlay = $('#js-overlay');
-        if ($overlay.length === 0) {
-            $overlay = $('<div class="window-popup__overlay" id="js-overlay"></div>');
-        }
-        return $overlay;
-    }
-
-    static showOverlay () {
-        let $overlay = Window.getOverlay();
-        $('body').addClass('web--window-activated').append($overlay);
-
-        // timeout 0 to asynchronous run to fix css animation fade
-        setTimeout(function () {
-            $overlay.addClass('window-popup__overlay--active');
-        }, 0);
-    }
-
-    static hideOverlay () {
-        let $overlay = $('#js-overlay');
-        $('body').removeClass('web--window-activated');
-        $overlay.removeClass('window-popup__overlay--active');
-
-        if ($overlay.length !== 0) {
-            setTimeout(function () {
-                $overlay.remove();
-            }, Window.animationTime);
-        }
     }
 }
 

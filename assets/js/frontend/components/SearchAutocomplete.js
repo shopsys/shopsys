@@ -1,5 +1,6 @@
 import Ajax from 'framework/common/utils/Ajax';
 import Register from 'framework/common/utils/Register';
+import Overlay from '../utils/overlay';
 
 export default class SearchAutocomplete {
 
@@ -19,26 +20,35 @@ export default class SearchAutocomplete {
 
     static init () {
         const searchAutocomplete = new SearchAutocomplete();
+        const $overlay = new Overlay(true);
 
         searchAutocomplete.$input = $('#js-search-autocomplete-input');
         searchAutocomplete.$searchAutocompleteResults = $('#js-search-autocomplete-results');
 
-        searchAutocomplete.$input.on('keyup paste', (event) => SearchAutocomplete.onInputChange(event, searchAutocomplete));
+        searchAutocomplete.$input.on('keyup paste', (event) => SearchAutocomplete.onInputChange(event, searchAutocomplete, $overlay));
         searchAutocomplete.$input.on('focus', function () {
             if (searchAutocomplete.resultExists) {
-                searchAutocomplete.$searchAutocompleteResults.addClass(searchAutocomplete.activeClass);
+                searchAutocomplete.$searchAutocompleteResults.closest('#js-search-autocomplete').addClass(searchAutocomplete.activeClass);
+                searchAutocomplete.$searchAutocompleteResults.find('#js-search-autocomplete-list').slideDown();
+                $overlay.showOverlay();
             }
         });
 
-        $(document).click((event) => SearchAutocomplete.onDocumentClickHideAutocompleteResults(event, searchAutocomplete));
+        $('.js-search-autocomplete-remove').click(function () {
+            searchAutocomplete.$searchAutocompleteResults.closest('#js-search-autocomplete').removeClass(searchAutocomplete.activeClass);
+            searchAutocomplete.$searchAutocompleteResults.find('#js-search-autocomplete-list').slideUp();
+            $overlay.hideOverlay();
+        });
+
+        $(document).click((event) => SearchAutocomplete.onDocumentClickHideAutocompleteResults(event, searchAutocomplete, $overlay));
     }
 
-    static onInputChange (event, searchAutocomplete) {
+    static onInputChange (event, searchAutocomplete, $overlay) {
         clearTimeout(searchAutocomplete.requestTimer);
 
         // on "paste" event the $input.val() is not updated with new value yet,
         // therefore call of search() method is scheduled for later
-        searchAutocomplete.requestTimer = setTimeout(() => SearchAutocomplete.search(searchAutocomplete), searchAutocomplete.options.requestDelay);
+        searchAutocomplete.requestTimer = setTimeout(() => SearchAutocomplete.search(searchAutocomplete, $overlay), searchAutocomplete.options.requestDelay);
 
         // do not propagate change events
         // (except "paste" event that must be propagated otherwise the value is not pasted)
@@ -47,29 +57,33 @@ export default class SearchAutocomplete {
         }
     }
 
-    static onDocumentClickHideAutocompleteResults (event, searchAutocomplete) {
+    static onDocumentClickHideAutocompleteResults (event, searchAutocomplete, $overlay) {
         const $autocompleteElements = searchAutocomplete.$input.add(searchAutocomplete.$searchAutocompleteResults);
         if (searchAutocomplete.resultExists && $(event.target).closest($autocompleteElements).length === 0) {
-            searchAutocomplete.$searchAutocompleteResults.removeClass(searchAutocomplete.activeClass);
+            searchAutocomplete.$searchAutocompleteResults.closest('#js-search-autocomplete').removeClass(searchAutocomplete.activeClass);
+            searchAutocomplete.$searchAutocompleteResults.find('#js-search-autocomplete-list').slideUp();
+            $overlay.hideOverlay();
         }
     }
 
-    static search (searchAutocomplete) {
+    static search (searchAutocomplete, $overlay) {
         const searchText = searchAutocomplete.$input.val();
 
         if (searchText.length >= searchAutocomplete.options.minLength) {
             if (searchAutocomplete.searchDataCache[searchText] !== undefined) {
-                searchAutocomplete.showResult(searchAutocomplete.searchDataCache[searchText]);
+                searchAutocomplete.showResult(searchAutocomplete.searchDataCache[searchText], $overlay);
             } else {
-                searchAutocomplete.searchRequest(searchText);
+                searchAutocomplete.searchRequest(searchText, $overlay);
             }
         } else {
             searchAutocomplete.resultExists = false;
-            searchAutocomplete.$searchAutocompleteResults.removeClass(searchAutocomplete.activeClass);
+            searchAutocomplete.$searchAutocompleteResults.closest('#js-search-autocomplete').removeClass(searchAutocomplete.activeClass);
+            searchAutocomplete.$searchAutocompleteResults.find('#js-search-autocomplete-list').slideUp();
+            $overlay.hideOverlay();
         }
     }
 
-    searchRequest (searchText) {
+    searchRequest (searchText, $overlay) {
         const _this = this;
         Ajax.ajaxPendingCall('Shopsys.search.autocomplete.searchRequest', {
             loaderElement: '.js-search-autocomplete-submit',
@@ -81,17 +95,19 @@ export default class SearchAutocomplete {
             },
             success: function (responseHtml) {
                 _this.searchDataCache[searchText] = responseHtml;
-                _this.showResult(responseHtml);
+                _this.showResult(responseHtml, $overlay);
             }
         });
     }
 
-    showResult (responseHtml) {
+    showResult (responseHtml, $overlay) {
         const $response = $($.parseHTML(responseHtml));
 
         this.resultExists = $response.find('li').length > 0;
 
-        this.$searchAutocompleteResults.addClass(this.activeClass);
+        this.$searchAutocompleteResults.closest('#js-search-autocomplete').addClass(this.activeClass);
+        this.$searchAutocompleteResults.find('#js-search-autocomplete-list').slideDown();
+        $overlay.showOverlay();
         this.$searchAutocompleteResults.html(responseHtml);
     }
 }

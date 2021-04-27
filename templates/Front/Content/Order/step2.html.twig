@@ -9,7 +9,7 @@
                         <button
                             type="submit"
                             name="transport_and_payment_form[save]"
-                            class="btn btn--checkout-step js-no-validate-button js-transport_and_payment_form_save">
+                            class="btn js-no-validate-button js-transport_and_payment_form_save">
                             {{ 'Vaše údaje'|trans }}
                         </button>
                     </div>
@@ -49,16 +49,16 @@
                                         <label class="box-chooser__item{% if transport.description and personalPickupStock != null %} box-chooser__item--selected{% endif %} js-payment-transport-checkbox-container" for="{{ transportFormId ~ '_' ~ transport.id }}">
                                             <span class="box-chooser__item__check">
                                                 <input
-                                                        type="checkbox"
-                                                        id="{{ transportFormId ~ '_' ~ transport.id }}"
-                                                        name="{{ form.transport.vars.full_name }}"
-                                                        class="css-checkbox js-order-transport-input js-payment-transport-checkbox {{ transport.personalPickup ? 'js-transport-personal-pickup-checkbox' : '' }}"
-                                                        data-id="{{ transport.id }}"
-                                                        data-hidden-id="{{ transportPersonalPickupFormId }}"
-                                                        value="{{ transport.id }}"
-                                                        {{ orderPreview.transport is same as(transport) ? 'checked' : '' }}
+                                                    type="checkbox"
+                                                    id="{{ transportFormId ~ '_' ~ transport.id }}"
+                                                    name="{{ form.transport.vars.full_name }}"
+                                                    class="css-radio js-order-transport-input js-payment-transport-checkbox {{ transport.personalPickup ? 'js-transport-personal-pickup-checkbox' : '' }}"
+                                                    data-id="{{ transport.id }}"
+                                                    data-hidden-id="{{ transportPersonalPickupFormId }}"
+                                                    value="{{ transport.id }}"
+                                                    {{ orderPreview.transport is same as(transport) ? 'checked' : '' }}
                                                 >
-                                                <span class="css-checkbox__image"></span>
+                                                <span class="css-radio__image"></span>
                                             </span>
 
                                             <span class="box-chooser__item__image">
@@ -180,8 +180,8 @@
 
                                     <label class="box-chooser__item box-chooser__item--payment js-payment-transport-checkbox-container" for="{{ child.vars.id }}">
                                         <span class="box-chooser__item__check">
-                                            {{ form_widget(child, { attr: { class: 'css-checkbox js-order-payment-input js-payment-transport-checkbox' ~ (isGoPayBankTransfer ? ' js-gopay-bank-transfer-input' : ''), 'data-id': payment.id} }) }}
-                                            <span class="css-checkbox__image"></span>
+                                            {{ form_widget(child, { attr: { class: 'css-radio js-order-payment-input js-payment-transport-checkbox' ~ (isGoPayBankTransfer ? ' js-gopay-bank-transfer-input' : ''), 'data-id': payment.id} }) }}
+                                            <span class="css-radio__image"></span>
                                         </span>
 
                                         <span class="box-chooser__item__image">
@@ -224,8 +224,8 @@
                                                 {% set goPayBankSwift = goPayBankSwiftFormChildChoice.data %}
                                                 <label class="box-chooser__item box-chooser__item--payment" for="{{goPayBankSwiftFormChild.vars.id}}">
                                                     <span class="box-chooser__item__check">
-                                                        {{ form_widget(goPayBankSwiftFormChild, { attr: { class: 'js-order-gopay-bank-swift-input css-checkbox', 'data-swift': goPayBankSwift.swift} }) }}
-                                                        <span class="css-checkbox__image"></span>
+                                                        {{ form_widget(goPayBankSwiftFormChild, { attr: { class: 'css-radio js-order-gopay-bank-swift-input', 'data-swift': goPayBankSwift.swift} }) }}
+                                                        <span class="css-radio__image"></span>
                                                     </span>
 
                                                     <span class="box-chooser__item__image">
@@ -283,13 +283,13 @@
                         </div>
                         <div class="box-cart__buttons">
                             <div class="box-cart__buttons__back">
-                                <button type="submit" name="{{ flow.getFormTransitionKey() }}" value="back" class="btn btn--prev btn--checkout-prev btn-no-style btn--arrow btn--arrow-prev js-no-validate-button">
-                                    <i class="btn__icon svg svg-chevron"></i>
+                                <button type="submit" name="{{ flow.getFormTransitionKey() }}" value="back" class="btn btn-no-style btn--arrow btn--arrow-prev js-no-validate-button">
+                                    <i class="btn__icon svg svg-arrow"></i>
                                     {{ 'Back to cart'|trans }}
                                 </button>
                             </div>
                             <div class="box-cart__buttons__next">
-                                {{ form_widget(form.save, { label: 'Vaše údaje'|trans, attr: { class: 'btn btn--checkout-step js-no-validate-button js-transport_and_payment_form_save' } }) }}
+                                {{ form_widget(form.save, { label: 'Vaše údaje'|trans, attr: { class: 'btn js-no-validate-button js-transport_and_payment_form_save' } }) }}
                             </div>
                         </div>
                     </div>

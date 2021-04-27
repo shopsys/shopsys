@@ -3,24 +3,80 @@
 
 // Paths
 @path-design: '/public/frontend/images';
-@path-font: '/public/frontend/fonts/Basier';
+@path-font: '/public/frontend/fonts/dm-sans';
+
+/* latin-ext */
+@font-face {
+    font-family: 'DM Sans';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url('@{path-font}/DmSans400-ext.woff2') format('woff2');
+    unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+/* latin */
+@font-face {
+    font-family: 'DM Sans';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url('@{path-font}/DmSans400.woff2') format('woff2');
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* latin-ext */
+@font-face {
+    font-family: 'DM Sans';
+    font-style: normal;
+    font-weight: 500;
+    font-display: swap;
+    src: url('@{path-font}/DmSans500-ext.woff2') format('woff2');
+    unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+/* latin */
+@font-face {
+    font-family: 'DM Sans';
+    font-style: normal;
+    font-weight: 500;
+    font-display: swap;
+    src: url('@{path-font}/DmSans500.woff2') format('woff2');
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* latin-ext */
+@font-face {
+    font-family: 'DM Sans';
+    font-style: normal;
+    font-weight: 700;
+    font-display: swap;
+    src: url('@{path-font}/DmSans700-ext.woff2') format('woff2');
+    unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+/* latin */
+@font-face {
+    font-family: 'DM Sans';
+    font-style: normal;
+    font-weight: 700;
+    font-display: swap;
+    src: url('@{path-font}/DmSans700.woff2') format('woff2');
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
 
 // Fonts
-@font-base: "BasierCircleRegular", Arial, Helvetica, sans-serif;
-@font: @font-base;
-@font-secondary: "BasierCircleBold", Arial, Helvetica, sans-serif;
-@font-tertiary: "BasierCircleSemiBold", Arial, Helvetica, sans-serif;
-@font-quartenary: "BasierCircleMedium", Arial, Helvetica, sans-serif;
+@font-base: "DM Sans", Arial, Helvetica, sans-serif;
 
-@font-size: 15px;
+@font-size: 16px;
+@font-size-small: 14px;
 @font-size-mobile: 14px;
 @line-height: 1.7;
 @line-height-mobile: 1.6;
 
 // Layout
-@web-width: 1450px;
+@web-width: 1240px;
 @web-padding: 20px;
-@web-padding-small: 15px;
 @web-panel-width-lg: 315px;
 @web-panel-width-xl: 330px;
 @web-panel-gap: 20px;
@@ -30,9 +86,18 @@
 @web-scrollbar-size: 17px;
 @box-component-bottom-spacing: 30px;
 
+@calc-base: 99.99%;
+
+// Z-index level
+@z-index-under: -1;
+@z-index-normal: 0;
+@z-index-above: 1;
+@z-index-menu: 500;
+@z-index-overlay: 1000;
+
 // Colors
 //// Gray scale
-@color-0: #000;
+@color-0: #0d0d0d;
 @color-1: #111;
 @color-2: #222;
 @color-3: #333;
@@ -47,77 +112,68 @@
 @color-c: #ccc;
 @color-d: #ddd;
 @color-e: #eee;
-@color-f: #fff;
+@color-f: #fefefe;
 
 //// Classic colors of design
-@color-blue: #009BD9;
-@color-green: #a0c519;
-@color-orange: #FFA200;
-@color-red: #D60000;
+@color-blue: #4c5bfd;
+@color-blue-dark: #000862;
+@color-blue-light: #f2f2ff;
+@color-orange: #ecb200;
+@color-orange-light: #fff0c4;
+@color-grey: #414353;
+@color-grey-light: #a4a7c1;
+@color-green: #00ecb1;
+@color-red: #ec5353;
 
 //// Context colors
 ////// Base color of text
-@color-base: #626268;
+@color-base: @color-0;
 
 ////// Base color of text - lighter
-@color-base-lighter: #5b5b61;
-
-////// Secondary base color
-@color-base-secondary: #7a929d;
+@color-base-lighter: @color-grey-light;
 
 ////// Color, which is main in design (used in titles or links, other significant places)
-@color-primary: #202330;
-
-////// Color, which is second to main in design
-@color-primary-light: #15161e;
+@color-primary: @color-blue;
 
 ////// Color, which is additional in design (second main color)
-@color-add: #FFD700;
+@color-add: @color-orange;
 
 ////// Color, which is additional in design (third main color)
-@color-add-secondary: #ffad00;
+@color-add-light: @color-orange-light;
 
 ////// Color, which is the most used grey in design
-@color-light: #f0f3f4;
+@color-light: @color-grey-light;
 
 ////// Color, which is the second to most used grey in design
-@color-light-secondary: #f0f3f4;
-
-////// Color, which is the third to most used grey in design
-@color-light-tertiary: #8a8B8f;
+@color-light-secondary: @color-blue-light;
 
 ////// Color for common prices
-@color-price: #aabbc3;
+@color-price: @color-primary;
 
 ////// Color for more visible prices (main price)
 @color-price-main: @color-primary;
 
-@color-price-sale: #ff7a00;
+@color-price-sale: @color-primary;
 
 ////// Color for main links and its hover color
-@color-link: @color-primary;
+@color-link: @color-grey;
 @color-link-hover: @color-primary;
 
 ////// Special colors
 @color-info: @color-green;
 @color-alert: @color-red;
-@color-warning: @color-orange;
+@color-warning: #ec5a00;
 
 ////// Color for inactive text (muted)
-@color-inactive: @color-a;
+@color-inactive: @color-grey-light;
 ////// Base color of border
-@color-border: @color-d;
-////// Light color of border
-@color-border-light: lighten(@color-border, 5%);
-////// Lighter color of border
-@color-border-lighter: #e7ebed;
+@color-border: #e2e3eb;
 ////// Secondary border color
-@color-border-secondary: #b0bec5;
+@color-border-secondary: #c4c9ff;
 ////// Tertiary border color
-@color-border-tertiary: #d7dee2;
+@color-border-tertiary: @color-grey-light;
 ////// Base color for background of components
 @color-box: @color-light;
-
 
 // Other
 //// Forms
@@ -129,7 +185,9 @@
 @transition: @transition-time @transition-type;
 
 //// Default border radius value
-@radius: 4px;
+@radius: 11px;
+@radius-medium: 4px;
+@radius-small: 2px;
 
 //// Global shadow hover item effect
 @hover-shadow: 0 6px 9px 0 darken(@color-light, 5%);

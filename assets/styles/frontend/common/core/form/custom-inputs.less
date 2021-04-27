@@ -1,8 +1,5 @@
 @custom-inputs-margin-left: 30px;
 @custom-inputs-filter-margin-left: 25px;
-@custom-inputs-font-size: @font-size;
-@custom-inputs-default-font-color: #8a8b8f;
-@custom-inputs-checked-font-color: @color-primary;
 @custom-inputs-icon-size: 18px;
 @custom-inputs-link-color: @color-base;
 @custom-inputs-link-color-hover: @color-orange;
@@ -23,20 +20,20 @@ input[type=checkbox].css-radio, input[type=radio].css-radio {
 
     & + .css-checkbox__image, & + .css-radio__image {
         position: relative;
-        display: inline-block;
-        vertical-align: middle;
+        display: inline-flex;
+        align-items: center;
         padding-left: @custom-inputs-margin-left;
-        line-height: @custom-inputs-font-size;
+        min-height: @custom-inputs-icon-size;
 
-        font-size: @custom-inputs-font-size;
-        color: @custom-inputs-default-font-color;
+        font-size: @font-size-small;
+        color: @color-0;
         cursor: pointer;
 
         &:before {
             content: "";
             position: absolute;
             display: inline-block;
-            top: -3px;
+            top: 0;
             left: 0;
             width: @custom-inputs-icon-size;
             height: @custom-inputs-icon-size;
@@ -51,16 +48,11 @@ input[type=checkbox].css-radio, input[type=radio].css-radio {
                 background-position-x: center;
             }
         }
-    }
 
-    & + .form-choice__label--flag {
-        padding-left: 25px;
-
-        font-size: 14px;
-        color: @color-primary-light;
-
-        &::before {
-            top: 1px;
+        &.active {
+            &:before {
+                background-position-y: bottom;
+            }
         }
     }
 
@@ -74,8 +66,6 @@ input[type=checkbox].css-radio, input[type=radio].css-radio {
 
     &:checked {
         & + .css-checkbox__image, & + .css-radio__image {
-            color: @custom-inputs-checked-font-color;
-
             &:before {
                 background-position-y: bottom;
             }

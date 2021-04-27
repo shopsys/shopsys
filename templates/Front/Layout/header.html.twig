@@ -22,63 +22,76 @@
             {{ render(controller('App\\Controller\\Front\\SearchController:boxAction')) }}
         </div>
 
-        <div class="header__mobile-button header__mobile-button--search">
-            <a class="header__mobile-button__in" href="{{ url('front_contacts') }}">
-                <i class="svg svg-chat svg-fw-bold"></i>
-            </a>
-        </div>
-        <div class="header__mobile-button header__mobile-button--login">
+        <div class="header__mobile-button header__mobile-button--login js-mobile-dropdown">
             {% if is_granted('ROLE_LOGGED_CUSTOMER') %}
-                <span class="header__mobile-button__in js-responsive-toggle" data-element="js-user-menu" data-hide-on-click-out="true">
+                <span class="header__mobile-button__in js-mobile-dropdown-button">
                     <i class="svg svg-user"></i>
-                    <span class="header__mobile-button__placeholder">
-                        <span class="header__mobile-button__placeholder__line header__mobile-button__placeholder__line--left"></span>
-                        <span class="header__mobile-button__placeholder__line header__mobile-button__placeholder__line--right"></span>
-                    </span>
                 </span>
             {% else %}
                 <a
                     href="{{ url('front_login') }}"
                     data-url="{{ url('front_login_window_form') }}"
-                    class="js-login-button menu-iconic__item__link"
+                    class="header__mobile-button__in js-login-button"
                 >
                     <i class="svg svg-user"></i>
                 </a>
             {% endif %}
-            <div class="header__mobile-button__menu" id="js-user-menu">
+            <div class="in-mobile-dropdown js-mobile-dropdown-container">
+                <div class="in-mobile-dropdown__button">
+                    <div class="in-menu in-menu--active js-mobile-dropdown-button">
+                        <div class="in-menu__icon">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+                        <span class="in-menu__text in-menu__text--open">{{ 'Menu'|trans }}</span>
+                        <span class="in-menu__text in-menu__text--close">{{ 'Zavřít'|trans }}</span>
+                    </div>
+                </div>
+
                 {% if is_granted('ROLE_LOGGED_CUSTOMER') %}
-                    <a href="{{ url('front_customer_edit') }}">
-                        {{ 'Personal data'|trans }}
-                    </a>
-                    <a href="{{ url('front_customer_orders') }}">
-                        {{ 'Orders'|trans }}
-                    </a>
-                    <a href="{{ url('front_logout', { _csrf_token: csrf_token('frontend_logout')}) }}">
-                        {{ 'Log out'|trans }}
-                    </a>
+                    <div class="header__mobile-button__menu">
+                        <a class="header__mobile-button__menu__item" href="{{ url('front_customer_edit') }}">
+                            {{ 'Personal data'|trans }}
+                        </a>
+                        <a class="header__mobile-button__menu__item" href="{{ url('front_customer_orders') }}">
+                            {{ 'Orders'|trans }}
+                        </a>
+                        <a class="header__mobile-button__menu__item" href="{{ url('front_logout', { _csrf_token: csrf_token('frontend_logout')}) }}">
+                            {{ 'Log out'|trans }}
+                        </a>
+                    </div>
                 {% endif %}
             </div>
         </div>
-        <div class="header__mobile-button header__mobile-button--menu">
-            <span class="header__mobile-button__in js-responsive-toggle" data-element="js-mobile-menu" data-hide-on-click-out="true">
-                <i class="svg svg-burger-menu"></i>
-                <span class="header__mobile-button__placeholder">
-                    <span class="header__mobile-button__placeholder__line header__mobile-button__placeholder__line--left"></span>
-                    <span class="header__mobile-button__placeholder__line header__mobile-button__placeholder__line--right"></span>
-                </span>
-            </span>
+
+        <div class="header__mobile-button header__mobile-button--menu js-mobile-dropdown">
+            <div class="in-menu js-mobile-dropdown-button">
+                <div class="in-menu__icon">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+                <span class="in-menu__text in-menu__text--open">{{ 'Menu'|trans }}</span>
+                <span class="in-menu__text in-menu__text--close">{{ 'Zavřít'|trans }}</span>
+            </div>
+
+            {{ render(controller('App\\Controller\\Front\\CategoryController:mobilePanelMenuAction'))|spaceless }}
         </div>
+
         <div class="header__links dont-print">
             <ul class="menu-iconic">
                 <li class="menu-iconic__item">
                     <a href="{{ url('front_contacts') }}" class="menu-iconic__item__link">
-                        <i class="menu-iconic__item__icon svg svg-chat svg-fw-bold"></i>
+                        <i class="menu-iconic__item__icon svg svg-chat"></i>
                         <span class="menu-iconic__item__text">{{ 'Zákaznický servis'|trans }}</span>
                     </a>
                 </li>
                 <li class="menu-iconic__item">
                     <a href="{{ url('front_stores') }}" class="menu-iconic__item__link">
-                        <i class="menu-iconic__item__icon svg svg-marker svg-fw-bold"></i>
+                        <i class="menu-iconic__item__icon svg svg-marker"></i>
                         <span class="menu-iconic__item__text">{{ 'Prodejny'|trans }}</span>
                     </a>
                 </li>

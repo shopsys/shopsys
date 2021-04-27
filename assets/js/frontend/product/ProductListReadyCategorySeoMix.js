@@ -29,9 +29,9 @@ export default class ProductListReadyCategorySeoMix {
         seoMetaDescription,
         url
     ) {
-        $('.js-category-seo-mix').removeClass('btn--primary');
+        $('.js-category-seo-mix').removeClass('btn--secondary');
         if (selectedReadyCategorySeoMixId) {
-            $('.js-category-seo-mix-' + selectedReadyCategorySeoMixId).addClass('btn--primary');
+            $('.js-category-seo-mix-' + selectedReadyCategorySeoMixId).addClass('btn--secondary');
         }
 
         $('.js-ready-category-seo-mix-product-list-h1').text(h1);
@@ -39,9 +39,9 @@ export default class ProductListReadyCategorySeoMix {
         const $shortDescription = $('.js-ready-category-seo-mix-product-list-short-description');
         $shortDescription.html(shortDescription);
         if (shortDescription == '') {
-            $shortDescription.siblings('.btn--next').hide();
+            $shortDescription.siblings('.btn').hide();
         } else {
-            $shortDescription.siblings('.btn--next').show();
+            $shortDescription.siblings('.btn').show();
         }
         $(document).attr('title', seoTitle);
         $('meta[name=description]').attr('content', seoMetaDescription);

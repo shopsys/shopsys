@@ -21,7 +21,7 @@ export default class MobileMenu {
         event.stopPropagation();
         event.preventDefault();
 
-        const $categoryCollapseControl = $(event.target);
+        const $categoryCollapseControl = $(event.currentTarget);
         const $parentCategoryList = $($categoryCollapseControl.data('parent-menu-id'));
         const $categoryItem = $categoryCollapseControl.closest('.js-mobile-menu-item');
         const $currentCategoryList = $categoryItem.parent('.js-mobile-menu-list').first();

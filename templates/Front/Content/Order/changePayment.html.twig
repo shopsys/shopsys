@@ -31,7 +31,7 @@
                     <div class="wrap-box__button-wrap">
                         <a
                             href="{{ url('front_order_repeat_gopay_payment', { urlHash: order.urlHash }) }}"
-                            class="btn btn--submit-next btn--success"
+                            class="btn"
                         >
                             {{ 'Opakovat platbu'|trans }}
                         </a>
@@ -53,7 +53,7 @@
                                                     {{ payment.getPrice(getDomain().id).price|priceText }}
                                                 </span>
                                             </span>
-                                            <i class="wrap-box__button__icon svg svg-chevron"></i>
+                                            <i class="wrap-box__button__icon svg svg-arrow"></i>
                                         </span>
                                     </label>
                                 {% endif %}

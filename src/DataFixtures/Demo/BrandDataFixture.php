@@ -38,7 +38,7 @@ class BrandDataFixture extends AbstractReferenceFixture
     public const BRAND_NIKON = 'brand_nikon';
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade
+     * @var \App\Model\Product\Brand\BrandFacade
      */
     private $brandFacade;
 
@@ -53,7 +53,7 @@ class BrandDataFixture extends AbstractReferenceFixture
     private $domain;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade $brandFacade
+     * @param \App\Model\Product\Brand\BrandFacade $brandFacade
      * @param \App\Model\Product\Brand\BrandDataFactory $brandDataFactory
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */

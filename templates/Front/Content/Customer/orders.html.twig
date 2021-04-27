@@ -19,13 +19,13 @@
             {% if orders|length == 0 %}
                 <div class="wrap-box wrap-box--v2 wrap-box--empty">
                     <h2 class="wrap-box__heading">{{ 'No order so far.'|trans }}</h2>
-                    <a class="btn btn--success-v2" href="{{ url('front_homepage') }}">
+                    <a class="btn" href="{{ url('front_homepage') }}">
                         {{ 'Zpět do obchodu'|trans }}
                     </a>
                 </div>
             {% else %}
-                <div class="in-scroll box-table box-table--orders">
-                    <div class="in-scroll__in box-table__wrap">
+                <div class="box-table box-table--orders">
+                    <div class="box-table__wrap">
                         <table class="box-table__table">
                             <tr class="box-table__row">
                                 <th class="box-table__item box-table__item--order-number box-table__item--heading">{{ 'Order number'|trans }}</th>
@@ -54,7 +54,7 @@
                                     <td class="box-table__item box-table__item--payment-name">
                                         {{ order.paymentName }}
                                         {% if order.payment.goPay is same as (true) and order.gopayPaid == false %}
-                                            <a class="btn btn--success-v2 btn--mini btn--in-text box-table__btn" href="{{ url('front_order_repeat_gopay_payment', { urlHash: order.urlHash }) }}">
+                                            <a class="btn btn--mini btn--in-text box-table__btn" href="{{ url('front_order_repeat_gopay_payment', { urlHash: order.urlHash }) }}">
                                                 {{ 'Zaplatit'|trans }}
                                             </a>
                                         {% endif %}
@@ -63,7 +63,7 @@
                                     <td class="box-table__item box-table__item--detail text-center">
                                         <a href="{{ url('front_customer_order_detail_registered', { orderNumber: order.number }) }}" class="in-icon in-icon--detail">
                                             {{ 'Detail'|trans }}
-                                            <i class="box-table__item--detail__icon svg svg-chevron svg-fw-bold"></i>
+                                            <i class="box-table__item--detail__icon svg svg-arrow"></i>
                                         </a>
                                     </td>
                                 </tr>

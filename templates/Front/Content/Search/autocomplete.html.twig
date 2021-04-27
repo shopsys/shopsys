@@ -1,67 +1,78 @@
-<ul class="search__hint" id="js-search-autocomplete-list">
-    {% for category in categoriesPaginationResult.results %}
-        <li class="search__hint__item">
-            <a href="{{ url('front_product_list', { id: category.id }) }}" class="search__hint__item__link">
-                <span class="search__hint__image">
-                    <img
-                        class="search__hint__image__icon"
-                        src="{{ asset('public/frontend/images/category_icon.png') }}" alt="{{ category.name }}">
-                </span>
-                <span class="search__hint__name js-search-autocomplete-item-label">{{ category.name }}</span>
-            </a>
-        </li>
-    {% endfor %}
+<div class="search__hint" id="js-search-autocomplete-list">
+    {% if productsPaginationResult.results|length > 0 %}
+        <p class="search__hint__title search__hint__title--big-gap">
+            {{ 'Produkty'|trans }} ({{ productsPaginationResult.results|length }})
+        </p>
 
-    {% for productView in productsPaginationResult.results %}
-        <li class="search__hint__item">
-            <a href="{{ productView.action.detailUrl }}"
-                class="search__hint__item__link">
-                <span class="search__hint__image">
-                     {{ image(productView.image, { size: 'thumbnailSearch', alt: productView.name, lazy: false }) }}
-                </span>
-                <span class="search__hint__name js-search-autocomplete-item-label">
-                    {{ productView.fullName }}
-                </span>
-            </a>
-        </li>
-    {% endfor %}
-
-    {% if productsPaginationResult.totalCount <= 0 and categoriesPaginationResult.totalCount <= 0 %}
-        <li class="search__hint__item">
-            <span class="search__hint__item__link">
-                <picture class="search__hint__image search__hint__image--no-result">
-                    <source
-                        srcset="
-                            {{ asset('public/frontend/images/warning2x.png') }} 2x,
-                            {{ asset('public/frontend/images/warning.png') }} 1x"
-                    />
-                    <img
-                        src="{{ asset('public/frontend/images/warning.png') }}"
-                        alt="{{ 'Žádné výsledky vyhledávání'|trans }}"
-                    >
-                </picture>
-                <span class="search__hint__name search__hint__name--no-results">
-                    {{ 'Pro tento výraz jsme bohužel nenašli žádné výsledky.'|trans }}
-                </span>
-            </span>
-        </li>
+        <ul class="search__hint__products">
+            {% for productView in productsPaginationResult.results %}
+                <li class="search__hint__products__item">
+                    <a href="{{ productView.action.detailUrl }}" class="search__hint__products__item__link">
+                        <span class="search__hint__products__item__image">
+                            {{ image(productView.image, { size: 'thumbnailMedium', alt: productView.name, lazy: false }) }}
+                        </span>
+                        <span class="search__hint__products__item__name js-search-autocomplete-item-label">
+                            {{ productView.fullName }}
+                        </span>
+                        <span class="search__hint__products__item__price">
+                            {{ productView.sellingPrice.priceWithVat|price }}
+                        </span>
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
     {% endif %}
 
-    {% if productsPaginationResult.totalCount > 0 %}
-        <li class="search__hint__item search__hint__item--info">
-            {% transchoice productsPaginationResult.totalCount with {'%totalProductCount%': productsPaginationResult.totalCount} %}
-                {0} Nenalezen žádný produkt
-                | {1} Nalezen <strong class="search__hint__item__strong">1</strong> produkt
-                | [2,Inf] Celkem nalezeno <strong class="search__hint__item__strong">%totalProductCount%</strong> produktů
-            {% endtranschoice %}
-        </li>
+    {% if brandsPaginationResult.results|length > 0 %}
+        <p class="search__hint__title">
+            {{ 'Značky'|trans }} ({{ brandsPaginationResult.results|length }})
+        </p>
+
+        <ul class="search__hint__list">
+            {% for brand in brandsPaginationResult.results %}
+                <li class="search__hint__list__item">
+                    <a href="{{ url('front_brand_detail', { id: brand.id }) }}" class="search__hint__list__item__link js-search-autocomplete-item-label">
+                        {{ brand.name }}
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    {% if categoriesPaginationResult.results|length > 0 %}
+        <p class="search__hint__title">
+            {{ 'Kategorie'|trans }} ({{ categoriesPaginationResult.results|length }})
+        </p>
+        
+        <ul class="search__hint__list">
+            {% for category in categoriesPaginationResult.results %}
+                <li class="search__hint__list__item">
+                    <a class="search__hint__list__item__link js-search-autocomplete-item-label" href="{{ url('front_product_list', { id: category.id }) }}">
+                        {{ category.name }}
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    {% if productsPaginationResult.totalCount <= 0 and categoriesPaginationResult.totalCount <= 0 and brandsPaginationResult.totalCount <= 0 %}
+        <div class="search__hint__no-result">
+            <picture class="search__hint__no-result__image">
+                <source srcset=" {{ asset('public/frontend/images/warning2x.png') }} 2x, {{ asset('public/frontend/images/warning.png') }} 1x" />
+                <img src="{{ asset('public/frontend/images/warning.png') }}" alt="{{ 'Žádné výsledky vyhledávání'|trans }}" >
+            </picture>
+
+            <span class="search__hint__no-result__name">
+                {{ 'Pro tento výraz jsme bohužel nenašli žádné výsledky.'|trans }}
+            </span>
+        </div>
     {% endif %}
 
     {% if categoriesPaginationResult.totalCount > 0 or productsPaginationResult.totalCount > 0 %}
-        <li class="search__hint__item search__hint__item--show-results">
-            <a class="btn btn--show-results" href="{{ searchUrl }}">
+        <div class="text-center">
+            <a class="btn btn--small" href="{{ searchUrl }}">
                 {{ 'View all results'|trans }}
             </a>
-        </li>
+        </div>
     {% endif %}
-</ul>
+</div>

@@ -11,14 +11,14 @@
     border-radius: @radius;
     background-color: @box-accordion-bg-color;
     outline: 0;
-    border: 2px solid @color-border-lighter;
+    border: 2px solid @color-border;
 
     @media @query-lg {
         margin-bottom: 29px;
     }
 
     &:hover {
-        border-color: darken(@color-border-lighter, 5%);
+        border-color: darken(@color-border, 5%);
     }
 
     &--opened-on-mobile {
@@ -106,7 +106,7 @@
             }
 
             @media @query-lg {
-                border-bottom: 1px solid @color-border-lighter;
+                border-bottom: 1px solid @color-border;
             }
         }
 
@@ -126,7 +126,7 @@
         &__desc {
             margin: 0;
 
-            color: @color-base-secondary;
+            color: @color-base;
 
             @media @query-md {
                 display: none;
@@ -138,7 +138,7 @@
         display: none;
         padding: @box-accordion-padding-vertical @box-accordion-padding-horisontal;
 
-        border-top: 1px solid @color-border-lighter;
+        border-top: 1px solid @color-border;
 
         @media @query-lg {
             padding: @box-accordion-padding-vertical-lg @box-accordion-padding-horisontal-lg;
@@ -149,7 +149,6 @@
 
             text-transform: none;
             font-size: 18px;
-            font-family: @font-quartenary;
         }
 
         p {
@@ -201,7 +200,7 @@
                     text-align: right;
                     margin-right: 2rem;
 
-                    border: 1px solid @color-border-lighter;
+                    border: 1px solid @color-border;
                     border-radius: @radius;
 
                     &:empty {
@@ -222,12 +221,11 @@
 
             .table--params {
                 td, th {
-                    color: @color-primary-light;
+                    color: @color-light-secondary;
                 }
 
                 th {
                     font-weight: 400;
-                    font-family: @font-quartenary;
                 }
             }
         }
@@ -254,7 +252,6 @@
         margin: 0;
 
         text-transform: none;
-        font-family: @font-quartenary;
         font-size: 20px;
         font-weight: 400;
         text-decoration: none;
@@ -274,13 +271,13 @@
                 .box-accordion__grid-table__row {
                     margin-bottom: 15px;
 
-                    border: 2px solid @color-border-lighter;
+                    border: 2px solid @color-border;
                     border-radius: @radius;
 
                     &:last-child {
                         margin-bottom: 0.5rem;
 
-                        border-bottom: 2px solid @color-border-lighter;
+                        border-bottom: 2px solid @color-border;
                     }
                 }
             }
@@ -298,7 +295,7 @@
                 width: 100%;
                 padding: 1rem @box-accordion-padding-horisontal-lg;
 
-                border-bottom: 1px solid @color-border-lighter;
+                border-bottom: 1px solid @color-border;
             }
 
             &:last-child {
@@ -314,8 +311,8 @@
             min-width: 200px;
             padding: 0.75rem 0.5rem;
 
-            color: @color-light-tertiary;
-            border-bottom: 1px solid @color-border-lighter;
+            color: @color-light;
+            border-bottom: 1px solid @color-border;
 
             @media @query-vl {
                 flex: 1 1 0;
@@ -362,7 +359,6 @@
             }
 
             strong {
-                font-family: @font-quartenary;
                 font-weight: 400;
                 color: @color-base-lighter;
             }
@@ -391,7 +387,7 @@
                 &.is-active {
                     margin-bottom: 1rem;
 
-                    border-bottom: 1px solid @color-border-lighter;
+                    border-bottom: 1px solid @color-border;
 
                     .box-accordion__grid-table__col__toggle {
                         transform: rotate(-180deg);
@@ -430,9 +426,8 @@
 
         &__title {
             font-size: 16px;
-            font-family: @font-quartenary;
             font-weight: 400;
-            color: @color-primary-light;
+            color: @color-light-secondary;
         }
     }
 }

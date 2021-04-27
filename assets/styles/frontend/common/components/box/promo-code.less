@@ -21,8 +21,8 @@
         transition: all @transition;
 
         &:focus {
-            border-color: @color-add-secondary;
-            box-shadow: 0 0 0 3px rgba(@color-add-secondary, .25);
+            border-color: @color-add-light;
+            box-shadow: 0 0 0 3px rgba(@color-add-light, .25);
         }
 
         &::-webkit-input-placeholder {
@@ -51,7 +51,6 @@
 
         text-transform: none;
         font-size: 14px;
-        font-family: @font-quartenary;
         font-weight: 400;
         letter-spacing: 0;
 
@@ -76,7 +75,7 @@
             height: @promo-code-spinner-size;
 
             border: 3px solid @color-f;
-            border-left-color: @color-add-secondary;
+            border-left-color: @color-add-light;
             box-shadow: none;
 
             &::before {
@@ -106,7 +105,6 @@
         display: block;
         margin-bottom: 6px;
 
-        font-family: @font-quartenary;
         font-size: 16px;
         color: @color-primary;
         font-weight: 400;
@@ -117,7 +115,7 @@
         margin-bottom: 0;
 
         font-size: 11px;
-        color: @color-light-tertiary;
+        color: @color-light-secondary;
         -webkit-font-smoothing: antialiased;
     }
 }

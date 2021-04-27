@@ -13,11 +13,11 @@
     bottom: 0;
     left: 50%;
     right: 0;
-    z-index: 1000;
+    z-index: @z-index-menu - 2;
     padding: 5px 0;
     height: @box-cookies-height;
     width: @box-cookies-width;
-    max-width: calc(100% - @web-padding-small * 2);
+    max-width: calc(100% - @web-padding * 2);
     will-change: transform;
     text-align: center;
     transform: translateX(-50%);
@@ -88,7 +88,7 @@
         padding-right: 0;
 
         text-decoration: underline;
-        color: @color-add-secondary;
+        color: @color-add-light;
 
         white-space: nowrap;
 

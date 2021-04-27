@@ -2,8 +2,9 @@
 
 {% block title %}Shopsys Framework styleguide{% endblock %}
 
-{% block meta_robots %}
+{% block pageStyles %}
     {{ encore_entry_link_tags('styleguide-style') }}
+    {{ parent() }}
 {% endblock %}
 
 {% block html_body %}
@@ -223,48 +224,89 @@
                         <h2 class="styleguide-module__title">Lists</h2>
                         <h3 class="styleguide-module__title--small">List simple</h3>
                         <ul class="list-simple">
-                            <li class="list-simple__item">Item 1</li>
-                            <li class="list-simple__item">Item 2</li>
-                            <li class="list-simple__item">Item 3</li>
+                            <li class="list-simple__item">Krásné světle zelené provedení</li>
+                            <li class="list-simple__item">Aerodynamický karbonový rám Exploro</li>
+                            <li class="list-simple__item">Zaujme na první pohled svým robustním vzhledem a těsně přiléhající sedlovou trubkou k zadnímu kolu</li>
+                            <li class="list-simple__item">Aerodynamický karbonový rám Exploro</li>
+                            <li class="list-simple__item">Kolo je kompletně postaveno na komponentech Campagnolo</li>
                         </ul>
+
+                        <h3 class="styleguide-module__title--small">List simple numbers</h3>
+                        <ol class="list-simple list-simple--numbers">
+                            <li class="list-simple__item">Krásné světle zelené provedení</li>
+                            <li class="list-simple__item">Aerodynamický karbonový rám Exploro</li>
+                            <li class="list-simple__item">Zaujme na první pohled svým robustním vzhledem a těsně přiléhající sedlovou trubkou k zadnímu kolu</li>
+                            <li class="list-simple__item">Aerodynamický karbonový rám Exploro</li>
+                            <li class="list-simple__item">Kolo je kompletně postaveno na komponentech Campagnolo</li>
+                        </ol>
                         <div class="styleguide-module__editor">
                             <textarea class="codemirror-html" id="html-list-simple">
 <ul class="list-simple">
-    <li class="list-simple__item">Item 1</li>
-    <li class="list-simple__item">Item 2</li>
-    <li class="list-simple__item">Item 3</li>
+    <li class="list-simple__item">Krásné světle zelené provedení</li>
+    <li class="list-simple__item">Aerodynamický karbonový rám Exploro</li>
+    <li class="list-simple__item">Zaujme na první pohled svým robustním vzhledem a těsně přiléhající sedlovou trubkou k zadnímu kolu</li>
+    <li class="list-simple__item">Aerodynamický karbonový rám Exploro</li>
+    <li class="list-simple__item">Kolo je kompletně postaveno na komponentech Campagnolo</li>
 </ul>
+
+<ol class="list-simple list-simple--numbers">
+    <li class="list-simple__item">Krásné světle zelené provedení</li>
+    <li class="list-simple__item">Aerodynamický karbonový rám Exploro</li>
+    <li class="list-simple__item">Zaujme na první pohled svým robustním vzhledem a těsně přiléhající sedlovou trubkou k zadnímu kolu</li>
+    <li class="list-simple__item">Aerodynamický karbonový rám Exploro</li>
+    <li class="list-simple__item">Kolo je kompletně postaveno na komponentech Campagnolo</li>
+</ol>
                             </textarea>
                         </div>
                     </section>
 
                     <section id="flags" class="styleguide-module anchor clearfix">
                         <h2 class="styleguide-module__title">Flags</h2>
-                        <p class="styleguide-module__paragraph">Flag colors are loaded from administration as inline style. But you can override it by class modification.</p>
-                        <div style="position: relative; height: 100px;">
-                            <div class="in-flag in-flag--in-list">
-                                <span class="in-flag__item" style="background-color: #d6fffa;">
-                                    TOP
+                        <p class="styleguide-module__paragraph">Flag colors are defined by a class modification that is created in the php.</p>
+                        <div style="position: relative; height: 30px;">
+                            <div class="in-flag in-flag--big">
+                                <span class="in-flag__item flag__product_made_in_cz">
+                                    Tipy & triky
                                 </span>
-                                <span class="in-flag__item in-flag__item--sales" style="background-color: #f9ffd6;">
-                                    Action
+                                <span class="in-flag__item flag__product_made_in_sk">
+                                    Cyklo rady
                                 </span>
-                                <span class="in-flag__item in-flag__item--news" style="background-color: #efd6ff;">
-                                    New
+                            </div>
+                        </div>
+
+                        <div style="position: relative; height: 30px;">
+                            <div class="in-flag">
+                                <span class="in-flag__item flag__product_action">
+                                    % Výprodej
+                                </span>
+                                <span class="in-flag__item flag__product_sale">
+                                    -15%
+                                </span>
+                                <span class="in-flag__item flag__product_new">
+                                    NOvinka
                                 </span>
                             </div>
                         </div>
                         <div class="styleguide-module__editor">
                             <textarea class="codemirror-html" id="html-flags">
-<div class="in-flag in-flag--in-list">
-    <span class="in-flag__item" style="background-color: #d6fffa;">
-        TOP
+<div class="in-flag in-flag--big">
+    <span class="in-flag__item flag__product_made_in_cz">
+        Tipy & triky
     </span>
-    <span class="in-flag__item in-flag__item--sales" style="background-color: #f9ffd6;">
-        Action
+    <span class="in-flag__item flag__product_made_in_sk">
+        Cyklo rady
     </span>
-    <span class="in-flag__item in-flag__item--news" style="background-color: #efd6ff;">
-        New
+</div>
+
+ <div class="in-flag">
+    <span class="in-flag__item flag__product_action">
+        % Výprodej
+    </span>
+    <span class="in-flag__item flag__product_sale">
+        -15%
+    </span>
+    <span class="in-flag__item flag__product_new">
+        NOvinka
     </span>
 </div>
                             </textarea>
@@ -317,30 +359,26 @@
                         <h2 class="styleguide-module__title">Buttons</h2>
 
                         <a href="#buttons" class="btn">Primary button</a> &nbsp;
-                        <a href="#buttons" class="btn btn--success">Success button</a> &nbsp;
-                        <a href="#buttons" class="btn btn--success"><i class="svg svg-arrow"></i>Go to cart</a> &nbsp;
-                        <a href="#buttons" class="window-popup__actions__btn--continue window-button-continue btn btn--success">Go to cart <i class="svg svg-arrow"></i></a> &nbsp;
+                        <a href="#buttons" class="btn btn--secondary">Secondary button</a> &nbsp;
+                        <a href="#buttons" class="btn btn--with-icon btn--with-icon--right svg svg-arrow">Button with icon on the right side</a> &nbsp;
+                        <a href="#buttons" class="btn btn--with-icon btn--with-icon--left svg svg-arrow">Button with icon on the left side</a> &nbsp;
                         <a href="#buttons" class="btn btn--disabled">Disabled</a> &nbsp;
-                        <a href="#buttons" class="btn btn--outline">Outline</a> &nbsp;
                         <a href="#buttons" class="btn-no-style">No style</a> &nbsp;
                         <br><br>
                         <a href="#buttons" class="btn btn--small">Primary small</a> &nbsp;
                         <a href="#buttons" class="btn">Primary</a> &nbsp;
-                        <a href="#buttons" class="btn btn--large">Primary large</a> &nbsp;
 
                         <div class="styleguide-module__editor">
                             <textarea class="codemirror-html" id="html-buttons">
 <a href="#" class="btn">Primary button</a>
-<a href="#" class="btn btn--success">Success button</a>
-<a href="#" class="btn btn--success"><i class="svg svg-arrow"></i>Go to cart</a>
-<a href="#" class="window-popup__actions__btn--continue window-button-continue btn btn--success">Go to cart <i class="svg svg-arrow"></i></a>
+<a href="#" class="btn btn--secondary">Secondary button</a>
+<a href="#" class="btn btn--with-icon btn--with-icon--right svg svg-arrow">Button with icon on the right side</a>
+<a href="#" class="btn btn--with-icon btn--with-icon--left svg svg-arrow">Button with icon on the left side</a>
 <a href="#" class="btn btn--disabled">Disabled</a>
-<a href="#" class="btn btn--outline">Outline</a>
 <a href="#" class="btn-no-style">No style</a>
 
 <a href="#" class="btn btn--small">Primary small</a>
 <a href="#" class="btn">Primary</a>
-<a href="#" class="btn btn--large">Primary large</a>
                             </textarea>
                         </div>
                     </section>
@@ -546,65 +584,39 @@
                         <h3 class="styleguide-module__title--small">Radio</h3>
                         <fieldset class="form-fieldset">
                             <div class="form-choice">
-                                <div class="form-choice__input">
-                                    <input type="radio" id="radio1" name="radio" class="css-radio"/>
-                                </div>
-                                <div class="form-choice__label">
-                                    <label for="radio1">Radio input</label>
-                                </div>
+                                <input type="radio" id="radio1" name="radio" class="css-radio"/>
+                                <label class="css-radio__image" for="radio1">Radio input</label>
                             </div>
                         </fieldset>
                         <fieldset class="form-fieldset">
                             <div class="form-choice">
-                                <div class="form-choice__input">
-                                    <input type="radio" id="radio2" name="radio" class="css-radio" checked="checked"/>
-                                </div>
-                                <div class="form-choice__label">
-                                    <label for="radio2">Radio input selected</label>
-                                </div>
+                                <input type="radio" id="radio2" name="radio" class="css-radio" checked="checked"/>
+                                <label class="css-radio__image" for="radio2">Radio input selected</label>
                             </div>
                         </fieldset>
                         <fieldset class="form-fieldset">
                             <div class="form-choice">
-                                <div class="form-choice__input">
-                                    <input type="radio" id="radio3" name="radio" class="css-radio" disabled="disabled"/>
-                                </div>
-                                <div class="form-choice__label">
-                                    <label for="radio3">Radio input disabled</label>
-                                </div>
+                                <input type="radio" id="radio3" name="radio" class="css-radio" disabled="disabled"/>
+                                <label class="css-radio__image" for="radio3">Radio input disabled</label>
                             </div>
                         </fieldset>
                         <fieldset class="form-fieldset">
                             <div class="form-choice">
-                                <div class="form-choice__input">
-                                    <input type="radio" id="radio4" name="radio2" class="css-radio" checked="checked"
-                                           disabled="disabled"/>
-                                </div>
-                                <div class="form-choice__label">
-                                    <label for="radio4">Radio input selected disabled</label>
-                                </div>
+                                <input type="radio" id="radio4" name="radio2" class="css-radio" checked="checked" disabled="disabled"/>
+                                <label class="css-radio__image" for="radio4">Radio input selected disabled</label>
                             </div>
                         </fieldset>
                         <fieldset class="form-fieldset" style="max-width: 200px;">
                             <div class="form-choice">
-                                <div class="form-choice__input">
-                                    <input type="radio" id="radio5" name="radio2" class="css-radio"/>
-                                </div>
-                                <div class="form-choice__label">
-                                    <label for="radio5">Radio with longer text Lorem ipsum dolor sit amet, consectetur
-                                        adipiscing elit,</label>
-                                </div>
+                                <input type="radio" id="radio5" name="radio2" class="css-radio"/>
+                                <label class="css-radio__image" for="radio5">Radio with longer text Lorem ipsum dolor sit amet, consectetur adipiscing elit,</label>
                             </div>
                         </fieldset>
                         <div class="styleguide-module__editor">
                             <textarea class="codemirror-html" id="html-radiobuttons">
 <div class="form-choice">
-    <div class="form-choice__input">
-        <input type="radio" id="radio_1" name="radio2" class="css-radio"/>
-    </div>
-    <div class="form-choice__label">
-        <label for="radio_1">Radio text label</label>
-    </div>
+    <input type="radio" id="radio_1" name="radio2" class="css-radio"/>
+    <label class="css-radio__image" for="radio_1">Radio text label</label>
 </div>
                             </textarea>
                         </div>
@@ -612,162 +624,86 @@
                         <h3 class="styleguide-module__title--small">Checkbox</h3>
                         <fieldset class="form-fieldset">
                             <div class="form-choice">
-                                <div class="form-choice__input">
-                                    <input type="checkbox" id="checkbox1" name="checkbox" class="css-checkbox"/>
-                                </div>
-                                <div class="form-choice__label">
-                                    <label for="checkbox1">Checkbox input</label>
-                                </div>
+                                <input type="checkbox" id="checkbox1" name="checkbox" class="css-checkbox"/>
+                                <label class="css-checkbox__image" for="checkbox1">Checkbox input</label>
                             </div>
                         </fieldset>
                         <fieldset class="form-fieldset">
                             <div class="form-choice">
-                                <div class="form-choice__input">
-                                    <input type="checkbox" id="checkbox2" name="checkbox" class="css-checkbox"
-                                           checked="checked"/>
-                                </div>
-                                <div class="form-choice__label">
-                                    <label for="checkbox2">Checkbox checked</label>
-                                </div>
+                                <input type="checkbox" id="checkbox2" name="checkbox" class="css-checkbox" checked="checked"/>
+                                <label class="css-checkbox__image" for="checkbox2">Checkbox checked</label>
                             </div>
                         </fieldset>
                         <fieldset class="form-fieldset">
                             <div class="form-choice">
-                                <div class="form-choice__input">
-                                    <input type="checkbox" id="checkbox3" name="checkbox" class="css-checkbox"
-                                           disabled="disabled"/>
-                                </div>
-                                <div class="form-choice__label">
-                                    <label for="checkbox3">Checkbox disabled</label>
-                                </div>
+                                <input type="checkbox" id="checkbox3" name="checkbox" class="css-checkbox" disabled="disabled"/>
+                                <label class="css-checkbox__image" for="checkbox3">Checkbox disabled</label>
                             </div>
                         </fieldset>
                         <fieldset class="form-fieldset">
                             <div class="form-choice">
-                                <div class="form-choice__input">
-                                    <input type="checkbox" id="checkbox4" name="checkbox-dis" class="css-checkbox"
-                                           disabled="disabled" checked="checked"/>
-                                </div>
-                                <div class="form-choice__label">
-                                    <label for="checkbox4">Checkbox checked disabled</label>
-                                </div>
+                                <input type="checkbox" id="checkbox4" name="checkbox-dis" class="css-checkbox" disabled="disabled" checked="checked"/>
+                                <label class="css-checkbox__image" for="checkbox4">Checkbox checked disabled</label>
                             </div>
                         </fieldset>
 
                         <fieldset class="form-fieldset" style="max-width: 200px;">
                             <div class="form-choice">
-                                <div class="form-choice__input">
-                                    <input type="checkbox" id="checkbox4" name="checkbox-dis" class="css-checkbox"
-                                           disabled="disabled"/>
-                                </div>
-                                <div class="form-choice__label">
-                                    <label for="checkbox4">Checkbox with longer text Lorem ipsum dolor sit amet,
-                                        consectetur adipiscing elit,</label>
-                                </div>
+                                <input type="checkbox" id="checkbox5" name="checkbox" class="css-checkbox"/>
+                                <label class="css-checkbox__image" for="checkbox5">Checkbox with longer text Lorem ipsum dolor sit amet, consectetur adipiscing elit,</label>
                             </div>
                         </fieldset>
                         <div class="styleguide-module__editor">
                             <textarea class="codemirror-html" id="html-checkboxes">
 <div class="form-choice">
-    <div class="form-choice__input">
-        <input type="checkbox" id="checkbox_1" name="checkbox" class="css-checkbox"/>
-    </div>
-    <div class="form-choice__label">
-        <label for="checkbox_1">Checkbox with text</label>
-    </div>
+    <input type="checkbox" id="checkbox_1" name="checkbox" class="css-checkbox"/>
+    <label class="css-checkbox__image" for="checkbox1">Checkbox with text</label>
 </div>
                             </textarea>
                         </div>
 
                         <h3 class="styleguide-module__title--small">Spinbox / add basket</h3>
                         <span class="form-input-spinbox js-spinbox">
-                            <input type="text" name="add_product_form[quantity]" required="required"
-                                   class="form-input-spinbox__input input-no-style js-spinbox-input input id__add_product_form_quantity"
-                                   data-spinbox-min="1" value="1">
-
-                            <button type="button"
-                                    class="btn-no-style form-input-spinbox__btn js-spinbox-plus">+</button>
-                            <button type="button"
-                                    class="btn-no-style form-input-spinbox__btn form-input-spinbox__btn--minus js-spinbox-minus">-</button>
+                            <button type="button" class="btn-no-style form-input-spinbox__btn js-spinbox-minus">
+                                <i class="svg svg-minus"></i>
+                            </button>
+                            <input type="text" class="form-input-spinbox__input input-no-style js-spinbox-input input" data-spinbox-min="1" data-spinbox-max="2699" value="1"> 
+                            <button type="button" class="btn-no-style form-input-spinbox__btn js-spinbox-plus">
+                                <i class="svg svg-plus"></i>
+                            </button>
+                        </span>
+                        <span class="form-input-spinbox disabled js-spinbox">
+                            <button type="button" class="btn-no-style form-input-spinbox__btn js-spinbox-minus">
+                                <i class="svg svg-minus"></i>
+                            </button>
+                            <input type="text" class="form-input-spinbox__input input-no-style js-spinbox-input input" data-spinbox-min="1" data-spinbox-max="2699" value="1"> 
+                            <button type="button" class="btn-no-style form-input-spinbox__btn js-spinbox-plus">
+                                <i class="svg svg-plus"></i>
+                            </button>
                         </span>
                         <button type="submit" name="add_product_form[add]"
-                                class="btn--success  btn id__add_product_form_add">Add to cart
+                                class="btn id__add_product_form_add">Add to cart
                         </button>
                         <input type="hidden" name="add_product_form[productId]"
                                class="input id__add_product_form_productId" value="1">
 
                         <h3 class="styleguide-module__title--small">Price Slider</h3>
-                        <div class="box-filter__price">
-                            <dl class="form-line">
-                                <dt>
-                                    <label for="product_filter_form_minimalPrice">
-                                        Price from:
-                                    </label>
-                                </dt>
-                                <dd>
-                                    <input type="text" id="product_filter_form_minimalPrice"
-                                           name="product_filter_form[minimalPrice]" placeholder="319.00"
-                                           class="js-product-filter-call-change-after-reset input">
-
-                                    <span class="js-validation-errors-list js-validation-error-list-product_filter_form_minimalPrice form-error form-error--line display-none"><span
-                                                class="form-error__icon"><i class="svg svg-warning"></i></span>
-                                        <ul class="form-error__list"></ul>
-                                    </span>
-                                    CZK
-                                </dd>
-                            </dl>
-
-                            <dl class="form-line">
-                                <dt>
-                                    <label for="product_filter_form_maximalPrice">
-                                        Price to:
-                                    </label>
-                                </dt>
-                                <dd>
-                                    <input type="text" id="product_filter_form_maximalPrice"
-                                           name="product_filter_form[maximalPrice]" placeholder="21590.00"
-                                           class="js-product-filter-call-change-after-reset input">
-
-                                    <span class="js-validation-errors-list js-validation-error-list-product_filter_form_maximalPrice form-error form-error--line display-none"><span
-                                                class="form-error__icon"><i class="svg svg-warning"></i></span>
-                                        <ul class="form-error__list"></ul>
-                                    </span>
-                                    CZK
-                                </dd>
-                            </dl>
-                            <div
-                                class="js-range-slider"
-                                data-minimum-input-id="product_filter_form_minimalPrice"
-                                data-minimal-value="319.000000"
-                                data-maximum-input-id="product_filter_form_maximalPrice"
-                                data-maximal-value="21590.000000"
-                            ></div>
-                        </div>
-
-                        <h3 class="styleguide-module__title--small">Newsletter form error</h3>
-                        <div class="footer__newsletter">
-                            <div class="footer__newsletter__form">
-                                <div class="footer__newsletter__form__wrap">
-                                    <div class="footer__newsletter__form__in">
-                                                <input type="email" id="subscription_form_email" name="subscription_form[email]" required="required" placeholder="Enter email" class="footer__newsletter__input input">
-
-                                                <span class="js-validation-errors-list js-validation-error-list-subscription_form_email form-error  display-none"><span class="form-error__icon"><i class="svg svg-warning"></i></span><ul class="form-error__list"></ul></span>
+                        <div class="box-price-slider" id="product_filter_box_price">
+                            <div class="js-range-slider ui-slider ui-corner-all ui-slider-horizontal ui-widget ui-widget-content" data-minimum-input-id="product_filter_form_minimalPrice" data-minimal-value="118.00" data-maximum-input-id="product_filter_form_maximalPrice" data-maximal-value="169990.00" data-decimals="2">
+                            <span tabindex="0" class="ui-slider-handle ui-corner-all ui-state-default" style="left: 0%;"></span>
+                            <span tabindex="0" class="ui-slider-handle ui-corner-all ui-state-default" style="left: 100%;"></span>
+                            </div>
+                            <div class="box-price-slider__form">
+                                <div class="box-price-slider__form__item">
+                                    <div class="form-line-block is-focused">
+                                        <input type="text" id="product_filter_form_minimalPrice" name="product_filter_form[minimalPrice]" class="js-product-filter-call-change-after-reset input" placeholder="118,00&nbsp;Kč">
+                                        <label>od</label>
                                     </div>
-                                        <button type="submit" id="subscription_form_send" name="subscription_form[send]" class="footer__newsletter__form__btn btn">Log in</button>
-
                                 </div>
-                                <span class="js-validation-errors-list js-validation-error-list-subscription_form in-message in-message--alert display-none">
-                                    <ul class="in-message__list"></ul>
-                                </span>
-                                <div class="form-choice">
-                                    <div class="form-choice__input">
-                                        <input type="checkbox" id="subscription_form_privacyPolicyAgreement" name="subscription_form[privacyPolicyAgreement]" required="required" value="1">
-                                    </div>
-                                    <div class="form-choice__label">
-                                        <label for="subscription_form_privacyPolicyAgreement">
-                                            I agree with <a href="#" target="_blank">privacy policy</a>.
-                                        </label>
-                                        <span class="js-validation-errors-list js-validation-error-list-subscription_form_privacyPolicyAgreement form-error form-error--choice display-none"><span class="form-error__icon"><i class="svg svg-warning"></i></span><ul class="form-error__list"></ul></span>
+                                <div class="box-price-slider__form__item">
+                                    <div class="form-line-block is-focused">
+                                        <input type="text" id="product_filter_form_maximalPrice" name="product_filter_form[maximalPrice]" class="js-product-filter-call-change-after-reset input" placeholder="169&nbsp;990,00&nbsp;Kč">
+                                        <label>do</label>
                                     </div>
                                 </div>
                             </div>
@@ -778,14 +714,14 @@
                         <h2 class="styleguide-module__title">Toggle</h2>
 
                         <h3 class="styleguide-module__title--small">Responsive toggle</h3>
-                        <a href="#toggle" class="btn btn--success js-responsive-toggle" data-element="hidden-div"
+                        <a href="#toggle" class="btn js-responsive-toggle" data-element="hidden-div"
                            data-element="hide-on-click-out">Toggle Button</a>
 
                         <div id="hidden-div" class="display-none">This is hidden div content</div>
 
                         <div class="styleguide-module__editor">
                             <textarea class="codemirror-html" id="html-list-simple">
-<a href="#toggle" class="btn btn--success js-responsive-toggle" data-element="hidden-div"
+<a href="#toggle" class="btn js-responsive-toggle" data-element="hidden-div"
    data-hide-on-click-out="true">Toggle Button</a>
 
 <div id="hidden-div" class="display-none">This is hidden div content</div>
@@ -814,7 +750,7 @@
 
                         <div class="styleguide-module__editor">
                             <textarea class="codemirror-html" id="html-list-simple">
-<a href="#toggle" class="btn btn--success js-checkbox-toggle"
+<a href="#toggle" class="btn js-checkbox-toggle"
    data-checkbox-toggle-container-class="js-checkbox-show-hide-this">Toggle Button</a>
 
 <div class="js-checkbox-show-hide-this display-none">This is checbox show hide element content</div>
@@ -834,164 +770,160 @@
 
                     <section id="tables" class="styleguide-module anchor clearfix">
                         <h2 class="styleguide-module__title">Tables</h2>
-                        <div class="wrap-box">
-                            <h2 class="wrap-box__title">Basic information</h2>
-                            <div class="wrap-box__in">
-                                <table class="table-params">
-                                    <tbody>
-                                    <tr>
-                                        <th>Status:</th>
-                                        <td>New</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Responsiblity:</th>
-                                        <td>Everyone</td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                        <div class="">
-                            <div class="wrap-box__in">
-                                <div class="in-scroll box-orders">
-                                    <div class="in-scroll__in">
-                                        <table class="table-main box-orders__table">
-                                            <tbody>
-                                            <tr>
-                                                <th>Order number</th>
-                                                <th>Creation date</th>
-                                                <th>Current status</th>
-                                                <th class="text-right">Number of items</th>
-                                                <th>Shipping</th>
-                                                <th>Payment</th>
-                                                <th class="text-right">Total price including VAT</th>
-                                                <th class="text-center">Detail</th>
-                                            </tr>
-                                            <tr>
-                                                <td><a href="#tables">1506464372</a></td>
-                                                <td>2017-09-25</td>
-                                                <td>New</td>
-                                                <td class="text-right">4</td>
-                                                <td>Personal collection</td>
-                                                <td>Credit card</td>
-                                                <td class="text-right">CZK1,916.00</td>
-                                                <td class="text-center"><a href="#tables" class="in-icon in-icon--detail"><i
-                                                                class="svg svg-search"></i></a></td>
-                                            </tr>
-                                            <tr>
-                                                <td><a href="#tables">1506464371</a></td>
-                                                <td>2017-09-25</td>
-                                                <td>Done</td>
-                                                <td class="text-right">2</td>
-                                                <td>Personal collection</td>
-                                                <td>Cash</td>
-                                                <td class="text-right">CZK6,150.00</td>
-                                                <td class="text-center"><a href="#tables" class="in-icon in-icon--detail"><i
-                                                                class="svg svg-search"></i></a></td>
-                                            </tr>
-                                            <tr>
-                                                <td><a href="#tables">1506464374</a></td>
-                                                <td>2017-09-25</td>
-                                                <td>In progress</td>
-                                                <td class="text-right">1</td>
-                                                <td>PPL</td>
-                                                <td>Credit card</td>
-                                                <td class="text-right">CZK3,841.00</td>
-                                                <td class="text-center"><a href="#tables" class="in-icon in-icon--detail"><i
-                                                                class="svg svg-search"></i></a></td>
-                                            </tr>
-                                            <tr>
-                                                <td><a href="#tables">1506464374</a></td>
-                                                <td>2017-09-25</td>
-                                                <td>In progress</td>
-                                                <td class="text-right">1</td>
-                                                <td>PPL</td>
-                                                <td>Credit card</td>
-                                                <td class="text-right">CZK3,841.00</td>
-                                                <td class="text-center"><a href="#tables" class="in-icon in-icon--detail"><i
-                                                                class="svg svg-search"></i></a></td>
-                                            </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+
+                        <h3 class="styleguide-module__title--small">Table params</h3>
+                        <table class="table-params">
+                            <tbody>
+                            <tr>
+                                <th>Výrobce</th>
+                                <td>Maloja</td>
+                            </tr>
+                            <tr>
+                                <th>Barva</th>
+                                <td>fialová</td>
+                            </tr>
+                            <tr>
+                                <th>materiál</th>
+                                <td>100% polyester</td>
+                            </tr>
+                            </tbody>
+                        </table>
+
+                        <h3 class="styleguide-module__title--small">Basic table</h3>
+                            <table class="table-main">
+                                <tbody>
+                                <tr>
+                                    <th>Order number</th>
+                                    <th>Creation date</th>
+                                    <th>Current status</th>
+                                    <th class="text-right">Number of items</th>
+                                    <th>Shipping</th>
+                                    <th>Payment</th>
+                                    <th class="full-width text-right">Total price<br>including VAT</th>
+                                </tr>
+                                <tr>
+                                    <td><a href="#tables">1506464372</a></td>
+                                    <td>2017-09-25</td>
+                                    <td>New</td>
+                                    <td class="text-right">4</td>
+                                    <td>Personal collection</td>
+                                    <td>Credit card</td>
+                                    <td class="text-right"><strong>CZK1,916.00</strong></td>
+                                </tr>
+                                <tr>
+                                    <td><a href="#tables">1506464371</a></td>
+                                    <td>2017-09-25</td>
+                                    <td>Done</td>
+                                    <td class="text-right">2</td>
+                                    <td>Personal collection</td>
+                                    <td>Cash</td>
+                                    <td class="text-right"><strong>CZK6,150.00</strong></td>
+                                </tr>
+                                <tr>
+                                    <td><a href="#tables">1506464374</a></td>
+                                    <td>2017-09-25</td>
+                                    <td>In progress</td>
+                                    <td class="text-right">1</td>
+                                    <td>PPL</td>
+                                    <td>Credit card</td>
+                                    <td class="text-right"><strong>CZK3,841.00</strong></td>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><a href="#tables">1506464374</a></td>
+                                    <td>2017-09-25</td>
+                                    <td>In progress</td>
+                                    <td class="text-right">1</td>
+                                    <td>PPL</td>
+                                    <td>Credit card</td>
+                                    <td class="text-right"><strong>CZK3,841.00</strong></td>
+                                </tr>
+                                </tbody>
+                            </table>
                     </section>
 
                     <section id="popup" class="styleguide-module anchor clearfix">
                         <h2 class="styleguide-module__title">Popup</h2>
                         <div style="position: relative; display: block;">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
                             labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
                             laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
                             voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-                            cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                            <div class="window-popup__overlay window-popup__overlay--active" id="js-overlay"
-                                 style="position: absolute;"></div>
-                            <div id="window-main-container" style="padding-bottom: 20px;">
-                                <div class="window-popup window-popup--standard window-popup--active" id="js-window"
-                                     style="position: relative;">
+                            cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.<br><br></p>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+                            labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+                            laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
+                            voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
+                            cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.<br><br></p>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+                            labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+                            laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
+                            voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
+                            cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                            <div style="position: absolute" class="web__overlay web__overlay--active" id="js-web-overlay"></div>
+                            <div id="window-main-container">
+                                <div class="window-popup window-popup--login window-popup--active" id="js-window" style="position: absolute;top: 50%;transform: translateY(-50%);">
                                     <div class="js-window-content window-popup__in">
-                                        <form name="front_login_form" method="post" action="/login/check/"
-                                              novalidate="novalidate" class="js-front-login-window" role="form">
-                                            <span class="js-validation-errors-list js-validation-error-list-front_login_form in-message  display-none">
-                                                <ul class="in-message__list"></ul>
-                                            </span>
-                                            <div class="box-login">
-                                                <h3 class="box-login__title">Login</h3>
-                                                <div class="js-front-login-window-message in-message in-message--alert display-none"></div>
+                                        <h2 class="window-popup__heading">Přihlášení</h2>
+                                        <div class="box-login">
+                                            <div class="box-login__col box-login__col--left">
                                                 <div class="box-login__item">
-                                                    <input name="front_login_form[email]" required="required"
-                                                           placeholder="Email" class="input id__front_login_form_email"
-                                                           type="text">
-                                                    <span class="js-validation-errors-list js-validation-error-list-front_login_form_email form-error  display-none">
-                                                        <span class="form-error__icon"><i
-                                                                    class="svg svg-warning"></i></span>
-                                                        <ul class="form-error__list"></ul>
-                                                    </span>
-                                                </div>
-                                                <div class="box-login__item">
-                                                    <span class="js-validation-errors-list js-validation-error-list-front_login_form_password form-error  display-none">
-                                                        <span class="form-error__icon"><i
-                                                                    class="svg svg-warning"></i></span>
-                                                        <ul class="form-error__list"></ul>
-                                                    </span>
-                                                    <input name="front_login_form[password]" required="required"
-                                                           placeholder="Password"
-                                                           class="input id__front_login_form_password" type="password">
-                                                </div>
-                                                <div class="box-login__item box-login__item--checkbox">
-                                                    <label class="form-choice">
-                                                    <span class="form-choice__input">
-                                                    <input name="front_login_form[rememberMe]"
-                                                           class="id__front_login_form_rememberMe" value="1"
-                                                           type="checkbox">
-                                                    </span>
-                                                        <span class="form-choice__label">
-                                                    Remember my login
-                                                    <i class="svg svg-info in-icon in-icon--info js-tooltip"
-                                                       data-toggle="tooltip" data-placement="right" title=""
-                                                       data-original-title="We will remember your login on this computer for 30 days."></i>
-                                                    </span>
+                                                    <div class="form-line-block js-form-field">
+                                                    <input type="text" id="front_login_form_email" name="front_login_form[email]" required="required" class="input">
+                                                    <label for="front_login_form_email" class="required">
+                                                        E-mail
+                                                        <span class="form-input-required">*</span>
                                                     </label>
                                                 </div>
-                                                <div class="box-login__item box-login__item--submit">
-                                                    <button type="submit" name="front_login_form[login]"
-                                                            class="btn id__front_login_form_login">Log in
-                                                    </button>
+                                            </div>
+                                                <div class="box-login__item">
+                                                    <div class="form-line-block js-form-field">
+                                                        <input type="password" id="front_login_form_password" name="front_login_form[password]" required="required" class="input">
+                                                        <label for="front_login_form_password" class="required">
+                                                            Heslo
+                                                            <span class="form-input-required">*</span>
+                                                        </label>
+                                                    </div>
                                                 </div>
-                                                <div class="box-login__item box-login__item--info">
-                                                    <a href="#popup">Forgot your password?</a>
+                                                <div class="box-login__item box-login__item--checkbox">
+                                                    <div class="form-choice">
+                                                        <input type="checkbox" id="front_login_form_rememberMe" name="front_login_form[rememberMe]" class="css-checkbox" value="1">
+                                                        <label class="css-checkbox__image" for="front_login_form_rememberMe">
+                                                            Zapamatuj si mé přihlášení
+                                                            <i class="svg svg-info in-icon in-icon--info js-tooltip" data-toggle="tooltip" data-placement="right" title="" data-original-title="Zapamatujeme si vaše přihlášení na tomto počítači po dobu 30 dní."></i>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div class="box-login__buttons">
+                                                    <div class="box-login__item box-login__item--submit">
+                                                        <button type="submit" id="front_login_form_login" name="front_login_form[login]" class="btn">Přihlásit</button>
+                                                    </div>
+                                                    <div class="box-login__alert">
+                                                        <img class="box-login__alert__icon" src="/public/frontend/images/warning.svg" alt="Zapomněli jste své heslo?">
+                                                        <span class="box-login__alert__text">Zapomněli jste své heslo?</span>
+                                                        <a class="box-login__alert__link box-login__alert__link--secondary" href="http://127.0.0.1:8000/zapomenute-heslo">Zapomněli jste heslo?</a>
+                                                        <a class="box-login__alert__link box-login__alert__link--primary" href="http://127.0.0.1:8000/zapomenute-heslo">Obnovte si ho</a>
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <input name="front_login_form[_token]"
-                                                   class="input id__front_login_form__token"
-                                                   value="" type="hidden">
-                                        </form>
+                                            <div class="box-login__col box-login__col--right">
+                                                <div class="box-login__profile">
+                                                    <strong class="box-login__profile__text">Nemáte ješte účet?<br>Registrujte se.</strong>
+                                                    <div class="box-login__profile__icon">
+                                                        <picture>
+                                                            <source srcset="/public/frontend/images/qmark2x.png 2x, /public/frontend/images/qmark.png 1x">
+                                                            <img class="box-login__profile__icon__img loaded" loading="lazy" src="/public/frontend/images/qmark.png" data-src="/public/frontend/images/qmark.png" alt="Profil">
+                                                        </picture>
+                                                    </div>
+                                                </div>
+                                                <p class="box-login__message">
+                                                    Nebudete muset dokola vyplňovat adresy a uvidíte přehled všech objednávek.
+                                                </p>
+                                                <a href="http://127.0.0.1:8000/registrace" class="btn js-registration-link-desktop">Registrujte se</a>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <a href="#popup" class="window-button-close window-popup__close js-window-button-close"
-                                       title="Close (Esc)"><i class="svg svg-remove-thin"></i></a>
+                                    <a href="#" class="window-button-close window-popup__close js-window-button-close" title="Zavřít (Esc)"><i class="svg svg-remove"></i></a>
                                 </div>
                             </div>
                         </div>
@@ -1042,52 +974,24 @@
                     <section id="paging" class="styleguide-module anchor clearfix">
                         <h2 class="styleguide-module__title">Paging</h2>
 
-                        <div class="in-paging__control">
-                            <span class="in-paging__control__item in-paging__control__item--arrow in-paging__control__item--inactive">
-                                <i class="svg svg-arrow-left"></i>
-                                <span class="in-paging__control__item__arrow-text">
-                                    Preview
+                        <div class="in-paging">
+                            <div class="in-paging__control">
+                                <span class="in-paging__control__item in-paging__control__item--prev in-paging__control__item--inactive">
+                                    <i class="svg svg-arrow"></i>
                                 </span>
-                            </span>
+                                <span class="in-paging__control__item in-paging__control__item in-paging__control__item--active">1</span>
+                                <a class="in-paging__control__item" href="/televize-audio?page=2" rel="next">2</a>
+                                <a class="in-paging__control__item" href="/televize-audio?page=3">3</a>
 
-                            <span class="in-paging__control__item in-paging__control__item--num in-paging__control__item--num--active">1</span>
-                            <a class="in-paging__control__item in-paging__control__item--num" href="#paging">2</a>
-                            <a class="in-paging__control__item in-paging__control__item--num" href="#paging">3</a>
-                            <a class="in-paging__control__item in-paging__control__item--num" href="#paging">4</a>
-                            <a class="in-paging__control__item in-paging__control__item--num" href="#paging">5</a>
-                            <a class="in-paging__control__item in-paging__control__item--num" href="#paging">6</a>
-                            <a class="in-paging__control__item in-paging__control__item--num" href="#paging">7</a>
-                            <a class="in-paging__control__item in-paging__control__item--num" href="#paging">8</a>
-                            <a class="in-paging__control__item in-paging__control__item--num" href="#paging">9</a>
-                            <a class="in-paging__control__item in-paging__control__item--num" href="#paging">10</a>
-                            <a class="in-paging__control__item in-paging__control__item--num" href="#paging">11</a>
-                            <a class="in-paging__control__item in-paging__control__item--num" href="#paging">12</a>
-                            <a class="in-paging__control__item in-paging__control__item--num" href="#paging">13</a>
-                            <a class="in-paging__control__item in-paging__control__item--num" href="#paging">14</a>
-                            <a class="in-paging__control__item in-paging__control__item--num" href="#paging">15</a>
-                            <a class="in-paging__control__item in-paging__control__item--num" href="#paging">16</a>
-                            <a class="in-paging__control__item in-paging__control__item--num" href="#paging">17</a>
-                            <a class="in-paging__control__item in-paging__control__item--num" href="#paging">18</a>
-                            <a class="in-paging__control__item in-paging__control__item--num" href="#paging">19</a>
-                            <a class="in-paging__control__item in-paging__control__item--num" href="#paging">...</a>
-                            <a class="in-paging__control__item in-paging__control__item--num" href="#paging">100</a>
-                            <a class="in-paging__control__item in-paging__control__item--num" href="#paging">...</a>
-                            <a class="in-paging__control__item in-paging__control__item--num" href="#paging">1000</a>
-
-                            <a class="in-paging__control__item in-paging__control__item--arrow in-paging__control__item--right"
-                               href="#paging">
-                                <span class="in-paging__control__item__arrow-text">
-                                    Next
+                                <span class="in-paging__control__item in-paging__control__item--separate">
+                                    <span class="in-paging__control__item__separate">...</span>
                                 </span>
-                                <i class="svg svg-arrow-left"></i>
-                            </a>
-                        </div>
 
-                        <div class="in-paging__control" style="padding-top: 20px;">
-                            <div class="in-paging__button-more text-center">
-                                <input class="js-load-more-button btn btn--success btn--large" data-page="1"
-                                       data-total-count="4" data-page-size="12" data-pagination-to-item="4"
-                                       value="Load next 20 products" type="button">
+                                <a class="in-paging__control__item" href="#">14</a>
+
+                                <a class="in-paging__control__item in-paging__control__item in-paging__control__item--next" href="/televize-audio?page=2" rel="next">
+                                    <i class="svg svg-arrow"></i>
+                                </a>
                             </div>
                         </div>
                     </section>

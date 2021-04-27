@@ -5,9 +5,7 @@
             {% for productFlag in flags %}
                 {% if productFlag.visible %}
                     <span class="in-flag__item {{ productFlag.akeneoCode }}">
-                        <span class="in-flag__item__name">
-                            {{ productFlag.name }}
-                        </span>
+                        {{ productFlag.name }}
                     </span>
                 {% endif %}
             {% endfor %}

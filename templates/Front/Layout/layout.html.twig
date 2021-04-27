@@ -28,16 +28,16 @@
                     {{ block('header') }}
                 </div>
             </div>
-        </div>
-        {% block mainMenu %}
-            {% cache constant('App\\Component\\Cache\\TwigCachedMenuFacade::HORIZONTAL_PANEL_MENU') {lifetime:60*60*24, domainId:getDomain().id} %}
-                <div class="web__line">
-                    <div class="web__container web__container--full-width web__container--no-padding">
-                        {{ render(controller('App\\Controller\\Front\\HorizontalMenuController:menuAction'))|spaceless }}
+            {% block mainMenu %}
+                {% cache constant('App\\Component\\Cache\\TwigCachedMenuFacade::HORIZONTAL_PANEL_MENU') {lifetime:60*60*24, domainId:getDomain().id} %}
+                    <div class="web__line">
+                        <div class="web__container">
+                            {{ render(controller('App\\Controller\\Front\\HorizontalMenuController:menuAction'))|spaceless }}
+                        </div>
                     </div>
-                </div>
-            {% endcache %}
-        {% endblock %}
+                {% endcache %}
+            {% endblock %}
+        </div>
 
         {% block content %}{% endblock %}
 
@@ -64,7 +64,7 @@
                     </span>
                 </div>
                 <div class="box-cookies__btn">
-                    <button class="btn btn--cookies js-eu-cookies-consent-button" type="button">{{ 'I understand'|trans }}</button>
+                    <button class="btn js-eu-cookies-consent-button" type="button">{{ 'I understand'|trans }}</button>
                 </div>
             </div>
         </div>
