@@ -41,6 +41,16 @@ class TransportData extends BaseTransportData
      */
     public int $typeOfDeliveryKey;
 
+    /**
+     * @var string|null
+     */
+    public ?string $trackingUrl;
+
+    /**
+     * @var string[]|null[]
+     */
+    public array $trackingInstructions;
+
     public function __construct()
     {
         parent::__construct();

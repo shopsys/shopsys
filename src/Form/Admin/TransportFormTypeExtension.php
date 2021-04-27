@@ -4,8 +4,14 @@ declare(strict_types=1);
 
 namespace App\Form\Admin;
 
+use App\Form\DisplayVariablesType;
+use App\Model\Order\Mail\OrderMail;
+use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Shopsys\FormTypesBundle\YesNoType;
 use Shopsys\FrameworkBundle\Form\Admin\Transport\TransportFormType;
+use Shopsys\FrameworkBundle\Form\FormRenderingConfigurationExtension;
+use Shopsys\FrameworkBundle\Form\GroupType;
+use Shopsys\FrameworkBundle\Form\Locale\LocalizedType;
 use Symfony\Component\Form\AbstractTypeExtension;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -63,6 +69,53 @@ class TransportFormTypeExtension extends AbstractTypeExtension
                     new LessThanOrEqual(99),
                 ],
             ]);
+
+        $builderPackageTrackingGroup = $builder->create('packageTracking', GroupType::class, [
+            'label' => t('Package tracking'),
+        ]);
+
+        $builderPackageTrackingGroup
+            ->add('trackingUrl', TextType::class, [
+                'label' => t('Tracking URL'),
+                'required' => false,
+                'constraints' => [
+                    new Length([
+                        'max' => 255,
+                    ]),
+                ],
+            ])
+            ->add('trackingUrlVariables', DisplayVariablesType::class, [
+                'label' => t('Tracking URL variables'),
+                'required' => false,
+                'variables' => [
+                    OrderMail::TRANSPORT_VARIABLE_TRACKING_NUMBER => [
+                        'text' => t('Tracking number'),
+                        'required' => false,
+                    ],
+                ],
+            ])
+            ->add('trackingInstructions', LocalizedType::class, [
+                'entry_type' => CKEditorType::class,
+                'label' => t('Tracking instructions'),
+                'required' => false,
+                'display_format' => FormRenderingConfigurationExtension::DISPLAY_FORMAT_MULTIDOMAIN_ROWS_NO_PADDING,
+            ])
+            ->add('trackingInstructionsVariables', DisplayVariablesType::class, [
+                'label' => t('Tracking instructions variables'),
+                'required' => false,
+                'variables' => [
+                    OrderMail::TRANSPORT_VARIABLE_TRACKING_NUMBER => [
+                        'text' => t('Tracking number'),
+                        'required' => false,
+                    ],
+                    OrderMail::TRANSPORT_VARIABLE_TRACKING_URL => [
+                        'text' => t('Tracking URL'),
+                        'required' => false,
+                    ],
+                ],
+            ]);
+
+        $builder->add($builderPackageTrackingGroup);
     }
 
     /**

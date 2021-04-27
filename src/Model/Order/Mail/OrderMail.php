@@ -27,6 +27,9 @@ use Shopsys\FrameworkBundle\Model\Order\Order;
  */
 class OrderMail extends BaseOrderMail
 {
+    public const TRANSPORT_VARIABLE_TRACKING_NUMBER = '{tracking_number}';
+    public const TRANSPORT_VARIABLE_TRACKING_URL = '{tracking_url}';
+
     /**
      * @param \App\Model\Order\Order $order
      * @return string
