@@ -48,10 +48,16 @@ class OrderData extends BaseOrderData
      */
     public $isOverLimit;
 
+    /**
+     * @var string|null
+     */
+    public ?string $trackingNumber;
+
     public function __construct()
     {
         parent::__construct();
 
         $this->isCompanyCustomer = false;
+        $this->trackingNumber = null;
     }
 }

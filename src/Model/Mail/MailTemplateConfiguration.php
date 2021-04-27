@@ -72,7 +72,8 @@ class MailTemplateConfiguration extends BaseMailTemplateConfiguration
             ->addVariable(OrderMail::VARIABLE_PRODUCTS, t('List of products in order (name, quantity, price per unit including VAT, total price per item including VAT)'), MailTemplateVariables::CONTEXT_BODY)
             ->addVariable(OrderMail::VARIABLE_ORDER_DETAIL_URL, t('Order detail URL address'), MailTemplateVariables::CONTEXT_BODY)
             ->addVariable(OrderMail::VARIABLE_TRANSPORT_INSTRUCTIONS, t('Shipping instructions'), MailTemplateVariables::CONTEXT_BODY)
-            ->addVariable(OrderMail::VARIABLE_PAYMENT_INSTRUCTIONS, t('Payment instructions'), MailTemplateVariables::CONTEXT_BODY);
+            ->addVariable(OrderMail::VARIABLE_PAYMENT_INSTRUCTIONS, t('Payment instructions'), MailTemplateVariables::CONTEXT_BODY)
+            ->addVariable(OrderMail::VARIABLE_TRACKING_INSTRUCTIONS, t('Tracking instructions'), MailTemplateVariables::CONTEXT_BODY);
 
         /** @var \App\Model\Order\Status\OrderStatus[] $allOrderStatuses */
         $allOrderStatuses = $this->orderStatusFacade->getAll();
