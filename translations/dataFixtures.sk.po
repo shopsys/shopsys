@@ -85,10 +85,22 @@ msgstr ""
 msgid "210 MB"
 msgstr ""
 
+msgid "22\""
+msgstr ""
+
 msgid "22\" Sencor SLE 22F46DM4 HELLO KITTY"
 msgstr ""
 
 msgid "220 x 250 x 9 mm"
+msgstr ""
+
+msgid "24\""
+msgstr ""
+
+msgid "24\" Philips 32PFL4308"
+msgstr ""
+
+msgid "24\" Philips CRT 32PFL4308"
 msgstr ""
 
 msgid "240 x 205 x 15 mm"
@@ -113,6 +125,9 @@ msgid "27\""
 msgstr ""
 
 msgid "275 kWh/year"
+msgstr ""
+
+msgid "27” Hyundai PLASMA T27D590EY"
 msgstr ""
 
 msgid "27” Hyundai T27D590EY"
@@ -160,7 +175,13 @@ msgstr ""
 msgid "36\" Hyundai 32PFL4308"
 msgstr ""
 
+msgid "36\" Hyundai PLASMA 32PFL4308"
+msgstr ""
+
 msgid "36\" Philips 32PFL4308"
+msgstr ""
+
+msgid "36\" Philips CRT 32PFL4308"
 msgstr ""
 
 msgid "380 g"
@@ -232,6 +253,9 @@ msgstr ""
 msgid "50 g"
 msgstr ""
 
+msgid "51,5\""
+msgstr ""
+
 msgid "51,5” Hyundai 22HD44D"
 msgstr ""
 
@@ -239,6 +263,9 @@ msgid "54\""
 msgstr ""
 
 msgid "54\" Philips 32PFL4308"
+msgstr ""
+
+msgid "54\" Philips CRT 32PFL4308"
 msgstr ""
 
 msgid "55"
@@ -278,6 +305,9 @@ msgid "80x70x70 mm"
 msgstr ""
 
 msgid "9 Mpix"
+msgstr ""
+
+msgid "<a class=\"box-cart-sent__btn btn\" href=\"{order_detail_url}\">Zobrazit moje objednávky</a>"
 msgstr ""
 
 msgid "<b>You have chosen payment by credit card. Please finish it in two business days.</b>"
@@ -353,9 +383,6 @@ msgid "<p> Hand printing adhesive labels Brother especially suitable for easy ma
 msgstr ""
 
 msgid "<p> It is safe for you to your loved ones as important as us? In that case, you will appreciate with hob SDV-3460 feature residual heat indicators - H that you and your loved ones will protect against nasty burns. The residual heat indicator signals a residual temperature of the cooking zone even after power off. </p><br /> <h2> Reasons to opt just for built-in ceramic plate Concept SDV-3460: </h2><br /> <ol> <li> The built-in ceramic hob SDV-3460 you will be astonished <strong> handy touch controls </strong>. </li><li> Special radiators cooking zones <strong> HI-LIGHT </strong> are able to warm up to a maximum of a few seconds. </li><li> <strong> The residual heat indicator H </strong> - protects you against nasty burns. Indicates residual temperature of the cooking zone even after power off. </li><li> If you want to directly select the time that you want to cook, be sure to take the opportunity of the <strong> off-delay </strong>. </li></ol><br /> <h2> Specifications: </h2><br /> <ul> <li> Height: 60 mm </li> <li> Width: 590 mm </li><li> Depth: 520 mm </li><li> Glass ceramics </li><li> Accessories cleaning scraper </li><li> Touch control </li><li> The residual heat indicator - H </li><li> Without frame, angled edges Grounded </li><li> 4 cooking zones </li><li> Auto-off function - EXTRA SECURE </li><li> The off-delay </li><li> Beep </li><li> Control Panel front center </li><li> Child lock </li><li> The ON state </li></ul><br /> <h2> Details: </h2><br /> <ul> <li> Dimensions for installation (HxWxD): 50 x 560 x 490 mm </li><li> Main switch </li><li> <strong> Left Front plate: </strong> </li><li> The diameter of the front left plates: 165x265 mm </li><li> Input left front plate: 1100/2000 W </li><li> <strong> Rear Left plate: </strong> Circular HI-LIGHT </li><li> The diameter of the rear left of the plate 165 mm </li><li> Input left rear plate: 1200 W </li><li> <strong> The right rear plate: </strong> Circular HI-LIGHT </li><li> The diameter of the rear right plate: 200mm </li><li> wattage right rear plate: 1800 W </li><li> <strong> The front right plate: </strong> Circular HI-lihgt </li><li> The diameter of the front right plate: 165 mm </li><li> Input right front plate: 1200 W </li><li> Max.příkon-el .: 5700-6800 W </li><li> Weight: 10 kg </li><li> Voltage: 220-240 / 400 V 2N ~ 50/60 Hz </li> </ul>"
-msgstr ""
-
-msgid "<p> Order number {number} has been sent, thank you for your purchase. We will contact you about next order status. <br /><br /> <a href=\"{order_detail_url}\">Track</a> the status of your order. <br /> {transport_instructions} <br /> {payment_instructions} <br /> </p>"
 msgstr ""
 
 msgid "<p> The minimum space requirements excels sub-mounting range hood OPP-2060th Suitable for very small kitchens. Metal buttons provide ease of use and precise adjustment of the corresponding stage performance. </p> <br /> <br /> <h2> Reasons to choose just the sub-mounting range hood Concept OPP-2060: </h2> <br /> <br /> <ol> <li> Performance is the most important parameter hoods and should be at least equal to ten times the volume of the room. The sub-mounting range hood brand Concept OPP-2060 will surprise performance <strong> 186 m3 per hour </strong>. </li><li> Very practical is the ability to select <strong> 4 Ways exhaust </strong>. </li></ol> Model OPP-2060 is equipped with a practical <strong> metal grease filter </strong>, its maintenance is very easy and unlimited lifespan. If you can not pay out of steam, you can choose instead of exhaust classic <strong> recirculation system </strong> using a carbon filter, which can be bought."
@@ -436,6 +463,15 @@ msgstr ""
 msgid "Aquila Aquagym non-carbonated spring water"
 msgstr ""
 
+msgid "Aquila Aquagym non-carbonated spring water, description."
+msgstr ""
+
+msgid "Authentication code"
+msgstr ""
+
+msgid "Authentication code for two factor authentication: {authentication_code}"
+msgstr ""
+
 msgid "BROTHER PT-H300"
 msgstr ""
 
@@ -467,6 +503,9 @@ msgid "By entering an email below, you can view your personal information that w
 msgstr ""
 
 msgid "CD-R VERBATIM 210MB"
+msgstr ""
+
+msgid "CRT"
 msgstr ""
 
 msgid "Camera type"
@@ -568,10 +607,10 @@ msgstr ""
 msgid "Construction"
 msgstr ""
 
-msgid "Coupon valued to 100 Czech crowns. You can cash it at any exchange office"
+msgid "Coupon valued to 100 Czech crowns."
 msgstr ""
 
-msgid "Coupon valued to 100 Czech crowns."
+msgid "Coupon valued to 100 Czech crowns. You can cash it at any exchange office"
 msgstr ""
 
 msgid "Cover"
@@ -650,6 +689,9 @@ msgid "Defender SPK-480, easy to fit into any bag or backpack"
 msgstr ""
 
 msgid "Demo advert"
+msgstr ""
+
+msgid "Demo advert in category"
 msgstr ""
 
 msgid "Determination"
@@ -1018,6 +1060,9 @@ msgstr ""
 msgid "Multimedia"
 msgstr ""
 
+msgid "Máš to moc velké... takže tě víc zkásnem"
+msgstr ""
+
 msgid "NFC"
 msgstr ""
 
@@ -1034,6 +1079,12 @@ msgid "NS-9310 Infant replacement bags of paper for the VP-9310"
 msgstr ""
 
 msgid "NS-9710 Prominent replacement paper bags for VP-9711/12/13"
+msgstr ""
+
+msgid "Nadlimitní"
+msgstr ""
+
+msgid "Nadlimitnís"
 msgstr ""
 
 msgid "Nejčastější dotazy FAQ"
@@ -1070,9 +1121,6 @@ msgid "No"
 msgstr ""
 
 msgid "Nozzle with brush VP-4290"
-msgstr ""
-
-msgid "Nožičky"
 msgstr ""
 
 msgid "Number of buttons"
@@ -1153,10 +1201,19 @@ msgstr ""
 msgid "Our electronics include devices used for entertainment (flat screen TVs, DVD players, DVD movies, iPods, video games, remote control cars, etc.), communications (telephones, cell phones, email-capable laptops, etc.) and home office activities (e.g., desktop computers, printers, paper shredders, etc.)."
 msgstr ""
 
+msgid "Over limit"
+msgstr ""
+
 msgid "Overall performance"
 msgstr ""
 
+msgid "Očekávej to koncem příštího měsíce"
+msgstr ""
+
 msgid "PANASONIC DMC FT5EP"
+msgstr ""
+
+msgid "PLASMA"
 msgstr ""
 
 msgid "POS cookbook_steam oven GB"
@@ -1360,6 +1417,15 @@ msgstr ""
 msgid "Shopping guide"
 msgstr ""
 
+msgid "Shopping guide - Tips and tricks how to quickly find what you are looking for"
+msgstr ""
+
+msgid "Shopping guide for quick shopping"
+msgstr ""
+
+msgid "Shopping guide to improve your shopping experience"
+msgstr ""
+
 msgid "Shopsys Framework - Title page"
 msgstr ""
 
@@ -1444,6 +1510,9 @@ msgstr ""
 msgid "TS-9170 replacement bag for textile VP-9171"
 msgstr ""
 
+msgid "TV CRT, 100Hz, diagonal 80cm 100Hz, Full HD 1920 x 1080, DVB-T / C, 2x HDMI, USB, CI +, VGA, SCART, speakers 16W, energy. Class A +"
+msgstr ""
+
 msgid "TV Cinema 3D LED SMART diagonal 119 cm, 700 MCI, 1920x1080 Full HD"
 msgstr ""
 
@@ -1454,6 +1523,9 @@ msgid "TV LED, 100Hz, diagonal 32 inches 100Hz, Full HD 1920 x 1080, DVB-T / C, 
 msgstr ""
 
 msgid "TV LED, 100Hz, diagonal 80cm 100Hz, Full HD 1920 x 1080, DVB-T / C, 2x HDMI, USB, CI +, VGA, SCART, speakers 16W, energy. Class A +"
+msgstr ""
+
+msgid "TV PLASMA, 100Hz, diagonal 80cm 100Hz, Full HD 1920 x 1080, DVB-T / C, 2x HDMI, USB, CI +, VGA, SCART, speakers 16W, energy. Class A +"
 msgstr ""
 
 msgid "TV SMART LED TV, 147 cm diagonal, 4K Ultra HD 3840x2160 4K upscaler"
@@ -1714,6 +1786,6 @@ msgstr ""
 msgid "white"
 msgstr ""
 
-msgid "šroubovák"
+msgid "| Commerce Cloud"
 msgstr ""
 
