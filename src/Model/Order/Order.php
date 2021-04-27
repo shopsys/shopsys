@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\Order;
 
+use App\Model\Order\Mail\OrderMail;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use GoPay\Definition\Response\PaymentStatus;
@@ -228,5 +229,22 @@ class Order extends BaseOrder
     public function getTrackingNumber(): ?string
     {
         return $this->trackingNumber;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getTrackingUrl(): ?string
+    {
+        $trackingUrl = $this->transport->getTrackingUrl();
+        $trackingNumber = $this->getTrackingNumber();
+
+        if ($trackingUrl === null || $trackingNumber === null) {
+            return null;
+        }
+
+        return strtr($trackingUrl, [
+            OrderMail::TRANSPORT_VARIABLE_TRACKING_NUMBER => $trackingNumber,
+        ]);
     }
 }
