@@ -33,11 +33,18 @@ class StockEvent extends Event
     protected Stock $stock;
 
     /**
-     * @param \App\Model\Stock\Stock $stock
+     * @var bool
      */
-    public function __construct(Stock $stock)
+    protected bool $hasChangedDomains;
+
+    /**
+     * @param \App\Model\Stock\Stock $stock
+     * @param bool $hasChangedDomains
+     */
+    public function __construct(Stock $stock, bool $hasChangedDomains = false)
     {
         $this->stock = $stock;
+        $this->hasChangedDomains = $hasChangedDomains;
     }
 
     /**
@@ -46,5 +53,13 @@ class StockEvent extends Event
     public function getStock(): Stock
     {
         return $this->stock;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasChangedDomains(): bool
+    {
+        return $this->hasChangedDomains === true;
     }
 }

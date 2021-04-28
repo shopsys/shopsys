@@ -61,10 +61,13 @@ class StockFacade
     public function edit(int $stockId, StockData $stockData): Stock
     {
         $stock = $this->getById($stockId);
+
+        $hasDomainsChanged = $stock->getEnabledIndexedByDomainId() !== $stockData->isEnabledByDomain;
+
         $stock->edit($stockData);
         $this->em->flush();
 
-        $this->eventDispatcher->dispatch(new StockEvent($stock), StockEvent::UPDATE);
+        $this->eventDispatcher->dispatch(new StockEvent($stock, $hasDomainsChanged), StockEvent::UPDATE);
 
         return $stock;
     }

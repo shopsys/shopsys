@@ -21,7 +21,18 @@ class MarkProductForExportSubscriber extends BaseMarkProductForExportSubscriber
         $subscribedEvents = parent::getSubscribedEvents();
 
         $subscribedEvents[StockEvent::DELETE] = 'markAll';
+        $subscribedEvents[StockEvent::UPDATE] = 'markAllIfStockDomainsChanged';
 
         return $subscribedEvents;
+    }
+
+    /**
+     * @param \App\Model\Stock\StockEvent $stockEvent
+     */
+    public function markAllIfStockDomainsChanged(StockEvent $stockEvent): void
+    {
+        if ($stockEvent->hasChangedDomains()) {
+            $this->markAll($stockEvent);
+        }
     }
 }
