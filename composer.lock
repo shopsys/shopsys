@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "17893f9caad31bddfa0cb61cdb2dfdcc",
+    "content-hash": "56e210fa4422c801a8b3be49eee5fe5e",
     "packages": [
         {
             "name": "adoy/fastcgi-client",
@@ -8507,16 +8507,16 @@
         },
         {
             "name": "shopsys/form-types-bundle",
-            "version": "dev-tl-release-9-1-1",
+            "version": "v9.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/shopsys/form-types-bundle.git",
-                "reference": "62a545d725cc9796cab19763f548966cfc72a461"
+                "reference": "dd6f7a0ff5db4c559f0f17f35b307f7823936274"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/shopsys/form-types-bundle/zipball/62a545d725cc9796cab19763f548966cfc72a461",
-                "reference": "62a545d725cc9796cab19763f548966cfc72a461",
+                "url": "https://api.github.com/repos/shopsys/form-types-bundle/zipball/dd6f7a0ff5db4c559f0f17f35b307f7823936274",
+                "reference": "dd6f7a0ff5db4c559f0f17f35b307f7823936274",
                 "shasum": ""
             },
             "require": {
@@ -8556,22 +8556,22 @@
                 "form"
             ],
             "support": {
-                "source": "https://github.com/shopsys/form-types-bundle/tree/tl-release-9-1-1"
+                "source": "https://github.com/shopsys/form-types-bundle/tree/v9.1.1"
             },
-            "time": "2021-04-15T20:34:13+00:00"
+            "time": "2021-04-19T09:13:00+00:00"
         },
         {
             "name": "shopsys/framework",
-            "version": "dev-tl-release-9-1-1",
+            "version": "v9.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/shopsys/framework.git",
-                "reference": "c14e46a4f3f341051f2063ead58ce0fc5959fcc4"
+                "reference": "219b66a263810ba1dec214b51b9e243b8727a537"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/shopsys/framework/zipball/c14e46a4f3f341051f2063ead58ce0fc5959fcc4",
-                "reference": "c14e46a4f3f341051f2063ead58ce0fc5959fcc4",
+                "url": "https://api.github.com/repos/shopsys/framework/zipball/219b66a263810ba1dec214b51b9e243b8727a537",
+                "reference": "219b66a263810ba1dec214b51b9e243b8727a537",
                 "shasum": ""
             },
             "require": {
@@ -8683,22 +8683,22 @@
             ],
             "description": "Core of Shopsys Framework - open source framework for building large, scalable, fast-growing e-commerce projects based on Symfony",
             "support": {
-                "source": "https://github.com/shopsys/framework/tree/tl-release-9-1-1"
+                "source": "https://github.com/shopsys/framework/tree/v9.1.1"
             },
-            "time": "2021-04-15T20:34:13+00:00"
+            "time": "2021-04-19T09:13:00+00:00"
         },
         {
             "name": "shopsys/google-cloud-bundle",
-            "version": "dev-tl-release-9-1-1",
+            "version": "v9.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/shopsys/google-cloud-bundle.git",
-                "reference": "47759a6347bf49d962f72abe03b1f5257fb27750"
+                "reference": "43fb0310e5d2915dd8edd27efd22ba825cee4bf2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/shopsys/google-cloud-bundle/zipball/47759a6347bf49d962f72abe03b1f5257fb27750",
-                "reference": "47759a6347bf49d962f72abe03b1f5257fb27750",
+                "url": "https://api.github.com/repos/shopsys/google-cloud-bundle/zipball/43fb0310e5d2915dd8edd27efd22ba825cee4bf2",
+                "reference": "43fb0310e5d2915dd8edd27efd22ba825cee4bf2",
                 "shasum": ""
             },
             "require": {
@@ -8742,22 +8742,22 @@
             ],
             "support": {
                 "issues": "https://github.com/shopsys/google-cloud-bundle/issues",
-                "source": "https://github.com/shopsys/google-cloud-bundle/tree/tl-release-9-1-1"
+                "source": "https://github.com/shopsys/google-cloud-bundle/tree/v9.1.1"
             },
-            "time": "2021-04-15T20:34:13+00:00"
+            "time": "2021-04-19T09:13:00+00:00"
         },
         {
             "name": "shopsys/migrations",
-            "version": "dev-tl-release-9-1-1",
+            "version": "v9.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/shopsys/migrations.git",
-                "reference": "9eb24eb943ffb35d48cc1c9d4a7ca24e29277e73"
+                "reference": "7541fed9155eaaa3706be8e765eb79c932211e8c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/shopsys/migrations/zipball/9eb24eb943ffb35d48cc1c9d4a7ca24e29277e73",
-                "reference": "9eb24eb943ffb35d48cc1c9d4a7ca24e29277e73",
+                "url": "https://api.github.com/repos/shopsys/migrations/zipball/7541fed9155eaaa3706be8e765eb79c932211e8c",
+                "reference": "7541fed9155eaaa3706be8e765eb79c932211e8c",
                 "shasum": ""
             },
             "require": {
@@ -8808,9 +8808,9 @@
                 "schema"
             ],
             "support": {
-                "source": "https://github.com/shopsys/migrations/tree/tl-release-9-1-1"
+                "source": "https://github.com/shopsys/migrations/tree/v9.1.1"
             },
-            "time": "2021-04-15T20:34:13+00:00"
+            "time": "2021-04-19T09:13:00+00:00"
         },
         {
             "name": "shopsys/ordered-form",
@@ -8865,16 +8865,16 @@
         },
         {
             "name": "shopsys/plugin-interface",
-            "version": "dev-tl-release-9-1-1",
+            "version": "v9.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/shopsys/plugin-interface.git",
-                "reference": "56daa9590fd6c0595a5d345cbb9b10b781038a48"
+                "reference": "d2cdc5b2e94a7c1c316a9abe01cc46dfd3e71799"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/shopsys/plugin-interface/zipball/56daa9590fd6c0595a5d345cbb9b10b781038a48",
-                "reference": "56daa9590fd6c0595a5d345cbb9b10b781038a48",
+                "url": "https://api.github.com/repos/shopsys/plugin-interface/zipball/d2cdc5b2e94a7c1c316a9abe01cc46dfd3e71799",
+                "reference": "d2cdc5b2e94a7c1c316a9abe01cc46dfd3e71799",
                 "shasum": ""
             },
             "require": {
@@ -8907,9 +8907,9 @@
                 "plugin"
             ],
             "support": {
-                "source": "https://github.com/shopsys/plugin-interface/tree/tl-release-9-1-1"
+                "source": "https://github.com/shopsys/plugin-interface/tree/v9.1.1"
             },
-            "time": "2021-04-15T20:34:13+00:00"
+            "time": "2021-04-19T09:13:00+00:00"
         },
         {
             "name": "shopsys/postgres-search-bundle",
@@ -8962,16 +8962,16 @@
         },
         {
             "name": "shopsys/product-feed-google",
-            "version": "dev-tl-release-9-1-1",
+            "version": "v9.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/shopsys/product-feed-google.git",
-                "reference": "2663c93619f71fafe4e9375f5c2cc459f7d3da48"
+                "reference": "dcf1889e66a4d3f5d04309017798603e6fa95230"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/shopsys/product-feed-google/zipball/2663c93619f71fafe4e9375f5c2cc459f7d3da48",
-                "reference": "2663c93619f71fafe4e9375f5c2cc459f7d3da48",
+                "url": "https://api.github.com/repos/shopsys/product-feed-google/zipball/dcf1889e66a4d3f5d04309017798603e6fa95230",
+                "reference": "dcf1889e66a4d3f5d04309017798603e6fa95230",
                 "shasum": ""
             },
             "require": {
@@ -9024,22 +9024,22 @@
                 "product feed"
             ],
             "support": {
-                "source": "https://github.com/shopsys/product-feed-google/tree/tl-release-9-1-1"
+                "source": "https://github.com/shopsys/product-feed-google/tree/v9.1.1"
             },
-            "time": "2021-04-15T20:34:13+00:00"
+            "time": "2021-04-19T09:13:00+00:00"
         },
         {
             "name": "shopsys/product-feed-heureka",
-            "version": "dev-tl-release-9-1-1",
+            "version": "v9.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/shopsys/product-feed-heureka.git",
-                "reference": "a28609edf3cdae9f124e94930c573f8ba140604c"
+                "reference": "093f5918d162e974644d5b251172266fa5aa0399"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/shopsys/product-feed-heureka/zipball/a28609edf3cdae9f124e94930c573f8ba140604c",
-                "reference": "a28609edf3cdae9f124e94930c573f8ba140604c",
+                "url": "https://api.github.com/repos/shopsys/product-feed-heureka/zipball/093f5918d162e974644d5b251172266fa5aa0399",
+                "reference": "093f5918d162e974644d5b251172266fa5aa0399",
                 "shasum": ""
             },
             "require": {
@@ -9095,22 +9095,22 @@
                 "product feed"
             ],
             "support": {
-                "source": "https://github.com/shopsys/product-feed-heureka/tree/tl-release-9-1-1"
+                "source": "https://github.com/shopsys/product-feed-heureka/tree/v9.1.1"
             },
-            "time": "2021-04-15T20:34:13+00:00"
+            "time": "2021-04-19T09:13:00+00:00"
         },
         {
             "name": "shopsys/product-feed-heureka-delivery",
-            "version": "dev-tl-release-9-1-1",
+            "version": "v9.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/shopsys/product-feed-heureka-delivery.git",
-                "reference": "08cdf8cdcf0516ff94df686ed75f4cb778b4d7fe"
+                "reference": "7ecf35378583cfc01ee7037e1d6767718682eb84"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/shopsys/product-feed-heureka-delivery/zipball/08cdf8cdcf0516ff94df686ed75f4cb778b4d7fe",
-                "reference": "08cdf8cdcf0516ff94df686ed75f4cb778b4d7fe",
+                "url": "https://api.github.com/repos/shopsys/product-feed-heureka-delivery/zipball/7ecf35378583cfc01ee7037e1d6767718682eb84",
+                "reference": "7ecf35378583cfc01ee7037e1d6767718682eb84",
                 "shasum": ""
             },
             "require": {
@@ -9157,22 +9157,22 @@
                 "product delivery feed"
             ],
             "support": {
-                "source": "https://github.com/shopsys/product-feed-heureka-delivery/tree/tl-release-9-1-1"
+                "source": "https://github.com/shopsys/product-feed-heureka-delivery/tree/v9.1.1"
             },
-            "time": "2021-04-15T20:34:13+00:00"
+            "time": "2021-04-19T09:13:00+00:00"
         },
         {
             "name": "shopsys/product-feed-zbozi",
-            "version": "dev-tl-release-9-1-1",
+            "version": "v9.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/shopsys/product-feed-zbozi.git",
-                "reference": "6c60a65f8d7fc970f86ab80f9ecb96ed1f2fd3c5"
+                "reference": "621342a24e8f928d294eca168ab52eaa12c89512"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/shopsys/product-feed-zbozi/zipball/6c60a65f8d7fc970f86ab80f9ecb96ed1f2fd3c5",
-                "reference": "6c60a65f8d7fc970f86ab80f9ecb96ed1f2fd3c5",
+                "url": "https://api.github.com/repos/shopsys/product-feed-zbozi/zipball/621342a24e8f928d294eca168ab52eaa12c89512",
+                "reference": "621342a24e8f928d294eca168ab52eaa12c89512",
                 "shasum": ""
             },
             "require": {
@@ -9225,22 +9225,22 @@
                 "zbozi"
             ],
             "support": {
-                "source": "https://github.com/shopsys/product-feed-zbozi/tree/tl-release-9-1-1"
+                "source": "https://github.com/shopsys/product-feed-zbozi/tree/v9.1.1"
             },
-            "time": "2021-04-15T20:34:13+00:00"
+            "time": "2021-04-19T09:13:00+00:00"
         },
         {
             "name": "shopsys/read-model",
-            "version": "dev-tl-release-9-1-1",
+            "version": "v9.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/shopsys/read-model.git",
-                "reference": "f746ae7ce238516def89827358158dbc842d3773"
+                "reference": "9f0def50c446f35341fab6b9426b7602af0de6ec"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/shopsys/read-model/zipball/f746ae7ce238516def89827358158dbc842d3773",
-                "reference": "f746ae7ce238516def89827358158dbc842d3773",
+                "url": "https://api.github.com/repos/shopsys/read-model/zipball/9f0def50c446f35341fab6b9426b7602af0de6ec",
+                "reference": "9f0def50c446f35341fab6b9426b7602af0de6ec",
                 "shasum": ""
             },
             "require": {
@@ -9281,9 +9281,9 @@
                 "read model"
             ],
             "support": {
-                "source": "https://github.com/shopsys/read-model/tree/tl-release-9-1-1"
+                "source": "https://github.com/shopsys/read-model/tree/v9.1.1"
             },
-            "time": "2021-04-15T20:34:13+00:00"
+            "time": "2021-04-19T09:13:00+00:00"
         },
         {
             "name": "sinergi/browser-detector",
@@ -18158,7 +18158,7 @@
         },
         {
             "name": "shopsys/coding-standards",
-            "version": "dev-tl-release-9-1-1",
+            "version": "v9.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/shopsys/coding-standards.git",
@@ -18212,22 +18212,22 @@
                 "coding standards"
             ],
             "support": {
-                "source": "https://github.com/shopsys/coding-standards/tree/tl-release-9-1-1"
+                "source": "https://github.com/shopsys/coding-standards/tree/v9.1.1"
             },
             "time": "2021-04-09T14:02:40+00:00"
         },
         {
             "name": "shopsys/http-smoke-testing",
-            "version": "dev-tl-release-9-1-1",
+            "version": "v9.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/shopsys/http-smoke-testing.git",
-                "reference": "595204682716a7779332960bda1236f44db5ecf7"
+                "reference": "f613b7b345ad69e73500372c61111418f983f0ef"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/shopsys/http-smoke-testing/zipball/595204682716a7779332960bda1236f44db5ecf7",
-                "reference": "595204682716a7779332960bda1236f44db5ecf7",
+                "url": "https://api.github.com/repos/shopsys/http-smoke-testing/zipball/f613b7b345ad69e73500372c61111418f983f0ef",
+                "reference": "f613b7b345ad69e73500372c61111418f983f0ef",
                 "shasum": ""
             },
             "require": {
@@ -18271,9 +18271,9 @@
                 "testing"
             ],
             "support": {
-                "source": "https://github.com/shopsys/http-smoke-testing/tree/tl-release-9-1-1"
+                "source": "https://github.com/shopsys/http-smoke-testing/tree/v9.1.1"
             },
-            "time": "2021-04-15T20:34:13+00:00"
+            "time": "2021-04-19T09:13:00+00:00"
         },
         {
             "name": "slevomat/coding-standard",
@@ -19469,95 +19469,9 @@
             "time": "2020-03-02T15:32:50+00:00"
         }
     ],
-    "aliases": [
-        {
-            "package": "shopsys/coding-standards",
-            "version": "dev-tl-release-9-1-1",
-            "alias": "9.1.1",
-            "alias_normalized": "9.1.1.0"
-        },
-        {
-            "package": "shopsys/form-types-bundle",
-            "version": "dev-tl-release-9-1-1",
-            "alias": "9.1.1",
-            "alias_normalized": "9.1.1.0"
-        },
-        {
-            "package": "shopsys/framework",
-            "version": "dev-tl-release-9-1-1",
-            "alias": "9.1.1",
-            "alias_normalized": "9.1.1.0"
-        },
-        {
-            "package": "shopsys/google-cloud-bundle",
-            "version": "dev-tl-release-9-1-1",
-            "alias": "9.1.1",
-            "alias_normalized": "9.1.1.0"
-        },
-        {
-            "package": "shopsys/http-smoke-testing",
-            "version": "dev-tl-release-9-1-1",
-            "alias": "9.1.1",
-            "alias_normalized": "9.1.1.0"
-        },
-        {
-            "package": "shopsys/migrations",
-            "version": "dev-tl-release-9-1-1",
-            "alias": "9.1.1",
-            "alias_normalized": "9.1.1.0"
-        },
-        {
-            "package": "shopsys/plugin-interface",
-            "version": "dev-tl-release-9-1-1",
-            "alias": "9.1.1",
-            "alias_normalized": "9.1.1.0"
-        },
-        {
-            "package": "shopsys/product-feed-google",
-            "version": "dev-tl-release-9-1-1",
-            "alias": "9.1.1",
-            "alias_normalized": "9.1.1.0"
-        },
-        {
-            "package": "shopsys/product-feed-heureka",
-            "version": "dev-tl-release-9-1-1",
-            "alias": "9.1.1",
-            "alias_normalized": "9.1.1.0"
-        },
-        {
-            "package": "shopsys/product-feed-heureka-delivery",
-            "version": "dev-tl-release-9-1-1",
-            "alias": "9.1.1",
-            "alias_normalized": "9.1.1.0"
-        },
-        {
-            "package": "shopsys/product-feed-zbozi",
-            "version": "dev-tl-release-9-1-1",
-            "alias": "9.1.1",
-            "alias_normalized": "9.1.1.0"
-        },
-        {
-            "package": "shopsys/read-model",
-            "version": "dev-tl-release-9-1-1",
-            "alias": "9.1.1",
-            "alias_normalized": "9.1.1.0"
-        }
-    ],
+    "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "shopsys/form-types-bundle": 20,
-        "shopsys/framework": 20,
-        "shopsys/google-cloud-bundle": 20,
-        "shopsys/migrations": 20,
-        "shopsys/plugin-interface": 20,
-        "shopsys/product-feed-google": 20,
-        "shopsys/product-feed-heureka": 20,
-        "shopsys/product-feed-heureka-delivery": 20,
-        "shopsys/product-feed-zbozi": 20,
-        "shopsys/read-model": 20,
-        "shopsys/coding-standards": 20,
-        "shopsys/http-smoke-testing": 20
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
