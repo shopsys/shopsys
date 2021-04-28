@@ -16,14 +16,14 @@ class Version20200714114004 extends AbstractMigration
     {
         $this->sql('
             CREATE TABLE promo_code_limit (
-                from_price_with_vat INT NOT NULL,
+                from_price_with_vat NUMERIC(20,4) NOT NULL,
                 percent NUMERIC(20, 4) NOT NULL, 
                 promo_code_id INT NOT NULL, 
                 PRIMARY KEY(promo_code_id, from_price_with_vat)
             );
             ');
         $this->sql('CREATE INDEX IDX_CF58514F2FAE4625 ON promo_code_limit (promo_code_id)');
-        $this->sql('ALTER TABLE promo_code_limit ADD CONSTRAINT FK_CF58514F2FAE4625 FOREIGN KEY (promo_code_id) REFERENCES promo_codes (id) NOT DEFERRABLE INITIALLY IMMEDIATE;');
+        $this->sql('ALTER TABLE promo_code_limit ADD CONSTRAINT FK_CF58514F2FAE4625 FOREIGN KEY (promo_code_id) REFERENCES promo_codes (id) ON DELETE CASCADE NOT DEFERRABLE INITIALLY IMMEDIATE');
     }
 
     /**

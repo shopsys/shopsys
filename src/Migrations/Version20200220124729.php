@@ -33,7 +33,6 @@ class Version20200220124729 extends AbstractMigration
                 CONSTRAINT FK_69348FEFE54D947 FOREIGN KEY (group_id) REFERENCES parameter_groups (id) ON DELETE CASCADE NOT DEFERRABLE INITIALLY IMMEDIATE');
         $this->sql('CREATE UNIQUE INDEX UNIQ_69348FECC7118A2 ON parameters (akeneo_code)');
         $this->sql('CREATE INDEX IDX_69348FEFE54D947 ON parameters (group_id)');
-        $this->sql('ALTER TABLE parameter_values ADD unit VARCHAR(100) DEFAULT NULL');
 
         $this->sql('
             CREATE TABLE parameter_groups_translations (
