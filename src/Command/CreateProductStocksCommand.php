@@ -91,6 +91,9 @@ class CreateProductStocksCommand extends Command
                         $stock,
                         $this->productStockDataFactory->createFromStock($stock)
                     );
+
+                    $this->productRepository->markProductsForExport([$product]);
+
                     $output->write(sprintf('%s created. ', $stockId));
                 } else {
                     $output->write(sprintf('%s ok. ', $stockId));
