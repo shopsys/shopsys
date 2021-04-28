@@ -39,10 +39,10 @@ class Stock implements OrderableEntityInterface
     protected string $name;
 
     /**
-     * @var string
-     * @ORM\Column(type="string", length=255, unique=true)
+     * @var string|null
+     * @ORM\Column(type="string", length=255, unique=true, nullable=true)
      */
-    protected string $externalId;
+    protected ?string $externalId;
 
     /**
      * @var bool
@@ -136,9 +136,9 @@ class Stock implements OrderableEntityInterface
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getExternalId(): string
+    public function getExternalId(): ?string
     {
         return $this->externalId;
     }

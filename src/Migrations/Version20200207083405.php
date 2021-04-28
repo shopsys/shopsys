@@ -28,7 +28,7 @@ class Version20200207083405 extends AbstractMigration
                 id SERIAL NOT NULL,
                 name VARCHAR(255) NOT NULL,
                 is_default BOOLEAN NOT NULL,
-                external_id VARCHAR(255) NOT NULL,
+                external_id VARCHAR(255) DEFAULT NULL,
                 note TEXT DEFAULT NULL,
                 PRIMARY KEY(id)
             )');

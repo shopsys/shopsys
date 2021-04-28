@@ -15,21 +15,21 @@ class StocksDataFixture extends AbstractReferenceFixture
     private const ATTR_NAME = 'name';
     private const ATTR_IS_DEFAULT = 'isDefault';
     private const ATTR_NOTE = 'note';
-    public const ATTR_ENABLED_BY_DOMAIN = 'enabled';
-    public const ATTR_EXTERNAL = 'externalId';
+    private const ATTR_ENABLED_BY_DOMAIN = 'enabled';
+    private const ATTR_EXTERNAL = 'externalId';
     private const ENABLED_FIRST_DOMAIN = [1 => true, 2 => false];
     private const ENABLED_SECOND_DOMAIN = [1 => false, 2 => true];
-    public const STOCK_PREFIX = 'stock_';
+    private const STOCK_PREFIX = 'stock_';
 
     /**
      * @var \App\Model\Stock\StockFacade
      */
-    private $stockFacade;
+    private StockFacade $stockFacade;
 
     /**
      * @var \App\Model\Stock\StockDataFactory
      */
-    private $stockDataFactory;
+    private StockDataFactory $stockDataFactory;
 
     /**
      * @param \App\Model\Stock\StockFacade $stockFacade
@@ -46,9 +46,9 @@ class StocksDataFixture extends AbstractReferenceFixture
      */
     public function load(ObjectManager $manager)
     {
-        foreach (self::getDemoData() as $demoRow) {
+        foreach ($this->getDemoData() as $demoRow) {
             $stock = $this->stockFacade->create($this->initStockData($demoRow));
-            $this->addReference(self::STOCK_PREFIX . $stock->getExternalId(), $stock);
+            $this->addReference(self::STOCK_PREFIX . $stock->getId(), $stock);
         }
     }
 
@@ -72,7 +72,7 @@ class StocksDataFixture extends AbstractReferenceFixture
     /**
      * @return array
      */
-    public static function getDemoData(): array
+    private function getDemoData(): array
     {
         return [
             [

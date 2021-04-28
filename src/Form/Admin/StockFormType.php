@@ -74,10 +74,9 @@ class StockFormType extends AbstractType
                 'label' => t('Display on'),
             ])
             ->add('externalId', TextType::class, [
-                'required' => true,
+                'required' => false,
                 'label' => t('Externí ID můstku'),
                 'constraints' => [
-                    new Constraints\NotBlank(['message' => 'Vyplňte prosím externí ID můstku']),
                     new Constraints\Length(['max' => 255, 'maxMessage' => 'Externí ID můstku nesmí být delší než {{ limit }} znaků']),
                     new Constraints\Callback([$this, 'sameStockExternalIdValidation']),
                 ],
@@ -105,17 +104,23 @@ class StockFormType extends AbstractType
     }
 
     /**
-     * @param string $externalId
+     * @param string|null $externalId
      * @param \Symfony\Component\Validator\Context\ExecutionContextInterface $context
      */
-    public function sameStockExternalIdValidation(string $externalId, ExecutionContextInterface $context)
+    public function sameStockExternalIdValidation(?string $externalId, ExecutionContextInterface $context): void
     {
-        if ($this->stock === null || $externalId !== $this->stock->getExternalId()) {
-            $stock = $this->stockFacade->findStockByExternalId($externalId);
+        if ($externalId === null) {
+            return;
+        }
 
-            if ($stock !== null) {
-                $context->addViolation('Sklad s tímto externím kódem již existuje');
-            }
+        if ($this->stock !== null && $externalId === $this->stock->getExternalId()) {
+            return;
+        }
+
+        $stock = $this->stockFacade->findStockByExternalId($externalId);
+
+        if ($stock !== null) {
+            $context->addViolation('Sklad s tímto externím kódem již existuje');
         }
     }
 }

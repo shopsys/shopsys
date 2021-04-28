@@ -76,15 +76,14 @@ class CreateProductStocksCommand extends Command
     {
         $stocks = $this->stockFacade->getAllStocks();
 
-        /** @var \App\Model\Product\Product $product */
         foreach ($this->productRepository->getAll() as $product) {
             $productCatnum = $product->getCatnum();
             $output->write(sprintf('Checking product %s stocks... ', $productCatnum));
             foreach ($stocks as $stock) {
-                $externalStockId = $stock->getExternalId();
-                $productStock = $this->productStockFacade->findProductStockByProductCatnumAndStockExternalId(
+                $stockId = $stock->getId();
+                $productStock = $this->productStockFacade->findProductStockByProductCatnumAndStockId(
                     $productCatnum,
-                    $externalStockId
+                    $stockId
                 );
                 if ($productStock === null) {
                     $this->productStockFacade->editProductStockRelation(
@@ -92,9 +91,9 @@ class CreateProductStocksCommand extends Command
                         $stock,
                         $this->productStockDataFactory->createFromStock($stock)
                     );
-                    $output->write(sprintf('%s created. ', $externalStockId));
+                    $output->write(sprintf('%s created. ', $stockId));
                 } else {
-                    $output->write(sprintf('%s ok. ', $externalStockId));
+                    $output->write(sprintf('%s ok. ', $stockId));
                 }
             }
             $output->writeln('');
