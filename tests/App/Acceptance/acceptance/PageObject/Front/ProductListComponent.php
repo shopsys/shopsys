@@ -58,9 +58,10 @@ class ProductListComponent extends AbstractPage
 
         foreach ($productItems as $item) {
             try {
-                $nameElement = $item->findElement(WebDriverBy::cssSelector('.js-list-products-item-title'));
+                $titleElement = $item->findElement(WebDriverBy::cssSelector('.js-list-products-item-title'));
+                $nameElement = $titleElement->findElement(WebDriverBy::cssSelector('.js-list-products-item-name'));
 
-                if ($nameElement->getText() === $productName) {
+                if (rtrim($nameElement->getText(), ',') === $translatedProductName) {
                     return $item;
                 }
             } catch (NoSuchElementException $ex) {

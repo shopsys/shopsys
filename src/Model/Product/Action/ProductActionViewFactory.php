@@ -51,7 +51,7 @@ class ProductActionViewFactory extends BaseProductActionViewFactory
             $product->isSellingDenied(),
             $product->isMainVariant(),
             $absoluteUrl,
-            null,
+            $this->productAvailabilityFacade->getGroupedStockQuantityByProductAndDomainId($product, $this->domain->getId()),
             $isProductAvailable,
             $product->hasPreorder()
         );

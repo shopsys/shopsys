@@ -75,7 +75,7 @@ class LocalizationHelper extends Module
     public function seeTranslationFrontendInCss(string $id, string $css, string $domain = 'messages', array $parameters = [])
     {
         $translatedMessage = t($id, $parameters, $domain, $this->getFrontendLocale());
-        $this->webDriver->seeInCss(strip_tags($translatedMessage), $css);
+        $this->webDriver->seeInCss(trim(strip_tags($translatedMessage)), $css);
     }
 
     /**
