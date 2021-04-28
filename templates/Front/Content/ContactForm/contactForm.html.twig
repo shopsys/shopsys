@@ -4,9 +4,9 @@
 
         {{ form_start(form, {attr: {'data-on-submit': 'contactFormAjaxSubmit'}}) }}
             {{ form_errors(form) }}
-            {{ form_row(form.name, { label: 'Full name'|trans, rowClass: 'form-line-block', errors_attr: { class: 'form-error--line' } }) }}
-            {{ form_row(form.email, { label: 'Email'|trans, rowClass: 'form-line-block', errors_attr: { class: 'form-error--line' } }) }}
-            {{ form_row(form.message, { label: 'Message'|trans, rowClass: 'form-line-block', errors_attr: { class: 'form-error--line' } }) }}
+            {{ form_row(form.name, { label: 'Full name'|trans, errors_attr: { class: 'form-error--line' } }) }}
+            {{ form_row(form.email, { label: 'Email'|trans, errors_attr: { class: 'form-error--line' } }) }}
+            {{ form_row(form.message, { label: 'Message'|trans, errors_attr: { class: 'form-error--line' } }) }}
             {% if privacyPolicyArticle is not null %}
                 {% set articleUrl = url('front_article_detail', {'id': privacyPolicyArticle.id}) %}
                 {{ form_row(
@@ -15,7 +15,6 @@
                         label:  'I agree with  <a href="%url%" target="_blank">privacy policy</a>.'|trans({'%url%': articleUrl}),
                         errors_attr: { class: 'form-error--choice' },
                         rawLabel:true,
-                        rowClass: 'form-line-block'
                     }
                 )}}
             {% else %}
@@ -23,8 +22,7 @@
                     form.privacyPolicy,
                     {
                         label:  'I agree with privacy policy.'|trans,
-                        errors_attr: { class: 'form-error--choice' },
-                        rowClass: 'form-line-block'
+                        errors_attr: { class: 'form-error--choice' }
                     }
                 )}}
             {% endif %}

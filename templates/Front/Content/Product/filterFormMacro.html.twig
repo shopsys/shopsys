@@ -102,21 +102,21 @@
                 ></div>
                 <div class="box-price-slider__form">
                     <div class="box-price-slider__form__item">
-                        <div class="form-line-block is-focused">
+                        <div class="form-line">
                             {{ form_widget(filterForm.minimalPrice, {
                                 symbolAfterInput: currencySymbolByDomainId(getDomain().id),
-                                attr: { class: 'js-product-filter-call-change-after-reset', placeholder: priceRange.minimalPrice|price }
+                                attr: { class: 'input--show-placeholder js-product-filter-call-change-after-reset', placeholder: priceRange.minimalPrice|price }
                             }) }}
-                            <label>{{ 'od'|trans }}</label>
+                            <label class="input-label input-label--fixed">{{ 'od'|trans }}</label>
                         </div>
                     </div>
                     <div class="box-price-slider__form__item">
-                        <div class="form-line-block is-focused">
+                        <div class="form-line">
                             {{ form_widget(filterForm.maximalPrice, {
                                 symbolAfterInput: currencySymbolByDomainId(getDomain().id),
-                                attr: { class: 'js-product-filter-call-change-after-reset', placeholder:priceRange.maximalPrice|price }
+                                attr: { class: 'input--show-placeholder js-product-filter-call-change-after-reset', placeholder:priceRange.maximalPrice|price }
                             }) }}
-                            <label>{{ 'do'|trans }}</label>
+                            <label class="input-label input-label--fixed">{{ 'do'|trans }}</label>
                         </div>
                     </div>
                 </div>

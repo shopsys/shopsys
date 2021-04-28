@@ -10,20 +10,20 @@
         ></div>
         <div>
             <div class="box-price-slider__form__item" data-unit="{{ form.vars.min.unit }}">
-                <div class="form-line-block is-focused">
-                    {{ form_widget(form.min) }} 
+                <div class="form-line">
+                    {{ form_widget(form.min, { attr: { class: 'input--show-placeholder'}}) }} 
                     <span class="box-price-slider__form__item__currency">{{ form.vars.min.unit }}</span>
                     {% if form.vars.min.unit is defined %}
-                        <label>{{'od'|trans}}</label>
+                        <label class="input-label input-label--fixed">{{'od'|trans}}</label>
                     {% endif %}
                 </div>
             </div>
             <div class="box-price-slider__form__item">
-                <div class="form-line-block is-focused">
-                    {{ form_widget(form.max) }} 
+                <div class="form-line">
+                    {{ form_widget(form.max, { attr: { class: 'input--show-placeholder'}}) }} 
                     <span class="box-price-slider__form__item__currency">{{ form.vars.max.unit }}</span>
                     {% if form.vars.max.unit is defined %}
-                        <label>{{ 'do'|trans }}</label>
+                        <label class="input-label input-label--fixed">{{ 'do'|trans }}</label>
                     {% endif %}
                 </div>
             </div>

@@ -5,7 +5,7 @@
         {% set promoDescUrl = '/akcia' %}
     {% endif %}
     {% if validEnteredPromoCode is null %}
-        <div class="box-promo-code__wrap form-line-block js-form-field">
+        <div class="box-promo-code__wrap form-line">
             <label>{{ 'Slevový kód'|trans }}</label>
             <input type="text" value="" id="js-promo-code-input" class="input box-promo-code__input" data-apply-code-url="{{ url('front_promo_code_apply') }}"/>
             <button type="button" id="js-promo-code-submit-button" class="btn box-promo-code__btn">{{ 'Apply'|trans }}</button>

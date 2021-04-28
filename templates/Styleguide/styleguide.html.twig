@@ -11,7 +11,7 @@
     <main class="container">
         <header class="styleguide-header">
             <div class="styleguide-header__welcome left"> Styleguide</div>
-            <nav class="styleguide-header__breakpoints right">
+            <nav class="styleguide-header__breakpoints float-right">
                 <ul class="styleguide-list--unstyled styleguide-list--float">
                     <li class="styleguide-header__breakpoints__item">
                         <a id="small" data-size="420px" data-size-label="small"
@@ -388,184 +388,102 @@
 
                         <form class="snippet">
                             <fieldset>
-                                <dl class="form-line">
-                                    <dt>
-                                        <label for="registration_form_firstName" class="required">
-                                            First name:
-                                            <span class="form-input-required">*</span>
-                                        </label>
-                                    </dt>
-                                    <dd>
-                                        <input type="text" id="registration_form_firstName"
-                                               name="registration_form[firstName]" required="required" class="input">
-                                        <span class="js-validation-errors-list js-validation-error-list-registration_form_firstName form-error form-error--line display-none">
-                                            <span class="form-error__icon"><i class="svg svg-warning"></i></span>
-                                            <ul class="form-error__list"></ul>
-                                        </span>
-                                    </dd>
-                                </dl>
-                                <dl class="form-line">
-                                    <dt></dt>
-                                    <dd>
-                                        <div class="form-choice">
-                                            <div class="form-choice__input">
-                                                <input type="checkbox" id="order_personal_info_form_companyCustomer"
-                                                       name="order_personal_info_form[companyCustomer]"
-                                                       class="js-checkbox-toggle"
-                                                       data-checkbox-toggle-container-id="js-company-fields" value="1">
-                                            </div>
-                                            <div class="form-choice__label">
-                                                <label for="order_personal_info_form_companyCustomer">
-                                                    I buy on company behalf
+                                <h2 class="in-title">Section title</h2>
+                                
+                                <div class="form-columns">
+                                    <div class="form-columns__item">
+                                        <div class="form-line">
+                                            <div class="form-line__input ">
+                                                <input type="email" id="registration_form_email" name="registration_form[email]" required="required" placeholder="Váš e-mail" class="input">
+                                                <label for="registration_form_email" class="input-label required">
+                                                    Váš e-mail
+                                                    <span class="form-input-required">*</span>
                                                 </label>
-                                                <span class="js-validation-errors-list js-validation-error-list-order_personal_info_form_companyCustomer form-error form-error--choice display-none"
-                                                      style="display: none;"><span class="form-error__icon"><i
-                                                                class="svg svg-warning"></i></span>
-                                                    <ul class="form-error__list"></ul>
-                                                </span>
-
                                             </div>
+                                            <div class="form-line__error"></div>
                                         </div>
-                                    </dd>
-                                </dl>
-
-                                <div id="js-company-fields" style="display: none;">
-                                    <dl class="form-line">
-                                        <dt>
-                                            <label for="order_personal_info_form_companyName" class="required">
-                                                Company name: <span class="form-input-required">*</span>
-                                            </label>
-                                        </dt>
-                                        <dd>
-                                            <input type="text" id="order_personal_info_form_companyName"
-                                                   name="order_personal_info_form[companyName]" required="required"
-                                                   class="input">
-
-                                            <span class="js-validation-errors-list js-validation-error-list-order_personal_info_form_companyName form-error form-error--line display-none"><span
-                                                        class="form-error__icon"><i class="svg svg-warning"></i></span>
-                                                <ul class="form-error__list"></ul>
-                                            </span>
-                                        </dd>
-                                    </dl>
-
-                                    <dl class="form-line">
-                                        <dt>
-                                            <label for="order_personal_info_form_companyNumber" class="required">
-                                                Company number: <span class="form-input-required">*</span>
-                                            </label>
-                                        </dt>
-                                        <dd>
-                                            <input type="text" id="order_personal_info_form_companyNumber"
-                                                   name="order_personal_info_form[companyNumber]" required="required"
-                                                   class="input">
-
-                                            <span class="js-validation-errors-list js-validation-error-list-order_personal_info_form_companyNumber form-error form-error--line display-none"><span
-                                                        class="form-error__icon"><i class="svg svg-warning"></i></span>
-                                                <ul class="form-error__list"></ul>
-                                            </span>
-                                        </dd>
-                                    </dl>
-
-                                    <dl class="form-line">
-                                        <dt>
-                                            <label for="order_personal_info_form_companyTaxNumber">
-                                                Tax number:
-                                            </label>
-                                        </dt>
-                                        <dd>
-                                            <input type="text" id="order_personal_info_form_companyTaxNumber"
-                                                   name="order_personal_info_form[companyTaxNumber]" class="input">
-
-                                            <span class="js-validation-errors-list js-validation-error-list-order_personal_info_form_companyTaxNumber form-error form-error--line display-none"><span
-                                                        class="form-error__icon"><i class="svg svg-warning"></i></span>
-                                                <ul class="form-error__list"></ul>
-                                            </span>
-                                        </dd>
-                                    </dl>
+                                    </div>
+                                    <div class="form-columns__item">
+                                        <div class="form-line">
+                                            <div class="form-line__input ">
+                                                <input type="email" id="registration_form_name" name="registration_form[email]" required="required" placeholder="Váše jméno" class="input">
+                                                <label for="registration_form_name" class="input-label required">
+                                                    Jméno
+                                                    <span class="form-input-required">*</span>
+                                                </label>
+                                            </div>
+                                            <div class="form-line__error"></div>
+                                        </div>
+                                    </div>
                                 </div>
 
-                                <dl class="form-line">
-                                    <dt>
-                                        <label for="registration_form_password_first" class="required">
-                                            Password: <span class="form-input-required">*</span>
+                                <div class="form-line">
+                                    <div class="form-line__input">
+                                        <textarea id="order_personal_info_form_note" name="order_personal_info_form[note]" placeholder="Napište nám" class="input input--textarea" rows="8" spellcheck="false"></textarea>
+                                        <label for="order_personal_info_form_note" class="input-label required">
+                                            Poznámka
+                                            <span class="form-input-required">*</span>
                                         </label>
-                                        <i class="svg svg-info in-icon in-icon--info js-tooltip" data-toggle="tooltip"
-                                           data-placement="right" title=""
-                                           data-original-title="Password must be at least six characters and can't be the same as entered email or its part before at sign."></i>
-                                    </dt>
-                                    <dd>
-                                        <input type="password" id="registration_form_password_first"
-                                               name="registration_form[password][first]" required="required"
-                                               autocomplete="new-password" class="input">
-
-                                        <span class="js-validation-errors-list js-validation-error-list-registration_form_password_first form-error form-error--line display-none"><span
-                                                    class="form-error__icon"><i class="svg svg-warning"></i></span>
-                                            <ul class="form-error__list"></ul>
-                                        </span>
-                                    </dd>
-                                </dl>
-
-                                <dl class="form-line">
-                                    <dt></dt>
-                                    <dd>
-                                        <div class="form-choice">
-                                            <div class="form-choice__input">
-                                                <input type="checkbox" id="registration_form_privacyPolicy"
-                                                       name="registration_form[privacyPolicy]" required="required"
-                                                       value="1">
-                                            </div>
-                                            <div class="form-choice__label">
-                                                <label for="registration_form_privacyPolicy">
-                                                    I agree with <a href="http://127.0.0.1:8000/privacy-policy/"
-                                                                    target="_blank">privacy policy</a>.
-                                                </label>
-                                                <span class="js-validation-errors-list js-validation-error-list-registration_form_privacyPolicy form-error form-error--choice display-none">
-                                                    <span class="form-error__icon">
-                                                        <i class="svg svg-warning"></i>
-                                                    </span>
-                                                    <ul class="form-error__list"></ul>
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </dd>
-                                </dl>
-
-                                <dl class="form-line">
-                                    <dt></dt>
-                                    <dd>
-                                        <button type="submit" name="submit_button" class="btn">Submit form</button>
-                                    </dd>
-                                </dl>
-
+                                    </div>
+                                    <div class="form-line__error"></div>
+                                </div>
                             </fieldset>
                         </form>
 
                         <h3 class="styleguide-module__title--small">Error field</h3>
                         <fieldset>
-                            <dl class="form-line">
-                                <dt>
-                                    <label for="order_personal_info_form_firstName" class="required">
-                                        First name: <span class="form-input-required">*</span>
-                                    </label>
-                                    <i class="svg svg-info in-icon in-icon--info js-tooltip" data-toggle="tooltip"
-                                       data-placement="right" title=""
-                                       data-original-title="Password must be at least six characters and can't be the same as entered email or its part before at sign."></i>
-                                </dt>
-                                <dd>
-                                    <input id="order_personal_info_form_firstName"
-                                           name="order_personal_info_form[firstName]" required="required"
-                                           class="input form-input-error" type="text">
+                            <h2 class="in-title">Form error basic</h2>
+                            <div class="form-line">
+                                <div class="form-line__input ">
+                                    <input type="email" id="registration_form_email" name="registration_form[email]" required="required" data-request-url="http://127.0.0.1:8000/registration/exists-email" placeholder="Váš e-mail" class="input form-input-error">
 
-                                    <span class="js-validation-errors-list js-validation-error-list-order_personal_info_form_firstName form-error form-error--line display-none"
-                                          style="display: block;">
-                                        <span class="form-error__icon"><i class="svg svg-warning"></i></span>
-                                        <ul class="form-error__list">
-                                            <li class="js-validation-errors-message js-validation-error-list-order_personal_info_form_firstName">This value is not a valid Name</li>
-                                        </ul>
+                                    <label for="registration_form_email" class="input-label required">
+                                        Váš e-mail
+                                        <span class="form-input-required">*</span>
+                                    </label>
+                                </div>
+                                <div class="form-line__error">
+                                    <div class="js-validation-errors-list js-validation-error-list-registration_form_email form-error form-error--line display-none" style="display: block;"><span class="form-error__icon"><i class="svg svg-error"></i></span><ul class="form-error__list"><li class="js-validation-errors-message js-error-source-id-form-error-registration-form-email">Vyplňte prosím platný e-mail</li></ul></div>
+                                </div>
+                            </div>
+
+                            <h2 class="in-title">Form error line</h2>
+                            <div class="form-line">
+                                <div class="form-error form-error--line">
+                                    <span class="form-error__icon">
+                                        <i class="svg svg-error"></i>
                                     </span>
-                                </dd>
-                            </dl>
+                                    <ul class="form-error__list">
+                                        <li>Error message</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <h2 class="in-title">Form error inline</h2>
+                            <div class="form-line">
+                                <div class="form-error form-error--inline">
+                                    <span class="form-error__icon">
+                                        <i class="svg svg-error"></i>
+                                    </span>
+                                    <ul class="form-error__list">
+                                        <li>Error message</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <h2 class="in-title">Form error choice</h2>
+                            <div class="form-line">
+                                <div class="form-error form-error--choice">
+                                    <span class="form-error__icon">
+                                        <i class="svg svg-error"></i>
+                                    </span>
+                                    <ul class="form-error__list">
+                                        <li>Error message</li>
+                                    </ul>
+                                </div>
+                            </div>
                         </fieldset>
+
                         <fieldset class="form-fieldset">
                             <h3 class="styleguide-module__title--small">Select classic</h3>
                             <select id="select_1" name="select_1" class="input">
@@ -695,15 +613,15 @@
                             </div>
                             <div class="box-price-slider__form">
                                 <div class="box-price-slider__form__item">
-                                    <div class="form-line-block is-focused">
-                                        <input type="text" id="product_filter_form_minimalPrice" name="product_filter_form[minimalPrice]" class="js-product-filter-call-change-after-reset input" placeholder="118,00&nbsp;Kč">
-                                        <label>od</label>
+                                    <div class="form-line">
+                                        <input type="text" id="product_filter_form_minimalPrice" name="product_filter_form[minimalPrice]" class="input--show-placeholder js-product-filter-call-change-after-reset input" placeholder="118,00&nbsp;Kč">
+                                        <label class="input-label input-label--fixed">od</label>
                                     </div>
                                 </div>
                                 <div class="box-price-slider__form__item">
-                                    <div class="form-line-block is-focused">
-                                        <input type="text" id="product_filter_form_maximalPrice" name="product_filter_form[maximalPrice]" class="js-product-filter-call-change-after-reset input" placeholder="169&nbsp;990,00&nbsp;Kč">
-                                        <label>do</label>
+                                    <div class="form-line">
+                                        <input type="text" id="product_filter_form_maximalPrice" name="product_filter_form[maximalPrice]" class="input--show-placeholder js-product-filter-call-change-after-reset input" placeholder="169&nbsp;990,00&nbsp;Kč">
+                                        <label class="input-label input-label--fixed">do</label>
                                     </div>
                                 </div>
                             </div>
@@ -868,16 +786,16 @@
                                         <div class="box-login">
                                             <div class="box-login__col box-login__col--left">
                                                 <div class="box-login__item">
-                                                    <div class="form-line-block js-form-field">
-                                                    <input type="text" id="front_login_form_email" name="front_login_form[email]" required="required" class="input">
-                                                    <label for="front_login_form_email" class="required">
-                                                        E-mail
-                                                        <span class="form-input-required">*</span>
-                                                    </label>
+                                                    <div class="form-line">
+                                                        <input type="text" id="front_login_form_email" name="front_login_form[email]" required="required" class="input">
+                                                        <label for="front_login_form_email" class="required">
+                                                            E-mail
+                                                            <span class="form-input-required">*</span>
+                                                        </label>
+                                                    </div>
                                                 </div>
-                                            </div>
                                                 <div class="box-login__item">
-                                                    <div class="form-line-block js-form-field">
+                                                    <div class="form-line">
                                                         <input type="password" id="front_login_form_password" name="front_login_form[password]" required="required" class="input">
                                                         <label for="front_login_form_password" class="required">
                                                             Heslo

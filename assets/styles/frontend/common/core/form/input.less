@@ -1,41 +1,77 @@
-@input-height: 48px;
+@input-height: 54px;
 @input-textarea-height: @input-height * 3;
-@input-width: 210px;
+@input-padding-vertical: 20px;
 @input-padding-horizontal: 10px;
 
-@input-error-border-color: @color-red;
-@input-background: #f0f3f4;
-@input-error-background: #fde7e7;
-@input-border-color: @input-background;
-@input-disabled-background: #eff1f2;
-@input-border-radius: 4px;
-
-@input-label-color: #555764;
+@input-border-width: 2px;
+@input-border-color: @color-border-secondary;
+@input-error-border-color: @color-alert;
+@input-background: @color-f;
+@input-error-background: @color-f;
+@input-border-radius: @radius;
+@input-label-font-size-small: 11px;
+@input-label-active-position-top: 9px;
 
 .input {
-    width: @input-width;
-    max-width: 100%;
+    width: 100%;
     height: @input-height;
     line-height: normal;
-    padding: 0 @input-padding-horizontal;
+    padding: @input-padding-vertical @input-padding-horizontal 0 @input-padding-horizontal;
 
-    border: 1px solid @input-border-color;
-    color: @color-primary;
+    border: @input-border-width solid @input-border-color;
+    color: @color-base;
     background-color: @input-background;
     border-radius: @input-border-radius;
     font-size: @font-size;
     // iOS ugly appearance fix
     -webkit-appearance: none !important;
 
+    &::placeholder {
+        color: transparent;
+    }
+
+    &:placeholder-shown { 
+        & ~ .input-label {
+            cursor: text;
+            top: 50%;
+            transform: translateY(-50%);
+
+            font-size: @font-size-small;
+        }
+        
+        & ~ .input-label--fixed {
+            top: @input-label-active-position-top;
+            transform: none;
+
+            font-size: @input-label-font-size-small;
+        }
+    }
+
     &--textarea {
+        padding: (@input-padding-vertical + 5) @input-padding-horizontal;
         height: @input-textarea-height;
-        line-height: 20px;
-        padding-top: 5px;
-        padding-bottom: 5px;
+
+        &:placeholder-shown ~ .input-label {
+            transform: translateY(0);
+            top: @input-padding-vertical;
+        }
+    }
+
+    &--show-placeholder {
+        &::placeholder {
+            color: @color-base;
+        }
     }
 
     &:focus {
         outline: 0;
+
+        ~ .input-label {
+            top: @input-label-active-position-top;
+            transform: none;
+
+            font-size: @input-label-font-size-small;
+        }
     }
 
     .form-input-error & ,
@@ -44,108 +80,21 @@
 
         box-shadow: none;
         background-color: @input-error-background;
-        border-color: @input-error-background;
-    }
-
-    .has-blur & {
-        border-color: transparent;
-        background-color: @input-background;
-        box-shadow: none;
-    }
-
-    &.form-input-error + label {
-        color: @color-alert;
+        border-color: @input-error-border-color;
     }
 
     .form-input-disabled &,
-    &.form-input-disabled {
-        background: @input-disabled-background;
-    }
-
-    &-drop {
-        position: relative;
-        width: 60px;
-        min-width: 60px;
-
-        &__btn {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 100%;
-            height: 100%;
-            margin-right: -2px;
-
-            background: @input-background;
-            border-top-right-radius: 0;
-            border-bottom-right-radius: 0;
-            border: 0;
-            border-right: 1px solid darken(@input-background, 4%);
-            outline: 0;
-            cursor: pointer;
-
-            &:focus + .input-drop__list {
-                opacity: 1;
-                transform: scale(1);
-            }
-        }
-
-        &__arrow {
-            position: relative;
-            left: 7px;
-            top: 1px;
-
-            font-size: 8px;
-        }
-
-        &__list {
-            position: absolute;
-            left: 50%;
-            width: 100%;
-            padding: 0;
-            margin: 0 0 0 -30px;
-            z-index: 10;
-
-            list-style: none;
-            opacity: 0;
-            transform: scale(0);
-            transition: all @transition;
-            transform-origin: center top;
-
-            &__item {
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                padding: 12px;
-                margin: 0;
-
-                background: @input-background;
-                border-bottom-left-radius: @radius;
-                border-bottom-right-radius: @radius;
-                box-shadow: 0 5px 5px 0 rgba(@color-0, .1);
-                cursor: pointer;
-            }
-        }
-    }
-
+    &.form-input-disabled,
     &[readonly] {
-        background-color: rgba(@input-disabled-background, .35);
+        opacity: 0.5;
         pointer-events: none;
-        border-color: transparent;
-    }
-}
+        cursor: no-drop;
 
-.is-focused-error {
-    .form-input-required,
-    .input + label {
-        color: @color-alert;
-    }
-}
-
-.is-focused {
-    .form-input-error {
-        box-shadow: none;
-        background-color: @input-error-background;
-        border-color: @input-error-background;
+        ~ .input-label {
+            opacity: 0.5;
+            pointer-events: none;
+            cursor: no-drop;
+        }
     }
 }
 
@@ -162,9 +111,22 @@
     }
 }
 
-label {
-    font-size: @font-size;
-    color: @input-label-color;
+.input-label {
+    position: absolute;
+    top: @input-label-active-position-top;
+    left: @input-padding-horizontal + @input-border-width;
+    display: block;
+    transition: @transition;
+    z-index: @z-index-above + 1;
+    line-height: 14px;
+
+    color: #555764;
+    font-size: @input-label-font-size-small;
+
+    &--checkbox {
+        top: 0;
+        left: 0;
+    }
 }
 
 

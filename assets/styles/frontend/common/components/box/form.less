@@ -56,13 +56,6 @@
             }
         }
 
-        .form-line-block {
-            @media @query-md {
-                flex-grow: 1;
-                margin: 0 1rem 0 0;
-            }
-        }
-
         .btn {
             width: 100%;
             justify-content: center;
@@ -85,30 +78,14 @@
         }
     }
 
-    .btn {
-        position: absolute;
-        left: 50%;
-        bottom: -105px;
-        width: 170px;
-        margin-left: -85px;
-    }
+    &__section {
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+        margin-bottom: 20px;
 
-    &__sep {
-        margin: 2rem -0.6rem 0;
-
-        border: 0;
-        background-color: @color-border;
-
-        @media @query-md {
-            margin: 2rem -1.5rem 0;
-        }
-
-        @media @query-lg {
-            margin: 2rem -6rem 0;
-        }
-
-        @media @query-vl {
-            margin: 2rem -12.5rem 0;
+        &--without-gap {
+            margin-bottom: 0;
         }
     }
 
@@ -118,7 +95,7 @@
         margin-top: 30px;
     }
 
-    &-buttons {
+    &__buttons {
         display: flex;
         align-items: center;
         flex-direction: column;

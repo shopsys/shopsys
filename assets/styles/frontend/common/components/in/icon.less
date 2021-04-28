@@ -1,20 +1,36 @@
+@in-icon-info-size: 16px;
+
 .in-icon {
-    position: relative;
-    top: -2px;
-    display: inline-block;
-    vertical-align: middle;
-    margin-left: 3px;
+    display: inline-flex;
+    align-items: center;
 
     text-decoration: none;
 
     &--info {
+        height: @in-icon-info-size;
+
         color: @color-add-light;
-        font-size: 16px;
-        height: 16px;
+        font-size: @in-icon-info-size;
         cursor: help;
+    }
+
+    &--link {
+        &:hover {
+            text-decoration: none;
+
+            .in-icon__label {
+                text-decoration: underline;
+            }
+        }
     }
 
     &--detail {
         color: @color-inactive;
+    }
+
+    &__icon {
+        margin-right: 5px;
+
+        color: @color-0;
     }
 }

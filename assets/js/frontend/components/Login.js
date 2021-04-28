@@ -3,7 +3,6 @@ import Register from 'framework/common/utils/Register';
 import { createLoaderOverlay, showLoaderOverlay } from 'framework/common/utils/loaderOverlay';
 import Window from '../utils/Window';
 import Translator from 'bazinga-translator';
-import FormField from '../components/FormField';
 
 export default class Login {
 
@@ -20,7 +19,6 @@ export default class Login {
                 });
 
                 $window.getWindow().on('submit', '.js-front-login-window', login.onSubmit);
-                FormField.init();
             }
         });
 
