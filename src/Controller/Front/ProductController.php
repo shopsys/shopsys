@@ -19,8 +19,7 @@ use App\Model\Gtm\GtmContainer;
 use App\Model\Gtm\GtmFacade;
 use App\Model\Gtm\GtmJsPushFacade;
 use App\Model\Product\Brand\Brand;
-use App\Model\Product\Filter\CachedProductFilterConfig;
-use App\Model\Product\Filter\ProductFilterCacheFacade;
+use App\Model\Product\Filter\Elasticsearch\ProductFilterConfigFactory;
 use App\Model\Product\Filter\ProductFilterData;
 use App\Model\Product\Filter\ProductFilterFacade;
 use App\Model\Product\Listed\ListedProductViewElasticFacade;
@@ -30,7 +29,7 @@ use Shopsys\FrameworkBundle\Component\String\TransformString;
 use Shopsys\FrameworkBundle\Model\Module\ModuleFacade;
 use Shopsys\FrameworkBundle\Model\Module\ModuleList;
 use Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade;
-use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfigFactory;
+use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig;
 use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingConfig;
 use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingModeForBrandFacade;
 use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingModeForListFacade;
@@ -55,7 +54,7 @@ class ProductController extends FrontBaseController
     public const SALE_PRODUCTS_PER_PAGE = 8;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfigFactory
+     * @var \App\Model\Product\Filter\Elasticsearch\ProductFilterConfigFactory
      */
     private $productFilterConfigFactory;
 
@@ -155,11 +154,6 @@ class ProductController extends FrontBaseController
     private $gtmJsPushFacade;
 
     /**
-     * @var \App\Model\Product\Filter\ProductFilterCacheFacade
-     */
-    private ProductFilterCacheFacade $productFilterCacheFacade;
-
-    /**
      * @var \App\Model\Gtm\GtmContainer
      */
     private $gtmContainer;
@@ -174,7 +168,7 @@ class ProductController extends FrontBaseController
      * @param \App\Model\Category\CategoryFacade $categoryFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \App\Model\Product\ProductOnCurrentDomainElasticFacade $productOnCurrentDomainFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfigFactory $productFilterConfigFactory
+     * @param \App\Model\Product\Filter\Elasticsearch\ProductFilterConfigFactory $productFilterConfigFactory
      * @param \App\Model\Product\Listing\ProductListOrderingModeForListFacade $productListOrderingModeForListFacade
      * @param \App\Model\Product\Listing\ProductListOrderingModeForBrandFacade $productListOrderingModeForBrandFacade
      * @param \App\Model\Product\Listing\ProductListOrderingModeForSearchFacade $productListOrderingModeForSearchFacade
@@ -190,7 +184,6 @@ class ProductController extends FrontBaseController
      * @param \App\Model\Product\Filter\ProductFilterFacade $productFilterFacade
      * @param \App\Model\Gtm\GtmFacade $gtmFacade
      * @param \App\Model\Gtm\GtmJsPushFacade $gtmJsPushFacade
-     * @param \App\Model\Product\Filter\ProductFilterCacheFacade $productFilterCacheFacade
      * @param \App\Model\Gtm\GtmContainer $gtmContainer
      * @param \Shopsys\ReadModelBundle\Product\Detail\ProductDetailViewFacadeInterface $productDetailViewFacade
      */
@@ -215,7 +208,6 @@ class ProductController extends FrontBaseController
         ProductFilterFacade $productFilterFacade,
         GtmFacade $gtmFacade,
         GtmJsPushFacade $gtmJsPushFacade,
-        ProductFilterCacheFacade $productFilterCacheFacade,
         GtmContainer $gtmContainer,
         ProductDetailViewFacadeInterface $productDetailViewFacade
     ) {
@@ -239,7 +231,6 @@ class ProductController extends FrontBaseController
         $this->productFilterFacade = $productFilterFacade;
         $this->gtmFacade = $gtmFacade;
         $this->gtmJsPushFacade = $gtmJsPushFacade;
-        $this->productFilterCacheFacade = $productFilterCacheFacade;
         $this->gtmContainer = $gtmContainer;
         $this->productDetailViewFacade = $productDetailViewFacade;
     }
@@ -341,7 +332,7 @@ class ProductController extends FrontBaseController
         );
 
         $productFilterData = new ProductFilterData();
-        $productFilterConfig = $this->createProductFilterConfigForCategory($category, $readyCategorySeoMix);
+        $productFilterConfig = $this->createProductFilterConfigForCategory($category);
         $filterForm = $this->createForm(ProductFilterFormType::class, $productFilterData, [
             'product_filter_config' => $productFilterConfig,
         ]);
@@ -667,34 +658,11 @@ class ProductController extends FrontBaseController
 
     /**
      * @param \App\Model\Category\Category $category
-     * @param \App\Model\CategorySeo\ReadyCategorySeoMix|null $readyCategorySeoMix
-     * @return \App\Model\Product\Filter\CachedProductFilterConfig
+     * @return \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig
      */
-    private function createProductFilterConfigForCategory(Category $category, ?ReadyCategorySeoMix $readyCategorySeoMix): CachedProductFilterConfig
+    private function createProductFilterConfigForCategory(Category $category): ProductFilterConfig
     {
-        $cachedProductFilterConfig = $this->productFilterCacheFacade->findProductFilterConfigInCache(
-            $category->getId(),
-            $this->domain->getId(),
-            $readyCategorySeoMix
-        );
-
-        if ($cachedProductFilterConfig === null) {
-            $productFilterConfig = $this->productFilterConfigFactory->createForCategory(
-                $this->domain->getId(),
-                $this->domain->getLocale(),
-                $category
-            );
-            $cachedProductFilterConfig = new CachedProductFilterConfig($productFilterConfig);
-
-            $this->productFilterCacheFacade->setProductFilterConfigIntoCache(
-                $cachedProductFilterConfig,
-                $category->getId(),
-                $this->domain->getId(),
-                $readyCategorySeoMix
-            );
-        }
-
-        return $cachedProductFilterConfig;
+        return $this->productFilterConfigFactory->createForCategory($this->domain->getLocale(), $category);
     }
 
     /**
@@ -703,11 +671,7 @@ class ProductController extends FrontBaseController
      */
     private function createProductFilterConfigForSearch($searchText)
     {
-        return $this->productFilterConfigFactory->createForSearch(
-            $this->domain->getId(),
-            $this->domain->getLocale(),
-            $searchText
-        );
+        return $this->productFilterConfigFactory->createForSearch($this->domain->getLocale(), $searchText);
     }
 
     /**

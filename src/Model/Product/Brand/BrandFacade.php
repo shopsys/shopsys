@@ -36,4 +36,13 @@ class BrandFacade extends BaseBrandFacade
             $limit
         );
     }
+
+    /**
+     * @param int[] $brandsIds
+     * @return \App\Model\Product\Brand\Brand[]
+     */
+    public function getBrandsByIds(array $brandsIds): array
+    {
+        return $this->brandRepository->getBrandsByIds($brandsIds);
+    }
 }

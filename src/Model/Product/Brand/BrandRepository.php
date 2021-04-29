@@ -52,4 +52,19 @@ class BrandRepository extends BaseBrandRepository
 
         return $queryBuilder;
     }
+
+    /**
+     * @param int[] $brandsIds
+     * @return \App\Model\Product\Brand\Brand[]
+     */
+    public function getBrandsByIds(array $brandsIds): array
+    {
+        $brandsQueryBuilder = $this->getBrandRepository()->createQueryBuilder('b')
+            ->select('b')
+            ->where('b.id IN (:brandIds)')
+            ->setParameter('brandIds', $brandsIds)
+            ->orderBy('b.name', 'asc');
+
+        return $brandsQueryBuilder->getQuery()->getResult();
+    }
 }

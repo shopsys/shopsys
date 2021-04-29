@@ -54,4 +54,14 @@ class FlagFacade extends BaseFlagFacade
         }
         return false;
     }
+
+    /**
+     * @param int[] $flagsIds
+     * @param string $locale
+     * @return \App\Model\Product\Flag\Flag[]
+     */
+    public function getVisibleFlagsByIds(array $flagsIds, string $locale): array
+    {
+        return $this->flagRepository->getVisibleFlagsByIds($flagsIds, $locale);
+    }
 }
