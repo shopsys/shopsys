@@ -365,7 +365,7 @@ msgid "Billing address"
 msgstr "Fakturačná adresa"
 
 msgid "Billing address - name, last name, company, company number, tax number and billing address"
-msgstr "Fakturačná adresa - meno, priezvisko, firma, IČO, DIČ, fakturačná adresa"
+msgstr "Fakturačná adresa - meno, priezvisko, firma, IČO, IČ DPH, fakturačná adresa"
 
 msgid "Bohužel došlo k chybě, zkuste to prosím znovu."
 msgstr "Bohužiaľ, došlo k chybe, skúste to, prosím, znova."
@@ -1892,7 +1892,7 @@ msgid "Tato rubrika neobsahuje žádné články."
 msgstr "Táto rubrika neobsahuje žiadne články."
 
 msgid "Tax number"
-msgstr "DIČ"
+msgstr "IČ DPH"
 
 msgid "Technical parameters"
 msgstr "Technické parametre"
