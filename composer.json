@@ -48,7 +48,7 @@
         "arvenil/ninja-mutex": "^0.4.1",
         "asm89/twig-cache-extension": "^1.4",
         "commerceguys/intl": "^1.0.0",
-        "composer/composer": "^1.6.0",
+        "composer/composer": "^1.10.22",
         "craue/formflow-bundle": "^3.0.3",
         "devops/kubernetes-deployment": "^1.5",
         "doctrine/annotations": "^1.6.0",
