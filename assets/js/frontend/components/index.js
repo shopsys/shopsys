@@ -25,6 +25,7 @@ import './safariDetection';
 import './SearchAutocomplete';
 import './SmoothScroll';
 import './ResetCustomerpassword';
+import './selectric';
 import './spinbox';
 import './popup';
 import './MobileMenu';

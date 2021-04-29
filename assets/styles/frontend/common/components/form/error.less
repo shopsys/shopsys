@@ -17,10 +17,7 @@
     }
 
     &--choice {
-        right: -20px;
-        position: absolute;
-        top: 50%;
-        margin-top: -10px;
+        position: relative;
     }
 
     &__icon {
@@ -37,6 +34,11 @@
             transform: translateY(-50%);
 
             color: @color-f;
+        }
+
+        .form-error--choice & {
+            top: 50%;
+            transform: translateY(-50%);
         }
     }
 

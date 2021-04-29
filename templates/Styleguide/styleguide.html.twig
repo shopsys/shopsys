@@ -443,19 +443,7 @@
                                     </label>
                                 </div>
                                 <div class="form-line__error">
-                                    <div class="js-validation-errors-list js-validation-error-list-registration_form_email form-error form-error--line display-none" style="display: block;"><span class="form-error__icon"><i class="svg svg-error"></i></span><ul class="form-error__list"><li class="js-validation-errors-message js-error-source-id-form-error-registration-form-email">Vyplňte prosím platný e-mail</li></ul></div>
-                                </div>
-                            </div>
-
-                            <h2 class="in-title">Form error line</h2>
-                            <div class="form-line">
-                                <div class="form-error form-error--line">
-                                    <span class="form-error__icon">
-                                        <i class="svg svg-error"></i>
-                                    </span>
-                                    <ul class="form-error__list">
-                                        <li>Error message</li>
-                                    </ul>
+                                    <div class="js-validation-errors-list js-validation-error-list-registration_form_email form-error display-none" style="display: block;"><span class="form-error__icon"><i class="svg svg-error"></i></span><ul class="form-error__list"><li class="js-validation-errors-message js-error-source-id-form-error-registration-form-email">Vyplňte prosím platný e-mail</li></ul></div>
                                 </div>
                             </div>
 
@@ -473,13 +461,18 @@
 
                             <h2 class="in-title">Form error choice</h2>
                             <div class="form-line">
-                                <div class="form-error form-error--choice">
-                                    <span class="form-error__icon">
-                                        <i class="svg svg-error"></i>
-                                    </span>
-                                    <ul class="form-error__list">
-                                        <li>Error message</li>
-                                    </ul>
+                                <div class="form-choice">
+                                    <input type="checkbox" id="registration_form_privacyPolicy" name="registration_form[privacyPolicy]" required="required" class="css-checkbox form-input-error" value="1">
+                                    <label for="registration_form_privacyPolicy" class="css-checkbox__image">
+                                        Souhlasím se <a href="http://127.0.0.1:8000/zasady-ochrany-osobnich-udaju" target="_blank">zpracováním osobních údajů</a>.
+                                        <span class="form-input-required">*</span>
+                                    </label>
+                                    <div class="js-validation-errors-list js-validation-error-list-registration_form_privacyPolicy form-error form-error--choice display-none" style="display: block;">
+                                        <span class="form-error__icon">
+                                            <i class="svg svg-error"></i>
+                                        </span>
+                                        <ul class="form-error__list" style="max-width: 340px;"><li class="js-validation-errors-message js-error-source-id-form-error-registration-form-privacyPolicy">Musíte souhlasit se zpracováním osobních údajů</li></ul>
+                                    </div>
                                 </div>
                             </div>
                         </fieldset>
@@ -491,14 +484,44 @@
                                 <option value="2">Czech republic</option>
                             </select>
                         </fieldset>
-                        <div class="styleguide-module__editor">
-                            <textarea class="codemirror-html" id="html-radiobuttons">
-<select id="select_1" name="select_1" class="input">
-    <option value="1">Slovenská republika</option>
-    <option value="2">Czech republic</option>
-</select>
-                            </textarea>
-                        </div>
+
+                        <fieldset class="form-fieldset">
+                            <h3 class="styleguide-module__title--small">Selectric</h3>
+
+                            <div class="form-line">
+                                <div class="form-line__input ">
+                                    <div class="selectric-wrapper selectric-input selectric-below">
+                                        <div class="selectric-hide-select">
+                                            <select id="order_personal_info_form_deliveryCountry" name="order_personal_info_form[deliveryCountry]" placeholder="Stát" class="input" tabindex="-1">
+                                                <option value="2" selected="selected">Slovensko</option>
+                                                <option value="1">Česká republika</option>
+                                            </select>
+                                        </div>
+                                        <div class="selectric">
+                                            <span class="label">Slovensko</span>
+                                            <b class="button">
+                                            <i class="svg svg-arrow"></i>
+                                            </b>
+                                        </div>
+                                        <div class="selectric-items" tabindex="-1" style="width: 502px;">
+                                            <div class="selectric-scroll">
+                                                <ul>
+                                                    <li data-index="0" class="selected highlighted">Slovensko</li>
+                                                    <li data-index="1" class="last">Česká republika</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <input class="selectric-input" tabindex="0">
+                                    </div>
+                                    <label for="order_personal_info_form_deliveryCountry" class="input-label required">
+                                        Stát
+                                        <span class="form-input-required">*</span>
+                                    </label>
+                                </div>
+                                <div class="form-line__error "></div>
+                            </div>
+                        </fieldset>
+
                         <h3 class="styleguide-module__title--small">Radio</h3>
                         <fieldset class="form-fieldset">
                             <div class="form-choice">

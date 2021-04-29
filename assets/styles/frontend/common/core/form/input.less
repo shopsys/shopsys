@@ -3,6 +3,9 @@
 @input-padding-vertical: 20px;
 @input-padding-horizontal: 10px;
 
+@select-arrow-width: @input-height;
+@select-inner-padding: @input-padding-horizontal;
+
 @input-border-width: 2px;
 @input-border-color: @color-border-secondary;
 @input-error-border-color: @color-alert;
@@ -168,8 +171,16 @@ html input:-internal-autofill-selected {
 }
 
 select {
-    background-image: url('@{path-design}/arrow.svg');
-    background-size: 10px 10px;
-    background-position: 95% 54%;
-    background-repeat: no-repeat;
+    width: 100%;
+    padding: 0 @select-arrow-width 0 @select-inner-padding;
+    line-height: @input-height - 2 * @input-border-width;
+    height: @input-height;
+    
+    border-radius: @radius-small;
+    border: 1px solid @color-border;
+    font-size: 13px;
+    background-color: @input-background;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
 }
