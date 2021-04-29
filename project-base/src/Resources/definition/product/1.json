@@ -274,6 +274,9 @@
       },
       "seo_meta_description": {
         "type": "text"
+      },
+      "accessories": {
+        "type": "integer"
       }
     }
   }
