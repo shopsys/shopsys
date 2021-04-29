@@ -43,6 +43,15 @@ class Version20210429125507 extends AbstractMigration
         $this->sql('INSERT INTO transport_types (code) VALUES (\'' . TransportTypeEnum::TYPE_COMMON . '\')');
         $this->sql('INSERT INTO transport_type_translations (translatable_id, name, locale) VALUES (1, \'Standardní\', \'cs\')');
         $this->sql('INSERT INTO transport_type_translations (translatable_id, name, locale) VALUES (1, \'Štandardná\', \'sk\')');
+
+        $this->sql('ALTER TABLE transports ADD transport_type_id INT NOT NULL DEFAULT 1');
+        $this->sql('
+            ALTER TABLE
+                transports
+            ADD
+                CONSTRAINT FK_C7BE69E5519B4C62 FOREIGN KEY (transport_type_id) REFERENCES transport_types (id) NOT DEFERRABLE INITIALLY IMMEDIATE');
+        $this->sql('CREATE INDEX IDX_C7BE69E5519B4C62 ON transports (transport_type_id)');
+        $this->sql('ALTER TABLE transports ALTER transport_type_id DROP DEFAULT');
     }
 
     /**

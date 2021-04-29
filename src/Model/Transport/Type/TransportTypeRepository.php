@@ -50,6 +50,35 @@ class TransportTypeRepository
     }
 
     /**
+     * @param string $code
+     * @return \App\Model\Transport\Type\TransportType
+     */
+    public function getByCode(string $code): TransportType
+    {
+        $transportType = $this->getTransportTypeRepository()->findOneBy(['code' => $code]);
+
+        if ($transportType === null) {
+            $message = sprintf('Transport type with code "%s" not found.', $code);
+            throw new TransportTypeNotFoundException($message);
+        }
+
+        return $transportType;
+    }
+
+    /**
+     * @return \App\Model\Transport\Type\TransportType[]
+     */
+    public function getAll(): array
+    {
+        return $this->em->createQueryBuilder()
+            ->select('tt, ttt')
+            ->from(TransportType::class, 'tt')
+            ->join('tt.translations', 'ttt')
+            ->getQuery()
+            ->execute();
+    }
+
+    /**
      * @param string $locale
      * @return \Doctrine\ORM\QueryBuilder
      */

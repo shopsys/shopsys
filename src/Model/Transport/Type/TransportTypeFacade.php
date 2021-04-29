@@ -50,6 +50,23 @@ class TransportTypeFacade
     }
 
     /**
+     * @param string $code
+     * @return \App\Model\Transport\Type\TransportType
+     */
+    public function getByCode(string $code): TransportType
+    {
+        return $this->transportTypeRepository->getByCode($code);
+    }
+
+    /**
+     * @return \App\Model\Transport\Type\TransportType[]
+     */
+    public function getAll(): array
+    {
+        return $this->transportTypeRepository->getAll();
+    }
+
+    /**
      * @param \App\Model\Transport\Type\TransportType $transportType
      * @param \App\Model\Transport\Type\TransportTypeData $transportTypeData
      * @return \App\Model\Transport\Type\TransportType
