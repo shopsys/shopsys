@@ -16,14 +16,18 @@
             <div class="box-stores box-stores--detail{{ imageExists(store, 'main') ? ' box-stores--detail-has-img' }}">
                 <div class="box-stores__info box-stores__info--detail">
                     <h1 class="heading heading--primary heading--primary-subpage box-stores__heading">{{ store.name }}</h1>
-                    {# @todo: add after stores implementation
                     <div class="box-stores__info__grid">
+                        <div class="box-stores__info__grid__item">
+                            <strong class="box-stores__store__subtitle box-stores__store__subtitle--detail">
+                                {{ 'Store description'|trans }}
+                            </strong>
+                            {{ store.description|raw }}
+                        </div>
                         <div class="box-stores__info__grid__item">
                             <strong class="box-stores__store__subtitle box-stores__store__subtitle--detail">
                                 {{ 'Adresa obchodu'|trans }}
                             </strong>
-                            {{ store.street }} <br>
-                            {{ store.city }} <br>
+                            {{ store.address }}
                         </div>
                         <div class="box-stores__info__grid__item">
                             <strong class="box-stores__store__subtitle box-stores__store__subtitle--detail">
@@ -37,31 +41,22 @@
                             <strong class="box-stores__store__subtitle box-stores__store__subtitle--detail">
                                 {{ 'Kontakt na obchodní dům'|trans }}
                             </strong>
-                            {{ store.contactText1 }}<br>
-                            {{ store.contactText2 }}
+                            {{ store.contactInfo }}
                         </div>
                         <div class="box-stores__info__grid__item">
                             <strong class="box-stores__store__subtitle box-stores__store__subtitle--detail">
-                                {{ 'Mimořádná otevírací doba'|trans }}
+                                {{ 'Special message'|trans }}
                             </strong>
-                            {{ store.extraordinaryOpeningHours }}
-                        </div>
-                        <div class="box-stores__info__grid__item box-stores__info__grid__item--full">
-                            <strong class="box-stores__store__subtitle box-stores__store__subtitle--detail">
-                                {{ 'Další popisky'|trans }}
-                            </strong>
-                            {{ store.contactInfo|raw }}
+                            {{ store.specialMessage }}
                         </div>
                     </div>
-
                     <div class="box-stores__map box-stores__map--detail">
                         <div id="js-google-map-box" class="box-stores__map__google box-stores__map__google--detail"></div>
-                        {% if imageExists(store, 'main') %}
-                            {{ image(store, { itemprop: 'image', lazy:true, type: 'main' }) }}
+                        {% if imageExists(store) %}
+                            {{ image(store, { itemprop: 'image', lazy:true}) }}
                         {% endif %}
                     </div>
 
-                    #}
                     <div class="box-stores-list">
                         <div class="box-stores-list__item box-stores-list__item--detail">
                             <a class="box-stores-list__item__link" href="{{ url('front_contacts') }}">
@@ -105,11 +100,9 @@
     <script type="text/javascript">
         var markersData = [];
 
-        {# @todo: add after stores implementation
-        {% if store.locationLng is not null and store.locationLat is not null  %}
-            markersData.push({locations: {lat: {{ store.locationLat }}, lng: {{ store.locationLng }} }, data: {id: '{{ store.id }}' }});
+        {% if store.locationLatitude is not null and store.locationLongitude is not null  %}
+            markersData.push({locations: {lat: {{ store.locationLatitude }}, lng: {{ store.locationLongitude }} }, data: {id: '{{ store.id }}' }});
         {% endif %}
-        #}
     </script>
     <script src="https://maps.googleapis.com/maps/api/js?key={{ googleMapApiKey }}"></script>
 {% endblock %}

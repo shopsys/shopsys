@@ -7,6 +7,7 @@ namespace App\Model\Store;
 use App\Model\Store\Exception\StoreNotFoundException;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
 
 class StoreRepository
@@ -89,5 +90,18 @@ class StoreRepository
 
         $store->setDefault();
         $this->entityManager->flush();
+    }
+
+    /**
+     * @param int $domainId
+     * @return \App\Model\Store\Store[]
+     */
+    public function getStoresEnabledOnDomain(int $domainId): array
+    {
+        return $this->getQueryBuilder()
+            ->join(StoreDomain::class, 'sd', Join::WITH, 's.id = sd.store AND sd.isEnabled = TRUE AND sd.domainId = :domainId')
+            ->setParameter('domainId', $domainId)
+            ->getQuery()
+            ->execute();
     }
 }

@@ -121,4 +121,19 @@ class StoreFacade
     {
         $this->storeRepository->changeDefaultStore($store);
     }
+
+    /**
+     * @param int $domainId
+     * @return \App\Model\Store\Store[]
+     */
+    public function getStoresEnabledOnDomainIndexedByStoreId(int $domainId): array
+    {
+        $stores = $this->storeRepository->getStoresEnabledOnDomain($domainId);
+        $storesById = [];
+        foreach ($stores as $store) {
+            $storesById[$store->getId()] = $store;
+        }
+
+        return $storesById;
+    }
 }
