@@ -235,6 +235,9 @@ msgstr "Telefon nesmí být kratší než {{ limit }} znaků"
 msgid "This email is already registered"
 msgstr "Tento e-mail je již registrován"
 
+msgid "Transport type name cannot be longer than {{ limit }} characters"
+msgstr "Název typu dopravy nesmí být delší než {{ limit }} znaků"
+
 msgid "Ulice musí obsahovat písmena"
 msgstr ""
 

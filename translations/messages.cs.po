@@ -583,6 +583,9 @@ msgstr ""
 msgid "EAN"
 msgstr "EAN"
 
+msgid "Edit transport type"
+msgstr "Upravit typ dopravy"
+
 msgid "Editace hodnoty parameteru typu barva"
 msgstr ""
 
@@ -630,6 +633,12 @@ msgstr ""
 
 msgid "Editing product - %name%"
 msgstr ""
+
+msgid "Editing transport type"
+msgstr "Editace typu dopravy"
+
+msgid "Editing transport type - %code%"
+msgstr "Editace typu dopravy - %code%"
 
 msgid "Email"
 msgstr "E-mail"
@@ -1173,6 +1182,9 @@ msgstr "Pro tuto značku nebyly nalezeny žádné produkty"
 
 msgid "No results matching filter"
 msgstr "Filtru neodpovídají žádné výsledky"
+
+msgid "No transport types found."
+msgstr "Nebyly nalezeny žádné typy doprav."
 
 msgid "Nominální"
 msgstr ""
@@ -2283,6 +2295,15 @@ msgstr "Proměnné pro instrukce pro sledování zásilky"
 
 msgid "Tracking number"
 msgstr "Číslo zásilky"
+
+msgid "Transport type"
+msgstr "Typ dopravy"
+
+msgid "Transport type <strong><a href=\"{{ url }}\">{{ code }}</a></strong> modified"
+msgstr "Byl upraven typ dopravy <strong><a href=\"{{ url }}\">{{ code }}</a></strong>"
+
+msgid "Transport types"
+msgstr "Typy doprav"
 
 msgid "Try using web search"
 msgstr "Zkuste použít vyhledávání na webu"

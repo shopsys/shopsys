@@ -937,6 +937,9 @@ msgstr "URL adresa e-shopu"
 msgid "EASYTOUCH"
 msgstr "EASYTOUCH"
 
+msgid "Edit transport type"
+msgstr ""
+
 msgid "Editace hodnoty parameteru typu barva"
 msgstr ""
 
@@ -983,6 +986,12 @@ msgid "Editace článku blogu - %name%"
 msgstr ""
 
 msgid "Editing product - %name%"
+msgstr ""
+
+msgid "Editing transport type"
+msgstr ""
+
+msgid "Editing transport type - %code%"
 msgstr ""
 
 msgid "Email"
@@ -1719,6 +1728,9 @@ msgstr "Pre túto značku neboli nájdené žiadne produkty"
 
 msgid "No results matching filter"
 msgstr "Filtru nezodpovedajú žiadne výsledky"
+
+msgid "No transport types found."
+msgstr ""
 
 msgid "Nobilia"
 msgstr "Nobilia"
@@ -3134,6 +3146,15 @@ msgid "Tracking instructions variables"
 msgstr ""
 
 msgid "Tracking number"
+msgstr ""
+
+msgid "Transport type"
+msgstr ""
+
+msgid "Transport type <strong><a href=\"{{ url }}\">{{ code }}</a></strong> modified"
+msgstr ""
+
+msgid "Transport types"
 msgstr ""
 
 msgid "Try using web search"
