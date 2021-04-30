@@ -23,15 +23,12 @@
 
 .selectric {
     position: relative;
+    z-index: @z-index-above;
 
     border: @selectric-border-width solid @color-border-secondary;
     border-radius: @radius;
     background: @selectric-bg-color;
     transition: @transition;
-
-    .selectric-open & {
-        border-radius: @radius @radius 0 0;
-    }
 
     .label {
         display: block;
@@ -155,9 +152,9 @@ input.selectric-input {
 .selectric-items {
     display: none;
     position: absolute;
-    top: 100%;
+    top: calc(~"100% - 9px");
     left: 0;
-    padding-top: 8px;
+    padding-top: 17px;
     overflow: hidden;
 
     background-color: @selectric-bg-color;

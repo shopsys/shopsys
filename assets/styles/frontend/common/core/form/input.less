@@ -8,7 +8,6 @@
 
 @input-border-width: 2px;
 @input-border-color: @color-border-secondary;
-@input-error-border-color: @color-alert;
 @input-background: @color-f;
 @input-error-background: @color-f;
 @input-border-radius: @radius;
@@ -82,8 +81,15 @@
         padding-right: 25px;
 
         box-shadow: none;
-        background-color: @input-error-background;
-        border-color: @input-error-border-color;
+        background-color: @color-f;
+        border-color: @color-alert;
+    }
+
+    .form-input-success &,
+    &.form-input-success {
+        border: 1px solid @color-green;
+        border-radius: @radius-medium;
+        box-shadow: 0 0 0 4px rgba(0,236,177,0.12);
     }
 
     .form-input-disabled &,
@@ -129,6 +135,25 @@
     &--checkbox {
         top: 0;
         left: 0;
+    }
+}
+
+.form-input-required {
+    color: @color-add-light;
+}
+
+.form-input-password {
+    display: flex;
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+
+    font-size: 24px;
+    color: @color-light;
+
+    &--active {
+        color: @color-0;
     }
 }
 

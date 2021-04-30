@@ -394,9 +394,9 @@
                                     <div class="form-columns__item">
                                         <div class="form-line">
                                             <div class="form-line__input ">
-                                                <input type="email" id="registration_form_email" name="registration_form[email]" required="required" placeholder="Váš e-mail" class="input">
-                                                <label for="registration_form_email" class="input-label required">
-                                                    Váš e-mail
+                                                <input type="name" id="registration_form_name" name="registration_form[name]" required="required" placeholder="Váše jméno" class="input">
+                                                <label for="registration_form_name" class="input-label required">
+                                                    Jméno
                                                     <span class="form-input-required">*</span>
                                                 </label>
                                             </div>
@@ -406,8 +406,8 @@
                                     <div class="form-columns__item">
                                         <div class="form-line">
                                             <div class="form-line__input ">
-                                                <input type="email" id="registration_form_name" name="registration_form[email]" required="required" placeholder="Váše jméno" class="input">
-                                                <label for="registration_form_name" class="input-label required">
+                                                <input type="name" id="registration_form_name2" name="registration_form[name]" required="required" placeholder="Váše jméno" class="input">
+                                                <label for="registration_form_name2" class="input-label required">
                                                     Jméno
                                                     <span class="form-input-required">*</span>
                                                 </label>
@@ -415,6 +415,32 @@
                                             <div class="form-line__error"></div>
                                         </div>
                                     </div>
+                                </div>
+
+                                <div class="form-line">
+                                    <div class="form-line__input">
+                                        <input type="password" id="registration_form_password" name="registration_form[name]" required="required" placeholder="Váše jméno" class="input">
+                                        <label for="registration_form_password" class="input-label required">
+                                            Heslo
+                                        </label>
+                                        <span class="form-input-password">
+                                            <i class="svg svg-eye"></i>
+                                        </span>
+                                    </div>
+                                    <div class="form-line__error"></div>
+                                </div>
+
+                                <div class="form-line">
+                                    <div class="form-line__input">
+                                        <input type="password" id="registration_form_password2" name="registration_form[name]" required="required" placeholder="Váše jméno" class="input">
+                                        <label for="registration_form_password2" class="input-label required">
+                                            Heslo znova
+                                        </label>
+                                        <span class="form-input-password form-input-password--active">
+                                            <i class="svg svg-eye"></i>
+                                        </span>
+                                    </div>
+                                    <div class="form-line__error"></div>
                                 </div>
 
                                 <div class="form-line">
@@ -429,6 +455,20 @@
                                 </div>
                             </fieldset>
                         </form>
+
+                        <h3 class="styleguide-module__title--small">Success field</h3>
+                        <fieldset>    
+                            <div class="form-line">
+                                <div class="form-line__input ">
+                                    <input type="name" id="registration_form_email" name="registration_form[email]" required="required" placeholder="Váš e-mail" class="form-input-success input">
+                                    <label for="registration_form_email" class="input-label required">
+                                        E-mail
+                                        <span class="form-input-required">*</span>
+                                    </label>
+                                </div>
+                                <div class="form-line__error"></div>
+                            </div>
+                        </fieldset>
 
                         <h3 class="styleguide-module__title--small">Error field</h3>
                         <fieldset>
