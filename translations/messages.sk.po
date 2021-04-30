@@ -16,6 +16,18 @@ msgstr "*akciová cena s 15 % DPH, bez elektrospotrebičov a príslušenstva"
 msgid "+ 420 225 510 000"
 msgstr "+421 253 488 100"
 
+msgid "-- Choose article position --"
+msgstr ""
+
+msgid "-- Vyber roli --"
+msgstr ""
+
+msgid "-- Vyberte kategorii výprodej --"
+msgstr ""
+
+msgid "-- Vyberte název přenosu --"
+msgstr ""
+
 msgid "18 307 <small>Kč*</small>"
 msgstr "689 €"
 
@@ -247,6 +259,12 @@ msgstr "3463 €"
 msgid "95 002 Kč"
 msgstr "3569 €"
 
+msgid "<button type=\"button\" class=\"btn-no-style link-style in-tab__password-box__link\" id=\"js-order-form-login-button\">Přihlaste se a všechny vaše údaje vyplníme za vás</button>"
+msgstr ""
+
+msgid "<h2 class=\"window-popup__heading\">Prosím zkontrolujte zadané údaje.</h2>"
+msgstr ""
+
 msgid "<p class=\"window-popup__in__desc\">Odkaz pro vyresetování hesla vám byl odeslán. Instrukce naleznete na své e-mailové adrese <strong>%email%</strong>. Váš Comerce Cloud.</p>"
 msgstr "<p class=\"window-popup__in__desc\">Odkaz na vyresetovanie hesla vám bol odeslaný. Inštrukcie nájdete na svojej e-mailovej adrese <strong>%email%</strong>. Váš Comerce Cloud.</p>"
 
@@ -271,6 +289,12 @@ msgstr "<strong class=\"box-cart-card__form__title__strong\">Vitajte späť v Sc
 msgid "<strong class=\"is-in-stock\">Ihned</strong> k odběru"
 msgstr "\n<strong class=\"is-in-stock\">Ihneď</strong> na odber"
 
+msgid "<strong><a href=\"{{ url }}\">Notifikační lišta</a></strong> byla úspešne upravená"
+msgstr ""
+
+msgid "<strong><a href=\"{{ url }}\">SEO kombinace kategorie</a></strong> byla uložena"
+msgstr ""
+
 msgid "<strong>INOX</strong> působí jako profesionální kuchyně a její dekor kartáčované oceli ladí s většinou typů vestavěných nerezových spotřebičů. Čisté jednoduché linie skvěle podtrhne bezúchytkové řešení LINE N, které si můžete zvolit. Na výběr máte také z mnoha dekorů pracovních desek a stylů úchytek. Pro více úložného prostoru volte korpusy generace XL."
 msgstr "<strong>INOX</strong> pôsobí ako profesionálna kuchyňa a jej dekor leštenej ocele ladí s väčšinou typov vstavaných antikorových spotrebičov. Čisté jednoduché línie skvele podčiarkne bezúchytkové riešenie LINE N, ktoré si môžete zvoliť. Na výber máte aj z mnohých dekorov pracovných dosiek a štýlov úchytiek. Pre viac úložného priestoru voľte korpusy generácie XL."
 
@@ -283,20 +307,53 @@ msgstr "<strong>RIO</strong> je moderná kuchyňa v dekore duba virginia. Vďaka
 msgid "<strong>STONEART</strong> představuje nejnovější trend v designu kuchyní: kameninové a břidlicové dekory. Nejde jen o perfektní vzhled, ale také o kvalitní zpracování, díky čemuž jsou dvířka <strong>STONEART</strong> věrnou imitací kameninových povrchů a jsou velmi odolné vůči manuálnímu poškození. Ve stejném dekoru jsou i voděodolné pracovní desky, takže tato kuchyně přežije i náročné užívání. Pokud jste příznivci čistého designu, oceníte možnost <strong>bezúchytkového řešení.</strong> A pokud potřebujete dostatek úložného prostoru, můžete si vybrat z nové řady korpusů <strong>velikosti XL.</strong>"
 msgstr "<strong>STONEART</strong> predstavuje najnovší trend v dizajne kuchýň: kameninové a bridlicové dekory. Nejde len o perfektný vzhľad, ale aj o kvalitné vyhotovenie, vďaka čomu sú dvierka <strong>STONEART</strong> vernou imitáciou kameninových povrchov a sú veľmi odolné voči manuálnemu poškodeniu. V rovnakom dekore sú aj vodoodolné pracovné dosky, takže táto kuchyňa prežije aj náročné používanie. Ak ste priaznivci čistého dizajnu, oceníte možnosť <strong bezúchytkového riešenia.</strong> A ak potrebujete dostatok úložného priestoru, môžete si vybrať z nového radu korpusov <strong>veľkosti XL.</strong>"
 
+msgid "AUTHORIZED"
+msgstr "Platba předautorizována"
+
 msgid "Accessories"
 msgstr "Príslušenstvo"
+
+msgid "Account"
+msgstr ""
+
+msgid "Add another parameter"
+msgstr ""
+
+msgid "Add some parameters"
+msgstr ""
+
+msgid "Administration"
+msgstr ""
+
+msgid "Administrator"
+msgstr ""
 
 msgid "Adresa obchodu"
 msgstr "\nAdresa obchodu"
 
+msgid "Advanced search"
+msgstr ""
+
+msgid "Akce"
+msgstr ""
+
+msgid "Aktivní"
+msgstr ""
+
 msgid "Aktuální leták"
 msgstr "Aktuálny leták"
+
+msgid "Aktvní"
+msgstr ""
 
 msgid "Akční cena"
 msgstr "Akciová cena"
 
 msgid "Ale na jiných adresách toho pro Vás máme spousty..."
 msgstr "Ale na iných adresách toho pre vás máme veľa..."
+
+msgid "All domains"
+msgstr ""
 
 msgid "Alpká bílá"
 msgstr "Alpská biela"
@@ -307,20 +364,56 @@ msgstr "Alpská biela"
 msgid "Amount"
 msgstr "Počet"
 
+msgid "An authentication exception occurred."
+msgstr ""
+
+msgid "An email with 6 digit code was sent to your email address."
+msgstr ""
+
+msgid "Ancestor category"
+msgstr ""
+
+msgid "Ano"
+msgstr ""
+
+msgid "Aplikovat podle příznaků"
+msgstr ""
+
 msgid "Apply"
 msgstr "Potvrdiť"
 
 msgid "Aqua"
 msgstr "Aqua"
 
+msgid "Articles in footer"
+msgstr ""
+
+msgid "Articles in upper menu"
+msgstr ""
+
+msgid "Articles without positioning"
+msgstr ""
+
+msgid "Assign to category"
+msgstr ""
+
 msgid "Attention! You are administrator logged in as the customer."
 msgstr "Pozor! Ste administrátor prihlásený ako zákazník."
+
+msgid "Authentication code"
+msgstr ""
+
+msgid "Authenticator key"
+msgstr ""
 
 msgid "Availability"
 msgstr "Dostupnosť"
 
 msgid "Back to cart"
 msgstr "Späť do košíku"
+
+msgid "Back to overview"
+msgstr ""
 
 msgid "Back to shop"
 msgstr "Späť do obchodu"
@@ -336,6 +429,12 @@ msgstr "Farebné varianty dvierok"
 
 msgid "Barva"
 msgstr "Farba"
+
+msgid "Barva pozadí"
+msgstr ""
+
+msgid "Basic"
+msgstr ""
 
 msgid "Basic information"
 msgstr "Základné informácie"
@@ -367,6 +466,9 @@ msgstr "Fakturačná adresa"
 msgid "Billing address - name, last name, company, company number, tax number and billing address"
 msgstr "Fakturačná adresa - meno, priezvisko, firma, IČO, IČ DPH, fakturačná adresa"
 
+msgid "Blog"
+msgstr ""
+
 msgid "Bohužel došlo k chybě, zkuste to prosím znovu."
 msgstr "Bohužiaľ, došlo k chybe, skúste to, prosím, znova."
 
@@ -381,6 +483,15 @@ msgstr "Prehľad značiek"
 
 msgid "Budete u nás nakupovat jako:"
 msgstr "Budete u nás nakupovať ako:"
+
+msgid "Byla upravena položka horizontálního menu <strong><a href=\"{{ url }}\">{{ name }}</a></strong>"
+msgstr ""
+
+msgid "Byla vytvořena položka horizontálního menu <strong><a href=\"{{ url }}\">{{ name }}</a></strong>"
+msgstr ""
+
+msgid "Bylo vytvořeno <strong>{{ quantity }}</strong> slevových kupónů"
+msgstr ""
 
 msgid "Bílá"
 msgstr "Biela"
@@ -400,6 +511,9 @@ msgstr "Bridlica kamenná sivá"
 msgid "Břidlicová šedá"
 msgstr "Bridlicovo sivá"
 
+msgid "CANCELED"
+msgstr "Platba zrušena"
+
 msgid "CASCADA"
 msgstr "CASCADA"
 
@@ -412,11 +526,23 @@ msgstr "CEMENTO"
 msgid "CHALET"
 msgstr "CHALET"
 
+msgid "CREATED"
+msgstr "Platba založena"
+
 msgid "CREDO"
 msgstr "CREDO"
 
+msgid "Cancel"
+msgstr ""
+
 msgid "Cart"
 msgstr "Košík"
+
+msgid "Catalog number"
+msgstr ""
+
+msgid "Category"
+msgstr ""
 
 msgid "Celkem zaplatíte"
 msgstr "Celkom zaplatíte"
@@ -448,8 +574,17 @@ msgstr "Cenový hit"
 msgid "Centrála společnosti"
 msgstr "Centrála spoločnosti"
 
+msgid "Centrální sklad"
+msgstr ""
+
 msgid "Changing password"
 msgstr "Zmena hesla"
+
+msgid "Chci aktivovat uživatelský účet"
+msgstr ""
+
+msgid "Chci se registrovat s objednávkou"
+msgstr ""
 
 msgid "Check the address correctness"
 msgstr "Skontrolujte správnosť adresy"
@@ -475,6 +610,15 @@ msgstr "Zavrieť"
 msgid "Close (Esc)"
 msgstr "Zavrieť (Esc)"
 
+msgid "Code"
+msgstr ""
+
+msgid "Color"
+msgstr ""
+
+msgid "Commerce Cloud"
+msgstr ""
+
 msgid "Company"
 msgstr "Firma"
 
@@ -487,6 +631,9 @@ msgstr "Názov firmy"
 msgid "Company number"
 msgstr "IČO"
 
+msgid "Confirm authentication code"
+msgstr ""
+
 msgid "Connection to GoPay gateway failed."
 msgstr "Pripojenie k bráne GoPay zlyhalo."
 
@@ -496,20 +643,47 @@ msgstr "Kontakt"
 msgid "Contact us"
 msgstr "Kontaktujte nás"
 
+msgid "Content"
+msgstr ""
+
 msgid "Cookies"
 msgstr "Cookies"
 
 msgid "Copyright"
 msgstr "Copyright"
 
+msgid "Copyright Shopsys, s.r.o."
+msgstr ""
+
 msgid "Country"
 msgstr "Krajina"
+
+msgid "Create new customer"
+msgstr ""
+
+msgid "Create new order status"
+msgstr ""
+
+msgid "Create promo code"
+msgstr ""
+
+msgid "Created"
+msgstr ""
 
 msgid "Creation date"
 msgstr "Dátum vytvorenia"
 
+msgid "Cron overview"
+msgstr ""
+
+msgid "Customer"
+msgstr ""
+
 msgid "Customer with email address <strong>{{ email }}</strong> doesn't exist. <a href=\"{{ registrationLink }}\"> Register</a>"
 msgstr "Zákazník s emailovou schránkou <strong>{{ email }}</strong> neexistuje. <a href=\"{{ registrationLink }}\"> Registrovať </a>"
+
+msgid "DPH {{domainName}}"
+msgstr ""
 
 msgid "Další"
 msgstr "Ďalší"
@@ -529,8 +703,35 @@ msgstr "Dátum a čas vytvorenia objednávky"
 msgid "Date of subscription"
 msgstr "Dátum prihlásenia"
 
+msgid "Datum a čas"
+msgstr ""
+
 msgid "Datum objednávky"
 msgstr "Dátum objednávky"
+
+msgid "Datum platnosti DO"
+msgstr ""
+
+msgid "Datum platnosti OD"
+msgstr ""
+
+msgid "Datum publikace"
+msgstr ""
+
+msgid "Datum vytvoření"
+msgstr ""
+
+msgid "Datum zobrazení DO"
+msgstr ""
+
+msgid "Datum zobrazení OD"
+msgstr ""
+
+msgid "Defaultně zavřené parametry ve filtru"
+msgstr ""
+
+msgid "Delete"
+msgstr ""
 
 msgid "Delivery address"
 msgstr "Dodacia adresa"
@@ -540,6 +741,9 @@ msgstr "Dodacia adresa nemohla byť odstránená"
 
 msgid "Delivery address has been removed."
 msgstr "Dodacia adresa bola odstránená"
+
+msgid "Description"
+msgstr ""
 
 msgid "Designová kuchyně"
 msgstr "Dizajnová kuchyňa"
@@ -553,26 +757,80 @@ msgstr "Detail"
 msgid "Detail prodejny"
 msgstr "Detail predajne"
 
+msgid "Detail skladu"
+msgstr ""
+
 msgid "Detailní informace o balení"
 msgstr "Detailné informácie o balení"
 
 msgid "Detaily"
 msgstr "\nDetaily"
 
+msgid "Disable two factor authentication"
+msgstr ""
+
 msgid "Discount"
 msgstr "Zľava"
+
+msgid "Display"
+msgstr ""
+
+msgid "Display on"
+msgstr ""
+
+msgid "Dle příznaků"
+msgstr ""
+
+msgid "Dny pro přesun mezi sklady"
+msgstr ""
+
+msgid "Dní do naskladnění"
+msgstr ""
+
+msgid "Dnů do doručení"
+msgstr ""
 
 msgid "Do košíku"
 msgstr "\nDo košíka"
 
+msgid "Do popisu lze vložit proměnnou, která bude nahrazena za produkty. Název proměnné je {products=XXXXXX,XXXXXX} kde XXXXXX je katalogové číslo produktu. Zobrazeny jsou produkty, které nejsou skryté a současně nejsou vyřazené z prodeje."
+msgstr ""
+
+msgid "Do you really want to remove the order?"
+msgstr ""
+
+msgid "Do you really want to remove this customer?"
+msgstr ""
+
 msgid "Do you really want to remove this delivery address?"
 msgstr "Naozaj chcete odstrániť túto dodaciu adresu?"
+
+msgid "Do you really want to remove this parameter? By deleting this parameter you will remove this parameter from a product where the parameter is assigned. This step is irreversible!"
+msgstr ""
+
+msgid "Do you really want to remove this promo code?"
+msgstr ""
 
 msgid "Dodací adresa"
 msgstr "Dodacia adresa"
 
+msgid "Dodací adresy"
+msgstr ""
+
+msgid "Dodací lhůta dodavatele"
+msgstr ""
+
 msgid "Dodávané příslušenství"
 msgstr "Dodávané príslušenstvo"
+
+msgid "Dokončení registrace"
+msgstr ""
+
+msgid "Dokončete objednávku, na e-mail vám zašleme odkaz pro potvrzení registrace a vytvoření hesla."
+msgstr ""
+
+msgid "Domain"
+msgstr ""
 
 msgid "Domluvit plánování"
 msgstr "Dohodnúť si plánovanie"
@@ -586,14 +844,23 @@ msgstr "Dohodnite si nezáväznú schôdzku v jednom z našich 4 kuchynských š
 msgid "Domluvte si schůzku"
 msgstr "Dohodnite si schôdzku"
 
+msgid "Doména"
+msgstr ""
+
 msgid "Domů"
 msgstr "Domov"
 
 msgid "Doprava"
 msgstr "Doprava"
 
+msgid "Doprava a platba"
+msgstr ""
+
 msgid "Doprava pro celý nákup"
 msgstr "Doprava pre celý nákup"
+
+msgid "Doprava pro nadlimitní množství"
+msgstr ""
 
 msgid "Doprava zdarma"
 msgstr "Doprava zadarmo"
@@ -634,11 +901,20 @@ msgstr "Dub Somerset"
 msgid "Dub Virginia"
 msgstr "Dub Virginia"
 
+msgid "Duplikovat"
+msgstr ""
+
+msgid "Dávka ID"
+msgstr ""
+
 msgid "Délka"
 msgstr "Dĺžka"
 
 msgid "Děkujeme za vaši objednávku"
 msgstr "Ďakujeme za vašu objednávku"
+
+msgid "Děkujeme za vaši objednávku.<br>Budete přesměrování na platební bránu."
+msgstr ""
 
 msgid "Dětský pokoj"
 msgstr "Detská izba"
@@ -658,6 +934,54 @@ msgstr "URL adresa e-shopu"
 msgid "EASYTOUCH"
 msgstr "EASYTOUCH"
 
+msgid "Editace hodnoty parameteru typu barva"
+msgstr ""
+
+msgid "Editace hodnoty parameteru typu barva:"
+msgstr ""
+
+msgid "Editace hodnoty parametru typu barva"
+msgstr ""
+
+msgid "Editace měrné jednotky"
+msgstr ""
+
+msgid "Editace měrné jednotky:"
+msgstr ""
+
+msgid "Editace notifikační lišty"
+msgstr ""
+
+msgid "Editace položky"
+msgstr ""
+
+msgid "Editace položky menu"
+msgstr ""
+
+msgid "Editace rubriky blogu"
+msgstr ""
+
+msgid "Editace rubriky blogu - %name%"
+msgstr ""
+
+msgid "Editace skladu"
+msgstr ""
+
+msgid "Editace skladu - %name%"
+msgstr ""
+
+msgid "Editace slevového kupónu"
+msgstr ""
+
+msgid "Editace článku blogu"
+msgstr ""
+
+msgid "Editace článku blogu - %name%"
+msgstr ""
+
+msgid "Editing product - %name%"
+msgstr ""
+
 msgid "Email"
 msgstr "Email"
 
@@ -667,8 +991,23 @@ msgstr "Email s odkazom na export vašich osobných informácií bol odoslaný n
 msgid "Email with a link to the page with your personal data was sent to your email address."
 msgstr "Email s odkazom na stránku s vašimi osobnými informáciami bol odoslaný na vašu emailovú adresu."
 
+msgid "Emailová šablona <strong><a href=\"{{ url }}\">{{ name }}</a></strong> byla vytvořena."
+msgstr ""
+
 msgid "Empty cart"
 msgstr "Prázdny košík"
+
+msgid "Enable two factor authentication by Google Authenticator"
+msgstr ""
+
+msgid "Enable two factor authentication by email"
+msgstr ""
+
+msgid "Enter a 6 digit authentication from your email. You need to request it by button bellow first."
+msgstr ""
+
+msgid "Enter a 6 digit authentication from your two factor authentication mobile application."
+msgstr ""
 
 msgid "Error occurred"
 msgstr "Ups! Nastala chyba"
@@ -681,6 +1020,9 @@ msgstr "Export objednávok do mostíka"
 
 msgid "Export zákazníků do můstku"
 msgstr "Export zákazníkov do mostíka"
+
+msgid "Externí ID můstku"
+msgstr ""
 
 msgid "FASHION"
 msgstr "FASHION"
@@ -709,11 +1051,20 @@ msgstr "Firma"
 msgid "First name"
 msgstr "Meno"
 
+msgid "Flags"
+msgstr ""
+
 msgid "Forgot your password?"
 msgstr "Zabudli ste Vaše heslo?"
 
 msgid "Forgotten password"
 msgstr "Zabudnuté heslo"
+
+msgid "Formát času: \"hh:mm\", např.: \"07:45\", \"23:05\""
+msgstr ""
+
+msgid "Frontend"
+msgstr ""
 
 msgid "Full name"
 msgstr "Celé meno"
@@ -724,11 +1075,29 @@ msgstr "Funkcie"
 msgid "GENT"
 msgstr "GENT"
 
+msgid "GTM ID"
+msgstr ""
+
+msgid "GTM creative"
+msgstr ""
+
+msgid "Go to Frontend"
+msgstr ""
+
 msgid "Go to cart"
 msgstr "Prejsť na košík"
 
+msgid "GoPay"
+msgstr ""
+
+msgid "GoPay payment method"
+msgstr ""
+
 msgid "Grafitová černá"
 msgstr "Grafitovo čierna"
+
+msgid "Heading (H1)"
+msgstr ""
 
 msgid "Hedvábně šedá"
 msgstr "Hodvábne sivá"
@@ -736,8 +1105,23 @@ msgstr "Hodvábne sivá"
 msgid "Heslo"
 msgstr "Heslo"
 
+msgid "Heslo musí obsahovat velké, malé písmena, číslice a musí být delší než 10 znaků."
+msgstr ""
+
+msgid "Hidden"
+msgstr ""
+
+msgid "Hide"
+msgstr ""
+
+msgid "Hlavní URL"
+msgstr ""
+
 msgid "Hledejte nábytek a doplňky"
 msgstr "Hľadajte nábytok a doplnky"
+
+msgid "Hledání v přenosech"
+msgstr ""
 
 msgid "Hledáte kuchyni, která odpovídá aktuálním moderním trendům, nebo naopak toužíte po nadčasovém a nestárnoucím designu? Umíme splnit všechna vaše očekávání. Naše rozsáhlá škála barev vám umožní experimentovat a vytvářet tak vlastní kombinace."
 msgstr "Hľadáte kuchyňu, ktorá zodpovedá aktuálnym moderným trendom, alebo, naopak, túžite po nadčasovom a nestarnúcom dizajne? Vieme splniť všetky vaše očakávania. Naša rozsiahla škála farieb vám umožní experimentovať a vytvárať tak vlastné kombinácie."
@@ -745,8 +1129,35 @@ msgstr "Hľadáte kuchyňu, ktorá zodpovedá aktuálnym moderným trendom, aleb
 msgid "Hmotnost balíku"
 msgstr "Hmotnosť balíka"
 
+msgid "Hodnota"
+msgstr ""
+
+msgid "Hodnota parameteru"
+msgstr ""
+
+msgid "Hodnota parameteru typu barva"
+msgstr ""
+
+msgid "Hodnota parametru <strong><a href=\"{{ url }}\">{{ parameterValue.text }}</a></strong> je úspěšně upravena."
+msgstr ""
+
+msgid "Hodnota parametru typu barva"
+msgstr ""
+
+msgid "Hodnoty parameterů typu barva"
+msgstr ""
+
+msgid "Horizontální menu"
+msgstr ""
+
+msgid "Hromadné generování kupónu"
+msgstr ""
+
 msgid "Hromadné kupony s prefixem"
 msgstr "Hromadné kupóny s prefixom"
+
+msgid "Hromadné vytvoření slevových kupónů"
+msgstr ""
 
 msgid "I agree with <a href=\"%termsAndConditionsUrl%\" target=\"_blank\">terms and conditions</a> and privacy policy."
 msgstr "Súhlasím s <a href=\"%termsAndConditionsUrl%\" target=\"_blank\">obchodnými podmienkami</a> and spracovaním osobných údajov."
@@ -766,20 +1177,41 @@ msgstr "Súhlasím s obchodnými podmienkami a spracovaním osobných údajov."
 msgid "I understand"
 msgstr "Rozumiem"
 
+msgid "I want to subscribe to the newsletter"
+msgstr ""
+
+msgid "ID"
+msgstr ""
+
 msgid "INLINE"
 msgstr "INLINE"
 
 msgid "INOX"
 msgstr "INOX"
 
+msgid "Identifikátor kupónu pro IS"
+msgstr ""
+
 msgid "Ihned uvidíte jak bude Vaše budoucí kuchyň vypadat."
 msgstr "Ihneď uvidíte ako bude vaša budúca kuchyňa vyzerať."
+
+msgid "Image"
+msgstr ""
+
+msgid "Image will be deleted after saving."
+msgstr ""
 
 msgid "Imitace"
 msgstr "Imitácia"
 
+msgid "In a particular domain tab it is not possible to adjust the order and plunge of categories. Please go to the category detail or to overview of categories of all domains"
+msgstr ""
+
 msgid "Informace o balení"
 msgstr "Informácie o balení"
+
+msgid "Informace o obchodním domě"
+msgstr ""
 
 msgid "Instagram"
 msgstr "\nInstagram"
@@ -790,6 +1222,12 @@ msgstr "Inštalácie"
 msgid "Instalační manuál"
 msgstr "Inštalačný manuál"
 
+msgid "Invalid two-factor authentication code."
+msgstr ""
+
+msgid "Je vystaven"
+msgstr ""
+
 msgid "Jednoduché čisté linie a široká nabídka dekorů včetně dřeva a betonu dělají z kuchyně <strong>RIVA</strong> jednu z nejoblíbenějších v naší nabídce. Skvěle se svým designem hodí do moderních interiérů, které může dřevěnými dekory zároveň zútulnit. Vybrat si můžete také ze široké nabídky pracovních desek a úchytek, nebo podpořit čistý design kuchyně bezúchytkovým řešením LINE N."
 msgstr "Jednoduché čisté línie a široká ponuka dekorov vrátane dreva a betónu robia z kuchyne <strong>RIVA</strong> jednu z najobľúbenejších v našej ponuke. Skvele sa svojím dizajnom hodí do moderných interiérov, ktoré môže drevenými dekormi zároveň zútulniť. Vybrať si môžete aj zo širokej ponuky pracovných dosiek a úchytiek, alebo podporiť čistý dizajn kuchyne bezúchytkovým riešením LINE N."
 
@@ -798,6 +1236,9 @@ msgstr "Jednoduché čisté línie a široká ponuka dekorov vrátane dreva a be
 
 msgid "Ještě nebylo implementováno."
 msgstr "Ešte nebolo implementované."
+
+msgid "Jsme na trhu již 17 let a od vývoje e-shopů na míru<br>jsme se dostali k digitalizaci prodejů největších B2C a B2B hráčů,<br>kterým pomáháme uspět v omnichannel světě."
+msgstr ""
 
 msgid "Jsme stabilní společnost, přední prodejce nábytku v Evropě. Neustále hledáme nové talenty i odborníky se zkušenostmi. Vyberte si z nabídky pracovních příležitostí."
 msgstr "Sme stabilná spoločnosť, popredný predajca nábytku v Európe. Neustále hľadáme nové talenty aj odborníkov so skúsenosťami. Vyberte si z ponuky pracovných príležitostí."
@@ -814,6 +1255,9 @@ msgstr "Jedálenské stoly"
 msgid "Jídelní židle"
 msgstr "Jedálenské stoličky"
 
+msgid "K dispozici do <span>týdne</span>"
+msgstr ""
+
 msgid "K dispozici do <strong>týdne</strong>"
 msgstr "\nK dispozícii do <strong>týždňa</strong>"
 
@@ -825,6 +1269,9 @@ msgstr "\nKamenná sivá"
 
 msgid "Kartáčovaná ocel"
 msgstr "Brúsená oceľ"
+
+msgid "Kategorie"
+msgstr ""
 
 msgid "Ke stažení"
 msgstr "Na stiahnutie"
@@ -850,6 +1297,9 @@ msgstr "Kliknutím na tlačidlo Odoslať objednávku súhlasíte<br>s <a href=\"
 msgid "Klikněte zde pro zopakování úhrady objednávky"
 msgstr "Kliknite tu na zopakovanie úhrady objednávky"
 
+msgid "Kombinace parametrů a jejich hodnot parametrů"
+msgstr ""
+
 msgid "Kombinujte otevřené regálové systémy a vnitřní rozdělovače tak jak se Vám líbí. Nabízejí prostor a vypadají skvěle."
 msgstr "Kombinujte otvorené regálové systémy a vnútorné rozdeľovače tak, ako sa vám páči. Ponúkajú priestor a vyzerajú skvele."
 
@@ -859,6 +1309,12 @@ msgstr "Koncový zákazník"
 msgid "Kontakt na obchodní dům"
 msgstr "Kontakt na obchodný dom"
 
+msgid "Kontakt na obchodní dům 1"
+msgstr ""
+
+msgid "Kontakt na obchodní dům 2"
+msgstr ""
+
 msgid "Kontaktní formulář"
 msgstr "Kontaktný formulár"
 
@@ -867,6 +1323,30 @@ msgstr "Kontakty na predajne"
 
 msgid "Koupelny"
 msgstr "Kúpeľne"
+
+msgid "Krátký popis"
+msgstr ""
+
+msgid "Krátký popis 1"
+msgstr ""
+
+msgid "Krátký popis 2"
+msgstr ""
+
+msgid "Krátký popis 3"
+msgstr ""
+
+msgid "Krátký popis 4"
+msgstr ""
+
+msgid "Krátký popis 5"
+msgstr ""
+
+msgid "Krátký popis USP"
+msgstr ""
+
+msgid "Krátký popis kategorie"
+msgstr ""
 
 msgid "Kuchyně"
 msgstr "Kuchyne"
@@ -931,14 +1411,26 @@ msgstr "\nLak"
 msgid "Last name"
 msgstr "Priezvisko"
 
+msgid "Last order"
+msgstr ""
+
+msgid "Legenda:"
+msgstr ""
+
 msgid "Lehce noblesní a s nádechem minulosti. V kombinaci se dřevem, kamenem nebo cihlami vytváří nezapomenutelný dojem. Doplňky volte z přírodních materiálů, kterými jsou bavlna, len, keramika a proutěné koše. To vše do vaší venkovské kuchyně patří."
 msgstr "Jemne noblesné a s nádychom minulosti. V kombinácii s drevom, kameňom alebo tehlami vytvárajú nezabudnuteľný dojem. Doplnky voľte z prírodných materiálov, ktorými sú bavlna, ľan, keramika a prútené koše. To všetko do vašej vidieckej kuchyne patrí."
+
+msgid "Limity"
+msgstr ""
 
 msgid "Link to password reset sent to email <strong>{{ email }}</strong>."
 msgstr "Odkaz na resetovanie hesla sme poslali na email <strong>{{ email }}</strong>."
 
 msgid "List of products in order (name, quantity, price per unit including VAT, total price per item including VAT)"
 msgstr "Zoznam produktov v poradí (názov, množstvo, cena za jednotku s DPH, celková \ncena za položku s DPH)"
+
+msgid "Location"
+msgstr ""
 
 msgid "Log in"
 msgstr "Prihlásiť sa"
@@ -967,6 +1459,9 @@ msgstr "Magnólia roztieraná"
 msgid "Magnolia softmatt"
 msgstr "\nMagnólia softmatt"
 
+msgid "Main image"
+msgstr ""
+
 msgid "Mastercard"
 msgstr "\nMastercard"
 
@@ -976,8 +1471,14 @@ msgstr "\nMatná"
 msgid "Matné přední plochy kuchyně <strong>TOUCH</strong> jsou dostupné v mnoha dekorech. Díky tomu si můžete vybrat kuchyni přesně na míru vašemu interiéru. Materiál povrchu je nejen velmi estetický, ale též příjemný na dotek a snadný na údržbu. Čistý minimalistický design podpoří bezúchytkové řešení LINE N. Více úložného prostoru poskytnou korpusy generace XL, které je možné si pro svou kuchyni zvolit."
 msgstr "Matné predné plochy kuchyne <strong>TOUCH</strong> sú dostupné v mnohých dekoroch. Vďaka tomu si môžete vybrať kuchyňu presne na mieru vášmu interiéru. Materiál povrchu je nielen veľmi estetický, ale tiež príjemný na dotyk a jednoduchý na údržbu. Čistý minimalistický dizajn podporí bezúchytkové riešenie LINE N. Viac úložného priestoru poskytnú korpusy generácie XL, ktoré si možno pre svoju kuchyňu zvoliť."
 
+msgid "Menu"
+msgstr ""
+
 msgid "Message"
 msgstr "Správa"
+
+msgid "Meta description"
+msgstr ""
 
 msgid "Mimořádná otevírací doba"
 msgstr "Mimoriadny otvárací čas"
@@ -1000,6 +1501,12 @@ msgstr "Moderná kuchyňa <strong>CEMENTO</strong> je výrazným prvkom interié
 msgid "Moderní kuchyně <strong>FASHION</strong> je synonymem elegance. Zasluhují se o to především její čistý design s jednoduchými liniemi a lakovaný povrch. Tento dojem se ještě umocňuje ve variantě s bezúchytkovým řešením LINE N. Aby kuchyně krásně ladila se zbytkem interiéru, můžete si vybrat z několika dekorů předních ploch a z široké nabídky pracovních desek a úchytů."
 msgstr "Moderná kuchyňa <strong>FASHION</strong> je synonymom elegancie. Zasluhujú sa o to predovšetkým jej čistý dizajn s jednoduchými líniami a lakovaný povrch. Tento dojem sa ešte umocňuje vo variante s bezúchytkovým riešením LINE N. Aby kuchyňa krásne ladila so zvyškom interiéru, môžete si vybrať z niekoľkých dekorov predných plôch a zo širokej ponuky pracovných dosiek a úchytiek."
 
+msgid "Moewe - DeliveryCode"
+msgstr ""
+
+msgid "Moewe - TypeOfDeliveryKey"
+msgstr ""
+
 msgid "Montáž"
 msgstr "\nMontáž"
 
@@ -1009,8 +1516,14 @@ msgstr "Dalšie najpredávanejšie"
 msgid "More information"
 msgstr "Viac informácií"
 
+msgid "Move"
+msgstr ""
+
 msgid "Možnosti platby"
 msgstr "Možnosti platby"
+
+msgid "My account"
+msgstr ""
 
 msgid "My orders"
 msgstr "Moje objednávky"
@@ -1020,6 +1533,21 @@ msgstr "Máme pre vás voľné miesto"
 
 msgid "Máte další otázky?"
 msgstr "Máte ďalšie otázky?"
+
+msgid "Místo"
+msgstr ""
+
+msgid "Měrná jednotka"
+msgstr ""
+
+msgid "Měrná jednotka (Akeneo Kód)"
+msgstr ""
+
+msgid "Měrná jednotka <strong><a href=\"{{ url }}\">{{ parameterUnit.name }}</a></strong> je úspěšně upravena."
+msgstr ""
+
+msgid "Měrné jednotky"
+msgstr ""
 
 msgid "Město"
 msgstr "Mesto"
@@ -1036,6 +1564,9 @@ msgstr "Môžete mať <strong>ihneď</strong>"
 msgid "Můžete si dokoupit"
 msgstr "Môžete si dokúpiť"
 
+msgid "Na Váš email, Vám byly zaslány infromace pro dokončení registrace."
+msgstr ""
+
 msgid "Na celou obrazovku"
 msgstr "Na celú obrazovku"
 
@@ -1045,8 +1576,23 @@ msgstr "Na čo je dobré pri nákupe kuchyne nezabúdať?"
 msgid "Na jejím naplnění intenzivně pracujeme. Do té doby si můžete prohlédnout jiné kategorie plné doplňků a nábytku."
 msgstr "Na jej naplnení intenzívne pracujeme. Dovtedy si môžete prezrieť iné kategórie plné doplnkov a nábytku."
 
+msgid "Na konkrétní záložce domény není možné upravovat pořadí a zanoření rubrik blogu. Prosím přejděte na detail kategorie nebo na přehled kategorií na všech doménách"
+msgstr ""
+
 msgid "Na téhle url adrese žádný nábytek ani doplňky nemáme."
 msgstr "Na tejto url adrese žiadny nábytok ani doplnky nemáme."
+
+msgid "Nadpis H1"
+msgstr ""
+
+msgid "Nahrát nový obrázek galerie"
+msgstr ""
+
+msgid "Nahrát nový obrázek pro mobilní zařízení"
+msgstr ""
+
+msgid "Nahrát obrázek pro mobilní zařízení"
+msgstr ""
 
 msgid "Nakupte ještě za <strong class=\"box-free-transport__desc__strong\">%price%</strong> a získáte doručení <strong class=\"box-free-transport__desc__strong\">Zdarma</strong>"
 msgstr "Nakupte ešte za <strong class=\"box-free-transport__desc__strong\">%price%</strong> a získate doručenie <strong class=\"box-free-transport__desc__strong\">Zadarmo</strong>"
@@ -1057,14 +1603,53 @@ msgstr "Nájdete široký sortiment rozmanitých štýlov, farebných vyhotoven�
 msgid "Name"
 msgstr "Meno"
 
+msgid "Name %locale%"
+msgstr ""
+
+msgid "Napište co hledáte"
+msgstr ""
+
 msgid "Napište nám"
 msgstr "Napíšte nám"
+
+msgid "Nastavení %domainName% skladů uloženo."
+msgstr ""
+
+msgid "Nastavení SVG ikony"
+msgstr ""
+
+msgid "Nastavení URL"
+msgstr ""
+
+msgid "Nastavení kategorie výprodej"
+msgstr ""
+
+msgid "Nastavení nadlimitního množství"
+msgstr ""
+
+msgid "Nastavení skladů"
+msgstr ""
+
+msgid "Nastavení výprodejové kategorie bylo úspěšné"
+msgstr ""
+
+msgid "Nastavit heslo"
+msgstr ""
 
 msgid "Načíst další"
 msgstr "Načítať ďalšie"
 
+msgid "Ne"
+msgstr ""
+
 msgid "Nebudete muset dokola vyplňovat adresy a uvidíte přehled všech objednávek."
 msgstr "Nebudete musieť dookola vyplňovať adresy a uvidíte prehľad všetkých objednávok."
+
+msgid "Nebyly nalezeny žádné kombinace pro SEO kategorií."
+msgstr ""
+
+msgid "Nebyly nalezeny žádné články blogu."
+msgstr ""
 
 msgid "Nejmodernější kuchyně s německou kvalitou zpracování. Exkluzivní design a precizní provedení doplňují nejnovější technologie."
 msgstr "Najmodernejšie kuchyne s nemeckou kvalitou vyhotovenia. Exkluzívny dizajn a precízne vyhotovenie dopĺňajú najnovšie technológie."
@@ -1078,6 +1663,9 @@ msgstr "Nemáte ešte účet? Registrujte sa."
 msgid "Nemáte slevový kód? Prohlédněte si seznam našich aktuálně platných <a href=\"%url%\">akcí</a>."
 msgstr "\nNemáte zľavový kód? Pozrite si zoznam našich aktuálne platných <a href=\"%url%\">akcií</a>."
 
+msgid "Nemáte slevový kód? Prohlédněte si seznam našich<br><a class=\"box-cart__promo__desc__link\" href=\"%url%\">aktuálně platných akcí</a>."
+msgstr ""
+
 msgid "Není skladem"
 msgstr "Nie je na sklade"
 
@@ -1087,11 +1675,20 @@ msgstr "Nie je vystavené"
 msgid "Neobsaženo v balení"
 msgstr "Neobsiahnuté v balení"
 
+msgid "Neomezeně"
+msgstr ""
+
 msgid "Neplatné řazení"
 msgstr "Neplatné zoradenie"
 
 msgid "Nepodporovaný datový typ pro validaci souboru. Kontaktujte, prosím, správce obchodu."
 msgstr "Nepodporovaný dátový typ pre validáciu súboru. Kontaktujte, prosím, správcu obchodu."
+
+msgid "New orders"
+msgstr ""
+
+msgid "New registered customers"
+msgstr ""
 
 msgid "Newsletter"
 msgstr "Newsletter"
@@ -1099,8 +1696,17 @@ msgstr "Newsletter"
 msgid "No"
 msgstr "Nie"
 
+msgid "No articles found on this domain. You have to create some first."
+msgstr ""
+
 msgid "No order so far."
 msgstr "Zatiaľ žiadna objednávka."
+
+msgid "No orders status found."
+msgstr ""
+
+msgid "No page found."
+msgstr ""
 
 msgid "No personal data for this email address"
 msgstr "Pre túto emailovú adresu neevidujeme žiadne osobné údaje"
@@ -1117,6 +1723,9 @@ msgstr "Nobilia"
 msgid "Nobilia kuchyně"
 msgstr "Nobilia kuchyne"
 
+msgid "Nominální"
+msgstr ""
+
 msgid "Note"
 msgstr "Poznámka"
 
@@ -1126,8 +1735,44 @@ msgstr "Nie je z čoho vyberať"
 msgid "Nothing to choose from."
 msgstr "Nie je z čoho vyberať."
 
+msgid "Notifikační lišta"
+msgstr ""
+
+msgid "Notifikační lišta byla úspešne smazaná"
+msgstr ""
+
+msgid "Notifikační lišta byla úspešne vytvořená"
+msgstr ""
+
+msgid "Nová notifikační lišta"
+msgstr ""
+
+msgid "Nová položka"
+msgstr ""
+
+msgid "Nová položka menu"
+msgstr ""
+
+msgid "Nová rubrika blogu"
+msgstr ""
+
+msgid "Nová šablona emailu"
+msgstr ""
+
+msgid "Nový sklad"
+msgstr ""
+
+msgid "Nový slevový kupóny"
+msgstr ""
+
+msgid "Nový článek blogu"
+msgstr ""
+
 msgid "Number of items"
 msgstr "Počet položiek"
+
+msgid "Number of orders"
+msgstr ""
 
 msgid "Nyní budete přesměrováni na platební bránu GoPay."
 msgstr "Teraz budete presmerovaný na platobnú bránu GoPay."
@@ -1141,11 +1786,29 @@ msgstr "\nNábytkové programy"
 msgid "Náhledy"
 msgstr "Náhľady"
 
+msgid "Nákupní košík"
+msgstr ""
+
 msgid "Následující kuchyň"
 msgstr "Nasledujúca kuchyňa"
 
+msgid "Název"
+msgstr ""
+
+msgid "Název kategorie"
+msgstr ""
+
+msgid "Název parametru"
+msgstr ""
+
+msgid "Název prefix"
+msgstr ""
+
 msgid "Název společnosti"
 msgstr "Názov spoločnosti"
+
+msgid "Název suffix"
+msgstr ""
 
 msgid "Německá kvalita"
 msgstr "Nemecká kvalita"
@@ -1183,11 +1846,17 @@ msgstr "Obrovskou výhodou kuchyne <strong>SPEED</strong> je jej cenová dostupn
 msgid "Obsah není možné načíst. <br/> Zkuste to prosím později."
 msgstr "Obsah nie je možné načítať. <br/> Skúste to, prosím, neskôr."
 
+msgid "Obsah vašeho košíku se změnil"
+msgstr ""
+
 msgid "Obývací pokoj"
 msgstr "Obývacia izba"
 
 msgid "Ochrana osobních údajů"
 msgstr "Ochrana osobných údajov"
+
+msgid "Od"
+msgstr ""
 
 msgid "Odborníci vás po instalaci seznámí s funkcemi vaší kuchyně."
 msgstr "Odborníci vás po inštalácii zoznámia s funkciami vašej kuchyne."
@@ -1200,6 +1869,15 @@ msgstr "Odoslať objednávku"
 
 msgid "Odhlásit"
 msgstr "Odhlásiť"
+
+msgid "Odkaz"
+msgstr ""
+
+msgid "Odkaz na dokončení registrace"
+msgstr ""
+
+msgid "Odkaz textu pod bannerem"
+msgstr ""
 
 msgid "Ok"
 msgstr "Ok"
@@ -1218,6 +1896,21 @@ msgstr "Operácia sa nepodarila"
 
 msgid "Opravdu chcete kupon použít?"
 msgstr "Naozaj chcete kupón použiť?"
+
+msgid "Opravdu chcete odstranit tento parametr? Smazáním parametru dojde k odstranění tohoto parametru u zboží a případné landing stránky rozšířeného SEO kategorií, kde je parametr přiřazen. Tento krok je nevratný!"
+msgstr ""
+
+msgid "Opravdu chcete odstranit tuto notifikační lištu?"
+msgstr ""
+
+msgid "Opravdu chcete smazat tento článek blogu?"
+msgstr ""
+
+msgid "Opravdu chcete smazat tuto rubriku blogu?"
+msgstr ""
+
+msgid "Opravdu chcete tento problém označit jako vyřešený?"
+msgstr ""
 
 msgid "Order Nr."
 msgstr "Objednávka č."
@@ -1249,11 +1942,17 @@ msgstr "Číslo objednávky"
 msgid "Orders"
 msgstr "Objednávky"
 
+msgid "Orders value"
+msgstr ""
+
 msgid "Originální kuchyně <strong>GENT</strong> se stane chloubou vašeho interiéru. Zaujme designově pojatým zpracováním předních ploch s drážkovým vzhledem a lakováním v odstínu šedého kamene. Právě těmito dvěma prvky se naprosto odlišuje od ostatních kuchyní. Díky naší široké nabídce úchytek a dekorů pracovní desky si můžete kuchyni upravit přesně podle svých představ."
 msgstr "Originálna kuchyňa <strong>GENT</strong> sa stane pýchou vášho interiéru. Zaujme dizajnovo poňatým vyhotovením predných plôch s drážkovým vzhľadom a lakovaním v odtieni sivého kameňa. Práve týmito dvoma prvkami sa úplne odlišuje od ostatných kuchýň. Vďaka našej širokej ponuke úchytiek a dekorov pracovnej dosky si môžete kuchyňu upraviť presne podľa svojich predstáv."
 
 msgid "Oslovení"
 msgstr "Oslovenie"
+
+msgid "Osobní odběr Commerce Cloud"
+msgstr ""
 
 msgid "Osvětlení"
 msgstr "Osvetlenie"
@@ -1263,6 +1962,9 @@ msgstr "Osvetlenie vytvárajúce atmosféru"
 
 msgid "Otevírací doba"
 msgstr "Otvárací čas"
+
+msgid "Otevírat v novém okně"
+msgstr ""
 
 msgid "Otevřeno"
 msgstr "Otvorené"
@@ -1282,6 +1984,9 @@ msgstr "Overenie platnosti kupónu"
 msgid "Ověřit slevový kupon"
 msgstr "Overiť zľavový kupón"
 
+msgid "Označení výprodeje"
+msgstr ""
+
 msgid "Označení: F887"
 msgstr "Označenie: F887"
 
@@ -1297,6 +2002,15 @@ msgstr "Označenie: F892\n"
 msgid "Označení: F893"
 msgstr "\nOznačenie: F893"
 
+msgid "PAID"
+msgstr "Platba zaplacena"
+
+msgid "PARTIALLY_REFUNDED"
+msgstr "Platba částečně refundována"
+
+msgid "PAYMENT_METHOD_CHOSEN"
+msgstr "Platební metoda vybrána"
+
 msgid "PSČ"
 msgstr "\nPSČ"
 
@@ -1306,8 +2020,26 @@ msgstr "PURA"
 msgid "Page not found!"
 msgstr "Stránka nenájdená!"
 
+msgid "Page title"
+msgstr ""
+
 msgid "Page you are looking for either no longer exists or you entered wrong address."
 msgstr "Stránka ktorú hľadáte neexistuje, alebo ste zadali zlú adresu."
+
+msgid "Parameter"
+msgstr ""
+
+msgid "Parametry"
+msgstr ""
+
+msgid "Parametry a pořadí v kategorii"
+msgstr ""
+
+msgid "Parametry filtru"
+msgstr ""
+
+msgid "Parametry produktů vybrané kategorie"
+msgstr ""
 
 msgid "Password"
 msgstr "Heslo"
@@ -1324,6 +2056,9 @@ msgstr "Platba"
 msgid "Payment instructions"
 msgstr "Inštrukcie ku platbe"
 
+msgid "Perex"
+msgstr ""
+
 msgid "Personal data"
 msgstr "Osobné údaje"
 
@@ -1336,8 +2071,47 @@ msgstr "Export osobných informácií"
 msgid "Personal information overview"
 msgstr "Prehľad osobných informácií"
 
+msgid "Platba"
+msgstr ""
+
+msgid "Platba pro nadlimitní množství"
+msgstr ""
+
+msgid "Platba předautorizována"
+msgstr ""
+
+msgid "Platba refundována"
+msgstr ""
+
 msgid "Platba za celý nákup"
 msgstr "Platba za celý nákup"
+
+msgid "Platba založena"
+msgstr ""
+
+msgid "Platba zaplacena"
+msgstr ""
+
+msgid "Platba zrušena"
+msgstr ""
+
+msgid "Platba částečně refundována"
+msgstr ""
+
+msgid "Platební metoda vybrána"
+msgstr ""
+
+msgid "Platnost do"
+msgstr ""
+
+msgid "Platnost od"
+msgstr ""
+
+msgid "Platnost odkazu již vypršela. Pomocí <a href=\"{{ resetLink }}\">resetu hesla</a> si můžete nechat zaslat nový."
+msgstr ""
+
+msgid "Platí na druhý produkt v košíku"
+msgstr ""
 
 msgid "Please check the correctness of all data filled."
 msgstr "Prosím skontrolujte správnosť všetkých vyplnených údajov"
@@ -1363,6 +2137,9 @@ msgstr "Prosím uistite sa, že ste zadali správny počet všetkých položiek 
 msgid "Plánování kuchyně"
 msgstr "Plánovanie kuchyne"
 
+msgid "Po odeslání formuláře Vám zašleme e-mail s instrukcemi pro dokončení registrace"
+msgstr ""
+
 msgid "Podle zákona o evidenci tržeb je prodávající povinen vystavit kupujícímu účtenku. Zároveň je povinen zaevidovat přijatou tržbu u správce daně online; v případě technického výpadku pak nejpozději do 48 hodin."
 msgstr "Podľa zákona o evidencii tržieb je predávajúci povinný vystaviť kupujúcemu účtenku. Zároveň je povinný zaevidovať prijatú tržbu u správcu dane online; v prípade technického výpadku najneskôr do 48 hodín."
 
@@ -1372,11 +2149,23 @@ msgstr "Podobné produkty"
 msgid "Pokračovat"
 msgstr "Pokračovať"
 
+msgid "Pokud je vyplněn čas DO, vyplňte i datum DO."
+msgstr ""
+
+msgid "Pokud je vyplněn čas OD, vyplňte i datum OD."
+msgstr ""
+
+msgid "Položka menu <strong>{{ name }}</strong> byla smazána"
+msgstr ""
+
 msgid "Pomůžeme vám"
 msgstr "Pomôžeme vám"
 
 msgid "Popis a parametry"
 msgstr "Popis a parametre"
+
+msgid "Popis kategorie"
+msgstr ""
 
 msgid "Postcode"
 msgstr "PSČ"
@@ -1393,6 +2182,9 @@ msgstr "Použiť"
 msgid "Použít slevový kupon"
 msgstr "Použiť zľavový kupón"
 
+msgid "Povolit nákup do mínusu"
+msgstr ""
+
 msgid "Povězte nám, jak má vaše vysněná kuchyně vypadat a my zařídíme vše ostatní. Sestavíme kuchyni tak, aby odpovídala vašim přáním a potřebám. V závislosti na prostoru plánujeme kuchyně různých tvarů a velikostí. Mezi nejoblíbenější tvary patří rohová kuchyně, kuchyně do U nebo kuchyně s ostrůvkem. Pohodlí a dlouhou výdrž pak zajistí kvalitní materiál a nejmodernější technologie."
 msgstr "Povedzte nám, ako má vaša vysnívaná kuchyňa vyzerať a my zariadime všetko ostatné. Zostavíme kuchyňu tak, aby zodpovedala vašim prianiam a potrebám. V závislosti od priestoru plánujeme kuchyne rôznych tvarov a veľkostí. Medzi najobľúbenejšie tvary patrí rohová kuchyňa, kuchyňa do U alebo kuchyňa s ostrovčekom. Pohodlie a dlhú výdrž zabezpečia kvalitný materiál a najmodernejšie technológie."
 
@@ -1402,11 +2194,20 @@ msgstr "Pozastaviť prezentáciu"
 msgid "Počet balíků"
 msgstr "Počet balíkov"
 
+msgid "Počet generovaných kupónů"
+msgstr ""
+
 msgid "Počet kusů"
 msgstr "Počet kusov"
 
 msgid "Počet produktů v balení"
 msgstr "Počet produktov v balení"
+
+msgid "Požadovaná šablona neexistuje."
+msgstr ""
+
+msgid "Po–Pia 8–18h"
+msgstr ""
 
 msgid "Po–Pá 8–19h | So–Ne 8–16h"
 msgstr "Po–Pia 8–18h"
@@ -1423,11 +2224,26 @@ msgstr "Prakticky rozdelené"
 msgid "Pravidla akce"
 msgstr "Pravidlá akcie"
 
+msgid "Prefix"
+msgstr ""
+
+msgid "Prefix (např. \"JARO_\")"
+msgstr ""
+
+msgid "Prefix kuponu"
+msgstr ""
+
+msgid "Preview"
+msgstr ""
+
 msgid "Price"
 msgstr "Cena"
 
 msgid "Price including VAT"
 msgstr "Cena s DPH"
+
+msgid "Pricing group"
+msgstr ""
 
 msgid "Pro přesné umístění veškerých rozvodů."
 msgstr "Na presné umiestnenie všetkých rozvodov."
@@ -1438,14 +2254,35 @@ msgstr "Pre skrinky so zásuvkami a skrinky s výsuvmi existujú užitočné vn�
 msgid "Pro tento výraz jsme bohužel nenašli žádné výsledky."
 msgstr "Pre tento výraz sme, bohužiaľ, nenašli žiadne výsledky."
 
+msgid "Pro tuto kombinaci již <a href=\"{{ url }}\">existuje emailová šablona</a>."
+msgstr ""
+
 msgid "Pro vaše přesné vyhledávání momentálně nemáme žádné výsledky.<br> Zkuste být více specifičtí, nebo se podívejte, jestli jste nevyfiltrovali neexistující údaje."
 msgstr "Pre vaše presné vyhľadávanie momentálne nemáme žiadne výsledky.<br> Skúste byť viac špecifický, alebo sa pozrite, či ste nevyfiltrovali neexistujúce údaje."
+
+msgid "Pro úspěšné dokončení Vaší registrace si prosím nastavte bezpečné heslo k Vašemu účtu."
+msgstr ""
 
 msgid "Pro úspěšné dokončení objednávky č. <strong>%orderNumber%</strong> zkuste zopakovat platbu, nebo si zvolte jiný způsob platby"
 msgstr "\nPre úspešné dokončenie objednávky č. <strong>%orderNumber%</strong> skúste zopakovať platbu, alebo si zvoľte iný spôsob platby"
 
+msgid "Pro úspěšné dokončení objednávky č. <strong>%orderNumber%</strong> zkuste zopakovat platbu, nebo si zvolte jiný způsob platby. K platbě se můžete vrátit později i ve vašem uživatelském profilu."
+msgstr ""
+
+msgid "Problém v přenosu byl označen jako vyřešený"
+msgstr ""
+
+msgid "Procenta"
+msgstr ""
+
 msgid "Prodejny"
 msgstr "Predajne"
+
+msgid "Prodejní cena s DPH"
+msgstr ""
+
+msgid "Product <strong><a href=\"{{ url }}\">{{ product|productDisplayName }}</a></strong> modified"
+msgstr ""
 
 msgid "Product <strong>{{ name }}</strong> ({{ quantity|formatNumber }} {{ unitName }}) added to the cart"
 msgstr "Produkt <strong>{{ name }}</strong> ({{ quantity|formatNumber }} {{ unitName }}) bol pridaný do košíka"
@@ -1461,6 +2298,27 @@ msgstr "Produkt sa už nepredáva"
 
 msgid "Product {{ name }} removed from cart"
 msgstr "Produkt {{ name }} odstránený z košíku"
+
+msgid "Products excluded from sale can't be displayed on lists and can't be searched. Product detail is available by direct access from the URL, but it is not possible to add product to cart."
+msgstr ""
+
+msgid "Produkt cenový hit"
+msgstr ""
+
+msgid "Produkt s tímto katalogovým číslem již existuje"
+msgstr ""
+
+msgid "Produkt v akci"
+msgstr ""
+
+msgid "Produkt ve výprodeji"
+msgstr ""
+
+msgid "Produkty"
+msgstr ""
+
+msgid "Profil"
+msgstr ""
 
 msgid "Program LINE N mění jednoduchost v jedinečnost. Bezúchytkové řešení zvýrazní jemné linie a eleganci."
 msgstr "Program LINE N mení jednoduchosť na jedinečnosť. Bezúchytkovú riešenie zvýrazní jemné línie a eleganciu."
@@ -1486,11 +2344,17 @@ msgstr "Prezrite si náš aktuálny leták, v ktorom nájdete štýlový nábyto
 msgid "Promo code"
 msgstr "Zľavový kód"
 
+msgid "Promo code <strong><a href=\"{{ url }}\">{{ code }}</a></strong> created"
+msgstr ""
+
 msgid "Promo code added to order"
 msgstr "Zľavový kód bol pridaný"
 
 msgid "Promo code removed from order"
 msgstr "Zľavový kód odstránený"
+
+msgid "Promo kód"
+msgstr ""
 
 msgid "Promo kód ještě není platný. Zkontrolujte ho, prosím."
 msgstr "Promo kód ešte nie je platný. Skontrolujte ho, prosím."
@@ -1500,6 +2364,21 @@ msgstr "Promo kód nie je možné uplatniť na žiadny produkt v košíku. Skont
 
 msgid "Promo kód už není platný. Zkontrolujte ho, prosím."
 msgstr "Promo kód už nie je platný. Skontrolujte ho, prosím."
+
+msgid "Propojené kategorie"
+msgstr ""
+
+msgid "Prosím vyplňte správný formát času hh:mm"
+msgstr ""
+
+msgid "Prosím zkontrolujte si správnost vyplnění všech údajů"
+msgstr ""
+
+msgid "Prosím zkontrolujte si, zda jsou všechna data správně vyplněna."
+msgstr ""
+
+msgid "Prosím zkontrolujte zda jsou všechna políčka správně vyplněná."
+msgstr ""
 
 msgid "Písková"
 msgstr "Piesková"
@@ -1516,23 +2395,59 @@ msgstr "Prednosťou tejto kuchyne sú vyfrézované úchytkové lišty, ktoré d
 msgid "Předsíň"
 msgstr "Predsieň"
 
+msgid "Přehled chyb v přenosech"
+msgstr ""
+
+msgid "Přehled problémů v přenosech"
+msgstr ""
+
+msgid "Přehled skladů"
+msgstr ""
+
 msgid "Přehled všech prodejen"
 msgstr "Prehľad všetkých predajní"
 
 msgid "Přejít do e-shopu"
 msgstr "Prejsť do e-shopu"
 
+msgid "Přenesené soubory"
+msgstr ""
+
+msgid "Přenos"
+msgstr ""
+
 msgid "Přenos budoucích produktových zásob"
 msgstr "Prenos budúcich produktových zásob"
 
+msgid "Přenos kategorií"
+msgstr ""
+
+msgid "Přenos parametrů produkt"
+msgstr ""
+
 msgid "Přenos produktových zásob"
 msgstr "Prenos produktových zásob"
+
+msgid "Přenos produktů"
+msgstr ""
+
+msgid "Přenos příslušenství produktu"
+msgstr ""
+
+msgid "Přenos příznaků produktů"
+msgstr ""
+
+msgid "Přenos skupin parametrů produkt"
+msgstr ""
 
 msgid "Přenos vystavených produktů"
 msgstr "Prenos vystavených produktov"
 
 msgid "Přenos zákazníků"
 msgstr "Prenos zákazníkov"
+
+msgid "Přenosy"
+msgstr ""
 
 msgid "Při použití úchytů si můžete vybrat ze stovky různých provedení. Nabízíme takové minimalistické kovové úchytky, které jsou nenápadné a elegantní."
 msgstr "Pri použití úchytiek si môžete vybrať zo stovky rôznych vyhotovení. Ponúkame tiež minimalistické kovové úchytky, ktoré sú nenápadné a elegantné."
@@ -1543,11 +2458,20 @@ msgstr "Pri resetovaní hesla došlo k chybe, skúste to, prosím, znova."
 msgid "Přidali jste velké množství zboží. Limit je %quantity% ks, proto budete mít speciální typ objednávky"
 msgstr "Pridali ste veľké množstvo tovaru. Limit je %quantity% ks, preto budete mať špeciálny typ objednávky"
 
+msgid "Přidat další limit"
+msgstr ""
+
 msgid "Přidat do košíku"
 msgstr "Pridať do košíka"
 
 msgid "Přidat dodací adresu"
 msgstr "Pridať dodaciu adresu"
+
+msgid "Přidat novou dodací adresu"
+msgstr ""
+
+msgid "Přidejte limit"
+msgstr ""
 
 msgid "Přihlašujete se poprvé na novém e-shopu, prosím nastavte si heslo pomocí funkce “Obnovení hesla”."
 msgstr "Prihlasujete sa prvýkrát na novom e-shope, prosím, nastavte si heslo pomocou funkcie „Obnovenie hesla“."
@@ -1555,14 +2479,32 @@ msgstr "Prihlasujete sa prvýkrát na novom e-shope, prosím, nastavte si heslo 
 msgid "Přihlásit"
 msgstr "Prihlásiť"
 
+msgid "Přihlásit se"
+msgstr ""
+
 msgid "Přihlášení"
 msgstr "Prihlásenie"
 
 msgid "Přijde k Vám náš odborný pracovník."
 msgstr "Príde k vám náš odborný pracovník."
 
+msgid "Příznak"
+msgstr ""
+
 msgid "Původně"
 msgstr "Pôvodne"
+
+msgid "Quick product search"
+msgstr ""
+
+msgid "REFUNDED"
+msgstr "Platba refundována"
+
+msgid "RGB Barva"
+msgstr ""
+
+msgid "RGB Hex"
+msgstr ""
 
 msgid "RIO"
 msgstr "RIO"
@@ -1599,6 +2541,9 @@ msgstr "Odstrániť položku"
 
 msgid "Reset password"
 msgstr "Resetovať heslo"
+
+msgid "Return back"
+msgstr ""
 
 msgid "Rezavě červená"
 msgstr "Hrdzavo červená "
@@ -1674,6 +2619,9 @@ msgstr "\nRohová kuchyňa TOUCH"
 
 msgid "Rohová kuchyň YORK"
 msgstr "\nRohová kuchyňa YORK"
+
+msgid "Role"
+msgstr ""
 
 msgid "Rounding"
 msgstr "Zaokrúhľovanie"
@@ -1759,6 +2707,45 @@ msgstr "Rozmery"
 msgid "Rozsviťte svou kuchyni dokonale. S LED spoty nebo integrovaným světlem verze NOVAPLUS."
 msgstr "Rozsvieťte svoju kuchyňu dokonale. S LED spotmi alebo integrovaným svetlom verzie NOVAPLUS."
 
+msgid "Rozšířené SEO kategorie %categoryName% - filtry"
+msgstr ""
+
+msgid "Rozšířené SEO kategorie %categoryName% - kombinace"
+msgstr ""
+
+msgid "Rozšířené SEO kategorie - filtry"
+msgstr ""
+
+msgid "Rozšířené SEO kategorie - kombinace"
+msgstr ""
+
+msgid "Rozšířené SEO kategorie - nastavení kombinace se SEO hodnotami"
+msgstr ""
+
+msgid "Rozšířené SEO kategorie - volba kategorie"
+msgstr ""
+
+msgid "Rozšířené SEO kategorií"
+msgstr ""
+
+msgid "Rozšířené SEO kategorií - volba kategorie"
+msgstr ""
+
+msgid "Rubrika blogu"
+msgstr ""
+
+msgid "Rubrika blogu <strong><a href=\"{{ url }}\">{{ name }}</a></strong> byla upravena"
+msgstr ""
+
+msgid "Rubrika blogu <strong><a href=\"{{ url }}\">{{ name }}</a></strong> byla vytvořena"
+msgstr ""
+
+msgid "Rubrika blogu <strong>{{ name }}</strong> byla smazána"
+msgstr ""
+
+msgid "Rubriky blogu"
+msgstr ""
+
 msgid "Rustikální"
 msgstr "Rustikálne"
 
@@ -1767,6 +2754,12 @@ msgstr "Rustikálne kuchyne"
 
 msgid "Rákos"
 msgstr "Trstina"
+
+msgid "SEO kombinace kategorie s ID {{ ReadyCategorySeoMixId }} byla smazána"
+msgstr ""
+
+msgid "SEO kombinace kategorie s ID {{ ReadyCategorySeoMixId }} nebyla smazána, protože nebyla nalezena"
+msgstr ""
 
 msgid "SPEED"
 msgstr "SPEED"
@@ -1779,6 +2772,15 @@ msgstr "STRUCTURA"
 
 msgid "SYLT"
 msgstr "SYLT"
+
+msgid "Sales overview (last 7 days)"
+msgstr ""
+
+msgid "Save changes"
+msgstr ""
+
+msgid "Save changes in order"
+msgstr ""
 
 msgid "Sbalit"
 msgstr "Zbaliť"
@@ -1798,8 +2800,17 @@ msgstr "Vybraný produkt už nie je dostupný alebo neexistuje"
 msgid "Send"
 msgstr "Odoslať"
 
+msgid "Send me authentication code"
+msgstr ""
+
+msgid "Seo"
+msgstr ""
+
 msgid "Set new password"
 msgstr "Nastaviť nové heslo"
+
+msgid "Settings"
+msgstr ""
 
 msgid "Seznámíme vás<br>s funkcemi"
 msgstr "Zoznámime vás<br>s funkciami"
@@ -1816,14 +2827,44 @@ msgstr "Doprava a platba"
 msgid "Shipping instructions"
 msgstr "Inštrukcie pre dopravu"
 
+msgid "Shipping is not filled in the order. Please check your order."
+msgstr ""
+
 msgid "Shipping selection"
 msgstr "Voľba dopravy"
+
+msgid "Shopsys Commerce Cloud"
+msgstr ""
+
+msgid "Shopsys s.r.o.<br> Koksární 1096/10<br> 702 00 Ostrava"
+msgstr ""
+
+msgid "Shopsys s.r.o.<br> Koksární 1096/10<br> 702 00 Ostrava<br> IČ: 27790487<br> DIČ: CZ27790487"
+msgstr ""
+
+msgid "Sklad"
+msgstr ""
 
 msgid "Skladem"
 msgstr "Na sklade"
 
+msgid "Skladovost"
+msgstr ""
+
+msgid "Sklady"
+msgstr ""
+
 msgid "Skrýt"
 msgstr "Skryť"
+
+msgid "Skrýt na doméně"
+msgstr ""
+
+msgid "Skupina"
+msgstr ""
+
+msgid "Skupiny"
+msgstr ""
 
 msgid "Skvělá volba! Vaše zboží jsme přidali do košíku"
 msgstr "Skvelá voľba! Váš tovar sme pridali do košíka."
@@ -1833,6 +2874,24 @@ msgstr "Sledujte nás"
 
 msgid "Sleva"
 msgstr "Zľava"
+
+msgid "Sleva (%)"
+msgstr ""
+
+msgid "Sleva byla uplatněna na všechny již neslevněné položky na které se akce vztahuje podle <a class=\"box-cart__promo__desc__link\" href=\"%url%\">pravidel</a>."
+msgstr ""
+
+msgid "Slevněné kategorie"
+msgstr ""
+
+msgid "Slevněné produkty"
+msgstr ""
+
+msgid "Slevové kupóny"
+msgstr ""
+
+msgid "Slevové kupóny - vygenerované dávky"
+msgstr ""
 
 msgid "Slevový kupón byl použit"
 msgstr "Zľavový kupón bol použitý"
@@ -1849,11 +2908,17 @@ msgstr "Zľavový kód sa uplatní na všetky už nezľavnené položky, na ktor
 msgid "Slovensko"
 msgstr "Slovensko"
 
+msgid "Sorting priority"
+msgstr ""
+
 msgid "Soubor se nepodařilo nalézt na hlavním uložišti. Zkuste to, prosím, znovu nebo kontaktujte správce obchodu."
 msgstr "Súbor sa nepodarilo nájsť na hlavnom úložisku. Skúste to, prosím, znovu alebo kontaktujte správcu obchodu."
 
 msgid "Souhlasím se zasíláním newsletteru"
 msgstr "Súhlasím so zasielaním newslettera"
+
+msgid "Soukromá osoba"
+msgstr ""
 
 msgid "Společnost je zapsaná v obchodním<br> rejstříku vedeném Městským soudem<br> v Praze, oddíl C, vložka 145176"
 msgstr "Spoločnosť je zapísaná v obchodnom registri Okresného súdu Trnava, oddiel Sro, vložka 25761/T"
@@ -1861,14 +2926,50 @@ msgstr "Spoločnosť je zapísaná v obchodnom registri Okresného súdu Trnava,
 msgid "Spustit prezentaci"
 msgstr "Spustiť prezentáciu"
 
+msgid "Status"
+msgstr ""
+
+msgid "Stav bjednávky"
+msgstr ""
+
 msgid "Stav montáže"
 msgstr "Stav montáže"
+
+msgid "Stav objednávky"
+msgstr ""
+
+msgid "Stav platby GoPay"
+msgstr ""
+
+msgid "Stock"
+msgstr ""
+
+msgid "Stock <strong><a href=\"{{ url }}\">{{ name }}</a></strong> created"
+msgstr ""
+
+msgid "Stock <strong><a href=\"{{ url }}\">{{ name }}</a></strong> modified"
+msgstr ""
+
+msgid "Stock <strong>{{ name }}</strong> deleted"
+msgstr ""
+
+msgid "Stocks"
+msgstr ""
+
+msgid "Street"
+msgstr ""
+
+msgid "Stránka"
+msgstr ""
 
 msgid "Stylový úložný prostor"
 msgstr "Štýlový úložný priestor"
 
 msgid "Stáhnout"
 msgstr "Stiahnuť"
+
+msgid "Stáhnout soubor"
+msgstr ""
 
 msgid "Subscription to email newsletter"
 msgstr "Prihlásenie k odberu newsletteru"
@@ -1881,6 +2982,9 @@ msgstr "Supermatná"
 
 msgid "Sídlo společnosti"
 msgstr "Sídlo spoločnosti"
+
+msgid "TIMEOUTED"
+msgstr "Vypršelá platnost platby"
 
 msgid "TOP"
 msgstr "TOP"
@@ -1909,14 +3013,35 @@ msgstr "Televize"
 msgid "Temporarily sold out"
 msgstr "Dočasne nedostupné"
 
+msgid "Tento typ šablony nemůže být odstraněn."
+msgstr ""
+
 msgid "Tento způsob platby je skrytý systémem GoPay."
 msgstr "Tento spôsob platby je skrytý systémom GoPay."
+
+msgid "Text"
+msgstr ""
+
+msgid "Text zobrazený pod bannerem"
+msgstr ""
+
+msgid "Text zprávy"
+msgstr ""
 
 msgid "Thank you, your message has been sent."
 msgstr "Ďakujeme, Vaša správa bola odoslaná"
 
 msgid "The link to change your password expired."
 msgstr "Platnosť odkazu na zmenu hesla vypršala."
+
+msgid "The payment method is not filled in the order. Please check your order."
+msgstr ""
+
+msgid "The price of payment {{ paymentName }} changed during ordering process. Check your order, please."
+msgstr ""
+
+msgid "The price of shipping {{ transportName }} changed during ordering process. Check your order, please."
+msgstr ""
 
 msgid "There were problems during payment of created order with number %orderNumber%."
 msgstr "Počas platby vytvorenej objednávky %orderNumber% sa vyskytol problém."
@@ -1933,6 +3058,21 @@ msgstr "Tento produkt sa už nepredáva. Pozrite si podobné produkty <a href=\"
 msgid "This site uses cookies. By staying on the site you agree with that."
 msgstr "Táto stránka používa cookies. Ďalším prehliadaním stránky vyjadrujete Váš súhlas."
 
+msgid "This status can't be deleted, because there is a functionality bounded to it - it identifies orders that were marked as oversized."
+msgstr ""
+
+msgid "This status can't be deleted, because there is a functionality bounded to it - it identifies orders that were not successfully processed."
+msgstr ""
+
+msgid "This status can't be deleted, because there is a functionality bounded to it - it identifies orders that were successfully processed."
+msgstr ""
+
+msgid "This status can't be deleted. This is automatically assigned status to all new orders."
+msgstr ""
+
+msgid "Titulek stránky"
+msgstr ""
+
 msgid "To prevent the possibility of account theft, the change of the email address must be dealt with individually. If your email address has changed, please contact us."
 msgstr "Aby sme sa vyhli možnosti odcudzenia Vášho účtu, je potrebné zmenu e-mailu riešiť individuálne. Pokiaľ sa Vám e-mailová adresa zmenila, kontakujte nás prosím."
 
@@ -1944,6 +3084,9 @@ msgstr "Top produkty"
 
 msgid "Total order price (including VAT)"
 msgstr "Celková cena objednávky (s DPH)"
+
+msgid "Total price"
+msgstr ""
 
 msgid "Total price including VAT"
 msgstr "Celková cena s DPH"
@@ -1957,8 +3100,53 @@ msgstr "Túžite po celistvom dizajne, vysokej kvalite a dokonalom vyhotovení k
 msgid "Try using web search"
 msgstr "Skúste použiť vyhľadávanie na webe"
 
+msgid "Two factor authentication code"
+msgstr ""
+
+msgid "Two factor authentication is already enabled."
+msgstr ""
+
+msgid "Two factor authentication is not enabled."
+msgstr ""
+
+msgid "Two factor authentication was disabled"
+msgstr ""
+
+msgid "Two factor authentication was enabled"
+msgstr ""
+
+msgid "Typ"
+msgstr ""
+
+msgid "Typ dopravy"
+msgstr ""
+
+msgid "Typ platby"
+msgstr ""
+
+msgid "Typ přenosu"
+msgstr ""
+
+msgid "Typ slevy"
+msgstr ""
+
+msgid "Type"
+msgstr ""
+
 msgid "Typový plán"
 msgstr "Typový plán"
+
+msgid "URL"
+msgstr ""
+
+msgid "URL addresses"
+msgstr ""
+
+msgid "URL odkazu"
+msgstr ""
+
+msgid "URL settings"
+msgstr ""
 
 msgid "Uh-oh, uh-oh. And specially <strong>\"%status_code% %status_text%\"</strong>, as if it was on purpose!"
 msgstr "Ajaj. A akurát <strong>\\\"%status_code% %status_text%\\\"</strong>, to je ako naschvál!"
@@ -1968,6 +3156,12 @@ msgstr "Uhradenie objednávky č. %orderNumber% platobnou kartou."
 
 msgid "Ulice a č. popisné"
 msgstr "Ulica a č. popisné"
+
+msgid "Uložit"
+msgstr ""
+
+msgid "Uložit nastavení skladu"
+msgstr ""
 
 msgid "Uložit údaje"
 msgstr "Uložiť údaje"
@@ -1996,8 +3190,26 @@ msgstr "Pri odosielaní e-mailu nastala chyba, prosím kontaktujte nás pre potv
 msgid "Unit price including VAT"
 msgstr "Cena za jednotku s DPH"
 
+msgid "Unsupported two factor authentication method"
+msgstr ""
+
+msgid "Upload attachment"
+msgstr ""
+
+msgid "Upload image"
+msgstr ""
+
+msgid "Upload new image"
+msgstr ""
+
+msgid "Upravit"
+msgstr ""
+
 msgid "Upravit údaje"
 msgstr "Upraviť údaje"
+
+msgid "Use stocks"
+msgstr ""
 
 msgid "User not found."
 msgstr "Užívateľ nenájdený"
@@ -2029,8 +3241,14 @@ msgstr "Sadzba DPH"
 msgid "VISA"
 msgstr "VISA"
 
+msgid "Value"
+msgstr ""
+
 msgid "Varianty"
 msgstr "Varianty"
+
+msgid "Vaše heslo"
+msgstr ""
 
 msgid "Vaše objednávka"
 msgstr "\nVaša objednávka"
@@ -2050,6 +3268,9 @@ msgstr "Vaše údaje"
 msgid "Venkovský vzhled kuchyni <strong>YORK</strong> dodávají zdobné prvky jako římsy a pilastry. Přední plochy ve formě dvířek a zásuvek jsou vyrobeny z masivního dřeva, což zaručuje dlouhou životnost. Jejich povrchová úprava je možná ve dvou různých barevných provedeních. Úchytky a dekor pracovní desky kuchyně si můžete vybrat z naší široké nabídky."
 msgstr "Vidiecky vzhľad kuchyni <strong>YORK</strong> dodávajú grafických prvky ako rímsy a pilastre. Predné plochy vo forme dvierok a zásuviek sú vyrobené z masívneho dreva, čo zaručuje dlhú životnosť. Ich povrchová úprava je možná v dvoch rôznych farebných vyhotoveniach. Úchytky a dekor pracovnej dosky kuchyne si môžete vybrať z našej širokej ponuky."
 
+msgid "Viditelný na homepage"
+msgstr ""
+
 msgid "View all results"
 msgstr "Zobraziť všetky výsledky"
 
@@ -2059,26 +3280,95 @@ msgstr "Zobraziť viac"
 msgid "View results"
 msgstr "Zobraziť výsledky"
 
+msgid "Visibility"
+msgstr ""
+
 msgid "Vizualizace"
 msgstr "Vizualizácia"
 
 msgid "Vyberte prodejnu kde si vyzvednete zásilku"
 msgstr "Vyberte predajňu, kde si vyzdvihnete zásielku"
 
+msgid "Vyberte prodejnu ze seznamu"
+msgstr ""
+
+msgid "Vybraná notifikační lišta neexistuje"
+msgstr ""
+
+msgid "Vybraná rubrika blogu neexistuje."
+msgstr ""
+
 msgid "Vybrané modely kuchyní na míru"
 msgstr "Vybrané modely kuchýň na mieru"
+
+msgid "Vybraný problém v přenosu nebyl nalezen"
+msgstr ""
+
+msgid "Vybraný sklad neexistuje."
+msgstr ""
+
+msgid "Vybraný článek blogu neexistuje."
+msgstr ""
+
+msgid "Vygenerované dávky"
+msgstr ""
 
 msgid "Vyhledat"
 msgstr "Vyhľadať"
 
+msgid "Vyplňte pouze URL pro zvolenou doménu"
+msgstr ""
+
+msgid "Vyplňte také URL pro zvolenou doménu"
+msgstr ""
+
 msgid "Vyprodáno"
 msgstr "Vypredané"
+
+msgid "Vypršelá platnost platby"
+msgstr ""
 
 msgid "Vysoký lesk"
 msgstr "\nVysoký lesk"
 
 msgid "Vystaveno"
 msgstr "Vystavené"
+
+msgid "Vytvoření email template - %name%"
+msgstr ""
+
+msgid "Vytvoření notifikační lišty"
+msgstr ""
+
+msgid "Vytvoři novou šablonu pro emaily objednávek dle skladovosti"
+msgstr ""
+
+msgid "Vytvořit"
+msgstr ""
+
+msgid "Vytvořit a stáhnout CSV"
+msgstr ""
+
+msgid "Vytvořit hromadné slevové kupóny"
+msgstr ""
+
+msgid "Vytvořit notifikační lištu"
+msgstr ""
+
+msgid "Vytvořit novou položku"
+msgstr ""
+
+msgid "Vytvořit novou rubriku blogu"
+msgstr ""
+
+msgid "Vytvořit nový sklad"
+msgstr ""
+
+msgid "Vytvořit nový článek blogu"
+msgstr ""
+
+msgid "Vytvořte si heslo"
+msgstr ""
 
 msgid "Vytíženost infolinky"
 msgstr "Vyťaženosť infolinky"
@@ -2088,6 +3378,18 @@ msgstr "Využite náš"
 
 msgid "Využijte slevový kód"
 msgstr "Využite zľavový kód"
+
+msgid "Vyřadit z prodeje v celém eshopu"
+msgstr ""
+
+msgid "Vyřazení z prodeje dle domén"
+msgstr ""
+
+msgid "Vyšší cena bez DPH"
+msgstr ""
+
+msgid "Vyšší cena s DPH"
+msgstr ""
 
 msgid "Vzhled betonu, dřeva nebo jednobarevné? V úplném kontrastu nebo tón v tónu s dvířky? Široký výběr pracovních desek nabízí mnoho možností. Díky přiřazeným barevným koncepcím určitě najdete tu svou oblíbenou."
 msgstr "Vzhľad betónu, dreva alebo jednofarebné? V úplnom kontraste alebo tón v tóne s dvierkami? Široký výber pracovných dosiek ponúka veľa možností. Vďaka priradeným farebným koncepciám určite nájdete tú svoju obľúbenú."
@@ -2104,6 +3406,9 @@ msgstr "Váš nákup"
 msgid "Váš nákupní košík je prázdný."
 msgstr "Váš nákupný košík je prázdny."
 
+msgid "Váš účet byl úspěšně aktivován"
+msgstr ""
+
 msgid "Váše heslo"
 msgstr "Vaše heslo"
 
@@ -2115,6 +3420,12 @@ msgstr "Viac informácií"
 
 msgid "Více než kuchyň"
 msgstr "Viac ako kuchyňa"
+
+msgid "Vítejte zpět ve Scontu"
+msgstr ""
+
+msgid "Výběr výprodejové kategorie"
+msgstr ""
 
 msgid "Výprodej"
 msgstr "Výpredaj"
@@ -2140,6 +3451,18 @@ msgstr "YORK"
 msgid "Yes"
 msgstr "Áno"
 
+msgid "You are allowed to disable two factor authentication only to yourself."
+msgstr ""
+
+msgid "You are allowed to set up two factor authentication only to yourself."
+msgstr ""
+
+msgid "You can upload following formats: PNG, JPG"
+msgstr ""
+
+msgid "You can upload following formats: PNG, JPG, GIF"
+msgstr ""
+
 msgid "You have been successfully registered."
 msgstr "Vaša registrácia bola úspešne dokončená."
 
@@ -2161,6 +3484,12 @@ msgstr "Z vášho košíka bol z dôvodu nedostupnosti odstránený tovar: <stro
 msgid "Zadali jste špatné uživatelské jméno nebo heslo."
 msgstr "Zadali ste nesprávne používateľské meno alebo heslo."
 
+msgid "Zadany kod neni spravny"
+msgstr ""
+
+msgid "Zadejte heslo"
+msgstr ""
+
 msgid "Zajistíme<br>profesionální montáž"
 msgstr "Zabezpečíme<br>profesionálnu montáž"
 
@@ -2176,6 +3505,9 @@ msgstr "Zaplatíte"
 msgid "Zapomněli jste heslo?"
 msgstr "Zabudli ste heslo?"
 
+msgid "Zapomněli jste vaše heslo?"
+msgstr ""
+
 msgid "Zaregistrujte se k odběru newsletteru a získejte slevu 35&nbsp;% na nábytek na Váš první nákup*"
 msgstr "Zaregistrujte sa na odber newslettera a získajte zľavu 35&nbsp;% na nábytok na váš prvý nákup*"
 
@@ -2188,8 +3520,14 @@ msgstr "Zavrieť okno"
 msgid "Začněte prosím zadáním e-mailu"
 msgstr "Začnite, prosím, zadaním e-mailu"
 
+msgid "Začněte zadáním e-mailu"
+msgstr ""
+
 msgid "Zařazeno v kategoriích:"
 msgstr "Zaradené v kategóriách:"
+
+msgid "Zbývající počet použití"
+msgstr ""
 
 msgid "Zdarma"
 msgstr "Zadarmo"
@@ -2200,14 +3538,26 @@ msgstr "Skontrolujte, prosím, vaše údaje:"
 msgid "Změna skladovosti objednávky"
 msgstr "Zmena skladovosti objednávky"
 
+msgid "Změna stavu objednávky"
+msgstr ""
+
 msgid "Změna způsobu platby objednávky"
 msgstr "Zmena spôsobu platby objednávky"
+
+msgid "Značky"
+msgstr ""
 
 msgid "Zobrazit celý program"
 msgstr "Zobraziť celý program"
 
+msgid "Zobrazit kombinace"
+msgstr ""
+
 msgid "Zobrazit méně"
 msgstr "Zobraziť menej"
+
+msgid "Zobrazit v rozcestníku"
+msgstr ""
 
 msgid "Zobrazit víc"
 msgstr "Zobraziť viac"
@@ -2242,6 +3592,24 @@ msgstr "Späť na Dopravu a platbu"
 msgid "Zpět na dopravu a platbu"
 msgstr "Späť na dopravu a platbu"
 
+msgid "Zpět na nástěnku"
+msgstr ""
+
+msgid "Zpět na přehled"
+msgstr ""
+
+msgid "Zpět na přehled možných kombinací"
+msgstr ""
+
+msgid "Zpět na volbu kategorie"
+msgstr ""
+
+msgid "Zpět na volbu parametrů"
+msgstr ""
+
+msgid "Zpět výpis"
+msgstr ""
+
 msgid "Způsob platby byl úspěšně změněn"
 msgstr "Spôsob platby bol úspešne zmenený"
 
@@ -2250,6 +3618,9 @@ msgstr "Zrušiť filtre"
 
 msgid "Zrušit úpravy"
 msgstr "Zrušiť úpravy"
+
+msgid "Zvolená položka menu neexistuje."
+msgstr ""
 
 msgid "Zvětšit"
 msgstr "Zväčšiť"
@@ -2262,6 +3633,9 @@ msgstr "Zákaznícky servis"
 
 msgid "Zákaznický servis telefon"
 msgstr "Zákaznícky servis telefón"
+
+msgid "Základní údaje"
+msgstr ""
 
 msgid "Zásilka"
 msgstr "Zásielka"
@@ -2290,6 +3664,9 @@ msgstr "cm"
 msgid "demontováno"
 msgstr "demontované"
 
+msgid "do"
+msgstr ""
+
 msgid "délka: 245 x 245cm"
 msgstr "dĺžka: 245 x 245 cm"
 
@@ -2308,11 +3685,35 @@ msgstr "od najdrahšieho"
 msgid "from the cheapest"
 msgstr "od najlacnejšieho"
 
+msgid "in upper menu"
+msgstr ""
+
+msgid "margin-top-20 margin-bottom-20"
+msgstr ""
+
 msgid "nad souhrnem objednávky v košíku"
 msgstr "nad súhrnom objednávky v košíku"
 
+msgid "např. Akce-zidle-20-2020-04"
+msgstr ""
+
+msgid "např. cervena-1035x340-jpg-carousel"
+msgstr ""
+
 msgid "není skladem"
 msgstr "nie je na sklade"
+
+msgid "new customers"
+msgstr ""
+
+msgid "od"
+msgstr ""
+
+msgid "order statuses"
+msgstr ""
+
+msgid "orders sold"
+msgstr ""
 
 msgid "pan"
 msgstr "pán"
@@ -2320,11 +3721,26 @@ msgstr "pán"
 msgid "paní/slečna"
 msgstr "pani/slečna"
 
+msgid "parameterUnit"
+msgstr ""
+
+msgid "parameterValue"
+msgstr ""
+
 msgid "plazmová"
 msgstr "plazmová"
 
 msgid "products"
 msgstr "produkty"
+
+msgid "přenos souborů \"Instalační manuál\""
+msgstr ""
+
+msgid "přenos souborů \"Typový plán\""
+msgstr ""
+
+msgid "readyCategorySeoMixs"
+msgstr ""
 
 msgid "relevance"
 msgstr "relevancia"
@@ -2335,14 +3751,26 @@ msgstr "na sklade"
 msgid "smontováno"
 msgstr "zmontované"
 
+msgid "souřadnice Zeměpisná délka"
+msgstr ""
+
+msgid "souřadnice Zeměpisná šířka"
+msgstr ""
+
 msgid "strana %currentPage% z %pageCount%"
 msgstr "strana %currentPage% z %pageCount%"
+
+msgid "turnover in"
+msgstr ""
 
 msgid "v kategorii (nad výpisem produktů)"
 msgstr "v kategórii (nad výpisom produktov)"
 
 msgid "všechny články"
 msgstr "všetky články"
+
+msgid "without positioning"
+msgstr ""
 
 msgid "{0,1} K dispozici za týden|[2,4] K dispozici za %weeks% týdny|[5,Inf] K dispozici za %weeks% týdnů"
 msgstr "\n{0,1} K dispozícii za týždeň|[2,4] K dispozícii za %weeks% týždne|[5,Inf] K dispozícii za %weeks% týždňov"
@@ -2353,8 +3781,14 @@ msgstr "\n{0} <span class=\"box-chooser__item__avail__text box-chooser__item__av
 msgid "{0} <span class=\"box-chooser__item__avail__text box-chooser__item__avail__text--now\">Můžete mít <span class=\"box-chooser__item__avail__time box-chooser__item__avail__time--now\">ihned</span></span> | {1} <span class=\"box-chooser__item__avail__text\">K dispozici do <span class=\"box-chooser__item__avail__time\">1 týdne</span></span> | [2,Inf] <span class=\"box-chooser__item__avail__text\">K dispozici do <span class=\"box-chooser__item__avail__time\">%weeksAvailability% týdnů</span></span>"
 msgstr "\n{0} <span class=\"box-chooser__item__avail__text box-chooser__item__avail__text--now\">Môžete mať <span class=\"box-chooser__item__avail__time box-chooser__item__avail__time--now\">ihneď</span></span> | {1} <span class=\"box-chooser__item__avail__text\">K dispozícii do <span class=\"box-chooser__item__avail__time\">1 týždňa</span></span> | [2,Inf] <span class=\"box-chooser__item__avail__text\">K dispozícii do <span class=\"box-chooser__item__avail__time\">%weeksAvailability% týždňov</span></span>"
 
+msgid "{0} <span class=\"box-chooser__item__avail__text box-chooser__item__avail__text--now\">Můžete mít <strong class=\"now\">ihned</strong></span> | [1,Inf] <span class=\"box-chooser__item__avail__text\">Osobní odběr do <strong>%daysAvailability% dnů</strong></span>"
+msgstr ""
+
 msgid "{0} <span class=\"box-chooser__item__avail__text box-chooser__item__avail__text--now\">Můžete mít ještě <span class=\"box-chooser__item__avail__time box-chooser__item__avail__time--now\">dnes</span></span> | [1,Inf] <span class=\"box-chooser__item__avail__text\">Doručení do <span class=\"box-chooser__item__avail__time\">%daysAvailability% dnů</span></span>"
 msgstr "{0} <span class=\"box-chooser__item__avail__text box-chooser__item__avail__text--now\">Môžete mať ešte <span class=\"box-chooser__item__avail__time box-chooser__item__avail__time--now\">dnes</span></span> | [1,Inf] <span class=\"box-chooser__item__avail__text\">Doručenie do <span class=\"box-chooser__item__avail__time\">%daysAvailability% dní</span></span>"
+
+msgid "{0} Máme pro vás <strong class=\"box-list__top__info__count js-paging-total-count\">0</strong> produktů |{1} Máme pro vás <strong class=\"box-list__top__info__count js-paging-total-count\">1</strong> produkt |{2, 3, 4} Máme pro vás <strong class=\"box-list__top__info__count js-paging-total-count\">%itemsCount%</strong> produkty |]4,Inf[ Máme pro vás <strong class=\"box-list__top__info__count js-paging-total-count\">%itemsCount%</strong> produktů"
+msgstr ""
 
 msgid "{0} Máme pro vás <strong class=\"box-list__top__info__count\">0</strong> produktů |{1} Máme pro vás <strong class=\"box-list__top__info__count\">1</strong> produkt |{2, 3, 4} Máme pro vás <strong class=\"box-list__top__info__count\">%itemsCount%</strong> produkty |]4,Inf[ Máme pro vás <strong class=\"box-list__top__info__count\">%itemsCount%</strong> produktů"
 msgstr "{0} Máme pre vás <strong class=\"box-list__top__info__count\">0</strong> produktov |{1} Máme pre vás <strong class=\"box-list__top__info__count\">1</strong> produkt |{2, 3, 4} Máme pre vás <strong class=\"box-list__top__info__count\">%itemsCount%</strong> produkty |]4,Inf[ Máme pre vás <strong class=\"box-list__top__info__count\">%itemsCount%</strong> produktov"
@@ -2377,6 +3811,9 @@ msgstr "\n{1} 1 variant |{2, 3, 4} %itemsCount% varianty |]4,Inf[ %itemsCount% v
 msgid "{1} <span class=\"box-chooser__item__avail__text\">K dispozici do <span class=\"box-chooser__item__avail__time\">1 týdne</span></span> | [2,Inf] <span class=\"box-chooser__item__avail__text\">K dispozici do <span class=\"box-chooser__item__avail__time\">%weeksAvailability% týdnů</span></span>"
 msgstr "\n{1} <span class=\"box-chooser__item__avail__text\">K dispozícii do <span class=\"box-chooser__item__avail__time\">1 týždňa</span></span> | [2,Inf] <span class=\"box-chooser__item__avail__text\">K dispozícii do <span class=\"box-chooser__item__avail__time\">%weeksAvailability% týždňov</span></span>"
 
+msgid "{1} <span class=\"box-chooser__item__avail__text\">K dispozici do <strong>1 týdne</strong> </span> | [2,Inf] <span class=\"box-chooser__item__avail__text\">K dispozici do <strong>%weeksAvailability% týdnů</strong></span>"
+msgstr ""
+
 msgid "{1}Load next %loadNextCount% item|[2,Inf]Load next %loadNextCount% items"
 msgstr "{1}Načítať ďalšiu položku|[2,4]Načítať dalšie %loadNextCount% položky|[5,Inf]Načítať ďalších %loadNextCount% položiek"
 
@@ -2398,8 +3835,20 @@ msgstr "Úchytky v modernom dizajne"
 msgid "Údaje"
 msgstr "Údaje"
 
+msgid "Úprava hodnoty parametru typu barva - %name%"
+msgstr ""
+
+msgid "Úprava měrné jednotky - %name%"
+msgstr ""
+
 msgid "ČSOB<br> Č.ú. 117983223 / 0300<br> IBAN: CZ54 0300 0000 0001 1798 3223 <br> BIC / SWIFT: CEKOCZPP"
 msgstr "SWIFT: GIBASKBX\nIBAN: SK62 0900 0000 0006 3380 8333"
+
+msgid "Čas platnosti DO"
+msgstr ""
+
+msgid "Čas platnosti OD"
+msgstr ""
 
 msgid "Černá"
 msgstr "Čierna"
@@ -2413,6 +3862,21 @@ msgstr "Česká republika"
 msgid "Čistý design kuchyně <strong>EASYTOUCH</strong> je ideální pro moderní a minimalistické interiéry. Nejvýraznějším prvkem je její ultra matná povrchová úprava, kterou lze zvolit v provedení rezavá červená nebo grafitová černá. Přední plochy jsou opatřeny inovativní technologií <strong>ANTIFINGERPRINT</strong>, díky které se stanou otisky prstů minulostí. Na výběr máte z široké nabídky možných provedení pracovních desek a úchytů, nebo můžete zvolit bezúchytkové řešení LINE N pro ještě čistší vzhled."
 msgstr "Čistý dizajn kuchyne <strong>EASYTOUCH</strong> je ideálny pre moderné a minimalistické interiéry. Najvýraznejším prvkom je jej ultramatná povrchová úprava, ktorú je možné zvoliť vo vyhotovení hrdzavá červená alebo grafitová čierna. Predné plochy sú opatrené inovatívnou technológiou <strong>ANTIFINGERPRINT</strong>, vďaka ktorej sa stanú odtlačky prstov minulosťou. Na výber máte zo širokej ponuky možných vyhotovení pracovných dosiek a úchytiek, alebo môžete zvoliť bezúchytkové riešenie LINE N pre ešte čistejší vzhľad."
 
+msgid "Článek blogu"
+msgstr ""
+
+msgid "Článek blogu <strong><a href=\"{{ url }}\">{{ name }}</a></strong> byl vytvořen"
+msgstr ""
+
+msgid "Článek blogu <strong><a href=\"{{ url }}\">{{ name }}</a></strong> byl změněn"
+msgstr ""
+
+msgid "Článek blogu <strong>{{ name }}</strong> byl smazán"
+msgstr ""
+
+msgid "Články blogu"
+msgstr ""
+
 msgid "Číst dál"
 msgstr "Čítať ďalej"
 
@@ -2422,8 +3886,17 @@ msgstr "\nč. produktu:"
 msgid "částečně skladem"
 msgstr "čiastočne na sklade"
 
+msgid "Řazení"
+msgstr ""
+
+msgid "Šablona s předmětem <strong>{{ subject }}</strong> byla smazána"
+msgstr ""
+
 msgid "Šedá břidlice"
 msgstr "Sivá bridlica"
+
+msgid "Škálovaný slevový kupón"
+msgstr ""
 
 msgid "Špatné přihlašovací údaje"
 msgstr "Nesprávne prihlasovacie údaje"
@@ -2431,29 +3904,15 @@ msgstr "Nesprávne prihlasovacie údaje"
 msgid "Šířka"
 msgstr "Šírka"
 
+msgid "Žádná hodnota parameteru typu barva není vytvořena."
+msgstr ""
+
+msgid "Žádná měrná jednotka není vytvořena."
+msgstr ""
+
 msgid "Žádné výsledky vyhledávání"
 msgstr "Žiadne výsledky vyhľadávania"
 
-msgid "CREATED"
-msgstr "Platba založena"
+msgid "Žádný sklad na této doméně není vytvořen. Nejprve musíte nějaký vytvořit."
+msgstr ""
 
-msgid "PAYMENT_METHOD_CHOSEN"
-msgstr "Platební metoda vybrána"
-
-msgid "PAID"
-msgstr "Platba zaplacena"
-
-msgid "AUTHORIZED"
-msgstr "Platba předautorizována"
-
-msgid "CANCELED"
-msgstr "Platba zrušena"
-
-msgid "TIMEOUTED"
-msgstr "Vypršelá platnost platby"
-
-msgid "REFUNDED"
-msgstr "Platba refundována"
-
-msgid "PARTIALLY_REFUNDED"
-msgstr "Platba částečně refundována"

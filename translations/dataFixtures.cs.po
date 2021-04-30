@@ -85,11 +85,23 @@ msgstr "21,5” Hyundai 22MT44"
 msgid "210 MB"
 msgstr "210 MB"
 
+msgid "22\""
+msgstr ""
+
 msgid "22\" Sencor SLE 22F46DM4 HELLO KITTY"
 msgstr "22\" Sencor SLE 22F46DM4 HELLO KITTY"
 
 msgid "220 x 250 x 9 mm"
 msgstr "220 x 250 x 9 mm"
+
+msgid "24\""
+msgstr ""
+
+msgid "24\" Philips 32PFL4308"
+msgstr ""
+
+msgid "24\" Philips CRT 32PFL4308"
+msgstr ""
 
 msgid "240 x 205 x 15 mm"
 msgstr "240 x 205 x 15 mm, klazeta s aktivnim uhlikem"
@@ -114,6 +126,9 @@ msgstr "27\""
 
 msgid "275 kWh/year"
 msgstr "275 kWh/rok"
+
+msgid "27” Hyundai PLASMA T27D590EY"
+msgstr ""
 
 msgid "27” Hyundai T27D590EY"
 msgstr "27” Hyundai T27D590EY"
@@ -160,8 +175,14 @@ msgstr "36\""
 msgid "36\" Hyundai 32PFL4308"
 msgstr "36\" Hyundai 32PFL4360"
 
+msgid "36\" Hyundai PLASMA 32PFL4308"
+msgstr ""
+
 msgid "36\" Philips 32PFL4308"
 msgstr "36\" Philips 32PFL4308"
+
+msgid "36\" Philips CRT 32PFL4308"
+msgstr ""
 
 msgid "380 g"
 msgstr "380 g"
@@ -232,6 +253,9 @@ msgstr "50"
 msgid "50 g"
 msgstr "50 g"
 
+msgid "51,5\""
+msgstr ""
+
 msgid "51,5” Hyundai 22HD44D"
 msgstr "51,5” Hyundai 22HD44D"
 
@@ -240,6 +264,9 @@ msgstr "54\""
 
 msgid "54\" Philips 32PFL4308"
 msgstr "54\" Philips 32PFL4308"
+
+msgid "54\" Philips CRT 32PFL4308"
+msgstr ""
 
 msgid "55"
 msgstr "55"
@@ -279,6 +306,9 @@ msgstr "80x70x70 mm"
 
 msgid "9 Mpix"
 msgstr "9 Mpix"
+
+msgid "<a class=\"box-cart-sent__btn btn\" href=\"{order_detail_url}\">Zobrazit moje objednávky</a>"
+msgstr ""
 
 msgid "<b>You have chosen payment by credit card. Please finish it in two business days.</b>"
 msgstr "<b>Zvolili jste platbu kreditní kartou. Prosím proveďte ji do dvou pracovních dnů.</b>"
@@ -439,6 +469,15 @@ msgstr "Apple iPhone 5S 64GB, zlatý"
 msgid "Aquila Aquagym non-carbonated spring water"
 msgstr "Aquila Aquagym Pramenitá voda neperlivá"
 
+msgid "Aquila Aquagym non-carbonated spring water, description."
+msgstr ""
+
+msgid "Authentication code"
+msgstr "Autentifikační kód"
+
+msgid "Authentication code for two factor authentication: {authentication_code}"
+msgstr "Autentifikační kód pro dvoufaktorovou autentifikaci: {authentication_code}"
+
 msgid "BROTHER PT-H300"
 msgstr "BROTHER PT-H300"
 
@@ -471,6 +510,9 @@ msgstr "Zadáním e-mailu níže si můžete nechat zobrazit vaše osobní údaj
 
 msgid "CD-R VERBATIM 210MB"
 msgstr "CD-R VERBATIM 210MB"
+
+msgid "CRT"
+msgstr ""
 
 msgid "Camera type"
 msgstr "Typ fotoaparátu"
@@ -654,6 +696,9 @@ msgstr "reproduktory 2.0, jednopásmové, výkon 2x2W RMS, 90Hz až 20kHz, USB n
 
 msgid "Demo advert"
 msgstr "Demo reklama"
+
+msgid "Demo advert in category"
+msgstr "Demo reklaman v kategorii"
 
 msgid "Determination"
 msgstr "Určení"
@@ -1021,6 +1066,9 @@ msgstr "Optická myš od Roccat je to pravé pro opravdové hráče. Skvěle pad
 msgid "Multimedia"
 msgstr "Multimédia"
 
+msgid "Máš to moc velké... takže tě víc zkásnem"
+msgstr ""
+
 msgid "NFC"
 msgstr "NFC"
 
@@ -1038,6 +1086,12 @@ msgstr "NS-9310 Infant náhradní sáčky papírové pro VP-9310"
 
 msgid "NS-9710 Prominent replacement paper bags for VP-9711/12/13"
 msgstr "NS-9710 Prominent náhradní sáčky papírové pro VP-9711/12/13"
+
+msgid "Nadlimitní"
+msgstr ""
+
+msgid "Nadlimitnís"
+msgstr ""
 
 msgid "Nejčastější dotazy FAQ"
 msgstr ""
@@ -1077,9 +1131,6 @@ msgstr "Ne"
 
 msgid "Nozzle with brush VP-4290"
 msgstr "Hubice s kartáčem VP-4290"
-
-msgid "Nožičky"
-msgstr ""
 
 msgid "Number of buttons"
 msgstr "Počet tlačítek"
@@ -1165,11 +1216,20 @@ msgstr "Spotřební elektronika zahrnuje elektronická zařízení každodenníh
 msgid "Out of stock"
 msgstr "Nedostupné"
 
+msgid "Over limit"
+msgstr "Přes limit"
+
 msgid "Overall performance"
 msgstr "Celkový výkon"
 
+msgid "Očekávej to koncem příštího měsíce"
+msgstr ""
+
 msgid "PANASONIC DMC FT5EP"
 msgstr "PANASONIC DMC FT5EP"
+
+msgid "PLASMA"
+msgstr ""
 
 msgid "POS cookbook_steam oven GB"
 msgstr "POS kuchařka_parní trouba CZ"
@@ -1474,6 +1534,9 @@ msgstr "TS-9080 náhradní sáček textilní pro VP-9080"
 msgid "TS-9170 replacement bag for textile VP-9171"
 msgstr "TS-9170 náhradní sáček textilní pro VP-9171"
 
+msgid "TV CRT, 100Hz, diagonal 80cm 100Hz, Full HD 1920 x 1080, DVB-T / C, 2x HDMI, USB, CI +, VGA, SCART, speakers 16W, energy. Class A +"
+msgstr ""
+
 msgid "TV Cinema 3D LED SMART diagonal 119 cm, 700 MCI, 1920x1080 Full HD"
 msgstr "Televize Cinema 3D SMART LED, úhlopříčka 119cm, MCI 700, FullHD 1920x1080"
 
@@ -1485,6 +1548,9 @@ msgstr "Televize LED, 100Hz, úhlopříčka 32 palců, 100Hz, Full HD 1920×1080
 
 msgid "TV LED, 100Hz, diagonal 80cm 100Hz, Full HD 1920 x 1080, DVB-T / C, 2x HDMI, USB, CI +, VGA, SCART, speakers 16W, energy. Class A +"
 msgstr "Televize LED, 100Hz, úhlopříčka 80cm, 100Hz, Full HD 1920×1080, DVB-T/C, 2x HDMI, USB, CI+, VGA, SCART, repro 16W, energ. třída A+"
+
+msgid "TV PLASMA, 100Hz, diagonal 80cm 100Hz, Full HD 1920 x 1080, DVB-T / C, 2x HDMI, USB, CI +, VGA, SCART, speakers 16W, energy. Class A +"
+msgstr "TV PLASMA, 100Hz, úhlopříčka 80cm, 100Hz, Full HD 1920×1080, DVB-T/C, 2x HDMI, USB, CI+, VGA, SCART, repro 16W, energ. třída A+"
 
 msgid "TV SMART LED TV, 147 cm diagonal, 4K Ultra HD 3840x2160 4K upscaler"
 msgstr "Televize SMART LED TV, úhlopříčka 147cm, 4K Ultra HD 3840x2160, 4K Upscaler"
@@ -1583,7 +1649,7 @@ msgid "The telescopic hood is very elegant and practical variant of the classica
 msgstr "<p>Výsuvný odsavač par je velice elegantní a praktickou variantou klasického odsavače s minimální prostorovou náročností, proto je vhodný i pro malé kuchyně. Nerezová přední lišta s kolébkovým přepínačem umožňuje snadné ovládání.</p><br /><br /><h2>Důvody, proč se rozhodnout právě pro výsuvný odsavač par Concept OPV-3260:</h2><br /><br /><ol><li>Výkon je nejdůležitějším parametrem odsavačů  a měl by odpovídat minimálně desetinásobku objemu místnosti. Výsuvný odsavač par značky Concept  OPV-3260 Vás překvapí <strong>výkonem 198 m3 za hodinu</strong>.</li><li>Model OPV-3260 je vybaven <strong>dvěma</strong> praktickými <strong>kovovými filtry proti mastnotám</strong>, jejichž údržba je velice snadná a životnost neomezená. Pokud nemáte možnost odvést páry ven, můžete zvolit namísto klasického odtahu <strong>systém recirkulace</strong> s užitím 2 uhlíkových filtrů, které lze dokoupit (kat.číslo: 61990005).</li></ol><br /><h2>Technické parametry:</h2><br /><br /><ul><li>Výška: 175 mm</li><li>Šířka: 600 mm</li><li>Hloubka: 310-470 mm</li><li>Příslušenství: zpětná klapka</li><li>Nerezová přední lišta</li><li>Možnost horního odtahu nebo recirkulace</li><li>Kolébkový přepínač</li><li>2 stupně výkonu</li><li>Max. výkon: 198 m3/hod.</li><li>Max.hlučnost na nejvyšším stupni 66dB (A)</li><li>Žárovka 40 W</li><li>2x kovový filtr proti mastnotám</li><li>Průměr odtahu: 120 mm</li></ul><br /><h2>Detailní popis:</h2><br /><ul><li>Volitelné příslušenství: 2x uhlíkový filtr 61990005</li><li>1 motor/ventilátor</li><li>Minimální vzdálenost od elektrické varné desky: 650 mm</li><li>Minimální vzdálenost od plynové varné desky: 750 mm</li><li>Rozměry pro zabudování (vxšxh): 133 x 560 x 272 mm</li><li>Netto hmotnost: 5,9 kg</li><li>Napětí: 230 V ~ 50 Hz</li><li>Příkon: 150 W</li><li>Délka přívodního kabelu: 2,2 m</li></ul>"
 
 msgid "This is SEO meta description of brand %brandName%."
-msgstr ""
+msgstr "Toto je SEO meta popisek značky %brandName%."
 
 msgid "This is description of brand %brandName%."
 msgstr "Toto je popis značky %brandName%."
@@ -1750,9 +1816,9 @@ msgstr ""
 msgid "white"
 msgstr "bílá"
 
+msgid "| Commerce Cloud"
+msgstr ""
+
 msgid "| Demo eshop"
 msgstr "| Demo obchod"
-
-msgid "šroubovák"
-msgstr ""
 

@@ -4,6 +4,15 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language: sk\n"
 
+msgid "Catalog number cannot be longer than {{ limit }} characters"
+msgstr ""
+
+msgid "Choose image"
+msgstr ""
+
+msgid "Chybný formát RGB HEX : #336699 nebo #ABC"
+msgstr ""
+
 msgid "City cannot be longer than {{ limit }} characters"
 msgstr "Mesto nemôže byť dlhšie, než {{ limit }} znakov"
 
@@ -16,20 +25,50 @@ msgstr "Názov firmy nemôže byť dlhší, než {{ limit }} znakov"
 msgid "Email cannot be longer than {{ limit }} characters"
 msgstr "Email nemôže byť dlhší, než {{ limit }} znakov"
 
+msgid "Externí ID můstku nesmí být delší než {{ limit }} znaků"
+msgstr ""
+
 msgid "First name cannot be longer than {{ limit }} characters"
 msgstr "Priezvisko nemôže byť dlhšie, než {{ limit }} znakov"
 
 msgid "First name of contact person cannot be longer than {{ limit }} characters"
 msgstr "Meno kontaktnej osoby nemôže byť dlhšie, než {{ limit }} znakov"
 
+msgid "Flag color in must be in valid hexadecimal code e.g. #3333ff"
+msgstr ""
+
+msgid "Heading (H1) cannot be longer than {{ limit }} characters"
+msgstr ""
+
+msgid "Heslo musí obsahovat velké, malé písmena, číslice a musí být delší než 10 znaků."
+msgstr ""
+
 msgid "Identification number cannot be longer than {{ limit }} characters"
 msgstr "IČO nemôže byť dlhšie, než {{ limit }} znakov"
+
+msgid "Identifikátor musí obsahovat dva znaky"
+msgstr ""
+
+msgid "Image can be only in JPG or PNG format"
+msgstr ""
+
+msgid "Image can be only in JPG, GIF or PNG format"
+msgstr ""
 
 msgid "Last name cannot be longer than {{ limit }} characters"
 msgstr "Priezvisko nemôže byť dlhšie, než {{ limit }} znakov"
 
 msgid "Last name of contact person cannot be longer than {{ limit }} characters"
 msgstr "Priezvisko kontaktnej osoby nemôže byť dlhšie, než {{ limit }} znakov"
+
+msgid "Město nesmí být delší než {{ limit }} znaků"
+msgstr ""
+
+msgid "Name cannot be longer than {{ limit }} characters"
+msgstr ""
+
+msgid "Název skladu nesmí být delší než {{ limit }} znaků"
+msgstr ""
 
 msgid "Password cannot be same as email"
 msgstr "Heslo nemôže byť rovnaké ako email"
@@ -43,11 +82,23 @@ msgstr "Heslo musí mať aspoň {{ limit }} znakov"
 msgid "Passwords do not match"
 msgstr "Heslá sa nezhodujú"
 
+msgid "Please check Tax number format"
+msgstr ""
+
+msgid "Please choose a valid combination of transport and payment"
+msgstr ""
+
 msgid "Please choose a valid combination of transports and payment"
 msgstr "Prosím vyberte povolenú kombináciu dopravy a platby"
 
+msgid "Please choose article placement"
+msgstr ""
+
 msgid "Please choose country"
 msgstr "Prosím vyberte krajinu"
+
+msgid "Please choose image"
+msgstr ""
 
 msgid "Please choose payment type"
 msgstr "Prosím zvoľte spôsob platby"
@@ -58,14 +109,23 @@ msgstr "Prosím zvoľte spôsob dopravy"
 msgid "Please choose your gender"
 msgstr "Prosím zvoľte Vaše pohlavie"
 
+msgid "Please enter VAT rate"
+msgstr ""
+
 msgid "Please enter city"
 msgstr "Prosím zadajte mesto"
+
+msgid "Please enter code"
+msgstr ""
 
 msgid "Please enter company name"
 msgstr "Prosím zadajte názov firmy"
 
 msgid "Please enter content"
 msgstr "Prosím zadajte obsah"
+
+msgid "Please enter date of creation"
+msgstr ""
 
 msgid "Please enter email"
 msgstr "Prosím zadajte email"
@@ -75,6 +135,9 @@ msgstr "Prosím zadajte meno"
 
 msgid "Please enter first name of contact person"
 msgstr "Prosím zadajte meno kontaktnej osoby"
+
+msgid "Please enter flag color"
+msgstr ""
 
 msgid "Please enter full name"
 msgstr "Prosím zadajte celé meno"
@@ -87,6 +150,9 @@ msgstr "Prosím zadajte priezvisko"
 
 msgid "Please enter last name of contact person"
 msgstr "Prosím zadajte priezvisko kontaktnej osoby"
+
+msgid "Please enter name"
+msgstr ""
 
 msgid "Please enter password"
 msgstr "Prosím zadajte heslo"
@@ -121,8 +187,20 @@ msgstr "PSČ nemôže byť dlhšie než {{ limit }} znakov"
 msgid "Price must be greater or equal to zero"
 msgstr "Cena musí byť väčšia alebo rovná nule"
 
+msgid "Product prefix name cannot be longer than {{ limit }} characters"
+msgstr ""
+
+msgid "Product suffix name cannot be longer than {{ limit }} characters"
+msgstr ""
+
+msgid "Prosím vložte limit od"
+msgstr ""
+
 msgid "Prosím vyberte si oslovení"
 msgstr "Prosím, vyberte si oslovenie"
+
+msgid "Prosím vyplňte GTM ID"
+msgstr ""
 
 msgid "Prosím zadejte vaše město"
 msgstr "Prosím, zadajte vaše mesto"
@@ -133,8 +211,20 @@ msgstr "Prosím, zadajte vaše poštové smerovacie číslo"
 msgid "Prosím zadejte vaší ulici"
 msgstr "Prosím, zadajte vašu ulicu"
 
+msgid "Prosím, zadejte pouze čísla"
+msgstr ""
+
+msgid "Prosím, zadávejte pouze čísla"
+msgstr ""
+
+msgid "Prosím, zadávejte pouze čísla a znak +"
+msgstr ""
+
 msgid "Quantity must be greater than {{ compared_value }}"
 msgstr "Množstvo musí byť väčšie než {{ compared_value }}"
+
+msgid "Sklad s tímto externím kódem již existuje"
+msgstr ""
 
 msgid "Street cannot be longer than {{ limit }} characters"
 msgstr "Ulica nemôže byť dlhšia než {{ limit }} znakov"
@@ -145,14 +235,35 @@ msgstr "Názov ulice nemôže byť dlhší než {{ limit }} znakov"
 msgid "Tax number cannot be longer than {{ limit }} characters"
 msgstr "IČ DPH nemôže byť dlhšie než {{ limit }} znakov"
 
-msgid "Telephone number cannot be shorter than {{ limit }} characters"
-msgstr "Tel. číslo nemôže byť kratšie než {{ limit }} znakov"
-
 msgid "Telephone number cannot be longer than {{ limit }} characters"
 msgstr "Tel. číslo nemôže byť dlhšie než {{ limit }} znakov"
 
+msgid "Telephone number cannot be shorter than {{ limit }} characters"
+msgstr "Tel. číslo nemôže byť kratšie než {{ limit }} znakov"
+
 msgid "This email is already registered"
 msgstr "Tento email je už zaregistrovaný"
+
+msgid "Ulice musí obsahovat písmena"
+msgstr ""
+
+msgid "Ulice musí obsahovat písmeno"
+msgstr ""
+
+msgid "Ulice musí obsahovat číslo"
+msgstr ""
+
+msgid "Ulice nesmí být delší než {{ limit }} znaků"
+msgstr ""
+
+msgid "Uploaded file is to large ({{ size }} {{ suffix }}). Maximum size of an file is {{ limit }} {{ suffix }}."
+msgstr ""
+
+msgid "Uploaded image is to large ({{ size }} {{ suffix }}). Maximum size of an image is {{ limit }} {{ suffix }}."
+msgstr ""
+
+msgid "Vložte, prosím, alespoň jeden limit se slevou"
+msgstr ""
 
 msgid "Vyberte prosím platbu"
 msgstr "Vyberte, prosím, platbu"
@@ -175,8 +286,26 @@ msgstr "Vyplňte, prosím, PSČ"
 msgid "Vyplňte prosím Stát"
 msgstr "Vyplňte, prosím, štát"
 
+msgid "Vyplňte prosím URL"
+msgstr ""
+
+msgid "Vyplňte prosím URL odkazu"
+msgstr ""
+
+msgid "Vyplňte prosím externí ID můstku"
+msgstr ""
+
+msgid "Vyplňte prosím kladnou hodnotu."
+msgstr ""
+
+msgid "Vyplňte prosím množství."
+msgstr ""
+
 msgid "Vyplňte prosím město"
 msgstr "Vyplňte, prosím, mesto"
+
+msgid "Vyplňte prosím název skladu"
+msgstr ""
 
 msgid "Vyplňte prosím název společnosti"
 msgstr "Vyplňte, prosím, názov spoločnosti"
@@ -184,11 +313,27 @@ msgstr "Vyplňte, prosím, názov spoločnosti"
 msgid "Vyplňte prosím název společnosti kratší než {{ limit }} znaků."
 msgstr "Vyplňte, prosím, názov spoločnosti kratší ako {{ limit }} znakov."
 
+msgid "Vyplňte prosím název článku"
+msgstr ""
+
+msgid "Vyplňte prosím obsah notifikační lišty"
+msgstr ""
+
+msgid "Vyplňte prosím obsah článku"
+msgstr ""
+
+msgid "Vyplňte prosím promo kód"
+msgstr ""
+
 msgid "Vyplňte prosím ulici a č. popisné"
 msgstr "Vyplňte, prosím, ulicu a č. popisné"
 
 msgid "You have to agree with privacy policy"
 msgstr "Musíte súhlasiť so Zásadami ochrany osobných údajov"
 
+msgid "Zadejte prosím celé číslo."
+msgstr ""
+
 msgid "Zip code cannot be longer than {{ limit }} characters"
 msgstr "PSČ nemôže byť dlhšie než {{ limit }} znakov"
+

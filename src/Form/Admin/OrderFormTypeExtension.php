@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Form\Admin;
 
+use App\Model\GoPay\GoPayOrderStatus;
 use Shopsys\FrameworkBundle\Form\Admin\Order\OrderFormType;
 use Shopsys\FrameworkBundle\Form\DisplayOnlyType;
 use Symfony\Component\Form\AbstractTypeExtension;
@@ -36,7 +37,7 @@ class OrderFormTypeExtension extends AbstractTypeExtension
             $builderBasicInformationGroup
                 ->add('gopayStatus', DisplayOnlyType::class, [
                     'label' => t('Stav platby GoPay'),
-                    'data' => t(end($transactions)->getGoPayStatus()),
+                    'data' => GoPayOrderStatus::getTranslatedGoPayStatus(end($transactions)->getGoPayStatus()),
                 ]);
         }
 
