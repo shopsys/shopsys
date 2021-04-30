@@ -6,6 +6,7 @@ namespace App\Model\Stock;
 
 use App\Model\Stock\Exception\StockDomainNotFoundException;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Shopsys\FrameworkBundle\Component\Grid\Ordering\OrderableEntityInterface;
@@ -31,6 +32,12 @@ class Stock implements OrderableEntityInterface
      * @ORM\OneToMany(targetEntity="App\Model\Stock\StockDomain", mappedBy="stock", cascade={"persist"})
      */
     protected $domains;
+
+    /**
+     * @var \App\Model\Store\Store[]|\Doctrine\Common\Collections\Collection
+     * @ORM\OneToMany(targetEntity="App\Model\Store\Store", mappedBy="stock", cascade={"persist"})
+     */
+    protected Collection $stores;
 
     /**
      * @var string

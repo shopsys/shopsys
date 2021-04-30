@@ -4,13 +4,16 @@ declare(strict_types=1);
 
 namespace App\Form\Admin\Store;
 
+use App\Model\Stock\StockFacade;
 use App\Model\Store\Store;
 use App\Model\Store\StoreData;
+use App\Model\Store\StoreFacade;
 use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Shopsys\FrameworkBundle\Form\DisplayOnlyType;
 use Shopsys\FrameworkBundle\Form\DomainsType;
 use Shopsys\FrameworkBundle\Form\ImageUploadType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -18,9 +21,35 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 class StoreFormType extends AbstractType
 {
+    /**
+     * @var \App\Model\Stock\StockFacade
+     */
+    private StockFacade $stockFacade;
+
+    /**
+     * @var \App\Model\Store\StoreFacade
+     */
+    private StoreFacade $storeFacade;
+
+    /**
+     * @var \App\Model\Store\Store|null
+     */
+    private ?Store $store = null;
+
+    /**
+     * @param \App\Model\Stock\StockFacade $stockFacade
+     * @param \App\Model\Store\StoreFacade $storeFacade
+     */
+    public function __construct(StockFacade $stockFacade, StoreFacade $storeFacade)
+    {
+        $this->stockFacade = $stockFacade;
+        $this->storeFacade = $storeFacade;
+    }
+
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
@@ -28,6 +57,8 @@ class StoreFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         if ($options['store'] instanceof Store) {
+            $this->store = $options['store'];
+
             $builder
                 ->add('id', DisplayOnlyType::class, [
                     'data' => $options['store']->getId(),
@@ -61,8 +92,19 @@ class StoreFormType extends AbstractType
                     new Constraints\Length(
                         ['max' => 255, 'maxMessage' => 'External ID cannot be longer than {{ limit }} characters']
                     ),
+                    new Constraints\Callback([$this, 'sameStoreExternalIdValidation']),
                 ],
                 'label' => t('External ID'),
+            ])
+            ->add('stock', ChoiceType::class, [
+                'required' => false,
+                'label' => t('Warehouse'),
+                'placeholder' => t('No warehouse associated'),
+                'choices' => $this->stockFacade->getAllStocks(),
+                'choice_label' => 'name',
+                'choice_value' => 'id',
+                'multiple' => false,
+                'expanded' => false,
             ])
             ->add('description', CKEditorType::class, [
                 'required' => false,
@@ -118,5 +160,26 @@ class StoreFormType extends AbstractType
                 'data_class' => StoreData::class,
                 'attr' => ['novalidate' => 'novalidate'],
             ]);
+    }
+
+    /**
+     * @param string|null $externalId
+     * @param \Symfony\Component\Validator\Context\ExecutionContextInterface $context
+     */
+    public function sameStoreExternalIdValidation(?string $externalId, ExecutionContextInterface $context): void
+    {
+        if ($externalId === null) {
+            return;
+        }
+
+        if ($this->store !== null && $externalId === $this->store->getExternalId()) {
+            return;
+        }
+
+        $store = $this->storeFacade->findStoreByExternalId($externalId);
+
+        if ($store !== null) {
+            $context->addViolation(sprintf('Store with this external ID already exists'));
+        }
     }
 }

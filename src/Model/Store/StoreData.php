@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\Store;
 
+use App\Model\Stock\Stock;
 use Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadData;
 
 class StoreData
@@ -13,6 +14,8 @@ class StoreData
     public bool $isDefault = false;
 
     public string $name;
+
+    public ?Stock $stock = null;
 
     public ?string $description = null;
 

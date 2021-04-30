@@ -34,6 +34,7 @@ class StoreDataFactory
     {
         $storeData = $this->createInstance();
         $storeData->name = $store->getName();
+        $storeData->stock = $store->getStock();
         $storeData->isDefault = $store->isDefault();
         $storeData->description = $store->getDescription();
         $storeData->externalId = $store->getExternalId();

@@ -318,7 +318,7 @@ class StockController extends AdminBaseController
         $grid->addEditActionColumn('admin_stock_edit', ['id' => 's.id']);
         $grid->addDeleteActionColumn('admin_stock_delete', ['id' => 's.id'])
             ->setConfirmMessage(t('Do you really want to remove this stock? By deleting this stock you will '
-                . 'remove all stock quantities from products. This step is irreversible!'));
+                . 'remove all stock quantities from products and association to stores. This step is irreversible!'));
         $grid->enableDragAndDrop(Stock::class);
 
         $grid->setTheme('Admin/Content/Stock/listGrid.html.twig');

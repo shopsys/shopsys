@@ -136,4 +136,13 @@ class StoreFacade
 
         return $storesById;
     }
+
+    /**
+     * @param string $externalId
+     * @return \App\Model\Store\Store|null
+     */
+    public function findStoreByExternalId(string $externalId): ?Store
+    {
+        return $this->storeRepository->findStoreByExternalId($externalId);
+    }
 }

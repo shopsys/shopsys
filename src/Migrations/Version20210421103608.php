@@ -17,6 +17,7 @@ class Version20210421103608 extends AbstractMigration
         $this->sql('
             CREATE TABLE stores (
                 id SERIAL NOT NULL,
+                stock_id INT DEFAULT NULL,
                 is_default BOOLEAN NOT NULL,
                 name VARCHAR(255) NOT NULL,
                 description TEXT DEFAULT NULL,
@@ -46,6 +47,12 @@ class Version20210421103608 extends AbstractMigration
             ADD
                 CONSTRAINT FK_95739E7AB092A811 FOREIGN KEY (store_id) REFERENCES stores (id) ON DELETE CASCADE NOT DEFERRABLE INITIALLY IMMEDIATE');
         $this->sql('CREATE UNIQUE INDEX store_domain ON store_domains (store_id, domain_id)');
+        $this->sql('
+            ALTER TABLE
+                stores
+            ADD
+                CONSTRAINT FK_D5907CCCDCD6110 FOREIGN KEY (stock_id) REFERENCES stocks (id) ON DELETE SET NULL NOT DEFERRABLE INITIALLY IMMEDIATE');
+        $this->sql('CREATE INDEX IDX_D5907CCCDCD6110 ON stores (stock_id)');
     }
 
     /**

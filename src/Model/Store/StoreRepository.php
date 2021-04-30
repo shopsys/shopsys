@@ -104,4 +104,13 @@ class StoreRepository
             ->getQuery()
             ->execute();
     }
+
+    /**
+     * @param string $externalId
+     * @return \App\Model\Store\Store|null
+     */
+    public function findStoreByExternalId(string $externalId): ?Store
+    {
+        return $this->getStoreRepository()->findOneBy(['externalId' => $externalId]);
+    }
 }

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\Store;
 
+use App\Model\Stock\Stock;
 use App\Model\Store\Exception\StoreDomainNotFoundException;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -32,6 +33,13 @@ class Store implements OrderableEntityInterface
      * @ORM\OneToMany(targetEntity="App\Model\Store\StoreDomain", mappedBy="store", cascade={"persist"})
      */
     protected Collection $domains;
+
+    /**
+     * @var \App\Model\Stock\Stock|null
+     * @ORM\ManyToOne(targetEntity="App\Model\Stock\Stock", inversedBy="stores", cascade={"persist"})
+     * @ORM\JoinColumn(nullable=true, onDelete="SET NULL")
+     */
+    protected ?Stock $stock;
 
     /**
      * @var bool
@@ -127,6 +135,7 @@ class Store implements OrderableEntityInterface
     {
         $this->isDefault = $storeData->isDefault;
         $this->name = $storeData->name;
+        $this->stock = $storeData->stock;
         $this->description = $storeData->description;
         $this->externalId = $storeData->externalId;
         $this->address = $storeData->address;
@@ -177,6 +186,14 @@ class Store implements OrderableEntityInterface
     public function getName(): string
     {
         return $this->name;
+    }
+
+    /**
+     * @return \App\Model\Stock\Stock|null
+     */
+    public function getStock(): ?Stock
+    {
+        return $this->stock;
     }
 
     /**
