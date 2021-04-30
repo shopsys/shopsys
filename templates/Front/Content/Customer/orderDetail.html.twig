@@ -30,7 +30,7 @@
 
                 <div class="wrap-box wrap-box--v2">
                     <div class="wrap-box__in">
-                        <div class="wrap-box__in__col">
+                        <div class="wrap-box__in__col wrap-box__in__col--first">
                             <h2 class="wrap-box__title">{{ 'Basic information'|trans }}</h2>
                             <table class="box-table box-table--fullwidth box-table--vertical box-table--params">
                                 <tr class="box-table__row">
@@ -39,9 +39,19 @@
                                 </tr>
                             </table>
                         </div>
+                        {% if order.trackingUrl is not null %}
+                            <div class="wrap-box__in__col wrap-box__in__col--last">
+                                <h2 class="wrap-box__title">{{ 'Package tracking'|trans }}</h2>
+                                <table class="box-table box-table--fullwidth box-table--vertical box-table--params">
+                                    <tr class="box-table__row">
+                                        <th class="box-table__item box-table__item--heading">{{ 'Tracking number'|trans }}: </th>
+                                        <td class="box-table__item"><a href="{{ order.trackingUrl }}" target="_blank">{{ order.trackingNumber }}</a></td>
+                                    </tr>
+                                </table>
+                            </div>
+                        {% endif %}
                     </div>
                 </div>
-
 
                 <div class="wrap-box wrap-box--v2">
                     <div class="wrap-box__in">
