@@ -127,11 +127,29 @@ msgstr ""
 msgid "Ano"
 msgstr ""
 
-msgid "Aplikovat podle příznaků"
-msgstr ""
+msgid "Applies to the second product in the cart"
+msgstr "Platí na druhý produkt v košíku"
 
 msgid "Apply"
 msgstr "Uplatnit"
+
+msgid "Apply according to date and time limit"
+msgstr "Aplikovat podle časového omezení"
+
+msgid "Apply according to product flags"
+msgstr "Aplikovat podle příznaků zboží"
+
+msgid "Apply according to the content of the cart"
+msgstr "Aplikovat podle obsahu košíku"
+
+msgid "Apply according to the total price of the order"
+msgstr "Aplikovat podle celkové ceny objednávky"
+
+msgid "Apply to selected categories"
+msgstr "Aplikovat na vybrané kategorie"
+
+msgid "Apply to selected products"
+msgstr "Aplikovat na vybrané produkty"
 
 msgid "Articles in footer"
 msgstr ""
@@ -217,6 +235,9 @@ msgstr "Přehled značek"
 msgid "Budete u nás nakupovat jako:"
 msgstr ""
 
+msgid "Bulk promo code generation"
+msgstr "Hromadné generování kupónu"
+
 msgid "Byla upravena položka horizontálního menu <strong><a href=\"{{ url }}\">{{ name }}</a></strong>"
 msgstr ""
 
@@ -243,6 +264,9 @@ msgstr "Košík"
 
 msgid "Catalog number"
 msgstr "Katalogové číslo"
+
+msgid "Categories"
+msgstr "Kategorie"
 
 msgid "Category"
 msgstr ""
@@ -358,6 +382,9 @@ msgstr ""
 msgid "Country"
 msgstr "Stát"
 
+msgid "Create and download CSV"
+msgstr "Vytvořit a stáhnout CSV"
+
 msgid "Create new customer"
 msgstr ""
 
@@ -407,12 +434,6 @@ msgid "Datum a čas"
 msgstr ""
 
 msgid "Datum objednávky"
-msgstr ""
-
-msgid "Datum platnosti DO"
-msgstr ""
-
-msgid "Datum platnosti OD"
 msgstr ""
 
 msgid "Datum publikace"
@@ -465,6 +486,9 @@ msgstr ""
 
 msgid "Discount"
 msgstr "Sleva"
+
+msgid "Discount type"
+msgstr "Typ slevy"
 
 msgid "Display"
 msgstr ""
@@ -709,9 +733,6 @@ msgstr "Zapomněli jste své heslo?"
 msgid "Forgotten password"
 msgstr "Zapomenuté heslo"
 
-msgid "Formát času: \"hh:mm\", např.: \"07:45\", \"23:05\""
-msgstr ""
-
 msgid "Frontend"
 msgstr ""
 
@@ -784,9 +805,6 @@ msgstr ""
 msgid "Horizontální menu"
 msgstr ""
 
-msgid "Hromadné generování kupónu"
-msgstr ""
-
 msgid "Hromadné kupony s prefixem"
 msgstr ""
 
@@ -829,8 +847,11 @@ msgstr "Chci se přihlásit k odběru newsletteru"
 msgid "ID"
 msgstr ""
 
-msgid "Identifikátor kupónu pro IS"
-msgstr ""
+msgid "If the time FROM is filled in, enter the date FROM too."
+msgstr "Pokud je vyplněn čas OD, vyplňte i datum OD."
+
+msgid "If the time TO is filled in, enter the date TO too."
+msgstr "Pokud je vyplněn čas DO, vyplňte i datum DO."
 
 msgid "Image"
 msgstr "Obrázek"
@@ -937,8 +958,8 @@ msgstr ""
 msgid "Legenda:"
 msgstr ""
 
-msgid "Limity"
-msgstr ""
+msgid "Limits"
+msgstr "Limity"
 
 msgid "Link to password reset sent to email <strong>{{ email }}</strong>."
 msgstr "Odkaz pro vyresetování hesla byl zaslán na e-mail <strong>{{ email }}</strong>."
@@ -1186,8 +1207,8 @@ msgstr "Filtru neodpovídají žádné výsledky"
 msgid "No transport types found."
 msgstr "Nebyly nalezeny žádné typy doprav."
 
-msgid "Nominální"
-msgstr ""
+msgid "Nominal"
+msgstr "Nominální"
 
 msgid "Note"
 msgstr "Poznámka"
@@ -1230,6 +1251,9 @@ msgstr ""
 
 msgid "Nový článek blogu"
 msgstr ""
+
+msgid "Number of generated promo codes"
+msgstr "Počet generovaných kupónů"
 
 msgid "Number of items"
 msgstr "Počet položek"
@@ -1483,6 +1507,9 @@ msgstr "Způsob platby"
 msgid "Payment selection"
 msgstr "Výběr platby"
 
+msgid "Percents"
+msgstr "Procenta"
+
 msgid "Perex"
 msgstr ""
 
@@ -1534,9 +1561,6 @@ msgstr ""
 msgid "Platnost odkazu již vypršela. Pomocí <a href=\"{{ resetLink }}\">resetu hesla</a> si můžete nechat zaslat nový."
 msgstr ""
 
-msgid "Platí na druhý produkt v košíku"
-msgstr ""
-
 msgid "Please check the correctness of all data filled."
 msgstr "Prosím zkontrolujte si správnost vyplnění všech údajů"
 
@@ -1545,6 +1569,9 @@ msgstr "Zkontrolujte prosím zadané hodnoty.<br>"
 
 msgid "Please enter promo code."
 msgstr "Zadejte, prosím, slevový kupón."
+
+msgid "Please enter the correct time format (hh:mm)"
+msgstr "Prosím vyplňte správný formát času (hh:mm)"
 
 msgid "Please enter valid quantity you want to add to cart."
 msgstr "Zadejte prosím platné množství, které chcete vložit do košíku."
@@ -1565,12 +1592,6 @@ msgid "Podle zákona o evidenci tržeb je prodávající povinen vystavit kupuj�
 msgstr ""
 
 msgid "Podobné produkty"
-msgstr ""
-
-msgid "Pokud je vyplněn čas DO, vyplňte i datum DO."
-msgstr ""
-
-msgid "Pokud je vyplněn čas OD, vyplňte i datum OD."
 msgstr ""
 
 msgid "Položka menu <strong>{{ name }}</strong> byla smazána"
@@ -1600,9 +1621,6 @@ msgstr ""
 msgid "Pozastavit prezentaci\""
 msgstr ""
 
-msgid "Počet generovaných kupónů"
-msgstr ""
-
 msgid "Počet kusů"
 msgstr ""
 
@@ -1621,8 +1639,8 @@ msgstr ""
 msgid "Prefix"
 msgstr ""
 
-msgid "Prefix (např. \"JARO_\")"
-msgstr ""
+msgid "Prefix (e.g. \"SPRING_\")"
+msgstr "Prefix (např. \"JARO_\")"
 
 msgid "Prefix kuponu"
 msgstr ""
@@ -1660,9 +1678,6 @@ msgstr ""
 msgid "Problém v přenosu byl označen jako vyřešený"
 msgstr ""
 
-msgid "Procenta"
-msgstr ""
-
 msgid "Prodejny"
 msgstr ""
 
@@ -1677,6 +1692,15 @@ msgstr "Do košíku bylo vloženo zboží <strong>{{ name }}</strong> ({{ quanti
 
 msgid "Product <strong>{{ name }}</strong> added to the cart (total amount {{ quantity|formatNumber }} {{ unitName }})"
 msgstr "Do košíku bylo vloženo zboží <strong>{{ name }}</strong> (celkem již {{ quantity|formatNumber }} {{ unitName }})"
+
+msgid "Product In Action"
+msgstr "Produkt v akci"
+
+msgid "Product On Sale"
+msgstr "Produkt ve výprodeji"
+
+msgid "Product Price Hit"
+msgstr "Produkt cenový hit"
 
 msgid "Product filter"
 msgstr "Filtr produktů"
@@ -1699,16 +1723,7 @@ msgstr "Přehled zboží v košíku"
 msgid "Products in stock only"
 msgstr "Jen zboží skladem"
 
-msgid "Produkt cenový hit"
-msgstr ""
-
 msgid "Produkt s tímto katalogovým číslem již existuje"
-msgstr ""
-
-msgid "Produkt v akci"
-msgstr ""
-
-msgid "Produkt ve výprodeji"
 msgstr ""
 
 msgid "Produkty"
@@ -1729,14 +1744,14 @@ msgstr ""
 msgid "Promo code added to order"
 msgstr "Slevový kupón byl přidán do objednávky."
 
+msgid "Promo code identifier in IS"
+msgstr "Identifikátor kupónu pro IS"
+
 msgid "Promo code invalid. Check it, please."
 msgstr "Slevový kupón není platný. Prosím, zkontrolujte ho."
 
 msgid "Promo code removed from order"
 msgstr "Slevový kupón byl odebrán z objednávky."
-
-msgid "Promo kód"
-msgstr ""
 
 msgid "Promo kód ještě není platný. Zkontrolujte ho, prosím."
 msgstr ""
@@ -1748,9 +1763,6 @@ msgid "Promo kód už není platný. Zkontrolujte ho, prosím."
 msgstr ""
 
 msgid "Propojené kategorie"
-msgstr ""
-
-msgid "Prosím vyplňte správný formát času hh:mm"
 msgstr ""
 
 msgid "Prosím zkontrolujte si správnost vyplnění všech údajů"
@@ -1866,6 +1878,9 @@ msgstr ""
 
 msgid "Reklamace, vrácení a výměna zboží"
 msgstr ""
+
+msgid "Remaining number of uses"
+msgstr "Zbývající počet použití"
 
 msgid "Remember my login"
 msgstr "Zapamatuj si mé přihlášení"
@@ -2053,16 +2068,7 @@ msgstr ""
 msgid "Sleva"
 msgstr ""
 
-msgid "Sleva (%)"
-msgstr ""
-
 msgid "Sleva byla uplatněna na všechny již neslevněné položky na které se akce vztahuje podle <a class=\"box-cart__promo__desc__link\" href=\"%url%\">pravidel</a>."
-msgstr ""
-
-msgid "Slevněné kategorie"
-msgstr ""
-
-msgid "Slevněné produkty"
 msgstr ""
 
 msgid "Slevové kupóny"
@@ -2242,6 +2248,9 @@ msgstr ""
 msgid "This status can't be deleted. This is automatically assigned status to all new orders."
 msgstr ""
 
+msgid "Time format: \"hh:mm\", e.g.: \"07:45\", \"23:05\""
+msgstr "Formát času: \"hh:mm\", např.: \"07:45\", \"23:05\""
+
 msgid "Titulek stránky"
 msgstr ""
 
@@ -2333,9 +2342,6 @@ msgid "Typ platby"
 msgstr ""
 
 msgid "Typ přenosu"
-msgstr ""
-
-msgid "Typ slevy"
 msgstr ""
 
 msgid "Type"
@@ -2434,6 +2440,18 @@ msgstr "Výše DPH (%)"
 msgid "VISA"
 msgstr ""
 
+msgid "Valid from (date)"
+msgstr "Datum platnosti OD"
+
+msgid "Valid from (time)"
+msgstr "Čas platnosti OD"
+
+msgid "Valid to (date)"
+msgstr "Datum platnosti DO"
+
+msgid "Valid to (time)"
+msgstr "Čas platnosti DO"
+
 msgid "Value"
 msgstr ""
 
@@ -2519,9 +2537,6 @@ msgid "Vytvoři novou šablonu pro emaily objednávek dle skladovosti"
 msgstr ""
 
 msgid "Vytvořit"
-msgstr ""
-
-msgid "Vytvořit a stáhnout CSV"
 msgstr ""
 
 msgid "Vytvořit hromadné slevové kupóny"
@@ -2687,9 +2702,6 @@ msgid "Začněte zadáním e-mailu"
 msgstr ""
 
 msgid "Zařazeno v kategoriích:"
-msgstr ""
-
-msgid "Zbývající počet použití"
 msgstr ""
 
 msgid "Změna stavu objednávky"
@@ -2930,12 +2942,6 @@ msgid "Úprava měrné jednotky - %name%"
 msgstr ""
 
 msgid "ČSOB<br> Č.ú. 117983223 / 0300<br> IBAN: CZ54 0300 0000 0001 1798 3223 <br> BIC / SWIFT: CEKOCZPP"
-msgstr ""
-
-msgid "Čas platnosti DO"
-msgstr ""
-
-msgid "Čas platnosti OD"
 msgstr ""
 
 msgid "Česká republika"

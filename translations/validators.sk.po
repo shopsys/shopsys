@@ -46,9 +46,6 @@ msgstr ""
 msgid "Identification number cannot be longer than {{ limit }} characters"
 msgstr "IČO nemôže byť dlhšie, než {{ limit }} znakov"
 
-msgid "Identifikátor musí obsahovat dva znaky"
-msgstr ""
-
 msgid "Image can be only in JPG or PNG format"
 msgstr ""
 
@@ -112,6 +109,9 @@ msgstr "Prosím zvoľte Vaše pohlavie"
 msgid "Please enter VAT rate"
 msgstr ""
 
+msgid "Please enter at least one discount limit"
+msgstr ""
+
 msgid "Please enter city"
 msgstr "Prosím zadajte mesto"
 
@@ -163,6 +163,9 @@ msgstr "Prosím zadajte cenu"
 msgid "Please enter price in correct format (positive number with decimal separator)"
 msgstr "Prosím zadajte cenu v správnom formáte (kladné číslo s desatinnou čiarkou alebo bodkou)"
 
+msgid "Please enter promo code"
+msgstr ""
+
 msgid "Please enter quantity"
 msgstr "Prosím zadajte množstvo"
 
@@ -171,6 +174,15 @@ msgstr "Prosím zadajte ulicu"
 
 msgid "Please enter telephone number"
 msgstr "Prosím zadajte telefónne číslo"
+
+msgid "Please enter the positive value."
+msgstr ""
+
+msgid "Please enter the quantity."
+msgstr ""
+
+msgid "Please enter the whole number."
+msgstr ""
 
 msgid "Please enter valid email"
 msgstr "Prosím zadajte platný email"
@@ -241,6 +253,9 @@ msgstr "Tel. číslo nemôže byť dlhšie než {{ limit }} znakov"
 msgid "Telephone number cannot be shorter than {{ limit }} characters"
 msgstr "Tel. číslo nemôže byť kratšie než {{ limit }} znakov"
 
+msgid "The identifier must contain two characters"
+msgstr ""
+
 msgid "This email is already registered"
 msgstr "Tento email je už zaregistrovaný"
 
@@ -263,9 +278,6 @@ msgid "Uploaded file is to large ({{ size }} {{ suffix }}). Maximum size of an f
 msgstr ""
 
 msgid "Uploaded image is to large ({{ size }} {{ suffix }}). Maximum size of an image is {{ limit }} {{ suffix }}."
-msgstr ""
-
-msgid "Vložte, prosím, alespoň jeden limit se slevou"
 msgstr ""
 
 msgid "Vyberte prosím platbu"
@@ -298,12 +310,6 @@ msgstr ""
 msgid "Vyplňte prosím externí ID můstku"
 msgstr ""
 
-msgid "Vyplňte prosím kladnou hodnotu."
-msgstr ""
-
-msgid "Vyplňte prosím množství."
-msgstr ""
-
 msgid "Vyplňte prosím město"
 msgstr "Vyplňte, prosím, mesto"
 
@@ -325,17 +331,11 @@ msgstr ""
 msgid "Vyplňte prosím obsah článku"
 msgstr ""
 
-msgid "Vyplňte prosím promo kód"
-msgstr ""
-
 msgid "Vyplňte prosím ulici a č. popisné"
 msgstr "Vyplňte, prosím, ulicu a č. popisné"
 
 msgid "You have to agree with privacy policy"
 msgstr "Musíte súhlasiť so Zásadami ochrany osobných údajov"
-
-msgid "Zadejte prosím celé číslo."
-msgstr ""
 
 msgid "Zip code cannot be longer than {{ limit }} characters"
 msgstr "PSČ nemôže byť dlhšie než {{ limit }} znakov"

@@ -40,17 +40,17 @@ class PromoCodeFormTypeExtension extends AbstractTypeExtension
     /**
      * @var \App\Model\Order\PromoCode\PromoCodeFacade
      */
-    private $promoCodeFacade;
+    private PromoCodeFacade $promoCodeFacade;
 
     /**
      * @var \App\Model\Order\PromoCode\PromoCode|null
      */
-    private $promoCode;
+    private ?PromoCode $promoCode;
 
     /**
      * @var \Shopsys\FrameworkBundle\Form\Transformers\RemoveDuplicatesFromArrayTransformer
      */
-    private $removeDuplicatesTransformer;
+    private RemoveDuplicatesFromArrayTransformer $removeDuplicatesTransformer;
 
     /**
      * @param \App\Model\Order\PromoCode\PromoCodeFacade $promoCodeFacade
@@ -67,28 +67,31 @@ class PromoCodeFormTypeExtension extends AbstractTypeExtension
     /**
      * {@inheritdoc}
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this->promoCode = $options['promo_code'];
 
         if ($options['mass_generate'] === true) {
             $builder->add($this->addMassGenerationGroup($builder));
             $builder->add('saveAndDownloadCsv', SubmitType::class, [
-                'label' => t('Vytvořit a stáhnout CSV'),
+                'label' => t('Create and download CSV'),
             ]);
         }
 
         if ($this->promoCode === null) {
             $builder->add('domainId', DomainType::class, [
                 'required' => true,
-                'label' => t('Doména'),
+                'label' => t('Domain'),
             ]);
         }
 
         $this->buildBaseFormGroup($builder, $options);
-        $this->buildPromoCodeFlagsForm($builder);
+        $this->buildLimitsFormGroup($builder);
+        $this->buildTimeValidationFormGroup($builder);
+        $this->buildFlagsFormGroup($builder);
         $this->buildProductsWithSaleForm($builder);
-        $this->buildCategoriesWithSaleForm($builder);
+        $this->buildCategoriesWithSaleFormGroup($builder);
+        $this->buildByCartContentFormGroup($builder);
     }
 
     /**
@@ -97,130 +100,167 @@ class PromoCodeFormTypeExtension extends AbstractTypeExtension
      */
     private function buildBaseFormGroup(FormBuilderInterface $builder, array $options): void
     {
-        $builder->add('discountType', ChoiceType::class, [
-            'expanded' => true,
-            'multiple' => false,
-            'choices' => [
-                t('Procenta') => PromoCode::DISCOUNT_TYPE_PERCENT,
-                t('Nominální') => PromoCode::DISCOUNT_TYPE_NOMINAL,
-            ],
-            'position' => ['before' => 'limits'],
-            'label' => t('Typ slevy'),
-        ]);
-
-        $discountOptions = $builder->get('percent')->getOptions();
-        $discountOptions['label'] = t('Sleva (%)');
-        $builder->remove('percent');
-
-        $putLimitsAfter = $options['mass_generate'] ? 'identifier' : 'code';
-        $this->buildLimitFields($builder, $discountOptions, $putLimitsAfter);
-
         $builder->add('identifier', TextType::class, [
-            'label' => t('Identifikátor kupónu pro IS'),
+            'label' => t('Promo code identifier in IS'),
             'required' => true,
             'constraints' => [
                 new Constraints\NotNull([
-                    'message' => 'Identifikátor musí obsahovat dva znaky',
+                    'message' => 'The identifier must contain two characters',
                 ]),
                 new Constraints\Length([
                     'min' => 2,
                     'max' => 2,
-                    'exactMessage' => 'Identifikátor musí obsahovat dva znaky',
+                    'exactMessage' => 'The identifier must contain two characters',
                 ]),
             ],
         ]);
 
-        $builder->add('applyOnSecondProduct', YesNoType::class, [
-            'label' => t('Platí na druhý produkt v košíku'),
+        $builder->add('discountType', ChoiceType::class, [
+            'expanded' => true,
+            'multiple' => false,
+            'choices' => [
+                t('Percents') => PromoCode::DISCOUNT_TYPE_PERCENT,
+                t('Nominal') => PromoCode::DISCOUNT_TYPE_NOMINAL,
+            ],
+            'label' => t('Discount type'),
+        ]);
+
+        $builder->add('remainingUses', IntegerType::class, [
+            'label' => t('Remaining number of uses'),
             'required' => false,
-            'position' => ['after' => 'limits'],
         ]);
 
         $codeOptions = $builder->get('code')->getOptions();
         $codeOptions['constraints'] = [
-            new Constraints\NotBlank(['message' => 'Vyplňte prosím promo kód']),
+            new Constraints\NotBlank(['message' => 'Please enter promo code']),
         ];
         $codeOptions['position'] = 'first';
-        $codeOptions['label'] = t('Promo kód');
+        $codeOptions['label'] = t('Promo code');
         $builder->add('code', TextType::class, $codeOptions);
 
         if ($options['mass_generate'] === true) {
             $builder->remove('code');
         }
-
-        $this->buildTimeValidationForm($builder);
-
-        $builder->add('remainingUses', IntegerType::class, [
-            'label' => t('Zbývající počet použití'),
-            'required' => false,
-        ]);
     }
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      */
-    private function buildPromoCodeFlagsForm(FormBuilderInterface $builder): void
+    private function buildLimitsFormGroup(FormBuilderInterface $builder): void
+    {
+        $discountOptions = $builder->get('percent')->getOptions();
+        $builder->remove('percent');
+
+        $limitsGroup = $builder->create('limitsGroup', GroupType::class, [
+            'label' => t('Apply according to the total price of the order'),
+        ]);
+
+        $limitsGroup->add(
+            $limitsGroup->create('limits', PromoCodeLimitCollectionType::class, [
+                'label' => t('Limits'),
+                'entry_type' => PromoCodeLimitType::class,
+                'entry_options' => ['discount' => $discountOptions],
+                'required' => false,
+                'allow_add' => true,
+                'allow_delete' => true,
+                'error_bubbling' => false,
+                'constraints' => [
+                    new Constraints\Count([
+                        'min' => 1,
+                        'minMessage' => 'Please enter at least one discount limit',
+                    ]),
+                ],
+            ])
+        );
+
+        $builder->add($limitsGroup);
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     */
+    private function buildTimeValidationFormGroup(FormBuilderInterface $builder): void
+    {
+        $timeValidationGroup = $builder->create('timeValidationGroup', GroupType::class, [
+            'label' => t('Apply according to date and time limit'),
+        ]);
+
+        $timeValidationGroup->add('dateValidFrom', DatePickerType::class, [
+            'view_timezone' => DateTimeHelper::UTC_TIMEZONE,
+            'required' => false,
+            'label' => t('Valid from (date)'),
+        ])->add('timeValidFrom', TextType::class, [
+            'icon_title' => t('Time format: "hh:mm", e.g.: "07:45", "23:05"'),
+            'constraints' => [
+                new Constraints\Callback([$this, 'validateTimeIfIsSet']),
+            ],
+            'required' => false,
+            'label' => t('Valid from (time)'),
+        ])->add('dateValidTo', DatePickerType::class, [
+            'view_timezone' => DateTimeHelper::UTC_TIMEZONE,
+            'required' => false,
+            'label' => t('Valid to (date)'),
+        ])->add('timeValidTo', TextType::class, [
+            'icon_title' => t('Time format: "hh:mm", e.g.: "07:45", "23:05"'),
+            'constraints' => [
+                new Constraints\Callback([$this, 'validateTimeIfIsSet']),
+            ],
+            'required' => false,
+            'label' => t('Valid to (time)'),
+        ]);
+
+        $builder->add($timeValidationGroup);
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     */
+    private function buildFlagsFormGroup(FormBuilderInterface $builder): void
     {
         $flagsGroup = $builder->create('flagsGroup', GroupType::class, [
-            'label' => t('Aplikovat podle příznaků'),
+            'label' => t('Apply according to product flags'),
         ]);
         $builder->add($flagsGroup);
         $flagsGroup->add('onSale', YesNoType::class, [
             'required' => false,
-            'label' => t('Produkt ve výprodeji'),
+            'label' => t('Product On Sale'),
         ])
-        ->add('inAction', YesNoType::class, [
-            'required' => false,
-            'label' => t('Produkt v akci'),
-        ])
-        ->add('priceHit', YesNoType::class, [
-            'required' => false,
-            'label' => t('Produkt cenový hit'),
-        ]);
+            ->add('inAction', YesNoType::class, [
+                'required' => false,
+                'label' => t('Product In Action'),
+            ])
+            ->add('priceHit', YesNoType::class, [
+                'required' => false,
+                'label' => t('Product Price Hit'),
+            ]);
     }
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      */
-    private function buildTimeValidationForm(FormBuilderInterface $builder)
+    private function buildProductsWithSaleForm(FormBuilderInterface $builder): void
     {
-        $builder->add('dateValidFrom', DatePickerType::class, [
-            'view_timezone' => DateTimeHelper::UTC_TIMEZONE,
-            'required' => false,
-            'label' => t('Datum platnosti OD'),
-        ])->add('timeValidFrom', TextType::class, [
-            'icon_title' => t('Formát času: "hh:mm", např.: "07:45", "23:05"'),
-            'constraints' => [
-                new Constraints\Callback([$this, 'validateTimeIfIsSet']),
-            ],
-            'required' => false,
-            'label' => t('Čas platnosti OD'),
-        ])->add('dateValidTo', DatePickerType::class, [
-            'view_timezone' => DateTimeHelper::UTC_TIMEZONE,
-            'required' => false,
-            'label' => t('Datum platnosti DO'),
-        ])->add('timeValidTo', TextType::class, [
-            'icon_title' => t('Formát času: "hh:mm", např.: "07:45", "23:05"'),
-            'constraints' => [
-                new Constraints\Callback([$this, 'validateTimeIfIsSet']),
-            ],
-            'required' => false,
-            'label' => t('Čas platnosti DO'),
-        ]);
+        $builder
+            ->add('productsWithSale', ProductsType::class, [
+                'required' => false,
+                'sortable' => true,
+                'label' => t('Apply to selected products'),
+            ])
+            ->addViewTransformer($this->removeDuplicatesTransformer);
     }
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      */
-    private function buildCategoriesWithSaleForm(FormBuilderInterface $builder)
+    private function buildCategoriesWithSaleFormGroup(FormBuilderInterface $builder): void
     {
         $displayCategoriesGroup = $builder->create('displayCategoriesGroup', GroupType::class, [
-            'label' => t('Slevněné kategorie'),
+            'label' => t('Apply to selected categories'),
         ]);
         $displayCategoriesGroup->add('categoriesWithSale', CategoriesType::class, [
             'required' => false,
             'domain_id' => Domain::FIRST_DOMAIN_ID,
-            'label' => t('Kategorie'),
+            'label' => t('Categories'),
             'display_format' => FormRenderingConfigurationExtension::DISPLAY_FORMAT_MULTIDOMAIN_ROWS_NO_PADDING,
         ]);
         $builder->add($displayCategoriesGroup);
@@ -229,21 +269,24 @@ class PromoCodeFormTypeExtension extends AbstractTypeExtension
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      */
-    private function buildProductsWithSaleForm(FormBuilderInterface $builder)
+    private function buildByCartContentFormGroup(FormBuilderInterface $builder): void
     {
-        $builder
-            ->add('productsWithSale', ProductsType::class, [
-                'required' => false,
-                'sortable' => true,
-                'label' => t('Slevněné produkty'),
-            ])
-            ->addViewTransformer($this->removeDuplicatesTransformer);
+        $cartContentGroup = $builder->create('cartContentGroup', GroupType::class, [
+            'label' => t('Apply according to the content of the cart'),
+        ]);
+
+        $cartContentGroup->add('applyOnSecondProduct', YesNoType::class, [
+            'label' => t('Applies to the second product in the cart'),
+            'required' => false,
+        ]);
+
+        $builder->add($cartContentGroup);
     }
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver
             ->setRequired(['promo_code', 'mass_generate'])
@@ -284,14 +327,14 @@ class PromoCodeFormTypeExtension extends AbstractTypeExtension
      * @param \App\Model\Order\PromoCode\PromoCodeData $promoCodeData
      * @param \Symfony\Component\Validator\Context\ExecutionContextInterface $context
      */
-    public function validateDateTimeFrom(PromoCodeData $promoCodeData, ExecutionContextInterface $context)
+    public function validateDateTimeFrom(PromoCodeData $promoCodeData, ExecutionContextInterface $context): void
     {
-        if ($promoCodeData->timeValidFrom !== null) {
-            if ($promoCodeData->dateValidFrom === null) {
-                $context->buildViolation(t('Pokud je vyplněn čas OD, vyplňte i datum OD.'))
-                    ->atPath('dateValidFrom')
-                    ->addViolation();
-            }
+        if ($promoCodeData->timeValidFrom !== null &&
+            $promoCodeData->dateValidFrom === null
+        ) {
+            $context->buildViolation(t('If the time FROM is filled in, enter the date FROM too.'))
+                ->atPath('dateValidFrom')
+                ->addViolation();
         }
     }
 
@@ -299,14 +342,14 @@ class PromoCodeFormTypeExtension extends AbstractTypeExtension
      * @param \App\Model\Order\PromoCode\PromoCodeData $promoCodeData
      * @param \Symfony\Component\Validator\Context\ExecutionContextInterface $context
      */
-    public function validateDateTimeTo(PromoCodeData $promoCodeData, ExecutionContextInterface $context)
+    public function validateDateTimeTo(PromoCodeData $promoCodeData, ExecutionContextInterface $context): void
     {
-        if ($promoCodeData->timeValidTo !== null) {
-            if ($promoCodeData->dateValidTo === null) {
-                $context->buildViolation(t('Pokud je vyplněn čas DO, vyplňte i datum DO.'))
-                    ->atPath('dateValidTo')
-                    ->addViolation();
-            }
+        if ($promoCodeData->timeValidTo !== null &&
+            $promoCodeData->dateValidTo === null
+        ) {
+            $context->buildViolation(t('If the time TO is filled in, enter the date TO too.'))
+                ->atPath('dateValidTo')
+                ->addViolation();
         }
     }
 
@@ -314,12 +357,13 @@ class PromoCodeFormTypeExtension extends AbstractTypeExtension
      * @param string|null $time
      * @param \Symfony\Component\Validator\Context\ExecutionContextInterface $context
      */
-    public function validateTimeIfIsSet($time, ExecutionContextInterface $context)
+    public function validateTimeIfIsSet(?string $time, ExecutionContextInterface $context): void
     {
-        if ($time !== null && $time !== '') {
-            if (preg_match(DateTimeHelper::TIME_REGEX, $time) !== 1) {
-                $context->addViolation(t('Prosím vyplňte správný formát času hh:mm'));
-            }
+        if ($time !== null &&
+            $time !== '' &&
+            preg_match(DateTimeHelper::TIME_REGEX, $time) !== 1
+        ) {
+            $context->addViolation(t('Please enter the correct time format (hh:mm)'));
         }
     }
 
@@ -327,7 +371,7 @@ class PromoCodeFormTypeExtension extends AbstractTypeExtension
      * @param \App\Model\Order\PromoCode\PromoCodeData $promoCodeData
      * @param \Symfony\Component\Validator\Context\ExecutionContextInterface $context
      */
-    public function validateUniquePromoCodeByDomain(PromoCodeData $promoCodeData, ExecutionContextInterface $context)
+    public function validateUniquePromoCodeByDomain(PromoCodeData $promoCodeData, ExecutionContextInterface $context): void
     {
         if ($promoCodeData->code === null) {
             return;
@@ -338,7 +382,7 @@ class PromoCodeFormTypeExtension extends AbstractTypeExtension
 
         $promoCode = $this->promoCodeFacade->findPromoCodeByCodeAndDomain($promoCodeData->code, $promoCodeData->domainId);
         if ($promoCode !== null) {
-            $context->buildViolation('Promo kód s tímto kódem již existuje')->atPath('code')->addViolation();
+            $context->buildViolation('Promo code with this code already exists')->atPath('code')->addViolation();
         }
     }
 
@@ -349,56 +393,29 @@ class PromoCodeFormTypeExtension extends AbstractTypeExtension
     private function addMassGenerationGroup(FormBuilderInterface $builder): FormBuilderInterface
     {
         $builderMassPromoCodeGroup = $builder->create('massPromoCodeGroup', GroupType::class, [
-            'label' => t('Hromadné generování kupónu'),
+            'label' => t('Bulk promo code generation'),
             'position' => 'first',
         ]);
 
         $builderMassPromoCodeGroup
             ->add('prefix', TextType::class, [
-                'label' => t('Prefix (např. "JARO_")'),
+                'label' => t('Prefix (e.g. "SPRING_")'),
                 'required' => false,
             ])
             ->add('quantity', IntegerType::class, [
-                'label' => t('Počet generovaných kupónů'),
+                'label' => t('Number of generated promo codes'),
                 'required' => true,
                 'constraints' => [
                     new NotBlank([
-                        'message' => 'Vyplňte prosím množství.',
+                        'message' => 'Please enter the quantity.',
                     ]),
                     new Positive([
-                        'message' => 'Vyplňte prosím kladnou hodnotu.',
+                        'message' => 'Please enter the positive value.',
                     ]),
                 ],
-                'invalid_message' => 'Zadejte prosím celé číslo.',
+                'invalid_message' => 'Please enter the whole number.',
             ]);
 
         return $builderMassPromoCodeGroup;
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $discountOptions
-     * @param string $after
-     */
-    private function buildLimitFields(FormBuilderInterface $builder, array $discountOptions, string $after): void
-    {
-        $builder->add(
-            $builder->create('limits', PromoCodeLimitCollectionType::class, [
-                'label' => t('Limity'),
-                'position' => ['after' => $after],
-                'entry_type' => PromoCodeLimitType::class,
-                'entry_options' => ['discount' => $discountOptions],
-                'required' => false,
-                'allow_add' => true,
-                'allow_delete' => true,
-                'error_bubbling' => false,
-                'constraints' => [
-                    new Constraints\Count([
-                        'min' => 1,
-                        'minMessage' => 'Vložte, prosím, alespoň jeden limit se slevou',
-                    ]),
-                ],
-            ])
-        );
     }
 }
