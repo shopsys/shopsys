@@ -109,6 +109,9 @@ msgstr ""
 msgid "All domains"
 msgstr ""
 
+msgid "All prices have to be handled manually if checked, otherwise the unit price without VAT and the total prices for that item will be recalculated automatically."
+msgstr "Pokud je zaškrtnuto, všechny ceny je třeba nastavovat ručně, jinak se jednotková cena bez DPH a celkové ceny pro tuto položku přepočítají automaticky."
+
 msgid "Amount"
 msgstr "Množství"
 
@@ -1360,6 +1363,9 @@ msgstr ""
 msgid "Order has been created but there were problems during payment"
 msgstr "Objednávka byla dokončena a odeslána, ale nastaly potíže během placení"
 
+msgid "Order items"
+msgstr "Položky objednávky"
+
 msgid "Order not found"
 msgstr "Objednávka nebyla nalezena"
 
@@ -1410,6 +1416,9 @@ msgstr "Platební metoda vybrána"
 
 msgid "PSČ"
 msgstr ""
+
+msgid "Package tracking"
+msgstr "Sledování zásilky"
 
 msgid "Page not found!"
 msgstr "Stránka nenalezena!"
@@ -1957,6 +1966,9 @@ msgstr "Výrobní číslo"
 msgid "Set new password"
 msgstr "Nastavit nové heslo"
 
+msgid "Set prices manually"
+msgstr "Nastavit ceny ručně"
+
 msgid "Settings"
 msgstr ""
 
@@ -2254,6 +2266,21 @@ msgstr "Celková cena bez DPH"
 msgid "Total price including VAT"
 msgstr "Celková cena s DPH"
 
+msgid "Tracking URL"
+msgstr "URL pro sledování zásilky"
+
+msgid "Tracking URL variables"
+msgstr "Proměnné sledovací URL"
+
+msgid "Tracking instructions"
+msgstr "Instrukce pro sledování zásilky"
+
+msgid "Tracking instructions variables"
+msgstr "Proměnné pro instrukce pro sledování zásilky"
+
+msgid "Tracking number"
+msgstr "Číslo zásilky"
+
 msgid "Try using web search"
 msgstr "Zkuste použít vyhledávání na webu"
 
@@ -2335,6 +2362,12 @@ msgstr "Nepodařilo se odstranit položku z košíku. Zřejmě vypršela platnos
 msgid "Unable to send some emails, please contact us for order verification."
 msgstr "Nepodařilo se odeslat některé e-maily, pro ověření objednávky nás prosím kontaktujte."
 
+msgid "Unit"
+msgstr "Jednotka"
+
+msgid "Unit price excluding VAT"
+msgstr "Jednotková cena bez DPH"
+
 msgid "Unit price including VAT"
 msgstr "Jednotková cena s DPH"
 
@@ -2370,6 +2403,9 @@ msgstr ""
 
 msgid "VAT rate"
 msgstr "Sazba DPH"
+
+msgid "VAT rate (%)"
+msgstr "Výše DPH (%)"
 
 msgid "VISA"
 msgstr ""

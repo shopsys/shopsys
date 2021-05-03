@@ -661,6 +661,9 @@ msgstr "Vážený zákazníku,<br /><br /> na základě vašeho zadaného e-mail
 msgid "Dear customer, <br /><br />Processing your order has been finished."
 msgstr "Vážený zákazníku, <br /><br />zpracování objednávky bylo dokončeno."
 
+msgid "Dear customer, <br /><br />Processing your order has been finished.<br /><br />{tracking_instructions}"
+msgstr "Vážený zákazníku, <br /><br />Vaše objednávka byla zpracována.<br /><br />{tracking_instructions}"
+
 msgid "Dear customer, <br /><br />Your order has been cancelled."
 msgstr "Vážený zákazníku, <br /><br />Vaše objednávka byla zrušena."
 
@@ -1668,6 +1671,9 @@ msgstr "Poukázka na 100 CZK"
 
 msgid "Ticket for 100 Czech crowns"
 msgstr "Poukázka na 100 korun českých"
+
+msgid "To track your package, click on this link: <a href=\"{tracking_url}\">{tracking_url}</a>."
+msgstr "Pro sledování Vaši zásilky klikněte na tento odkaz: <a href=\"{tracking_url}\">{tracking_url}</a>."
 
 msgid "Toilet paper with Euro pictures. Even you can feel rich now!"
 msgstr "toaleťák s potiskem bankovek EURO, pocit z použití tohoto toaletního papíru dá zapomenout na jakékoliv trable spojené s finanční krizí"

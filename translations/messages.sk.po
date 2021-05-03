@@ -355,6 +355,9 @@ msgstr "Ale na iných adresách toho pre vás máme veľa..."
 msgid "All domains"
 msgstr ""
 
+msgid "All prices have to be handled manually if checked, otherwise the unit price without VAT and the total prices for that item will be recalculated automatically."
+msgstr ""
+
 msgid "Alpká bílá"
 msgstr "Alpská biela"
 
@@ -1930,6 +1933,9 @@ msgstr "URL adresa detailu objednávky"
 msgid "Order has been created but there were problems during payment"
 msgstr "Objednávka bola vytvorená, no pri platení nastali problémy."
 
+msgid "Order items"
+msgstr ""
+
 msgid "Order not found"
 msgstr "Objednávka nenájdená"
 
@@ -2016,6 +2022,9 @@ msgstr "\nPSČ"
 
 msgid "PURA"
 msgstr "PURA"
+
+msgid "Package tracking"
+msgstr ""
 
 msgid "Page not found!"
 msgstr "Stránka nenájdená!"
@@ -2809,6 +2818,9 @@ msgstr ""
 msgid "Set new password"
 msgstr "Nastaviť nové heslo"
 
+msgid "Set prices manually"
+msgstr ""
+
 msgid "Settings"
 msgstr ""
 
@@ -3082,6 +3094,15 @@ msgstr "Tento tovar má pre svoje rozmery a náročnosť manipulácie iné poži
 msgid "Top produkty"
 msgstr "Top produkty"
 
+msgid "Total"
+msgstr ""
+
+msgid "Total excluding VAT"
+msgstr ""
+
+msgid "Total including VAT"
+msgstr ""
+
 msgid "Total order price (including VAT)"
 msgstr "Celková cena objednávky (s DPH)"
 
@@ -3096,6 +3117,21 @@ msgstr "Toto pole je povinné a musí obsahovať e-mailovú adresu."
 
 msgid "Toužíte po celistvém designu, vysoké kvalitě a dokonalém zpracování každého detailu ve vaší domácnosti? Dejte sbohem nejednotnému vzhledu a prohlédněte si naše nábytkové programy, díky kterým ušetříte nejen peníze, ale i starosti. Navíc si můžete sestavit jednotlivé části tak, aby vyhovovaly vašemu prostoru."
 msgstr "Túžite po celistvom dizajne, vysokej kvalite a dokonalom vyhotovení každého detailu vo vašej domácnosti? Dajte zbohom nejednotnému vzhľadu a pozrite si naše nábytkové programy, vďaka ktorým ušetríte nielen peniaze, ale aj starosti. Navyše si môžete zostaviť jednotlivé časti tak, aby vyhovovali vášmu priestoru."
+
+msgid "Tracking URL"
+msgstr ""
+
+msgid "Tracking URL variables"
+msgstr ""
+
+msgid "Tracking instructions"
+msgstr ""
+
+msgid "Tracking instructions variables"
+msgstr ""
+
+msgid "Tracking number"
+msgstr ""
 
 msgid "Try using web search"
 msgstr "Skúste použiť vyhľadávanie na webe"
@@ -3187,6 +3223,12 @@ msgstr "Odstránenie položky z košíka sa nepodarilo. Platnosť odkazu na jej 
 msgid "Unable to send some emails, please contact us for order verification."
 msgstr "Pri odosielaní e-mailu nastala chyba, prosím kontaktujte nás pre potvrdenie objednávky."
 
+msgid "Unit"
+msgstr ""
+
+msgid "Unit price excluding VAT"
+msgstr ""
+
 msgid "Unit price including VAT"
 msgstr "Cena za jednotku s DPH"
 
@@ -3237,6 +3279,9 @@ msgstr "V priebehu objednávkového procesu bola zmenená cena platby. Prosím, 
 
 msgid "VAT rate"
 msgstr "Sadzba DPH"
+
+msgid "VAT rate (%)"
+msgstr ""
 
 msgid "VISA"
 msgstr "VISA"
