@@ -2,13 +2,9 @@
 {% set shopInfoPhoneNumber = getShopInfoPhoneNumber() %}
 {% set shopInfoPhoneHours = getShopInfoPhoneHours() %}
 
-<div class="box-info {{ cssClass }}">
+<div class="box-info">
     {% set inofoboxIcon = 'potrebujete_poradit' %}
     {% set inofoboxIcon2x = 'potrebujete_poradit2x' %}
-    {% if inHeader is defined and inHeader == true %}
-        {% set inofoboxIcon = 'potrebujete_poradit-flat' %}
-        {% set inofoboxIcon2x = 'potrebujete_poradit-flat-2x' %}
-    {% endif %}
     <picture>
         <source
             srcset="
@@ -24,22 +20,16 @@
         >
     </picture>
     <div class="box-info__content">
-        <div class="box-info__text">
-            <h2 class="box-info__title">{{ 'Potřebujete poradit?'|trans }}</h2>
-            <span class="box-info__hours">{{ shopInfoPhoneHours }}</span>
-        </div>
+        <h2 class="box-info__title">{{ 'Potřebujete poradit?'|trans }}</h2>
+        
         <div class="box-info__contacts">
-            <a href="tel:{{ shopInfoPhoneNumber }}" class="box-info__contacts__link">
-                <i class="box-info__contacts__icon box-info__contacts__icon--phone svg svg-phone"></i>
-                <span class="box-info__contacts__text">{{ shopInfoPhoneNumber }}</span>
-            </a>
-            <a
-                href="/zakaznicky-formular"
-                class="box-info__contacts__btn btn"
-            >
-                <span class="box-info__contacts__btn__text">{{ 'Napište nám'|trans }}</span>
-                <i class="box-info__contacts__icon svg svg-email"></i>
-            </a>
+            <i class="svg svg-phone"></i>
+            <a class="box-info__contacts__phone" href="tel:{{ shopInfoPhoneNumber }}">{{ shopInfoPhoneNumber }}</a>
+            <p class="box-info__contacts__hours">{{ shopInfoPhoneHours }}</p>
         </div>
+
+        <a href="/zakaznicky-formular" class="position-relative btn btn--secondary">
+            {{ 'Napište nám'|trans }}
+        </a>
     </div>
 </div>

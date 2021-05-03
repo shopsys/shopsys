@@ -30,20 +30,12 @@ img {
     }
 
     &__line {
-        &--copyright {
-            position: relative;
-        }
-
-        &--grey {
-            background: @color-light;
+        &--dark {
+            background-color: @color-grey;
         }
 
         &--bg-color {
             background: @color-light-secondary;
-        }
-
-        &--top-border {
-            border-top: 2px solid @color-border;
         }
 
         &--spacing {
@@ -80,10 +72,6 @@ img {
             }
         }
 
-        &--grey-bottom-border {
-            border-bottom: @web-footer-border;
-        }
-
         &--margin-bottom {
             margin-bottom: 1.5rem;
         }
@@ -107,11 +95,6 @@ img {
             }
         }
 
-        &--zi {
-            position: relative;
-            z-index: 10;
-        }
-
         &--cart {
             padding: 25px 0 4rem;
 
@@ -122,18 +105,6 @@ img {
 
             @media @query-lg {
                 padding: 3rem 0 8rem;
-            }
-
-            &-buttons-up-mobile {
-                @media @query-mobile {
-                    padding-bottom: 4rem;
-                }
-            }
-
-            &-final-step {
-                @media @query-mobile {
-                    padding-bottom: 330px;
-                }
             }
         }
     }
@@ -148,10 +119,6 @@ img {
 
         &--no-padding {
             padding: 0;
-        }
-
-        &--category-detail {
-            padding-top: 1.5rem;
         }
 
         &--full-width {

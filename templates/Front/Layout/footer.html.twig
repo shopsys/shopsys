@@ -2,9 +2,8 @@
 {% set shopInfoPhoneNumber = getShopInfoPhoneNumber() %}
 {% set shopInfoPhoneHours = getShopInfoPhoneHours() %}
 {% set domain = getDomain() %}
-{% set logoName = domain.id == 1 ? 'logo_footer' : 'logo_footer_sk' %}
 
-<div class="footer">
+<footer class="footer">
     {% if getRoute() not in ['front_cart', 'front_order_step_transport_payment', 'front_order_step_personal_info', 'front_order_not_paid'] %}
         {% if showNewsletter %}
             <div class="web__line clearfix dont-print">
@@ -15,88 +14,76 @@
                 </div>
             </div>
         {% endif %}
-        <div class="web__line">
-            <div class="web__container">
-                {% include 'Front/Content/InfoBox/infoBox.html.twig' with { 'cssClass' : null } %}
-            </div>
-        </div>
-        {% include 'Front/Content/Disclaimer/disclaimer.html.twig' with { 'inCart' : false } %}
     {% endif %}
 
-    {% if getRoute() not in ['front_order_step_transport_payment', 'front_order_step_personal_info', 'front_order_not_paid'] %}
-        <div class="web__line web__line--grey web__line--grey-bottom-border clearfix dont-print">
-            <div class="web__container footer__wrap">
-                <div class="footer__block">
-                    <div class="footer__block__contact">
-                        <div class="footer__block__menu__item padding-0">
-                            <img
-                                class="footer__block__img footer__block__img--logo"
-                                loading="lazy"
-                                src="{{ imgLazyloadPlaceholder }}"
-                                data-src="{{ asset("public/frontend/images/#{logoName}.svg") }}"
-                                alt="{{ 'Commerce Cloud'|trans }}"
-                            >
-                            <p class="footer__block__paragraph">
-                                {{ 'Jsme na trhu již 17 let a od vývoje e-shopů na míru<br>jsme se dostali k digitalizaci prodejů největších B2C a B2B hráčů,<br>kterým pomáháme uspět v omnichannel světě.'|transHtml }}
-                            </p>
-                            <div class="footer__block__langs">
+    <div class="web__line web__line--dark">
+        <div class="web__container">
+            <div class="footer__bottom">
+                {% if getRoute() not in ['front_cart', 'front_order_step_transport_payment', 'front_order_step_personal_info', 'front_order_not_paid'] %}
+                    {% include 'Front/Content/InfoBox/infoBox.html.twig' %}
+                {% endif %}
+
+                {% if getRoute() not in ['front_order_step_transport_payment', 'front_order_step_personal_info', 'front_order_not_paid'] %}
+                    <div class="footer__block">
+                        {% cache constant('App\\Controller\\Front\\ArticleController::FOOTER_MENU_TWIG_CACHE_KEY') {lifetime:getCacheLifetimeByHours(24), domainId:getDomain().id} %}
+                            {{ render(controller('App\\Controller\\Front\\ArticleController:footerMenuAction'))|spaceless }}
+                        {% endcache %}
+
+                        <div class="footer__block__contact">
+                            <div class="footer__block__menu__item padding-0">
+                                <p class="footer__block__paragraph">
+                                    {{ 'Jsme na trhu již 17 let a od vývoje e-shopů na míru<br>jsme se dostali k digitalizaci prodejů největších B2C a B2B hráčů,<br>kterým pomáháme uspět v omnichannel světě.'|transHtml }}
+                                </p>
+                                <div class="footer__block__langs">
+                                    <a
+                                        href="{{ domain.id == 1 ? '/' : 'https://www.shopsys.cz/' }}"
+                                        class="footer__block__langs__link no-hover-decoration"
+                                        {% if domain.id == 2 %}target="_blank"{% endif %}
+                                    >
+                                        <img
+                                            class="footer__block__img footer__block__img--lang"
+                                            loading="lazy"
+                                            src="{{ imgLazyloadPlaceholder }}"
+                                            data-src="{{ asset('public/frontend/images/flags/cz.svg') }}"
+                                            alt="{{ 'Česká republika'|trans }}"
+                                        >
+                                        <span class="footer__block__label">{{ 'Česká republika'|trans }}</span>
+                                    </a>
+                                    <a
+                                        href="{{ domain.id ==  2 ? '/' : 'https://www.shopsys.sk/' }}"
+                                        class="footer__block__langs__link no-hover-decoration"
+                                        {% if domain.id == 1 %}target="_blank"{% endif %}
+                                    >
+                                        <img
+                                            class="footer__block__img footer__block__img--lang"
+                                            loading="lazy"
+                                            src="{{ imgLazyloadPlaceholder }}"
+                                            data-src="{{ asset('public/frontend/images/flags/sk.svg') }}"
+                                            alt="{{ 'Slovensko'|trans }}"
+                                        >
+                                        <span class="footer__block__label">{{ 'Slovensko'|trans }}</span>
+                                    </a>
+                                </div>
+                                <h2 class="footer__block__heading footer__block__heading--inline-xs">{{ 'Sledujte nás'|trans }}</h2>
                                 <a
-                                    href="{{ domain.id == 1 ? '/' : 'https://www.shopsys.cz/' }}"
-                                    class="footer__block__langs__link no-hover-decoration"
-                                    {% if domain.id == 2 %}target="_blank"{% endif %}
+                                    class="no-hover-decoration"
+                                    href="https://www.facebook.com/shopsyscz/"
+                                    target="_blank"
                                 >
                                     <img
-                                        class="footer__block__img footer__block__img--lang"
+                                        class="footer__block__img footer__block__img--social"
                                         loading="lazy"
                                         src="{{ imgLazyloadPlaceholder }}"
-                                        data-src="{{ asset('public/frontend/images/flags/cz.svg') }}"
-                                        alt="{{ 'Česká republika'|trans }}"
+                                        data-src="{{ asset('public/frontend/images/social/facebook.svg') }}"
+                                        alt="{{ 'Facebook'|trans }}"
                                     >
-                                    <span class="footer__block__label">{{ 'Česká republika'|trans }}</span>
-                                </a>
-                                <a
-                                    href="{{ domain.id ==  2 ? '/' : 'https://www.shopsys.sk/' }}"
-                                    class="footer__block__langs__link no-hover-decoration"
-                                    {% if domain.id == 1 %}target="_blank"{% endif %}
-                                >
-                                    <img
-                                        class="footer__block__img footer__block__img--lang"
-                                        loading="lazy"
-                                        src="{{ imgLazyloadPlaceholder }}"
-                                        data-src="{{ asset('public/frontend/images/flags/sk.svg') }}"
-                                        alt="{{ 'Slovensko'|trans }}"
-                                    >
-                                    <span class="footer__block__label">{{ 'Slovensko'|trans }}</span>
                                 </a>
                             </div>
-                            <h2 class="footer__block__heading footer__block__heading--inline-xs">{{ 'Sledujte nás'|trans }}</h2>
-                            <a
-                                class="no-hover-decoration"
-                                href="https://www.facebook.com/shopsyscz/"
-                                target="_blank"
-                            >
-                                <img
-                                    class="footer__block__img footer__block__img--social"
-                                    loading="lazy"
-                                    src="{{ imgLazyloadPlaceholder }}"
-                                    data-src="{{ asset('public/frontend/images/social/facebook.svg') }}"
-                                    alt="{{ 'Facebook'|trans }}"
-                                >
-                            </a>
                         </div>
                     </div>
-                    {% cache constant('App\\Controller\\Front\\ArticleController::FOOTER_MENU_TWIG_CACHE_KEY') {lifetime:getCacheLifetimeByHours(24), domainId:getDomain().id} %}
-                        {{ render(controller('App\\Controller\\Front\\ArticleController:footerMenuAction'))|spaceless }}
-                    {% endcache %}
-                </div>
+                {% endif %}
+                {% include 'Front/Layout/copyright.html.twig' %}
             </div>
         </div>
-    {% endif %}
-    {% set copyrightCssClass = null %}
-    {% if getRoute() in ['front_order_step_transport_payment', 'front_order_step_personal_info', 'front_cart', 'front_order_not_paid'] %}
-        {% set copyrightCssClass = 'footer__bottom--checkout' %}
-        {% include 'Front/Content/Disclaimer/disclaimer.html.twig' with { 'inCart' : true } %}
-    {% endif %}
-    {% include 'Front/Layout/copyright.html.twig' with { 'cssClass' : copyrightCssClass } %}
-</div>
-
+    </div>
+</footer>

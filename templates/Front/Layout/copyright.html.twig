@@ -1,38 +1,32 @@
 {% set domain = getDomain() %}
-<div class="web__line web__line--copyright">
-    <footer class="web__container footer__bottom {{ cssClass }}">
-        <div class="footer__bottom__copyright dont-print">
-            &copy; {{ 'now' | date('Y') }} {{ 'Copyright Shopsys, s.r.o.'|trans }}
-        </div>
-        <div class="footer__bottom__articles">
-            <ul class="menu dont-print">
-                <li class="menu__item">
-                    <a class="menu__item__link" href="/copyright">{{ 'Copyright'|trans }}</a>
-                </li>
-                <li class="menu__item">
-                    <a
-                        class="menu__item__link"
-                        href="{{ domain.id == 1 ? '/ochrana-osobnich-udaju' : '/ochrana-osobnych-udajov' }}"
-                    >
-                        {{ 'Ochrana osobních údajů'|trans }}
-                    </a>
-                </li>
-                <li class="menu__item">
-                    <a
-                        class="menu__item__link"
-                        href="/cookie"
-                    >
-                        {{ 'Cookies'|trans }}
-                        <img
-                            class="menu__item__link__icon"
-                            loading="lazy"
-                            src="{{ imgLazyloadPlaceholder }}"
-                            data-src="{{ asset('public/frontend/images/cookie.png') }}"
-                            alt="{{ 'Cookies'|trans }}"
-                        >
-                    </a>
-                </li>
-            </ul>
-        </div>
-    </footer>
-</div>
+<p class="dont-print">
+    &copy; {{ 'now' | date('Y') }} {{ 'Copyright Shopsys, s.r.o.'|trans }}
+</p>
+<ul class="menu dont-print">
+    <li class="menu__item">
+        <a class="menu__item__link" href="/copyright">{{ 'Copyright'|trans }}</a>
+    </li>
+    <li class="menu__item">
+        <a
+            class="menu__item__link"
+            href="{{ domain.id == 1 ? '/ochrana-osobnich-udaju' : '/ochrana-osobnych-udajov' }}"
+        >
+            {{ 'Ochrana osobních údajů'|trans }}
+        </a>
+    </li>
+    <li class="menu__item">
+        <a
+            class="menu__item__link"
+            href="/cookie"
+        >
+            {{ 'Cookies'|trans }}
+            <img
+                class="menu__item__link__icon"
+                loading="lazy"
+                src="{{ imgLazyloadPlaceholder }}"
+                data-src="{{ asset('public/frontend/images/cookie.png') }}"
+                alt="{{ 'Cookies'|trans }}"
+            >
+        </a>
+    </li>
+</ul>

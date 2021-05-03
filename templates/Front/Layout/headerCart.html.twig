@@ -13,7 +13,7 @@
         {% endblock %}
     </div>
     <div class="header__info-box">
-        {% include 'Front/Content/InfoBox/infoBox.html.twig' with { 'cssClass' : 'box-info--in-header', 'inHeader' : true } %}
+        {% include 'Front/Content/InfoBox/infoBox.html.twig' %}
     </div>
     <div class="header__mobile-button header__mobile-button--login js-mobile-dropdown">
         {% if is_granted('ROLE_LOGGED_CUSTOMER') %}
