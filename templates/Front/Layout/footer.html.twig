@@ -30,54 +30,66 @@
                         {% endcache %}
 
                         <div class="footer__block__contact">
-                            <div class="footer__block__menu__item padding-0">
-                                <p class="footer__block__paragraph">
-                                    {{ 'Jsme na trhu již 17 let a od vývoje e-shopů na míru<br>jsme se dostali k digitalizaci prodejů největších B2C a B2B hráčů,<br>kterým pomáháme uspět v omnichannel světě.'|transHtml }}
-                                </p>
+                            <div class="footer__block__menu__item">
+                                <h4 class="footer__block__heading">
+                                    {{ 'Sledujte nás'|trans }}
+                                </h4>
+
+                                <div class="footer__block__socials">
+                                    <a class="footer__block__socials__item" href="https://www.instagram.com/shopsyscz/" target="_blank">
+                                        <img
+                                            loading="lazy"
+                                            src="{{ imgLazyloadPlaceholder }}"
+                                            data-src="{{ asset('public/frontend/images/instagram.svg') }}"
+                                            alt="{{ 'Instagram'|trans }}"
+                                        >
+                                    </a>
+                                    <a class="footer__block__socials__item" href="https://www.facebook.com/shopsyscz/" target="_blank">
+                                        <img
+                                            loading="lazy"
+                                            src="{{ imgLazyloadPlaceholder }}"
+                                            data-src="{{ asset('public/frontend/images/facebook.svg') }}"
+                                            alt="{{ 'Facebook'|trans }}"
+                                        >
+                                    </a>
+                                    <a class="footer__block__socials__item" href="https://www.youtube.com/user/netdevelo" target="_blank">
+                                        <img
+                                            loading="lazy"
+                                            src="{{ imgLazyloadPlaceholder }}"
+                                            data-src="{{ asset('public/frontend/images/youtube.svg') }}"
+                                            alt="{{ 'Youtube'|trans }}"
+                                        >
+                                    </a>
+                                </div>
+
                                 <div class="footer__block__langs">
                                     <a
                                         href="{{ domain.id == 1 ? '/' : 'https://www.shopsys.cz/' }}"
-                                        class="footer__block__langs__link no-hover-decoration"
+                                        class="footer__block__langs__link"
                                         {% if domain.id == 2 %}target="_blank"{% endif %}
                                     >
                                         <img
-                                            class="footer__block__img footer__block__img--lang"
                                             loading="lazy"
                                             src="{{ imgLazyloadPlaceholder }}"
-                                            data-src="{{ asset('public/frontend/images/flags/cz.svg') }}"
-                                            alt="{{ 'Česká republika'|trans }}"
+                                            data-src="{{ asset('public/frontend/images/cz.svg') }}"
+                                            alt="{{ 'Česko'|trans }}"
                                         >
-                                        <span class="footer__block__label">{{ 'Česká republika'|trans }}</span>
+                                        <span class="footer__block__langs__text">{{ 'Česko'|trans }}</span>
                                     </a>
                                     <a
                                         href="{{ domain.id ==  2 ? '/' : 'https://www.shopsys.sk/' }}"
-                                        class="footer__block__langs__link no-hover-decoration"
+                                        class="footer__block__langs__link"
                                         {% if domain.id == 1 %}target="_blank"{% endif %}
                                     >
                                         <img
-                                            class="footer__block__img footer__block__img--lang"
                                             loading="lazy"
                                             src="{{ imgLazyloadPlaceholder }}"
-                                            data-src="{{ asset('public/frontend/images/flags/sk.svg') }}"
+                                            data-src="{{ asset('public/frontend/images/sk.svg') }}"
                                             alt="{{ 'Slovensko'|trans }}"
                                         >
-                                        <span class="footer__block__label">{{ 'Slovensko'|trans }}</span>
+                                        <span class="footer__block__langs__text">{{ 'Slovensko'|trans }}</span>
                                     </a>
                                 </div>
-                                <h2 class="footer__block__heading footer__block__heading--inline-xs">{{ 'Sledujte nás'|trans }}</h2>
-                                <a
-                                    class="no-hover-decoration"
-                                    href="https://www.facebook.com/shopsyscz/"
-                                    target="_blank"
-                                >
-                                    <img
-                                        class="footer__block__img footer__block__img--social"
-                                        loading="lazy"
-                                        src="{{ imgLazyloadPlaceholder }}"
-                                        data-src="{{ asset('public/frontend/images/social/facebook.svg') }}"
-                                        alt="{{ 'Facebook'|trans }}"
-                                    >
-                                </a>
                             </div>
                         </div>
                     </div>

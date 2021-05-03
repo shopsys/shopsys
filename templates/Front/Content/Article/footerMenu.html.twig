@@ -9,27 +9,8 @@
     </div>
     <div class="footer__block__menu__item">
         {{ footerMenu.articlesList(3, articlesByPlacements[constant('App\\Model\\Article\\Article::PLACEMENT_FOOTER_3')], 'E-shop'|trans, 'svg-arrow') }}
-        <h2 class="footer__block__heading footer__block__heading--inner footer__block__heading--toggle js-responsive-toggle footer__block__list--top-spacing" data-element="js-footer-menu-5">
-            {{ 'Možnosti platby'|trans }} <i class="svg svg-arrow"></i>
-        </h2>
-        <div class="footer__block__toggle" id="js-footer-menu-5">
-            <img
-                    class="footer__block__img footer__block__img--payment"
-                    loading="lazy"
-                    src="{{ imgLazyloadPlaceholder }}"
-                    data-src="{{ asset('public/frontend/images/payments/mastercard.svg') }}"
-                    alt="{{ 'Mastercard'|trans }}"
-            >
-            <img
-                    class="footer__block__img footer__block__img--payment"
-                    loading="lazy"
-                    src="{{ imgLazyloadPlaceholder }}"
-                    data-src="{{ asset('public/frontend/images/payments/visa.svg') }}"
-                    alt="{{ 'VISA'|trans }}"
-            >
-        </div>
     </div>
-    <div class="footer__block__menu__item margin-0">
+    <div class="footer__block__menu__item">
         {{ footerMenu.articlesList(4, articlesByPlacements[constant('App\\Model\\Article\\Article::PLACEMENT_FOOTER_4')], 'Prodejny'|trans, 'svg-arrow') }}
     </div>
 </div>
