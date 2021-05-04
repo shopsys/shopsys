@@ -54,6 +54,11 @@ class PromoCodeData extends BasePromoCodeData
     public $categoriesWithSale = [];
 
     /**
+     * @var \App\Model\Product\Brand\Brand[]
+     */
+    public $brandsWithSale = [];
+
+    /**
      * @var int|null
      */
     public $remainingUses;

@@ -30,18 +30,26 @@ class ProductPromoCodeFiller
     private PromoCodeCategoryRepository $promoCodeCategoryRepository;
 
     /**
+     * @var \App\Model\Order\PromoCode\PromoCodeBrandRepository
+     */
+    private PromoCodeBrandRepository $promoCodeBrandRepository;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \App\Model\Order\PromoCode\PromoCodeProductRepository $promoCodeProductRepository
      * @param \App\Model\Order\PromoCode\PromoCodeCategoryRepository $promoCodeCategoryRepository
+     * @param \App\Model\Order\PromoCode\PromoCodeBrandRepository $promoCodeBrandRepository
      */
     public function __construct(
         Domain $domain,
         PromoCodeProductRepository $promoCodeProductRepository,
-        PromoCodeCategoryRepository $promoCodeCategoryRepository
+        PromoCodeCategoryRepository $promoCodeCategoryRepository,
+        PromoCodeBrandRepository $promoCodeBrandRepository
     ) {
         $this->domain = $domain;
         $this->promoCodeProductRepository = $promoCodeProductRepository;
         $this->promoCodeCategoryRepository = $promoCodeCategoryRepository;
+        $this->promoCodeBrandRepository = $promoCodeBrandRepository;
     }
 
     /**
@@ -52,19 +60,35 @@ class ProductPromoCodeFiller
      */
     public function getPromoCodePerProductByDomainId(array $quantifiedProducts, int $domainId, PromoCode $promoCode): array
     {
-        $allowedProductIdsByPromoCode = $this->promoCodeProductRepository->getProductIdsByPromoCodeId($promoCode->getId());
-        $allowedProductIdsFromCategoriesByPromoCode = $this->promoCodeCategoryRepository->getProductIdsFromCategoriesByPromoCodeIdAndDomainId($promoCode->getId(), $domainId);
+        $allowedProductIds = $this->promoCodeProductRepository->getProductIdsByPromoCodeId($promoCode->getId());
+        $allowedProductIdsFromCategories = $this->promoCodeCategoryRepository->getProductIdsFromCategoriesByPromoCodeIdAndDomainId($promoCode->getId(), $domainId);
+        $allowedProductIdsFromBrands = $this->promoCodeBrandRepository->getProductIdsFromBrandsByPromoCodeId($promoCode->getId());
 
-        $allowedProductIds = array_merge($allowedProductIdsByPromoCode, $allowedProductIdsFromCategoriesByPromoCode);
-        $uniqueAllowedProductIds = array_unique($allowedProductIds);
+        if (count($allowedProductIdsFromCategories) !== 0 && count($allowedProductIdsFromBrands) !== 0) {
+            $allowedProductIdsByCriteria = array_intersect($allowedProductIdsFromCategories, $allowedProductIdsFromBrands);
+        } elseif (count($allowedProductIdsFromCategories) === 0) {
+            $allowedProductIdsByCriteria = $allowedProductIdsFromBrands;
+        } elseif (count($allowedProductIdsFromBrands) === 0) {
+            $allowedProductIdsByCriteria = $allowedProductIdsFromCategories;
+        } else {
+            $allowedProductIdsByCriteria = [];
+        }
+
+        $totalAllowedProductIds = array_merge($allowedProductIds, $allowedProductIdsByCriteria);
+        $uniqueAllowedProductIds = array_unique($totalAllowedProductIds);
         if (count($uniqueAllowedProductIds) === 0) {
             return $this->fillPromoCodeDiscountsForAllProducts($quantifiedProducts, $promoCode);
         }
 
-        $promoCodeDiscountPercentPerProduct = $this->fillPromoCodes($quantifiedProducts, $allowedProductIdsByPromoCode, $promoCode);
-        $promoCodeDiscountPercentPerProductFromCategories = $this->fillPromoCodes($quantifiedProducts, $allowedProductIdsFromCategoriesByPromoCode, $promoCode);
+        $promoCodeDiscountPercentPerProduct = $this->fillPromoCodes($quantifiedProducts, $allowedProductIds, $promoCode);
+        $promoCodeDiscountPercentPerProductFromCategories = $this->fillPromoCodes($quantifiedProducts, $allowedProductIdsByCriteria, $promoCode);
+        $promoCodeDiscountPercentPerProductFromBrands = $this->fillPromoCodes($quantifiedProducts, $allowedProductIdsByCriteria, $promoCode);
 
-        return array_replace($promoCodeDiscountPercentPerProduct, $promoCodeDiscountPercentPerProductFromCategories);
+        return array_replace(
+            $promoCodeDiscountPercentPerProduct,
+            $promoCodeDiscountPercentPerProductFromCategories,
+            $promoCodeDiscountPercentPerProductFromBrands
+        );
     }
 
     /**

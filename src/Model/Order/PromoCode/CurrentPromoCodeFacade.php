@@ -56,6 +56,11 @@ class CurrentPromoCodeFacade extends BaseCurrentPromoCodeFacade
     private PromoCodeLimitResolver $promoCodeLimitByCartTotalResolver;
 
     /**
+     * @var \App\Model\Order\PromoCode\PromoCodeBrandRepository
+     */
+    private PromoCodeBrandRepository $promoCodeBrandRepository;
+
+    /**
      * @param \App\Model\Order\PromoCode\PromoCodeFacade $promoCodeFacade
      * @param \Symfony\Component\HttpFoundation\Session\SessionInterface $session
      * @param \App\Model\Order\PromoCode\PromoCodeProductRepository $promoCodeProductRepository
@@ -65,6 +70,7 @@ class CurrentPromoCodeFacade extends BaseCurrentPromoCodeFacade
      * @param \Shopsys\FrameworkBundle\Model\Cart\CartRepository $cartRepository
      * @param \App\Model\Order\PromoCode\ProductPromoCodeFiller $productPromoCodeFiller
      * @param \App\Model\Order\PromoCode\PromoCodeLimitResolver $promoCodeLimitByCartTotalResolver
+     * @param \App\Model\Order\PromoCode\PromoCodeBrandRepository $promoCodeBrandRepository
      */
     public function __construct(
         PromoCodeFacade $promoCodeFacade,
@@ -75,7 +81,8 @@ class CurrentPromoCodeFacade extends BaseCurrentPromoCodeFacade
         CustomerUserIdentifierFactory $customerUserIdentifierFactory,
         CartRepository $cartRepository,
         ProductPromoCodeFiller $productPromoCodeFiller,
-        PromoCodeLimitResolver $promoCodeLimitByCartTotalResolver
+        PromoCodeLimitResolver $promoCodeLimitByCartTotalResolver,
+        PromoCodeBrandRepository $promoCodeBrandRepository
     ) {
         parent::__construct(
             $promoCodeFacade,
@@ -89,6 +96,7 @@ class CurrentPromoCodeFacade extends BaseCurrentPromoCodeFacade
         $this->cartRepository = $cartRepository;
         $this->productPromoCodeFiller = $productPromoCodeFiller;
         $this->promoCodeLimitByCartTotalResolver = $promoCodeLimitByCartTotalResolver;
+        $this->promoCodeBrandRepository = $promoCodeBrandRepository;
     }
 
     /**
@@ -159,10 +167,21 @@ class CurrentPromoCodeFacade extends BaseCurrentPromoCodeFacade
         $domainId = $this->domain->getId();
         $allowedProductIds = $this->promoCodeProductRepository->getProductIdsByPromoCodeId($promoCode->getId());
         $allowedProductIdsFromCategories = $this->promoCodeCategoryRepository->getProductIdsFromCategoriesByPromoCodeIdAndDomainId($promoCode->getId(), $domainId);
+        $allowedProductIdsFromBrands = $this->promoCodeBrandRepository->getProductIdsFromBrandsByPromoCodeId($promoCode->getId());
 
-        $allowedProductIds = array_unique(array_merge($allowedProductIds, $allowedProductIdsFromCategories));
+        if (count($allowedProductIdsFromCategories) !== 0 && count($allowedProductIdsFromBrands) !== 0) {
+            $allowedProductIdsByCriteria = array_intersect($allowedProductIdsFromCategories, $allowedProductIdsFromBrands);
+        } elseif (count($allowedProductIdsFromCategories) === 0) {
+            $allowedProductIdsByCriteria = $allowedProductIdsFromBrands;
+        } elseif (count($allowedProductIdsFromBrands) === 0) {
+            $allowedProductIdsByCriteria = $allowedProductIdsFromCategories;
+        } else {
+            $allowedProductIdsByCriteria = [];
+        }
+
+        $allowedProductIds = array_unique(array_merge($allowedProductIds, $allowedProductIdsByCriteria));
         if (count($allowedProductIds) === 0) {
-            //promo code hasn't any relation with products or product from categories
+            //promo code hasn't any relation with products or product from categories or product from brands
             return;
         }
 
