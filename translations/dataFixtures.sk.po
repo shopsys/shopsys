@@ -652,7 +652,7 @@ msgstr ""
 msgid "Dear customer, <br /><br /> based on your email {email}, we are sending you a link to your personal details. By clicking on the link below, you will be taken to a page listing all the<br/> personal details which we have in evidence in our online store {domain}. <br/><br/> To overview your personal information please click here - {url} <br/> The link is valid for next 24 hours.<br/> Best Regards <br/><br/> team of {domain}"
 msgstr ""
 
-msgid "Dear customer, <br /><br />Processing your order has been finished."
+msgid "Dear customer, <br /><br />Processing your order has been finished.<br /><br />{tracking_instructions}"
 msgstr ""
 
 msgid "Dear customer, <br /><br />Your order has been cancelled."
@@ -1640,6 +1640,9 @@ msgid "Ticket for 100 CZK"
 msgstr ""
 
 msgid "Ticket for 100 Czech crowns"
+msgstr ""
+
+msgid "To track your package, click on this link: <a href=\"{tracking_url}\">{tracking_url}</a>."
 msgstr ""
 
 msgid "Toilet paper with Euro pictures. Even you can feel rich now!"

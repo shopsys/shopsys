@@ -13,12 +13,13 @@ use Shopsys\FrameworkBundle\Model\Transport\TransportData as BaseTransportData;
  * @ORM\Entity
  * @property \App\Model\Payment\Payment[]|\Doctrine\Common\Collections\Collection $payments
  * @method \App\Model\Payment\Payment[] getPayments()
- * @method setTranslations(\App\Model\Transport\TransportData $transportData)
  * @method setDomains(\App\Model\Transport\TransportData $transportData)
  * @method createDomains(\App\Model\Transport\TransportData $transportData)
  * @method addPayment(\App\Model\Payment\Payment $payment)
  * @method setPayments(\App\Model\Payment\Payment[] $payments)
  * @method removePayment(\App\Model\Payment\Payment $payment)
+ * @method \App\Model\Transport\TransportTranslation translation(?string $locale = null)
+ * @property \App\Model\Transport\TransportTranslation[]|\Doctrine\Common\Collections\Collection $translations
  */
 class Transport extends BaseTransport
 {
@@ -56,6 +57,12 @@ class Transport extends BaseTransport
     private int $typeOfDeliveryKey;
 
     /**
+     * @var string|null
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private ?string $trackingUrl;
+
+    /**
      * @param \App\Model\Transport\TransportData $transportData
      */
     public function __construct(BaseTransportData $transportData)
@@ -83,6 +90,19 @@ class Transport extends BaseTransport
         $this->daysUntilDelivery = $transportData->daysUntilDelivery;
         $this->deliveryCode = $transportData->deliveryCode;
         $this->typeOfDeliveryKey = $transportData->typeOfDeliveryKey;
+        $this->trackingUrl = $transportData->trackingUrl;
+    }
+
+    /**
+     * @param \App\Model\Transport\TransportData $transportData
+     */
+    protected function setTranslations(BaseTransportData $transportData)
+    {
+        parent::setTranslations($transportData);
+
+        foreach ($transportData->trackingInstructions as $locale => $trackingInstruction) {
+            $this->translation($locale)->setTrackingInstruction($trackingInstruction);
+        }
     }
 
     /**
@@ -123,5 +143,30 @@ class Transport extends BaseTransport
     public function getTypeOfDeliveryKey(): int
     {
         return $this->typeOfDeliveryKey;
+    }
+
+    /**
+     * @return ?string
+     */
+    public function getTrackingUrl(): ?string
+    {
+        return $this->trackingUrl;
+    }
+
+    /**
+     * @return \App\Model\Transport\TransportTranslation
+     */
+    protected function createTranslation(): TransportTranslation
+    {
+        return new TransportTranslation();
+    }
+
+    /**
+     * @param string|null $locale
+     * @return string|null
+     */
+    public function getTrackingInstruction($locale = null): ?string
+    {
+        return $this->translation($locale)->getTrackingInstruction();
     }
 }

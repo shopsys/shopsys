@@ -80,9 +80,11 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
         $transportData->daysUntilDelivery = 4;
         $transportData->deliveryCode = 'B';
         $transportData->typeOfDeliveryKey = 2;
+        $transportData->trackingUrl = 'https://www.ppl.cz/vyhledat-zasilku?shipmentId={tracking_number}';
 
         foreach ($this->domain->getAllLocales() as $locale) {
             $transportData->name[$locale] = t('PPL', [], 'dataFixtures', $locale);
+            $transportData->trackingInstructions[$locale] = t('To track your package, click on this link: <a href="{tracking_url}">{tracking_url}</a>.', [], 'dataFixtures', $locale);
         }
 
         $this->setPriceForAllDomains($transportData, Money::create('199.95'));

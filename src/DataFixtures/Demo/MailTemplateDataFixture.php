@@ -87,7 +87,7 @@ class MailTemplateDataFixture extends AbstractReferenceFixture implements Depend
 
             $mailTemplateData->subject = t('Order status has changed', [], 'dataFixtures', $locale);
             $mailTemplateData->body = t('Dear customer, <br /><br />'
-                . 'Processing your order has been finished.', [], 'dataFixtures', $locale);
+                . 'Processing your order has been finished.<br /><br />{tracking_instructions}', [], 'dataFixtures', $locale);
 
             $this->createMailTemplate($manager, 'order_status_3', $mailTemplateData, $domainId);
 

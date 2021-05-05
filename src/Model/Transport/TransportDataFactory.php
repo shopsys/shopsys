@@ -37,6 +37,11 @@ class TransportDataFactory extends BaseTransportDataFactory
         parent::fillNew($transportData);
 
         $transportData->daysUntilDelivery = 0;
+        $transportData->trackingUrl = null;
+
+        foreach ($this->domain->getAllLocales() as $locale) {
+            $transportData->trackingInstructions[$locale] = null;
+        }
     }
 
     /**
@@ -54,6 +59,15 @@ class TransportDataFactory extends BaseTransportDataFactory
 
         $transportData->deliveryCode = $transport->getDeliveryCode();
         $transportData->typeOfDeliveryKey = $transport->getTypeOfDeliveryKey();
+
+        $transportData->trackingUrl = $transport->getTrackingUrl();
+
+        /** @var \App\Model\Transport\TransportTranslation[] $translations */
+        $translations = $transport->getTranslations();
+
+        foreach ($translations as $translate) {
+            $transportData->trackingInstructions[$translate->getLocale()] = $translate->getTrackingInstruction();
+        }
 
         return $transportData;
     }

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\Order;
 
+use App\Model\Order\Mail\OrderMail;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use GoPay\Definition\Response\PaymentStatus;
@@ -91,6 +92,12 @@ class Order extends BaseOrder
     protected $isOverLimit;
 
     /**
+     * @var string|null
+     * @ORM\Column(type="string", length=100, nullable=true)
+     */
+    protected ?string $trackingNumber;
+
+    /**
      * @param \App\Model\Order\OrderData $orderData
      * @param string $orderNumber
      * @param string $urlHash
@@ -120,6 +127,7 @@ class Order extends BaseOrder
         $this->goPayTransactions = new ArrayCollection();
         $this->gtmCoupon = $orderData->gtmCoupon;
         $this->isOverLimit = $orderData->isOverLimit;
+        $this->trackingNumber = $orderData->trackingNumber;
     }
 
     /**
@@ -142,6 +150,7 @@ class Order extends BaseOrder
 
         $this->gtmCoupon = $orderData->gtmCoupon;
         $this->isOverLimit = $orderData->isOverLimit;
+        $this->trackingNumber = $orderData->trackingNumber;
     }
 
     /**
@@ -212,5 +221,30 @@ class Order extends BaseOrder
     public function setIsOverLimit(bool $value): void
     {
         $this->isOverLimit = $value;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getTrackingNumber(): ?string
+    {
+        return $this->trackingNumber;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getTrackingUrl(): ?string
+    {
+        $trackingUrl = $this->transport->getTrackingUrl();
+        $trackingNumber = $this->getTrackingNumber();
+
+        if ($trackingUrl === null || $trackingNumber === null) {
+            return null;
+        }
+
+        return strtr($trackingUrl, [
+            OrderMail::TRANSPORT_VARIABLE_TRACKING_NUMBER => $trackingNumber,
+        ]);
     }
 }

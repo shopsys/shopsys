@@ -8,7 +8,9 @@ use App\Model\GoPay\GoPayOrderStatus;
 use Shopsys\FrameworkBundle\Form\Admin\Order\OrderFormType;
 use Shopsys\FrameworkBundle\Form\DisplayOnlyType;
 use Symfony\Component\Form\AbstractTypeExtension;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints\Length;
 
 class OrderFormTypeExtension extends AbstractTypeExtension
 {
@@ -41,10 +43,20 @@ class OrderFormTypeExtension extends AbstractTypeExtension
                 ]);
         }
 
-        $builderBasicInformationGroup->add('transport', DisplayOnlyType::class, [
-            'label' => t('Typ dopravy'),
-            'data' => $order->getTransport()->getName(),
-        ]);
+        $builderBasicInformationGroup
+            ->add('transport', DisplayOnlyType::class, [
+                'label' => t('Typ dopravy'),
+                'data' => $order->getTransport()->getName(),
+            ])
+            ->add('trackingNumber', TextType::class, [
+                'label' => t('Tracking number'),
+                'required' => false,
+                'constraints' => [
+                    new Length([
+                        'max' => 100,
+                    ]),
+                ],
+            ]);
     }
 
     /**
