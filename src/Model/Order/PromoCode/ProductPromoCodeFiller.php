@@ -74,21 +74,12 @@ class ProductPromoCodeFiller
             $allowedProductIdsByCriteria = [];
         }
 
-        $totalAllowedProductIds = array_merge($allowedProductIds, $allowedProductIdsByCriteria);
-        $uniqueAllowedProductIds = array_unique($totalAllowedProductIds);
-        if (count($uniqueAllowedProductIds) === 0) {
+        $totalAllowedProductIds = array_unique(array_merge($allowedProductIds, $allowedProductIdsByCriteria));
+        if (count($totalAllowedProductIds) === 0) {
             return $this->fillPromoCodeDiscountsForAllProducts($quantifiedProducts, $promoCode);
         }
 
-        $promoCodeDiscountPercentPerProduct = $this->fillPromoCodes($quantifiedProducts, $allowedProductIds, $promoCode);
-        $promoCodeDiscountPercentPerProductFromCategories = $this->fillPromoCodes($quantifiedProducts, $allowedProductIdsByCriteria, $promoCode);
-        $promoCodeDiscountPercentPerProductFromBrands = $this->fillPromoCodes($quantifiedProducts, $allowedProductIdsByCriteria, $promoCode);
-
-        return array_replace(
-            $promoCodeDiscountPercentPerProduct,
-            $promoCodeDiscountPercentPerProductFromCategories,
-            $promoCodeDiscountPercentPerProductFromBrands
-        );
+        return $this->fillPromoCodes($quantifiedProducts, $totalAllowedProductIds, $promoCode);
     }
 
     /**
