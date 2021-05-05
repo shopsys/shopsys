@@ -114,17 +114,3 @@
         <div class="gtm-info" data-gtm-event="{{ gtmEvent|json_encode() }}"></div>
     {% endif %}
 {% endblock %}
-
-{% block footer %}
-    <div class="footer">
-        {% if cart is not null %}
-            <div class="web__line">
-                <div class="web__container">
-                    {% include 'Front/Layout/copyright.html.twig' %}
-                </div>
-            </div>
-        {% else %}
-            {% embed 'Front/Layout/footer.html.twig' with { 'showNewsletter' : true } %}{% endembed %}
-        {% endif %}
-    </div>
-{% endblock %}

@@ -34,6 +34,10 @@ img {
             background-color: @color-grey;
         }
 
+        &--colored {
+            background-color: @color-add-light;
+        }
+
         &--bg-color {
             background: @color-light-secondary;
         }
@@ -115,6 +119,22 @@ img {
         @media @query-xl {
             width: @web-width;
             margin: 0 auto;
+        }
+
+        &--lines {
+            position: relative;
+
+            &:before {
+                content: '';
+                position: absolute;
+                left: 0;
+                bottom: 0;
+                width: 106px;
+                height: 133px;
+                transform: translateX(-100%);
+
+                background: url('/public/frontend/images/lines.png') left no-repeat;
+            }
         }
 
         &--no-padding {

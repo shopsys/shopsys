@@ -35,7 +35,7 @@
 {% endblock form_end %}
 
 {% block form_row %}
-    <div class="{{ rowClass|default('form-line') }}">
+    <div class="form-line {{ rowClass }}">
         <div class="form-line__input {{ inputModificationClass|default('') }}">
             {{ form_widget(form , {attr: { placeholder: label }}) }}
             {{ form_label(form, label, { withoutColon: true }) }}
@@ -49,7 +49,7 @@
 {% endblock form_row %}
 
 {% block checkbox_row %}
-    <div class="{{ rowClass|default('form-line') }}">
+    <div class="form-line {{ rowClass }}">
         <div class="form-choice">
             {% set checkboxAttr = attr|merge({'class': (attr.class|default('') ~ ' css-checkbox')|trim}) %}
             {{ form_widget(form, { attr: checkboxAttr }) }}
@@ -62,7 +62,7 @@
 {% endblock checkbox_row %}
 
 {% block textarea_row -%}
-    <div class="{{ rowClass|default('form-line') }}">
+    <div class="form-line {{ rowClass }}">
         <div class="form-line__input">
             {{- form_widget(form, {attr: { placeholder: label }}) -}}
             {{ form_label(form, label, { withoutColon: true }) }}

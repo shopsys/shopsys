@@ -6,8 +6,8 @@
 <footer class="footer">
     {% if getRoute() not in ['front_cart', 'front_order_step_transport_payment', 'front_order_step_personal_info', 'front_order_not_paid'] %}
         {% if showNewsletter %}
-            <div class="web__line clearfix dont-print">
-                <div class="web__container">
+            <div class="web__line web__line--colored">
+                <div class="web__container web__container--lines">
                     {% cache "newsletter_form" {lifetime:getCacheLifetimeByHours(24), domainId:getDomain().id} %}
                         {{ render(controller('App\\Controller\\Front\\NewsletterController:subscriptionAction'))|spaceless }}
                     {% endcache %}
@@ -23,7 +23,7 @@
                     {% include 'Front/Content/InfoBox/infoBox.html.twig' %}
                 {% endif %}
 
-                {% if getRoute() not in ['front_order_step_transport_payment', 'front_order_step_personal_info', 'front_order_not_paid'] %}
+                {% if getRoute() not in ['front_cart', 'front_order_step_transport_payment', 'front_order_step_personal_info', 'front_order_not_paid'] %}
                     <div class="footer__block">
                         {% cache constant('App\\Controller\\Front\\ArticleController::FOOTER_MENU_TWIG_CACHE_KEY') {lifetime:getCacheLifetimeByHours(24), domainId:getDomain().id} %}
                             {{ render(controller('App\\Controller\\Front\\ArticleController:footerMenuAction'))|spaceless }}
