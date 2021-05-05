@@ -113,14 +113,13 @@ class MethodAnnotationsFactoryTest extends TestCase
             ReflectionObject::createFromName(BaseClass5::class),
             ReflectionObject::createFromName(ChildClass5::class)
         );
-        d($annotationLines);
 
         $this->assertStringContainsString(
-            '@method setCategory(\App\Model\Category\Category|null $category=null)',
+            '@method setCategory(\App\Model\Category\Category|null $category = null)',
             $annotationLines
         );
         $this->assertStringContainsString(
-            '@method setCategoryWithString(\App\Model\Category\Category $category, string $string="default")',
+            '@method setCategoryWithString(\App\Model\Category\Category $category, string $string = "default")',
             $annotationLines
         );
     }

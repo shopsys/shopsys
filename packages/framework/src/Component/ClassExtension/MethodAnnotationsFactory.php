@@ -158,9 +158,10 @@ class MethodAnnotationsFactory
         $methodParameterNamesWithTypes = [];
         foreach ($reflectionMethod->getParameters() as $methodParameter) {
             $methodParameterNamesWithTypes[] = sprintf(
-                '%s $%s',
+                '%s $%s%s',
                 $this->annotationsReplacer->replaceInParameterType($methodParameter),
-                $methodParameter->getName()
+                $methodParameter->getName(),
+                $methodParameter->isDefaultValueAvailable() ? ' = ' . json_encode($methodParameter->getDefaultValue()) : ''
             );
         }
 
