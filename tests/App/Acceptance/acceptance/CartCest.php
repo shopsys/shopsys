@@ -7,7 +7,9 @@ namespace Tests\App\Acceptance\acceptance;
 use Tests\App\Acceptance\acceptance\PageObject\Front\CartBoxPage;
 use Tests\App\Acceptance\acceptance\PageObject\Front\CartPage;
 use Tests\App\Acceptance\acceptance\PageObject\Front\FloatingWindowPage;
+use Tests\App\Acceptance\acceptance\PageObject\Front\HomepagePage;
 use Tests\App\Acceptance\acceptance\PageObject\Front\ProductDetailPage;
+use Tests\App\Acceptance\acceptance\PageObject\Front\ProductListPage;
 use Tests\App\Test\Codeception\AcceptanceTester;
 
 class CartCest
@@ -41,6 +43,67 @@ class CartCest
         $me->amOnLocalizedRoute('front_cart');
 
         $cartPage->assertProductQuantity('22" Sencor SLE 22F46DM4 HELLO KITTY', 6);
+    }
+
+    /**
+     * @param \Tests\App\Acceptance\acceptance\PageObject\Front\CartPage $cartPage
+     * @param \Tests\App\Acceptance\acceptance\PageObject\Front\ProductListPage $productListPage
+     * @param \Tests\App\Acceptance\acceptance\PageObject\Front\CartBoxPage $cartBoxPage
+     * @param \Tests\App\Test\Codeception\AcceptanceTester $me
+     * @param \Tests\App\Acceptance\acceptance\PageObject\Front\FloatingWindowPage $floatingWindowPage
+     */
+    public function testAddToCartFromProductListPage(
+        CartPage $cartPage,
+        ProductListPage $productListPage,
+        CartBoxPage $cartBoxPage,
+        AcceptanceTester $me,
+        FloatingWindowPage $floatingWindowPage
+    ) {
+        $me->wantTo('add product to cart from product list');
+
+        // tv-audio
+        $me->amOnLocalizedRoute('front_product_list', ['id' => 3]);
+
+        $productListPage->addProductToCartByName('Defender 2.0 SPK-480', 1);
+
+        $productName = 'Defender 2.0 SPK-480';
+        $productNamePrefix = '';
+        $cartPage->seeSuccessMessageForAddedProducts($productName, $productNamePrefix, 1);
+
+        $floatingWindowPage->closeFloatingWindow();
+
+        $cartBoxPage->seeCountAndPriceRoundedByCurrencyInCartBox(1, '119');
+
+        $me->amOnLocalizedRoute('front_cart');
+        $cartPage->assertProductPriceRoundedByCurrency('Defender 2.0 SPK-480', '119');
+    }
+
+    /**
+     * @param \Tests\App\Acceptance\acceptance\PageObject\Front\CartPage $cartPage
+     * @param \Tests\App\Acceptance\acceptance\PageObject\Front\HomepagePage $homepagePage
+     * @param \Tests\App\Acceptance\acceptance\PageObject\Front\CartBoxPage $cartBoxPage
+     * @param \Tests\App\Test\Codeception\AcceptanceTester $me
+     * @param \Tests\App\Acceptance\acceptance\PageObject\Front\FloatingWindowPage $floatingWindowPage
+     */
+    public function testAddToCartFromHomepage(
+        CartPage $cartPage,
+        HomepagePage $homepagePage,
+        CartBoxPage $cartBoxPage,
+        AcceptanceTester $me,
+        FloatingWindowPage $floatingWindowPage
+    ) {
+        $me->wantTo('add product to cart from homepage');
+        $me->amOnPage('/');
+
+        $productName = '22" Sencor SLE 22F46DM4 HELLO KITTY';
+        $productNamePrefix = 'Televize';
+
+        $homepagePage->addTopProductToCartByName($productName, 1);
+        $cartPage->seeSuccessMessageForAddedProducts($productName, $productNamePrefix, 1);
+        $floatingWindowPage->closeFloatingWindow();
+        $cartBoxPage->seeCountAndPriceRoundedByCurrencyInCartBox(1, '3499');
+        $me->amOnLocalizedRoute('front_cart');
+        $cartPage->assertProductPriceRoundedByCurrency('22" Sencor SLE 22F46DM4 HELLO KITTY', '3499');
     }
 
     /**

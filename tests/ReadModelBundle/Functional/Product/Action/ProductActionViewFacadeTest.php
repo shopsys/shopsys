@@ -29,9 +29,9 @@ class ProductActionViewFacadeTest extends FunctionalTestCase
         $productActionViews = $this->productActionViewFacade->getForProducts($products);
 
         $expected = [
-            1 => new ProductActionView(1, false, false, sprintf('%s/televize-22-sencor-sle-22f46dm4-hello-kitty-plazmova', $url), null, true, false),
-            2 => new ProductActionView(2, false, false, sprintf('%s/32-philips-32pfl4308', $url), null, true, false),
-            3 => new ProductActionView(3, false, false, sprintf('%s/47-lg-47la790v-fhd', $url), null, true, false),
+            1 => new ProductActionView(1, false, false, sprintf('%s/televize-22-sencor-sle-22f46dm4-hello-kitty-plazmova', $url), 2700, true, false),
+            2 => new ProductActionView(2, false, false, sprintf('%s/32-philips-32pfl4308', $url), 1800, true, false),
+            3 => new ProductActionView(3, false, false, sprintf('%s/47-lg-47la790v-fhd', $url), 7200, true, false),
         ];
 
         $this->assertEquals($expected, $productActionViews);

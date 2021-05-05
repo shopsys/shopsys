@@ -19,7 +19,7 @@
                             {% if productView.namePrefix is not empty %}
                                 <span class="list-products__item__title__prefix">{{ productView.namePrefix }}</span>
                             {% endif %}
-                            <span>
+                            <span class="js-list-products-item-name">
                                 {{ productView.name }}{{ productView.nameSufix is not empty ? ',' }}
                             </span>
                             {% if productView.nameSufix is not empty %}
@@ -54,6 +54,7 @@
                             {% endif %}
                         </div>
                     </a>
+                    {{ render(controller('App\\Controller\\Front\\CartController:productActionAction', { productActionView: productView.action, type: 'large'} )) }}
                 </div>
             </div>
         {% endfor %}
