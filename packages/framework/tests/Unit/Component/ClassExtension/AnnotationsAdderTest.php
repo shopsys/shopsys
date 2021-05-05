@@ -87,4 +87,62 @@ class AnnotationsAdderTest extends TestCase
             " * @method void setCategory(\\App\\Model\\Category\\Category \$category)\n"
         );
     }
+
+    /**
+     * @return string[][]
+     */
+    public function extractPropertyOrMethodAnnotationNameDataProvider(): array
+    {
+        return [
+            ['property-test', '@property $test'],
+            ['property-test', '@property int $test'],
+            ['property-test', '@property int[] $test'],
+            ['property-test', '@property int[]|null $test'],
+            ['property-test', '@property array<int,array<string,string[]>> $test'],
+            ['property-test', '@property int[]|null $test This is a testing property'],
+            ['property-testDifferentName', '@property $testDifferentName'],
+            ['property-test', ' * @property $test  '],
+            ['method-test', '@method test()'],
+            ['method-test', '@method void test($parameter)'],
+            ['method-test', '@method test(array $parameter)'],
+            ['method-test', '@method test(array $parameter = [], int $number = 0)'],
+            ['method-test', '@method int test()'],
+            ['method-test', '@method int[] test()'],
+            ['method-test', '@method int[]|null test()'],
+            ['method-test', '@method array<int,array<string,string[]>> test()'],
+            ['method-test', '@method int[]|null test() This is a testing method'],
+            ['method-testDifferentName', '@method testDifferentName()'],
+            ['method-test', ' * @method test()  '],
+            ['@property invalidIdentifier', '@property invalidIdentifier'],
+            ['@method invalidIdentifier', '@method invalidIdentifier'],
+            ['@author Aaron Aardvark', '@author Aaron Aardvark'],
+            ['Any non-property and non-method string', 'Any non-property and non-method string'],
+        ];
+    }
+
+    /**
+     * @dataProvider extractPropertyOrMethodAnnotationNameDataProvider
+     * @param string $expectedPropertyName
+     * @param string $propertyLine
+     */
+    public function testExtractPropertyOrMethodAnnotationName(string $expectedPropertyName, string $propertyLine): void
+    {
+        $fileContentsReplacerMock = $this->createMock(FileContentsReplacer::class);
+        $annotationsAdder = (new class($fileContentsReplacerMock) extends AnnotationsAdder {
+            /**
+             * Method overridden to make it public and thus testable
+             *
+             * @param string $annotationLine
+             * @return string
+             */
+            public function extractPropertyOrMethodAnnotationName(string $annotationLine): string
+            {
+                return parent::extractPropertyOrMethodAnnotationName($annotationLine);
+            }
+        });
+
+        $annotationName = $annotationsAdder->extractPropertyOrMethodAnnotationName($propertyLine);
+
+        $this->assertSame($expectedPropertyName, $annotationName);
+    }
 }

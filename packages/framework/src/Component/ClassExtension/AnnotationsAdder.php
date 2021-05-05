@@ -53,14 +53,45 @@ class AnnotationsAdder
     }
 
     /**
-     * @param string $docBlock
-     * @param string $annotationLinesBlock
+     * Appends second annotation block, annotation lines with colliding "name" will get replaced instead
+     *
+     * @see extractPropertyOrMethodAnnotationName() for explanation of how the "name" works
+     * @param string $annotation
+     * @param string $annotationToAdd
      * @return string
      */
-    private function replaceAnnotationsInExistingDocBlock(string $docBlock, string $annotationLinesBlock): string
+    protected function replaceAnnotationsInExistingDocBlock(string $annotation, string $annotationToAdd): string
     {
-        $annotationLinesToAdd = array_filter(explode("\n", $annotationLinesBlock));
+        $annotationLinesByName = [];
 
-        return str_replace(' */', implode("\n", $annotationLinesToAdd) . "\n */", $docBlock);
+        $annotationLines = explode("\n", $annotation);
+        $annotationStart = array_shift($annotationLines);
+        $annotationEnd = array_pop($annotationLines);
+        foreach ($annotationLines as $annotationLine) {
+            $annotationLinesByName[$this->extractPropertyOrMethodAnnotationName($annotationLine)] = $annotationLine;
+        }
+        $annotationLinesToAdd = array_filter(explode("\n", $annotationToAdd));
+        foreach ($annotationLinesToAdd as $annotationLine) {
+            $annotationLinesByName[$this->extractPropertyOrMethodAnnotationName($annotationLine)] = $annotationLine;
+        }
+
+        return implode("\n", [$annotationStart, ...array_values($annotationLinesByName), $annotationEnd]);
+    }
+
+    /**
+     * For property or method annotations returns just their name, eg. "method-setName" or "property-annotationsAdder"
+     * Otherwise it will return the whole annotation line, eg " * AnnotationsAdder constructor"
+     *
+     * @see \Tests\FrameworkBundle\Unit\Component\ClassExtension\AnnotationsAdderTest::testExtractPropertyOrMethodAnnotationName()
+     * @param string $annotationLine
+     * @return string
+     */
+    protected function extractPropertyOrMethodAnnotationName(string $annotationLine): string
+    {
+        if (preg_match('~@(property|method)\s+(?:\S+\s+)??(?:\$(\w+)|(\w+)\s*\()~', $annotationLine, $matches)) {
+            return $matches[1] . '-' . $matches[2] . ($matches[3] ?? '');
+        }
+
+        return $annotationLine;
     }
 }
