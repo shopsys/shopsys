@@ -52,7 +52,7 @@ class MethodAnnotationsFactoryTest extends TestCase
     /**
      * @return array
      */
-    public function testGetProjectClassNecessaryMethodAnnotationsLinesEmptyResultDataProvider(): array
+    public function getProjectClassNecessaryMethodAnnotationsLinesEmptyResultDataProvider(): array
     {
         return [
             'method redeclared in the child using annotation' => [ReflectionObject::createFromName(
@@ -74,7 +74,7 @@ class MethodAnnotationsFactoryTest extends TestCase
     }
 
     /**
-     * @dataProvider testGetProjectClassNecessaryMethodAnnotationsLinesEmptyResultDataProvider
+     * @dataProvider getProjectClassNecessaryMethodAnnotationsLinesEmptyResultDataProvider
      * @param \Roave\BetterReflection\Reflection\ReflectionClass $frameworkReflectionClass
      * @param \Roave\BetterReflection\Reflection\ReflectionClass $projectReflectionClass
      */
