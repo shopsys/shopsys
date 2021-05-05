@@ -15,10 +15,12 @@ use Tests\FrameworkBundle\Unit\Component\ClassExtension\Source\MethodAnnotations
 use Tests\FrameworkBundle\Unit\Component\ClassExtension\Source\MethodAnnotationsFactoryTest\BaseClass2;
 use Tests\FrameworkBundle\Unit\Component\ClassExtension\Source\MethodAnnotationsFactoryTest\BaseClass3;
 use Tests\FrameworkBundle\Unit\Component\ClassExtension\Source\MethodAnnotationsFactoryTest\BaseClass4;
+use Tests\FrameworkBundle\Unit\Component\ClassExtension\Source\MethodAnnotationsFactoryTest\BaseClass5;
 use Tests\FrameworkBundle\Unit\Component\ClassExtension\Source\MethodAnnotationsFactoryTest\ChildClass;
 use Tests\FrameworkBundle\Unit\Component\ClassExtension\Source\MethodAnnotationsFactoryTest\ChildClass2;
 use Tests\FrameworkBundle\Unit\Component\ClassExtension\Source\MethodAnnotationsFactoryTest\ChildClass3;
 use Tests\FrameworkBundle\Unit\Component\ClassExtension\Source\MethodAnnotationsFactoryTest\ChildClass4;
+use Tests\FrameworkBundle\Unit\Component\ClassExtension\Source\MethodAnnotationsFactoryTest\ChildClass5;
 
 class MethodAnnotationsFactoryTest extends TestCase
 {
@@ -36,6 +38,7 @@ class MethodAnnotationsFactoryTest extends TestCase
             'Tests\FrameworkBundle\Unit\Component\ClassExtension\Source\MethodAnnotationsFactoryTest\BaseClass2' => 'Tests\FrameworkBundle\Unit\Component\ClassExtension\Source\MethodAnnotationsFactoryTest\ChildClass2',
             'Tests\FrameworkBundle\Unit\Component\ClassExtension\Source\MethodAnnotationsFactoryTest\BaseClass3' => 'Tests\FrameworkBundle\Unit\Component\ClassExtension\Source\MethodAnnotationsFactoryTest\ChildClass3',
             'Tests\FrameworkBundle\Unit\Component\ClassExtension\Source\MethodAnnotationsFactoryTest\BaseClass4' => 'Tests\FrameworkBundle\Unit\Component\ClassExtension\Source\MethodAnnotationsFactoryTest\ChildClass4',
+            'Tests\FrameworkBundle\Unit\Component\ClassExtension\Source\MethodAnnotationsFactoryTest\BaseClass5' => 'Tests\FrameworkBundle\Unit\Component\ClassExtension\Source\MethodAnnotationsFactoryTest\ChildClass5',
         ]);
 
         $docBlockParser = new DocBlockParser();
@@ -100,6 +103,24 @@ class MethodAnnotationsFactoryTest extends TestCase
         );
         $this->assertStringContainsString(
             '@method setCategory(\App\Model\Category\Category $category)',
+            $annotationLines
+        );
+    }
+
+    public function testGetProjectClassNecessaryMethodWithDefaultValueAnnotationsLines(): void
+    {
+        $annotationLines = $this->methodAnnotationsFactory->getProjectClassNecessaryMethodAnnotationsLines(
+            ReflectionObject::createFromName(BaseClass5::class),
+            ReflectionObject::createFromName(ChildClass5::class)
+        );
+        d($annotationLines);
+
+        $this->assertStringContainsString(
+            '@method setCategory(\App\Model\Category\Category|null $category=null)',
+            $annotationLines
+        );
+        $this->assertStringContainsString(
+            '@method setCategoryWithString(\App\Model\Category\Category $category, string $string="default")',
             $annotationLines
         );
     }
