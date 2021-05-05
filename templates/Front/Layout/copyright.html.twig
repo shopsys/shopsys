@@ -1,32 +1,12 @@
 {% set domain = getDomain() %}
-<p class="dont-print">
-    &copy; {{ 'now' | date('Y') }} {{ 'Copyright Shopsys, s.r.o.'|trans }}
-</p>
-<ul class="menu dont-print">
-    <li class="menu__item">
-        <a class="menu__item__link" href="/copyright">{{ 'Copyright'|trans }}</a>
-    </li>
-    <li class="menu__item">
-        <a
-            class="menu__item__link"
-            href="{{ domain.id == 1 ? '/ochrana-osobnich-udaju' : '/ochrana-osobnych-udajov' }}"
-        >
-            {{ 'Ochrana osobních údajů'|trans }}
+<div class="footer__copyright">
+    <p class="footer__copyright__text">
+        {{ 'Copyright'|trans }} &copy; {{ 'now' | date('Y') }}, {{ 'Shopsys s.r.o. Všechna práva vyhrazena.'|trans }}
+    </p>
+    <p class="footer__copyright__text">
+        {{ 'E-shop na míru od'|trans }}
+        <a class="footer__copyright__logo" href="https://www.shopsys.sk/">
+            <img src="{{ asset("public/frontend/images/logo.svg") }}" alt="{{ 'Online shop'|trans }}">
         </a>
-    </li>
-    <li class="menu__item">
-        <a
-            class="menu__item__link"
-            href="/cookie"
-        >
-            {{ 'Cookies'|trans }}
-            <img
-                class="menu__item__link__icon"
-                loading="lazy"
-                src="{{ imgLazyloadPlaceholder }}"
-                data-src="{{ asset('public/frontend/images/cookie.png') }}"
-                alt="{{ 'Cookies'|trans }}"
-            >
-        </a>
-    </li>
-</ul>
+    </p>
+</div>

@@ -1,121 +1,75 @@
 @footer-block-socials-border-color: #4f505c;
+@footer-block-menu-item-border-color: #606476;
+@footer-block-menu-item-gap: 20px;
 @footer-block-langs-link-gap: 60px;
 @footer-block-langs-link-gap-bottom: 10px;
-@footer-toggle-drop-icon-size: 8px;
 
 // Footer block (footer with menu and contacts)
 .footer__block {
+    margin-bottom: 50px;
+
     @media @query-vl {
         display: flex;
-        justify-content: space-between;
+        margin-bottom: 95px;
     }
 
     &__menu {
-        @media @query-md {
+        margin: 0 -@web-padding 30px;
+
+        @media @query-lg {
             display: flex;
-            justify-content: space-between;
+            margin-bottom: 40px;
+            margin-left: -@footer-block-menu-item-gap;
         }
 
         @media @query-vl {
             flex: 1;
+            margin-bottom: 0;
         }
 
         &__item {
-            margin-bottom: 1.5rem;
+            padding: 0 @web-padding;
 
-            @media @query-md {
-                flex-grow: 1;
-                padding-left: 1.5rem;
-                margin-bottom: 0;
-            }
+            border-top: 2px solid @footer-block-menu-item-border-color;
 
-            @media @query-xl {
-                padding-left: 3rem;
-            }
-        }
-    }
+            &:last-child {
+                border-bottom: 2px solid @footer-block-menu-item-border-color;
 
-    &__contact {
-        @media @query-vl {
-            width: 27%;
-        }
-    }
-
-    &__heading {
-        color: @color-f;
-        text-transform: uppercase;
-
-        &--toggle {
-            @media @query-md {
-                pointer-events: none;
-            }
-
-            .svg {
-                display: inline-block;
-                position: relative;
-                left: 3px;
-
-                @media @query-md {
-                    display: none;
-                }
-
-                &::before {
-                    font-size: @footer-toggle-drop-icon-size;
+                @media @query-lg {
+                    border-bottom: 0;
                 }
             }
 
-            &.active .svg {
-                transform: rotate(180deg);
+            @media @query-lg {
+                width: 25%;
+                padding-left: @footer-block-menu-item-gap;
+
+                border-top: 0;
             }
         }
-
-        &--inner {
-            @media @query-mobile-xs {
-                margin-top: 25px;
-            }
-        }
-
-        &--inline-xs {
-            @media @query-mobile-xs {
-                display: inline-block;
-                vertical-align: middle;
-                margin: 0 1.5rem 0 0;
-            }
-        }
-    }
-
-    &__label {
-        display: inline-block;
-        vertical-align: middle;
-
-        font-size: 15px;
     }
 
     &__list {
-        padding-left: 0;
-        margin-bottom: 0;
-
-        list-style: none;
-
-        &--bottom-spacing {
-            margin-bottom: 2rem;
-        }
-
-        &--top-spacing {
-            margin-top: 2rem;
-        }
+        .reset-ul();
 
         &__item {
-            margin-bottom: 10px;
+            margin-bottom: 5px;
+
+            @media @query-lg {
+                margin-bottom: 18px;
+            }
 
             &:last-child {
-                margin-bottom: 0;
+                margin-bottom: 20px;
+
+                @media @query-lg {
+                    margin-bottom: 0;
+                }
             }
         }
 
         &__link {
             display: block;
-            margin-bottom: 18px;
 
             font-size: @font-size-small;
             color: @color-base-lighter;
@@ -127,14 +81,82 @@
         }
     }
 
-    &__socials {
+    &__contact {
         display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        
+        @media @query-lg {
+            align-items: center;
+        }
+
+        @media @query-vl {
+            width: 27%;
+            padding-left: @footer-block-menu-item-gap;
+            align-items: flex-start;
+        }
+    }
+
+    &__heading {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 0;
+        padding: 20px 0;
+
+        cursor: pointer;
+        color: @color-f;
+        text-transform: uppercase;
+
+        @media @query-lg {
+            padding: 0;
+            margin-bottom: 24px;
+            pointer-events: none;
+        }
+
+        &--socials {
+            display: none;
+
+            @media @query-lg {
+                display: block;
+            }
+        }
+
+        .svg {
+            font-size: 20px;
+
+            @media @query-lg {
+                display: none;
+            }
+        }
+
+        &.active .svg {
+            transform: rotate(180deg);
+        }
+    }
+
+    &__toggle {
+        display: none;
+
+        @media @query-lg {
+            display: block;
+        }
+    }
+
+    &__socials {
+        display: none;
         overflow: hidden;
         height: 92px;
+        width: 100%;
+        max-width: 400px;
         margin-bottom: 24px;
 
         border: 2px solid @footer-block-socials-border-color;
         border-radius: 6px;
+
+        @media @query-lg {
+            display: flex;
+        }
 
         &__item {
             display: flex;
@@ -155,14 +177,22 @@
         display: flex;
         flex-direction: row;
         flex-wrap: wrap;
-        margin-left: -@footer-block-langs-link-gap;
+        margin-left: -@footer-block-langs-link-gap + 20px;
         margin-bottom: -@footer-block-langs-link-gap-bottom;
+
+        @media @query-lg {
+            margin-left: -@footer-block-langs-link-gap;
+        }
         
         &__link {
             display: flex;
             align-items: center;
-            padding-left: @footer-block-langs-link-gap;
+            padding-left: @footer-block-langs-link-gap - 20px;
             margin-bottom: @footer-block-langs-link-gap-bottom;
+
+            @media @query-lg {
+                padding-left: @footer-block-langs-link-gap;
+            }
 
             &:hover {
                 text-decoration: none;
@@ -178,14 +208,6 @@
 
             color: @color-base-lighter;
             font-size: @font-size-small;
-        }
-    }
-
-    &__toggle {
-        display: none;
-
-        @media @query-md {
-            display: block;
         }
     }
 }

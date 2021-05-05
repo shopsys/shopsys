@@ -1,5 +1,5 @@
 {% macro articlesList(id, articles, title, icon) %}
-    <h4 class="footer__block__heading footer__block__heading--toggle js-responsive-toggle" data-element="js-footer-menu-{{ id }}">{{ title }} <i class="svg {{ icon }}"></i></h4>
+    <h4 class="footer__block__heading js-responsive-toggle" data-element="js-footer-menu-{{ id }}">{{ title }} <i class="svg {{ icon }}"></i></h4>
     <ul class="footer__block__list footer__block__toggle" id="js-footer-menu-{{ id }}">
         {% for article in articles %}
             <li class="footer__block__list__item">

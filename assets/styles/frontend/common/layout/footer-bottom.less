@@ -4,7 +4,11 @@
 .footer__bottom {
     display: flex;
     flex-direction: column;
-    padding: 45px 0;
+    padding: 20px 0 42px;
+
+    @media @query-lg {
+        padding: 45px 0;
+    }
 
     &__copyright {
         margin-top: 15px;

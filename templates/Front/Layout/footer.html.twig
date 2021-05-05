@@ -30,66 +30,64 @@
                         {% endcache %}
 
                         <div class="footer__block__contact">
-                            <div class="footer__block__menu__item">
-                                <h4 class="footer__block__heading">
-                                    {{ 'Sledujte nás'|trans }}
-                                </h4>
+                            <h4 class="footer__block__heading footer__block__heading--socials">
+                                {{ 'Sledujte nás'|trans }}
+                            </h4>
 
-                                <div class="footer__block__socials">
-                                    <a class="footer__block__socials__item" href="https://www.instagram.com/shopsyscz/" target="_blank">
-                                        <img
-                                            loading="lazy"
-                                            src="{{ imgLazyloadPlaceholder }}"
-                                            data-src="{{ asset('public/frontend/images/instagram.svg') }}"
-                                            alt="{{ 'Instagram'|trans }}"
-                                        >
-                                    </a>
-                                    <a class="footer__block__socials__item" href="https://www.facebook.com/shopsyscz/" target="_blank">
-                                        <img
-                                            loading="lazy"
-                                            src="{{ imgLazyloadPlaceholder }}"
-                                            data-src="{{ asset('public/frontend/images/facebook.svg') }}"
-                                            alt="{{ 'Facebook'|trans }}"
-                                        >
-                                    </a>
-                                    <a class="footer__block__socials__item" href="https://www.youtube.com/user/netdevelo" target="_blank">
-                                        <img
-                                            loading="lazy"
-                                            src="{{ imgLazyloadPlaceholder }}"
-                                            data-src="{{ asset('public/frontend/images/youtube.svg') }}"
-                                            alt="{{ 'Youtube'|trans }}"
-                                        >
-                                    </a>
-                                </div>
+                            <div class="footer__block__socials">
+                                <a class="footer__block__socials__item" href="https://www.instagram.com/shopsyscz/" target="_blank">
+                                    <img
+                                        loading="lazy"
+                                        src="{{ imgLazyloadPlaceholder }}"
+                                        data-src="{{ asset('public/frontend/images/instagram.svg') }}"
+                                        alt="{{ 'Instagram'|trans }}"
+                                    >
+                                </a>
+                                <a class="footer__block__socials__item" href="https://www.facebook.com/shopsyscz/" target="_blank">
+                                    <img
+                                        loading="lazy"
+                                        src="{{ imgLazyloadPlaceholder }}"
+                                        data-src="{{ asset('public/frontend/images/facebook.svg') }}"
+                                        alt="{{ 'Facebook'|trans }}"
+                                    >
+                                </a>
+                                <a class="footer__block__socials__item" href="https://www.youtube.com/user/netdevelo" target="_blank">
+                                    <img
+                                        loading="lazy"
+                                        src="{{ imgLazyloadPlaceholder }}"
+                                        data-src="{{ asset('public/frontend/images/youtube.svg') }}"
+                                        alt="{{ 'Youtube'|trans }}"
+                                    >
+                                </a>
+                            </div>
 
-                                <div class="footer__block__langs">
-                                    <a
-                                        href="{{ domain.id == 1 ? '/' : 'https://www.shopsys.cz/' }}"
-                                        class="footer__block__langs__link"
-                                        {% if domain.id == 2 %}target="_blank"{% endif %}
+                            <div class="footer__block__langs">
+                                <a
+                                    href="{{ domain.id == 1 ? '/' : 'https://www.shopsys.cz/' }}"
+                                    class="footer__block__langs__link"
+                                    {% if domain.id == 2 %}target="_blank"{% endif %}
+                                >
+                                    <img
+                                        loading="lazy"
+                                        src="{{ imgLazyloadPlaceholder }}"
+                                        data-src="{{ asset('public/frontend/images/cz.svg') }}"
+                                        alt="{{ 'Česko'|trans }}"
                                     >
-                                        <img
-                                            loading="lazy"
-                                            src="{{ imgLazyloadPlaceholder }}"
-                                            data-src="{{ asset('public/frontend/images/cz.svg') }}"
-                                            alt="{{ 'Česko'|trans }}"
-                                        >
-                                        <span class="footer__block__langs__text">{{ 'Česko'|trans }}</span>
-                                    </a>
-                                    <a
-                                        href="{{ domain.id ==  2 ? '/' : 'https://www.shopsys.sk/' }}"
-                                        class="footer__block__langs__link"
-                                        {% if domain.id == 1 %}target="_blank"{% endif %}
+                                    <span class="footer__block__langs__text">{{ 'Česko'|trans }}</span>
+                                </a>
+                                <a
+                                    href="{{ domain.id ==  2 ? '/' : 'https://www.shopsys.sk/' }}"
+                                    class="footer__block__langs__link"
+                                    {% if domain.id == 1 %}target="_blank"{% endif %}
+                                >
+                                    <img
+                                        loading="lazy"
+                                        src="{{ imgLazyloadPlaceholder }}"
+                                        data-src="{{ asset('public/frontend/images/sk.svg') }}"
+                                        alt="{{ 'Slovensko'|trans }}"
                                     >
-                                        <img
-                                            loading="lazy"
-                                            src="{{ imgLazyloadPlaceholder }}"
-                                            data-src="{{ asset('public/frontend/images/sk.svg') }}"
-                                            alt="{{ 'Slovensko'|trans }}"
-                                        >
-                                        <span class="footer__block__langs__text">{{ 'Slovensko'|trans }}</span>
-                                    </a>
-                                </div>
+                                    <span class="footer__block__langs__text">{{ 'Slovensko'|trans }}</span>
+                                </a>
                             </div>
                         </div>
                     </div>
