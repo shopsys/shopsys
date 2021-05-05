@@ -26,11 +26,6 @@ class CurrentPromoCodeFacade extends BaseCurrentPromoCodeFacade
     private $promoCodeProductRepository;
 
     /**
-     * @var \App\Model\Order\PromoCode\PromoCodeCategoryRepository
-     */
-    private $promoCodeCategoryRepository;
-
-    /**
      * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
      */
     private $domain;
@@ -56,33 +51,24 @@ class CurrentPromoCodeFacade extends BaseCurrentPromoCodeFacade
     private PromoCodeLimitResolver $promoCodeLimitByCartTotalResolver;
 
     /**
-     * @var \App\Model\Order\PromoCode\PromoCodeBrandRepository
-     */
-    private PromoCodeBrandRepository $promoCodeBrandRepository;
-
-    /**
      * @param \App\Model\Order\PromoCode\PromoCodeFacade $promoCodeFacade
      * @param \Symfony\Component\HttpFoundation\Session\SessionInterface $session
      * @param \App\Model\Order\PromoCode\PromoCodeProductRepository $promoCodeProductRepository
-     * @param \App\Model\Order\PromoCode\PromoCodeCategoryRepository $promoCodeCategoryRepository
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifierFactory $customerUserIdentifierFactory
      * @param \Shopsys\FrameworkBundle\Model\Cart\CartRepository $cartRepository
      * @param \App\Model\Order\PromoCode\ProductPromoCodeFiller $productPromoCodeFiller
      * @param \App\Model\Order\PromoCode\PromoCodeLimitResolver $promoCodeLimitByCartTotalResolver
-     * @param \App\Model\Order\PromoCode\PromoCodeBrandRepository $promoCodeBrandRepository
      */
     public function __construct(
         PromoCodeFacade $promoCodeFacade,
         SessionInterface $session,
         PromoCodeProductRepository $promoCodeProductRepository,
-        PromoCodeCategoryRepository $promoCodeCategoryRepository,
         Domain $domain,
         CustomerUserIdentifierFactory $customerUserIdentifierFactory,
         CartRepository $cartRepository,
         ProductPromoCodeFiller $productPromoCodeFiller,
-        PromoCodeLimitResolver $promoCodeLimitByCartTotalResolver,
-        PromoCodeBrandRepository $promoCodeBrandRepository
+        PromoCodeLimitResolver $promoCodeLimitByCartTotalResolver
     ) {
         parent::__construct(
             $promoCodeFacade,
@@ -90,13 +76,11 @@ class CurrentPromoCodeFacade extends BaseCurrentPromoCodeFacade
         );
 
         $this->promoCodeProductRepository = $promoCodeProductRepository;
-        $this->promoCodeCategoryRepository = $promoCodeCategoryRepository;
         $this->domain = $domain;
         $this->customerUserIdentifierFactory = $customerUserIdentifierFactory;
         $this->cartRepository = $cartRepository;
         $this->productPromoCodeFiller = $productPromoCodeFiller;
         $this->promoCodeLimitByCartTotalResolver = $promoCodeLimitByCartTotalResolver;
-        $this->promoCodeBrandRepository = $promoCodeBrandRepository;
     }
 
     /**
@@ -166,18 +150,7 @@ class CurrentPromoCodeFacade extends BaseCurrentPromoCodeFacade
     {
         $domainId = $this->domain->getId();
         $allowedProductIds = $this->promoCodeProductRepository->getProductIdsByPromoCodeId($promoCode->getId());
-        $allowedProductIdsFromCategories = $this->promoCodeCategoryRepository->getProductIdsFromCategoriesByPromoCodeIdAndDomainId($promoCode->getId(), $domainId);
-        $allowedProductIdsFromBrands = $this->promoCodeBrandRepository->getProductIdsFromBrandsByPromoCodeId($promoCode->getId());
-
-        if (count($allowedProductIdsFromCategories) !== 0 && count($allowedProductIdsFromBrands) !== 0) {
-            $allowedProductIdsByCriteria = array_intersect($allowedProductIdsFromCategories, $allowedProductIdsFromBrands);
-        } elseif (count($allowedProductIdsFromCategories) === 0) {
-            $allowedProductIdsByCriteria = $allowedProductIdsFromBrands;
-        } elseif (count($allowedProductIdsFromBrands) === 0) {
-            $allowedProductIdsByCriteria = $allowedProductIdsFromCategories;
-        } else {
-            $allowedProductIdsByCriteria = [];
-        }
+        $allowedProductIdsByCriteria = $this->productPromoCodeFiller->getAllowedProductIdsForBrandsAndCategories($promoCode, $domainId);
 
         $allowedProductIds = array_unique(array_merge($allowedProductIds, $allowedProductIdsByCriteria));
         if (count($allowedProductIds) === 0) {

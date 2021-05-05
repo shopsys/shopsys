@@ -61,18 +61,7 @@ class ProductPromoCodeFiller
     public function getPromoCodePerProductByDomainId(array $quantifiedProducts, int $domainId, PromoCode $promoCode): array
     {
         $allowedProductIds = $this->promoCodeProductRepository->getProductIdsByPromoCodeId($promoCode->getId());
-        $allowedProductIdsFromCategories = $this->promoCodeCategoryRepository->getProductIdsFromCategoriesByPromoCodeIdAndDomainId($promoCode->getId(), $domainId);
-        $allowedProductIdsFromBrands = $this->promoCodeBrandRepository->getProductIdsFromBrandsByPromoCodeId($promoCode->getId());
-
-        if (count($allowedProductIdsFromCategories) !== 0 && count($allowedProductIdsFromBrands) !== 0) {
-            $allowedProductIdsByCriteria = array_intersect($allowedProductIdsFromCategories, $allowedProductIdsFromBrands);
-        } elseif (count($allowedProductIdsFromCategories) === 0) {
-            $allowedProductIdsByCriteria = $allowedProductIdsFromBrands;
-        } elseif (count($allowedProductIdsFromBrands) === 0) {
-            $allowedProductIdsByCriteria = $allowedProductIdsFromCategories;
-        } else {
-            $allowedProductIdsByCriteria = [];
-        }
+        $allowedProductIdsByCriteria = $this->getAllowedProductIdsForBrandsAndCategories($promoCode, $domainId);
 
         $totalAllowedProductIds = array_unique(array_merge($allowedProductIds, $allowedProductIdsByCriteria));
         if (count($totalAllowedProductIds) === 0) {
@@ -154,5 +143,27 @@ class ProductPromoCodeFiller
         }
 
         return null;
+    }
+
+    /**
+     * @param \App\Model\Order\PromoCode\PromoCode $promoCode
+     * @param int $domainId
+     * @return int[]
+     */
+    public function getAllowedProductIdsForBrandsAndCategories(PromoCode $promoCode, int $domainId): array
+    {
+        $allowedProductIdsFromCategories = $this->promoCodeCategoryRepository->getProductIdsFromCategoriesByPromoCodeIdAndDomainId(
+            $promoCode->getId(),
+            $domainId
+        );
+        $allowedProductIdsFromBrands = $this->promoCodeBrandRepository->getProductIdsFromBrandsByPromoCodeId(
+            $promoCode->getId()
+        );
+
+        if (count($allowedProductIdsFromCategories) !== 0 && count($allowedProductIdsFromBrands) !== 0) {
+            return array_intersect($allowedProductIdsFromCategories, $allowedProductIdsFromBrands);
+        }
+
+        return array_merge($allowedProductIdsFromCategories, $allowedProductIdsFromBrands);
     }
 }
