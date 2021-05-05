@@ -40,7 +40,7 @@ class AnnotationsAdder
                 "/**\n" . $propertyAndMethodAnnotationsLines . " */\n" . $classKeywordWithName
             );
         } else {
-            $replacedClassDocBlock = $this->replaceAnnotationsInExistingDocBlock(
+            $replacedClassDocBlock = $this->replaceInClassDocBlock(
                 $projectClassDocComment,
                 $propertyAndMethodAnnotationsLines
             );
@@ -53,24 +53,24 @@ class AnnotationsAdder
     }
 
     /**
-     * Appends second annotation block, annotation lines with colliding "name" will get replaced instead
+     * Appends annotations to a doc block, annotation lines with colliding "name" will get replaced instead
      *
      * @see extractPropertyOrMethodAnnotationName() for explanation of how the "name" works
-     * @param string $annotation
-     * @param string $annotationToAdd
+     * @param string $classDocBlock
+     * @param string $propertyAndMethodAnnotationsLines
      * @return string
      */
-    protected function replaceAnnotationsInExistingDocBlock(string $annotation, string $annotationToAdd): string
+    protected function replaceInClassDocBlock(string $classDocBlock, string $propertyAndMethodAnnotationsLines): string
     {
         $annotationLinesByName = [];
 
-        $annotationLines = explode("\n", $annotation);
+        $annotationLines = explode("\n", $classDocBlock);
         $annotationStart = array_shift($annotationLines);
         $annotationEnd = array_pop($annotationLines);
         foreach ($annotationLines as $annotationLine) {
             $annotationLinesByName[$this->extractPropertyOrMethodAnnotationName($annotationLine)] = $annotationLine;
         }
-        $annotationLinesToAdd = array_filter(explode("\n", $annotationToAdd));
+        $annotationLinesToAdd = array_filter(explode("\n", $propertyAndMethodAnnotationsLines));
         foreach ($annotationLinesToAdd as $annotationLine) {
             $annotationLinesByName[$this->extractPropertyOrMethodAnnotationName($annotationLine)] = $annotationLine;
         }
