@@ -9,6 +9,7 @@ use Roave\BetterReflection\Reflection\ReflectionObject;
 use Shopsys\FrameworkBundle\Component\ClassExtension\AnnotationsAdder;
 use Shopsys\FrameworkBundle\Component\ClassExtension\FileContentsReplacer;
 use Tests\FrameworkBundle\Unit\Component\ClassExtension\Source\AnnotationsAdderTest\DummyClassWithAnAnnotation;
+use Tests\FrameworkBundle\Unit\Component\ClassExtension\Source\AnnotationsAdderTest\DummyClassWithMethodAnnotation;
 use Tests\FrameworkBundle\Unit\Component\ClassExtension\Source\AnnotationsAdderTest\DummyClassWithNoAnnotation;
 
 class AnnotationsAdderTest extends TestCase
@@ -68,5 +69,22 @@ class AnnotationsAdderTest extends TestCase
 
         $annotationsAdder = new AnnotationsAdder($fileContentsReplacerMock);
         $annotationsAdder->addAnnotationToClass($betterReflectionClass, '');
+    }
+
+    public function testAddMethodAnnotationToClassReplacesPrevious(): void
+    {
+        $betterReflectionClass = ReflectionObject::createFromName(DummyClassWithMethodAnnotation::class);
+        $fileContentsReplacerMock = $this->createMock(FileContentsReplacer::class);
+        $fileContentsReplacerMock->expects($this->once())->method('replaceInFile')->with(
+            $betterReflectionClass->getFileName(),
+            "/**\n * @method void setCategory(\\Shopsys\\FrameworkBundle\\Model\\Category\\Category \$category)\n */",
+            "/**\n * @method void setCategory(\\App\\Model\\Category\\Category \$category)\n */"
+        );
+
+        $annotationsAdder = new AnnotationsAdder($fileContentsReplacerMock);
+        $annotationsAdder->addAnnotationToClass(
+            $betterReflectionClass,
+            " * @method void setCategory(\\App\\Model\\Category\\Category \$category)\n"
+        );
     }
 }
