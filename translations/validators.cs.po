@@ -25,6 +25,9 @@ msgstr "Název firmy nesmí být delší než {{ limit }} znaků"
 msgid "Email cannot be longer than {{ limit }} characters"
 msgstr "E-mail nesmí být delší než {{ limit }} znaků"
 
+msgid "External ID cannot be longer than {{ limit }} characters"
+msgstr "Externí ID nesmí být delší než {{ limit }} znaků"
+
 msgid "Externí ID můstku nesmí být delší než {{ limit }} znaků"
 msgstr ""
 
@@ -57,9 +60,6 @@ msgstr "Příjmení nesmí být delší než {{ limit }} znaků"
 
 msgid "Last name of contact person cannot be longer than {{ limit }} characters"
 msgstr "Příjmení kontaktní osoby nesmí být delší než {{ limit }} znaků"
-
-msgid "Město nesmí být delší než {{ limit }} znaků"
-msgstr ""
 
 msgid "Name cannot be longer than {{ limit }} characters"
 msgstr ""
@@ -260,9 +260,6 @@ msgid "Ulice musí obsahovat písmeno"
 msgstr ""
 
 msgid "Ulice musí obsahovat číslo"
-msgstr ""
-
-msgid "Ulice nesmí být delší než {{ limit }} znaků"
 msgstr ""
 
 msgid "Uploaded file is to large ({{ size }} {{ suffix }}). Maximum size of an file is {{ limit }} {{ suffix }}."

@@ -607,9 +607,6 @@ msgstr "Cenový hit"
 msgid "Centrála společnosti"
 msgstr "Centrála spoločnosti"
 
-msgid "Centrální sklad"
-msgstr ""
-
 msgid "Changing password"
 msgstr "Zmena hesla"
 
@@ -673,6 +670,9 @@ msgstr "Pripojenie k bráne GoPay zlyhalo."
 msgid "Contact"
 msgstr "Kontakt"
 
+msgid "Contact informations"
+msgstr ""
+
 msgid "Contact us"
 msgstr "Kontaktujte nás"
 
@@ -698,6 +698,9 @@ msgid "Create new customer"
 msgstr ""
 
 msgid "Create new order status"
+msgstr ""
+
+msgid "Create new store"
 msgstr ""
 
 msgid "Create promo code"
@@ -755,6 +758,15 @@ msgid "Datum zobrazení DO"
 msgstr ""
 
 msgid "Datum zobrazení OD"
+msgstr ""
+
+msgid "Default stock cannot be removed"
+msgstr ""
+
+msgid "Default store"
+msgstr ""
+
+msgid "Default store cannot be removed"
 msgstr ""
 
 msgid "Defaultně zavřené parametry ve filtru"
@@ -842,6 +854,12 @@ msgid "Do you really want to remove this parameter? By deleting this parameter y
 msgstr ""
 
 msgid "Do you really want to remove this promo code?"
+msgstr ""
+
+msgid "Do you really want to remove this stock? By deleting this stock you will remove all stock quantities from products and association to stores. This step is irreversible!"
+msgstr ""
+
+msgid "Do you really want to remove this store? This step is irreversible!"
 msgstr ""
 
 msgid "Dodací adresa"
@@ -967,6 +985,9 @@ msgstr "URL adresa e-shopu"
 msgid "EASYTOUCH"
 msgstr "EASYTOUCH"
 
+msgid "Edit store"
+msgstr ""
+
 msgid "Edit transport type"
 msgstr ""
 
@@ -1062,6 +1083,9 @@ msgstr "Export objednávok do mostíka"
 
 msgid "Export zákazníků do můstku"
 msgstr "Export zákazníkov do mostíka"
+
+msgid "External ID"
+msgstr ""
 
 msgid "Externí ID můstku"
 msgstr ""
@@ -1249,9 +1273,6 @@ msgstr ""
 msgid "Informace o balení"
 msgstr "Informácie o balení"
 
-msgid "Informace o obchodním domě"
-msgstr ""
-
 msgid "Instagram"
 msgstr "\nInstagram"
 
@@ -1260,6 +1281,9 @@ msgstr "Inštalácie"
 
 msgid "Instalační manuál"
 msgstr "Inštalačný manuál"
+
+msgid "Interní poznámka"
+msgstr ""
 
 msgid "Invalid two-factor authentication code."
 msgstr ""
@@ -1347,12 +1371,6 @@ msgstr "Koncový zákazník"
 
 msgid "Kontakt na obchodní dům"
 msgstr "Kontakt na obchodný dom"
-
-msgid "Kontakt na obchodní dům 1"
-msgstr ""
-
-msgid "Kontakt na obchodní dům 2"
-msgstr ""
 
 msgid "Kontaktní formulář"
 msgstr "Kontaktný formulár"
@@ -1624,9 +1642,6 @@ msgstr "Na tejto url adrese žiadny nábytok ani doplnky nemáme."
 msgid "Nadpis H1"
 msgstr ""
 
-msgid "Nahrát nový obrázek galerie"
-msgstr ""
-
 msgid "Nahrát nový obrázek pro mobilní zařízení"
 msgstr ""
 
@@ -1729,6 +1744,9 @@ msgstr ""
 msgid "New registered customers"
 msgstr ""
 
+msgid "New store"
+msgstr ""
+
 msgid "Newsletter"
 msgstr "Newsletter"
 
@@ -1756,7 +1774,13 @@ msgstr "Pre túto značku neboli nájdené žiadne produkty"
 msgid "No results matching filter"
 msgstr "Filtru nezodpovedajú žiadne výsledky"
 
+msgid "No store is created. You have to create one first."
+msgstr ""
+
 msgid "No transport types found."
+msgstr ""
+
+msgid "No warehouse associated"
 msgstr ""
 
 msgid "Nobilia"
@@ -2851,6 +2875,9 @@ msgstr ""
 msgid "Seo"
 msgstr ""
 
+msgid "Set as default"
+msgstr ""
+
 msgid "Set new password"
 msgstr "Nastaviť nové heslo"
 
@@ -2959,6 +2986,9 @@ msgstr "Súhlasím so zasielaním newslettera"
 msgid "Soukromá osoba"
 msgstr ""
 
+msgid "Special message"
+msgstr ""
+
 msgid "Společnost je zapsaná v obchodním<br> rejstříku vedeném Městským soudem<br> v Praze, oddíl C, vložka 145176"
 msgstr "Spoločnosť je zapísaná v obchodnom registri Okresného súdu Trnava, oddiel Sro, vložka 25761/T"
 
@@ -2992,7 +3022,37 @@ msgstr ""
 msgid "Stock <strong>{{ name }}</strong> deleted"
 msgstr ""
 
+msgid "Stock <strong>{{ name }}</strong> was set as default."
+msgstr ""
+
 msgid "Stocks"
+msgstr ""
+
+msgid "Store"
+msgstr ""
+
+msgid "Store <strong><a href=\"{{ url }}\">{{ name }}</a></strong> created"
+msgstr ""
+
+msgid "Store <strong><a href=\"{{ url }}\">{{ name }}</a></strong> edited"
+msgstr ""
+
+msgid "Store <strong>{{ name }}</strong> was deleted"
+msgstr ""
+
+msgid "Store <strong>{{ name }}</strong> was set as default."
+msgstr ""
+
+msgid "Store description"
+msgstr ""
+
+msgid "Store does not exist"
+msgstr ""
+
+msgid "Store list"
+msgstr ""
+
+msgid "Stores"
 msgstr ""
 
 msgid "Street"
@@ -3215,9 +3275,6 @@ msgid "URL addresses"
 msgstr ""
 
 msgid "URL odkazu"
-msgstr ""
-
-msgid "URL settings"
 msgstr ""
 
 msgid "Uh-oh, uh-oh. And specially <strong>\"%status_code% %status_text%\"</strong>, as if it was on purpose!"
@@ -3517,6 +3574,9 @@ msgstr ""
 msgid "Výběr výprodejové kategorie"
 msgstr ""
 
+msgid "Výchozí sklad"
+msgstr ""
+
 msgid "Výprodej"
 msgstr "Výpredaj"
 
@@ -3531,6 +3591,9 @@ msgstr "Všetky produkty"
 
 msgid "Všechny články"
 msgstr "Všetky články"
+
+msgid "Warehouse"
+msgstr ""
 
 msgid "We will remember your login on this computer for 30 days."
 msgstr "Zapamätáme si prihlásenie na tomto počítači po dobu 30 dní"
@@ -3837,12 +3900,6 @@ msgstr "na sklade"
 
 msgid "smontováno"
 msgstr "zmontované"
-
-msgid "souřadnice Zeměpisná délka"
-msgstr ""
-
-msgid "souřadnice Zeměpisná šířka"
-msgstr ""
 
 msgid "strana %currentPage% z %pageCount%"
 msgstr "strana %currentPage% z %pageCount%"
