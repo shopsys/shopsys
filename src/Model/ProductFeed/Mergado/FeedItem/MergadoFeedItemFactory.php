@@ -7,15 +7,15 @@ namespace App\Model\ProductFeed\Mergado\FeedItem;
 use App\Component\Image\ImageFacade;
 use App\Model\Product\Availability\ProductAvailabilityFacade;
 use App\Model\Product\Flag\Flag;
-use App\Model\Product\Pricing\ProductPriceCalculation;
 use App\Model\Product\Product;
-use App\Model\ProductFeed\Mergado\Exception\MissingRequiredInformationException;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Image\Exception\ImageNotFoundException;
 use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
+use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade;
 use Shopsys\FrameworkBundle\Model\Product\Collection\ProductParametersBatchLoader;
 use Shopsys\FrameworkBundle\Model\Product\Collection\ProductUrlsBatchLoader;
+use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser;
 
 class MergadoFeedItemFactory
@@ -41,7 +41,7 @@ class MergadoFeedItemFactory
     private $availabilityFacade;
 
     /**
-     * @var \App\Model\Product\Pricing\ProductPriceCalculationForCustomerUser
+     * @var \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser
      */
     private $productPriceCalculationForCustomerUser;
 
@@ -56,19 +56,25 @@ class MergadoFeedItemFactory
     private $currencyFacade;
 
     /**
-     * @var \App\Model\Product\Pricing\ProductPriceCalculation
+     * @var \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculation
      */
     private ProductPriceCalculation $productPriceCalculation;
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade
+     */
+    private PricingGroupSettingFacade $pricingGroupSettingFacade;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Collection\ProductUrlsBatchLoader $productUrlsBatchLoader
      * @param \Shopsys\FrameworkBundle\Model\Product\Collection\ProductParametersBatchLoader $productParametersBatchLoader
      * @param \App\Model\Category\CategoryFacade $categoryFacade
      * @param \App\Model\Product\Availability\ProductAvailabilityFacade $availabilityFacade
-     * @param \App\Model\Product\Pricing\ProductPriceCalculationForCustomerUser $productPriceCalculationForCustomerUser
+     * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser $productPriceCalculationForCustomerUser
      * @param \App\Component\Image\ImageFacade $imageFacade
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
-     * @param \App\Model\Product\Pricing\ProductPriceCalculation $productPriceCalculation
+     * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculation $productPriceCalculation
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade $pricingGroupSettingFacade
      */
     public function __construct(
         ProductUrlsBatchLoader $productUrlsBatchLoader,
@@ -78,7 +84,8 @@ class MergadoFeedItemFactory
         ProductPriceCalculationForCustomerUser $productPriceCalculationForCustomerUser,
         ImageFacade $imageFacade,
         CurrencyFacade $currencyFacade,
-        ProductPriceCalculation $productPriceCalculation
+        ProductPriceCalculation $productPriceCalculation,
+        PricingGroupSettingFacade $pricingGroupSettingFacade
     ) {
         $this->productUrlsBatchLoader = $productUrlsBatchLoader;
         $this->productParametersBatchLoader = $productParametersBatchLoader;
@@ -88,6 +95,7 @@ class MergadoFeedItemFactory
         $this->imageFacade = $imageFacade;
         $this->currencyFacade = $currencyFacade;
         $this->productPriceCalculation = $productPriceCalculation;
+        $this->pricingGroupSettingFacade = $pricingGroupSettingFacade;
     }
 
     /**
@@ -99,10 +107,11 @@ class MergadoFeedItemFactory
     {
         $domainId = $domainConfig->getId();
         $currency = $this->currencyFacade->getDomainDefaultCurrencyByDomainId($domainId);
-        if ($product->getHighPriceWithVat($domainId) === null) {
-            throw new MissingRequiredInformationException('Product high price isn\'t set');
-        }
-        $highProductPrice = $this->productPriceCalculation->getProductPrice($product->getHighPriceWithVat($domainId), $product->getVatForDomain($domainId), $domainId);
+        $productPrice = $this->productPriceCalculation->calculatePrice(
+            $product,
+            $domainId,
+            $this->pricingGroupSettingFacade->getDefaultPricingGroupByDomainId($domainId)
+        );
         $availability = $this->availabilityFacade->getProductAvailabilityDaysByDomainId($product, $domainId);
         $flags = $this->extractProductFlags($product, $domainId);
 
@@ -122,7 +131,7 @@ class MergadoFeedItemFactory
             $product->getBrand(),
             $this->productUrlsBatchLoader->getProductImageUrl($product, $domainConfig),
             $product->isVariant() ? $product->getMainVariant()->getId() : null,
-            $highProductPrice,
+            $productPrice,
             $flags,
             $availability
         );

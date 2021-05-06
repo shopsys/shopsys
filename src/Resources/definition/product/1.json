@@ -256,9 +256,6 @@
           }
         }
       },
-      "non_selling_price_with_vat": {
-        "type": "float"
-      },
       "in_stock": {
         "type": "boolean"
       },

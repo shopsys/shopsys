@@ -29,7 +29,6 @@ use Twig\Environment;
 /**
  * @property \App\Model\Product\ProductRepository $productRepository
  * @property \App\Model\Order\PromoCode\CurrentPromoCodeFacade $currentPromoCodeFacade
- * @property \App\Model\Product\Pricing\ProductPriceCalculationForCustomerUser $productPriceCalculation
  * @property \App\Model\Cart\Watcher\CartWatcherFacade $cartWatcherFacade
  * @method deleteCart(\App\Model\Cart\Cart $cart)
  * @method \App\Model\Product\Product getProductByCartItemId(int $cartItemId)
@@ -68,7 +67,7 @@ class CartFacade extends BaseCartFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
      * @param \App\Model\Order\PromoCode\CurrentPromoCodeFacade $currentPromoCodeFacade
-     * @param \App\Model\Product\Pricing\ProductPriceCalculationForCustomerUser $productPriceCalculation
+     * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser $productPriceCalculation
      * @param \Shopsys\FrameworkBundle\Model\Cart\Item\CartItemFactoryInterface $cartItemFactory
      * @param \Shopsys\FrameworkBundle\Model\Cart\CartRepository $cartRepository
      * @param \App\Model\Cart\Watcher\CartWatcherFacade $cartWatcherFacade

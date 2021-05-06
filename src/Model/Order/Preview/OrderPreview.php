@@ -14,11 +14,6 @@ use Shopsys\FrameworkBundle\Model\Transport\Transport;
 class OrderPreview extends BaseOrderPreview
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\Price
-     */
-    private $totalProductHighPrice;
-
-    /**
      * @var \App\Model\Stock\Stock|null
      */
     private $personalPickupStock;
@@ -74,7 +69,6 @@ class OrderPreview extends BaseOrderPreview
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Price[] $quantifiedItemsDiscountsByIndex
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $productsPrice
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $totalPrice
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $totalProductHighPrice
      * @param string[] $productsAvailability
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Price[]|null[] $quantifiedItemsDiscountPricesByIndex
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $productsFullPrice
@@ -98,7 +92,6 @@ class OrderPreview extends BaseOrderPreview
         array $quantifiedItemsDiscountsByIndex,
         Price $productsPrice,
         Price $totalPrice,
-        Price $totalProductHighPrice,
         array $productsAvailability,
         array $quantifiedItemsDiscountPricesByIndex,
         Price $productsFullPrice,
@@ -130,7 +123,6 @@ class OrderPreview extends BaseOrderPreview
             $promoCodeDiscountPercent
         );
 
-        $this->totalProductHighPrice = $totalProductHighPrice;
         $this->personalPickupStock = $personalPickupStock;
         $this->productsAvailability = $productsAvailability;
         $this->restToFreeTransportPrice = $restToFreeTransportPrice;
@@ -141,22 +133,6 @@ class OrderPreview extends BaseOrderPreview
         $this->productsFullPrice = $productsFullPrice;
         $this->totalPriceDiscount = $totalPriceDiscount;
         $this->promoCodeIdentifier = $promoCodeIdentifier;
-    }
-
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Price
-     */
-    public function getTotalProductHighPrice(): Price
-    {
-        return $this->totalProductHighPrice;
-    }
-
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Price
-     */
-    public function getSubHighAndLowPrice(): Price
-    {
-        return $this->totalProductHighPrice->subtract($this->totalPrice);
     }
 
     /**
@@ -237,27 +213,5 @@ class OrderPreview extends BaseOrderPreview
     public function getPromoCodeIdentifier(): ?string
     {
         return $this->promoCodeIdentifier;
-    }
-
-    /**
-     * @param int $domainId
-     * @return bool
-     */
-    public function hasAnyProductCommonPrice(int $domainId): bool
-    {
-        foreach ($this->quantifiedProductsByIndex as $quantifiedproduct) {
-            /** @var \App\Model\Product\Product $product */
-            $product = $quantifiedproduct->getProduct();
-            $highPrice = $product->getHighPriceWithVat($domainId);
-
-            if ($highPrice !== null
-                && $highPrice->isGreaterThan(Money::zero())
-                && $highPrice->isGreaterThan($product->getSellingPriceWithVat($domainId))
-            ) {
-                return true;
-            }
-        }
-
-        return false;
     }
 }

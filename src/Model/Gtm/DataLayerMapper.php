@@ -19,11 +19,11 @@ use App\Model\Product\Detail\ProductDetailView;
 use App\Model\Product\Flag\Flag;
 use App\Model\Product\Listed\ListedProductView;
 use App\Model\Product\Product;
-use App\Model\Product\ProductCachedAttributesFacade;
 use App\Model\Slider\SliderItem;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Administrator\Security\AdministratorFrontSecurityFacade;
+use Shopsys\FrameworkBundle\Model\Product\ProductCachedAttributesFacade;
 use Shopsys\FrameworkBundle\Model\Security\Roles;
 use Shopsys\ReadModelBundle\Flag\FlagsProvider;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
@@ -64,7 +64,7 @@ class DataLayerMapper
     private $authorizationChecker;
 
     /**
-     * @var \App\Model\Product\ProductCachedAttributesFacade
+     * @var \Shopsys\FrameworkBundle\Model\Product\ProductCachedAttributesFacade
      */
     private $productCachedAttributesFacade;
 
@@ -87,7 +87,7 @@ class DataLayerMapper
      * @param \App\Model\Category\CategoryFacade $categoryFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface $authorizationChecker
-     * @param \App\Model\Product\ProductCachedAttributesFacade $productCachedAttributesFacade
+     * @param \Shopsys\FrameworkBundle\Model\Product\ProductCachedAttributesFacade $productCachedAttributesFacade
      * @param \App\Model\Administrator\Security\AdministratorFrontSecurityFacade $administratorFrontSecurityFacade
      * @param \App\Model\Product\Availability\ProductAvailabilityFacade $productAvailabilityFacade
      * @param \Shopsys\ReadModelBundle\Flag\FlagsProvider $flagsProvider

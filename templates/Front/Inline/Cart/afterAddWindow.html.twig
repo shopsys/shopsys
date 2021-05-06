@@ -36,13 +36,7 @@
                     <span class="window-popup__cart__content__catnum">{{ product.catnum }}</span>
                 </div>
                 {% set sellingPriceWithVat = getProductSellingPrice(product).priceWithVat %}
-                {% set nonSellingPriceWithVat = getProductNonSellingPrice(product).priceWithVat %}
                 <div class="window-popup__cart__content__prices">
-                    {% if nonSellingPriceWithVat.isGreaterThan(sellingPriceWithVat) %}
-                        <span class="window-popup__cart__content__price window-popup__cart__content__price--legacy">
-                            {{ nonSellingPriceWithVat.multiply(addedQuantity)|price }}
-                        </span>
-                    {% endif %}
                     <strong class="window-popup__cart__content__price window-popup__cart__content__price--main">
                         {{ sellingPriceWithVat.multiply(addedQuantity)|price }}
                     </strong>

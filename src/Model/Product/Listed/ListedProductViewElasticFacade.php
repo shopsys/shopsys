@@ -13,6 +13,7 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Paginator\PaginationResult;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryFacade;
+use Shopsys\FrameworkBundle\Model\Product\ProductCachedAttributesFacade;
 use Shopsys\FrameworkBundle\Model\Product\ProductElasticsearchProvider;
 use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
 use Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainFacadeInterface;
@@ -38,6 +39,11 @@ class ListedProductViewElasticFacade extends BaseListedProductViewElasticFacade
     protected $productAvailabilityFacade;
 
     /**
+     * @var \Shopsys\FrameworkBundle\Model\Product\ProductCachedAttributesFacade
+     */
+    private ProductCachedAttributesFacade $productCachedAttributesFacade;
+
+    /**
      * @param \App\Model\Product\ProductFacade $productFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryFacade $productAccessoryFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
@@ -51,6 +57,7 @@ class ListedProductViewElasticFacade extends BaseListedProductViewElasticFacade
      * @param \App\Model\Product\Availability\ProductAvailabilityFacade $productAvailabilityFacade
      * @param \App\Model\Product\Action\ProductActionViewFactory $productActionViewFactory
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductElasticsearchProvider $productElasticsearchProvider
+     * @param \Shopsys\FrameworkBundle\Model\Product\ProductCachedAttributesFacade $productCachedAttributesFacade
      */
     public function __construct(
         ProductFacade $productFacade,
@@ -65,7 +72,8 @@ class ListedProductViewElasticFacade extends BaseListedProductViewElasticFacade
         ImageViewFacade $imageViewFacade,
         ProductAvailabilityFacade $productAvailabilityFacade,
         ProductActionViewFactory $productActionViewFactory,
-        ProductElasticsearchProvider $productElasticsearchProvider
+        ProductElasticsearchProvider $productElasticsearchProvider,
+        ProductCachedAttributesFacade $productCachedAttributesFacade
     ) {
         parent::__construct(
             $productFacade,
@@ -83,6 +91,7 @@ class ListedProductViewElasticFacade extends BaseListedProductViewElasticFacade
 
         $this->categoryFacade = $categoryFacade;
         $this->productAvailabilityFacade = $productAvailabilityFacade;
+        $this->productCachedAttributesFacade = $productCachedAttributesFacade;
     }
 
     /**
@@ -101,8 +110,8 @@ class ListedProductViewElasticFacade extends BaseListedProductViewElasticFacade
         int $limit
     ): PaginationResult {
         $productFilterData = new ProductFilterData();
-        $productFilterData->minimalPrice = $product->getSellingPriceWithVat($domainId)->multiply('0.9');
-        $productFilterData->maximalPrice = $product->getSellingPriceWithVat($domainId)->multiply('1.1');
+        $productFilterData->minimalPrice = $this->productCachedAttributesFacade->getProductSellingPrice($product)->getPriceWithVat()->multiply('0.9');
+        $productFilterData->maximalPrice = $this->productCachedAttributesFacade->getProductSellingPrice($product)->getPriceWithVat()->multiply('1.1');
 
         $mainCategory = $this->categoryFacade->getProductMainCategoryByDomainId($product, $domainId);
 

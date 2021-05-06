@@ -1,13 +1,11 @@
 {% extends 'Front/Layout/layoutWithoutPanel.html.twig' %}
 {% import 'Front/Content/Product/productListMacro.html.twig' as productList %}
-{% import 'Front/Inline/Product/productDiscountMacro.html.twig' as discount %}
 
 {% set domain = getDomain() %}
 {% set descriptionHeadline = 'Product information'|trans %}
 {% set parametersHeadline = 'Technical parameters'|trans %}
 {% set accessoriesHeadline = 'Accessories'|trans %}
 {% set sellingPriceWithVat = productView.sellingPrice.priceWithVat %}
-{% set nonSellingPriceWithVat = productView.nonSellingPriceWithVat %}
 
 {% block meta_description %}
     {{- productView.seoMetaDescription -}}
@@ -159,21 +157,9 @@
                                                 itemscope
                                                 itemtype="http://schema.org/Offer"
                                                 class="box-detail-add__prices">
-                                                {% if nonSellingPriceWithVat.isGreaterThan(sellingPriceWithVat) %}
-                                                    {{ discount.circle(sellingPriceWithVat, nonSellingPriceWithVat) }}
-                                                    <div class="box-detail-add__prices__wrap">
-                                                        <div class="box-detail-add__prices__item box-detail-add__prices__item--high-price">
-                                                            {{ nonSellingPriceWithVat|price }}
-                                                        </div>
-                                                        <div class="box-detail-add__prices__item box-detail-add__prices__item--main">
-                                                            {{ sellingPriceWithVat|price }}
-                                                        </div>
-                                                    </div>
-                                                {% else %}
-                                                    <div class="box-detail-add__prices__item box-detail-add__prices__item--main">
-                                                        {{ sellingPriceWithVat|price }}
-                                                    </div>
-                                                {% endif %}
+                                                <div class="box-detail-add__prices__item box-detail-add__prices__item--main">
+                                                    {{ sellingPriceWithVat|price }}
+                                                </div>
                                                 <meta itemprop="priceCurrency"
                                                     content="{{ currencyCode(domain.id) }}"
                                                 >

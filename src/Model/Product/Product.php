@@ -9,7 +9,6 @@ use App\Model\Product\Exception\ProductCannotBeTransformedException;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Exception;
-use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Product\Exception\MainVariantCannotBeVariantException;
 use Shopsys\FrameworkBundle\Model\Product\Exception\ProductIsAlreadyVariantException;
 use Shopsys\FrameworkBundle\Model\Product\Exception\VariantCanBeAddedOnlyToMainVariantException;
@@ -185,8 +184,6 @@ class Product extends BaseProduct
             $productDomain->setShortDescriptionUsp3($productData->shortDescriptionUsp3[$domainId]);
             $productDomain->setShortDescriptionUsp4($productData->shortDescriptionUsp4[$domainId]);
             $productDomain->setShortDescriptionUsp5($productData->shortDescriptionUsp5[$domainId]);
-            $productDomain->setHighPriceWithVat($productData->highPriceWithVat[$domainId]);
-            $productDomain->calcSellingPriceWithVat();
             $productDomain->setFlags($productData->flags[$domainId] ?? []);
             $productDomain->setSaleExclusion($productDomain->calcSaleExclusion($productData->flags[$domainId] ?? []));
             $productDomain->setDomainHidden($productData->domainHidden[$domainId] ?? false);
@@ -254,46 +251,6 @@ class Product extends BaseProduct
         $this->variants->add($variant);
         $variant->setMainVariant($this);
         $variant->copyProductCategoryDomains($this->productCategoryDomains->toArray());
-    }
-
-    /**
-     * @param int $domainId
-     * @return \Shopsys\FrameworkBundle\Component\Money\Money|null
-     */
-    public function getMaximalVariantPriceForFilteringMinimalPrice($domainId): ?Money
-    {
-        $price = null;
-        if (!$this->isMainVariant()) {
-            $price = $this->getSellingPriceWithVat($domainId);
-        } else {
-            foreach ($this->getVariants() as $variant) {
-                if ($price === null || $variant->getSellingPriceWithVat($domainId) > $price) {
-                    $price = $variant->getSellingPriceWithVat($domainId);
-                }
-            }
-        }
-
-        return $price;
-    }
-
-    /**
-     * @param int $domainId
-     * @return \Shopsys\FrameworkBundle\Component\Money\Money|null
-     */
-    public function getMinimalVariantPriceForFilteringMaximalPrice($domainId): ?Money
-    {
-        $price = null;
-        if (!$this->isMainVariant()) {
-            $price = $this->getSellingPriceWithVat($domainId);
-        } else {
-            foreach ($this->getVariants() as $variant) {
-                if ($price === null || $variant->getSellingPriceWithVat($domainId) < $price) {
-                    $price = $variant->getSellingPriceWithVat($domainId);
-                }
-            }
-        }
-
-        return $price;
     }
 
     /**
@@ -369,24 +326,6 @@ class Product extends BaseProduct
                 return $value !== null && $value !== '';
             }
         ));
-    }
-
-    /**
-     * @param int $domainId
-     * @return \Shopsys\FrameworkBundle\Component\Money\Money|null
-     */
-    public function getHighPriceWithVat(int $domainId): ?Money
-    {
-        return $this->getProductDomain($domainId)->getHighPriceWithVat();
-    }
-
-    /**
-     * @param int $domainId
-     * @return \Shopsys\FrameworkBundle\Component\Money\Money
-     */
-    public function getSellingPriceWithVat(int $domainId): ?Money
-    {
-        return $this->getProductDomain($domainId)->getSellingPriceWithVat();
     }
 
     /**

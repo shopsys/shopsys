@@ -22,11 +22,6 @@ class ListedProductView extends BaseListedProductView
     private $nameSufix;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice|null
-     */
-    private $nonSellingPrice;
-
-    /**
      * @var string|null
      */
     private $productAvailableStocksCountInformation;
@@ -57,7 +52,6 @@ class ListedProductView extends BaseListedProductView
      * @param \Shopsys\ReadModelBundle\Image\ImageView|null $image
      * @param string|null $namePrefix
      * @param string|null $nameSufix
-     * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice|null $nonSellingPrice
      * @param string $productAvailableStocksCountInformation
      * @param string $productCountExposedInStores
      * @param string $mainCategoryPath
@@ -74,7 +68,6 @@ class ListedProductView extends BaseListedProductView
         ?ImageView $image,
         ?string $namePrefix,
         ?string $nameSufix,
-        ?ProductPrice $nonSellingPrice,
         string $productAvailableStocksCountInformation,
         string $productCountExposedInStores,
         string $mainCategoryPath,
@@ -84,7 +77,6 @@ class ListedProductView extends BaseListedProductView
 
         $this->namePrefix = $namePrefix;
         $this->nameSufix = $nameSufix;
-        $this->nonSellingPrice = $nonSellingPrice;
         $this->productAvailableStocksCountInformation = $productAvailableStocksCountInformation;
         $this->productCountExposedInStores = $productCountExposedInStores;
         $this->mainCategoryPath = $mainCategoryPath;
@@ -105,14 +97,6 @@ class ListedProductView extends BaseListedProductView
     public function getNameSufix(): ?string
     {
         return $this->nameSufix;
-    }
-
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice|null
-     */
-    public function getNonSellingPrice(): ?ProductPrice
-    {
-        return $this->nonSellingPrice;
     }
 
     /**

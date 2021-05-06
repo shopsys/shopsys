@@ -6,7 +6,6 @@ namespace App\Model\Product;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Product\ProductDomain as BaseProductDomain;
 
 /**
@@ -52,18 +51,6 @@ class ProductDomain extends BaseProductDomain
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     protected $shortDescriptionUsp5;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Money\Money|null
-     * @ORM\Column(type="money", precision=20, scale=6, nullable=true)
-     */
-    protected $highPriceWithVat;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Money\Money
-     * @ORM\Column(type="money", precision=20, scale=6, nullable=false)
-     */
-    protected $sellingPriceWithVat;
 
     /**
      * @var string|null
@@ -198,39 +185,6 @@ class ProductDomain extends BaseProductDomain
     public function setShortDescriptionUsp5(?string $shortDescriptionUsp5): void
     {
         $this->shortDescriptionUsp5 = $shortDescriptionUsp5;
-    }
-
-    /**
-     * @return \Shopsys\FrameworkBundle\Component\Money\Money|null
-     */
-    public function getHighPriceWithVat(): ?Money
-    {
-        return $this->highPriceWithVat;
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Money\Money|null $highPriceWithVat
-     */
-    public function setHighPriceWithVat(?Money $highPriceWithVat): void
-    {
-        $this->highPriceWithVat = $highPriceWithVat;
-    }
-
-    /**
-     * @return \Shopsys\FrameworkBundle\Component\Money\Money
-     */
-    public function getSellingPriceWithVat(): ?Money
-    {
-        return $this->sellingPriceWithVat;
-    }
-
-    public function calcSellingPriceWithVat(): void
-    {
-        if ($this->highPriceWithVat !== null && $this->highPriceWithVat->getAmount() > 0) {
-            $this->sellingPriceWithVat = $this->highPriceWithVat;
-        } else {
-            $this->sellingPriceWithVat = Money::zero();
-        }
     }
 
     /**

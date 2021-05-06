@@ -321,20 +321,14 @@ class OrderFacade extends BaseOrderFacade
             /** @var \App\Model\Product\Product $product */
             $product = $quantifiedProduct->getProduct();
 
-            /** @var \App\Model\Order\Item\QuantifiedItemPrice $quantifiedItemPrice */
             $quantifiedItemPrice = $quantifiedItemPrices[$index];
             /** @var \Shopsys\FrameworkBundle\Model\Pricing\Price|null $quantifiedItemDiscount */
             $quantifiedItemDiscount = $quantifiedItemDiscounts[$index];
 
             $orderItemData = $this->orderItemDataFactory->create();
             $orderItemData->name = $product->getFullname($locale);
-            if ($quantifiedItemDiscount !== null) {
-                $orderItemData->priceWithoutVat = $quantifiedItemPrice->getUnitHighPrice()->getPriceWithoutVat();
-                $orderItemData->priceWithVat = $quantifiedItemPrice->getUnitHighPrice()->getPriceWithVat();
-            } else {
-                $orderItemData->priceWithoutVat = $quantifiedItemPrice->getUnitPrice()->getPriceWithoutVat();
-                $orderItemData->priceWithVat = $quantifiedItemPrice->getUnitPrice()->getPriceWithVat();
-            }
+            $orderItemData->priceWithoutVat = $quantifiedItemPrice->getUnitPrice()->getPriceWithoutVat();
+            $orderItemData->priceWithVat = $quantifiedItemPrice->getUnitPrice()->getPriceWithVat();
             $orderItemData->vatPercent = $product->getVatForDomain($order->getDomainId())->getPercent();
             $orderItemData->quantity = $quantifiedProduct->getQuantity();
             $orderItemData->unitName = $product->getUnit()->getName($locale);

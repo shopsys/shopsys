@@ -20,7 +20,6 @@ use Symfony\Component\Form\AbstractTypeExtension;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
-use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -288,38 +287,9 @@ class ProductFormTypeExtension extends AbstractTypeExtension
     private function setPricesGroup(FormBuilderInterface $builder, ?Product $product): void
     {
         $builderPricesGroup = $builder->get('pricesGroup');
-        $builderPricesGroup->remove('productCalculatedPricesGroup');
         if ($this->isProductMainVariant($product)) {
             $builderPricesGroup->remove('disabledPricesOnMainVariant');
         }
-
-        $builderPricesGroup
-            ->add('highPriceWithVat', MultidomainType::class, [
-                'label' => t('Vyšší cena s DPH'),
-                'entry_type' => MoneyType::class,
-                'entry_options' => [
-                    'required' => true,
-                    'scale' => 6,
-                ],
-                'required' => true,
-            ])
-            ->add('highPriceWithoutVat', MultidomainType::class, [
-                'label' => t('Vyšší cena bez DPH'),
-                'entry_type' => MoneyType::class,
-                'entry_options' => [
-                    'required' => true,
-                    'scale' => 6,
-                ],
-                'required' => true,
-            ])
-            ->add('sellingPriceWithVat', MultidomainType::class, [
-                'label' => t('Prodejní cena s DPH'),
-                'entry_type' => MoneyType::class,
-                'entry_options' => [
-                    'scale' => 6,
-                ],
-                'required' => false,
-            ]);
 
         $vatsIndexedByDomainId = $builder->create('vatsIndexedByDomainId', FormType::class, [
             'compound' => true,

@@ -4,18 +4,16 @@ declare(strict_types=1);
 
 namespace App\Twig;
 
-use App\Model\Product\Product;
-use App\Model\Product\ProductCachedAttributesFacade;
 use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
 use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingModeForListFacade;
-use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice;
+use Shopsys\FrameworkBundle\Model\Product\ProductCachedAttributesFacade;
 use Shopsys\FrameworkBundle\Twig\ProductExtension as BaseProductExtension;
 use Twig\TwigFunction;
 
 /**
  * Class ProductExtension
  *
- * @property \App\Model\Product\ProductCachedAttributesFacade $productCachedAttributesFacade
+ * @property \Shopsys\FrameworkBundle\Model\Product\ProductCachedAttributesFacade $productCachedAttributesFacade
  */
 class ProductExtension extends BaseProductExtension
 {
@@ -26,7 +24,7 @@ class ProductExtension extends BaseProductExtension
 
     /**
      * @param \App\Model\Category\CategoryFacade $categoryFacade
-     * @param \App\Model\Product\ProductCachedAttributesFacade $productCachedAttributesFacade
+     * @param \Shopsys\FrameworkBundle\Model\Product\ProductCachedAttributesFacade $productCachedAttributesFacade
      * @param \App\Model\Product\Listing\ProductListOrderingModeForListFacade $productListOrderingModeForListFacade
      */
     public function __construct(
@@ -49,24 +47,11 @@ class ProductExtension extends BaseProductExtension
     {
         $functions = parent::getFunctions();
         $functions[] = new TwigFunction(
-            'getProductNonSellingPrice',
-            [$this, 'getProductNonSellingPrice']
-        );
-        $functions[] = new TwigFunction(
             'getOrderingNameByOrderingId',
             [$this, 'getOrderingNameByOrderingId']
         );
 
         return $functions;
-    }
-
-    /**
-     * @param \App\Model\Product\Product $product
-     * @return \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice
-     */
-    public function getProductNonSellingPrice(Product $product): ProductPrice
-    {
-        return $this->productCachedAttributesFacade->getProductNonSellingPrice($product);
     }
 
     /**

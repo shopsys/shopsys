@@ -19,7 +19,6 @@ use App\Model\Product\ProductFilesData;
 use App\Model\Product\ProductFilesDataFactory;
 use App\Model\Transfer\TransferLoggerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueData;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueDataFactoryInterface;
@@ -152,10 +151,6 @@ class ProductTransferAkeneoMapper
         $productData->shortDescriptionUsp5 = AkeneoProductHelper::mapDomainDataString($productData->shortDescriptionUsp5, $akeneoProductData['values']['usp5'] ?? null);
 
         $productData->domainOrderingPriority = AkeneoProductHelper::mapDomainDataInt($productData->domainOrderingPriority, $akeneoProductData['values']['product_priority'] ?? []);
-
-        $productData->highPriceWithVat = AkeneoProductHelper::mapDomainDataPrices($productData->highPriceWithVat, $akeneoProductData['values']['high_price_vat'] ?? null);
-
-        $this->fixMandatoryPrices($productData);
 
         $productCategories = $this->getProductCategories($akeneoProductData['categories']);
         $productData->categoriesByDomainId = [
@@ -455,17 +450,5 @@ class ProductTransferAkeneoMapper
         }
 
         return $akeneoParameterValueCode;
-    }
-
-    /**
-     * @param \App\Model\Product\ProductData $productData
-     */
-    private function fixMandatoryPrices(ProductData $productData): void
-    {
-        foreach ($productData->highPriceWithVat as $domainId => $highPriceWithVat) {
-            if ($highPriceWithVat === null) {
-                $productData->highPriceWithVat[$domainId] = Money::zero();
-            }
-        }
     }
 }

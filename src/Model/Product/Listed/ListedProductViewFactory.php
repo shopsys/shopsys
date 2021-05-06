@@ -6,14 +6,10 @@ namespace App\Model\Product\Listed;
 
 use App\Model\Category\CategoryFacade;
 use App\Model\Product\Availability\ProductAvailabilityFacade;
-use App\Model\Product\ProductFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
-use Shopsys\FrameworkBundle\Model\Pricing\Price;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\PriceFactory;
-use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\ProductCachedAttributesFacade;
 use Shopsys\ReadModelBundle\Image\ImageView;
@@ -37,16 +33,10 @@ class ListedProductViewFactory extends BaseListedProductViewFactory
     private $categoryFacade;
 
     /**
-     * @var \App\Model\Product\ProductFacade
-     */
-    private ProductFacade $productFacade;
-
-    /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \App\Model\Product\ProductCachedAttributesFacade $productCachedAttributesFacade
+     * @param \Shopsys\FrameworkBundle\Model\Product\ProductCachedAttributesFacade $productCachedAttributesFacade
      * @param \App\Model\Product\Availability\ProductAvailabilityFacade $productAvailabilityFacade
      * @param \App\Model\Category\CategoryFacade $categoryFacade
-     * @param \App\Model\Product\ProductFacade $productFacade
      * @param \Shopsys\ReadModelBundle\Image\ImageViewFacadeInterface $imageViewFacade
      * @param \Shopsys\ReadModelBundle\Product\Action\ProductActionViewFacadeInterface $productActionViewFacade
      * @param \Shopsys\ReadModelBundle\Product\Action\ProductActionViewFactory $productActionViewFactory
@@ -58,7 +48,6 @@ class ListedProductViewFactory extends BaseListedProductViewFactory
         ProductCachedAttributesFacade $productCachedAttributesFacade,
         ProductAvailabilityFacade $productAvailabilityFacade,
         CategoryFacade $categoryFacade,
-        ProductFacade $productFacade,
         ImageViewFacadeInterface $imageViewFacade,
         ProductActionViewFacadeInterface $productActionViewFacade,
         ProductActionViewFactory $productActionViewFactory,
@@ -77,7 +66,6 @@ class ListedProductViewFactory extends BaseListedProductViewFactory
 
         $this->productAvailabilityFacade = $productAvailabilityFacade;
         $this->categoryFacade = $categoryFacade;
-        $this->productFacade = $productFacade;
     }
 
     /**
@@ -102,7 +90,6 @@ class ListedProductViewFactory extends BaseListedProductViewFactory
             $imageView,
             $product->getNamePrefix(),
             $product->getNameSufix(),
-            $this->getProductPriceWithVatByMoney($this->productFacade->getNonSellingPriceByProductAndDomainId($product, $domainId) ?? Money::zero()),
             $this->productAvailabilityFacade->getProductAvailableStocksCountInformationByDomainId($product, $domainId),
             $this->productAvailabilityFacade->getProductCountExposedInStocksInformationByDomainId($product, $domainId),
             $this->categoryFacade->getCategoriesNamesInPathAsString(
@@ -133,7 +120,6 @@ class ListedProductViewFactory extends BaseListedProductViewFactory
             $imageView,
             $productArray['name_prefix'],
             $productArray['name_sufix'],
-            $this->getProductPriceWithVatByMoney($productArray['non_selling_price_with_vat'] === null ? Money::zero() : Money::create((string)$productArray['non_selling_price_with_vat'])),
             $productArray['product_available_stocks_count_information'],
             $productArray['product_count_exposed_in_stores'],
             $productArray['main_category_path'],
@@ -168,21 +154,6 @@ class ListedProductViewFactory extends BaseListedProductViewFactory
         }
 
         return $listedProductViews;
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Money\Money $priceWithVat
-     * @return \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice
-     */
-    private function getProductPriceWithVatByMoney(Money $priceWithVat): ProductPrice
-    {
-        return new ProductPrice(
-            new Price(
-                Money::zero(),
-                $priceWithVat
-            ),
-            false
-        );
     }
 
     /**

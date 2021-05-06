@@ -20,9 +20,11 @@ use Faker\Generator;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
+use Shopsys\FrameworkBundle\Model\Pricing\BasePriceCalculation;
+use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade;
-use Shopsys\FrameworkBundle\Model\Pricing\PriceCalculation;
 use Shopsys\FrameworkBundle\Model\Pricing\PriceConverter;
+use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter as BaseParameter;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueDataFactoryInterface;
@@ -120,9 +122,14 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
     private $em;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\PriceCalculation
+     * @var \Shopsys\FrameworkBundle\Model\Pricing\BasePriceCalculation
      */
-    private PriceCalculation $priceCalculation;
+    private BasePriceCalculation $basePriceCalculation;
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade
+     */
+    private CurrencyFacade $currencyFacade;
 
     /**
      * @param \App\Model\Product\ProductFacade $productFacade
@@ -140,7 +147,8 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
      * @param \App\Model\Stock\StockRepository $stockRepository
      * @param \App\Model\Stock\ProductStockDataFactory $productStockDataFactory
      * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceCalculation $priceCalculation
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\BasePriceCalculation $basePriceCalculation
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
      */
     public function __construct(
         ProductFacade $productFacade,
@@ -158,7 +166,8 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         StockRepository $stockRepository,
         ProductStockDataFactory $productStockDataFactory,
         EntityManagerInterface $em,
-        PriceCalculation $priceCalculation
+        BasePriceCalculation $basePriceCalculation,
+        CurrencyFacade $currencyFacade
     ) {
         $this->productFacade = $productFacade;
         $this->domain = $domain;
@@ -175,7 +184,8 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->stockRepository = $stockRepository;
         $this->productStockDataFactory = $productStockDataFactory;
         $this->em = $em;
-        $this->priceCalculation = $priceCalculation;
+        $this->basePriceCalculation = $basePriceCalculation;
+        $this->currencyFacade = $currencyFacade;
     }
 
     /**
@@ -217,9 +227,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setParametersByTranslations($productData, $parameterTranslations);
 
+        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '2891.7');
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setSellingFrom($productData, '16.1.2000');
         $this->setSellingTo($productData, null);
         $productData->usingStock = true;
@@ -266,9 +276,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setParametersByTranslations($productData, $parameterTranslations);
 
+        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '8173.5');
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setSellingFrom($productData, '15.1.2000');
         $this->setSellingTo($productData, null);
         $productData->usingStock = true;
@@ -310,9 +320,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setParametersByTranslations($productData, $parameterTranslations);
 
+        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '17843');
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setSellingFrom($productData, '14.1.2000');
         $this->setSellingTo($productData, null);
         $productData->usingStock = true;
@@ -353,9 +363,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setParametersByTranslations($productData, $parameterTranslations);
 
+        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '263.6');
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setSellingFrom($productData, '9.1.2000');
         $this->setSellingTo($productData, null);
         $productData->usingStock = false;
@@ -402,9 +412,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setParametersByTranslations($productData, $parameterTranslations);
 
+        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '19000');
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setSellingFrom($productData, '11.2.2014');
         $this->setSellingTo($productData, null);
         $productData->usingStock = false;
@@ -443,9 +453,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setParametersByTranslations($productData, $parameterTranslations);
 
+        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '1295');
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setSellingFrom($productData, '25.1.2014');
         $this->setSellingTo($productData, null);
         $productData->usingStock = true;
@@ -482,9 +492,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setParametersByTranslations($productData, $parameterTranslations);
 
+        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '1110.54896');
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setSellingFrom($productData, '3.8.1999');
         $this->setSellingTo($productData, null);
         $productData->usingStock = true;
@@ -529,9 +539,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setParametersByTranslations($productData, $parameterTranslations);
 
+        $this->setVat($productData, VatDataFixture::VAT_ZERO);
         $this->setPriceForAllPricingGroups($productData, '24990');
 
-        $this->setVat($productData, VatDataFixture::VAT_ZERO);
         $this->setSellingFrom($productData, '3.2.2013');
         $this->setSellingTo($productData, null);
         $productData->usingStock = true;
@@ -577,9 +587,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setParametersByTranslations($productData, $parameterTranslations);
 
+        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '1314.1');
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setSellingFrom($productData, '24.1.2014');
         $this->setSellingTo($productData, null);
         $productData->usingStock = false;
@@ -628,9 +638,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setParametersByTranslations($productData, $parameterTranslations);
 
+        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '818');
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setSellingFrom($productData, '22.1.2014');
         $this->setSellingTo($productData, null);
         $productData->usingStock = false;
@@ -674,9 +684,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setParametersByTranslations($productData, $parameterTranslations);
 
+        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '5');
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setSellingFrom($productData, '6.1.2000');
         $this->setSellingTo($productData, null);
         $productData->usingStock = true;
@@ -707,9 +717,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->shortDescriptions[$domain->getId()] = t('The switch provides a cost-effective way to create a small network or extend existing ones. Connect not only computers, but also a number of network devices such as IP cameras, network printers and more.', [], 'dataFixtures', $domain->getLocale());
         }
 
+        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '2891.7');
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setSellingFrom($productData, '4.1.2000');
         $this->setSellingTo($productData, null);
         $productData->usingStock = false;
@@ -747,9 +757,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setParametersByTranslations($productData, $parameterTranslations);
 
+        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '98.3');
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setSellingFrom($productData, '31.1.2014');
         $this->setSellingTo($productData, null);
         $productData->usingStock = true;
@@ -793,9 +803,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setParametersByTranslations($productData, $parameterTranslations);
 
+        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '19743.6');
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setSellingFrom($productData, '20.1.2014');
         $this->setSellingTo($productData, null);
         $productData->usingStock = true;
@@ -826,9 +836,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->shortDescriptions[$domain->getId()] = t('This pot holder is used to hold pots. No more burnt kitchen tables!', [], 'dataFixtures', $domain->getLocale());
         }
 
+        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '3');
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setSellingFrom($productData, '13.2.2014');
         $this->setSellingTo($productData, null);
         $productData->usingStock = false;
@@ -866,9 +876,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setParametersByTranslations($productData, $parameterTranslations);
 
+        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '90.1');
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setSellingFrom($productData, '10.1.2000');
         $this->setSellingTo($productData, null);
         $productData->usingStock = true;
@@ -908,9 +918,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setParametersByTranslations($productData, $parameterTranslations);
 
+        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '164.5');
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setSellingFrom($productData, '1.2.2014');
         $this->setSellingTo($productData, null);
         $productData->usingStock = true;
@@ -951,9 +961,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setParametersByTranslations($productData, $parameterTranslations);
 
+        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '437.2');
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setSellingFrom($productData, '11.1.2000');
         $this->setSellingTo($productData, null);
         $productData->usingStock = true;
@@ -993,9 +1003,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setParametersByTranslations($productData, $parameterTranslations);
 
+        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '180');
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setSellingFrom($productData, '2.2.2014');
         $this->setSellingTo($productData, null);
         $productData->usingStock = true;
@@ -1038,9 +1048,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setParametersByTranslations($productData, $parameterTranslations);
 
+        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '429.8');
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setSellingFrom($productData, '12.1.2000');
         $this->setSellingTo($productData, null);
         $productData->usingStock = true;
@@ -1086,9 +1096,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setParametersByTranslations($productData, $parameterTranslations);
 
+        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '1238');
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setSellingFrom($productData, '23.1.2014');
         $this->setSellingTo($productData, null);
         $productData->usingStock = false;
@@ -1128,9 +1138,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setParametersByTranslations($productData, $parameterTranslations);
 
+        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '8421.5');
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setSellingFrom($productData, '10.2.2014');
         $this->setSellingTo($productData, null);
         $productData->usingStock = false;
@@ -1171,9 +1181,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setParametersByTranslations($productData, $parameterTranslations);
 
+        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '49587.5');
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setSellingFrom($productData, '19.1.2014');
         $this->setSellingTo($productData, null);
         $productData->usingStock = true;
@@ -1203,9 +1213,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->shortDescriptions[$domain->getId()] = t('A cable HDMI - HDMI AM / M 2 m gold-plated connector High Speed HDMI Cable with Ethernet 1.4 support 1080p FULL HD', [], 'dataFixtures', $domain->getLocale());
         }
 
+        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '98');
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setSellingFrom($productData, '5.1.2000');
         $this->setSellingTo($productData, null);
         $productData->usingStock = true;
@@ -1245,9 +1255,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setParametersByTranslations($productData, $parameterTranslations);
 
+        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '37');
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setSellingFrom($productData, '27.1.2014');
         $this->setSellingTo($productData, null);
         $productData->usingStock = true;
@@ -1291,9 +1301,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setParametersByTranslations($productData, $parameterTranslations);
 
+        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '37');
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setSellingFrom($productData, '28.1.2014');
         $this->setSellingTo($productData, null);
         $productData->usingStock = true;
@@ -1332,9 +1342,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setParametersByTranslations($productData, $parameterTranslations);
 
+        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '44');
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setSellingFrom($productData, '29.1.2014');
         $this->setSellingTo($productData, null);
         $productData->usingStock = true;
@@ -1374,9 +1384,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setParametersByTranslations($productData, $parameterTranslations);
 
+        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '56');
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setSellingFrom($productData, '30.1.2014');
         $this->setSellingTo($productData, null);
         $productData->usingStock = true;
@@ -1406,9 +1416,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->shortDescriptions[$domain->getId()] = t('Have you ever experienced an accident and didn\'t know how to react? Or are you going to? This book is just for you!', [], 'dataFixtures', $domain->getLocale());
         }
 
+        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '28');
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setSellingFrom($productData, '26.1.2014');
         $this->setSellingTo($productData, null);
         $productData->usingStock = true;
@@ -1455,9 +1465,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setParametersByTranslations($productData, $parameterTranslations);
 
+        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '1644');
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setSellingFrom($productData, '6.2.2014');
         $this->setSellingTo($productData, null);
         $productData->usingStock = true;
@@ -1496,9 +1506,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setParametersByTranslations($productData, $parameterTranslations);
 
+        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '263.6');
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setSellingFrom($productData, '4.2.2014');
         $this->setSellingTo($productData, null);
         $productData->usingStock = true;
@@ -1542,9 +1552,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setParametersByTranslations($productData, $parameterTranslations);
 
+        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '231.5');
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setSellingFrom($productData, '8.1.2000');
         $this->setSellingTo($productData, null);
         $productData->usingStock = true;
@@ -1575,9 +1585,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->shortDescriptions[$domain->getId()] = t('Toilet paper with Euro pictures. Even you can feel rich now!', [], 'dataFixtures', $domain->getLocale());
         }
 
+        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '10');
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setSellingFrom($productData, '14.2.2014');
         $this->setSellingTo($productData, null);
         $productData->usingStock = false;
@@ -1608,9 +1618,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->shortDescriptions[$domain->getId()] = t('Cyklocomputer – cyklonavigation with preset maps, color display 3", training programmes, WiFi', [], 'dataFixtures', $domain->getLocale());
         }
 
+        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '0');
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setSellingFrom($productData, '2.1.2000');
         $this->setSellingTo($productData, null);
         $productData->usingStock = true;
@@ -1656,9 +1666,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setParametersByTranslations($productData, $parameterTranslations);
 
+        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '67771.9');
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setSellingFrom($productData, '21.1.2014');
         $this->setSellingTo($productData, null);
         $productData->usingStock = true;
@@ -1689,9 +1699,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->shortDescriptions[$domain->getId()] = t('Digital Voice Reco.rder Olympus VN-733PC is profiled primarily intuitive operation and long battery lif.', [], 'dataFixtures', $domain->getLocale());
         }
 
+        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '1268.7');
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setSellingFrom($productData, '1.1.2000');
         $this->setSellingTo($productData, null);
         $productData->usingStock = true;
@@ -1736,9 +1746,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setParametersByTranslations($productData, $parameterTranslations);
 
+        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '2783');
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setSellingFrom($productData, '1.1.2013');
         $this->setSellingTo($productData, null);
         $productData->usingStock = true;
@@ -1783,9 +1793,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setParametersByTranslations($productData, $parameterTranslations);
 
+        $this->setVat($productData, VatDataFixture::VAT_LOW);
         $this->setPriceForAllPricingGroups($productData, '8385');
 
-        $this->setVat($productData, VatDataFixture::VAT_LOW);
         $this->setSellingFrom($productData, '1.2.2013');
         $this->setSellingTo($productData, null);
         $productData->usingStock = true;
@@ -1816,9 +1826,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->shortDescriptions[$domain->getId()] = t('Red and green paper glasses for watching ', [], 'dataFixtures', $domain->getLocale());
         }
 
+        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '15.7');
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setSellingFrom($productData, '13.1.2000');
         $this->setSellingTo($productData, null);
         $productData->usingStock = true;
@@ -1849,9 +1859,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->shortDescriptions[$domain->getId()] = t('This luminiscent tape might prevent you from dying.', [], 'dataFixtures', $domain->getLocale());
         }
 
+        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '2');
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setSellingFrom($productData, '12.2.2014');
         $this->setSellingTo($productData, null);
         $productData->usingStock = false;
@@ -1891,9 +1901,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setParametersByTranslations($productData, $parameterTranslations);
 
+        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '1562');
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setSellingFrom($productData, '7.1.2000');
         $this->setSellingTo($productData, null);
         $productData->usingStock = false;
@@ -1934,9 +1944,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setParametersByTranslations($productData, $parameterTranslations);
 
+        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '4124');
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setSellingFrom($productData, '8.2.2014');
         $this->setSellingTo($productData, null);
         $productData->usingStock = false;
@@ -1978,9 +1988,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setParametersByTranslations($productData, $parameterTranslations);
 
+        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '3876');
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setSellingFrom($productData, '7.2.2014');
         $this->setSellingTo($productData, null);
         $productData->usingStock = false;
@@ -2019,9 +2029,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setParametersByTranslations($productData, $parameterTranslations);
 
+        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '140486.8');
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setSellingFrom($productData, '18.1.2014');
         $this->setSellingTo($productData, null);
         $productData->usingStock = true;
@@ -2063,9 +2073,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setParametersByTranslations($productData, $parameterTranslations);
 
+        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '577.7');
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setSellingFrom($productData, '17.1.2000');
         $this->setSellingTo($productData, null);
         $productData->usingStock = true;
@@ -2106,9 +2116,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setParametersByTranslations($productData, $parameterTranslations);
 
+        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '14537');
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setSellingFrom($productData, '5.2.2014');
         $this->setSellingTo($productData, null);
         $productData->usingStock = true;
@@ -2138,9 +2148,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->shortDescriptions[$domain->getId()] = t('Cap with air conditioning, convenient for hot days.', [], 'dataFixtures', $domain->getLocale());
         }
 
+        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '136.9');
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setSellingFrom($productData, '16.2.2014');
         $this->setSellingTo($productData, null);
         $productData->usingStock = false;
@@ -2170,9 +2180,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->shortDescriptions[$domain->getId()] = t('Digital Camera CMOS Exmor R1 20.2 megapixel, 3.6x zoom', [], 'dataFixtures', $domain->getLocale());
         }
 
+        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '12989');
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setSellingFrom($productData, '2.6.2000');
         $this->setSellingTo($productData, null);
         $productData->usingStock = true;
@@ -2203,9 +2213,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->shortDescriptions[$domain->getId()] = t('Mobile phone 4.6 "1280x720, Qualcomm MSM8960Pro 1.7 GHz', [], 'dataFixtures', $domain->getLocale());
         }
 
+        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '4371.9');
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setSellingFrom($productData, '9.2.2014');
         $this->setSellingTo($productData, null);
         $productData->usingStock = true;
@@ -2236,9 +2246,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->shortDescriptions[$domain->getId()] = t('Fluorescent green laces. Visible at any condition.', [], 'dataFixtures', $domain->getLocale());
         }
 
+        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '15');
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setSellingFrom($productData, '15.2.2014');
         $this->setSellingTo($productData, null);
         $productData->usingStock = false;
@@ -2268,9 +2278,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->shortDescriptions[$domain->getId()] = t('This product is not an independently functional unit and may require professional installation.', [], 'dataFixtures', $domain->getLocale());
         }
 
+        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '1268.7');
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setSellingFrom($productData, '3.1.2000');
         $this->setSellingTo($productData, null);
         $productData->usingStock = true;
@@ -2301,9 +2311,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->shortDescriptions[$domain->getId()] = t('Speakers 2 x 3W RMS, 2.0 stereo, portable, volume control, frequency range of 150Hz-20kHz, sensitivity 80dB', [], 'dataFixtures', $domain->getLocale());
         }
 
+        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '189.3');
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setSellingFrom($productData, '3.2.2014');
         $this->setSellingTo($productData, null);
         $productData->usingStock = true;
@@ -2347,9 +2357,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setParametersByTranslations($productData, $parameterTranslations);
 
+        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '9173.5');
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setSellingFrom($productData, '15.1.2000');
         $this->setSellingTo($productData, null);
         $productData->usingStock = true;
@@ -2392,9 +2402,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setParametersByTranslations($productData, $parameterTranslations);
 
+        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '10173.5');
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setSellingFrom($productData, '15.1.2000');
         $this->setSellingTo($productData, null);
         $productData->usingStock = true;
@@ -2436,9 +2446,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setParametersByTranslations($productData, $parameterTranslations);
 
+        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '19843');
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setSellingFrom($productData, '14.1.2000');
         $this->setSellingTo($productData, null);
         $productData->usingStock = true;
@@ -2470,9 +2480,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->shortDescriptions[$domain->getId()] = t('Television LED, diagonal 82 cm, 1366x768, DVB-T/C MPEG4 tuner', [], 'dataFixtures', $domain->getLocale());
         }
 
+        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '6490');
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setSellingFrom($productData, '14.1.2000');
         $this->setSellingTo($productData, null);
         $productData->usingStock = true;
@@ -2514,9 +2524,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setParametersByTranslations($productData, $parameterTranslations);
 
+        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '3999');
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setSellingFrom($productData, '14.1.2000');
         $this->setSellingTo($productData, null);
         $productData->usingStock = true;
@@ -2558,9 +2568,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setParametersByTranslations($productData, $parameterTranslations);
 
+        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '3999');
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setSellingFrom($productData, '14.1.2000');
         $this->setSellingTo($productData, null);
         $productData->usingStock = true;
@@ -2602,9 +2612,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setParametersByTranslations($productData, $parameterTranslations);
 
+        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '5199');
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setSellingFrom($productData, '14.1.2000');
         $this->setSellingTo($productData, null);
         $productData->usingStock = true;
@@ -2646,9 +2656,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setParametersByTranslations($productData, $parameterTranslations);
 
+        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '5399');
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setSellingFrom($productData, '14.1.2000');
         $this->setSellingTo($productData, null);
         $productData->usingStock = true;
@@ -2679,9 +2689,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->shortDescriptions[$domain->getId()] = t('Xtreamer SW4 is all-encompassing amusement system, bringing fun to your TV. Games, movies and many more functions', [], 'dataFixtures', $domain->getLocale());
         }
 
+        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '2390');
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setSellingFrom($productData, '14.1.2000');
         $this->setSellingTo($productData, null);
         $productData->usingStock = true;
@@ -2712,9 +2722,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->shortDescriptions[$domain->getId()] = t('TV SMART LED TV, 147 cm diagonal, 4K Ultra HD 3840x2160 4K upscaler', [], 'dataFixtures', $domain->getLocale());
         }
 
+        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '20159');
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setSellingFrom($productData, '14.1.2000');
         $this->setSellingTo($productData, null);
         $productData->usingStock = true;
@@ -2745,9 +2755,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->shortDescriptions[$domain->getId()] = t('Television LED, diagonal 82 cm, 1366x768, DVB-T/C MPEG4 tuner, 2x HDMI', [], 'dataFixtures', $domain->getLocale());
         }
 
+        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '7290');
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setSellingFrom($productData, '14.1.2000');
         $this->setSellingTo($productData, null);
         $productData->usingStock = true;
@@ -2790,9 +2800,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setParametersByTranslations($productData, $parameterTranslations);
 
+        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '4899');
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setSellingFrom($productData, '14.1.2000');
         $this->setSellingTo($productData, null);
         $productData->usingStock = true;
@@ -2835,9 +2845,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setParametersByTranslations($productData, $parameterTranslations);
 
+        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '5999');
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setSellingFrom($productData, '14.1.2000');
         $this->setSellingTo($productData, null);
         $productData->usingStock = true;
@@ -2868,9 +2878,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->shortDescriptions[$domain->getId()] = t('The TV monitor PLS LED, 1000:1, 5ms, 1920x1080, tuner DVB-T/C, PiP +, 2x HDMI, MHL, USB, CI, Scart, 2x 5W speakers, remote control ', [], 'dataFixtures', $domain->getLocale());
         }
 
+        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '6199');
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setSellingFrom($productData, '14.1.2000');
         $this->setSellingTo($productData, null);
         $productData->usingStock = true;
@@ -2901,9 +2911,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->shortDescriptions[$domain->getId()] = t('The TV monitor PLS LED, 1000:1, 5ms, 1920x1080, tuner DVB-T/C, PiP +, 2x HDMI, MHL, USB, CI, Scart, 2x 5W speakers, remote control ', [], 'dataFixtures', $domain->getLocale());
         }
 
+        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '6399');
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setSellingFrom($productData, '14.1.2000');
         $this->setSellingTo($productData, null);
         $productData->usingStock = true;
@@ -2934,9 +2944,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->shortDescriptions[$domain->getId()] = t('Xtreamer SW5 is all-encompassing amusement system, bringing fun to your TV. Games, movies and many more functions', [], 'dataFixtures', $domain->getLocale());
         }
 
+        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '2490');
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setSellingFrom($productData, '14.1.2000');
         $this->setSellingTo($productData, null);
         $productData->usingStock = true;
@@ -2977,9 +2987,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         }
         $this->setParametersByTranslations($productData, $parameterTranslations);
 
+        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '9173.5');
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setSellingFrom($productData, '15.1.2000');
         $this->setSellingTo($productData, null);
         $productData->usingStock = false;
@@ -3016,9 +3026,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setParametersByTranslations($productData, $parameterTranslations);
 
+        $this->setVat($productData, VatDataFixture::VAT_LOW);
         $this->setPriceForAllPricingGroups($productData, '8.3');
 
-        $this->setVat($productData, VatDataFixture::VAT_LOW);
         $this->setSellingFrom($productData, '15.1.2000');
         $this->setSellingTo($productData, null);
         $productData->usingStock = true;
@@ -3048,9 +3058,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->descriptions[$domain->getId()] = t('Aquila Aquagym non-carbonated spring water, description.', [], 'dataFixtures', $domain->getLocale());
         }
 
+        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '12.5');
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setSellingFrom($productData, '15.1.2000');
         $this->setSellingTo($productData, null);
         $productData->usingStock = true;
@@ -3086,9 +3096,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->seoMetaDescriptions[$domain->getId()] = t('Coupon valued to 100 Czech crowns.', [], 'dataFixtures', $domain->getLocale());
         }
 
+        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '100');
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setSellingFrom($productData, '15.1.2000');
         $this->setSellingTo($productData, null);
         $productData->usingStock = true;
@@ -3127,9 +3137,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setParametersByTranslations($productData, $parameterTranslations);
 
+        $this->setVat($productData, VatDataFixture::VAT_SECOND_LOW);
         $this->setPriceForAllPricingGroups($productData, '61.9');
 
-        $this->setVat($productData, VatDataFixture::VAT_SECOND_LOW);
         $this->setSellingFrom($productData, '15.1.2000');
         $this->setSellingTo($productData, null);
         $productData->usingStock = true;
@@ -3171,9 +3181,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setParametersByTranslations($productData, $parameterTranslations);
 
+        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '9173.5');
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setSellingFrom($productData, '15.1.2000');
         $this->setSellingTo($productData, null);
         $productData->usingStock = true;
@@ -3216,9 +3226,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setParametersByTranslations($productData, $parameterTranslations);
 
+        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '9173.5');
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setSellingFrom($productData, '15.1.2000');
         $this->setSellingTo($productData, null);
         $productData->usingStock = true;
@@ -3260,9 +3270,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setParametersByTranslations($productData, $parameterTranslations);
 
+        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '3999');
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setSellingFrom($productData, '14.1.2000');
         $this->setSellingTo($productData, null);
         $productData->usingStock = true;
@@ -3305,9 +3315,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setParametersByTranslations($productData, $parameterTranslations);
 
+        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '3999');
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setSellingFrom($productData, '14.1.2000');
         $this->setSellingTo($productData, null);
         $productData->usingStock = true;
@@ -3344,9 +3354,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setParametersByTranslations($productData, $parameterTranslations);
 
+        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '4899');
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setSellingFrom($productData, '14.1.2000');
         $this->setSellingTo($productData, null);
         $productData->usingStock = true;
@@ -3383,9 +3393,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setParametersByTranslations($productData, $parameterTranslations);
 
+        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '5999');
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setSellingFrom($productData, '16.1.2000');
         $this->setSellingTo($productData, null);
         $productData->usingStock = true;
@@ -3428,9 +3438,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setParametersByTranslations($productData, $parameterTranslations);
 
+        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '6199');
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setSellingFrom($productData, '15.1.2000');
         $this->setSellingTo($productData, null);
         $productData->usingStock = true;
@@ -3473,9 +3483,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setParametersByTranslations($productData, $parameterTranslations);
 
+        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '6399');
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setSellingFrom($productData, '14.1.2000');
         $this->setSellingTo($productData, null);
         $productData->usingStock = true;
@@ -3516,9 +3526,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         }
         $this->setParametersByTranslations($productData, $parameterTranslations);
 
+        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '9173.5');
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setSellingFrom($productData, '9.1.2000');
         $this->setSellingTo($productData, null);
         $productData->usingStock = false;
@@ -3553,9 +3563,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         }
         $this->setParametersByTranslations($productData, $parameterTranslations);
 
+        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '5999');
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setSellingFrom($productData, '16.1.2000');
         $this->setSellingTo($productData, null);
         $productData->usingStock = true;
@@ -3586,9 +3596,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->shortDescriptions[$domain->getId()] = t('High quality, elegant, soft, and yet reliably protecting brand case for your Canon digital camera CANON EOS 650D or 700D.', [], 'dataFixtures', $domain->getLocale());
         }
 
+        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '1110.54896');
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setSellingFrom($productData, '11.2.2320');
         $this->setSellingTo($productData, null);
         $productData->usingStock = true;
@@ -3637,9 +3647,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setParametersByTranslations($productData, $parameterTranslations);
 
+        $this->setVat($productData, VatDataFixture::VAT_ZERO);
         $this->setPriceForAllPricingGroups($productData, '24990');
 
-        $this->setVat($productData, VatDataFixture::VAT_ZERO);
         $this->setSellingFrom($productData, '25.1.2014');
         $this->setSellingTo($productData, '25.1.2015');
         $productData->usingStock = true;
@@ -3688,9 +3698,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setParametersByTranslations($productData, $parameterTranslations);
 
+        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '2783');
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setSellingFrom($productData, '3.8.1999');
         $this->setSellingTo($productData, null);
         $productData->usingStock = true;
@@ -3735,9 +3745,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setParametersByTranslations($productData, $parameterTranslations);
 
+        $this->setVat($productData, VatDataFixture::VAT_LOW);
         $this->setPriceForAllPricingGroups($productData, '2000');
 
-        $this->setVat($productData, VatDataFixture::VAT_LOW);
         $this->setSellingFrom($productData, '3.2.2013');
         $this->setSellingTo($productData, null);
         $productData->usingStock = true;
@@ -3775,9 +3785,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setParametersByTranslations($productData, $parameterTranslations);
 
+        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '1110.54896');
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setSellingFrom($productData, '3.8.1999');
         $this->setSellingTo($productData, null);
         $productData->usingStock = true;
@@ -3822,9 +3832,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setParametersByTranslations($productData, $parameterTranslations);
 
+        $this->setVat($productData, VatDataFixture::VAT_ZERO);
         $this->setPriceForAllPricingGroups($productData, '24990');
 
-        $this->setVat($productData, VatDataFixture::VAT_ZERO);
         $this->setSellingFrom($productData, '3.2.2013');
         $this->setSellingTo($productData, null);
         $productData->usingStock = true;
@@ -3869,9 +3879,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setParametersByTranslations($productData, $parameterTranslations);
 
+        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '2783');
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setSellingFrom($productData, '1.1.2013');
         $this->setSellingTo($productData, null);
         $productData->usingStock = true;
@@ -3916,9 +3926,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setParametersByTranslations($productData, $parameterTranslations);
 
+        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '2783');
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setSellingFrom($productData, '3.8.1999');
         $this->setSellingTo($productData, null);
         $productData->usingStock = true;
@@ -3951,9 +3961,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->shortDescriptions[$domain->getId()] = t('Type nozzles: Universal. Diameter: 32 mm. Turbobrush: Big.', [], 'dataFixtures', $domain->getLocale());
         }
 
+        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '449');
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setSellingFrom($productData, '24.1.2014');
         $this->setSellingTo($productData, null);
         $productData->usingStock = true;
@@ -3984,9 +3994,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->shortDescriptions[$domain->getId()] = t('Spare paper bags for vacuum cleaners CONCEPT Limpio VP 9020/21', [], 'dataFixtures', $domain->getLocale());
         }
 
+        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '119');
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setSellingFrom($productData, '22.1.2014');
         $this->setSellingTo($productData, null);
         $productData->usingStock = true;
@@ -4017,9 +4027,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->shortDescriptions[$domain->getId()] = t('Spare paper bags for vacuum cleaners CONCEPT Clipper 9030/31/32/33 VP and VP 9130/31/32', [], 'dataFixtures', $domain->getLocale());
         }
 
+        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '119');
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setSellingFrom($productData, '6.1.2000');
         $this->setSellingTo($productData, null);
         $productData->usingStock = true;
@@ -4050,9 +4060,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->shortDescriptions[$domain->getId()] = t('Spare paper bags for vacuum cleaners CONCEPT Jumbo VP 9', [], 'dataFixtures', $domain->getLocale());
         }
 
+        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '149');
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setSellingFrom($productData, '4.1.2000');
         $this->setSellingTo($productData, null);
         $productData->usingStock = true;
@@ -4083,9 +4093,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->shortDescriptions[$domain->getId()] = t('Spare paper bags for vacuum cleaners CONCEPT Prominent VP 9711/12/13', [], 'dataFixtures', $domain->getLocale());
         }
 
+        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '159');
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setSellingFrom($productData, '31.1.2014');
         $this->setSellingTo($productData, null);
         $productData->usingStock = true;
@@ -4114,9 +4124,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->name[$locale] = t('Winch throttle silver VP-9711/12', [], 'dataFixtures', $locale);
         }
 
+        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '32');
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setSellingFrom($productData, '20.1.2014');
         $this->setSellingTo($productData, null);
         $productData->usingStock = true;
@@ -4147,9 +4157,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->shortDescriptions[$domain->getId()] = t('Tube type: Universal. Diameter: 32mm.', [], 'dataFixtures', $domain->getLocale());
         }
 
+        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '299');
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setSellingFrom($productData, '13.2.2014');
         $this->setSellingTo($productData, null);
         $productData->usingStock = true;
@@ -4178,9 +4188,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->name[$locale] = t('HEPA filter VP-9711/12', [], 'dataFixtures', $locale);
         }
 
+        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '269');
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setSellingFrom($productData, '10.1.2000');
         $this->setSellingTo($productData, null);
         $productData->usingStock = true;
@@ -4209,9 +4219,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->name[$locale] = t('Reducing the diameter of 35 mm to 32 mm', [], 'dataFixtures', $locale);
         }
 
+        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '85');
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setSellingFrom($productData, '23.1.2014');
         $this->setSellingTo($productData, null);
         $productData->usingStock = true;
@@ -4242,9 +4252,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->shortDescriptions[$domain->getId()] = t(' The telescopic hood is very elegant and practical variant of the classical extractor with minimum space requirements', [], 'dataFixtures', $domain->getLocale());
         }
 
+        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '3290');
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setSellingFrom($productData, '10.2.2014');
         $this->setSellingTo($productData, null);
         $productData->usingStock = true;
@@ -4275,9 +4285,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->shortDescriptions[$domain->getId()] = t('The minimum space requirements excels sub-mounting range hood OPP-2060th', [], 'dataFixtures', $domain->getLocale());
         }
 
+        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '2990');
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setSellingFrom($productData, '19.1.2014');
         $this->setSellingTo($productData, null);
         $productData->usingStock = true;
@@ -4308,9 +4318,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->shortDescriptions[$domain->getId()] = t('295 x 240 x 15 mm <br /> cartridge with active carbon', [], 'dataFixtures', $domain->getLocale());
         }
 
+        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '499');
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setSellingFrom($productData, '5.1.2000');
         $this->setSellingTo($productData, null);
         $productData->usingStock = true;
@@ -4341,9 +4351,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->shortDescriptions[$domain->getId()] = t('Using a steamer Concept is surprisingly versatile. It can be used to prepare appetizers, soups, meat, fish, vegetables, vegetarian dishes, dumplings, rice, fruit and desserts.', [], 'dataFixtures', $domain->getLocale());
         }
 
+        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '499');
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setSellingFrom($productData, '27.1.2014');
         $this->setSellingTo($productData, null);
         $productData->usingStock = true;
@@ -4374,9 +4384,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->shortDescriptions[$domain->getId()] = t('240 x 205 x 15 mm', [], 'dataFixtures', $domain->getLocale());
         }
 
+        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '499');
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setSellingFrom($productData, '28.1.2014');
         $this->setSellingTo($productData, null);
         $productData->usingStock = true;
@@ -4407,9 +4417,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->shortDescriptions[$domain->getId()] = t('310 x 285 x 15 mm', [], 'dataFixtures', $domain->getLocale());
         }
 
+        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '349');
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setSellingFrom($productData, '29.1.2014');
         $this->setSellingTo($productData, null);
         $productData->usingStock = true;
@@ -4440,9 +4450,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->shortDescriptions[$domain->getId()] = t('220 x 250 x 9 mm', [], 'dataFixtures', $domain->getLocale());
         }
 
+        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '599');
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setSellingFrom($productData, '30.1.2014');
         $this->setSellingTo($productData, null);
         $productData->usingStock = true;
@@ -4473,9 +4483,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->shortDescriptions[$domain->getId()] = t('320 x 300 x 10 mm', [], 'dataFixtures', $domain->getLocale());
         }
 
+        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '399');
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setSellingFrom($productData, '26.1.2014');
         $this->setSellingTo($productData, null);
         $productData->usingStock = true;
@@ -4506,9 +4516,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->shortDescriptions[$domain->getId()] = t('495 x 200 x 8 mm', [], 'dataFixtures', $domain->getLocale());
         }
 
+        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '499');
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setSellingFrom($productData, '6.2.2014');
         $this->setSellingTo($productData, null);
         $productData->usingStock = true;
@@ -4537,9 +4547,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->name[$locale] = t('Reduction Avg. OPK OPO 150/120 mm', [], 'dataFixtures', $locale);
         }
 
+        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '382');
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setSellingFrom($productData, '4.2.2014');
         $this->setSellingTo($productData, null);
         $productData->usingStock = true;
@@ -4569,9 +4579,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->descriptions[$domain->getId()] = t('<p> It is safe for you to your loved ones as important as us? In that case, you will appreciate with hob SDV-3460 feature residual heat indicators - H that you and your loved ones will protect against nasty burns. The residual heat indicator signals a residual temperature of the cooking zone even after power off. </p><br /> <h2> Reasons to opt just for built-in ceramic plate Concept SDV-3460: </h2><br /> <ol> <li> The built-in ceramic hob SDV-3460 you will be astonished <strong> handy touch controls </strong>. </li><li> Special radiators cooking zones <strong> HI-LIGHT </strong> are able to warm up to a maximum of a few seconds. </li><li> <strong> The residual heat indicator H </strong> - protects you against nasty burns. Indicates residual temperature of the cooking zone even after power off. </li><li> If you want to directly select the time that you want to cook, be sure to take the opportunity of the <strong> off-delay </strong>. </li></ol><br /> <h2> Specifications: </h2><br /> <ul> <li> Height: 60 mm </li> <li> Width: 590 mm </li><li> Depth: 520 mm </li><li> Glass ceramics </li><li> Accessories cleaning scraper </li><li> Touch control </li><li> The residual heat indicator - H </li><li> Without frame, angled edges Grounded </li><li> 4 cooking zones </li><li> Auto-off function - EXTRA SECURE </li><li> The off-delay </li><li> Beep </li><li> Control Panel front center </li><li> Child lock </li><li> The ON state </li></ul><br /> <h2> Details: </h2><br /> <ul> <li> Dimensions for installation (HxWxD): 50 x 560 x 490 mm </li><li> Main switch </li><li> <strong> Left Front plate: </strong> </li><li> The diameter of the front left plates: 165x265 mm </li><li> Input left front plate: 1100/2000 W </li><li> <strong> Rear Left plate: </strong> Circular HI-LIGHT </li><li> The diameter of the rear left of the plate 165 mm </li><li> Input left rear plate: 1200 W </li><li> <strong> The right rear plate: </strong> Circular HI-LIGHT </li><li> The diameter of the rear right plate: 200mm </li><li> wattage right rear plate: 1800 W </li><li> <strong> The front right plate: </strong> Circular HI-lihgt </li><li> The diameter of the front right plate: 165 mm </li><li> Input right front plate: 1200 W </li><li> Max.příkon-el .: 5700-6800 W </li><li> Weight: 10 kg </li><li> Voltage: 220-240 / 400 V 2N ~ 50/60 Hz </li> </ul>', [], 'dataFixtures', $domain->getLocale());
         }
 
+        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '6990');
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setSellingFrom($productData, '8.1.2000');
         $this->setSellingTo($productData, null);
         $productData->usingStock = true;
@@ -4600,9 +4610,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->name[$locale] = t('Side mount plates - few ETV-2860', [], 'dataFixtures', $locale);
         }
 
+        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '199');
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setSellingFrom($productData, '14.2.2014');
         $this->setSellingTo($productData, null);
         $productData->usingStock = true;
@@ -4633,9 +4643,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->shortDescriptions[$domain->getId()] = t('440 x 345 x 40 mm', [], 'dataFixtures', $domain->getLocale());
         }
 
+        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '299');
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setSellingFrom($productData, '2.1.2000');
         $this->setSellingTo($productData, null);
         $productData->usingStock = true;
@@ -4664,9 +4674,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->name[$locale] = t('Slicer Pizza ETV-2860', [], 'dataFixtures', $locale);
         }
 
+        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '49');
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setSellingFrom($productData, '21.1.2014');
         $this->setSellingTo($productData, null);
         $productData->usingStock = true;
@@ -4695,9 +4705,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->name[$locale] = t('HEPA filter SF-9161 / SF-8210', [], 'dataFixtures', $locale);
         }
 
+        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '199');
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setSellingFrom($productData, '1.1.2000');
         $this->setSellingTo($productData, null);
         $productData->usingStock = true;
@@ -4726,9 +4736,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->name[$locale] = t('Filter input VP-9161 / SF-9162 / SF-8210', [], 'dataFixtures', $locale);
         }
 
+        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '29');
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setSellingFrom($productData, '1.1.2013');
         $this->setSellingTo($productData, null);
         $productData->usingStock = true;
@@ -4757,9 +4767,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->name[$locale] = t('Floor nozzle metal yellow VP-9141ye', [], 'dataFixtures', $locale);
         }
 
+        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '299');
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setSellingFrom($productData, '1.2.2013');
         $this->setSellingTo($productData, null);
         $productData->usingStock = true;
@@ -4790,9 +4800,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->shortDescriptions[$domain->getId()] = t('Enjoy quick cooking with special cooking HI-LIGHT zones', [], 'dataFixtures', $domain->getLocale());
         }
 
+        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '5990');
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setSellingFrom($productData, '13.1.2000');
         $this->setSellingTo($productData, null);
         $productData->usingStock = true;
@@ -4822,9 +4832,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->descriptions[$domain->getId()] = t('<h2> Specifications: </h2> <ul> <li> Height: 140 mm </li> <li> Width: 600 mm </li> <li> Depth: 470 mm </li> <li> Accessories: backflow preventer </li> <li> White execution </li> <li> Top towing - the possibility of recirculation </li> <li> Controls - slider slider </li> <li> 3 levels of performance </li> <li> Max. Performance: 185 m3 / h. </li> <li> Max.hlučnost the highest level of 66 db (A) </li> <li> The bulb 40 W </li> <li> Textile grease filter </li> <li> diameter: 120 mm </li> </ul> <h2> Detailed description: </h2> <ul> <li> Optional Accessories: 1x textile filter 61990026, 1x carbon filter 61990028 </li> <li> 1 motor / fan </li> <li> Minimum distance from electric hob 650 mm </li> <li> Minimum distance from gas hob: 750 mm </li> <li> Net weight: 4 , 5 kg </li> <li> Voltage: 230 V ~ 50Hz </li> <li> Power: 150 W </li> <li> Cord Length: 1.5 m </li> </ul>', [], 'dataFixtures', $domain->getLocale());
         }
 
+        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '1290');
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setSellingFrom($productData, '12.2.2014');
         $this->setSellingTo($productData, null);
         $productData->usingStock = true;
@@ -4853,9 +4863,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->name[$locale] = t('Coarse grater blade RM-3240/3250', [], 'dataFixtures', $locale);
         }
 
+        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '179');
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setSellingFrom($productData, '7.1.2000');
         $this->setSellingTo($productData, null);
         $productData->usingStock = true;
@@ -4884,9 +4894,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->name[$locale] = t('Knife potato RM-3240/3250', [], 'dataFixtures', $locale);
         }
 
+        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '259');
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setSellingFrom($productData, '8.2.2014');
         $this->setSellingTo($productData, null);
         $productData->usingStock = true;
@@ -4916,9 +4926,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->descriptions[$domain->getId()] = t('255 x 255 x 15', [], 'dataFixtures', $domain->getLocale());
         }
 
+        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '369');
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setSellingFrom($productData, '7.2.2014');
         $this->setSellingTo($productData, null);
         $productData->usingStock = true;
@@ -4947,9 +4957,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->name[$locale] = t('Hose VP-9310', [], 'dataFixtures', $locale);
         }
 
+        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '289');
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setSellingFrom($productData, '18.1.2014');
         $this->setSellingTo($productData, null);
         $productData->usingStock = true;
@@ -4978,9 +4988,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->name[$locale] = t('Floor nozzle metal VP-9310', [], 'dataFixtures', $locale);
         }
 
+        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '299');
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setSellingFrom($productData, '17.1.2000');
         $this->setSellingTo($productData, null);
         $productData->usingStock = true;
@@ -5009,9 +5019,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->name[$locale] = t('Extension rod plastic TM-4610', [], 'dataFixtures', $locale);
         }
 
+        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '149');
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setSellingFrom($productData, '5.2.2014');
         $this->setSellingTo($productData, null);
         $productData->usingStock = true;
@@ -5041,9 +5051,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->descriptions[$domain->getId()] = t('<h2>Steam iron Concept ZN8009 wattage 2200 Watt security system AUTO - SHUT OFF lets much easier and more convenient ironing. </h2> Its other advantage is easy operation and many other practical functions and features, such as 3 m long supply cable through which you will not have to move ironing. Specifications: <ul> <li> Stainless steel soleplate </li><li> Even steam dosage: 20 g / min </li><li> Auto-off function AUTO SHUT-OFF Audible : turn off after 30 seconds in horizontal position and after 8 minutes in the vertical position irons </li><li> The water tank: 300 ml </li><li> Airbrush </li><li> The anti-drip ANTI-DRIP </li><li> Self-cleaning function Self Clean </li><li> The descaling function ANTI-CALC </li><li> Vertical steam </li><li> Notification light </li><li> Thermostat </li><li> 3 m power cable (with swivel 360 °) </li><li> Color: blue + silver </li><li> Power consumption: 2200 W </li><li> Voltage: 230 V </li> </ul> <br/>Accessories: container to refill their water', [], 'dataFixtures', $domain->getLocale());
         }
 
+        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '999');
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setSellingFrom($productData, '16.2.2014');
         $this->setSellingTo($productData, null);
         $productData->usingStock = true;
@@ -5074,9 +5084,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->shortDescriptions[$domain->getId()] = t('480 x 310 x 10 mm. The filter is a need to adjust the scissors to cover the entire surface of the grease filter.', [], 'dataFixtures', $domain->getLocale());
         }
 
+        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '399');
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setSellingFrom($productData, '2.6.2000');
         $this->setSellingTo($productData, null);
         $productData->usingStock = true;
@@ -5107,9 +5117,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->shortDescriptions[$domain->getId()] = t('Replacement textile bag for vacuum cleaners CONCEPT Sprinter - VP9070. Package: 1 pc', [], 'dataFixtures', $domain->getLocale());
         }
 
+        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '89');
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setSellingFrom($productData, '9.2.2014');
         $this->setSellingTo($productData, null);
         $productData->usingStock = true;
@@ -5140,9 +5150,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->shortDescriptions[$domain->getId()] = t('310 x 480 x 10', [], 'dataFixtures', $domain->getLocale());
         }
 
+        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '399');
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setSellingFrom($productData, '15.2.2014');
         $this->setSellingTo($productData, null);
         $productData->usingStock = true;
@@ -5172,9 +5182,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->descriptions[$domain->getId()] = t('Perfectly cleans, treats and protects stainless steel surfaces in one step.<ul> <li> <strong> remove </strong> without smudges dust, dirt, fingerprints and grease </li><li> long-lasting protective film <strong> repellent </strong> water and prevents new settling of dirt </li><li> <strong> acts </strong> antistatically </li></ul>', [], 'dataFixtures', $domain->getLocale());
         }
 
+        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '499');
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setSellingFrom($productData, '3.1.2000');
         $this->setSellingTo($productData, null);
         $productData->usingStock = true;
@@ -5204,9 +5214,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->descriptions[$domain->getId()] = t('<p> A perfectly clean glass ceramic cooktop without leaving stains and does not endanger the environment. </p><br /> <ul> <li> <strong> remove </strong> leftover food, grease, nicotine coating and many other impurities </li><li> <strong> does not harm </strong> rubber and plastics </li><li> <strong> does not </strong> AOX - Adsorbable organic halogens </li><li> biologically <strong> degradable </strong> by OECD </li></ul><br />', [], 'dataFixtures', $domain->getLocale());
         }
 
+        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '499');
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setSellingFrom($productData, '3.2.2014');
         $this->setSellingTo($productData, null);
         $productData->usingStock = true;
@@ -5236,9 +5246,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->descriptions[$domain->getId()] = t('295 x 245 x 15 mm <br /> cartridge with active carbon', [], 'dataFixtures', $domain->getLocale());
         }
 
+        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '369');
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setSellingFrom($productData, '15.1.2000');
         $this->setSellingTo($productData, null);
         $productData->usingStock = true;
@@ -5267,9 +5277,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->name[$locale] = t('HEPA filter VP-9241', [], 'dataFixtures', $locale);
         }
 
+        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '199');
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setSellingFrom($productData, '15.1.2000');
         $this->setSellingTo($productData, null);
         $productData->usingStock = true;
@@ -5298,9 +5308,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->name[$locale] = t('Crevice nozzle VP-4290', [], 'dataFixtures', $locale);
         }
 
+        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '89');
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setSellingFrom($productData, '14.1.2000');
         $this->setSellingTo($productData, null);
         $productData->usingStock = true;
@@ -5329,9 +5339,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->name[$locale] = t('Nozzle with brush VP-4290', [], 'dataFixtures', $locale);
         }
 
+        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '138');
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setSellingFrom($productData, '14.1.2000');
         $this->setSellingTo($productData, null);
         $productData->usingStock = true;
@@ -5360,9 +5370,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->name[$locale] = t('Hose VP-9241', [], 'dataFixtures', $locale);
         }
 
+        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '289');
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setSellingFrom($productData, '14.1.2000');
         $this->setSellingTo($productData, null);
         $productData->usingStock = true;
@@ -5391,9 +5401,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->name[$locale] = t('Telescopic metal pipes VP-9161', [], 'dataFixtures', $locale);
         }
 
+        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '299');
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setSellingFrom($productData, '14.1.2000');
         $this->setSellingTo($productData, null);
         $productData->usingStock = true;
@@ -5422,9 +5432,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->name[$locale] = t('TS-9170 replacement bag for textile VP-9171', [], 'dataFixtures', $locale);
         }
 
+        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '169');
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setSellingFrom($productData, '14.1.2000');
         $this->setSellingTo($productData, null);
         $productData->usingStock = true;
@@ -5453,9 +5463,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->name[$locale] = t('HEPA filter CN-9240 (VP-9241)', [], 'dataFixtures', $locale);
         }
 
+        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '199');
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setSellingFrom($productData, '14.1.2000');
         $this->setSellingTo($productData, null);
         $productData->usingStock = true;
@@ -5486,9 +5496,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->shortDescriptions[$domain->getId()] = t('Spare paper bags for vacuum cleaners CONCEPT INFANT VP 9310th Package: 5 pieces of bags + 2.', [], 'dataFixtures', $domain->getLocale());
         }
 
+        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '119');
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setSellingFrom($productData, '14.1.2000');
         $this->setSellingTo($productData, null);
         $productData->usingStock = true;
@@ -5519,9 +5529,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->shortDescriptions[$domain->getId()] = t('fits into VP812x VP9520', [], 'dataFixtures', $domain->getLocale());
         }
 
+        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '149');
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setSellingFrom($productData, '14.1.2000');
         $this->setSellingTo($productData, null);
         $productData->usingStock = true;
@@ -5567,9 +5577,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setParametersByTranslations($productData, $parameterTranslations);
 
+        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '19990');
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setSellingFrom($productData, '14.1.2001');
         $this->setSellingTo($productData, null);
         $productData->usingStock = true;
@@ -5615,9 +5625,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setParametersByTranslations($productData, $parameterTranslations);
 
+        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '19990');
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setSellingFrom($productData, '14.1.2001');
         $this->setSellingTo($productData, null);
         $productData->usingStock = true;
@@ -5663,9 +5673,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setParametersByTranslations($productData, $parameterTranslations);
 
+        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '1314.1');
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setSellingFrom($productData, '24.1.2014');
         $this->setSellingTo($productData, null);
         $productData->usingStock = true;
@@ -5714,9 +5724,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setParametersByTranslations($productData, $parameterTranslations);
 
+        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '818');
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setSellingFrom($productData, '22.1.2014');
         $this->setSellingTo($productData, null);
         $productData->usingStock = true;
@@ -5765,9 +5775,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setParametersByTranslations($productData, $parameterTranslations);
 
+        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '1238');
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setSellingFrom($productData, '23.1.2014');
         $this->setSellingTo($productData, null);
         $productData->usingStock = true;
@@ -5813,9 +5823,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setParametersByTranslations($productData, $parameterTranslations);
 
+        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '67771.9');
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setSellingFrom($productData, '21.1.2014');
         $this->setSellingTo($productData, null);
         $productData->usingStock = true;
@@ -5858,9 +5868,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setParametersByTranslations($productData, $parameterTranslations);
 
+        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '30173.5');
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setSellingFrom($productData, '15.1.2000');
         $this->setSellingTo($productData, null);
         $productData->usingStock = true;
@@ -5903,9 +5913,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setParametersByTranslations($productData, $parameterTranslations);
 
+        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '30173.5');
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setSellingFrom($productData, '15.1.2000');
         $this->setSellingTo($productData, null);
         $productData->usingStock = true;
@@ -5948,9 +5958,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setParametersByTranslations($productData, $parameterTranslations);
 
+        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '40173.5');
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setSellingFrom($productData, '15.1.2000');
         $this->setSellingTo($productData, null);
         $productData->usingStock = true;
@@ -5993,9 +6003,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setParametersByTranslations($productData, $parameterTranslations);
 
+        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '30173.5');
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setSellingFrom($productData, '15.1.2000');
         $this->setSellingTo($productData, null);
         $productData->usingStock = true;
@@ -6037,9 +6047,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setParametersByTranslations($productData, $parameterTranslations);
 
+        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '9173.5');
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setSellingFrom($productData, '15.1.2000');
         $this->setSellingTo($productData, null);
         $productData->usingStock = true;
@@ -6081,9 +6091,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setParametersByTranslations($productData, $parameterTranslations);
 
+        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setPriceForAllPricingGroups($productData, '9173.5');
 
-        $this->setVat($productData, VatDataFixture::VAT_HIGH);
         $this->setSellingFrom($productData, '15.1.2000');
         $this->setSellingTo($productData, null);
         $productData->usingStock = true;
@@ -6221,26 +6231,16 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
     private function setPriceForAllPricingGroups(ProductData $productData, string $price): void
     {
         foreach ($this->pricingGroupFacade->getAll() as $pricingGroup) {
-            $moneyWithoutVat = $this->priceConverter->convertPriceWithoutVatToPriceInDomainDefaultCurrency(
-                Money::create($price),
-                $pricingGroup->getDomainId()
-            );
-            $productData->manualInputPricesByPricingGroupId[$pricingGroup->getId()] = $moneyWithoutVat;
-        }
-    }
+            $domainId = $pricingGroup->getDomainId();
 
-    /**
-     * @param \App\Model\Product\ProductData $productData
-     */
-    private function setHighPriceForAllPricingGroups(ProductData $productData): void
-    {
-        foreach ($this->pricingGroupFacade->getAll() as $pricingGroup) {
-            $moneyWithoutVat = $productData->manualInputPricesByPricingGroupId[$pricingGroup->getId()];
-            $moneyWithVat = $this->priceCalculation->applyVatPercent(
-                $moneyWithoutVat,
-                $productData->vatsIndexedByDomainId[$pricingGroup->getDomainId()]
+            $inputPrice = $this->basePriceCalculation->calculateBasePriceRoundedByCurrency(
+                $this->priceConverter->convertPriceWithoutVatToPriceInDomainDefaultCurrency(Money::create($price), $domainId),
+                PricingSetting::INPUT_PRICE_TYPE_WITHOUT_VAT,
+                $productData->vatsIndexedByDomainId[$domainId],
+                $this->currencyFacade->getDomainDefaultCurrencyByDomainId($domainId)
             );
-            $productData->highPriceWithVat[$pricingGroup->getDomainId()] = $moneyWithVat;
+
+            $productData->manualInputPricesByPricingGroupId[$pricingGroup->getId()] = $inputPrice->getPriceWithVat();
         }
     }
 
@@ -6352,8 +6352,6 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             }
         }
         $productData->vatsIndexedByDomainId = $productVatsIndexedByDomainId;
-
-        $this->setHighPriceForAllPricingGroups($productData);
     }
 
     /**
