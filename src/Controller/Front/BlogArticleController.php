@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class BlogArticleController extends FrontBaseController
 {
-    public const HOMEPAGE_BLOG_ARTICLES = 2;
+    public const HOMEPAGE_BLOG_ARTICLES = 6;
     public const MAIN_BLOG_CATEGORY_ID = BlogCategory::BLOG_MAIN_PAGE_CATEGORY_ID;
 
     /**

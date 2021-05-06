@@ -259,13 +259,20 @@
             additionalSizes:
                 - {width: 1920, height: ~, media: "only screen and (-webkit-min-device-pixel-ratio: 1.5)"}
         -   name: list
-            width: 440
-            height: 220
+            width: 328
+            height: 179
             crop: true
             occurrence: 'Front-end: Blog article list'
             additionalSizes:
-                - {width: 269, height: 209, media: "(max-width: 768px)"}
-                - {width: 880, height: 440, media: "only screen and (-webkit-min-device-pixel-ratio: 1.5)"}
+                - {width: 656, height: 358, media: "only screen and (-webkit-min-device-pixel-ratio: 1.5)"}
+        -   name: listAside
+            width: 148
+            height: 82
+            crop: true
+            occurrence: 'Front-end: Blog article list'
+            additionalSizes:
+                - {width: 231, height: 127, media: "(max-width: 768px)"}
+                - {width: 296, height: 254, media: "only screen and (-webkit-min-device-pixel-ratio: 1.5)"}
         -   name: listGrid
             width: 450
             height: 220

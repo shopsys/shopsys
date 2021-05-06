@@ -12,10 +12,6 @@
 {% endblock %}
 
 {% block main_content %}
-    {% cache constant('App\\Twig\\Cache\\TwigCacheFacade::SLIGHTLY_CHANGING_PARTS_ON_HOMEPAGE') {lifetime:getCacheLifetimeByHours(4), domainId:getDomain().id} %}
-        {{ render(controller('App\\Controller\\Front\\HomepageController:slightlyChangingPartsOnHomepageAction'))|spaceless }}
-    {% endcache %}
-
     {% set domain = getDomain() %}
     <div class="web__line">
         <div class="web__container">
@@ -50,5 +46,7 @@
             </div>
         </div>
     </div>
-
+    {% cache constant('App\\Twig\\Cache\\TwigCacheFacade::SLIGHTLY_CHANGING_PARTS_ON_HOMEPAGE') {lifetime:getCacheLifetimeByHours(4), domainId:getDomain().id} %}
+        {{ render(controller('App\\Controller\\Front\\HomepageController:slightlyChangingPartsOnHomepageAction'))|spaceless }}
+    {% endcache %}
 {% endblock %}
