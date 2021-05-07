@@ -1,0 +1,4 @@
+ignoredAliases:
+  - Shopsys\FrameworkBundle\Controller\Admin\AdminBaseController
+  - Shopsys\FrameworkBundle\Form\Admin\AdvancedSearch\AdvancedSearchFilterTranslation
+  - Shopsys\FrontendApiBundle\Model\Mutation\BaseTokenMutation
