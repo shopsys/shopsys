@@ -7,9 +7,15 @@ namespace Shopsys\FrameworkBundle\DependencyInjection\Compiler;
 use Shopsys\FrameworkBundle\Component\ServiceAliasContainerInfoRegistry;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Definition;
 
 class SaveServiceAliasContainerInfoCompilerPass implements CompilerPassInterface
 {
+    protected const TAGS_OF_IMPLICITLY_PUBLIC_SERVICES = [
+        'overblog_graphql.resolver',
+        'overblog_graphql.mutation',
+    ];
+
     /**
      * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
      */
@@ -21,7 +27,7 @@ class SaveServiceAliasContainerInfoCompilerPass implements CompilerPassInterface
         $publicServiceIds = [];
         foreach ($container->getDefinitions() as $serviceId => $service) {
             $serviceIdsToClassNames[$serviceId] = $service->getClass();
-            if ($service->isPublic()) {
+            if ($this->shouldBePublic($service)) {
                 $publicServiceIds[] = $serviceId;
             }
         }
@@ -33,5 +39,25 @@ class SaveServiceAliasContainerInfoCompilerPass implements CompilerPassInterface
             $aliasIdsToAliases[$aliasId] = (string)$alias;
         }
         $containerInfoDump->addMethodCall('setAliasIdsToAliases', [$aliasIdsToAliases]);
+    }
+
+    /**
+     * @param \Symfony\Component\DependencyInjection\Definition $service
+     * @return bool
+     */
+    protected function shouldBePublic(Definition $service): bool
+    {
+        if ($service->isPublic()) {
+            return true;
+        }
+
+        // There are some tagged services that are automagically declared public, couldn't find a better solution
+        foreach (array_keys($service->getTags()) as $keyName) {
+            if (in_array($keyName, static::TAGS_OF_IMPLICITLY_PUBLIC_SERVICES, true)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
