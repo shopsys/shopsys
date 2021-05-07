@@ -26,3 +26,18 @@ There you can find links to upgrade notes for other versions too.
         +   {{ icon('question') }}
         ```
     - for more information read our article [Icon function](https://docs.shopsys.com/en/9.1/frontend/icon-function/)
+
+## Tools
+- enable automated check of the alias configuration for extended classes in your project ([#2309](https://github.com/shopsys/shopsys/pull/2309))
+    - in your `build.xml` add the following line to include the check of the alias configuration in your `services.yaml`
+    ```diff
+    + <property name="check-alias-configuration" value="true"/>
+      <property name="check-and-fix-annotations" value="true"/>
+      <property name="path.root" value="${project.basedir}"/>
+      ...
+      <import file="${path.framework}/build.xml"/>
+    ```
+    - run `php phing annotations-alias-check` to check the relevant configuration of your extended classes
+    - then run `php phing annotations-fix` to fix the annotations due to improved understanding of the class extension
+    - thanks to the fixes, your IDE (PHPStorm) and static analysis (PHPStan) will understand your code better
+    - afterwards, running `php phing standards` is highly recommended 
