@@ -10,6 +10,7 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Component\Yaml\Yaml;
 
 class DetectMissingServiceAliasesCommand extends Command
@@ -274,6 +275,18 @@ class DetectMissingServiceAliasesCommand extends Command
             $symfonyStyleIo->title('Recommended addition to your "services.yml" config:');
             $symfonyStyleIo->writeln('<fg=yellow>services:</fg=yellow>');
             $symfonyStyleIo->writeln($serviceConfigLines);
+        }
+
+        if ($unambiguousPossibleMissingAliases !== []) {
+            $symfonyStyleIo->note(
+                'Your IDE might warn you that the key is duplicated in Yaml. This means that the service is already explicitly defined, but not as alias of the project service.'
+            );
+            $symfonyStyleIo->note(sprintf(
+                "For validators (%s) it's recommended to change the class in the original service definition (%s*) and define an alias named after your own class (%s*)",
+                ValidatorInterface::class,
+                static::FQCN_PREFIX_EXTENDED_SERVICES,
+                static::FQCN_PREFIX_APPLICATION
+            ));
         }
 
         $settingYamlLines = [];
