@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Component;
 
 use RuntimeException;
 use Shopsys\FrameworkBundle\DependencyInjection\Compiler\SaveServiceAliasContainerInfoCompilerPass;
+use Symfony\Contracts\Service\ServiceProviderInterface;
 
 class ServiceAliasContainerInfoRegistry
 {
@@ -23,6 +24,11 @@ class ServiceAliasContainerInfoRegistry
      * @var array<string,string>|null
      */
     protected ?array $aliasIdsToAliases = null;
+
+    /**
+     * @var \Symfony\Contracts\Service\ServiceProviderInterface[]|null
+     */
+    protected ?array $serviceLocators = null;
 
     /**
      * @param array<string,string> $serviceIdToClassNames
@@ -55,6 +61,14 @@ class ServiceAliasContainerInfoRegistry
     }
 
     /**
+     * @param \Symfony\Contracts\Service\ServiceProviderInterface ...$serviceLocators
+     */
+    public function setServiceLocators(ServiceProviderInterface ...$serviceLocators): void
+    {
+        $this->serviceLocators = $serviceLocators;
+    }
+
+    /**
      * @return array<string,string>
      */
     public function getServiceIdsToClassNames(): array
@@ -63,11 +77,27 @@ class ServiceAliasContainerInfoRegistry
     }
 
     /**
-     * @return array<string>
+     * Returns true if service is accessible from Container or ServiceLocator
+     * (eg. ValidatorFactory uses service locator for accessing Validator services)
+     *
+     * @see \Symfony\Component\DependencyInjection\Compiler\ServiceLocatorTagPass
+     * @see \Symfony\Component\Validator\DependencyInjection\AddConstraintValidatorsPass
+     * @param string $serviceId
+     * @return bool
      */
-    public function getPublicServiceIds(): array
+    public function isServiceAccessible(string $serviceId): bool
     {
-        return $this->checkDataWasSetByCompilerPass($this->publicServiceIds);
+        if (in_array($serviceId, $this->checkDataWasSetByCompilerPass($this->publicServiceIds), true)) {
+            return true;
+        }
+
+        foreach ($this->checkDataWasSetByCompilerPass($this->serviceLocators) as $serviceLocator) {
+            if ($serviceLocator->has($serviceId)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**
@@ -91,8 +121,9 @@ class ServiceAliasContainerInfoRegistry
     }
 
     /**
-     * @param array|null $internalData
-     * @return array
+     * @template T
+     * @param array<T>|null $internalData
+     * @return array<T>
      */
     protected function checkDataWasSetByCompilerPass(?array $internalData): array
     {

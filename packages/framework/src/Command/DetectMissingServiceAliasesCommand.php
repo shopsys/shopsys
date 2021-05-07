@@ -265,7 +265,7 @@ class DetectMissingServiceAliasesCommand extends Command
         foreach ($missingDirectAliases + $unambiguousPossibleMissingAliases as $aliasId => $serviceId) {
             $serviceConfigLines[] = sprintf('    %s:', $aliasId);
             $serviceConfigLines[] = sprintf('        alias: %s', $serviceId);
-            if (in_array($aliasId, $this->containerInfoRegistry->getPublicServiceIds(), true)) {
+            if ($this->containerInfoRegistry->isServiceAccessible($aliasId)) {
                 $serviceConfigLines[] = '        public: true';
             }
             $serviceConfigLines[] = '';

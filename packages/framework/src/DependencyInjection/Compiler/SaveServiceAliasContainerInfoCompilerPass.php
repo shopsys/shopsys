@@ -8,6 +8,7 @@ use Shopsys\FrameworkBundle\Component\ServiceAliasContainerInfoRegistry;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
+use Symfony\Component\DependencyInjection\Reference;
 
 class SaveServiceAliasContainerInfoCompilerPass implements CompilerPassInterface
 {
@@ -25,14 +26,21 @@ class SaveServiceAliasContainerInfoCompilerPass implements CompilerPassInterface
 
         $serviceIdsToClassNames = [];
         $publicServiceIds = [];
+        $serviceLocatorIds = [];
         foreach ($container->getDefinitions() as $serviceId => $service) {
             $serviceIdsToClassNames[$serviceId] = $service->getClass();
             if ($this->shouldBePublic($service)) {
                 $publicServiceIds[] = $serviceId;
             }
+            if ($service->hasTag('container.service_locator')) {
+                $serviceLocatorIds[] = $serviceId;
+            }
         }
         $containerInfoDump->addMethodCall('setServiceIdsToClassNames', [$serviceIdsToClassNames]);
         $containerInfoDump->addMethodCall('setPublicServiceIds', [$publicServiceIds]);
+        $containerInfoDump->addMethodCall('setServiceLocators', array_map(function ($serviceLocatorId) {
+            return new Reference($serviceLocatorId);
+        }, $serviceLocatorIds));
 
         $aliasIdsToAliases = [];
         foreach ($container->getAliases() as $aliasId => $alias) {
