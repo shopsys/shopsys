@@ -4,10 +4,9 @@ declare(strict_types=1);
 
 namespace App\Model\Stock;
 
-use App\Component\Image\ImageFacade;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
-use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class StockFacade
 {
@@ -22,31 +21,23 @@ class StockFacade
     private $em;
 
     /**
-     * @var \App\Component\Image\ImageFacade
+     * @var \Symfony\Component\EventDispatcher\EventDispatcherInterface
      */
-    private $imageFacade;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade
-     */
-    private FriendlyUrlFacade $friendlyUrlFacade;
+    protected EventDispatcherInterface $eventDispatcher;
 
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \App\Model\Stock\StockRepository $stockRepository
-     * @param \App\Component\Image\ImageFacade $imageFacade
-     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
+     * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher
      */
     public function __construct(
         EntityManagerInterface $em,
         StockRepository $stockRepository,
-        ImageFacade $imageFacade,
-        FriendlyUrlFacade $friendlyUrlFacade
+        EventDispatcherInterface $eventDispatcher
     ) {
         $this->stockRepository = $stockRepository;
         $this->em = $em;
-        $this->imageFacade = $imageFacade;
-        $this->friendlyUrlFacade = $friendlyUrlFacade;
+        $this->eventDispatcher = $eventDispatcher;
     }
 
     /**
@@ -59,15 +50,6 @@ class StockFacade
         $this->em->persist($stock);
         $this->em->flush();
 
-        $this->friendlyUrlFacade->createFriendlyUrlForDomain(
-            'front_stores_detail',
-            $stock->getId(),
-            $stock->getCity(),
-            $stock->getDomainId()
-        );
-        $this->imageFacade->manageImages($stock, $stockData->image, 'main');
-        $this->imageFacade->manageImages($stock, $stockData->imageGallery, 'gallery');
-
         return $stock;
     }
 
@@ -79,13 +61,13 @@ class StockFacade
     public function edit(int $stockId, StockData $stockData): Stock
     {
         $stock = $this->getById($stockId);
+
+        $hasDomainsChanged = $stock->getEnabledIndexedByDomainId() !== $stockData->isEnabledByDomain;
+
         $stock->edit($stockData);
         $this->em->flush();
 
-        $this->friendlyUrlFacade->saveUrlListFormData('front_stores_detail', $stock->getId(), $stockData->urls);
-
-        $this->imageFacade->manageImages($stock, $stockData->image, 'main');
-        $this->imageFacade->manageImages($stock, $stockData->imageGallery, 'gallery');
+        $this->eventDispatcher->dispatch(new StockEvent($stock, $hasDomainsChanged), StockEvent::UPDATE);
 
         return $stock;
     }
@@ -96,8 +78,19 @@ class StockFacade
     public function delete(int $stockId): void
     {
         $stock = $this->getById($stockId);
+
+        $this->eventDispatcher->dispatch(new StockEvent($stock), StockEvent::DELETE);
+
         $this->em->remove($stock);
         $this->em->flush();
+    }
+
+    /**
+     * @param \App\Model\Stock\Stock $stock
+     */
+    public function changeDefaultStock(Stock $stock): void
+    {
+        $this->stockRepository->changeDefaultStock($stock);
     }
 
     /**
@@ -110,12 +103,11 @@ class StockFacade
     }
 
     /**
-     * @param int $domainId
      * @return \Doctrine\ORM\QueryBuilder
      */
-    public function getAllStockQueryBuilderByDomain(int $domainId): QueryBuilder
+    public function getAllStockQueryBuilder(): QueryBuilder
     {
-        return $this->stockRepository->getQueryBuilderByDomain($domainId);
+        return $this->stockRepository->getAllStocksQueryBuilder();
     }
 
     /**
@@ -124,16 +116,6 @@ class StockFacade
     public function getAllStocks(): array
     {
         return $this->stockRepository->getAllStocks();
-    }
-
-    /**
-     * @param string $name
-     * @param int $domainId
-     * @return \App\Model\Stock\Stock|null
-     */
-    public function findStockByNameAndDomainId(string $name, int $domainId): ?Stock
-    {
-        return $this->stockRepository->findStockByNameAndDomainId($name, $domainId);
     }
 
     /**
@@ -149,9 +131,9 @@ class StockFacade
      * @param int $domainId
      * @return \App\Model\Stock\Stock[]
      */
-    public function getStocksWithoutCentralByDomainIdIndexedByStockId(int $domainId): array
+    public function getStocksEnabledOnDomainIndexedByStockId(int $domainId): array
     {
-        $stocks = $this->stockRepository->getStocksWithoutCentralByDomainId($domainId);
+        $stocks = $this->stockRepository->getStocksEnabledOnDomain($domainId);
         $stocksById = [];
         foreach ($stocks as $stock) {
             $stocksById[$stock->getId()] = $stock;

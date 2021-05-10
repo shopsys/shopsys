@@ -673,7 +673,7 @@ class OrderFacade extends BaseOrderFacade
         $transportName = $transport->getName($locale);
         $stock = $orderPreview->getPersonalPickupStock();
         if ($stock !== null) {
-            $transportName = sprintf('%s %s %s %s', $transportName, $stock->getName(), $stock->getStreet(), $stock->getCity());
+            $transportName = sprintf('%s %s', $transportName, $stock->getName());
             $orderItemData->personalPickupStock = $stock;
         }
 

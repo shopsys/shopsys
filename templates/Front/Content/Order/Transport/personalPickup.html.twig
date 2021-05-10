@@ -18,15 +18,18 @@
                         value="{{ stock.id }}"
                         class="css-checkbox personal-pickup-stock"
                         data-stock-name="{{ stock.name }}"
+                        {# @todo: add after stores implementation
                         data-stock-street="{{ stock.street }}"
                         data-stock-opening-hours="{{ stock.openingHours }}"
                         data-stock-availability="{{ stockAvailabilityText|raw }}"
+                        #}
                     />
                     <span class="css-checkbox__image"></span>
                 </span>
                 <span class="box-chooser__item__title">
                     <strong class="box-chooser__item__title__name">{{ stock.name }}</strong>
                 </span>
+                {# @todo: add after stores implementation
                 <span class="box-chooser__item__address">
                     <span class="box-chooser__item__address__street">{{ stock.street }}</span>
                     <span class="box-chooser__item__address__city">{{ stock.city }}</span>
@@ -37,6 +40,7 @@
                         {{ stock.openingHours|nl2br }}
                     {% endif %}
                 </span>
+                #}
                 <span class="box-chooser__item__avail">
                     {% transchoice stockDayAvailabilitiesByStockId[stock.id]|daysToWeeks with {'%weeksAvailability%': stockDayAvailabilitiesByStockId[stock.id]|daysToWeeks} %}
                         {0} <span class="box-chooser__item__avail__text box-chooser__item__avail__text--now">Můžete mít <span class="box-chooser__item__avail__time box-chooser__item__avail__time--now">ihned</span></span>

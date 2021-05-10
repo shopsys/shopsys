@@ -463,9 +463,6 @@
 20200326125911:
     class: App\Migrations\Version20200326125911
     skip: false
-20200326131155:
-    class: App\Migrations\Version20200326131155
-    skip: false
 20200331114558:
     class: App\Migrations\Version20200331114558
     skip: false
@@ -480,9 +477,6 @@
     skip: false
 20200414143255:
     class: App\Migrations\Version20200414143255
-    skip: false
-20200421184951:
-    class: App\Migrations\Version20200421184951
     skip: false
 20200418102440:
     class: App\Migrations\Version20200418102440
@@ -585,9 +579,6 @@
     skip: false
 20200716132559:
     class: App\Migrations\Version20200716132559
-    skip: false
-20200716135132:
-    class: App\Migrations\Version20200716135132
     skip: false
 20200803152004:
     class: App\Migrations\Version20200803152004

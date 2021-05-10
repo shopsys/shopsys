@@ -16,6 +16,7 @@
             <div class="box-stores box-stores--detail{{ imageExists(store, 'main') ? ' box-stores--detail-has-img' }}">
                 <div class="box-stores__info box-stores__info--detail">
                     <h1 class="heading heading--primary heading--primary-subpage box-stores__heading">{{ store.name }}</h1>
+                    {# @todo: add after stores implementation
                     <div class="box-stores__info__grid">
                         <div class="box-stores__info__grid__item">
                             <strong class="box-stores__store__subtitle box-stores__store__subtitle--detail">
@@ -60,6 +61,7 @@
                         {% endif %}
                     </div>
 
+                    #}
                     <div class="box-stores-list">
                         <div class="box-stores-list__item box-stores-list__item--detail">
                             <a class="box-stores-list__item__link" href="{{ url('front_contacts') }}">
@@ -103,9 +105,11 @@
     <script type="text/javascript">
         var markersData = [];
 
+        {# @todo: add after stores implementation
         {% if store.locationLng is not null and store.locationLat is not null  %}
             markersData.push({locations: {lat: {{ store.locationLat }}, lng: {{ store.locationLng }} }, data: {id: '{{ store.id }}' }});
         {% endif %}
+        #}
     </script>
     <script src="https://maps.googleapis.com/maps/api/js?key={{ googleMapApiKey }}"></script>
 {% endblock %}

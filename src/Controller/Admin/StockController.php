@@ -12,7 +12,6 @@ use App\Model\Stock\StockDataFactory;
 use App\Model\Stock\StockFacade;
 use App\Model\Stock\StockSettingsDataFacade;
 use App\Model\Stock\StockSettingsDataFactory;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 use Shopsys\FrameworkBundle\Component\Grid\Grid;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
@@ -24,6 +23,7 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
 
 class StockController extends AdminBaseController
 {
@@ -169,11 +169,9 @@ class StockController extends AdminBaseController
     public function newAction(Request $request): Response
     {
         $stockData = $this->stockDataFactory->create();
-        $stockData->domainId = $this->adminDomainTabsFacade->getSelectedDomainId();
 
         $form = $this->createForm(StockFormType::class, $stockData, [
             'stock' => null,
-            'domain_id' => $this->adminDomainTabsFacade->getSelectedDomainId(),
         ]);
         $form->handleRequest($request);
 
@@ -215,7 +213,6 @@ class StockController extends AdminBaseController
 
         $form = $this->createForm(StockFormType::class, $stockData, [
             'stock' => $stock,
-            'domain_id' => $this->adminDomainTabsFacade->getSelectedDomainId(),
         ]);
         $form->handleRequest($request);
 
@@ -246,6 +243,32 @@ class StockController extends AdminBaseController
     }
 
     /**
+     * @Route("/stock/setdefault/{id}", requirements={"id" = "\d+"})
+     * @CsrfProtection
+     * @param int $id
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function setDefaultAction(int $id): Response
+    {
+        try {
+            $stock = $this->stockFacade->getById($id);
+
+            $this->stockFacade->changeDefaultStock($stock);
+
+            $this->addSuccessFlashTwig(
+                t('Stock <strong>{{ name }}</strong> was set as default.'),
+                [
+                    'name' => $stock->getName(),
+                ]
+            );
+        } catch (StockNotFoundException $ex) {
+            $this->addErrorFlash(t('Vybraný sklad neexistuje.'));
+        }
+
+        return $this->redirectToRoute('admin_stock_list');
+    }
+
+    /**
      * @Route("/stock/delete/{id}", requirements={"id" = "\d+"})
      * @CsrfProtection
      * @param int $id
@@ -254,14 +277,20 @@ class StockController extends AdminBaseController
     public function deleteAction(int $id): RedirectResponse
     {
         try {
-            $fullName = $this->stockFacade->getById($id)->getName();
+            $stock = $this->stockFacade->getById($id);
+
+            if ($stock->isDefault()) {
+                $this->addErrorFlash('Cannot delete the default stock');
+
+                return $this->redirectToRoute('admin_stock_list');
+            }
 
             $this->stockFacade->delete($id);
 
             $this->addSuccessFlashTwig(
                 t('Stock <strong>{{ name }}</strong> deleted'),
                 [
-                    'name' => $fullName,
+                    'name' => $stock->getName(),
                 ]
             );
         } catch (StockNotFoundException $ex) {
@@ -276,9 +305,7 @@ class StockController extends AdminBaseController
      */
     private function getGrid(): Grid
     {
-        $queryBuilder = $this->stockFacade->getAllStockQueryBuilderByDomain(
-            $this->adminDomainTabsFacade->getSelectedDomainId()
-        );
+        $queryBuilder = $this->stockFacade->getAllStockQueryBuilder();
 
         $dataSource = new QueryBuilderDataSource($queryBuilder, 's.id');
 
@@ -289,7 +316,9 @@ class StockController extends AdminBaseController
 
         $grid->setActionColumnClassAttribute('table-col table-col-10');
         $grid->addEditActionColumn('admin_stock_edit', ['id' => 's.id']);
-        $grid->addDeleteActionColumn('admin_stock_delete', ['id' => 's.id']);
+        $grid->addDeleteActionColumn('admin_stock_delete', ['id' => 's.id'])
+            ->setConfirmMessage(t('Do you really want to remove this stock? By deleting this stock you will '
+                . 'remove all stock quantities from products. This step is irreversible!'));
         $grid->enableDragAndDrop(Stock::class);
 
         $grid->setTheme('Admin/Content/Stock/listGrid.html.twig');

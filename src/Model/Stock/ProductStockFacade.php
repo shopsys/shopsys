@@ -64,7 +64,7 @@ class ProductStockFacade
     {
         $productStocksById = [];
         foreach ($this->getProductStocksByProductIndexedByStockId($product) as $id => $productStock) {
-            if ($productStock->getStock()->getDomainId() === $domainId) {
+            if ($productStock->getStock()->isEnabled($domainId)) {
                 $productStocksById[$id] = $productStock;
             }
         }
@@ -91,11 +91,11 @@ class ProductStockFacade
 
     /**
      * @param string $productCatnum
-     * @param string $stockExternalId
+     * @param int $stockId
      * @return \App\Model\Stock\ProductStock|null
      */
-    public function findProductStockByProductCatnumAndStockExternalId(string $productCatnum, string $stockExternalId): ?ProductStock
+    public function findProductStockByProductCatnumAndStockId(string $productCatnum, int $stockId): ?ProductStock
     {
-        return $this->productStockRepository->findProductStockByStockExternalIdAndProductCatnum($stockExternalId, $productCatnum);
+        return $this->productStockRepository->findProductStockByProductCatnumAndStockId($stockId, $productCatnum);
     }
 }

@@ -85,8 +85,9 @@ class ProductSellingDeniedRecalculator extends BaseProductSellingDeniedRecalcula
                                 NOT EXISTS(
                                     SELECT 1
                                     FROM product_stocks as ps
-                                    JOIN stocks as s ON s.id = ps.stock_id AND s.domain_id = :domainId
-                                    WHERE ps.product_id = p.id
+                                    JOIN stocks as s ON s.id = ps.stock_id
+                                    JOIN stock_domains sd ON s.id = sd.stock_id AND sd.domain_id = :domainId
+                                    WHERE ps.product_id = p.id AND sd.is_enabled = TRUE
                                     HAVING SUM(ps.product_quantity) > 0
                                 )
                             )                            

@@ -69,19 +69,18 @@ class ProductStockRepository
     }
 
     /**
-     * @param string $stockExternalId
+     * @param int $stockId
      * @param string $productCatnum
-     * @throws \Doctrine\ORM\NonUniqueResultException
      * @return \App\Model\Stock\ProductStock|null
      */
-    public function findProductStockByStockExternalIdAndProductCatnum(string $stockExternalId, string $productCatnum): ?ProductStock
+    public function findProductStockByProductCatnumAndStockId(int $stockId, string $productCatnum): ?ProductStock
     {
         return $this->getQueryBuilder()
             ->join(Product::class, 'p', JOIN::WITH, 'ps.product = p')
             ->join(Stock::class, 's', JOIN::WITH, 'ps.stock = s')
-            ->andWhere('s.externalId = :stockExternalId')
+            ->andWhere('s.id = :stockId')
             ->andWhere('p.catnum = :productCatnum')
-            ->setParameter('stockExternalId', $stockExternalId)
+            ->setParameter('stockId', $stockId)
             ->setParameter('productCatnum', $productCatnum)
             ->getQuery()
             ->getOneOrNullResult();
@@ -95,8 +94,7 @@ class ProductStockRepository
     {
         return $this->getProductStockQueryBuilderByProduct($product)
             ->join('ps.stock', 's')
-            ->orderBy('s.domainId', 'ASC')
-            ->addOrderBy('s.position', 'ASC')
+            ->orderBy('s.position', 'ASC')
             ->getQuery()
             ->execute();
     }
@@ -109,7 +107,8 @@ class ProductStockRepository
     public function isProductAvailableOnDomain(Product $product, int $domainId): bool
     {
         $queryBuilder = $this->getQueryBuilder()
-            ->join(Stock::class, 's', Join::WITH, 's.id = ps.stock AND s.domainId = :domainId')
+            ->join(Stock::class, 's', Join::WITH, 's.id = ps.stock')
+            ->join(StockDomain::class, 'sd', Join::WITH, 's.id = sd.stock AND sd.domainId = :domainId AND sd.isEnabled = TRUE')
             ->setParameter('domainId', $domainId)
             ->select('CASE WHEN SUM(ps.productQuantity) > 0 THEN TRUE ELSE FALSE END');
 
@@ -132,7 +131,7 @@ class ProductStockRepository
     {
         return $this->getProductStockQueryBuilderByProduct($product)
             ->join(Stock::class, 's', Join::WITH, 's.id = ps.stock')
-            ->andWhere('s.domainId = :domainId')
+            ->join(StockDomain::class, 'sd', Join::WITH, 's.id = sd.stock AND sd.domainId = :domainId AND sd.isEnabled = TRUE')
             ->setParameter('domainId', $domainId)
             ->getQuery()
             ->execute();

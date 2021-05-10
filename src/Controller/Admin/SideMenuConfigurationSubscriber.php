@@ -32,7 +32,6 @@ class SideMenuConfigurationSubscriber implements EventSubscriberInterface
         return [
             ConfigureMenuEvent::SIDE_MENU_MARKETING => 'configureMarketingMenu',
             ConfigureMenuEvent::SIDE_MENU_PRICING => 'configurePricingMenu',
-            ConfigureMenuEvent::SIDE_MENU_PRODUCTS => 'configureProductMenu',
             ConfigureMenuEvent::SIDE_MENU_DASHBOARD => 'configureDashboardMenu',
             ConfigureMenuEvent::SIDE_MENU_SETTINGS => 'configureSettingsMenu',
             ConfigureMenuEvent::SIDE_MENU_ROOT => 'configureRootMenu',
@@ -108,18 +107,6 @@ class SideMenuConfigurationSubscriber implements EventSubscriberInterface
     /**
      * @param \Shopsys\FrameworkBundle\Model\AdminNavigation\ConfigureMenuEvent $event
      */
-    public function configureProductMenu(ConfigureMenuEvent $event): void
-    {
-        $menu = $event->getMenu();
-
-        $stockMenu = $menu->addChild('stock', ['route' => 'admin_stock_list', 'label' => t('Skladovost')]);
-        $stockMenu->addChild('new_stock', ['route' => 'admin_stock_new', 'display' => false, 'label' => t('Nový sklad')]);
-        $stockMenu->addChild('edit_stock', ['route' => 'admin_stock_edit', 'display' => false, 'label' => t('Detail skladu')]);
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\AdminNavigation\ConfigureMenuEvent $event
-     */
     public function configureSettingsMenu(ConfigureMenuEvent $event): void
     {
         $settingsMenu = $event->getMenu();
@@ -143,6 +130,14 @@ class SideMenuConfigurationSubscriber implements EventSubscriberInterface
         $listMenu->addChild('sale_category', ['route' => 'admin_set_sale_category', 'label' => t('Výběr výprodejové kategorie')]);
         $transportTypeMenu = $listMenu->addChild('transport_type', ['route' => 'admin_transporttype_list', 'label' => t('Transport types')]);
         $transportTypeMenu->addChild('transport_type_edit', ['route' => 'admin_transporttype_edit', 'display' => false, 'label' => t('Edit transport type')]);
+
+        $stockMenu = $settingsMenu->addChild('stocks', ['label' => t('Skladovost')]);
+
+        $stockMenu->addChild('stock', ['route' => 'admin_stock_list', 'label' => t('Sklady')]);
+        $stockMenu->addChild('new_stock', ['route' => 'admin_stock_new', 'display' => false, 'label' => t('Nový sklad')]);
+        $stockMenu->addChild('edit_stock', ['route' => 'admin_stock_edit', 'display' => false, 'label' => t('Detail skladu')]);
+
+        $stockMenu->addChild('stock_settings', ['route' => 'admin_stock_settings', 'label' => t('Nastavení skladů')]);
 
         $communicationMenu = $settingsMenu->getChild('communication');
         $mailTemplates = $communicationMenu->getChild('mail_templates');

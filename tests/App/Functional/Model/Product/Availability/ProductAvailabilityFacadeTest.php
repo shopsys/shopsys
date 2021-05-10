@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Tests\App\Functional\Model\Product\Availability;
 
 use App\DataFixtures\Demo\ProductDataFixture;
-use App\DataFixtures\Demo\StocksDataFixture;
 use App\Model\Product\ProductData;
 use App\Model\Stock\StockSettingsData;
 use Tests\App\Test\TransactionFunctionalTestCase;
@@ -43,6 +42,12 @@ class ProductAvailabilityFacadeTest extends TransactionFunctionalTestCase
      * @inject
      */
     private $stockSettingsDataFacade;
+
+    /**
+     * @var \App\Model\Stock\StockFacade
+     * @inject
+     */
+    private $stockFacade;
 
     public function testShippingDaysByDomainIdForEmptyStock()
     {
@@ -98,7 +103,7 @@ class ProductAvailabilityFacadeTest extends TransactionFunctionalTestCase
     private function setupStockQuantityToProductData(ProductData $productData, int $stockQuantity): void
     {
         $productData->stockProductData = [];
-        foreach ($this->getStocksByDomainId(self::FIRST_DOMAIN_ID) as $stock) {
+        foreach ($this->stockFacade->getStocksEnabledOnDomainIndexedByStockId(self::FIRST_DOMAIN_ID) as $stock) {
             $stockProductData = $this->productStockDataFactory->createFromStock($stock);
             $stockProductData->productQuantity = $stockQuantity;
             $productData->stockProductData[] = $stockProductData;
@@ -120,7 +125,7 @@ class ProductAvailabilityFacadeTest extends TransactionFunctionalTestCase
         $productData = $this->productDataFactory->createFromProduct($product);
 
         $productData->stockProductData = [];
-        foreach ($this->getStocksByDomainId(self::FIRST_DOMAIN_ID) as $stock) {
+        foreach ($this->stockFacade->getStocksEnabledOnDomainIndexedByStockId(self::FIRST_DOMAIN_ID) as $stock) {
             $stockProductData = $this->productStockDataFactory->createFromStock($stock);
             $stockProductData->productQuantity = $stockQuantity;
 
@@ -167,7 +172,7 @@ class ProductAvailabilityFacadeTest extends TransactionFunctionalTestCase
         $productData = $this->productDataFactory->createFromProduct($product);
 
         $productData->stockProductData = [];
-        foreach ($this->getStocksByDomainId(self::FIRST_DOMAIN_ID) as $stock) {
+        foreach ($this->stockFacade->getStocksEnabledOnDomainIndexedByStockId(self::FIRST_DOMAIN_ID) as $stock) {
             $stockProductData = $this->productStockDataFactory->createFromStock($stock);
             $stockProductData->productQuantity = $stockQuantity;
             $productData->stockProductData[] = $stockProductData;
@@ -214,7 +219,7 @@ class ProductAvailabilityFacadeTest extends TransactionFunctionalTestCase
     public function testGroupedStockQuantity()
     {
         $stockQuantity = 5;
-        $expected = count($this->getStocksByDomainId(self::FIRST_DOMAIN_ID)) * $stockQuantity;
+        $expected = count($this->stockFacade->getStocksEnabledOnDomainIndexedByStockId(self::FIRST_DOMAIN_ID)) * $stockQuantity;
 
         /** @var \App\Model\Product\Product $product */
         $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1');
@@ -223,7 +228,7 @@ class ProductAvailabilityFacadeTest extends TransactionFunctionalTestCase
         $productData = $this->productDataFactory->createFromProduct($product);
 
         $productData->stockProductData = [];
-        foreach ($this->getStocksByDomainId(self::FIRST_DOMAIN_ID) as $stock) {
+        foreach ($this->stockFacade->getStocksEnabledOnDomainIndexedByStockId(self::FIRST_DOMAIN_ID) as $stock) {
             $stockProductData = $this->productStockDataFactory->createFromStock($stock);
             $stockProductData->productQuantity = $stockQuantity;
             $productData->stockProductData[] = $stockProductData;
@@ -265,7 +270,7 @@ class ProductAvailabilityFacadeTest extends TransactionFunctionalTestCase
         $productData = $this->productDataFactory->createFromProduct($product);
 
         $productData->stockProductData = [];
-        foreach ($this->getStocksByDomainId(self::FIRST_DOMAIN_ID) as $stock) {
+        foreach ($this->stockFacade->getStocksEnabledOnDomainIndexedByStockId(self::FIRST_DOMAIN_ID) as $stock) {
             $stockProductData = $this->productStockDataFactory->createFromStock($stock);
             $stockProductData->productQuantity = $stockQuantity;
             $productData->stockProductData[] = $stockProductData;
@@ -365,19 +370,5 @@ class ProductAvailabilityFacadeTest extends TransactionFunctionalTestCase
             ],
 
         ];
-    }
-
-    /**
-     * @param int $domainId
-     * @return \App\Model\Stock\Stock[]
-     */
-    private function getStocksByDomainId(int $domainId): array
-    {
-        $stocks = [];
-        foreach (StocksDataFixture::getDemoData($domainId) as $demoRow) {
-            $stocks[] = $this->getReferenceForDomain(StocksDataFixture::STOCK_PREFIX . $demoRow[StocksDataFixture::ATTR_EXTERNAL], $domainId);
-        }
-
-        return $stocks;
     }
 }

@@ -45,7 +45,7 @@ class StockIdToStockTransformer implements DataTransformerInterface
         }
 
         try {
-            return $this->stockRepository->getById($stockId);
+            return $this->stockRepository->getById((int)$stockId);
         } catch (StockNotFoundException $e) {
             throw new TransformationFailedException('Stock not found', 0, $e);
         }

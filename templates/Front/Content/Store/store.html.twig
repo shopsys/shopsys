@@ -53,6 +53,7 @@
                             </button>
 
                             <h2 class="box-stores__store__title">{{ store.name }}</h2>
+                            {# @todo: add after stores implementation
                             {{ store.street }} <br>
                             {{ store.city }} <br>
                             {% if store.openingHours is not empty %}
@@ -78,6 +79,7 @@
                             {% if imageExists(store, 'main') %}
                                 {{ image(store, { itemprop: 'image', lazy: true, type: 'main', class: 'box-stores__store__img' }) }}
                             {% endif %}
+                            #}
                         </div>
                     {% endfor %}
                 </div>
@@ -85,7 +87,8 @@
             <div class="box-stores-list">
                 {% for store in stores %}
                     <div class="box-stores-list__item">
-                        <a class="box-stores-list__item__link" href="{{ url('front_stores_detail', {id: store.id}) }}">
+                        {# @todo: add link after stores implementation #}
+                        <a class="box-stores-list__item__link" href="#">
                             <i class="box-stores-list__item__icon svg svg-marker"></i>
                             <strong class="box-stores-list__item__name">{{ store.name }}</strong>
                             <span class="box-stores-list__item__to-detail">
@@ -105,11 +108,13 @@
     <script type="text/javascript">
         var markersData = [];
 
+        {# @todo: add after stores implementation
         {% for store in stores %}
         {% if store.locationLng is not null and store.locationLat is not null  %}
             markersData.push({locations: {lat: {{ store.locationLat }}, lng: {{ store.locationLng }} }, data: {id: '{{ store.id }}' }});
         {% endif %}
         {% endfor %}
+        #}
     </script>
     <script src="https://maps.googleapis.com/maps/api/js?key={{ googleMapApiKey }}"></script>
 {% endblock %}
