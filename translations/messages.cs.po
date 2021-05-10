@@ -1375,6 +1375,9 @@ msgstr ""
 msgid "Order has been created but there were problems during payment"
 msgstr "Objednávka byla dokončena a odeslána, ale nastaly potíže během placení"
 
+msgid "Order has not been sent to GoPay"
+msgstr "Objednávka nebyla odeslána do GoPay"
+
 msgid "Order items"
 msgstr "Položky objednávky"
 
@@ -1389,9 +1392,6 @@ msgstr "Číslo objednávky"
 
 msgid "Order sent"
 msgstr "Objednávka byla odeslána"
-
-msgid "Order was not send to GoPay"
-msgstr "Objednávka nebyla odeslána do GoPay"
 
 msgid "Orders"
 msgstr "Objednávky"
