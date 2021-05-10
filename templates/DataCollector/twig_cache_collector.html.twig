@@ -1,0 +1,10 @@
+{% extends '@WebProfiler/Profiler/layout.html.twig' %}
+
+{% block toolbar %}
+    {% set icon %}
+        <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve"><polygon style="fill:#e0d7d7;" points="297.651,35.415 133.844,267.475 243.049,267.475 215.748,472.234 379.555,199.222 270.35,199.222 "/><path style="fill:#231F20;" d="M201.841,512l31.465-235.993H117.378L312.198,0l-31.772,190.69h114.196L201.841,512z M150.31,258.943 h102.482l-23.129,173.525l134.825-224.715H260.274l22.822-136.933L150.31,258.943z"/><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g></svg>
+        <span class="sf-toolbar-value">Twig cache: {{ collector.cacheStatus }}</span>
+    {% endset %}
+
+    {{ include('@WebProfiler/Profiler/toolbar_item.html.twig', { link: false }) }}
+{% endblock %}
