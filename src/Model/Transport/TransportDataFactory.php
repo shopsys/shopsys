@@ -4,12 +4,42 @@ declare(strict_types=1);
 
 namespace App\Model\Transport;
 
+use App\Model\Transport\Type\TransportTypeEnum;
+use App\Model\Transport\Type\TransportTypeFacade;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
+use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade;
 use Shopsys\FrameworkBundle\Model\Transport\Transport as BaseTransport;
 use Shopsys\FrameworkBundle\Model\Transport\TransportData as BaseTransportData;
 use Shopsys\FrameworkBundle\Model\Transport\TransportDataFactory as BaseTransportDataFactory;
+use Shopsys\FrameworkBundle\Model\Transport\TransportFacade;
 
 class TransportDataFactory extends BaseTransportDataFactory
 {
+    /**
+     * @var \App\Model\Transport\Type\TransportTypeFacade
+     */
+    protected TransportTypeFacade $transportTypeFacade;
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Transport\TransportFacade $transportFacade
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade $vatFacade
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     * @param \App\Component\Image\ImageFacade $imageFacade
+     * @param \App\Model\Transport\Type\TransportTypeFacade $transportTypeFacade
+     */
+    public function __construct(
+        TransportFacade $transportFacade,
+        VatFacade $vatFacade,
+        Domain $domain,
+        ImageFacade $imageFacade,
+        TransportTypeFacade $transportTypeFacade
+    ) {
+        parent::__construct($transportFacade, $vatFacade, $domain, $imageFacade);
+
+        $this->transportTypeFacade = $transportTypeFacade;
+    }
+
     /**
      * @return \App\Model\Transport\TransportData
      */
@@ -37,6 +67,7 @@ class TransportDataFactory extends BaseTransportDataFactory
         parent::fillNew($transportData);
 
         $transportData->daysUntilDelivery = 0;
+        $transportData->transportType = $this->transportTypeFacade->getByCode(TransportTypeEnum::TYPE_COMMON);
         $transportData->trackingUrl = null;
 
         foreach ($this->domain->getAllLocales() as $locale) {
@@ -59,6 +90,7 @@ class TransportDataFactory extends BaseTransportDataFactory
 
         $transportData->deliveryCode = $transport->getDeliveryCode();
         $transportData->typeOfDeliveryKey = $transport->getTypeOfDeliveryKey();
+        $transportData->transportType = $transport->getTransportType();
 
         $transportData->trackingUrl = $transport->getTrackingUrl();
 

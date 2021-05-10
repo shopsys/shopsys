@@ -244,6 +244,9 @@ msgstr "Tel. číslo nemôže byť kratšie než {{ limit }} znakov"
 msgid "This email is already registered"
 msgstr "Tento email je už zaregistrovaný"
 
+msgid "Transport type name cannot be longer than {{ limit }} characters"
+msgstr ""
+
 msgid "Ulice musí obsahovat písmena"
 msgstr ""
 

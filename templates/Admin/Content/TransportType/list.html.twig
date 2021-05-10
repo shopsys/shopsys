@@ -1,0 +1,8 @@
+{% extends '@ShopsysFramework/Admin/Layout/layoutWithPanel.html.twig' %}
+
+{% block title %}- {{ 'Transport types'|trans }}{% endblock %}
+{% block h1 %}{{ 'Transport types'|trans }}{% endblock %}
+
+{% block main_content %}
+    {{ gridView.render() }}
+{% endblock %}

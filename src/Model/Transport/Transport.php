@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\Transport;
 
+use App\Model\Transport\Type\TransportType;
 use Doctrine\ORM\Mapping as ORM;
 use Shopsys\FrameworkBundle\Model\Transport\Transport as BaseTransport;
 use Shopsys\FrameworkBundle\Model\Transport\TransportData as BaseTransportData;
@@ -57,6 +58,13 @@ class Transport extends BaseTransport
     private int $typeOfDeliveryKey;
 
     /**
+     * @var \App\Model\Transport\Type\TransportType
+     * @ORM\ManyToOne(targetEntity="App\Model\Transport\Type\TransportType")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private TransportType $transportType;
+
+    /**
      * @var string|null
      * @ORM\Column(type="string", length=255, nullable=true)
      */
@@ -91,6 +99,7 @@ class Transport extends BaseTransport
         $this->deliveryCode = $transportData->deliveryCode;
         $this->typeOfDeliveryKey = $transportData->typeOfDeliveryKey;
         $this->trackingUrl = $transportData->trackingUrl;
+        $this->transportType = $transportData->transportType;
     }
 
     /**
@@ -168,5 +177,13 @@ class Transport extends BaseTransport
     public function getTrackingInstruction($locale = null): ?string
     {
         return $this->translation($locale)->getTrackingInstruction();
+    }
+
+    /**
+     * @return \App\Model\Transport\Type\TransportType
+     */
+    public function getTransportType(): TransportType
+    {
+        return $this->transportType;
     }
 }

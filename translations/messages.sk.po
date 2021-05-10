@@ -937,6 +937,9 @@ msgstr "URL adresa e-shopu"
 msgid "EASYTOUCH"
 msgstr "EASYTOUCH"
 
+msgid "Edit transport type"
+msgstr ""
+
 msgid "Editace hodnoty parameteru typu barva"
 msgstr ""
 
@@ -983,6 +986,12 @@ msgid "Editace článku blogu - %name%"
 msgstr ""
 
 msgid "Editing product - %name%"
+msgstr ""
+
+msgid "Editing transport type"
+msgstr ""
+
+msgid "Editing transport type - %code%"
 msgstr ""
 
 msgid "Email"
@@ -1720,6 +1729,9 @@ msgstr "Pre túto značku neboli nájdené žiadne produkty"
 msgid "No results matching filter"
 msgstr "Filtru nezodpovedajú žiadne výsledky"
 
+msgid "No transport types found."
+msgstr ""
+
 msgid "Nobilia"
 msgstr "Nobilia"
 
@@ -1933,6 +1945,9 @@ msgstr "URL adresa detailu objednávky"
 msgid "Order has been created but there were problems during payment"
 msgstr "Objednávka bola vytvorená, no pri platení nastali problémy."
 
+msgid "Order has not been sent to GoPay"
+msgstr "Objednávka nebola odoslaná do GoPay"
+
 msgid "Order items"
 msgstr ""
 
@@ -1944,9 +1959,6 @@ msgstr "Objednávka nenájdená."
 
 msgid "Order number"
 msgstr "Číslo objednávky"
-
-msgid "Order was not send to GoPay"
-msgstr "Objednávka nebola odoslaná do GoPay"
 
 msgid "Orders"
 msgstr "Objednávky"
@@ -3134,6 +3146,15 @@ msgid "Tracking instructions variables"
 msgstr ""
 
 msgid "Tracking number"
+msgstr ""
+
+msgid "Transport type"
+msgstr ""
+
+msgid "Transport type <strong><a href=\"{{ url }}\">{{ code }}</a></strong> modified"
+msgstr ""
+
+msgid "Transport types"
 msgstr ""
 
 msgid "Try using web search"

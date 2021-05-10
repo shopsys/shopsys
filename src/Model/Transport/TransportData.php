@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\Transport;
 
+use App\Model\Transport\Type\TransportType;
 use Shopsys\FrameworkBundle\Model\Transport\TransportData as BaseTransportData;
 
 /**
@@ -45,6 +46,11 @@ class TransportData extends BaseTransportData
      * @var string|null
      */
     public ?string $trackingUrl;
+
+    /**
+     * @var \App\Model\Transport\Type\TransportType
+     */
+    public TransportType $transportType;
 
     /**
      * @var string[]|null[]
