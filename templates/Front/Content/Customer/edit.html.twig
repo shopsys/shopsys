@@ -17,55 +17,56 @@
 
                 <div id="{{ form.customerUserData.vars.id }}">
                     <div class="box-form box-form--registration box-form--small">
-                        <div class="form-line-block-section form-line-block-section--no-spacing">
-                            <h2 class="form-line-block-section__heading">{{ 'Personal data'|trans }}</h2>
+                        <div class="box-form__section">
+                            <h2 class="in-title">{{ 'Personal data'|trans }}</h2>
+                        
                             {{ form_row(form.customerUserData.email, {
-                                label: 'Váš e-mail'|trans,
-                                rowClass: 'form-line-block js-form-field'
+                                label: 'Váš e-mail'|trans
                             }) }}
-                            <p class="form-line-block-desc">
+
+                            <p>
                                 {{ 'To prevent the possibility of account theft, the change of the email address must be dealt with individually. If your email address has changed, please contact us.'|trans }}
                             </p>
-                            <div class="form-line-block-section form-line-block-section--no-spacing">
-                                {{ form_row(form.customerUserData.firstName, {
-                                    label: 'First name'|trans,
-                                    rowClass: 'form-line-block js-form-field'
-                                }) }}
-                                {{ form_row(form.customerUserData.lastName, {
-                                    label: 'Last name'|trans,
-                                    rowClass: 'form-line-block js-form-field'
-                                }) }}
+
+                            <div class="form-columns">
+                                <div class="form-columns__item">
+                                    {{ form_row(form.customerUserData.firstName, {
+                                        label: 'First name'|trans
+                                    }) }}
+                                </div>
+                                <div class="form-columns__item">
+                                    {{ form_row(form.customerUserData.lastName, {
+                                        label: 'Last name'|trans
+                                    }) }}
+                                </div>
                             </div>
-                            <div class="form-line-block-wrap">
-                                {{ form_row(form.customerUserData.telephone, {
-                                    label: 'Telephone'|trans,
-                                    rowClass: 'form-line-block js-form-field'
-                                }) }}
-                            </div>
-                            <dl class="form-line-block form-line-block--check">
-                                <dd>
-                                    <div class="form-choice">
-                                        {{ form_row(form.customerUserData.newsletterSubscription, { label: 'Souhlasím se zasíláním newsletteru'|trans }) }}
-                                    </div>
-                                </dd>
-                            </dl>
+
+                            {{ form_row(form.customerUserData.telephone, {
+                                label: 'Telephone'|trans
+                            }) }}
+
+                            {{ form_row(form.customerUserData.newsletterSubscription, { label: 'Souhlasím se zasíláním newsletteru'|trans }) }}
                         </div>
-                        <div class="form-line-block-section">
-                            <h2 class="form-line-block-section__heading">{{ 'Changing password'|trans }}</h2>
-                            <div id="{{ form.customerUserData.password.vars.id }}">
-                                {{ form_row(form.customerUserData.password.first, {
-                                    label: 'Password'|trans,
-                                    rowClass: 'form-line-block js-form-field'
-                                }) }}
-                                {{ form_row(form.customerUserData.password.second, {
-                                    label: 'Password again'|trans,
-                                    rowClass: 'form-line-block js-form-field'
-                                }) }}
+
+                        <div class="box-form__section">
+                            <h2 class="in-title">{{ 'Changing password'|trans }}</h2>
+                            <div class="form-columns" id="{{ form.customerUserData.password.vars.id }}">
+                                <div class="form-columns__item">
+                                    {{ form_row(form.customerUserData.password.first, {
+                                        label: 'Password'|trans
+                                    }) }}
+                                </div>
+                                <div class="form-columns__item">
+                                    {{ form_row(form.customerUserData.password.second, {
+                                        label: 'Password again'|trans
+                                    }) }}
+                                </div>
                             </div>
                         </div>
-                        <div class="form-line-block-section" id="{{ form.billingAddressData.vars.id }}">
+
+                        <div class="box-form__section" id="{{ form.billingAddressData.vars.id }}">
                             {% if isCompanyCustomer %}
-                                <h2 class="form-line-block-section__heading">{{ 'Company data'|trans }}</h2>
+                                <h2 class="in-title">{{ 'Company data'|trans }}</h2>
                                 <div id="js-company-fields">
                                     {{ form_row(form.billingAddressData.companyName, { label: 'Company'|trans}) }}
                                     {{ form_row(form.billingAddressData.companyNumber, { label: 'Company number'|trans}) }}
@@ -77,28 +78,32 @@
                                 {% do form.billingAddressData.companyTaxNumber.setRendered() %}
                             {% endif %}
                         </div>
-                        <div class="form-line-block-section">
-                            <h2 class="form-line-block-section__heading">{{ 'Fakturační adresa'|trans }}</h2>
+                        
+                        <div class="box-form__section">
+                            <h2 class="in-title">{{ 'Fakturační adresa'|trans }}</h2>
                             {{ form_row(form.billingAddressData.street, {
-                                label: 'Ulice a č. popisné'|trans,
-                                rowClass: 'form-line-block js-form-field'
+                                label: 'Ulice a č. popisné'|trans
                             }) }}
-                            <div class="form-line-block-section__grid">
-                                {{ form_row(form.billingAddressData.city, {
-                                    label: 'City'|trans,
-                                    rowClass: 'form-line-block form-line-block--full-width form-line-block--first js-form-field'
-                                }) }}
-                                {{ form_row(form.billingAddressData.postcode, {
-                                    label: 'Postcode'|trans,
-                                    rowClass: 'form-line-block form-line-block--small-width js-form-field'
-                                }) }}
+
+                            <div class="form-columns">
+                                <div class="form-columns__item">
+                                    {{ form_row(form.billingAddressData.city, {
+                                        label: 'City'|trans
+                                    }) }}
+                                </div>
+                                <div class="form-columns__item">
+                                    {{ form_row(form.billingAddressData.postcode, {
+                                        label: 'Postcode'|trans
+                                    }) }}
+                                </div>
                             </div>
+
                             {{ form_row(form.billingAddressData.country, {
-                                label: 'Country'|trans,
-                                rowClass: 'form-line-block js-form-field'
+                                label: 'Country'|trans
                             }) }}
                         </div>
-                        <div id="{{ form.deliveryAddressData.vars.id }}" class="box-chooser-check-wrap js-delivery-address-form">
+
+                        <div class="box-form__section box-form__section--without-gap" id="{{ form.deliveryAddressData.vars.id }}" class="box-chooser-check-wrap js-delivery-address-form">
                             {{ form_row(form.customerUserData.defaultDeliveryAddress) }}
                             <div class="box-chooser-check-wrap__in">
                                 <div class="box-chooser box-chooser--check box-chooser--check--spaced">
@@ -115,52 +120,49 @@
                                 </div>
                                 <div class="box-chooser__item__in" id="js-delivery-address-fields">
                                     {{ form_row(form.deliveryAddressData.companyName, {
-                                        label: 'Company'|trans,
-                                        rowClass: 'form-line-block js-form-field'
+                                        label: 'Company'|trans
                                     }) }}
                                     {{ form_row(form.deliveryAddressData.firstName, {
-                                        label: 'First name'|trans,
-                                        rowClass: 'form-line-block js-form-field'
+                                        label: 'First name'|trans
                                     }) }}
                                     {{ form_row(form.deliveryAddressData.lastName, {
-                                        label: 'Last name'|trans,
-                                        rowClass: 'form-line-block js-form-field'
+                                        label: 'Last name'|trans
                                     }) }}
-                                    <div class="form-line-block-wrap">
-                                        {{ form_row(form.deliveryAddressData.telephone, {
-                                            label: 'Telephone'|trans,
-                                            rowClass: 'form-line-block js-form-field'
-                                        }) }}
-                                    </div>
+                                    {{ form_row(form.deliveryAddressData.telephone, {
+                                        label: 'Telephone'|trans
+                                    }) }}
                                     {{ form_row(form.deliveryAddressData.street, {
-                                        label: 'Ulice a č. popisné'|trans,
-                                        rowClass: 'form-line-block js-form-field'
+                                        label: 'Ulice a č. popisné'|trans
                                     }) }}
-                                    <div class="form-line-block-section__grid">
-                                        {{ form_row(form.deliveryAddressData.city, {
-                                            label: 'City'|trans,
-                                            rowClass: 'form-line-block form-line-block--full-width form-line-block--first js-form-field'
-                                        }) }}
-                                        {{ form_row(form.deliveryAddressData.postcode, {
-                                            label: 'Postcode'|trans,
-                                            rowClass: 'form-line-block form-line-block--small-width js-form-field'
-                                        }) }}
+
+                                    <div class="form-columns">
+                                        <div class="form-columns__item">
+                                            {{ form_row(form.deliveryAddressData.city, {
+                                                label: 'City'|trans
+                                            }) }}
+                                        </div>
+                                        <div class="form-columns__item">
+                                            {{ form_row(form.deliveryAddressData.postcode, {
+                                                label: 'Postcode'|trans
+                                            }) }}
+                                        </div>
                                     </div>
+
                                     {{ form_row(form.deliveryAddressData.country, {
-                                        label: 'Country'|trans,
-                                        rowClass: 'form-line-block js-form-field'
+                                        label: 'Country'|trans
                                     }) }}
                                 </div>
                             </div>
                         </div>
-                        <div class="box-form-buttons">
+
+                        <div class="box-form__buttons">
                             {{ form_widget(form.save, {
                                 label: 'Uložit údaje'|trans,
                                 attr: {
                                     class: 'btn btn--no-icon'
                                 }
                             }) }}
-                            <a href="{{ url('front_homepage') }}" class="btn btn-no-style btn--arrow btn--arrow-prev">
+                            <a href="{{ url('front_homepage') }}" class="btn btn--arrow btn--arrow-prev">
                                 <i class="btn__icon svg svg-arrow"></i>
                                 {{ 'Zrušit úpravy'|trans }}
                             </a>

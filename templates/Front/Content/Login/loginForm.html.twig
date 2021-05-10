@@ -23,13 +23,11 @@
             <div class="box-form box-form--registration box-form--small">
 
                 {{ form_row(form.email, {
-                    label: 'Váš e-mail'|trans,
-                    rowClass: 'form-line-block js-form-field'
+                    label: 'Váš e-mail'|trans
                 }) }}
 
                 {{ form_row(form.password, {
                     label: 'Váše heslo'|trans,
-                    rowClass: 'form-line-block js-form-field',
                     attr: { autocomplete: 'new-password' }
                 }) }}
 

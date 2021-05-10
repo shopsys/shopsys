@@ -1,0 +1,12 @@
+@form-columns-item-gap: 12px;
+
+.form-columns {
+    display: flex;
+    flex-wrap: wrap;
+    margin-left: -@form-columns-item-gap;
+
+    &__item {
+        flex: 1;
+        padding-left: @form-columns-item-gap;
+    }
+}

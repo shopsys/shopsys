@@ -2,7 +2,7 @@
 {% block delivery_address_choice_row %}
     {% if deliveryAddresses|length > 0 %}
         <div class="wrap-divide box-chooser-adresses-wrap">
-            <h2 class="form-line-block-section__heading">{{ 'Dodací adresy'|trans }}</h2>
+            <h2 class="in-title">{{ 'Dodací adresy'|trans }}</h2>
             <ul class="box-chooser box-chooser--adresses">
                 {% for child in form %}
                     {% if child.vars.value|isInteger %}

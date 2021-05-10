@@ -4,7 +4,6 @@ import Register from 'framework/common/utils/Register';
 import Timeout from 'framework/common/utils/Timeout';
 import Window from '../utils/Window';
 import Translator from 'bazinga-translator';
-import FormField from '../components/FormField';
 
 export default class OrderForm {
 
@@ -57,8 +56,6 @@ export default class OrderForm {
             }
         });
         $loginSubmitButton.click(() => this.tryLogin($loginPasswordInput.val()));
-
-        FormField.init();
     }
 
     tryLogin (password) {

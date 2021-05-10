@@ -21,20 +21,11 @@
             {{ form_errors(form) }}
             {{ form_start(form) }}
             <div class="box-form box-form--registration box-form--small">
-                {{ form_row(form.newPassword.first, {
-                    label: 'Password'|trans,
-                    rowClass: 'form-line-block js-form-field'
-                }) }}
-
-                {{ form_row(form.newPassword.second, {
-                    label: 'Password again'|trans,
-                    rowClass: 'form-line-block js-form-field'
-                }) }}
+                {{ form_row(form.newPassword.first, { label: 'Password'|trans }) }}
+                {{ form_row(form.newPassword.second, { label: 'Password again'|trans }) }}
 
                 <div class="box-form__submit">
-                    {{ form_widget(form.submit, {
-                        label: 'Nastavit heslo'|trans
-                    }) }}
+                    {{ form_widget(form.submit, { label: 'Nastavit heslo'|trans }) }}
                 </div>
             </div>
             {{ form_end(form) }}

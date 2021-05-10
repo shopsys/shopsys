@@ -14,15 +14,12 @@
                     <div class="box-cart-card box-cart-card--form box-cart-card box-cart-card--form--spaced">
                         <div class="box-cart-card__form">
                             {% if not isUserLogged %}
-                                <h2 class="form-line-block-section__heading form-line-block-section__heading--small-spacing" id="js-user-email-label">{{ 'Začněte zadáním e-mailu'|trans }}</h2>
+                                <h2 class="in-title in-title--small-spacing" id="js-user-email-label">{{ 'Začněte zadáním e-mailu'|trans }}</h2>
                             {% else %}
-                                <h2 class="form-line-block-section__heading">{{ 'Váš e-mail'|trans }}</h2>
+                                <h2 class="in-title">{{ 'Váš e-mail'|trans }}</h2>
                             {% endif %}
                             <div class="in-tab js-responsive-tabs js-tabs-only">
-                                {{ form_row(form.email, {
-                                    label: 'Váš e-mail'|trans,
-                                    rowClass: 'form-line-block js-form-field'
-                                }) }}
+                                {{ form_row(form.email, { label: 'Váš e-mail'|trans }) }}
                                 <div id="js-order-form-details-container">
                                     {% if not isUserLogged %}
                                         <div class="in-tab__password-box" id="js-order-form-login-container">
@@ -31,7 +28,7 @@
                                             <i class="in-tab__password-box__icon svg svg-arrow"></i>
                                             <div class="display-none" id="js-order-form-login-window-content">
                                                 <div class="in-message--error display-none js-order-form-login-error"></div>
-                                                <div class="form-line-block js-form-field">
+                                                <div class="form-line">
                                                     <label>{{ 'Vaše heslo'|trans }}</label>
                                                     <input type="password" class="input js-order-form-login-password" />
                                                 </div>
@@ -45,27 +42,18 @@
                                             <div class="box-chooser-check-wrap__in">
                                                 <div class="box-chooser box-chooser--check">
                                                     <div id="js-order-form-register-container" class="box-chooser__item box-chooser__item--big-label">
-                                                        {{ form_row(form.register, {
-                                                            label: 'Chci se registrovat s objednávkou'|trans,
-                                                            rowClass: 'form-line js-form-field'
-                                                        }) }}
+                                                        {{ form_row(form.register, { label: 'Chci se registrovat s objednávkou'|trans }) }}
                                                     </div>
                                                 </div>
                                                 {% if not isUserLogged %}
-                                                    <div class="box-chooser__item__in box-chooser__item__in--no-spacing form-line-block-section" id="js-order-form-password-container">
-                                                        <h2 class="form-line-block-section__heading form-line-block-section__heading--mini">{{ 'Vytvořte si heslo'|trans }}</h2>
-                                                        {{ form_row(form.password.first, {
-                                                            label: 'Password'|trans,
-                                                            rowClass: 'form-line-block js-form-field'
-                                                        }) }}
-                                                        {{ form_row(form.password.second, {
-                                                            label: 'Password again'|trans,
-                                                            rowClass: 'form-line-block js-form-field'
-                                                        }) }}
+                                                    <div class="box-chooser__item__in box-chooser__item__in--no-spacing" id="js-order-form-password-container">
+                                                        <h2 class="in-title in-title--mini">{{ 'Vytvořte si heslo'|trans }}</h2>
+                                                        {{ form_row(form.password.first, { label: 'Password'|trans }) }}
+                                                        {{ form_row(form.password.second, { label: 'Password again'|trans }) }}
                                                     </div>
                                                 {% endif %}
                                                 <div class="box-chooser__item__in box-chooser__item__in--no-spacing" id="js-order-form-activation-info">
-                                                    <div class="form-line-block-section__heading form-line-block-section__heading--mini">
+                                                    <div class="in-title in-title--mini">
                                                         {{ 'Dokončete objednávku, na e-mail vám zašleme odkaz pro potvrzení registrace a vytvoření hesla.'|trans }}
                                                     </div>
                                                 </div>
@@ -88,67 +76,37 @@
                                         </label>
                                     </div>
                                     <div class="in-tab__content in-tab__content--spaced in-tab__content--spaced-small personal-info-order-form">
-                                        <h2 class="form-line-block-section__heading">{{ 'Základní údaje'|trans }}</h2>
-                                        <div class="form-line-block-wrap form-line-block-wrap--phone">
-                                            {{ form_row(form.telephone, {
-                                                label: 'Telephone'|trans,
-                                                rowClass: 'form-line-block js-form-field'
-                                            }) }}
-                                        </div>
+                                        <h2 class="in-title">{{ 'Základní údaje'|trans }}</h2>
+                                        {{ form_row(form.telephone, { label: 'Telephone'|trans }) }}
                                         <div class="in-tab__content__item in-tab__content__item--no-spacing js-tabs-content active">
-                                            <div class="form-line-block-section">
-                                                {{ form_row(form.firstName, {
-                                                    label: 'First name'|trans,
-                                                    rowClass: 'form-line-block js-form-field'
-                                                }) }}
-                                                {{ form_row(form.lastName, {
-                                                    label: 'Last name'|trans,
-                                                    rowClass: 'form-line-block js-form-field'
-                                                }) }}
-                                            </div>
+                                            {{ form_row(form.firstName, { label: 'First name'|trans }) }}
+                                            {{ form_row(form.lastName, { label: 'Last name'|trans }) }}
                                         </div>
                                         <div class="in-tab__content__item in-tab__content__item--no-padding js-tabs-content  {{ companyTabActiveClass }}"
                                             data-tab-id="company-customer">
-                                            <h2 class="form-line-block-section__heading">{{ 'Company data'|trans }}</h2>
+                                            <h2 class="in-title">{{ 'Company data'|trans }}</h2>
                                             <div class="hidden">
                                                 {{ form_row(form.companyCustomer) }}
                                             </div>
-                                            <div id="js-company-fields" class="form-line-block-section">
-                                                {{ form_row(form.companyName, {
-                                                    label: 'Název společnosti'|trans,
-                                                    rowClass: 'form-line-block js-form-field'
-                                                }) }}
-                                                {{ form_row(form.companyNumber, {
-                                                    label: 'Company number'|trans,
-                                                    rowClass: 'form-line-block js-form-field'
-                                                }) }}
-                                                {{ form_row(form.companyTaxNumber, {
-                                                    label: 'Tax number'|trans,
-                                                    rowClass: 'form-line-block js-form-field'
-                                                }) }}
+                                            <div id="js-company-fields">
+                                                {{ form_row(form.companyName, { label: 'Název společnosti'|trans }) }}
+                                                {{ form_row(form.companyNumber, { label: 'Company number'|trans }) }}
+                                                {{ form_row(form.companyTaxNumber, { label: 'Tax number'|trans }) }}
                                             </div>
                                         </div>
 
-                                        <div class="form-line-block-section">
-                                            <h2 class="form-line-block-section__heading">{{ 'Fakturační adresa'|trans }}</h2>
-                                            {{ form_row(form.street, {
-                                                label: 'Ulice a č. popisné'|trans,
-                                                rowClass: 'form-line-block js-form-field'
-                                            }) }}
-                                             <div class="form-line-block-section__grid">
-                                                {{ form_row(form.city, {
-                                                    label: 'City'|trans,
-                                                    rowClass: 'form-line-block form-line-block--full-width form-line-block--first js-form-field'
-                                                }) }}
-                                                {{ form_row(form.postcode, {
-                                                    label: 'Postcode'|trans,
-                                                    rowClass: 'form-line-block form-line-block--small-width js-form-field'
-                                                }) }}
+                                        <div class="margin-bottom-20">
+                                            <h2 class="in-title">{{ 'Fakturační adresa'|trans }}</h2>
+                                            {{ form_row(form.street, { label: 'Ulice a č. popisné'|trans }) }}
+                                            <div class="form-columns">
+                                                <div class="form-columns__item">
+                                                    {{ form_row(form.city, { label: 'City'|trans }) }}
+                                                </div>
+                                                <div class="form-columns__item">
+                                                    {{ form_row(form.postcode, { label: 'Postcode'|trans }) }}
+                                                </div>
                                             </div>
-                                            {{ form_row(form.country, {
-                                                label: 'Country'|trans,
-                                                rowClass: 'form-line-block js-form-field'
-                                            }) }}
+                                            {{ form_row(form.country, { label: 'Country'|trans }) }}
                                         </div>
                                         <div class="box-chooser-check-wrap js-delivery-address-form">
                                             {% set hasEmptyAddresses = true %}
@@ -191,40 +149,20 @@
                                                     </div>
                                                     <div class="box-chooser__item__in" id="js-order-delivery-address">
                                                         <div class="box-chooser__delivery-address-fields js-order-delivery-address-fields{% if app.user is not null and form.deliveryAddress.vars.value is not same as('') %} display-none{% endif %}">
-                                                            {{ form_row(form.deliveryFirstName, {
-                                                                label: 'First name'|trans,
-                                                                rowClass: 'form-line-block js-form-field'
-                                                            }) }}
-                                                            {{ form_row(form.deliveryLastName, {
-                                                                label: 'Last name'|trans,
-                                                                rowClass: 'form-line-block js-form-field'
-                                                            }) }}
-                                                            {{ form_row(form.deliveryCompanyName, {
-                                                                label: 'Company'|trans,
-                                                                rowClass: 'form-line-block js-form-field'
-                                                            }) }}
-                                                            {{ form_row(form.deliveryTelephone, {
-                                                                label: 'Telephone'|trans,
-                                                                rowClass: 'form-line-block js-form-field'
-                                                            }) }}
-                                                            {{ form_row(form.deliveryStreet, {
-                                                                label: 'Ulice a č. popisné'|trans,
-                                                                rowClass: 'form-line-block js-form-field'
-                                                            }) }}
-                                                            <div class="form-line-block-section__grid">
-                                                                {{ form_row(form.deliveryCity, {
-                                                                    label: 'City'|trans,
-                                                                    rowClass: 'form-line-block form-line-block--full-width form-line-block--first js-form-field'
-                                                                }) }}
-                                                                {{ form_row(form.deliveryPostcode, {
-                                                                    label: 'Postcode'|trans,
-                                                                    rowClass: 'form-line-block form-line-block--small-width js-form-field'
-                                                                }) }}
+                                                            {{ form_row(form.deliveryFirstName, { label: 'First name'|trans }) }}
+                                                            {{ form_row(form.deliveryLastName, { label: 'Last name'|trans }) }}
+                                                            {{ form_row(form.deliveryCompanyName, { label: 'Company'|trans }) }}
+                                                            {{ form_row(form.deliveryTelephone, { label: 'Telephone'|trans }) }}
+                                                            {{ form_row(form.deliveryStreet, { label: 'Ulice a č. popisné'|trans}) }}
+                                                            <div class="form-columns">
+                                                                <div class="form-columns__item">
+                                                                    {{ form_row(form.deliveryCity, { label: 'City'|trans }) }}
+                                                                </div>
+                                                                <div class="form-columns__item">
+                                                                    {{ form_row(form.deliveryPostcode, { label: 'Postcode'|trans }) }}
+                                                                </div>
                                                             </div>
-                                                            {{ form_row(form.deliveryCountry, {
-                                                                label: 'Country'|trans,
-                                                                rowClass: 'form-line-block js-form-field'
-                                                            }) }}
+                                                            {{ form_row(form.deliveryCountry, { label: 'Country'|trans }) }}
                                                         </div>
                                                     </div>
                                                 </div>
