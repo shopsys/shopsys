@@ -1,5 +1,6 @@
 
 @list-articles-main-item-gap: 87px;
+@list-articles-item-aside-mobile-item-gap: 24px;
 
 .list-articles {
     display: flex;
@@ -8,9 +9,18 @@
 
     &__main {
         display: flex;
-        flex: 1;
-        flex-direction: row;
-        margin-left: -@list-articles-main-item-gap / 2;
+        flex-direction: column;
+        margin-bottom: 30px;
+
+        @media @query-lg {
+            flex-direction: row;
+            margin-left: -@list-articles-main-item-gap / 2;
+        }
+
+        @media @query-vl {
+            flex: 1;
+            margin-bottom: 0;
+        }
 
         @media @query-xl {
             margin-left: -@list-articles-main-item-gap;
@@ -18,31 +28,64 @@
     }
 
     &__aside {
-        width: 346px;
-        margin-left: 50px;
-        display: flex;
-        flex-direction: column;
+        display: none;
+        flex-direction: row;
+        overflow: hidden;
+
+        &.slick-initialized {
+            display: block;
+        }
+
+        @media @query-vl {
+            display: flex;
+            width: 346px;
+            margin-left: 50px;
+            flex-direction: column;
+        }
 
         @media @query-xl {
             margin-left: 103px;
+        }
+
+        .slick-track {
+            display: flex;
         }
     }
 
     &__item {
         display: flex;
-        flex-direction: row;
-        width: 100%;
-        margin-bottom: 11px;
+        flex-direction: column;
+        width: 231px;
+        margin-right: 24px;
+
+        @media @query-vl {
+            flex-direction: row;
+            width: 100%;
+            margin-bottom: 11px;
+            margin-right: 0;
+        }
 
         &:last-child {
             margin-bottom: 0;
         }
 
+        &:first-child {
+            .list-articles__main & {
+                display: flex;
+            }
+        }
+
         .list-articles__main & {
-            width: 50%;
+            display: none;
+            width: 100%;
             flex-direction: column;
-            padding-left: @list-articles-main-item-gap / 2;
             margin-bottom: 0;
+
+            @media @query-lg {
+                display: flex;
+                width: 50%;
+                padding-left: @list-articles-main-item-gap / 2;
+            }
 
             @media @query-xl {
                 padding-left: @list-articles-main-item-gap;
@@ -50,28 +93,43 @@
         }
 
         &__image {
-            height: 0;
-            width: 148px;
-            padding-bottom: 23.8%;
+            display: flex;
+            max-width: 231px;
+            width: 100%;
+
+            @media @query-vl {
+                max-width: 148px;
+            }
 
             .list-articles__main & {
-                width: 100%;
-                margin-bottom: 10px;
-                padding-bottom: 54%;
+                max-width: 328px;
             }
 
             &__link {
+                height: 0;
+                width: 100%;
+                padding-bottom: 55.41%;
                 display: flex;
+                margin-bottom: 8px;
                 
                 font-size: 0;
 
+                @media @query-vl {
+                    margin-bottom: 0;
+                }
+
                 .list-articles__main & {
-                    width: 100%;
+                    margin-bottom: 10px;
+                    padding-bottom: 54%;
                 }
 
                 img {
                     border-radius: @radius-medium;
-                    max-height: 82px;
+                    max-height: 127px;
+
+                    @media @query-vl {
+                        max-height: 82px;
+                    }
 
                     .list-articles__main & {
                         max-height: 179px;
@@ -82,7 +140,10 @@
 
         &__content {
             flex: 1;
-            margin-left: 20px;
+
+            @media @query-vl {
+                margin-left: 20px;
+            }
         
             .list-articles__main & {
                 margin-left: 0;
@@ -91,10 +152,9 @@
 
         &__name {
             display: block;
-            line-height: 20px;
-            margin-bottom: 6px;
+            line-height: 22px;
 
-            font-size: @font-size;
+            font-size: 18px;
             font-weight: 700;
             color: @color-f;
             text-decoration: none;
@@ -103,8 +163,16 @@
                 color: @color-f;
             }
 
+            @media @query-vl {
+                margin-bottom: 6px;
+                line-height: 20px;
+
+                font-size: @font-size;
+            }
+
             .list-articles__main & {
-                line-height: 24px;
+                line-height: 22px;
+                margin-bottom: 6px;
 
                 font-size: 18px;
             }

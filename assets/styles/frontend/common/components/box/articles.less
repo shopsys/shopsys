@@ -1,7 +1,11 @@
 @box-articles-heading-title-gap: 7px;
 
 .box-articles {
-    padding: 50px 0 60px;
+    padding: 50px 0 40px;
+
+    @media @query-vl {
+        padding: 50px 0 60px;
+    }
 
     &__heading {
         display: flex;

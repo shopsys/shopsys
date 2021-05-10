@@ -266,12 +266,11 @@
             additionalSizes:
                 - {width: 656, height: 358, media: "only screen and (-webkit-min-device-pixel-ratio: 1.5)"}
         -   name: listAside
-            width: 148
-            height: 82
+            width: 231
+            height: 127
             crop: true
             occurrence: 'Front-end: Blog article list'
             additionalSizes:
-                - {width: 231, height: 127, media: "(max-width: 768px)"}
                 - {width: 296, height: 254, media: "only screen and (-webkit-min-device-pixel-ratio: 1.5)"}
         -   name: listGrid
             width: 450
