@@ -1945,6 +1945,9 @@ msgstr "Objednávka nenájdená."
 msgid "Order number"
 msgstr "Číslo objednávky"
 
+msgid "Order was not send to GoPay"
+msgstr "Objednávka nebola odoslaná do GoPay"
+
 msgid "Orders"
 msgstr "Objednávky"
 

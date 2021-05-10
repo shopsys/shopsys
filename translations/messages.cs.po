@@ -1378,6 +1378,9 @@ msgstr "Číslo objednávky"
 msgid "Order sent"
 msgstr "Objednávka byla odeslána"
 
+msgid "Order was not send to GoPay"
+msgstr "Objednávka nebyla odeslána do GoPay"
+
 msgid "Orders"
 msgstr "Objednávky"
 
