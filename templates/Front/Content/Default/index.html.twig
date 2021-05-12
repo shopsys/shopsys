@@ -11,6 +11,8 @@
     {{- title -}}
 {% endblock %}
 
+{% block headerClass %}web__header--with-gap{% endblock %}
+
 {% block main_content %}
     {% set domain = getDomain() %}
     <div class="web__line">

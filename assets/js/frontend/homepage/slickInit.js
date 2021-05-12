@@ -14,7 +14,23 @@ export default function slickInit () {
         autoplaySpeed: 4000,
         slidesToShow: 1,
         slidesToScroll: 1,
-        asNavFor: $hpSliderThumbnails
+        asNavFor: $hpSliderThumbnails,
+        responsive: [
+            {
+                breakpoint: Responsive.VL,
+                settings: {
+                    dots: true,
+                }
+            },
+            {
+                breakpoint: Responsive.LG,
+                settings: {
+                    variableWidth: true,
+                    dots: true,
+                    infinite: false
+                }
+            },
+        ]
     });
 
     $hpSliderThumbnails.not('.slick-initialized').slick({
