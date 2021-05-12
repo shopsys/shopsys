@@ -36,21 +36,29 @@ class PromoCodeDataFactory extends BasePromoCodeDataFactory
     private $promoCodeLimitRepository;
 
     /**
+     * @var \App\Model\Order\PromoCode\PromoCodeBrandRepository
+     */
+    private PromoCodeBrandRepository $promoCodeBrandRepository;
+
+    /**
      * @param \App\Model\Order\PromoCode\PromoCodeCategoryRepository $promoCodeCategoryRepository
      * @param \App\Model\Order\PromoCode\PromoCodeProductRepository $promoCodeProductRepository
      * @param \App\Model\Order\PromoCode\PromoCodeLimitRepository $promoCodeLimitRepository
      * @param \App\Component\DateTimeHelper\DateTimeHelper $dateTimeHelper
+     * @param \App\Model\Order\PromoCode\PromoCodeBrandRepository $promoCodeBrandRepository
      */
     public function __construct(
         PromoCodeCategoryRepository $promoCodeCategoryRepository,
         PromoCodeProductRepository $promoCodeProductRepository,
         PromoCodeLimitRepository $promoCodeLimitRepository,
-        DateTimeHelper $dateTimeHelper
+        DateTimeHelper $dateTimeHelper,
+        PromoCodeBrandRepository $promoCodeBrandRepository
     ) {
         $this->dateTimeHelper = $dateTimeHelper;
         $this->promoCodeCategoryRepository = $promoCodeCategoryRepository;
         $this->promoCodeProductRepository = $promoCodeProductRepository;
         $this->promoCodeLimitRepository = $promoCodeLimitRepository;
+        $this->promoCodeBrandRepository = $promoCodeBrandRepository;
     }
 
     /**
@@ -92,6 +100,7 @@ class PromoCodeDataFactory extends BasePromoCodeDataFactory
         $promoCodeData->dateValidTo = $this->switchDateFromDatabaseTimeZoneToViewTimezone($promoCode->getDatetimeValidTo());
 
         $promoCodeData->categoriesWithSale = $this->promoCodeCategoryRepository->getCategoriesByPromoCodeId($promoCode->getId());
+        $promoCodeData->brandsWithSale = $this->promoCodeBrandRepository->getBrandsByPromoCodeId($promoCode->getId());
         $promoCodeData->productsWithSale = $this->promoCodeProductRepository->getProductsByPromoCodeId($promoCode->getId());
         $promoCodeData->limits = $this->promoCodeLimitRepository->getLimitsByPromoCodeId($promoCode->getId());
         $promoCodeData->remainingUses = $promoCode->getRemainingUses();

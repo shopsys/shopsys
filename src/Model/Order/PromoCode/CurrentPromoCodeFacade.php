@@ -26,11 +26,6 @@ class CurrentPromoCodeFacade extends BaseCurrentPromoCodeFacade
     private $promoCodeProductRepository;
 
     /**
-     * @var \App\Model\Order\PromoCode\PromoCodeCategoryRepository
-     */
-    private $promoCodeCategoryRepository;
-
-    /**
      * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
      */
     private $domain;
@@ -59,7 +54,6 @@ class CurrentPromoCodeFacade extends BaseCurrentPromoCodeFacade
      * @param \App\Model\Order\PromoCode\PromoCodeFacade $promoCodeFacade
      * @param \Symfony\Component\HttpFoundation\Session\SessionInterface $session
      * @param \App\Model\Order\PromoCode\PromoCodeProductRepository $promoCodeProductRepository
-     * @param \App\Model\Order\PromoCode\PromoCodeCategoryRepository $promoCodeCategoryRepository
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifierFactory $customerUserIdentifierFactory
      * @param \Shopsys\FrameworkBundle\Model\Cart\CartRepository $cartRepository
@@ -70,7 +64,6 @@ class CurrentPromoCodeFacade extends BaseCurrentPromoCodeFacade
         PromoCodeFacade $promoCodeFacade,
         SessionInterface $session,
         PromoCodeProductRepository $promoCodeProductRepository,
-        PromoCodeCategoryRepository $promoCodeCategoryRepository,
         Domain $domain,
         CustomerUserIdentifierFactory $customerUserIdentifierFactory,
         CartRepository $cartRepository,
@@ -83,7 +76,6 @@ class CurrentPromoCodeFacade extends BaseCurrentPromoCodeFacade
         );
 
         $this->promoCodeProductRepository = $promoCodeProductRepository;
-        $this->promoCodeCategoryRepository = $promoCodeCategoryRepository;
         $this->domain = $domain;
         $this->customerUserIdentifierFactory = $customerUserIdentifierFactory;
         $this->cartRepository = $cartRepository;
@@ -158,11 +150,11 @@ class CurrentPromoCodeFacade extends BaseCurrentPromoCodeFacade
     {
         $domainId = $this->domain->getId();
         $allowedProductIds = $this->promoCodeProductRepository->getProductIdsByPromoCodeId($promoCode->getId());
-        $allowedProductIdsFromCategories = $this->promoCodeCategoryRepository->getProductIdsFromCategoriesByPromoCodeIdAndDomainId($promoCode->getId(), $domainId);
+        $allowedProductIdsByCriteria = $this->productPromoCodeFiller->getAllowedProductIdsForBrandsAndCategories($promoCode, $domainId);
 
-        $allowedProductIds = array_unique(array_merge($allowedProductIds, $allowedProductIdsFromCategories));
+        $allowedProductIds = array_unique(array_merge($allowedProductIds, $allowedProductIdsByCriteria));
         if (count($allowedProductIds) === 0) {
-            //promo code hasn't any relation with products or product from categories
+            //promo code hasn't any relation with products or product from categories or product from brands
             return;
         }
 

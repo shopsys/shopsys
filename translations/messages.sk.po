@@ -397,6 +397,9 @@ msgstr ""
 msgid "Apply according to the total price of the order"
 msgstr ""
 
+msgid "Apply to selected brands"
+msgstr ""
+
 msgid "Apply to selected categories"
 msgstr ""
 
@@ -501,6 +504,9 @@ msgstr "Značka"
 
 msgid "Brand overview"
 msgstr "Prehľad značiek"
+
+msgid "Brands"
+msgstr ""
 
 msgid "Budete u nás nakupovat jako:"
 msgstr "Budete u nás nakupovať ako:"

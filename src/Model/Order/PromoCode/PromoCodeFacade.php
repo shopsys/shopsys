@@ -72,6 +72,16 @@ class PromoCodeFacade extends BasePromoCodeFacade
     private PromoCodeLimitFactory $promoCodeLimitFactory;
 
     /**
+     * @var \App\Model\Order\PromoCode\PromoCodeBrandRepository
+     */
+    private PromoCodeBrandRepository $promoCodeBrandRepository;
+
+    /**
+     * @var \App\Model\Order\PromoCode\PromoCodeBrandFactory
+     */
+    private PromoCodeBrandFactory $promoCodeBrandFactory;
+
+    /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \App\Model\Order\PromoCode\PromoCodeRepository $promoCodeRepository
      * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFactoryInterface $promoCodeFactory
@@ -84,6 +94,8 @@ class PromoCodeFacade extends BasePromoCodeFacade
      * @param \App\Model\Order\PromoCode\PromoCodeLimitRepository $promoCodeLimitRepository
      * @param \App\Component\String\HashGenerator $hashGenerator
      * @param \App\Model\Order\PromoCode\PromoCodeLimitFactory $promoCodeLimitFactory
+     * @param \App\Model\Order\PromoCode\PromoCodeBrandRepository $promoCodeBrandRepository
+     * @param \App\Model\Order\PromoCode\PromoCodeBrandFactory $promoCodeBrandFactory
      */
     public function __construct(
         EntityManagerInterface $em,
@@ -97,7 +109,9 @@ class PromoCodeFacade extends BasePromoCodeFacade
         PromoCodeCategoryFactory $promoCodeCategoryFactory,
         PromoCodeLimitRepository $promoCodeLimitRepository,
         HashGenerator $hashGenerator,
-        PromoCodeLimitFactory $promoCodeLimitFactory
+        PromoCodeLimitFactory $promoCodeLimitFactory,
+        PromoCodeBrandRepository $promoCodeBrandRepository,
+        PromoCodeBrandFactory $promoCodeBrandFactory
     ) {
         parent::__construct($em, $promoCodeRepository, $promoCodeFactory);
 
@@ -110,6 +124,8 @@ class PromoCodeFacade extends BasePromoCodeFacade
         $this->promoCodeLimitRepository = $promoCodeLimitRepository;
         $this->hashGenerator = $hashGenerator;
         $this->promoCodeLimitFactory = $promoCodeLimitFactory;
+        $this->promoCodeBrandRepository = $promoCodeBrandRepository;
+        $this->promoCodeBrandFactory = $promoCodeBrandFactory;
     }
 
     /**
@@ -144,6 +160,7 @@ class PromoCodeFacade extends BasePromoCodeFacade
         $this->refreshPromoCodeLimits($promoCode, $promoCodeData->limits);
         $this->refreshPromoCodeProducts($promoCode, $promoCodeData->productsWithSale);
         $this->refreshPromoCodeCategories($promoCode, $promoCodeData->categoriesWithSale);
+        $this->refreshPromoCodeBrands($promoCode, $promoCodeData->brandsWithSale);
 
         return $promoCode;
     }
@@ -162,6 +179,7 @@ class PromoCodeFacade extends BasePromoCodeFacade
         $this->refreshPromoCodeLimits($promoCode, $promoCodeData->limits);
         $this->refreshPromoCodeProducts($promoCode, $promoCodeData->productsWithSale);
         $this->refreshPromoCodeCategories($promoCode, $promoCodeData->categoriesWithSale);
+        $this->refreshPromoCodeBrands($promoCode, $promoCodeData->brandsWithSale);
 
         return $promoCode;
     }
@@ -302,6 +320,41 @@ class PromoCodeFacade extends BasePromoCodeFacade
         foreach ($products as $product) {
             if (in_array($product->getId(), $productIdsFromStorage, true) === false) {
                 $this->promoCodeProductFactory->create($promoCode, $product);
+            }
+        }
+    }
+
+    /**
+     * @param \App\Model\Order\PromoCode\PromoCode $promoCode
+     * @param \App\Model\Product\Brand\Brand[] $brands
+     */
+    private function refreshPromoCodeBrands(PromoCode $promoCode, array $brands): void
+    {
+        $needFlush = false;
+        $brandIdsFromForm = [];
+        $brandIdsFromStorage = [];
+        foreach ($brands as $brand) {
+            $brandIdsFromForm[$brand->getId()] = $brand->getId();
+        }
+
+        $promoCodeBrands = $this->promoCodeBrandRepository->getAllByPromoCodeId($promoCode->getId());
+        foreach ($promoCodeBrands as $promoCodeBrand) {
+            $brandId = $promoCodeBrand->getBrand()->getId();
+            if (in_array($brandId, $brandIdsFromForm, true) === false) {
+                $this->em->remove($promoCodeBrand);
+                $needFlush = true;
+            } else {
+                $brandIdsFromStorage[$brandId] = $brandId;
+            }
+        }
+
+        if ($needFlush === true) {
+            $this->em->flush();
+        }
+
+        foreach ($brands as $brand) {
+            if (in_array($brand->getId(), $brandIdsFromStorage, true) === false) {
+                $this->promoCodeBrandFactory->create($promoCode, $brand);
             }
         }
     }

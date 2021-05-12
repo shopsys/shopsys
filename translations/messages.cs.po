@@ -145,6 +145,9 @@ msgstr "Aplikovat podle obsahu košíku"
 msgid "Apply according to the total price of the order"
 msgstr "Aplikovat podle celkové ceny objednávky"
 
+msgid "Apply to selected brands"
+msgstr "Aplikovat pro vybrané značky"
+
 msgid "Apply to selected categories"
 msgstr "Aplikovat na vybrané kategorie"
 
@@ -231,6 +234,9 @@ msgstr "Značka"
 
 msgid "Brand overview"
 msgstr "Přehled značek"
+
+msgid "Brands"
+msgstr "Značky"
 
 msgid "Budete u nás nakupovat jako:"
 msgstr ""

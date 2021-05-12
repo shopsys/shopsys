@@ -8,6 +8,7 @@ use App\Component\DateTimeHelper\DateTimeHelper;
 use App\Model\Order\PromoCode\PromoCode;
 use App\Model\Order\PromoCode\PromoCodeData;
 use App\Model\Order\PromoCode\PromoCodeFacade;
+use App\Model\Product\Brand\BrandFacade;
 use Shopsys\FormTypesBundle\YesNoType;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Form\Admin\PromoCode\PromoCodeFormType;
@@ -53,15 +54,23 @@ class PromoCodeFormTypeExtension extends AbstractTypeExtension
     private RemoveDuplicatesFromArrayTransformer $removeDuplicatesTransformer;
 
     /**
+     * @var \App\Model\Product\Brand\BrandFacade
+     */
+    private BrandFacade $brandFacade;
+
+    /**
      * @param \App\Model\Order\PromoCode\PromoCodeFacade $promoCodeFacade
      * @param \Shopsys\FrameworkBundle\Form\Transformers\RemoveDuplicatesFromArrayTransformer $removeDuplicatesTransformer
+     * @param \App\Model\Product\Brand\BrandFacade $brandFacade
      */
     public function __construct(
         PromoCodeFacade $promoCodeFacade,
-        RemoveDuplicatesFromArrayTransformer $removeDuplicatesTransformer
+        RemoveDuplicatesFromArrayTransformer $removeDuplicatesTransformer,
+        BrandFacade $brandFacade
     ) {
         $this->promoCodeFacade = $promoCodeFacade;
         $this->removeDuplicatesTransformer = $removeDuplicatesTransformer;
+        $this->brandFacade = $brandFacade;
     }
 
     /**
@@ -91,6 +100,7 @@ class PromoCodeFormTypeExtension extends AbstractTypeExtension
         $this->buildFlagsFormGroup($builder);
         $this->buildProductsWithSaleForm($builder);
         $this->buildCategoriesWithSaleFormGroup($builder);
+        $this->buildBrandsWithSaleFormGroup($builder);
         $this->buildByCartContentFormGroup($builder);
     }
 
@@ -262,6 +272,25 @@ class PromoCodeFormTypeExtension extends AbstractTypeExtension
             'domain_id' => Domain::FIRST_DOMAIN_ID,
             'label' => t('Categories'),
             'display_format' => FormRenderingConfigurationExtension::DISPLAY_FORMAT_MULTIDOMAIN_ROWS_NO_PADDING,
+        ]);
+        $builder->add($displayCategoriesGroup);
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     */
+    private function buildBrandsWithSaleFormGroup(FormBuilderInterface $builder): void
+    {
+        $displayCategoriesGroup = $builder->create('displayBrandsGroup', GroupType::class, [
+            'label' => t('Apply to selected brands'),
+        ]);
+        $displayCategoriesGroup->add('brandsWithSale', ChoiceType::class, [
+            'required' => false,
+            'choices' => $this->brandFacade->getAll(),
+            'choice_label' => 'name',
+            'choice_value' => 'id',
+            'label' => t('Brands'),
+            'multiple' => true,
         ]);
         $builder->add($displayCategoriesGroup);
     }
