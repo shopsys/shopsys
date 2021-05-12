@@ -1,7 +1,7 @@
 <div class="list-articles">
     {% set isMainArticles = true %}
     
-    {% for blogArticle in homepageArticles %}
+    {% for blogArticle in blogArticles %}
         {% if loop.first %}
             <div class="list-articles__main">
         {% elseif loop.index == 3 %}
