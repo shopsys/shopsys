@@ -19,11 +19,18 @@ class CurrentDomainLifetimeCacheStrategy implements CacheStrategyInterface
     private $cacheProvider;
 
     /**
-     * @param \Doctrine\Common\Cache\CacheProvider $cacheProvider
+     * @var bool
      */
-    public function __construct(CacheProvider $cacheProvider)
+    private bool $twigCacheEnabled;
+
+    /**
+     * @param \Doctrine\Common\Cache\CacheProvider $cacheProvider
+     * @param bool $twigCacheEnabled
+     */
+    public function __construct(CacheProvider $cacheProvider, bool $twigCacheEnabled)
     {
         $this->cacheProvider = $cacheProvider;
+        $this->twigCacheEnabled = $twigCacheEnabled;
     }
 
     /**
@@ -31,6 +38,10 @@ class CurrentDomainLifetimeCacheStrategy implements CacheStrategyInterface
      */
     public function fetchBlock($key)
     {
+        if ($this->twigCacheEnabled === false) {
+            return false;
+        }
+
         return $this->cacheProvider->fetch($key['key']);
     }
 
@@ -62,6 +73,10 @@ class CurrentDomainLifetimeCacheStrategy implements CacheStrategyInterface
      */
     public function saveBlock($key, $block)
     {
+        if ($this->twigCacheEnabled === false) {
+            return false;
+        }
+
         return $this->cacheProvider->save($key['key'], $block, $key['lifetime']);
     }
 }

@@ -702,6 +702,7 @@ services:
         class: App\Twig\Cache\CurrentDomainLifetimeCacheStrategy
         arguments:
             - '@twig_cache_extension.cache_provider'
+            - '%env(bool:TWIG_CACHE_ENABLED)%'
 
     twig_cache_extension:
         class: Asm89\Twig\CacheExtension\Extension
@@ -856,3 +857,5 @@ services:
 
     Shopsys\FrameworkBundle\Model\Product\Elasticsearch\MarkProductForExportSubscriber:
         alias: App\Model\Product\Elasticsearch\MarkProductForExportSubscriber
+
+    App\Twig\CacheLifetimeExtension: ~

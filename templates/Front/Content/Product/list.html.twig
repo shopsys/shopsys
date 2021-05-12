@@ -45,14 +45,14 @@
                     </div>
                 {% endif %}
             </div>
-            {% cache 'category_children_' ~ category.id {lifetime:60*60, domainId:getDomain().id} %}
+            {% cache 'category_children_' ~ category.id {lifetime:getCacheLifetimeByHours(1), domainId:getDomain().id} %}
                 {{ render(controller('App\\Controller\\Front\\CategoryController:categoryChildrenListAction', {category: category}))|spaceless }}
             {% endcache %}
             {{ render(controller('App\\Controller\\Front\\BestsellingProductController:listAction', { category: category })) }}
             {{ render(controller('App\\Controller\\Front\\AdvertController:categoryBoxAction',{'positionName' : constant('App\\Model\\Advert\\AdvertPositionRegistry::CATEGORIES_ABOVE_PRODUCT_LIST'), category: category})) }}
         </div>
     </div>
-    {% cache 'seo_categories_mixes__' ~ category.id ~ '_' ~ readyCategorySeoMixId {lifetime:60*60, domainId:getDomain().id} %}
+    {% cache 'seo_categories_mixes__' ~ category.id ~ '_' ~ readyCategorySeoMixId {lifetime:getCacheLifetimeByHours(1), domainId:getDomain().id} %}
         {{ render(controller('App\\Controller\\Front\\CategorySeoMixController:childSeoCategoryMixesAction', {'category' : category, 'selectedReadyCategorySeoMixId': readyCategorySeoMixId}))|spaceless }}
     {% endcache %}
     <div class="web__line web__line--product-list">
