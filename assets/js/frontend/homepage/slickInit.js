@@ -19,7 +19,7 @@ export default function slickInit () {
             {
                 breakpoint: Responsive.VL,
                 settings: {
-                    dots: true,
+                    dots: true
                 }
             },
             {
@@ -29,7 +29,7 @@ export default function slickInit () {
                     dots: true,
                     infinite: false
                 }
-            },
+            }
         ]
     });
 
