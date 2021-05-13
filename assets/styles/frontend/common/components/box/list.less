@@ -1,44 +1,25 @@
-@box-list-description-line-height: 1.7;
-@box-list-description-lines: 2;
+@box-list-description-line-height: 21px;
+@box-list-description-lines: 4;
 
 @box-list-producer-image-space-around: 10px;
 @box-list-sort-info-color: #8a8b8f;
 
 .box-list {
-    padding: 30px @web-padding / 2 20px;
     margin-bottom: 30px;
 
-    @media screen and (min-width: 350px) {
-        padding: 30px @web-padding 30px;
-    }
-
     @media @query-lg {
-        padding: 0 0 54px;
         margin-bottom: 40px;
     }
 
     &__top {
         display: none;
         width: 100%;
-        padding: 1rem;
-        margin-bottom: 1.5rem;
+        margin-bottom: 16px;
 
-        border: 1px solid @color-primary;
-        border-radius: @radius;
-        background-color: @color-f;
+        border-bottom: 1px solid @color-border;
 
         @media @query-lg {
             display: block;
-            position: absolute;
-            top: 0;
-            left: calc(-50vw + 50%);
-            width: 100vw;
-            margin-bottom: 0;
-            padding: 0;
-
-            border: 0;
-            border-bottom: 2px solid @color-border;
-            border-radius: 0;
         }
 
         &.active {
@@ -57,11 +38,6 @@
             @media @query-vl {
                 justify-content: space-between;
             }
-
-            @media @query-xl {
-                width: @web-width;
-                margin: 0 auto;
-            }
         }
 
         &__info {
@@ -69,14 +45,10 @@
 
             @media @query-lg {
                 display: block;
-                position: absolute;
-                right: 25px;
-                top: 70px;
                 font-size: 14px;
             }
 
             @media @query-vl {
-                position: static;
                 display: block;
 
                 font-size: 16px;
@@ -93,19 +65,6 @@
         position: relative;
         display: flex;
         flex-direction: column;
-
-        @media @query-lg {
-            padding: 100px @web-padding 0;
-        }
-
-        @media @query-vl {
-            padding-top: 115px;
-        }
-
-        @media @query-xl {
-            width: @web-width;
-            margin: 0 auto;
-        }
 
         @media @query-lg {
             flex-direction: row;
@@ -173,100 +132,32 @@
     }
 
     &__description {
+        position: relative;
+        padding-bottom: @box-list-description-line-height;
+
         &__text {
-            max-width: 940px;
-            margin: 3rem auto;
-            padding: 0 1.5rem;
+            overflow: hidden;
+            line-height: @box-list-description-line-height;
+            max-height: @box-list-description-line-height * @box-list-description-lines;
+
+            transition: @transition;
+        }
+
+        &__button {
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            display: none;
+            align-items: center;
             line-height: @box-list-description-line-height;
 
-            &--small {
-                overflow: hidden;
-                height: @box-list-description-line-height * @box-list-description-lines;
-            }
+            color: @color-primary;
+            cursor: pointer;
+            font-size: @font-size-small;
+            font-weight: 700;
 
-            &--centered {
-                text-align: center;
-            }
-
-            &--top {
-                display: none;
-
-                @media @query-md {
-                    display: block;
-                    margin-top: 1.25rem;
-                }
-            }
-
-            &--wider {
-                max-width: 980px;
-
-                @media @query-vl {
-                    margin-bottom: 4rem;
-                }
-            }
-        }
-
-        &__more {
-            text-align: center;
-
-            &__btn {
-                display: none;
-            }
-        }
-
-        &__heading {
-            margin-bottom: 0;
-            text-align: center;
-
-            font-size: 30px;
-        }
-
-        &--top {
-            padding-top: 1.5rem;
-
-            @media @query-md {
-                padding-top: 2.5rem;
-            }
-
-            .box-breadcrumb {
-                padding: 0;
-                margin: 0.25rem 0 2rem;
-
-                @media @query-md {
-                    margin-bottom: 0;
-                }
-            }
-
-            .web__container--fullwidth {
-                width: auto;
-            }
-
-            .btn {
-                position: relative;
-                margin-left: 6px;
-                padding-right: 15px;
-
-                &:hover {
-                    color: @color-add-light;
-                }
-
-                .btn__icon {
-                    position: absolute;
-                    right: 0;
-                    top: -1px;
-                }
-            }
-
-            &--no-spacing {
-                padding-top: 0;
-            }
-        }
-
-        &--furniture {
-            .box-breadcrumb {
-                @media @query-mobile {
-                    margin-bottom: 1rem;
-                }
+            .svg {
+                margin-left: 5px;
             }
         }
     }

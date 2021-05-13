@@ -25,38 +25,24 @@
 {% endblock %}
 
 {% block main_content %}
+    {{ render(controller('App\\Controller\\Front\\AdvertController:boxAction',{'positionName' : 'productList'})) }}
+    {{ render(controller('App\\Controller\\Front\\BreadcrumbController:indexAction', { routeName: getRoute(), routeParameters: getRouteParams() } )) }}
+    {% cache 'category_children_' ~ category.id {lifetime:getCacheLifetimeByHours(1), domainId:getDomain().id} %}
+        {{ render(controller('App\\Controller\\Front\\CategoryController:categoryChildrenListAction', {category: category}))|spaceless }}
+    {% endcache %}
+
     <div class="web__line">
         <div class="web__container">
-            {{ render(controller('App\\Controller\\Front\\AdvertController:boxAction',{'positionName' : 'productList'})) }}
-            <div class="box-list__description box-list__description--top">
-                <h1 class="box-list__description__heading js-ready-category-seo-mix-product-list-h1">{{ seoH1 }}</h1>
-                {{ render(controller('App\\Controller\\Front\\BreadcrumbController:indexAction', { routeName: getRoute(), routeParameters: getRouteParams() } )) }}
-                {% if paginationResult.page == 1 and shortDescription is not null %}
-                    <div class="box-list__description__text box-list__description__text--top">
-                        <div class="js-ready-category-seo-mix-product-list-short-description">
-                            {{ shortDescription|raw }}
-                            {% if description is not null %}
-                                <a class="btn btn-no-style js-smooth-scroll-anchor" href="#description">
-                                    {{ 'Číst dál'|trans }}
-                                    <i class="btn__icon svg svg-arrow"></i>
-                                </a>
-                            {% endif %}
-                        </div>
-                    </div>
-                {% endif %}
-            </div>
-            {% cache 'category_children_' ~ category.id {lifetime:getCacheLifetimeByHours(1), domainId:getDomain().id} %}
-                {{ render(controller('App\\Controller\\Front\\CategoryController:categoryChildrenListAction', {category: category}))|spaceless }}
-            {% endcache %}
-            {{ render(controller('App\\Controller\\Front\\BestsellingProductController:listAction', { category: category })) }}
             {{ render(controller('App\\Controller\\Front\\AdvertController:categoryBoxAction',{'positionName' : constant('App\\Model\\Advert\\AdvertPositionRegistry::CATEGORIES_ABOVE_PRODUCT_LIST'), category: category})) }}
         </div>
     </div>
+
     {% cache 'seo_categories_mixes__' ~ category.id ~ '_' ~ readyCategorySeoMixId {lifetime:getCacheLifetimeByHours(1), domainId:getDomain().id} %}
         {{ render(controller('App\\Controller\\Front\\CategorySeoMixController:childSeoCategoryMixesAction', {'category' : category, 'selectedReadyCategorySeoMixId': readyCategorySeoMixId}))|spaceless }}
     {% endcache %}
-    <div class="web__line web__line--product-list">
-        <div class="web__container web__container--full-width web__container--no-padding">
+
+    <div class="web__line">
+        <div class="web__container">
             <div class="box-list js-product-list-with-filter">
                 <div class="box-filter__opener">
                     <button type="button" class="btn btn-no-style box-filter__opener__btn js-product-filter-open-button">
@@ -94,6 +80,21 @@
                         </div>
                     {% endif %}
                     <div class="box-list__content">
+                        <h1 class="js-ready-category-seo-mix-product-list-h1">{{ seoH1 }}</h1>
+                        {% if paginationResult.page == 1 and shortDescription is not null %}
+                            <div class="box-list__description">
+                                <div class="box-list__description__text js-ready-category-seo-mix-product-list-short-description">
+                                    {{ shortDescription|raw }}
+
+                                    {% if description is not null %}
+                                        <a class="js-smooth-scroll-anchor" href="#description">
+                                            {{ 'Číst dál'|trans }}
+                                            <i class="svg svg-arrow"></i>
+                                        </a>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        {% endif %}
                         <div class="js-product-list-ajax-filter-products-with-controls">
                             <div class="box-list__top js-product-sort">
                                 <div class="box-list__top__wrap">
@@ -105,22 +106,23 @@
                             </div>
                             {% include 'Front/Content/Product/productsWithControls.html.twig' with {paginationResult: paginationResult, filterFormSubmitted: filterFormSubmitted, gtmList: gtmList} %}
                         </div>
+
+                        {% if paginationResult.page == 1 %}
+                            <div class="box-list__description" id="description">
+                                <div class="box-list__description__text js-category-description">
+                                    <span class="js-category-description-content js-ready-category-seo-mix-product-list-description">
+                                        {{ description|raw }}
+                                    </span>
+                                </div>
+                                <span class="box-list__description__button js-category-description-load-more">
+                                    {{ 'Číst dále'|trans }}
+                                    <i class="svg svg-arrow"></i>
+                                </span>
+                            </div>
+                        {% endif %}
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-    <div class="box-list__description">
-        <a id="description"></a>
-        <div class="box-list__description__text in-user-text js-category-description js-ready-category-seo-mix-product-list-description">
-            {% if paginationResult.page == 1 %}
-                {{ description|raw }}
-            {% endif %}
-        </div>
-        <div class="box-list__description__more">
-            <span class="link-style box-list__description__more__btn js-category-description-load-more">
-                {{ 'View more'|trans }}
-            </span>
         </div>
     </div>
 {% endblock %}
