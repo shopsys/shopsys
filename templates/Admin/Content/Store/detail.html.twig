@@ -1,0 +1,25 @@
+{% extends '@ShopsysFramework/Admin/Layout/layoutWithPanel.html.twig' %}
+
+{% block title %}- {{ 'Store'|trans }}{% endblock %}
+{% block h1 %}{{ 'Store'|trans }}{% endblock %}
+{% block main_content %}
+    {% if store is defined and not store.isDefault %}
+        <div class="wrap-bar__buttons">
+            <a href="{{ protectedUrl('admin_store_setdefault', { id: store.id }) }}" class="btn btn--light wrap-bar__btn">
+                {{ 'Set as default'|trans }}
+            </a>
+        </div>
+    {% endif %}
+
+
+    {{ form_start(form) }}
+    {{ form_errors(form) }}
+
+    {% embed '@ShopsysFramework/Admin/Inline/FixedBar/fixedBar.html.twig' %}
+        {% block fixed_bar_content %}
+            <a href="{{ url('admin_store_list') }}" class="btn-link-style">{{ 'Back to overview'|trans }}</a>
+            {{ form_save(store|default(null), form) }}
+        {% endblock %}
+    {% endembed %}
+    {{ form_end(form) }}
+{% endblock %}

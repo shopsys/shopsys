@@ -1,22 +1,22 @@
 {% extends '@!ShopsysFramework/Admin/Grid/Grid.html.twig' %}
 
 {% block grid_value_cell_id_name %}
-    <a href="{{ url('admin_stock_edit', { id: row.s.id }) }}">{{ value }}</a> {% if row.s.isDefault %}*{% endif %}
+    <a href="{{ url('admin_store_edit', { id: row.s.id }) }}">{{ value }}</a> {% if row.s.isDefault %}*{% endif %}
 {% endblock %}
 
 {% block grid_pager_totalcount %}
-    {% set entityName = 'Sklad'|trans %}
+    {% set entityName = 'Store'|trans %}
     {{ parent() }}
 {% endblock %}
 
 {% block grid_no_data %}
-    {{ 'Žádný sklad na této doméně není vytvořen. Nejprve musíte nějaký vytvořit.'|trans }}
+    {{ 'No store is created. You have to create one first.'|trans }}
 {% endblock %}
 
 {% block grid_action_cell_type_delete %}
     {% if row.s.isDefault %}
-        <span title="{{ 'Default stock cannot be removed'|trans }}"
-            class="js-tooltip cursor-help in-icon in-icon--info" data-toggle="tooltip" data-placement="left">
+        <span title="{{ 'Default store cannot be removed'|trans }}"
+              class="js-tooltip cursor-help in-icon in-icon--info" data-toggle="tooltip" data-placement="left">
             <i class="svg svg-info"></i>
         </span>
     {% else %}

@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace App\Controller\Front;
 
-use App\Model\Stock\StockFacade;
+use App\Model\Store\StoreFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Symfony\Component\HttpFoundation\Response;
 
 class StoreController extends FrontBaseController
 {
     /**
-     * @var \App\Model\Stock\StockFacade
+     * @var \App\Model\Store\StoreFacade
      */
-    private StockFacade $stockFacade;
+    private StoreFacade $storeFacade;
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
@@ -21,14 +21,12 @@ class StoreController extends FrontBaseController
     private Domain $domain;
 
     /**
-     * StoreController constructor.
-     *
-     * @param \App\Model\Stock\StockFacade $stockFacade
+     * @param \App\Model\Store\StoreFacade $storeFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
-    public function __construct(StockFacade $stockFacade, Domain $domain)
+    public function __construct(StoreFacade $storeFacade, Domain $domain)
     {
-        $this->stockFacade = $stockFacade;
+        $this->storeFacade = $storeFacade;
         $this->domain = $domain;
     }
 
@@ -38,7 +36,7 @@ class StoreController extends FrontBaseController
     public function indexAction(): Response
     {
         return $this->render('Front/Content/Store/store.html.twig', [
-            'stores' => $this->stockFacade->getStocksEnabledOnDomainIndexedByStockId($this->domain->getId()),
+            'stores' => $this->storeFacade->getStoresEnabledOnDomainIndexedByStoreId($this->domain->getId()),
         ]);
     }
 
@@ -48,7 +46,7 @@ class StoreController extends FrontBaseController
      */
     public function detailAction(int $id): Response
     {
-        $store = $this->stockFacade->getById($id);
+        $store = $this->storeFacade->getById($id);
 
         return $this->render('Front/Content/Store/detail.html.twig', [
             'store' => $store,

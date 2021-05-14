@@ -295,9 +295,6 @@ msgstr ""
 msgid "Centrála společnosti"
 msgstr ""
 
-msgid "Centrální sklad"
-msgstr ""
-
 msgid "Changing password"
 msgstr "Změna hesla"
 
@@ -367,6 +364,9 @@ msgstr "Připojení k bráně GoPay selhalo."
 msgid "Contact"
 msgstr "Kontakt"
 
+msgid "Contact informations"
+msgstr "Kontaktní informace"
+
 msgid "Contact us"
 msgstr "Napište nám"
 
@@ -397,6 +397,9 @@ msgstr ""
 msgid "Create new order status"
 msgstr ""
 
+msgid "Create new store"
+msgstr "Vytvořit novou prodejnu"
+
 msgid "Create promo code"
 msgstr ""
 
@@ -424,12 +427,6 @@ msgstr ""
 msgid "Další"
 msgstr ""
 
-msgid "Další doplňkový sortiment, zákaznické<br>centrum nebo osobní vyzvednutí zboží z<br>e-shopu zdarma na 8 místech v ČR."
-msgstr ""
-
-msgid "Další popisky"
-msgstr ""
-
 msgid "Date and time of order creation"
 msgstr ""
 
@@ -453,6 +450,15 @@ msgstr ""
 
 msgid "Datum zobrazení OD"
 msgstr ""
+
+msgid "Default stock cannot be removed"
+msgstr "Výchozí sklad nemůže být odstraněn"
+
+msgid "Default store"
+msgstr "Výchozí prodejna"
+
+msgid "Default store cannot be removed"
+msgstr "Výchozí prodejna nemůže být odstraněna"
 
 msgid "Defaultně zavřené parametry ve filtru"
 msgstr ""
@@ -538,6 +544,12 @@ msgstr ""
 msgid "Do you really want to remove this promo code?"
 msgstr ""
 
+msgid "Do you really want to remove this stock? By deleting this stock you will remove all stock quantities from products and association to stores. This step is irreversible!"
+msgstr "Opravdu si přejete odstranit tento sklad? Odstraněním skladu dojde i k odstranění všech skladových zásob produktů a bude zrušena vazba prodejny. Tento krok nelze vzít zpět!"
+
+msgid "Do you really want to remove this store? This step is irreversible!"
+msgstr "Opravdu si přejete odstranit tuto prodejnu? Tento krok nelze vzít zpět!"
+
 msgid "Do you want to receive the newest information about our shop? Subscribe to our email newsletter."
 msgstr "Chcete dostávat nejnovější informace z našeho obchodu? Přihlašte se do našeho e-mailového zpravodaje."
 
@@ -612,6 +624,9 @@ msgstr ""
 
 msgid "EAN"
 msgstr "EAN"
+
+msgid "Edit store"
+msgstr "Upravit prodejnu"
 
 msgid "Edit transport type"
 msgstr "Upravit typ dopravy"
@@ -705,6 +720,9 @@ msgstr "Nastala chyba"
 
 msgid "Error occurred when sending email."
 msgstr "Nastala chyba při odesílání e-mailu."
+
+msgid "External ID"
+msgstr "Externí ID"
 
 msgid "Externí ID můstku"
 msgstr ""
@@ -868,10 +886,10 @@ msgstr ""
 msgid "In a particular domain tab it is not possible to adjust the order and plunge of categories. Please go to the category detail or to overview of categories of all domains"
 msgstr ""
 
-msgid "Informace o obchodním domě"
+msgid "Instalační manuál"
 msgstr ""
 
-msgid "Instalační manuál"
+msgid "Interní poznámka"
 msgstr ""
 
 msgid "Invalid two-factor authentication code."
@@ -917,12 +935,6 @@ msgid "Koncový zákazník"
 msgstr ""
 
 msgid "Kontakt na obchodní dům"
-msgstr ""
-
-msgid "Kontakt na obchodní dům 1"
-msgstr ""
-
-msgid "Kontakt na obchodní dům 2"
 msgstr ""
 
 msgid "Kontaktní formulář"
@@ -1006,9 +1018,6 @@ msgstr "Vzkaz"
 msgid "Meta description"
 msgstr ""
 
-msgid "Mimořádná otevírací doba"
-msgstr ""
-
 msgid "Množství zboží <strong>{{ name }}</strong> ve Vašem košíku bylo upraveno z důvodu změny dostupnosti. Prosím zkontrolujte si svojí objednávku."
 msgstr ""
 
@@ -1085,9 +1094,6 @@ msgid "Na téhle url adrese žádný nábytek ani doplňky nemáme."
 msgstr ""
 
 msgid "Nadpis H1"
-msgstr ""
-
-msgid "Nahrát nový obrázek galerie"
 msgstr ""
 
 msgid "Nahrát nový obrázek pro mobilní zařízení"
@@ -1183,6 +1189,9 @@ msgstr ""
 msgid "New registered customers"
 msgstr ""
 
+msgid "New store"
+msgstr "Nová prodejna"
+
 msgid "Newsletter"
 msgstr ""
 
@@ -1210,8 +1219,14 @@ msgstr "Pro tuto značku nebyly nalezeny žádné produkty"
 msgid "No results matching filter"
 msgstr "Filtru neodpovídají žádné výsledky"
 
+msgid "No store is created. You have to create one first."
+msgstr "Žádná prodejna není vytvořena. Nejdříve musíte nějakou vytvořit."
+
 msgid "No transport types found."
 msgstr "Nebyly nalezeny žádné typy doprav."
+
+msgid "No warehouse associated"
+msgstr "Žádný sklad není přiřazen"
 
 msgid "Nominal"
 msgstr "Nominální"
@@ -1999,6 +2014,9 @@ msgstr ""
 msgid "Serial number"
 msgstr "Výrobní číslo"
 
+msgid "Set as default"
+msgstr "Nastavit jako výchozí"
+
 msgid "Set new password"
 msgstr "Nastavit nové heslo"
 
@@ -2104,6 +2122,9 @@ msgstr ""
 msgid "Soukromá osoba"
 msgstr ""
 
+msgid "Special message"
+msgstr "Mimořádné oznámení"
+
 msgid "Special offers"
 msgstr "Akční zboží"
 
@@ -2137,8 +2158,38 @@ msgstr ""
 msgid "Stock <strong>{{ name }}</strong> deleted"
 msgstr ""
 
+msgid "Stock <strong>{{ name }}</strong> was set as default."
+msgstr "Sklad <strong>{{ name }}</strong> byl nastaven jako výchozí."
+
 msgid "Stocks"
 msgstr ""
+
+msgid "Store"
+msgstr "Prodejna"
+
+msgid "Store <strong><a href=\"{{ url }}\">{{ name }}</a></strong> created"
+msgstr "Prodejna <strong><a href=\"{{ url }}\">{{ name }}</a></strong> byla vytvořena"
+
+msgid "Store <strong><a href=\"{{ url }}\">{{ name }}</a></strong> edited"
+msgstr "Prodejna <strong><a href=\"{{ url }}\">{{ name }}</a></strong> byla upravena"
+
+msgid "Store <strong>{{ name }}</strong> was deleted"
+msgstr "Prodejna <strong>{{ name }}</strong> byla odstraněna"
+
+msgid "Store <strong>{{ name }}</strong> was set as default."
+msgstr "Prodejna <strong>{{ name }}</strong> byla nastavena jako výchozí."
+
+msgid "Store description"
+msgstr "Popis prodejny"
+
+msgid "Store does not exist"
+msgstr "Prodejna neexistuje"
+
+msgid "Store list"
+msgstr "Seznam prodejen"
+
+msgid "Stores"
+msgstr "Prodejny"
 
 msgid "Street"
 msgstr "Ulice"
@@ -2363,9 +2414,6 @@ msgid "URL addresses"
 msgstr ""
 
 msgid "URL odkazu"
-msgstr ""
-
-msgid "URL settings"
 msgstr ""
 
 msgid "Uh-oh, uh-oh. And specially <strong>\"%status_code% %status_text%\"</strong>, as if it was on purpose!"
@@ -2611,6 +2659,9 @@ msgstr ""
 msgid "Výběr výprodejové kategorie"
 msgstr ""
 
+msgid "Výchozí sklad"
+msgstr ""
+
 msgid "Výprodej"
 msgstr ""
 
@@ -2622,6 +2673,9 @@ msgstr ""
 
 msgid "Všechny články"
 msgstr ""
+
+msgid "Warehouse"
+msgstr "Sklad"
 
 msgid "We will remember your login on this computer for 30 days."
 msgstr "Zapamatujeme si vaše přihlášení na tomto počítači po dobu 30 dní."
@@ -2870,12 +2924,6 @@ msgid "records"
 msgstr "záznamů"
 
 msgid "relevance"
-msgstr ""
-
-msgid "souřadnice Zeměpisná délka"
-msgstr ""
-
-msgid "souřadnice Zeměpisná šířka"
 msgstr ""
 
 msgid "strana %currentPage% z %pageCount%"
