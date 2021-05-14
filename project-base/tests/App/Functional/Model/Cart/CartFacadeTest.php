@@ -7,8 +7,11 @@ namespace Tests\App\Functional\Model\Cart;
 use App\DataFixtures\Demo\ProductDataFixture;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Cart\CartFacade;
+use Shopsys\FrameworkBundle\Model\Cart\Exception\InvalidCartItemException;
+use Shopsys\FrameworkBundle\Model\Cart\Exception\InvalidQuantityException;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifier;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifierFactory;
+use Shopsys\FrameworkBundle\Model\Product\Exception\ProductNotFoundException;
 use Tests\App\Test\TransactionFunctionalTestCase;
 use Zalas\Injector\PHPUnit\Symfony\TestCase\SymfonyTestContainer;
 
@@ -109,7 +112,7 @@ class CartFacadeTest extends TransactionFunctionalTestCase
         $customerUserIdentifier = new CustomerUserIdentifier('secretSessionHash');
         $cartFacade = $this->createCartFacade($customerUserIdentifier);
 
-        $this->expectException('\Shopsys\FrameworkBundle\Model\Product\Exception\ProductNotFoundException');
+        $this->expectException(ProductNotFoundException::class);
         $cartFacade->addProductToCart($productId, $quantity);
 
         $cart = $this->getCartByCustomerUserIdentifier($customerUserIdentifier);
@@ -163,7 +166,7 @@ class CartFacadeTest extends TransactionFunctionalTestCase
         $cartItems = $cart->getItems();
         $cartItem = array_pop($cartItems);
 
-        $this->expectException('\Shopsys\FrameworkBundle\Model\Cart\Exception\InvalidCartItemException');
+        $this->expectException(InvalidCartItemException::class);
         $cartFacade->deleteCartItem($cartItem->getId() + 1);
     }
 
@@ -308,7 +311,7 @@ class CartFacadeTest extends TransactionFunctionalTestCase
     {
         $product = $this->createProduct();
 
-        $this->expectException('Shopsys\FrameworkBundle\Model\Cart\Exception\InvalidQuantityException');
+        $this->expectException(InvalidQuantityException::class);
 
         /** @phpstan-ignore-next-line */
         $this->cartFacadeFromContainer->addProductToCart($product->getId(), 1.1);
@@ -318,7 +321,7 @@ class CartFacadeTest extends TransactionFunctionalTestCase
     {
         $product = $this->createProduct();
 
-        $this->expectException('Shopsys\FrameworkBundle\Model\Cart\Exception\InvalidQuantityException');
+        $this->expectException(InvalidQuantityException::class);
         $this->cartFacadeFromContainer->addProductToCart($product->getId(), 0);
     }
 
@@ -326,7 +329,7 @@ class CartFacadeTest extends TransactionFunctionalTestCase
     {
         $product = $this->createProduct();
 
-        $this->expectException('Shopsys\FrameworkBundle\Model\Cart\Exception\InvalidQuantityException');
+        $this->expectException(InvalidQuantityException::class);
         $this->cartFacadeFromContainer->addProductToCart($product->getId(), -10);
     }
 

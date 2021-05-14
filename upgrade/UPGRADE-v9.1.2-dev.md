@@ -8,3 +8,6 @@ There you can find links to upgrade notes for other versions too.
 - potential **BC break** ([#2300](https://github.com/shopsys/shopsys/pull/2300))
     - method `Shopsys\FrameworkBundle\Form\Admin\Customer\User\CustomerUserFormType::validateUniqueEmail()` has changed its interface
         - first argument `$email` was changed to accept `null` or `string` instead of `string` only
+
+- replace class names defined by FQCN string by `*::class` constant ([#2319](https://github.com/shopsys/shopsys/pull/2300))
+    - see #project-base-diff to update your project
