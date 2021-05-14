@@ -36,7 +36,7 @@
         "ext-xml": "*",
         "arvenil/ninja-mutex": "^0.4.1",
         "commerceguys/intl": "^1.0.0",
-        "composer/composer": "^1.6.0",
+        "composer/composer": "^1.10.22",
         "craue/formflow-bundle": "^3.0.3",
         "doctrine/annotations": "^1.6.0",
         "doctrine/common": "^2.8.1",

@@ -376,6 +376,9 @@ msgstr ""
 msgid "Chosen payment name"
 msgstr ""
 
+msgid "Choose replacement"
+msgstr ""
+
 msgid "Chosen shipping name"
 msgstr ""
 

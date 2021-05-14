@@ -4,8 +4,12 @@ namespace Tests\FrameworkBundle\Unit\Model\Security;
 
 use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Model\Security\Authenticator;
+use Shopsys\FrameworkBundle\Model\Security\Exception\LoginFailedException;
 use stdClass;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\HttpFoundation\ParameterBag;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 class AuthenticatorTest extends TestCase
@@ -15,15 +19,15 @@ class AuthenticatorTest extends TestCase
         $authenticator = $this->getAuthenticator();
 
         /** @var \Symfony\Component\HttpFoundation\Request|\PHPUnit\Framework\MockObject\MockObject $requestMock */
-        $requestMock = $this->createMock('\Symfony\Component\HttpFoundation\Request');
+        $requestMock = $this->createMock(Request::class);
 
         $requestMock->expects($this->never())->method('getSession');
 
-        $requestMock->attributes = $this->createMock('\Symfony\Component\HttpFoundation\ParameterBag');
+        $requestMock->attributes = $this->createMock(ParameterBag::class);
         $requestMock->attributes->expects($this->once())->method('has')->willReturn(true);
         $requestMock->attributes->expects($this->once())->method('get')->willReturn(new stdClass());
 
-        $this->expectException('Shopsys\FrameworkBundle\Model\Security\Exception\LoginFailedException');
+        $this->expectException(LoginFailedException::class);
         $authenticator->checkLoginProcess($requestMock);
     }
 
@@ -31,19 +35,19 @@ class AuthenticatorTest extends TestCase
     {
         $authenticator = $this->getAuthenticator();
 
-        $sessionMock = $this->createMock('\Symfony\Component\HttpFoundation\Session\SessionInterface');
+        $sessionMock = $this->createMock(SessionInterface::class);
         $sessionMock->expects($this->atLeastOnce())->method('get')->willReturn(new stdClass());
         $sessionMock->expects($this->atLeastOnce())->method('remove');
 
         /** @var \Symfony\Component\HttpFoundation\Request|\PHPUnit\Framework\MockObject\MockObject $requestMock */
-        $requestMock = $this->createMock('\Symfony\Component\HttpFoundation\Request');
+        $requestMock = $this->createMock(Request::class);
         $requestMock->expects($this->once())->method('getSession')->willReturn($sessionMock);
 
-        $requestMock->attributes = $this->createMock('\Symfony\Component\HttpFoundation\ParameterBag');
+        $requestMock->attributes = $this->createMock(ParameterBag::class);
         $requestMock->attributes->expects($this->once())->method('has')->willReturn(false);
         $requestMock->attributes->expects($this->never())->method('get');
 
-        $this->expectException('Shopsys\FrameworkBundle\Model\Security\Exception\LoginFailedException');
+        $this->expectException(LoginFailedException::class);
         $authenticator->checkLoginProcess($requestMock);
     }
 
@@ -51,15 +55,15 @@ class AuthenticatorTest extends TestCase
     {
         $authenticator = $this->getAuthenticator();
 
-        $sessionMock = $this->createMock('\Symfony\Component\HttpFoundation\Session\SessionInterface');
+        $sessionMock = $this->createMock(SessionInterface::class);
         $sessionMock->expects($this->once())->method('get')->willReturn(null);
         $sessionMock->expects($this->once())->method('remove');
 
         /** @var \Symfony\Component\HttpFoundation\Request|\PHPUnit\Framework\MockObject\MockObject $requestMock */
-        $requestMock = $this->createMock('\Symfony\Component\HttpFoundation\Request');
+        $requestMock = $this->createMock(Request::class);
         $requestMock->expects($this->once())->method('getSession')->willReturn($sessionMock);
 
-        $requestMock->attributes = $this->createMock('\Symfony\Component\HttpFoundation\ParameterBag');
+        $requestMock->attributes = $this->createMock(ParameterBag::class);
         $requestMock->attributes->expects($this->once())->method('has')->willReturn(false);
         $requestMock->attributes->expects($this->never())->method('get');
 
