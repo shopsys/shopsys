@@ -1,6 +1,6 @@
 <div class="list-articles">
     {% set isMainArticles = true %}
-    
+
     {% for blogArticle in blogArticles %}
         {% if loop.first %}
             <div class="list-articles__main">
@@ -8,15 +8,11 @@
             {% set isMainArticles = false %}
             <div class="list-articles__aside js-slider-drawable-list-mobile">
         {% endif %}
-        
+
         <div class="list-articles__item">
-            <div class="list-articles__item__image">   
+            <div class="list-articles__item__image">
                 <a class="list-articles__item__image__link" href="{{ url('front_blogarticle_detail', {'id': blogArticle.id}) }}" title="{{ blogArticle.name }}">
-                    {% if isMainArticles %}
-                        {{ image(blogArticle, { size: 'list', alt: blogArticle.name, lazy: true }) }}
-                    {% else %}
-                        {{ image(blogArticle, { size: 'listAside', alt: blogArticle.name, lazy: true }) }}
-                    {% endif %}
+                    {{ image(blogArticle, { size: isMainArticle ? 'list' : 'listAside', alt: blogArticle.name, lazy: true }) }}
                 </a>
             </div>
             <div class="list-articles__item__content">
