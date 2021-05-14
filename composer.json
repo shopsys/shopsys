@@ -182,7 +182,8 @@
     "conflict": {
         "symfony/symfony": "*",
         "symfony/dependency-injection": ">=4.4.19",
-        "codeception/codeception": ">=4.1.19"
+        "codeception/codeception": ">=4.1.19",
+        "friendsofphp/php-cs-fixer": "2.19.0"
     },
     "scripts": {
         "post-install-cmd": [
