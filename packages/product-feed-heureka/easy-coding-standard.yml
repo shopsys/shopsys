@@ -23,5 +23,8 @@ parameters:
         PHP_CodeSniffer\Standards\Squiz\Sniffs\NamingConventions\ValidVariableNameSniff.NotCamelCaps:
             - '*/src/Model/HeurekaCategory/HeurekaCategoryDownloader.php'
 
+        PHP_CodeSniffer\Standards\Squiz\Sniffs\NamingConventions\ValidVariableNameSniff.MemberNotCamelCaps:
+            - '*/src/Model/HeurekaCategory/HeurekaCategoryDownloader.php'
+
         Shopsys\CodingStandards\Sniffs\ObjectIsCreatedByFactorySniff:
             - '*/tests/*'
