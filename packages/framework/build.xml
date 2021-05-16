@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="shopsys_framework" default="list">
 
+    <property name="check-alias-configuration" value="false"/>
     <property name="check-and-fix-annotations" value="false"/>
     <property name="path.app" value="${path.root}/app"/>
     <property name="path.bin" value="${path.vendor}/bin"/>
@@ -60,7 +61,25 @@
         </else>
     </if>
 
-    <target name="annotations-check" description="Checks whether annotations of extended classes in the project match the actual types according to ClassExtensionRegistry. Reported problems can be fixed using 'annotations-fix' phing target">
+    <target name="annotations-alias-check" description="Detects possible missing service aliases of extended Shopsys Framework classes.">
+        <if>
+            <istrue value="${check-alias-configuration}"/>
+            <then>
+                <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
+                    <arg value="${path.bin-console}"/>
+                    <arg value="shopsys:extended-classes:aliases"/>
+                </exec>
+            </then>
+            <else>
+                <echo>
+                    Alias configuration check is turned off by configuration, see "check-alias-configuration" build property.
+                    You are still able to run "shopsys:extended-classes:aliases" Symfony command directly.
+                </echo>
+            </else>
+        </if>
+    </target>
+
+    <target name="annotations-check" depends="annotations-alias-check" description="Checks whether annotations of extended classes in the project match the actual types according to ClassExtensionRegistry. Reported problems can be fixed using 'annotations-fix' phing target">
         <if>
             <istrue value="${check-and-fix-annotations}"/>
             <then>
@@ -79,7 +98,7 @@
         </if>
     </target>
 
-    <target name="annotations-fix" description="Fixes and adds annotations in project classes to improve static analysis and DX with extended classes">
+    <target name="annotations-fix" depends="annotations-alias-check" description="Fixes and adds annotations in project classes to improve static analysis and DX with extended classes">
         <if>
             <istrue value="${check-and-fix-annotations}"/>
             <then>

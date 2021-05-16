@@ -35,6 +35,9 @@ services:
     Shopsys\FrameworkBundle\Model\Article\ArticleDataFactoryInterface:
         alias: App\Model\Article\ArticleDataFactory
 
+    Shopsys\FrameworkBundle\Model\Article\ArticleDataFactory:
+        alias: App\Model\Article\ArticleDataFactory
+
     App\Model\Category\CurrentCategoryResolver: ~
 
     League\Flysystem\FilesystemInterface:
@@ -43,16 +46,31 @@ services:
     Shopsys\FrameworkBundle\Model\Administrator\AdministratorDataFactoryInterface:
         alias: App\Model\Administrator\AdministratorDataFactory
 
+    Shopsys\FrameworkBundle\Model\Administrator\AdministratorDataFactory:
+        alias: App\Model\Administrator\AdministratorDataFactory
+
     Shopsys\FrameworkBundle\Model\Category\CategoryDataFactoryInterface:
+        alias: App\Model\Category\CategoryDataFactory
+
+    Shopsys\FrameworkBundle\Model\Category\CategoryDataFactory:
         alias: App\Model\Category\CategoryDataFactory
 
     Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserDataFactoryInterface:
         alias: App\Model\Customer\User\CustomerUserDataFactory
 
+    Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserDataFactory:
+        alias: App\Model\Customer\User\CustomerUserDataFactory
+
     Shopsys\FrameworkBundle\Model\Order\OrderDataFactoryInterface:
         alias: App\Model\Order\OrderDataFactory
 
+    Shopsys\FrameworkBundle\Model\Order\OrderDataFactory:
+        alias: App\Model\Order\OrderDataFactory
+
     Shopsys\FrameworkBundle\Model\Order\Item\OrderItemDataFactoryInterface:
+        alias: App\Model\Order\Item\OrderItemDataFactory
+
+    Shopsys\FrameworkBundle\Model\Order\Item\OrderItemDataFactory:
         alias: App\Model\Order\Item\OrderItemDataFactory
 
     App\Model\Order\OrderDataMapper: ~
@@ -63,10 +81,19 @@ services:
     Shopsys\FrameworkBundle\Model\Transport\TransportDataFactoryInterface:
         alias: App\Model\Transport\TransportDataFactory
 
+    Shopsys\FrameworkBundle\Model\Transport\TransportDataFactory:
+        alias: App\Model\Transport\TransportDataFactory
+
     Shopsys\FrameworkBundle\Model\Payment\PaymentDataFactoryInterface:
         alias: App\Model\Payment\PaymentDataFactory
 
+    Shopsys\FrameworkBundle\Model\Payment\PaymentDataFactory:
+        alias: App\Model\Payment\PaymentDataFactory
+
     Shopsys\FrameworkBundle\Model\Product\ProductDataFactoryInterface:
+        alias: App\Model\Product\ProductDataFactory
+
+    Shopsys\FrameworkBundle\Model\Product\ProductDataFactory:
         alias: App\Model\Product\ProductDataFactory
 
     Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainFacadeInterface:
@@ -81,6 +108,9 @@ services:
     Shopsys\ReadModelBundle\Product\Listed\ListedProductViewElasticFacade: ~
 
     Shopsys\FrameworkBundle\Model\Product\Brand\BrandDataFactoryInterface:
+        alias: App\Model\Product\Brand\BrandDataFactory
+
+    Shopsys\FrameworkBundle\Model\Product\Brand\BrandDataFactory:
         alias: App\Model\Product\Brand\BrandDataFactory
 
     App\DataFixtures\Performance\CategoryDataFixture:

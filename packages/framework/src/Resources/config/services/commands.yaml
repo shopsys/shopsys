@@ -3,6 +3,8 @@ services:
         autowire: true
         autoconfigure: true
         public: false
+        bind:
+            string $shopsysRootDir: "%shopsys.root_dir%"
 
     Shopsys\FrameworkBundle\Command\:
         resource: '../../Command'

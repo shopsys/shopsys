@@ -13,6 +13,7 @@ use Shopsys\FrameworkBundle\DependencyInjection\Compiler\RegisterPluginCrudExten
 use Shopsys\FrameworkBundle\DependencyInjection\Compiler\RegisterPluginDataFixturesCompilerPass;
 use Shopsys\FrameworkBundle\DependencyInjection\Compiler\RegisterProductFeedConfigsCompilerPass;
 use Shopsys\FrameworkBundle\DependencyInjection\Compiler\RegisterProjectFrameworkClassExtensionsCompilerPass;
+use Shopsys\FrameworkBundle\DependencyInjection\Compiler\SaveServiceAliasContainerInfoCompilerPass;
 use Symfony\Component\Config\Resource\DirectoryResource;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
@@ -43,12 +44,12 @@ class ShopsysFrameworkBundle extends Bundle
         $container->registerForAutoconfiguration(AbstractIndex::class)->addTag('elasticsearch.index');
 
         $environment = $container->getParameter('kernel.environment');
-        if ($environment !== EnvironmentType::DEVELOPMENT) {
-            return;
+        if ($environment === EnvironmentType::DEVELOPMENT) {
+            $container->addCompilerPass(new SaveServiceAliasContainerInfoCompilerPass());
+        } else {
+            $container->addCompilerPass(new RegisterProjectFrameworkClassExtensionsCompilerPass());
+            $container->addResource(new DirectoryResource($container->getParameter('kernel.root_dir') . '/Component'));
+            $container->addResource(new DirectoryResource($container->getParameter('kernel.root_dir') . '/Model'));
         }
-
-        $container->addCompilerPass(new RegisterProjectFrameworkClassExtensionsCompilerPass());
-        $container->addResource(new DirectoryResource($container->getParameter('kernel.root_dir') . '/Component'));
-        $container->addResource(new DirectoryResource($container->getParameter('kernel.root_dir') . '/Model'));
     }
 }
