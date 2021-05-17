@@ -12,7 +12,7 @@
         <div class="list-articles__item">
             <div class="list-articles__item__image">
                 <a class="list-articles__item__image__link" href="{{ url('front_blogarticle_detail', {'id': blogArticle.id}) }}" title="{{ blogArticle.name }}">
-                    {{ image(blogArticle, { size: isMainArticle ? 'list' : 'listAside', alt: blogArticle.name, lazy: true }) }}
+                    {{ image(blogArticle, { size: isMainArticles ? 'list' : 'listAside', alt: blogArticle.name, lazy: true }) }}
                 </a>
             </div>
             <div class="list-articles__item__content">
