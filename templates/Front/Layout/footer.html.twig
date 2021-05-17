@@ -63,9 +63,9 @@
 
                             <div class="footer__block__langs">
                                 <a
-                                    href="{{ domain.id == 1 ? '/' : 'https://www.shopsys.cz/' }}"
+                                    href="{{ domain.id is same as(1) ? '/' : 'https://www.shopsys.cz/' }}"
                                     class="footer__block__langs__link"
-                                    {% if domain.id == 2 %}target="_blank"{% endif %}
+                                    {% if domain.id is same as(2) %}target="_blank"{% endif %}
                                 >
                                     <img
                                         loading="lazy"
@@ -76,9 +76,9 @@
                                     <span class="footer__block__langs__text">{{ 'Česko'|trans }}</span>
                                 </a>
                                 <a
-                                    href="{{ domain.id ==  2 ? '/' : 'https://www.shopsys.sk/' }}"
+                                    href="{{ domain.id is same as(2) ? '/' : 'https://www.shopsys.sk/' }}"
                                     class="footer__block__langs__link"
-                                    {% if domain.id == 1 %}target="_blank"{% endif %}
+                                    {% if domain.id is same as(1) %}target="_blank"{% endif %}
                                 >
                                     <img
                                         loading="lazy"

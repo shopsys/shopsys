@@ -21,14 +21,14 @@
     </picture>
     <div class="box-info__content">
         <h2 class="box-info__title">{{ 'Potřebujete poradit?'|trans }}</h2>
-        
+
         <div class="box-info__contacts">
             <i class="svg svg-phone"></i>
             <a class="box-info__contacts__phone" href="tel:{{ shopInfoPhoneNumber }}">{{ shopInfoPhoneNumber }}</a>
             <p class="box-info__contacts__hours">{{ shopInfoPhoneHours }}</p>
         </div>
 
-        <a href="/zakaznicky-formular" class="position-relative btn btn--secondary">
+        <a href="{{ url('front_contacts') }}" class="position-relative btn btn--secondary">
             {{ 'Napište nám'|trans }}
         </a>
     </div>
