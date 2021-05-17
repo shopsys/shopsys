@@ -27,9 +27,6 @@
 {% block main_content %}
     {{ render(controller('App\\Controller\\Front\\AdvertController:boxAction',{'positionName' : 'productList'})) }}
     {{ render(controller('App\\Controller\\Front\\BreadcrumbController:indexAction', { routeName: getRoute(), routeParameters: getRouteParams() } )) }}
-    {% cache 'category_children_' ~ category.id {lifetime:getCacheLifetimeByHours(1), domainId:getDomain().id} %}
-        {{ render(controller('App\\Controller\\Front\\CategoryController:categoryChildrenListAction', {category: category}))|spaceless }}
-    {% endcache %}
 
     <div class="web__line">
         <div class="web__container">
@@ -37,29 +34,9 @@
         </div>
     </div>
 
-    {% cache 'seo_categories_mixes__' ~ category.id ~ '_' ~ readyCategorySeoMixId {lifetime:getCacheLifetimeByHours(1), domainId:getDomain().id} %}
-        {{ render(controller('App\\Controller\\Front\\CategorySeoMixController:childSeoCategoryMixesAction', {'category' : category, 'selectedReadyCategorySeoMixId': readyCategorySeoMixId}))|spaceless }}
-    {% endcache %}
-
     <div class="web__line">
         <div class="web__container">
             <div class="box-list js-product-list-with-filter">
-                <div class="box-filter__opener">
-                    <button type="button" class="btn btn-no-style box-filter__opener__btn js-product-filter-open-button">
-                        <i class="box-filter__opener__btn__icon svg svg-filter"></i>
-                        <span class="box-filter__opener__btn__text">
-                            {{ 'Filtr'|trans }}
-                            <span class="box-filter__opener__btn__info box-filter__opener__btn__info--count js-product-filter-open-button-placeolder"></span>
-                        </span>
-                    </button>
-                    <button type="button" class="btn btn-no-style box-filter__opener__btn js-product-sort-open-button">
-                        <i class="box-filter__opener__btn__icon svg svg-sort"></i>
-                        <span class="box-filter__opener__btn__text">
-                            {{ 'Seřadit'|trans }}
-                            <span class="box-filter__opener__btn__info box-filter__opener__btn__info--sort js-product-sort-open-button-placeholder">{{ orderModeName }}</span>
-                        </span>
-                    </button>
-                </div>
                 <div class="box-list__body">
                     {% if paginationResult.results|length > 0 or filterFormSubmitted %}
                         <div class="box-list__panel">
@@ -81,20 +58,75 @@
                     {% endif %}
                     <div class="box-list__content">
                         <h1 class="js-ready-category-seo-mix-product-list-h1">{{ seoH1 }}</h1>
-                        {% if paginationResult.page == 1 and shortDescription is not null %}
-                            <div class="box-list__description">
-                                <div class="box-list__description__text js-ready-category-seo-mix-product-list-short-description">
-                                    {{ shortDescription|raw }}
 
-                                    {% if description is not null %}
-                                        <a class="js-smooth-scroll-anchor" href="#description">
-                                            {{ 'Číst dál'|trans }}
-                                            <i class="svg svg-arrow"></i>
-                                        </a>
-                                    {% endif %}
+                        {% if paginationResult.page == 1 and shortDescription is not null %}
+                            <div class="box-list__section">
+                                <div class="box-list__description">
+                                    <div class="box-list__description__text js-ready-category-seo-mix-product-list-short-description">
+                                        {{ shortDescription|raw }}
+
+                                        {% if description is not null %}
+                                            <a class="box-list__description__button box-list__description__button--displayed js-smooth-scroll-anchor" href="#description">
+                                                <span class="box-list__description__button__text">
+                                                    {{ 'Číst dále'|trans }}
+                                                </span>
+                                                <i class="svg svg-arrow"></i>
+                                            </a>
+                                        {% endif %}
+                                    </div>
                                 </div>
                             </div>
                         {% endif %}
+
+                        {% cache 'category_children_' ~ category.id {lifetime:getCacheLifetimeByHours(1), domainId:getDomain().id} %}
+                            {{ render(controller('App\\Controller\\Front\\CategoryController:categoryChildrenListAction', {category: category}))|spaceless }}
+                        {% endcache %}
+
+                        {% cache 'seo_categories_mixes__' ~ category.id ~ '_' ~ readyCategorySeoMixId {lifetime:getCacheLifetimeByHours(1), domainId:getDomain().id} %}
+                            {{ render(controller('App\\Controller\\Front\\CategorySeoMixController:childSeoCategoryMixesAction', {'category' : category, 'selectedReadyCategorySeoMixId': readyCategorySeoMixId}))|spaceless }}
+                        {% endcache %}
+
+                        <div class="box-list__section js-not-implemented-yet">
+                            <h3 class="box-list__subtitle">{{ 'Oblíbené'|trans }}</h3>
+
+                            <ul class="list-favorites js-slider-drawable-list-mobile">
+                                <li class="list-favorites__item">
+                                    <a class="list-favorites__item__link" href="#">
+                                        Dámská celoodpružená kola
+                                    </a>
+                                </li>
+                                <li class="list-favorites__item">
+                                    <a class="list-favorites__item__link" href="#">
+                                        Dětská odrážedla
+                                    </a>
+                                </li>
+                                <li class="list-favorites__item">
+                                    <a class="list-favorites__item__link" href="#">
+                                        Pánská silniční kola
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+
+                        {{ render(controller('App\\Controller\\Front\\BestsellingProductController:listAction', { category: category })) }}
+
+                        <div class="box-filter__opener">
+                            <button type="button" class="btn btn-no-style box-filter__opener__btn js-product-filter-open-button">
+                                <i class="box-filter__opener__btn__icon svg svg-filter"></i>
+                                <span class="box-filter__opener__btn__text">
+                                    {{ 'Filtr'|trans }}
+                                    <span class="box-filter__opener__btn__info box-filter__opener__btn__info--count js-product-filter-open-button-placeolder"></span>
+                                </span>
+                            </button>
+                            <button type="button" class="btn btn-no-style box-filter__opener__btn js-product-sort-open-button">
+                                <i class="box-filter__opener__btn__icon svg svg-sort"></i>
+                                <span class="box-filter__opener__btn__text">
+                                    {{ 'Seřadit'|trans }}
+                                    <span class="box-filter__opener__btn__info box-filter__opener__btn__info--sort js-product-sort-open-button-placeholder">{{ orderModeName }}</span>
+                                </span>
+                            </button>
+                        </div>
+
                         <div class="js-product-list-ajax-filter-products-with-controls">
                             <div class="box-list__top js-product-sort">
                                 <div class="box-list__top__wrap">
@@ -115,7 +147,9 @@
                                     </span>
                                 </div>
                                 <span class="box-list__description__button js-category-description-load-more">
-                                    {{ 'Číst dále'|trans }}
+                                    <span class="box-list__description__button__text">
+                                        {{ 'Číst dále'|trans }}
+                                    </span>
                                     <i class="svg svg-arrow"></i>
                                 </span>
                             </div>

@@ -41,12 +41,12 @@
     class: Shopsys\FrameworkBundle\Model\Category\Category
     sizes:
         -   name: ~
-            width: ~
-            height: 80
+            width: 64
+            height: 48
             crop: false
             occurrence: 'Front-end: Product list by category'
             additionalSizes:
-                - {width: ~, height: 160, media: "only screen and (-webkit-min-device-pixel-ratio: 1.5)"}
+                - {width: 128, height: 96, media: "only screen and (-webkit-min-device-pixel-ratio: 1.5)"}
 
 -   name: product
     class: Shopsys\FrameworkBundle\Model\Product\Product

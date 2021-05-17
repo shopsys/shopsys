@@ -1,0 +1,14 @@
+@list-categories-seo-item-gap: 15px;
+
+.list-categories-seo {
+    .reset-ul();
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin: 0 0 - @list-categories-seo-item-gap -@list-categories-seo-item-gap;
+
+    &__item {
+        margin-left: @list-categories-seo-item-gap;
+        margin-bottom: @list-categories-seo-item-gap;
+    }
+}

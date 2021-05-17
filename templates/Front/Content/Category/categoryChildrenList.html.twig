@@ -1,9 +1,5 @@
 {% if categories is not empty %}
-    <div class="web__line">
-        <div class="web__container">
-            <div class="list-categories-wrap list-categories-wrap--centered">
-                {{ render(controller('App\\Controller\\Front\\CategoryController:categoryListAction', {categories: categories})) }}
-            </div>
-        </div>
+    <div class="box-list__section">
+        {{ render(controller('App\\Controller\\Front\\CategoryController:categoryListAction', {categories: categories})) }}
     </div>
 {% endif %}

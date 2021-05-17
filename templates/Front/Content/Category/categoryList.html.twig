@@ -1,26 +1,19 @@
 {% if categories|length > 0 %}
-    <ul class="list-categories{{ cssClass ?? '' }}">
+    <ul class="list-categories js-slider-drawable-list-mobile">
         {% for category in categories %}
             <li class="list-categories__item">
                 <a href="{{ url('front_product_list', { id: category.id }) }}" class="list-categories__item__block">
-                    <span class="list-categories__item__image__wrap">
-                        {% if imageExists(category) %}
-                            {{ image(category, { alt: category.name, class: "list-categories__item__image" }) }}
-                        {% else %}
-                            <img
-                                class="list-categories__item__icon"
-                                loading="lazy"
-                                data-src="{{ asset('public/frontend/images/category_icon.svg') }}"
-                                alt="{{ category.name }}"
-                            >
-                        {% endif %}
-                    </span>
-                    <h3 class="list-categories__item__title">
+                    <div class="list-categories__item__image">
+                        {{ image(category, { alt: category.name }) }}
+                    </div>
+                    <p class="list-categories__item__name">
                         {{ category.name }}
                         {% if listableProductCountsIndexedByCategoryId is not empty %}
-                            ({{ listableProductCountsIndexedByCategoryId[category.id] }})
+                            <span class="list-categories__item__count">
+                                ({{ listableProductCountsIndexedByCategoryId[category.id] }})
+                            </span>
                         {% endif %}
-                    </h3>
+                    </p>
                 </a>
             </li>
         {% endfor %}

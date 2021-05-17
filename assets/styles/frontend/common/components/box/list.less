@@ -11,6 +11,18 @@
         margin-bottom: 40px;
     }
 
+    &__subtitle {
+        margin: 0 0 8px 0;
+    }
+
+    &__section {
+        margin-bottom: 24px;
+
+        @media @query-lg {
+            margin-bottom: 34px;
+        }
+    }
+
     &__top {
         display: none;
         width: 100%;
@@ -155,6 +167,19 @@
             cursor: pointer;
             font-size: @font-size-small;
             font-weight: 700;
+            text-decoration: none;
+
+            &:hover {
+                text-decoration: none;
+
+                .box-list__description__button__text {
+                    text-decoration: underline;
+                }
+            }
+
+            &--displayed {
+                display: flex;
+            }
 
             .svg {
                 margin-left: 5px;
