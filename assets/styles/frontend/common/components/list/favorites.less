@@ -1,11 +1,11 @@
-@list-cagegories-item-gap: 24px;
-@list-cagegories-item-gap-mobile: 10px;
+@list-favorites-item-gap: 24px;
+@list-favorites-item-gap-mobile: 10px;
 @list-favorites-item-mobile-width: 206px;
 
 .list-favorites {
     .reset-ul();
     display: flex;
-    margin-left: -@list-cagegories-item-gap-mobile;
+    margin-left: -@list-favorites-item-gap-mobile;
 
     &.slick-initialized {
         display: block;
@@ -15,7 +15,7 @@
     @media @query-lg {
         flex-wrap: wrap;
         flex-direction: row;
-        margin: 0 0 -@list-cagegories-item-gap / 2 -@list-cagegories-item-gap;
+        margin: 0 0 -@list-favorites-item-gap / 2 -@list-favorites-item-gap;
     }
 
     .slick-track {
@@ -26,13 +26,13 @@
     &__item {
         width: @list-favorites-item-mobile-width;
         min-width: @list-favorites-item-mobile-width;
-        margin-left: @list-cagegories-item-gap-mobile;
+        margin-left: @list-favorites-item-gap-mobile;
 
         @media @query-lg {
             width: auto;
             min-width: auto;
-            margin: 0 0 @list-cagegories-item-gap / 2 0;
-            padding-left: @list-cagegories-item-gap;
+            margin: 0 0 @list-favorites-item-gap / 2 0;
+            padding-left: @list-favorites-item-gap;
         }
 
         &__link {

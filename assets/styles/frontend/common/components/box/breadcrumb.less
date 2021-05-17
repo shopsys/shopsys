@@ -41,6 +41,22 @@
             margin-right: 0;
         }
 
+        &:nth-last-child(4) {
+            display: inline-block;
+
+            .svg {
+                transform: rotate(90deg);
+
+                @media @query-lg {
+                    transform: rotate(-90deg);
+                }
+            }
+        }
+
+        &:nth-last-child(3) {
+            display: inline-block;
+        }
+
         &--separator {
             transform: rotate(180deg) translateY(2px);
             margin-right: 7.5px;
@@ -80,22 +96,6 @@
             @media @query-lg {
                 display: none !important;
             }
-        }
-
-        &:nth-last-child(4) {
-            display: inline-block;
-
-            .svg {
-                transform: rotate(90deg);
-
-                @media @query-lg {
-                    transform: rotate(-90deg);
-                }
-            }
-        }
-
-        &:nth-last-child(3) {
-            display: inline-block;
         }
     }
 }

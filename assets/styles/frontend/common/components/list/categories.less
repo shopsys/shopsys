@@ -1,11 +1,11 @@
-@list-cagegories-item-gap: 24px;
-@list-cagegories-item-gap-mobile: 10px;
-@list-cagegories-item-mobile-width: 96px;
+@list-categories-item-gap: 24px;
+@list-categories-item-gap-mobile: 10px;
+@list-categories-item-mobile-width: 96px;
 
 .list-categories {
     .reset-ul();
     display: flex;
-    margin-left: -@list-cagegories-item-gap-mobile;
+    margin-left: -@list-categories-item-gap-mobile;
 
     &.slick-initialized {
         display: block;
@@ -15,7 +15,7 @@
     @media @query-lg {
         flex-direction: row;
         flex-wrap: wrap;
-        margin: 0 0 -@list-cagegories-item-gap / 2 -@list-cagegories-item-gap;
+        margin: 0 0 -@list-categories-item-gap / 2 -@list-categories-item-gap;
     }
 
     .slick-track {
@@ -24,17 +24,17 @@
     }
 
     &__item {
-        margin-left: @list-cagegories-item-gap-mobile;
-        width: @list-cagegories-item-mobile-width;
-        min-width: @list-cagegories-item-mobile-width;
+        margin-left: @list-categories-item-gap-mobile;
+        width: @list-categories-item-mobile-width;
+        min-width: @list-categories-item-mobile-width;
         text-align: center;
 
         @media @query-lg {
             width: 50%;
             min-width: auto;
             text-align: left;
-            padding-left: @list-cagegories-item-gap;
-            margin-bottom: @list-cagegories-item-gap / 2;
+            padding-left: @list-categories-item-gap;
+            margin-bottom: @list-categories-item-gap / 2;
             margin-left: 0;
         }
 
