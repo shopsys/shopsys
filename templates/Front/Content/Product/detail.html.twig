@@ -41,10 +41,9 @@
                                         <div class="box-detail__image__main__item">
                                             {% if productView.mainImageView %}
                                                 <a
-                                                    data-fancybox="products-gallery"
-                                                    data-caption="{{ productView.name }}"
-                                                    href="{{ imageUrl(galleryImage, 'original') }}"
-                                                    class="box-detail__image__main__item__link">
+                                                    href="{{ imageUrl(productView.mainImageView, 'original') }}"
+                                                    class="box-detail__image__main__item__link {{ showGallery ? 'js-gallery-main-image' : 'js-popup-image' }}"
+                                                >
                                                     {{ image(galleryImage, {lazy: false, alt: productView.fullname ~ ' ' ~ loop.index}) }}
                                                 </a>
                                             {% else %}
@@ -61,12 +60,12 @@
                                 <div class="box-gallery dont-print js-gallery{{ galleryImagesCount > 1 ? ' js-gallery-slick-carousel' }}">
                                     <div class="box-gallery__in{{ galleryImagesCount <= 4 ? ' box-gallery__in--centered' }} js-gallery-wrap">
                                         {% for galleryImage in productView.galleryImageViews %}
-                                            <button class="box-gallery__item">
-                                                <span
-                                                    class="box-gallery__item__link">
+                                            <div class="box-gallery__item">
+                                                <a href="{{ imageUrl(galleryImage, 'original') }}"
+                                                   class="box-gallery__item__link js-gallery-slide-link">
                                                     {{ image(galleryImage, {size: 'galleryThumbnail', lazy: false, alt: productView.fullname ~ ' ' ~ loop.index}) }}
-                                                </span>
-                                            </button>
+                                                </a>
+                                            </div>
                                         {% endfor %}
                                     </div>
                                 </div>
