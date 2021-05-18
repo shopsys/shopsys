@@ -5,6 +5,13 @@
 
     font-size: 0;
 
+    &--in-list {
+        left: 14px;
+        top: 10px;
+        display: flex;
+        flex-direction: column;
+    }
+
     &--static {
         position: static;
     }
@@ -38,6 +45,10 @@
         &:hover {
             color: @color-0;
             text-decoration: none;
+        }
+
+        .in-flag--in-list & {
+            margin-right: auto;
         }
 
         &.flag__product_action {

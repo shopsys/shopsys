@@ -37,124 +37,122 @@
     <div class="web__line">
         <div class="web__container">
             <div class="box-list js-product-list-with-filter">
-                <div class="box-list__body">
-                    {% if paginationResult.results|length > 0 or filterFormSubmitted %}
-                        <div class="box-list__panel">
-                            <div class="box-filter js-product-filter">
-                                {{ productFilterForm.filterForm(
-                                    filterForm,
-                                    url('front_product_list', { id: category.id }),
-                                    url('front_product_list', { id: category.id }),
-                                    null,
-                                    'product_list',
-                                    productFilterCountData,
-                                    priceRange,
-                                    filterCollapsedParameters,
-                                    allParameterValuesImagesIndexedById,
-                                    productFilterSetup
-                                ) }}
+                {% if paginationResult.results|length > 0 or filterFormSubmitted %}
+                    <div class="box-list__panel">
+                        <div class="box-filter js-product-filter">
+                            {{ productFilterForm.filterForm(
+                                filterForm,
+                                url('front_product_list', { id: category.id }),
+                                url('front_product_list', { id: category.id }),
+                                null,
+                                'product_list',
+                                productFilterCountData,
+                                priceRange,
+                                filterCollapsedParameters,
+                                allParameterValuesImagesIndexedById,
+                                productFilterSetup
+                            ) }}
+                        </div>
+                    </div>
+                {% endif %}
+                <div class="box-list__content">
+                    <h1 class="js-ready-category-seo-mix-product-list-h1">{{ seoH1 }}</h1>
+
+                    {% if paginationResult.page == 1 and shortDescription is not null %}
+                        <div class="box-list__section">
+                            <div class="box-list__description">
+                                <div class="box-list__description__text js-ready-category-seo-mix-product-list-short-description">
+                                    {{ shortDescription|raw }}
+
+                                    {% if description is not null %}
+                                        <a class="box-list__description__button box-list__description__button--displayed js-smooth-scroll-anchor" href="#description">
+                                            <span class="box-list__description__button__text">
+                                                {{ 'Číst dále'|trans }}
+                                            </span>
+                                            <i class="svg svg-arrow"></i>
+                                        </a>
+                                    {% endif %}
+                                </div>
                             </div>
                         </div>
                     {% endif %}
-                    <div class="box-list__content">
-                        <h1 class="js-ready-category-seo-mix-product-list-h1">{{ seoH1 }}</h1>
 
-                        {% if paginationResult.page == 1 and shortDescription is not null %}
-                            <div class="box-list__section">
-                                <div class="box-list__description">
-                                    <div class="box-list__description__text js-ready-category-seo-mix-product-list-short-description">
-                                        {{ shortDescription|raw }}
+                    {% cache 'category_children_' ~ category.id {lifetime:getCacheLifetimeByHours(1), domainId:getDomain().id} %}
+                        {{ render(controller('App\\Controller\\Front\\CategoryController:categoryChildrenListAction', {category: category}))|spaceless }}
+                    {% endcache %}
 
-                                        {% if description is not null %}
-                                            <a class="box-list__description__button box-list__description__button--displayed js-smooth-scroll-anchor" href="#description">
-                                                <span class="box-list__description__button__text">
-                                                    {{ 'Číst dále'|trans }}
-                                                </span>
-                                                <i class="svg svg-arrow"></i>
-                                            </a>
-                                        {% endif %}
-                                    </div>
-                                </div>
-                            </div>
-                        {% endif %}
+                    {% cache 'seo_categories_mixes__' ~ category.id ~ '_' ~ readyCategorySeoMixId {lifetime:getCacheLifetimeByHours(1), domainId:getDomain().id} %}
+                        {{ render(controller('App\\Controller\\Front\\CategorySeoMixController:childSeoCategoryMixesAction', {'category' : category, 'selectedReadyCategorySeoMixId': readyCategorySeoMixId}))|spaceless }}
+                    {% endcache %}
 
-                        {% cache 'category_children_' ~ category.id {lifetime:getCacheLifetimeByHours(1), domainId:getDomain().id} %}
-                            {{ render(controller('App\\Controller\\Front\\CategoryController:categoryChildrenListAction', {category: category}))|spaceless }}
-                        {% endcache %}
+                    <div class="box-list__section js-not-implemented-yet">
+                        <h3 class="box-list__subtitle">{{ 'Oblíbené'|trans }}</h3>
 
-                        {% cache 'seo_categories_mixes__' ~ category.id ~ '_' ~ readyCategorySeoMixId {lifetime:getCacheLifetimeByHours(1), domainId:getDomain().id} %}
-                            {{ render(controller('App\\Controller\\Front\\CategorySeoMixController:childSeoCategoryMixesAction', {'category' : category, 'selectedReadyCategorySeoMixId': readyCategorySeoMixId}))|spaceless }}
-                        {% endcache %}
-
-                        <div class="box-list__section js-not-implemented-yet">
-                            <h3 class="box-list__subtitle">{{ 'Oblíbené'|trans }}</h3>
-
-                            <ul class="list-favorites js-slider-drawable-list-mobile">
-                                <li class="list-favorites__item">
-                                    <a class="list-favorites__item__link" href="#">
-                                        Dámská celoodpružená kola
-                                    </a>
-                                </li>
-                                <li class="list-favorites__item">
-                                    <a class="list-favorites__item__link" href="#">
-                                        Dětská odrážedla
-                                    </a>
-                                </li>
-                                <li class="list-favorites__item">
-                                    <a class="list-favorites__item__link" href="#">
-                                        Pánská silniční kola
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-
-                        {{ render(controller('App\\Controller\\Front\\BestsellingProductController:listAction', { category: category })) }}
-
-                        <div class="box-filter__opener">
-                            <button type="button" class="btn btn-no-style box-filter__opener__btn js-product-filter-open-button">
-                                <i class="box-filter__opener__btn__icon svg svg-filter"></i>
-                                <span class="box-filter__opener__btn__text">
-                                    {{ 'Filtr'|trans }}
-                                    <span class="box-filter__opener__btn__info box-filter__opener__btn__info--count js-product-filter-open-button-placeolder"></span>
-                                </span>
-                            </button>
-                            <button type="button" class="btn btn-no-style box-filter__opener__btn js-product-sort-open-button">
-                                <i class="box-filter__opener__btn__icon svg svg-sort"></i>
-                                <span class="box-filter__opener__btn__text">
-                                    {{ 'Seřadit'|trans }}
-                                    <span class="box-filter__opener__btn__info box-filter__opener__btn__info--sort js-product-sort-open-button-placeholder">{{ orderModeName }}</span>
-                                </span>
-                            </button>
-                        </div>
-
-                        <div class="js-product-list-ajax-filter-products-with-controls">
-                            <div class="box-list__top js-product-sort">
-                                <div class="box-list__top__wrap">
-                                    {{ render(controller('App\\Controller\\Front\\ProductController:selectOrderingModeForListAction', { readyCategorySeoMixId: readyCategorySeoMixId })) }}
-                                    <div class="box-list__top__info">
-                                        {% include 'Front/Content/Product/productSortCount.html.twig' with {paginationResult: paginationResult} %}
-                                    </div>
-                                </div>
-                            </div>
-                            {% include 'Front/Content/Product/productsWithControls.html.twig' with {paginationResult: paginationResult, filterFormSubmitted: filterFormSubmitted, gtmList: gtmList} %}
-                        </div>
-
-                        {% if paginationResult.page == 1 %}
-                            <div class="box-list__description" id="description">
-                                <div class="box-list__description__text js-category-description">
-                                    <span class="js-category-description-content js-ready-category-seo-mix-product-list-description">
-                                        {{ description|raw }}
-                                    </span>
-                                </div>
-                                <span class="box-list__description__button js-category-description-load-more">
-                                    <span class="box-list__description__button__text">
-                                        {{ 'Číst dále'|trans }}
-                                    </span>
-                                    <i class="svg svg-arrow"></i>
-                                </span>
-                            </div>
-                        {% endif %}
+                        <ul class="list-favorites js-slider-drawable-list-mobile">
+                            <li class="list-favorites__item">
+                                <a class="list-favorites__item__link" href="#">
+                                    Dámská celoodpružená kola
+                                </a>
+                            </li>
+                            <li class="list-favorites__item">
+                                <a class="list-favorites__item__link" href="#">
+                                    Dětská odrážedla
+                                </a>
+                            </li>
+                            <li class="list-favorites__item">
+                                <a class="list-favorites__item__link" href="#">
+                                    Pánská silniční kola
+                                </a>
+                            </li>
+                        </ul>
                     </div>
+
+                    {{ render(controller('App\\Controller\\Front\\BestsellingProductController:listAction', { category: category })) }}
+
+                    <div class="box-filter__opener">
+                        <button type="button" class="btn btn-no-style box-filter__opener__btn js-product-filter-open-button">
+                            <i class="box-filter__opener__btn__icon svg svg-filter"></i>
+                            <span class="box-filter__opener__btn__text">
+                                {{ 'Filtr'|trans }}
+                                <span class="box-filter__opener__btn__info box-filter__opener__btn__info--count js-product-filter-open-button-placeolder"></span>
+                            </span>
+                        </button>
+                        <button type="button" class="btn btn-no-style box-filter__opener__btn js-product-sort-open-button">
+                            <i class="box-filter__opener__btn__icon svg svg-sort"></i>
+                            <span class="box-filter__opener__btn__text">
+                                {{ 'Seřadit'|trans }}
+                                <span class="box-filter__opener__btn__info box-filter__opener__btn__info--sort js-product-sort-open-button-placeholder">{{ orderModeName }}</span>
+                            </span>
+                        </button>
+                    </div>
+
+                    <div class="js-product-list-ajax-filter-products-with-controls">
+                        <div class="box-list__top js-product-sort">
+                            <div class="box-list__top__wrap">
+                                {{ render(controller('App\\Controller\\Front\\ProductController:selectOrderingModeForListAction', { readyCategorySeoMixId: readyCategorySeoMixId })) }}
+                                <div class="box-list__top__info">
+                                    {% include 'Front/Content/Product/productSortCount.html.twig' with {paginationResult: paginationResult} %}
+                                </div>
+                            </div>
+                        </div>
+                        {% include 'Front/Content/Product/productsWithControls.html.twig' with {paginationResult: paginationResult, filterFormSubmitted: filterFormSubmitted, gtmList: gtmList} %}
+                    </div>
+
+                    {% if paginationResult.page == 1 %}
+                        <div class="box-list__description" id="description">
+                            <div class="box-list__description__text js-category-description">
+                                <span class="js-category-description-content js-ready-category-seo-mix-product-list-description">
+                                    {{ description|raw }}
+                                </span>
+                            </div>
+                            <span class="box-list__description__button js-category-description-load-more">
+                                <span class="box-list__description__button__text">
+                                    {{ 'Číst dále'|trans }}
+                                </span>
+                                <i class="svg svg-arrow"></i>
+                            </span>
+                        </div>
+                    {% endif %}
                 </div>
             </div>
         </div>

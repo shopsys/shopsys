@@ -1,6 +1,7 @@
 import './AddProduct';
 import './BestsellingProducts';
 import './CategoryDescription';
+import './infoBoxHeight';
 import './ProductDetail';
 import './ProductFilterBox';
 import './productList.AjaxFilter';

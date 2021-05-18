@@ -76,30 +76,6 @@ export default function slickInit () {
         $hpSliderThumbnails.find('.slick-slide').removeClass('slick-active-current');
         $hpSliderThumbnails.find('.slick-slide').eq(currentSlide).addClass('slick-active-current');
     });
-
-    function mobileSlider () {
-        const sliderClass = $('.js-slider-drawable-list-mobile');
-        if (window.innerWidth <= Responsive.LG) {
-            sliderClass.not('.slick-initialized').slick({
-                dots: false,
-                arrows: false,
-                infinite: false,
-                slidesToShow: 1,
-                slidesToScroll: 1,
-                variableWidth: true
-            });
-        } else {
-            if (sliderClass.hasClass('slick-initialized')) {
-                sliderClass.slick('unslick');
-            }
-        }
-    }
-
-    mobileSlider();
-
-    $(window).resize(function (e) {
-        mobileSlider();
-    });
 }
 
 (new Register()).registerCallback(slickInit, 'slickInit');
