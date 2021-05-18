@@ -2,7 +2,6 @@
 
 .form-error {
     display: block;
-    position: static;
     margin-top: 6px;
 
     cursor: default;
@@ -28,6 +27,10 @@
 
         color: @color-alert;
         font-size: @form-error-icon-size;
+
+        .form-line--small-input & {
+            top: -(@input-height-small / 2) - (@form-error-icon-size / 2);
+        }
 
         .form-error--inline & {
             top: 50%;

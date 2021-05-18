@@ -30,20 +30,16 @@ img {
     }
 
     &__line {
-        &--copyright {
-            position: relative;
+        &--dark {
+            background-color: @color-grey;
         }
 
-        &--grey {
-            background: @color-light;
+        &--colored {
+            background-color: @color-add-light;
         }
 
         &--bg-color {
             background: @color-light-secondary;
-        }
-
-        &--top-border {
-            border-top: 2px solid @color-border;
         }
 
         &--spacing {
@@ -80,10 +76,6 @@ img {
             }
         }
 
-        &--grey-bottom-border {
-            border-bottom: @web-footer-border;
-        }
-
         &--margin-bottom {
             margin-bottom: 1.5rem;
         }
@@ -107,11 +99,6 @@ img {
             }
         }
 
-        &--zi {
-            position: relative;
-            z-index: 10;
-        }
-
         &--cart {
             padding: 25px 0 4rem;
 
@@ -122,18 +109,6 @@ img {
 
             @media @query-lg {
                 padding: 3rem 0 8rem;
-            }
-
-            &-buttons-up-mobile {
-                @media @query-mobile {
-                    padding-bottom: 4rem;
-                }
-            }
-
-            &-final-step {
-                @media @query-mobile {
-                    padding-bottom: 330px;
-                }
             }
         }
     }
@@ -146,12 +121,24 @@ img {
             margin: 0 auto;
         }
 
-        &--no-padding {
-            padding: 0;
+        &--lines {
+            position: relative;
+
+            &:before {
+                content: '';
+                position: absolute;
+                left: 0;
+                bottom: 0;
+                width: 106px;
+                height: 133px;
+                transform: translateX(-100%);
+
+                background: url('/public/frontend/images/lines.png') left no-repeat;
+            }
         }
 
-        &--category-detail {
-            padding-top: 1.5rem;
+        &--no-padding {
+            padding: 0;
         }
 
         &--full-width {

@@ -2,17 +2,12 @@
 
 {{ form_start(form, { attr: { 'data-on-submit': 'ajaxSubmit', 'data-success': success ? 'true' : 'false' }}) }}
     <div class="footer__newsletter">
-        <div class="footer__newsletter__text">
-            <h2 class="footer__newsletter__heading h3">
-                {{ 'Zaregistrujte se k odběru newsletteru a získejte slevu 35&nbsp;% na nábytek na Váš první nákup*'|transHtml }}
-            </h2>
-        </div>
+        <h2 class="footer__newsletter__heading">
+            {{ 'Zaregistrujte se k odběru newsletteru<br> a získejte slevu 35&nbsp;% na běžecké vybavení'|transHtml }}
+        </h2>
         <div class="footer__newsletter__form">
             <div class="footer__newsletter__form__wrap">
-                <div class="footer__newsletter__form__in">
-                    {{ form_widget(form.email, { attr: {placeholder: 'Váš e-mail'|trans, class: 'footer__newsletter__form__input'} }) }}
-                    {{ form_errors(form.email) }}
-                </div>
+                {{ form_row(form.email, { rowClass: 'form-line--small-input form-line--without-gap', label: 'Váš e-mail'|trans }) }}
                 {{ form_widget(form.send, { label: 'Odeslat'|trans, attr: { class: "btn footer__newsletter__form__btn" }}) }}
             </div>
             <div class="form-choice">
@@ -20,9 +15,9 @@
                 <label class="css-checkbox__image" for="{{ form.privacyPolicyAgreement.vars.id }}">
                     {% if privacyPolicyArticle is not null %}
                         {% set articleUrl = url('front_article_detail', {'id': privacyPolicyArticle.id}) %}
-                        {{ "I agree with <a href=\"%url%\" target=\"_blank\">privacy policy</a>."|trans({'%url%': articleUrl})|raw }}
+                        {{ "Beru na vědomí zpracování osobních údajů (<a href=\"%url%\" target=\"_blank\">jak pracujeme s vašimi daty</a>)."|trans({'%url%': articleUrl})|raw }}
                     {% else %}
-                        {{ 'I agree with privacy policy.'|trans }}
+                        {{ 'Beru na vědomí zpracování osobních údajů'|trans }}
                     {% endif %}
                     <span class="js-validation-errors-list js-validation-error-list-{{ form.privacyPolicyAgreement.vars.id }} form-error display-none"><span class="form-error__icon"><i class="svg svg-error"></i></span><ul class="form-error__list"></ul></span>
                 </label>
@@ -33,20 +28,6 @@
                 {% set descUrl = '/ochrana-osobnych-udajov' %}
             {% endif %}
         </div>
-        <picture>
-            <source
-                media="(min-width: {{ imgSrcsetDesktopBreakpoint }})"
-                srcset="
-                {{ asset('public/frontend/images/newsletter2x.png') }} 2x,
-                {{ asset('public/frontend/images/newsletter.png') }} 1x"
-            />
-            <img
-                class="footer__newsletter__img"
-                loading="lazy"
-                src="{{ imgLazyloadPlaceholder }}"
-                data-src="{{ asset('public/frontend/images/newsletter.png') }}"
-                alt="{{ 'Newsletter'|trans }}">
-        </picture>
     </div>
 {{ form_end(form) }}
 {{ init_js_validation(form, true) }}

@@ -106,20 +106,11 @@
                         </picture>
                     </div>
                 </div>
-                {% include 'Front/Content/InfoBox/infoBox.html.twig' with { 'cssClass' : 'box-info--in-cart' } %}
+                {% include 'Front/Content/InfoBox/infoBox.html.twig' %}
             </div>
         </div>
     {% endif %}
     {% if gtmEvent is defined %}
         <div class="gtm-info" data-gtm-event="{{ gtmEvent|json_encode() }}"></div>
-    {% endif %}
-{% endblock %}
-
-{% block footer %}
-    {% if cart is not null %}
-        {% include 'Front/Content/Disclaimer/disclaimer.html.twig' with { 'inCart' : true } %}
-        {% include 'Front/Layout/copyright.html.twig' with { 'cssClass' : 'footer__bottom--cart' } %}
-    {% else %}
-        {% embed 'Front/Layout/footer.html.twig' with { 'showNewsletter' : true } %}{% endembed %}
     {% endif %}
 {% endblock %}

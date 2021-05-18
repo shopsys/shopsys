@@ -1,4 +1,5 @@
 @input-height: 54px;
+@input-height-small: 48px;
 @input-textarea-height: @input-height * 3;
 @input-padding-vertical: 20px;
 @input-padding-horizontal: 10px;
@@ -47,6 +48,11 @@
 
             font-size: @input-label-font-size-small;
         }
+    }
+
+    .form-line--small-input & {
+        height: @input-height-small;
+        padding: @input-padding-vertical - 5px @input-padding-horizontal 0 @input-padding-horizontal;
     }
 
     &--textarea {
