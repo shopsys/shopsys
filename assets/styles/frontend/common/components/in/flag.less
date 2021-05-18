@@ -3,6 +3,12 @@
     top: 0;
     left: 0;
 
+    font-size: 0;
+
+    &--static {
+        position: static;
+    }
+
     &--in-checkout {
         position: static;
         margin-top: 3px;
@@ -25,25 +31,46 @@
         letter-spacing: 0.24px;
         text-transform: uppercase;
         border-radius: @radius-small;
-        color: @color-f;
+        color: @color-0;
+        text-decoration: none;
+        background-color: #cdb3ff;
+
+        &:hover {
+            color: @color-0;
+            text-decoration: none;
+        }
 
         &.flag__product_action {
             background-color: #00996d;
+            color: @color-f;
+
+            &:hover {
+                color: @color-f;
+            }
         }
 
         &.flag__product_new {
             background-color: #0037ec;
+            color: @color-f;
+
+            &:hover {
+                color: @color-f;
+            }
         }
 
         &.flag__product_sale, &.flag__product_hit {
             background-color: #ecb200;
+            color: @color-f;
+
+            &:hover {
+                color: @color-f;
+            }
         }
 
         &.flag__product_made_in_cz,
         &.flag__product_made_in_sk,
         &.flag__product_made_in_de {
             background-color: #cdb3ff;
-            color: @color-0;
         }
     }
 }

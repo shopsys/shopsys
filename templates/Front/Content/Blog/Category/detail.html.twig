@@ -42,36 +42,7 @@
                     <div class="box-blog__list">
                         {% if blogArticlePaginationResult.results|length > 0 %}
                             <div class="js-blog-list-with-paginator">
-                                <ul class="list-articles list-articles--grid js-list">
-                                    {% for blogArticle in blogArticlePaginationResult.results %}
-                                        <li class="list-articles__item list-articles__item--grid">
-                                            <a href="{{ url('front_blogarticle_detail', {'id': blogArticle.id}) }}" class="list-articles__item__link list-articles__item__link--image" title="{{ blogArticle.name }}">
-                                                {{ image(blogArticle, { size: 'listGrid', alt: blogArticle.name, class: "list-articles__item__image", lazy: true }) }}
-                                            </a>
-                                            <div class="list-articles__item__content">
-                                                <div class="list-tags">
-                                                    <span class="list-tags__tag">
-                                                        {{ render(controller('App\\Controller\\Front\\BlogCategoryController::allCategoriesForBlogArticleAction', { blogArticle: blogArticle, currentBlogCategory: blogCategory })) }}
-                                                    </span>
-                                                </div>
-                                                <h3 class="list-articles__item__name">
-                                                    <a href="{{ url('front_blogarticle_detail', {'id': blogArticle.id}) }}" class="list-articles__item__image__link" title="{{ blogArticle.name }}" class="list-articles__item__content__title underline">
-                                                        {{ blogArticle.name }}
-                                                    </a>
-                                                </h3>
-                                                <div class="list-articles__item__desc">
-                                                    {{ blogArticle.perex|slice(0,200) }}{% if blogArticle.perex|length > 200 %}&hellip;{% endif %}
-                                                </div>
-                                                <div class="list-articles__item__content__text">
-                                                    <a href="{{ url('front_blogarticle_detail', {'id': blogArticle.id}) }}" class="btn btn-no-style dont-print" title="{{ blogArticle.name }}">
-                                                        {{ "Číst dál"|trans }} <i class="btn__icon svg svg-long-arrow-right"></i>
-                                                    </a>
-                                                </div>
-
-                                            </div>
-                                        </li>
-                                    {% endfor %}
-                                </ul>
+                                {% include 'Front/Content/Article/list.html.twig' with { blogArticles: blogArticlePaginationResult.results } %}
 
                                 <div class="box-blog__pagination">
                                     {{ paginator.loadMoreButton(blogArticlePaginationResult) }}

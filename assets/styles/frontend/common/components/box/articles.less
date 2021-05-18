@@ -1,53 +1,53 @@
+@box-articles-heading-title-gap: 7px;
+
 .box-articles {
-    @media @query-lg {
-        margin-top: 5rem;
+    padding: 50px 0 40px;
+
+    @media @query-vl {
+        padding: 50px 0 60px;
     }
 
-    &__wrap {
-        position: relative;
-        z-index: 1;
+    &__heading {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: baseline;
+        margin-bottom: 27px - @box-articles-heading-title-gap;
 
-        @media @query-lg {
+        &__title {
+            line-height: 36px;
+            margin: 0 32px @box-articles-heading-title-gap 0;
+
+            font-size: 32px;
+            color: @color-f;
+            text-transform: none;
+        }
+
+        &__link {
             display: flex;
-        }
-    }
+            align-items: center;
+            margin-bottom: @box-articles-heading-title-gap;
 
-    &__text {
-        width: 100%;
-        margin-bottom: 2rem;
-        padding: 2rem;
+            color: @color-f;
+            font-weight: 700;
+            text-transform: uppercase;
+            text-decoration: none;
 
-        background-color: @color-light-secondary;
-        border-radius: @radius;
+            &:hover {
+                color: @color-f;
+                text-decoration: none;
 
-        @media @query-lg {
-            position: absolute;
-            left: 0;
-            top: -2rem;
-            width: 95%;
-        }
-
-        &__inner {
-            position: relative;
-            z-index: 2;
-
-            @media @query-lg {
-                min-width: 33%;
-                max-width: 33%;
+                .box-articles__heading__link__text {
+                    text-decoration: underline;
+                }
             }
-        }
-    }
 
-    &__desc {
-        margin-bottom: 1rem;
+            .svg {
+                position: relative;
+                top: -1px;
+                margin-left: 6px;
 
-        @media @query-md {
-            max-width: 70%;
-        }
-
-        @media @query-vl {
-            max-width: 100%;
-            padding-right: 2.5rem;
+                font-size: 14px;
+            }
         }
     }
 }
