@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Controller\Admin;
 
+use BadMethodCallException;
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
@@ -88,6 +89,11 @@ class CustomerController extends AdminBaseController
     protected $customerUserUpdateDataFactory;
 
     /**
+     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain|null
+     */
+    protected ?Domain $domain = null;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserDataFactoryInterface $customerUserDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserListAdminFacade $customerUserListAdminFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade $customerUserFacade
@@ -99,6 +105,7 @@ class CustomerController extends AdminBaseController
      * @param \Shopsys\FrameworkBundle\Model\Security\LoginAsUserFacade $loginAsUserFacade
      * @param \Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory $domainRouterFactory
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactoryInterface $customerUserUpdateDataFactory
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain|null $domain
      */
     public function __construct(
         CustomerUserDataFactoryInterface $customerUserDataFactory,
@@ -111,7 +118,8 @@ class CustomerController extends AdminBaseController
         OrderFacade $orderFacade,
         LoginAsUserFacade $loginAsUserFacade,
         DomainRouterFactory $domainRouterFactory,
-        CustomerUserUpdateDataFactoryInterface $customerUserUpdateDataFactory
+        CustomerUserUpdateDataFactoryInterface $customerUserUpdateDataFactory,
+        ?Domain $domain = null
     ) {
         $this->customerUserDataFactory = $customerUserDataFactory;
         $this->customerUserListAdminFacade = $customerUserListAdminFacade;
@@ -124,6 +132,36 @@ class CustomerController extends AdminBaseController
         $this->loginAsUserFacade = $loginAsUserFacade;
         $this->domainRouterFactory = $domainRouterFactory;
         $this->customerUserUpdateDataFactory = $customerUserUpdateDataFactory;
+        $this->domain = $domain;
+    }
+
+    /**
+     * @required
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     * @internal This function will be replaced by constructor injection in next major
+     */
+    public function setDomain(Domain $domain): void
+    {
+        if ($this->domain !== null && $this->domain !== $domain) {
+            throw new BadMethodCallException(sprintf(
+                'Method "%s" has been already called and cannot be called multiple times.',
+                __METHOD__
+            ));
+        }
+
+        if ($this->domain !== null) {
+            return;
+        }
+
+        @trigger_error(
+            sprintf(
+                'The %s() method is deprecated and will be removed in the next major. Use the constructor injection instead.',
+                __METHOD__
+            ),
+            E_USER_DEPRECATED
+        );
+
+        $this->domain = $domain;
     }
 
     /**
@@ -296,6 +334,11 @@ class CustomerController extends AdminBaseController
     public function loginAsUserAction($customerUserId)
     {
         $customerUser = $this->customerUserFacade->getCustomerUserById($customerUserId);
+
+        if ($this->domain->getId() !== $customerUser->getDomainId()) {
+            return $this->redirectToRoute('admin_customer_edit', ['id' => $customerUserId]);
+        }
+
         $this->loginAsUserFacade->rememberLoginAsUser($customerUser);
 
         return $this->redirectToRoute('front_customer_login_as_remembered_user');
