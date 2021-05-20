@@ -298,4 +298,14 @@ class TransportFacade
     {
         return $this->transportRepository->getOneByUuid($uuid);
     }
+
+    /**
+     * @param string $uuid
+     * @param int $domainId
+     * @return \Shopsys\FrameworkBundle\Model\Transport\Transport
+     */
+    public function getEnabledOnDomainByUuid(string $uuid, int $domainId): Transport
+    {
+        return $this->transportRepository->getEnabledOnDomainByUuid($uuid, $domainId);
+    }
 }

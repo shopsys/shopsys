@@ -137,7 +137,10 @@ class OrderDataFactory
             $this->domain->getId()
         );
 
-        $cloneOrderData->transport = $this->transportFacade->getByUuid($input['transport']['uuid']);
+        $cloneOrderData->transport = $this->transportFacade->getEnabledOnDomainByUuid(
+            $input['transport']['uuid'],
+            $this->domain->getId()
+        );
 
         $cloneOrderData->currency = $this->currencyFacade->getDomainDefaultCurrencyByDomainId($this->domain->getId());
 
