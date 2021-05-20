@@ -7,9 +7,9 @@ namespace App\Model\Product\Parameter\Transfer\Akeneo;
 use App\Component\Akeneo\Transfer\AbstractAkeneoImportTransfer;
 use App\Component\Akeneo\Transfer\AkeneoImportTransferDependency;
 use App\Model\Product\Parameter\ParameterFacade;
-use App\Model\Product\Parameter\Unit\ParameterUnit;
-use App\Model\Product\Parameter\Unit\ParameterUnitDataFactory;
-use App\Model\Product\Parameter\Unit\ParameterUnitFacade;
+use App\Model\Product\Unit\Unit;
+use App\Model\Product\Unit\UnitDataFactory;
+use App\Model\Product\Unit\UnitFacade;
 use Generator;
 
 class AkeneoImportProductParameterFacade extends AbstractAkeneoImportTransfer
@@ -37,16 +37,6 @@ class AkeneoImportProductParameterFacade extends AbstractAkeneoImportTransfer
     private $productParameterTransferAkeneoValidator;
 
     /**
-     * @var \App\Model\Product\Parameter\Unit\ParameterUnitFacade
-     */
-    private $parameterUnitFacade;
-
-    /**
-     * @var \App\Model\Product\Parameter\Unit\ParameterUnitDataFactory
-     */
-    private $parameterUnitDataFactory;
-
-    /**
      * @var int[]
      */
     private $notTransferredParameterIds = [];
@@ -57,13 +47,23 @@ class AkeneoImportProductParameterFacade extends AbstractAkeneoImportTransfer
     private $parametersFromAkeneoCountBeforeTransfer;
 
     /**
+     * @var \App\Model\Product\Unit\UnitFacade
+     */
+    private UnitFacade $unitFacade;
+
+    /**
+     * @var \App\Model\Product\Unit\UnitDataFactory
+     */
+    private UnitDataFactory $unitDataFactory;
+
+    /**
      * @param \App\Component\Akeneo\Transfer\AkeneoImportTransferDependency $akeneoImportTransferDependency
      * @param \App\Model\Product\Parameter\Transfer\Akeneo\ProductParameterTransferAkeneoFacade $productParameterTransferAkeneoFacade
      * @param \App\Model\Product\Parameter\Transfer\Akeneo\ProductParameterTransferAkeneoMapper $productParameterTransferAkeneoMapper
      * @param \App\Model\Product\Parameter\ParameterFacade $parameterFacade
      * @param \App\Model\Product\Parameter\Transfer\Akeneo\ProductParameterTransferAkeneoValidator $productParameterTransferAkeneoValidator
-     * @param \App\Model\Product\Parameter\Unit\ParameterUnitFacade $parameterUnitFacade
-     * @param \App\Model\Product\Parameter\Unit\ParameterUnitDataFactory $parameterUnitDataFactory
+     * @param \App\Model\Product\Unit\UnitFacade $unitFacade
+     * @param \App\Model\Product\Unit\UnitDataFactory $unitDataFactory
      */
     public function __construct(
         AkeneoImportTransferDependency $akeneoImportTransferDependency,
@@ -71,8 +71,8 @@ class AkeneoImportProductParameterFacade extends AbstractAkeneoImportTransfer
         ProductParameterTransferAkeneoMapper $productParameterTransferAkeneoMapper,
         ParameterFacade $parameterFacade,
         ProductParameterTransferAkeneoValidator $productParameterTransferAkeneoValidator,
-        ParameterUnitFacade $parameterUnitFacade,
-        ParameterUnitDataFactory $parameterUnitDataFactory
+        UnitFacade $unitFacade,
+        UnitDataFactory $unitDataFactory
     ) {
         parent::__construct($akeneoImportTransferDependency);
 
@@ -80,8 +80,8 @@ class AkeneoImportProductParameterFacade extends AbstractAkeneoImportTransfer
         $this->parameterFacade = $parameterFacade;
         $this->productParameterTransferAkeneoMapper = $productParameterTransferAkeneoMapper;
         $this->productParameterTransferAkeneoValidator = $productParameterTransferAkeneoValidator;
-        $this->parameterUnitFacade = $parameterUnitFacade;
-        $this->parameterUnitDataFactory = $parameterUnitDataFactory;
+        $this->unitFacade = $unitFacade;
+        $this->unitDataFactory = $unitDataFactory;
     }
 
     public const DEFAULT_METRIC_UNIT_AKENEO_KEY = 'default_metric_unit';
@@ -113,7 +113,12 @@ class AkeneoImportProductParameterFacade extends AbstractAkeneoImportTransfer
 
         $parameter = $this->parameterFacade->findParameterByAkeneoCode($akeneoParameterData['code']);
         $parameterData = $this->productParameterTransferAkeneoMapper->mapAkeneoParameterDataToParameterData($akeneoParameterData, $parameter);
-        $parameterData->parameterUnit = $this->saveParameterUnit($akeneoParameterData[self::DEFAULT_METRIC_UNIT_AKENEO_KEY] ?? null);
+
+        if (array_key_exists(self::DEFAULT_METRIC_UNIT_AKENEO_KEY, $akeneoParameterData)) {
+            $parameterData->unit = $this->saveUnit($akeneoParameterData[self::DEFAULT_METRIC_UNIT_AKENEO_KEY]);
+        } else {
+            $parameterData->unit = null;
+        }
 
         if ($parameter === null) {
             $this->logger->addInfo(sprintf('Creating parameter group with akeneo code : %s', $parameterData->akeneoCode));
@@ -149,26 +154,22 @@ class AkeneoImportProductParameterFacade extends AbstractAkeneoImportTransfer
     }
 
     /**
-     * @param string|null $akeneoParameterDefaultMetricUnitCode
-     * @return \App\Model\Product\Parameter\Unit\ParameterUnit|null
+     * @param string $akeneoParameterDefaultMetricUnitCode
+     * @return \App\Model\Product\Unit\Unit
      */
-    private function saveParameterUnit(?string $akeneoParameterDefaultMetricUnitCode): ?ParameterUnit
+    private function saveUnit(string $akeneoParameterDefaultMetricUnitCode): Unit
     {
-        if ($akeneoParameterDefaultMetricUnitCode === null) {
-            return null;
+        $unit = $this->unitFacade->findByAkeneoCode($akeneoParameterDefaultMetricUnitCode);
+
+        if ($unit === null) {
+            $this->logger->addInfo(sprintf('Creating unit : %s', $akeneoParameterDefaultMetricUnitCode));
+
+            $unitData = $this->unitDataFactory->create();
+            $unitData->akeneoCode = $akeneoParameterDefaultMetricUnitCode;
+            $unit = $this->unitFacade->create($unitData);
         }
 
-        $parameterUnit = $this->parameterUnitFacade->findByAkeneoCode($akeneoParameterDefaultMetricUnitCode);
-
-        if ($parameterUnit === null) {
-            $this->logger->addInfo(sprintf('Creating parameter unit : %s', $akeneoParameterDefaultMetricUnitCode));
-
-            $parameterUnitData = $this->parameterUnitDataFactory->create();
-            $parameterUnitData->akeneoCode = $akeneoParameterDefaultMetricUnitCode;
-            $parameterUnit = $this->parameterUnitFacade->create($parameterUnitData);
-        }
-
-        return $parameterUnit;
+        return $unit;
     }
 
     private function loadAkeneoParameterIds(): void

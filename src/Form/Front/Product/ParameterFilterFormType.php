@@ -62,8 +62,8 @@ class ParameterFilterFormType extends AbstractType implements DataTransformerInt
                 $parameterValues = $this->prepareYesNoParameterValues($parameterValues);
             }
 
-            if ($parameter->getParameterUnit() !== null) {
-                $parameterValues = $this->prepareParameterUnitsForParameterValues($parameter, $parameterValues);
+            if ($parameter->getUnit() !== null) {
+                $parameterValues = $this->prepareUnitsForParameterValues($parameter, $parameterValues);
             }
 
             if ($parameter->getParameterType() === Parameter::PARAMETER_TYPE_SLIDER) {
@@ -120,7 +120,7 @@ class ParameterFilterFormType extends AbstractType implements DataTransformerInt
      * @param \App\Model\Product\Parameter\ParameterValue[] $parameterValues
      * @return array
      */
-    private function prepareParameterUnitsForParameterValues(
+    private function prepareUnitsForParameterValues(
         Parameter $parameter,
         array $parameterValues
     ): array {
@@ -128,7 +128,7 @@ class ParameterFilterFormType extends AbstractType implements DataTransformerInt
         foreach ($parameterValues as $parameterValue) {
             $newParameterValue = new stdClass();
             $newParameterValue->id = $parameterValue->getId();
-            $newParameterValue->text = $parameterValue->getText() . ' ' . $parameter->getParameterUnit()->getName();
+            $newParameterValue->text = $parameterValue->getText() . ' ' . $parameter->getUnit()->getName();
             $newParameterValues[] = $newParameterValue;
         }
 
@@ -227,7 +227,7 @@ class ParameterFilterFormType extends AbstractType implements DataTransformerInt
 
         /** @var \App\Model\Product\Parameter\Parameter $parameter */
         $parameter = $parameterFilterChoice->getParameter();
-        $unit = $parameter->getParameterUnit() !== null ? $parameter->getParameterUnit()->getName() : '';
+        $unit = $parameter->getUnit() !== null ? $parameter->getUnit()->getName() : '';
 
         return [
             'min' => [

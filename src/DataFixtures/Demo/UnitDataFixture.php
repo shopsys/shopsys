@@ -26,7 +26,7 @@ class UnitDataFixture extends AbstractReferenceFixture
     public const UNIT_METER = 'unit_meter';
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Unit\UnitFacade
+     * @var \App\Model\Product\Unit\UnitFacade
      */
     private $unitFacade;
 
@@ -46,7 +46,7 @@ class UnitDataFixture extends AbstractReferenceFixture
     private $domain;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Unit\UnitFacade $unitFacade
+     * @param \App\Model\Product\Unit\UnitFacade $unitFacade
      * @param \App\Model\Product\Unit\UnitDataFactory $unitDataFactory
      * @param \App\Component\Setting\Setting $setting
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain

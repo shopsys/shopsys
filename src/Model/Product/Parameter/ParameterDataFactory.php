@@ -60,7 +60,7 @@ class ParameterDataFactory extends BaseParameterDataFactory
         $parameterData->orderingPriority = $parameter->getOrderingPriority();
         $parameterData->akeneoCode = $parameter->getAkeneoCode();
         $parameterData->akeneoType = $parameter->getAkeneoType();
-        $parameterData->parameterUnit = $parameter->getParameterUnit();
         $parameterData->parameterType = $parameter->getParameterType();
+        $parameterData->unit = $parameter->getUnit();
     }
 }

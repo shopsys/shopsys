@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\Product\Parameter;
 
+use App\Model\Product\Unit\Unit;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterData as BaseParameterData;
 
 class ParameterData extends BaseParameterData
@@ -29,14 +30,14 @@ class ParameterData extends BaseParameterData
     public $orderingPriority;
 
     /**
-     * @var \App\Model\Product\Parameter\Unit\ParameterUnit|null
-     */
-    public $parameterUnit;
-
-    /**
      * @var string
      */
     public $parameterType;
+
+    /**
+     * @var \App\Model\Product\Unit\Unit|null
+     */
+    public ?Unit $unit = null;
 
     public function __construct()
     {

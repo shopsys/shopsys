@@ -326,6 +326,12 @@ services:
     Shopsys\FrameworkBundle\Model\Product\Unit\UnitGridFactory:
         alias: App\Model\Product\Unit\UnitGridFactory
 
+    Shopsys\FrameworkBundle\Model\Product\Unit\UnitFacade:
+        alias: App\Model\Product\Unit\UnitFacade
+
+    Shopsys\FrameworkBundle\Model\Product\Unit\UnitRepository:
+        alias: App\Model\Product\Unit\UnitRepository
+
     Shopsys\FrameworkBundle\Model\Country\CountryFacade:
         class: 'App\Model\Country\CountryFacade'
 
