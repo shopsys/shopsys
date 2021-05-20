@@ -41,7 +41,7 @@ class PaymentResolver implements ResolverInterface, AliasedInterface
     public function resolver(string $uuid): Payment
     {
         try {
-            return $this->paymentFacade->getByUuid($uuid);
+            return $this->paymentFacade->getEnabledOnDomainByUuid($uuid, $this->domain->getId());
         } catch (PaymentNotFoundException $paymentNotFoundException) {
             throw new UserError($paymentNotFoundException->getMessage());
         }
