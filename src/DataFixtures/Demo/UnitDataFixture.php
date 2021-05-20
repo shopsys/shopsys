@@ -16,6 +16,14 @@ class UnitDataFixture extends AbstractReferenceFixture
 {
     public const UNIT_CUBIC_METERS = 'unit_m3';
     public const UNIT_PIECES = 'unit_pcs';
+    public const UNIT_GRAM = 'unit_gram';
+    public const UNIT_CENTIMETER = 'unit_centimeter';
+    public const UNIT_TON = 'unit_ton';
+    public const UNIT_KILOWATT = 'unit_kilowatt';
+    public const UNIT_KILOGRAM = 'unit_kilogram';
+    public const UNIT_WATT = 'unit_watt';
+    public const UNIT_VOLT = 'unit_volt';
+    public const UNIT_METER = 'unit_meter';
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\Unit\UnitFacade
@@ -23,7 +31,7 @@ class UnitDataFixture extends AbstractReferenceFixture
     private $unitFacade;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Unit\UnitDataFactoryInterface
+     * @var \App\Model\Product\Unit\UnitDataFactory
      */
     private $unitDataFactory;
 
@@ -39,7 +47,7 @@ class UnitDataFixture extends AbstractReferenceFixture
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Unit\UnitFacade $unitFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\Unit\UnitDataFactoryInterface $unitDataFactory
+     * @param \App\Model\Product\Unit\UnitDataFactory $unitDataFactory
      * @param \App\Component\Setting\Setting $setting
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
@@ -72,14 +80,62 @@ class UnitDataFixture extends AbstractReferenceFixture
         }
         $this->createUnit($unitData, self::UNIT_PIECES);
 
+        foreach ($this->domain->getAllLocales() as $locale) {
+            $unitData->name[$locale] = t('g', [], 'dataFixtures', $locale);
+        }
+        $unitData->akeneoCode = 'GRAM';
+        $this->createUnit($unitData, self::UNIT_GRAM);
+
+        foreach ($this->domain->getAllLocales() as $locale) {
+            $unitData->name[$locale] = t('cm', [], 'dataFixtures', $locale);
+        }
+        $unitData->akeneoCode = 'CENTIMETER';
+        $this->createUnit($unitData, self::UNIT_CENTIMETER);
+
+        foreach ($this->domain->getAllLocales() as $locale) {
+            $unitData->name[$locale] = t('t', [], 'dataFixtures', $locale);
+        }
+        $unitData->akeneoCode = 'TON';
+        $this->createUnit($unitData, self::UNIT_TON);
+
+        foreach ($this->domain->getAllLocales() as $locale) {
+            $unitData->name[$locale] = t('kW', [], 'dataFixtures', $locale);
+        }
+        $unitData->akeneoCode = 'KILOWATT';
+        $this->createUnit($unitData, self::UNIT_KILOWATT);
+
+        foreach ($this->domain->getAllLocales() as $locale) {
+            $unitData->name[$locale] = t('kg', [], 'dataFixtures', $locale);
+        }
+        $unitData->akeneoCode = 'KILOGRAM';
+        $this->createUnit($unitData, self::UNIT_KILOGRAM);
+
+        foreach ($this->domain->getAllLocales() as $locale) {
+            $unitData->name[$locale] = t('W', [], 'dataFixtures', $locale);
+        }
+        $unitData->akeneoCode = 'WATT';
+        $this->createUnit($unitData, self::UNIT_WATT);
+
+        foreach ($this->domain->getAllLocales() as $locale) {
+            $unitData->name[$locale] = t('V', [], 'dataFixtures', $locale);
+        }
+        $unitData->akeneoCode = 'VOLT';
+        $this->createUnit($unitData, self::UNIT_VOLT);
+
+        foreach ($this->domain->getAllLocales() as $locale) {
+            $unitData->name[$locale] = t('m', [], 'dataFixtures', $locale);
+        }
+        $unitData->akeneoCode = 'METER';
+        $this->createUnit($unitData, self::UNIT_METER);
+
         $this->setPiecesAsDefaultUnit();
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Unit\UnitData $unitData
+     * @param \App\Model\Product\Unit\UnitData $unitData
      * @param string|null $referenceName
      */
-    private function createUnit(UnitData $unitData, $referenceName = null)
+    private function createUnit(UnitData $unitData, ?string $referenceName = null)
     {
         $unit = $this->unitFacade->create($unitData);
         if ($referenceName !== null) {
@@ -89,7 +145,7 @@ class UnitDataFixture extends AbstractReferenceFixture
 
     private function setPiecesAsDefaultUnit(): void
     {
-        /** @var \Shopsys\FrameworkBundle\Model\Product\Unit\Unit $defaultUnit */
+        /** @var \App\Model\Product\Unit\Unit $defaultUnit */
         $defaultUnit = $this->getReference(self::UNIT_PIECES);
         $this->setting->set(Setting::DEFAULT_UNIT, $defaultUnit->getId());
     }

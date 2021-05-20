@@ -320,6 +320,12 @@ services:
     Shopsys\FrameworkBundle\Model\Product\TopProduct\TopProductFacade:
         alias: App\Model\Product\TopProduct\TopProductFacade
 
+    Shopsys\FrameworkBundle\Model\Product\Unit\UnitDataFactory:
+        alias: App\Model\Product\Unit\UnitDataFactory
+
+    Shopsys\FrameworkBundle\Model\Product\Unit\UnitGridFactory:
+        alias: App\Model\Product\Unit\UnitGridFactory
+
     Shopsys\FrameworkBundle\Model\Country\CountryFacade:
         class: 'App\Model\Country\CountryFacade'
 
