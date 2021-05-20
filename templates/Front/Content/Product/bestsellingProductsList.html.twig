@@ -3,7 +3,7 @@
         <h3 class="box-list__subtitle">{{ 'Nejprodávanější produkty'|trans }}</h3>
 
         <div class="list-products-line js-bestselling-products">
-            <ul class="list-products-line__list js-slider-drawable-list-mobile">
+            <ul class="list-products-line__list js-slider-drawable-list-mobile" data-breakpoint="mobile">
                 {% for product in products %}
                     <li class="list-products-line__item js-bestselling-product{% if (loop.index > maxShownProducts )%} display-none{% endif %}">
                         <a href="{{ url('front_product_detail', {'id': product.id}) }}" class="list-products-line__item__block">

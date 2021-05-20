@@ -23,7 +23,11 @@ img {
     &__header {
         background-color: @color-primary;
 
-        &--with-gap {
+        @media @query-lg {
+            margin-bottom: 16px;
+        }
+
+        &--big-gap {
             margin-bottom: 18px;
 
             @media @query-lg {
