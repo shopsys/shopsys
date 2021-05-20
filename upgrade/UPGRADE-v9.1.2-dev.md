@@ -15,3 +15,6 @@ There you can find links to upgrade notes for other versions too.
 - update composer dependency `composer/composer` in your project ([#2313](https://github.com/shopsys/shopsys/pull/2313))
     - versions bellow `1.10.22` has [reported security issue](https://github.com/composer/composer/security/advisories/GHSA-h5h8-pc6h-jvvx)
     - see #project-base-diff to update your project
+
+- drop usage of Doctrine\Common\Cache\PhpFileCache as framework annotation cache ([#2326](https://github.com/shopsys/shopsys/pull/2326))
+    - see #project-base-diff to update your project
