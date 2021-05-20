@@ -15,39 +15,6 @@
 
 {% block main_content %}
     {% set domain = getDomain() %}
-    <div class="web__line">
-        <div class="web__container">
-            <div class="box-media">
-                <div class="box-media__wrap">
-                    <div class="box-media__picture">
-                        <picture>
-                            <source srcset="{{ asset('public/frontend/images/kreslo_2x.png') }} 2x, {{ asset('public/frontend/images/kreslo.png') }} 1x" />
-                            <img
-                                class="box-media__img"
-                                loading="lazy"
-                                src="{{ imgLazyloadPlaceholder }}"
-                                data-src="{{ asset('public/frontend/images/kreslo.png') }}"
-                                alt="{{ 'Máme pro vás volné místo'|trans }}">
-                        </picture>
-                    </div>
-                    <div class="box-media__text">
-                        <h2 class="box-media__heading">{{ 'Máme pro vás volné místo'|trans }}</h2>
-                        <p class="box-media__desc">
-                            {{ 'Jsme stabilní společnost, přední prodejce nábytku v Evropě.
-                            Neustále hledáme nové talenty i odborníky se zkušenostmi. Vyberte si z nabídky pracovních příležitostí.'|trans }}
-                        </p>
-                        <a
-                            class="btn"
-                            href="https://jobs.shopsys.com/"
-                            target="_blank"
-                        >
-                            {{ 'Prohlédnout nabídky'|trans }}
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
     {% cache constant('App\\Twig\\Cache\\TwigCacheFacade::SLIGHTLY_CHANGING_PARTS_ON_HOMEPAGE') {lifetime:getCacheLifetimeByHours(4), domainId:getDomain().id} %}
         {{ render(controller('App\\Controller\\Front\\HomepageController:slightlyChangingPartsOnHomepageAction'))|spaceless }}
     {% endcache %}
