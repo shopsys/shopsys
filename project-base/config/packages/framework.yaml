@@ -1,6 +1,7 @@
 framework:
     annotations:
-        cache: shopsys.framework.cache_driver.annotations_cache
+        cache: file
+        file_cache_dir: '%kernel.cache_dir%/annotations'
     secret: "%secret%"
     router:
         strict_requirements: true
