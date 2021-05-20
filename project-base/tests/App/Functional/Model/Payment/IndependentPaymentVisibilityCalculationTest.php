@@ -105,12 +105,29 @@ class IndependentPaymentVisibilityCalculationTest extends TransactionFunctionalT
         );
     }
 
+    public function testIsNotIndependentlyVisibleWhenDeleted(): void
+    {
+        $enabledForDomains = [
+            self::FIRST_DOMAIN_ID => true,
+            self::SECOND_DOMAIN_ID => true,
+        ];
+        $payment = $this->getDefaultPayment($enabledForDomains, false, true);
+
+        $this->em->persist($payment);
+        $this->em->flush();
+
+        $this->assertFalse(
+            $this->independentPaymentVisibilityCalculation->isIndependentlyVisible($payment, self::FIRST_DOMAIN_ID)
+        );
+    }
+
     /**
      * @param bool[] $enabledForDomains
      * @param bool $hidden
+     * @param bool $deleted
      * @return \App\Model\Payment\Payment
      */
-    public function getDefaultPayment($enabledForDomains, $hidden)
+    public function getDefaultPayment($enabledForDomains, $hidden, bool $deleted = false)
     {
         $paymentData = $this->paymentDataFactory->create();
         $names = [];
@@ -121,7 +138,13 @@ class IndependentPaymentVisibilityCalculationTest extends TransactionFunctionalT
         $paymentData->hidden = $hidden;
         $paymentData->enabled = $this->getFilteredEnabledForDomains($enabledForDomains);
 
-        return new Payment($paymentData);
+        $payment = new Payment($paymentData);
+
+        if ($deleted) {
+            $payment->markAsDeleted();
+        }
+
+        return $payment;
     }
 
     /**
