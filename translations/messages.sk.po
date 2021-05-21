@@ -1000,12 +1000,6 @@ msgstr ""
 msgid "Editace hodnoty parametru typu barva"
 msgstr ""
 
-msgid "Editace měrné jednotky"
-msgstr ""
-
-msgid "Editace měrné jednotky:"
-msgstr ""
-
 msgid "Editace notifikační lišty"
 msgstr ""
 
@@ -1595,15 +1589,6 @@ msgid "Místo"
 msgstr ""
 
 msgid "Měrná jednotka"
-msgstr ""
-
-msgid "Měrná jednotka (Akeneo Kód)"
-msgstr ""
-
-msgid "Měrná jednotka <strong><a href=\"{{ url }}\">{{ parameterUnit.name }}</a></strong> je úspěšně upravena."
-msgstr ""
-
-msgid "Měrné jednotky"
 msgstr ""
 
 msgid "Město"
@@ -3871,9 +3856,6 @@ msgstr "pán"
 msgid "paní/slečna"
 msgstr "pani/slečna"
 
-msgid "parameterUnit"
-msgstr ""
-
 msgid "parameterValue"
 msgstr ""
 
@@ -3980,9 +3962,6 @@ msgid "Údaje"
 msgstr "Údaje"
 
 msgid "Úprava hodnoty parametru typu barva - %name%"
-msgstr ""
-
-msgid "Úprava měrné jednotky - %name%"
 msgstr ""
 
 msgid "ČSOB<br> Č.ú. 117983223 / 0300<br> IBAN: CZ54 0300 0000 0001 1798 3223 <br> BIC / SWIFT: CEKOCZPP"

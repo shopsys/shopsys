@@ -125,9 +125,6 @@ class SideMenuConfigurationSubscriber implements EventSubscriberInterface
         $storeMenu->addChild('new_store', ['route' => 'admin_store_new', 'display' => false, 'label' => t('New store')]);
         $storeMenu->addChild('edit_store', ['route' => 'admin_store_edit', 'display' => false, 'label' => t('Edit store')]);
 
-        $parameterUnitMenu = $listMenu->addChild('parameter_units', ['route' => 'admin_parameterunit_list', 'label' => t('Měrné jednotky')]);
-        $parameterUnitMenu->addChild('parameter_units_edit', ['route' => 'admin_parameterunit_edit', 'display' => false, 'label' => t('Editace položky')]);
-
         $parameterValueMenu = $listMenu->addChild('parameter_values', ['route' => 'admin_parametervalue_list', 'label' => t('Hodnota parametru typu barva')]);
         $parameterValueMenu->addChild('parameter_values_edit', ['route' => 'admin_parametervalue_edit', 'display' => false, 'label' => t('Editace hodnoty parametru typu barva')]);
 
