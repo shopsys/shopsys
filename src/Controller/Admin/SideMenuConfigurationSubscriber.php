@@ -120,6 +120,7 @@ class SideMenuConfigurationSubscriber implements EventSubscriberInterface
 
         $listMenu = $settingsMenu->getChild('lists');
         $listMenu->removeChild('availabilities');
+        $listMenu->getChild('units')->setLabel(t('Measurement units'));
 
         $storeMenu = $listMenu->addChild('stores', ['route' => 'admin_store_list', 'label' => t('Stores')]);
         $storeMenu->addChild('new_store', ['route' => 'admin_store_new', 'display' => false, 'label' => t('New store')]);

@@ -94,6 +94,9 @@ msgstr ""
 msgid "Akce"
 msgstr ""
 
+msgid "Akeneo code"
+msgstr "Akeneo kód"
+
 msgid "Aktivní"
 msgstr ""
 
@@ -1000,8 +1003,11 @@ msgstr ""
 msgid "Main image"
 msgstr ""
 
-msgid "Mastercard"
-msgstr ""
+msgid "Measurement units"
+msgstr "Měrné jednotky"
+
+msgid "Measurement units overview"
+msgstr "Přehled měrných jednotek"
 
 msgid "Menu"
 msgstr "Menu"
@@ -1046,9 +1052,6 @@ msgid "Máte další otázky?"
 msgstr ""
 
 msgid "Místo"
-msgstr ""
-
-msgid "Měrná jednotka"
 msgstr ""
 
 msgid "Město"
@@ -3014,9 +3017,6 @@ msgid "Špatné přihlašovací údaje"
 msgstr ""
 
 msgid "Žádná hodnota parameteru typu barva není vytvořena."
-msgstr ""
-
-msgid "Žádná měrná jednotka není vytvořena."
 msgstr ""
 
 msgid "Žádné výsledky vyhledávání"

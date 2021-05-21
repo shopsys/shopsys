@@ -1669,6 +1669,9 @@ msgstr ""
 msgid "Using a steamer Concept is surprisingly versatile. It can be used to prepare appetizers, soups, meat, fish, vegetables, vegetarian dishes, dumplings, rice, fruit and desserts."
 msgstr ""
 
+msgid "V"
+msgstr ""
+
 msgid "VERBATIM 1TB external HDD 2,5\" USB 3.0 GT SuperSpeed red"
 msgstr ""
 
@@ -1676,6 +1679,9 @@ msgid "Video"
 msgstr ""
 
 msgid "Viewfinder type"
+msgstr ""
+
+msgid "W"
 msgstr ""
 
 msgid "Watch broadcast in stunning Full HD, while at the same stylish devices work."
@@ -1750,16 +1756,31 @@ msgstr ""
 msgid "classic"
 msgstr ""
 
+msgid "cm"
+msgstr ""
+
 msgid "fits into VP812x VP9520"
 msgstr ""
 
 msgid "flash disk"
 msgstr ""
 
+msgid "g"
+msgstr ""
+
 msgid "hardcover"
 msgstr ""
 
 msgid "inkjet"
+msgstr ""
+
+msgid "kW"
+msgstr ""
+
+msgid "kg"
+msgstr ""
+
+msgid "m"
 msgstr ""
 
 msgid "media 210MB, 24min., writing speed 24x, slim box"
@@ -1784,6 +1805,9 @@ msgid "pcs"
 msgstr ""
 
 msgid "plazmová"
+msgstr ""
+
+msgid "t"
 msgstr ""
 
 msgid "white"

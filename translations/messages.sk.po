@@ -337,6 +337,9 @@ msgstr ""
 msgid "Akce"
 msgstr ""
 
+msgid "Akeneo code"
+msgstr ""
+
 msgid "Aktivní"
 msgstr ""
 
@@ -1522,6 +1525,12 @@ msgstr "\nMatná"
 msgid "Matné přední plochy kuchyně <strong>TOUCH</strong> jsou dostupné v mnoha dekorech. Díky tomu si můžete vybrat kuchyni přesně na míru vašemu interiéru. Materiál povrchu je nejen velmi estetický, ale též příjemný na dotek a snadný na údržbu. Čistý minimalistický design podpoří bezúchytkové řešení LINE N. Více úložného prostoru poskytnou korpusy generace XL, které je možné si pro svou kuchyni zvolit."
 msgstr "Matné predné plochy kuchyne <strong>TOUCH</strong> sú dostupné v mnohých dekoroch. Vďaka tomu si môžete vybrať kuchyňu presne na mieru vášmu interiéru. Materiál povrchu je nielen veľmi estetický, ale tiež príjemný na dotyk a jednoduchý na údržbu. Čistý minimalistický dizajn podporí bezúchytkové riešenie LINE N. Viac úložného priestoru poskytnú korpusy generácie XL, ktoré si možno pre svoju kuchyňu zvoliť."
 
+msgid "Measurement units"
+msgstr ""
+
+msgid "Measurement units overview"
+msgstr ""
+
 msgid "Menu"
 msgstr ""
 
@@ -1586,9 +1595,6 @@ msgid "Máte další otázky?"
 msgstr "Máte ďalšie otázky?"
 
 msgid "Místo"
-msgstr ""
-
-msgid "Měrná jednotka"
 msgstr ""
 
 msgid "Město"
@@ -4022,9 +4028,6 @@ msgid "Šířka"
 msgstr "Šírka"
 
 msgid "Žádná hodnota parameteru typu barva není vytvořena."
-msgstr ""
-
-msgid "Žádná měrná jednotka není vytvořena."
 msgstr ""
 
 msgid "Žádné výsledky vyhledávání"
