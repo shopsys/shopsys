@@ -3,6 +3,8 @@
 namespace Shopsys\FrameworkBundle\Model\Slider;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Query;
+use Shopsys\FrameworkBundle\Component\Doctrine\SortableNullsWalker;
 use Shopsys\FrameworkBundle\Model\Slider\Exception\SliderItemNotFoundException;
 
 class SliderItemRepository
@@ -68,9 +70,18 @@ class SliderItemRepository
      */
     public function getAllVisibleByDomainId($domainId)
     {
-        return $this->getSliderItemRepository()->findBy([
-            'domainId' => $domainId,
-            'hidden' => false,
-        ]);
+        $queryBuilder = $this->em->createQueryBuilder()
+            ->select('si')
+            ->from(SliderItem::class, 'si')
+            ->where('si.domainId = :domainId')
+            ->setParameter('domainId', $domainId)
+            ->andWhere('si.hidden = false')
+            ->orderBy('si.position')
+            ->addOrderBy('si.id');
+
+        return $queryBuilder
+            ->getQuery()
+            ->setHint(Query::HINT_CUSTOM_OUTPUT_WALKER, SortableNullsWalker::class)
+            ->execute();
     }
 }
