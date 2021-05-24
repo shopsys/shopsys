@@ -5,8 +5,15 @@
 .box-slider {
     display: block;
     position: relative;
-    padding: 0;
-    margin-bottom: 32px;
+    overflow: hidden;
+    margin: 0 -@web-padding;
+    padding: 0 @web-padding 32px;
+
+    @media @query-lg {
+        overflow: visible;
+        margin: 0;
+        padding: 0 0 32px;
+    }
 
     @media @query-vl {
         display: flex;
