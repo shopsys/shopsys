@@ -26,7 +26,7 @@
     &__item {
         width: calc(~"@{calc-base}/@{list-products-item-count-sm}");
         padding-left: @list-products-item-gap;
-        margin-bottom: 24px;
+        padding-top: 24px;
 
         @media @query-md {
             width: calc(~"@{calc-base}/@{list-products-item-count-md}");
@@ -35,7 +35,7 @@
         @media @query-lg {
             width: calc(~"@{calc-base}/@{list-products-item-count-lg}");
 
-            border-bottom: 1px solid @color-border;
+            border-top: 1px solid @color-border;
         }
 
         @media @query-xl {
@@ -180,6 +180,8 @@
                 border-radius: 0 0 @radius @radius;
 
                 &__in {
+                    display: flex;
+                    flex-direction: column;
                     padding: 10px;
 
                     background-color: @color-grey-very-light;

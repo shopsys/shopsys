@@ -21,7 +21,7 @@
     border: 0;
     border-radius: @btn-border-radius;
     color: @btn-color;
-    background: @btn-bg;
+    background-color: @btn-bg;
     cursor: pointer;
     text-decoration: none;
     font-size: @font-size;
@@ -31,26 +31,40 @@
 
     &:hover {
         color: @btn-color-hover;
-        background: @btn-bg-hover;
+        background-color: @btn-bg-hover;
         text-decoration: none;
     }
 }
 
 //// Modifications - color
 .btn {
-    // call to action button
-    @btn-success-color: @color-base;
-    @btn-success-color-hover: @color-base;
-    @btn-success-bg: @color-add-light;
-    @btn-success-bg-hover: @color-f;
+    @btn-primary-color: @color-f;
+    @btn-primary-color-hover: @color-f;
+    @btn-primary-bg: @color-primary;
+    @btn-primary-bg-hover: darken(@color-primary, 5%);
 
-    &--secondary {
-        color: @btn-success-color;
-        background: @btn-success-bg;
+    &--primary {
+        color: @btn-primary-color;
+        background-color: @btn-primary-bg;
 
         &:hover {
-            color: @btn-success-color-hover;
-            background: @btn-success-bg-hover;
+            color: @btn-primary-color-hover;
+            background-color: @btn-primary-bg-hover;
+        }
+    }
+
+    @btn-secondary-color: @color-base;
+    @btn-secondary-color-hover: @color-base;
+    @btn-secondary-bg: @color-add-light;
+    @btn-secondary-bg-hover: @color-f;
+
+    &--secondary {
+        color: @btn-secondary-color;
+        background-color: @btn-secondary-bg;
+
+        &:hover {
+            color: @btn-secondary-color-hover;
+            background-color: @btn-secondary-bg-hover;
         }
     }
 
@@ -73,6 +87,10 @@
         line-height: 23px;
 
         font-size: @font-size-small;
+    }
+
+    &--big-radius {
+        border-radius: @radius;
     }
 }
 

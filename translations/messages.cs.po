@@ -2969,7 +2969,7 @@ msgid "{1}Load next %loadNextCount% item|[2,Inf]Load next %loadNextCount% items"
 msgstr "{1}Načíst další položku|[2,4]Načíst další %loadNextCount% položky|[5,Inf]Načíst dalších %loadNextCount% položek"
 
 msgid "{1}Load next %loadNextCount% product|[2,Inf]Load next %loadNextCount% products"
-msgstr "[1,4]Načíst další %loadNextCount% zboží|[5,Inf]Načíst dalších %loadNextCount% zboží"
+msgstr "{1}Načíst další %loadNextCount% produkt|[2,4]Načíst další %loadNextCount% produkty|[5,Inf]Načíst dalších %loadNextCount% produktů"
 
 msgid "{1}Načíst další %loadNextCount% článek|[2,4]Načíst další %loadNextCount% články|[5,Inf]Načíst dalších %loadNextCount% článků"
 msgstr ""
