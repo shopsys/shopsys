@@ -4,6 +4,6 @@
         <i class="svg svg-arrow"></i>
     </span>
     <div id="{{ parameterForm.vars.id }}" class="box-filter__choice__inputs">
-            {{ form_row(parameterForm) }}
+        {{ form_row(parameterForm, { attr: {'data-filter-name-with-entity-id': filterForm.parameters.vars.id ~ '_' ~ parameterId ~ '_' ~ parameterValueForm.vars.value }}) }}
     </div>
 </div>

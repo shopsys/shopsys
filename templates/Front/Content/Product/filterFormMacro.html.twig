@@ -2,6 +2,8 @@
     {{ form_start(filterForm, { action: actionUrl }) }}
         {% form_theme filterForm 'Front/Content/Product/filterFormTheme.html.twig' %}
 
+        {% import 'Front/Content/Product/selectedFilterBoxMacro.html.twig' as selectedFilterBox %}
+
         {% set isSearch = page == 'search' %}
         {% set paramsVisibleCount = 5 %}
 
@@ -13,13 +15,7 @@
             />
         {% endif %}
 
-        <div class="box-filter__header">
-            <h2 class="box-filter__heading">{{ 'Filtr'|trans }}</h2>
-            <a class="box-filter__reset btn btn-no-style js-product-filter-reset-button" href="{{ resetUrl }}">
-                <span class="box-filter__reset__text">{{ 'Zrušit filtry'|trans }}</span>
-                <i class="box-filter__reset__icon svg svg-remove"></i>
-            </a>
-        </div>
+        {{ selectedFilterBox.filterBox(filterForm, resetUrl) }}
 
         {% if filterForm.flags is empty %}
             {% do filterForm.flags.setRendered %}
@@ -33,7 +29,7 @@
                         {% set flagId = flagForm.vars.value %}
 
                         <div class="form-choice box-filter__choice__input">
-                            {{ form_widget(flagForm, { attr: { class: "css-checkbox" } }) }}
+                            {{ form_widget(flagForm, { attr: { class: "css-checkbox", 'data-filter-name-with-entity-id': filterForm.flags.vars.id ~ '_' ~ flagForm.vars.value } }) }}
                             <label class="css-checkbox__image" for="{{ flagForm.vars.id }}">
                                 <a href="{{ getUrlByFlagValue(productFilterSetup, flagId, flagChecked) }}"
                                    class="flag-icon {{ getFlagIconClass(flagId) }} js-product-filter-links"
@@ -58,7 +54,7 @@
 
                     {% if productFilterCountData is not null %}
                         <div class="form-choice box-filter__choice__input">
-                            {{ form_widget(filterForm.inStock, { attr: { class: "css-checkbox" } }) }}
+                            {{ form_widget(filterForm.inStock, { attr: { class: "css-checkbox", 'data-filter-name-with-entity-id': filterForm.inStock.vars.id } }) }}
 
                             {% set inStockChecked = filterForm.inStock.vars.checked %}
                             {% set stockId = filterForm.inStock.vars.value %}
@@ -141,7 +137,7 @@
                         <div class="form-choice js-form-choice box-filter__choice__input
                             {{ loop.index > paramsVisibleCount and not brandForm.vars.checked ? ' js-form-choice--collapsing display-none' }}
                         ">
-                            {{ form_widget(brandForm, { attr: { class: 'css-checkbox'} }) }}
+                            {{ form_widget(brandForm, { attr: { class: 'css-checkbox', 'data-filter-name-with-entity-id': filterForm.brands.vars.id ~ '_' ~ brandForm.vars.value } }) }}
                             <label class="css-checkbox__image" for="{{ brandForm.vars.id }}">
                                 <a href="{{ getUrlByBrandValue(productFilterSetup, brandId, brandChecked) }}"
                                    class="js-product-filter-links"

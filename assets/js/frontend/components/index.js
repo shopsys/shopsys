@@ -3,6 +3,7 @@ import './AjaxMoreLoader';
 import './CategoryPanel';
 import './cookieInit';
 import './filterAllNodes';
+import './filterBox';
 import './pushReloadState';
 import './HoverIntent';
 import './honeyPot';

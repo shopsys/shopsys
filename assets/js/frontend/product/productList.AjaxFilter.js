@@ -9,6 +9,7 @@ export default class ProductListAjaxFilter {
         this.$productsWithControls = $filter.filterAllNodes('.js-product-list-ajax-filter-products-with-controls');
         this.$productFilterForm = $filter.filterAllNodes('form[name="product_filter_form"]');
         this.$showResultsButton = $filter.filterAllNodes('.js-product-filter-show-result-button');
+        this.$selectedFiltersBox = $filter.filterAllNodes('#js-selected-filters-box');
         this.$resetFilterButton = $filter.filterAllNodes('.js-product-filter-reset-button');
         this.requestTimer = null;
         this.requestDelay = 1000;
@@ -145,6 +146,7 @@ export default class ProductListAjaxFilter {
                 productListAjaxFilter.updateFilterLinks($wrappedData);
                 productListAjaxFilter.updateBoxFilterOpener($wrappedData);
                 productListAjaxFilter.updateFiltersDisabled();
+                productListAjaxFilter.updateSelectedFilters($wrappedData);
 
                 // if .js-ready-category-seo-mix-values has been found, ProductListReadyCategorySeoMix.js will take care about changing URL
                 const seoMixFound = $wrappedData.filterAllNodes('.js-ready-category-seo-mix-values').length > 0;
@@ -160,6 +162,12 @@ export default class ProductListAjaxFilter {
     static willFilterZeroProducts ($countElement) {
         return $countElement.html().indexOf('(0)') !== -1;
     }
+
+    updateSelectedFilters ($wrappedData) {
+        const $newSelectedFiltersBox = $wrappedData.filterAllNodes('#js-selected-filters-box');
+        this.$selectedFiltersBox.html($newSelectedFiltersBox.html());
+        (new Register()).registerNewContent(this.$selectedFiltersBox);
+    };
 
     static init ($container) {
         // eslint-disable-next-line no-new
