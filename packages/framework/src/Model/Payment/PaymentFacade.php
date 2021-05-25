@@ -307,4 +307,14 @@ class PaymentFacade
     {
         return $this->paymentRepository->getOneByUuid($uuid);
     }
+
+    /**
+     * @param string $uuid
+     * @param int $domainId
+     * @return \Shopsys\FrameworkBundle\Model\Payment\Payment
+     */
+    public function getEnabledOnDomainByUuid(string $uuid, int $domainId): Payment
+    {
+        return $this->paymentRepository->getEnabledOnDomainByUuid($uuid, $domainId);
+    }
 }

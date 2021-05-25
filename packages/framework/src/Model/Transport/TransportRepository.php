@@ -127,4 +127,29 @@ class TransportRepository
 
         return $transport;
     }
+
+    /**
+     * @param string $uuid
+     * @param int $domainId
+     * @return \Shopsys\FrameworkBundle\Model\Transport\Transport
+     */
+    public function getEnabledOnDomainByUuid(string $uuid, int $domainId): Transport
+    {
+        $queryBuilder = $this->getTransportRepository()->createQueryBuilder('t')
+            ->join(TransportDomain::class, 'td', Join::WITH, 't.id = td.transport AND td.domainId = :domainId')
+            ->setParameter('domainId', $domainId)
+            ->where('t.uuid = :uuid')
+            ->setParameter('uuid', $uuid)
+            ->andWhere('t.deleted = false')
+            ->andWhere('td.enabled = true')
+            ->andWhere('t.hidden = false');
+
+        $transport = $queryBuilder->getQuery()->getOneOrNullResult();
+
+        if ($transport === null) {
+            throw new TransportNotFoundException('Transport with UUID ' . $uuid . ' does not exist.');
+        }
+
+        return $transport;
+    }
 }

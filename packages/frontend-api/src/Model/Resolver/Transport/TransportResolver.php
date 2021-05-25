@@ -41,7 +41,7 @@ class TransportResolver implements ResolverInterface, AliasedInterface
     public function resolver(string $uuid): Transport
     {
         try {
-            return $this->transportFacade->getByUuid($uuid);
+            return $this->transportFacade->getEnabledOnDomainByUuid($uuid, $this->domain->getId());
         } catch (TransportNotFoundException $transportNotFoundException) {
             throw new UserError($transportNotFoundException->getMessage());
         }
