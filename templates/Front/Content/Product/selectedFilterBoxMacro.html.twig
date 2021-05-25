@@ -1,57 +1,52 @@
 {% macro filterBox(filterForm, resetUrl) %}
     {% set domainId = getDomain().id %}
-    <div id="js-selected-filters-box" class="box-filter__top">
+    <div class="box-filter__block box-filter__block--with-gap" id="js-selected-filters-box">
         <div class="box-filter__selected">
-            <div class="box-filter__header">
-                <h2 class="box-filter__heading">{{ 'Filtr'|trans }}</h2>
-                <a class="box-filter__reset btn btn-no-style js-product-filter-reset-button" href="{{ resetUrl }}">
-                    <span class="box-filter__reset__text">{{ 'Zrušit filtry'|trans }}</span>
-                    <i class="box-filter__reset__icon svg svg-remove"></i>
-                </a>
-            </div>
+            <h3 class="box-filter__title">{{ 'Vybrané filtry'|trans }}</h3>
 
-            {% if filterForm.minimalPrice.vars.data|length > 0 %}
-                <span class="box-filter__subtitle">{{ 'Cena od'|trans }}</span>
-                {{ _self.filterRow(filterForm.minimalPrice.vars.data|formatNumber ~ ' ' ~ currencySymbolByDomainId(domainId), filterForm.minimalPrice.vars.id, true) }}
-            {% endif %}
-            {% if filterForm.maximalPrice.vars.data|length > 0 %}
-                <span class="box-filter__subtitle">{{ 'Cena do'|trans }}</span>
-                {{ _self.filterRow(filterForm.maximalPrice.vars.data|formatNumber ~ ' ' ~ currencySymbolByDomainId(domainId), filterForm.maximalPrice.vars.id, true) }}
-            {% endif %}
-            {% if filterForm.brands.vars.data|length > 0 %}
-                <span class="box-filter__subtitle">{{ 'Výrobce'|trans }}</span>
-                {% for brand in filterForm.brands.vars.data %}
-                    {{ _self.filterRow(brand.name, filterForm.brands.vars.id ~ '_' ~ brand.id) }}
-                {% endfor %}
-            {% endif %}
-            {% if filterForm.flags.vars.data|length > 0 %}
-                <span class="box-filter__subtitle">{{ 'Flags'|trans }}</span>
-                {% for flag in filterForm.flags.vars.data %}
-                    {{ _self.filterRow(flag.name, filterForm.flags.vars.id ~ '_' ~ flag.id) }}
-                {% endfor %}
-            {% endif %}
-            {% if filterForm.inStock.vars.data %}
-                <span class="box-filter__subtitle">{{ 'Skladovost'|trans }}</span>
-                {{ _self.filterRow('Products in stock only'|trans, filterForm.inStock.vars.id) }}
-            {% endif %}
-            {% if filterForm.parameters.vars.data|length > 0 %}
-                {% for parameterFilterData in filterForm.parameters.vars.data %}
-                    {% if parameterFilterData.values|length > 0 %}
-                        {% set parameter = parameterFilterData.parameter %}
-                        <span class="box-filter__subtitle">{{ parameter.name }}</span>
-                        {% for parameterValue in parameterFilterData.values %}
-                            {{ _self.filterRow(parameterValue.text, filterForm.parameters.vars.id ~ '_' ~ parameter.id ~ '_' ~ parameterValue.id) }}
-                        {% endfor %}
-                    {% endif %}
-                {% endfor %}
-            {% endif %}
+            <ul class="box-filter__selected__list">
+                {% if filterForm.minimalPrice.vars.data|length > 0 %}
+                    {{ _self.filterRow(filterForm.minimalPrice.vars.data|formatNumber ~ ' ' ~ currencySymbolByDomainId(domainId), filterForm.minimalPrice.vars.id, true) }}
+                {% endif %}
+                {% if filterForm.maximalPrice.vars.data|length > 0 %}
+                    {{ _self.filterRow(filterForm.maximalPrice.vars.data|formatNumber ~ ' ' ~ currencySymbolByDomainId(domainId), filterForm.maximalPrice.vars.id, true) }}
+                {% endif %}
+                {% if filterForm.brands.vars.data|length > 0 %}
+                    {% for brand in filterForm.brands.vars.data %}
+                        {{ _self.filterRow(brand.name, filterForm.brands.vars.id ~ '_' ~ brand.id) }}
+                    {% endfor %}
+                {% endif %}
+                {% if filterForm.flags.vars.data|length > 0 %}
+                    {% for flag in filterForm.flags.vars.data %}
+                        {{ _self.filterRow(flag.name, filterForm.flags.vars.id ~ '_' ~ flag.id) }}
+                    {% endfor %}
+                {% endif %}
+                {% if filterForm.inStock.vars.data %}
+                    {{ _self.filterRow('Products in stock only'|trans, filterForm.inStock.vars.id) }}
+                {% endif %}
+                {% if filterForm.parameters.vars.data|length > 0 %}
+                    {% for parameterFilterData in filterForm.parameters.vars.data %}
+                        {% if parameterFilterData.values|length > 0 %}
+                            {% set parameter = parameterFilterData.parameter %}
+                            {% for parameterValue in parameterFilterData.values %}
+                                {{ _self.filterRow(parameterValue.text, filterForm.parameters.vars.id ~ '_' ~ parameter.id ~ '_' ~ parameterValue.id) }}
+                            {% endfor %}
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+            </ul>
+
+            <a class="box-filter__reset js-product-filter-reset-button" href="{{ resetUrl }}">
+                <span class="box-filter__reset__text">{{ 'Zrušit vše'|trans }}</span>
+                <i class="svg svg-remove"></i>
+            </a>
         </div>
     </div>
 {% endmacro %}
 
 {% macro filterRow(formValueName, formId, isRangeFilter) %}
-    <div class="box-filter__selected__item">
+    <li class="box-filter__selected__list__item">
         {{ formValueName }}
-        <i class="svg svg-remove {% if isRangeFilter %}js-filter-box-uncheck-range{% else %}js-selected-filters-box-uncheck{% endif %}" data-filter-form-id="{{ formId }}"></i>
-    </div>
+        <i class="svg svg-remove-thin {% if isRangeFilter %}js-filter-box-uncheck-range{% else %}js-selected-filters-box-uncheck{% endif %}" data-filter-form-id="{{ formId }}"></i>
+    </li>
 {% endmacro %}
