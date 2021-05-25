@@ -46,7 +46,7 @@ use Shopsys\FrameworkBundle\Model\Product\ProductVisibility;
  * @method markProductsForExport(\App\Model\Product\Product[] $products)
  * @method \App\Model\Product\Product[] getProductsWithBrand(\App\Model\Product\Brand\Brand $brand)
  * @method \App\Model\Product\Product[] getProductsWithFlag(\App\Model\Product\Flag\Flag $flag)
- * @method \App\Model\Product\Product[] getProductsWithUnit(\Shopsys\FrameworkBundle\Model\Product\Unit\Unit $unit)
+ * @method \App\Model\Product\Product[] getProductsWithUnit(\App\Model\Product\Unit\Unit $unit)
  * @property \App\Component\Doctrine\QueryBuilderExtender $queryBuilderExtender
  * @method array getProductsWithParameter(\App\Model\Product\Parameter\Parameter $parameter)
  * @property \App\Model\Product\Filter\ProductFilterRepository $productFilterRepository

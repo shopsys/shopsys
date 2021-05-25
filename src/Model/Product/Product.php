@@ -39,6 +39,8 @@ use Shopsys\FrameworkBundle\Model\Product\ProductData as BaseProductData;
  * @property \App\Model\Product\ProductDomain[]|\Doctrine\Common\Collections\Collection $domains
  * @method \App\Model\Product\ProductDomain getProductDomain(int $domainId)
  * @property \App\Model\Product\Flag\Flag[]|\Doctrine\Common\Collections\Collection $flags
+ * @property \App\Model\Product\Unit\Unit $unit
+ * @method \App\Model\Product\Unit\Unit getUnit()
  */
 class Product extends BaseProduct
 {

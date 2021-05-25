@@ -6,7 +6,7 @@ namespace Tests\App\Functional\Model\Unit;
 
 use App\DataFixtures\Demo\ProductDataFixture;
 use App\DataFixtures\Demo\UnitDataFixture;
-use Shopsys\FrameworkBundle\Model\Product\Unit\UnitData;
+use App\Model\Product\Unit\UnitData;
 use Tests\App\Test\TransactionFunctionalTestCase;
 use Zalas\Injector\PHPUnit\Symfony\TestCase\SymfonyTestContainer;
 

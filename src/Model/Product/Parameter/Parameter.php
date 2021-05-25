@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Model\Product\Parameter;
 
 use App\Model\Product\Parameter\Exception\DeprecatedParameterPropertyException;
-use App\Model\Product\Parameter\Unit\ParameterUnit;
+use App\Model\Product\Unit\Unit;
 use Doctrine\ORM\Mapping as ORM;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter as BaseParameter;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterData as BaseParameterData;
@@ -59,17 +59,17 @@ class Parameter extends BaseParameter
     protected $orderingPriority;
 
     /**
-     * @var \App\Model\Product\Parameter\Unit\ParameterUnit|null
-     * @ORM\ManyToOne(targetEntity="App\Model\Product\Parameter\Unit\ParameterUnit")
-     * @ORM\JoinColumn(nullable=true, name="parameter_unit_id", referencedColumnName="id")
-     */
-    protected $parameterUnit;
-
-    /**
      * @var string
      * @ORM\Column(type="string", length=100, nullable=false)
      */
     protected $parameterType;
+
+    /**
+     * @var \App\Model\Product\Unit\Unit|null
+     * @ORM\ManyToOne(targetEntity="App\Model\Product\Unit\Unit")
+     * @ORM\JoinColumn(nullable=true, name="unit_id", referencedColumnName="id")
+     */
+    protected ?Unit $unit;
 
     /**
      * @param \App\Model\Product\Parameter\ParameterData $parameterData
@@ -99,8 +99,8 @@ class Parameter extends BaseParameter
         $this->akeneoCode = $parameterData->akeneoCode;
         $this->akeneoType = $parameterData->akeneoType;
         $this->orderingPriority = $parameterData->orderingPriority;
-        $this->parameterUnit = $parameterData->parameterUnit;
         $this->parameterType = $parameterData->parameterType;
+        $this->unit = $parameterData->unit;
     }
 
     /**
@@ -136,11 +136,11 @@ class Parameter extends BaseParameter
     }
 
     /**
-     * @return \App\Model\Product\Parameter\Unit\ParameterUnit|null
+     * @return \App\Model\Product\Unit\Unit|null
      */
-    public function getParameterUnit(): ?ParameterUnit
+    public function getUnit(): ?Unit
     {
-        return $this->parameterUnit;
+        return $this->unit;
     }
 
     /**

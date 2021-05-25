@@ -94,6 +94,9 @@ msgstr ""
 msgid "Akce"
 msgstr ""
 
+msgid "Akeneo code"
+msgstr "Akeneo kód"
+
 msgid "Aktivní"
 msgstr ""
 
@@ -640,12 +643,6 @@ msgstr ""
 msgid "Editace hodnoty parametru typu barva"
 msgstr ""
 
-msgid "Editace měrné jednotky"
-msgstr ""
-
-msgid "Editace měrné jednotky:"
-msgstr ""
-
 msgid "Editace notifikační lišty"
 msgstr ""
 
@@ -1006,8 +1003,11 @@ msgstr ""
 msgid "Main image"
 msgstr ""
 
-msgid "Mastercard"
-msgstr ""
+msgid "Measurement units"
+msgstr "Měrné jednotky"
+
+msgid "Measurement units overview"
+msgstr "Přehled měrných jednotek"
 
 msgid "Menu"
 msgstr "Menu"
@@ -1052,18 +1052,6 @@ msgid "Máte další otázky?"
 msgstr ""
 
 msgid "Místo"
-msgstr ""
-
-msgid "Měrná jednotka"
-msgstr ""
-
-msgid "Měrná jednotka (Akeneo Kód)"
-msgstr ""
-
-msgid "Měrná jednotka <strong><a href=\"{{ url }}\">{{ parameterUnit.name }}</a></strong> je úspěšně upravena."
-msgstr ""
-
-msgid "Měrné jednotky"
 msgstr ""
 
 msgid "Město"
@@ -2899,9 +2887,6 @@ msgstr ""
 msgid "orders sold"
 msgstr ""
 
-msgid "parameterUnit"
-msgstr ""
-
 msgid "parameterValue"
 msgstr ""
 
@@ -2992,9 +2977,6 @@ msgstr ""
 msgid "Úprava hodnoty parametru typu barva - %name%"
 msgstr ""
 
-msgid "Úprava měrné jednotky - %name%"
-msgstr ""
-
 msgid "ČSOB<br> Č.ú. 117983223 / 0300<br> IBAN: CZ54 0300 0000 0001 1798 3223 <br> BIC / SWIFT: CEKOCZPP"
 msgstr ""
 
@@ -3035,9 +3017,6 @@ msgid "Špatné přihlašovací údaje"
 msgstr ""
 
 msgid "Žádná hodnota parameteru typu barva není vytvořena."
-msgstr ""
-
-msgid "Žádná měrná jednotka není vytvořena."
 msgstr ""
 
 msgid "Žádné výsledky vyhledávání"

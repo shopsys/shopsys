@@ -342,14 +342,14 @@ class ProductTransferAkeneoMapper
      */
     private function checkExpectedParameterUnit(Parameter $parameter, string $parameterValueUnitAkeneoCode, string $productCatnum): void
     {
-        if ($parameter->getParameterUnit() === null || $parameter->getParameterUnit()->getAkeneoCode() !== $parameterValueUnitAkeneoCode
+        if ($parameter->getUnit() === null || $parameter->getUnit()->getAkeneoCode() !== $parameterValueUnitAkeneoCode
         ) {
             throw new TransferException(
                 sprintf(
                     'Product "%s" with parameter "%s" has wrong unit, expected is "%s" but incoming is "%s"',
                     $productCatnum,
                     $parameter->getName('cs'),
-                    $parameter->getParameterUnit()->getAkeneoCode(),
+                    $parameter->getUnit()->getAkeneoCode(),
                     $parameterValueUnitAkeneoCode
                 )
             );

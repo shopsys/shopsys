@@ -304,11 +304,11 @@ class ParameterRepository extends BaseParameterRepository
         $collation = $this->localization->getCollationByLocale($locale);
         $parameterValueRows = $this->getProductParameterValuesByProductSortedByNameQueryBuilder($product, $locale)
             ->select('pt.id AS parameterId, pt.name AS parameterName, pv.text AS valueText, 
-                pg.akeneoCode AS parameterGroupCode, pgt.name AS parameterGroupName, put.name AS unitName')
+                pg.akeneoCode AS parameterGroupCode, pgt.name AS parameterGroupName, ut.name AS unitName')
             ->leftJoin('pg.translations', 'pgt', Join::WITH, 'pgt.locale = :locale')
             ->join('ppv.value', 'pv', Join::WITH, 'pv.locale = :locale')
-            ->leftJoin('p.parameterUnit', 'pu')
-            ->leftJoin('pu.translations', 'put', Join::WITH, 'put.locale = :locale')
+            ->leftJoin('p.unit', 'u')
+            ->leftJoin('u.translations', 'ut', Join::WITH, 'pu.locale = :locale')
             ->addOrderBy("COLLATE(pv.text, '" . $collation . "')", 'ASC')
             ->getQuery()
             ->getScalarResult();

@@ -337,6 +337,9 @@ msgstr ""
 msgid "Akce"
 msgstr ""
 
+msgid "Akeneo code"
+msgstr ""
+
 msgid "Aktivní"
 msgstr ""
 
@@ -1000,12 +1003,6 @@ msgstr ""
 msgid "Editace hodnoty parametru typu barva"
 msgstr ""
 
-msgid "Editace měrné jednotky"
-msgstr ""
-
-msgid "Editace měrné jednotky:"
-msgstr ""
-
 msgid "Editace notifikační lišty"
 msgstr ""
 
@@ -1528,6 +1525,12 @@ msgstr "\nMatná"
 msgid "Matné přední plochy kuchyně <strong>TOUCH</strong> jsou dostupné v mnoha dekorech. Díky tomu si můžete vybrat kuchyni přesně na míru vašemu interiéru. Materiál povrchu je nejen velmi estetický, ale též příjemný na dotek a snadný na údržbu. Čistý minimalistický design podpoří bezúchytkové řešení LINE N. Více úložného prostoru poskytnou korpusy generace XL, které je možné si pro svou kuchyni zvolit."
 msgstr "Matné predné plochy kuchyne <strong>TOUCH</strong> sú dostupné v mnohých dekoroch. Vďaka tomu si môžete vybrať kuchyňu presne na mieru vášmu interiéru. Materiál povrchu je nielen veľmi estetický, ale tiež príjemný na dotyk a jednoduchý na údržbu. Čistý minimalistický dizajn podporí bezúchytkové riešenie LINE N. Viac úložného priestoru poskytnú korpusy generácie XL, ktoré si možno pre svoju kuchyňu zvoliť."
 
+msgid "Measurement units"
+msgstr ""
+
+msgid "Measurement units overview"
+msgstr ""
+
 msgid "Menu"
 msgstr ""
 
@@ -1592,18 +1595,6 @@ msgid "Máte další otázky?"
 msgstr "Máte ďalšie otázky?"
 
 msgid "Místo"
-msgstr ""
-
-msgid "Měrná jednotka"
-msgstr ""
-
-msgid "Měrná jednotka (Akeneo Kód)"
-msgstr ""
-
-msgid "Měrná jednotka <strong><a href=\"{{ url }}\">{{ parameterUnit.name }}</a></strong> je úspěšně upravena."
-msgstr ""
-
-msgid "Měrné jednotky"
 msgstr ""
 
 msgid "Město"
@@ -3871,9 +3862,6 @@ msgstr "pán"
 msgid "paní/slečna"
 msgstr "pani/slečna"
 
-msgid "parameterUnit"
-msgstr ""
-
 msgid "parameterValue"
 msgstr ""
 
@@ -3982,9 +3970,6 @@ msgstr "Údaje"
 msgid "Úprava hodnoty parametru typu barva - %name%"
 msgstr ""
 
-msgid "Úprava měrné jednotky - %name%"
-msgstr ""
-
 msgid "ČSOB<br> Č.ú. 117983223 / 0300<br> IBAN: CZ54 0300 0000 0001 1798 3223 <br> BIC / SWIFT: CEKOCZPP"
 msgstr "SWIFT: GIBASKBX\nIBAN: SK62 0900 0000 0006 3380 8333"
 
@@ -4043,9 +4028,6 @@ msgid "Šířka"
 msgstr "Šírka"
 
 msgid "Žádná hodnota parameteru typu barva není vytvořena."
-msgstr ""
-
-msgid "Žádná měrná jednotka není vytvořena."
 msgstr ""
 
 msgid "Žádné výsledky vyhledávání"

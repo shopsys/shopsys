@@ -1699,6 +1699,9 @@ msgstr "USB"
 msgid "Using a steamer Concept is surprisingly versatile. It can be used to prepare appetizers, soups, meat, fish, vegetables, vegetarian dishes, dumplings, rice, fruit and desserts."
 msgstr "Použití parní trouby Concept  je překvapivě všestranné. Lze v ní připravit předkrmy, polévky, maso, ryby, zeleninu, vegetariánská jídla, knedlíky, rýži, ovoce i dezerty."
 
+msgid "V"
+msgstr ""
+
 msgid "VERBATIM 1TB external HDD 2,5\" USB 3.0 GT SuperSpeed red"
 msgstr "VERBATIM 1TB externí disk 2,5\" USB 3.0 GT SuperSpeed červený"
 
@@ -1710,6 +1713,9 @@ msgstr "Video"
 
 msgid "Viewfinder type"
 msgstr "Typ hledáčku"
+
+msgid "W"
+msgstr ""
 
 msgid "Watch broadcast in stunning Full HD, while at the same stylish devices work."
 msgstr "Sledujte vysílání v úžasném rozlišení Full HD a zároveň na stejném stylovém zařízení pracujte."
@@ -1783,17 +1789,32 @@ msgstr "černá"
 msgid "classic"
 msgstr "klasické"
 
+msgid "cm"
+msgstr ""
+
 msgid "fits into VP812x VP9520"
 msgstr "pasuje do VP812x VP9520"
 
 msgid "flash disk"
 msgstr "flash disk"
 
+msgid "g"
+msgstr ""
+
 msgid "hardcover"
 msgstr "pevný"
 
 msgid "inkjet"
 msgstr "inkoustové"
+
+msgid "kW"
+msgstr ""
+
+msgid "kg"
+msgstr ""
+
+msgid "m"
+msgstr ""
 
 msgid "media 210MB, 24min., writing speed 24x, slim box"
 msgstr "médium 210MB, 24min., rychlost zápisu 24x, slim box"
@@ -1817,6 +1838,9 @@ msgid "pcs"
 msgstr "ks"
 
 msgid "plazmová"
+msgstr ""
+
+msgid "t"
 msgstr ""
 
 msgid "white"
