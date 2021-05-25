@@ -27,7 +27,8 @@ export default function slickInit () {
                 settings: {
                     variableWidth: true,
                     dots: true,
-                    infinite: false
+                    infinite: true,
+                    centerMode: true,
                 }
             }
         ]
