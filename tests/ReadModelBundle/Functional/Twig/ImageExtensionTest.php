@@ -4,22 +4,22 @@ declare(strict_types=1);
 
 namespace Tests\ReadModelBundle\Functional\Twig;
 
+use App\Component\Image\ImageFacade;
+use App\Twig\ImageExtension;
 use Shopsys\FrameworkBundle\Component\Image\AdditionalImageData;
-use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
 use Shopsys\ReadModelBundle\Image\ImageView;
-use Shopsys\ReadModelBundle\Twig\ImageExtension;
 use Tests\App\Test\FunctionalTestCase;
 
 class ImageExtensionTest extends FunctionalTestCase
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Image\ImageFacade
+     * @var \App\Component\Image\ImageFacade
      * @inject
      */
     private $imageFacade;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Image\ImageLocator
+     * @var \App\Component\Image\ImageLocator
      * @inject
      */
     private $imageLocator;
@@ -61,7 +61,7 @@ class ImageExtensionTest extends FunctionalTestCase
         $expected = '<picture>';
         $expected .= sprintf('    <source media="(min-width: 480px) and (max-width: 768px)" srcset="%s/content-test/images/product/default/22-sencor-sle-22f46dm4-hello-kitty_1.jpg"/>', $this->getCurrentUrl());
         $expected .= sprintf('    <source media="only screen and (min-width: 769px) and (-webkit-min-device-pixel-ratio: 1.5)" srcset="%s/content-test/images/product/default/1--22-sencor-sle-22f46dm4-hello-kitty_1.jpg"/>', $this->getCurrentUrl());
-        $expected .= sprintf('    <img alt="" class="image-product" itemprop="image" data-src="%s/content-test/images/product/default/22-sencor-sle-22f46dm4-hello-kitty_1.jpg" title="" src="" loading="lazy"/>', $this->getCurrentUrl());
+        $expected .= sprintf('    <img alt="" class="image-product" itemprop="image" data-src="%s/content-test/images/product/default/22-sencor-sle-22f46dm4-hello-kitty_1.jpg" title="" src="%1$s/content-test/images/product/default/22-sencor-sle-22f46dm4-hello-kitty_1.jpg" loading="lazy"/>', $this->getCurrentUrl());
         $expected .= '</picture>';
 
         $this->assertXmlStringEqualsXmlString($expected, $html);
@@ -98,7 +98,7 @@ class ImageExtensionTest extends FunctionalTestCase
         $html = $readModelBundleImageExtension->getImageHtml(null);
 
         $expected = '<picture>';
-        $expected .= sprintf('    <img alt="" class="image-noimage" title=""  itemprop="image" data-src="%s/noimage.png" src="" loading="lazy"/>', $this->getCurrentUrl());
+        $expected .= sprintf('    <img alt="" class="image-noimage" title=""  itemprop="image" src="%s/optimized-noimage.png"/>', $this->getCurrentUrl());
         $expected .= '</picture>';
 
         $this->assertXmlStringEqualsXmlString($expected, $html);
@@ -114,7 +114,7 @@ class ImageExtensionTest extends FunctionalTestCase
         $html = $readModelBundleImageExtension->getImageHtml(null);
 
         $expected = '<picture>';
-        $expected .= sprintf('    <img alt="" class="image-noimage" title=""  itemprop="image" data-src="%s%snoimage.png" src="" loading="lazy"/>', $this->getCurrentUrl(), $defaultFrontDesignImageUrlPrefix);
+        $expected .= sprintf('    <img alt="" class="image-noimage" title=""  itemprop="image" src="%s%soptimized-noimage.png"/>', $this->getCurrentUrl(), $defaultFrontDesignImageUrlPrefix);
         $expected .= '</picture>';
 
         $this->assertXmlStringEqualsXmlString($expected, $html);
@@ -132,9 +132,9 @@ class ImageExtensionTest extends FunctionalTestCase
 
     /**
      * @param string $frontDesignImageUrlPrefix
-     * @param \Shopsys\FrameworkBundle\Component\Image\ImageFacade|null $imageFacade
+     * @param \App\Component\Image\ImageFacade|null $imageFacade
      * @param bool $enableLazyLoad
-     * @return \Shopsys\ReadModelBundle\Twig\ImageExtension
+     * @return \App\Twig\ImageExtension
      */
     private function createImageExtension(
         string $frontDesignImageUrlPrefix = '',

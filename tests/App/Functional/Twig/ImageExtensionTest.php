@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Tests\App\Functional\Twig;
 
+use App\Component\Image\Image;
+use App\Component\Image\ImageFacade;
+use App\Twig\ImageExtension;
 use Shopsys\FrameworkBundle\Component\Image\AdditionalImageData;
-use Shopsys\FrameworkBundle\Component\Image\Image;
-use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
-use Shopsys\FrameworkBundle\Twig\ImageExtension;
 use Tests\App\Test\FunctionalTestCase;
 use Zalas\Injector\PHPUnit\Symfony\TestCase\SymfonyTestContainer;
 
@@ -16,7 +16,7 @@ class ImageExtensionTest extends FunctionalTestCase
     use SymfonyTestContainer;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Image\ImageLocator
+     * @var \App\Component\Image\ImageLocator
      * @inject
      */
     private $imageLocator;
