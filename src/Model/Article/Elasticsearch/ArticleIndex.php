@@ -63,8 +63,13 @@ class ArticleIndex extends AbstractIndex
      */
     public function getExportDataForIds(int $domainId, array $restrictToIds): array
     {
-        // TODO: Implement getExportDataForIds() method.
-        return [];
+        $results = [];
+
+        foreach ($this->articleExportRepository->getVisibleArticleSitesByDomainIdAndArticleIds($domainId, $restrictToIds) as $article) {
+            $results[$article->getId()] = $this->articleExportRepository->extractArticle($article);
+        }
+
+        return $results;
     }
 
     /**

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Model\Article;
 
 use App\Controller\Front\ArticleController;
+use App\Model\Article\Elasticsearch\ArticleExportScheduler;
 use App\Twig\Cache\TwigCacheFacade;
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
@@ -31,12 +32,18 @@ class ArticleFacade extends BaseArticleFacade
     private $twigCacheFacade;
 
     /**
+     * @var \App\Model\Article\Elasticsearch\ArticleExportScheduler
+     */
+    private ArticleExportScheduler $articleExportScheduler;
+
+    /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \App\Model\Article\ArticleRepository $articleRepository
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
      * @param \Shopsys\FrameworkBundle\Model\Article\ArticleFactoryInterface $articleFactory
      * @param \App\Twig\Cache\TwigCacheFacade $twigCacheFacade
+     * @param \App\Model\Article\Elasticsearch\ArticleExportScheduler $articleExportScheduler
      */
     public function __construct(
         EntityManagerInterface $em,
@@ -44,7 +51,8 @@ class ArticleFacade extends BaseArticleFacade
         Domain $domain,
         FriendlyUrlFacade $friendlyUrlFacade,
         ArticleFactoryInterface $articleFactory,
-        TwigCacheFacade $twigCacheFacade
+        TwigCacheFacade $twigCacheFacade,
+        ArticleExportScheduler $articleExportScheduler
     ) {
         parent::__construct(
             $em,
@@ -55,6 +63,7 @@ class ArticleFacade extends BaseArticleFacade
         );
 
         $this->twigCacheFacade = $twigCacheFacade;
+        $this->articleExportScheduler = $articleExportScheduler;
     }
 
     /**
@@ -69,6 +78,8 @@ class ArticleFacade extends BaseArticleFacade
         if (in_array($article->getPlacement(), $this->getFooterPlacements(), true)) {
             $this->twigCacheFacade->invalidateByKey(ArticleController::FOOTER_MENU_TWIG_CACHE_KEY, $article->getDomainId());
         }
+
+        $this->articleExportScheduler->scheduleRowIdForImmediateExport($article->getId());
 
         return $article;
     }
@@ -87,7 +98,19 @@ class ArticleFacade extends BaseArticleFacade
             $this->twigCacheFacade->invalidateByKey(ArticleController::FOOTER_MENU_TWIG_CACHE_KEY, $article->getDomainId());
         }
 
+        $this->articleExportScheduler->scheduleRowIdForImmediateExport($article->getId());
+
         return $article;
+    }
+
+    /**
+     * @param int $articleId
+     */
+    public function delete($articleId)
+    {
+        parent::delete($articleId);
+
+        $this->articleExportScheduler->scheduleRowIdForImmediateExport((int)$articleId);
     }
 
     /**

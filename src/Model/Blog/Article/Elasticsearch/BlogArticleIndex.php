@@ -68,8 +68,14 @@ class BlogArticleIndex extends AbstractIndex
      */
     public function getExportDataForIds(int $domainId, array $restrictToIds): array
     {
-        // TODO: Implement getExportDataForIds() method.
-        return [];
+        $locale = $this->domain->getDomainConfigById($domainId)->getLocale();
+
+        $results = [];
+        foreach ($this->blogArticleExportRepository->getVisibleBlogArticlesByDomainIdAndLocaleAndBlogArticleIds($domainId, $locale, $restrictToIds) as $blogArticle) {
+            $results[$blogArticle->getId()] = $this->blogArticleExportRepository->extractBlogArticle($blogArticle, $domainId, $locale);
+        }
+
+        return $results;
     }
 
     /**

@@ -65,6 +65,22 @@ class ArticleExportRepository
     }
 
     /**
+     * @param int $domainId
+     * @param int[] $articleIds
+     * @return \App\Model\Article\Article[]
+     */
+    public function getVisibleArticleSitesByDomainIdAndArticleIds(int $domainId, array $articleIds): array
+    {
+        return $this->articleRepository->getVisibleArticlesByDomainIdQueryBuilder($domainId)
+            ->andWhere('a.type = :type')
+            ->andWhere('a.id IN (:articleIds)')
+            ->setParameter('type', Article::TYPE_SITE)
+            ->setParameter('articleIds', $articleIds)
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
      * @param \App\Model\Article\Article $article
      * @return array
      */

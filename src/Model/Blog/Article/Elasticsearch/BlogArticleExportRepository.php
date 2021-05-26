@@ -68,6 +68,24 @@ class BlogArticleExportRepository
     /**
      * @param int $domainId
      * @param string $locale
+     * @param int[] $blogArticleIds
+     * @return \App\Model\Blog\Article\BlogArticle[]
+     */
+    public function getVisibleBlogArticlesByDomainIdAndLocaleAndBlogArticleIds(
+        int $domainId,
+        string $locale,
+        array $blogArticleIds
+    ): array {
+        return $this->blogArticleRepository->getVisibleBlogArticlesByDomainIdAndLocaleQueryBuilder($domainId, $locale)
+            ->andWhere('ba.id IN (:blogArticleIds)')
+            ->setParameter('blogArticleIds', $blogArticleIds)
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * @param int $domainId
+     * @param string $locale
      * @return int
      */
     public function getVisibleBlogArticlesCountByDomainIdAndLocale(int $domainId, string $locale): int
