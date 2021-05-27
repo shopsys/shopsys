@@ -279,6 +279,19 @@ class CategoryFacade
     }
 
     /**
+     * @return bool
+     */
+    public function recalculateNestedSet(): bool
+    {
+        $errors = $this->categoryRepository->verify();
+
+        $this->categoryRepository->recover();
+        $this->em->flush();
+
+        return $errors !== true;
+    }
+
+    /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @return \Shopsys\FrameworkBundle\Model\Category\Category[]
      * @deprecated This method will be removed in next major version. It has been replaced by getAllTranslated
