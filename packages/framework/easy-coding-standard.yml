@@ -61,6 +61,7 @@ parameters:
             - '*/tests/Test/Codeception/ActorInterface.php'
             - '*/tests/Unit/Component/Money/MoneyTest.php'
             - '*/src/Model/Product/Search/FilterQuery.php'
+            - '*/src/Model/Category/CategoryFacade.php'
             - '*/src/Model/Category/CategoryRepository.php'
             - '*/src/Model/Product/ProductFacade.php'
 

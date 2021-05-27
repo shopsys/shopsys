@@ -42,10 +42,10 @@ export default class CategoryTreeSorting {
 
         const _this = this;
         Ajax.ajax({
-            url: _this.$saveButton.data('category-save-order-url'),
+            url: _this.$saveButton.data('category-apply-sorting-url'),
             type: 'post',
             data: {
-                categoriesOrderingData: _this.getCategoriesOrderingData()
+                categoriesOrderingData: JSON.stringify(_this.getNestedSetData())
             },
             success: function () {
                 _this.$saveButton.addClass('btn--disabled');
@@ -64,6 +64,19 @@ export default class CategoryTreeSorting {
         });
     }
 
+    getNestedSetData () {
+        return this.$rootTree.nestedSortable(
+            'toArray',
+            {
+                excludeRoot: true,
+                expression: /(js-category-tree-)(\d+)/
+            }
+        );
+    }
+
+    /**
+     * @deprecated use getNestedSetData() instead
+     */
     getCategoriesOrderingData () {
         const data = this.$rootTree.nestedSortable(
             'toArray',
