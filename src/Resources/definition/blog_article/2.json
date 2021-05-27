@@ -150,13 +150,8 @@
       },
       "name": {
         "type": "text",
-        "fields": {
-          "keyword": {
-            "type": "icu_collation_keyword",
-            "language": "cs",
-            "index": false
-          }
-        }
+        "analyzer": "edge_ngram_without_diacritic",
+        "search_analyzer": "full_without_diacritic"
       },
       "text": {
         "type": "text",

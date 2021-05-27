@@ -412,6 +412,9 @@ msgstr ""
 msgid "Aqua"
 msgstr "Aqua"
 
+msgid "Articles"
+msgstr ""
+
 msgid "Articles in footer"
 msgstr ""
 

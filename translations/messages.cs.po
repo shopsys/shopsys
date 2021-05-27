@@ -157,6 +157,9 @@ msgstr "Aplikovat na vybrané kategorie"
 msgid "Apply to selected products"
 msgstr "Aplikovat na vybrané produkty"
 
+msgid "Articles"
+msgstr "Články"
+
 msgid "Articles in footer"
 msgstr ""
 

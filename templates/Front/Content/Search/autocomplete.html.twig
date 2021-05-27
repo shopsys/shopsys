@@ -55,7 +55,23 @@
         </ul>
     {% endif %}
 
-    {% if productsPaginationResult.totalCount <= 0 and categoriesPaginationResult.totalCount <= 0 and brandsPaginationResult.totalCount <= 0 %}
+    {% if articlesPaginationResult.results|length > 0 %}
+        <p class="search__hint__title">
+            {{ 'Articles'|trans }} ({{ articlesPaginationResult.results|length }})
+        </p>
+
+        <ul class="search__hint__list">
+            {% for article in articlesPaginationResult.results %}
+                <li class="search__hint__list__item">
+                    <a class="search__hint__list__item__link js-search-autocomplete-item-label" href="{{ article.url }}">
+                        {{ article.name }}
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    {% if productsPaginationResult.totalCount <= 0 and categoriesPaginationResult.totalCount <= 0 and brandsPaginationResult.totalCount <= 0 and articlesPaginationResult.totalCount <= 0 %}
         <div class="search__hint__no-result">
             <picture class="search__hint__no-result__image">
                 <source srcset=" {{ asset('public/frontend/images/warning2x.png') }} 2x, {{ asset('public/frontend/images/warning.png') }} 1x" />
@@ -68,7 +84,7 @@
         </div>
     {% endif %}
 
-    {% if categoriesPaginationResult.totalCount > 0 or productsPaginationResult.totalCount > 0 %}
+    {% if categoriesPaginationResult.totalCount > 0 or productsPaginationResult.totalCount > 0 or articlesPaginationResult.totalCount > 0 %}
         <div class="text-center">
             <a class="btn btn--small" href="{{ searchUrl }}">
                 {{ 'View all results'|trans }}
