@@ -40,6 +40,7 @@ parameters:
             - '*/tests/Unit/Component/Image/ImageLocatorTest.php'
             - '*/tests/Unit/Component/Image/Config/ImageConfigLoaderTest.php'
             - '*/tests/Unit/Component/Image/Config/ImageConfigTest.php'
+            - '*/tests/Unit/Model/Category/CategoryNestedSetCalculatorTest.php'
             - '*/tests/Unit/Model/Payment/PaymentPriceCalculationTest.php'
             - '*/src/Form/Constraints/FileAbstractFilesystemValidator.php'
 
