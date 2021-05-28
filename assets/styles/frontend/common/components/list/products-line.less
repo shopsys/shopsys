@@ -8,15 +8,17 @@
         .reset-ul();
         display: flex;
         overflow: hidden;
-        margin-left: -@list-products-line-item-gap;
+        padding: 0 @web-padding;
+        margin: 0 -@web-padding 0 (-@web-padding - @list-products-line-item-gap);
 
         &.slick-initialized {
             display: block;
-            margin-left: 0;
+            margin-left: -@web-padding;
         }
 
         @media @query-lg {
-            margin-left: 0;
+            margin: 0;
+            padding: 0;
             flex-direction: column;
         }
     }

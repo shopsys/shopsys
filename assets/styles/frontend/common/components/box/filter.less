@@ -1,8 +1,9 @@
 @box-filter-subtitle-item: 6px;
 @box-filter-choice-border-width: 1px;
+@box-filter-opener-btn-gap: 10px;
+@box-filter-block-side-gap: 14px;
 
 .box-filter {
-    display: none;
     position: relative;
     margin-bottom: 20px;
     z-index: @z-index-overlay;
@@ -12,12 +13,8 @@
         z-index: 0;
     }
 
-    &.active {
-        display: block;
-    }
-
     &__block {
-        padding: 0 14px;
+        padding: 0 @box-filter-block-side-gap;
         overflow: hidden;
 
         background-color: @color-light-secondary;
@@ -89,74 +86,10 @@
     }
 
     &__action {
-        display: none;
-    }
-
-    &__opener {
-        position: relative;
-        display: flex;
-        margin-bottom: 1.5rem;
-
-        background-color: @color-f;
-        border: 2px solid @color-border;
-        border-radius: @radius;
-
-        &::after {
-            position: absolute;
-            left: 50%;
-            margin-left: -1px;
-            width: 1px;
-            height: 100%;
-            content: '';
-
-            background-color: @color-border;
-        }
+        margin: 0 -@box-filter-block-side-gap;
 
         @media @query-vl {
             display: none;
-        }
-
-        &__btn {
-            display: flex;
-            align-items: center;
-            flex-grow: 1;
-            height: 55px;
-            width: 50%;
-            padding: 0 5px;
-
-            background-color: transparent;
-            text-transform: none;
-            font-size: 16px;
-            border-radius: 0;
-
-            &__text {
-                padding-left: 6px;
-                text-align: left;
-            }
-
-            &__icon {
-                font-size: 20px;
-
-                @media screen and (min-width: 350px) {
-                    font-size: 24px;
-                }
-            }
-
-            &__info {
-                color: @color-add-light;
-
-                &--sort {
-                    display: block;
-                    margin-top: 3px;
-                    white-space: nowrap;
-
-                    font-size: 13px;
-
-                    @media screen and (max-width: 360px) {
-                        font-size: 12px;
-                    }
-                }
-            }
         }
     }
 

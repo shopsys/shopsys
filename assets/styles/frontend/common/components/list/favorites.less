@@ -5,16 +5,19 @@
 .list-favorites {
     .reset-ul();
     display: flex;
-    margin-left: -@list-favorites-item-gap-mobile;
+    padding: 0 @web-padding;
+    margin: 0 -@web-padding 0 (-@web-padding - @list-favorites-item-gap-mobile);
+    overflow: hidden;
 
     &.slick-initialized {
         display: block;
-        margin-left: 0;
+        margin-left: -@web-padding;
     }
 
     @media @query-lg {
         flex-wrap: wrap;
         flex-direction: row;
+        padding: 0;
         margin: 0 0 -@list-favorites-item-gap / 2 -@list-favorites-item-gap;
     }
 

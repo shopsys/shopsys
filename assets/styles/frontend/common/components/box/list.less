@@ -28,14 +28,12 @@
     }
 
     &__top {
-        display: none;
         width: 100%;
-        margin-bottom: -1px;
-
-        border-bottom: 1px solid @color-border;
 
         @media @query-vl {
-            display: block;
+            margin-bottom: -1px;
+
+            border-bottom: 1px solid @color-border;
         }
 
         &.active {
@@ -45,7 +43,6 @@
         &__wrap {
             display: flex;
             align-items: center;
-            justify-content: center;
 
             @media @query-vl {
                 justify-content: space-between;
@@ -67,9 +64,18 @@
     }
 
     &__panel {
+        display: none;
+        position: absolute;
         width: 100%;
 
+        &.active {
+            display: block;
+            z-index: @z-index-above + 3;
+        }
+
         @media @query-vl {
+            position: static;
+            display: block;
             width: 304px;
         }
     }

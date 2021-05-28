@@ -52,7 +52,13 @@ export default function slickInit () {
                 infinite: false,
                 slidesToShow: 1,
                 slidesToScroll: 1,
-                variableWidth: true
+                variableWidth: true,
+                touchThreshold: 40,
+                speed: 600,
+                cssEase: 'ease-out',
+                easing: 'swing',
+                edgeFriction: 0,
+                swipeToSlide: true
             });
         } else {
             if ($(event).hasClass('slick-initialized')) {

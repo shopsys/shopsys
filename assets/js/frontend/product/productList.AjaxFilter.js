@@ -22,6 +22,7 @@ export default class ProductListAjaxFilter {
 
         this.$showResultsButton.on('click', () => {
             const $productList = $('.js-product-list');
+            $('.js-product-list-panel').toggleClass('active');
             if ($productList && $productList.offset()) {
                 $('html, body').animate({ scrollTop: $productList.offset().top }, 'slow');
             }

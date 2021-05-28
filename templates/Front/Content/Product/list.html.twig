@@ -38,7 +38,7 @@
         <div class="web__container">
             <div class="box-list js-product-list-with-filter">
                 {% if paginationResult.results|length > 0 or filterFormSubmitted %}
-                    <div class="box-list__panel">
+                    <div class="box-list__panel js-product-list-panel">
                         <div class="box-filter js-product-filter">
                             {{ productFilterForm.filterForm(
                                 filterForm,
@@ -108,23 +108,6 @@
                     </div>
 
                     {{ render(controller('App\\Controller\\Front\\BestsellingProductController:listAction', { category: category })) }}
-
-                    <div class="box-filter__opener">
-                        <button type="button" class="btn btn-no-style box-filter__opener__btn js-product-filter-open-button">
-                            <i class="box-filter__opener__btn__icon svg svg-filter"></i>
-                            <span class="box-filter__opener__btn__text">
-                                {{ 'Filtr'|trans }}
-                                <span class="box-filter__opener__btn__info box-filter__opener__btn__info--count js-product-filter-open-button-placeolder"></span>
-                            </span>
-                        </button>
-                        <button type="button" class="btn btn-no-style box-filter__opener__btn js-product-sort-open-button">
-                            <i class="box-filter__opener__btn__icon svg svg-sort"></i>
-                            <span class="box-filter__opener__btn__text">
-                                {{ 'Seřadit'|trans }}
-                                <span class="box-filter__opener__btn__info box-filter__opener__btn__info--sort js-product-sort-open-button-placeholder">{{ orderModeName }}</span>
-                            </span>
-                        </button>
-                    </div>
 
                     <div class="js-product-list-ajax-filter-products-with-controls">
                         <div class="box-list__top js-product-sort">

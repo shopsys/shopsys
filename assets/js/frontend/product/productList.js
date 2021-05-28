@@ -76,7 +76,6 @@ export default class ProductList {
                 const $wrappedData = $($.parseHTML('<div>' + data + '</div>'));
                 productList.showProducts($wrappedData);
                 productList.updateFilterLinks($wrappedData);
-                productList.updateBoxFilterOpener($wrappedData);
                 if ($wrappedData.filterAllNodes('.js-ready-category-seo-mix-values').length === 0) {
                     pushReloadState(url + (queryData ? '?' : '') + queryData);
                 }
@@ -94,18 +93,11 @@ export default class ProductList {
                 const $wrappedData = $($.parseHTML('<div>' + data + '</div>'));
                 productList.showProducts($wrappedData);
                 productList.updateFilterLinks($wrappedData);
-                productList.updateBoxFilterOpener($wrappedData);
                 pushReloadState(url);
 
                 Gtm.pushEvent($wrappedData.find('.gtm-info').data('gtm-event'));
             }
         });
-    }
-
-    updateBoxFilterOpener ($wrappedData) {
-        const $filterResultsSpan = $wrappedData.find('.js-product-filter-results');
-        const $existingSortingButton = $('.js-product-sort-open-button-placeholder');
-        $existingSortingButton.text($filterResultsSpan.data('order-mode-name'));
     }
 
     updateFilterLinks ($wrappedData) {
