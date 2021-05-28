@@ -12,23 +12,54 @@ function deploy() {
     )
 
     declare -A PARAMETERS=(
-        ["parameters.database_host"]=${POSTGRES_DATABASE_IP_ADDRESS}
-        ["parameters.database_name"]=${PROJECT_NAME}
-        ["parameters.database_port"]=${POSTGRES_DATABASE_PORT}
-        ["parameters.database_user"]=${PROJECT_NAME}
-        ["parameters.database_password"]=${POSTGRES_DATABASE_PASSWORD}
-        ["parameters.elasticsearch_host"]=${ELASTICSEARCH_URL}
-        ["parameters.mailer_host"]='shopmail.shopsys.cz'
         ["parameters.trusted_proxies[+]"]=10.0.0.0/8
     )
 
     declare -A ENVIRONMENT_VARIABLES=(
+        ["DATABASE_HOST"]=${POSTGRES_DATABASE_IP_ADDRESS}
+        ["DATABASE_PORT"]=${POSTGRES_DATABASE_PORT}
+        ["DATABASE_NAME"]=${PROJECT_NAME}
+        ["DATABASE_USER"]=${PROJECT_NAME}
+        ["DATABASE_PASSWORD"]=${POSTGRES_DATABASE_PASSWORD}
+        ["ELASTICSEARCH_HOST"]=${ELASTICSEARCH_URL}
+        ["ELASTIC_SEARCH_INDEX_PREFIX"]=${PROJECT_NAME}
+        ["REDIS_PREFIX"]=${PROJECT_NAME}
+        ["MAILER_HOST"]='shopmail.shopsys.cz'
+
+        ["GOOGLE_MAP_API_KEY"]=${GOOGLE_MAP_API_KEY}
+
+        ["GOPAY_IS_PRODUCTION_MODE"]=${GOPAY_IS_PRODUCTION_MODE}
+        ["GOPAY_CS_GOID"]=${GOPAY_CS_GOID}
+        ["GOPAY_CS_CLIENTID"]=${GOPAY_CS_CLIENTID}
+        ["GOPAY_CS_CLIENTSECRET"]=${GOPAY_CS_CLIENTSECRET}
+        ["GOPAY_SK_GOID"]=${GOPAY_SK_GOID}
+        ["GOPAY_SK_CLIENTID"]=${GOPAY_SK_CLIENTID}
+        ["GOPAY_SK_CLIENTSECRET"]=${GOPAY_SK_CLIENTSECRET}
+
+        ["GTM_CS_ENABLED"]=${GTM_CS_ENABLED}
+        ["GTM_CS_CONTAINER_ID"]=${GTM_CS_CONTAINER_ID}
+        ["GTM_CS_CONTAINER_ENV"]=${GTM_CS_CONTAINER_ENV}
+        ["GTM_SK_ENABLED"]=${GTM_SK_ENABLED}
+        ["GTM_SK_CONTAINER_ID"]=${GTM_SK_CONTAINER_ID}
+        ["GTM_SK_CONTAINER_ENV"]=${GTM_SK_CONTAINER_ENV}
+
+        ["AKENEO_ENABLED"]=${AKENEO_ENABLED}
+        ["AKENEO_BASE_URI"]=${AKENEO_BASE_URI}
+        ["AKENEO_CLIENT_ID"]=${AKENEO_CLIENT_ID}
+        ["AKENEO_SECRET"]=${AKENEO_SECRET}
+        ["AKENEO_USER"]=${AKENEO_USER}
+        ["AKENEO_PASSWORD"]=${AKENEO_PASSWORD}
+
+        ["SSFWCC_BRIDGE_ENABLED"]=${SSFWCC_BRIDGE_ENABLED}
+        ["SSFWCC_BRIDGE_BASE_URI"]=${SSFWCC_BRIDGE_BASE_URI}
+        ["SSFWCC_BRIDGE_USER"]=${SSFWCC_BRIDGE_USER}
+        ["SSFWCC_BRIDGE_PASSWORD"]=${SSFWCC_BRIDGE_PASSWORD}
+
         ["S3_API_HOST"]=${S3_API_HOST}
         ["S3_API_USERNAME"]=${S3_API_USERNAME}
         ["S3_API_PASSWORD"]=${S3_API_PASSWORD}
         ["S3_API_BUCKET_NAME"]=${PROJECT_NAME}
-        ["REDIS_PREFIX"]=${PROJECT_NAME}
-        ["ELASTIC_SEARCH_INDEX_PREFIX"]=${PROJECT_NAME}
+
         ["CDN_DOMAIN"]=${CDN_DOMAIN}
     )
 
