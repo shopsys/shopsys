@@ -11,6 +11,7 @@ arrange:
     - modifying-a-template-in-administration.md
     - adding-ajax-load-more-button-into-pagination.md
     - basic-data-import.md
+    - import-categories.md
     - creating-a-multidomain-design.md
     - working-with-multiple-cron-instances.md
     - create-basic-grid.md

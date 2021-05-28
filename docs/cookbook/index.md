@@ -11,6 +11,7 @@
 * [Modifying a Template in Administration](./modifying-a-template-in-administration.md)
 * [Adding Ajax Load More Button into Pagination](./adding-ajax-load-more-button-into-pagination.md)
 * [Implementing a Basic Data Import](./basic-data-import.md)
+* [Import categories](./import-categories.md)
 * [Creating a Multidomain Design](./creating-a-multidomain-design.md)
 * [Working with Multiple Cron Instances](./working-with-multiple-cron-instances.md)
 * [Create Basic Grid](./create-basic-grid.md)
