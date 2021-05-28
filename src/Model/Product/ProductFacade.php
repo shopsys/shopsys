@@ -10,7 +10,6 @@ use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
-use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Component\Plugin\PluginCrudExtensionFacade;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRepository;
@@ -46,7 +45,7 @@ use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFactoryInterface;
  * @property \App\Model\Product\ProductHiddenRecalculator $productHiddenRecalculator
  * @property \App\Model\Product\ProductSellingDeniedRecalculator $productSellingDeniedRecalculator
  * @property \App\Model\Product\Availability\AvailabilityFacade $availabilityFacade
- * @property \App\Model\Product\Pricing\ProductPriceCalculation $productPriceCalculation
+ * @property \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculation $productPriceCalculation
  * @method \App\Model\Product\Product getById(int $productId)
  * @method \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductSellingPrice[][] getAllProductSellingPricesIndexedByDomainId(\App\Model\Product\Product $product)
  * @method \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductSellingPrice[] getAllProductSellingPricesByDomainId(\App\Model\Product\Product $product, int $domainId)
@@ -111,7 +110,7 @@ class ProductFacade extends BaseProductFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductCategoryDomainFactoryInterface $productCategoryDomainFactory
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueFactoryInterface $productParameterValueFactory
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFactoryInterface $productVisibilityFactory
-     * @param \App\Model\Product\Pricing\ProductPriceCalculation $productPriceCalculation
+     * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculation $productPriceCalculation
      * @param \Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductExportScheduler $productExportScheduler
      * @param \App\Model\Stock\ProductStockFacade $productStockFacade
      * @param \App\Model\Stock\StockFacade $stockFacade
@@ -227,6 +226,11 @@ class ProductFacade extends BaseProductFacade
         $this->productPriceRecalculationScheduler->scheduleProductForImmediateRecalculation($product);
 
         $this->saveParameters($product, $productData->parameters);
+
+        if (!$product->isMainVariant()) {
+            $this->refreshProductManualInputPrices($product, $productData->manualInputPricesByPricingGroupId);
+        }
+
         if ($product->isMainVariant()) {
             $product->refreshVariants($productData->variants);
         }
@@ -303,6 +307,7 @@ class ProductFacade extends BaseProductFacade
 
         $this->saveParameters($product, $productData->parameters);
         $this->createProductVisibilities($product);
+        $this->refreshProductManualInputPrices($product, $productData->manualInputPricesByPricingGroupId);
         $this->refreshProductAccessories($product, $productData->accessories);
         $this->imageFacade->manageImages($product, $productData->images);
         $this->productHiddenRecalculator->calculateHiddenForProduct($product);
@@ -452,53 +457,5 @@ class ProductFacade extends BaseProductFacade
     public function refreshProductAccessories(BaseProduct $product, array $accessories): void
     {
         parent::refreshProductAccessories($product, $accessories);
-    }
-
-    /**
-     * @param \App\Model\Product\Product $product
-     * @param int $domainId
-     * @return \Shopsys\FrameworkBundle\Component\Money\Money|null
-     */
-    public function getNonSellingPriceByProductAndDomainId(BaseProduct $product, int $domainId): ?Money
-    {
-        if ($product->isMainVariant()) {
-            /** @var \App\Model\Product\Product[] $variants */
-            $variants = $this->productRepository->getAllSellableVariantsByMainVariant(
-                $product,
-                $domainId,
-                null
-            );
-
-            if (count($variants) === 0) {
-                return null;
-            }
-
-            $nonSellingVariantMoney = null;
-            $sellingVariantMoney = null;
-            foreach ($variants as $variant) {
-                $variantSellingPriceWithVat = $variant->getSellingPriceWithVat($domainId);
-                /** @var \Shopsys\FrameworkBundle\Component\Money\Money|null $variantHighPriceWithVat */
-                $variantHighPriceWithVat = $variant->getHighPriceWithVat($domainId);
-                if ($variantHighPriceWithVat === null) {
-                    return null;
-                }
-                if ($nonSellingVariantMoney === null) {
-                    $sellingVariantMoney = $variantSellingPriceWithVat;
-                    $nonSellingVariantMoney = $variantHighPriceWithVat;
-                    continue;
-                }
-
-                if ($variantSellingPriceWithVat->compare($sellingVariantMoney) !== 0) {
-                    return null;
-                }
-                if ($variantHighPriceWithVat->compare($nonSellingVariantMoney) !== 0) {
-                    return null;
-                }
-            }
-
-            return $nonSellingVariantMoney;
-        }
-
-        return $product->getHighPriceWithVat($domainId);
     }
 }

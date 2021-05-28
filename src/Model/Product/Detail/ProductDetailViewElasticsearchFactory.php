@@ -8,7 +8,6 @@ use App\Model\Category\Listed\CategoryViewFacade;
 use App\Model\Product\Availability\ProductStockAvailabilityInformation;
 use App\Model\Product\Parameter\ParameterValuesViewFactory;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\PriceFactory;
 use Shopsys\FrameworkBundle\Model\Product\ProductElasticsearchProvider;
@@ -144,7 +143,6 @@ class ProductDetailViewElasticsearchFactory extends BaseProductDetailViewElastic
 
         $productDetailView->nameFirstLine = $productArray['name_prefix'];
         $productDetailView->nameSecondLine = $this->getNameSecondLine($productArray);
-        $productDetailView->nonSellingPriceWithVat = $productArray['non_selling_price_with_vat'] === null ? Money::zero() : Money::create((string)$productArray['non_selling_price_with_vat']);
         $productDetailView->fullname = $this->getFullname($productArray);
         $productDetailView->usps = $productArray['usps'];
         $productDetailView->availabilityStatus = $productArray['availability_status'];

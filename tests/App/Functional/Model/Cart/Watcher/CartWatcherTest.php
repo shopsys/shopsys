@@ -71,6 +71,9 @@ class CartWatcherTest extends TransactionFunctionalTestCase
 
         $this->manualInputPriceFacade->refresh($product, $pricingGroup, Money::create(10));
 
+        $modifiedItems2 = $this->cartWatcher->getModifiedPriceItemsAndUpdatePrices($cart);
+        $this->assertNotEmpty($modifiedItems2);
+
         $modifiedItems3 = $this->cartWatcher->getModifiedPriceItemsAndUpdatePrices($cart);
         $this->assertEmpty($modifiedItems3);
     }
@@ -108,7 +111,7 @@ class CartWatcherTest extends TransactionFunctionalTestCase
         /** @var \App\Model\Product\ProductData $productData */
         $productData = $this->productDataFactory->create();
         $productData->name = [];
-        $productData->highPriceWithVat = [1 => Money::zero(), 2 => Money::zero()];
+        $productData->manualInputPricesByPricingGroupId = [1 => Money::zero(), 2 => Money::zero()];
         $this->setVats($productData);
         $product = Product::create($productData);
 

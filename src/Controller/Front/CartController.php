@@ -228,7 +228,6 @@ class CartController extends FrontBaseController
         return $this->render('Front/Inline/Cart/cartBox.html.twig', [
             'cart' => $this->cartFacade->findCartOfCurrentCustomerUser(),
             'productsPrice' => $orderPreview->getProductsPrice(),
-            'productsHighPrice' => $orderPreview->getTotalProductHighPrice(),
             'isIntentActive' => $request->query->getBoolean('isIntentActive'),
             'isCartHoverEnable' => $this->isCartHoverEnable(),
             'loadItems' => $request->query->getBoolean('loadItems'),
@@ -246,7 +245,6 @@ class CartController extends FrontBaseController
         return $this->render('Front/Inline/Cart/cartBox.html.twig', [
             'cart' => $this->cartFacade->findCartOfCurrentCustomerUser(),
             'productsPrice' => $orderPreview->getProductsPrice(),
-            'productsHighPrice' => $orderPreview->getTotalProductHighPrice(),
             'isIntentActive' => true,
             'isCartHoverEnable' => false,
             'loadItems' => true,

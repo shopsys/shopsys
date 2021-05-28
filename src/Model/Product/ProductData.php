@@ -57,21 +57,6 @@ class ProductData extends BaseProductData
     public $stockProductData;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Money\Money[]|null[]
-     */
-    public $highPriceWithVat;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Money\Money[]|null[]
-     */
-    public $highPriceWithoutVat;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Money\Money[]|null[]
-     */
-    public $sellingPriceWithVat;
-
-    /**
      * @var bool
      */
     public $downloadAssemblyInstructionFiles = false;
@@ -143,8 +128,6 @@ class ProductData extends BaseProductData
         $this->namePrefix = [];
         $this->nameSufix = [];
         $this->stockProductData = [];
-        $this->highPriceWithVat = [];
-        $this->highPriceWithoutVat = [];
         $this->assemblyInstructionCode = [];
         $this->productTypePlanCode = [];
         $this->assemblyInstructionFileUrl = [];

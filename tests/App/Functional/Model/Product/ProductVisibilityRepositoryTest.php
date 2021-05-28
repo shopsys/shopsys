@@ -131,10 +131,6 @@ class ProductVisibilityRepositoryTest extends TransactionFunctionalTestCase
         }
 
         $productData->manualInputPricesByPricingGroupId = $manualInputPrices;
-
-        foreach ($this->domain->getAll() as $domainConfig) {
-            $productData->highPriceWithVat[$domainConfig->getId()] = $price;
-        }
     }
 
     public function testIsVisibleOnAnyDomainWhenHidden()

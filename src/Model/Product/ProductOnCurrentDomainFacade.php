@@ -29,6 +29,10 @@ class ProductOnCurrentDomainFacade extends BaseProductOnCurrentDomainFacade
      */
     public function getVisibleProductsByCatnums(array $productCatnums): array
     {
-        return $this->productRepository->getVisibleProductsByCatnumsAndDomainId($productCatnums, $this->domain->getId());
+        return $this->productRepository->getVisibleProductsByCatnumsAndDomainId(
+            $productCatnums,
+            $this->domain->getId(),
+            $this->currentCustomerUser->getPricingGroup()
+        );
     }
 }

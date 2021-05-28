@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Model\Order\Preview;
 
 use App\Model\Product\Availability\ProductAvailabilityFacade;
-use App\Model\Product\Pricing\ProductPriceCalculation;
 use App\Model\Stock\Stock;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
@@ -36,11 +35,6 @@ class OrderPreviewCalculation extends BaseOrderPreviewCalculation
     private $currentPromoCodeFacade;
 
     /**
-     * @var \App\Model\Product\Pricing\ProductPriceCalculation
-     */
-    private $productPriceCalculation;
-
-    /**
      * @var \App\Model\Product\Availability\ProductAvailabilityFacade
      */
     private $productAvailabilityFacade;
@@ -52,7 +46,6 @@ class OrderPreviewCalculation extends BaseOrderPreviewCalculation
      * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentPriceCalculation $paymentPriceCalculation
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderPriceCalculation $orderPriceCalculation
      * @param \App\Model\Order\PromoCode\CurrentPromoCodeFacade $currentPromoCodeFacade
-     * @param \App\Model\Product\Pricing\ProductPriceCalculation $productPriceCalculation
      * @param \App\Model\Product\Availability\ProductAvailabilityFacade $productAvailabilityFacade
      */
     public function __construct(
@@ -62,7 +55,6 @@ class OrderPreviewCalculation extends BaseOrderPreviewCalculation
         PaymentPriceCalculation $paymentPriceCalculation,
         OrderPriceCalculation $orderPriceCalculation,
         CurrentPromoCodeFacade $currentPromoCodeFacade,
-        ProductPriceCalculation $productPriceCalculation,
         ProductAvailabilityFacade $productAvailabilityFacade
     ) {
         parent::__construct(
@@ -74,7 +66,6 @@ class OrderPreviewCalculation extends BaseOrderPreviewCalculation
         );
 
         $this->currentPromoCodeFacade = $currentPromoCodeFacade;
-        $this->productPriceCalculation = $productPriceCalculation;
         $this->productAvailabilityFacade = $productAvailabilityFacade;
     }
 
@@ -166,7 +157,6 @@ class OrderPreviewCalculation extends BaseOrderPreviewCalculation
             $roundingPrice
         );
 
-        $totalProductHighPrice = $this->calculateTotalProductsHighPriceByDomain($quantifiedProducts, $domainId);
         $promoCodeCode = $this->currentPromoCodeFacade->getPromoCodeCode();
         $productsAvailability = $this->getProductsAvailability($quantifiedProducts, $domainId);
         $promoCodeIdentifier = $this->currentPromoCodeFacade->getPromoCodeIdentifier();
@@ -179,7 +169,6 @@ class OrderPreviewCalculation extends BaseOrderPreviewCalculation
             $quantifiedItemsDiscounts,
             $productsPrice,
             $totalPrice,
-            $totalProductHighPrice,
             $productsAvailability,
             $quantifiedItemsDiscountPrices,
             $productsFullPrice,
@@ -197,29 +186,6 @@ class OrderPreviewCalculation extends BaseOrderPreviewCalculation
             $promoCodeCode,
             $promoCodeIdentifier
         );
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct[] $quantifiedProducts
-     * @param int $domainId
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Price
-     */
-    private function calculateTotalProductsHighPriceByDomain(array $quantifiedProducts, int $domainId): Price
-    {
-        $totalHighPrice = Price::zero();
-        foreach ($quantifiedProducts as $quantifiedProduct) {
-            /** @var \App\Model\Product\Product $product */
-            $product = $quantifiedProduct->getProduct();
-            $productHighPrice = $this->productPriceCalculation->calculateProductNonSellingPrice(
-                $product,
-                $domainId,
-                $quantifiedProduct->getQuantity()
-            );
-
-            $totalHighPrice = $totalHighPrice->add($productHighPrice);
-        }
-
-        return $totalHighPrice;
     }
 
     /**

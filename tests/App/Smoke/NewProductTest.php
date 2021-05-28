@@ -81,7 +81,6 @@ class NewProductTest extends FunctionalTestCase
         $form['product_form[basicInformationGroup][partno]'] = '123456';
         $form['product_form[basicInformationGroup][ean]'] = '123456';
         $form['product_form[descriptionsGroup][descriptions][1]'] = 'test description';
-        $this->fillAkeneoPrices($form);
         $form['product_form[displayAvailabilityGroup][sellingFrom]'] = '1.1.1990';
         $form['product_form[displayAvailabilityGroup][sellingTo]'] = '1.1.2000';
         $form['product_form[displayAvailabilityGroup][unit]']->setValue((string)$unit->getId());
@@ -101,19 +100,5 @@ class NewProductTest extends FunctionalTestCase
     private function setFormCsrfToken(Form $form, CsrfToken $token)
     {
         $form['product_form[_token]'] = $token->getValue();
-    }
-
-    /**
-     * @param \Symfony\Component\DomCrawler\Form $form
-     */
-    private function fillAkeneoPrices(Form $form): void
-    {
-        foreach ($this->domain->getAllIds() as $domainId) {
-            $inputName = sprintf(
-                'product_form[pricesGroup][highPriceWithVat][%s]',
-                $domainId
-            );
-            $form[$inputName] = (string)($domainId * 10000);
-        }
     }
 }

@@ -88,20 +88,6 @@
         </tr>
     </tbody>
     <tfoot>
-
-        {% if orderPreview.hasAnyProductCommonPrice(getDomain().id) %}
-            {% if orderPreview.totalPriceDiscount is null %}
-                <tr class="table-cart-preview__row table-cart-preview__row--previous-price">
-                    <td class="table-cart-preview__cell table-cart-preview__cell--no-spacing table-cart-preview__cell--summary">
-                        {{ 'Místo'|trans }}
-                    </td>
-                    <td class="table-cart-preview__cell table-cart-preview__cell--no-spacing table-cart-preview__cell--summary table-cart-preview__cell--price">
-                        <span class="cart-price cart-price--secondary cart-price--previous cart-price--previous-no-decoration">{{ orderPreview.totalProductHighPrice.priceWithVat|price }}</span>
-                    </td>
-                </tr>
-            {% endif %}
-        {% endif %}
-
         {% if orderPreview.roundingPrice is not empty %}
             <tr class="table-cart-preview__row">
                 <td class="table-cart-preview__cell table-cart-preview__cell--summary table-cart-preview__cell--no-spacing">

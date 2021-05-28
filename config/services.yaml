@@ -526,20 +526,6 @@ services:
     Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterRepository:
         alias: App\Model\Product\Filter\ProductFilterRepository
 
-    Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculation:
-        alias: App\Model\Product\Pricing\ProductPriceCalculation
-
-    Shopsys\FrameworkBundle\Model\Product\Listing\ProductListAdminRepository:
-        alias: App\Model\Product\Listing\ProductListAdminRepository
-
-    App\Model\Product\Pricing\ProductPriceCalculationForCustomerUser: ~
-
-    Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser:
-        alias: App\Model\Product\Pricing\ProductPriceCalculationForCustomerUser
-
-    Shopsys\FrameworkBundle\Model\Product\ProductCachedAttributesFacade:
-        alias: App\Model\Product\ProductCachedAttributesFacade
-
     Shopsys\FrameworkBundle\Model\Product\ProductVisibilityRepository:
         alias: App\Model\Product\ProductVisibilityRepository
 

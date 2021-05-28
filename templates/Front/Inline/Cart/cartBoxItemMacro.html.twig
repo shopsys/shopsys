@@ -1,7 +1,7 @@
 {% macro item(cartItem) %}
     {% set product = cartItem.product %}
     {% set sellingPriceWithVat = getProductSellingPrice(product).priceWithVat %}
-    {% set nonSellingPriceWithVat = getProductNonSellingPrice(product).priceWithVat %}
+
     <li class="cart-detail__item">
         <div class="cart-detail__item__image">
             {{ image(product, { size: 'thumbnailSmall' }) }}
@@ -24,9 +24,6 @@
             <span class="cart-detail__item__content__quantity">{{ cartItem.quantity }}ks </span>
 
             <span class="cart-detail__item__content__price">
-                {% if nonSellingPriceWithVat.isGreaterThan(sellingPriceWithVat) %}
-                    <span class="cart-detail__item__content__price--high">{{ nonSellingPriceWithVat|price }}</span>
-                {% endif %}
                 {{ cartItem.watchedPrice|price}}
             </span>
 

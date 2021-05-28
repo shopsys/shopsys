@@ -42,7 +42,13 @@ class ProductVisibilityRepository extends BaseProductVisibilityRepository
                         (
                             p.variant_type = :variantTypeMain
                             OR
-                            pd.selling_price_with_vat > 0
+                            EXISTS (
+                                SELECT 1
+                                FROM product_calculated_prices as pcp
+                                WHERE pcp.price_with_vat > 0
+                                    AND pcp.product_id = pv.product_id
+                                    AND pcp.pricing_group_id = pv.pricing_group_id
+                            )
                         )
                         AND EXISTS (
                             SELECT 1
@@ -83,15 +89,18 @@ class ProductVisibilityRepository extends BaseProductVisibilityRepository
             WHERE p.id = pv.product_id
                 AND pv.domain_id = :domainId
                 AND pv.domain_id = pd.domain_id
+                AND pv.pricing_group_id = :pricingGroupId
             ' . $onlyMarkedProductsCondition;
 
-        foreach ($this->domain->getAll() as $domain) {
+        foreach ($this->pricingGroupRepository->getAll() as $pricingGroup) {
+            $domain = $this->domain->getDomainConfigById($pricingGroup->getDomainId());
             $this->em->getConnection()->executeStatement(
                 $query,
                 [
                     'now' => $now,
                     'locale' => $domain->getLocale(),
                     'domainId' => $domain->getId(),
+                    'pricingGroupId' => $pricingGroup->getId(),
                     'variantTypeMain' => Product::VARIANT_TYPE_MAIN,
                     'variantTypeVariant' => Product::VARIANT_TYPE_VARIANT,
                 ],
@@ -99,6 +108,7 @@ class ProductVisibilityRepository extends BaseProductVisibilityRepository
                     'now' => Types::DATETIME_IMMUTABLE,
                     'locale' => Types::STRING,
                     'domainId' => Types::INTEGER,
+                    'pricingGroupId' => Types::INTEGER,
                     'variantTypeMain' => Types::STRING,
                     'variantTypeVariant' => Types::STRING,
                 ]

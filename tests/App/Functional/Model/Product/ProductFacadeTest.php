@@ -60,7 +60,7 @@ class ProductFacadeTest extends TransactionFunctionalTestCase
         $productData->sellingDenied = $sellingDenied;
         $productData->availability = $this->getReference(AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
         $productData->unit = $this->getReference(UnitDataFixture::UNIT_PIECES);
-        $productData->highPriceWithVat = [1 => Money::zero(), 2 => Money::zero()];
+        $productData->manualInputPricesByPricingGroupId = [1 => Money::zero(), 2 => Money::zero()];
         $productData->preorder = true;
         $productData->catnum = '123';
         $this->setVats($productData);
@@ -127,7 +127,7 @@ class ProductFacadeTest extends TransactionFunctionalTestCase
         $productId = $product->getId();
 
         $productData = $this->productDataFactory->create();
-        $productData->highPriceWithVat = [1 => Money::zero(), 2 => Money::zero()];
+        $productData->manualInputPricesByPricingGroupId = [1 => Money::zero(), 2 => Money::zero()];
         $productData->catnum = '123';
         $this->setVats($productData);
 

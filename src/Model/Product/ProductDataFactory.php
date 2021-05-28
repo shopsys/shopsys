@@ -10,13 +10,9 @@ use App\Model\Stock\ProductStockFacade;
 use App\Model\Stock\StockFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
-use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Component\Plugin\PluginCrudExtensionFacade;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
-use Shopsys\FrameworkBundle\Model\Pricing\BasePriceCalculation;
-use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade;
-use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade;
 use Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryRepository;
 use Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityFacade;
@@ -32,11 +28,6 @@ use Shopsys\FrameworkBundle\Model\Product\Unit\UnitFacade;
 
 class ProductDataFactory extends BaseProductDataFactory
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade
-     */
-    private $currencyFacade;
-
     /**
      * @return \App\Model\Product\ProductData
      */
@@ -59,11 +50,6 @@ class ProductDataFactory extends BaseProductDataFactory
      * @var \App\Model\Stock\ProductStockDataFactory
      */
     private $stockProductDataFactory;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\BasePriceCalculation
-     */
-    private $basePriceCalculation;
 
     /**
      * @var \App\Model\Product\ProductFacade
@@ -96,11 +82,9 @@ class ProductDataFactory extends BaseProductDataFactory
      * @param \App\Model\Stock\ProductStockFacade $stockProductFacade
      * @param \App\Model\Stock\StockFacade $stockFacade
      * @param \App\Model\Stock\ProductStockDataFactory $stockProductDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\BasePriceCalculation $basePriceCalculation
      * @param \App\Model\Product\ProductFacade $productFacade
      * @param \App\Component\Setting\Setting $setting
      * @param \App\Model\Product\Availability\AvailabilityFacade $availabilityFacade
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
      */
     public function __construct(
         VatFacade $vatFacade,
@@ -118,11 +102,9 @@ class ProductDataFactory extends BaseProductDataFactory
         ProductStockFacade $stockProductFacade,
         StockFacade $stockFacade,
         ProductStockDataFactory $stockProductDataFactory,
-        BasePriceCalculation $basePriceCalculation,
         ProductFacade $productFacade,
         Setting $setting,
-        AvailabilityFacade $availabilityFacade,
-        CurrencyFacade $currencyFacade
+        AvailabilityFacade $availabilityFacade
     ) {
         parent::__construct(
             $vatFacade,
@@ -142,11 +124,9 @@ class ProductDataFactory extends BaseProductDataFactory
         $this->stockProductFacade = $stockProductFacade;
         $this->stockFacade = $stockFacade;
         $this->stockProductDataFactory = $stockProductDataFactory;
-        $this->basePriceCalculation = $basePriceCalculation;
         $this->productFacade = $productFacade;
         $this->setting = $setting;
         $this->availabilityFacade = $availabilityFacade;
-        $this->currencyFacade = $currencyFacade;
     }
 
     /**
@@ -187,8 +167,6 @@ class ProductDataFactory extends BaseProductDataFactory
             $productData->shortDescriptionUsp3[$domainId] = null;
             $productData->shortDescriptionUsp4[$domainId] = null;
             $productData->shortDescriptionUsp5[$domainId] = null;
-            $productData->highPriceWithVat[$domainId] = null;
-            $productData->highPriceWithoutVat[$domainId] = null;
             $productData->assemblyInstructionFileUrl[$domainId] = null;
             $productData->productTypePlanFileUrl[$domainId] = null;
             $productData->flags[$domainId] = [];
@@ -240,8 +218,6 @@ class ProductDataFactory extends BaseProductDataFactory
             $productData->saleExclusion[$domainId] = $product->getSaleExclusion($domainId);
             $productData->domainHidden[$domainId] = $product->isDomainHidden($domainId);
             $productData->domainOrderingPriority[$domainId] = $product->getDomainOrderingPriority($domainId);
-
-            $this->fillPricesFromProductByDomain($productData, $product, $domainId);
         }
 
         $productData->catnum = $product->getCatnum();
@@ -280,35 +256,6 @@ class ProductDataFactory extends BaseProductDataFactory
 
         $productData->preorder = $product->hasPreorder();
         $productData->vendorDeliveryDate = $product->getVendorDeliveryDate();
-    }
-
-    /**
-     * @param \App\Model\Product\ProductData $productData
-     * @param \App\Model\Product\Product $product
-     * @param int $domainId
-     */
-    private function fillPricesFromProductByDomain(ProductData $productData, Product $product, int $domainId): void
-    {
-        $currency = $this->currencyFacade->getDomainDefaultCurrencyByDomainId($domainId);
-
-        $highPrice = $this->basePriceCalculation->calculateBasePriceRoundedByCurrency(
-            $product->getHighPriceWithVat($domainId) ?? Money::zero(),
-            PricingSetting::INPUT_PRICE_TYPE_WITH_VAT,
-            $product->getVatForDomain($domainId),
-            $currency
-        );
-
-        $sellingPrice = $this->basePriceCalculation->calculateBasePriceRoundedByCurrency(
-            $product->getSellingPriceWithVat($domainId) ?? Money::zero(),
-            PricingSetting::INPUT_PRICE_TYPE_WITH_VAT,
-            $product->getVatForDomain($domainId),
-            $currency
-        );
-
-        $productData->highPriceWithVat[$domainId] = $highPrice->getPriceWithVat();
-        $productData->highPriceWithoutVat[$domainId] = $highPrice->getPriceWithoutVat();
-
-        $productData->sellingPriceWithVat[$domainId] = $sellingPrice->getPriceWithVat();
     }
 
     /**

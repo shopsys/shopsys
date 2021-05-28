@@ -75,13 +75,6 @@
                 </td>
 
                 <td class="table-cart__cell table-cart__cell--price js-cart-item-price">
-                    {% if orderPreview.hasAnyProductCommonPrice(getDomain().id) %}
-                        {% if product.getHighPriceWithVat(getDomain().id).isGreaterThan(cartItemPrice.unitPrice.priceWithVat) %}
-                            <span class="line-through">
-                                {{ product.getHighPriceWithVat(getDomain().id)|price }}
-                            </span>
-                        {% endif %}
-                    {% endif %}
                     <strong class="cart-price cart-price--secondary {{ priceFlag }}">
                         {{ cartItemPrice.unitPrice.priceWithVat|price }}
                     </strong>
@@ -100,21 +93,6 @@
                 </td>
 
                 <td class="table-cart__cell table-cart__cell--price-final js-cart-item-total-price">
-                    {% set canShowNonSellingPrice = true %}
-                    {% if (product.hasFlagByAkeneoCodeForDomain(constant('App\\Model\\Product\\Flag\\Flag::AKENEO_CODE_ACTION'), getDomain().id)) %}
-                        {% set canShowNonSellingPrice = false %}
-                    {% endif %}
-                    {% if (product.hasFlagByAkeneoCodeForDomain(constant('App\\Model\\Product\\Flag\\Flag::AKENEO_CODE_SALE'), getDomain().id)) %}
-                        {% set canShowNonSellingPrice = false %}
-                    {% endif %}
-                    {% if (product.hasFlagByAkeneoCodeForDomain(constant('App\\Model\\Product\\Flag\\Flag::AKENEO_CODE_HIT'), getDomain().id)) %}
-                        {% set canShowNonSellingPrice = false %}
-                    {% endif %}
-                    {% if canShowNonSellingPrice and product.getHighPriceWithVat(getDomain().id).isGreaterThan(cartItemPrice.unitPrice.priceWithVat) %}
-                        <span class="line-through">
-                            {{ product.getHighPriceWithVat(getDomain().id).multiply(quantifiedProduct.quantity)|price }}
-                        </span>
-                    {% endif %}
                     {% if cartItemDiscount is not null %}
                         <strong class="cart-price cart-price--primary cart-price--promo">{{ cartItemDiscountPrice.priceWithVat|price }}</strong>
                         <strong class="cart-tag cart-tag--promo cart-tag--promo-in-table">{{ orderPreview.promoCodeCode }}</strong>

@@ -16,7 +16,6 @@ use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\ProductDomain;
 use Shopsys\FrameworkBundle\Model\Product\ProductRepository as BaseProductRepository;
-use Shopsys\FrameworkBundle\Model\Product\ProductVisibility;
 
 /**
  * @property \App\Model\Product\Search\ProductElasticsearchRepository $productElasticsearchRepository
@@ -54,86 +53,24 @@ use Shopsys\FrameworkBundle\Model\Product\ProductVisibility;
  * @method \Shopsys\FrameworkBundle\Component\Paginator\PaginationResult getPaginationResultForSearchListable(string|null $searchText, int $domainId, string $locale, \App\Model\Product\Filter\ProductFilterData $productFilterData, string $orderingModeId, \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup, int $page, int $limit)
  * @method \Doctrine\ORM\QueryBuilder getFilteredListableForSearchQueryBuilder(string|null $searchText, int $domainId, string $locale, \App\Model\Product\Filter\ProductFilterData $productFilterData, \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup)
  * @method \Doctrine\ORM\QueryBuilder getListableForBrandQueryBuilderPublic(int $domainId, \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup, \App\Model\Product\Brand\Brand $brand)
+ * @method \App\Model\Product\Product[] getAllSellableVariantsByMainVariant(\App\Model\Product\Product $mainVariant, int $domainId, \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup)
  */
 class ProductRepository extends BaseProductRepository
 {
     /**
      * @param array $productCatnums
      * @param int $domainId
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
      * @return \App\Model\Product\Product[]
      */
-    public function getVisibleProductsByCatnumsAndDomainId(array $productCatnums, int $domainId): array
+    public function getVisibleProductsByCatnumsAndDomainId(array $productCatnums, int $domainId, PricingGroup $pricingGroup): array
     {
-        return $this->getAllVisibleQueryBuilder($domainId, null)
+        return $this->getAllVisibleQueryBuilder($domainId, $pricingGroup)
             ->andWhere('p.catnum IN (:catnums)')
             ->andWhere('p.sellingDenied = FALSE')
             ->setParameter('catnums', $productCatnums)
             ->getQuery()
             ->execute();
-    }
-
-    /**
-     * @param int $domainId
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup|null $pricingGroup
-     * @return \Doctrine\ORM\QueryBuilder
-     */
-    public function getAllVisibleQueryBuilder($domainId, ?PricingGroup $pricingGroup = null): QueryBuilder
-    {
-        $queryBuilder = $this->em->createQueryBuilder()
-            ->select('p')
-            ->from(Product::class, 'p')
-            ->join(ProductVisibility::class, 'prv', Join::WITH, 'prv.product = p.id')
-            ->where('prv.domainId = :domainId')
-            ->andWhere('prv.visible = TRUE')
-            ->orderBy('p.id');
-
-        $queryBuilder->setParameter('domainId', $domainId);
-
-        return $queryBuilder;
-    }
-
-    /**
-     * @param int $domainId
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
-     * @return \Doctrine\ORM\QueryBuilder
-     */
-    public function getAllSellableQueryBuilder($domainId, ?PricingGroup $pricingGroup = null)
-    {
-        $queryBuilder = $this->getAllOfferedQueryBuilder($domainId, $pricingGroup);
-        $queryBuilder->andWhere('p.variantType != :variantTypeMain')
-            ->setParameter('variantTypeMain', Product::VARIANT_TYPE_MAIN);
-
-        return $queryBuilder;
-    }
-
-    /**
-     * @param int $domainId
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
-     * @return \Doctrine\ORM\QueryBuilder
-     */
-    public function getAllOfferedQueryBuilder($domainId, ?PricingGroup $pricingGroup = null)
-    {
-        $queryBuilder = $this->getAllVisibleQueryBuilder($domainId, $pricingGroup);
-        $queryBuilder->join('p.domains', 'pd', Join::WITH, 'pd.domainId = :domainId');
-        $queryBuilder->andWhere('pd.calculatedSaleExclusion = FALSE');
-
-        return $queryBuilder;
-    }
-
-    /**
-     * @param \App\Model\Product\Product $mainVariant
-     * @param int $domainId
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup|null $pricingGroup
-     * @return mixed|\App\Model\Product\Product[]
-     */
-    public function getAllSellableVariantsByMainVariant(Product $mainVariant, $domainId, ?PricingGroup $pricingGroup = null)
-    {
-        $queryBuilder = $this->getAllSellableQueryBuilder($domainId, $pricingGroup);
-        $queryBuilder
-            ->andWhere('p.mainVariant = :mainVariant')
-            ->setParameter('mainVariant', $mainVariant);
-
-        return $queryBuilder->getQuery()->execute();
     }
 
     /**

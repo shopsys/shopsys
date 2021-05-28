@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Model\Product\Detail;
 
-use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\ReadModelBundle\Product\Detail\ProductDetailView as BaseProductDetailView;
 
 /**
@@ -32,11 +31,6 @@ class ProductDetailView extends BaseProductDetailView
      * @var string[]
      */
     public array $usps;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Money\Money
-     */
-    public Money $nonSellingPriceWithVat;
 
     /**
      * @var \App\Model\Product\Parameter\ParameterValuesViewData[]

@@ -57,13 +57,6 @@ class ProductTransferAkeneoValidator
             'fields' => $fieldsValidationSetup,
         ]));
 
-        $priceValidationSetup = [
-            new Assert\Type('string'),
-            new Assert\Length(['max' => 20]),
-        ];
-        $this->validatePriceValue($violations, $akeneoProductData['values'], 'low_price_vat', $priceValidationSetup);
-        $this->validatePriceValue($violations, $akeneoProductData['values'], 'high_price_vat', $priceValidationSetup);
-
         $this->validateValueData($violations, $akeneoProductData['values'] ?? null, 'ean', [
             new Assert\Type(['type' => 'numeric']),
             new Assert\Length(['max' => 100]),
