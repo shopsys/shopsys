@@ -109,47 +109,47 @@
         -   name: web
             sizes:
                 -   name: ~
-                    width: 1045
-                    height: 290
+                    width: 968
+                    height: 318
                     crop: false
                     occurrence: 'Front-end: Main page slider'
                 -   name: retinaSlider
-                    width: 2090
-                    height: ~
+                    width: 1936
+                    height: 636
                     crop: false
                     occurrence: 'Front-end: Main page slider - retina display'
                 -   name: fullwidthSlider
-                    width: 1410
-                    height: ~
+                    width: 1200
+                    height: 394
                     crop: false
                     occurrence: 'Front-end: Main page slider - fullwidth slider'
                 -   name: fullwidthSliderRetina
-                    width: 2820
-                    height: ~
+                    width: 2400
+                    height: 788
                     crop: false
                     occurrence: 'Front-end: Main page slider - fullwidth slider - retina display'
         -   name: mobile
             sizes:
                 -   name: ~
-                    width: 345
-                    height: ~
-                    crop: false
-                    occurrence: 'Front-end: Mobile main page slider'
-                -   name: sliderSmall
-                    width: 330
-                    height: ~
+                    width: 285
+                    height: 199
                     crop: false
                     occurrence: 'Front-end: Mobile main page slider'
                 -   name: retinaSlider
-                    width: 690
-                    height: ~
+                    width: 570
+                    height: 398
                     crop: false
                     occurrence: 'Front-end: Mobile main page slider - retina display small'
-                -   name: retinaSliderSmall
-                    width: 660
-                    height: ~
+                -   name: fullwidthSlider
+                    width: 714
+                    height: 234
                     crop: false
-                    occurrence: 'Front-end: Mobile main page slider - retina display'
+                    occurrence: 'Front-end: Mobile main page slider - fullwidth slider'
+                -   name: fullwidthSliderRetina
+                    width: 1428
+                    height: 468
+                    crop: false
+                    occurrence: 'Front-end: Mobile main page slider - fullwidth slider - retina display'
 
 -   name: transport
     class: Shopsys\FrameworkBundle\Model\Transport\Transport

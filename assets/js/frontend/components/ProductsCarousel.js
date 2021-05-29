@@ -35,7 +35,7 @@ export default class SlickCarousel {
         if ($galleryCarousel.length) {
             let carouselVariableWidth = false;
 
-            if ($(window).width() >= Responsive.XXL) {
+            if ($(window).width() >= Responsive.XL) {
                 carouselVariableWidth = true;
             }
 

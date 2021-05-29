@@ -22,6 +22,14 @@ img {
 
     &__header {
         background-color: @color-primary;
+
+        &--with-gap {
+            margin-bottom: 18px;
+
+            @media @query-lg {
+                margin-bottom: 32px;
+            }
+        }
     }
 
     &__in {
@@ -93,13 +101,6 @@ img {
 
             @media @query-md {
                 margin-bottom: 3.5rem;
-            }
-        }
-
-        &--hp {
-            @media @query-mobile {
-                margin-bottom: 0;
-                padding-bottom: 0;
             }
         }
 

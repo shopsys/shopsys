@@ -1,79 +1,60 @@
 {% import 'Front/Content/Product/productListMacro.html.twig' as productList %}
 {% set domain = getDomain() %}
-<div class="web__line web__line--spacing web__line--margin-bottom web__line--hp">
+<div class="web__line">
     <div class="web__container">
         {% if sliderItems is not empty %}
             {% set slidersCount = sliderItems|length %}
-            <div class="box-slider{{ slidersCount <= 1 ? ' box-slider--fullwidth' }}">
-                <div class="box-slider__wrap">
-                    <div
-                        {% if slidersCount > 1 %} id="js-slider-homepage"{% endif %}
-                        class="box-slider__in gtm-scroll"
-                        data-gtm-event="{{ gtmSliderScrollEvent|json_encode() }}"
-                    >
-                        {% for item in sliderItems|slice(0, 4) %}
-                            <div class="box-slider__item">
-                                <a href="{{ item.link }}" {{ gtm(item, loop.index) }}>
-                                    <picture>
-                                        <source
-                                                media="(max-width: 360px)"
-                                                srcset="{{ imageUrl(item, 'retinaSliderSmall', 'mobile') }} 2x, {{ imageUrl(item, 'sliderSmall', 'mobile') }} 1x"
-                                        >
-                                        <source
-                                                media="(min-width: 361px) and (max-width: 480px)"
-                                                srcset="{{ imageUrl(item, 'retinaSlider', 'mobile') }} 2x, {{ imageUrl(item, null, 'mobile') }} 1x"
-                                        >
-                                        <source
-                                                media="(min-width: 481px)"
-                                                {% if slidersCount > 1 %}
-                                                    srcset="{{ imageUrl(item, 'retinaSlider', 'web') }} 2x, {{ imageUrl(item, null, 'web') }} 1x"
-                                                {% else %}
-                                                    srcset="{{ imageUrl(item, 'fullwidthSliderRetina', 'web') }} 2x, {{ imageUrl(item, 'fullwidthSlider', 'web') }} 1x"
-                                                {% endif %}
-                                        >
-                                        <img
-                                            loading="lazy"
+            <div class="box-slider{{ slidersCount <= 1 ? ' box-slider--full-width' }}">
+                <div
+                    {% if slidersCount > 1 %} id="js-slider-homepage"{% endif %}
+                    class="box-slider__in gtm-scroll"
+                    data-gtm-event="{{ gtmSliderScrollEvent|json_encode() }}"
+                >
+                    {% for item in sliderItems|slice(0, 4) %}
+                        <div class="box-slider__item">
+                            <a href="{{ item.link }}" {{ gtm(item, loop.index) }}>
+                                <picture>
+                                    <source
+                                            media="(max-width: 768px)"
                                             {% if slidersCount > 1 %}
-                                                src="{{ imgLazyloadPlaceholder }}"
-                                                data-src="{{ imageUrl(item, null, 'web') }}"
+                                                srcset="{{ imageUrl(item, 'retinaSlider', 'mobile') }} 2x, {{ imageUrl(item, null, 'mobile') }} 1x"
                                             {% else %}
-                                                src="{{ imgLazyloadPlaceholder }}"
-                                                data-src="{{ imageUrl(item, 'fullwidthSlider', 'web') }}"
+                                                srcset="{{ imageUrl(item, 'fullwidthSliderRetina', 'mobile') }} 2x, {{ imageUrl(item, 'fullwidthSlider', 'mobile') }} 1x"
                                             {% endif %}
-                                            itemprop="image" class="image-sliderItem-web"
-                                        />
-                                    </picture>
-                                </a>
-                                {% if item.sliderExtendedTextLink and item.sliderExtendedText %}
-                                    <a href="{{ item.sliderExtendedTextLink }}" class="box-slider__item__link text-center" target="_blank">
-                                        <span class="box-slider__item__link__text">{{ item.sliderExtendedText }}</span>
-                                    </a>
-                                {% elseif item.sliderExtendedText %}
-                                    <span class="box-slider__item__link box-slider__item__link--no-anchor text-center">
-                                        <span class="box-slider__item__link__text">{{ item.sliderExtendedText }}</span>
-                                    </span>
-                                {% endif %}
-                            </div>
-                        {% endfor %}
-                    </div>
-                    {% if slidersCount > 1 %}
-                        <div class="box-slider__thumbnails">
-                            <div class="box-slider__thumbnails__block" id="js-slider-homepage-thumbnails">
-                                {% for item in sliderItems|slice(0, 4) %}
-                                    <button class="box-slider__thumbnails__item">
-                                        <span class="box-slider__thumbnails__item__text">{{ item.name }}</span>
-                                    </button>
-                                {% endfor %}
-                            </div>
-                            <a
-                                href="{{ domain.id == 1 ? '/akce' : '/akcia' }}"
-                                class="btn"
-                            >
-                                {{ 'Všechny akce'|trans }}
+                                    >
+                                    <source
+                                            media="(min-width: 769px)"
+                                            {% if slidersCount > 1 %}
+                                                srcset="{{ imageUrl(item, 'retinaSlider', 'web') }} 2x, {{ imageUrl(item, null, 'web') }} 1x"
+                                            {% else %}
+                                                srcset="{{ imageUrl(item, 'fullwidthSliderRetina', 'web') }} 2x, {{ imageUrl(item, 'fullwidthSlider', 'web') }} 1x"
+                                            {% endif %}
+                                    >
+                                    <img
+                                        loading="lazy"
+                                        {% if slidersCount > 1 %}
+                                            src="{{ imgLazyloadPlaceholder }}"
+                                            data-src="{{ imageUrl(item, null, 'web') }}"
+                                        {% else %}
+                                            src="{{ imgLazyloadPlaceholder }}"
+                                            data-src="{{ imageUrl(item, 'fullwidthSlider', 'web') }}"
+                                        {% endif %}
+                                        itemprop="image" class="image-sliderItem-web"
+                                    />
+                                </picture>
                             </a>
                         </div>
-                    {% endif %}
+                    {% endfor %}
                 </div>
+                {% if slidersCount > 1 %}
+                    <div class="box-slider__thumbnails" id="js-slider-homepage-thumbnails">
+                        {% for item in sliderItems|slice(0, 4) %}
+                            <button class="box-slider__thumbnails__item">
+                                {{ item.name }}
+                            </button>
+                        {% endfor %}
+                    </div>
+                {% endif %}
             </div>
         {% endif %}
     </div>
