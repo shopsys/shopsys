@@ -1,6 +1,6 @@
 {% macro filterBox(filterForm, resetUrl) %}
     {% set domainId = getDomain().id %}
-    <div class="box-filter__block box-filter__block--with-gap" id="js-selected-filters-box">
+    <div class="box-filter__block box-filter__block--with-gap display-none" id="js-selected-filters-box">
         <div class="box-filter__selected">
             <h3 class="box-filter__title">{{ 'Vybrané filtry'|trans }}</h3>
 
