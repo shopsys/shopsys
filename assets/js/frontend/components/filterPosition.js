@@ -1,5 +1,5 @@
 import Register from 'framework/common/utils/Register';
-import Translator from 'bazinga-translator';
+import Responsive from '../utils/Responsive';
 
 (function ($) {
 
@@ -9,7 +9,7 @@ import Translator from 'bazinga-translator';
 
     const productFilterOpenerSelector = '.js-product-filter-opener';
     const productListPanelSelector = '.js-product-list-panel';
-    const windowWidthLimit = 1024;
+    const windowWidthLimit = Responsive.VL;
 
     Shopsys.filterPosition.init = function ($container) {
         if ($container.find('.js-product-filter-opener').length > 0) {
