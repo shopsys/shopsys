@@ -46,12 +46,12 @@ import Register from 'framework/common/utils/Register';
                 const formId = $filterRangeUncheckButton.data('filter-form-id').split(',');
                 const $rangeFilter = $filterRangeUncheckButton.closest('.js-product-filter').find('.js-range-slider');
 
-                $.each(formId, function(index, value) {
+                $.each(formId, function (index, value) {
                     const $inputId = $rangeFilter.data(value === 'product_filter_form_minimalPrice' ? 'minimum-input-id' : 'maximum-input-id');
                     const $formInput = $('#' + $inputId);
                     $formInput.val('');
                     $formInput.change();
-                })
+                });
             });
         }
     });

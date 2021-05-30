@@ -43,7 +43,9 @@ export default function slickInit () {
     });
 
     function mobileSlider (event, breakpoint) {
-        breakpoint === "mobile" ? breakpoint = Responsive.LG : '';
+        if (breakpoint === 'mobile') {
+            breakpoint = Responsive.LG;
+        }
 
         if (window.innerWidth <= breakpoint) {
             $(event).not('.slick-initialized').slick({
@@ -67,8 +69,7 @@ export default function slickInit () {
         }
     }
 
-
-    $('.js-slider-drawable-list-mobile').each(function(){
+    $('.js-slider-drawable-list-mobile').each(function () {
         const _this = $(this);
         const breakpoint = _this.attr('data-breakpoint') || Responsive.VL;
 
