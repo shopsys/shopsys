@@ -20,16 +20,10 @@
                             </div>
 
                             {% set sellingPriceWithVat = getProductSellingPrice(product).priceWithVat %}
-                            {% set nonSellingPriceWithVat = getProductNonSellingPrice(product).priceWithVat %}
                             <div class="list-products-line__item__price">
                                 <strong class="list-products-line__item__price__item list-products-line__item__price__item--main">
                                     {{ sellingPriceWithVat|price }}
                                 </strong>
-                                {% if nonSellingPriceWithVat.isGreaterThan(sellingPriceWithVat) %}
-                                    <span class="list-products-line__item__price__item js-not-implemented-yet">
-                                        {{ nonSellingPriceWithVat|price }}
-                                    </span>
-                                {% endif %}
                             </div>
                         </a>
                     </li>

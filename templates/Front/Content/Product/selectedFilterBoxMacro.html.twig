@@ -5,11 +5,18 @@
             <h3 class="box-filter__title">{{ 'Vybrané filtry'|trans }}</h3>
 
             <ul class="box-filter__selected__list">
-                {% if filterForm.minimalPrice.vars.data|length > 0 %}
-                    {{ _self.filterRow(filterForm.minimalPrice.vars.data|formatNumber ~ ' ' ~ currencySymbolByDomainId(domainId), filterForm.minimalPrice.vars.id, true) }}
-                {% endif %}
-                {% if filterForm.maximalPrice.vars.data|length > 0 %}
-                    {{ _self.filterRow(filterForm.maximalPrice.vars.data|formatNumber ~ ' ' ~ currencySymbolByDomainId(domainId), filterForm.maximalPrice.vars.id, true) }}
+                {% if filterForm.minimalPrice.vars.data|length > 0 or filterForm.maximalPrice.vars.data|length > 0 %}
+                    <li class="box-filter__selected__list__item">
+                        {% if filterForm.minimalPrice.vars.data|length > 0 %}
+                            {{ 'od'|trans }}
+                            {{ filterForm.minimalPrice.vars.data|formatNumber ~ ' ' ~ currencySymbolByDomainId(domainId) }}
+                        {% endif %}
+                        {% if filterForm.maximalPrice.vars.data|length > 0 %}
+                            {{ 'do'|trans }}
+                            {{ filterForm.maximalPrice.vars.data|formatNumber ~ ' ' ~ currencySymbolByDomainId(domainId) }}
+                        {% endif %}
+                        <i class="svg svg-remove-thin js-filter-box-uncheck-range" data-filter-form-id="{{ filterForm.minimalPrice.vars.id }}, {{ filterForm.maximalPrice.vars.id }}"></i>
+                    </li>
                 {% endif %}
                 {% if filterForm.brands.vars.data|length > 0 %}
                     {% for brand in filterForm.brands.vars.data %}

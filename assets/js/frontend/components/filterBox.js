@@ -43,12 +43,15 @@ import Register from 'framework/common/utils/Register';
         function uncheckCheckboxRangeAndRefreshContent ($filterRangeUncheckButton) {
             $filterRangeUncheckButton.on('click', function () {
                 $filterRangeUncheckButton.closest('.js-product-filter');
-                const formId = $filterRangeUncheckButton.data('filter-form-id');
+                const formId = $filterRangeUncheckButton.data('filter-form-id').split(',');
                 const $rangeFilter = $filterRangeUncheckButton.closest('.js-product-filter').find('.js-range-slider');
-                const $inputId = $rangeFilter.data(formId === 'product_filter_form_minimalPrice' ? 'minimum-input-id' : 'maximum-input-id');
-                const $formInput = $('#' + $inputId);
-                $formInput.val('');
-                $formInput.change();
+
+                $.each(formId, function(index, value) {
+                    const $inputId = $rangeFilter.data(value === 'product_filter_form_minimalPrice' ? 'minimum-input-id' : 'maximum-input-id');
+                    const $formInput = $('#' + $inputId);
+                    $formInput.val('');
+                    $formInput.change();
+                })
             });
         }
     });
