@@ -286,11 +286,11 @@ msgstr "\n<strong class=\"box-accordion__grid-table__col__expose\">Nie je vystav
 msgid "<strong class=\"box-accordion__grid-table__col__expose\">Vystaveno</strong> na prodejně"
 msgstr "\n<strong class=\"box-accordion__grid-table__col__expose\">Vystavené</strong> na predajni"
 
-msgid "<strong class=\"box-cart-card__form__title__strong\">Ještě jste u nás nenakupovali?</strong> Pro dokončení nákupu se prosím zaregistrujte. Budete u nás nakupovat jako:"
-msgstr "\n<strong class=\"box-cart-card__form__title__strong\">Ešte ste u nás nenakupovali?</strong> Na dokončenie nákupu sa, prosím, zaregistrujte. Budete u nás nakupovať ako:"
+msgid "<strong>Ještě jste u nás nenakupovali?</strong> Pro dokončení nákupu se prosím zaregistrujte. Budete u nás nakupovat jako:"
+msgstr "\n<strong>Ešte ste u nás nenakupovali?</strong> Na dokončenie nákupu sa, prosím, zaregistrujte. Budete u nás nakupovať ako:"
 
-msgid "<strong class=\"box-cart-card__form__title__strong\">Vítejte zpět ve Scontu</strong> Pro dokončení nákupu se prosím přihlašte"
-msgstr "<strong class=\"box-cart-card__form__title__strong\">Vitajte späť v Sconte </strong> Na dokončenie nákupu sa, prosím, prihláste"
+msgid "<strong>Vítejte zpět ve Scontu</strong> Pro dokončení nákupu se prosím přihlašte"
+msgstr "<strong>Vitajte späť v Sconte </strong> Na dokončenie nákupu sa, prosím, prihláste"
 
 msgid "<strong class=\"is-in-stock\">Ihned</strong> k odběru"
 msgstr "\n<strong class=\"is-in-stock\">Ihneď</strong> na odber"
@@ -1756,7 +1756,7 @@ msgstr "Nemáte ešte účet? Registrujte sa."
 msgid "Nemáte slevový kód? Prohlédněte si seznam našich aktuálně platných <a href=\"%url%\">akcí</a>."
 msgstr "\nNemáte zľavový kód? Pozrite si zoznam našich aktuálne platných <a href=\"%url%\">akcií</a>."
 
-msgid "Nemáte slevový kód? Prohlédněte si seznam našich<br><a class=\"box-cart__promo__desc__link\" href=\"%url%\">aktuálně platných akcí</a>."
+msgid "Nemáte slevový kód? Prohlédněte si seznam našich<br><a href=\"%url%\">aktuálně platných akcí</a>."
 msgstr ""
 
 msgid "Není skladem"
@@ -3010,7 +3010,7 @@ msgstr "Sledujte nás"
 msgid "Sleva"
 msgstr "Zľava"
 
-msgid "Sleva byla uplatněna na všechny již neslevněné položky na které se akce vztahuje podle <a class=\"box-cart__promo__desc__link\" href=\"%url%\">pravidel</a>."
+msgid "Sleva byla uplatněna na všechny již neslevněné položky na které se akce vztahuje podle <a href=\"%url%\">pravidel</a>."
 msgstr ""
 
 msgid "Slevové kupóny"

@@ -3,9 +3,9 @@
 {% block content %}
     <div class="web__line web__line--cart">
         <div class="web__container">
-            <div class="box-cart box-cart--order">
-                <div id="{{ form.vars.id }}" class="box-cart__col box-cart__col--info js-no-validate">
-                    <div class="box-cart__buttons box-cart__buttons--mobile">
+            <div class="box-order">
+                <div id="{{ form.vars.id }}" class="js-no-validate">
+                    <div>
                         <button
                             type="submit"
                             name="transport_and_payment_form[save]"
@@ -14,7 +14,7 @@
                         </button>
                     </div>
 
-                    <div id="{{ form.transport.vars.id }}" class="box-cart-card-wrap">
+                    <div id="{{ form.transport.vars.id }}">
                         {% set transportForm = form.transport %}
                         {% set transportFormId = transportForm.vars.id %}
 
@@ -22,9 +22,9 @@
                         {% set transportPersonalPickupFormId = transportPersonalPickupForm.vars.id %}
                         {% set personalPickupStock = form.personalPickupStock.vars.value %}
 
-                        <div class="box-cart-card box-cart-card--transport box-cart-card--transport-payment js-payment-transport-group">
-                            <div class="box-cart-card__top box-cart-card__top--bordered">
-                                <h2 class="box-cart-card__title box-cart-card__title--large box-cart-card__title--no-margin" id="js-label-{{ transportFormId }}">
+                        <div class="js-payment-transport-group">
+                            <div>
+                                <h2 id="js-label-{{ transportFormId }}">
                                     {{ 'Doprava'|trans }}
                                 </h2>
                             </div>
@@ -155,9 +155,9 @@
                         </div>
                     </div>
 
-                    <div class="box-cart-card box-cart-card--payments box-cart-card--transport-payment js-payment-transport-group">
-                        <div class="box-cart-card__top box-cart-card__top--bordered">
-                            <h2 class="box-cart-card__title box-cart-card__title--large box-cart-card__title--no-margin" id="js-label-{{ form.payment.vars.id }}">{{ 'Platba'|trans }}</h2>
+                    <div class="js-payment-transport-group">
+                        <div>
+                            <h2 id="js-label-{{ form.payment.vars.id }}">{{ 'Platba'|trans }}</h2>
                         </div>
 
                         <div class="box-chooser box-chooser--smaller js-form-group">
@@ -271,9 +271,9 @@
                 </div>
 
 
-                <div class="box-cart__col box-cart__col--preview box-cart__col--preview-step-2">
-                    <div class="box-cart-card-preview-wrap">
-                        <div id="js-order-preview" class="box-cart-card box-cart-card--preview box-cart-card--preview-step-2" data-url="{{ url('front_order_preview') }}">
+                <div>
+                    <div>
+                        <div id="js-order-preview" data-url="{{ url('front_order_preview') }}">
                             {{ render(controller('App\\Controller\\Front\\OrderController:previewAction', {
                                 transportId: orderPreview.transport is not null ? orderPreview.transport.id : null,
                                 paymentId: orderPreview.payment,
@@ -281,14 +281,14 @@
                                 showPromo: false
                             })) }}
                         </div>
-                        <div class="box-cart__buttons">
-                            <div class="box-cart__buttons__back">
+                        <div>
+                            <div>
                                 <button type="submit" name="{{ flow.getFormTransitionKey() }}" value="back" class="btn btn-no-style btn--arrow btn--arrow-prev js-no-validate-button">
                                     <i class="btn__icon svg svg-arrow"></i>
                                     {{ 'Back to cart'|trans }}
                                 </button>
                             </div>
-                            <div class="box-cart__buttons__next">
+                            <div>
                                 {{ form_widget(form.save, { label: 'Vaše údaje'|trans, attr: { class: 'btn js-no-validate-button js-transport_and_payment_form_save' } }) }}
                             </div>
                         </div>

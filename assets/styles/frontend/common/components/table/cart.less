@@ -89,9 +89,6 @@
     }
 
     &__row {
-        margin: 0 -@box-cart-card-padding;
-        padding: 0 @box-cart-card-padding;
-
         &--footer {
             width: 365px;
             padding: 0 45px 0 5px;
@@ -239,13 +236,6 @@
             &--content:last-child {
                 border-bottom: 0;
             }
-
-            &--head {
-                position: relative;
-                margin-top: -4px;
-
-                border: 0;
-            }
         }
 
         &__cell {
@@ -258,22 +248,10 @@
             font-weight: 400;
             -webkit-font-smoothing: antialiased;
 
-            &--head,
             &--footer {
                 padding: 5px 8px;
 
                 border: 0;
-            }
-
-            &--head {
-                text-transform: uppercase;
-                font-size: 12px;
-                color: #979ca9;
-
-                &.table-cart__cell--image {
-                    position: relative;
-                    left: -22px;
-                }
             }
 
             &--image {

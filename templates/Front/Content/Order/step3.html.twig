@@ -8,11 +8,11 @@
     <div class="web__line web__line--cart">
         <div class="web__container">
 
-            <div class="box-cart box-cart--personals">
-                <div class="box-cart__col box-cart__col--info">
-                    <h1 class="box-cart-card__title box-cart-card__title--large box-cart-card__title--no-margin">{{ 'Vaše údaje'|trans }}</h1>
-                    <div class="box-cart-card box-cart-card--form box-cart-card box-cart-card--form--spaced">
-                        <div class="box-cart-card__form">
+            <div class="box-order">
+                <div>
+                    <h1>{{ 'Vaše údaje'|trans }}</h1>
+                    <div>
+                        <div>
                             {% if not isUserLogged %}
                                 <h2 class="in-title in-title--small-spacing" id="js-user-email-label">{{ 'Začněte zadáním e-mailu'|trans }}</h2>
                             {% else %}
@@ -173,15 +173,15 @@
                             </div>
                         </div>
                     </div>
-                    <div class="box-cart__buttons box-cart__buttons--final">
-                        <div class="box-cart__buttons__back">
+                    <div>
+                        <div>
                             <button type="submit" name="{{ flow.getFormTransitionKey() }}" value="back" class="btn btn-no-style btn--arrow btn--arrow-prev js-no-validate-button">
                                 <i class="btn__icon svg svg-arrow"></i>
                                 {{ 'Zpět na Dopravu a platbu'|trans }}
                             </button>
                         </div>
-                        <div class="box-cart__buttons__next box-cart__buttons__next--terms {{ app.user is null ? 'is-disabled' : '' }}" id="js-order-form-submit-container">
-                            <span class="box-cart__buttons__terms">
+                        <div class="{{ app.user is null ? 'is-disabled' : '' }}" id="js-order-form-submit-container">
+                            <span>
                                 {% if privacyPolicyArticle is not null and termsAndConditionsArticle is not null %}
                                     {% set privacyPolicyUrl = url('front_article_detail', {'id': privacyPolicyArticle.id}) %}
                                     {% set termsAndConditionsUrl = url('front_article_detail', {'id': termsAndConditionsArticle.id}) %}
@@ -201,9 +201,9 @@
                         </div>
                     </div>
                 </div>
-                <div class="box-cart__col box-cart__col--preview box-cart__col--preview-step-3">
-                    <div class="box-cart-card-preview-wrap">
-                        <div id="js-order-preview" class="box-cart-card box-cart-card--preview box-cart-card--preview-step-3" data-url="{{ url('front_order_preview') }}">
+                <div>
+                    <div>
+                        <div id="js-order-preview" data-url="{{ url('front_order_preview') }}">
                             {{ render(controller('App\\Controller\\Front\\OrderController:previewAction', {
                                 transportId: orderPreview.transport is not null ? orderPreview.transport.id : null,
                                 paymentId: orderPreview.payment is not null ? orderPreview.payment.id : null,

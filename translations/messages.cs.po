@@ -1186,7 +1186,7 @@ msgstr ""
 msgid "Nemáte ještě účet? Registrujte se."
 msgstr ""
 
-msgid "Nemáte slevový kód? Prohlédněte si seznam našich<br><a class=\"box-cart__promo__desc__link\" href=\"%url%\">aktuálně platných akcí</a>."
+msgid "Nemáte slevový kód? Prohlédněte si seznam našich<br><a href=\"%url%\">aktuálně platných akcí</a>."
 msgstr ""
 
 msgid "Není skladem"
@@ -2110,7 +2110,7 @@ msgstr ""
 msgid "Sleva"
 msgstr ""
 
-msgid "Sleva byla uplatněna na všechny již neslevněné položky na které se akce vztahuje podle <a class=\"box-cart__promo__desc__link\" href=\"%url%\">pravidel</a>."
+msgid "Sleva byla uplatněna na všechny již neslevněné položky na které se akce vztahuje podle <a href=\"%url%\">pravidel</a>."
 msgstr ""
 
 msgid "Slevové kupóny"

@@ -1,18 +1,5 @@
 {% macro table(form, orderPreview, maximumOrderQuantity) %}
     <table class="table-cart js-cart">
-        <thead>
-            <tr class="table-cart__row table-cart__row--head">
-                <th class="table-cart__cell table-cart__cell--head table-cart__cell--image">{{ 'Váš nákup'|trans }}</th>
-                <th class="table-cart__cell table-cart__cell--head table-cart__cell--name">
-                    <span class="visibility-hidden">{{ 'Name'|trans }}</span>
-                </th>
-                <th class="table-cart__cell table-cart__cell--head table-cart__cell--avail">{{ 'Dostupnost'|trans }}</th>
-                <th class="table-cart__cell table-cart__cell--head table-cart__cell--price">{{ 'Cena za kus'|trans }}</th>
-                <th class="table-cart__cell table-cart__cell--head table-cart__cell--amount">{{ 'Počet kusů'|trans }}</th>
-                <th class="table-cart__cell table-cart__cell--head table-cart__cell--price-final">{{ 'Zaplatíte'|trans }}</th>
-                <th class="table-cart__cell table-cart__cell--head table-cart__cell--action">&nbsp;</th>
-            </tr>
-        </thead>
         <tbody>
         {% set cartItemPrices = orderPreview.quantifiedItemsPrices %}
         {% set cartItemDiscounts = orderPreview.quantifiedItemsDiscounts %}

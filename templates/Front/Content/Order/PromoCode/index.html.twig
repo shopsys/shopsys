@@ -10,8 +10,8 @@
             <input type="text" value="" id="js-promo-code-input" class="input box-promo-code__input" data-apply-code-url="{{ url('front_promo_code_apply') }}"/>
             <button type="button" id="js-promo-code-submit-button" class="btn box-promo-code__btn">{{ 'Apply'|trans }}</button>
         </div>
-        <p class="box-cart__promo__desc">
-            {{ 'Nemáte slevový kód? Prohlédněte si seznam našich<br><a class="box-cart__promo__desc__link" href="%url%">aktuálně platných akcí</a>.'|transHtml({'%url%': promoDescUrl}) }}
+        <p>
+            {{ 'Nemáte slevový kód? Prohlédněte si seznam našich<br><a href="%url%">aktuálně platných akcí</a>.'|transHtml({'%url%': promoDescUrl}) }}
         </p>
     {% else %}
         <strong class="box-promo-code__title">{{ 'Vaše sleva s kódem byla uplatněna'|trans }}</strong>
@@ -25,8 +25,8 @@
                 </strong>
             </span>
         </span>
-        <p class="box-cart__promo__desc box-cart__promo__desc--apply">
-            {{ 'Sleva byla uplatněna na všechny již neslevněné položky na které se akce vztahuje podle <a class="box-cart__promo__desc__link" href="%url%">pravidel</a>.'|transHtml({'%url%': promoDescUrl}) }}
+        <p>
+            {{ 'Sleva byla uplatněna na všechny již neslevněné položky na které se akce vztahuje podle <a href="%url%">pravidel</a>.'|transHtml({'%url%': promoDescUrl}) }}
         </p>
     {% endif %}
 </div>

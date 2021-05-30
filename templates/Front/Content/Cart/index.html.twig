@@ -13,14 +13,6 @@
 {% block breadcrumb %}
 {% endblock %}
 
-{% block header %}
-    {% if cart is not null %}
-        {% include 'Front/Layout/headerCart.html.twig' %}
-    {% else %}
-        {% include 'Front/Layout/header.html.twig' %}
-    {% endif %}
-{% endblock %}
-
 {% block main_content %}
 
     {% set shopInfoEmail = getShopInfoEmail() %}
@@ -33,58 +25,41 @@
     {% if cart is not null %}
 
         {% include 'Front/Inline/OrderProgress/index.html.twig' with {step: 1} only %}
-        <div class="web__line web__line--cart">
+        <div class="web__line">
             <div class="web__container">
-                {{ form_start(form, { attr: { class: 'js-no-validate js-cart-form box-cart' }}) }}
+                {{ form_start(form, { attr: { class: 'box-cart js-no-validate js-cart-form' }}) }}
                     {{ form_errors(form) }}
-                    <div class="box-cart__buttons box-cart__buttons--mobile">
-                        <button
-                            type="submit"
-                            name="cart_form[submit]"
-                            class="btn js-no-validate-button">
-                            {{ 'Doprava a platba'|trans }}
-                        </button>
+                    <div class="box-cart__top">
+                        {{ cartItemsTableMacro.table(form, orderPreview, maximumOrderQuantity) }}
+                        {{ cartFreeTransportMacro.progressBar(orderPreview) }}
                     </div>
-                    <div class="box-cart__col box-cart__col--info">
-                        <div class="box-cart-card box-cart-card--info">
-                            {{ cartItemsTableMacro.table(form, orderPreview, maximumOrderQuantity) }}
-                            <div class="box-cart-card__bottom">
-                                {{ cartFreeTransportMacro.progressBar(orderPreview) }}
-                            </div>
+                    <div class="box-cart__bottom">
+                        <div id="js-order-preview" data-url="{{ url('front_order_preview') }}">
+                            {{ render(controller('App\\Controller\\Front\\OrderController:previewAction', {
+                                paymentId: orderPreview.payment is null ? null : orderPreview.payment.id,
+                                showProducts: false,
+                                showAdvert: true,
+                                showPromo: true
+                            })) }}
                         </div>
-                    </div>
-                    <div class="box-cart__col box-cart__col--preview box-cart__col--preview-step-1">
-                        <div class="box-cart-card-preview-wrap">
-                            <div class="box-cart-card box-cart-card--preview box-cart-card--preview">
-                                <div id="js-order-preview" data-url="{{ url('front_order_preview') }}">
-                                    {{ render(controller('App\\Controller\\Front\\OrderController:previewAction', {
-                                        paymentId: orderPreview.payment is null ? null : orderPreview.payment.id,
-                                        showProducts: false,
-                                        showAdvert: true,
-                                        showPromo: true
-                                    })) }}
-                                </div>
+                        <div class="in-action">
+                            <div class="in-action__left">
+                                <a href="{{ url('front_homepage') }}" class="btn btn-no-style btn--arrow btn--arrow-prev">
+                                    <i class="btn__icon svg svg-arrow"></i>
+                                    {{ 'Zpět do obchodu'|trans }}
+                                </a>
                             </div>
-                            <div class="box-cart__buttons">
-                                <div class="box-cart__buttons__back">
-                                    <a href="{{ url('front_homepage') }}" class="btn btn-no-style btn--arrow btn--arrow-prev">
-                                        <i class="btn__icon svg svg-arrow"></i>
-                                        {{ 'Zpět do obchodu'|trans }}
-                                    </a>
+                            {% if cart.itemsCount > 0 %}
+                                <div class="in-action__right">
+                                    {{ form_row(form.submit, { label: 'Doprava a platba'|trans, attr: { class: 'btn'}}) }}
                                 </div>
-                                {% if cart.itemsCount > 0 %}
-                                    <div class="box-cart__buttons__next">
-                                        {{ form_row(form.submit, { label: 'Doprava a platba'|trans, attr: { class: 'btn'}}) }}
-                                    </div>
-                                {% endif %}
-                            </div>
+                            {% endif %}
                         </div>
                     </div>
                 {{ form_end(form) }}
             </div>
         </div>
     {% else %}
-
         <div class="web__line">
             <div class="web__container">
                 {{ render(controller('App\\Controller\\Front\\NavigationController:menuAction')) }}

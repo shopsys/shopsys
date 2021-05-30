@@ -13,10 +13,10 @@
     {% endfor %}
 
     {% if showPromo %}
-        <div class="box-cart__promo{% if isDiscountInOrderPreview %} box-cart__promo--active{% endif %}{% if not showPromo %} display-none{% endif %}">
+        <div class="{% if isDiscountInOrderPreview %} active{% endif %}{% if not showPromo %} display-none{% endif %}">
             {% if not isDiscountInOrderPreview %}
-                <div class="box-cart__promo__top">
-                    <h2 class="box-cart-card__title box-cart-card__title--no-margin">{{ 'Využijte slevový kód'|trans }}</h2>
+                <div>
+                    <h2>{{ 'Využijte slevový kód'|trans }}</h2>
                 </div>
                 {% if showAdvert %}
                     {{ render(controller('App\\Controller\\Front\\AdvertController:boxAction',{'positionName' : 'cartPreview'})) }}
@@ -25,8 +25,7 @@
             {{ render(controller('App\\Controller\\Front\\PromoCodeController:indexAction')) }}
         </div>
     {% endif %}
-    <hr class="box-cart-card__separator" />
-    <h2 class="box-cart-card__title box-cart-card__title--small-margin">{{ 'Vaše objednávka'|trans }}</h2>
+    <h2>{{ 'Vaše objednávka'|trans }}</h2>
     <table class="table-cart-preview">
         <tbody class="table-cart-preview__body">
             <tr class="table-cart-preview__body__row">
