@@ -19,7 +19,7 @@
 
         <div class="box-filter__block">
             <div class="box-filter__choice js-product-filter-box" data-product-filter-box-id="product_filter_box_price">
-                <h3 class="box-filter__choice__title active cursor-pointer js-product-filter-box-label js-product-filter-box-arrow">
+                <h3 class="box-filter__choice__title cursor-pointer js-product-filter-box-label js-product-filter-box-arrow">
                     {{ 'Price'|trans }}
                     <i class="svg svg-arrow"></i>
                 </h3>
@@ -63,7 +63,7 @@
                         {{ 'Dostupnost'|trans }}
                         <i class="svg svg-arrow"></i>
                     </h3>
-                    <div class="box-filter__choice__content display-none" id="product_filter_box_instock">
+                    <div class="box-filter__choice__content" id="product_filter_box_instock">
                         <div class="form-choice form-choice--without-margin">
                             {{ form_widget(filterForm.inStock, { attr: { class: "css-checkbox", 'data-filter-name-with-entity-id': filterForm.inStock.vars.id } }) }}
 
@@ -99,7 +99,7 @@
                         <i class="svg svg-arrow"></i>
                     </h3>
 
-                    <div class="box-filter__choice__content display-none" id="{{ filterForm.flags.vars.id }}">
+                    <div class="box-filter__choice__content" id="{{ filterForm.flags.vars.id }}">
                         {% for flagForm in filterForm.flags %}
 
                             {% set flagChecked = flagForm.vars.checked %}
@@ -142,7 +142,7 @@
                         {{ 'Brand'|trans }}
                         <i class="svg svg-arrow"></i>
                     </h3>
-                    <div class="box-filter__choice__content display-none" id="{{ filterForm.brands.vars.id }}">
+                    <div class="box-filter__choice__content" id="{{ filterForm.brands.vars.id }}">
                         {% for brandForm in filterForm.brands %}
                             {% set brandChecked = brandForm.vars.checked %}
                             {% set brandId = brandForm.vars.value %}

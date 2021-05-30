@@ -3,7 +3,7 @@
         {{ parameterForm.vars.label }}
         <i class="svg svg-arrow"></i>
     </h3>
-    <div class="box-filter__choice__content display-none" id="{{ parameterForm.vars.id }}">
+    <div class="box-filter__choice__content" id="{{ parameterForm.vars.id }}">
         {{ form_row(parameterForm, { attr: {'data-filter-name-with-entity-id': filterForm.parameters.vars.id ~ '_' ~ parameterId ~ '_' ~ parameterValueForm.vars.value }}) }}
     </div>
 </div>
