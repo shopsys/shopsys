@@ -141,13 +141,13 @@
                     crop: false
                     occurrence: 'Front-end: Mobile main page slider - retina display small'
                 -   name: fullwidthSlider
-                    width: 714
-                    height: 234
+                    width: 713
+                    height: 498
                     crop: false
                     occurrence: 'Front-end: Mobile main page slider - fullwidth slider'
                 -   name: fullwidthSliderRetina
-                    width: 1428
-                    height: 468
+                    width: 1426
+                    height: 996
                     crop: false
                     occurrence: 'Front-end: Mobile main page slider - fullwidth slider - retina display'
 
