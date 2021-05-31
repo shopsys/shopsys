@@ -1,7 +1,12 @@
 .box-free-transport {
-    display: flex;
+    display: inline-flex;
+    width: 100%;
     flex-wrap: wrap;
     align-items: center;
+
+    @media @query-lg {
+        width: auto;
+    }
 
     &__icon {
         margin-right: 10px;

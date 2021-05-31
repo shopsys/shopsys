@@ -3,7 +3,7 @@
         <ul class="box-progress">
             <li class="box-progress__item{% if step == 1 %} box-progress__item--active{% endif %}">
                 {% if step == 1 %}
-                    <span class="box-progress__item__title">1. {{ 'Nákupní košík'|trans }}</span>
+                    <span class="box-progress__item__title">1.&nbsp;{{ 'Nákupní košík'|trans }}</span>
                 {% else %}
                     <a
                         class="box-progress__item__title"
@@ -20,7 +20,7 @@
                         class="box-progress__item__title"
                         href="{{ url('front_order_step_transport_payment') }}"
                     >
-                        2. {{ 'Shipping and payment'|trans }}
+                        2.&nbsp;{{ 'Shipping and payment'|trans }}
                     </a>
                 {% else %}
                     <span class="box-progress__item__title">2. {{ 'Shipping and payment'|trans }}</span>
@@ -28,7 +28,7 @@
             </li>
 
             <li class="box-progress__item{% if step == 3 %} box-progress__item--active{% endif %}">
-                <span class="box-progress__item__title">3. {{ 'Dodací údaje'|trans }}</span>
+                <span class="box-progress__item__title">3.&nbsp;{{ 'Dodací údaje'|trans }}</span>
             </li>
         </ul>
     </div>

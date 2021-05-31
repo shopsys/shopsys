@@ -3,14 +3,22 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    margin-bottom: 12px;
+    margin: 0 -@web-padding 26px;
 
     border-bottom: 1px solid @color-border;
+
+    @media @query-lg {
+        margin: 0 0 12px;
+    }
 
     &__item {
         width: @calc-base / 3;
         position: relative;
-        padding: 12px 20px;
+        padding: 12px;
+
+        @media @query-lg {
+            padding: 12px 20px;
+        }
 
         &--active {
             &:before {
@@ -27,11 +35,15 @@
 
         &__title {
             display: block;
-            line-height: 10px;
+            line-height: 14px;
 
             font-size: 12px;
             text-decoration: none;
             text-transform: uppercase;
+
+            @media @query-lg {
+                line-height: 10px;
+            }
 
             &:hover {
                 text-decoration: none;

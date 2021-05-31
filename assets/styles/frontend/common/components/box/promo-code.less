@@ -2,7 +2,6 @@
 
 .box-promo-code {
     &__button {
-        width: 210px;
         display: flex;
         align-items: center;
         padding: 11px 16px;
@@ -15,6 +14,10 @@
         transition: @transition;
         font-weight: 700;
         font-size: @font-size-small;
+
+        @media @query-lg {
+            width: 210px;
+        }
 
         &:hover {
             text-decoration: none;
