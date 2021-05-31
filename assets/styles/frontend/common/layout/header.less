@@ -16,6 +16,10 @@
         padding: 23px 0 16px;
     }
 
+    &--cart {
+        padding: 16px 0;
+    }
+
     &__logo {
         order: 1;
         flex: 1;
@@ -37,9 +41,9 @@
     }
 
     &__info-box {
+        display: flex;
         order: 2;
         margin-left: auto;
-        margin-right: @header-item-gap;
     }
 
     &__middle {
@@ -171,22 +175,6 @@
 
         @media @query-lg {
             display: none;
-        }
-    }
-
-    &--cart {
-        padding: 8px 0;
-
-        @media @query-lg {
-            padding: 23px 0;
-        }
-
-        .header__links {
-            margin-right: 0;
-        }
-
-        .header__logo {
-            align-self: center;
         }
     }
 }

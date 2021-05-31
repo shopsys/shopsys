@@ -1,26 +1,35 @@
 {% set shopInfoEmail = getShopInfoEmail() %}
 {% set shopInfoPhoneNumber = getShopInfoPhoneNumber() %}
 {% set shopInfoPhoneHours = getShopInfoPhoneHours() %}
+{% set isNotHeader = true %}
 
-<div class="box-info">
+{% if header is defined and header == true %}
+    {% set isNotHeader = false %}
+{% endif %}
+
+<div class="box-info {{ cssClassModification|default('') }}">
     {% set inofoboxIcon = 'potrebujete_poradit' %}
     {% set inofoboxIcon2x = 'potrebujete_poradit2x' %}
-    <picture>
-        <source
-            srcset="
-            {{ asset("public/frontend/images/#{inofoboxIcon2x}.png") }} 2x,
-            {{ asset("public/frontend/images/#{inofoboxIcon}.png") }} 1x"
-        >
-        <img
-            class="box-info__img"
-            loading="lazy"
-            src="{{ imgLazyloadPlaceholder }}"
-            data-src="{{ asset("public/frontend/images/#{inofoboxIcon}.png") }}"
-            alt="{{ 'Potřebujete poradit?'|trans }}"
-        >
-    </picture>
+    {% if isNotHeader %}
+        <picture>
+            <source
+                srcset="
+                {{ asset("public/frontend/images/#{inofoboxIcon2x}.png") }} 2x,
+                {{ asset("public/frontend/images/#{inofoboxIcon}.png") }} 1x"
+            >
+            <img
+                class="box-info__img"
+                loading="lazy"
+                src="{{ imgLazyloadPlaceholder }}"
+                data-src="{{ asset("public/frontend/images/#{inofoboxIcon}.png") }}"
+                alt="{{ 'Potřebujete poradit?'|trans }}"
+            >
+        </picture>
+    {% endif %}
     <div class="box-info__content">
-        <h2 class="box-info__title">{{ 'Potřebujete poradit?'|trans }}</h2>
+        {% if isNotHeader %}
+            <h2 class="box-info__title">{{ 'Potřebujete poradit?'|trans }}</h2>
+        {% endif %}
 
         <div class="box-info__contacts">
             <i class="svg svg-phone"></i>
@@ -28,8 +37,10 @@
             <p class="box-info__contacts__hours">{{ shopInfoPhoneHours }}</p>
         </div>
 
-        <a href="{{ url('front_contacts') }}" class="position-relative btn btn--secondary">
-            {{ 'Napište nám'|trans }}
-        </a>
+        {% if isNotHeader %}
+            <a href="{{ url('front_contacts') }}" class="position-relative btn btn--secondary">
+                {{ 'Napište nám'|trans }}
+            </a>
+        {% endif %}
     </div>
 </div>
