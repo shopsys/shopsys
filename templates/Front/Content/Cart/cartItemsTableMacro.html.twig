@@ -41,6 +41,24 @@
                             <span class="js-cart-item-name-text">
                                 {{ product.name }}
                             </span>
+
+                            <div class="in-flag in-flag--in-checkout">
+                                {% if (product.hasFlagByAkeneoCodeForDomain(constant('App\\Model\\Product\\Flag\\Flag::AKENEO_CODE_ACTION'), getDomain().id)) %}
+                                    <div class="in-flag__item flag__product_action">
+                                        {{ "Akční cena"|trans }}
+                                    </div>
+                                {% endif %}
+                                {% if (product.hasFlagByAkeneoCodeForDomain(constant('App\\Model\\Product\\Flag\\Flag::AKENEO_CODE_SALE'), getDomain().id)) %}
+                                    <div class="in-flag__item flag__product_sale">
+                                        {{ "Výprodej"|trans }}
+                                    </div>
+                                {% endif %}
+                                {% if (product.hasFlagByAkeneoCodeForDomain(constant('App\\Model\\Product\\Flag\\Flag::AKENEO_CODE_HIT'), getDomain().id)) %}
+                                    <div class="in-flag__item flag__product_hit">
+                                        {{ "Cenový hit"|trans }}
+                                    </div>
+                                {% endif %}
+                            </div>
                         </a>
                         <div class="table-cart__cell__name__catnum">
                             {{ 'Kód:' }} {{ product.catnum }}

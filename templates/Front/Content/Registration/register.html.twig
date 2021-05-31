@@ -89,14 +89,14 @@
                                 </label>
                                 <div class="js-validation-errors-list js-validation-error-list-{{ form.privacyPolicy.vars.id }} form-error form-error--choice display-none">
                                     <span class="form-error__icon">
-                                        <i class="svg svg-error"></i>
+                                        <i class="svg svg-cross"></i>
                                     </span>
                                     <ul class="form-error__list"></ul>
                                 </div>
                             </div>
                         </div>
                         {{ form_row(form.newsletterSubscription, { label: 'Souhlasím se zasíláním newsletteru'|trans }) }}
-                        
+
                         <div class="box-form__submit">
                             {{ form_widget(form.save, { label: 'Register'|trans }) }}
                         </div>

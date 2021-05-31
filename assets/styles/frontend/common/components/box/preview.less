@@ -1,0 +1,27 @@
+.box-preview {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 24px;
+
+    @media @query-lg {
+        margin-bottom: 30px;
+    }
+
+    &__item {
+        padding-right: 15px;
+
+        &--promo-code {
+            width: 320px;
+        }
+
+        &--free-transport {
+            padding-top: 11px;
+        }
+
+        &--preview {
+            width: 300px;
+            margin-left: auto;
+            padding-right: 0;
+        }
+    }
+}

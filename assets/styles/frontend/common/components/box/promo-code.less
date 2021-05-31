@@ -1,121 +1,75 @@
-@promo-code-spinner-size: 26px;
+@box-promo-code-button-text-color: #555764;
 
 .box-promo-code {
-    &__wrap {
+    &__button {
+        width: 210px;
+        display: flex;
+        align-items: center;
+        padding: 11px 16px;
+
+        background-color: @color-add-light;
+        border-radius: @radius-medium;
+        color: @box-promo-code-button-text-color;
+        text-decoration: none;
+        text-transform: uppercase;
+        transition: @transition;
+        font-weight: 700;
+        font-size: @font-size-small;
+
+        &:hover {
+            text-decoration: none;
+            color: @box-promo-code-button-text-color;
+            background-color: darken(@color-add-light, 5%);
+        }
+
+        .svg {
+            margin-right: 10px;
+
+            font-size: 12px;
+            color: @color-0;
+        }
+    }
+
+    &__content {
         position: relative;
-    }
+        display: flex;
+        margin-top: 10px;
 
-    label {
-        left: 14px;
-    }
-
-    &__input {
-        height: 54px;
-        width: 100%;
-        padding: 0 120px 0 13px;
-
-        border-radius: @radius;
-        background-color: @color-f;
-        border: 1px solid @color-f;
-        outline: 0;
-        transition: all @transition;
-
-        &:focus {
-            border-color: @color-add-light;
-            box-shadow: 0 0 0 3px rgba(@color-add-light, .25);
+        &__input {
+            border-radius: @radius 0 0 @radius;
+            border-right: 0;
         }
 
-        &::-webkit-input-placeholder {
-            color: @color-base-lighter;
-            opacity: 1;
-        }
-
-        &::-moz-placeholder {
-            color: @color-base-lighter;
-            opacity: 1;
-        }
-
-        &:-ms-input-placeholder {
-            color: @color-base-lighter;
-            opacity: 1;
-        }
-    }
-
-    &__btn {
-        // .in-overlay has position: relative !important
-        position: absolute !important;
-        top: 8px;
-        right: 10px;
-        padding-left: 20px;
-        padding-right: 20px;
-
-        text-transform: none;
-        font-size: 14px;
-        font-weight: 400;
-        letter-spacing: 0;
-
-        &.in-overlay {
-            color: #ffb900;
-        }
-
-        .in-overlay__in {
-            background-color: transparent;
-        }
-
-        .in-overlay__spinner {
-            min-width: @promo-code-spinner-size;
-            min-height: @promo-code-spinner-size;
-            margin-top: -@promo-code-spinner-size / 2;
-            margin-left: -@promo-code-spinner-size / 2;
-            line-height: @promo-code-spinner-size;
-        }
-
-        .in-overlay__spinner__icon {
-            width: @promo-code-spinner-size;
-            height: @promo-code-spinner-size;
-
-            border: 3px solid @color-f;
-            border-left-color: @color-add-light;
-            box-shadow: none;
-
-            &::before {
-                width: @promo-code-spinner-size;
-                height: @promo-code-spinner-size;
-                line-height: @promo-code-spinner-size;
-            }
+        &__btn {
+            border-radius: 0 @radius @radius 0;
+            padding-left: 10px;
+            padding-right: 10px;
         }
     }
 
     &__added {
+        display: flex;
+        align-items: center;
+
         &__remove {
-            margin-left: 10px;
-            position: relative;
-            top: -1px;
+            display: flex;
+            align-items: center;
+            margin-left: 5px;
 
             text-decoration: none;
 
-            .svg {
-                font-size: 16px;
-                color: @color-f;
+            &:hover {
+                text-decoration: none;
             }
         }
     }
 
     &__title {
         display: block;
-        margin-bottom: 6px;
 
-        font-size: 16px;
+        font-size: @font-size;
         color: @color-primary;
         font-weight: 400;
-        -webkit-font-smoothing: antialiased;
-    }
-
-    &__desc {
-        margin-bottom: 0;
-
-        font-size: 11px;
-        color: @color-light-secondary;
         -webkit-font-smoothing: antialiased;
     }
 }

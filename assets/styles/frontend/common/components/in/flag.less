@@ -17,8 +17,10 @@
     }
 
     &--in-checkout {
-        position: static;
-        margin-top: 3px;
+        display: inline;
+        position: relative;
+        top: -1px;
+        line-height: 10px;
     }
 
     &--big {
@@ -49,6 +51,11 @@
 
         .in-flag--in-list & {
             margin-right: auto;
+        }
+
+        .in-flag--in-checkout & {
+            margin-bottom: 0;
+            margin-right: 5px;
         }
 
         &.flag__product_action {

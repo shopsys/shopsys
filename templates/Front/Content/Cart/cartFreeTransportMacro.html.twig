@@ -1,38 +1,20 @@
 {% macro progressBar(orderPreview, loop) %}
-    {% if orderPreview.isTransportForFree() %}
-        {% set restForFreeTransportPriceAmount = orderPreview.getRestToFreeTransportPrice().getAmount() %}
-        {% set restForFreeTransportPrice = orderPreview.getRestToFreeTransportPrice()|price %}
-        {% set percentageOfFreeTransport = orderPreview.getPercentageOfFreeTransport() %}
-        <div class="box-free-transport">
-            <div class="box-free-transport__icon">
-                <picture>
-                    <source
-                        srcset="
-                        {{ asset('public/frontend/images/free-delivery-img_2x.png') }} 2x,
-                        {{ asset('public/frontend/images/free-delivery-img.png') }} 1x"
-                    >
-                    <img
-                        data-src="{{ asset('public/frontend/images/free-delivery-img.png') }}"
-                        class="box-free-transport__icon__image"
-                        loading="lazy"
-                        alt="{{ 'Doprava zdarma'|trans }}"
-                    />
-                </picture>
+    {% set restForFreeTransportPriceAmount = orderPreview.getRestToFreeTransportPrice().getAmount() %}
+    {% set restForFreeTransportPrice = orderPreview.getRestToFreeTransportPrice()|price %}
+    {% set percentageOfFreeTransport = orderPreview.getPercentageOfFreeTransport() %}
+    <div class="box-free-transport">
+        {% if restForFreeTransportPriceAmount > 0 %}
+            <div class="box-free-transport__desc">
+                {{ 'Nakupte ještě za <strong class="box-free-transport__desc__strong">%price%</strong> a získáte doručení <strong class="box-free-transport__desc__strong">Zdarma</strong>'|trans({ '%price%': restForFreeTransportPrice })|raw }}
             </div>
-            <div class="box-free-transport__content">
-                {% if restForFreeTransportPriceAmount > 0 %}
-                    <div class="box-free-transport__desc">
-                        {{ 'Nakupte ještě za <strong class="box-free-transport__desc__strong">%price%</strong> a získáte doručení <strong class="box-free-transport__desc__strong">Zdarma</strong>'|trans({ '%price%': restForFreeTransportPrice })|raw }}
-                    </div>
-                    <div class="box-free-transport__progress">
-                        <div class="box-free-transport__progress__bar" style="width: {{ percentageOfFreeTransport }}%;"></div>
-                    </div>
-                {% else %}
-                    <div class="box-free-transport__desc box-free-transport__desc--standalone">
-                        {{ 'Získali jste doručení <strong class="box-free-transport__desc__strong">Zdarma</strong>'|trans|raw }}
-                    </div>
-                {% endif %}
+            <div class="box-free-transport__progress">
+                <div class="box-free-transport__progress__bar" style="width: {{ percentageOfFreeTransport }}%;"></div>
             </div>
-        </div>
-    {% endif %}
+        {% else %}
+            <i class="box-free-transport__icon svg svg-success"></i>
+            <div class="box-free-transport__desc">
+                {{ 'Dopravu máte zdarma'|trans }}
+            </div>
+        {% endif %}
+    </div>
 {% endmacro %}

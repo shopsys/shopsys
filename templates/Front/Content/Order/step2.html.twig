@@ -277,6 +277,7 @@
                             {{ render(controller('App\\Controller\\Front\\OrderController:previewAction', {
                                 transportId: orderPreview.transport is not null ? orderPreview.transport.id : null,
                                 paymentId: orderPreview.payment,
+                                orderStep: '2',
                                 showAdvert: false,
                                 showPromo: false
                             })) }}

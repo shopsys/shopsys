@@ -5,27 +5,29 @@
         {% set promoDescUrl = '/akcia' %}
     {% endif %}
     {% if validEnteredPromoCode is null %}
-        <div class="box-promo-code__wrap form-line">
-            <label>{{ 'Slevový kód'|trans }}</label>
-            <input type="text" value="" id="js-promo-code-input" class="input box-promo-code__input" data-apply-code-url="{{ url('front_promo_code_apply') }}"/>
-            <button type="button" id="js-promo-code-submit-button" class="btn box-promo-code__btn">{{ 'Apply'|trans }}</button>
+        <a class="box-promo-code__button js-responsive-toggle" data-element="promo-code">
+            <i class="svg svg-plus"></i>
+            {{ 'Mám slevový kupón'|trans }}
+        </a>
+
+        <div class="display-none" id="promo-code">
+            <div class="box-promo-code__content">
+                <input type="text" placeholder="{{ 'Kupón'|trans }}" id="js-promo-code-input" class="box-promo-code__content__input input" data-apply-code-url="{{ url('front_promo_code_apply') }}"/>
+                <label for="js-promo-code-input" class="input-label">{{ 'Kupón'|trans }}</label>
+                <button type="button" id="js-promo-code-submit-button" class="box-promo-code__content__btn btn">
+                    {{ 'Apply'|trans }}
+                </button>
+            </div>
         </div>
-        <p>
-            {{ 'Nemáte slevový kód? Prohlédněte si seznam našich<br><a href="%url%">aktuálně platných akcí</a>.'|transHtml({'%url%': promoDescUrl}) }}
-        </p>
     {% else %}
         <strong class="box-promo-code__title">{{ 'Vaše sleva s kódem byla uplatněna'|trans }}</strong>
         <span class="box-promo-code__added">
-            <span class="box-promo-code__added__discount color-purple">
-                <strong class="cart-tag cart-tag--promo cart-tag cart-tag--promo--primary">
-                    {{ validEnteredPromoCode.code }}
-                    <a href="{{ url('front_promo_code_remove') }}" id="js-promo-code-remove-button" class="box-promo-code__added__remove">
-                        <i class="svg svg-remove"></i>
-                    </a>
-                </strong>
-            </span>
+            <strong>{{ validEnteredPromoCode.code }}</strong>
+            <a href="{{ url('front_promo_code_remove') }}" id="js-promo-code-remove-button" class="box-promo-code__added__remove">
+                <i class="svg svg-cross"></i>
+            </a>
         </span>
-        <p>
+        <p class="margin-bottom-0">
             {{ 'Sleva byla uplatněna na všechny již neslevněné položky na které se akce vztahuje podle <a href="%url%">pravidel</a>.'|transHtml({'%url%': promoDescUrl}) }}
         </p>
     {% endif %}
