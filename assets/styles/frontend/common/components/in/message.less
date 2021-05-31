@@ -2,13 +2,13 @@
 @in-message-remove-size: 13px;
 
 .in-message {
+    position: relative;
     display: flex;
     align-items: center;
     padding: 15px 44px;
     line-height: 18px;
     margin-bottom: 10px;
 
-    cursor: pointer;
     font-size: @font-size-small;
     color: @color-0;
     border-radius: @radius;
@@ -25,20 +25,6 @@
         font-size: @in-message-icon-size;
         background-color: @color-f;
         border-radius: 100%;
-    }
-
-    &:after {
-        &:extend(.svg-remove:before);
-        position: absolute;
-        top: 50%;
-        right: 18px;
-        transform: translateY(-50%);
-        line-height: @in-message-remove-size;
-
-        font-family: svg;
-        color: @color-0;
-        font-size: @in-message-remove-size;
-        cursor: pointer;
     }
 
     &--error,
@@ -80,5 +66,17 @@
 
     &__list {
         .reset-ul();
+    }
+
+    &__icon {
+        position: absolute;
+        top: 50%;
+        right: 18px;
+        transform: translateY(-50%);
+        line-height: @in-message-remove-size;
+
+        color: @color-0;
+        font-size: @in-message-remove-size;
+        cursor: pointer;
     }
 }

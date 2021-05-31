@@ -15,7 +15,10 @@
             {% else %}
                 {% set authenticationErrorMessage = 'An authentication exception occurred.'|trans %}
             {% endif %}
-            <p class="in-message in-message--error">{{ authenticationErrorMessage }}</p>
+            <div class="in-message in-message--error">
+                {{ authenticationErrorMessage }}
+                <i class="in-message__icon svg svg-remove js-message-close"></i>
+            </div>
         {% endif %}
 
         {# Display current two-factor provider #}

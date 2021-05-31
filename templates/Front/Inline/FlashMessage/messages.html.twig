@@ -1,7 +1,8 @@
 {% if messages %}
-    <div class="in-message in-message--{{ type }}">
-        {% for message in messages %}
-            <div>{{ message|raw }}</div>
-        {% endfor %}
-    </div>
+    {% for message in messages %}
+        <div class="in-message in-message--{{ type }}">
+            {{ message|raw }}
+            <i class="in-message__icon svg svg-remove js-message-close"></i>
+        </div>
+    {% endfor %}
 {% endif %}
