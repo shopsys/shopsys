@@ -15,6 +15,11 @@
         flex-direction: row;
     }
 
+    &__top {
+        width: 100%;
+        margin-bottom: 30px;
+    }
+
     &__promo {
         margin-bottom: 18px;
 
@@ -43,97 +48,6 @@
                 &:hover {
                     text-decoration: none;
                 }
-            }
-        }
-    }
-}
-
-.cart-price {
-    display: block;
-
-    color: @color-light-secondary;
-    font-weight: 400;
-    -webkit-font-smoothing: antialiased;
-
-    &--primary {
-        font-size: 17px;
-        color: @color-primary;
-        line-height: 1;
-    }
-
-    &--sale {
-        color: #ff7a00;
-    }
-
-    &--action {
-        color: #ff3400;
-    }
-
-    &--secondary {
-        font-size: 13px;
-        line-height: 1;
-
-        &-2 {
-            margin-top: 2px;
-
-            color: #536b76;
-            font-size: 14px;
-        }
-    }
-
-    &--smaller {
-        font-size: 12px;
-    }
-
-    &--bigger {
-        font-size: 17px;
-    }
-
-    &--big {
-        font-size: 18px;
-        line-height: 1;
-    }
-
-    &--previous {
-        text-decoration: line-through;
-        color: @color-base-lighter;
-
-        &-no-decoration {
-            display: inline-block;
-            text-decoration: none;
-        }
-    }
-
-    &--promo {
-        color: #7f00ff;
-
-        &-preview {
-            font-size: 15px;
-        }
-    }
-
-    &-caption {
-        font-weight: 400;
-
-        &--primary {
-            line-height: 1.2;
-
-            @media @query-xl {
-                white-space: nowrap;
-            }
-        }
-
-        &--small {
-            font-size: 15px;
-            color: @color-primary;
-        }
-
-        &--big {
-            font-size: 16px;
-            color: @color-primary;
-
-            @media @query-cart-vl {
-                font-size: 18px;
             }
         }
     }

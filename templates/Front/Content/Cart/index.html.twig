@@ -13,18 +13,26 @@
 {% block breadcrumb %}
 {% endblock %}
 
+{% block flashMessage %}
+{% endblock %}
+
+{% block headerClass %}web__header--with-gap{% endblock %}
+
 {% block main_content %}
 
     {% set shopInfoEmail = getShopInfoEmail() %}
     {% set shopInfoPhoneNumber = getShopInfoPhoneNumber() %}
     {% set shopInfoPhoneHours = getShopInfoPhoneHours() %}
 
-    {% block mainMenu %}
-    {% endblock %}
-
     {% if cart is not null %}
-
         {% include 'Front/Inline/OrderProgress/index.html.twig' with {step: 1} only %}
+
+        <div class="web__line">
+            <div class="web__container">
+                {{ render(controller('App\\Controller\\Front\\FlashMessageController:indexAction')) }}
+            </div>
+        </div>
+
         <div class="web__line">
             <div class="web__container">
                 {{ form_start(form, { attr: { class: 'box-cart js-no-validate js-cart-form' }}) }}
@@ -33,6 +41,7 @@
                         {{ cartItemsTableMacro.table(form, orderPreview, maximumOrderQuantity) }}
                         {{ cartFreeTransportMacro.progressBar(orderPreview) }}
                     </div>
+
                     <div class="box-cart__bottom">
                         <div id="js-order-preview" data-url="{{ url('front_order_preview') }}">
                             {{ render(controller('App\\Controller\\Front\\OrderController:previewAction', {
@@ -42,19 +51,20 @@
                                 showPromo: true
                             })) }}
                         </div>
-                        <div class="in-action">
-                            <div class="in-action__left">
-                                <a href="{{ url('front_homepage') }}" class="btn btn-no-style btn--arrow btn--arrow-prev">
-                                    <i class="btn__icon svg svg-arrow"></i>
-                                    {{ 'Zpět do obchodu'|trans }}
-                                </a>
-                            </div>
-                            {% if cart.itemsCount > 0 %}
-                                <div class="in-action__right">
-                                    {{ form_row(form.submit, { label: 'Doprava a platba'|trans, attr: { class: 'btn'}}) }}
-                                </div>
-                            {% endif %}
+                    </div>
+
+                    <div class="in-action">
+                        <div class="in-action__left">
+                            <a href="{{ url('front_homepage') }}" class="btn btn-no-style btn--arrow btn--arrow-prev">
+                                <i class="btn__icon svg svg-arrow"></i>
+                                {{ 'Zpět do obchodu'|trans }}
+                            </a>
                         </div>
+                        {% if cart.itemsCount > 0 %}
+                            <div class="in-action__right">
+                                {{ form_row(form.submit, { label: 'Doprava a platba'|trans, attr: { class: 'btn'}}) }}
+                            </div>
+                        {% endif %}
                     </div>
                 {{ form_end(form) }}
             </div>

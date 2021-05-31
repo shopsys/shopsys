@@ -83,11 +83,11 @@
                 - {width: 380, height: 380, media: "only screen and (-webkit-min-device-pixel-ratio: 1.5)"}
         -   name: thumbnail
             width: 90
-            height: 90
+            height: 63
             crop: false
             occurrence: 'Front-end: preview in cart during ordering process'
             additionalSizes:
-                - {width: 180, height: ~, media: "only screen and (-webkit-min-device-pixel-ratio: 1.5)"}
+                - {width: 180, height: 126, media: "only screen and (-webkit-min-device-pixel-ratio: 1.5)"}
         -   name: thumbnailSmall
             width: 43
             height: 28
