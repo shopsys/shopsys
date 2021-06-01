@@ -46,6 +46,7 @@
 
                     {% if foundCategories|length > 0 %}
                         <div class="box-list__section">
+                            <h2>{{ 'Categories'|trans }}</h2>
                             {{ render(controller('App\\Controller\\Front\\CategoryController:categoryListAction', {categories: foundCategories})) }}
                         </div>
                     {% endif %}
