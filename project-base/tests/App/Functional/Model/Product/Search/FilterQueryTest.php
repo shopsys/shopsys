@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\App\Functional\Model\Product\Search;
 
+use App\DataFixtures\Demo\CurrencyDataFixture;
 use App\DataFixtures\Demo\PricingGroupDataFixture;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
@@ -77,6 +78,8 @@ class FilterQueryTest extends ParameterTransactionFunctionalTestCase
     public function testMultiFilter(): void
     {
         $this->skipTestIfFirstDomainIsNotInEnglish();
+        /** @var \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currencyCzk */
+        $currencyCzk = $this->getReference(CurrencyDataFixture::CURRENCY_CZK);
 
         /** @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup */
         $pricingGroup = $this->getReferenceForDomain(
@@ -91,8 +94,9 @@ class FilterQueryTest extends ParameterTransactionFunctionalTestCase
             ->filterByPrices(
                 $pricingGroup,
                 null,
-                $this->priceConverter->convertPriceWithVatToPriceInDomainDefaultCurrency(
+                $this->priceConverter->convertPriceWithVatToDomainDefaultCurrencyPrice(
                     Money::create(20),
+                    $currencyCzk,
                     Domain::FIRST_DOMAIN_ID
                 )
             );

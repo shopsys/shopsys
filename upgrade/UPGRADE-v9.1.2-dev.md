@@ -55,3 +55,8 @@ There you can find links to upgrade notes for other versions too.
 
 - remove unnecessary setter injection in `CartController` ([#2349](https://github.com/shopsys/shopsys/pull/2349))
     - see #project-base-diff to update your project
+
+- fix your data fixtures and tests to set the proper exchange rate for the demo currencies (if you use the default demo setup) ([#2332](https://github.com/shopsys/shopsys/pull/2332))
+    - `PriceConverter::convertPriceWithoutVatToPriceInDomainDefaultCurrency` is deprecated, use `convertPriceWithoutVatToPriceInDomainDefaultCurrency` instead (the new method requires `$priceCurrency` argument)
+    - `PriceConverter::convertPriceWithVatToPriceInDomainDefaultCurrency` is deprecated, use `convertPriceWithVatToPriceInDomainDefaultCurrency` instead (the new method requires `$priceCurrency` argument)
+    - see #project-base-diff to update your project

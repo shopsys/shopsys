@@ -128,6 +128,15 @@ class CurrencyFacade
     }
 
     /**
+     * @param string $currencyCode
+     * @return \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency
+     */
+    public function getByCode(string $currencyCode): Currency
+    {
+        return $this->currencyRepository->getByCode($currencyCode);
+    }
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyData $currencyData
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency
      */

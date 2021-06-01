@@ -6,6 +6,7 @@ namespace Tests\App\Functional\Model\Product;
 
 use App\DataFixtures\Demo\BrandDataFixture;
 use App\DataFixtures\Demo\CategoryDataFixture;
+use App\DataFixtures\Demo\CurrencyDataFixture;
 use App\DataFixtures\Demo\FlagDataFixture;
 use App\Model\Category\Category;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
@@ -38,11 +39,14 @@ abstract class ProductOnCurrentDomainFacadeTest extends TransactionFunctionalTes
 
     public function testFilterByMinimalPrice()
     {
+        /** @var \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currencyCzk */
+        $currencyCzk = $this->getReference(CurrencyDataFixture::CURRENCY_CZK);
         $category = $this->getReference(CategoryDataFixture::CATEGORY_TV);
 
         $productFilterData = new ProductFilterData();
-        $productFilterData->minimalPrice = $this->priceConverter->convertPriceWithVatToPriceInDomainDefaultCurrency(
+        $productFilterData->minimalPrice = $this->priceConverter->convertPriceWithVatToDomainDefaultCurrencyPrice(
             Money::create(1000),
+            $currencyCzk,
             Domain::FIRST_DOMAIN_ID
         );
         $paginationResult = $this->getPaginationResultInCategory($productFilterData, $category);
@@ -52,11 +56,14 @@ abstract class ProductOnCurrentDomainFacadeTest extends TransactionFunctionalTes
 
     public function testFilterByMaximalPrice()
     {
+        /** @var \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currencyCzk */
+        $currencyCzk = $this->getReference(CurrencyDataFixture::CURRENCY_CZK);
         $category = $this->getReference(CategoryDataFixture::CATEGORY_TV);
 
         $productFilterData = new ProductFilterData();
-        $productFilterData->maximalPrice = $this->priceConverter->convertPriceWithVatToPriceInDomainDefaultCurrency(
+        $productFilterData->maximalPrice = $this->priceConverter->convertPriceWithVatToDomainDefaultCurrencyPrice(
             Money::create(10000),
+            $currencyCzk,
             Domain::FIRST_DOMAIN_ID
         );
         $paginationResult = $this->getPaginationResultInCategory($productFilterData, $category);
@@ -253,11 +260,14 @@ abstract class ProductOnCurrentDomainFacadeTest extends TransactionFunctionalTes
 
     public function testPagination(): void
     {
+        /** @var \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currencyCzk */
+        $currencyCzk = $this->getReference(CurrencyDataFixture::CURRENCY_CZK);
         $category = $this->getReference(CategoryDataFixture::CATEGORY_TV);
 
         $productFilterData = new ProductFilterData();
-        $productFilterData->minimalPrice = $this->priceConverter->convertPriceWithVatToPriceInDomainDefaultCurrency(
+        $productFilterData->minimalPrice = $this->priceConverter->convertPriceWithVatToDomainDefaultCurrencyPrice(
             Money::create(1000),
+            $currencyCzk,
             Domain::FIRST_DOMAIN_ID
         );
 
