@@ -10,7 +10,6 @@ export default class ProductListAjaxFilter {
         this.$productFilterForm = $filter.filterAllNodes('form[name="product_filter_form"]');
         this.$showResultsButton = $filter.filterAllNodes('.js-product-filter-show-result-button');
         this.$selectedFiltersBox = $filter.filterAllNodes('#js-selected-filters-box');
-        this.$resetFilterButton = $filter.filterAllNodes('.js-product-filter-reset-button');
         this.requestTimer = null;
         this.requestDelay = 1000;
 
@@ -26,17 +25,6 @@ export default class ProductListAjaxFilter {
             if ($productList && $productList.offset()) {
                 $('html, body').animate({ scrollTop: $productList.offset().top }, 'slow');
             }
-            return false;
-        });
-
-        this.$resetFilterButton.on('click', (event) => {
-            _this.$productFilterForm.find(':radio, :checkbox').prop('checked', false);
-            _this.$productFilterForm.find('textarea, :text, select').val('');
-            _this.$productFilterForm.find('.js-product-filter-call-change-after-reset').change();
-            clearTimeout(_this.requestTimer);
-            const resetUrl = $(event.target).attr('href');
-            pushReloadState(resetUrl);
-            _this.submitFormWithAjax(_this);
             return false;
         });
 
