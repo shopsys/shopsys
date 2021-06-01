@@ -31,10 +31,8 @@ Encore
     .enableSingleRuntimeChunk()
     .enableSourceMaps(!Encore.isProduction())
     .enableVersioning(Encore.isProduction())
-    .configureBabel(() => {}, {
+    .configureBabel(null, {
         includeNodeModules: ['@shopsys'],
-        useBuiltIns: 'usage',
-        corejs: 3
     })
     .enableBuildNotifications()
     .configureWatchOptions(function (watchOptions) {
