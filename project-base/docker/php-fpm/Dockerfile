@@ -14,7 +14,7 @@ ARG project_root=.
 RUN apt-get update && apt-get install -y wget gnupg g++ locales unzip dialog apt-utils git && apt-get clean
 
 # Install NodeJS
-RUN curl -sL https://deb.nodesource.com/setup_10.x | bash
+RUN curl -fsSL https://deb.nodesource.com/setup_16.x | bash -
 RUN apt-get update && apt-get install -y nodejs && apt-get clean
 
 # install Composer
