@@ -147,7 +147,7 @@
                             {% set brandChecked = brandForm.vars.checked %}
                             {% set brandId = brandForm.vars.value %}
 
-                            <div class="form-choice{% if loop.last %} form-choice--without-margin{% endif %} js-form-choice
+                            <div class="form-choice{% if loop.last %} form-choice--without-margin{% endif %}
                                 {{ loop.index > paramsVisibleCount and not brandForm.vars.checked ? ' js-form-choice--collapsing display-none' }}
                             ">
                                 {{ form_widget(brandForm, { attr: { class: 'css-checkbox', 'data-filter-name-with-entity-id': filterForm.brands.vars.id ~ '_' ~ brandForm.vars.value } }) }}
@@ -191,9 +191,9 @@
                 <div class="box-filter__parameters">
                     <div id="{{ filterForm.parameters.vars.id }}">
                         {% for parameterId, parameterForm in filterForm.parameters %}
-                            {% if parameterForm.vars.attr.parameterType == constant('App\\Model\\Product\\Parameter\\Parameter::PARAMETER_TYPE_COLOR') %}
+                            {% if parameterForm.vars.attr.parameterType is same as constant('App\\Model\\Product\\Parameter\\Parameter::PARAMETER_TYPE_COLOR') %}
                                 {% include 'Front/Content/Product/Parameter/colorParameterForm.html.twig' with {parameterForm: parameterForm, allParameterValuesImagesIndexedById: allParameterValuesImagesIndexedById, productFilterSetup: productFilterSetup} %}
-                            {% elseif parameterForm.vars.attr.parameterType == constant('App\\Model\\Product\\Parameter\\Parameter::PARAMETER_TYPE_SLIDER') %}
+                            {% elseif parameterForm.vars.attr.parameterType is same as constant('App\\Model\\Product\\Parameter\\Parameter::PARAMETER_TYPE_SLIDER') %}
                                 {% include 'Front/Content/Product/Parameter/sliderParameterForm.html.twig' with {parameterForm: parameterForm} %}
                             {% else %}
                                 {% include 'Front/Content/Product/Parameter/checkboxParameterForm.html.twig' with {parameterForm: parameterForm, productFilterSetup: productFilterSetup} %}

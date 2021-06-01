@@ -25,7 +25,7 @@ export default class InfoBoxHeight {
         const countOfChunks = dividedValues.length;
         let biggestValue = 0;
 
-        for (let i = 0; i < countOfChunks; i++) { // loop for getting the biggest value of height per everyone row
+        for (let i = 0; i < countOfChunks; i++) { // loop for getting the biggest value of height per every row
             for (let a = 0; a < productsInRow; a++) {
                 let currentvalue = dividedValues[i][a];
                 if (currentvalue > biggestValue) {

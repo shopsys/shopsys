@@ -12,7 +12,7 @@
             {% set parameterId = parameterValueForm.parent.vars.name %}
             {% set parameterValueId = parameterValueForm.vars.value %}
 
-            <div class="form-choice{% if loop.last %} form-choice--without-margin{% endif %} js-form-choice js-product-filter-parameter-value
+            <div class="form-choice{% if loop.last %} form-choice--without-margin{% endif %} js-product-filter-parameter-value
                 {{ loop.index > paramsVisibleCount and not parameterValueForm.vars.checked ? ' js-form-choice--collapsing display-none' }}
                 ">
                 {{ form_widget(parameterValueForm, { attr: { class: 'css-checkbox', 'data-filter-name-with-entity-id': filterForm.parameters.vars.id ~ '_' ~ parameterId ~ '_' ~ parameterValueForm.vars.value } }) }}

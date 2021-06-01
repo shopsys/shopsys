@@ -121,7 +121,7 @@
                         {% include 'Front/Content/Product/productsWithControls.html.twig' with {paginationResult: paginationResult, filterFormSubmitted: filterFormSubmitted, gtmList: gtmList} %}
                     </div>
 
-                    {% if paginationResult.page == 1 %}
+                    {% if paginationResult.page is same as 1 %}
                         <div class="box-list__description" id="description">
                             <div class="box-list__description__text js-category-description">
                                 <span class="js-category-description-content js-ready-category-seo-mix-product-list-description">

@@ -33,7 +33,7 @@
                 <div class="list-products-line__more js-bestselling-products-load-more-container">
                     <span class="btn btn--small btn-with-icon btn-with-icon--right js-bestselling-products-load-more">
                         {% transchoice products|length with {'%count%': products|length} %}
-                            {4} Zobrazit %count% nejprodávanější
+                            [1,4] Zobrazit %count% nejprodávanější
                             | [5,Inf] Zobrazit %count% nejprodávanějších
                         {% endtranschoice %}
                     </span>

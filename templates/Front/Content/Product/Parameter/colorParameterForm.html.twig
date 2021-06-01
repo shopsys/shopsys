@@ -18,7 +18,7 @@
                 {% set colourIcon = null %}
             {% endif %}
             {% if colourIcon is not null %}
-                <div class="form-choice form-choice--without-margin form-choice--color js-form-choice js-product-filter-parameter-value">
+                <div class="form-choice form-choice--without-margin form-choice--color js-product-filter-parameter-value">
                     {{ form_widget(parameterValueForm, { attr: { class: 'css-checkbox', 'data-filter-name-with-entity-id': filterForm.parameters.vars.id ~ '_' ~ parameterId ~ '_' ~ parameterValueForm.vars.value } }) }}
                     <label class="form-choice-color-picker form-choice-color-picker--image is-dark-bg"
                            for="{{ parameterValueForm.vars.id }}"
@@ -33,7 +33,7 @@
                     </label>
                 </div>
             {% elseif rgbHex is not empty %}
-                <div class="form-choice form-choice--without-margin form-choice--color js-form-choice js-product-filter-parameter-value">
+                <div class="form-choice form-choice--without-margin form-choice--color js-product-filter-parameter-value">
                     {{ form_widget(parameterValueForm, { attr: { class: 'css-checkbox', 'data-filter-name-with-entity-id': filterForm.parameters.vars.id ~ '_' ~ parameterId ~ '_' ~ parameterValueForm.vars.value } }) }}
                     <label class="form-choice-color-picker js-form-choice-color"
                             for="{{ parameterValueForm.vars.id }}"
