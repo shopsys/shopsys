@@ -69,11 +69,28 @@ Encore
             }
         }
     }))
-    .addPlugin(new CopyPlugin([
-        { from: 'web/bundles/fpjsformvalidator', to: '../../assets/js/bundles/fpjsformvalidator', force: true },
-        { from: 'node_modules/@shopsys/framework/public/admin', to: '../../web/public/admin', force: true },
-        { from: 'assets/public', to: '../../web/public', ignore: ['assets/public/admin/svg/**/*'], force: true }
-    ]))
+    .addPlugin(new CopyPlugin({
+        patterns: [
+            {
+                from: 'web/bundles/fpjsformvalidator',
+                to: '../../assets/js/bundles/fpjsformvalidator',
+                force: true
+            },
+            {
+                from: sources.getFrameworkNodeModulesDir() + '/public/admin',
+                to: '../../web/public/admin',
+                force: true
+            },
+            {
+                from: 'assets/public',
+                to: '../../web/public',
+                globOptions: {
+                    ignore: ['assets/public/admin/svg/**/*']
+                },
+                force: true
+            }
+        ]
+    }))
     .addPlugin(new LiveReloadPlugin())
 ;
 
