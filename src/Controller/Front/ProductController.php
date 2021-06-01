@@ -570,6 +570,7 @@ class ProductController extends FrontBaseController
 
         if (!$request->isXmlHttpRequest()) {
             $viewParameters['foundCategories'] = $this->searchCategories($searchText);
+            $viewParameters['foundBrands'] = $this->brandFacade->getBrandsForSearchText($searchText);
             $viewParameters['foundCombinedArticles'] = $this->combinedArticleElasticsearchFacade->getArticlesBySearchText(
                 $searchText,
                 self::ARTICLE_SEARCH_LIMIT
