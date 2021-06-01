@@ -4,6 +4,7 @@ namespace Shopsys\FrameworkBundle\Model\Pricing\Currency;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Order\OrderRepository;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentPriceFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentRepository;
@@ -213,7 +214,9 @@ class CurrencyFacade
      */
     public function setDefaultCurrency(Currency $currency)
     {
+        $originalDefaultCurrency = $this->getDefaultCurrency();
         $this->pricingSetting->setDefaultCurrency($currency);
+        $this->recalculateExchangeRatesByNewDefaultCurrency($originalDefaultCurrency, $currency);
         $this->em->flush();
     }
 
@@ -225,6 +228,24 @@ class CurrencyFacade
     {
         $this->pricingSetting->setDomainDefaultCurrency($currency, $domainId);
         $this->productPriceRecalculationScheduler->scheduleAllProductsForDelayedRecalculation();
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $originalDefaultCurrency
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $newDefaultCurrency
+     */
+    protected function recalculateExchangeRatesByNewDefaultCurrency(
+        Currency $originalDefaultCurrency,
+        Currency $newDefaultCurrency
+    ): void {
+        $coefficient = Money::createFromFloat($originalDefaultCurrency->getExchangeRate() / $newDefaultCurrency->getExchangeRate(), 6);
+        foreach ($this->getAll() as $currency) {
+            if ($currency->getId() === $newDefaultCurrency->getId()) {
+                $currency->setExchangeRate(Currency::DEFAULT_EXCHANGE_RATE);
+            } else {
+                $currency->setExchangeRate($coefficient->multiply($currency->getExchangeRate())->getAmount());
+            }
+        }
     }
 
     /**
