@@ -50,7 +50,19 @@ class CombinedArticleElasticsearchRepository
      */
     public function getSearchAutocompleteArticles(string $searchText, int $limit): PaginationResult
     {
-        return $this->getSortedArticlesResultByQuery($this->getSearchQuery($limit, $searchText), $limit);
+        return $this->getSortedArticlesResultByQuery($this->getSearchQuery($searchText, $limit), $limit);
+    }
+
+    /**
+     * @param string $searchText
+     * @param int|null $limit
+     * @return array
+     */
+    public function getArticlesBySearchText(string $searchText, ?int $limit = null): array
+    {
+        $result = $this->client->search($this->getSearchQuery($searchText, $limit));
+
+        return $this->extractHits($result);
     }
 
     /**
@@ -78,10 +90,24 @@ class CombinedArticleElasticsearchRepository
     {
         return array_map(function ($value) {
             $data = $value['_source'];
+            $data['index'] = $this->getIndexNameFromIndexVersion($value['_index']);
             $data['id'] = (int)$value['_id'];
 
             return $this->fillEmptyFields($data);
         }, $result['hits']['hits']);
+    }
+
+    /**
+     * @param string $indexVersion
+     * @return string
+     */
+    private function getIndexNameFromIndexVersion(string $indexVersion): string
+    {
+        if (strpos($indexVersion, BlogArticleIndex::getName()) === 0) {
+            return BlogArticleIndex::getName();
+        }
+
+        return ArticleIndex::getName();
     }
 
     /**
@@ -127,17 +153,16 @@ class CombinedArticleElasticsearchRepository
     }
 
     /**
-     * @param int $limit
      * @param string $searchText
+     * @param int|null $limit
      * @return array
      */
-    private function getSearchQuery(int $limit, string $searchText): array
+    private function getSearchQuery(string $searchText, ?int $limit = null): array
     {
-        return [
+        $query = [
             'index' => $this->getCombinedArticleIndex(),
             'body' => [
                 'from' => 0,
-                'size' => $limit,
                 'query' => [
                     'bool' => [
                         'must' => [
@@ -157,5 +182,11 @@ class CombinedArticleElasticsearchRepository
                 ],
             ],
         ];
+
+        if ($limit !== null) {
+            $query['body']['size'] = $limit;
+        }
+
+        return $query;
     }
 }

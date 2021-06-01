@@ -50,6 +50,30 @@
                         </div>
                     {% endif %}
 
+                    {% if foundBrands|length > 0 %}
+                        <h2>{{ 'Brands'|trans }}</h2>
+                    {% endif %}
+                    {% for brand in foundBrands %}
+                        {% if not loop.first %}
+                            &nbsp;&nbsp;&nbsp;
+                        {% endif %}
+                        <span>
+                            <a href="{{ url('front_brand_detail', {id: brand.id}) }}">{{ brand.name }}</a>
+                        </span>
+                    {% endfor %}
+
+                    {% if foundCombinedArticles|length > 0 %}
+                        <h2>{{ 'Articles'|trans }}</h2>
+                    {% endif %}
+                    {% for combinedArticle in foundCombinedArticles %}
+                        {% if not loop.first %}
+                            &nbsp;&nbsp;&nbsp;
+                        {% endif %}
+                        <span>
+                            <a href="{{ combinedArticle.url }}">{{ combinedArticle.name }}</a>
+                        </span>
+                    {% endfor %}
+
                     <div class="js-product-list-ajax-filter-products-with-controls">
                         <div class="box-list__top js-product-sort">
                             <div class="box-list__top__wrap">

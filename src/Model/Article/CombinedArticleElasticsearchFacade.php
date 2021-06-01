@@ -30,4 +30,14 @@ class CombinedArticleElasticsearchFacade
     {
         return $this->combinedArticleElasticsearchRepository->getSearchAutocompleteArticles($searchText, $limit);
     }
+
+    /**
+     * @param string $searchText
+     * @param int|null $limit
+     * @return array
+     */
+    public function getArticlesBySearchText(string $searchText, ?int $limit = null): array
+    {
+        return $this->combinedArticleElasticsearchRepository->getArticlesBySearchText($searchText, $limit);
+    }
 }
