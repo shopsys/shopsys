@@ -18,3 +18,9 @@ There you can find links to upgrade notes for other versions too.
 
 - drop usage of Doctrine\Common\Cache\PhpFileCache as framework annotation cache ([#2326](https://github.com/shopsys/shopsys/pull/2326))
     - see #project-base-diff to update your project
+
+- update your composer dependencies `symfony/security*`
+    - run `composer update symfony/security-guard symfony/security-core`
+        - version of both packages must be `4.4.23` or higher
+    - using lower version is potential security risk
+        - see more information https://github.com/symfony/symfony/security/advisories/GHSA-5pv8-ppvj-4h68
