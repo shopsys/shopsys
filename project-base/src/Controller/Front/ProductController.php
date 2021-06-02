@@ -57,17 +57,17 @@ class ProductController extends FrontBaseController
     private $requestExtension;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingModeForListFacade
+     * @var \App\Model\Product\Listing\ProductListOrderingModeForListFacade
      */
     private $productListOrderingModeForListFacade;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingModeForBrandFacade
+     * @var \App\Model\Product\Listing\ProductListOrderingModeForBrandFacade
      */
     private $productListOrderingModeForBrandFacade;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingModeForSearchFacade
+     * @var \App\Model\Product\Listing\ProductListOrderingModeForSearchFacade
      */
     private $productListOrderingModeForSearchFacade;
 
@@ -102,9 +102,9 @@ class ProductController extends FrontBaseController
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainFacadeInterface $productOnCurrentDomainFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfigFactory $productFilterConfigFactory
-     * @param \Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingModeForListFacade $productListOrderingModeForListFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingModeForBrandFacade $productListOrderingModeForBrandFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingModeForSearchFacade $productListOrderingModeForSearchFacade
+     * @param \App\Model\Product\Listing\ProductListOrderingModeForListFacade $productListOrderingModeForListFacade
+     * @param \App\Model\Product\Listing\ProductListOrderingModeForBrandFacade $productListOrderingModeForBrandFacade
+     * @param \App\Model\Product\Listing\ProductListOrderingModeForSearchFacade $productListOrderingModeForSearchFacade
      * @param \Shopsys\FrameworkBundle\Model\Module\ModuleFacade $moduleFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade $brandFacade
      * @param \Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFacadeInterface $listedProductViewFacade

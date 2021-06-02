@@ -10,6 +10,9 @@ use Shopsys\FrameworkBundle\Model\Product\Exception\ProductNotFoundException;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 use Twig\Environment;
 
+/**
+ * @deprecated Class will be changed to abstract class in next major version. Extend this class to your project and implement corresponding methods instead.
+ */
 class CartWatcherFacade
 {
     /**
@@ -51,6 +54,16 @@ class CartWatcherFacade
         CurrentCustomerUser $currentCustomerUser,
         Environment $twigEnvironment
     ) {
+        if (static::class === self::class) {
+            trigger_error(
+                sprintf(
+                    'Class "%s" will be changed to abstract class in next major version. Extend this class to your project and implement corresponding methods instead.',
+                    self::class
+                ),
+                E_USER_DEPRECATED
+            );
+        }
+
         $this->flashBag = $flashBag;
         $this->em = $em;
         $this->cartWatcher = $cartWatcher;
@@ -75,7 +88,7 @@ class CartWatcherFacade
         $modifiedItems = $this->cartWatcher->getModifiedPriceItemsAndUpdatePrices($cart);
 
         $messageTemplate = $this->twigEnvironment->createTemplate(
-            t('The price of the product <strong>{{ name }}</strong> you have in cart has changed. Please, check your order.')
+            $this->getMessageForChangedProduct()
         );
 
         foreach ($modifiedItems as $cartItem) {
@@ -97,7 +110,7 @@ class CartWatcherFacade
         $toFlush = [];
 
         $messageTemplate = $this->twigEnvironment->createTemplate(
-            t('Product <strong>{{ name }}</strong> you had in cart is no longer available. Please check your order.')
+            $this->getMessageForNoLongerAvailableExistingProduct()
         );
 
         foreach ($notVisibleItems as $cartItem) {
@@ -107,7 +120,7 @@ class CartWatcherFacade
             } catch (ProductNotFoundException $e) {
                 $this->flashBag->add(
                     FlashMessage::KEY_ERROR,
-                    t('Product you had in cart is no longer in available. Please check your order.')
+                    $this->getMessageForNoLongerAvailableProduct()
                 );
             }
 
@@ -119,5 +132,56 @@ class CartWatcherFacade
         if (count($toFlush) > 0) {
             $this->em->flush($toFlush);
         }
+    }
+
+    /**
+     * @deprecated Method will be changed to abstract in next major version. Extend this class to your project and implement method by yourself instead.
+     * @return string
+     */
+    protected function getMessageForNoLongerAvailableExistingProduct(): string
+    {
+        trigger_error(
+            sprintf(
+                'Method "%s" will be changed to abstract in next major version. Extend this class to your project and implement method by yourself instead.',
+                __METHOD__
+            ),
+            E_USER_DEPRECATED
+        );
+
+        return t('Product <strong>{{ name }}</strong> you had in cart is no longer available. Please check your order.');
+    }
+
+    /**
+     * @deprecated Method will be changed to abstract in next major version. Extend this class to your project and implement method by yourself instead.
+     * @return string
+     */
+    protected function getMessageForNoLongerAvailableProduct(): string
+    {
+        trigger_error(
+            sprintf(
+                'Method "%s" will be changed to abstract in next major version. Extend this class to your project and implement method by yourself instead.',
+                __METHOD__
+            ),
+            E_USER_DEPRECATED
+        );
+
+        return t('Product you had in cart is no longer in available. Please check your order.');
+    }
+
+    /**
+     * @deprecated Method will be changed to abstract in next major version. Extend this class to your project and implement method by yourself instead.
+     * @return string
+     */
+    protected function getMessageForChangedProduct(): string
+    {
+        trigger_error(
+            sprintf(
+                'Method "%s" will be changed to abstract in next major version. Extend this class to your project and implement method by yourself instead.',
+                __METHOD__
+            ),
+            E_USER_DEPRECATED
+        );
+
+        return t('The price of the product <strong>{{ name }}</strong> you have in cart has changed. Please, check your order.');
     }
 }

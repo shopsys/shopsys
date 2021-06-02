@@ -30,3 +30,18 @@ There you can find links to upgrade notes for other versions too.
 
 - update `ProductFilterPage` so it is resistant to case changes ([#2330](https://github.com/shopsys/shopsys/pull/2330))
     - see #project-base-diff to update your project
+
+- extend and implement methods which are marked to be abstract ([#2337](https://github.com/shopsys/shopsys/pull/2337))
+    - following methods will become abstract:
+        - `Shopsys\FrameworkBundle\Model\Breadcrumb\ErrorPageBreadcrumbGenerator::getTranslatedBreadcrumbForNotFoundPage()`
+        - `Shopsys\FrameworkBundle\Model\Breadcrumb\ErrorPageBreadcrumbGenerator::getTranslatedBreadcrumbForErrorPage()`
+        - `Shopsys\FrameworkBundle\Model\Breadcrumb\SimpleBreadcrumbGenerator::getTranslatedBreadcrumbsByRouteNames()`
+        - `Shopsys\FrameworkBundle\Model\Cart\Watcher\CartWatcherFacade::getMessageForNoLongerAvailableExistingProduct()`
+        - `Shopsys\FrameworkBundle\Model\Cart\Watcher\CartWatcherFacade::getMessageForNoLongerAvailableProduct()`
+        - `Shopsys\FrameworkBundle\Model\Cart\Watcher\CartWatcherFacade::getMessageForChangedProduct()`
+        - `Shopsys\FrameworkBundle\Model\LegalConditions\LegalConditionsFacade::getTermsAndConditionsDownloadFilename()`
+        - `Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingModeForBrandFacade::getSupportedOrderingModesNamesById()`
+        - `Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingModeForListFacade::getSupportedOrderingModesNamesById()`
+        - `Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingModeForSearchFacade::getSupportedOrderingModesNamesById()`
+    - run `php phing translations-dump` to extract translations and translate it
+    - see #project-base-diff to update your project
