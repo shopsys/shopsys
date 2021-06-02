@@ -27,3 +27,6 @@ There you can find links to upgrade notes for other versions too.
 
 - remove unused multipleProductsInOrder.graphql file ([#2306](https://github.com/shopsys/shopsys/pull/2306))
     - see #project-base-diff to update your project
+
+- update `ProductFilterPage` so it is resistant to case changes ([#2330](https://github.com/shopsys/shopsys/pull/2330))
+    - see #project-base-diff to update your project

@@ -92,7 +92,7 @@ class ProductFilterPage extends AbstractPage
             try {
                 $itemLabel = $item->findElement(WebDriverBy::cssSelector('.js-product-filter-parameter-label'));
 
-                if (stripos($itemLabel->getText(), $translatedParameterLabel) !== false) {
+                if (mb_stripos($itemLabel->getText(), $translatedParameterLabel) !== false) {
                     return $item;
                 }
             } catch (NoSuchElementException $ex) {
@@ -123,7 +123,7 @@ class ProductFilterPage extends AbstractPage
         foreach ($parameterValueDivs as $parameterValueDiv) {
             try {
                 $labelElement = $parameterValueDiv->findElement(WebDriverBy::cssSelector('label'));
-                if (stripos($labelElement->getText(), $translatedParameterValueText) !== false) {
+                if (mb_stripos($labelElement->getText(), $translatedParameterValueText) !== false) {
                     return $labelElement;
                 }
             } catch (NoSuchElementException $ex) {
