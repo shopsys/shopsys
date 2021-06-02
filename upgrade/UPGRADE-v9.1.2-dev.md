@@ -24,3 +24,6 @@ There you can find links to upgrade notes for other versions too.
         - version of both packages must be `4.4.23` or higher
     - using lower version is potential security risk
         - see more information https://github.com/symfony/symfony/security/advisories/GHSA-5pv8-ppvj-4h68
+
+- remove unused multipleProductsInOrder.graphql file ([#2306](https://github.com/shopsys/shopsys/pull/2306))
+    - see #project-base-diff to update your project
