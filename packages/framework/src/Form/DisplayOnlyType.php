@@ -18,6 +18,7 @@ class DisplayOnlyType extends AbstractType
                 'mapped' => false,
                 'required' => false,
                 'disabled' => true,
+                'compound' => false,
                 'attr' => [
                     'readonly' => 'readonly',
                     'class' => '',
