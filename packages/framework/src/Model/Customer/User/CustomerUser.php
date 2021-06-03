@@ -283,7 +283,7 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface, Serializab
     public function getFullName()
     {
         if ($this->getCustomer()->getBillingAddress()->isCompanyCustomer()) {
-            return $this->getCustomer()->getBillingAddress()->getCompanyName();
+            return (string)$this->getCustomer()->getBillingAddress()->getCompanyName();
         }
 
         return $this->lastName . ' ' . $this->firstName;
