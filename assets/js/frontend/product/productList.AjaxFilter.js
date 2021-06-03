@@ -2,10 +2,11 @@ import Register from 'framework/common/utils/Register';
 import Ajax from 'framework/common/utils/Ajax';
 import pushReloadState from '../components/pushReloadState';
 import Gtm from '../../gtm';
+import Overlay from '../utils/overlay';
 
 export default class ProductListAjaxFilter {
 
-    constructor ($filter) {
+    constructor ($filter, overlay) {
         this.$productsWithControls = $filter.filterAllNodes('.js-product-list-ajax-filter-products-with-controls');
         this.$productFilterForm = $filter.filterAllNodes('form[name="product_filter_form"]');
         this.$showResultsButton = $filter.filterAllNodes('.js-product-filter-show-result-button');
@@ -22,9 +23,11 @@ export default class ProductListAjaxFilter {
         this.$showResultsButton.on('click', () => {
             const $productList = $('.js-product-list');
             $('.js-product-list-panel').toggleClass('active');
+            $('.js-product-list-with-filter').toggleClass('active');
             if ($productList && $productList.offset()) {
                 $('html, body').animate({ scrollTop: $productList.offset().top }, 'slow');
-            }
+            };
+            overlay.hideOverlay();
             return false;
         });
 
@@ -160,7 +163,9 @@ export default class ProductListAjaxFilter {
 
     static init ($container) {
         // eslint-disable-next-line no-new
-        new ProductListAjaxFilter($container);
+        const overlay = new Overlay();
+
+        new ProductListAjaxFilter($container, overlay);
     }
 }
 

@@ -4,7 +4,6 @@ export default class ProductFilterBox {
 
     constructor ($container) {
         $container.filterAllNodes('.js-product-filter-open-button').click(event => {
-            $(event.target).toggleClass('active');
             $container.filterAllNodes('.js-product-filter').toggleClass('active');
         });
 

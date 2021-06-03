@@ -16,6 +16,8 @@
     }
 
     &__filter-opener {
+        position: relative;
+
         @media @query-sm {
             margin-right: 10px;
         }
@@ -29,6 +31,7 @@
         }
 
         &__button {
+            position: relative;
             display: flex;
             flex-direction: row;
             justify-content: center;
@@ -37,6 +40,10 @@
 
             @media @query-sm {
                 width: @box-order-type-button-size-width;
+            }
+
+            .active & {
+                z-index: @z-index-menu;
             }
 
             &:before {
@@ -64,6 +71,10 @@
             width: auto;
             height: auto;
             margin-left: -@box-order-type-item-gap;
+        }
+
+        .active & {
+            z-index: @z-index-menu;
         }
 
         &.open {
