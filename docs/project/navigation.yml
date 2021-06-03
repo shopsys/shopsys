@@ -1,2 +1,5 @@
-title: Guidelines for Project Documentation
-hide: true
+title: Working on your Project
+arrange:
+    - index.md
+    - guidelines-for-project-documentation.md
+    - how-to-write-an-upgradable-application.md
