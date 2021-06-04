@@ -3,8 +3,8 @@
 namespace Shopsys\FrameworkBundle\Model\Pricing\Currency;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Litipk\BigNumbers\Decimal;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Order\OrderRepository;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentPriceFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentRepository;
@@ -238,13 +238,14 @@ class CurrencyFacade
         Currency $originalDefaultCurrency,
         Currency $newDefaultCurrency
     ): void {
-        $coefficient = Money::createFromFloat($originalDefaultCurrency->getExchangeRate() / $newDefaultCurrency->getExchangeRate(), 6);
+        $coefficient = $this->getExchangeRateForCurrencies($originalDefaultCurrency, $newDefaultCurrency);
         foreach ($this->getAll() as $currency) {
             if ($currency->getId() === $newDefaultCurrency->getId()) {
-                $currency->setExchangeRate(Currency::DEFAULT_EXCHANGE_RATE);
+                $newExchangeRate = Currency::DEFAULT_EXCHANGE_RATE;
             } else {
-                $currency->setExchangeRate($coefficient->multiply($currency->getExchangeRate())->getAmount());
+                $newExchangeRate = Decimal::fromString($currency->getExchangeRate())->mul($coefficient);
             }
+            $currency->setExchangeRate($newExchangeRate);
         }
     }
 
@@ -294,5 +295,18 @@ class CurrencyFacade
         }
 
         return $currenciesIndexedById;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $inputCurrency
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $outputCurrency
+     * @return \Litipk\BigNumbers\Decimal
+     */
+    public function getExchangeRateForCurrencies(Currency $inputCurrency, Currency $outputCurrency): Decimal
+    {
+        $inputCurrencyExchangeRate = Decimal::fromString($inputCurrency->getExchangeRate());
+        $outputCurrencyExchangeRate = Decimal::fromString($outputCurrency->getExchangeRate());
+
+        return $inputCurrencyExchangeRate->div($outputCurrencyExchangeRate, 6);
     }
 }

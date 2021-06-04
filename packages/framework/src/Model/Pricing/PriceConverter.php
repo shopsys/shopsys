@@ -99,8 +99,8 @@ class PriceConverter
      */
     protected function convertPriceToPriceInDomainDefaultCurrency(Money $price, Currency $priceCurrency, Currency $domainDefaultCurrency): Money
     {
-        $coefficient = Money::createFromFloat($priceCurrency->getExchangeRate() / $domainDefaultCurrency->getExchangeRate(), 6);
+        $coefficient = $this->currencyFacade->getExchangeRateForCurrencies($priceCurrency, $domainDefaultCurrency);
 
-        return $price->multiply($coefficient->getAmount());
+        return $price->multiply((string)$coefficient);
     }
 }
