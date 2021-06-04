@@ -45,7 +45,8 @@
             "Tests\\ProductFeed\\HeurekaDeliveryBundle\\": "packages/product-feed-heureka-delivery/tests/",
             "Tests\\ReadModelBundle\\": "packages/read-model/tests/",
             "Shopsys\\Releaser\\": "utils/releaser/src/",
-            "Shopsys\\Releaser\\Tests\\": "utils/releaser/tests"
+            "Shopsys\\Releaser\\Tests\\": "utils/releaser/tests",
+            "Symplify\\EasyCodingStandard\\Yaml\\": "packages/coding-standards/src/Yaml/"
         }
     },
     "require": {
@@ -181,7 +182,6 @@
     },
     "conflict": {
         "symfony/symfony": "*",
-        "symfony/dependency-injection": ">=4.4.19",
         "codeception/codeception": ">=4.1.19",
         "friendsofphp/php-cs-fixer": "2.19.0"
     },
