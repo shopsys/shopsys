@@ -14,15 +14,23 @@
 
         &--price {
             font-size: @font-size;
-            font-weight: 700;
             text-align: right;
         }
 
-        &--total-price {
-            text-align: right;
+        &__total-price {
             font-size: 24px;
-            font-weight: 700;
             color: @color-primary;
+        }
+
+        &__image {
+            display: inline-block;
+            vertical-align: bottom;
+            height: 18px;
+            margin-left: 5px;
+
+            img {
+                max-height: 100%;
+            }
         }
     }
 }

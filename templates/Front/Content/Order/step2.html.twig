@@ -4,16 +4,7 @@
     <div class="web__line web__line--cart">
         <div class="web__container">
             <div class="box-order">
-                <div id="{{ form.vars.id }}" class="js-no-validate">
-                    <div>
-                        <button
-                            type="submit"
-                            name="transport_and_payment_form[save]"
-                            class="btn js-no-validate-button js-transport_and_payment_form_save">
-                            {{ 'Vaše údaje'|trans }}
-                        </button>
-                    </div>
-
+                <div class="box-order__info" id="{{ form.vars.id }}" class="js-no-validate">
                     <div id="{{ form.transport.vars.id }}">
                         {% set transportForm = form.transport %}
                         {% set transportFormId = transportForm.vars.id %}
@@ -23,11 +14,9 @@
                         {% set personalPickupStock = form.personalPickupStock.vars.value %}
 
                         <div class="js-payment-transport-group">
-                            <div>
-                                <h2 id="js-label-{{ transportFormId }}">
-                                    {{ 'Doprava'|trans }}
-                                </h2>
-                            </div>
+                            <h3 class="box-order__title" id="js-label-{{ transportFormId }}">
+                                {{ 'Vyberte způsob dopravy'|trans }}
+                            </h3>
 
                             <input type="hidden"
                                 id="{{ transportPersonalPickupFormId }}"
@@ -156,9 +145,7 @@
                     </div>
 
                     <div class="js-payment-transport-group">
-                        <div>
-                            <h2 id="js-label-{{ form.payment.vars.id }}">{{ 'Platba'|trans }}</h2>
-                        </div>
+                        <h3 class="box-order__title" id="js-label-{{ form.payment.vars.id }}">{{ 'Vyberte způsob platby'|trans }}</h3>
 
                         <div class="box-chooser box-chooser--smaller js-form-group">
                             {{ form_errors(form.payment, { errors_attr: {class: 'form-error--inline'} }) }}
@@ -268,31 +255,30 @@
                             </div>
                         </div>
                     </div>
+
+                    <div class="in-action">
+                        <div class="in-action__left">
+                            <button type="submit" name="{{ flow.getFormTransitionKey() }}" value="back" class="in-action__back btn btn-no-style btn--arrow btn--arrow-prev js-no-validate-button">
+                                {{ 'Back to cart'|trans }}
+                            </button>
+                        </div>
+                        <div class="in-action__right">
+                            {{ form_widget(form.save, { label: 'Vaše údaje'|trans, attr: { class: 'in-action__next btn btn--primary btn--big-radius btn-with-icon btn-with-icon--right js-no-validate-button js-transport_and_payment_form_save' } }) }}
+                        </div>
+                    </div>
                 </div>
 
 
-                <div>
-                    <div>
-                        <div id="js-order-preview" data-url="{{ url('front_order_preview') }}">
-                            {{ render(controller('App\\Controller\\Front\\OrderController:previewAction', {
-                                transportId: orderPreview.transport is not null ? orderPreview.transport.id : null,
-                                paymentId: orderPreview.payment,
-                                orderStep: '2',
-                                showAdvert: false,
-                                showPromo: false
-                            })) }}
-                        </div>
-                        <div>
-                            <div>
-                                <button type="submit" name="{{ flow.getFormTransitionKey() }}" value="back" class="btn btn-no-style btn--arrow btn--arrow-prev js-no-validate-button">
-                                    <i class="btn__icon svg svg-arrow"></i>
-                                    {{ 'Back to cart'|trans }}
-                                </button>
-                            </div>
-                            <div>
-                                {{ form_widget(form.save, { label: 'Vaše údaje'|trans, attr: { class: 'btn js-no-validate-button js-transport_and_payment_form_save' } }) }}
-                            </div>
-                        </div>
+                <div class="box-order__cart">
+                    <h3 class="box-order__title">{{ 'Vaše objednávka'|trans }}</h3>
+                    <div id="js-order-preview" data-url="{{ url('front_order_preview') }}">
+                        {{ render(controller('App\\Controller\\Front\\OrderController:previewAction', {
+                            transportId: orderPreview.transport is not null ? orderPreview.transport.id : null,
+                            paymentId: orderPreview.payment,
+                            orderStep: '2',
+                            showAdvert: false,
+                            showPromo: false
+                        })) }}
                     </div>
                 </div>
             </div>
