@@ -50,7 +50,7 @@
 
 {% block form_row %}
     {% if render_form_row %}
-        <div class="form-line{{ attr.disabledField is defined ? ' form-input-disabled form-line--disabled' }}">
+        <div class="form-line{% if multidomain is defined and multidomain %} form-line--no-horizontal-gap{% endif %}{{ attr.disabledField is defined ? ' form-input-disabled form-line--disabled' }}">
         {{ form_errors(form) }}
         {{ form_label(form, label) }}
     {% endif %}
@@ -269,22 +269,32 @@
             {% if js_container is not null %}
                 <div class="{{ js_container.container_class }}" data-type="{{ js_container.data_type }}">
             {% endif %}
-            <div class="form-line">
+            <div class="form-line{% if multidomain is defined and isMultidomain() %} form-line--no-horizontal-gap{% endif %}">
             {% if multidomain is defined %}
                 {% if isMultidomain() %}
                     {{ form_label(form, getDomainName(domainId)) }}
-                    {{ domainIcon(domainId) }}
                 {% endif %}
             {% else %}
                 {{ form_label(form, label) }}
             {% endif %}
             {{- form_errors(form) -}}
             {% if newline is not defined %}
-                <div{% if isMultidomain() %} class="form-line__side"{% endif %}>
-                    <div class="form-line__item form-line__item--full-width">
-                        {{- form_widget(form) -}}
+                {% if isMultidomain() %}
+                    <div class="form-line__side form-line__side--multidomain">
+                        <div class="input__wrap">
+                            {{- form_widget(form, { attr: { class: 'input--domain' }}) -}}
+                            <span class="input__domain">
+                                {{ domainIcon(domainId) }}
+                            </span>
+                        </div>
                     </div>
-                </div>
+                {% else %}
+                    <div>
+                        <div class="form-line__item form-line__item--full-width">
+                            {{- form_widget(form) -}}
+                        </div>
+                    </div>
+                {% endif %}
             {% else %}
                 <div{% if isMultidomain() %} class="form-line__side"{% endif %}>
                     {% set inputAttr = attr|merge({'class': (attr.class|default('') ~ ' input--textarea')|trim}) %}
@@ -859,11 +869,13 @@
 
 {% block yes_no_row %}
     {% if multidomain is defined %}
-        {% if isMultidomain() %}
-            {{ domainIcon(domainId, 'long-bordered') }}
-        {% endif %}
-        {{ form_widget(form, { isSimple: isSimple|default(isMultidomain()) }) }}
-        {{ form_errors(form) }}
+        <div class="form-line__side">
+            {% if isMultidomain() %}
+                {{ domainIcon(domainId, 'long-bordered') }}
+            {% endif %}
+            {{ form_widget(form, { isSimple: isSimple|default(isMultidomain()) }) }}
+            {{ form_errors(form) }}
+        </div>
     {% else %}
         {{ block('form_row') }}
     {% endif %}
