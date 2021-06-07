@@ -1,4 +1,5 @@
 # Changelog
+
 All notable changes, that change in some way the behavior of any of our packages that are maintained by monorepo repository.
 
 There is a list of all the repositories maintained by monorepo:
@@ -24,9 +25,27 @@ Packages are formatted by release version. You can see all the changes done to p
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html) as explained in the [Backward Compatibility Promise](https://docs.shopsys.com/en/latest/contributing/backward-compatibility-promise/).
 
-The changelog is generated during the release process using [ChangelogLinker](https://github.com/symplify/changeloglinker) since `v7.0.0-alpha6` release.
+The changelog is generated during the release process using [ChangelogLinker](https://github.com/symplify/changeloglinker) since `v7.0.0-alpha6` release and using [Github Changelog Generator](https://github.com/github-changelog-generator/github-changelog-generator) since `v7.3.7` release.
 
-<!-- changelog-linker -->
+## [v7.3.7](https://github.com/shopsys/shopsys/compare/v7.3.6...v7.3.7) (2021-06-07)
+
+:hammer: Developer experience and refactoring
+
+- \[product-feed-heureka\] ignored errors reported by new squizlabs/php\_codesniffer version 3.6.0 in 7.3 [\#2321](https://github.com/shopsys/shopsys/pull/2321) ([s3tezsky](https://github.com/s3tezsky))
+- \[shopsys\] added --resume-step option for release command [\#2340](https://github.com/shopsys/shopsys/pull/2340) ([vitek-rostislav](https://github.com/vitek-rostislav))
+
+:bug: Bug fixes
+
+- \[shopsys\] excluded friendsofphp/php-cs-fixer v2.19.0 in 7.3 [\#2320](https://github.com/shopsys/shopsys/pull/2320) ([s3tezsky](https://github.com/s3tezsky))
+
+:cloud: Infrastructure
+
+- \[shopsys\] fix travis for version 7.3 [\#2331](https://github.com/shopsys/shopsys/pull/2331) ([TomasLudvik](https://github.com/TomasLudvik))
+
+:warning: Security
+
+- \[shopsys\] bumped version of composer dependency composer/composer in 7.3 [\#2314](https://github.com/shopsys/shopsys/pull/2314) ([s3tezsky](https://github.com/s3tezsky))
+- \[shopsys\] set minimal version of symfony/symfony to 3.4.48 [\#2315](https://github.com/shopsys/shopsys/pull/2315) ([s3tezsky](https://github.com/s3tezsky))
 
 ## [v7.3.6](https://github.com/shopsys/shopsys/compare/v7.3.5...v7.3.6) - 2020-11-29
 
