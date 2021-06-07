@@ -172,6 +172,9 @@ msgstr ""
 msgid "EAN"
 msgstr ""
 
+msgid "Edit data"
+msgstr ""
+
 msgid "Email"
 msgstr ""
 
@@ -325,6 +328,9 @@ msgstr ""
 msgid "Online shop"
 msgstr ""
 
+msgid "Oops! Error occurred"
+msgstr ""
+
 msgid "Oops! Error occurred."
 msgstr ""
 
@@ -346,6 +352,9 @@ msgstr "Order"
 msgid "Order completed"
 msgstr ""
 
+msgid "Order detail"
+msgstr ""
+
 msgid "Order not found"
 msgstr ""
 
@@ -359,6 +368,9 @@ msgid "Orders"
 msgstr ""
 
 msgid "Our customers who bought this bought also"
+msgstr ""
+
+msgid "Page not found"
 msgstr ""
 
 msgid "Page not found!"
@@ -442,6 +454,9 @@ msgstr ""
 msgid "Product <strong>{{ name }}</strong> added to the cart (total amount {{ quantity|formatNumber }} {{ unitName }})"
 msgstr ""
 
+msgid "Product <strong>{{ name }}</strong> you had in cart is no longer available. Please check your order."
+msgstr ""
+
 msgid "Product filter"
 msgstr ""
 
@@ -449,6 +464,9 @@ msgid "Product information"
 msgstr ""
 
 msgid "Product no longer on sale"
+msgstr ""
+
+msgid "Product you had in cart is no longer in available. Please check your order."
 msgstr ""
 
 msgid "Product {{ name }} removed from cart"
@@ -491,6 +509,9 @@ msgid "Rounding"
 msgstr ""
 
 msgid "Save changes"
+msgstr ""
+
+msgid "Search [noun]"
 msgstr ""
 
 msgid "Search [verb]"
@@ -547,6 +568,9 @@ msgstr ""
 msgid "Subscription was failed"
 msgstr ""
 
+msgid "TOP"
+msgstr ""
+
 msgid "Tax number"
 msgstr ""
 
@@ -559,6 +583,9 @@ msgstr ""
 msgid "Terms and conditions"
 msgstr ""
 
+msgid "Terms-and-conditions.html"
+msgstr ""
+
 msgid "Thank you, your message has been sent."
 msgstr ""
 
@@ -569,6 +596,9 @@ msgid "The price of payment {{ paymentName }} changed during ordering process. C
 msgstr ""
 
 msgid "The price of shipping {{ transportName }} changed during ordering process. Check your order, please."
+msgstr ""
+
+msgid "The price of the product <strong>{{ name }}</strong> you have in cart has changed. Please, check your order."
 msgstr ""
 
 msgid "This account doesn't exist or password is incorrect"
@@ -679,6 +709,12 @@ msgstr ""
 msgid "Your discount"
 msgstr ""
 
+msgid "alphabetically A -> Z"
+msgstr ""
+
+msgid "alphabetically Z -> A"
+msgstr ""
+
 msgid "excluding VAT"
 msgstr ""
 
@@ -688,10 +724,19 @@ msgstr ""
 msgid "from %price%"
 msgstr ""
 
+msgid "from most expensive"
+msgstr ""
+
+msgid "from the cheapest"
+msgstr ""
+
 msgid "products"
 msgstr ""
 
 msgid "records"
+msgstr ""
+
+msgid "relevance"
 msgstr ""
 
 msgid "to"

@@ -172,6 +172,9 @@ msgstr "Stáhnout zákaznické údaje"
 msgid "EAN"
 msgstr "EAN"
 
+msgid "Edit data"
+msgstr "Upravit údaje"
+
 msgid "Email"
 msgstr "E-mail"
 
@@ -325,6 +328,9 @@ msgstr ""
 msgid "Online shop"
 msgstr "Internetový obchod"
 
+msgid "Oops! Error occurred"
+msgstr "Jejda! Nastala chyba"
+
 msgid "Oops! Error occurred."
 msgstr "Jejda! Nastala chyba."
 
@@ -346,6 +352,9 @@ msgstr "Objednat"
 msgid "Order completed"
 msgstr "Objednávka dokončena"
 
+msgid "Order detail"
+msgstr "Detail objednávky"
+
 msgid "Order not found"
 msgstr "Objednávka nebyla nalezena"
 
@@ -360,6 +369,9 @@ msgstr "Objednávky"
 
 msgid "Our customers who bought this bought also"
 msgstr "Naši zákaznící k tomuto produktu nejčastěji nakupují"
+
+msgid "Page not found"
+msgstr "Stránka nenalezena"
 
 msgid "Page not found!"
 msgstr "Stránka nenalezena!"
@@ -442,6 +454,9 @@ msgstr "Do košíku bylo vloženo zboží <strong>{{ name }}</strong> ({{ quanti
 msgid "Product <strong>{{ name }}</strong> added to the cart (total amount {{ quantity|formatNumber }} {{ unitName }})"
 msgstr "Do košíku bylo vloženo zboží <strong>{{ name }}</strong> (celkem již {{ quantity|formatNumber }} {{ unitName }})"
 
+msgid "Product <strong>{{ name }}</strong> you had in cart is no longer available. Please check your order."
+msgstr "Zboží <strong>{{ name }}</strong>, které jste měli v košíku, již není v nabídce. Prosím, překontrolujte si objednávku."
+
 msgid "Product filter"
 msgstr "Filtr produktů"
 
@@ -450,6 +465,9 @@ msgstr "Informace o produktu"
 
 msgid "Product no longer on sale"
 msgstr "Zboží se již neprodává"
+
+msgid "Product you had in cart is no longer in available. Please check your order."
+msgstr "Zboží, které jste měli v košíku, již není v nabídce. Prosím, překontrolujte si objednávku."
 
 msgid "Product {{ name }} removed from cart"
 msgstr "Z košíku bylo odstraněno zboží {{ name }}"
@@ -492,6 +510,9 @@ msgstr "Zaokrouhlení"
 
 msgid "Save changes"
 msgstr "Uložit změny"
+
+msgid "Search [noun]"
+msgstr "Hledání"
 
 msgid "Search [verb]"
 msgstr "Vyhledat"
@@ -547,6 +568,9 @@ msgstr "Přihlášení k zpravodaji"
 msgid "Subscription was failed"
 msgstr "Přihlášení k novinkám selhalo"
 
+msgid "TOP"
+msgstr "TOP"
+
 msgid "Tax number"
 msgstr "DIČ"
 
@@ -559,6 +583,9 @@ msgstr "Telefon"
 msgid "Terms and conditions"
 msgstr "Obchodní podmínky"
 
+msgid "Terms-and-conditions.html"
+msgstr "Obchodní-podmínky.html"
+
 msgid "Thank you, your message has been sent."
 msgstr "Děkujeme, váš vzkaz byl odeslán."
 
@@ -570,6 +597,9 @@ msgstr "V průběhu objednávkového procesu byla změněna cena platby {{ payme
 
 msgid "The price of shipping {{ transportName }} changed during ordering process. Check your order, please."
 msgstr "V průběhu objednávkového procesu byla změněna cena dopravy {{ transportName }}. Prosím, překontrolujte si objednávku."
+
+msgid "The price of the product <strong>{{ name }}</strong> you have in cart has changed. Please, check your order."
+msgstr "Byla změněna cena zboží <strong>{{ name }}</strong>, které máte v košíku. Prosím, překontrolujte si objednávku."
 
 msgid "This account doesn't exist or password is incorrect"
 msgstr "Zadali jste špatné uživatelské jméno nebo heslo"
@@ -679,6 +709,12 @@ msgstr "Vaše údaje byly úspěšně zaktualizovány"
 msgid "Your discount"
 msgstr "Vaše sleva"
 
+msgid "alphabetically A -> Z"
+msgstr "abecedně A -> Z"
+
+msgid "alphabetically Z -> A"
+msgstr "abecedně Z -> A"
+
 msgid "excluding VAT"
 msgstr "bez DPH"
 
@@ -688,11 +724,20 @@ msgstr "z"
 msgid "from %price%"
 msgstr "od %price%"
 
+msgid "from most expensive"
+msgstr "od nejdražšího"
+
+msgid "from the cheapest"
+msgstr "od nejlevnějšího"
+
 msgid "products"
 msgstr "zboží"
 
 msgid "records"
 msgstr "záznamů"
+
+msgid "relevance"
+msgstr "relevance"
 
 msgid "to"
 msgstr "do"
