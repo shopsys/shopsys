@@ -8,6 +8,7 @@ use BadMethodCallException;
 use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
 use Overblog\GraphQLBundle\Definition\Resolver\ResolverInterface;
 use Overblog\GraphQLBundle\Error\UserError;
+use Shopsys\FrameworkBundle\Component\Deprecations\DeprecationHelper;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\Exception\FriendlyUrlNotFoundException;
 use Shopsys\FrameworkBundle\Model\Category\Category;
@@ -63,13 +64,9 @@ class CategoryResolver implements ResolverInterface, AliasedInterface
         if ($this->domain !== null) {
             return;
         }
-        @trigger_error(
-            sprintf(
-                'The %s() method is deprecated and will be removed in the next major. Use the constructor injection instead.',
-                __METHOD__
-            ),
-            E_USER_DEPRECATED
-        );
+
+        DeprecationHelper::triggerSetterInjection(__METHOD__);
+
         $this->domain = $domain;
     }
 
@@ -89,13 +86,9 @@ class CategoryResolver implements ResolverInterface, AliasedInterface
         if ($this->friendlyUrlFacade !== null) {
             return;
         }
-        @trigger_error(
-            sprintf(
-                'The %s() method is deprecated and will be removed in the next major. Use the constructor injection instead.',
-                __METHOD__
-            ),
-            E_USER_DEPRECATED
-        );
+
+        DeprecationHelper::triggerSetterInjection(__METHOD__);
+
         $this->friendlyUrlFacade = $friendlyUrlFacade;
     }
 
@@ -106,13 +99,8 @@ class CategoryResolver implements ResolverInterface, AliasedInterface
      */
     public function resolver(string $uuid): Category
     {
-        @trigger_error(
-            sprintf(
-                'The %s() method is deprecated and will be removed in the next major. Use resolveByUuidOrUrlSlug() instead.',
-                __METHOD__
-            ),
-            E_USER_DEPRECATED
-        );
+        DeprecationHelper::triggerMethod(__METHOD__, 'resolveByUuidOrUrlSlug');
+
         try {
             return $this->categoryFacade->getVisibleOnDomainByUuid($this->domain->getId(), $uuid);
         } catch (CategoryNotFoundException $categoryNotFoundException) {

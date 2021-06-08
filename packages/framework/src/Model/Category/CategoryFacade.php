@@ -3,6 +3,7 @@
 namespace Shopsys\FrameworkBundle\Model\Category;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Shopsys\FrameworkBundle\Component\Deprecations\DeprecationHelper;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
@@ -298,13 +299,7 @@ class CategoryFacade
      */
     public function getTranslatedAll(DomainConfig $domainConfig)
     {
-        @trigger_error(
-            sprintf(
-                'The %s() method is deprecated and will be removed in the next major. Use getAllTranslated() instead.',
-                __METHOD__
-            ),
-            E_USER_DEPRECATED
-        );
+        DeprecationHelper::triggerMethod(__METHOD__, 'getAllTranslated');
 
         return $this->categoryRepository->getTranslatedAll($domainConfig);
     }
@@ -421,13 +416,7 @@ class CategoryFacade
      */
     public function getTranslatedAllWithoutBranch(Category $category, DomainConfig $domainConfig)
     {
-        @trigger_error(
-            sprintf(
-                'The %s() method is deprecated and will be removed in the next major. Use getAllTranslatedWithoutBranch() instead.',
-                __METHOD__
-            ),
-            E_USER_DEPRECATED
-        );
+        DeprecationHelper::triggerMethod(__METHOD__, 'getAllTranslatedWithoutBranch');
 
         return $this->categoryRepository->getTranslatedAllWithoutBranch($category, $domainConfig);
     }

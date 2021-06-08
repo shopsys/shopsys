@@ -10,6 +10,7 @@ use Shopsys\FrameworkBundle\Command\Exception\CronCommandException;
 use Shopsys\FrameworkBundle\Component\Cron\Config\CronModuleConfig;
 use Shopsys\FrameworkBundle\Component\Cron\CronFacade;
 use Shopsys\FrameworkBundle\Component\Cron\MutexFactory;
+use Shopsys\FrameworkBundle\Component\Deprecations\DeprecationHelper;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -76,13 +77,8 @@ class CronCommand extends Command
             return;
         }
 
-        @trigger_error(
-            sprintf(
-                'The %s() method is deprecated and will be removed in the next major. Use the constructor injection instead.',
-                __METHOD__
-            ),
-            E_USER_DEPRECATED
-        );
+        DeprecationHelper::triggerSetterInjection(__METHOD__);
+
         $this->parameterBag = $parameterBag;
     }
 

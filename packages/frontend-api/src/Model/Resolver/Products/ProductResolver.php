@@ -7,6 +7,7 @@ namespace Shopsys\FrontendApiBundle\Model\Resolver\Products;
 use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
 use Overblog\GraphQLBundle\Definition\Resolver\ResolverInterface;
 use Overblog\GraphQLBundle\Error\UserError;
+use Shopsys\FrameworkBundle\Component\Deprecations\DeprecationHelper;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Product\Exception\ProductNotFoundException;
 use Shopsys\FrameworkBundle\Model\Product\Product;
@@ -45,14 +46,7 @@ class ProductResolver implements ResolverInterface, AliasedInterface
      */
     public function resolver(string $uuid): Product
     {
-        @trigger_error(
-            sprintf(
-                'The "%s" class is deprecated and will be removed in the next major. Use "%s" instead.',
-                self::class,
-                ProductDetailResolver::class
-            ),
-            E_USER_DEPRECATED
-        );
+        DeprecationHelper::triggerClass(self::class, ProductDetailResolver::class);
 
         try {
             return $this->productFacade->getByUuid($uuid);

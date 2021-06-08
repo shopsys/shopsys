@@ -3,6 +3,7 @@
 namespace Shopsys\FrameworkBundle\Model\Script;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Shopsys\FrameworkBundle\Component\Deprecations\DeprecationHelper;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\FrameworkBundle\Model\Order\Order;
 use Shopsys\FrameworkBundle\Twig\MoneyExtension;
@@ -131,13 +132,7 @@ class ScriptFacade
      */
     public function getAllPagesScriptCodes()
     {
-        @trigger_error(
-            sprintf(
-                'The "%s()" method is deprecated and will be removed in the next major. Use "getAllPagesBeforeContentScriptCodes()" instead.',
-                __METHOD__
-            ),
-            E_USER_DEPRECATED
-        );
+        DeprecationHelper::triggerMethod(__METHOD__, 'getAllPagesBeforeContentScriptCodes');
 
         return $this->getAllPagesBeforeContentScriptCodes();
     }

@@ -9,6 +9,7 @@ use Overblog\GraphQLBundle\Definition\Argument;
 use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
 use Overblog\GraphQLBundle\Definition\Resolver\ResolverInterface;
 use Overblog\GraphQLBundle\Relay\Connection\ConnectionBuilder;
+use Shopsys\FrameworkBundle\Component\Deprecations\DeprecationHelper;
 use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
 use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingConfig;
@@ -86,13 +87,9 @@ class ProductsResolver implements ResolverInterface, AliasedInterface
         if ($this->productFacade !== null) {
             return;
         }
-        @trigger_error(
-            sprintf(
-                'The %s() method is deprecated and will be removed in the next major. Use the constructor injection instead.',
-                __METHOD__
-            ),
-            E_USER_DEPRECATED
-        );
+
+        DeprecationHelper::triggerSetterInjection(__METHOD__);
+
         $this->productFacade = $productFacade;
     }
 
@@ -114,13 +111,7 @@ class ProductsResolver implements ResolverInterface, AliasedInterface
             return;
         }
 
-        @trigger_error(
-            sprintf(
-                'The %s() method is deprecated and will be removed in the next major. Use the constructor injection instead.',
-                __METHOD__
-            ),
-            E_USER_DEPRECATED
-        );
+        DeprecationHelper::triggerSetterInjection(__METHOD__);
 
         $this->productFilterFacade = $productFilterFacade;
     }
@@ -146,13 +137,7 @@ class ProductsResolver implements ResolverInterface, AliasedInterface
             return;
         }
 
-        @trigger_error(
-            sprintf(
-                'The %s() method is deprecated and will be removed in the next major. Use the constructor injection instead.',
-                __METHOD__
-            ),
-            E_USER_DEPRECATED
-        );
+        DeprecationHelper::triggerSetterInjection(__METHOD__);
 
         $this->productConnectionFactory = $productConnectionFactory;
     }

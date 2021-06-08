@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrontendApiBundle\Component\Constraints;
 
 use BadMethodCallException;
+use Shopsys\FrameworkBundle\Component\Deprecations\DeprecationHelper;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Product\Exception\ProductNotFoundException;
@@ -84,13 +85,7 @@ class ProductCanBeOrderedValidator extends ConstraintValidator
             return;
         }
 
-        @trigger_error(
-            sprintf(
-                'The %s() method is deprecated and will be removed in the next major. Use the constructor injection instead.',
-                __METHOD__
-            ),
-            E_USER_DEPRECATED
-        );
+        DeprecationHelper::triggerSetterInjection(__METHOD__);
 
         $this->frontendApiProductFacade = $frontendApiProductFacade;
     }

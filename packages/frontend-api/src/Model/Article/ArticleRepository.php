@@ -6,6 +6,7 @@ namespace Shopsys\FrontendApiBundle\Model\Article;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
+use Shopsys\FrameworkBundle\Component\Deprecations\DeprecationHelper;
 use Shopsys\FrameworkBundle\Model\Article\Article;
 use Shopsys\FrameworkBundle\Model\Article\ArticleRepository as FrameworkArticleRepository;
 use Shopsys\FrameworkBundle\Model\Article\Exception\ArticleNotFoundException;
@@ -65,12 +66,9 @@ class ArticleRepository
         int $domainId,
         string $placement
     ): QueryBuilder {
-        @trigger_error(
-            sprintf(
-                'The %s() method is deprecated and will be removed in the next major. It will be replaced by \Shopsys\FrameworkBundle\Model\Article\ArticleRepository::getVisibleArticlesByDomainIdAndPlacementSortedByPositionQueryBuilder() which will change its visibility to public.',
-                __METHOD__
-            ),
-            E_USER_DEPRECATED
+        DeprecationHelper::trigger(
+            'The %s() method is deprecated and will be removed in the next major. It will be replaced by \Shopsys\FrameworkBundle\Model\Article\ArticleRepository::getVisibleArticlesByDomainIdAndPlacementSortedByPositionQueryBuilder() which will change its visibility to public.',
+            __METHOD__
         );
 
         return $this->articleRepository->getVisibleArticlesByDomainIdQueryBuilder($domainId)
@@ -101,12 +99,9 @@ class ArticleRepository
      */
     protected function getArticlesByDomainIdQueryBuilder($domainId)
     {
-        @trigger_error(
-            sprintf(
-                'The %s() method is deprecated and will be removed in the next major. It will be replaced by \Shopsys\FrameworkBundle\Model\Article\ArticleRepository::getArticlesByDomainIdQueryBuilder() which will change its visibility to public.',
-                __METHOD__
-            ),
-            E_USER_DEPRECATED
+        DeprecationHelper::trigger(
+            'The %s() method is deprecated and will be removed in the next major. It will be replaced by \Shopsys\FrameworkBundle\Model\Article\ArticleRepository::getArticlesByDomainIdQueryBuilder() which will change its visibility to public.',
+            __METHOD__
         );
 
         return $this->em->createQueryBuilder()
@@ -156,12 +151,9 @@ class ArticleRepository
      */
     protected function getAllVisibleQueryBuilder()
     {
-        @trigger_error(
-            sprintf(
-                'The %s() method is deprecated and will be removed in the next major. It will be replaced by \Shopsys\FrameworkBundle\Model\Article\ArticleRepository::getAllVisibleQueryBuilder() which will change its visibility to public.',
-                __METHOD__
-            ),
-            E_USER_DEPRECATED
+        DeprecationHelper::trigger(
+            'The %s() method is deprecated and will be removed in the next major. It will be replaced by \Shopsys\FrameworkBundle\Model\Article\ArticleRepository::getAllVisibleQueryBuilder() which will change its visibility to public.',
+            __METHOD__
         );
 
         return $this->em->createQueryBuilder()

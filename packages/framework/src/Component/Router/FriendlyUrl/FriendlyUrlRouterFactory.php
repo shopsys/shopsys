@@ -3,6 +3,7 @@
 namespace Shopsys\FrameworkBundle\Component\Router\FriendlyUrl;
 
 use BadMethodCallException;
+use Shopsys\FrameworkBundle\Component\Deprecations\DeprecationHelper;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\Routing\RequestContext;
@@ -97,13 +98,8 @@ class FriendlyUrlRouterFactory
             return;
         }
 
-        @trigger_error(
-            sprintf(
-                'The %s() method is deprecated and will be removed in the next major. Use the constructor injection instead.',
-                __METHOD__
-            ),
-            E_USER_DEPRECATED
-        );
+        DeprecationHelper::triggerSetterInjection(__METHOD__);
+
         $this->friendlyUrlCacheKeyProvider = $friendlyUrlCacheKeyProvider;
     }
 }

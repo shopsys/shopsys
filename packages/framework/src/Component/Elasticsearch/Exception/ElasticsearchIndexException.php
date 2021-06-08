@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Component\Elasticsearch\Exception;
 
 use Exception;
+use Shopsys\FrameworkBundle\Component\Deprecations\DeprecationHelper;
 
 class ElasticsearchIndexException extends Exception
 {
@@ -83,14 +84,12 @@ class ElasticsearchIndexException extends Exception
      */
     public static function indexAlreadyExists(string $indexName): self
     {
-        trigger_error(
-            sprintf(
-                'Method "%s" is deprecated. For throwing an exception use "%s" directly',
-                __METHOD__,
-                ElasticsearchIndexAlreadyExistsException::class
-            ),
-            E_USER_DEPRECATED
+        DeprecationHelper::trigger(
+            'Method "%s()" is deprecated. For throwing an exception use "%s" directly',
+            __METHOD__,
+            ElasticsearchIndexAlreadyExistsException::class
         );
+
         return new static(sprintf(
             'Index "%s" already exists',
             $indexName
