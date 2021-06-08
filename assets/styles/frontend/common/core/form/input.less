@@ -33,7 +33,7 @@
         color: transparent;
     }
 
-    &:placeholder-shown { 
+    &:placeholder-shown {
         & ~ .input-label {
             cursor: text;
             top: 50%;
@@ -41,7 +41,7 @@
 
             font-size: @font-size-small;
         }
-        
+
         & ~ .input-label--fixed {
             top: @input-label-active-position-top;
             transform: none;
@@ -141,6 +141,7 @@
     &--checkbox {
         top: 0;
         left: 0;
+        line-height: normal;
     }
 }
 
@@ -206,7 +207,7 @@ select {
     padding: 0 @select-arrow-width 0 @select-inner-padding;
     line-height: @input-height - 2 * @input-border-width;
     height: @input-height;
-    
+
     border-radius: @radius-small;
     border: 1px solid @color-border;
     font-size: 13px;

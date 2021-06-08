@@ -38,24 +38,20 @@
                                                 <a class="window-popup__link" href="{{ url('front_registration_reset_password') }}">{{ 'Zapomněli jste vaše heslo?'|trans }}</a>
                                             </div>
                                         </div>
-                                        <div class="box-chooser-check-wrap box-chooser-check-wrap--checkout box-chooser-check-wrap--no-spacing" id="js-order-form-register-container-wrap">
-                                            <div class="box-chooser-check-wrap__in">
-                                                <div class="box-chooser box-chooser--check">
-                                                    <div id="js-order-form-register-container" class="box-chooser__item box-chooser__item--big-label">
-                                                        {{ form_row(form.register, { label: 'Chci se registrovat s objednávkou'|trans }) }}
-                                                    </div>
+                                        <div id="js-order-form-register-container-wrap">
+                                            <div id="js-order-form-register-container">
+                                                {{ form_row(form.register, { label: 'Chci se registrovat s objednávkou'|trans }) }}
+                                            </div>
+                                            {% if not isUserLogged %}
+                                                <div id="js-order-form-password-container">
+                                                    <h2 class="in-title in-title--mini">{{ 'Vytvořte si heslo'|trans }}</h2>
+                                                    {{ form_row(form.password.first, { label: 'Password'|trans }) }}
+                                                    {{ form_row(form.password.second, { label: 'Password again'|trans }) }}
                                                 </div>
-                                                {% if not isUserLogged %}
-                                                    <div class="box-chooser__item__in box-chooser__item__in--no-spacing" id="js-order-form-password-container">
-                                                        <h2 class="in-title in-title--mini">{{ 'Vytvořte si heslo'|trans }}</h2>
-                                                        {{ form_row(form.password.first, { label: 'Password'|trans }) }}
-                                                        {{ form_row(form.password.second, { label: 'Password again'|trans }) }}
-                                                    </div>
-                                                {% endif %}
-                                                <div class="box-chooser__item__in box-chooser__item__in--no-spacing" id="js-order-form-activation-info">
-                                                    <div class="in-title in-title--mini">
-                                                        {{ 'Dokončete objednávku, na e-mail vám zašleme odkaz pro potvrzení registrace a vytvoření hesla.'|trans }}
-                                                    </div>
+                                            {% endif %}
+                                            <div id="js-order-form-activation-info">
+                                                <div class="in-title in-title--mini">
+                                                    {{ 'Dokončete objednávku, na e-mail vám zašleme odkaz pro potvrzení registrace a vytvoření hesla.'|trans }}
                                                 </div>
                                             </div>
                                         </div>
@@ -108,7 +104,7 @@
                                             </div>
                                             {{ form_row(form.country, { label: 'Country'|trans }) }}
                                         </div>
-                                        <div class="box-chooser-check-wrap js-delivery-address-form">
+                                        <div class="js-delivery-address-form">
                                             {% set hasEmptyAddresses = true %}
                                             {% if customerUser is null or customerUser.customer.deliveryAddresses is null and app.user is null %}
                                                 {% set hasEmptyAddresses = false %}
@@ -119,51 +115,43 @@
                                             {% if app.user is not null %}
                                                 {{ form_row(form.deliveryAddress) }}
                                             {% endif %}
-                                            <div class="box-chooser-check-wrap box-chooser-check-wrap--checkout{{ hasEmptyAddresses == true ? ' box-chooser-check-wrap--child' }}">
-                                                <div class="box-chooser-check-wrap__in">
-                                                    <div class="box-chooser box-chooser--check{{ hasEmptyAddresses == true ? ' display-none' }}">
-                                                        <span class="box-chooser__item">
-                                                            {% if hasEmptyAddresses == true %}
-                                                                {{ form_row(form.deliveryAddressFilled, {
-                                                                    attr: {
-                                                                        class: 'js-checkbox-toggle js-order-delivery-address',
-                                                                        'data-checkbox-toggle-container-id': 'js-order-delivery-address',
-                                                                        checked: 'checked'
-                                                                    },
-                                                                    label: 'Přidat novou dodací adresu'|trans
-                                                                }) }}
-                                                            {% else %}
-                                                                {{ form_row(form.deliveryAddressFilled, {
-                                                                    attr: {
-                                                                        class: 'js-checkbox-toggle js-order-delivery-address',
-                                                                        'data-checkbox-toggle-container-id': 'js-order-delivery-address'
-                                                                    },
-                                                                    label: 'Přidat novou dodací adresu'|trans
-                                                                }) }}
-                                                            {% endif %}
-                                                            <picture>
-                                                                <source srcset="{{ asset('public/frontend/images/marker_2x.png') }} 2x, {{ asset('public/frontend/images/marker.png') }} 1x" />
-                                                                <img class="box-chooser__item__marker" loading="lazy" src="" data-src="{{ asset('public/frontend/images/marker.png') }}" alt="{{ 'Dodací adresa'|trans }}">
-                                                            </picture>
-                                                        </span>
-                                                    </div>
-                                                    <div class="box-chooser__item__in" id="js-order-delivery-address">
-                                                        <div class="box-chooser__delivery-address-fields js-order-delivery-address-fields{% if app.user is not null and form.deliveryAddress.vars.value is not same as('') %} display-none{% endif %}">
-                                                            {{ form_row(form.deliveryFirstName, { label: 'First name'|trans }) }}
-                                                            {{ form_row(form.deliveryLastName, { label: 'Last name'|trans }) }}
-                                                            {{ form_row(form.deliveryCompanyName, { label: 'Company'|trans }) }}
-                                                            {{ form_row(form.deliveryTelephone, { label: 'Telephone'|trans }) }}
-                                                            {{ form_row(form.deliveryStreet, { label: 'Ulice a č. popisné'|trans}) }}
-                                                            <div class="form-columns">
-                                                                <div class="form-columns__item">
-                                                                    {{ form_row(form.deliveryCity, { label: 'City'|trans }) }}
-                                                                </div>
-                                                                <div class="form-columns__item">
-                                                                    {{ form_row(form.deliveryPostcode, { label: 'Postcode'|trans }) }}
-                                                                </div>
+                                            <div class="{{ hasEmptyAddresses == true ? ' emptyAdress' }}">
+                                                <div class="form-columns{{ hasEmptyAddresses == true ? ' display-none' }}">
+                                                    {% if hasEmptyAddresses == true %}
+                                                        {{ form_row(form.deliveryAddressFilled, {
+                                                            attr: {
+                                                                class: 'js-checkbox-toggle js-order-delivery-address',
+                                                                'data-checkbox-toggle-container-id': 'js-order-delivery-address',
+                                                                checked: 'checked'
+                                                            },
+                                                            label: 'Přidat novou dodací adresu'|trans
+                                                        }) }}
+                                                    {% else %}
+                                                        {{ form_row(form.deliveryAddressFilled, {
+                                                            attr: {
+                                                                class: 'js-checkbox-toggle js-order-delivery-address',
+                                                                'data-checkbox-toggle-container-id': 'js-order-delivery-address'
+                                                            },
+                                                            label: 'Přidat novou dodací adresu'|trans
+                                                        }) }}
+                                                    {% endif %}
+                                                </div>
+                                                <div id="js-order-delivery-address">
+                                                    <div class="js-order-delivery-address-fields{% if app.user is not null and form.deliveryAddress.vars.value is not same as('') %} display-none{% endif %}">
+                                                        {{ form_row(form.deliveryFirstName, { label: 'First name'|trans }) }}
+                                                        {{ form_row(form.deliveryLastName, { label: 'Last name'|trans }) }}
+                                                        {{ form_row(form.deliveryCompanyName, { label: 'Company'|trans }) }}
+                                                        {{ form_row(form.deliveryTelephone, { label: 'Telephone'|trans }) }}
+                                                        {{ form_row(form.deliveryStreet, { label: 'Ulice a č. popisné'|trans}) }}
+                                                        <div class="form-columns">
+                                                            <div class="form-columns__item">
+                                                                {{ form_row(form.deliveryCity, { label: 'City'|trans }) }}
                                                             </div>
-                                                            {{ form_row(form.deliveryCountry, { label: 'Country'|trans }) }}
+                                                            <div class="form-columns__item">
+                                                                {{ form_row(form.deliveryPostcode, { label: 'Postcode'|trans }) }}
+                                                            </div>
                                                         </div>
+                                                        {{ form_row(form.deliveryCountry, { label: 'Country'|trans }) }}
                                                     </div>
                                                 </div>
                                             </div>

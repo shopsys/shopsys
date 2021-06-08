@@ -29,23 +29,11 @@
                 <span class="box-chooser__item__title">
                     <strong class="box-chooser__item__title__name">{{ stock.name }}</strong>
                 </span>
-                {# @todo: add after stores implementation
-                <span class="box-chooser__item__address">
-                    <span class="box-chooser__item__address__street">{{ stock.street }}</span>
-                    <span class="box-chooser__item__address__city">{{ stock.city }}</span>
-                </span>
-                <span class="box-chooser__item__opening">
-                    {% if stock.openingHours is not empty %}
-                        <span class="box-chooser__item__opening__title">{{ 'Otevřeno'|trans }}</span>
-                        {{ stock.openingHours|nl2br }}
-                    {% endif %}
-                </span>
-                #}
                 <span class="box-chooser__item__avail">
                     {% transchoice stockDayAvailabilitiesByStockId[stock.id]|daysToWeeks with {'%weeksAvailability%': stockDayAvailabilitiesByStockId[stock.id]|daysToWeeks} %}
-                        {0} <span class="box-chooser__item__avail__text box-chooser__item__avail__text--now">Můžete mít <span class="box-chooser__item__avail__time box-chooser__item__avail__time--now">ihned</span></span>
-                        | {1} <span class="box-chooser__item__avail__text">K dispozici do <span class="box-chooser__item__avail__time">1 týdne</span></span>
-                        | [2,Inf] <span class="box-chooser__item__avail__text">K dispozici do <span class="box-chooser__item__avail__time">%weeksAvailability% týdnů</span></span>
+                        {0} <span class="box-chooser__item__avail__text box-chooser__item__avail__text--now">Můžete mít ihned</span>
+                        | {1} <span class="box-chooser__item__avail__text">K dispozici do 1 týdne</span>
+                        | [2,Inf] <span class="box-chooser__item__avail__text">K dispozici do %weeksAvailability% týdnů</span>
                     {% endtranschoice %}
                 </span>
             </label>

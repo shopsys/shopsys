@@ -1,22 +1,24 @@
 {% extends '@!ShopsysFramework/Front/Form/deliveryAddressChoiceFields.html.twig' %}
 {% block delivery_address_choice_row %}
     {% if deliveryAddresses|length > 0 %}
-        <div class="wrap-divide box-chooser-adresses-wrap">
-            <h2 class="in-title">{{ 'Dodací adresy'|trans }}</h2>
-            <ul class="box-chooser box-chooser--adresses">
-                {% for child in form %}
-                    {% if child.vars.value|isInteger %}
-                        {% set deliveryAddress = deliveryAddresses[child.vars.value] %}
-                        <li class="box-chooser__item {% if child.vars.checked %} active {% endif %} js-delivery-address-row">
-                            <label for="{{ child.vars.id }}" class="form-choice">
+        <h2 class="in-title">{{ 'Dodací adresy'|trans }}</h2>
+        <ul class="list-addresses">
+            {% for child in form %}
+                {% if child.vars.value|isInteger %}
+                    {% set deliveryAddress = deliveryAddresses[child.vars.value] %}
+                    <li class="list-addresses__item {% if child.vars.checked %} active {% endif %} js-delivery-address-row">
+                        <label class="list-addresses__item__in" for="{{ child.vars.id }}">
+                            <div class="list-addresses__item__circle">
                                 {{ form_widget(child, { attr: { class: 'css-checkbox js-delivery-address-input' } }) }}
                                 <span class="css-checkbox__image"></span>
-                                <strong class="box-chooser__item__name">
+                            </div>
+                            <div class="list-addresses__item__left">
+                                <strong>
                                     {{ deliveryAddress.firstName }} {{ deliveryAddress.lastName }}
                                 </strong>
-                                <span class="box-chooser__item__address">
+                                <span>
                                     {% if deliveryAddress.companyName %}
-                                        <span class="box-chooser__item__company">
+                                        <span>
                                             {{ deliveryAddress.companyName }}
                                         </span>
                                     {% endif %}
@@ -29,40 +31,30 @@
                                     {% endif %}
                                 </span>
                                 {% if deliveryAddress.telephone %}
-                                    <span class="box-chooser__item__phone">
+                                    <span>
                                         <i class="svg svg-phone"></i>
                                         {{ deliveryAddress.telephone }}
                                     </span>
                                 {% endif %}
-                                <a
-                                    data-href="{{ url('front_customer_delivery_address_delete', { deliveryAddressId: deliveryAddress.id }) }}"
-                                    class="box-chooser__item__remove js-delivery-address-remove-button"
-                                >
-                                    <i class="svg svg-remove"></i>
-                                </a>
-                            </label>
-                        </li>
-                    {% else %}
-                        <li class="box-chooser__item box-chooser__item--no-bg box-chooser__item--last {% if child.vars.checked %} active {% endif %} js-delivery-address-row">
-                            <label for="{{ child.vars.id }}" class="form-choice">
-                                {{ form_widget(child, { attr: { class: 'css-checkbox js-delivery-address-input' } }) }}
-                                <span class="css-checkbox__image"></span>
-                                <span class="box-chooser__item__title">{{ 'Přidat novou dodací adresu'|trans }}</span>
-                                <picture>
-                                    <source srcset="{{ asset('public/frontend/images/marker_2x.png') }} 2x, {{ asset('public/frontend/images/marker.png') }} 1x" />
-                                    <img
-                                        class="box-chooser__item__marker"
-                                        loading="lazy"
-                                        src=""
-                                        data-src="{{ asset('public/frontend/images/marker.png') }}"
-                                        alt="{{ 'Dodací adresa'|trans }}"
-                                    >
-                                </picture>
-                            </label>
-                        </li>
-                    {% endif %}
-                {% endfor %}
-            </ul>
-        </div>
+                            </div>
+                            <a
+                                data-href="{{ url('front_customer_delivery_address_delete', { deliveryAddressId: deliveryAddress.id }) }}"
+                                class="list-addresses__item__remove js-delivery-address-remove-button"
+                            >
+                                <i class="svg svg-remove"></i>
+                            </a>
+                        </label>
+                    </li>
+                {% else %}
+                    <li class="list-addresses__item list-addresses__item--last {% if child.vars.checked %} active {% endif %} js-delivery-address-row">
+                        <label for="{{ child.vars.id }}" class="form-choice">
+                            {{ form_widget(child, { attr: { class: 'css-checkbox js-delivery-address-input' } }) }}
+                            <span class="css-checkbox__image"></span>
+                            <span>{{ 'Přidat novou dodací adresu'|trans }}</span>
+                        </label>
+                    </li>
+                {% endif %}
+            {% endfor %}
+        </ul>
     {% endif %}
 {% endblock %}

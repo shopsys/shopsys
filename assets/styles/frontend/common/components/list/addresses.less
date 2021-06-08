@@ -1,8 +1,5 @@
 @list-address-padding: 20px;
-@list-address-gap: 15px;
 @list-address-input-size: @custom-inputs-icon-size;
-@list-address-active-bg: @color-light;
-@list-address-active-border: @color-primary;
 
 .list-addresses {
     .reset-ul();
@@ -11,7 +8,7 @@
 
     &__item {
         border-radius: @radius;
-        margin-bottom: @list-address-gap;
+        margin-bottom: 15px;
         position: relative;
 
         cursor: pointer;
@@ -23,12 +20,8 @@
         }
 
         &.active {
-            border: 1px solid @list-address-active-border;
-            background: @list-address-active-bg;
-        }
-
-        &--no-border {
-            border: 0;
+            border: 1px solid @color-primary;
+            background: @color-grey-very-light;
         }
 
         &__in {
@@ -54,18 +47,6 @@
             }
         }
 
-        &__line {
-            display: flex;
-            flex-direction: row;
-
-            .svg {
-                padding-right: 10px;
-
-                font-size: 16px;
-                color: @color-inactive;
-            }
-        }
-
         &__left {
             width: 100%;
             padding-left: @list-address-input-size+15px;
@@ -75,24 +56,10 @@
             }
         }
 
-        &__right {
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            padding-left: 35px;
-            padding-top: 15px;
-
-            @media @query-md {
-                width: 50%;
-                padding-top: 0;
-            }
-        }
-
         &__remove {
             position: absolute;
             right: @list-address-padding;
             top: @list-address-padding;
-
 
             cursor: pointer;
 

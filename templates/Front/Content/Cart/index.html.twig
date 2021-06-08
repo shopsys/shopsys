@@ -68,11 +68,6 @@
     {% else %}
         <div class="web__line">
             <div class="web__container">
-                {{ render(controller('App\\Controller\\Front\\NavigationController:menuAction')) }}
-            </div>
-        </div>
-        <div class="web__line">
-            <div class="web__container">
                 <div class="box-cart-empty">
                     <div class="box-cart-empty__text">
                         <h1 class="box-cart-empty__heading">{{ 'Váš nákupní košík je prázdný.'|trans }}</h1>
@@ -87,7 +82,6 @@
                         </picture>
                     </div>
                 </div>
-                {% include 'Front/Content/InfoBox/infoBox.html.twig' %}
             </div>
         </div>
     {% endif %}

@@ -105,7 +105,6 @@ export default class PersonalPickup {
 
     setCurrentCheckboxDescription ($transportCheckbox, description) {
         $transportCheckbox.parents('.box-chooser__item').find('.box-chooser__item__title__description').html(description);
-        $transportCheckbox.parents('.box-chooser__item').find('.box-chooser__item__delivery-information').addClass('hidden');
         $('.box-chooser__item').removeClass('box-chooser__item--selected');
         $transportCheckbox.parents('.box-chooser__item').addClass('box-chooser__item--selected');
     }
@@ -121,7 +120,6 @@ export default class PersonalPickup {
             $transportCheckbox,
             $description
         );
-        $transportCheckbox.parents('.box-chooser__item').find('.box-chooser__item__delivery-information').removeClass('hidden');
         $transportCheckbox.parents('.box-chooser__item').removeClass('box-chooser__item--selected');
     }
 

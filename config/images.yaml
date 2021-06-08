@@ -30,12 +30,12 @@
     class: Shopsys\FrameworkBundle\Model\Payment\Payment
     sizes:
         -   name: ~
-            width: ~
-            height: 32
+            width: 45
+            height: 25
             crop: false
             occurrence: 'Front-end: Ordering process'
             additionalSizes:
-                - {width: ~, height: 64, media: "only screen and (-webkit-min-device-pixel-ratio: 1.5)"}
+                - {width: 90, height: 50, media: "only screen and (-webkit-min-device-pixel-ratio: 1.5)"}
 
 -   name: category
     class: Shopsys\FrameworkBundle\Model\Category\Category
@@ -162,12 +162,12 @@
     class: Shopsys\FrameworkBundle\Model\Transport\Transport
     sizes:
         -   name: ~
-            width: 40
-            height: ~
+            width: 45
+            height: 25
             crop: false
             occurrence: 'Front-end: Ordering process'
             additionalSizes:
-                - {width: 40, height: ~, media: "only screen and (-webkit-min-device-pixel-ratio: 1.5)"}
+                - {width: 90, height: 50, media: "only screen and (-webkit-min-device-pixel-ratio: 1.5)"}
 
 -   name: noticer
     class: Shopsys\FrameworkBundle\Model\Advert\Advert

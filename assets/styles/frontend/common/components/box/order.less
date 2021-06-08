@@ -14,6 +14,17 @@
     &__info {
         flex: 1;
         padding-right: 40px;
+
+        &__item {
+            &--with-gap {
+                margin-top: 50px;
+            }
+
+            &.is-disabled {
+                display: none;
+                pointer-events: none;
+            }
+        }
     }
 
     &__cart {
