@@ -28,6 +28,17 @@ export default function orderValidator ($container) {
             return groups;
         }
     });
+
+    $container.filterAllNodes('input[name="order_personal_info_form[companyCustomer]"]').on('change', event => {
+        const $companyCustomerElement = $(event.target);
+        if ($companyCustomerElement.is(':checked')) {
+            return;
+        }
+
+        $('#js-company-fields').filterAllNodes('input, textarea').each((index, element) => {
+            $(element).jsFormValidator().forEach(element => element.validate());
+        });
+    });
 }
 
 (new Register()).registerCallback(orderValidator);
