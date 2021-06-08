@@ -104,6 +104,7 @@ parameters:
             - '*/src/Form/Admin/ProductFormTypeExtension.php'
             - '*/src/Model/Product/Availability/ProductAvailabilityFacade.php'
             - '*/tests/App/Test/Codeception/Module/StrictWebDriver.php'
+            - '*/tests/App/Smoke/Http/RouteConfigCustomization.php'
 
         PHP_CodeSniffer\Standards\Generic\Sniffs\Metrics\CyclomaticComplexitySniff:
             - '*/src/DataFixtures/Demo/ProductDataFixture.php'

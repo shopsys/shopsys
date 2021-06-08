@@ -335,6 +335,13 @@ class RouteConfigCustomization
                 $config->addExtraRequestDataSet('Two factor authentication is not enabled for normal administrator (with ID 2).')
                     ->setParameter('id', 2)
                     ->setExpectedStatusCode(302);
+            })
+            ->customizeByRouteName('admin_cspheader_setting', function (RouteConfig $config) {
+                $config->changeDefaultRequestDataSet('CSP setting is available only to superadmin.')
+                    ->setExpectedStatusCode(302);
+                $config->addExtraRequestDataSet('Login as "superadmin" to see CSP setting page')
+                    ->setAuth(new BasicHttpAuth('superadmin', 'admin123'))
+                    ->setExpectedStatusCode(200);
             });
     }
 
