@@ -52,3 +52,6 @@ There you can find links to upgrade notes for other versions too.
 
 - fix converting price for Transport and Payment in data fixtures ([#2354](https://github.com/shopsys/shopsys/pull/2354))
     - see #project-base-diff to update your project
+
+- remove unnecessary setter injection in `CartController` ([#2349](https://github.com/shopsys/shopsys/pull/2349))
+    - see #project-base-diff to update your project

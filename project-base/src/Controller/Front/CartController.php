@@ -6,7 +6,6 @@ namespace App\Controller\Front;
 
 use App\Form\Front\Cart\AddProductFormType;
 use App\Form\Front\Cart\CartFormType;
-use BadMethodCallException;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\FlashMessage\ErrorExtractor;
 use Shopsys\FrameworkBundle\Model\Cart\AddProductResult;
@@ -82,7 +81,7 @@ class CartController extends FrontBaseController
      * @param \Shopsys\FrameworkBundle\Component\FlashMessage\ErrorExtractor $errorExtractor
      * @param \Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFacadeInterface $listedProductViewFacade
      * @param \Symfony\Component\HttpFoundation\RequestStack $requestStack
-     * @param \Shopsys\FrameworkBundle\Model\Module\ModuleFacade|null $moduleFacade
+     * @param \Shopsys\FrameworkBundle\Model\Module\ModuleFacade $moduleFacade
      */
     public function __construct(
         CartFacade $cartFacade,
@@ -92,7 +91,7 @@ class CartController extends FrontBaseController
         ErrorExtractor $errorExtractor,
         ListedProductViewFacadeInterface $listedProductViewFacade,
         RequestStack $requestStack,
-        ?ModuleFacade $moduleFacade = null
+        ModuleFacade $moduleFacade
     ) {
         $this->cartFacade = $cartFacade;
         $this->domain = $domain;
@@ -432,31 +431,5 @@ class CartController extends FrontBaseController
         }
 
         return !in_array($masterRequest->get('_route'), self::PAGES_WITH_DISABLED_CART_HOVER, true);
-    }
-
-    /**
-     * @required
-     * @param \Shopsys\FrameworkBundle\Model\Module\ModuleFacade $moduleFacade
-     * @internal This function will be replaced by constructor injection in next major
-     */
-    public function setModuleFacade(ModuleFacade $moduleFacade): void
-    {
-        if ($this->moduleFacade !== null && $this->moduleFacade !== $moduleFacade) {
-            throw new BadMethodCallException(
-                sprintf('Method "%s" has been already called and cannot be called multiple times.', __METHOD__)
-            );
-        }
-        if ($this->moduleFacade !== null) {
-            return;
-        }
-
-        @trigger_error(
-            sprintf(
-                'The %s() method is deprecated and will be removed in the next major. Use the constructor injection instead.',
-                __METHOD__
-            ),
-            E_USER_DEPRECATED
-        );
-        $this->moduleFacade = $moduleFacade;
     }
 }
