@@ -1,0 +1,4 @@
+ParameterFilter:
+    type: input-object
+    inherits:
+        - 'ParameterFilterDecorator'

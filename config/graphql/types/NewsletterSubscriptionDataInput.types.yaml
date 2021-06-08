@@ -1,0 +1,4 @@
+NewsletterSubscriptionDataInput:
+    type: input-object
+    inherits:
+        - 'NewsletterSubscriptionDataInputDecorator'

@@ -1,0 +1,4 @@
+Order:
+    type: object
+    inherits:
+        - 'OrderDecorator'

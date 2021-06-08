@@ -1,0 +1,4 @@
+Brand:
+    type: object
+    inherits:
+        - 'BrandDecorator'

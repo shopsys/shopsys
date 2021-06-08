@@ -1,0 +1,4 @@
+DateTime:
+    type: custom-scalar
+    inherits:
+        - 'DateTimeDecorator'

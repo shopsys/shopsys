@@ -375,6 +375,9 @@
     "laminas/laminas-zendframework-bridge": {
         "version": "1.0.4"
     },
+    "lcobucci/jwt": {
+        "version": "3.4.5"
+    },
     "league/csv": {
         "version": "9.6.0"
     },
@@ -425,6 +428,32 @@
     },
     "ocramius/proxy-manager": {
         "version": "2.2.3"
+    },
+    "overblog/graphiql-bundle": {
+        "version": "0.1",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "master",
+            "version": "0.1",
+            "ref": "fe8d172f2480efc598f5a8be0e732656d3594cec"
+        },
+        "files": [
+            "config/routes/dev/graphiql.yaml"
+        ]
+    },
+    "overblog/graphql-bundle": {
+        "version": "0.12",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "master",
+            "version": "0.12",
+            "ref": "c01dcfb85a6e93f1a43ef36151fcff11cf17f791"
+        },
+        "files": [
+            "config/graphql/types/.gitignore",
+            "config/packages/graphql.yaml",
+            "config/routes/graphql.yaml"
+        ]
     },
     "paragonie/constant_time_encoding": {
         "version": "v2.4.0"
@@ -666,6 +695,9 @@
     },
     "shopsys/framework": {
         "version": "dev-mg-weird-flex-but-ok"
+    },
+    "shopsys/frontend-api": {
+        "version": "v9.1.1"
     },
     "shopsys/google-cloud-bundle": {
         "version": "dev-mg-weird-flex-but-ok"
@@ -1162,6 +1194,9 @@
     },
     "webmozart/assert": {
         "version": "1.5.0"
+    },
+    "webonyx/graphql-php": {
+        "version": "v0.13.9"
     },
     "zalas/injector": {
         "version": "v1.2.0"

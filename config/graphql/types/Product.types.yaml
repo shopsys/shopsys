@@ -1,0 +1,4 @@
+Product:
+    type: interface
+    inherits:
+        - 'ProductDecorator'

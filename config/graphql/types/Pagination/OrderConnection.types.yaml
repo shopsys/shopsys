@@ -1,0 +1,10 @@
+OrderConnection:
+    type: relay-connection
+    config:
+        nodeType: Order
+        connectionFields:
+            totalCount:
+                type: "Int!"
+                description: "Total number of orders"
+    inherits:
+        - 'OrderConnectionDecorator'

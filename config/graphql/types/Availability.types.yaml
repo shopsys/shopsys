@@ -1,0 +1,4 @@
+Availability:
+    type: object
+    inherits:
+        - 'AvailabilityDecorator'

@@ -1,0 +1,4 @@
+Variant:
+    type: object
+    inherits:
+        - 'VariantDecorator'
