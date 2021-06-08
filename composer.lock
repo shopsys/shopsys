@@ -13272,16 +13272,16 @@
         },
         {
             "name": "symfony/security",
-            "version": "v4.4.21",
+            "version": "v4.4.25",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/security.git",
-                "reference": "5a96313ce9628180e66f62b38f6f3899cf7f2669"
+                "reference": "0a584655f3f15aab5c60b709e90b4a40907aa49e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/security/zipball/5a96313ce9628180e66f62b38f6f3899cf7f2669",
-                "reference": "5a96313ce9628180e66f62b38f6f3899cf7f2669",
+                "url": "https://api.github.com/repos/symfony/security/zipball/0a584655f3f15aab5c60b709e90b4a40907aa49e",
+                "reference": "0a584655f3f15aab5c60b709e90b4a40907aa49e",
                 "shasum": ""
             },
             "require": {
@@ -13351,7 +13351,7 @@
             "description": "Provides a complete security system for your web application",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/security/tree/v4.4.21"
+                "source": "https://github.com/symfony/security/tree/v4.4.25"
             },
             "funding": [
                 {
@@ -13367,7 +13367,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-03-12T01:21:32+00:00"
+            "time": "2021-05-26T17:39:37+00:00"
         },
         {
             "name": "symfony/security-bundle",
@@ -19498,5 +19498,5 @@
     "platform-overrides": {
         "php": "7.4.1"
     },
-    "plugin-api-version": "2.0.0"
+    "plugin-api-version": "2.1.0"
 }
