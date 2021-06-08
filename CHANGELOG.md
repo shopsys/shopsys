@@ -27,7 +27,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 The changelog is generated during the release process using [ChangelogLinker](https://github.com/symplify/changeloglinker) since `v7.0.0-alpha6` release and using [Github Changelog Generator](https://github.com/github-changelog-generator/github-changelog-generator) since `v7.3.7` release.
 
-## [v7.3.7](https://github.com/shopsys/shopsys/compare/v7.3.6...v7.3.7) (2021-06-07)
+## [v7.3.7](https://github.com/shopsys/shopsys/compare/v7.3.6...v7.3.7) (2021-06-08)
 
 :hammer: Developer experience and refactoring
 
