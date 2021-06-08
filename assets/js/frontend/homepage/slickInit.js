@@ -42,28 +42,42 @@ export default function slickInit () {
         focusOnSelect: true
     });
 
-    function mobileSlider () {
-        const sliderClass = $('.js-slider-drawable-list-mobile');
-        if (window.innerWidth <= Responsive.VL) {
-            sliderClass.not('.slick-initialized').slick({
+    function mobileSlider (event, breakpoint) {
+        if (breakpoint === 'mobile') {
+            breakpoint = Responsive.LG;
+        }
+
+        if (window.innerWidth <= breakpoint) {
+            $(event).not('.slick-initialized').slick({
                 dots: false,
                 arrows: false,
                 infinite: false,
                 slidesToShow: 1,
                 slidesToScroll: 1,
-                variableWidth: true
+                variableWidth: true,
+                touchThreshold: 40,
+                speed: 600,
+                cssEase: 'ease-out',
+                easing: 'swing',
+                edgeFriction: 0,
+                swipeToSlide: true
             });
         } else {
-            if (sliderClass.hasClass('slick-initialized')) {
-                sliderClass.slick('unslick');
+            if ($(event).hasClass('slick-initialized')) {
+                $(event).slick('unslick');
             }
         }
     }
 
-    mobileSlider();
+    $('.js-slider-drawable-list-mobile').each(function () {
+        const _this = $(this);
+        const breakpoint = _this.attr('data-breakpoint') || Responsive.VL;
 
-    $(window).resize(function (e) {
-        mobileSlider();
+        mobileSlider(_this, breakpoint);
+
+        $(window).resize(function () {
+            mobileSlider(_this, breakpoint);
+        });
     });
 
     // slick-active-current - slick carousel always gives slick-active to asNavFor element,

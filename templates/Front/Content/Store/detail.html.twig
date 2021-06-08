@@ -10,9 +10,7 @@
 {% block main_content %}
     <div class="web__line web__line--spacing">
         <div class="web__container">
-            <div class="box-breadcrumb box-breadcrumb--align-left">
-                {{ render(controller('App\\Controller\\Front\\BreadcrumbController:indexAction', { routeName: getRoute(), routeParameters: getRouteParams() } )) }}
-            </div>
+            {{ render(controller('App\\Controller\\Front\\BreadcrumbController:indexAction', { routeName: getRoute(), routeParameters: getRouteParams() } )) }}
             <div class="box-stores box-stores--detail{{ imageExists(store, 'main') ? ' box-stores--detail-has-img' }}">
                 <div class="box-stores__info box-stores__info--detail">
                     <h1 class="heading heading--primary heading--primary-subpage box-stores__heading">{{ store.name }}</h1>

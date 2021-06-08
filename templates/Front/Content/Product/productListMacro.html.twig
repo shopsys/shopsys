@@ -2,49 +2,55 @@
     <div class="list-products js-list js-product-list {{ listCssClass|default('') }}">
         {% for productView in productViews %}
             <div class="list-products__item js-list-products-item">
-                <div class="list-products__item__in">
-                    <a href="{{ productView.action.detailUrl }}"
-                       class="list-products__item__block" {{ gtm(productView, nextIndex + loop.index0, { 'list': gtmList }) }}>
-                        <div class="list-products__item__image dont-print">
-                            {{ image(productView.image, { size: 'list', alt: productView.name }) }}
-                            {{ renderFlagsByIds(productView.flagIds) }}
-                        </div>
+                <div class="list-products__item__in" {{ gtm(productView, nextIndex + loop.index0, { 'list': gtmList }) }}>
+                    <a class="list-products__item__image dont-print" href="{{ productView.action.detailUrl }}">
+                        {{ image(productView.image, { size: 'list', alt: productView.name }) }}
+                        {{ renderFlagsByIds(productView.flagIds, 'in-flag--in-list') }}
+                    </a>
 
-                        <{{ productHeadingTagName|default('h2') }} class="list-products__item__title js-list-products-item-title">
-                            {% if productView.namePrefix is not empty %}
-                                <span class="list-products__item__title__prefix">{{ productView.namePrefix }}</span>
-                            {% endif %}
-                            <span class="js-list-products-item-name">
-                                {{ productView.name }}{{ productView.nameSufix is not empty ? ',' }}
-                            </span>
-                            {% if productView.nameSufix is not empty %}
-                                <span class="list-products__item__title__suffix"> {{ productView.nameSufix }}</span>
-                            {% endif %}
-                        </{{ productHeadingTagName|default('h2') }}>
-                        <div class="list-products__item__info dont-print">
-                            <div class="list-products__item__info__availability">
-                                <strong class="list-products__item__info__availability__text {{ productView.available ? 'list-products__item__info__availability__text--primary' : ' ' }}">{{ productView.availability }}</strong>
-                                {% if productView.productAvailableStocksCountInformation is not empty %}
-                                    <span class="list-products__item__info__availability__text list-products__item__info__availability__text--secondary">{{ productView.productAvailableStocksCountInformation|raw }}</span>
-                                {% endif %}
-                                {% if productView.productCountExposedInStores is not empty %}
-                                    <span class="list-products__item__info__availability__text list-products__item__info__availability__text--secondary">{{ productView.productCountExposedInStores|raw }}</span>
-                                {% endif %}
-                            </div>
-                            {% if productView.sellingPrice is not null %}
-                                <div class="list-products__item__info__price">
-                                    <div class="list-products__item__info__price__item list-products__item__info__price__item--main">
-                                        {% if productView.sellingPrice.priceFrom %}
-                                            {{ 'from %price%'|trans({'%price%': productView.sellingPrice.priceWithVat|price}) }}
-                                        {% else %}
-                                            {{ productView.sellingPrice.priceWithVat|price }}
-                                        {% endif %}
-                                    </div>
+                    <{{ productHeadingTagName|default('a') }} class="list-products__item__title js-list-products-item-title" href="{{ productView.action.detailUrl }}">
+                        {% if productView.namePrefix is not empty %}
+                            <span class="list-products__item__title__prefix">{{ productView.namePrefix }}</span>
+                        {% endif %}
+                        <span class="js-list-products-item-name">
+                            {{ productView.name }}{{ productView.nameSufix is not empty ? ',' }}
+                        </span>
+                        {% if productView.nameSufix is not empty %}
+                            <span class="list-products__item__title__suffix"> {{ productView.nameSufix }}</span>
+                        {% endif %}
+                    </{{ productHeadingTagName|default('a') }}>
+
+
+                    <a class="list-products__item__info js-list-products-info-block dont-print" href="{{ productView.action.detailUrl }}">
+                        {% if productView.sellingPrice is not null %}
+                            <div class="list-products__item__info__price">
+                                <div class="list-products__item__info__price__main">
+                                    {% if productView.sellingPrice.priceFrom %}
+                                        {{ 'from %price%'|trans({'%price%': productView.sellingPrice.priceWithVat|price}) }}
+                                    {% else %}
+                                        {{ productView.sellingPrice.priceWithVat|price }}
+                                    {% endif %}
                                 </div>
+                            </div>
+                        {% endif %}
+
+                        <div class="list-products__item__info__availability">
+                            <strong>{{ productView.availability }}</br></strong>
+                            {% if productView.productAvailableStocksCountInformation is not empty %}
+                                <span>{{ productView.productAvailableStocksCountInformation|raw }}</span>
+                            {% endif %}
+                            {% if productView.productCountExposedInStores is not empty %}
+                                <span>{{ productView.productCountExposedInStores|raw }}</span>
                             {% endif %}
                         </div>
                     </a>
-                    {{ render(controller('App\\Controller\\Front\\CartController:productActionAction', { productActionView: productView.action, type: 'large'} )) }}
+                    <div class="list-products__item__hover">
+                        <div class="list-products__item__hover__wrap">
+                            <div class="list-products__item__hover__wrap__in">
+                                {{ render(controller('App\\Controller\\Front\\CartController:productActionAction', { productActionView: productView.action, type: 'large'} )) }}
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         {% endfor %}

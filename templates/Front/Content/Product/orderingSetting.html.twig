@@ -1,13 +1,40 @@
 <div class="box-order-type">
-    {% for orderingModeId, orderingModeName in orderingModesNames %}
-        <a
-            href="#"
-            class="box-order-type__item js-product-list-ordering-mode {{ activeOrderingModeId == orderingModeId ? 'active' }}"
-            data-cookie-name="{{ cookieName }}"
-            data-ordering-mode="{{ orderingModeId }}"
-            data-is-ready-category-seo-mix-page="{{ isReadyCategorySeoMixPage }}"
-        >
-            {{ orderingModeName }}
-        </a>
-    {% endfor %}
+    <div class="box-order-type__filter-opener">
+        <button class="box-order-type__filter-opener__button btn btn--primary btn--big-radius js-product-filter-open-button">
+            {{ 'Filtrovat'|trans }}
+        </button>
+    </div>
+
+    <div class="box-order-type__order js-order-type-select">
+        <div class="box-order-type__order__wrap">
+            {% for orderingModeId, orderingModeName in orderingModesNames %}
+                <div class="box-order-type__order__item{% if activeOrderingModeId == orderingModeId %} active{% endif %}">
+                    {% if activeOrderingModeId == orderingModeId %}
+                        <span class="box-order-type__order__item__button">
+                            {{ orderingModeName }}
+                        </span>
+                        <div class="box-order-type__order__item__dropdown js-order-type-select-dropdown">
+                            <i class="svg svg-sort"></i>
+                            <div class="box-order-type__order__item__dropdown__content">
+                                <div class="box-order-type__order__item__dropdown__title">{{ 'seřadit'|trans }}</div>
+                                <div class="box-order-type__order__item__dropdown__value">
+                                    {{ orderingModeName }}
+                                </div>
+                            </div>
+                        </div>
+                    {% else %}
+                        <a
+                            href="#"
+                            class="box-order-type__order__item__button js-product-list-ordering-mode"
+                            data-cookie-name="{{ cookieName }}"
+                            data-ordering-mode="{{ orderingModeId }}"
+                            data-is-ready-category-seo-mix-page="{{ isReadyCategorySeoMixPage }}"
+                        >
+                            <span class="underline-text">{{ orderingModeName }}</span>
+                        </a>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </div>
+    </div>
 </div>

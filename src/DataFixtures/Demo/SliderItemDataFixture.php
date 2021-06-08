@@ -61,16 +61,5 @@ class SliderItemDataFixture extends AbstractReferenceFixture
         $sliderItemData->link = 'https://shopsys.cz';
 
         $this->sliderItemFacade->create($sliderItemData);
-
-        $sliderItemData->name = '40% na jídelní stoly a židle';
-        $sliderItemData->link = 'https://shopsys.cz';
-
-        $this->sliderItemFacade->create($sliderItemData);
-
-        $sliderItemData->name = 'Informace o otevírací době';
-        $sliderItemData->link = 'https://shopsys.cz';
-        $sliderItemData->domainId = Domain::SECOND_DOMAIN_ID;
-
-        $this->sliderItemFacade->create($sliderItemData);
     }
 }

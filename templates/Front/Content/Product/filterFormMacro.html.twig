@@ -2,6 +2,8 @@
     {{ form_start(filterForm, { action: actionUrl }) }}
         {% form_theme filterForm 'Front/Content/Product/filterFormTheme.html.twig' %}
 
+        {% import 'Front/Content/Product/selectedFilterBoxMacro.html.twig' as selectedFilterBox %}
+
         {% set isSearch = page == 'search' %}
         {% set paramsVisibleCount = 5 %}
 
@@ -13,52 +15,57 @@
             />
         {% endif %}
 
-        <div class="box-filter__header">
-            <h2 class="box-filter__heading">{{ 'Filtr'|trans }}</h2>
-            <a class="box-filter__reset btn btn-no-style js-product-filter-reset-button" href="{{ resetUrl }}">
-                <span class="box-filter__reset__text">{{ 'Zrušit filtry'|trans }}</span>
-                <i class="box-filter__reset__icon svg svg-remove"></i>
-            </a>
-        </div>
+        {{ selectedFilterBox.filterBox(filterForm, resetUrl) }}
 
-        {% if filterForm.flags is empty %}
-            {% do filterForm.flags.setRendered %}
-        {% endif %}
-        {% if filterForm.flags is not empty or productFilterCountData is not null %}
-            <div class="box-filter__choice js-product-filter-box" data-product-filter-box-id="{{ filterForm.flags.vars.id }}">
-                <div id="{{ filterForm.flags.vars.id }}" class="box-filter__choice__inputs box-filter__choice__inputs--flags">
-                    {% for flagForm in filterForm.flags %}
-
-                        {% set flagChecked = flagForm.vars.checked %}
-                        {% set flagId = flagForm.vars.value %}
-
-                        <div class="form-choice box-filter__choice__input">
-                            {{ form_widget(flagForm, { attr: { class: "css-checkbox" } }) }}
-                            <label class="css-checkbox__image" for="{{ flagForm.vars.id }}">
-                                <a href="{{ getUrlByFlagValue(productFilterSetup, flagId, flagChecked) }}"
-                                   class="flag-icon {{ getFlagIconClass(flagId) }} js-product-filter-links"
-                                   data-link-id="flag-{{ flagId }}"
-                                >
-                                {{ flagForm.vars.label }}
-                                {% if productFilterCountData is not null %}
-                                    <span
-                                        class="js-product-filter-count"
-                                        data-form-id="{{ flagForm.vars.id }}"
-                                    >
-                                        {% if not flagForm.vars.checked %}
-                                            {% set flagsCount = productFilterCountData.countByFlagId[flagForm.vars.value]|default(0) %}
-                                            ({% if filterForm.flags.vars.data is not empty and flagsCount > 0 %}+{% endif %}{{ flagsCount }})
-                                        {% endif %}
-                                    </span>
-                                {% endif %}
-                                </a>
-                            </label>
+        <div class="box-filter__block">
+            <div class="box-filter__choice js-product-filter-box" data-product-filter-box-id="product_filter_box_price">
+                <h3 class="box-filter__choice__title cursor-pointer js-product-filter-box-label js-product-filter-box-arrow">
+                    {{ 'Price'|trans }}
+                    <i class="svg svg-arrow"></i>
+                </h3>
+                <div class="box-filter__choice__content" id="product_filter_box_price">
+                    <div class="box-price-slider">
+                        <div
+                            class="js-range-slider"
+                            data-minimum-input-id="{{ filterForm.minimalPrice.vars.id }}"
+                            data-minimal-value="{{ priceRange.minimalPrice|moneyFormat }}"
+                            data-maximum-input-id="{{ filterForm.maximalPrice.vars.id }}"
+                            data-maximal-value="{{ priceRange.maximalPrice|moneyFormat }}"
+                            data-decimals="{{ decimalsByDomainId(getDomain().id) }}"
+                        ></div>
+                        <div class="box-price-slider__form">
+                            <div class="box-price-slider__form__item">
+                                <div class="form-line form-line--without-gap">
+                                    {{ form_widget(filterForm.minimalPrice, {
+                                        symbolAfterInput: currencySymbolByDomainId(getDomain().id),
+                                        attr: { class: 'input--show-placeholder', placeholder: priceRange.minimalPrice|price }
+                                    }) }}
+                                    <label class="input-label input-label--fixed">{{ 'od'|trans }}</label>
+                                </div>
+                            </div>
+                            <div class="box-price-slider__form__item">
+                                <div class="form-line form-line--without-gap">
+                                    {{ form_widget(filterForm.maximalPrice, {
+                                        symbolAfterInput: currencySymbolByDomainId(getDomain().id),
+                                        attr: { class: 'input--show-placeholder', placeholder:priceRange.maximalPrice|price }
+                                    }) }}
+                                    <label class="input-label input-label--fixed">{{ 'do'|trans }}</label>
+                                </div>
+                            </div>
                         </div>
-                    {% endfor %}
+                    </div>
+                </div>
+            </div>
 
-                    {% if productFilterCountData is not null %}
-                        <div class="form-choice box-filter__choice__input">
-                            {{ form_widget(filterForm.inStock, { attr: { class: "css-checkbox" } }) }}
+            {% if productFilterCountData is not null %}
+                <div class="box-filter__choice js-product-filter-box" data-product-filter-box-id="product_filter_box_instock">
+                    <h3 class="box-filter__choice__title cursor-pointer js-product-filter-box-label js-product-filter-box-arrow">
+                        {{ 'Dostupnost'|trans }}
+                        <i class="svg svg-arrow"></i>
+                    </h3>
+                    <div class="box-filter__choice__content" id="product_filter_box_instock">
+                        <div class="form-choice form-choice--without-margin">
+                            {{ form_widget(filterForm.inStock, { attr: { class: "css-checkbox", 'data-filter-name-with-entity-id': filterForm.inStock.vars.id } }) }}
 
                             {% set inStockChecked = filterForm.inStock.vars.checked %}
                             {% set stockId = filterForm.inStock.vars.value %}
@@ -79,123 +86,126 @@
                                 </a>
                             </label>
                         </div>
-                    {% else %}
-                        {% do filterForm.inStock.setRendered %}
-                    {% endif %}
-                </div>
-            </div>
-        {% endif %}
-
-        <div class="box-filter__choice js-product-filter-box" data-product-filter-box-id="product_filter_box_price">
-            <span class="box-filter__choice__title active cursor-pointer js-product-filter-box-label js-product-filter-box-arrow">
-                {{ 'Price'|trans }}
-                <i class="svg svg-arrow"></i>
-            </span>
-            <div class="box-price-slider" id="product_filter_box_price">
-                <div
-                    class="js-range-slider"
-                    data-minimum-input-id="{{ filterForm.minimalPrice.vars.id }}"
-                    data-minimal-value="{{ priceRange.minimalPrice|moneyFormat }}"
-                    data-maximum-input-id="{{ filterForm.maximalPrice.vars.id }}"
-                    data-maximal-value="{{ priceRange.maximalPrice|moneyFormat }}"
-                    data-decimals="{{ decimalsByDomainId(getDomain().id) }}"
-                ></div>
-                <div class="box-price-slider__form">
-                    <div class="box-price-slider__form__item">
-                        <div class="form-line">
-                            {{ form_widget(filterForm.minimalPrice, {
-                                symbolAfterInput: currencySymbolByDomainId(getDomain().id),
-                                attr: { class: 'input--show-placeholder js-product-filter-call-change-after-reset', placeholder: priceRange.minimalPrice|price }
-                            }) }}
-                            <label class="input-label input-label--fixed">{{ 'od'|trans }}</label>
-                        </div>
-                    </div>
-                    <div class="box-price-slider__form__item">
-                        <div class="form-line">
-                            {{ form_widget(filterForm.maximalPrice, {
-                                symbolAfterInput: currencySymbolByDomainId(getDomain().id),
-                                attr: { class: 'input--show-placeholder js-product-filter-call-change-after-reset', placeholder:priceRange.maximalPrice|price }
-                            }) }}
-                            <label class="input-label input-label--fixed">{{ 'do'|trans }}</label>
-                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
+            {% else %}
+                {% do filterForm.inStock.setRendered %}
+            {% endif %}
 
-        {% if filterForm.brands is empty %}
-            {% do filterForm.brands.setRendered %}
-        {% else %}
-            <div class="box-filter__choice js-product-filter-box" data-product-filter-box-id="{{ filterForm.brands.vars.id }}">
-                <span class="box-filter__choice__title active cursor-pointer js-product-filter-box-label js-product-filter-box-arrow">
-                    {{ 'Brand'|trans }}
-                    <i class="svg svg-arrow"></i>
-                </span>
-                <div id="{{ filterForm.brands.vars.id }}" class="box-filter__choice__inputs">
+            {% if filterForm.flags is not empty or productFilterCountData is not null %}
+                <div class="box-filter__choice js-product-filter-box" data-product-filter-box-id="{{ filterForm.flags.vars.id }}">
+                    <h3 class="box-filter__choice__title js-product-filter-box-label js-product-filter-box-arrow">
+                        {{ 'Příznaky'|trans }}
+                        <i class="svg svg-arrow"></i>
+                    </h3>
 
-                    {% for brandForm in filterForm.brands %}
+                    <div class="box-filter__choice__content" id="{{ filterForm.flags.vars.id }}">
+                        {% for flagForm in filterForm.flags %}
 
-                        {% set brandChecked = brandForm.vars.checked %}
-                        {% set brandId = brandForm.vars.value %}
+                            {% set flagChecked = flagForm.vars.checked %}
+                            {% set flagId = flagForm.vars.value %}
 
-                        <div class="form-choice js-form-choice box-filter__choice__input
-                            {{ loop.index > paramsVisibleCount and not brandForm.vars.checked ? ' js-form-choice--collapsing display-none' }}
-                        ">
-                            {{ form_widget(brandForm, { attr: { class: 'css-checkbox'} }) }}
-                            <label class="css-checkbox__image" for="{{ brandForm.vars.id }}">
-                                <a href="{{ getUrlByBrandValue(productFilterSetup, brandId, brandChecked) }}"
-                                   class="js-product-filter-links"
-                                   data-link-id="brand-{{ brandId }}"
-                                >
-                                {{ brandForm.vars.label }}
-                                {% if productFilterCountData is not null %}
-                                    <span
-                                        class="js-product-filter-count"
-                                        data-form-id="{{ brandForm.vars.id }}"
+                            <div class="form-choice{% if loop.last %} form-choice--without-margin{% endif %}">
+                                {{ form_widget(flagForm, { attr: { class: "css-checkbox", 'data-filter-name-with-entity-id': filterForm.flags.vars.id ~ '_' ~ flagForm.vars.value } }) }}
+                                <label class="css-checkbox__image" for="{{ flagForm.vars.id }}">
+                                    <a href="{{ getUrlByFlagValue(productFilterSetup, flagId, flagChecked) }}"
+                                    class="flag-icon {{ getFlagIconClass(flagId) }} js-product-filter-links"
+                                    data-link-id="flag-{{ flagId }}"
                                     >
-                                        {% set brandCount = productFilterCountData.countByBrandId[brandForm.vars.value]|default(0) %}
-                                        {% if not brandForm.vars.checked %}
-                                            ({% if filterForm.brands.vars.data is not empty and brandCount > 0 %}+{% endif %}{{ brandCount }})
-                                        {% endif %}
-                                    </span>
-                                {% endif %}
-                                </a>
-                            </label>
-                        </div>
-                    {% endfor %}
-                    {% if filterForm.brands|length > paramsVisibleCount %}
-                        <a
-                            class="box-filter__more btn btn-no-style js-product-filter-show-more-less"
-                            data-text-more="{{ 'Zobrazit více'|trans }}"
-                            data-text-less="{{ 'Zobrazit méně'|trans }}"
-                            href="#">
-                                {{ 'Zobrazit více'|trans }}
-                        </a>
-                    {% endif %}
+                                    {{ flagForm.vars.label }}
+                                    {% if productFilterCountData is not null %}
+                                        <span
+                                            class="js-product-filter-count"
+                                            data-form-id="{{ flagForm.vars.id }}"
+                                        >
+                                            {% if not flagForm.vars.checked %}
+                                                {% set flagsCount = productFilterCountData.countByFlagId[flagForm.vars.value]|default(0) %}
+                                                ({% if filterForm.flags.vars.data is not empty and flagsCount > 0 %}+{% endif %}{{ flagsCount }})
+                                            {% endif %}
+                                        </span>
+                                    {% endif %}
+                                    </a>
+                                </label>
+                            </div>
+                        {% endfor %}
+                    </div>
                 </div>
-            </div>
-        {% endif %}
+            {% elseif filterForm.flags is empty %}
+                {% do filterForm.flags.setRendered %}
+            {% endif %}
 
-        {% if isSearch or filterForm.parameters is empty %}
-            {% do filterForm.parameters.setRendered %}
-        {% else %}
-            <div class="box-filter__parameters">
-                <div id="{{ filterForm.parameters.vars.id }}">
-                    {% for parameterId, parameterForm in filterForm.parameters %}
-                        {% if parameterForm.vars.attr.parameterType == constant('App\\Model\\Product\\Parameter\\Parameter::PARAMETER_TYPE_COLOR') %}
-                            {% include 'Front/Content/Product/Parameter/colorParameterForm.html.twig' with {parameterForm: parameterForm, allParameterValuesImagesIndexedById: allParameterValuesImagesIndexedById, productFilterSetup: productFilterSetup} %}
-                        {% elseif parameterForm.vars.attr.parameterType == constant('App\\Model\\Product\\Parameter\\Parameter::PARAMETER_TYPE_SLIDER') %}
-                            {% include 'Front/Content/Product/Parameter/sliderParameterForm.html.twig' with {parameterForm: parameterForm} %}
-                        {% else %}
-                            {% include 'Front/Content/Product/Parameter/checkboxParameterForm.html.twig' with {parameterForm: parameterForm, productFilterSetup: productFilterSetup} %}
+            {% if filterForm.brands is empty %}
+                {% do filterForm.brands.setRendered %}
+            {% else %}
+                <div class="box-filter__choice js-product-filter-box" data-product-filter-box-id="{{ filterForm.brands.vars.id }}">
+                    <h3 class="box-filter__choice__title cursor-pointer js-product-filter-box-label js-product-filter-box-arrow">
+                        {{ 'Brand'|trans }}
+                        <i class="svg svg-arrow"></i>
+                    </h3>
+                    <div class="box-filter__choice__content" id="{{ filterForm.brands.vars.id }}">
+                        {% for brandForm in filterForm.brands %}
+                            {% set brandChecked = brandForm.vars.checked %}
+                            {% set brandId = brandForm.vars.value %}
+
+                            <div class="form-choice{% if loop.last %} form-choice--without-margin{% endif %}
+                                {{ loop.index > paramsVisibleCount and not brandForm.vars.checked ? ' js-form-choice--collapsing display-none' }}
+                            ">
+                                {{ form_widget(brandForm, { attr: { class: 'css-checkbox', 'data-filter-name-with-entity-id': filterForm.brands.vars.id ~ '_' ~ brandForm.vars.value } }) }}
+                                <label class="css-checkbox__image" for="{{ brandForm.vars.id }}">
+                                    <a href="{{ getUrlByBrandValue(productFilterSetup, brandId, brandChecked) }}"
+                                    class="js-product-filter-links"
+                                    data-link-id="brand-{{ brandId }}"
+                                    >
+                                    {{ brandForm.vars.label }}
+                                    {% if productFilterCountData is not null %}
+                                        <span
+                                            class="js-product-filter-count"
+                                            data-form-id="{{ brandForm.vars.id }}"
+                                        >
+                                            {% set brandCount = productFilterCountData.countByBrandId[brandForm.vars.value]|default(0) %}
+                                            {% if not brandForm.vars.checked %}
+                                                ({% if filterForm.brands.vars.data is not empty and brandCount > 0 %}+{% endif %}{{ brandCount }})
+                                            {% endif %}
+                                        </span>
+                                    {% endif %}
+                                    </a>
+                                </label>
+                            </div>
+                        {% endfor %}
+                        {% if filterForm.brands|length > paramsVisibleCount %}
+                            <a
+                                class="box-filter__choice__more js-product-filter-show-more-less"
+                                data-text-more="{{ 'Zobrazit více'|trans }}"
+                                data-text-less="{{ 'Zobrazit méně'|trans }}"
+                                href="#">
+                                    {{ 'Zobrazit více'|trans }}
+                            </a>
                         {% endif %}
-                    {% endfor %}
+                    </div>
                 </div>
-            </div>
-        {% endif %}
+            {% endif %}
 
-        <div class="box-filter__action">
-            {{ form_widget(filterForm.search, { label: 'View results'|trans, attr: {class: 'js-product-filter-show-result-button' } }) }}
+            {% if isSearch or filterForm.parameters is empty %}
+                {% do filterForm.parameters.setRendered %}
+            {% else %}
+                <div class="box-filter__parameters">
+                    <div id="{{ filterForm.parameters.vars.id }}">
+                        {% for parameterId, parameterForm in filterForm.parameters %}
+                            {% if parameterForm.vars.attr.parameterType is same as constant('App\\Model\\Product\\Parameter\\Parameter::PARAMETER_TYPE_COLOR') %}
+                                {% include 'Front/Content/Product/Parameter/colorParameterForm.html.twig' with {parameterForm: parameterForm, allParameterValuesImagesIndexedById: allParameterValuesImagesIndexedById, productFilterSetup: productFilterSetup} %}
+                            {% elseif parameterForm.vars.attr.parameterType is same as constant('App\\Model\\Product\\Parameter\\Parameter::PARAMETER_TYPE_SLIDER') %}
+                                {% include 'Front/Content/Product/Parameter/sliderParameterForm.html.twig' with {parameterForm: parameterForm} %}
+                            {% else %}
+                                {% include 'Front/Content/Product/Parameter/checkboxParameterForm.html.twig' with {parameterForm: parameterForm, productFilterSetup: productFilterSetup} %}
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endif %}
+
+            <div class="box-filter__action">
+                {{ form_widget(filterForm.search, { label: 'View results'|trans, attr: {class: 'btn--small full-width js-product-filter-show-result-button' } }) }}
+            </div>
         </div>
 
     {{ form_end(filterForm) }}

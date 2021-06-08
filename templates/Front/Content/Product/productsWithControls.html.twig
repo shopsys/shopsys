@@ -7,14 +7,16 @@
 
         {{ productList.list(paginationResult.results, null, null, gtmList|default(null), nextIndex|default(1)) }}
 
-        <div class="list-pagination">
-            <div class="list-pagination__item">
-                {{ paginator.loadMoreButton(paginationResult) }}
+        {% if paginationResult.pageCount > 1 %}
+            <div class="list-pagination">
+                <div class="list-pagination__button">
+                    {{ paginator.loadMoreButton(paginationResult) }}
+                </div>
+                <div>
+                    {{ paginator.paginatorNavigation(paginationResult, entityName) }}
+                </div>
             </div>
-            <div class="list-pagination__item">
-                {{ paginator.paginatorNavigation(paginationResult, entityName) }}
-            </div>
-        </div>
+        {% endif %}
     </div>
 {% else %}
     <div class="box-list__content__message">

@@ -24,7 +24,7 @@ class SliderFilterFormType extends AbstractType
         $config = $options['slider_config'];
 
         $builder->add('min', TextType::class, [
-            'attr' => ['placeholder' => $config['min']['value'], 'class' => 'js-product-filter-call-change-after-reset'],
+            'attr' => ['placeholder' => $config['min']['value']],
             'constraints' => [
                 new GreaterThanOrEqual([
                     'value' => $config['min']['value'],
@@ -32,7 +32,7 @@ class SliderFilterFormType extends AbstractType
             ],
         ]);
         $builder->add('max', TextType::class, [
-            'attr' => ['placeholder' => $config['max']['value'], 'class' => 'js-product-filter-call-change-after-reset'],
+            'attr' => ['placeholder' => $config['max']['value']],
             'constraints' => [
                 new LessThanOrEqual([
                     'value' => $config['max']['value'],

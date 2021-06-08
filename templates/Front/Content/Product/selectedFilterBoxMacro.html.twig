@@ -1,0 +1,59 @@
+{% macro filterBox(filterForm, resetUrl) %}
+    {% set domainId = getDomain().id %}
+    <div class="box-filter__block box-filter__block--with-gap display-none" id="js-selected-filters-box">
+        <div class="box-filter__selected">
+            <h3 class="box-filter__title">{{ 'Vybrané filtry'|trans }}</h3>
+
+            <ul class="box-filter__selected__list">
+                {% if filterForm.minimalPrice.vars.data|length > 0 or filterForm.maximalPrice.vars.data|length > 0 %}
+                    <li class="box-filter__selected__list__item">
+                        {% if filterForm.minimalPrice.vars.data|length > 0 %}
+                            {{ 'od'|trans }}
+                            {{ filterForm.minimalPrice.vars.data|formatNumber ~ ' ' ~ currencySymbolByDomainId(domainId) }}
+                        {% endif %}
+                        {% if filterForm.maximalPrice.vars.data|length > 0 %}
+                            {{ 'do'|trans }}
+                            {{ filterForm.maximalPrice.vars.data|formatNumber ~ ' ' ~ currencySymbolByDomainId(domainId) }}
+                        {% endif %}
+                        <i class="svg svg-remove-thin js-filter-box-uncheck-range" data-filter-form-id="{{ filterForm.minimalPrice.vars.id }}, {{ filterForm.maximalPrice.vars.id }}"></i>
+                    </li>
+                {% endif %}
+                {% if filterForm.brands.vars.data|length > 0 %}
+                    {% for brand in filterForm.brands.vars.data %}
+                        {{ _self.filterRow(brand.name, filterForm.brands.vars.id ~ '_' ~ brand.id) }}
+                    {% endfor %}
+                {% endif %}
+                {% if filterForm.flags.vars.data|length > 0 %}
+                    {% for flag in filterForm.flags.vars.data %}
+                        {{ _self.filterRow(flag.name, filterForm.flags.vars.id ~ '_' ~ flag.id) }}
+                    {% endfor %}
+                {% endif %}
+                {% if filterForm.inStock.vars.data %}
+                    {{ _self.filterRow('Products in stock only'|trans, filterForm.inStock.vars.id) }}
+                {% endif %}
+                {% if filterForm.parameters.vars.data|length > 0 %}
+                    {% for parameterFilterData in filterForm.parameters.vars.data %}
+                        {% if parameterFilterData.values|length > 0 %}
+                            {% set parameter = parameterFilterData.parameter %}
+                            {% for parameterValue in parameterFilterData.values %}
+                                {{ _self.filterRow(parameterValue.text, filterForm.parameters.vars.id ~ '_' ~ parameter.id ~ '_' ~ parameterValue.id) }}
+                            {% endfor %}
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+            </ul>
+
+            <a class="box-filter__reset" href="{{ resetUrl }}">
+                <span class="box-filter__reset__text">{{ 'Zrušit vše'|trans }}</span>
+                <i class="svg svg-remove"></i>
+            </a>
+        </div>
+    </div>
+{% endmacro %}
+
+{% macro filterRow(formValueName, formId, isRangeFilter) %}
+    <li class="box-filter__selected__list__item">
+        {{ formValueName }}
+        <i class="svg svg-remove-thin {% if isRangeFilter %}js-filter-box-uncheck-range{% else %}js-selected-filters-box-uncheck{% endif %}" data-filter-form-id="{{ formId }}"></i>
+    </li>
+{% endmacro %}

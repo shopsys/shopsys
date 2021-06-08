@@ -4,13 +4,7 @@ export default class ProductFilterBox {
 
     constructor ($container) {
         $container.filterAllNodes('.js-product-filter-open-button').click(event => {
-            $(event.target).toggleClass('active');
             $container.filterAllNodes('.js-product-filter').toggleClass('active');
-        });
-
-        $container.filterAllNodes('.js-product-sort-open-button').click(event => {
-            $(event.target).toggleClass('active');
-            $container.filterAllNodes('.js-product-sort').toggleClass('active');
         });
 
         const _this = this;
@@ -75,14 +69,15 @@ export default class ProductFilterBox {
 
     toggleFilterBox ($parameterContainer) {
         const $productFilterParameterLabel = $parameterContainer.find('.js-product-filter-box-label');
-        $productFilterParameterLabel.toggleClass('active');
-
         const parameterFilterFormId = $parameterContainer.data('product-filter-box-id');
+        const $productFilterParameterContent = $parameterContainer.find('#' + parameterFilterFormId);
 
-        if ($productFilterParameterLabel.hasClass('active')) {
-            $parameterContainer.find('#' + parameterFilterFormId).slideDown('fast');
+        if ($productFilterParameterContent.is(':visible')) {
+            $productFilterParameterContent.slideUp('fast');
+            $productFilterParameterLabel.find('.svg').css('transform', 'translateY(-50%) rotate(0deg)');
         } else {
-            $parameterContainer.find('#' + parameterFilterFormId).slideUp('fast');
+            $productFilterParameterContent.slideDown('fast');
+            $productFilterParameterLabel.find('.svg').css('transform', 'translateY(-50%) rotate(180deg)');
         }
     }
 

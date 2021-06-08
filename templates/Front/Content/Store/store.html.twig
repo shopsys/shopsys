@@ -13,9 +13,7 @@
         <div class="web__container">
             <h1 class="heading heading--primary heading--primary-subpage">{{ "Prodejny"|trans }}</h1>
             <div class="web__container web__container--fullwidth web__container--max-width web__container--no-spacing">
-                <div class="box-breadcrumb">
-                    {{ render(controller('App\\Controller\\Front\\BreadcrumbController:indexAction', { routeName: getRoute(), routeParameters: getRouteParams() } )) }}
-                </div>
+                {{ render(controller('App\\Controller\\Front\\BreadcrumbController:indexAction', { routeName: getRoute(), routeParameters: getRouteParams() } )) }}
             </div>
             <div class="box-stores">
                 <div class="box-stores__map">

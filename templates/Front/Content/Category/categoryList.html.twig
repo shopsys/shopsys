@@ -1,28 +1,19 @@
-{% if categories|length > 0 %}
-    <ul class="list-categories{{ cssClass ?? '' }}">
-        {% for category in categories %}
-            <li class="list-categories__item">
-                <a href="{{ url('front_product_list', { id: category.id }) }}" class="list-categories__item__block">
-                    <span class="list-categories__item__image__wrap">
-                        {% if imageExists(category) %}
-                            {{ image(category, { alt: category.name, class: "list-categories__item__image" }) }}
-                        {% else %}
-                            <img
-                                class="list-categories__item__icon"
-                                loading="lazy"
-                                data-src="{{ asset('public/frontend/images/category_icon.svg') }}"
-                                alt="{{ category.name }}"
-                            >
-                        {% endif %}
-                    </span>
-                    <h3 class="list-categories__item__title">
-                        {{ category.name }}
-                        {% if listableProductCountsIndexedByCategoryId is not empty %}
+<ul class="list-categories js-slider-drawable-list-mobile" data-breakpoint="mobile">
+    {% for category in categories %}
+        <li class="list-categories__item">
+            <a href="{{ url('front_product_list', { id: category.id }) }}" class="list-categories__item__block">
+                <div class="list-categories__item__image">
+                    {{ image(category, { alt: category.name }) }}
+                </div>
+                <p class="list-categories__item__name">
+                    {{ category.name }}
+                    {% if listableProductCountsIndexedByCategoryId is not empty %}
+                        <span class="list-categories__item__count">
                             ({{ listableProductCountsIndexedByCategoryId[category.id] }})
-                        {% endif %}
-                    </h3>
-                </a>
-            </li>
-        {% endfor %}
-    </ul>
-{% endif %}
+                        </span>
+                    {% endif %}
+                </p>
+            </a>
+        </li>
+    {% endfor %}
+</ul>

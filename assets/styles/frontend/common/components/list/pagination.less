@@ -1,18 +1,20 @@
 .list-pagination {
-    @media @query-vl {
-        display: flex;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin-bottom: 18px;
+
+    @media @query-lg {
+        flex-direction: row;
         align-items: center;
         justify-content: space-between;
+        margin-bottom: 53px;
     }
 
-    &__item:first-child {
-        margin-bottom: 1rem;
+    &__button {
+        margin-bottom: 20px;
 
-        @media @query-tablet {
-            text-align: center;
-        }
-
-        @media @query-vl {
+        @media @query-lg {
             margin-bottom: 0;
         }
     }

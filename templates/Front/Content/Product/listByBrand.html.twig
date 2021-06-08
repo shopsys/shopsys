@@ -42,31 +42,20 @@
             </div>
         </div>
     </div>
-    <div class="web__line web__line--product-list web__line--bg-color">
-        <div class="web__container web__container--full-width web__container--no-padding">
-            <div class="box-list js-product-list-with-filter">
-                <div class="box-filter__opener">
-                    <button type="button" class="btn btn-no-style box-filter__opener__btn js-product-sort-open-button">
-                        <i class="box-filter__opener__btn__icon svg svg-sort"></i>
-                        <span class="box-filter__opener__btn__text">
-                            {{ 'Seřadit'|trans }}
-                            <span class="box-filter__opener__btn__info box-filter__opener__btn__info--sort js-not-implemented-yet">Not ready</span>
-                        </span>
-                    </button>
-                </div>
-                <div class="box-list__body">
-                     <div class="box-list__content">
-                        <div class="js-product-list-ajax-filter-products-with-controls">
-                            <div class="box-list__top js-product-sort">
-                                <div class="box-list__top__wrap">
-                                    {{ render(controller('App\\Controller\\Front\\ProductController:selectOrderingModeForListByBrandAction')) }}
-                                    <div class="box-list__top__info">
-                                        {% include 'Front/Content/Product/productSortCount.html.twig' with {paginationResult: paginationResult} %}
-                                    </div>
+    <div class="web__line">
+        <div class="web__container">
+            <div class="box-list box-list--brand-page js-product-list-with-filter">
+                <div class="box-list__content box-list__content--without-gap">
+                    <div class="js-product-list-ajax-filter-products-with-controls">
+                        <div class="box-list__top js-product-sort">
+                            <div class="box-list__top__wrap">
+                                {{ render(controller('App\\Controller\\Front\\ProductController:selectOrderingModeForListByBrandAction')) }}
+                                <div class="box-list__top__info">
+                                    {% include 'Front/Content/Product/productSortCount.html.twig' with {paginationResult: paginationResult} %}
                                 </div>
                             </div>
-                            {% include 'Front/Content/Product/productsWithControls.html.twig' with {paginationResult: paginationResult, filterFormSubmitted: false } %}
                         </div>
+                        {% include 'Front/Content/Product/productsWithControls.html.twig' with {paginationResult: paginationResult, filterFormSubmitted: false } %}
                     </div>
                 </div>
             </div>

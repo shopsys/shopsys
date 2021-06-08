@@ -64,6 +64,6 @@ class ProductListPage extends AbstractPage
      */
     private function getProductListCompomentContext()
     {
-        return $this->webDriver->findElement(WebDriverBy::cssSelector('.box-list__body'));
+        return $this->webDriver->findElement(WebDriverBy::cssSelector('.box-list'));
     }
 }

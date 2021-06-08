@@ -2,14 +2,15 @@ import Register from 'framework/common/utils/Register';
 import Ajax from 'framework/common/utils/Ajax';
 import pushReloadState from '../components/pushReloadState';
 import Gtm from '../../gtm';
+import Overlay from '../utils/overlay';
 
 export default class ProductListAjaxFilter {
 
-    constructor ($filter) {
+    constructor ($filter, overlay) {
         this.$productsWithControls = $filter.filterAllNodes('.js-product-list-ajax-filter-products-with-controls');
         this.$productFilterForm = $filter.filterAllNodes('form[name="product_filter_form"]');
         this.$showResultsButton = $filter.filterAllNodes('.js-product-filter-show-result-button');
-        this.$resetFilterButton = $filter.filterAllNodes('.js-product-filter-reset-button');
+        this.$selectedFiltersBox = $filter.filterAllNodes('#js-selected-filters-box');
         this.requestTimer = null;
         this.requestDelay = 1000;
 
@@ -21,20 +22,12 @@ export default class ProductListAjaxFilter {
 
         this.$showResultsButton.on('click', () => {
             const $productList = $('.js-product-list');
+            $('.js-product-list-panel').toggleClass('active');
+            $('.js-product-list-with-filter').toggleClass('active');
             if ($productList && $productList.offset()) {
                 $('html, body').animate({ scrollTop: $productList.offset().top }, 'slow');
-            }
-            return false;
-        });
-
-        this.$resetFilterButton.on('click', (event) => {
-            _this.$productFilterForm.find(':radio, :checkbox').prop('checked', false);
-            _this.$productFilterForm.find('textarea, :text, select').val('');
-            _this.$productFilterForm.find('.js-product-filter-call-change-after-reset').change();
-            clearTimeout(_this.requestTimer);
-            const resetUrl = $(event.target).attr('href');
-            pushReloadState(resetUrl);
-            _this.submitFormWithAjax(_this);
+            };
+            overlay.hideOverlay();
             return false;
         });
 
@@ -145,6 +138,7 @@ export default class ProductListAjaxFilter {
                 productListAjaxFilter.updateFilterLinks($wrappedData);
                 productListAjaxFilter.updateBoxFilterOpener($wrappedData);
                 productListAjaxFilter.updateFiltersDisabled();
+                productListAjaxFilter.updateSelectedFilters($wrappedData);
 
                 // if .js-ready-category-seo-mix-values has been found, ProductListReadyCategorySeoMix.js will take care about changing URL
                 const seoMixFound = $wrappedData.filterAllNodes('.js-ready-category-seo-mix-values').length > 0;
@@ -161,9 +155,17 @@ export default class ProductListAjaxFilter {
         return $countElement.html().indexOf('(0)') !== -1;
     }
 
+    updateSelectedFilters ($wrappedData) {
+        const $newSelectedFiltersBox = $wrappedData.filterAllNodes('#js-selected-filters-box');
+        this.$selectedFiltersBox.html($newSelectedFiltersBox.html());
+        (new Register()).registerNewContent(this.$selectedFiltersBox);
+    };
+
     static init ($container) {
         // eslint-disable-next-line no-new
-        new ProductListAjaxFilter($container);
+        const overlay = new Overlay();
+
+        new ProductListAjaxFilter($container, overlay);
     }
 }
 

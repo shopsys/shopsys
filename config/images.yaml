@@ -41,12 +41,12 @@
     class: Shopsys\FrameworkBundle\Model\Category\Category
     sizes:
         -   name: ~
-            width: ~
-            height: 80
+            width: 64
+            height: 48
             crop: false
             occurrence: 'Front-end: Product list by category'
             additionalSizes:
-                - {width: ~, height: 160, media: "only screen and (-webkit-min-device-pixel-ratio: 1.5)"}
+                - {width: 128, height: 96, media: "only screen and (-webkit-min-device-pixel-ratio: 1.5)"}
 
 -   name: product
     class: Shopsys\FrameworkBundle\Model\Product\Product
@@ -75,12 +75,12 @@
             additionalSizes:
                 - {width: 192, height: ~, media: "only screen and (-webkit-min-device-pixel-ratio: 1.5)"}
         -   name: list
-            width: 300
-            height: ~
+            width: 190
+            height: 190
             crop: false
             occurrence: 'Front-end: Listing of products in section, listing of products on special offer'
             additionalSizes:
-                - {width: 600, height: ~, media: "only screen and (-webkit-min-device-pixel-ratio: 1.5)"}
+                - {width: 380, height: 380, media: "only screen and (-webkit-min-device-pixel-ratio: 1.5)"}
         -   name: thumbnail
             width: 90
             height: 90
@@ -141,13 +141,13 @@
                     crop: false
                     occurrence: 'Front-end: Mobile main page slider - retina display small'
                 -   name: fullwidthSlider
-                    width: 714
-                    height: 234
+                    width: 713
+                    height: 498
                     crop: false
                     occurrence: 'Front-end: Mobile main page slider - fullwidth slider'
                 -   name: fullwidthSliderRetina
-                    width: 1428
-                    height: 468
+                    width: 1426
+                    height: 996
                     crop: false
                     occurrence: 'Front-end: Mobile main page slider - fullwidth slider - retina display'
 

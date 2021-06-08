@@ -23,7 +23,11 @@ img {
     &__header {
         background-color: @color-primary;
 
-        &--with-gap {
+        @media @query-lg {
+            margin-bottom: 16px;
+        }
+
+        &--big-gap {
             margin-bottom: 18px;
 
             @media @query-lg {
@@ -142,14 +146,6 @@ img {
             }
         }
 
-        &--no-padding {
-            padding: 0;
-        }
-
-        &--full-width {
-            width: 100%;
-        }
-
         &--max-width {
             max-width: 100%;
         }
@@ -183,17 +179,6 @@ img {
             @media @query-xl {
                 width: @web-width;
                 margin: 0 auto;
-            }
-        }
-
-        &__content {
-            .web__main--with-panel & {
-                margin-bottom: @margin-gap;
-
-                @media @query-lg {
-                    order: 2;
-                    width: calc(~"100% - @{web-panel-width-lg}");
-                }
             }
         }
     }

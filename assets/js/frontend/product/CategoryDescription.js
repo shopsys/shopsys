@@ -3,17 +3,16 @@ import Register from 'framework/common/utils/Register';
 export default class CategoryDescription {
     static init () {
         const $description = $('.js-category-description');
+        const $descriptionContentHeight = $('.js-category-description-content').height();
         const $loadMoreButton = $('.js-category-description-load-more');
-        const descriptionHeight = $description.height();
 
-        if (descriptionHeight > 32) {
-            $loadMoreButton.addClass('is-visible');
-            $description.addClass('box-list__description__text--small');
+        if ($description.height() < $descriptionContentHeight) {
+            $loadMoreButton.css('display', 'flex');
         }
 
         $loadMoreButton.click(function () {
-            $description.removeClass('box-list__description__text--small');
-            $loadMoreButton.closest('.js-category-description-load-more').removeClass('is-visible');
+            $description.css('max-height', $descriptionContentHeight);
+            $(this).hide();
         });
     }
 }
