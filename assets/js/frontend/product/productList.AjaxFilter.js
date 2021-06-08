@@ -162,7 +162,7 @@ export default class ProductListAjaxFilter {
     };
 
     static init ($container) {
-        // eslint-disable-next-line no-new
+        /* eslint-disable no-new */
         const overlay = new Overlay();
 
         new ProductListAjaxFilter($container, overlay);
