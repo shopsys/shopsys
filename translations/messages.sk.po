@@ -469,6 +469,12 @@ msgstr ""
 msgid "Basic information"
 msgstr "Základné informácie"
 
+msgid "Beru na vědomí zpracování osobních údajů"
+msgstr ""
+
+msgid "Beru na vědomí zpracování osobních údajů (<a href=\"%url%\" target=\"_blank\">jak pracujeme s vašimi daty</a>)."
+msgstr ""
+
 msgid "Bestsellers"
 msgstr "Najpredávanejšie"
 
@@ -652,9 +658,6 @@ msgstr ""
 msgid "Color"
 msgstr ""
 
-msgid "Commerce Cloud"
-msgstr ""
-
 msgid "Company"
 msgstr "Firma"
 
@@ -685,14 +688,20 @@ msgstr "Kontaktujte nás"
 msgid "Content"
 msgstr ""
 
+msgid "Content-Security-Policy header"
+msgstr ""
+
+msgid "Content-Security-Policy header has been set."
+msgstr ""
+
+msgid "Content-Security-Policy header setting"
+msgstr ""
+
 msgid "Cookies"
 msgstr "Cookies"
 
 msgid "Copyright"
 msgstr "Copyright"
-
-msgid "Copyright Shopsys, s.r.o."
-msgstr ""
 
 msgid "Country"
 msgstr "Krajina"
@@ -987,6 +996,9 @@ msgstr "E-shop"
 
 msgid "E-shop URL address"
 msgstr "URL adresa e-shopu"
+
+msgid "E-shop na míru od"
+msgstr ""
 
 msgid "EASYTOUCH"
 msgstr "EASYTOUCH"
@@ -1288,6 +1300,9 @@ msgstr ""
 msgid "Invalid two-factor authentication code."
 msgstr ""
 
+msgid "It is highly recommended to test this setting on devel or CI server before it is applied in production!"
+msgstr ""
+
 msgid "Je vystaven"
 msgstr ""
 
@@ -1299,9 +1314,6 @@ msgstr "Jednoduché čisté línie a široká ponuka dekorov vrátane dreva a be
 
 msgid "Ještě nebylo implementováno."
 msgstr "Ešte nebolo implementované."
-
-msgid "Jsme na trhu již 17 let a od vývoje e-shopů na míru<br>jsme se dostali k digitalizaci prodejů největších B2C a B2B hráčů,<br>kterým pomáháme uspět v omnichannel světě."
-msgstr ""
 
 msgid "Jsme stabilní společnost, přední prodejce nábytku v Evropě. Neustále hledáme nové talenty i odborníky se zkušenostmi. Vyberte si z nabídky pracovních příležitostí."
 msgstr "Sme stabilná spoločnosť, popredný predajca nábytku v Európe. Neustále hľadáme nové talenty aj odborníkov so skúsenosťami. Vyberte si z ponuky pracovných príležitostí."
@@ -2341,9 +2353,6 @@ msgstr ""
 msgid "Prodejny"
 msgstr "Predajne"
 
-msgid "Prodejní cena s DPH"
-msgstr ""
-
 msgid "Product <strong><a href=\"{{ url }}\">{{ product|productDisplayName }}</a></strong> modified"
 msgstr ""
 
@@ -2903,6 +2912,12 @@ msgid "Shipping selection"
 msgstr "Voľba dopravy"
 
 msgid "Shopsys Commerce Cloud"
+msgstr ""
+
+msgid "Shopsys magazín"
+msgstr ""
+
+msgid "Shopsys s.r.o. Všechna práva vyhrazena."
 msgstr ""
 
 msgid "Shopsys s.r.o.<br> Koksární 1096/10<br> 702 00 Ostrava"
@@ -3526,12 +3541,6 @@ msgstr ""
 msgid "Vyřazení z prodeje dle domén"
 msgstr ""
 
-msgid "Vyšší cena bez DPH"
-msgstr ""
-
-msgid "Vyšší cena s DPH"
-msgstr ""
-
 msgid "Vzhled betonu, dřeva nebo jednobarevné? V úplném kontrastu nebo tón v tónu s dvířky? Široký výběr pracovních desek nabízí mnoho možností. Díky přiřazeným barevným koncepcím určitě najdete tu svou oblíbenou."
 msgstr "Vzhľad betónu, dreva alebo jednofarebné? V úplnom kontraste alebo tón v tóne s dvierkami? Široký výber pracovných dosiek ponúka veľa možností. Vďaka priradeným farebným koncepciám určite nájdete tú svoju obľúbenú."
 
@@ -3625,6 +3634,9 @@ msgstr "Pre vstup na túto stránku sa musíte prihlásiť"
 msgid "Your data had been successfully updated"
 msgstr "Vaše informácie boli úspešne aktualizované"
 
+msgid "Youtube"
+msgstr ""
+
 msgid "Z Vašeho košíku bylo z důvodu nedostupnosti odstraněno zbožéí: <strong>{{ name }}</strong>. Prosím zkontrolujte si svojí objednávku."
 msgstr "Z vášho košíka bol z dôvodu nedostupnosti odstránený tovar: <strong>{{ name }}</strong>. Prosím, skontrolujte si svoju objednávku."
 
@@ -3657,6 +3669,9 @@ msgstr ""
 
 msgid "Zaregistrujte se k odběru newsletteru a získejte slevu 35&nbsp;% na nábytek na Váš první nákup*"
 msgstr "Zaregistrujte sa na odber newslettera a získajte zľavu 35&nbsp;% na nábytok na váš prvý nákup*"
+
+msgid "Zaregistrujte se k odběru newsletteru<br> a získejte slevu 35&nbsp;% na běžecké vybavení"
+msgstr ""
 
 msgid "Zavřít"
 msgstr "Zavieť"
@@ -3981,6 +3996,9 @@ msgstr "Čierna"
 
 msgid "Černý beton"
 msgstr "Čierný betón"
+
+msgid "Česko"
+msgstr ""
 
 msgid "Česká republika"
 msgstr "Česká republika"

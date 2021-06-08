@@ -217,6 +217,12 @@ msgstr "Základní"
 msgid "Basic information"
 msgstr "Základní informace"
 
+msgid "Beru na vědomí zpracování osobních údajů"
+msgstr ""
+
+msgid "Beru na vědomí zpracování osobních údajů (<a href=\"%url%\" target=\"_blank\">jak pracujeme s vašimi daty</a>)."
+msgstr ""
+
 msgid "Bestsellers"
 msgstr "Nejprodávanější zboží"
 
@@ -343,9 +349,6 @@ msgstr ""
 msgid "Color"
 msgstr ""
 
-msgid "Commerce Cloud"
-msgstr ""
-
 msgid "Common price"
 msgstr "Běžná cena"
 
@@ -379,6 +382,15 @@ msgstr "Napište nám"
 msgid "Content"
 msgstr ""
 
+msgid "Content-Security-Policy header"
+msgstr ""
+
+msgid "Content-Security-Policy header has been set."
+msgstr ""
+
+msgid "Content-Security-Policy header setting"
+msgstr ""
+
 msgid "Continue in order"
 msgstr "Pokračovat v objednávce"
 
@@ -386,9 +398,6 @@ msgid "Cookies"
 msgstr ""
 
 msgid "Copyright"
-msgstr ""
-
-msgid "Copyright Shopsys, s.r.o."
 msgstr ""
 
 msgid "Country"
@@ -428,9 +437,6 @@ msgid "Customer with email address <strong>{{ email }}</strong> doesn't exist. <
 msgstr "Zákazník s e-mailovou adresou <strong>{{ email }}</strong> neexistuje. <a href=\"{{ registrationLink }}\">Zaregistrovat</a>"
 
 msgid "DPH {{domainName}}"
-msgstr ""
-
-msgid "Další"
 msgstr ""
 
 msgid "Date and time of order creation"
@@ -626,6 +632,9 @@ msgid "E-shop"
 msgstr ""
 
 msgid "E-shop URL address"
+msgstr ""
+
+msgid "E-shop na míru od"
 msgstr ""
 
 msgid "EAN"
@@ -886,6 +895,9 @@ msgstr ""
 msgid "In a particular domain tab it is not possible to adjust the order and plunge of categories. Please go to the category detail or to overview of categories of all domains"
 msgstr ""
 
+msgid "Instagram"
+msgstr ""
+
 msgid "Instalační manuál"
 msgstr ""
 
@@ -895,6 +907,9 @@ msgstr ""
 msgid "Invalid two-factor authentication code."
 msgstr ""
 
+msgid "It is highly recommended to test this setting on devel or CI server before it is applied in production!"
+msgstr ""
+
 msgid "Items"
 msgstr "Položky"
 
@@ -902,12 +917,6 @@ msgid "Je vystaven"
 msgstr ""
 
 msgid "Ještě nebylo implementováno."
-msgstr ""
-
-msgid "Jsme na trhu již 17 let a od vývoje e-shopů na míru<br>jsme se dostali k digitalizaci prodejů největších B2C a B2B hráčů,<br>kterým pomáháme uspět v omnichannel světě."
-msgstr ""
-
-msgid "Jsme stabilní společnost, přední prodejce nábytku v Evropě. Neustále hledáme nové talenty i odborníky se zkušenostmi. Vyberte si z nabídky pracovních příležitostí."
 msgstr ""
 
 msgid "K dispozici do <span>týdne</span>"
@@ -1039,17 +1048,11 @@ msgstr "Více informací"
 msgid "Move"
 msgstr ""
 
-msgid "Možnosti platby"
-msgstr ""
-
 msgid "My account"
 msgstr ""
 
 msgid "My orders"
 msgstr "Mé objednávky"
-
-msgid "Máme pro vás volné místo"
-msgstr ""
 
 msgid "Máte další otázky?"
 msgstr ""
@@ -1070,9 +1073,6 @@ msgid "Můžete si dokoupit"
 msgstr ""
 
 msgid "Na Váš email, Vám byly zaslány infromace pro dokončení registrace."
-msgstr ""
-
-msgid "Na celou obrazovku"
 msgstr ""
 
 msgid "Na jejím naplnění intenzivně pracujeme. Do té doby si můžete prohlédnout jiné kategorie plné doplňků a nábytku."
@@ -1183,9 +1183,6 @@ msgstr ""
 msgid "New store"
 msgstr "Nová prodejna"
 
-msgid "Newsletter"
-msgstr ""
-
 msgid "No"
 msgstr "Ne"
 
@@ -1273,9 +1270,6 @@ msgstr "Počet položek"
 msgid "Number of orders"
 msgstr ""
 
-msgid "Náhledy"
-msgstr ""
-
 msgid "Nákupní košík"
 msgstr ""
 
@@ -1324,13 +1318,7 @@ msgstr ""
 msgid "Obnovte si ho"
 msgstr ""
 
-msgid "Obsah není možné načíst. <br/> Zkuste to prosím později."
-msgstr ""
-
 msgid "Obsah vašeho košíku se změnil"
-msgstr ""
-
-msgid "Ochrana osobních údajů"
 msgstr ""
 
 msgid "Od"
@@ -1600,9 +1588,6 @@ msgstr "Prosím zkontrolujte, zda jste správně zadali množství veškerých p
 msgid "Po odeslání formuláře Vám zašleme e-mail s instrukcemi pro dokončení registrace"
 msgstr ""
 
-msgid "Podle zákona o evidenci tržeb je prodávající povinen vystavit kupujícímu účtenku. Zároveň je povinen zaevidovat přijatou tržbu u správce daně online; v případě technického výpadku pak nejpozději do 48 hodin."
-msgstr ""
-
 msgid "Podobné produkty"
 msgstr ""
 
@@ -1628,9 +1613,6 @@ msgid "Potřebujete poradit?"
 msgstr ""
 
 msgid "Povolit nákup do mínusu"
-msgstr ""
-
-msgid "Pozastavit prezentaci\""
 msgstr ""
 
 msgid "Počet kusů"
@@ -1693,9 +1675,6 @@ msgstr ""
 msgid "Prodejny"
 msgstr ""
 
-msgid "Prodejní cena s DPH"
-msgstr ""
-
 msgid "Product <strong><a href=\"{{ url }}\">{{ product|productDisplayName }}</a></strong> modified"
 msgstr ""
 
@@ -1744,9 +1723,6 @@ msgstr ""
 msgid "Profil"
 msgstr ""
 
-msgid "Prohlédnout nabídky"
-msgstr ""
-
 msgid "Promo code"
 msgstr "Slevový kupón"
 
@@ -1784,9 +1760,6 @@ msgid "Prosím zkontrolujte si, zda jsou všechna data správně vyplněna."
 msgstr ""
 
 msgid "Prosím zkontrolujte zda jsou všechna políčka správně vyplněná."
-msgstr ""
-
-msgid "Předchozí"
 msgstr ""
 
 msgid "Přehled chyb v přenosech"
@@ -1975,9 +1948,6 @@ msgstr ""
 msgid "Sbalit"
 msgstr ""
 
-msgid "Sdílet"
-msgstr ""
-
 msgid "Search [verb]"
 msgstr "Vyhledat"
 
@@ -2042,6 +2012,12 @@ msgid "Shipping selection"
 msgstr "Výběr dopravy"
 
 msgid "Shopsys Commerce Cloud"
+msgstr ""
+
+msgid "Shopsys magazín"
+msgstr ""
+
+msgid "Shopsys s.r.o. Všechna práva vyhrazena."
 msgstr ""
 
 msgid "Shopsys s.r.o.<br> Koksární 1096/10<br> 702 00 Ostrava"
@@ -2120,9 +2096,6 @@ msgid "Special offers"
 msgstr "Akční zboží"
 
 msgid "Společnost je zapsaná v obchodním<br> rejstříku vedeném Městským soudem<br> v Praze, oddíl C, vložka 145176"
-msgstr ""
-
-msgid "Spustit prezentaci"
 msgstr ""
 
 msgid "Status"
@@ -2482,9 +2455,6 @@ msgstr "Sazba DPH"
 msgid "VAT rate (%)"
 msgstr "Výše DPH (%)"
 
-msgid "VISA"
-msgstr ""
-
 msgid "Valid from (date)"
 msgstr "Datum platnosti OD"
 
@@ -2620,12 +2590,6 @@ msgstr ""
 msgid "Vyřazení z prodeje dle domén"
 msgstr ""
 
-msgid "Vyšší cena bez DPH"
-msgstr ""
-
-msgid "Vyšší cena s DPH"
-msgstr ""
-
 msgid "Váš e-mail"
 msgstr ""
 
@@ -2654,9 +2618,6 @@ msgid "Výchozí sklad"
 msgstr ""
 
 msgid "Výprodej"
-msgstr ""
-
-msgid "Všechny akce"
 msgstr ""
 
 msgid "Všechny produkty"
@@ -2716,6 +2677,9 @@ msgstr "Vaše údaje byly úspěšně zaktualizovány"
 msgid "Your discount"
 msgstr "Vaše sleva"
 
+msgid "Youtube"
+msgstr ""
+
 msgid "Z Vašeho košíku bylo z důvodu nedostupnosti odstraněno zbožéí: <strong>{{ name }}</strong>. Prosím zkontrolujte si svojí objednávku."
 msgstr ""
 
@@ -2740,7 +2704,7 @@ msgstr ""
 msgid "Zapomněli jste vaše heslo?"
 msgstr ""
 
-msgid "Zaregistrujte se k odběru newsletteru a získejte slevu 35&nbsp;% na nábytek na Váš první nákup*"
+msgid "Zaregistrujte se k odběru newsletteru<br> a získejte slevu 35&nbsp;% na běžecké vybavení"
 msgstr ""
 
 msgid "Zavřít"
@@ -2777,6 +2741,9 @@ msgid "Zobrazit víc"
 msgstr ""
 
 msgid "Zobrazit více"
+msgstr ""
+
+msgid "Zobrazit všechny"
 msgstr ""
 
 msgid "Zpět"
@@ -2819,9 +2786,6 @@ msgid "Zrušit úpravy"
 msgstr ""
 
 msgid "Zvolená položka menu neexistuje."
-msgstr ""
-
-msgid "Zvětšit"
 msgstr ""
 
 msgid "Zákaznické centrum"
@@ -2926,9 +2890,6 @@ msgstr ""
 msgid "v kategorii (nad výpisem produktů)"
 msgstr ""
 
-msgid "všechny články"
-msgstr ""
-
 msgid "without positioning"
 msgstr ""
 
@@ -2983,7 +2944,7 @@ msgstr ""
 msgid "ČSOB<br> Č.ú. 117983223 / 0300<br> IBAN: CZ54 0300 0000 0001 1798 3223 <br> BIC / SWIFT: CEKOCZPP"
 msgstr ""
 
-msgid "Česká republika"
+msgid "Česko"
 msgstr ""
 
 msgid "Článek blogu"

@@ -304,9 +304,6 @@ msgstr ""
 msgid "Vyplňte prosím URL odkazu"
 msgstr ""
 
-msgid "Vyplňte prosím externí ID můstku"
-msgstr ""
-
 msgid "Vyplňte prosím město"
 msgstr "Vyplňte, prosím, mesto"
 
