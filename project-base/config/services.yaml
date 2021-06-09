@@ -43,11 +43,23 @@ services:
     Shopsys\FrameworkBundle\Model\Administrator\AdministratorDataFactoryInterface:
         alias: App\Model\Administrator\AdministratorDataFactory
 
+    Shopsys\FrameworkBundle\Model\Breadcrumb\ErrorPageBreadcrumbGenerator:
+        alias: App\Model\Breadcrumb\ErrorPageBreadcrumbGenerator
+
+    Shopsys\FrameworkBundle\Model\Breadcrumb\SimpleBreadcrumbGenerator:
+        alias: App\Model\Breadcrumb\SimpleBreadcrumbGenerator
+
+    Shopsys\FrameworkBundle\Model\Cart\Watcher\CartWatcherFacade:
+        alias: App\Model\Cart\Watcher\CartWatcherFacade
+
     Shopsys\FrameworkBundle\Model\Category\CategoryDataFactoryInterface:
         alias: App\Model\Category\CategoryDataFactory
 
     Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserDataFactoryInterface:
         alias: App\Model\Customer\User\CustomerUserDataFactory
+
+    Shopsys\FrameworkBundle\Model\LegalConditions\LegalConditionsFacade:
+        alias: App\Model\LegalConditions\LegalConditionsFacade
 
     Shopsys\FrameworkBundle\Model\Order\OrderDataFactoryInterface:
         alias: App\Model\Order\OrderDataFactory
@@ -82,6 +94,15 @@ services:
 
     Shopsys\FrameworkBundle\Model\Product\Brand\BrandDataFactoryInterface:
         alias: App\Model\Product\Brand\BrandDataFactory
+
+    Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingModeForBrandFacade:
+        alias: App\Model\Product\Listing\ProductListOrderingModeForBrandFacade
+
+    Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingModeForListFacade:
+        alias: App\Model\Product\Listing\ProductListOrderingModeForListFacade
+
+    Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingModeForSearchFacade:
+        alias: App\Model\Product\Listing\ProductListOrderingModeForSearchFacade
 
     App\DataFixtures\Performance\CategoryDataFixture:
         arguments:

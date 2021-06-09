@@ -118,12 +118,33 @@ class IndependentTransportVisibilityCalculationTest extends TransactionFunctiona
         );
     }
 
+    public function testIsNotIndependentlyVisibleWhenDeleted(): void
+    {
+        $enabledOnDomains = [
+            Domain::FIRST_DOMAIN_ID => true,
+            Domain::SECOND_DOMAIN_ID => true,
+        ];
+
+        $transport = $this->getDefaultTransport($enabledOnDomains, false, true);
+
+        $this->em->persist($transport);
+        $this->em->flush();
+
+        $this->assertFalse(
+            $this->independentTransportVisibilityCalculation->isIndependentlyVisible(
+                $transport,
+                Domain::FIRST_DOMAIN_ID
+            )
+        );
+    }
+
     /**
      * @param array $enabledForDomains
      * @param bool $hidden
+     * @param bool $deleted
      * @return \App\Model\Transport\Transport
      */
-    public function getDefaultTransport($enabledForDomains, $hidden)
+    public function getDefaultTransport($enabledForDomains, $hidden, bool $deleted = false)
     {
         $transportData = $this->transportDataFactory->create();
         $names = [];
@@ -135,7 +156,13 @@ class IndependentTransportVisibilityCalculationTest extends TransactionFunctiona
         $transportData->hidden = $hidden;
         $transportData->enabled = $this->getFilteredEnabledForDomains($enabledForDomains);
 
-        return new Transport($transportData);
+        $transport = new Transport($transportData);
+
+        if ($deleted) {
+            $transport->markAsDeleted();
+        }
+
+        return $transport;
     }
 
     /**

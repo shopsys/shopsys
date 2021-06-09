@@ -12,9 +12,13 @@
                         <li class="list-files__item js-file-upload-file" data-id="{{ file.id }}" data-delete-input="#{{ form.filesToDelete.vars.id }}">
                             <div class="list-files__item__in">
                                 <div class="list-files__item__file js-file-upload-preview{% if isRemoved %} list-files__item__in--removed{% endif %}">
-                                    <a href="{{ uploadedFileUrl(file) }}" target="_blank">
+                                    {% if uploadedFileExists(file) %}
+                                        <a href="{{ uploadedFileUrl(file) }}" target="_blank">
+                                            {{ uploadedFilePreview(file) }}
+                                        </a>
+                                    {% else %}
                                         {{ uploadedFilePreview(file) }}
-                                    </a>
+                                    {% endif %}
                                 </div>
                                 {% if multiple %}
                                     <span class="js-file-upload-file-handle list-files__item__move" title="{{ 'Move'|trans }}">

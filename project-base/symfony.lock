@@ -429,6 +429,9 @@
     "object-calisthenics/phpcs-calisthenics-rules": {
         "version": "v3.4.0"
     },
+    "ocramius/proxy-manager": {
+        "version": "2.11.1"
+    },
     "overblog/graphiql-bundle": {
         "version": "0.1",
         "recipe": {
@@ -936,6 +939,9 @@
     "symfony/polyfill-php80": {
         "version": "v1.18.0"
     },
+    "symfony/polyfill-php81": {
+        "version": "v1.23.0"
+    },
     "symfony/polyfill-util": {
         "version": "v1.12.0"
     },
@@ -1154,6 +1160,9 @@
     },
     "vasek-purchart/console-errors-bundle": {
         "version": "1.0.1"
+    },
+    "webimpress/safe-writer": {
+        "version": "2.2.0"
     },
     "webmozart/assert": {
         "version": "1.5.0"

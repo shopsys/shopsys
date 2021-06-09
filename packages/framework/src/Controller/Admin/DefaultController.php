@@ -25,6 +25,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class DefaultController extends AdminBaseController
 {
     protected const PREVIOUS_DAYS_TO_LOAD_STATISTICS_FOR = 7;
+    protected const HOUR_IN_SECONDS = 60 * 60;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Statistics\StatisticsFacade
@@ -293,10 +294,7 @@ class DefaultController extends AdminBaseController
                 'name' => $cronConfig->getReadableName() ?? $cronModule->getServiceId(),
                 'lastStartedAt' => $cronModule->getLastStartedAt(),
                 'lastFinishedAt' => $cronModule->getLastFinishedAt(),
-                'lastDuration' => is_int($cronModule->getLastDuration()) ? date(
-                    'i:s',
-                    $cronModule->getLastDuration()
-                ) : '',
+                'lastDuration' => $this->getFormattedDuration($cronModule->getLastDuration()),
                 'status' => $cronModule->getStatus(),
                 'enabled' => $cronModule->isEnabled(),
                 'readableFrequency' => $cronConfig->getReadableFrequency(),
@@ -372,5 +370,27 @@ class DefaultController extends AdminBaseController
         );
 
         return $this->redirectToRoute('admin_default_dashboard');
+    }
+
+    /**
+     * @param int|null $durationInSeconds
+     * @return string
+     */
+    protected function getFormattedDuration(?int $durationInSeconds): string
+    {
+        if ($durationInSeconds === null) {
+            return '';
+        }
+
+        $formattedHours = '';
+
+        if ($durationInSeconds >= static::HOUR_IN_SECONDS) {
+            $hours = (int)floor($durationInSeconds / static::HOUR_IN_SECONDS);
+            $formattedHours .= $hours . ':';
+
+            $durationInSeconds -= $hours * static::HOUR_IN_SECONDS;
+        }
+
+        return $formattedHours . date('i:s', $durationInSeconds);
     }
 }

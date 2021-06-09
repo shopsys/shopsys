@@ -123,6 +123,7 @@ services:
             - '%kernel.cache_dir%/metadata'
 
     shopsys.framework.cache_driver.annotations_cache:
+        deprecated: The "%service_id%" service is deprecated since shopsys/framework 9.1.2 and will be removed in 10.0.0.
         class: Doctrine\Common\Cache\PhpFileCache
         arguments:
             - '%kernel.cache_dir%/annotations'

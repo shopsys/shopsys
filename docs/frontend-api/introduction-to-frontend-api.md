@@ -1,6 +1,6 @@
 # Introduction to Frontend API
 
-Shopsys Framework Frontend API is an interface to the application that is used for integration with external store frontend, for example, JS storefront od mobile app.
+Shopsys Framework Frontend API is an interface to the application that is used for integration with external store frontend, for example, JS storefront or a mobile app.
 We use [GraphQL](https://graphql.org) (implemented using [overblog/GraphQLBundle](https://github.com/overblog/GraphQLBundle)).
 
 GraphQL is a query language for APIs and provides an understandable description of the data in the API,
@@ -27,7 +27,7 @@ parmeters:
 
 If you want to disable the frontend api for a special domain, delete its id from the `shopsys.frontend_api.domains` array.
 
-The command `./phing frontend-api-enable` create pair of private and public keys for signing access tokens.
+The command `./phing frontend-api-enable` creates pair of private and public keys for signing access tokens.
 If these keys are lost, you can regenerate them with the command `./phing frontend-api-generate-new-keys`.
 Note that when you regenerate the keys, you invalidate all issued access and refresh tokens.
 You can read more about tokens in part [authentication](./authentication.md).
@@ -164,7 +164,7 @@ Query:
 Resolvers are normal Symfony services.
 They only have to implement the `Overblog\GraphQLBundle\Definition\Resolver\ResolverInterface` to be recognized as an available resolver for the GraphQL.
 
-It is several ways how to define resolvers in definition YAML files.
+There are several ways how to define resolvers in definition YAML files.
 We use `Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface` to keep definitions simple and easy to read.
 
 `AliasedInterface` describe one method `getAliases` that should return array of `"method name" => "name used in definition"` pairs.
@@ -198,7 +198,7 @@ This can happen when we want to use getter for some entity attribute and such ge
 
 For this transformation we can use a `ResolverMap` object .
 `ResolverMap` is a Symfony service that implements `Overblog\GraphQLBundle\Resolver\ResolverMapInterface`.
-ResolverMap can be created as a child of `Overblog\GraphQLBundle\Resolver\ResolverMap` class too and overload the `map` method.
+ResolverMap can be created as a child of `Overblog\GraphQLBundle\Resolver\ResolverMap` class too and override the `map` method.
 
 Example of `ResolverMap`:
 
@@ -237,7 +237,7 @@ services:
             - { name: overblog_graphql.resolver_map, schema: default }
 ```
 
-you can read more info about `ResolveMap` in [documentation](https://github.com/overblog/GraphQLBundle/blob/master/docs/definitions/resolver-map.md).
+You can read more info about `ResolveMap` in [documentation](https://github.com/overblog/GraphQLBundle/blob/master/docs/definitions/resolver-map.md).
 
 #### ProductResolverMap
 Data for products can be obtained in two ways – from the Elasticsearch (for example single product and list of products), or from the database (for example promoted products)

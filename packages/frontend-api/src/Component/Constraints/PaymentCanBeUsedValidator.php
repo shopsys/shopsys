@@ -70,7 +70,7 @@ class PaymentCanBeUsedValidator extends ConstraintValidator
 
         try {
             $paymentEntity = $this->paymentFacade->getByUuid($uuid);
-            if (!$paymentEntity->isEnabled($this->domain->getId())) {
+            if ($paymentEntity->isDeleted() || !$paymentEntity->isEnabled($this->domain->getId())) {
                 throw new PaymentNotFoundException('Payment is disabled on domain');
             }
         } catch (PaymentNotFoundException $exception) {

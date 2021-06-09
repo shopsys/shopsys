@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Payment;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Query\Expr\Join;
 use Shopsys\FrameworkBundle\Model\Payment\Exception\PaymentNotFoundException;
 use Shopsys\FrameworkBundle\Model\Transport\Transport;
 
@@ -106,6 +107,31 @@ class PaymentRepository
     public function getOneByUuid(string $uuid): Payment
     {
         $payment = $this->getPaymentRepository()->findOneBy(['uuid' => $uuid]);
+
+        if ($payment === null) {
+            throw new PaymentNotFoundException('Payment with UUID ' . $uuid . ' does not exist.');
+        }
+
+        return $payment;
+    }
+
+    /**
+     * @param string $uuid
+     * @param int $domainId
+     * @return \Shopsys\FrameworkBundle\Model\Payment\Payment
+     */
+    public function getEnabledOnDomainByUuid(string $uuid, int $domainId): Payment
+    {
+        $queryBuilder = $this->getPaymentRepository()->createQueryBuilder('p')
+            ->join(PaymentDomain::class, 'pd', Join::WITH, 'p.id = pd.payment AND pd.domainId = :domainId')
+            ->setParameter('domainId', $domainId)
+            ->where('p.uuid = :uuid')
+            ->setParameter('uuid', $uuid)
+            ->andWhere('p.deleted = false')
+            ->andWhere('pd.enabled = true')
+            ->andWhere('p.hidden = false');
+
+        $payment = $queryBuilder->getQuery()->getOneOrNullResult();
 
         if ($payment === null) {
             throw new PaymentNotFoundException('Payment with UUID ' . $uuid . ' does not exist.');

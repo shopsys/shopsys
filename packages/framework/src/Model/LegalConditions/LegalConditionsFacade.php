@@ -7,6 +7,9 @@ use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\FrameworkBundle\Model\Article\Article;
 use Shopsys\FrameworkBundle\Model\Article\ArticleFacade;
 
+/**
+ * @deprecated Class will be changed to abstract class in next major version. Extend this class to your project and implement corresponding methods instead.
+ */
 class LegalConditionsFacade
 {
     /**
@@ -34,6 +37,16 @@ class LegalConditionsFacade
         Setting $setting,
         Domain $domain
     ) {
+        if (static::class === self::class) {
+            trigger_error(
+                sprintf(
+                    'Class "%s" will be changed to abstract class in next major version. Extend this class to your project and implement corresponding methods instead.',
+                    self::class
+                ),
+                E_USER_DEPRECATED
+            );
+        }
+
         $this->articleFacade = $articleFacade;
         $this->setting = $setting;
         $this->domain = $domain;
@@ -58,10 +71,19 @@ class LegalConditionsFacade
     }
 
     /**
+     * @deprecated Method will be changed to abstract in next major version. Extend this class to your project and implement method by yourself instead.
      * @return string
      */
     public function getTermsAndConditionsDownloadFilename()
     {
+        trigger_error(
+            sprintf(
+                'Method "%s" will be changed to abstract in next major version. Extend this class to your project and implement method by yourself instead.',
+                __METHOD__
+            ),
+            E_USER_DEPRECATED
+        );
+
         return t('Terms-and-conditions.html');
     }
 

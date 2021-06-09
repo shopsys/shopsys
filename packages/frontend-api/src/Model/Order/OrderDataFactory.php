@@ -132,8 +132,15 @@ class OrderDataFactory
     {
         $cloneOrderData = clone $orderData;
 
-        $cloneOrderData->payment = $this->paymentFacade->getByUuid($input['payment']['uuid']);
-        $cloneOrderData->transport = $this->transportFacade->getByUuid($input['transport']['uuid']);
+        $cloneOrderData->payment = $this->paymentFacade->getEnabledOnDomainByUuid(
+            $input['payment']['uuid'],
+            $this->domain->getId()
+        );
+
+        $cloneOrderData->transport = $this->transportFacade->getEnabledOnDomainByUuid(
+            $input['transport']['uuid'],
+            $this->domain->getId()
+        );
 
         $cloneOrderData->currency = $this->currencyFacade->getDomainDefaultCurrencyByDomainId($this->domain->getId());
 

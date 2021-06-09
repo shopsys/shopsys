@@ -71,7 +71,7 @@ class StatisticsRepository
         $query = $this->em->createNativeQuery(
             'SELECT DATE(o.created_at) AS date, COUNT(o.created_at) AS count
             FROM orders o
-            WHERE o.created_at BETWEEN :start_date AND :end_date AND o.status_id != :canceled
+            WHERE o.created_at BETWEEN :start_date AND :end_date AND o.status_id != :canceled AND o.deleted = FALSE
             GROUP BY date
             ORDER BY date ASC',
             $resultSetMapping
@@ -125,7 +125,7 @@ class StatisticsRepository
         $query = $this->em->createNativeQuery(
             'SELECT COUNT(o.created_at) AS count
             FROM orders o
-            WHERE o.created_at BETWEEN :start_date AND :end_date AND o.status_id != :canceled',
+            WHERE o.created_at BETWEEN :start_date AND :end_date AND o.status_id != :canceled AND o.deleted = FALSE',
             $resultSetMapping
         );
 
@@ -149,7 +149,7 @@ class StatisticsRepository
         $query = $this->em->createNativeQuery(
             'SELECT SUM(o.total_price_with_vat * c.exchange_rate) AS total_price
             FROM orders o, currencies c
-            WHERE o.created_at BETWEEN :start_date AND :end_date AND o.status_id != :canceled
+            WHERE o.created_at BETWEEN :start_date AND :end_date AND o.status_id != :canceled AND o.deleted = FALSE
             AND o.currency_id = c.id',
             $resultSetMapping
         );

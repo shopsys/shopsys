@@ -105,7 +105,7 @@ class OrderController extends FrontBaseController
     private $session;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\LegalConditions\LegalConditionsFacade
+     * @var \App\Model\LegalConditions\LegalConditionsFacade
      */
     private $legalConditionsFacade;
 
@@ -129,7 +129,7 @@ class OrderController extends FrontBaseController
      * @param \Symfony\Component\HttpFoundation\Session\SessionInterface $session
      * @param \Shopsys\FrameworkBundle\Model\Order\Watcher\TransportAndPaymentWatcher $transportAndPaymentWatcher
      * @param \Shopsys\FrameworkBundle\Model\Order\Mail\OrderMailFacade $orderMailFacade
-     * @param \Shopsys\FrameworkBundle\Model\LegalConditions\LegalConditionsFacade $legalConditionsFacade
+     * @param \App\Model\LegalConditions\LegalConditionsFacade $legalConditionsFacade
      * @param \Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade $newsletterFacade
      */
     public function __construct(

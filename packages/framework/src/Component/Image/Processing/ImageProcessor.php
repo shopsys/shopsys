@@ -103,6 +103,8 @@ class ImageProcessor
         $this->filesystem->delete($filepath);
         $this->filesystem->write($newFilepath, $data);
 
+        $image->destroy();
+
         return $filename . '.' . $extension;
     }
 

@@ -176,3 +176,6 @@ parameters:
         PHP_CodeSniffer\Standards\Generic\Sniffs\CodeAnalysis\EmptyStatementSniff.DetectedCatch: ~
 
         PHP_CodeSniffer\Standards\PSR2\Sniffs\Methods\FunctionCallSignatureSniff.Indent: ~
+
+        SlevomatCodingStandard\Sniffs\ControlStructures\DisallowEmptySniff:
+            - '*/src/Yaml/CheckerServiceParametersShifter.php'
