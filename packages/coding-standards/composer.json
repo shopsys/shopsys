@@ -27,7 +27,8 @@
     },
     "conflict": {
         "symplify/better-phpdoc-parser": "5.4.14|5.4.15",
-        "friendsofphp/php-cs-fixer": "2.19.0"
+        "friendsofphp/php-cs-fixer": "2.19.0",
+        "symfony/dependency-injection": ">=4.4.19 <5.0"
     },
     "autoload": {
         "psr-4": {

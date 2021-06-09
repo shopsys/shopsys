@@ -33,6 +33,6 @@
         "jakub-onderka/php-parallel-lint": "^0.9"
     },
     "conflict": {
-        "symfony/dependency-injection": "3.4.15|3.4.16"
+        "symfony/dependency-injection": "3.4.15|3.4.16|>=4.4.19 <5.0"
     }
 }
