@@ -1,0 +1,4 @@
+includes:
+    - packages/framework/phpstan.neon
+parameters:
+    frameworkRootDirectory: '%currentWorkingDirectory%/packages/framework'

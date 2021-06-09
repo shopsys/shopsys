@@ -1,51 +1,56 @@
+parametersSchema:
+    frameworkRootDirectory: string()
+
 parameters:
 
     treatPhpDocTypesAsCertain: false
+    
+    frameworkRootDirectory: %currentWorkingDirectory%
 
     ignoreErrors:
         # Don't forget to add these rules to phpstan.neon in monorepo
         # Ignoring absence of \App\Kernel, which should be provided by project implementation
         -
             message: '~Instantiated class App\\Kernel not found~'
-            path: *
+            path: %frameworkRootDirectory%/*
         -
             message: '#Call to method .+\(\) on an unknown class App\\Kernel\.#'
-            path: %currentWorkingDirectory%/src/Component/Error/ErrorPagesFacade.php
+            path: %frameworkRootDirectory%/src/Component/Error/ErrorPagesFacade.php
         -
             message: '#Method Doctrine\\Persistence\\ObjectManager::flush\(\) invoked with 1 parameter, 0 required\.#'
-            path: *
+            path: %frameworkRootDirectory%/*
         -
             message: '#Symfony\\Component\\Config\\Definition\\Builder\\NodeDefinition::children\(\)#'
-            path: %currentWorkingDirectory%/src/Component/Domain/Config/DomainsUrlsConfigDefinition.php
+            path: %frameworkRootDirectory%/src/Component/Domain/Config/DomainsUrlsConfigDefinition.php
         -
             message: '#Property Doctrine\\ORM\\Mapping\\ClassMetadataInfo::\$discriminatorColumn \(array\) does not accept null\.#'
-            path: %currentWorkingDirectory%/src/Component/EntityExtension/EntityExtensionParentMetadataCleanerEventSubscriber.php
+            path: %frameworkRootDirectory%/src/Component/EntityExtension/EntityExtensionParentMetadataCleanerEventSubscriber.php
         -
             message: '#Argument of an invalid type Symfony\\Component\\Validator\\Constraint supplied for foreach, only iterables are supported\.#'
-            path: %currentWorkingDirectory%/src/Form/JsFormValidatorFactory.php
+            path: %frameworkRootDirectory%/src/Form/JsFormValidatorFactory.php
         -
             message: '#Property Shopsys\\FrameworkBundle\\Model\\Order\\Order::\$transport \(Shopsys\\FrameworkBundle\\Model\\Transport\\Transport\) does not accept null\.#'
-            path: %currentWorkingDirectory%/src/Model/Order/Order.php
+            path: %frameworkRootDirectory%/src/Model/Order/Order.php
         -
             message: '#Property Shopsys\\FrameworkBundle\\Model\\Order\\Order::\$payment \(Shopsys\\FrameworkBundle\\Model\\Payment\\Payment\) does not accept null\.#'
-            path: %currentWorkingDirectory%/src/Model/Order/Order.php
+            path: %frameworkRootDirectory%/src/Model/Order/Order.php
         -
             message: '#^Method Symfony\\Contracts\\EventDispatcher\\EventDispatcherInterface::dispatch\(\) invoked with 2 parameters, 1 required\.$#'
-            path: %currentWorkingDirectory%/src/*
+            path: %frameworkRootDirectory%/src/*
         -
             message: '#Call to an undefined method \(Shopsys\\FrontendApiBundle\\Model\\User\\FrontendApiUser&Stringable\)|\(Shopsys\\FrontendApiBundle\\Model\\User\\FrontendApiUser&Symfony\\Component\\Security\\Core\\User\\UserInterface\)::getUuid\(\)\.#'
-            path: %currentWorkingDirectory%/src/Model/Customer/User/CurrentCustomerUser.php*
+            path: %frameworkRootDirectory%/src/Model/Customer/User/CurrentCustomerUser.php*
         -
             message: '#^Unsafe usage of new static\(\).#'
-            path: %currentWorkingDirectory%/src/*
+            path: %frameworkRootDirectory%/src/*
         -
             message: '#^Parameter \#2 \$default of method Symfony\\Component\\HttpFoundation\\InputBag::get\(\) expects string\|null, array given\.$#'
-            path: %currentWorkingDirectory%/src/Component/Grid/Grid.php
+            path: %frameworkRootDirectory%/src/Component/Grid/Grid.php
     excludes_analyse:
         # Exclude "Source" folder dedicated for testing functionality connected to "shopsys:extended-classes:annotations" command
-        - %currentWorkingDirectory%/tests/Unit/Component/ClassExtension/Source/*
+        - %frameworkRootDirectory%/tests/Unit/Component/ClassExtension/Source/*
 includes:
-    - vendor/phpstan/phpstan-doctrine/extension.neon
-    - vendor/phpstan/phpstan-phpunit/extension.neon
-    - vendor/phpstan/phpstan-symfony/extension.neon
-    - vendor/phpstan/phpstan-symfony/rules.neon
+    - %currentWorkingDirectory%/vendor/phpstan/phpstan-doctrine/extension.neon
+    - %currentWorkingDirectory%/vendor/phpstan/phpstan-phpunit/extension.neon
+    - %currentWorkingDirectory%/vendor/phpstan/phpstan-symfony/extension.neon
+    - %currentWorkingDirectory%/vendor/phpstan/phpstan-symfony/rules.neon

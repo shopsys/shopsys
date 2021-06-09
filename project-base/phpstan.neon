@@ -1,46 +1,50 @@
+parametersSchema:
+    projectRootDirectory: string()
+
 parameters:
 
     treatPhpDocTypesAsCertain: false
     symfony:
-        container_xml_path: '%currentWorkingDirectory%/var/cache/dev/srcApp_KernelDevDebugContainer.xml'
+        container_xml_path: '%projectRootDirectory%/var/cache/dev/srcApp_KernelDevDebugContainer.xml'
         constant_hassers: false
+    projectRootDirectory: %currentWorkingDirectory%
 
     ignoreErrors:
         -
             # We need to have undefined variable for testing purposes
             message: '#^Undefined variable: \$undefined$#'
-            path: %currentWorkingDirectory%/src/Controller/Test/ErrorHandlerController.php
+            path: %projectRootDirectory%/src/Controller/Test/ErrorHandlerController.php
         -
             # We need to have undefined variable for testing purposes
             message: '#^Expression "\$undefined\[42\]" on a separate line does not do anything\.$#'
-            path: %currentWorkingDirectory%/src/Controller/Test/ErrorHandlerController.php
+            path: %projectRootDirectory%/src/Controller/Test/ErrorHandlerController.php
         -
             # Ignore annotations in generated code
             message: '#^PHPDoc tag @(param|return) has invalid value (.|\n)+ expected type at offset \d+$#'
-            path: %currentWorkingDirectory%/tests/App/Test/Codeception/_generated/AcceptanceTesterActions.php
+            path: %projectRootDirectory%/tests/App/Test/Codeception/_generated/AcceptanceTesterActions.php
         -
             # Ignore annotations in generated code
             message: '#^PHPDoc tag @throws with type .+ is not subtype of Throwable$#'
-            path: %currentWorkingDirectory%/tests/App/Test/Codeception/_generated/AcceptanceTesterActions.php
+            path: %projectRootDirectory%/tests/App/Test/Codeception/_generated/AcceptanceTesterActions.php
         -
             # phpstan-symfony extension cannot work right with symfony test container at the moment https://github.com/phpstan/phpstan-symfony/issues/27
             message: '#^Service "[^"]+" is private.$#'
-            path: %currentWorkingDirectory%/tests/*
+            path: %projectRootDirectory%/tests/*
         -
             message: '#^Service "test.service_container" is not registered in the container.$#'
-            path: %currentWorkingDirectory%/tests/*
+            path: %projectRootDirectory%/tests/*
         -
             message: '#^Service "snc_redis.test" is not registered in the container.$#'
-            path: %currentWorkingDirectory%/tests/App/Functional/Component/Redis/Redis*FacadeTest.php
+            path: %projectRootDirectory%/tests/App/Functional/Component/Redis/Redis*FacadeTest.php
         -
             message: '#^Method Doctrine\\Persistence\\ObjectManager::flush\(\) invoked with 1 parameter, 0 required\.$#'
             path: *
         -
             # Annotations in Codeception are not well describing
             message: '#^Parameter \#(\d+) (\$cssOrXPath|\$cssOrXPathOrRegex|\$field|\$selector|\$element) of method (Tests\\(.*)\\Codeception\\(.*)|Codeception\\Module\\WebDriver::moveMouseOver\(\)) expects (.*)#'
-            path: %currentWorkingDirectory%/tests/App/*
+            path: %projectRootDirectory%/tests/App/*
 includes:
-    - vendor/phpstan/phpstan-doctrine/extension.neon
-    - vendor/phpstan/phpstan-phpunit/extension.neon
-    - vendor/phpstan/phpstan-symfony/extension.neon
-    - vendor/phpstan/phpstan-symfony/rules.neon
+    - %currentWorkingDirectory%/vendor/phpstan/phpstan-doctrine/extension.neon
+    - %currentWorkingDirectory%/vendor/phpstan/phpstan-phpunit/extension.neon
+    - %currentWorkingDirectory%/vendor/phpstan/phpstan-symfony/extension.neon
+    - %currentWorkingDirectory%/vendor/phpstan/phpstan-symfony/rules.neon

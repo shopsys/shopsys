@@ -1,0 +1,6 @@
+includes:
+    - project-base/phpstan.neon
+parameters:
+    symfony:
+        container_xml_path: '%currentWorkingDirectory%/project-base/var/cache/dev/srcApp_KernelDevDebugContainer.xml'
+    projectRootDirectory: '%currentWorkingDirectory%/project-base'

@@ -274,6 +274,24 @@
             <arg value="--memory-limit=${phpstan.memory-limit}"/>
             <arg value="-vvv"/>
         </exec>
+        <exec executable="${path.phpstan.executable}" logoutput="true" passthru="true" checkreturn="true">
+            <arg value="analyze"/>
+            <arg value="-c"/>
+            <arg path="./phpstan-framework.neon"/>
+            <arg path="${path.packages}/framework/src"/>
+            <arg value="--level=${phpstan.level}"/>
+            <arg value="--memory-limit=${phpstan.memory-limit}"/>
+            <arg value="-vvv"/>
+        </exec>
+        <exec executable="${path.phpstan.executable}" logoutput="true" passthru="true" checkreturn="true">
+            <arg value="analyze"/>
+            <arg value="-c"/>
+            <arg path="./phpstan-project-base.neon"/>
+            <arg path="${path.root}/src"/>
+            <arg value="--level=${phpstan.level}"/>
+            <arg value="--memory-limit=${phpstan.memory-limit}"/>
+            <arg value="-vvv"/>
+        </exec>
     </target>
 
     <target name="project-base-vendor-check" description="Check there exists no vendor directory in project-base/ as that would break the autoloader" hidden="true">
