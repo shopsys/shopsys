@@ -38,6 +38,18 @@ class BrandRepository extends BaseBrandRepository
     }
 
     /**
+     * @param string $searchText
+     * @return array
+     */
+    public function getResultsForSearch(string $searchText): array
+    {
+        $queryBuilder = $this->getBySearchTextQueryBuilder($searchText);
+        $queryBuilder->orderBy('b.name');
+
+        return $queryBuilder->getQuery()->getResult();
+    }
+
+    /**
      * @param string|null $searchText
      * @return \Doctrine\ORM\QueryBuilder
      */

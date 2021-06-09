@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Model\Blog\Article;
 
 use App\Component\Image\ImageFacade;
+use App\Model\Blog\Article\Elasticsearch\BlogArticleExportScheduler;
 use App\Model\Blog\BlogVisibilityRecalculationScheduler;
 use App\Model\Blog\Category\BlogCategory;
 use App\Twig\Cache\TwigCacheFacade;
@@ -63,6 +64,11 @@ class BlogArticleFacade
     private $domain;
 
     /**
+     * @var \App\Model\Blog\Article\Elasticsearch\BlogArticleExportScheduler
+     */
+    private BlogArticleExportScheduler $blogArticleExportScheduler;
+
+    /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \App\Model\Blog\Article\BlogArticleRepository $blogArticleRepository
      * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
@@ -72,6 +78,7 @@ class BlogArticleFacade
      * @param \App\Model\Blog\BlogVisibilityRecalculationScheduler $blogVisibilityRecalculationScheduler
      * @param \App\Twig\Cache\TwigCacheFacade $twigCacheFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     * @param \App\Model\Blog\Article\Elasticsearch\BlogArticleExportScheduler $blogArticleExportScheduler
      */
     public function __construct(
         EntityManagerInterface $em,
@@ -82,7 +89,8 @@ class BlogArticleFacade
         ImageFacade $imageFacade,
         BlogVisibilityRecalculationScheduler $blogVisibilityRecalculationScheduler,
         TwigCacheFacade $twigCacheFacade,
-        Domain $domain
+        Domain $domain,
+        BlogArticleExportScheduler $blogArticleExportScheduler
     ) {
         $this->em = $em;
         $this->blogArticleRepository = $blogArticleRepository;
@@ -93,6 +101,7 @@ class BlogArticleFacade
         $this->blogVisibilityRecalculationScheduler = $blogVisibilityRecalculationScheduler;
         $this->twigCacheFacade = $twigCacheFacade;
         $this->domain = $domain;
+        $this->blogArticleExportScheduler = $blogArticleExportScheduler;
     }
 
     /**
@@ -158,6 +167,8 @@ class BlogArticleFacade
             $this->twigCacheFacade->invalidateByKey($this->twigCacheFacade::SLIGHTLY_CHANGING_PARTS_ON_HOMEPAGE, $domainId);
         }
 
+        $this->blogArticleExportScheduler->scheduleRowIdForImmediateExport($blogArticle->getId());
+
         return $blogArticle;
     }
 
@@ -186,6 +197,8 @@ class BlogArticleFacade
             $this->twigCacheFacade->invalidateByKey($this->twigCacheFacade::SLIGHTLY_CHANGING_PARTS_ON_HOMEPAGE, $domainId);
         }
 
+        $this->blogArticleExportScheduler->scheduleRowIdForImmediateExport($blogArticle->getId());
+
         return $blogArticle;
     }
 
@@ -204,6 +217,8 @@ class BlogArticleFacade
         foreach ($this->domain->getAllIds() as $domainId) {
             $this->twigCacheFacade->invalidateByKey($this->twigCacheFacade::SLIGHTLY_CHANGING_PARTS_ON_HOMEPAGE, $domainId);
         }
+
+        $this->blogArticleExportScheduler->scheduleRowIdForImmediateExport($blogArticleId);
     }
 
     /**

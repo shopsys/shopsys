@@ -8,6 +8,7 @@ use App\Component\Router\CategorySeoMix\CategorySeoMixUrlGenerator;
 use App\Component\SeoHelper\SeoHelper;
 use App\Component\UploadedFile\UploadedFileFacade;
 use App\Form\Front\Product\ProductFilterFormType;
+use App\Model\Article\CombinedArticleElasticsearchFacade;
 use App\Model\Category\Category;
 use App\Model\Category\CategoryFacade;
 use App\Model\Category\CategoryParameterFacade;
@@ -52,6 +53,7 @@ class ProductController extends FrontBaseController
     public const SIMILAR_PRODUCTS_PER_PAGE = 8;
     private const PARAMETER_VALUE_ENTITY_NAME = 'parameterValue';
     public const SALE_PRODUCTS_PER_PAGE = 8;
+    private const ARTICLE_SEARCH_LIMIT = 50;
 
     /**
      * @var \App\Model\Product\Filter\Elasticsearch\ProductFilterConfigFactory
@@ -164,6 +166,11 @@ class ProductController extends FrontBaseController
     protected ProductDetailViewFacadeInterface $productDetailViewFacade;
 
     /**
+     * @var \App\Model\Article\CombinedArticleElasticsearchFacade
+     */
+    private CombinedArticleElasticsearchFacade $combinedArticleElasticsearchFacade;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Twig\RequestExtension $requestExtension
      * @param \App\Model\Category\CategoryFacade $categoryFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
@@ -186,6 +193,7 @@ class ProductController extends FrontBaseController
      * @param \App\Model\Gtm\GtmJsPushFacade $gtmJsPushFacade
      * @param \App\Model\Gtm\GtmContainer $gtmContainer
      * @param \Shopsys\ReadModelBundle\Product\Detail\ProductDetailViewFacadeInterface $productDetailViewFacade
+     * @param \App\Model\Article\CombinedArticleElasticsearchFacade $combinedArticleElasticsearchFacade
      */
     public function __construct(
         RequestExtension $requestExtension,
@@ -209,7 +217,8 @@ class ProductController extends FrontBaseController
         GtmFacade $gtmFacade,
         GtmJsPushFacade $gtmJsPushFacade,
         GtmContainer $gtmContainer,
-        ProductDetailViewFacadeInterface $productDetailViewFacade
+        ProductDetailViewFacadeInterface $productDetailViewFacade,
+        CombinedArticleElasticsearchFacade $combinedArticleElasticsearchFacade
     ) {
         $this->requestExtension = $requestExtension;
         $this->domain = $domain;
@@ -233,6 +242,7 @@ class ProductController extends FrontBaseController
         $this->gtmJsPushFacade = $gtmJsPushFacade;
         $this->gtmContainer = $gtmContainer;
         $this->productDetailViewFacade = $productDetailViewFacade;
+        $this->combinedArticleElasticsearchFacade = $combinedArticleElasticsearchFacade;
     }
 
     /**
@@ -560,6 +570,12 @@ class ProductController extends FrontBaseController
 
         if (!$request->isXmlHttpRequest()) {
             $viewParameters['foundCategories'] = $this->searchCategories($searchText);
+            $viewParameters['foundBrands'] = $this->brandFacade->getBrandsForSearchText($searchText);
+            $viewParameters['foundCombinedArticles'] = $this->combinedArticleElasticsearchFacade->getArticlesBySearchText(
+                $searchText,
+                self::ARTICLE_SEARCH_LIMIT
+            );
+
             return $this->render('Front/Content/Product/search.html.twig', $viewParameters);
         }
 

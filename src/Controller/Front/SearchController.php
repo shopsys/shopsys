@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller\Front;
 
+use App\Model\Article\CombinedArticleElasticsearchFacade;
 use App\Model\Product\Brand\BrandFacade;
 use App\Model\Product\Filter\ProductFilterData;
 use App\Model\Product\Listed\ListedProductViewElasticFacade;
@@ -17,6 +18,7 @@ class SearchController extends FrontBaseController
     protected const AUTOCOMPLETE_BRAND_LIMIT = 3;
     protected const AUTOCOMPLETE_CATEGORY_LIMIT = 3;
     protected const AUTOCOMPLETE_PRODUCT_LIMIT = 5;
+    protected const AUTOCOMPLETE_ARTICLE_LIMIT = 3;
 
     /**
      * @var \App\Model\Category\CategoryFacade
@@ -34,18 +36,26 @@ class SearchController extends FrontBaseController
     private $brandFacade;
 
     /**
+     * @var \App\Model\Article\CombinedArticleElasticsearchFacade
+     */
+    private CombinedArticleElasticsearchFacade $elasticsearchArticleFacade;
+
+    /**
      * @param \App\Model\Category\CategoryFacade $categoryFacade
      * @param \App\Model\Product\Listed\ListedProductViewElasticFacade $listedProductViewFacade
      * @param \App\Model\Product\Brand\BrandFacade $brandFacade
+     * @param \App\Model\Article\CombinedArticleElasticsearchFacade $elasticsearchArticleFacade
      */
     public function __construct(
         CategoryFacade $categoryFacade,
         ListedProductViewElasticFacade $listedProductViewFacade,
-        BrandFacade $brandFacade
+        BrandFacade $brandFacade,
+        CombinedArticleElasticsearchFacade $elasticsearchArticleFacade
     ) {
         $this->categoryFacade = $categoryFacade;
         $this->listedProductViewFacade = $listedProductViewFacade;
         $this->brandFacade = $brandFacade;
+        $this->elasticsearchArticleFacade = $elasticsearchArticleFacade;
     }
 
     /**
@@ -76,11 +86,17 @@ class SearchController extends FrontBaseController
             self::AUTOCOMPLETE_PRODUCT_LIMIT
         );
 
+        $articlesPaginationResult = $this->elasticsearchArticleFacade->getSearchAutocompleteArticles(
+            $searchText,
+            self::AUTOCOMPLETE_ARTICLE_LIMIT
+        );
+
         return $this->render('Front/Content/Search/autocomplete.html.twig', [
             'searchUrl' => $searchUrl,
             'brandsPaginationResult' => $brandsPaginationResult,
             'categoriesPaginationResult' => $categoriesPaginationResult,
             'productsPaginationResult' => $productsPaginationResult,
+            'articlesPaginationResult' => $articlesPaginationResult,
         ]);
     }
 

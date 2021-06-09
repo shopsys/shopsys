@@ -38,6 +38,15 @@ class BrandFacade extends BaseBrandFacade
     }
 
     /**
+     * @param string $searchText
+     * @return array
+     */
+    public function getBrandsForSearchText(string $searchText): array
+    {
+        return $this->brandRepository->getResultsForSearch($searchText);
+    }
+
+    /**
      * @param int[] $brandsIds
      * @return \App\Model\Product\Brand\Brand[]
      */
