@@ -39,7 +39,6 @@ export default class ResetCustomerpassword {
             content: $html,
             buttonContinue: true,
             cssClass: 'window-popup--wide window-popup--reset-password',
-            cssClassContinue: 'window-popup__actions__btn--continue window-popup__actions__btn--continue--outline',
             textContinue: Translator.trans('Potvrdit')
         });
     }

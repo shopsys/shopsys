@@ -184,31 +184,15 @@
 
         .window-popup__actions--multiple-buttons {
             padding-top: 20px;
-            justify-content: flex-end;
+            justify-content: space-between;
 
             @media @query-mobile {
                 padding: 1rem 1rem 0;
             }
         }
 
-        .window-popup__actions__btn--continue {
-            padding: 10px 20px;
-
-            background-color: @color-f;
-            border: 2px solid @color-add;
-            border-radius: @radius;
-
-            .svg {
-                display: none;
-            }
-        }
-
         .window-popup__actions__btn--cancel {
             margin-right: 30px;
-
-            .svg {
-                display: none;
-            }
         }
     }
 
@@ -339,75 +323,9 @@
                 justify-content: flex-start;
             }
 
-            .svg {
-                position: relative;
-                top: 0;
-                vertical-align: middle;
-
-                font-size: 18px;
-            }
-
             &--cancel {
-                padding-top: 18px;
-                background-color: transparent;
-
-                @media @query-sm {
-                    padding: 0;
-                }
-
-                &:hover {
-                    background-color: transparent;
-                    color: @color-add;
-                }
-
-                .svg {
-                    margin-right: 4px;
-                    transform: rotate(180deg);
-                }
-
                 @media @query-sm {
                     order: -1;
-                }
-            }
-
-            &--continue {
-                padding: 17px 35px 15px 35px;
-
-                @media @query-sm {
-                    padding: 15px 35px 13px 35px;
-                }
-
-                .svg {
-                    margin: 0 0 0 @window-popup-button-icon-gap;
-                    order: 1;
-                    top: -1px;
-
-                    color: @color-primary;
-                }
-
-                &--disabled {
-                    opacity: 0.3;
-                    cursor: default;
-
-                    &:hover {
-                        cursor: default;
-                    }
-                }
-
-                &--outline {
-                    padding: 10px 20px;
-
-                    background-color: @color-f;
-                    border: 2px solid @color-add;
-                    border-radius: @radius;
-
-                    &:hover {
-                        background-color: @color-add;
-                    }
-
-                    .svg {
-                        display: none;
-                    }
                 }
             }
         }

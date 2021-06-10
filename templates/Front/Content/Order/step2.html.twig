@@ -35,7 +35,7 @@
                                 <div id="{{ transportFormId }}">
                                     {% for transport in transports %}
                                         {% set transportPrice = transportsPrices[transport.id] %}
-                                        <label class="box-chooser__item{% if transport.description and personalPickupStock != null %} box-chooser__item--selected{% endif %} js-payment-transport-checkbox-container" for="{{ transportFormId ~ '_' ~ transport.id }}">
+                                        <label class="box-chooser__item js-payment-transport-checkbox-container" for="{{ transportFormId ~ '_' ~ transport.id }}">
                                             <div class="box-chooser__item__side">
                                                 <span class="box-chooser__item__check">
                                                     <input
@@ -64,7 +64,7 @@
                                                         {{ transport.name }}
                                                     </span>
                                                     {% if transport.description %}
-                                                        <span class="box-chooser__item__title__description" data-origin="{{ transport.description }}">
+                                                        <span class="box-chooser__item__title__description{% if transport.isPersonalPickup() != false and personalPickupStock != null %} box-chooser__item__title__description--full-width{% endif %}" data-origin="{{ transport.description }}">
                                                             {% if transport.isPersonalPickup() == false %}
                                                                 <div class="box-chooser__item__tooltip__wrap">
                                                                     <i class="box-chooser__item__tooltip__handler">i</i>
@@ -76,51 +76,43 @@
                                                                     <div class="box-chooser__item__tooltip">{{ transport.description }}</div>
                                                                 </div>
                                                             {% else %}
-                                                                <span class="box-chooser__item__title__description__address">
-                                                                    <span class="box-chooser__item__title__description__name">{{ stocksById[personalPickupStock].name }}</span>
-                                                                    <span class="box-chooser__item__title__description__street">{{ stocksById[personalPickupStock].street }}</span>
-                                                                </span>
-                                                                <span class="box-chooser__item__title__description__hours">
-                                                                    <strong>{{ 'Otevřeno'|trans }}</strong>
-                                                                    <span class="box-chooser__item__title__description__hours__value">{{ stocksById[personalPickupStock].openingHours|nl2br }}</span>
-                                                                </span>
-                                                                <span class="box-chooser__item__title__description__availability">
-                                                                    {% set minimalDaysAvailability = stockDayAvailabilitiesByStockId[personalPickupStock] %}
-                                                                    {% if minimalDaysAvailability < 7 %}
-                                                                        {% transchoice minimalDaysAvailability with {'%daysAvailability%': minimalDaysAvailability} %}
-                                                                        {0} <span class="box-chooser__item__avail__text box-chooser__item__avail__text--now">Můžete mít <strong class="now">ihned</strong></span>
-                                                                        | [1,Inf] <span class="box-chooser__item__avail__text">Osobní odběr do <strong>%daysAvailability% dnů</strong></span>
-                                                                        {% endtranschoice %}
-                                                                    {% else %}
-                                                                        {% transchoice minimalDaysAvailability|daysToWeeks with {'%weeksAvailability%': minimalDaysAvailability|daysToWeeks} %}
-                                                                            {1} <span class="box-chooser__item__avail__text">K dispozici do <strong>1 týdne</strong> </span>
-                                                                            | [2,Inf] <span class="box-chooser__item__avail__text">K dispozici do <strong>%weeksAvailability% týdnů</strong></span>
-                                                                        {% endtranschoice %}
-                                                                    {% endif %}
-                                                                </span>
+                                                                {{ stocksById[personalPickupStock].name }}, sdsd <br>
+                                                                {{ 'Otevřeno'|trans }}: sdsd <br>
+                                                                {% set minimalDaysAvailability = stockDayAvailabilitiesByStockId[personalPickupStock] %}
+                                                                {% if minimalDaysAvailability < 7 %}
+                                                                    {% transchoice minimalDaysAvailability with {'%daysAvailability%': minimalDaysAvailability} %}
+                                                                    {0} Můžete mít ihned
+                                                                    | [1,Inf] Osobní odběr do %daysAvailability% dnů
+                                                                    {% endtranschoice %}
+                                                                {% else %}
+                                                                    {% transchoice minimalDaysAvailability|daysToWeeks with {'%weeksAvailability%': minimalDaysAvailability|daysToWeeks} %}
+                                                                        {1} K dispozici do 1 týdne
+                                                                        | [2,Inf] K dispozici do %weeksAvailability% týdnů
+                                                                    {% endtranschoice %}
+                                                                {% endif %}
                                                             {% endif %}
                                                         </span>
                                                     {% endif %}
                                                 </span>
 
-                                                <span class="box-chooser__item__avail js-chooser-delivery-information {% if transport.isPersonalPickup() and personalPickupStock != null %}hidden{% endif %}">
+                                                <span class="box-chooser__item__avail js-chooser-delivery-information {% if transport.isPersonalPickup() and personalPickupStock != null %}display-none{% endif %}">
                                                     {% set minimalDaysAvailability = minimalDaysAvailabilityIndexedByTransportIds[transport.id] %}
                                                     {% if minimalDaysAvailability < 7 %}
                                                         {% if transport.isPersonalPickup() %}
                                                             {% transchoice minimalDaysAvailability with {'%daysAvailability%': minimalDaysAvailability} %}
-                                                                {0} <span class="box-chooser__item__avail__text box-chooser__item__avail__text--now">Můžete mít ihned</span>
-                                                            | [1,Inf] <span class="box-chooser__item__avail__text">Osobní odběr do %daysAvailability% dnů</span>
+                                                                {0} Můžete mít ihned
+                                                            | [1,Inf] Osobní odběr do %daysAvailability% dnů
                                                             {% endtranschoice %}
                                                         {% else %}
                                                             {% transchoice minimalDaysAvailability with {'%daysAvailability%': minimalDaysAvailability} %}
-                                                                {0} <span class="box-chooser__item__avail__text box-chooser__item__avail__text--now">Můžete mít ještě dnes</span>
-                                                            | [1,Inf] <span class="box-chooser__item__avail__text">Doručení do %daysAvailability% dnů</span>
+                                                                {0} Můžete mít ještě dnes
+                                                            | [1,Inf] Doručení do %daysAvailability% dnů
                                                             {% endtranschoice %}
                                                         {% endif %}
                                                     {% else %}
                                                         {% transchoice minimalDaysAvailability|daysToWeeks with {'%weeksAvailability%': minimalDaysAvailability|daysToWeeks} %}
-                                                            {1} <span class="box-chooser__item__avail__text">K dispozici do 1 týdne</span>
-                                                            | [2,Inf] <span class="box-chooser__item__avail__text">K dispozici do %weeksAvailability% týdnů</span>
+                                                            {1} K dispozici do 1 týdne
+                                                            | [2,Inf] K dispozici do %weeksAvailability% týdnů
                                                         {% endtranschoice %}
                                                     {% endif %}
                                                 </span>
@@ -131,7 +123,7 @@
                                             </div>
                                         </label>
                                     {% endfor %}
-                                    <div class="box-chooser__toggle">
+                                    <div class="box-chooser__toggle display-none">
                                         <button type="button" class="btn btn-no-style box-chooser__toggle__btn js-payment-transport-change-button">
                                             {{ 'Změnit dopravu' }}
                                             <i class="box-chooser__toggle__btn__icon svg svg-arrow"></i>
@@ -147,7 +139,7 @@
                         </div>
                     </div>
 
-                    <div class="box-order__info__item box-order__info__item--with-gap js-payment-transport-group">
+                    <div class="box-order__info__item box-order__info__item--with-gap js-payment-transport-group is-disabled">
                         <h3 class="box-order__title" id="js-label-{{ form.payment.vars.id }}">{{ 'Vyberte způsob platby'|trans }}</h3>
 
                         <div class="box-chooser box-chooser--smaller js-form-group">
@@ -186,11 +178,8 @@
 
                                         <div class="box-chooser__item__info box-chooser__item__info--in-row">
                                             <div class="box-chooser__item__title">
-                                                <span class="box-chooser__item__title__name{{ isGoPayBankTransfer ? ' box-chooser__item__title__name--with-arrow' }}">
+                                                <span class="box-chooser__item__title__name">
                                                     {{ payment.name }}
-                                                    {% if isGoPayBankTransfer %}
-                                                        <i class="svg svg-arrow"></i>
-                                                    {% endif %}
                                                 </span>
                                                 {% if payment.description %}
                                                     <div class="box-chooser__item__title__description">
@@ -253,7 +242,7 @@
                                 {% if not bankTransferRendered %}
                                     {% do goPayBankSwiftForm.setRendered %}
                                 {% endif %}
-                                <div class="box-chooser__toggle">
+                                <div class="box-chooser__toggle display-none">
                                     <button type="button" class="btn btn-no-style box-chooser__toggle__btn js-payment-transport-change-button">
                                         {{ 'Změnit platbu' }}
                                         <i class="box-chooser__toggle__btn__icon svg svg-arrow"></i>

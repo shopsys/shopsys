@@ -31,9 +31,9 @@
                 </span>
                 <span class="box-chooser__item__avail">
                     {% transchoice stockDayAvailabilitiesByStockId[stock.id]|daysToWeeks with {'%weeksAvailability%': stockDayAvailabilitiesByStockId[stock.id]|daysToWeeks} %}
-                        {0} <span class="box-chooser__item__avail__text box-chooser__item__avail__text--now">Můžete mít ihned</span>
-                        | {1} <span class="box-chooser__item__avail__text">K dispozici do 1 týdne</span>
-                        | [2,Inf] <span class="box-chooser__item__avail__text">K dispozici do %weeksAvailability% týdnů</span>
+                        {0} Můžete mít ihned
+                        | {1} K dispozici do 1 týdne
+                        | [2,Inf] K dispozici do %weeksAvailability% týdnů
                     {% endtranschoice %}
                 </span>
             </label>
