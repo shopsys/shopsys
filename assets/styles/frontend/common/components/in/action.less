@@ -1,6 +1,7 @@
 .in-action {
     display: flex;
     flex-direction: column;
+    flex-wrap: wrap;
     align-items: center;
 
     @media @query-lg {
@@ -29,6 +30,10 @@
             order: 2;
             margin-bottom: 0;
         }
+    }
+
+    &__text {
+        width: 100%;
     }
 
     &__back {

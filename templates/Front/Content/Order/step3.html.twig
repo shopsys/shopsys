@@ -9,151 +9,146 @@
         <div class="web__container">
 
             <div class="box-order">
-                <div>
-                    <h1>{{ 'Vaše údaje'|trans }}</h1>
-                    <div>
-                        <div>
+                <div class="box-order__info">
+                    {% if not isUserLogged %}
+                        <h2 class="in-title in-title--small-spacing" id="js-user-email-label">{{ 'Začněte zadáním e-mailu'|trans }}</h2>
+                    {% else %}
+                        <h2 class="in-title">{{ 'Váš e-mail'|trans }}</h2>
+                    {% endif %}
+                    <div class="in-tab js-responsive-tabs js-tabs-only">
+                        {{ form_row(form.email, { label: 'Váš e-mail'|trans }) }}
+                        <div id="js-order-form-details-container">
                             {% if not isUserLogged %}
-                                <h2 class="in-title in-title--small-spacing" id="js-user-email-label">{{ 'Začněte zadáním e-mailu'|trans }}</h2>
-                            {% else %}
-                                <h2 class="in-title">{{ 'Váš e-mail'|trans }}</h2>
-                            {% endif %}
-                            <div class="in-tab js-responsive-tabs js-tabs-only">
-                                {{ form_row(form.email, { label: 'Váš e-mail'|trans }) }}
-                                <div id="js-order-form-details-container">
-                                    {% if not isUserLogged %}
-                                        <div class="in-tab__password-box" id="js-order-form-login-container">
-                                            <h2 class="in-tab__password-box__heading">{{ 'Vítejte zpět ve Scontu'|trans }}</h2>
-                                            {{ '<button type="button" class="btn-no-style link-style in-tab__password-box__link" id="js-order-form-login-button">Přihlaste se a všechny vaše údaje vyplníme za vás</button>'|transHtml }}
-                                            <i class="in-tab__password-box__icon svg svg-arrow"></i>
-                                            <div class="display-none" id="js-order-form-login-window-content">
-                                                <div class="in-message--error display-none js-order-form-login-error"></div>
-                                                <div class="form-line">
-                                                    <label>{{ 'Vaše heslo'|trans }}</label>
-                                                    <input type="password" class="input js-order-form-login-password" />
-                                                </div>
-                                                <button class="window-popup__actions__btn js-window-button-continue btn js-order-form-login-submit">
-                                                    {{ 'Přihlásit'|trans }}
-                                                </button>
-                                                <a class="window-popup__link" href="{{ url('front_registration_reset_password') }}">{{ 'Zapomněli jste vaše heslo?'|trans }}</a>
-                                            </div>
+                                <div class="in-tab__password-box" id="js-order-form-login-container">
+                                    <h2 class="in-tab__password-box__heading">{{ 'Vítejte zpět ve Scontu'|trans }}</h2>
+                                    {{ '<button type="button" class="btn-no-style link-style in-tab__password-box__link" id="js-order-form-login-button">Přihlaste se a všechny vaše údaje vyplníme za vás</button>'|transHtml }}
+                                    <i class="in-tab__password-box__icon svg svg-arrow"></i>
+                                    <div class="display-none" id="js-order-form-login-window-content">
+                                        <div class="in-message--error display-none js-order-form-login-error"></div>
+                                        <div class="form-line">
+                                            <label>{{ 'Vaše heslo'|trans }}</label>
+                                            <input type="password" class="input js-order-form-login-password" />
                                         </div>
-                                        <div id="js-order-form-register-container-wrap">
-                                            <div id="js-order-form-register-container">
-                                                {{ form_row(form.register, { label: 'Chci se registrovat s objednávkou'|trans }) }}
-                                            </div>
-                                            {% if not isUserLogged %}
-                                                <div id="js-order-form-password-container">
-                                                    <h2 class="in-title in-title--mini">{{ 'Vytvořte si heslo'|trans }}</h2>
-                                                    {{ form_row(form.password.first, { label: 'Password'|trans }) }}
-                                                    {{ form_row(form.password.second, { label: 'Password again'|trans }) }}
-                                                </div>
-                                            {% endif %}
-                                            <div id="js-order-form-activation-info">
-                                                <div class="in-title in-title--mini">
-                                                    {{ 'Dokončete objednávku, na e-mail vám zašleme odkaz pro potvrzení registrace a vytvoření hesla.'|trans }}
-                                                </div>
-                                            </div>
-                                        </div>
-                                    {% endif %}
-                                    {% if not isUserLogged %}
-                                        <h2 class="in-tab__heading" id="js-order-form-customer-type-selector-heading">
-                                            {{ 'Budete u nás nakupovat jako' }}
-                                        </h2>
-                                    {% endif %}
-                                    <div class="in-tab__head dont-print {{ isUserLogged ? 'display-none' }}" id="js-order-form-customer-type-selector">
-                                        <input type="checkbox" class="css-radio"></input>
-                                        <label class="css-radio__image js-tabs-button" data-tab-id="common-customer">
-                                            {{ "Soukromá osoba"|trans }}
-                                        </label>
-                                        <input type="checkbox" class="css-radio"></input>
-                                        <label class="css-radio__image js-tabs-button" data-tab-id="company-customer">
-                                            {{ "Firma"|trans }}
-                                        </label>
+                                        <button class="window-popup__actions__btn js-window-button-continue btn js-order-form-login-submit">
+                                            {{ 'Přihlásit'|trans }}
+                                        </button>
+                                        <a class="window-popup__link" href="{{ url('front_registration_reset_password') }}">{{ 'Zapomněli jste vaše heslo?'|trans }}</a>
                                     </div>
-                                    <div class="in-tab__content in-tab__content--spaced in-tab__content--spaced-small personal-info-order-form">
-                                        <h2 class="in-title">{{ 'Základní údaje'|trans }}</h2>
-                                        {{ form_row(form.telephone, { label: 'Telephone'|trans }) }}
-                                        <div class="in-tab__content__item in-tab__content__item--no-spacing js-tabs-content active">
-                                            {{ form_row(form.firstName, { label: 'First name'|trans }) }}
-                                            {{ form_row(form.lastName, { label: 'Last name'|trans }) }}
+                                </div>
+                                <div id="js-order-form-register-container-wrap">
+                                    <div id="js-order-form-register-container">
+                                        {{ form_row(form.register, { label: 'Chci se registrovat s objednávkou'|trans }) }}
+                                    </div>
+                                    {% if not isUserLogged %}
+                                        <div id="js-order-form-password-container">
+                                            <h2 class="in-title in-title--mini">{{ 'Vytvořte si heslo'|trans }}</h2>
+                                            {{ form_row(form.password.first, { label: 'Password'|trans }) }}
+                                            {{ form_row(form.password.second, { label: 'Password again'|trans }) }}
                                         </div>
-                                        <div class="in-tab__content__item in-tab__content__item--no-padding js-tabs-content  {{ companyTabActiveClass }}"
-                                            data-tab-id="company-customer">
-                                            <h2 class="in-title">{{ 'Company data'|trans }}</h2>
-                                            <div class="hidden">
-                                                {{ form_row(form.companyCustomer) }}
-                                            </div>
-                                            <div id="js-company-fields">
-                                                {{ form_row(form.companyName, { label: 'Název společnosti'|trans }) }}
-                                                {{ form_row(form.companyNumber, { label: 'Company number'|trans }) }}
-                                                {{ form_row(form.companyTaxNumber, { label: 'Tax number'|trans }) }}
-                                            </div>
+                                    {% endif %}
+                                    <div id="js-order-form-activation-info">
+                                        <div class="in-title in-title--mini">
+                                            {{ 'Dokončete objednávku, na e-mail vám zašleme odkaz pro potvrzení registrace a vytvoření hesla.'|trans }}
                                         </div>
+                                    </div>
+                                </div>
+                            {% endif %}
+                            {% if not isUserLogged %}
+                                <h2 class="in-tab__heading" id="js-order-form-customer-type-selector-heading">
+                                    {{ 'Budete u nás nakupovat jako' }}
+                                </h2>
+                            {% endif %}
+                            <div class="in-tab__head dont-print {{ isUserLogged ? 'display-none' }}" id="js-order-form-customer-type-selector">
+                                <input type="checkbox" class="css-radio"></input>
+                                <label class="css-radio__image js-tabs-button" data-tab-id="common-customer">
+                                    {{ "Soukromá osoba"|trans }}
+                                </label>
+                                <input type="checkbox" class="css-radio"></input>
+                                <label class="css-radio__image js-tabs-button" data-tab-id="company-customer">
+                                    {{ "Firma"|trans }}
+                                </label>
+                            </div>
+                            <div class="in-tab__content in-tab__content--spaced in-tab__content--spaced-small personal-info-order-form">
+                                <h3 class="box-order__title">{{ 'Informace o zákazníkovi'|trans }}</h3>
+                                {{ form_row(form.telephone, { label: 'Telephone'|trans }) }}
+                                <div class="in-tab__content__item in-tab__content__item--no-spacing js-tabs-content active">
+                                    {{ form_row(form.firstName, { label: 'First name'|trans }) }}
+                                    {{ form_row(form.lastName, { label: 'Last name'|trans }) }}
+                                </div>
+                                <div class="in-tab__content__item in-tab__content__item--no-padding js-tabs-content  {{ companyTabActiveClass }}"
+                                    data-tab-id="company-customer">
+                                    <h2 class="in-title">{{ 'Company data'|trans }}</h2>
+                                    <div class="hidden">
+                                        {{ form_row(form.companyCustomer) }}
+                                    </div>
+                                    <div id="js-company-fields">
+                                        {{ form_row(form.companyName, { label: 'Název společnosti'|trans }) }}
+                                        {{ form_row(form.companyNumber, { label: 'Company number'|trans }) }}
+                                        {{ form_row(form.companyTaxNumber, { label: 'Tax number'|trans }) }}
+                                    </div>
+                                </div>
 
-                                        <div class="margin-bottom-20">
-                                            <h2 class="in-title">{{ 'Fakturační adresa'|trans }}</h2>
-                                            {{ form_row(form.street, { label: 'Ulice a č. popisné'|trans }) }}
-                                            <div class="form-columns">
-                                                <div class="form-columns__item">
-                                                    {{ form_row(form.city, { label: 'City'|trans }) }}
-                                                </div>
-                                                <div class="form-columns__item">
-                                                    {{ form_row(form.postcode, { label: 'Postcode'|trans }) }}
-                                                </div>
-                                            </div>
-                                            {{ form_row(form.country, { label: 'Country'|trans }) }}
+                                <div class="margin-bottom-20">
+                                    <h3 class="box-order__title">{{ 'Fakturační adresa'|trans }}</h3>
+                                    {{ form_row(form.street, { label: 'Ulice a č. popisné'|trans }) }}
+                                    <div class="form-columns">
+                                        <div class="form-columns__item">
+                                            {{ form_row(form.city, { label: 'City'|trans }) }}
                                         </div>
-                                        <div class="js-delivery-address-form">
-                                            {% set hasEmptyAddresses = true %}
-                                            {% if customerUser is null or customerUser.customer.deliveryAddresses is null and app.user is null %}
-                                                {% set hasEmptyAddresses = false %}
+                                        <div class="form-columns__item">
+                                            {{ form_row(form.postcode, { label: 'Postcode'|trans }) }}
+                                        </div>
+                                    </div>
+                                    {{ form_row(form.country, { label: 'Country'|trans }) }}
+                                </div>
+                                <div class="js-delivery-address-form">
+                                    {% set hasEmptyAddresses = true %}
+                                    {% if customerUser is null or customerUser.customer.deliveryAddresses is null and app.user is null %}
+                                        {% set hasEmptyAddresses = false %}
+                                    {% endif %}
+                                    {% if customerUser is not null and customerUser.customer.deliveryAddresses is empty %}
+                                        {% set hasEmptyAddresses = false %}
+                                    {% endif %}
+                                    {% if app.user is not null %}
+                                        {{ form_row(form.deliveryAddress) }}
+                                    {% endif %}
+                                    <div class="{{ hasEmptyAddresses == true ? ' emptyAdress' }}">
+                                        <div class="form-columns{{ hasEmptyAddresses == true ? ' display-none' }}">
+                                            {% if hasEmptyAddresses == true %}
+                                                {{ form_row(form.deliveryAddressFilled, {
+                                                    attr: {
+                                                        class: 'js-checkbox-toggle js-order-delivery-address',
+                                                        'data-checkbox-toggle-container-id': 'js-order-delivery-address',
+                                                        checked: 'checked'
+                                                    },
+                                                    label: 'Přidat novou dodací adresu'|trans
+                                                }) }}
+                                            {% else %}
+                                                {{ form_row(form.deliveryAddressFilled, {
+                                                    attr: {
+                                                        class: 'js-checkbox-toggle js-order-delivery-address',
+                                                        'data-checkbox-toggle-container-id': 'js-order-delivery-address'
+                                                    },
+                                                    label: 'Přidat novou dodací adresu'|trans
+                                                }) }}
                                             {% endif %}
-                                            {% if customerUser is not null and customerUser.customer.deliveryAddresses is empty %}
-                                                {% set hasEmptyAddresses = false %}
-                                            {% endif %}
-                                            {% if app.user is not null %}
-                                                {{ form_row(form.deliveryAddress) }}
-                                            {% endif %}
-                                            <div class="{{ hasEmptyAddresses == true ? ' emptyAdress' }}">
-                                                <div class="form-columns{{ hasEmptyAddresses == true ? ' display-none' }}">
-                                                    {% if hasEmptyAddresses == true %}
-                                                        {{ form_row(form.deliveryAddressFilled, {
-                                                            attr: {
-                                                                class: 'js-checkbox-toggle js-order-delivery-address',
-                                                                'data-checkbox-toggle-container-id': 'js-order-delivery-address',
-                                                                checked: 'checked'
-                                                            },
-                                                            label: 'Přidat novou dodací adresu'|trans
-                                                        }) }}
-                                                    {% else %}
-                                                        {{ form_row(form.deliveryAddressFilled, {
-                                                            attr: {
-                                                                class: 'js-checkbox-toggle js-order-delivery-address',
-                                                                'data-checkbox-toggle-container-id': 'js-order-delivery-address'
-                                                            },
-                                                            label: 'Přidat novou dodací adresu'|trans
-                                                        }) }}
-                                                    {% endif %}
-                                                </div>
-                                                <div id="js-order-delivery-address">
-                                                    <div class="js-order-delivery-address-fields{% if app.user is not null and form.deliveryAddress.vars.value is not same as('') %} display-none{% endif %}">
-                                                        {{ form_row(form.deliveryFirstName, { label: 'First name'|trans }) }}
-                                                        {{ form_row(form.deliveryLastName, { label: 'Last name'|trans }) }}
-                                                        {{ form_row(form.deliveryCompanyName, { label: 'Company'|trans }) }}
-                                                        {{ form_row(form.deliveryTelephone, { label: 'Telephone'|trans }) }}
-                                                        {{ form_row(form.deliveryStreet, { label: 'Ulice a č. popisné'|trans}) }}
-                                                        <div class="form-columns">
-                                                            <div class="form-columns__item">
-                                                                {{ form_row(form.deliveryCity, { label: 'City'|trans }) }}
-                                                            </div>
-                                                            <div class="form-columns__item">
-                                                                {{ form_row(form.deliveryPostcode, { label: 'Postcode'|trans }) }}
-                                                            </div>
-                                                        </div>
-                                                        {{ form_row(form.deliveryCountry, { label: 'Country'|trans }) }}
+                                        </div>
+                                        <div id="js-order-delivery-address">
+                                            <div class="js-order-delivery-address-fields{% if app.user is not null and form.deliveryAddress.vars.value is not same as('') %} display-none{% endif %}">
+                                                {{ form_row(form.deliveryFirstName, { label: 'First name'|trans }) }}
+                                                {{ form_row(form.deliveryLastName, { label: 'Last name'|trans }) }}
+                                                {{ form_row(form.deliveryCompanyName, { label: 'Company'|trans }) }}
+                                                {{ form_row(form.deliveryTelephone, { label: 'Telephone'|trans }) }}
+                                                {{ form_row(form.deliveryStreet, { label: 'Ulice a č. popisné'|trans}) }}
+                                                <div class="form-columns">
+                                                    <div class="form-columns__item">
+                                                        {{ form_row(form.deliveryCity, { label: 'City'|trans }) }}
+                                                    </div>
+                                                    <div class="form-columns__item">
+                                                        {{ form_row(form.deliveryPostcode, { label: 'Postcode'|trans }) }}
                                                     </div>
                                                 </div>
+                                                {{ form_row(form.deliveryCountry, { label: 'Country'|trans }) }}
                                             </div>
                                         </div>
                                     </div>
@@ -161,19 +156,14 @@
                             </div>
                         </div>
                     </div>
-                    <div>
-                        <div>
-                            <button type="submit" name="{{ flow.getFormTransitionKey() }}" value="back" class="btn btn-no-style btn--arrow btn--arrow-prev js-no-validate-button">
-                                <i class="btn__icon svg svg-arrow"></i>
-                                {{ 'Zpět na Dopravu a platbu'|trans }}
-                            </button>
-                        </div>
-                        <div class="{{ app.user is null ? 'is-disabled' : '' }}" id="js-order-form-submit-container">
-                            <span>
+
+                    <div class="in-action in-action--with-gap">
+                        <div class="in-action__text">
+                            <p>
                                 {% if privacyPolicyArticle is not null and termsAndConditionsArticle is not null %}
                                     {% set privacyPolicyUrl = url('front_article_detail', {'id': privacyPolicyArticle.id}) %}
                                     {% set termsAndConditionsUrl = url('front_article_detail', {'id': termsAndConditionsArticle.id}) %}
-                                    {{ 'Kliknutím na tlačítko Odeslat objednávku souhlasíte<br>s <a href="%termsAndConditionsUrl%" target="_blank">obchodními podmínkami</a> e-shopu a se<br><a href="%privacyPolicyUrl%" target="_blank">zpracováním osobních údajů</a>.'|transHtml({'%privacyPolicyUrl%': privacyPolicyUrl, '%termsAndConditionsUrl%': termsAndConditionsUrl})|raw }}
+                                    {{ 'Kliknutím na tlačítko Odeslat objednávku souhlasíte s <a href="%termsAndConditionsUrl%" target="_blank">obchodními podmínkami</a> e-shopu a se <a href="%privacyPolicyUrl%" target="_blank">zpracováním osobních údajů</a>.'|transHtml({'%privacyPolicyUrl%': privacyPolicyUrl, '%termsAndConditionsUrl%': termsAndConditionsUrl})|raw }}
                                 {% elseif privacyPolicyArticle is not null %}
                                     {% set privacyPolicyUrl = url('front_article_detail', {'id': privacyPolicyArticle.id}) %}
                                     {{ 'I agree with terms and conditions and <a href="%privacyPolicyUrl%" target="_blank">privacy policy</a>.'|trans({'%privacyPolicyUrl%': privacyPolicyUrl })|raw }}
@@ -183,23 +173,43 @@
                                 {% else %}
                                     {{ 'I agree with terms and conditions and privacy policy.'|trans }}
                                 {% endif %}
-                            </span>
-                            {{ form_row(form.newsletterSubscription, { label: 'I want to subscribe to the newsletter'|trans }) }}
-                            {{ form_widget(form.save, { label: 'Odeslat objednávku'|trans, attr: { class: 'btn' } }) }}
+                            </p>
+
+                            <div class="form-choice">
+                                {{ form_widget(form.newsletterSubscription, { attr: { class: "css-checkbox" } }) }}
+                                <label class="css-checkbox__image" for="{{ form.newsletterSubscription.vars.id }}">
+                                    {{ 'I want to subscribe to the newsletter'|trans }}
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="in-action__left">
+                            <button type="submit" name="{{ flow.getFormTransitionKey() }}" value="back" class="in-action__back btn btn-no-style btn--arrow btn--arrow-prev js-no-validate-button">
+                                {{ 'Zpět'|trans }}
+                            </button>
+                        </div>
+
+                        <div class="in-action__right">
+                            {% set buttonClass = 'in-action__next btn btn--primary btn--big-radius btn-with-icon btn-with-icon--right js-order-form-submit-container' %}
+                            {% if app.user is null %}
+                                {% set buttonClass = 'in-action__next btn btn--disabled btn--primary btn--big-radius btn-with-icon btn-with-icon--right js-order-form-submit-container' %}
+                            {% endif %}
+
+                            {{ form_widget(form.save, { label: 'Odeslat objednávku'|trans, attr: { class: buttonClass } }) }}
                         </div>
                     </div>
                 </div>
-                <div>
-                    <div>
-                        <div id="js-order-preview" data-url="{{ url('front_order_preview') }}">
-                            {{ render(controller('App\\Controller\\Front\\OrderController:previewAction', {
-                                transportId: orderPreview.transport is not null ? orderPreview.transport.id : null,
-                                paymentId: orderPreview.payment is not null ? orderPreview.payment.id : null,
-                                orderStep: '3',
-                                showAdvert: false,
-                                showPromo: false
-                            })) }}
-                        </div>
+
+                <div class="box-order__cart">
+                    <h3 class="box-order__title">{{ 'Vaše objednávka'|trans }}</h3>
+                    <div id="js-order-preview" data-url="{{ url('front_order_preview') }}">
+                        {{ render(controller('App\\Controller\\Front\\OrderController:previewAction', {
+                            transportId: orderPreview.transport is not null ? orderPreview.transport.id : null,
+                            paymentId: orderPreview.payment is not null ? orderPreview.payment.id : null,
+                            orderStep: '3',
+                            showAdvert: false,
+                            showPromo: false
+                        })) }}
                     </div>
                 </div>
             </div>
