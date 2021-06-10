@@ -3028,16 +3028,16 @@
         },
         {
             "name": "google/cloud-core",
-            "version": "v1.42.0",
+            "version": "v1.42.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/googleapis/google-cloud-php-core.git",
-                "reference": "0e311771797adb1b8674fce77e5dbaf727cea3eb"
+                "reference": "26a471ec72ee98ae146316054b25a88de8693b11"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/googleapis/google-cloud-php-core/zipball/0e311771797adb1b8674fce77e5dbaf727cea3eb",
-                "reference": "0e311771797adb1b8674fce77e5dbaf727cea3eb",
+                "url": "https://api.github.com/repos/googleapis/google-cloud-php-core/zipball/26a471ec72ee98ae146316054b25a88de8693b11",
+                "reference": "26a471ec72ee98ae146316054b25a88de8693b11",
                 "shasum": ""
             },
             "require": {
@@ -3085,20 +3085,20 @@
                 "Apache-2.0"
             ],
             "description": "Google Cloud PHP shared dependency, providing functionality useful to all components.",
-            "time": "2021-05-07T17:20:51+00:00"
+            "time": "2021-06-09T22:04:14+00:00"
         },
         {
             "name": "google/cloud-storage",
-            "version": "v1.23.1",
+            "version": "v1.23.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/googleapis/google-cloud-php-storage.git",
-                "reference": "ca3817dae90d7d757381f3f63c9d7df58ca1416f"
+                "reference": "4a9f1262c2929af8c33a58466616820dba91dddc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/googleapis/google-cloud-php-storage/zipball/ca3817dae90d7d757381f3f63c9d7df58ca1416f",
-                "reference": "ca3817dae90d7d757381f3f63c9d7df58ca1416f",
+                "url": "https://api.github.com/repos/googleapis/google-cloud-php-storage/zipball/4a9f1262c2929af8c33a58466616820dba91dddc",
+                "reference": "4a9f1262c2929af8c33a58466616820dba91dddc",
                 "shasum": ""
             },
             "require": {
@@ -3136,7 +3136,7 @@
                 "Apache-2.0"
             ],
             "description": "Cloud Storage Client for PHP",
-            "time": "2021-01-13T22:28:48+00:00"
+            "time": "2021-06-09T22:04:14+00:00"
         },
         {
             "name": "google/crc32",
@@ -6657,16 +6657,16 @@
         },
         {
             "name": "studio-42/elfinder",
-            "version": "2.1.57",
+            "version": "2.1.58",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Studio-42/elFinder.git",
-                "reference": "087524b1d7a4d76cfd848dee2093cd8daf987f78"
+                "reference": "3802892cf32e999f08143107c5686e84ce837164"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Studio-42/elFinder/zipball/087524b1d7a4d76cfd848dee2093cd8daf987f78",
-                "reference": "087524b1d7a4d76cfd848dee2093cd8daf987f78",
+                "url": "https://api.github.com/repos/Studio-42/elFinder/zipball/3802892cf32e999f08143107c5686e84ce837164",
+                "reference": "3802892cf32e999f08143107c5686e84ce837164",
                 "shasum": ""
             },
             "require": {
@@ -6711,7 +6711,7 @@
             ],
             "description": "File manager for web",
             "homepage": "http://elfinder.org",
-            "time": "2020-06-05T08:06:57+00:00"
+            "time": "2021-06-09T08:25:39+00:00"
         },
         {
             "name": "superbalist/flysystem-google-storage",
@@ -11825,12 +11825,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/shopsys/coding-standards.git",
-                "reference": "8219d28f1f3fb1fe2548ceae67563d413c62678b"
+                "reference": "c01b510a1393b5d2171560b650430856c7ea6457"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/shopsys/coding-standards/zipball/8219d28f1f3fb1fe2548ceae67563d413c62678b",
-                "reference": "8219d28f1f3fb1fe2548ceae67563d413c62678b",
+                "url": "https://api.github.com/repos/shopsys/coding-standards/zipball/c01b510a1393b5d2171560b650430856c7ea6457",
+                "reference": "c01b510a1393b5d2171560b650430856c7ea6457",
                 "shasum": ""
             },
             "require": {
@@ -11846,6 +11846,7 @@
             },
             "conflict": {
                 "friendsofphp/php-cs-fixer": "2.19.0",
+                "symfony/dependency-injection": ">=4.4.19 <5.0",
                 "symplify/better-phpdoc-parser": "5.4.14|5.4.15"
             },
             "require-dev": {
@@ -11875,7 +11876,7 @@
                 "code quality",
                 "coding standards"
             ],
-            "time": "2021-05-14T12:41:32+00:00"
+            "time": "2021-06-09T10:50:21+00:00"
         },
         {
             "name": "shopsys/http-smoke-testing",
@@ -11883,12 +11884,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/shopsys/http-smoke-testing.git",
-                "reference": "fe0bc68c65d0b2e63205b818caea3c9d8efcc6d1"
+                "reference": "f6555749a3addf76674690b2dd6d0207641e2477"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/shopsys/http-smoke-testing/zipball/fe0bc68c65d0b2e63205b818caea3c9d8efcc6d1",
-                "reference": "fe0bc68c65d0b2e63205b818caea3c9d8efcc6d1",
+                "url": "https://api.github.com/repos/shopsys/http-smoke-testing/zipball/f6555749a3addf76674690b2dd6d0207641e2477",
+                "reference": "f6555749a3addf76674690b2dd6d0207641e2477",
                 "shasum": ""
             },
             "require": {
@@ -11900,7 +11901,7 @@
                 "symfony/routing": "^2.5|^3.0|^4.0"
             },
             "conflict": {
-                "symfony/dependency-injection": "3.4.15|3.4.16"
+                "symfony/dependency-injection": "3.4.15|3.4.16|>=4.4.19 <5.0"
             },
             "require-dev": {
                 "jakub-onderka/php-parallel-lint": "^0.9",
@@ -11930,7 +11931,7 @@
                 "symfony",
                 "testing"
             ],
-            "time": "2021-01-22T12:41:47+00:00"
+            "time": "2021-06-09T10:50:21+00:00"
         },
         {
             "name": "slam/php-cs-fixer-extensions",
