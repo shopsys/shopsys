@@ -162,12 +162,14 @@
     class: Shopsys\FrameworkBundle\Model\Transport\Transport
     sizes:
         -   name: ~
-            width: 45
-            height: 25
+            width: 35
+            height: 20
             crop: false
             occurrence: 'Front-end: Ordering process'
             additionalSizes:
-                - {width: 90, height: 50, media: "only screen and (-webkit-min-device-pixel-ratio: 1.5)"}
+                - {width: 70, height: 40, media: "only screen and (-webkit-min-device-pixel-ratio: 1.5)"}
+                - {width: 90, height: 50, media: "only screen and (min-width: 769px) and (-webkit-min-device-pixel-ratio: 1.5)"}
+                - {width: 45, height: 25, media: "(min-width: 769px)"}
 
 -   name: noticer
     class: Shopsys\FrameworkBundle\Model\Advert\Advert

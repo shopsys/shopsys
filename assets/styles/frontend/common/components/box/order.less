@@ -1,9 +1,12 @@
 .box-order {
     width: 100%;
     display: flex;
-    margin-bottom: 60px;
+    flex-direction: column;
+    flex-wrap: wrap;
+    margin-bottom: 90px;
 
-    @media @query-lg {
+    @media @query-vl {
+        flex-direction: row;
         margin: 28px 0 60px;
     }
 
@@ -12,8 +15,14 @@
     }
 
     &__info {
-        flex: 1;
-        padding-right: 40px;
+        width: 100%;
+        margin-bottom: 60px;
+
+        @media @query-vl {
+            flex: 1;
+            padding-right: 40px;
+            margin-bottom: 0;
+        }
 
         &__item {
             &--with-gap {
@@ -28,6 +37,10 @@
     }
 
     &__cart {
-        width: 420px
+        width: 100%;
+
+        @media @query-vl {
+            width: 420px
+        }
     }
 }

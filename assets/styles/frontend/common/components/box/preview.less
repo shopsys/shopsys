@@ -38,10 +38,16 @@
     }
 
     &__summary {
-        padding: 10px 20px;
+        padding: 10px @web-padding;
+        margin: 0 -@web-padding;
 
         background-color: @color-grey-very-light;
-        border-radius: @radius;
+
+        @media @query-vl {
+            margin: 0;
+
+            border-radius: @radius;
+        }
 
         &__block {
             margin-bottom: 20px;
