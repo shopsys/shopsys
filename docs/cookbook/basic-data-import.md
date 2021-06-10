@@ -346,7 +346,7 @@ private function fillProductData(ProductData $productData, array $externalProduc
 {
     $productData->name[self::LOCALE] = $externalProductData['name'];
     $productData->manualInputPricesByPricingGroupId[self::PRICING_GROUP_ID] = Money::create($externalProductData['price_without_vat']);
-    $productData->vat = $this->vatFacade->getVatByPercent($externalProductData['vat_percent']); // will be implemented in next step
+    $productData->vatsIndexedByDomainId[self::DOMAIN_ID] = $this->vatFacade->getVatByPercent($externalProductData['vat_percent']); // will be implemented in next step
     $productData->ean = $externalProductData['ean'];
     $productData->descriptions[self::DOMAIN_ID] = $externalProductData['description'];
     $productData->usingStock = true;
