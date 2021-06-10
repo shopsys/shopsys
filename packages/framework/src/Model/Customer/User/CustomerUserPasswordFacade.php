@@ -4,16 +4,17 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Customer\User;
 
-use BadMethodCallException;
 use Doctrine\ORM\EntityManagerInterface;
-use Shopsys\FrameworkBundle\Component\Deprecations\DeprecationHelper;
 use Shopsys\FrameworkBundle\Component\String\HashGenerator;
+use Shopsys\FrameworkBundle\DependencyInjection\SetterInjectionTrait;
 use Shopsys\FrameworkBundle\Model\Customer\Exception\InvalidResetPasswordHashUserException;
 use Shopsys\FrameworkBundle\Model\Customer\Mail\ResetPasswordMailFacade;
 use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
 
 class CustomerUserPasswordFacade
 {
+    use SetterInjectionTrait;
+
     public const RESET_PASSWORD_HASH_LENGTH = 50;
     public const MINIMUM_PASSWORD_LENGTH = 6;
 
@@ -79,21 +80,7 @@ class CustomerUserPasswordFacade
     public function setCustomerUserRefreshTokenChainFacade(
         CustomerUserRefreshTokenChainFacade $customerUserRefreshTokenChainFacade
     ): void {
-        if (
-            $this->customerUserRefreshTokenChainFacade !== null
-            && $this->customerUserRefreshTokenChainFacade !== $customerUserRefreshTokenChainFacade
-        ) {
-            throw new BadMethodCallException(
-                sprintf('Method "%s" has been already called and cannot be called multiple times.', __METHOD__)
-            );
-        }
-        if ($this->customerUserRefreshTokenChainFacade !== null) {
-            return;
-        }
-
-        DeprecationHelper::triggerSetterInjection(__METHOD__);
-
-        $this->customerUserRefreshTokenChainFacade = $customerUserRefreshTokenChainFacade;
+        $this->setDependency($customerUserRefreshTokenChainFacade, 'customerUserRefreshTokenChainFacade');
     }
 
     /**

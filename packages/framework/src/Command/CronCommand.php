@@ -2,7 +2,6 @@
 
 namespace Shopsys\FrameworkBundle\Command;
 
-use BadMethodCallException;
 use DateTime;
 use DateTimeImmutable;
 use DateTimeZone;
@@ -10,7 +9,7 @@ use Shopsys\FrameworkBundle\Command\Exception\CronCommandException;
 use Shopsys\FrameworkBundle\Component\Cron\Config\CronModuleConfig;
 use Shopsys\FrameworkBundle\Component\Cron\CronFacade;
 use Shopsys\FrameworkBundle\Component\Cron\MutexFactory;
-use Shopsys\FrameworkBundle\Component\Deprecations\DeprecationHelper;
+use Shopsys\FrameworkBundle\DependencyInjection\SetterInjectionTrait;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -20,6 +19,8 @@ use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 class CronCommand extends Command
 {
+    use SetterInjectionTrait;
+
     private const OPTION_MODULE = 'module';
     private const OPTION_LIST = 'list';
     private const OPTION_INSTANCE_NAME = 'instance-name';
@@ -68,18 +69,7 @@ class CronCommand extends Command
      */
     public function setParameterBag(ParameterBagInterface $parameterBag): void
     {
-        if ($this->parameterBag !== null && $this->parameterBag !== $parameterBag) {
-            throw new BadMethodCallException(
-                sprintf('Method "%s" has been already called and cannot be called multiple times.', __METHOD__)
-            );
-        }
-        if ($this->parameterBag !== null) {
-            return;
-        }
-
-        DeprecationHelper::triggerSetterInjection(__METHOD__);
-
-        $this->parameterBag = $parameterBag;
+        $this->setDependency($parameterBag, 'parameterBag');
     }
 
     protected function configure()

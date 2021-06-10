@@ -4,12 +4,11 @@ declare(strict_types=1);
 
 namespace Shopsys\FrontendApiBundle\Model\Resolver\Products;
 
-use BadMethodCallException;
 use Overblog\GraphQLBundle\Definition\Argument;
 use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
 use Overblog\GraphQLBundle\Definition\Resolver\ResolverInterface;
 use Overblog\GraphQLBundle\Relay\Connection\ConnectionBuilder;
-use Shopsys\FrameworkBundle\Component\Deprecations\DeprecationHelper;
+use Shopsys\FrameworkBundle\DependencyInjection\SetterInjectionTrait;
 use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
 use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingConfig;
@@ -20,6 +19,8 @@ use Shopsys\FrontendApiBundle\Model\Product\ProductFacade;
 
 class ProductsResolver implements ResolverInterface, AliasedInterface
 {
+    use SetterInjectionTrait;
+
     protected const DEFAULT_FIRST_LIMIT = 10;
     /**
      * @deprecated This will be removed in next major release
@@ -78,19 +79,7 @@ class ProductsResolver implements ResolverInterface, AliasedInterface
      */
     public function setProductFacade(ProductFacade $productFacade): void
     {
-        if ($this->productFacade !== null && $this->productFacade !== $productFacade) {
-            throw new BadMethodCallException(sprintf(
-                'Method "%s" has been already called and cannot be called multiple times.',
-                __METHOD__
-            ));
-        }
-        if ($this->productFacade !== null) {
-            return;
-        }
-
-        DeprecationHelper::triggerSetterInjection(__METHOD__);
-
-        $this->productFacade = $productFacade;
+        $this->setDependency($productFacade, 'productFacade');
     }
 
     /**
@@ -100,20 +89,7 @@ class ProductsResolver implements ResolverInterface, AliasedInterface
      */
     public function setProductFilterFacade(ProductFilterFacade $productFilterFacade): void
     {
-        if ($this->productFilterFacade !== null && $this->productFilterFacade !== $productFilterFacade) {
-            throw new BadMethodCallException(sprintf(
-                'Method "%s" has been already called and cannot be called multiple times.',
-                __METHOD__
-            ));
-        }
-
-        if ($this->productFilterFacade !== null) {
-            return;
-        }
-
-        DeprecationHelper::triggerSetterInjection(__METHOD__);
-
-        $this->productFilterFacade = $productFilterFacade;
+        $this->setDependency($productFilterFacade, 'productFilterFacade');
     }
 
     /**
@@ -123,23 +99,7 @@ class ProductsResolver implements ResolverInterface, AliasedInterface
      */
     public function setProductConnectionFactory(ProductConnectionFactory $productConnectionFactory): void
     {
-        if (
-            $this->productConnectionFactory !== null
-            && $this->productConnectionFactory !== $productConnectionFactory
-        ) {
-            throw new BadMethodCallException(sprintf(
-                'Method "%s" has been already called and cannot be called multiple times.',
-                __METHOD__
-            ));
-        }
-
-        if ($this->productConnectionFactory !== null) {
-            return;
-        }
-
-        DeprecationHelper::triggerSetterInjection(__METHOD__);
-
-        $this->productConnectionFactory = $productConnectionFactory;
+        $this->setDependency($productConnectionFactory, 'productConnectionFactory');
     }
 
     /**

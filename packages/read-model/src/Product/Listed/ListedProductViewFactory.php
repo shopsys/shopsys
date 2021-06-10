@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Shopsys\ReadModelBundle\Product\Listed;
 
-use BadMethodCallException;
 use Shopsys\FrameworkBundle\Component\Deprecations\DeprecationHelper;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\DependencyInjection\SetterInjectionTrait;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Pricing\Exception\NoProductPriceForPricingGroupException;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
@@ -22,6 +22,8 @@ use Shopsys\ReadModelBundle\Product\Action\ProductActionViewFactory;
 
 class ListedProductViewFactory
 {
+    use SetterInjectionTrait;
+
     /**
      * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
      */
@@ -267,18 +269,7 @@ class ListedProductViewFactory
      */
     public function setImageViewFacade(ImageViewFacadeInterface $imageViewFacade): void
     {
-        if ($this->imageViewFacade !== null && $this->imageViewFacade !== $imageViewFacade) {
-            throw new BadMethodCallException(
-                sprintf('Method "%s" has been already called and cannot be called multiple times.', __METHOD__)
-            );
-        }
-        if ($this->imageViewFacade !== null) {
-            return;
-        }
-
-        DeprecationHelper::triggerSetterInjection(__METHOD__);
-
-        $this->imageViewFacade = $imageViewFacade;
+        $this->setDependency($imageViewFacade, 'imageViewFacade');
     }
 
     /**
@@ -288,18 +279,7 @@ class ListedProductViewFactory
      */
     public function setProductActionViewFacade(ProductActionViewFacadeInterface $productActionViewFacade): void
     {
-        if ($this->productActionViewFacade !== null && $this->productActionViewFacade !== $productActionViewFacade) {
-            throw new BadMethodCallException(
-                sprintf('Method "%s" has been already called and cannot be called multiple times.', __METHOD__)
-            );
-        }
-        if ($this->productActionViewFacade !== null) {
-            return;
-        }
-
-        DeprecationHelper::triggerSetterInjection(__METHOD__);
-
-        $this->productActionViewFacade = $productActionViewFacade;
+        $this->setDependency($productActionViewFacade, 'productActionViewFacade');
     }
 
     /**
@@ -309,21 +289,7 @@ class ListedProductViewFactory
      */
     public function setProductActionViewFactory(ProductActionViewFactory $productActionViewFactory): void
     {
-        if (
-            $this->productActionViewFactory !== null
-            && $this->productActionViewFactory !== $productActionViewFactory
-        ) {
-            throw new BadMethodCallException(
-                sprintf('Method "%s" has been already called and cannot be called multiple times.', __METHOD__)
-            );
-        }
-        if ($this->productActionViewFactory !== null) {
-            return;
-        }
-
-        DeprecationHelper::triggerSetterInjection(__METHOD__);
-
-        $this->productActionViewFactory = $productActionViewFactory;
+        $this->setDependency($productActionViewFactory, 'productActionViewFactory');
     }
 
     /**
@@ -333,18 +299,7 @@ class ListedProductViewFactory
      */
     public function setCurrentCustomerUser(CurrentCustomerUser $currentCustomerUser): void
     {
-        if ($this->currentCustomerUser !== null && $this->currentCustomerUser !== $currentCustomerUser) {
-            throw new BadMethodCallException(
-                sprintf('Method "%s" has been already called and cannot be called multiple times.', __METHOD__)
-            );
-        }
-        if ($this->currentCustomerUser !== null) {
-            return;
-        }
-
-        DeprecationHelper::triggerSetterInjection(__METHOD__);
-
-        $this->currentCustomerUser = $currentCustomerUser;
+        $this->setDependency($currentCustomerUser, 'currentCustomerUser');
     }
 
     /**
@@ -354,17 +309,6 @@ class ListedProductViewFactory
      */
     public function setPriceFactory(PriceFactory $priceFactory): void
     {
-        if ($this->priceFactory !== null && $this->priceFactory !== $priceFactory) {
-            throw new BadMethodCallException(
-                sprintf('Method "%s" has been already called and cannot be called multiple times.', __METHOD__)
-            );
-        }
-        if ($this->priceFactory !== null) {
-            return;
-        }
-
-        DeprecationHelper::triggerSetterInjection(__METHOD__);
-
-        $this->priceFactory = $priceFactory;
+        $this->setDependency($priceFactory, 'priceFactory');
     }
 }

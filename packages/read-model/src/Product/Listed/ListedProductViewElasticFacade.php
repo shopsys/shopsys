@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Shopsys\ReadModelBundle\Product\Listed;
 
-use BadMethodCallException;
 use Shopsys\FrameworkBundle\Component\Deprecations\DeprecationHelper;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Paginator\PaginationResult;
+use Shopsys\FrameworkBundle\DependencyInjection\SetterInjectionTrait;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Pricing\Exception\NoProductPriceForPricingGroupException;
 use Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryFacade;
@@ -23,6 +23,8 @@ use Shopsys\ReadModelBundle\Product\Action\ProductActionViewFactory;
 
 class ListedProductViewElasticFacade implements ListedProductViewFacadeInterface
 {
+    use SetterInjectionTrait;
+
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\ProductFacade
      */
@@ -321,21 +323,7 @@ class ListedProductViewElasticFacade implements ListedProductViewFacadeInterface
      */
     public function setProductActionViewFactory(ProductActionViewFactory $productActionViewFactory): void
     {
-        if (
-            $this->productActionViewFactory !== null
-            && $this->productActionViewFactory !== $productActionViewFactory
-        ) {
-            throw new BadMethodCallException(
-                sprintf('Method "%s" has been already called and cannot be called multiple times.', __METHOD__)
-            );
-        }
-        if ($this->productActionViewFactory !== null) {
-            return;
-        }
-
-        DeprecationHelper::triggerSetterInjection(__METHOD__);
-
-        $this->productActionViewFactory = $productActionViewFactory;
+        $this->setDependency($productActionViewFactory, 'productActionViewFactory');
     }
 
     /**
@@ -345,20 +333,6 @@ class ListedProductViewElasticFacade implements ListedProductViewFacadeInterface
      */
     public function setProductElasticsearchProvider(ProductElasticsearchProvider $productElasticsearchProvider): void
     {
-        if (
-            $this->productElasticsearchProvider !== null
-            && $this->productElasticsearchProvider !== $productElasticsearchProvider
-        ) {
-            throw new BadMethodCallException(
-                sprintf('Method "%s" has been already called and cannot be called multiple times.', __METHOD__)
-            );
-        }
-        if ($this->productElasticsearchProvider !== null) {
-            return;
-        }
-
-        DeprecationHelper::triggerSetterInjection(__METHOD__);
-
-        $this->productElasticsearchProvider = $productElasticsearchProvider;
+        $this->setDependency($productElasticsearchProvider, 'productElasticsearchProvider');
     }
 }

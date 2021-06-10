@@ -5,13 +5,13 @@ declare(strict_types=1);
 namespace Shopsys\FrontendApiBundle\Model\Resolver\Products;
 
 use ArrayObject;
-use BadMethodCallException;
 use GraphQL\Type\Definition\ResolveInfo;
 use Overblog\GraphQLBundle\Definition\ArgumentInterface;
 use Overblog\GraphQLBundle\Resolver\FieldResolver;
 use Overblog\GraphQLBundle\Resolver\ResolverMap;
 use Shopsys\FrameworkBundle\Component\Deprecations\DeprecationHelper;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\DependencyInjection\SetterInjectionTrait;
 use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
 use Shopsys\FrameworkBundle\Model\Product\Collection\ProductCollectionFacade;
 use Shopsys\FrameworkBundle\Model\Product\Flag\FlagFacade;
@@ -22,6 +22,8 @@ use Shopsys\FrontendApiBundle\Model\Resolver\Products\DataMapper\ProductEntityFi
 
 class ProductResolverMap extends ResolverMap
 {
+    use SetterInjectionTrait;
+
     /**
      * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
      * @deprecated Used only in deprecated method, will be removed in the next major release
@@ -87,21 +89,7 @@ class ProductResolverMap extends ResolverMap
      */
     public function setProductArrayFieldMapper(ProductArrayFieldMapper $productArrayFieldMapper): void
     {
-        if (
-            $this->productArrayFieldMapper !== null
-            && $this->productArrayFieldMapper !== $productArrayFieldMapper
-        ) {
-            throw new BadMethodCallException(
-                sprintf('Method "%s" has been already called and cannot be called multiple times.', __METHOD__)
-            );
-        }
-        if ($this->productArrayFieldMapper !== null) {
-            return;
-        }
-
-        DeprecationHelper::triggerSetterInjection(__METHOD__);
-
-        $this->productArrayFieldMapper = $productArrayFieldMapper;
+        $this->setDependency($productArrayFieldMapper, 'productArrayFieldMapper');
     }
 
     /**
@@ -111,21 +99,7 @@ class ProductResolverMap extends ResolverMap
      */
     public function setProductEntityFieldMapper(ProductEntityFieldMapper $productEntityFieldMapper): void
     {
-        if (
-            $this->productEntityFieldMapper !== null
-            && $this->productEntityFieldMapper !== $productEntityFieldMapper
-        ) {
-            throw new BadMethodCallException(
-                sprintf('Method "%s" has been already called and cannot be called multiple times.', __METHOD__)
-            );
-        }
-        if ($this->productEntityFieldMapper !== null) {
-            return;
-        }
-
-        DeprecationHelper::triggerSetterInjection(__METHOD__);
-
-        $this->productEntityFieldMapper = $productEntityFieldMapper;
+        $this->setDependency($productEntityFieldMapper, 'productEntityFieldMapper');
     }
 
     /**

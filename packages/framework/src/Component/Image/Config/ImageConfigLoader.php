@@ -2,8 +2,6 @@
 
 namespace Shopsys\FrameworkBundle\Component\Image\Config;
 
-use BadMethodCallException;
-use Shopsys\FrameworkBundle\Component\Deprecations\DeprecationHelper;
 use Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver;
 use Shopsys\FrameworkBundle\Component\Image\Config\Exception\DuplicateEntityNameException;
 use Shopsys\FrameworkBundle\Component\Image\Config\Exception\DuplicateMediaException;
@@ -13,6 +11,7 @@ use Shopsys\FrameworkBundle\Component\Image\Config\Exception\EntityParseExceptio
 use Shopsys\FrameworkBundle\Component\Image\Config\Exception\ImageConfigException;
 use Shopsys\FrameworkBundle\Component\Image\Config\Exception\WidthAndHeightMissingException;
 use Shopsys\FrameworkBundle\Component\Utils\Utils;
+use Shopsys\FrameworkBundle\DependencyInjection\SetterInjectionTrait;
 use Symfony\Component\Config\Definition\Processor;
 use Symfony\Component\Filesystem\Exception\FileNotFoundException;
 use Symfony\Component\Filesystem\Filesystem;
@@ -20,6 +19,8 @@ use Symfony\Component\Yaml\Parser;
 
 class ImageConfigLoader
 {
+    use SetterInjectionTrait;
+
     /**
      * @var \Symfony\Component\Filesystem\Filesystem
      */
@@ -57,19 +58,7 @@ class ImageConfigLoader
      */
     public function setEntityNameResolver(EntityNameResolver $entityNameResolver): void
     {
-        if ($this->entityNameResolver !== null && $this->entityNameResolver !== $entityNameResolver) {
-            throw new BadMethodCallException(sprintf(
-                'Method "%s" has been already called and cannot be called multiple times.',
-                __METHOD__
-            ));
-        }
-        if ($this->entityNameResolver !== null) {
-            return;
-        }
-
-        DeprecationHelper::triggerSetterInjection(__METHOD__);
-
-        $this->entityNameResolver = $entityNameResolver;
+        $this->setDependency($entityNameResolver, 'entityNameResolver');
     }
 
     /**

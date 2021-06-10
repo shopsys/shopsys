@@ -4,19 +4,20 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Twig;
 
-use BadMethodCallException;
-use Shopsys\FrameworkBundle\Component\Deprecations\DeprecationHelper;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Image\Exception\ImageNotFoundException;
 use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile;
 use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade;
 use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileLocator;
+use Shopsys\FrameworkBundle\DependencyInjection\SetterInjectionTrait;
 use Shopsys\FrameworkBundle\Twig\FileThumbnail\FileThumbnailExtension;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
 class UploadedFileExtension extends AbstractExtension
 {
+    use SetterInjectionTrait;
+
     protected const FILE_NOT_FOUND_ICON_TYPE = 'not-found';
 
     /**
@@ -64,18 +65,7 @@ class UploadedFileExtension extends AbstractExtension
      */
     public function setUploadedFileLocator(UploadedFileLocator $uploadedFileLocator)
     {
-        if ($this->uploadedFileLocator !== null && $this->uploadedFileLocator !== $uploadedFileLocator) {
-            throw new BadMethodCallException(
-                sprintf('Method "%s" has been already called and cannot be called multiple times.', __METHOD__)
-            );
-        }
-        if ($this->uploadedFileLocator !== null) {
-            return;
-        }
-
-        DeprecationHelper::triggerSetterInjection(__METHOD__);
-
-        $this->uploadedFileLocator = $uploadedFileLocator;
+        $this->setDependency($uploadedFileLocator, 'uploadedFileLocator');
     }
 
     /**

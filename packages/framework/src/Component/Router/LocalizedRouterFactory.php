@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Component\Router;
 
-use BadMethodCallException;
 use Shopsys\FrameworkBundle\Component\Deprecations\DeprecationHelper;
 use Shopsys\FrameworkBundle\Component\Environment\EnvironmentType;
 use Shopsys\FrameworkBundle\Component\Router\Exception\LocalizedRoutingConfigFileNotFoundException;
+use Shopsys\FrameworkBundle\DependencyInjection\SetterInjectionTrait;
 use Symfony\Bundle\FrameworkBundle\Routing\Router;
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -15,6 +15,8 @@ use Symfony\Component\Routing\RequestContext;
 
 class LocalizedRouterFactory
 {
+    use SetterInjectionTrait;
+
     /**
      * @deprecated This loader is deprecated and will be removed in the next major. Use Symfony\Bundle\FrameworkBundle\Routing\Router instead of Symfony\Component\Routing\Router without this dependency.
      * @var \Symfony\Component\Config\Loader\LoaderInterface
@@ -67,18 +69,7 @@ class LocalizedRouterFactory
      */
     public function setContainer(ContainerInterface $container): void
     {
-        if ($this->container !== null && $this->container !== $container) {
-            throw new BadMethodCallException(
-                sprintf('Method "%s" has been already called and cannot be called multiple times.', __METHOD__)
-            );
-        }
-        if ($this->container !== null) {
-            return;
-        }
-
-        DeprecationHelper::triggerSetterInjection(__METHOD__);
-
-        $this->container = $container;
+        $this->setDependency($container, 'container');
     }
 
     /**

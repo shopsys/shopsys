@@ -4,15 +4,14 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Product\Elasticsearch;
 
-use BadMethodCallException;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
-use Shopsys\FrameworkBundle\Component\Deprecations\DeprecationHelper;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Paginator\QueryPaginator;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRepository;
+use Shopsys\FrameworkBundle\DependencyInjection\SetterInjectionTrait;
 use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
 use Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryFacade;
 use Shopsys\FrameworkBundle\Model\Product\Brand\BrandCachedFacade;
@@ -25,6 +24,8 @@ use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityRepository;
 
 class ProductExportRepository
 {
+    use SetterInjectionTrait;
+
     /**
      * @var \Doctrine\ORM\EntityManagerInterface
      */
@@ -118,22 +119,7 @@ class ProductExportRepository
      */
     public function setCategoryFacade(CategoryFacade $categoryFacade): void
     {
-        if (
-            $this->categoryFacade !== null
-            && $this->categoryFacade !== $categoryFacade
-        ) {
-            throw new BadMethodCallException(sprintf(
-                'Method "%s" has been already called and cannot be called multiple times.',
-                __METHOD__
-            ));
-        }
-        if ($this->categoryFacade !== null) {
-            return;
-        }
-
-        DeprecationHelper::triggerSetterInjection(__METHOD__);
-
-        $this->categoryFacade = $categoryFacade;
+        $this->setDependency($categoryFacade, 'categoryFacade');
     }
 
     /**
@@ -143,22 +129,7 @@ class ProductExportRepository
      */
     public function setProductAccessoryFacade(ProductAccessoryFacade $productAccessoryFacade): void
     {
-        if (
-            $this->productAccessoryFacade !== null
-            && $this->productAccessoryFacade !== $productAccessoryFacade
-        ) {
-            throw new BadMethodCallException(sprintf(
-                'Method "%s" has been already called and cannot be called multiple times.',
-                __METHOD__
-            ));
-        }
-        if ($this->productAccessoryFacade !== null) {
-            return;
-        }
-
-        DeprecationHelper::triggerSetterInjection(__METHOD__);
-
-        $this->productAccessoryFacade = $productAccessoryFacade;
+        $this->setDependency($productAccessoryFacade, 'productAccessoryFacade');
     }
 
     /**
@@ -168,22 +139,7 @@ class ProductExportRepository
      */
     public function setBrandCachedFacade(BrandCachedFacade $brandCachedFacade): void
     {
-        if (
-            $this->brandCachedFacade !== null
-            && $this->brandCachedFacade !== $brandCachedFacade
-        ) {
-            throw new BadMethodCallException(sprintf(
-                'Method "%s" has been already called and cannot be called multiple times.',
-                __METHOD__
-            ));
-        }
-        if ($this->brandCachedFacade !== null) {
-            return;
-        }
-
-        DeprecationHelper::triggerSetterInjection(__METHOD__);
-
-        $this->brandCachedFacade = $brandCachedFacade;
+        $this->setDependency($brandCachedFacade, 'brandCachedFacade');
     }
 
     /**
@@ -379,8 +335,8 @@ class ProductExportRepository
             ->select('p')
             ->from(Product::class, 'p')
             ->join(ProductVisibility::class, 'prv', Join::WITH, 'prv.product = p.id')
-                ->andWhere('prv.domainId = :domainId')
-                ->andWhere('prv.visible = TRUE')
+            ->andWhere('prv.domainId = :domainId')
+            ->andWhere('prv.visible = TRUE')
             ->groupBy('p.id')
             ->orderBy('p.id');
 

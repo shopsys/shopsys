@@ -2,11 +2,11 @@
 
 namespace Shopsys\FrameworkBundle\Component\Router\FriendlyUrl;
 
-use BadMethodCallException;
 use Shopsys\FrameworkBundle\Component\Deprecations\DeprecationHelper;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\Exception\FriendlyUrlNotFoundException;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\Exception\MethodGenerateIsNotSupportedException;
+use Shopsys\FrameworkBundle\DependencyInjection\SetterInjectionTrait;
 use Symfony\Component\Routing\Exception\MissingMandatoryParametersException;
 use Symfony\Component\Routing\Exception\RouteNotFoundException;
 use Symfony\Component\Routing\Generator\UrlGenerator as BaseUrlGenerator;
@@ -18,6 +18,8 @@ use Symfony\Contracts\Cache\CacheInterface;
 
 class FriendlyUrlGenerator extends BaseUrlGenerator
 {
+    use SetterInjectionTrait;
+
     /**
      * @var \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRepository
      */
@@ -215,20 +217,6 @@ class FriendlyUrlGenerator extends BaseUrlGenerator
      */
     public function setFriendlyUrlCacheKeyProvider(FriendlyUrlCacheKeyProvider $friendlyUrlCacheKeyProvider): void
     {
-        if (
-            $this->friendlyUrlCacheKeyProvider !== null
-            && $this->friendlyUrlCacheKeyProvider !== $friendlyUrlCacheKeyProvider
-        ) {
-            throw new BadMethodCallException(
-                sprintf('Method "%s" has been already called and cannot be called multiple times.', __METHOD__)
-            );
-        }
-        if ($this->friendlyUrlCacheKeyProvider !== null) {
-            return;
-        }
-
-        DeprecationHelper::triggerSetterInjection(__METHOD__);
-
-        $this->friendlyUrlCacheKeyProvider = $friendlyUrlCacheKeyProvider;
+        $this->setDependency($friendlyUrlCacheKeyProvider, 'friendlyUrlCacheKeyProvider');
     }
 }
