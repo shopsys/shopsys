@@ -58,7 +58,7 @@ class PaginatedProductsTest extends GraphQlTestCase
                     ['name' => t('YENKEE YSP 1005WH white', [], 'dataFixtures', $firstDomainLocale)],
                     ['name' => t('Xtreamer SW5', [], 'dataFixtures', $firstDomainLocale)],
                     ['name' => t('Xtreamer SW4', [], 'dataFixtures', $firstDomainLocale)],
-                    ['name' => t('Winch throttle silver VP-9711/12', [], 'dataFixtures', $firstDomainLocale)],
+                    ['name' => t('VERBATIM 1TB external HDD 2,5" USB 3.0 GT SuperSpeed red', [], 'dataFixtures', $firstDomainLocale)],
                 ],
             ],
             [

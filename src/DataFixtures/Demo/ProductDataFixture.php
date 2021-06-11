@@ -1845,9 +1845,10 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $this->setSellingFrom($productData, '12.2.2014');
         $this->setSellingTo($productData, null);
-        $productData->usingStock = false;
-        $productData->stockQuantity = 0;
+        $productData->usingStock = true;
+        $productData->stockQuantity = 10;
         $productData->outOfStockAction = Product::OUT_OF_STOCK_ACTION_HIDE;
+        $this->setStocksQuantity($productData, 10);
 
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
