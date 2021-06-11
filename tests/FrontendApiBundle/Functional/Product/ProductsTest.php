@@ -127,7 +127,7 @@ class ProductsTest extends ProductsGraphQlTestCase
                 'availability' => [
                     'name' => t('In stock', [], 'dataFixtures', $firstDomainLocale),
                 ],
-                'stockQuantity' => 100,
+                'stockQuantity' => 900,
                 'categories' => [
                     [
                         'name' => t('TV, audio', [], 'dataFixtures', $firstDomainLocale),
@@ -146,24 +146,8 @@ class ProductsTest extends ProductsGraphQlTestCase
                     'dataFixtures',
                     $firstDomainLocale
                 ),
-                'orderingPriority' => 1,
+                'orderingPriority' => 0,
                 'parameters' => [
-                    [
-                        'name' => t('HDMI', [], 'dataFixtures', $firstDomainLocale),
-                        'values' => [
-                            [
-                                'text' => t('Yes', [], 'dataFixtures', $firstDomainLocale),
-                            ],
-                        ],
-                    ],
-                    [
-                        'name' => t('Resolution', [], 'dataFixtures', $firstDomainLocale),
-                        'values' => [
-                            [
-                                'text' => t('1920×1080 (Full HD)', [], 'dataFixtures', $firstDomainLocale),
-                            ],
-                        ],
-                    ],
                     [
                         'name' => t('Screen size', [], 'dataFixtures', $firstDomainLocale),
                         'values' => [
@@ -181,7 +165,23 @@ class ProductsTest extends ProductsGraphQlTestCase
                         ],
                     ],
                     [
+                        'name' => t('Resolution', [], 'dataFixtures', $firstDomainLocale),
+                        'values' => [
+                            [
+                                'text' => t('1920×1080 (Full HD)', [], 'dataFixtures', $firstDomainLocale),
+                            ],
+                        ],
+                    ],
+                    [
                         'name' => t('USB', [], 'dataFixtures', $firstDomainLocale),
+                        'values' => [
+                            [
+                                'text' => t('Yes', [], 'dataFixtures', $firstDomainLocale),
+                            ],
+                        ],
+                    ],
+                    [
+                        'name' => t('HDMI', [], 'dataFixtures', $firstDomainLocale),
                         'values' => [
                             [
                                 'text' => t('Yes', [], 'dataFixtures', $firstDomainLocale),

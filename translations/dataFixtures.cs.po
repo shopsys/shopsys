@@ -23,7 +23,7 @@ msgid "1.7GHz"
 msgstr "1.7GHz"
 
 msgid "100 Czech crowns ticket"
-msgstr "Stokorunová poukázka"
+msgstr "100 Korun českých - poukázka"
 
 msgid "1024 MB"
 msgstr "1024 MB"
