@@ -37,7 +37,7 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
     private $domain;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\PriceConverter
+     * @var \App\Model\Pricing\PriceConverter
      */
     private $priceConverter;
 
@@ -45,7 +45,7 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
      * @param \Shopsys\FrameworkBundle\Model\Transport\TransportFacade $transportFacade
      * @param \App\Model\Transport\TransportDataFactory $transportDataFactory
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceConverter $priceConverter
+     * @param \App\Model\Pricing\PriceConverter $priceConverter
      */
     public function __construct(
         TransportFacade $transportFacade,
@@ -140,13 +140,17 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
     private function setPriceForAllDomains(TransportData $transportData, Money $price): void
     {
         foreach ($this->domain->getAllIncludingDomainConfigsWithoutDataCreated() as $domain) {
-            $price = $this->priceConverter->convertPriceWithoutVatToPriceInDomainDefaultCurrency($price, $domain->getId());
-
             /** @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vat */
             $vat = $this->getReferenceForDomain(VatDataFixture::VAT_HIGH, $domain->getId());
 
+            $convertedPrice = $this->priceConverter->convertPriceToInputPriceWithoutVatInDomainDefaultCurrency(
+                $price,
+                $vat->getPercent(),
+                $domain->getId()
+            );
+
             $transportData->vatsIndexedByDomainId[$domain->getId()] = $vat;
-            $transportData->pricesIndexedByDomainId[$domain->getId()] = $price;
+            $transportData->pricesIndexedByDomainId[$domain->getId()] = $convertedPrice;
         }
     }
 

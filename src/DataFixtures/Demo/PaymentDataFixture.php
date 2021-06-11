@@ -39,7 +39,7 @@ class PaymentDataFixture extends AbstractReferenceFixture implements DependentFi
     private $domain;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\PriceConverter
+     * @var \App\Model\Pricing\PriceConverter
      */
     private $priceConverter;
 
@@ -47,7 +47,7 @@ class PaymentDataFixture extends AbstractReferenceFixture implements DependentFi
      * @param \App\Model\Payment\PaymentFacade $paymentFacade
      * @param \App\Model\Payment\PaymentDataFactory $paymentDataFactory
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceConverter $priceConverter
+     * @param \App\Model\Pricing\PriceConverter $priceConverter
      */
     public function __construct(
         PaymentFacade $paymentFacade,
@@ -182,12 +182,16 @@ class PaymentDataFixture extends AbstractReferenceFixture implements DependentFi
     private function setPriceForAllDomainDefaultCurrencies(PaymentData $paymentData, Money $price): void
     {
         foreach ($this->domain->getAllIncludingDomainConfigsWithoutDataCreated() as $domain) {
-            $price = $this->priceConverter->convertPriceWithoutVatToPriceInDomainDefaultCurrency($price, $domain->getId());
-
             /** @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vat */
             $vat = $this->getReferenceForDomain(VatDataFixture::VAT_ZERO, $domain->getId());
 
-            $paymentData->pricesIndexedByDomainId[$domain->getId()] = $price;
+            $convertedPrice = $this->priceConverter->convertPriceToInputPriceWithoutVatInDomainDefaultCurrency(
+                $price,
+                $vat->getPercent(),
+                $domain->getId()
+            );
+
+            $paymentData->pricesIndexedByDomainId[$domain->getId()] = $convertedPrice;
             $paymentData->vatsIndexedByDomainId[$domain->getId()] = $vat;
         }
     }

@@ -20,11 +20,8 @@ use Faker\Generator;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
-use Shopsys\FrameworkBundle\Model\Pricing\BasePriceCalculation;
-use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\PriceConverter;
-use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter as BaseParameter;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueDataFactoryInterface;
@@ -87,7 +84,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
     private $productIdsByCatnum = [];
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\PriceConverter
+     * @var \App\Model\Pricing\PriceConverter
      */
     private $priceConverter;
 
@@ -122,16 +119,6 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
     private $em;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\BasePriceCalculation
-     */
-    private BasePriceCalculation $basePriceCalculation;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade
-     */
-    private CurrencyFacade $currencyFacade;
-
-    /**
      * @param \App\Model\Product\ProductFacade $productFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade $pricingGroupFacade
@@ -140,15 +127,13 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
      * @param \App\Model\Product\Parameter\ParameterValueDataFactory $parameterValueDataFactory
      * @param \App\Model\Product\Parameter\ParameterFacade $parameterFacade
      * @param \App\Model\Product\Parameter\ParameterDataFactory $parameterDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceConverter $priceConverter
+     * @param \App\Model\Pricing\PriceConverter $priceConverter
      * @param \App\Model\Product\Parameter\ParameterGroupDataFactory $parameterGroupDataFactory
      * @param \Faker\Generator $generator
      * @param \App\Model\Product\Parameter\ParameterGroupFacade $parameterGroupFacade
      * @param \App\Model\Stock\StockRepository $stockRepository
      * @param \App\Model\Stock\ProductStockDataFactory $productStockDataFactory
      * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\BasePriceCalculation $basePriceCalculation
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
      */
     public function __construct(
         ProductFacade $productFacade,
@@ -165,9 +150,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         ParameterGroupFacade $parameterGroupFacade,
         StockRepository $stockRepository,
         ProductStockDataFactory $productStockDataFactory,
-        EntityManagerInterface $em,
-        BasePriceCalculation $basePriceCalculation,
-        CurrencyFacade $currencyFacade
+        EntityManagerInterface $em
     ) {
         $this->productFacade = $productFacade;
         $this->domain = $domain;
@@ -184,8 +167,6 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->stockRepository = $stockRepository;
         $this->productStockDataFactory = $productStockDataFactory;
         $this->em = $em;
-        $this->basePriceCalculation = $basePriceCalculation;
-        $this->currencyFacade = $currencyFacade;
     }
 
     /**
@@ -6231,16 +6212,16 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
     private function setPriceForAllPricingGroups(ProductData $productData, string $price): void
     {
         foreach ($this->pricingGroupFacade->getAll() as $pricingGroup) {
-            $domainId = $pricingGroup->getDomainId();
+            /** @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vat */
+            $vat = $this->getReferenceForDomain(VatDataFixture::VAT_HIGH, $pricingGroup->getDomainId());
 
-            $inputPrice = $this->basePriceCalculation->calculateBasePriceRoundedByCurrency(
-                $this->priceConverter->convertPriceWithoutVatToPriceInDomainDefaultCurrency(Money::create($price), $domainId),
-                PricingSetting::INPUT_PRICE_TYPE_WITHOUT_VAT,
-                $productData->vatsIndexedByDomainId[$domainId],
-                $this->currencyFacade->getDomainDefaultCurrencyByDomainId($domainId)
+            $money = $this->priceConverter->convertPriceToInputPriceWithoutVatInDomainDefaultCurrency(
+                Money::create($price),
+                $vat->getPercent(),
+                $pricingGroup->getDomainId()
             );
 
-            $productData->manualInputPricesByPricingGroupId[$pricingGroup->getId()] = $inputPrice->getPriceWithVat();
+            $productData->manualInputPricesByPricingGroupId[$pricingGroup->getId()] = $money;
         }
     }
 

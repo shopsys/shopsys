@@ -866,3 +866,6 @@ services:
         class: App\Component\Domain\DomainAwareSecurityHeadersSetter
         tags:
             - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse }
+
+    Shopsys\FrameworkBundle\Model\Pricing\PriceConverter:
+        alias: App\Model\Pricing\PriceConverter
