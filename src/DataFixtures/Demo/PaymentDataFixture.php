@@ -133,7 +133,7 @@ class PaymentDataFixture extends AbstractReferenceFixture implements DependentFi
         $paymentData->type = Payment::TYPE_BASIC;
 
         foreach ($this->domain->getAllLocales() as $locale) {
-            $paymentData->name[$locale] = t('Nadlimitnís', [], 'dataFixtures', $locale);
+            $paymentData->name[$locale] = t('Nadlimitní', [], 'dataFixtures', $locale);
         }
 
         $this->setPriceForAllDomainDefaultCurrencies($paymentData, Money::create('199.90'));
