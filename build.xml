@@ -204,6 +204,50 @@
         <phingcall target="acceptance-elasticsearch-export"/>
     </target>
 
+    <target name="tests-functional-single" depends="production-protection,clean,test-clean-redis,domains-info-load" description="Runs functional test.">
+        <if>
+            <not><isset property="test"/></not>
+            <then>
+                <input propertyName="test" message="Enter class test name (e.g. ProductFacadeTest) or specific test name (e.g. ProductFacadeTest::testEditSchedulesPriceRecalculation)"/>
+            </then>
+        </if>
+        <if>
+            <equals arg1="${test}" arg2=""/>
+            <then>
+                <fail message="Test name not provided"/>
+            </then>
+        </if>
+        <if>
+            <istrue value="${domains-info.is-multidomain}"/>
+            <then>
+                <exec executable="${path.phpunit.executable}" logoutput="true" passthru="true" checkreturn="true">
+                    <arg value="--colors=always"/>
+                    <arg value="--testsuite"/>
+                    <arg value="Functional"/>
+                    <arg value="--exclude-group"/>
+                    <arg value="singledomain"/>
+                    <arg value="--configuration"/>
+                    <arg value="${path.root}/phpunit.xml"/>
+                    <arg value="--filter"/>
+                    <arg value="${test}"/>
+                </exec>
+            </then>
+            <else>
+                <exec executable="${path.phpunit.executable}" logoutput="true" passthru="true" checkreturn="true">
+                    <arg value="--colors=always"/>
+                    <arg value="--testsuite"/>
+                    <arg value="Functional"/>
+                    <arg value="--exclude-group"/>
+                    <arg value="multidomain"/>
+                    <arg value="--configuration"/>
+                    <arg value="${path.root}/phpunit.xml"/>
+                    <arg value="--filter"/>
+                    <arg value="${test}"/>
+                </exec>
+            </else>
+        </if>
+    </target>
+
     <target name="translations-frontend-dump" depends="domains-info-load" description="Extracts translatable messages from front-end source files in your project.">
         <phingcall target="npm-translations-dump"/>
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true" >
