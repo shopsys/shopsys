@@ -23,6 +23,7 @@ class PromotedProductsTest extends GraphQlTestCase
             ['name' => t('22" Sencor SLE 22F46DM4 HELLO KITTY', [], 'dataFixtures', $firstDomainLocale)],
             ['name' => t('Genius repro SP-M120 black', [], 'dataFixtures', $firstDomainLocale)],
             ['name' => t('Canon MG3550', [], 'dataFixtures', $firstDomainLocale)],
+            ['name' => t('Philips 32PFL4308', [], 'dataFixtures', $firstDomainLocale)],
         ];
 
         $graphQlType = 'promotedProducts';

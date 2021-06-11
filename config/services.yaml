@@ -869,3 +869,9 @@ services:
 
     Shopsys\FrameworkBundle\Model\Pricing\PriceConverter:
         alias: App\Model\Pricing\PriceConverter
+
+    Shopsys\FrontendApiBundle\Model\Resolver\Products\PromotedProductsResolver:
+        alias: App\FrontendApi\Model\Resolver\Products\PromotedProductsResolver
+
+    Shopsys\FrontendApiBundle\Model\Product\ProductFacade:
+        alias: App\FrontendApi\Model\Product\ProductFacade
