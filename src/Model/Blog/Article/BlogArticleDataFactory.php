@@ -87,6 +87,7 @@ class BlogArticleDataFactory
         $blogArticleData->publishDate = $blogArticle->getPublishDate();
         $blogArticleData->blogCategoriesByDomainId = $blogArticle->getBlogCategoriesIndexedByDomainId();
         $blogArticleData->products = $blogArticle->getProducts();
+        $blogArticleData->uuid = $blogArticle->getUuid();
 
         foreach ($this->domain->getAllIds() as $domainId) {
             $blogArticleData->seoMetaDescriptions[$domainId] = $blogArticle->getSeoMetaDescription($domainId);

@@ -119,6 +119,14 @@ class BlogArticleExportRepository
                 'front_blogarticle_detail',
                 $blogArticle->getId()
             ),
+            'uuid' => $blogArticle->getUuid(),
+            'createdAt' => $blogArticle->getCreatedAt()->format('Y-m-d H:i:s'),
+            'visibleOnHomepage' => $blogArticle->isVisibleOnHomepage(),
+            'publishDate' => $blogArticle->getPublishDate()->format('Y-m-d'),
+            'perex' => $blogArticle->getPerex($locale),
+            'seoTitle' => $blogArticle->getSeoTitle($domainId),
+            'seoMetaDescription' => $blogArticle->getSeoMetaDescription($domainId),
+            'seoH1' => $blogArticle->getSeoH1($domainId),
         ];
     }
 }

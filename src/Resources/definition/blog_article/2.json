@@ -160,6 +160,30 @@
       },
       "url": {
         "type": "text"
+      },
+      "uuid": {
+        "type": "keyword"
+      },
+      "createdAt": {
+        "type": "text"
+      },
+      "visibleOnHomepage": {
+        "type": "boolean"
+      },
+      "publishDate": {
+        "type": "text"
+      },
+      "perex": {
+        "type": "text"
+      },
+      "seoTitle": {
+        "type": "text"
+      },
+      "seoMetaDescription": {
+        "type": "text"
+      },
+      "seoH1": {
+        "type": "text"
       }
     }
   }

@@ -9,6 +9,7 @@ use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Prezent\Doctrine\Translatable\Annotation as Prezent;
+use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Model\Localization\AbstractTranslatableEntity;
 
 /**
@@ -81,6 +82,12 @@ class BlogArticle extends AbstractTranslatableEntity
     protected $products;
 
     /**
+     * @var string
+     * @ORM\Column(type="guid", unique=true)
+     */
+    private string $uuid;
+
+    /**
      * @param \App\Model\Blog\Article\BlogArticleData $blogArticleData
      */
     public function __construct(BlogArticleData $blogArticleData)
@@ -96,6 +103,7 @@ class BlogArticle extends AbstractTranslatableEntity
         $this->visibleOnHomepage = $blogArticleData->visibleOnHomepage;
         $this->publishDate = $blogArticleData->publishDate ?? new DateTime();
         $this->products = new ArrayCollection($blogArticleData->products);
+        $this->uuid = $blogArticleData->uuid ?: Uuid::uuid4()->toString();
     }
 
     /**
@@ -415,5 +423,13 @@ class BlogArticle extends AbstractTranslatableEntity
     public function getProducts(): array
     {
         return $this->products->toArray();
+    }
+
+    /**
+     * @return string
+     */
+    public function getUuid(): string
+    {
+        return $this->uuid;
     }
 }
