@@ -16,6 +16,7 @@ class FriendlyUrlTest extends GraphQlTestCase
             $expectedName = $dataSet['expectedName'];
 
             $query = $this->getQuery($graphQlType, $urlSlug);
+
             $response = $this->getResponseContentForQuery($query);
             $this->assertResponseContainsArrayOfDataForGraphQlType($response, $graphQlType);
             $responseData = $this->getResponseDataForGraphQlType($response, $graphQlType);
@@ -77,12 +78,12 @@ class FriendlyUrlTest extends GraphQlTestCase
             ],
             [
                 'graphQlType' => 'article',
-                'urlSlug' => 'terms-and-conditions/',
-                'expectedName' => t('Terms and conditions', [], 'dataFixtures', $this->getFirstDomainLocale()),
+                'urlSlug' => 'zasady-ochrany-osobnich-udaju/',
+                'expectedName' => t('Privacy policy', [], 'dataFixtures', $this->getFirstDomainLocale()),
             ],
             [
                 'graphQlType' => 'category',
-                'urlSlug' => 'electronics/',
+                'urlSlug' => 'elektro/',
                 'expectedName' => t('Electronics', [], 'dataFixtures', $this->getFirstDomainLocale()),
             ],
             [
