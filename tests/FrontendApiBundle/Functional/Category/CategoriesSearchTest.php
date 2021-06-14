@@ -12,7 +12,7 @@ class CategoriesSearchTest extends GraphQlTestCase
     {
         $query = '
             query {
-                categoriesSearch(search: "tv") {
+                categoriesSearch(search: "audio") {
                     edges {
                         node {
                             name
@@ -62,8 +62,8 @@ class CategoriesSearchTest extends GraphQlTestCase
             }';
 
         $categoriesExpected = [
-            ['name' => t('Personal Computers & accessories', [], 'dataFixtures', $this->getFirstDomainLocale())],
-            ['name' => t('TV, audio', [], 'dataFixtures', $this->getFirstDomainLocale())],
+            ['name' => t('Printers', [], 'dataFixtures', $this->getFirstDomainLocale())],
+            ['name' => t('Garden tools', [], 'dataFixtures', $this->getFirstDomainLocale())],
         ];
 
         $this->assertCategories($query, $categoriesExpected);
