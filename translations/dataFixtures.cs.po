@@ -580,6 +580,9 @@ msgstr "Hotově"
 msgid "Cash on delivery"
 msgstr "Dobírka"
 
+msgid "Catalog"
+msgstr "Katalog"
+
 msgid "Circumaural"
 msgstr "Okolo uší - Circumaurální"
 
