@@ -102,7 +102,7 @@ class BrandTest extends GraphQlTestCase
             },
             "images": [
                 {
-                    "url": "' . $this->getFullUrlPath('/content-test/images/brand/default/80.jpg') . '",
+                    "url": "' . $this->getFullUrlPath('/content-test/images/brand/default/canon_80.jpg') . '",
                     "type": null,
                     "size": "default",
                     "width": 300,
@@ -110,7 +110,7 @@ class BrandTest extends GraphQlTestCase
                     "position": null
                 },
                 {
-                    "url": "' . $this->getFullUrlPath('/content-test/images/brand/original/80.jpg') . '",
+                    "url": "' . $this->getFullUrlPath('/content-test/images/brand/original/canon_80.jpg') . '",
                     "type": null,
                     "size": "original",
                     "width": null,
