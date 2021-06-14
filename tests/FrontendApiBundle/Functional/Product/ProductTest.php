@@ -150,7 +150,7 @@ class ProductTest extends GraphQlTestCase
                     'availability' => [
                         'name' => t('In stock', [], 'dataFixtures', $firstDomainLocale),
                     ],
-                    'stockQuantity' => 300,
+                    'stockQuantity' => 2700,
                     'categories' => [
                         [
                             'name' => t('Electronics', [], 'dataFixtures', $firstDomainLocale),
@@ -161,12 +161,8 @@ class ProductTest extends GraphQlTestCase
                     ],
                     'flags' => [
                         [
-                            'name' => t('TOP', [], 'dataFixtures', $firstDomainLocale),
-                            'rgbColor' => '#d6fffa',
-                        ],
-                        [
                             'name' => t('Action', [], 'dataFixtures', $firstDomainLocale),
-                            'rgbColor' => '#f9ffd6',
+                            'rgbColor' => '#ffffff',
                         ],
                     ],
                     'price' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('2891.70', $vatHigh),
@@ -193,24 +189,8 @@ class ProductTest extends GraphQlTestCase
                         'dataFixtures',
                         $firstDomainLocale
                     ),
-                    'orderingPriority' => 1,
+                    'orderingPriority' => 0,
                     'parameters' => [
-                        [
-                            'name' => t('HDMI', [], 'dataFixtures', $firstDomainLocale),
-                            'values' => [
-                                [
-                                    'text' => t('Yes', [], 'dataFixtures', $firstDomainLocale),
-                                ],
-                            ],
-                        ],
-                        [
-                            'name' => t('Resolution', [], 'dataFixtures', $firstDomainLocale),
-                            'values' => [
-                                [
-                                    'text' => t('1920×1080 (Full HD)', [], 'dataFixtures', $firstDomainLocale),
-                                ],
-                            ],
-                        ],
                         [
                             'name' => t('Screen size', [], 'dataFixtures', $firstDomainLocale),
                             'values' => [
@@ -228,10 +208,66 @@ class ProductTest extends GraphQlTestCase
                             ],
                         ],
                         [
+                            'name' => t('Resolution', [], 'dataFixtures', $firstDomainLocale),
+                            'values' => [
+                                [
+                                    'text' => t('1920×1080 (Full HD)', [], 'dataFixtures', $firstDomainLocale),
+                                ],
+                            ],
+                        ],
+                        [
                             'name' => t('USB', [], 'dataFixtures', $firstDomainLocale),
                             'values' => [
                                 [
                                     'text' => t('Yes', [], 'dataFixtures', $firstDomainLocale),
+                                ],
+                            ],
+                        ],
+                        [
+                            'name' => t('HDMI', [], 'dataFixtures', $firstDomainLocale),
+                            'values' => [
+                                [
+                                    'text' => t('Yes', [], 'dataFixtures', $firstDomainLocale),
+                                ],
+                            ],
+                        ],
+                        [
+                            'name' => t('Barva', [], 'dataFixtures', $firstDomainLocale),
+                            'values' => [
+                                [
+                                    'text' => t('červená', [], 'dataFixtures', $firstDomainLocale),
+                                ],
+                            ],
+                        ],
+                        [
+                            'name' => t('Barva', [], 'dataFixtures', $firstDomainLocale),
+                            'values' => [
+                                [
+                                    'text' => t('černá', [], 'dataFixtures', $firstDomainLocale),
+                                ],
+                            ],
+                        ],
+                        [
+                            'name' => t('Materiál', [], 'dataFixtures', $firstDomainLocale),
+                            'values' => [
+                                [
+                                    'text' => t('kov', [], 'dataFixtures', $firstDomainLocale),
+                                ],
+                            ],
+                        ],
+                        [
+                            'name' => t('Materiál', [], 'dataFixtures', $firstDomainLocale),
+                            'values' => [
+                                [
+                                    'text' => t('dřevo', [], 'dataFixtures', $firstDomainLocale),
+                                ],
+                            ],
+                        ],
+                        [
+                            'name' => t('Materiál', [], 'dataFixtures', $firstDomainLocale),
+                            'values' => [
+                                [
+                                    'text' => t('plast', [], 'dataFixtures', $firstDomainLocale),
                                 ],
                             ],
                         ],
