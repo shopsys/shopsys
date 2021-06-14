@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Tests\FrontendApiBundle\Functional\Article;
 
+use App\Model\Article\Article;
 use Ramsey\Uuid\Uuid;
-use Shopsys\FrameworkBundle\Model\Article\Article;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class GetArticlesTest extends GraphQlTestCase
@@ -78,23 +78,23 @@ class GetArticlesTest extends GraphQlTestCase
             ],
             [
                 $this->getLastArticlesQuery(1),
-                array_slice($this->getExpectedArticles(), 4, 1),
+                array_slice($this->getExpectedArticles(), 19, 1),
             ],
             [
                 $this->getLastArticlesQuery(2),
-                array_slice($this->getExpectedArticles(), 3, 2),
+                array_slice($this->getExpectedArticles(), 18, 2),
             ],
             [
                 $this->getFirstArticlesQuery(1, Article::PLACEMENT_TOP_MENU),
-                array_slice($this->getExpectedArticles(), 3, 1),
+                array_slice($this->getExpectedArticles(), 18, 1),
             ],
             [
                 $this->getLastArticlesQuery(1, Article::PLACEMENT_TOP_MENU),
-                array_slice($this->getExpectedArticles(), 4, 1),
+                array_slice($this->getExpectedArticles(), 19, 1),
             ],
             [
                 $this->getAllArticlesQuery(Article::PLACEMENT_TOP_MENU),
-                array_slice($this->getExpectedArticles(), 3, 2),
+                array_slice($this->getExpectedArticles(), 18, 2),
             ],
             [
                 $this->getAllArticlesQuery('non-existing-placement'),
@@ -110,9 +110,9 @@ class GetArticlesTest extends GraphQlTestCase
     private function getAllArticlesQuery(?string $placement = null): string
     {
         if ($placement !== null) {
-            $graphQlTypeWithFilters = 'articles (placement:"' . $placement . '")';
+            $graphQlTypeWithFilters = 'articles (first:20, placement:"' . $placement . '")';
         } else {
-            $graphQlTypeWithFilters = 'articles';
+            $graphQlTypeWithFilters = 'articles (first:20)';
         }
         return '
             {
@@ -205,8 +205,8 @@ class GetArticlesTest extends GraphQlTestCase
         $firstDomainLocale = $this->getLocaleForFirstDomain();
         return [
             [
-                'name' => t('Terms and conditions', [], 'dataFixtures', $firstDomainLocale),
-                'placement' => Article::PLACEMENT_FOOTER,
+                'name' => t('O nás', [], 'dataFixtures', $firstDomainLocale),
+                'placement' => Article::PLACEMENT_FOOTER_1,
                 'text' => t(
                     'Morbi posuere mauris dolor, quis accumsan dolor ullamcorper eget. Phasellus at elementum magna, et pretium neque. Praesent tristique lorem mi, eget varius quam aliquam eget. Vivamus ultrices interdum nisi, sed placerat lectus fermentum non. Phasellus ac quam vitae nisi aliquam vestibulum. Sed rhoncus tortor a arcu sagittis placerat. Nulla lectus nunc, ultrices ac faucibus sed, accumsan nec diam. Nam auctor neque quis tincidunt tempus. Nunc eget risus tristique, lobortis metus vitae, pellentesque leo. Vivamus placerat turpis ac dolor vehicula tincidunt. Sed venenatis, ante id ultrices convallis, lacus elit porttitor dolor, non porta risus ipsum ac justo. Integer id pretium quam, id placerat nulla.',
                     [],
@@ -218,7 +218,202 @@ class GetArticlesTest extends GraphQlTestCase
                 'seoMetaDescription' => null,
             ],
             [
-                'name' => t('Privacy policy', [], 'dataFixtures', $firstDomainLocale),
+                'name' => t('Práce v Shopsys', [], 'dataFixtures', $firstDomainLocale),
+                'placement' => Article::PLACEMENT_FOOTER_1,
+                'text' => t(
+                    'Morbi posuere mauris dolor, quis accumsan dolor ullamcorper eget. Phasellus at elementum magna, et pretium neque. Praesent tristique lorem mi, eget varius quam aliquam eget. Vivamus ultrices interdum nisi, sed placerat lectus fermentum non. Phasellus ac quam vitae nisi aliquam vestibulum. Sed rhoncus tortor a arcu sagittis placerat. Nulla lectus nunc, ultrices ac faucibus sed, accumsan nec diam. Nam auctor neque quis tincidunt tempus. Nunc eget risus tristique, lobortis metus vitae, pellentesque leo. Vivamus placerat turpis ac dolor vehicula tincidunt. Sed venenatis, ante id ultrices convallis, lacus elit porttitor dolor, non porta risus ipsum ac justo. Integer id pretium quam, id placerat nulla.',
+                    [],
+                    'dataFixtures',
+                    $firstDomainLocale
+                ),
+                'seoH1' => null,
+                'seoTitle' => null,
+                'seoMetaDescription' => null,
+            ],
+            [
+                'name' => t('Spolupráce', [], 'dataFixtures', $firstDomainLocale),
+                'placement' => Article::PLACEMENT_FOOTER_1,
+                'text' => t(
+                    'Morbi posuere mauris dolor, quis accumsan dolor ullamcorper eget. Phasellus at elementum magna, et pretium neque. Praesent tristique lorem mi, eget varius quam aliquam eget. Vivamus ultrices interdum nisi, sed placerat lectus fermentum non. Phasellus ac quam vitae nisi aliquam vestibulum. Sed rhoncus tortor a arcu sagittis placerat. Nulla lectus nunc, ultrices ac faucibus sed, accumsan nec diam. Nam auctor neque quis tincidunt tempus. Nunc eget risus tristique, lobortis metus vitae, pellentesque leo. Vivamus placerat turpis ac dolor vehicula tincidunt. Sed venenatis, ante id ultrices convallis, lacus elit porttitor dolor, non porta risus ipsum ac justo. Integer id pretium quam, id placerat nulla.',
+                    [],
+                    'dataFixtures',
+                    $firstDomainLocale
+                ),
+                'seoH1' => null,
+                'seoTitle' => null,
+                'seoMetaDescription' => null,
+            ],
+            [
+                'name' => t('Pro média', [], 'dataFixtures', $firstDomainLocale),
+                'placement' => Article::PLACEMENT_FOOTER_1,
+                'text' => t(
+                    'Morbi posuere mauris dolor, quis accumsan dolor ullamcorper eget. Phasellus at elementum magna, et pretium neque. Praesent tristique lorem mi, eget varius quam aliquam eget. Vivamus ultrices interdum nisi, sed placerat lectus fermentum non. Phasellus ac quam vitae nisi aliquam vestibulum. Sed rhoncus tortor a arcu sagittis placerat. Nulla lectus nunc, ultrices ac faucibus sed, accumsan nec diam. Nam auctor neque quis tincidunt tempus. Nunc eget risus tristique, lobortis metus vitae, pellentesque leo. Vivamus placerat turpis ac dolor vehicula tincidunt. Sed venenatis, ante id ultrices convallis, lacus elit porttitor dolor, non porta risus ipsum ac justo. Integer id pretium quam, id placerat nulla.',
+                    [],
+                    'dataFixtures',
+                    $firstDomainLocale
+                ),
+                'seoH1' => null,
+                'seoTitle' => null,
+                'seoMetaDescription' => null,
+            ],
+            [
+                'name' => t('Kontakty', [], 'dataFixtures', $firstDomainLocale),
+                'placement' => Article::PLACEMENT_FOOTER_1,
+                'text' => t(
+                    'Morbi posuere mauris dolor, quis accumsan dolor ullamcorper eget. Phasellus at elementum magna, et pretium neque. Praesent tristique lorem mi, eget varius quam aliquam eget. Vivamus ultrices interdum nisi, sed placerat lectus fermentum non. Phasellus ac quam vitae nisi aliquam vestibulum. Sed rhoncus tortor a arcu sagittis placerat. Nulla lectus nunc, ultrices ac faucibus sed, accumsan nec diam. Nam auctor neque quis tincidunt tempus. Nunc eget risus tristique, lobortis metus vitae, pellentesque leo. Vivamus placerat turpis ac dolor vehicula tincidunt. Sed venenatis, ante id ultrices convallis, lacus elit porttitor dolor, non porta risus ipsum ac justo. Integer id pretium quam, id placerat nulla.',
+                    [],
+                    'dataFixtures',
+                    $firstDomainLocale
+                ),
+                'seoH1' => null,
+                'seoTitle' => null,
+                'seoMetaDescription' => null,
+            ],
+            [
+                'name' => t('Péče o nábytek', [], 'dataFixtures', $firstDomainLocale),
+                'placement' => Article::PLACEMENT_FOOTER_2,
+                'text' => t(
+                    'Morbi posuere mauris dolor, quis accumsan dolor ullamcorper eget. Phasellus at elementum magna, et pretium neque. Praesent tristique lorem mi, eget varius quam aliquam eget. Vivamus ultrices interdum nisi, sed placerat lectus fermentum non. Phasellus ac quam vitae nisi aliquam vestibulum. Sed rhoncus tortor a arcu sagittis placerat. Nulla lectus nunc, ultrices ac faucibus sed, accumsan nec diam. Nam auctor neque quis tincidunt tempus. Nunc eget risus tristique, lobortis metus vitae, pellentesque leo. Vivamus placerat turpis ac dolor vehicula tincidunt. Sed venenatis, ante id ultrices convallis, lacus elit porttitor dolor, non porta risus ipsum ac justo. Integer id pretium quam, id placerat nulla.',
+                    [],
+                    'dataFixtures',
+                    $firstDomainLocale
+                ),
+                'seoH1' => null,
+                'seoTitle' => null,
+                'seoMetaDescription' => null,
+            ],
+            [
+                'name' => t('Nákup na splátky', [], 'dataFixtures', $firstDomainLocale),
+                'placement' => Article::PLACEMENT_FOOTER_2,
+                'text' => t(
+                    'Morbi posuere mauris dolor, quis accumsan dolor ullamcorper eget. Phasellus at elementum magna, et pretium neque. Praesent tristique lorem mi, eget varius quam aliquam eget. Vivamus ultrices interdum nisi, sed placerat lectus fermentum non. Phasellus ac quam vitae nisi aliquam vestibulum. Sed rhoncus tortor a arcu sagittis placerat. Nulla lectus nunc, ultrices ac faucibus sed, accumsan nec diam. Nam auctor neque quis tincidunt tempus. Nunc eget risus tristique, lobortis metus vitae, pellentesque leo. Vivamus placerat turpis ac dolor vehicula tincidunt. Sed venenatis, ante id ultrices convallis, lacus elit porttitor dolor, non porta risus ipsum ac justo. Integer id pretium quam, id placerat nulla.',
+                    [],
+                    'dataFixtures',
+                    $firstDomainLocale
+                ),
+                'seoH1' => null,
+                'seoTitle' => null,
+                'seoMetaDescription' => null,
+            ],
+            [
+                'name' => t('Reklamace', [], 'dataFixtures', $firstDomainLocale),
+                'placement' => Article::PLACEMENT_FOOTER_2,
+                'text' => t(
+                    'Morbi posuere mauris dolor, quis accumsan dolor ullamcorper eget. Phasellus at elementum magna, et pretium neque. Praesent tristique lorem mi, eget varius quam aliquam eget. Vivamus ultrices interdum nisi, sed placerat lectus fermentum non. Phasellus ac quam vitae nisi aliquam vestibulum. Sed rhoncus tortor a arcu sagittis placerat. Nulla lectus nunc, ultrices ac faucibus sed, accumsan nec diam. Nam auctor neque quis tincidunt tempus. Nunc eget risus tristique, lobortis metus vitae, pellentesque leo. Vivamus placerat turpis ac dolor vehicula tincidunt. Sed venenatis, ante id ultrices convallis, lacus elit porttitor dolor, non porta risus ipsum ac justo. Integer id pretium quam, id placerat nulla.',
+                    [],
+                    'dataFixtures',
+                    $firstDomainLocale
+                ),
+                'seoH1' => null,
+                'seoTitle' => null,
+                'seoMetaDescription' => null,
+            ],
+            [
+                'name' => t('Nejčastější dotazy FAQ', [], 'dataFixtures', $firstDomainLocale),
+                'placement' => Article::PLACEMENT_FOOTER_3,
+                'text' => t(
+                    'Morbi posuere mauris dolor, quis accumsan dolor ullamcorper eget. Phasellus at elementum magna, et pretium neque. Praesent tristique lorem mi, eget varius quam aliquam eget. Vivamus ultrices interdum nisi, sed placerat lectus fermentum non. Phasellus ac quam vitae nisi aliquam vestibulum. Sed rhoncus tortor a arcu sagittis placerat. Nulla lectus nunc, ultrices ac faucibus sed, accumsan nec diam. Nam auctor neque quis tincidunt tempus. Nunc eget risus tristique, lobortis metus vitae, pellentesque leo. Vivamus placerat turpis ac dolor vehicula tincidunt. Sed venenatis, ante id ultrices convallis, lacus elit porttitor dolor, non porta risus ipsum ac justo. Integer id pretium quam, id placerat nulla.',
+                    [],
+                    'dataFixtures',
+                    $firstDomainLocale
+                ),
+                'seoH1' => null,
+                'seoTitle' => null,
+                'seoMetaDescription' => null,
+            ],
+            [
+                'name' => t('Nejčastější dotazy FAQ', [], 'dataFixtures', $firstDomainLocale),
+                'placement' => Article::PLACEMENT_FOOTER_3,
+                'text' => t(
+                    'Morbi posuere mauris dolor, quis accumsan dolor ullamcorper eget. Phasellus at elementum magna, et pretium neque. Praesent tristique lorem mi, eget varius quam aliquam eget. Vivamus ultrices interdum nisi, sed placerat lectus fermentum non. Phasellus ac quam vitae nisi aliquam vestibulum. Sed rhoncus tortor a arcu sagittis placerat. Nulla lectus nunc, ultrices ac faucibus sed, accumsan nec diam. Nam auctor neque quis tincidunt tempus. Nunc eget risus tristique, lobortis metus vitae, pellentesque leo. Vivamus placerat turpis ac dolor vehicula tincidunt. Sed venenatis, ante id ultrices convallis, lacus elit porttitor dolor, non porta risus ipsum ac justo. Integer id pretium quam, id placerat nulla.',
+                    [],
+                    'dataFixtures',
+                    $firstDomainLocale
+                ),
+                'seoH1' => null,
+                'seoTitle' => null,
+                'seoMetaDescription' => null,
+            ],
+            [
+                'name' => t('Doprava a platba', [], 'dataFixtures', $firstDomainLocale),
+                'placement' => Article::PLACEMENT_FOOTER_3,
+                'text' => t(
+                    'Morbi posuere mauris dolor, quis accumsan dolor ullamcorper eget. Phasellus at elementum magna, et pretium neque. Praesent tristique lorem mi, eget varius quam aliquam eget. Vivamus ultrices interdum nisi, sed placerat lectus fermentum non. Phasellus ac quam vitae nisi aliquam vestibulum. Sed rhoncus tortor a arcu sagittis placerat. Nulla lectus nunc, ultrices ac faucibus sed, accumsan nec diam. Nam auctor neque quis tincidunt tempus. Nunc eget risus tristique, lobortis metus vitae, pellentesque leo. Vivamus placerat turpis ac dolor vehicula tincidunt. Sed venenatis, ante id ultrices convallis, lacus elit porttitor dolor, non porta risus ipsum ac justo. Integer id pretium quam, id placerat nulla.',
+                    [],
+                    'dataFixtures',
+                    $firstDomainLocale
+                ),
+                'seoH1' => null,
+                'seoTitle' => null,
+                'seoMetaDescription' => null,
+            ],
+            [
+                'name' => t('Odstoupení od smlouvy', [], 'dataFixtures', $firstDomainLocale),
+                'placement' => Article::PLACEMENT_FOOTER_3,
+                'text' => t(
+                    'Morbi posuere mauris dolor, quis accumsan dolor ullamcorper eget. Phasellus at elementum magna, et pretium neque. Praesent tristique lorem mi, eget varius quam aliquam eget. Vivamus ultrices interdum nisi, sed placerat lectus fermentum non. Phasellus ac quam vitae nisi aliquam vestibulum. Sed rhoncus tortor a arcu sagittis placerat. Nulla lectus nunc, ultrices ac faucibus sed, accumsan nec diam. Nam auctor neque quis tincidunt tempus. Nunc eget risus tristique, lobortis metus vitae, pellentesque leo. Vivamus placerat turpis ac dolor vehicula tincidunt. Sed venenatis, ante id ultrices convallis, lacus elit porttitor dolor, non porta risus ipsum ac justo. Integer id pretium quam, id placerat nulla.',
+                    [],
+                    'dataFixtures',
+                    $firstDomainLocale
+                ),
+                'seoH1' => null,
+                'seoTitle' => null,
+                'seoMetaDescription' => null,
+            ],
+            [
+                'name' => t('Obchodní podmínky e-shopu', [], 'dataFixtures', $firstDomainLocale),
+                'placement' => Article::PLACEMENT_FOOTER_3,
+                'text' => t(
+                    'Morbi posuere mauris dolor, quis accumsan dolor ullamcorper eget. Phasellus at elementum magna, et pretium neque. Praesent tristique lorem mi, eget varius quam aliquam eget. Vivamus ultrices interdum nisi, sed placerat lectus fermentum non. Phasellus ac quam vitae nisi aliquam vestibulum. Sed rhoncus tortor a arcu sagittis placerat. Nulla lectus nunc, ultrices ac faucibus sed, accumsan nec diam. Nam auctor neque quis tincidunt tempus. Nunc eget risus tristique, lobortis metus vitae, pellentesque leo. Vivamus placerat turpis ac dolor vehicula tincidunt. Sed venenatis, ante id ultrices convallis, lacus elit porttitor dolor, non porta risus ipsum ac justo. Integer id pretium quam, id placerat nulla.',
+                    [],
+                    'dataFixtures',
+                    $firstDomainLocale
+                ),
+                'seoH1' => null,
+                'seoTitle' => null,
+                'seoMetaDescription' => null,
+            ],
+            [
+                'name' => t('Kde nás najdete', [], 'dataFixtures', $firstDomainLocale),
+                'placement' => Article::PLACEMENT_FOOTER_4,
+                'text' => t(
+                    'Morbi posuere mauris dolor, quis accumsan dolor ullamcorper eget. Phasellus at elementum magna, et pretium neque. Praesent tristique lorem mi, eget varius quam aliquam eget. Vivamus ultrices interdum nisi, sed placerat lectus fermentum non. Phasellus ac quam vitae nisi aliquam vestibulum. Sed rhoncus tortor a arcu sagittis placerat. Nulla lectus nunc, ultrices ac faucibus sed, accumsan nec diam. Nam auctor neque quis tincidunt tempus. Nunc eget risus tristique, lobortis metus vitae, pellentesque leo. Vivamus placerat turpis ac dolor vehicula tincidunt. Sed venenatis, ante id ultrices convallis, lacus elit porttitor dolor, non porta risus ipsum ac justo. Integer id pretium quam, id placerat nulla.',
+                    [],
+                    'dataFixtures',
+                    $firstDomainLocale
+                ),
+                'seoH1' => null,
+                'seoTitle' => null,
+                'seoMetaDescription' => null,
+            ],
+            [
+                'name' => t('Služby obchodních domů', [], 'dataFixtures', $firstDomainLocale),
+                'placement' => Article::PLACEMENT_FOOTER_4,
+                'text' => t(
+                    'Morbi posuere mauris dolor, quis accumsan dolor ullamcorper eget. Phasellus at elementum magna, et pretium neque. Praesent tristique lorem mi, eget varius quam aliquam eget. Vivamus ultrices interdum nisi, sed placerat lectus fermentum non. Phasellus ac quam vitae nisi aliquam vestibulum. Sed rhoncus tortor a arcu sagittis placerat. Nulla lectus nunc, ultrices ac faucibus sed, accumsan nec diam. Nam auctor neque quis tincidunt tempus. Nunc eget risus tristique, lobortis metus vitae, pellentesque leo. Vivamus placerat turpis ac dolor vehicula tincidunt. Sed venenatis, ante id ultrices convallis, lacus elit porttitor dolor, non porta risus ipsum ac justo. Integer id pretium quam, id placerat nulla.',
+                    [],
+                    'dataFixtures',
+                    $firstDomainLocale
+                ),
+                'seoH1' => null,
+                'seoTitle' => null,
+                'seoMetaDescription' => null,
+            ],
+            [
+                'name' => t('Obchodní podmínky OD', [], 'dataFixtures', $firstDomainLocale),
+                'placement' => Article::PLACEMENT_FOOTER_4,
+                'text' => t(
+                    'Morbi posuere mauris dolor, quis accumsan dolor ullamcorper eget. Phasellus at elementum magna, et pretium neque. Praesent tristique lorem mi, eget varius quam aliquam eget. Vivamus ultrices interdum nisi, sed placerat lectus fermentum non. Phasellus ac quam vitae nisi aliquam vestibulum. Sed rhoncus tortor a arcu sagittis placerat. Nulla lectus nunc, ultrices ac faucibus sed, accumsan nec diam. Nam auctor neque quis tincidunt tempus. Nunc eget risus tristique, lobortis metus vitae, pellentesque leo. Vivamus placerat turpis ac dolor vehicula tincidunt. Sed venenatis, ante id ultrices convallis, lacus elit porttitor dolor, non porta risus ipsum ac justo. Integer id pretium quam, id placerat nulla.',
+                    [],
+                    'dataFixtures',
+                    $firstDomainLocale
+                ),
+                'seoH1' => null,
+                'seoTitle' => null,
+                'seoMetaDescription' => null,
+            ],
+            [
+                'name' => t('Zásady ochrany osobních údajů', [], 'dataFixtures', $firstDomainLocale),
                 'placement' => Article::PLACEMENT_NONE,
                 'text' => t(
                     'Morbi posuere mauris dolor, quis accumsan dolor ullamcorper eget. Phasellus at elementum magna, et pretium neque. Praesent tristique lorem mi, eget varius quam aliquam eget. Vivamus ultrices interdum nisi, sed placerat lectus fermentum non. Phasellus ac quam vitae nisi aliquam vestibulum. Sed rhoncus tortor a arcu sagittis placerat. Nulla lectus nunc, ultrices ac faucibus sed, accumsan nec diam. Nam auctor neque quis tincidunt tempus. Nunc eget risus tristique, lobortis metus vitae, pellentesque leo. Vivamus placerat turpis ac dolor vehicula tincidunt. Sed venenatis, ante id ultrices convallis, lacus elit porttitor dolor, non porta risus ipsum ac justo. Integer id pretium quam, id placerat nulla.',
@@ -231,7 +426,7 @@ class GetArticlesTest extends GraphQlTestCase
                 'seoMetaDescription' => null,
             ],
             [
-                'name' => t('Information about cookies', [], 'dataFixtures', $firstDomainLocale),
+                'name' => t('Informace o cookies', [], 'dataFixtures', $firstDomainLocale),
                 'placement' => Article::PLACEMENT_NONE,
                 'text' => t(
                     'Morbi posuere mauris dolor, quis accumsan dolor ullamcorper eget. Phasellus at elementum magna, et pretium neque. Praesent tristique lorem mi, eget varius quam aliquam eget. Vivamus ultrices interdum nisi, sed placerat lectus fermentum non. Phasellus ac quam vitae nisi aliquam vestibulum. Sed rhoncus tortor a arcu sagittis placerat. Nulla lectus nunc, ultrices ac faucibus sed, accumsan nec diam. Nam auctor neque quis tincidunt tempus. Nunc eget risus tristique, lobortis metus vitae, pellentesque leo. Vivamus placerat turpis ac dolor vehicula tincidunt. Sed venenatis, ante id ultrices convallis, lacus elit porttitor dolor, non porta risus ipsum ac justo. Integer id pretium quam, id placerat nulla.',
@@ -244,7 +439,7 @@ class GetArticlesTest extends GraphQlTestCase
                 'seoMetaDescription' => null,
             ],
             [
-                'name' => t('News', [], 'dataFixtures', $firstDomainLocale),
+                'name' => t('Novinky', [], 'dataFixtures', $firstDomainLocale),
                 'placement' => Article::PLACEMENT_TOP_MENU,
                 'text' => t(
                     'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus felis nisi, tincidunt sollicitudin augue eu, laoreet blandit sem. Donec rutrum augue a elit imperdiet, eu vehicula tortor porta. Vivamus pulvinar sem non auctor dictum. Morbi eleifend semper enim, eu faucibus tortor posuere vitae. Donec tincidunt ipsum ullamcorper nisi accumsan tincidunt. Aenean sed velit massa. Nullam interdum eget est ut convallis. Vestibulum et mauris condimentum, rutrum sem congue, suscipit arcu.\\nSed tristique vehicula ipsum, ut vulputate tortor feugiat eu. Vivamus convallis quam vulputate faucibus facilisis. Curabitur tincidunt pulvinar leo, eu dapibus augue lacinia a. Fusce sed tincidunt nunc. Morbi a nisi a odio pharetra laoreet nec eget quam. In in nisl tortor. Ut fringilla vitae lectus eu venenatis. Nullam interdum sed odio a posuere. Fusce pellentesque dui vel tortor blandit, a dictum nunc congue.',
@@ -265,19 +460,9 @@ class GetArticlesTest extends GraphQlTestCase
                     'dataFixtures',
                     $firstDomainLocale
                 ),
-                'seoH1' => t(
-                    'Shopping guide to improve your shopping experience',
-                    [],
-                    'dataFixtures',
-                    $firstDomainLocale
-                ),
+                'seoH1' => t('Shopping guide to improve your shopping experience', [], 'dataFixtures', $firstDomainLocale),
                 'seoTitle' => t('Shopping guide for quick shopping', [], 'dataFixtures', $firstDomainLocale),
-                'seoMetaDescription' => t(
-                    'Shopping guide - Tips and tricks how to quickly find what you are looking for',
-                    [],
-                    'dataFixtures',
-                    $firstDomainLocale
-                ),
+                'seoMetaDescription' => t('Shopping guide - Tips and tricks how to quickly find what you are looking for', [], 'dataFixtures', $firstDomainLocale),
             ],
         ];
     }

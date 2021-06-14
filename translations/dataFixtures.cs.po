@@ -1183,7 +1183,7 @@ msgstr "OPV-3260 Vestavný odsavač výsuvný 60cm"
 msgid "Obchodní podmínky e-shopu"
 msgstr ""
 
-msgid "Obchodí podmínky OD"
+msgid "Obchodní podmínky OD"
 msgstr ""
 
 msgid "Odstoupení od smlouvy"
@@ -1330,7 +1330,7 @@ msgstr ""
 msgid "Processor frequency"
 msgstr "Frekvence procesoru"
 
-msgid "Práce ve Scontu"
+msgid "Práce v Shopsys"
 msgstr ""
 
 msgid "Péče o nábytek"
@@ -1474,7 +1474,7 @@ msgstr "Kráječ na pizzu ETV-2860"
 msgid "Slovakia"
 msgstr "Slovensko"
 
-msgid "Služby obchodích domů"
+msgid "Služby obchodních domů"
 msgstr ""
 
 msgid "Spare paper bags for vacuum cleaners CONCEPT Clipper 9030/31/32/33 VP and VP 9130/31/32"
