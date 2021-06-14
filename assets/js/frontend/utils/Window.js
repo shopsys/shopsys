@@ -62,7 +62,7 @@ export default class Window {
 
         const displayClass = this.options.errors === '' ? 'display-none' : '';
         $windowContent.append(
-            '<div class="' + displayClass + ' in-message in-message--alert js-window-validation-errors">'
+            '<div class="' + displayClass + ' js-window-validation-errors">'
             + this.options.errors
             + '</div>'
             + this.options.content

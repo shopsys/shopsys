@@ -23,6 +23,7 @@ export default class OrderForm {
         this.$customerTypeSelectorHeading = $form.find('#js-order-form-customer-type-selector-heading');
         this.$commonCustomerButton = this.$customerTypeSelector.find('a[data-tab-id="common-customer"]');
         this.$companyCustomerButton = this.$customerTypeSelector.find('a[data-tab-id="company-customer"]');
+        this.$loginEmail = $form.find('#js-order-form-login-email');
         this.$loginContainer = $form.find('#js-order-form-login-container');
         this.$loginButton = $form.find('#js-order-form-login-button');
         this.$loginWindowContent = $form.find('#js-order-form-login-window-content');
@@ -122,6 +123,7 @@ export default class OrderForm {
         this.$customerTypeSelector.toggleClass('display-none', this.customerInfo.exists);
         this.$customerTypeSelectorHeading.toggleClass('display-none', this.customerInfo.exists);
         this.$loginContainer.toggle(this.customerInfo.activated);
+        this.$loginEmail.find('input').toggleClass('form-input-success', this.customerInfo.exists);
 
         if (this.customerInfo.exists) {
             this.$registerContainerLabel.text(Translator.trans('Chci aktivovat uživatelský účet'));

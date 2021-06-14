@@ -468,18 +468,24 @@
 
     &__errors {
         ul {
-            padding: 0;
-
-            list-style: none;
+            .reset-ul();
 
             li {
-                padding: 6px;
+                margin-bottom: 6px;
+                padding-bottom: 6px;
 
-                border-bottom: 1px solid @color-primary;
+                border-bottom: 1px solid @color-border;
+
+                &:last-child {
+                    margin-bottom: 0;
+                    padding-bottom: 0;
+
+                    border-bottom: 0;
+                }
 
                 li {
                     padding: 0;
-                    margin: -6px 0 0;
+                    margin: -2px 0 0;
 
                     border: 0;
                     color: @color-alert;
