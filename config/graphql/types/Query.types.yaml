@@ -2,3 +2,9 @@ Query:
     type: object
     inherits:
         - 'QueryDecorator'
+    config:
+        fields:
+            navigation:
+                type: '[NavigationItem!]!'
+                resolve: "@=resolver('navigationResolver')"
+                description: "Returns complete navigation menu"

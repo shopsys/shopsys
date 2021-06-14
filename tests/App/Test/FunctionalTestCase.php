@@ -180,13 +180,14 @@ abstract class FunctionalTestCase extends WebTestCase implements ServiceContaine
     /**
      * @param string $routeName
      * @param array $parameters
+     * @param int $absolute
      * @return string
      */
-    protected function getLocalizedPathOnFirstDomainByRouteName(string $routeName, array $parameters = []): string
+    protected function getLocalizedPathOnFirstDomainByRouteName(string $routeName, array $parameters = [], int $absolute = UrlGeneratorInterface::ABSOLUTE_URL): string
     {
         $domainRouterFactory = $this->getContainer()->get(DomainRouterFactory::class);
         $router = $domainRouterFactory->getRouter(Domain::FIRST_DOMAIN_ID);
 
-        return $router->generate($routeName, $parameters, UrlGeneratorInterface::ABSOLUTE_URL);
+        return $router->generate($routeName, $parameters, $absolute);
     }
 }
