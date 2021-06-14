@@ -19,21 +19,57 @@
     <div class="web__line">
         <div class="web__container">
             <div class="box-cart-sent">
-                <div class="box-cart-sent__text">
-                    <h1 class="box-cart-sent__heading">{{ 'Děkujeme za vaši objednávku'|trans }}</h1>
-                    <p class="box-cart-sent__info">{{ 'Rekapitulaci jsme zaslali také na váš e&#8209;mail'|transHtml }} <strong>{{ order.email }}</strong></p>
-                    {{ pageContent|raw }}
-                </div>
-                <div class="box-cart-sent__figure">
+                <div class="box-cart-sent__image">
                     <picture>
-                        <source
-                            srcset="{{ asset('public/frontend/images/sent-cart2x.png') }} 2x, {{ asset('public/frontend/images/sent-cart.png') }} 1x">
-                        <img
-                            class="box-cart-sent__image"
-                            loading="lazy"
-                            data-src="{{ asset('public/frontend/images/sent-cart.png') }}"
-                            alt="{{ 'Objednávka odeslána'|trans }}">
+                        <source srcset="{{ asset('public/frontend/images/sent-cart.svg') }} 2x, {{ asset('public/frontend/images/sent-cart.svg') }} 1x" />
+                        <img loading="lazy" data-src="{{ asset('public/frontend/images/sent-cart.svg') }}" alt="{{ 'Objednávka odeslána'|trans }}">
                     </picture>
+                </div>
+                <div class="box-cart-sent__content">
+                    <h1 class="box-cart-sent__title">{{ 'Děkujeme vám za objednávku!'|trans }}</h1>
+                    <p class="box-cart-sent__text">{{ 'Rekapitulaci jsme vám zaslali také na váš e&#8209;mail'|transHtml }}</p>
+                    <p class="box-cart-sent__email">{{ order.email }}</p>
+                </div>
+            </div>
+
+            <div class="box-loyalty">
+                <div class="box-loyalty__item">
+                    <h2 class="box-loyalty__title">
+                        {{ 'Dokončete registraci <br>do <strong>věrnostního <br>programu</strong>.'|trans|raw }}
+                    </h2>
+                    <ul class="list-simple">
+                        <li class="list-simple__item">{{ 'Budete mít přehled ve svých objednávkách nebo reklamací'|trans }}</li>
+                        <li class="list-simple__item">{{ 'Sbírání bodů s každou objednávkou'|trans }}</li>
+                        <li class="list-simple__item">{{ 'Možnost nákupu za výhodné ceny'|trans }}</li>
+                        <li class="list-simple__item">{{ 'Exkluzivní produkty ve věrnostním programu'|trans }}</li>
+                    </ul>
+                </div>
+                <div class="box-loyalty__item box-loyalty__item--right">
+                    <div class="box-loyalty__form js-not-implemented-yet">
+                        <div class="box-loyalty__form__item">
+                            <div class="form-line">
+                                <div class="form-line__input">
+                                    <input type="password" id="registration_form_password2" name="registration_form[name]" required="required" placeholder="Váše jméno" class="input">
+                                    <label for="registration_form_password2" class="input-label required">
+                                        Zadejte své heslo
+                                    </label>
+                                    <span class="form-input-password form-input-password--active">
+                                        <i class="svg svg-eye"></i>
+                                    </span>
+                                </div>
+                                <div class="form-line__error"></div>
+                            </div>
+                        </div>
+
+                        <div class="box-loyalty__form__item">
+                            <div class="form-choice form-choice--without-margin">
+                                <input type="checkbox" id="checkbox1" name="checkbox" class="css-checkbox">
+                                <label class="css-checkbox__image" for="checkbox1">Souhlasím s <a href="#">obchodními podmínkami a ochraně osobních údajů</a></label>
+                            </div>
+                        </div>
+
+                        <a href="#buttons" class="btn btn--primary btn--big-radius full-width">Vytvořit účet</a>
+                    </div>
                 </div>
             </div>
         </div>
