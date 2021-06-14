@@ -87,6 +87,29 @@ class PaymentsTest extends GraphQlTestCase
                             ['name' => t('Personal collection', [], 'dataFixtures', $this->getLocaleForFirstDomain())],
                         ],
                     ],
+                    [
+                        'name' => t('GoPay - Platba kartou', [], 'dataFixtures', $this->getLocaleForFirstDomain()),
+                        'description' => null,
+                        'instruction' => null,
+                        'position' => 3,
+                        'price' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('0', $vatZero),
+                        'images' => [],
+                        'transports' => [
+                            ['name' => t('PPL', [], 'dataFixtures', $this->getLocaleForFirstDomain())],
+                            ['name' => t('Personal collection', [], 'dataFixtures', $this->getLocaleForFirstDomain())],
+                        ],
+                    ],
+                    [
+                        'name' => t('Nadlimitní', [], 'dataFixtures', $this->getLocaleForFirstDomain()),
+                        'description' => null,
+                        'instruction' => null,
+                        'position' => 4,
+                        'price' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('200', $vatZero),
+                        'images' => [],
+                        'transports' => [
+                            ['name' => t('Nadlimitní', [], 'dataFixtures', $this->getLocaleForFirstDomain())],
+                        ],
+                    ],
                 ],
             ],
         ];
