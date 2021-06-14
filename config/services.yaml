@@ -875,3 +875,6 @@ services:
 
     Shopsys\FrontendApiBundle\Model\Product\ProductFacade:
         alias: App\FrontendApi\Model\Product\ProductFacade
+
+    Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterDataMapper:
+        alias: App\FrontendApi\Model\Product\Filter\ProductFilterDataMapper

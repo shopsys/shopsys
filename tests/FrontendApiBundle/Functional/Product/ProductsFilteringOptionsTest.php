@@ -30,7 +30,7 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
     {
         $query = $this->getElectronicsQuery();
 
-        $minimalPrice = $this->getFormattedMoneyAmountConvertedToDomainDefaultCurrency('318.75');
+        $minimalPrice = $this->getFormattedMoneyAmountConvertedToDomainDefaultCurrency('319');
         $maximalPrice = $this->getFormattedMoneyAmountConvertedToDomainDefaultCurrency('21590');
 
         $expectedResult = '{
@@ -42,13 +42,6 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
                         {
                             "flag": {
                                 "name": "' . t('Action', [], 'dataFixtures', $this->firstDomainLocale) . '"
-                            },
-                            "count": 1,
-                            "isAbsolute": true
-                        },
-                        {
-                            "flag": {
-                                "name": "' . t('TOP', [], 'dataFixtures', $this->firstDomainLocale) . '"
                             },
                             "count": 2,
                             "isAbsolute": true
@@ -89,40 +82,85 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
                     "maximalPrice": "' . $maximalPrice . '",
                     "parameters": [
                         {
-                            "name": "' . t('Ergonomics', [], 'dataFixtures', $this->firstDomainLocale) . '",
+                            "name": "' . t('Materiál', [], 'dataFixtures', $this->firstDomainLocale) . '",
                             "values": [
                                 {
                                     "text": "' . t(
-            'Right-handed',
+            'dřevo',
             [],
             'dataFixtures',
             $this->firstDomainLocale
         ) . '",
-                                    "count": 1,
-                                    "isAbsolute": true
-                                }
-                            ]
-                        },
-                        {
-                            "name": "' . t('Gaming mouse', [], 'dataFixtures', $this->firstDomainLocale) . '",
-                            "values": [
-                                {
-                                    "text": "' . t('Yes', [], 'dataFixtures', $this->firstDomainLocale) . '",
-                                    "count": 1,
-                                    "isAbsolute": true
-                                }
-                            ]
-                        },
-                        {
-                            "name": "' . t('HDMI', [], 'dataFixtures', $this->firstDomainLocale) . '",
-                            "values": [
-                                {
-                                    "text": "' . t('No', [], 'dataFixtures', $this->firstDomainLocale) . '",
                                     "count": 2,
                                     "isAbsolute": true
                                 },
                                 {
-                                    "text": "' . t('Yes', [], 'dataFixtures', $this->firstDomainLocale) . '",
+                                    "text": "' . t(
+            'kov',
+            [],
+            'dataFixtures',
+            $this->firstDomainLocale
+        ) . '",
+                                    "count": 2,
+                                    "isAbsolute": true
+                                },
+                                {
+                                    "text": "' . t(
+            'plast',
+            [],
+            'dataFixtures',
+            $this->firstDomainLocale
+        ) . '",
+                                    "count": 4,
+                                    "isAbsolute": true
+                                }
+                            ]
+                        },
+                        {
+                            "name": "' . t('Color', [], 'dataFixtures', $this->firstDomainLocale) . '",
+                            "values": [
+                                {
+                                    "text": "' . t(
+            'bílá',
+            [],
+            'dataFixtures',
+            $this->firstDomainLocale
+        ) . '",
+                                    "count": 3,
+                                    "isAbsolute": true
+                                },
+                                {
+                                    "text": "' . t(
+            'černá',
+            [],
+            'dataFixtures',
+            $this->firstDomainLocale
+        ) . '",
+                                    "count": 2,
+                                    "isAbsolute": true
+                                },
+                                {
+                                    "text": "' . t(
+            'červená',
+            [],
+            'dataFixtures',
+            $this->firstDomainLocale
+        ) . '",
+                                    "count": 3,
+                                    "isAbsolute": true
+                                }
+                            ]
+                        },
+                        {
+                            "name": "' . t('Supported OS', [], 'dataFixtures', $this->firstDomainLocale) . '",
+                            "values": [
+                                {
+                                    "text": "' . t(
+            'Windows 2000/XP/Vista/7',
+            [],
+            'dataFixtures',
+            $this->firstDomainLocale
+        ) . '",
                                     "count": 1,
                                     "isAbsolute": true
                                 }
@@ -139,16 +177,16 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
                             ]
                         },
                         {
-                            "name": "' . t('Resolution', [], 'dataFixtures', $this->firstDomainLocale) . '",
+                            "name": "' . t('Ergonomics', [], 'dataFixtures', $this->firstDomainLocale) . '",
                             "values": [
                                 {
                                     "text": "' . t(
-            '1920×1080 (Full HD)',
+            'Right-handed',
             [],
             'dataFixtures',
             $this->firstDomainLocale
         ) . '",
-                                    "count": 3,
+                                    "count": 1,
                                     "isAbsolute": true
                                 }
                             ]
@@ -174,16 +212,26 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
                             ]
                         },
                         {
-                            "name": "' . t('Supported OS', [], 'dataFixtures', $this->firstDomainLocale) . '",
+                            "name": "' . t('HDMI', [], 'dataFixtures', $this->firstDomainLocale) . '",
                             "values": [
                                 {
-                                    "text": "' . t(
-            'Windows 2000/XP/Vista/7',
-            [],
-            'dataFixtures',
-            $this->firstDomainLocale
-        ) . '",
+                                    "text": "' . t('Yes', [], 'dataFixtures', $this->firstDomainLocale) . '",
                                     "count": 1,
+                                    "isAbsolute": true
+                                },
+                                {
+                                    "text": "' . t('No', [], 'dataFixtures', $this->firstDomainLocale) . '",
+                                    "count": 2,
+                                    "isAbsolute": true
+                                }
+                            ]
+                        },
+                        {
+                            "name": "' . t('USB', [], 'dataFixtures', $this->firstDomainLocale) . '",
+                            "values": [
+                                {
+                                    "text": "' . t('Yes', [], 'dataFixtures', $this->firstDomainLocale) . '",
+                                    "count": 3,
                                     "isAbsolute": true
                                 }
                             ]
@@ -199,10 +247,25 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
                             ]
                         },
                         {
-                            "name": "' . t('USB', [], 'dataFixtures', $this->firstDomainLocale) . '",
+                            "name": "' . t('Gaming mouse', [], 'dataFixtures', $this->firstDomainLocale) . '",
                             "values": [
                                 {
                                     "text": "' . t('Yes', [], 'dataFixtures', $this->firstDomainLocale) . '",
+                                    "count": 1,
+                                    "isAbsolute": true
+                                }
+                            ]
+                        },
+                        {
+                            "name": "' . t('Resolution', [], 'dataFixtures', $this->firstDomainLocale) . '",
+                            "values": [
+                                {
+                                    "text": "' . t(
+            '1920×1080 (Full HD)',
+            [],
+            'dataFixtures',
+            $this->firstDomainLocale
+        ) . '",
                                     "count": 3,
                                     "isAbsolute": true
                                 }
@@ -262,7 +325,7 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
 
     public function testGetElectronicsFlagFilterOptionsWithAppliedFilters(): void
     {
-        $flagAction = $this->getReference(FlagDataFixture::FLAG_ACTION_PRODUCT);
+        $flagAction = $this->getReference(FlagDataFixture::FLAG_PRODUCT_ACTION);
 
         $query = $this->getElectronicsQuery('{ flags: ["' . $flagAction->getUuid() . '"] }');
 
@@ -272,13 +335,6 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
             "name": "' . t('Action', [], 'dataFixtures', $this->firstDomainLocale) . '"
         },
         "count": 0,
-        "isAbsolute": false
-    },
-    {
-        "flag": {
-            "name": "' . t('TOP', [], 'dataFixtures', $this->firstDomainLocale) . '"
-        },
-        "count": 1,
         "isAbsolute": false
     }
 ]';
@@ -308,42 +364,87 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
 
         $expectedJson = '[
     {
-        "name": "' . t('Ergonomics', [], 'dataFixtures', $this->firstDomainLocale) . '",
+        "name": "' . t('Materiál', [], 'dataFixtures', $this->firstDomainLocale) . '",
         "values": [
             {
                 "text": "' . t(
-            'Right-handed',
+            'dřevo',
             [],
             'dataFixtures',
             $this->firstDomainLocale
         ) . '",
                 "count": 0,
                 "isAbsolute": true
-            }
-        ]
-    },
-    {
-        "name": "' . t('Gaming mouse', [], 'dataFixtures', $this->firstDomainLocale) . '",
-        "values": [
+            },
             {
-                "text": "' . t('Yes', [], 'dataFixtures', $this->firstDomainLocale) . '",
-                "count": 0,
+                "text": "' . t(
+            'kov',
+            [],
+            'dataFixtures',
+            $this->firstDomainLocale
+        ) . '",
+                "count": 1,
+                "isAbsolute": true
+            },
+            {
+                "text": "' . t(
+            'plast',
+            [],
+            'dataFixtures',
+            $this->firstDomainLocale
+        ) . '",
+                "count": 2,
                 "isAbsolute": true
             }
         ]
     },
     {
-        "name": "' . t('HDMI', [], 'dataFixtures', $this->firstDomainLocale) . '",
+        "name": "' . t('Color', [], 'dataFixtures', $this->firstDomainLocale) . '",
         "values": [
             {
-                "text": "' . t('No', [], 'dataFixtures', $this->firstDomainLocale) . '",
-                "count": 0,
-                "isAbsolute": false
+                "text": "' . t(
+            'bílá',
+            [],
+            'dataFixtures',
+            $this->firstDomainLocale
+        ) . '",
+                "count": 2,
+                "isAbsolute": true
             },
             {
-                "text": "' . t('Yes', [], 'dataFixtures', $this->firstDomainLocale) . '",
+                "text": "' . t(
+            'černá',
+            [],
+            'dataFixtures',
+            $this->firstDomainLocale
+        ) . '",
                 "count": 1,
-                "isAbsolute": false
+                "isAbsolute": true
+            },
+            {
+                "text": "' . t(
+            'červená',
+            [],
+            'dataFixtures',
+            $this->firstDomainLocale
+        ) . '",
+                "count": 1,
+                "isAbsolute": true
+            }
+        ]
+    },
+    {
+        "name": "' . t('Supported OS', [], 'dataFixtures', $this->firstDomainLocale) . '",
+        "values": [
+            {
+                "text": "' . t(
+            'Windows 2000/XP/Vista/7',
+            [],
+            'dataFixtures',
+            $this->firstDomainLocale
+        ) . '",
+                "count": 0,
+                "isAbsolute": true
             }
         ]
     },
@@ -358,16 +459,16 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
         ]
     },
     {
-        "name": "' . t('Resolution', [], 'dataFixtures', $this->firstDomainLocale) . '",
+        "name": "' . t('Ergonomics', [], 'dataFixtures', $this->firstDomainLocale) . '",
         "values": [
             {
                 "text": "' . t(
-            '1920×1080 (Full HD)',
+            'Right-handed',
             [],
             'dataFixtures',
             $this->firstDomainLocale
         ) . '",
-                "count": 2,
+                "count": 0,
                 "isAbsolute": true
             }
         ]
@@ -393,16 +494,26 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
         ]
     },
     {
-        "name": "' . t('Supported OS', [], 'dataFixtures', $this->firstDomainLocale) . '",
+        "name": "' . t('HDMI', [], 'dataFixtures', $this->firstDomainLocale) . '",
         "values": [
             {
-                "text": "' . t(
-            'Windows 2000/XP/Vista/7',
-            [],
-            'dataFixtures',
-            $this->firstDomainLocale
-        ) . '",
+                "text": "' . t('Yes', [], 'dataFixtures', $this->firstDomainLocale) . '",
+                "count": 1,
+                "isAbsolute": false
+            },
+            {
+                "text": "' . t('No', [], 'dataFixtures', $this->firstDomainLocale) . '",
                 "count": 0,
+                "isAbsolute": false
+            }
+        ]
+    },
+    {
+        "name": "' . t('USB', [], 'dataFixtures', $this->firstDomainLocale) . '",
+        "values": [
+            {
+                "text": "' . t('Yes', [], 'dataFixtures', $this->firstDomainLocale) . '",
+                "count": 2,
                 "isAbsolute": true
             }
         ]
@@ -418,10 +529,25 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
         ]
     },
     {
-        "name": "' . t('USB', [], 'dataFixtures', $this->firstDomainLocale) . '",
+        "name": "' . t('Gaming mouse', [], 'dataFixtures', $this->firstDomainLocale) . '",
         "values": [
             {
                 "text": "' . t('Yes', [], 'dataFixtures', $this->firstDomainLocale) . '",
+                "count": 0,
+                "isAbsolute": true
+            }
+        ]
+    },
+    {
+        "name": "' . t('Resolution', [], 'dataFixtures', $this->firstDomainLocale) . '",
+        "values": [
+            {
+                "text": "' . t(
+            '1920×1080 (Full HD)',
+            [],
+            'dataFixtures',
+            $this->firstDomainLocale
+        ) . '",
                 "count": 2,
                 "isAbsolute": true
             }
@@ -430,6 +556,7 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
 ]';
 
         $result = $this->getResponseContentForQuery($query);
+
         $resultJson = json_encode($result['data']['category']['products']['productFilterOptions']['parameters']);
 
         $this->assertJsonStringEqualsJsonString($expectedJson, $resultJson);
