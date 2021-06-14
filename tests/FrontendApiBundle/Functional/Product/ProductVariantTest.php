@@ -24,7 +24,7 @@ class ProductVariantTest extends GraphQlTestCase
         $productFacade = $this->getContainer()->get(ProductFacade::class);
 
         /** @var \App\Model\Product\Product $productAsMainVariant */
-        $productAsMainVariant = $productFacade->getById(150);
+        $productAsMainVariant = $productFacade->getById(83);
         $this->productAsMainVariant = $productAsMainVariant;
 
         /** @var \App\Model\Product\Product $productAsVariant */
@@ -67,9 +67,6 @@ class ProductVariantTest extends GraphQlTestCase
                         // Variant 51,5” Hyundai 22HD44D is not sellable, so it's not present
                         [
                             'name' => t('60” Hyundai 22HD44D', [], 'dataFixtures', $firstDomainLocale),
-                        ],
-                        [
-                            'name' => t('Hyundai 22HD44D', [], 'dataFixtures', $firstDomainLocale),
                         ],
                     ],
                 ],
