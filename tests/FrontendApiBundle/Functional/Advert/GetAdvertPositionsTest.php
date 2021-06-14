@@ -57,6 +57,14 @@ class GetAdvertPositionsTest extends GraphQlTestCase
                 'description' => t('in category (above the category name)', [], 'messages', $firstDomainLocale),
                 'positionName' => 'productList',
             ],
+            [
+                'description' => t('nad souhrnem objednávky v košíku', [], 'messages', $firstDomainLocale),
+                'positionName' => 'cartPreview',
+            ],
+            [
+                'description' => t('v kategorii (nad výpisem produktů)', [], 'messages', $firstDomainLocale),
+                'positionName' => 'productListMiddle',
+            ],
         ];
     }
 }
