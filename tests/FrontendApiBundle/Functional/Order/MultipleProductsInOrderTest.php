@@ -29,8 +29,8 @@ class MultipleProductsInOrderTest extends AbstractOrderTestCase
                         $expectedOrderItems
                     ),
                     'items' => $expectedOrderItems,
-                    'firstName' => 'firstName',
-                    'lastName' => 'lastName',
+                    'firstName' => null,
+                    'lastName' => null,
                     'email' => 'user@example.com',
                     'telephone' => '+53 123456789',
                     'companyName' => 'Airlocks s.r.o.',
@@ -71,7 +71,7 @@ class MultipleProductsInOrderTest extends AbstractOrderTestCase
 
         return [
             0 => [
-                'name' => t('22" Sencor SLE 22F46DM4 HELLO KITTY', [], 'dataFixtures', $firstDomainLocale),
+                'name' => t('Televize 22" Sencor SLE 22F46DM4 HELLO KITTY plazmová', [], 'dataFixtures', $firstDomainLocale),
                 'unitPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('2891.70', $vatHigh),
                 'totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('2891.70', $vatHigh, 10),
                 'quantity' => 10,

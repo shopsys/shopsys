@@ -878,3 +878,6 @@ services:
 
     Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterDataMapper:
         alias: App\FrontendApi\Model\Product\Filter\ProductFilterDataMapper
+
+    Shopsys\FrontendApiBundle\Model\Order\OrderDataFactory:
+        alias: App\FrontendApi\Model\Order\OrderDataFactory
