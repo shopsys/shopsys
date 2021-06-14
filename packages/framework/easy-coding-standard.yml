@@ -40,6 +40,7 @@ parameters:
             - '*/tests/Unit/Component/Image/ImageLocatorTest.php'
             - '*/tests/Unit/Component/Image/Config/ImageConfigLoaderTest.php'
             - '*/tests/Unit/Component/Image/Config/ImageConfigTest.php'
+            - '*/tests/Unit/Model/Category/CategoryNestedSetCalculatorTest.php'
             - '*/tests/Unit/Model/Payment/PaymentPriceCalculationTest.php'
             - '*/src/Form/Constraints/FileAbstractFilesystemValidator.php'
 
@@ -61,6 +62,7 @@ parameters:
             - '*/tests/Test/Codeception/ActorInterface.php'
             - '*/tests/Unit/Component/Money/MoneyTest.php'
             - '*/src/Model/Product/Search/FilterQuery.php'
+            - '*/src/Model/Category/CategoryFacade.php'
             - '*/src/Model/Category/CategoryRepository.php'
             - '*/src/Model/Product/ProductFacade.php'
 

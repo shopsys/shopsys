@@ -14,6 +14,8 @@ use Shopsys\FrameworkBundle\Model\Product\Product;
 
 class CategoryFacade
 {
+    protected const INCREMENT_DUE_TO_MISSING_ROOT_CATEGORY = 1;
+
     /**
      * @var \Doctrine\ORM\EntityManagerInterface
      */
@@ -216,10 +218,20 @@ class CategoryFacade
     }
 
     /**
+     * @deprecated this method is slow for the large number of categories. Use reorderByNestedSetValues() instead
+     * @see https://docs.shopsys.com/en/9.1/model/how-to-sort-categories/
      * @param int[]|null[] $parentIdByCategoryId
      */
     public function editOrdering($parentIdByCategoryId)
     {
+        @trigger_error(
+            sprintf(
+                'The %s() method is deprecated and will be removed in the next major. Use reorderByNestedSetValues() instead.',
+                __METHOD__
+            ),
+            E_USER_DEPRECATED
+        );
+
         // eager-load all categories into identity map
         $this->categoryRepository->getAll();
 
@@ -240,6 +252,43 @@ class CategoryFacade
         }
 
         $this->em->flush();
+    }
+
+    /**
+     * @param array<int, array{id: string|int, parent_id: string|int|null, depth: int, left: int, right: int}> $categoriesOrderingData
+     */
+    public function reorderByNestedSetValues(array $categoriesOrderingData): void
+    {
+        $rootCategoryId = $this->getRootCategory()->getId();
+
+        $query = $this->em->createQuery('
+            UPDATE ' . Category::class . ' c 
+            SET c.parent = :parent, c.level = :level, c.lft = :lft, c.rgt = :rgt 
+            WHERE c.id = :id
+        ');
+
+        foreach ($categoriesOrderingData as $categoryOrderingData) {
+            $query->execute([
+                'id' => (int)$categoryOrderingData['id'],
+                'parent' => $categoryOrderingData['parent_id'] ? (int)$categoryOrderingData['parent_id'] : $rootCategoryId,
+                'level' => $categoryOrderingData['depth'] + static::INCREMENT_DUE_TO_MISSING_ROOT_CATEGORY,
+                'lft' => $categoryOrderingData['left'] + static::INCREMENT_DUE_TO_MISSING_ROOT_CATEGORY,
+                'rgt' => $categoryOrderingData['right'] + static::INCREMENT_DUE_TO_MISSING_ROOT_CATEGORY,
+            ]);
+        }
+    }
+
+    /**
+     * @return bool
+     */
+    public function recalculateNestedSet(): bool
+    {
+        $errors = $this->categoryRepository->verify();
+
+        $this->categoryRepository->recover();
+        $this->em->flush();
+
+        return $errors !== true;
     }
 
     /**
