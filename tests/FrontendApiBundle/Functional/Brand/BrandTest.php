@@ -57,20 +57,20 @@ class BrandTest extends GraphQlTestCase
         "brand": {
             "name": "' . t('Canon', [], 'dataFixtures', $this->getFirstDomainLocale()) . '",
             "description": "' . t(
-            'This is description of brand Canon.',
-            [],
+            'This is description of brand %brandName%.',
+            ['%brandName%' => 'Canon'],
             'dataFixtures',
             $this->getFirstDomainLocale()
         ) . '",
-            "link": "' . $this->getFullUrlPath('/canon/') . '",
-            "seoTitle": "' . t('Canon SEO Title', [], 'dataFixtures', $this->getFirstDomainLocale()) . '",
+            "link": "' . $this->getFullUrlPath('/canon') . '",
+            "seoTitle": "' . t('%brandName% SEO Title', ['%brandName%' => 'Canon'], 'dataFixtures', $this->getFirstDomainLocale()) . '",
             "seoMetaDescription": "' . t(
-            'This is SEO meta description of brand Canon.',
-            [],
+            'This is SEO meta description of brand %brandName%.',
+            ['%brandName%' => 'Canon'],
             'dataFixtures',
             $this->getFirstDomainLocale()
         ) . '",
-            "seoH1": "' . t('Canon SEO H1', [], 'dataFixtures', $this->getFirstDomainLocale()) . '",
+            "seoH1": "' . t('%brandName% SEO H1', ['%brandName%' => 'Canon'], 'dataFixtures', $this->getFirstDomainLocale()) . '",
             "products": {
                 "edges": [
                     {
