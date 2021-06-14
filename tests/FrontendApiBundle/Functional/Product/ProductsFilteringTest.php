@@ -50,7 +50,7 @@ class ProductsFilteringTest extends ProductsGraphQlTestCase
 
     public function testFilterByFlag(): void
     {
-        $flag = $this->getReference(FlagDataFixture::FLAG_ACTION_PRODUCT);
+        $flag = $this->getReference(FlagDataFixture::FLAG_PRODUCT_ACTION);
 
         $query = '
             query {

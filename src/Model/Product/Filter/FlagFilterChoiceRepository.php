@@ -8,6 +8,7 @@ use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
+use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
 use Shopsys\FrameworkBundle\Model\Product\Filter\FlagFilterChoiceRepository as BaseFlagFilterChoiceRepository;
 use Shopsys\FrameworkBundle\Model\Product\Flag\Flag;
 
@@ -42,6 +43,24 @@ class FlagFilterChoiceRepository extends BaseFlagFilterChoiceRepository
      * @param int $domainId
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
      * @param string $locale
+     * @param \App\Model\Product\Brand\Brand $brand
+     * @return \App\Model\Product\Flag\Flag[]
+     */
+    public function getFlagFilterChoicesForBrand(int $domainId, PricingGroup $pricingGroup, string $locale, Brand $brand): array
+    {
+        $productsQueryBuilder = $this->productRepository->getListableForBrandQueryBuilderPublic(
+            $domainId,
+            $pricingGroup,
+            $brand
+        );
+
+        return $this->getVisibleFlagsByProductsQueryBuilderForDomain($productsQueryBuilder, $locale, $domainId);
+    }
+
+    /**
+     * @param int $domainId
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
+     * @param string $locale
      * @param string|null $searchText
      * @return \App\Model\Product\Flag\Flag[]
      */
@@ -49,6 +68,22 @@ class FlagFilterChoiceRepository extends BaseFlagFilterChoiceRepository
     {
         $productsQueryBuilder = $this->productRepository
             ->getSellableBySearchTextQueryBuilder($domainId, $pricingGroup, $locale, $searchText);
+
+        return $this->getVisibleFlagsByProductsQueryBuilderForDomain($productsQueryBuilder, $locale, $domainId);
+    }
+
+    /**
+     * @param int $domainId
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
+     * @param string $locale
+     * @return \App\Model\Product\Flag\Flag[]
+     */
+    public function getFlagFilterChoicesForAll(int $domainId, PricingGroup $pricingGroup, string $locale): array
+    {
+        $productsQueryBuilder = $this->productRepository->getAllListableQueryBuilder(
+            $domainId,
+            $pricingGroup
+        );
 
         return $this->getVisibleFlagsByProductsQueryBuilderForDomain($productsQueryBuilder, $locale, $domainId);
     }
