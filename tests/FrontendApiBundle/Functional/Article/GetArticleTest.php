@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Tests\FrontendApiBundle\Functional\Article;
 
+use App\Model\Article\Article;
 use Ramsey\Uuid\Uuid;
-use Shopsys\FrameworkBundle\Model\Article\Article;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class GetArticleTest extends GraphQlTestCase
@@ -118,8 +118,8 @@ class GetArticleTest extends GraphQlTestCase
             [
                 'termsAndConditionsArticle',
                 [
-                    'name' => t('Terms and conditions', [], 'dataFixtures', $firstDomainLocale),
-                    'placement' => Article::PLACEMENT_FOOTER,
+                    'name' => t('Obchodní podmínky OD', [], 'dataFixtures', $firstDomainLocale),
+                    'placement' => Article::PLACEMENT_FOOTER_4,
                     'text' => t(
                         'Morbi posuere mauris dolor, quis accumsan dolor ullamcorper eget. Phasellus at elementum magna, et pretium neque. Praesent tristique lorem mi, eget varius quam aliquam eget. Vivamus ultrices interdum nisi, sed placerat lectus fermentum non. Phasellus ac quam vitae nisi aliquam vestibulum. Sed rhoncus tortor a arcu sagittis placerat. Nulla lectus nunc, ultrices ac faucibus sed, accumsan nec diam. Nam auctor neque quis tincidunt tempus. Nunc eget risus tristique, lobortis metus vitae, pellentesque leo. Vivamus placerat turpis ac dolor vehicula tincidunt. Sed venenatis, ante id ultrices convallis, lacus elit porttitor dolor, non porta risus ipsum ac justo. Integer id pretium quam, id placerat nulla.',
                         [],
