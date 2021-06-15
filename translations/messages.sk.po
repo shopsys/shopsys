@@ -91,6 +91,12 @@ msgstr "1135 €"
 msgid "30 954 <small>Kč*</small>"
 msgstr "1163 €"
 
+msgid "301 (Permanent redirect)"
+msgstr ""
+
+msgid "302 (Temporary redirect)"
+msgstr ""
+
 msgid "31 477 <small>Kč*</small>"
 msgstr "1184 €"
 
@@ -412,6 +418,9 @@ msgstr ""
 msgid "Aqua"
 msgstr "Aqua"
 
+msgid "Article"
+msgstr ""
+
 msgid "Articles"
 msgstr ""
 
@@ -505,6 +514,12 @@ msgstr "Fakturačná adresa - meno, priezvisko, firma, IČO, IČ DPH, fakturačn
 msgid "Blog"
 msgstr ""
 
+msgid "Blog article"
+msgstr ""
+
+msgid "Blog category"
+msgstr ""
+
 msgid "Bohužel došlo k chybě, zkuste to prosím znovu."
 msgstr "Bohužiaľ, došlo k chybe, skúste to, prosím, znova."
 
@@ -589,6 +604,9 @@ msgstr ""
 msgid "Category"
 msgstr ""
 
+msgid "Category with prefilled filters"
+msgstr ""
+
 msgid "Celkem zaplatíte"
 msgstr "Celkom zaplatíte"
 
@@ -630,6 +648,9 @@ msgstr ""
 
 msgid "Check the address correctness"
 msgstr "Skontrolujte správnosť adresy"
+
+msgid "Choose type of redirect"
+msgstr ""
 
 msgid "Choose variant"
 msgstr "Vyberte variantu"
@@ -865,6 +886,9 @@ msgstr ""
 msgid "Do you really want to remove this delivery address?"
 msgstr "Naozaj chcete odstrániť túto dodaciu adresu?"
 
+msgid "Do you really want to remove this friendly URL? Removing friendly URL may have bad impact to SEO performance."
+msgstr ""
+
 msgid "Do you really want to remove this parameter? By deleting this parameter you will remove this parameter from a product where the parameter is assigned. This step is irreversible!"
 msgstr ""
 
@@ -1082,6 +1106,12 @@ msgid "Enter a 6 digit authentication from your email. You need to request it by
 msgstr ""
 
 msgid "Enter a 6 digit authentication from your two factor authentication mobile application."
+msgstr ""
+
+msgid "Entity"
+msgstr ""
+
+msgid "Entity ID"
 msgstr ""
 
 msgid "Error occurred"
@@ -1473,6 +1503,9 @@ msgstr "LUX"
 
 msgid "Lak"
 msgstr "\nLak"
+
+msgid "Last modification"
+msgstr ""
 
 msgid "Last name"
 msgstr "Priezvisko"
@@ -2353,6 +2386,9 @@ msgstr ""
 msgid "Prodejny"
 msgstr "Predajne"
 
+msgid "Product"
+msgstr ""
+
 msgid "Product <strong><a href=\"{{ url }}\">{{ product|productDisplayName }}</a></strong> modified"
 msgstr ""
 
@@ -2566,6 +2602,9 @@ msgstr "Pôvodne"
 msgid "Quick product search"
 msgstr ""
 
+msgid "Quick search"
+msgstr ""
+
 msgid "REFUNDED"
 msgstr "Platba refundována"
 
@@ -2583,6 +2622,12 @@ msgstr "RIVA"
 
 msgid "RIVA kuchyně"
 msgstr "RIVA kuchyňa"
+
+msgid "Redirect target"
+msgstr ""
+
+msgid "Redirect type"
+msgstr ""
 
 msgid "Register"
 msgstr "Registrovať"
@@ -2860,11 +2905,17 @@ msgstr "Zbaliť"
 msgid "Sdílet"
 msgstr "Zdieľať"
 
+msgid "Search by slug..."
+msgstr ""
+
 msgid "Search didn't find any products."
 msgstr "Vyhľadávanie nenašlo žiadne produkty"
 
 msgid "Search results for \"%searchText%\""
 msgstr "Výsledky vyhľadávanie pre \"%searchText%\""
+
+msgid "Searching searches in slugs. It is possible to use wildcards * and ?."
+msgstr ""
 
 msgid "Selected product no longer available or doesn't exist."
 msgstr "Vybraný produkt už nie je dostupný alebo neexistuje"
@@ -2982,6 +3033,9 @@ msgstr "Zľavový kód sa uplatní na všetky už nezľavnené položky, na ktor
 
 msgid "Slovensko"
 msgstr "Slovensko"
+
+msgid "Slug"
+msgstr ""
 
 msgid "Sorting priority"
 msgstr ""
@@ -3337,6 +3391,9 @@ msgstr "Cena za jednotku s DPH"
 msgid "Unsupported two factor authentication method"
 msgstr ""
 
+msgid "Unused friendly URL list"
+msgstr ""
+
 msgid "Upload attachment"
 msgstr ""
 
@@ -3630,6 +3687,9 @@ msgstr "Objednávku ste úspešne zaplatili cez GoPay."
 
 msgid "You have to be logged in to enter this page"
 msgstr "Pre vstup na túto stránku sa musíte prihlásiť"
+
+msgid "You have to set redirect code for redirect."
+msgstr ""
 
 msgid "Your data had been successfully updated"
 msgstr "Vaše informácie boli úspešne aktualizované"

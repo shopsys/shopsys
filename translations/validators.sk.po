@@ -235,6 +235,9 @@ msgstr ""
 msgid "Quantity must be greater than {{ compared_value }}"
 msgstr "Množstvo musí byť väčšie než {{ compared_value }}"
 
+msgid "Redirect target must be relative path (with leading slash) or absolute path starting by protocol (http:// or https://)"
+msgstr ""
+
 msgid "Sklad s tímto externím kódem již existuje"
 msgstr ""
 

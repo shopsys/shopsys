@@ -26,8 +26,15 @@
         </exec>
     </target>
 
-    <!-- Remove dependency `clean-redis-old` because old redis is used by live container during deployment. -->
-    <target name="build-deploy-part-2-db-dependent" depends="elasticsearch-index-migrate,redis-check,db-migrations,domains-data-create,friendly-urls-generate,domains-urls-replace,error-pages-generate,warmup" description="Second part of application build for production preserving your DB (must be run with maintenance page when containing DB migrations)."/>
+    <target name="build-dev" depends="build-version-generate,clean,composer-dev,timezones-check,dirs-create,test-dirs-create,assets,npm,db-migrations,domains-data-create,friendly-urls-generate,friendly-url-entity-mapping-check,domains-urls-replace,elasticsearch-index-recreate,elasticsearch-export,error-pages-generate,tests-acceptance-build,clean-redis-old,checks" description="Builds application for development preserving your DB and runs checks on changed files."/>
+
+    <target name="build-dev-quick" depends="build-version-generate,clean,composer-dev,dirs-create,test-dirs-create,assets,npm,db-migrations,domains-data-create,friendly-urls-generate,friendly-url-entity-mapping-check,domains-urls-replace,elasticsearch-index-migrate,clean-redis-old" description="Builds application for development preserving your DB while skipping nonessential steps."/>
+
+    <target name="db-demo" depends="production-protection,db-wipe-public-schema,db-import-basic-structure,db-migrations,domains-data-create,db-fixtures-demo,plugin-demo-data-load,friendly-urls-generate,friendly-url-entity-mapping-check,domains-urls-replace" description="Creates DB and fills it with demo data"/>
+
+    <target name="db-rebuild" depends="production-protection,db-wipe-public-schema,db-import-basic-structure,db-migrations,domains-data-create,friendly-urls-generate,friendly-url-entity-mapping-check,domains-urls-replace" description="Drops all data in database and creates a new one with base data only."/>
+
+    <target name="test-db-demo" depends="production-protection,clean,test-clean-redis,test-db-wipe-public-schema,test-db-import-basic-structure,test-db-migrations,test-domains-data-create,test-db-fixtures-demo,test-friendly-urls-generate,friendly-url-entity-mapping-check,test-plugin-demo-data-load,test-domains-urls-replace" description="Drops all data in test database and creates a new one with demo data." hidden="true"/>
 
     <target name="maintenance-off" description="Turns the maintenance page off.">
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
@@ -177,6 +184,13 @@
                 <phingcall target="clean-opcache" />
             </then>
         </if>
+    </target>
+
+    <target name="friendly-url-entity-mapping-check" description="Checks completeness of entity mapping by route name">
+        <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
+            <arg value="${path.bin-console}"/>
+            <arg value="shopsys:friendly-urls:check-entity-mapping"/>
+        </exec>
     </target>
 
     <target name="tests-acceptance-after" description="Actions necessary to run after acceptance tests." hidden="true">

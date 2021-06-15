@@ -8,6 +8,10 @@ use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrl;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFactory as BaseFriendlyUrlFactory;
 use Shopsys\FrameworkBundle\Component\String\TransformString;
 
+/**
+ * @method \App\Component\Router\FriendlyUrl\FriendlyUrl create(string $routeName, int $entityId, int $domainId, string $slug)
+ * @method \App\Component\Router\FriendlyUrl\FriendlyUrl[] createForAllDomains(string $routeName, int $entityId, string[] $namesByLocale)
+ */
 class FriendlyUrlFactory extends BaseFriendlyUrlFactory
 {
     /**
@@ -16,7 +20,7 @@ class FriendlyUrlFactory extends BaseFriendlyUrlFactory
      * @param string $entityName
      * @param int $domainId
      * @param int|null $indexPostfix
-     * @return \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrl|null
+     * @return \App\Component\Router\FriendlyUrl\FriendlyUrl|null
      */
     public function createIfValid(
         string $routeName,

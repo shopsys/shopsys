@@ -424,6 +424,15 @@ services:
     Shopsys\FrameworkBundle\Component\Setting\Setting:
         alias: App\Component\Setting\Setting
 
+    Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade:
+        alias: App\Component\Router\FriendlyUrl\FriendlyUrlFacade
+
+    Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRepository:
+        alias: App\Component\Router\FriendlyUrl\FriendlyUrlRepository
+
+    Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlDataFactory:
+        alias: App\Component\Router\FriendlyUrl\FriendlyUrlDataFactory
+
     Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFactory:
         alias: App\Model\Product\Listed\ListedProductViewFactory
 

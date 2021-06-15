@@ -31,6 +31,12 @@ msgstr ""
 msgid "-- Vyberte název přenosu --"
 msgstr ""
 
+msgid "301 (Permanent redirect)"
+msgstr "301 (Trvalé přesměrování)"
+
+msgid "302 (Temporary redirect)"
+msgstr "302 (Dočasné přesměrování)"
+
 msgid "404"
 msgstr ""
 
@@ -157,6 +163,9 @@ msgstr "Aplikovat na vybrané kategorie"
 msgid "Apply to selected products"
 msgstr "Aplikovat na vybrané produkty"
 
+msgid "Article"
+msgstr "Článek"
+
 msgid "Articles"
 msgstr "Články"
 
@@ -238,6 +247,12 @@ msgstr "Fakturační údaje"
 msgid "Blog"
 msgstr ""
 
+msgid "Blog article"
+msgstr "Článek blogu"
+
+msgid "Blog category"
+msgstr "Kategorie blogu"
+
 msgid "Bohužel zadaný e-mail <strong>%email%</strong> neexistuje."
 msgstr ""
 
@@ -289,6 +304,9 @@ msgstr "Kategorie"
 msgid "Category"
 msgstr ""
 
+msgid "Category with prefilled filters"
+msgstr "Kategorie s předvyplněnými filtry"
+
 msgid "Celková cena bez DPH"
 msgstr ""
 
@@ -318,6 +336,9 @@ msgstr ""
 
 msgid "Check the address correctness"
 msgstr "Zkontrolujte správnost adresy"
+
+msgid "Choose type of redirect"
+msgstr "Vyberte typ přesměrování"
 
 msgid "Choose variant"
 msgstr "Vybrat variantu"
@@ -550,6 +571,9 @@ msgstr ""
 msgid "Do you really want to remove this delivery address?"
 msgstr "Opravdu si přejete odebrat tuto dodací adresu?"
 
+msgid "Do you really want to remove this friendly URL? Removing friendly URL may have bad impact to SEO performance."
+msgstr "Opravdu si přejete odebrat tuto hezkou URL? Odstranění hezké URL může mít špatný vliv na SEO."
+
 msgid "Do you really want to remove this parameter? By deleting this parameter you will remove this parameter from a product where the parameter is assigned. This step is irreversible!"
 msgstr ""
 
@@ -723,6 +747,12 @@ msgstr ""
 
 msgid "Enter email"
 msgstr "Zadejte e-mail"
+
+msgid "Entity"
+msgstr "Entita"
+
+msgid "Entity ID"
+msgstr "ID entity"
 
 msgid "Error occurred"
 msgstr "Nastala chyba"
@@ -972,6 +1002,9 @@ msgstr ""
 
 msgid "Krátký popis kategorie"
 msgstr ""
+
+msgid "Last modification"
+msgstr "Naposledy upraveno"
 
 msgid "Last name"
 msgstr "Příjmení"
@@ -1675,6 +1708,9 @@ msgstr ""
 msgid "Prodejny"
 msgstr ""
 
+msgid "Product"
+msgstr "Produkt"
+
 msgid "Product <strong><a href=\"{{ url }}\">{{ product|productDisplayName }}</a></strong> modified"
 msgstr ""
 
@@ -1840,6 +1876,9 @@ msgstr ""
 msgid "Quick product search"
 msgstr ""
 
+msgid "Quick search"
+msgstr "Rychlé hledání"
+
 msgid "REFUNDED"
 msgstr "Platba refundována"
 
@@ -1848,6 +1887,12 @@ msgstr ""
 
 msgid "RGB Hex"
 msgstr ""
+
+msgid "Redirect target"
+msgstr "Cíl přesměrování"
+
+msgid "Redirect type"
+msgstr "Typ přesměrování"
 
 msgid "Register"
 msgstr "Registrovat"
@@ -1951,6 +1996,9 @@ msgstr ""
 msgid "Search [verb]"
 msgstr "Vyhledat"
 
+msgid "Search by slug..."
+msgstr "Vyhledat podle slugu..."
+
 msgid "Search didn't find any products."
 msgstr "Hledání neodpovídají žádné produkty"
 
@@ -1959,6 +2007,9 @@ msgstr "Výsledky hledání \"%searchText%\""
 
 msgid "Searching"
 msgstr "Vyhledávání"
+
+msgid "Searching searches in slugs. It is possible to use wildcards * and ?."
+msgstr "Vyhledávání hledá ve sluzích. Je možné používat operátory * a ?."
 
 msgid "Selected product no longer available or doesn't exist."
 msgstr "Zvolené zboží již není v nabídce nebo neexistuje."
@@ -2076,6 +2127,9 @@ msgstr ""
 
 msgid "Slovensko"
 msgstr ""
+
+msgid "Slug"
+msgstr "Slug"
 
 msgid "Sorting priority"
 msgstr ""
@@ -2422,6 +2476,9 @@ msgstr "Jednotková cena s DPH"
 msgid "Unsupported two factor authentication method"
 msgstr ""
 
+msgid "Unused friendly URL list"
+msgstr "Seznam nepoužívaných hezkých URL"
+
 msgid "Upload attachment"
 msgstr ""
 
@@ -2658,6 +2715,9 @@ msgstr "Objednávku jste úspěšně zaplatili přes GoPay."
 
 msgid "You have to be logged in to enter this page"
 msgstr "Pro přístup na tuto stránku musíte být přihlášeni"
+
+msgid "You have to set redirect code for redirect."
+msgstr "Pro nastavení přesměrování musíte zadat typ přesměrování."
 
 msgid "You still have to purchase products for <strong> %price% </strong> for <strong> free </strong> shipping and payment."
 msgstr "Musíte ještě nakoupit zboží za <strong> %price% </strong> abyste měli dopravu i platbu <strong> zdarma. </strong>"
