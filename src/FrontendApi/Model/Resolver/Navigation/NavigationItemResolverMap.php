@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\FrontendApi\Model\Resolver\Navigation;
 
-use App\Model\HorizontalMenu\HorizontalMenuItemDetail;
+use App\Model\Navigation\NavigationItemDetail;
 use Overblog\GraphQLBundle\Resolver\ResolverMap;
 
 class NavigationItemResolverMap extends ResolverMap
@@ -16,14 +16,14 @@ class NavigationItemResolverMap extends ResolverMap
     {
         return [
             'NavigationItem' => [
-                'name' => static function (HorizontalMenuItemDetail $horizontalMenuItemDetail) {
-                    return $horizontalMenuItemDetail->getHorizontalMenuItem()->getName();
+                'name' => static function (NavigationItemDetail $navigationItemDetail) {
+                    return $navigationItemDetail->getNavigationItem()->getName();
                 },
-                'link' => static function (HorizontalMenuItemDetail $horizontalMenuItemDetail) {
-                    return $horizontalMenuItemDetail->getHorizontalMenuItem()->getUrl();
+                'link' => static function (NavigationItemDetail $navigationItemDetail) {
+                    return $navigationItemDetail->getNavigationItem()->getUrl();
                 },
-                'categoriesByColumns' => static function (HorizontalMenuItemDetail $horizontalMenuItemDetail) {
-                    foreach ($horizontalMenuItemDetail->getCategoryDetailsByColumnNumber() as $columnNumber => $categories) {
+                'categoriesByColumns' => static function (NavigationItemDetail $navigationItemDetail) {
+                    foreach ($navigationItemDetail->getCategoryDetailsByColumnNumber() as $columnNumber => $categories) {
                         yield [
                             'columnNumber' => $columnNumber,
                             'categories' => $categories,

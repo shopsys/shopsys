@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Model\HorizontalMenu;
+namespace App\Model\Navigation;
 
 use App\Model\Category\Category;
 use Doctrine\ORM\Mapping as ORM;
@@ -10,32 +10,32 @@ use Gedmo\Mapping\Annotation as Gedmo;
 use Shopsys\FrameworkBundle\Component\Grid\Ordering\OrderableEntityInterface;
 
 /**
- * @ORM\Table(name="horizontal_menu_item_categories")
+ * @ORM\Table(name="navigation_item_categories")
  * @ORM\Entity
  */
-class HorizontalMenuItemCategory implements OrderableEntityInterface
+class NavigationItemCategory implements OrderableEntityInterface
 {
     /**
-     * @var \App\Model\HorizontalMenu\HorizontalMenuItem
+     * @var \App\Model\Navigation\NavigationItem
      * @ORM\Id
-     * @ORM\ManyToOne(targetEntity="App\Model\HorizontalMenu\HorizontalMenuItem")
+     * @ORM\ManyToOne(targetEntity="App\Model\Navigation\NavigationItem")
      * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
      */
-    private $horizontalMenuItem;
+    private NavigationItem $navigationItem;
 
     /**
      * @var int
      * @ORM\Id
      * @ORM\Column(type="integer")
      */
-    private $columnNumber;
+    private int $columnNumber;
 
     /**
      * @var int
      * @Gedmo\SortablePosition
      * @ORM\Column(type="integer")
      */
-    private $position;
+    private int $position;
 
     /**
      * @var \App\Model\Category\Category
@@ -43,21 +43,21 @@ class HorizontalMenuItemCategory implements OrderableEntityInterface
      * @ORM\ManyToOne(targetEntity="App\Model\Category\Category")
      * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
      */
-    private $category;
+    private Category $category;
 
     /**
-     * @param \App\Model\HorizontalMenu\HorizontalMenuItem $horizontalMenuItem
+     * @param \App\Model\Navigation\NavigationItem $navigationItem
      * @param int $columnNumber
      * @param int $position
      * @param \App\Model\Category\Category $category
      */
     public function __construct(
-        HorizontalMenuItem $horizontalMenuItem,
+        NavigationItem $navigationItem,
         int $columnNumber,
         int $position,
         Category $category
     ) {
-        $this->horizontalMenuItem = $horizontalMenuItem;
+        $this->navigationItem = $navigationItem;
         $this->columnNumber = $columnNumber;
         $this->position = $position;
         $this->category = $category;
@@ -96,10 +96,10 @@ class HorizontalMenuItemCategory implements OrderableEntityInterface
     }
 
     /**
-     * @return \App\Model\HorizontalMenu\HorizontalMenuItem
+     * @return \App\Model\Navigation\NavigationItem
      */
-    public function getHorizontalMenuItem(): HorizontalMenuItem
+    public function getNavigationItem(): NavigationItem
     {
-        return $this->horizontalMenuItem;
+        return $this->navigationItem;
     }
 }

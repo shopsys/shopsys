@@ -526,10 +526,10 @@ msgstr "Budete u nás nakupovať ako:"
 msgid "Bulk promo code generation"
 msgstr ""
 
-msgid "Byla upravena položka horizontálního menu <strong><a href=\"{{ url }}\">{{ name }}</a></strong>"
+msgid "Byla upravena položka navigace <strong><a href=\"{{ url }}\">{{ name }}</a></strong>"
 msgstr ""
 
-msgid "Byla vytvořena položka horizontálního menu <strong><a href=\"{{ url }}\">{{ name }}</a></strong>"
+msgid "Byla vytvořena položka navigace <strong><a href=\"{{ url }}\">{{ name }}</a></strong>"
 msgstr ""
 
 msgid "Bylo vytvořeno <strong>{{ quantity }}</strong> slevových kupónů"
@@ -1024,7 +1024,7 @@ msgstr ""
 msgid "Editace položky"
 msgstr ""
 
-msgid "Editace položky menu"
+msgid "Editace položky navigace"
 msgstr ""
 
 msgid "Editace rubriky blogu"
@@ -1220,9 +1220,6 @@ msgid "Hodnota parametru typu barva"
 msgstr ""
 
 msgid "Hodnoty parameterů typu barva"
-msgstr ""
-
-msgid "Horizontální menu"
 msgstr ""
 
 msgid "Hromadné kupony s prefixem"
@@ -1696,6 +1693,9 @@ msgstr ""
 msgid "Nastavit heslo"
 msgstr ""
 
+msgid "Navigation"
+msgstr ""
+
 msgid "Načíst další"
 msgstr "Načítať ďalšie"
 
@@ -1822,7 +1822,7 @@ msgstr ""
 msgid "Nová položka"
 msgstr ""
 
-msgid "Nová položka menu"
+msgid "Nová položka navigace"
 msgstr ""
 
 msgid "Nová rubrika blogu"
@@ -2236,7 +2236,7 @@ msgstr "Podobné produkty"
 msgid "Pokračovat"
 msgstr "Pokračovať"
 
-msgid "Položka menu <strong>{{ name }}</strong> byla smazána"
+msgid "Položka navigace <strong>{{ name }}</strong> byla smazána"
 msgstr ""
 
 msgid "Pomůžeme vám"
@@ -3778,7 +3778,7 @@ msgstr "Zrušiť filtre"
 msgid "Zrušit úpravy"
 msgstr "Zrušiť úpravy"
 
-msgid "Zvolená položka menu neexistuje."
+msgid "Zvolená položka navigace neexistuje."
 msgstr ""
 
 msgid "Zvětšit"

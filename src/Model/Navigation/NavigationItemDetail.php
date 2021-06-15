@@ -2,38 +2,38 @@
 
 declare(strict_types=1);
 
-namespace App\Model\HorizontalMenu;
+namespace App\Model\Navigation;
 
-class HorizontalMenuItemDetail
+class NavigationItemDetail
 {
     /**
-     * @var \App\Model\HorizontalMenu\HorizontalMenuItem
+     * @var \App\Model\Navigation\NavigationItem
      */
-    private $horizontalMenuItem;
+    private NavigationItem $navigationItem;
 
     /**
      * @var \App\Model\Category\Category[][]
      */
-    private $categoryDetailsByColumnNumber;
+    private array $categoryDetailsByColumnNumber;
 
     /**
-     * @param \App\Model\HorizontalMenu\HorizontalMenuItem $horizontalMenuItem
+     * @param \App\Model\Navigation\NavigationItem $navigationItem
      * @param \App\Model\Category\Category[][] $categoriesByColumnNumber
      */
     public function __construct(
-        HorizontalMenuItem $horizontalMenuItem,
+        NavigationItem $navigationItem,
         array $categoriesByColumnNumber
     ) {
-        $this->horizontalMenuItem = $horizontalMenuItem;
+        $this->navigationItem = $navigationItem;
         $this->categoryDetailsByColumnNumber = $categoriesByColumnNumber;
     }
 
     /**
-     * @return \App\Model\HorizontalMenu\HorizontalMenuItem
+     * @return \App\Model\Navigation\NavigationItem
      */
-    public function getHorizontalMenuItem(): HorizontalMenuItem
+    public function getNavigationItem(): NavigationItem
     {
-        return $this->horizontalMenuItem;
+        return $this->navigationItem;
     }
 
     /**

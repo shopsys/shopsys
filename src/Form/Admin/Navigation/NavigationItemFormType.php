@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace App\Form\Admin\HorizontalMenu;
+namespace App\Form\Admin\Navigation;
 
 use App\Component\Locale\LocaleHelper;
 use App\Model\Category\CategoryFacade;
-use App\Model\HorizontalMenu\HorizontalMenuItem;
-use App\Model\HorizontalMenu\HorizontalMenuItemData;
+use App\Model\Navigation\NavigationItem;
+use App\Model\Navigation\NavigationItemData;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Form\DomainType;
 use Shopsys\FrameworkBundle\Form\SortableValuesType;
@@ -20,7 +20,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints;
 
-class HorizontalMenuItemFormType extends AbstractType
+class NavigationItemFormType extends AbstractType
 {
     /**
      * @var \Shopsys\FrameworkBundle\Form\Transformers\RemoveDuplicatesFromArrayTransformer
@@ -58,7 +58,7 @@ class HorizontalMenuItemFormType extends AbstractType
      */
     public function getName()
     {
-        return 'horizontal_menu_item_form';
+        return 'navigation_item_form';
     }
 
     /**
@@ -97,10 +97,10 @@ class HorizontalMenuItemFormType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver
-            ->setRequired('horizontalMenuItem')
-            ->setAllowedTypes('horizontalMenuItem', [HorizontalMenuItem::class, 'null'])
+            ->setRequired('navigationItem')
+            ->setAllowedTypes('navigationItem', [NavigationItem::class, 'null'])
             ->setDefaults([
-                'data_class' => HorizontalMenuItemData::class,
+                'data_class' => NavigationItemData::class,
                 'attr' => ['novalidate' => 'novalidate'],
             ]);
     }

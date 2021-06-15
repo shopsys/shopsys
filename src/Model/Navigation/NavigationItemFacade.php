@@ -1,0 +1,171 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\Model\Navigation;
+
+use App\Component\Cache\TwigCachedMenuFacade;
+use Doctrine\ORM\QueryBuilder;
+use Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator;
+
+class NavigationItemFacade
+{
+    /**
+     * @var \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator
+     */
+    private EntityManagerDecorator $em;
+
+    /**
+     * @var \App\Model\Navigation\NavigationItemRepository
+     */
+    private NavigationItemRepository $navigationItemRepository;
+
+    /**
+     * @var \App\Model\Navigation\NavigationItemCategoryFacade
+     */
+    private NavigationItemCategoryFacade $navigationItemCategoryFacade;
+
+    /**
+     * @var \App\Model\Navigation\NavigationItemDetailFactory
+     */
+    private NavigationItemDetailFactory $navigationItemDetailFactory;
+
+    /**
+     * @var \App\Component\Cache\TwigCachedMenuFacade
+     */
+    private TwigCachedMenuFacade $twigCachedMenuFacade;
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator $entityManager
+     * @param \App\Model\Navigation\NavigationItemRepository $navigationItemRepository
+     * @param \App\Model\Navigation\NavigationItemCategoryFacade $navigationItemCategoryFacade
+     * @param \App\Model\Navigation\NavigationItemDetailFactory $navigationItemDetailFactory
+     * @param \App\Component\Cache\TwigCachedMenuFacade $twigCachedMenuFacade
+     */
+    public function __construct(
+        EntityManagerDecorator $entityManager,
+        NavigationItemRepository $navigationItemRepository,
+        NavigationItemCategoryFacade $navigationItemCategoryFacade,
+        NavigationItemDetailFactory $navigationItemDetailFactory,
+        TwigCachedMenuFacade $twigCachedMenuFacade
+    ) {
+        $this->em = $entityManager;
+        $this->navigationItemRepository = $navigationItemRepository;
+        $this->navigationItemCategoryFacade = $navigationItemCategoryFacade;
+        $this->navigationItemDetailFactory = $navigationItemDetailFactory;
+        $this->twigCachedMenuFacade = $twigCachedMenuFacade;
+    }
+
+    /**
+     * @return \Doctrine\ORM\QueryBuilder
+     */
+    public function getOrderedItemsQueryBuilder(): QueryBuilder
+    {
+        return $this->navigationItemRepository->getOrderedItemsQueryBuilder();
+    }
+
+    /**
+     * @param int $domainId
+     * @return \Doctrine\ORM\QueryBuilder
+     */
+    public function getOrderedItemsByDomainQueryBuilder(int $domainId): QueryBuilder
+    {
+        return $this->getOrderedItemsQueryBuilder()->where('ni.domainId = :domainId')
+            ->setParameter(':domainId', $domainId);
+    }
+
+    /**
+     * @param int $domainId
+     * @return \App\Model\Navigation\NavigationItemDetail[]
+     */
+    public function getOrderedNavigationItemDetails(int $domainId): array
+    {
+        $navigationItems = $this->getOrderedItemsByDomainQueryBuilder($domainId)->getQuery()->execute();
+
+        return $this->navigationItemDetailFactory->createDetails($navigationItems, $domainId);
+    }
+
+    /**
+     * @param int $id
+     * @return \App\Model\Navigation\NavigationItem
+     */
+    public function getById(int $id): NavigationItem
+    {
+        return $this->navigationItemRepository->getById($id);
+    }
+
+    /**
+     * @param \App\Model\Navigation\NavigationItemData $navigationItemData
+     * @return \App\Model\Navigation\NavigationItem
+     */
+    public function create(NavigationItemData $navigationItemData): NavigationItem
+    {
+        $this->fixUrlInNavigationItemData($navigationItemData);
+
+        $navigationItem = new NavigationItem($navigationItemData);
+
+        $this->em->persist($navigationItem);
+        $this->em->flush($navigationItem);
+
+        $this->navigationItemCategoryFacade
+            ->refreshCategoriesForNavigationItem($navigationItem, $navigationItemData);
+
+        $this->twigCachedMenuFacade->invalidateCachedMenuByDomainId($navigationItem->getDomainId());
+
+        return $navigationItem;
+    }
+
+    /**
+     * @param int $id
+     * @param \App\Model\Navigation\NavigationItemData $navigationItemData
+     * @return \App\Model\Navigation\NavigationItem
+     */
+    public function edit(int $id, NavigationItemData $navigationItemData): NavigationItem
+    {
+        $navigationItem = $this->getById($id);
+        $this->fixUrlInNavigationItemData($navigationItemData);
+
+        $navigationItem->edit($navigationItemData);
+
+        $this->em->flush($navigationItem);
+
+        $this->navigationItemCategoryFacade
+            ->refreshCategoriesForNavigationItem($navigationItem, $navigationItemData);
+
+        $this->twigCachedMenuFacade->invalidateCachedMenuByDomainId($navigationItem->getDomainId());
+
+        return $navigationItem;
+    }
+
+    /**
+     * @param \App\Model\Navigation\NavigationItemData $navigationItemData
+     */
+    private function fixUrlInNavigationItemData(NavigationItemData $navigationItemData): void
+    {
+        if ($navigationItemData->url === null) {
+            return;
+        }
+
+        if (strpos($navigationItemData->url, 'http') === 0) {
+            return;
+        }
+
+        if (strpos($navigationItemData->url, 'www') === 0) {
+            return;
+        }
+
+        if (strpos($navigationItemData->url, '/') !== 0) {
+            $navigationItemData->url = '/' . $navigationItemData->url;
+        }
+    }
+
+    /**
+     * @param \App\Model\Navigation\NavigationItem $navigationItem
+     */
+    public function delete(NavigationItem $navigationItem): void
+    {
+        $this->twigCachedMenuFacade->invalidateCachedMenuByDomainId($navigationItem->getDomainId());
+        $this->em->remove($navigationItem);
+        $this->em->flush($navigationItem);
+    }
+}

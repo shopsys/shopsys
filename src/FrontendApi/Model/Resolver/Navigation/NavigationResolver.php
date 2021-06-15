@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\FrontendApi\Model\Resolver\Navigation;
 
-use App\Model\HorizontalMenu\HorizontalMenuItemFacade;
+use App\Model\Navigation\NavigationItemFacade;
 use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
 use Overblog\GraphQLBundle\Definition\Resolver\ResolverInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
@@ -12,9 +12,9 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 class NavigationResolver implements ResolverInterface, AliasedInterface
 {
     /**
-     * @var \App\Model\HorizontalMenu\HorizontalMenuItemFacade
+     * @var \App\Model\Navigation\NavigationItemFacade
      */
-    protected HorizontalMenuItemFacade $horizontalMenuItemFacade;
+    protected NavigationItemFacade $navigationItemFacade;
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
@@ -22,23 +22,23 @@ class NavigationResolver implements ResolverInterface, AliasedInterface
     protected Domain $domain;
 
     /**
-     * @param \App\Model\HorizontalMenu\HorizontalMenuItemFacade $horizontalMenuItemFacade
+     * @param \App\Model\Navigation\NavigationItemFacade $navigationItemFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
-        HorizontalMenuItemFacade $horizontalMenuItemFacade,
+        NavigationItemFacade $navigationItemFacade,
         Domain $domain
     ) {
-        $this->horizontalMenuItemFacade = $horizontalMenuItemFacade;
+        $this->navigationItemFacade = $navigationItemFacade;
         $this->domain = $domain;
     }
 
     /**
-     * @return \App\Model\HorizontalMenu\HorizontalMenuItemDetail[]
+     * @return \App\Model\Navigation\NavigationItemDetail[]
      */
     public function resolve(): array
     {
-        return $this->horizontalMenuItemFacade->getOrderedHorizontalMenuItemDetails($this->domain->getId());
+        return $this->navigationItemFacade->getOrderedNavigationItemDetails($this->domain->getId());
     }
 
     /**

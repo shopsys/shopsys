@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace App\Model\HorizontalMenu;
+namespace App\Model\Navigation;
 
-use App\Model\HorizontalMenu\Exception\HorizontalMenuItemNotFoundException;
+use App\Model\Navigation\Exception\NavigationItemNotFoundException;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
 
-class HorizontalMenuItemRepository
+class NavigationItemRepository
 {
     /**
      * @var \Doctrine\ORM\EntityManager
@@ -29,29 +29,29 @@ class HorizontalMenuItemRepository
      */
     private function getEntityRepository(): EntityRepository
     {
-        return $this->em->getRepository(HorizontalMenuItem::class);
+        return $this->em->getRepository(NavigationItem::class);
     }
 
     /**
      * @param int $id
-     * @return \App\Model\HorizontalMenu\HorizontalMenuItem|null
+     * @return \App\Model\Navigation\NavigationItem|null
      */
-    public function findById(int $id): ?HorizontalMenuItem
+    public function findById(int $id): ?NavigationItem
     {
         return $this->getEntityRepository()->find($id);
     }
 
     /**
      * @param int $id
-     * @return \App\Model\HorizontalMenu\HorizontalMenuItem
+     * @return \App\Model\Navigation\NavigationItem
      */
-    public function getById(int $id): HorizontalMenuItem
+    public function getById(int $id): NavigationItem
     {
         $item = $this->findById($id);
 
         if ($item === null) {
-            throw new HorizontalMenuItemNotFoundException(
-                sprintf('Horizontal menu iten with ID %s not found', $id)
+            throw new NavigationItemNotFoundException(
+                sprintf('Navigation item with ID %s not found', $id)
             );
         }
 
@@ -64,8 +64,8 @@ class HorizontalMenuItemRepository
     public function getOrderedItemsQueryBuilder(): QueryBuilder
     {
         return $this->em->createQueryBuilder()
-            ->select('hmi')
-            ->from(HorizontalMenuItem::class, 'hmi')
-            ->orderBy('hmi.position', 'asc');
+            ->select('ni')
+            ->from(NavigationItem::class, 'ni')
+            ->orderBy('ni.position', 'asc');
     }
 }

@@ -99,7 +99,7 @@
             width: 72
             height: 48
             crop: false
-            occurrence: 'Front-end: Preview in autocomplete for search, category image in horizontal menu'
+            occurrence: 'Front-end: Preview in autocomplete for search, category image in navigation'
             additionalSizes:
                 - {width: 144, height: 96, media: "only screen and (-webkit-min-device-pixel-ratio: 1.5)"}
 

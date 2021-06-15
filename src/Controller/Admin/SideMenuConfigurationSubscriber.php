@@ -79,9 +79,9 @@ class SideMenuConfigurationSubscriber implements EventSubscriberInterface
     {
         $marketingMenu = $event->getMenu();
 
-        $horizontalMenuMenu = $marketingMenu->addChild('horizontal_menu', ['route' => 'admin_horizontalmenu_list', 'label' => t('Horizontální menu')]);
-        $horizontalMenuMenu->addChild('horizontal_menu_edit', ['route' => 'admin_horizontalmenu_edit', 'display' => false, 'label' => t('Editace položky')]);
-        $horizontalMenuMenu->addChild('horizontal_menu_new', ['route' => 'admin_horizontalmenu_new', 'display' => false, 'label' => t('Nová položka')]);
+        $navigationMenu = $marketingMenu->addChild('navigation', ['route' => 'admin_navigation_list', 'label' => t('Navigation')]);
+        $navigationMenu->addChild('navigation_edit', ['route' => 'admin_navigation_edit', 'display' => false, 'label' => t('Editace položky')]);
+        $navigationMenu->addChild('navigation_new', ['route' => 'admin_navigation_new', 'display' => false, 'label' => t('Nová položka')]);
 
         $blogMenu = $marketingMenu->addChild('blog', ['label' => t('Blog')]);
 

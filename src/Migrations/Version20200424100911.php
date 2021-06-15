@@ -14,9 +14,9 @@ class Version20200424100911 extends AbstractMigration
      */
     public function up(Schema $schema): void
     {
-        $this->sql('ALTER TABLE horizontal_menu_items ADD domain_id INT NOT NULL default 1');
-        $this->sql('ALTER TABLE horizontal_menu_items ALTER domain_id DROP DEFAULT');
-        $this->sql('CREATE INDEX domain_id_idx ON horizontal_menu_items (domain_id)');
+        $this->sql('ALTER TABLE navigation_items ADD domain_id INT NOT NULL default 1');
+        $this->sql('ALTER TABLE navigation_items ALTER domain_id DROP DEFAULT');
+        $this->sql('CREATE INDEX domain_id_idx ON navigation_items (domain_id)');
     }
 
     /**
