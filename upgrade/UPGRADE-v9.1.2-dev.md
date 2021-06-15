@@ -49,3 +49,6 @@ There you can find links to upgrade notes for other versions too.
 - improve performance of category sorting ([#2328](https://github.com/shopsys/shopsys/pull/2328))
     - you may want to check [article about category sorting](https://docs.shopsys.com/en/9.1/model/how-to-sort-categories/) to introduce performance improvements to your project
     - `CategoryTreeSorting.js` now calls different action to sort categories. You should check your custom implementation of category sorting **\[possible BC-Break\]**
+
+- fix converting price for Transport and Payment in data fixtures ([#2354](https://github.com/shopsys/shopsys/pull/2354))
+    - see #project-base-diff to update your project

@@ -149,7 +149,7 @@ class PaymentDataFixture extends AbstractReferenceFixture implements DependentFi
     private function setPriceForAllDomainDefaultCurrencies(PaymentData $paymentData, Money $price): void
     {
         foreach ($this->domain->getAllIncludingDomainConfigsWithoutDataCreated() as $domain) {
-            $price = $this->priceConverter->convertPriceWithoutVatToPriceInDomainDefaultCurrency(
+            $convertedPrice = $this->priceConverter->convertPriceWithoutVatToPriceInDomainDefaultCurrency(
                 $price,
                 $domain->getId()
             );
@@ -157,7 +157,7 @@ class PaymentDataFixture extends AbstractReferenceFixture implements DependentFi
             /** @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vat */
             $vat = $this->getReferenceForDomain(VatDataFixture::VAT_ZERO, $domain->getId());
 
-            $paymentData->pricesIndexedByDomainId[$domain->getId()] = $price;
+            $paymentData->pricesIndexedByDomainId[$domain->getId()] = $convertedPrice;
             $paymentData->vatsIndexedByDomainId[$domain->getId()] = $vat;
         }
     }
