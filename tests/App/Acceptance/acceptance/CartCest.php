@@ -293,7 +293,7 @@ class CartCest
 
         $cartPage->removePromoCode();
 
-        $cartPage->canSeePromoCodeSubmitButtonElement();
+        $cartPage->canSeePromoCodeButton();
         $cartPage->assertTotalPriceWithVatByProducts($products);
     }
 }

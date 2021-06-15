@@ -35,7 +35,7 @@ class InlineEditPage extends AbstractPage
         $this->tester->clickByCss($class);
         $this->tester->wait(1); // Pop-up animation
 
-        $this->tester->clickByCss('.js-window-button-continue');
+        $this->tester->clickByCss('.window-button-continue');
         $this->tester->waitForAjax();
     }
 

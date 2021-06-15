@@ -57,7 +57,7 @@
                                 <div class="box-order__info__block active" id="js-order-form-register-container-wrap">
                                     <div class="form-columns" id="js-order-form-register-container">
                                         <div class="form-columns__left">
-                                            <div class="form-columns__item">
+                                            <div class="form-columns__item margin-bottom-10">
                                                 {{ form_widget(form.register, { attr: { class: 'css-checkbox' } }) }}
                                                 <label for="{{ form.register.vars.id }}" class="css-checkbox__image input-label input-label--checkbox">
                                                     {{ 'Chci se registrovat s objednávkou'|trans }}
@@ -215,9 +215,14 @@
                                 <div class="form-columns{{ hasEmptyAddresses == true ? ' display-none' }}">
                                     <div class="form-columns__left">
                                         <div class="form-columns__item">
-                                            {{ form_widget(form.deliveryAddressFilled, { attr: { class: 'css-checkbox js-checkbox-toggle js-order-delivery-address',
+                                            {% if hasEmptyAddresses == true %}
+                                                {{ form_widget(form.deliveryAddressFilled, { attr: { class: 'css-checkbox js-checkbox-toggle js-order-delivery-address',
                                                 'data-checkbox-toggle-container-id': 'js-order-delivery-address',
                                                 checked: 'checked' } }) }}
+                                            {% else %}
+                                                {{ form_widget(form.deliveryAddressFilled, { attr: { class: 'css-checkbox js-checkbox-toggle js-order-delivery-address',
+                                                'data-checkbox-toggle-container-id': 'js-order-delivery-address'} }) }}
+                                            {% endif %}
                                             <label for="{{ form.deliveryAddressFilled.vars.id }}" class="css-checkbox__image input-label input-label--checkbox">
                                                 {{ 'Přidat novou dodací adresu'|trans }}
                                             </label>
@@ -282,7 +287,7 @@
                         </div>
                     </div>
 
-                    <div class="in-action">
+                    <div class="in-action" id="js-order-form-submit-container">
                         <div class="in-action__text">
                             <p>
                                 {% if privacyPolicyArticle is not null and termsAndConditionsArticle is not null %}
@@ -315,9 +320,9 @@
                         </div>
 
                         <div class="in-action__right">
-                            {% set buttonClass = 'in-action__next btn btn--primary btn--big-radius btn-with-icon btn-with-icon--right js-order-form-submit-container' %}
+                            {% set buttonClass = 'in-action__next btn btn--primary btn--big-radius btn-with-icon btn-with-icon--right' %}
                             {% if app.user is null %}
-                                {% set buttonClass = 'in-action__next btn btn--disabled btn--primary btn--big-radius btn-with-icon btn-with-icon--right js-order-form-submit-container' %}
+                                {% set buttonClass = 'in-action__next btn btn--disabled btn--primary btn--big-radius btn-with-icon btn-with-icon--right' %}
                             {% endif %}
 
                             {{ form_widget(form.save, { label: 'Odeslat objednávku'|trans, attr: { class: buttonClass } }) }}

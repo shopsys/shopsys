@@ -156,12 +156,12 @@ class OrderPage extends AbstractPage
 
     public function continueToThirdStep(): void
     {
-        $this->tester->clickByTranslationFrontend('Vaše údaje');
+        $this->tester->clickByTranslationFrontend('Dodací údaje');
     }
 
     public function goBackToSecondStep(): void
     {
-        $this->tester->clickByTranslationFrontend('Zpět na Dopravu a platbu');
+        $this->tester->clickByTranslationFrontend('Zpět');
     }
 
     public function finishOrder(): void
@@ -171,7 +171,7 @@ class OrderPage extends AbstractPage
 
     public function checkOrderFinishedSuccessfully(): void
     {
-        $this->tester->seeTranslationFrontend('Děkujeme za vaši objednávku');
+        $this->tester->seeTranslationFrontend('Děkujeme vám za objednávku!');
     }
 
     public function selectCommonCustomer(): void

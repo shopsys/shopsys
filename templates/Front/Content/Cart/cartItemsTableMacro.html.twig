@@ -31,16 +31,14 @@
                     </a>
                 </div>
 
-                <div class="table-cart__cell table-cart__cell--info js-cart-item-name">
-                    <div class="table-cart__cell__name">
+                <div class="table-cart__cell table-cart__cell--info">
+                    <div class="table-cart__cell__name js-cart-item-name">
                         <a class="table-cart__cell__name__title" href="{{ url('front_product_detail', {id: product.id}) }}">
                             {% if product.namePrefix is not empty %}
                                 <span>{{ product.namePrefix }}</span>
                             {% endif %}
 
-                            <span class="js-cart-item-name-text">
-                                {{ product.name }}
-                            </span>
+                            <span class="js-cart-item-name-text">{{ product.name }}</span>
 
                             <div class="in-flag in-flag--in-checkout">
                                 {% if (product.hasFlagByAkeneoCodeForDomain(constant('App\\Model\\Product\\Flag\\Flag::AKENEO_CODE_ACTION'), getDomain().id)) %}

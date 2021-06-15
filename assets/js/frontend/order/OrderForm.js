@@ -158,7 +158,7 @@ export default class OrderForm {
                 .hide()
                 .css('opacity', 0);
         }
-        this.$submitContainer.toggleClass('is-disabled', !showFullForm);
+        this.$submitContainer.toggleClass('disabled', !showFullForm);
     }
 
     updatePasswordContainer () {
