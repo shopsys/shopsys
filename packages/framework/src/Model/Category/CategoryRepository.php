@@ -8,6 +8,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
 use Gedmo\Tree\Entity\Repository\NestedTreeRepository;
+use Shopsys\FrameworkBundle\Component\Deprecations\DeprecationHelper;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver;
 use Shopsys\FrameworkBundle\Component\Paginator\QueryPaginator;
@@ -168,13 +169,7 @@ class CategoryRepository extends NestedTreeRepository
      */
     public function getTranslatedAllWithoutBranch(Category $categoryBranch, DomainConfig $domainConfig)
     {
-        @trigger_error(
-            sprintf(
-                'The %s() method is deprecated and will be removed in the next major. Use getAllTranslatedWithoutBranch() instead.',
-                __METHOD__
-            ),
-            E_USER_DEPRECATED
-        );
+        DeprecationHelper::triggerMethod(__METHOD__, 'getAllTranslatedWithoutBranch');
 
         $queryBuilder = $this->getAllQueryBuilder();
         $this->addTranslation($queryBuilder, $domainConfig->getLocale());
@@ -337,12 +332,9 @@ class CategoryRepository extends NestedTreeRepository
      */
     public function addTranslationPublic(QueryBuilder $queryBuilder, string $locale): void
     {
-        @trigger_error(
-            sprintf(
-                'The %s() method is deprecated and will be removed in the next major. It will be replaced by addTranslation() which will change its visibility to public.',
-                __METHOD__
-            ),
-            E_USER_DEPRECATED
+        DeprecationHelper::trigger(
+            'The %s() method is deprecated and will be removed in the next major. It will be replaced by addTranslation() which will change its visibility to public.',
+            __METHOD__
         );
 
         $this->addTranslation($queryBuilder, $locale);
@@ -497,12 +489,9 @@ class CategoryRepository extends NestedTreeRepository
      */
     public function filterBySearchTextPublic(QueryBuilder $queryBuilder, string $searchText): void
     {
-        @trigger_error(
-            sprintf(
-                'The %s() method is deprecated and will be removed in the next major. It will be replaced by filterBySearchText() which will change its visibility to public.',
-                __METHOD__
-            ),
-            E_USER_DEPRECATED
+        DeprecationHelper::trigger(
+            'The %s() method is deprecated and will be removed in the next major. It will be replaced by filterBySearchText() which will change its visibility to public.',
+            __METHOD__
         );
 
         $this->filterBySearchText($queryBuilder, $searchText);
@@ -573,7 +562,7 @@ class CategoryRepository extends NestedTreeRepository
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param  \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @return string[]
      */
     public function getCategoryNamesInPathFromRootToProductMainCategoryOnDomain(Product $product, DomainConfig $domainConfig)
@@ -635,12 +624,9 @@ class CategoryRepository extends NestedTreeRepository
      */
     public function getTranslatedAll(DomainConfig $domainConfig)
     {
-        @trigger_error(
-            sprintf(
-                'The %s() method is deprecated and will be removed in the next major. Use getAllTranslated() instead.',
-                __METHOD__
-            ),
-            E_USER_DEPRECATED
+        DeprecationHelper::trigger(
+            'The %s() method is deprecated and will be removed in the next major. Use getAllTranslated() instead.',
+            __METHOD__
         );
 
         $queryBuilder = $this->getAllQueryBuilder();

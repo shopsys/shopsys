@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Component\Router\FriendlyUrl;
 
 use BadMethodCallException;
 use Doctrine\ORM\EntityManagerInterface;
+use Shopsys\FrameworkBundle\Component\Deprecations\DeprecationHelper;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\Exception\FriendlyUrlNotFoundException;
@@ -78,11 +79,10 @@ class FriendlyUrlFacade
         ?CacheInterface $mainFriendlyUrlSlugCache = null
     ) {
         if ($mainFriendlyUrlSlugCache === null) {
-            $deprecationMessage = sprintf(
+            DeprecationHelper::trigger(
                 'The argument "$mainFriendlyUrlSlugCache" is not provided by constructor in "%s". In the next major it will be required.',
                 self::class
             );
-            @trigger_error($deprecationMessage, E_USER_DEPRECATED);
         }
 
         $this->em = $em;
@@ -312,13 +312,8 @@ class FriendlyUrlFacade
             return;
         }
 
-        @trigger_error(
-            sprintf(
-                'The %s() method is deprecated and will be removed in the next major. Use the constructor injection instead.',
-                __METHOD__
-            ),
-            E_USER_DEPRECATED
-        );
+        DeprecationHelper::triggerSetterInjection(__METHOD__);
+
         $this->friendlyUrlCacheKeyProvider = $friendlyUrlCacheKeyProvider;
     }
 

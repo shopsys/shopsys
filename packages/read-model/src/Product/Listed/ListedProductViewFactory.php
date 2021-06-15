@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\ReadModelBundle\Product\Listed;
 
 use BadMethodCallException;
+use Shopsys\FrameworkBundle\Component\Deprecations\DeprecationHelper;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Pricing\Exception\NoProductPriceForPricingGroupException;
@@ -240,13 +241,8 @@ class ListedProductViewFactory
         array $pricesArray,
         PricingGroup $pricingGroup
     ): ?ProductPrice {
-        @trigger_error(
-            sprintf(
-                'The %s() method is deprecated and will be removed in the next major. Use PriceFactory::createProductPriceFromArrayByPricingGroup() instead.',
-                __METHOD__
-            ),
-            E_USER_DEPRECATED
-        );
+        DeprecationHelper::triggerMethod(__METHOD__, 'PriceFactory::createProductPriceFromArrayByPricingGroup');
+
         return $this->priceFactory->createProductPriceFromArrayByPricingGroup($pricesArray, $pricingGroup);
     }
 
@@ -280,13 +276,8 @@ class ListedProductViewFactory
             return;
         }
 
-        @trigger_error(
-            sprintf(
-                'The %s() method is deprecated and will be removed in the next major. Use the constructor injection instead.',
-                __METHOD__
-            ),
-            E_USER_DEPRECATED
-        );
+        DeprecationHelper::triggerSetterInjection(__METHOD__);
+
         $this->imageViewFacade = $imageViewFacade;
     }
 
@@ -306,13 +297,8 @@ class ListedProductViewFactory
             return;
         }
 
-        @trigger_error(
-            sprintf(
-                'The %s() method is deprecated and will be removed in the next major. Use the constructor injection instead.',
-                __METHOD__
-            ),
-            E_USER_DEPRECATED
-        );
+        DeprecationHelper::triggerSetterInjection(__METHOD__);
+
         $this->productActionViewFacade = $productActionViewFacade;
     }
 
@@ -335,13 +321,8 @@ class ListedProductViewFactory
             return;
         }
 
-        @trigger_error(
-            sprintf(
-                'The %s() method is deprecated and will be removed in the next major. Use the constructor injection instead.',
-                __METHOD__
-            ),
-            E_USER_DEPRECATED
-        );
+        DeprecationHelper::triggerSetterInjection(__METHOD__);
+
         $this->productActionViewFactory = $productActionViewFactory;
     }
 
@@ -361,13 +342,8 @@ class ListedProductViewFactory
             return;
         }
 
-        @trigger_error(
-            sprintf(
-                'The %s() method is deprecated and will be removed in the next major. Use the constructor injection instead.',
-                __METHOD__
-            ),
-            E_USER_DEPRECATED
-        );
+        DeprecationHelper::triggerSetterInjection(__METHOD__);
+
         $this->currentCustomerUser = $currentCustomerUser;
     }
 
@@ -387,13 +363,8 @@ class ListedProductViewFactory
             return;
         }
 
-        @trigger_error(
-            sprintf(
-                'The %s() method is deprecated and will be removed in the next major. Use the constructor injection instead.',
-                __METHOD__
-            ),
-            E_USER_DEPRECATED
-        );
+        DeprecationHelper::triggerSetterInjection(__METHOD__);
+
         $this->priceFactory = $priceFactory;
     }
 }

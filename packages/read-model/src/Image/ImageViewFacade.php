@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\ReadModelBundle\Image;
 
+use Shopsys\FrameworkBundle\Component\Deprecations\DeprecationHelper;
 use Shopsys\FrameworkBundle\Component\Image\Image;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
 
@@ -37,8 +38,7 @@ class ImageViewFacade implements ImageViewFacadeInterface
      */
     public function getForEntityIds(string $entityClass, array $entityIds): array
     {
-        $message = 'The %s() method is deprecated since Shopsys Framework 9.1. Use getMainImagesByEntityIds() instead.';
-        @trigger_error(sprintf($message, __METHOD__), E_USER_DEPRECATED);
+        DeprecationHelper::triggerMethod(__METHOD__, 'getMainImagesByEntityIds()');
 
         return $this->getMainImagesByEntityIds($entityClass, $entityIds);
     }

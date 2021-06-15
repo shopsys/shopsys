@@ -10,6 +10,7 @@ use GraphQL\Type\Definition\ResolveInfo;
 use Overblog\GraphQLBundle\Definition\ArgumentInterface;
 use Overblog\GraphQLBundle\Resolver\FieldResolver;
 use Overblog\GraphQLBundle\Resolver\ResolverMap;
+use Shopsys\FrameworkBundle\Component\Deprecations\DeprecationHelper;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
 use Shopsys\FrameworkBundle\Model\Product\Collection\ProductCollectionFacade;
@@ -98,13 +99,8 @@ class ProductResolverMap extends ResolverMap
             return;
         }
 
-        @trigger_error(
-            sprintf(
-                'The %s() method is deprecated and will be removed in the next major. Use the constructor injection instead.',
-                __METHOD__
-            ),
-            E_USER_DEPRECATED
-        );
+        DeprecationHelper::triggerSetterInjection(__METHOD__);
+
         $this->productArrayFieldMapper = $productArrayFieldMapper;
     }
 
@@ -127,13 +123,8 @@ class ProductResolverMap extends ResolverMap
             return;
         }
 
-        @trigger_error(
-            sprintf(
-                'The %s() method is deprecated and will be removed in the next major. Use the constructor injection instead.',
-                __METHOD__
-            ),
-            E_USER_DEPRECATED
-        );
+        DeprecationHelper::triggerSetterInjection(__METHOD__);
+
         $this->productEntityFieldMapper = $productEntityFieldMapper;
     }
 
@@ -209,12 +200,9 @@ class ProductResolverMap extends ResolverMap
      */
     protected function getProductLink(int $productId): string
     {
-        @trigger_error(
-            sprintf(
-                'The %s() method is deprecated and will be removed in the next major. Use appropriate field mapper instead.',
-                __METHOD__
-            ),
-            E_USER_DEPRECATED
+        DeprecationHelper::trigger(
+            'The "%s()" method is deprecated and will be removed in the next major. Use appropriate field mapper instead.',
+            __METHOD__
         );
 
         $absoluteUrlsIndexedByProductId = $this->productCollectionFacade->getAbsoluteUrlsIndexedByProductId(
@@ -232,12 +220,9 @@ class ProductResolverMap extends ResolverMap
      */
     protected function getFlagsForData($data): array
     {
-        @trigger_error(
-            sprintf(
-                'The %s() method is deprecated and will be removed in the next major. Use appropriate field mapper instead.',
-                __METHOD__
-            ),
-            E_USER_DEPRECATED
+        DeprecationHelper::trigger(
+            'The "%s()" method is deprecated and will be removed in the next major. Use appropriate field mapper instead.',
+            __METHOD__
         );
 
         if ($data instanceof Product) {
@@ -254,12 +239,9 @@ class ProductResolverMap extends ResolverMap
      */
     protected function getCategoriesForData($data): array
     {
-        @trigger_error(
-            sprintf(
-                'The %s() method is deprecated and will be removed in the next major. Use appropriate field mapper instead.',
-                __METHOD__
-            ),
-            E_USER_DEPRECATED
+        DeprecationHelper::trigger(
+            'The "%s()" method is deprecated and will be removed in the next major. Use appropriate field mapper instead.',
+            __METHOD__
         );
 
         return $this->productArrayFieldMapper->getCategories($data);

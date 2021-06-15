@@ -6,6 +6,7 @@ namespace Shopsys\FrontendApiBundle\Controller;
 
 use BadMethodCallException;
 use Overblog\GraphQLBundle\Controller\GraphController;
+use Shopsys\FrameworkBundle\Component\Deprecations\DeprecationHelper;
 use Shopsys\FrontendApiBundle\Component\Domain\EnabledOnDomainChecker;
 use Shopsys\FrontendApiBundle\Model\GraphqlConfigurator;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -101,13 +102,7 @@ class FrontendApiController
             return;
         }
 
-        @trigger_error(
-            sprintf(
-                'The %s() method is deprecated and will be removed in the next major. Use the constructor injection instead.',
-                __METHOD__
-            ),
-            E_USER_DEPRECATED
-        );
+        DeprecationHelper::triggerSetterInjection(__METHOD__);
 
         $this->graphqlConfigurator = $graphqlConfigurator;
     }

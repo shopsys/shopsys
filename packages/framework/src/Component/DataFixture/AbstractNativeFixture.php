@@ -5,6 +5,7 @@ namespace Shopsys\FrameworkBundle\Component\DataFixture;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query\ResultSetMapping;
+use Shopsys\FrameworkBundle\Component\Deprecations\DeprecationHelper;
 
 /**
  * @deprecated Class is obsolete and will be removed in the next major
@@ -32,13 +33,7 @@ abstract class AbstractNativeFixture extends AbstractFixture
      */
     protected function executeNativeQuery($sql, ?array $parameters = null)
     {
-        @trigger_error(
-            sprintf(
-                'The "%s" class is deprecated and will be removed in the next major.',
-                self::class
-            ),
-            E_USER_DEPRECATED
-        );
+        DeprecationHelper::triggerClass(self::class);
 
         $nativeQuery = $this->entityManager->createNativeQuery($sql, new ResultSetMapping());
         return $nativeQuery->execute($parameters);

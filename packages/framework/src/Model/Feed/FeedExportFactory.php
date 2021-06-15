@@ -5,6 +5,7 @@ namespace Shopsys\FrameworkBundle\Model\Feed;
 use Doctrine\ORM\EntityManagerInterface;
 use League\Flysystem\FilesystemInterface;
 use League\Flysystem\MountManager;
+use Shopsys\FrameworkBundle\Component\Deprecations\DeprecationHelper;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Symfony\Component\Filesystem\Filesystem;
 
@@ -73,13 +74,10 @@ class FeedExportFactory
     public function create(FeedInterface $feed, DomainConfig $domainConfig, $lastSeekId = null): FeedExport
     {
         if ($lastSeekId !== null && !is_int($lastSeekId)) {
-            @trigger_error(
-                sprintf(
-                    'The argument "$lastSeekId" passed to method "%s()" should be type of int or null.'
-                    . ' Argument will be strict typed in the next major.',
-                    __METHOD__
-                ),
-                E_USER_DEPRECATED
+            DeprecationHelper::trigger(
+                'The argument "$lastSeekId" passed to method "%s()" should be type of int or null.'
+                . ' Argument will be strictly typed in the next major.',
+                __METHOD__
             );
         }
 

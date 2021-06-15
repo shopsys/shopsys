@@ -3,6 +3,7 @@
 namespace Shopsys\FrameworkBundle\Model\Cart\Watcher;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Shopsys\FrameworkBundle\Component\Deprecations\DeprecationHelper;
 use Shopsys\FrameworkBundle\Component\FlashMessage\FlashMessage;
 use Shopsys\FrameworkBundle\Model\Cart\Cart;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
@@ -55,13 +56,7 @@ class CartWatcherFacade
         Environment $twigEnvironment
     ) {
         if (static::class === self::class) {
-            trigger_error(
-                sprintf(
-                    'Class "%s" will be changed to abstract class in next major version. Extend this class to your project and implement corresponding methods instead.',
-                    self::class
-                ),
-                E_USER_DEPRECATED
-            );
+            DeprecationHelper::triggerAbstractClass(self::class);
         }
 
         $this->flashBag = $flashBag;
@@ -140,13 +135,7 @@ class CartWatcherFacade
      */
     protected function getMessageForNoLongerAvailableExistingProduct(): string
     {
-        trigger_error(
-            sprintf(
-                'Method "%s" will be changed to abstract in next major version. Extend this class to your project and implement method by yourself instead.',
-                __METHOD__
-            ),
-            E_USER_DEPRECATED
-        );
+        DeprecationHelper::triggerAbstractMethod(__METHOD__);
 
         return t('Product <strong>{{ name }}</strong> you had in cart is no longer available. Please check your order.');
     }
@@ -157,13 +146,7 @@ class CartWatcherFacade
      */
     protected function getMessageForNoLongerAvailableProduct(): string
     {
-        trigger_error(
-            sprintf(
-                'Method "%s" will be changed to abstract in next major version. Extend this class to your project and implement method by yourself instead.',
-                __METHOD__
-            ),
-            E_USER_DEPRECATED
-        );
+        DeprecationHelper::triggerAbstractMethod(__METHOD__);
 
         return t('Product you had in cart is no longer in available. Please check your order.');
     }
@@ -174,13 +157,7 @@ class CartWatcherFacade
      */
     protected function getMessageForChangedProduct(): string
     {
-        trigger_error(
-            sprintf(
-                'Method "%s" will be changed to abstract in next major version. Extend this class to your project and implement method by yourself instead.',
-                __METHOD__
-            ),
-            E_USER_DEPRECATED
-        );
+        DeprecationHelper::triggerAbstractMethod(__METHOD__);
 
         return t('The price of the product <strong>{{ name }}</strong> you have in cart has changed. Please, check your order.');
     }

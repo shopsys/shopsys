@@ -3,6 +3,7 @@
 namespace Shopsys\FrameworkBundle\Component\Image\Config;
 
 use BadMethodCallException;
+use Shopsys\FrameworkBundle\Component\Deprecations\DeprecationHelper;
 use Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver;
 use Shopsys\FrameworkBundle\Component\Image\Config\Exception\ImageEntityConfigNotFoundException;
 use Shopsys\FrameworkBundle\Component\Image\Image;
@@ -67,13 +68,7 @@ class ImageConfig
             return;
         }
 
-        @trigger_error(
-            sprintf(
-                'The %s() method is deprecated and will be removed in the next major. Use the constructor injection instead.',
-                __METHOD__
-            ),
-            E_USER_DEPRECATED
-        );
+        DeprecationHelper::triggerSetterInjection(__METHOD__);
 
         $this->entityNameResolver = $entityNameResolver;
         $this->setUpImageEntityConfigsByClass($this->imageEntityConfigsByClass);

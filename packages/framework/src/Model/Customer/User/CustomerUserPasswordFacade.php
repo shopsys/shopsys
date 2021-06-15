@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Customer\User;
 
 use BadMethodCallException;
 use Doctrine\ORM\EntityManagerInterface;
+use Shopsys\FrameworkBundle\Component\Deprecations\DeprecationHelper;
 use Shopsys\FrameworkBundle\Component\String\HashGenerator;
 use Shopsys\FrameworkBundle\Model\Customer\Exception\InvalidResetPasswordHashUserException;
 use Shopsys\FrameworkBundle\Model\Customer\Mail\ResetPasswordMailFacade;
@@ -90,13 +91,8 @@ class CustomerUserPasswordFacade
             return;
         }
 
-        @trigger_error(
-            sprintf(
-                'The %s() method is deprecated and will be removed in the next major. Use the constructor injection instead.',
-                __METHOD__
-            ),
-            E_USER_DEPRECATED
-        );
+        DeprecationHelper::triggerSetterInjection(__METHOD__);
+
         $this->customerUserRefreshTokenChainFacade = $customerUserRefreshTokenChainFacade;
     }
 

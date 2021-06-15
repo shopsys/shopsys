@@ -2,6 +2,8 @@
 
 namespace Shopsys\FrameworkBundle\Component\Environment;
 
+use Shopsys\FrameworkBundle\Component\Deprecations\DeprecationHelper;
+
 class EnvironmentFileSetting
 {
     protected const FILE_NAMES_BY_ENVIRONMENT = [
@@ -47,12 +49,9 @@ class EnvironmentFileSetting
     public function getEnvironment(?bool $console = null): string
     {
         if ($console !== null) {
-            @trigger_error(
-                sprintf(
-                    'The $console parameter of %s() method is deprecated and will be removed in the next major.',
-                    __METHOD__
-                ),
-                E_USER_DEPRECATED
+            DeprecationHelper::trigger(
+                'The $console parameter of %s() method is deprecated and will be removed in the next major.',
+                __METHOD__
             );
         }
 

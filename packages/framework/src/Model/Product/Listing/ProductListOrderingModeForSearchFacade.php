@@ -2,6 +2,7 @@
 
 namespace Shopsys\FrameworkBundle\Model\Product\Listing;
 
+use Shopsys\FrameworkBundle\Component\Deprecations\DeprecationHelper;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -22,13 +23,7 @@ class ProductListOrderingModeForSearchFacade
     public function __construct(RequestToOrderingModeIdConverter $requestToOrderingModeIdConverter)
     {
         if (static::class === self::class) {
-            trigger_error(
-                sprintf(
-                    'Class "%s" will be changed to abstract class in next major version. Extend this class to your project and implement corresponding methods instead.',
-                    self::class
-                ),
-                E_USER_DEPRECATED
-            );
+            DeprecationHelper::triggerAbstractClass(self::class);
         }
 
         $this->requestToOrderingModeIdConverter = $requestToOrderingModeIdConverter;
@@ -64,13 +59,7 @@ class ProductListOrderingModeForSearchFacade
      */
     protected function getSupportedOrderingModesNamesById(): array
     {
-        trigger_error(
-            sprintf(
-                'Method "%s" will be changed to abstract in next major version. Extend this class to your project and implement method by yourself instead.',
-                __METHOD__
-            ),
-            E_USER_DEPRECATED
-        );
+        DeprecationHelper::triggerAbstractMethod(__METHOD__);
 
         return [
             ProductListOrderingConfig::ORDER_BY_RELEVANCE => t('relevance'),

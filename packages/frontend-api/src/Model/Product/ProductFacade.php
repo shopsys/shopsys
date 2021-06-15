@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrontendApiBundle\Model\Product;
 
+use Shopsys\FrameworkBundle\Component\Deprecations\DeprecationHelper;
 use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
@@ -61,13 +62,7 @@ class ProductFacade
      */
     public function getProductsCountOnCurrentDomain(): int
     {
-        @trigger_error(
-            sprintf(
-                'The %s() method is deprecated and will be removed in the next major. It has been replaced by getFilteredProductsCountOnCurrentDomain().',
-                __METHOD__
-            ),
-            E_USER_DEPRECATED
-        );
+        DeprecationHelper::triggerMethod(__METHOD__, 'getFilteredProductsCountOnCurrentDomain');
 
         $filterQuery = $this->filterQueryFactory->createListable();
 
@@ -99,13 +94,7 @@ class ProductFacade
      */
     public function getProductsOnCurrentDomain(int $limit, int $offset, string $orderingModeId): array
     {
-        @trigger_error(
-            sprintf(
-                'The %s() method is deprecated and will be removed in the next major. It has been replaced by getFilteredProductsOnCurrentDomain().',
-                __METHOD__
-            ),
-            E_USER_DEPRECATED
-        );
+        DeprecationHelper::triggerMethod(__METHOD__, 'getFilteredProductsOnCurrentDomain');
 
         $emptyProductFilterData = new ProductFilterData();
         $filterQuery = $this->filterQueryFactory->createWithProductFilterData(
@@ -160,13 +149,7 @@ class ProductFacade
      */
     public function getProductsByCategory(Category $category, int $limit, int $offset, string $orderingModeId): array
     {
-        @trigger_error(
-            sprintf(
-                'The %s() method is deprecated and will be removed in the next major. It has been replaced by getFilteredProductsByCategory().',
-                __METHOD__
-            ),
-            E_USER_DEPRECATED
-        );
+        DeprecationHelper::triggerMethod(__METHOD__, 'getFilteredProductsByCategory');
 
         $emptyProductFilterData = new ProductFilterData();
         $filterQuery = $this->filterQueryFactory->createListableProductsByCategoryId(
@@ -222,13 +205,7 @@ class ProductFacade
      */
     public function getProductsByCategoryCount(Category $category): int
     {
-        @trigger_error(
-            sprintf(
-                'The %s() method is deprecated and will be removed in the next major. It has been replaced by getFilteredProductsByCategoryCount().',
-                __METHOD__
-            ),
-            E_USER_DEPRECATED
-        );
+        DeprecationHelper::triggerMethod(__METHOD__, 'getFilteredProductsByCategoryCount');
 
         $filterQuery = $this->filterQueryFactory->createListable()
             ->filterByCategory([$category->getId()]);
@@ -267,13 +244,7 @@ class ProductFacade
      */
     public function getProductsByBrand(Brand $brand, int $limit, int $offset, string $orderingModeId): array
     {
-        @trigger_error(
-            sprintf(
-                'The %s() method is deprecated and will be removed in the next major. It has been replaced by getFilteredProductsByBrand().',
-                __METHOD__
-            ),
-            E_USER_DEPRECATED
-        );
+        DeprecationHelper::triggerMethod(__METHOD__, 'getFilteredProductsByBrand');
 
         $emptyProductFilterData = new ProductFilterData();
         $filterQuery = $this->filterQueryFactory->createListableProductsByBrandId(
@@ -328,13 +299,7 @@ class ProductFacade
      */
     public function getProductsByBrandCount(Brand $brand): int
     {
-        @trigger_error(
-            sprintf(
-                'The %s() method is deprecated and will be removed in the next major. It has been replaced by getFilteredProductsByBrandCount().',
-                __METHOD__
-            ),
-            E_USER_DEPRECATED
-        );
+        DeprecationHelper::triggerMethod(__METHOD__, 'getFilteredProductsByBrandCount');
 
         $filterQuery = $this->filterQueryFactory->createListable()
             ->filterByBrands([$brand->getId()]);
