@@ -4,9 +4,8 @@ declare(strict_types=1);
 
 namespace Shopsys\FrontendApiBundle\Component\Constraints;
 
-use BadMethodCallException;
-use Shopsys\FrameworkBundle\Component\Deprecations\DeprecationHelper;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\DependencyInjection\SetterInjectionTrait;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Product\Exception\ProductNotFoundException;
 use Shopsys\FrameworkBundle\Model\Product\ProductCachedAttributesFacade;
@@ -18,6 +17,8 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
 class ProductCanBeOrderedValidator extends ConstraintValidator
 {
+    use SetterInjectionTrait;
+
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\ProductFacade
      * @deprecated This property will be removed in next major version as it is no longer in use
@@ -72,22 +73,7 @@ class ProductCanBeOrderedValidator extends ConstraintValidator
      */
     public function setFrontendApiProductFacade(FrontendApiProductFacade $frontendApiProductFacade): void
     {
-        if (
-            $this->frontendApiProductFacade !== null
-            && $this->frontendApiProductFacade !== $frontendApiProductFacade
-        ) {
-            throw new BadMethodCallException(sprintf(
-                'Method "%s" has been already called and cannot be called multiple times.',
-                __METHOD__
-            ));
-        }
-        if ($this->frontendApiProductFacade !== null) {
-            return;
-        }
-
-        DeprecationHelper::triggerSetterInjection(__METHOD__);
-
-        $this->frontendApiProductFacade = $frontendApiProductFacade;
+        $this->setDependency($frontendApiProductFacade, 'frontendApiProductFacade');
     }
 
     /**

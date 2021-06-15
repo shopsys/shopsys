@@ -2,12 +2,11 @@
 
 namespace Shopsys\FrameworkBundle\Model\Product;
 
-use BadMethodCallException;
-use Shopsys\FrameworkBundle\Component\Deprecations\DeprecationHelper;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
 use Shopsys\FrameworkBundle\Component\Plugin\PluginCrudExtensionFacade;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
+use Shopsys\FrameworkBundle\DependencyInjection\SetterInjectionTrait;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade;
 use Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryRepository;
@@ -20,6 +19,8 @@ use Shopsys\FrameworkBundle\Model\Product\Unit\UnitFacade;
 
 class ProductDataFactory implements ProductDataFactoryInterface
 {
+    use SetterInjectionTrait;
+
     /**
      * @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade
      */
@@ -137,18 +138,7 @@ class ProductDataFactory implements ProductDataFactoryInterface
      */
     public function setAvailabilityFacade(AvailabilityFacade $availabilityFacade)
     {
-        if ($this->availabilityFacade !== null && $this->availabilityFacade !== $availabilityFacade) {
-            throw new BadMethodCallException(
-                sprintf('Method "%s" has been already called and cannot be called multiple times.', __METHOD__)
-            );
-        }
-        if ($this->availabilityFacade !== null) {
-            return;
-        }
-
-        DeprecationHelper::triggerSetterInjection(__METHOD__);
-
-        $this->availabilityFacade = $availabilityFacade;
+        $this->setDependency($availabilityFacade, 'availabilityFacade');
     }
 
     /**

@@ -4,10 +4,9 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\AdvancedSearch\Filter;
 
-use BadMethodCallException;
 use Doctrine\ORM\QueryBuilder;
-use Shopsys\FrameworkBundle\Component\Deprecations\DeprecationHelper;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\DependencyInjection\SetterInjectionTrait;
 use Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchFilterInterface;
 use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
@@ -18,6 +17,8 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 class ProductCategoryFilter implements AdvancedSearchFilterInterface
 {
+    use SetterInjectionTrait;
+
     public const NAME = 'productCategory';
 
     /**
@@ -58,18 +59,7 @@ class ProductCategoryFilter implements AdvancedSearchFilterInterface
      */
     public function setLocalization(Localization $localization): void
     {
-        if ($this->localization !== null && $this->localization !== $localization) {
-            throw new BadMethodCallException(
-                sprintf('Method "%s" has been already called and cannot be called multiple times.', __METHOD__)
-            );
-        }
-        if ($this->localization !== null) {
-            return;
-        }
-
-        DeprecationHelper::triggerSetterInjection(__METHOD__);
-
-        $this->localization = $localization;
+        $this->setDependency($localization, 'localization');
     }
 
     /**
