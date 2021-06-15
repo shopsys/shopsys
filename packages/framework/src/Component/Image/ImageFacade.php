@@ -4,9 +4,12 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Component\Image;
 
+use BadMethodCallException;
 use Doctrine\ORM\EntityManagerInterface;
+use League\Flysystem\FileNotFoundException;
 use League\Flysystem\FilesystemInterface;
 use League\Flysystem\MountManager;
+use Psr\Log\LoggerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\FileUpload\FileUpload;
 use Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadData;
@@ -63,6 +66,11 @@ class ImageFacade
     protected $imageFactory;
 
     /**
+     * @var \Psr\Log\LoggerInterface|null
+     */
+    protected ?LoggerInterface $logger;
+
+    /**
      * @param mixed $imageUrlPrefix
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig $imageConfig
@@ -72,6 +80,7 @@ class ImageFacade
      * @param \Shopsys\FrameworkBundle\Component\Image\ImageLocator $imageLocator
      * @param \Shopsys\FrameworkBundle\Component\Image\ImageFactoryInterface $imageFactory
      * @param \League\Flysystem\MountManager $mountManager
+     * @param \Psr\Log\LoggerInterface|null $logger
      */
     public function __construct(
         $imageUrlPrefix,
@@ -82,7 +91,8 @@ class ImageFacade
         FileUpload $fileUpload,
         ImageLocator $imageLocator,
         ImageFactoryInterface $imageFactory,
-        MountManager $mountManager
+        MountManager $mountManager,
+        ?LoggerInterface $logger = null
     ) {
         $this->imageUrlPrefix = $imageUrlPrefix;
         $this->em = $em;
@@ -93,6 +103,36 @@ class ImageFacade
         $this->imageLocator = $imageLocator;
         $this->imageFactory = $imageFactory;
         $this->mountManager = $mountManager;
+        $this->logger = $logger;
+    }
+
+    /**
+     * @required
+     * @param \Psr\Log\LoggerInterface $logger
+     * @internal This function will be replaced by constructor injection in next major
+     */
+    public function setLogger(LoggerInterface $logger): void
+    {
+        if (
+            $this->logger !== null
+            && $this->logger !== $logger
+        ) {
+            throw new BadMethodCallException(
+                sprintf('Method "%s" has been already called and cannot be called multiple times.', __METHOD__)
+            );
+        }
+        if ($this->logger !== null) {
+            return;
+        }
+
+        @trigger_error(
+            sprintf(
+                'The %s() method is deprecated and will be removed in the next major. Use the constructor injection instead.',
+                __METHOD__
+            ),
+            E_USER_DEPRECATED
+        );
+        $this->logger = $logger;
     }
 
     /**
@@ -457,15 +497,20 @@ class ImageFacade
         $sourceImages = $this->getAllImagesByEntity($sourceEntity);
         $targetImages = [];
         foreach ($sourceImages as $sourceImage) {
-            $this->mountManager->copy(
-                'main://' . $this->imageLocator->getAbsoluteImageFilepath(
-                    $sourceImage,
-                    ImageConfig::ORIGINAL_SIZE_NAME
-                ),
-                'main://' . TransformString::removeDriveLetterFromPath(
-                    $this->fileUpload->getTemporaryFilepath($sourceImage->getFilename())
-                )
-            );
+            try {
+                $this->mountManager->copy(
+                    'main://' . $this->imageLocator->getAbsoluteImageFilepath(
+                        $sourceImage,
+                        ImageConfig::ORIGINAL_SIZE_NAME
+                    ),
+                    'main://' . TransformString::removeDriveLetterFromPath(
+                        $this->fileUpload->getTemporaryFilepath($sourceImage->getFilename())
+                    )
+                );
+            } catch (FileNotFoundException $exception) {
+                $this->logger->error('Image could not be copied because file was not found', [$exception]);
+                continue;
+            }
 
             $targetImage = $this->imageFactory->create(
                 $this->imageConfig->getImageEntityConfig($targetEntity)->getEntityName(),
