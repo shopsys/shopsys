@@ -280,6 +280,9 @@ msgstr ""
 msgid "Items"
 msgstr ""
 
+msgid "Last modification"
+msgstr "Naposledy upraveno"
+
 msgid "Last name"
 msgstr ""
 
