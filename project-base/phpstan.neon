@@ -27,22 +27,8 @@ parameters:
             message: '#^PHPDoc tag @throws with type .+ is not subtype of Throwable$#'
             path: %projectRootDirectory%/tests/App/Test/Codeception/_generated/AcceptanceTesterActions.php
         -
-            # phpstan-symfony extension cannot work right with symfony test container at the moment https://github.com/phpstan/phpstan-symfony/issues/27
-            message: '#^Service "[^"]+" is private.$#'
-            path: %projectRootDirectory%/tests/*
-        -
-            message: '#^Service "test.service_container" is not registered in the container.$#'
-            path: %projectRootDirectory%/tests/*
-        -
-            message: '#^Service "snc_redis.test" is not registered in the container.$#'
-            path: %projectRootDirectory%/tests/App/Functional/Component/Redis/Redis*FacadeTest.php
-        -
             message: '#^Method Doctrine\\Persistence\\ObjectManager::flush\(\) invoked with 1 parameter, 0 required\.$#'
             path: *
-        -
-            # Annotations in Codeception are not well describing
-            message: '#^Parameter \#(\d+) (\$cssOrXPath|\$cssOrXPathOrRegex|\$field|\$selector|\$element) of method (Tests\\(.*)\\Codeception\\(.*)|Codeception\\Module\\WebDriver::moveMouseOver\(\)) expects (.*)#'
-            path: %projectRootDirectory%/tests/App/*
 includes:
     - %currentWorkingDirectory%/vendor/phpstan/phpstan-doctrine/extension.neon
     - %currentWorkingDirectory%/vendor/phpstan/phpstan-phpunit/extension.neon

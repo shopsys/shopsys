@@ -11,12 +11,6 @@ parameters:
         # Don't forget to add these rules to phpstan.neon in monorepo
         # Ignoring absence of \App\Kernel, which should be provided by project implementation
         -
-            message: '~Instantiated class App\\Kernel not found~'
-            path: %frameworkRootDirectory%/*
-        -
-            message: '#Call to method .+\(\) on an unknown class App\\Kernel\.#'
-            path: %frameworkRootDirectory%/src/Component/Error/ErrorPagesFacade.php
-        -
             message: '#Method Doctrine\\Persistence\\ObjectManager::flush\(\) invoked with 1 parameter, 0 required\.#'
             path: %frameworkRootDirectory%/*
         -
@@ -38,14 +32,8 @@ parameters:
             message: '#^Method Symfony\\Contracts\\EventDispatcher\\EventDispatcherInterface::dispatch\(\) invoked with 2 parameters, 1 required\.$#'
             path: %frameworkRootDirectory%/src/*
         -
-            message: '#Call to an undefined method \(Shopsys\\FrontendApiBundle\\Model\\User\\FrontendApiUser&Stringable\)|\(Shopsys\\FrontendApiBundle\\Model\\User\\FrontendApiUser&Symfony\\Component\\Security\\Core\\User\\UserInterface\)::getUuid\(\)\.#'
-            path: %frameworkRootDirectory%/src/Model/Customer/User/CurrentCustomerUser.php*
-        -
             message: '#^Unsafe usage of new static\(\).#'
             path: %frameworkRootDirectory%/src/*
-        -
-            message: '#^Parameter \#2 \$default of method Symfony\\Component\\HttpFoundation\\InputBag::get\(\) expects string\|null, array given\.$#'
-            path: %frameworkRootDirectory%/src/Component/Grid/Grid.php
     excludes_analyse:
         # Exclude "Source" folder dedicated for testing functionality connected to "shopsys:extended-classes:annotations" command
         - %frameworkRootDirectory%/tests/Unit/Component/ClassExtension/Source/*
