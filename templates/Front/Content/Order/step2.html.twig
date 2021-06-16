@@ -64,7 +64,7 @@
                                                         {{ transport.name }}
                                                     </span>
                                                     {% if transport.description %}
-                                                        <span class="box-chooser__item__title__description{% if transport.isPersonalPickup() != false and personalPickupStock != null %} box-chooser__item__title__description--full-width{% endif %}" data-origin="{{ transport.description }}">
+                                                        <span class="box-chooser__item__title__description{% if transport.isPersonalPickup() != false and personalPickupStock != null %} full-width{% endif %}" data-origin="{{ transport.description }}">
                                                             {% if transport.isPersonalPickup() == false %}
                                                                 <div class="box-chooser__item__tooltip__wrap">
                                                                     <i class="box-chooser__item__tooltip__handler">i</i>
@@ -95,7 +95,7 @@
                                                     {% endif %}
                                                 </span>
 
-                                                <span class="box-chooser__item__avail js-chooser-delivery-information {% if transport.isPersonalPickup() and personalPickupStock != null %}display-none{% endif %}">
+                                                <span class="box-chooser__item__availability js-chooser-delivery-information {% if transport.isPersonalPickup() and personalPickupStock != null %}display-none{% endif %}">
                                                     {% set minimalDaysAvailability = minimalDaysAvailabilityIndexedByTransportIds[transport.id] %}
                                                     {% if minimalDaysAvailability < 7 %}
                                                         {% if transport.isPersonalPickup() %}

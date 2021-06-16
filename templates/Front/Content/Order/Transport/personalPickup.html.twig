@@ -29,7 +29,7 @@
                 <span class="box-chooser__item__title">
                     <strong class="box-chooser__item__title__name">{{ stock.name }}</strong>
                 </span>
-                <span class="box-chooser__item__avail">
+                <span class="box-chooser__item__availability">
                     {% transchoice stockDayAvailabilitiesByStockId[stock.id]|daysToWeeks with {'%weeksAvailability%': stockDayAvailabilitiesByStockId[stock.id]|daysToWeeks} %}
                         {0} Můžete mít ihned
                         | {1} K dispozici do 1 týdne

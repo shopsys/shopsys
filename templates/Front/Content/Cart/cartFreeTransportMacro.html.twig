@@ -5,7 +5,7 @@
     <div class="box-free-transport">
         {% if restForFreeTransportPriceAmount > 0 %}
             <div class="box-free-transport__desc">
-                {{ 'Nakupte ještě za <strong class="box-free-transport__desc__strong">%price%</strong> a získáte doručení <strong class="box-free-transport__desc__strong">Zdarma</strong>'|trans({ '%price%': restForFreeTransportPrice })|raw }}
+                {{ 'Nakupte ještě za <strong>%price%</strong> a získáte doručení <strong>Zdarma</strong>'|trans({ '%price%': restForFreeTransportPrice })|raw }}
             </div>
             <div class="box-free-transport__progress">
                 <div class="box-free-transport__progress__bar" style="width: {{ percentageOfFreeTransport }}%;"></div>
