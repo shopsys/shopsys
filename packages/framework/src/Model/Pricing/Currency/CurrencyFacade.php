@@ -3,6 +3,7 @@
 namespace Shopsys\FrameworkBundle\Model\Pricing\Currency;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Litipk\BigNumbers\Decimal;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Order\OrderRepository;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentPriceFactoryInterface;
@@ -128,6 +129,15 @@ class CurrencyFacade
     }
 
     /**
+     * @param string $currencyCode
+     * @return \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency
+     */
+    public function getByCode(string $currencyCode): Currency
+    {
+        return $this->currencyRepository->getByCode($currencyCode);
+    }
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyData $currencyData
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency
      */
@@ -204,7 +214,9 @@ class CurrencyFacade
      */
     public function setDefaultCurrency(Currency $currency)
     {
+        $originalDefaultCurrency = $this->getDefaultCurrency();
         $this->pricingSetting->setDefaultCurrency($currency);
+        $this->recalculateExchangeRatesByNewDefaultCurrency($originalDefaultCurrency, $currency);
         $this->em->flush();
     }
 
@@ -216,6 +228,25 @@ class CurrencyFacade
     {
         $this->pricingSetting->setDomainDefaultCurrency($currency, $domainId);
         $this->productPriceRecalculationScheduler->scheduleAllProductsForDelayedRecalculation();
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $originalDefaultCurrency
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $newDefaultCurrency
+     */
+    protected function recalculateExchangeRatesByNewDefaultCurrency(
+        Currency $originalDefaultCurrency,
+        Currency $newDefaultCurrency
+    ): void {
+        $coefficient = $this->getExchangeRateForCurrencies($originalDefaultCurrency, $newDefaultCurrency);
+        foreach ($this->getAll() as $currency) {
+            if ($currency->getId() === $newDefaultCurrency->getId()) {
+                $newExchangeRate = Currency::DEFAULT_EXCHANGE_RATE;
+            } else {
+                $newExchangeRate = Decimal::fromString($currency->getExchangeRate())->mul($coefficient);
+            }
+            $currency->setExchangeRate($newExchangeRate);
+        }
     }
 
     /**
@@ -264,5 +295,18 @@ class CurrencyFacade
         }
 
         return $currenciesIndexedById;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $inputCurrency
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $outputCurrency
+     * @return \Litipk\BigNumbers\Decimal
+     */
+    public function getExchangeRateForCurrencies(Currency $inputCurrency, Currency $outputCurrency): Decimal
+    {
+        $inputCurrencyExchangeRate = Decimal::fromString($inputCurrency->getExchangeRate());
+        $outputCurrencyExchangeRate = Decimal::fromString($outputCurrency->getExchangeRate());
+
+        return $inputCurrencyExchangeRate->div($outputCurrencyExchangeRate, 6);
     }
 }

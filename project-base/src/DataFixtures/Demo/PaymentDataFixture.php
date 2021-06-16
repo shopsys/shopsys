@@ -148,9 +148,12 @@ class PaymentDataFixture extends AbstractReferenceFixture implements DependentFi
      */
     private function setPriceForAllDomainDefaultCurrencies(PaymentData $paymentData, Money $price): void
     {
+        /** @var \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currencyCzk */
+        $currencyCzk = $this->getReference(CurrencyDataFixture::CURRENCY_CZK);
         foreach ($this->domain->getAllIncludingDomainConfigsWithoutDataCreated() as $domain) {
-            $convertedPrice = $this->priceConverter->convertPriceWithoutVatToPriceInDomainDefaultCurrency(
+            $convertedPrice = $this->priceConverter->convertPriceWithoutVatToDomainDefaultCurrencyPrice(
                 $price,
+                $currencyCzk,
                 $domain->getId()
             );
 

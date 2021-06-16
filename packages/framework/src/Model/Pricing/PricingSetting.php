@@ -70,7 +70,6 @@ class PricingSetting
      */
     public function setDefaultCurrency(Currency $currency)
     {
-        $currency->setExchangeRate(Currency::DEFAULT_EXCHANGE_RATE);
         $this->setting->set(self::DEFAULT_CURRENCY, $currency->getId());
     }
 
