@@ -861,3 +861,8 @@ services:
         alias: App\Model\Product\Elasticsearch\MarkProductForExportSubscriber
 
     App\Twig\CacheLifetimeExtension: ~
+
+    Shopsys\FrameworkBundle\Component\Domain\DomainAwareSecurityHeadersSetter:
+        class: App\Component\Domain\DomainAwareSecurityHeadersSetter
+        tags:
+            - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse }

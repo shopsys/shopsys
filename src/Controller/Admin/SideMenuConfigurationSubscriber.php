@@ -144,5 +144,10 @@ class SideMenuConfigurationSubscriber implements EventSubscriberInterface
         $communicationMenu = $settingsMenu->getChild('communication');
         $mailTemplates = $communicationMenu->getChild('mail_templates');
         $mailTemplates->addChild('new_template', ['route' => 'admin_mail_createtemplate', 'label' => t('Nová šablona emailu'), 'display' => false]);
+
+        $superadminSettingMenu = $settingsMenu->getChild('superadmin');
+        if ($superadminSettingMenu !== null) {
+            $superadminSettingMenu->addChild('cspHeader', ['route' => 'admin_cspheader_setting', 'label' => t('Content-Security-Policy header')]);
+        }
     }
 }
