@@ -121,15 +121,17 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
     {
         /** @var \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currencyCzk */
         $currencyCzk = $this->getReference(CurrencyDataFixture::CURRENCY_CZK);
-        foreach ($this->domain->getAllIncludingDomainConfigsWithoutDataCreated() as $domain) {
-            $convertedPrice = $this->priceConverter->convertPriceWithoutVatToDomainDefaultCurrencyPrice(
-                $price,
-                $currencyCzk,
-                $domain->getId()
-            );
 
+        foreach ($this->domain->getAllIncludingDomainConfigsWithoutDataCreated() as $domain) {
             /** @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vat */
             $vat = $this->getReferenceForDomain(VatDataFixture::VAT_HIGH, $domain->getId());
+
+            $convertedPrice = $this->priceConverter->convertPriceToInputPriceWithoutVatInDomainDefaultCurrency(
+                $price,
+                $currencyCzk,
+                $vat->getPercent(),
+                $domain->getId()
+            );
 
             $transportData->vatsIndexedByDomainId[$domain->getId()] = $vat;
             $transportData->pricesIndexedByDomainId[$domain->getId()] = $convertedPrice;

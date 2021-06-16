@@ -60,3 +60,6 @@ There you can find links to upgrade notes for other versions too.
     - `PriceConverter::convertPriceWithoutVatToPriceInDomainDefaultCurrency` is deprecated, use `convertPriceWithoutVatToPriceInDomainDefaultCurrency` instead (the new method requires `$priceCurrency` argument)
     - `PriceConverter::convertPriceWithVatToPriceInDomainDefaultCurrency` is deprecated, use `convertPriceWithVatToPriceInDomainDefaultCurrency` instead (the new method requires `$priceCurrency` argument)
     - see #project-base-diff to update your project
+
+- update your data fixtures to always generate data with same prices ([#2356](https://github.com/shopsys/shopsys/pull/2356))
+    - see #project-base-diff to update your project
