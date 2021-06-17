@@ -67,3 +67,12 @@ There you can find links to upgrade notes for other versions too.
 - increase minimal version of `symfony/proxy-manager-bridge` package ([#2359](https://github.com/shopsys/shopsys/pull/2359))
     - see #project-base-diff to update your project
     - don't forget to update dependency with `composer update symfony/proxy-manager-bridge` 
+
+- **\[BC break\]** update node (to version 16) and npm packages ([#2336](https://github.com/shopsys/shopsys/pull/2336))
+    - remove your `package-lock.yaml` and run `npm i` to create the new version of the file
+    - paths to assets in `*.less` files now require path from the root of the app, you may want to update your custom styles
+      ```diff
+      -  background-image: url("/public/styleguide/images/icon_large_up.svg")
+      +  background-image: url("/web/public/styleguide/images/icon_large_up.svg")
+      ```
+    - see #project-base-diff to update your project
