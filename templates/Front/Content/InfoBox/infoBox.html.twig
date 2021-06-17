@@ -8,20 +8,20 @@
 {% endif %}
 
 <div class="box-info {{ cssClassModification|default('') }}">
-    {% set inofoboxIcon = 'potrebujete_poradit' %}
-    {% set inofoboxIcon2x = 'potrebujete_poradit2x' %}
+    {% set infoBoxIcon = 'potrebujete_poradit' %}
+    {% set infoBoxIcon2x = 'potrebujete_poradit2x' %}
     {% if isNotHeader %}
         <picture>
             <source
                 srcset="
-                {{ asset("public/frontend/images/#{inofoboxIcon2x}.png") }} 2x,
-                {{ asset("public/frontend/images/#{inofoboxIcon}.png") }} 1x"
+                {{ asset("public/frontend/images/#{infoBoxIcon2x}.png") }} 2x,
+                {{ asset("public/frontend/images/#{infoBoxIcon}.png") }} 1x"
             >
             <img
                 class="box-info__img"
                 loading="lazy"
                 src="{{ imgLazyloadPlaceholder }}"
-                data-src="{{ asset("public/frontend/images/#{inofoboxIcon}.png") }}"
+                data-src="{{ asset("public/frontend/images/#{infoBoxIcon}.png") }}"
                 alt="{{ 'Potřebujete poradit?'|trans }}"
             >
         </picture>

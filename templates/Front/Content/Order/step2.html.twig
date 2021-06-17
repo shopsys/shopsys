@@ -76,13 +76,13 @@
                                                                     <div class="box-chooser__item__tooltip">{{ transport.description }}</div>
                                                                 </div>
                                                             {% else %}
-                                                                {{ stocksById[personalPickupStock].name }}, sdsd <br>
-                                                                {{ 'Otevřeno'|trans }}: sdsd <br>
+                                                                {{ stocksById[personalPickupStock].name }}, {{ stocksById[personalPickupStock].street }} <br>
+                                                                {{ 'Otevřeno'|trans }}: {{ stocksById[personalPickupStock].openingHours|nl2br }} <br>
                                                                 {% set minimalDaysAvailability = stockDayAvailabilitiesByStockId[personalPickupStock] %}
                                                                 {% if minimalDaysAvailability < 7 %}
                                                                     {% transchoice minimalDaysAvailability with {'%daysAvailability%': minimalDaysAvailability} %}
                                                                     {0} Můžete mít ihned
-                                                                    | [1,Inf] Osobní odběr do %daysAvailability% dnů
+                                                                    | [1,Inf] Osobní odběr do %daysAvailability% dne
                                                                     {% endtranschoice %}
                                                                 {% else %}
                                                                     {% transchoice minimalDaysAvailability|daysToWeeks with {'%weeksAvailability%': minimalDaysAvailability|daysToWeeks} %}
@@ -101,12 +101,12 @@
                                                         {% if transport.isPersonalPickup() %}
                                                             {% transchoice minimalDaysAvailability with {'%daysAvailability%': minimalDaysAvailability} %}
                                                                 {0} Můžete mít ihned
-                                                            | [1,Inf] Osobní odběr do %daysAvailability% dnů
+                                                            | [1,Inf] Osobní odběr do %daysAvailability% dne
                                                             {% endtranschoice %}
                                                         {% else %}
                                                             {% transchoice minimalDaysAvailability with {'%daysAvailability%': minimalDaysAvailability} %}
                                                                 {0} Můžete mít ještě dnes
-                                                            | [1,Inf] Doručení do %daysAvailability% dnů
+                                                            | [1,Inf] Doručení do %daysAvailability% dne
                                                             {% endtranschoice %}
                                                         {% endif %}
                                                     {% else %}
@@ -133,9 +133,6 @@
                             </div>
                         {% do form.transport.setRendered %} {# When session contains transport for productType without products with them, it must be skipped #}
                         {% do form.personalPickupStock.setRendered %} {# When session contains transport for productType without products with them, it must be skipped #}
-                        </div>
-                        <div class="box-chooser__free-transport {{ orderPreview.transportForFree ? '' : ' box-chooser__free-transport--empty' }}">
-                            {{ cartFreeTransportMacro.progressBar(orderPreview) }}
                         </div>
                     </div>
 
@@ -271,9 +268,7 @@
                         {{ render(controller('App\\Controller\\Front\\OrderController:previewAction', {
                             transportId: orderPreview.transport is not null ? orderPreview.transport.id : null,
                             paymentId: orderPreview.payment,
-                            orderStep: '2',
-                            showAdvert: false,
-                            showPromo: false
+                            orderStep: '2'
                         })) }}
                     </div>
                 </div>

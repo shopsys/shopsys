@@ -336,9 +336,7 @@
                         {{ render(controller('App\\Controller\\Front\\OrderController:previewAction', {
                             transportId: orderPreview.transport is not null ? orderPreview.transport.id : null,
                             paymentId: orderPreview.payment is not null ? orderPreview.payment.id : null,
-                            orderStep: '3',
-                            showAdvert: false,
-                            showPromo: false
+                            orderStep: '3'
                         })) }}
                     </div>
                 </div>

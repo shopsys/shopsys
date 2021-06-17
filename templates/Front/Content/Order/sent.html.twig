@@ -51,7 +51,7 @@
                                 <div class="form-line__input">
                                     <input type="password" id="registration_form_password2" name="registration_form[name]" required="required" placeholder="Váše jméno" class="input">
                                     <label for="registration_form_password2" class="input-label required">
-                                        Zadejte své heslo
+                                        {{ 'Enter your password'|trans }}
                                     </label>
                                     <span class="form-input-password form-input-password--active">
                                         <i class="svg svg-eye"></i>
@@ -64,11 +64,13 @@
                         <div class="box-loyalty__form__item">
                             <div class="form-choice form-choice--without-margin">
                                 <input type="checkbox" id="checkbox1" name="checkbox" class="css-checkbox">
-                                <label class="css-checkbox__image" for="checkbox1">Souhlasím s <a href="#">obchodními podmínkami a ochraně osobních údajů</a></label>
+                                <label class="css-checkbox__image" for="checkbox1">
+                                    {{ 'I agree with <a href="" target="_blank">terms and conditions</a> and privacy policy.'|trans|raw }}
+                                </label>
                             </div>
                         </div>
 
-                        <a href="#buttons" class="btn btn--primary btn--big-radius full-width">Vytvořit účet</a>
+                        <a href="#buttons" class="btn btn--primary btn--big-radius full-width">{{ 'Create and account'|trans }}</a>
                     </div>
                 </div>
             </div>

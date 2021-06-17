@@ -2,10 +2,10 @@
 {% set shopInfoPhoneNumber = getShopInfoPhoneNumber() %}
 {% set shopInfoPhoneHours = getShopInfoPhoneHours() %}
 {% set domain = getDomain() %}
-{% set orderStep = ['front_order_step_transport_payment', 'front_order_step_personal_info', 'front_order_not_paid'] %}
+{% set orderRoutes = ['front_order_step_transport_payment', 'front_order_step_personal_info', 'front_order_not_paid'] %}
 
-<footer class="footer{% if getRoute() in orderStep %} footer--order-step{% endif %}">
-    {% if getRoute() not in orderStep %}
+<footer class="footer{% if getRoute() in orderRoutes %} footer--order-step{% endif %}">
+    {% if getRoute() not in orderRoutes %}
         {% if showNewsletter %}
             <div class="web__line web__line--colored">
                 <div class="web__container web__container--lines">
@@ -20,11 +20,9 @@
     <div class="web__line web__line--dark">
         <div class="web__container">
             <div class="footer__bottom">
-                {% if getRoute() not in orderStep %}
+                {% if getRoute() not in orderRoutes %}
                     {% include 'Front/Content/InfoBox/infoBox.html.twig' %}
-                {% endif %}
-
-                {% if getRoute() not in orderStep %}
+                    
                     <div class="footer__block">
                         {% cache constant('App\\Controller\\Front\\ArticleController::FOOTER_MENU_TWIG_CACHE_KEY') {lifetime:getCacheLifetimeByHours(24), domainId:getDomain().id} %}
                             {{ render(controller('App\\Controller\\Front\\ArticleController:footerMenuAction'))|spaceless }}

@@ -44,9 +44,7 @@
                         {{ render(controller('App\\Controller\\Front\\OrderController:previewAction', {
                             paymentId: orderPreview.payment is null ? null : orderPreview.payment.id,
                             orderStep: '1',
-                            showProducts: false,
-                            showAdvert: true,
-                            showPromo: true
+                            showProducts: false
                         })) }}
                     </div>
 

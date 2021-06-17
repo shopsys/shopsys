@@ -16,16 +16,12 @@
 
 <div class="box-preview">
     {% if orderStep == 1 %}
-        {% if showPromo %}
-            <div class="box-preview__item box-preview__item--promo-code">
-                {% if not isDiscountInOrderPreview %}
-                    {% if showAdvert %}
-                        {{ render(controller('App\\Controller\\Front\\AdvertController:boxAction',{'positionName' : 'cartPreview'})) }}
-                    {% endif %}
-                {% endif %}
-                {{ render(controller('App\\Controller\\Front\\PromoCodeController:indexAction')) }}
-            </div>
-        {% endif %}
+        <div class="box-preview__item box-preview__item--promo-code">
+            {% if not isDiscountInOrderPreview %}
+                {{ render(controller('App\\Controller\\Front\\AdvertController:boxAction',{'positionName' : 'cartPreview'})) }}
+            {% endif %}
+            {{ render(controller('App\\Controller\\Front\\PromoCodeController:indexAction')) }}
+        </div>
 
         {% if orderPreview.isTransportForFree() %}
             <div class="box-preview__item box-preview__item--free-transport">
