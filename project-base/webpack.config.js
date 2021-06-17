@@ -1,7 +1,6 @@
 const Encore = require('@symfony/webpack-encore');
 const EventHooksPlugin = require('event-hooks-webpack-plugin');
 const processTrans = require('./assets/js/commands/translations/process');
-const generateWebFont = require('./assets/js/commands/svg/generateWebFont');
 const CopyPlugin = require('copy-webpack-plugin');
 const yaml = require('js-yaml');
 const fs = require('fs');
@@ -40,16 +39,6 @@ Encore
     })
     .addPlugin(new EventHooksPlugin({
         beforeRun: () => {
-            generateWebFont(
-                'frontend',
-                './assets/public/frontend/svg/'
-            );
-            generateWebFont(
-                'admin',
-                sources.getFrameworkNodeModulesDir() + '/public/admin/svg/',
-                './web/public/admin/svg/'
-            );
-
             const dirWithJsFiles = [
                 sources.getFrameworkNodeModulesDir() + '/js/**/*.js',
                 './assets/js/**/*.js'
