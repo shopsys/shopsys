@@ -81,14 +81,15 @@ export default class PersonalPickup {
             .val($personalPickupStockRadio.val())
             .trigger('orderRememberData.littleDelayedSaveData');
 
-        const stockName = $personalPickupStockRadio.data('stock-name');
-        const stockStreet = $personalPickupStockRadio.data('stock-street');
-        const stockOpeningHours = $personalPickupStockRadio.data('stock-openingHours');
-        const stockAvailability = $personalPickupStockRadio.data('stock-availability');
-        const address = `
+        const stockName = 'xxx';
+        const stockStreet = 'xxx';
+        const stockOpeningHours = 'xxx';
+        const stockAvailability = 'xxx';
+        const address = `<span id="js-pickup-info" class="js-not-implemented-yet">
             ${stockName}, ${stockStreet} <br>
             ${Translator.trans('Otevřeno')}: ${stockOpeningHours} <br>
             ${stockAvailability}
+            </span>
         `;
         this.setCurrentCheckboxDescription($transportCheckbox, address);
         $transportCheckbox.parents('.box-chooser__item').find('.box-chooser__item__title__description').addClass('full-width');
@@ -97,8 +98,10 @@ export default class PersonalPickup {
     }
 
     setCurrentCheckboxDescription ($transportCheckbox, description) {
-        $transportCheckbox.parents('.box-chooser__item').find('.box-chooser__item__title__description').html(description);
+        const $descriptionContainer = $transportCheckbox.parents('.box-chooser__item').find('.box-chooser__item__title__description');
+        $descriptionContainer.html(description);
         $transportCheckbox.parents('.box-chooser__item').find('.js-chooser-delivery-information').hide();
+        new Register().registerNewContent($descriptionContainer.find('#js-pickup-info'));
     }
 
     resetCurrentCheckboxToOrigin ($transportCheckbox) {

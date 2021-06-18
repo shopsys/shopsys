@@ -76,8 +76,10 @@
                                                                     <div class="box-chooser__item__tooltip">{{ transport.description }}</div>
                                                                 </div>
                                                             {% else %}
-                                                                {{ stocksById[personalPickupStock].name }}, {{ stocksById[personalPickupStock].street }} <br>
-                                                                {{ 'Otevřeno'|trans }}: {{ stocksById[personalPickupStock].openingHours|nl2br }} <br>
+                                                                <span class="js-not-implemented-yet">
+                                                                    {{ 'xxx' }}, {{ 'xxx' }} <br>
+                                                                    {{ 'Otevřeno'|trans }}: {{ 'xxx' }} <br>
+                                                                </span>
                                                                 {% set minimalDaysAvailability = stockDayAvailabilitiesByStockId[personalPickupStock] %}
                                                                 {% if minimalDaysAvailability < 7 %}
                                                                     {% transchoice minimalDaysAvailability with {'%daysAvailability%': minimalDaysAvailability} %}
