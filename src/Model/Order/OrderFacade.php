@@ -23,6 +23,7 @@ use Shopsys\FrameworkBundle\Model\Administrator\Security\AdministratorFrontSecur
 use Shopsys\FrameworkBundle\Model\Cart\CartFacade;
 use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser as BaseCustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateData;
 use Shopsys\FrameworkBundle\Model\Heureka\HeurekaFacade;
@@ -66,7 +67,6 @@ use Shopsys\FrameworkBundle\Twig\NumberFormatterExtension;
  * @property \App\Model\Order\FrontOrderDataMapper $frontOrderDataMapper
  * @property \Shopsys\FrameworkBundle\Model\Transport\TransportPriceCalculation $transportPriceCalculation
  * @property \App\Model\Order\Item\OrderItemFactory $orderItemFactory
- * @method \App\Model\Order\Order createOrder(\App\Model\Order\OrderData $orderData, \Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreview $orderPreview, \App\Model\Customer\User\CustomerUser|null $customerUser)
  * @method sendHeurekaOrderInfo(\App\Model\Order\Order $order, bool $disallowHeurekaVerifiedByCustomers)
  * @method prefillFrontOrderData(\App\Model\Order\FrontOrderData $orderData, \App\Model\Customer\User\CustomerUser $customerUser)
  * @method \App\Model\Order\Order[] getCustomerUserOrderList(\App\Model\Customer\User\CustomerUser $customerUser)
@@ -235,12 +235,15 @@ class OrderFacade extends BaseOrderFacade
 
     /**
      * @param \App\Model\Order\OrderData $orderData
-     * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress|null $deliveryAddress
-     * @param \App\Model\Order\FrontOrderData $frontOrderData
-     * @return \App\Model\Order\OrderCreatedResult
+     * @param \Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreview $orderPreview
+     * @param \App\Model\Customer\User\CustomerUser|null $customerUser
+     * @return \App\Model\Order\Order
      */
-    public function createOrderFromFrontWithRegistration(OrderData $orderData, ?DeliveryAddress $deliveryAddress, FrontOrderData $frontOrderData): OrderCreatedResult
-    {
+    public function createOrder(
+        BaseOrderData $orderData,
+        BaseOrderPreview $orderPreview,
+        ?BaseCustomerUser $customerUser = null
+    ): Order {
         $promoCode = $this->currentPromoCodeFacade->getValidEnteredPromoCodeOrNull();
         if ($promoCode) {
             $promoCode->decreaseRemainingUses();
@@ -255,11 +258,27 @@ class OrderFacade extends BaseOrderFacade
             /** @var \App\Model\Order\Status\OrderStatus $status */
             $status = $this->orderStatusRepository->findById(OrderStatus::TYPE_OVER_LIMIT);
             $orderData->status = $status;
-        } else {
+        } elseif ($orderData->status === null) {
             /** @var \App\Model\Order\Status\OrderStatus $status */
             $status = $this->orderStatusRepository->getDefault();
             $orderData->status = $status;
         }
+
+        /** @var \App\Model\Order\Order $order */
+        $order = parent::createOrder($orderData, $orderPreview, $customerUser);
+
+        return $order;
+    }
+
+    /**
+     * @param \App\Model\Order\OrderData $orderData
+     * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress|null $deliveryAddress
+     * @param \App\Model\Order\FrontOrderData $frontOrderData
+     * @return \App\Model\Order\OrderCreatedResult
+     */
+    public function createOrderFromFrontWithRegistration(OrderData $orderData, ?DeliveryAddress $deliveryAddress, FrontOrderData $frontOrderData): OrderCreatedResult
+    {
+        $this->updateOrderDataWithDeliveryAddress($orderData, $deliveryAddress);
 
         $customerUser = $this->findCustomerForOrder($orderData);
         $loginCustomer = false;
@@ -270,16 +289,14 @@ class OrderFacade extends BaseOrderFacade
             $loginCustomer = $customerUser->isActivated();
         }
 
-        $this->updateOrderDataWithDeliveryAddress($orderData, $deliveryAddress);
-
         $promoCode = $this->currentPromoCodeFacade->getValidEnteredPromoCodeOrNull();
         $this->gtmHelper->amendGtmCouponToOrderData($orderData, $promoCode);
 
         $orderPreview = $this->orderPreviewFactory->createForCurrentUser($orderData->transport, $orderData->payment);
         $order = $this->createOrder($orderData, $orderPreview, $customerUser);
 
-        $this->cartFacade->deleteCartOfCurrentCustomerUser();
         $this->currentPromoCodeFacade->removeEnteredPromoCode();
+        $this->cartFacade->deleteCartOfCurrentCustomerUser();
 
         if ($customerUser instanceof CustomerUser) {
             $this->customerUserFacade->amendCustomerUserDataFromOrder($customerUser, $order, $deliveryAddress);

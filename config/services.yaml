@@ -866,3 +866,18 @@ services:
         class: App\Component\Domain\DomainAwareSecurityHeadersSetter
         tags:
             - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse }
+
+    Shopsys\FrameworkBundle\Model\Pricing\PriceConverter:
+        alias: App\Model\Pricing\PriceConverter
+
+    Shopsys\FrontendApiBundle\Model\Resolver\Products\PromotedProductsResolver:
+        alias: App\FrontendApi\Model\Resolver\Products\PromotedProductsResolver
+
+    Shopsys\FrontendApiBundle\Model\Product\ProductFacade:
+        alias: App\FrontendApi\Model\Product\ProductFacade
+
+    Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterDataMapper:
+        alias: App\FrontendApi\Model\Product\Filter\ProductFilterDataMapper
+
+    Shopsys\FrontendApiBundle\Model\Order\OrderDataFactory:
+        alias: App\FrontendApi\Model\Order\OrderDataFactory

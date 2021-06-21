@@ -1,0 +1,12 @@
+Order:
+    type: object
+    inherits:
+        - 'OrderDecorator'
+    config:
+        fields:
+            firstName:
+                type: "String"
+                description: "The customer's first name"
+            lastName:
+                type: "String"
+                description: "The customer's last name"

@@ -1,0 +1,4 @@
+Advert:
+    type: interface
+    inherits:
+        - 'AdvertDecorator'

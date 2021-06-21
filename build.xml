@@ -8,11 +8,13 @@
     <property name="path.vendor" value="${path.root}/vendor"/>
     <property name="path.framework" value="${path.vendor}/shopsys/framework"/>
     <property name="path.framework.assets" value="${path.root}/node_modules/@shopsys/framework"/>
+    <property name="path.frontend-api" value="${path.vendor}/shopsys/frontend-api"/>
 
     <property name="phpstan.level" value="5"/>
 
     <import file="${path.vendor}/devops/kubernetes-deployment/build.xml"/>
     <import file="${path.framework}/build.xml"/>
+    <import file="${path.frontend-api}/build.xml"/>
 
     <target name="acceptance-elasticsearch-export" description="Exports indexes data into elasticsearch for acceptance environment.">
         <property name="elasticsearch.index" value=""/>
@@ -200,6 +202,50 @@
         </if>
         <phingcall target="test-db-dump"/>
         <phingcall target="acceptance-elasticsearch-export"/>
+    </target>
+
+    <target name="tests-functional-single" depends="production-protection,clean,test-clean-redis,domains-info-load" description="Runs functional test.">
+        <if>
+            <not><isset property="test"/></not>
+            <then>
+                <input propertyName="test" message="Enter class test name (e.g. ProductFacadeTest) or specific test name (e.g. ProductFacadeTest::testEditSchedulesPriceRecalculation)"/>
+            </then>
+        </if>
+        <if>
+            <equals arg1="${test}" arg2=""/>
+            <then>
+                <fail message="Test name not provided"/>
+            </then>
+        </if>
+        <if>
+            <istrue value="${domains-info.is-multidomain}"/>
+            <then>
+                <exec executable="${path.phpunit.executable}" logoutput="true" passthru="true" checkreturn="true">
+                    <arg value="--colors=always"/>
+                    <arg value="--testsuite"/>
+                    <arg value="Functional"/>
+                    <arg value="--exclude-group"/>
+                    <arg value="singledomain"/>
+                    <arg value="--configuration"/>
+                    <arg value="${path.root}/phpunit.xml"/>
+                    <arg value="--filter"/>
+                    <arg value="${test}"/>
+                </exec>
+            </then>
+            <else>
+                <exec executable="${path.phpunit.executable}" logoutput="true" passthru="true" checkreturn="true">
+                    <arg value="--colors=always"/>
+                    <arg value="--testsuite"/>
+                    <arg value="Functional"/>
+                    <arg value="--exclude-group"/>
+                    <arg value="multidomain"/>
+                    <arg value="--configuration"/>
+                    <arg value="${path.root}/phpunit.xml"/>
+                    <arg value="--filter"/>
+                    <arg value="${test}"/>
+                </exec>
+            </else>
+        </if>
     </target>
 
     <target name="translations-frontend-dump" depends="domains-info-load" description="Extracts translatable messages from front-end source files in your project.">

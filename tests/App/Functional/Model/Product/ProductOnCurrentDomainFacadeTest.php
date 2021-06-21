@@ -94,7 +94,7 @@ abstract class ProductOnCurrentDomainFacadeTest extends TransactionFunctionalTes
         $productFilterData->flags = [$flagTopProduct, $flagActionProduct];
         $paginationResult = $this->getPaginationResultInCategory($productFilterData, $category);
 
-        $this->assertCount(4, $paginationResult->getResults());
+        $this->assertCount(5, $paginationResult->getResults());
     }
 
     public function testFilterByParameter()

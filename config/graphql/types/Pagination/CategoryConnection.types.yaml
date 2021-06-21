@@ -1,0 +1,10 @@
+CategoryConnection:
+    type: relay-connection
+    config:
+        nodeType: Category
+        connectionFields:
+            totalCount:
+                type: "Int!"
+                description: "Total number of categories"
+    inherits:
+        - 'CategoryConnectionDecorator'

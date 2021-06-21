@@ -1,0 +1,4 @@
+ProductFilterOptions:
+    type: object
+    inherits:
+        - 'ProductFilterOptionsDecorator'

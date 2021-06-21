@@ -37,4 +37,7 @@ return [
     DevOps\KubernetesDeployment\DevOpsKubernetesDeploymentBundle::class => ['all' => true],
     Shopsys\Cdn\CdnBundle::class => ['all' => true],
     Scheb\TwoFactorBundle\SchebTwoFactorBundle::class => ['all' => true],
+    Overblog\GraphQLBundle\OverblogGraphQLBundle::class => ['all' => true],
+    Overblog\GraphiQLBundle\OverblogGraphiQLBundle::class => ['dev' => true],
+    Shopsys\FrontendApiBundle\ShopsysFrontendApiBundle::class => ['all' => true],
 ];

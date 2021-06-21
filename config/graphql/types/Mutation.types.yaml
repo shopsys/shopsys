@@ -1,0 +1,4 @@
+Mutation:
+    type: object
+    inherits:
+        - 'MutationDecorator'

@@ -1,0 +1,4 @@
+MainVariant:
+    type: object
+    inherits:
+        - 'MainVariantDecorator'

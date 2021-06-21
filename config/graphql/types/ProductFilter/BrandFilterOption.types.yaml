@@ -1,0 +1,4 @@
+BrandFilterOption:
+    type: object
+    inherits:
+        - 'BrandFilterOptionDecorator'
