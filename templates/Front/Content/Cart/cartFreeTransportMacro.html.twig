@@ -1,20 +1,23 @@
 {% macro progressBar(orderPreview, loop) %}
-    {% set restForFreeTransportPriceAmount = orderPreview.getRestToFreeTransportPrice().getAmount() %}
-    {% set restForFreeTransportPrice = orderPreview.getRestToFreeTransportPrice()|price %}
-    {% set percentageOfFreeTransport = orderPreview.getPercentageOfFreeTransport() %}
-    <div class="box-free-transport">
-        {% if restForFreeTransportPriceAmount > 0 %}
-            <div class="box-free-transport__desc">
-                {{ 'Nakupte ještě za <strong>%price%</strong> a získáte doručení <strong>Zdarma</strong>'|trans({ '%price%': restForFreeTransportPrice })|raw }}
-            </div>
-            <div class="box-free-transport__progress">
-                <div class="box-free-transport__progress__bar" style="width: {{ percentageOfFreeTransport }}%;"></div>
-            </div>
-        {% else %}
-            <i class="box-free-transport__icon svg svg-success"></i>
-            <div class="box-free-transport__desc">
-                {{ 'Dopravu máte zdarma'|trans }}
-            </div>
-        {% endif %}
-    </div>
+    {% if orderPreview.isTransportForFree() %}
+        {% set restForFreeTransportPriceAmount = orderPreview.getRestToFreeTransportPrice().getAmount() %}
+        {% set restForFreeTransportPrice = orderPreview.getRestToFreeTransportPrice()|price %}
+        {% set percentageOfFreeTransport = orderPreview.getPercentageOfFreeTransport() %}
+
+        <div class="box-free-transport">
+            {% if restForFreeTransportPriceAmount > 0 %}
+                <div class="box-free-transport__desc">
+                    {{ 'Nakupte ještě za <strong>%price%</strong> a získáte doručení <strong>Zdarma</strong>'|trans({ '%price%': restForFreeTransportPrice })|raw }}
+                </div>
+                <div class="box-free-transport__progress">
+                    <div class="box-free-transport__progress__bar" style="width: {{ percentageOfFreeTransport }}%;"></div>
+                </div>
+            {% else %}
+                <i class="box-free-transport__icon svg svg-success"></i>
+                <div class="box-free-transport__desc">
+                    {{ 'Dopravu máte zdarma'|trans }}
+                </div>
+            {% endif %}
+        </div>
+    {% endif %}
 {% endmacro %}

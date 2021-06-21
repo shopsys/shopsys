@@ -1,8 +1,3 @@
-{% set shopInfoPhoneNumber = getShopInfoPhoneNumber() %}
-{% set shopInfoPhoneHours = getShopInfoPhoneHours() %}
-{% set shopInfoEmail = getShopInfoEmail() %}
-{% set domain = getDomain() %}
-
 <header class="header header--cart">
     <div class="header__logo">
         {% block logo %}
@@ -12,6 +7,6 @@
         {% endblock %}
     </div>
     <div class="header__info-box">
-        {% include 'Front/Content/InfoBox/infoBox.html.twig' with { 'header' : true, cssClassModification: 'box-info--header' } %}
+        {% include 'Front/Content/InfoBox/infoBoxOrder.html.twig' %}
     </div>
 </header>

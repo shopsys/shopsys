@@ -1,5 +1,3 @@
-{% import 'Front/Content/Cart/cartFreeTransportMacro.html.twig' as cartFreeTransportMacro %}
-
 {% block content %}
     <div class="web__line web__line--cart">
         <div class="web__container">
@@ -83,8 +81,9 @@
                                                                 {% set minimalDaysAvailability = stockDayAvailabilitiesByStockId[personalPickupStock] %}
                                                                 {% if minimalDaysAvailability < 7 %}
                                                                     {% transchoice minimalDaysAvailability with {'%daysAvailability%': minimalDaysAvailability} %}
-                                                                    {0} Můžete mít ihned
-                                                                    | [1,Inf] Osobní odběr do %daysAvailability% dne
+                                                                        {0} Můžete mít ihned
+                                                                        | {1} Osobní odběr do %daysAvailability% dne
+                                                                        | [2,Inf] Osobní odběr do %daysAvailability% dnů
                                                                     {% endtranschoice %}
                                                                 {% else %}
                                                                     {% transchoice minimalDaysAvailability|daysToWeeks with {'%weeksAvailability%': minimalDaysAvailability|daysToWeeks} %}
@@ -103,12 +102,14 @@
                                                         {% if transport.isPersonalPickup() %}
                                                             {% transchoice minimalDaysAvailability with {'%daysAvailability%': minimalDaysAvailability} %}
                                                                 {0} Můžete mít ihned
-                                                            | [1,Inf] Osobní odběr do %daysAvailability% dne
+                                                                | {1} Osobní odběr do %daysAvailability% dne
+                                                                | [2,Inf] Osobní odběr do %daysAvailability% dnů
                                                             {% endtranschoice %}
                                                         {% else %}
                                                             {% transchoice minimalDaysAvailability with {'%daysAvailability%': minimalDaysAvailability} %}
                                                                 {0} Můžete mít ještě dnes
-                                                            | [1,Inf] Doručení do %daysAvailability% dne
+                                                                | {1} Doručení do %daysAvailability% dne
+                                                                | [2,Inf] Doručení do %daysAvailability% dnů
                                                             {% endtranschoice %}
                                                         {% endif %}
                                                     {% else %}

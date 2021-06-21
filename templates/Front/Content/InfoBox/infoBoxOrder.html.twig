@@ -1,0 +1,12 @@
+{% set shopInfoPhoneNumber = getShopInfoPhoneNumber() %}
+{% set shopInfoPhoneHours = getShopInfoPhoneHours() %}
+
+<div class="box-info box-info--order">
+    <div class="box-info__content">
+        <div class="box-info__contacts">
+            <i class="svg svg-phone"></i>
+            <a class="box-info__contacts__phone" href="tel:{{ shopInfoPhoneNumber }}">{{ shopInfoPhoneNumber }}</a>
+            <p class="box-info__contacts__hours">{{ shopInfoPhoneHours }}</p>
+        </div>
+    </div>
+</div>

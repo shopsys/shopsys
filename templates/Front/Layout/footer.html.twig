@@ -21,7 +21,7 @@
         <div class="web__container">
             <div class="footer__bottom">
                 {% if getRoute() not in orderRoutes %}
-                    {% include 'Front/Content/InfoBox/infoBox.html.twig' %}
+                    {% include 'Front/Content/InfoBox/infoBoxFooter.html.twig' %}
                     
                     <div class="footer__block">
                         {% cache constant('App\\Controller\\Front\\ArticleController::FOOTER_MENU_TWIG_CACHE_KEY') {lifetime:getCacheLifetimeByHours(24), domainId:getDomain().id} %}
