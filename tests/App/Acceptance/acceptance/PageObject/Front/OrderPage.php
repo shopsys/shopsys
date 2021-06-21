@@ -156,7 +156,7 @@ class OrderPage extends AbstractPage
 
     public function continueToThirdStep(): void
     {
-        $this->tester->clickByTranslationFrontend('Dodací údaje');
+        $this->tester->clickByCss('.js-continue-to-third-step');
     }
 
     public function goBackToSecondStep(): void
