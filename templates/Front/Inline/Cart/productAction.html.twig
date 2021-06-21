@@ -18,11 +18,13 @@
                 <i class="svg svg-plus"></i>
             </button>
         </span>
-        {% if productActionView.isProductAvailable == true %}
-            {{ form_widget(form.add, { label: 'Do košíku'|trans, attr: { class: 'btn btn--small' }} )}}
-        {% else %}
-            {{ form_widget(form.add, { label: 'Temporarily sold out'|trans, disabled: 'disabled'} )}}
-        {% endif %}
+        <div class="in-add-to-cart__spinbox">
+            {% if productActionView.isProductAvailable == true %}
+                {{ form_widget(form.add, { label: 'Do košíku'|trans, attr: { class: 'btn btn--small' }} )}}
+            {% else %}
+                {{ form_widget(form.add, { label: 'Temporarily sold out'|trans, disabled: 'disabled'} )}}
+            {% endif %}
+        </div>
     </div>
     {{ form_end(form) }}
 {% endif %}

@@ -15,9 +15,9 @@ import Timeout from 'framework/common/utils/Timeout';
             const nextArrow = $currentGallery.filterAllNodes('.js-horizontal-list-action-next');
 
             const types = {
-                'top-products': [1, 2, 3, 4, 4],
-                'in-sales': [1, 2, 3, 4, 4],
-                'similar-products': [1, 2, 3, 4, 4]
+                'top-products': [1, 2, 3, 4, 5],
+                'in-sales': [1, 2, 3, 4, 5],
+                'similar-products': [1, 2, 3, 4, 5]
             };
 
             const selectedType = types[galleryType];
@@ -82,8 +82,8 @@ import Timeout from 'framework/common/utils/Timeout';
                 ]
             });
 
-            $currentGallery.find('.js-horizontal-list-slides').on('breakpoint', function (event, slick, breakpoint) {
-                recalculateSlickArrowVisibility(breakpoint);
+            $currentGallery.find('.js-horizontal-list-slides').on('breakpoint', function () {
+                recalculateSlickArrowVisibility(window.innerWidth || $(window).width());
             });
             recalculateSlickArrowVisibility(window.innerWidth || $(window).width());
 
