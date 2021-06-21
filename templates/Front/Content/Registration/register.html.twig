@@ -51,20 +51,20 @@
                     </div>
                     <div class="in-tab__content">
                         <div class="in-tab__content__item js-tabs-content {{ companyTabActiveClass }}" data-tab-id="company-customer">
-                            <h2 class="in-title">{{ 'Company data'|trans }}</h2>
+                            <h2>{{ 'Company data'|trans }}</h2>
                             {{ form_row(form.companyName, { label: 'Název společnosti'|trans }) }}
                             {{ form_row(form.companyNumber, { label: 'Company number'|trans }) }}
                             {{ form_row(form.companyTaxNumber, { label: 'Tax number'|trans }) }}
                         </div>
                         <div id="js-registration-form-password-container">
-                            <h2 class="in-title">{{ 'Password'|trans }}</h2>
+                            <h2>{{ 'Password'|trans }}</h2>
                             {{ form_row(form.password.first, { label: 'Password'|trans }) }}
                             {{ form_row(form.password.second, { label: 'Password again'|trans }) }}
                         </div>
                         <div id="js-registration-form-activation-info">
                             <p>{{ 'Po odeslání formuláře Vám zašleme e-mail s instrukcemi pro dokončení registrace'|trans }}</p>
                         </div>
-                        <h2 class="in-title">{{ 'Fakturační adresa'|trans }}</h2>
+                        <h2>{{ 'Fakturační adresa'|trans }}</h2>
                         {{ form_row(form.street, { label: 'Ulice a č. popisné'|trans }) }}
                         <div class="form-columns">
                             <div class="form-columns__item">

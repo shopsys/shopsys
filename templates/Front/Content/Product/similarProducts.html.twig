@@ -1,17 +1,16 @@
 {% import 'Front/Content/Product/productListMacro.html.twig' as productList %}
 
 {% if paginationResult.results|length > 0 %}
-    <div class="box-detail box-detail--similar gtm-scroll" data-gtm-event="{{ gtmSimilarProductsScrollEvent|json_encode() }}">
-        <h2 class="box-detail__title">{{ 'Podobné produkty'|trans }}</h2>
-        <div class="box-products-carousel box-products-carousel--detail box-products-carousel--similar">
-            <div class="box-products-carousel__in box-products-carousel__in--detail">
-                <div class="list-products-grid list-products-grid--similar js-similar-products-slick-carousel"
-                     data-product-id="{{ productMainVariantId }}"
-                     data-similar-products-url="{{ url('front_similar_products') }}"
-                >
-                    {{ productList.list(paginationResult.results, null, null, gtmList) }}
-                </div>
+    <div class="box-detail gtm-scroll" data-gtm-event="{{ gtmSimilarProductsScrollEvent|json_encode() }}">
+        <div class="box-products-carousel">
+            <div class="box-products-carousel__title">
+                <h2 class="in-title">
+                    <span class="in-title__separator in-title__separator--without-separator">
+                        {{ 'Podobné produkty'|trans }}
+                    </span>
+                </h2>
             </div>
+            {{ productList.list(paginationResult.results, null, 'similar-products', gtmList) }}
         </div>
     </div>
 {% endif %}

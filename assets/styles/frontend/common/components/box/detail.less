@@ -3,10 +3,6 @@
 @box-detail-package-margin-right: 30px;
 
 .box-detail {
-    &-breadcrumb {
-        padding-top: 1.25rem;
-    }
-
     &--primary {
         position: relative;
 
@@ -34,43 +30,6 @@
     &--no-gallery {
         @media @query-lg-up {
             min-height: 710px;
-        }
-    }
-
-    &--accessories,
-    &--similar {
-        margin-top: 3rem;
-
-        @media @query-md {
-            margin-top: 4rem;
-        }
-    }
-
-    &--similar {
-        position: relative;
-        padding-bottom: 1rem;
-
-        &::after {
-            position: absolute;
-            width: 100vw;
-            height: 2px;
-            top: 100%;
-            left: calc(-50vw + 50%);
-            content: '';
-
-            background-color: @color-border;
-        }
-
-        .box-detail__title {
-            @media @query-vl {
-                margin-bottom: 3rem;
-            }
-        }
-
-        .box-products-carousel--detail {
-            @media @query-mobile {
-                margin-bottom: 0;
-            }
         }
     }
 

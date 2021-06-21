@@ -19,9 +19,8 @@
 {% endblock %}
 
 {% block main_content %}
-    <div class="box-detail-breadcrumb">
-        {{ render(controller('App\\Controller\\Front\\BreadcrumbController:indexAction', { routeName: getRoute(), routeParameters: getRouteParams() } )) }}
-    </div>
+    {{ render(controller('App\\Controller\\Front\\BreadcrumbController:indexAction', { routeName: getRoute(), routeParameters: getRouteParams() } )) }}
+
     <div itemscope itemtype="http://schema.org/Product">
         <div class="web__line">
             <div class="web__container">
@@ -459,7 +458,7 @@
                 {% endif %}
 
                 {% if productView.accessories|length > 0 %}
-                    <div class="box-detail box-detail--accessories gtm-scroll" data-gtm-event="{{ gtmAccessoriesScrollEvent|json_encode() }}">
+                    <div class="box-detail gtm-scroll" data-gtm-event="{{ gtmAccessoriesScrollEvent|json_encode() }}">
                         <h2 class="box-detail__title">{{ 'Můžete si dokoupit'|trans }}</h2>
                         <div class="box-products-accessories js-products-slick-carousel-cols">
                             {{ productList.list(productView.accessories, null, null, constant('App\\Model\\Gtm\\DataLayer::LIST_NAME_PRODUCT_ACCESSORIES')) }}

@@ -62,25 +62,27 @@
 {% if topProducts is not empty %}
     <div class="web__line">
         <div class="web__container">
-            <div class="box-products-carousel box-products-carousel--bg box-products-carousel--top-products gtm-scroll" id="top-products" data-gtm-event="{{ gtmTopProductsScrollEvent|json_encode() }}">
-                <div class="box-products-carousel__in box-products-carousel__in--bg box-products-carousel__in--top-products">
-                    <h2 class="box-products-carousel__heading">{{ 'Top produkty'|trans }}</h2>
-                    <div class="list-products-grid list-products-grid--sales js-products-slick-carousel">
-                        {{ productList.list(topProducts, null, 'h3', constant('App\\Model\\Gtm\\DataLayer::LIST_NAME_HOME_TOP_PRODUCTS')) }}
-                    </div>
-                    {% if saleCategory is not null %}
-                        <a href="{{ url('front_product_list', { id: saleCategory.id }) }}" class="sale-page-on-hp">
-                            {{ "Všechny produkty"|trans }}
-                        </a>
-                    {% endif %}
+            <div class="box-products-carousel gtm-scroll" id="top-products" data-gtm-event="{{ gtmTopProductsScrollEvent|json_encode() }}">
+                <div class="box-products-carousel__title">
+                    <h2 class="in-title">
+                        <span class="in-title__separator{% if saleCategory is null %} in-title__separator--without-separator{% endif %}">
+                            {{ 'Top produkty'|trans }}
+                        </span>
+                        {% if saleCategory is not null %}
+                            <a class="in-title__subtitle" href="{{ url('front_product_list', { id: saleCategory.id }) }}">
+                                {{ "Všechny produkty"|trans }}
+                            </a>
+                        {% endif %}
+                    </h2>
                 </div>
+                {{ productList.sliderList(topProducts, 'top-products', constant('App\\Model\\Gtm\\DataLayer::LIST_NAME_HOME_TOP_PRODUCTS')) }}
             </div>
         </div>
     </div>
 {% endif %}
 <div class="web__line">
     <div class="web__container">
-        <h2>{{ 'Oblíbené kategorie'|trans }}</h2>
+        <h2 class="in-title">{{ 'Oblíbené kategorie'|trans }}</h2>
         {{ render(controller('App\\Controller\\Front\\CategoryController:categoryListAction', {categories: categories, showProductsCountByCategory: false})) }}
     </div>
 </div>
