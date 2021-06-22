@@ -881,3 +881,6 @@ services:
 
     Shopsys\FrontendApiBundle\Model\Order\OrderDataFactory:
         alias: App\FrontendApi\Model\Order\OrderDataFactory
+
+    Shopsys\ProductFeed\HeurekaBundle\Model\FeedItem\HeurekaFeedItemFactory:
+        alias: App\ProductFeed\Heureka\Model\FeedItem\HeurekaFeedItemFactory

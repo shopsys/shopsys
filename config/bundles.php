@@ -17,6 +17,7 @@ return [
     Shopsys\FormTypesBundle\ShopsysFormTypesBundle::class => ['all' => true],
     Shopsys\GoogleCloudBundle\ShopsysGoogleCloudBundle::class => ['all' => true],
     Shopsys\MigrationBundle\ShopsysMigrationBundle::class => ['all' => true],
+    Shopsys\ProductFeed\HeurekaBundle\ShopsysProductFeedHeurekaBundle::class => ['all' => true],
     Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle::class => ['all' => true],
     Snc\RedisBundle\SncRedisBundle::class => ['all' => true],
     Symfony\Bundle\FrameworkBundle\FrameworkBundle::class => ['all' => true],
