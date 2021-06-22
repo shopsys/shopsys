@@ -38,9 +38,6 @@ parameters:
         -
             message: '#^Unsafe usage of new static\(\).#'
             path: %currentWorkingDirectory%/src/*
-        -
-            message: '#^Parameter \#2 \$default of method Symfony\\Component\\HttpFoundation\\InputBag::get\(\) expects string\|null, array given\.$#'
-            path: %currentWorkingDirectory%/src/Component/Grid/Grid.php
     excludes_analyse:
         # Exclude "Source" folder dedicated for testing functionality connected to "shopsys:extended-classes:annotations" command
         - %currentWorkingDirectory%/tests/Unit/Component/ClassExtension/Source/*
