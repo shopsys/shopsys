@@ -63,3 +63,7 @@ There you can find links to upgrade notes for other versions too.
 
 - update your data fixtures to always generate data with same prices ([#2356](https://github.com/shopsys/shopsys/pull/2356))
     - see #project-base-diff to update your project
+
+- increase minimal version of `symfony/proxy-manager-bridge` package ([#2359](https://github.com/shopsys/shopsys/pull/2359))
+    - see #project-base-diff to update your project
+    - don't forget to update dependency with `composer update symfony/proxy-manager-bridge` 
