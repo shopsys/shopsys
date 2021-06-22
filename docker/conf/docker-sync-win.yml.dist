@@ -14,6 +14,7 @@ syncs:
             - kubernetes
             - nbproject
             - node_modules
+            - storefront
             - var/cache
             - var/elasticsearch-data
             - var/postgres-data
