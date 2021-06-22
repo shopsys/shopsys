@@ -109,5 +109,10 @@
     },
     "suggest": {
         "ext-pgsql": "Required for dumping the Postgres database in shopsys:database:dump command"
+    },
+    "extra": {
+        "symfony": {
+            "require": "^4.4.0"
+        }
     }
 }
