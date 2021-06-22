@@ -87,7 +87,7 @@
         "symfony/event-dispatcher": "^4.4",
         "symfony/monolog-bundle": "^3.5.0",
         "symfony/property-info": "^4.4",
-        "symfony/proxy-manager-bridge": "^4.4",
+        "symfony/proxy-manager-bridge": "^4.4.25",
         "symfony/security": "^4.4",
         "symfony/swiftmailer-bundle": "^3.2.2",
         "symfony-cmf/routing": "^2.0.3",
