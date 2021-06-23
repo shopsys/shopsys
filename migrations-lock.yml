@@ -682,3 +682,15 @@
 20210608120422:
     class: App\Migrations\Version20210608120422
     skip: false
+20180327093930:
+    class: Shopsys\ProductFeed\HeurekaBundle\Migrations\Version20180327093930
+    skip: false
+20180327094552:
+    class: Shopsys\ProductFeed\HeurekaBundle\Migrations\Version20180327094552
+    skip: false
+20180413102103:
+    class: Shopsys\ProductFeed\HeurekaBundle\Migrations\Version20180413102103
+    skip: false
+20190215092227:
+    class: Shopsys\ProductFeed\HeurekaBundle\Migrations\Version20190215092227
+    skip: false
