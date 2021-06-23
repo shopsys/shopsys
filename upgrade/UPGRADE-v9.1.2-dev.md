@@ -76,3 +76,7 @@ There you can find links to upgrade notes for other versions too.
       +  background-image: url("/web/public/styleguide/images/icon_large_up.svg")
       ```
     - see #project-base-diff to update your project
+
+- increase minimal version of `doctrine/dbal` package ([#2360](https://github.com/shopsys/shopsys/pull/2360))
+    - see #project-base-diff to update your project
+    - don't forget to update dependency with `composer update doctrine/dbal` 
