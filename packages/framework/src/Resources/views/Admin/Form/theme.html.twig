@@ -279,7 +279,7 @@
             {% endif %}
             {{- form_errors(form) -}}
             {% if newline is not defined %}
-                {% if isMultidomain() %}
+                {% if multidomain is defined and isMultidomain() %}
                     <div class="form-line__side form-line__side--multidomain">
                         <div class="input__wrap">
                             {{- form_widget(form, { attr: { class: 'input--domain' }}) -}}
@@ -289,8 +289,10 @@
                         </div>
                     </div>
                 {% else %}
-                    <div class="form-line__item form-line__item--full-width">
-                        {{- form_widget(form) -}}
+                    <div class="form-line__side">
+                        <div class="form-line__item form-line__item--full-width">
+                            {{- form_widget(form) -}}
+                        </div>
                     </div>
                 {% endif %}
             {% else %}
