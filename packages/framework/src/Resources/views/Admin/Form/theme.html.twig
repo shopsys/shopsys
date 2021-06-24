@@ -169,7 +169,7 @@
             </div>
             {{ form_errors(form) }}
         </div>
-    {% elseif multidomain is defined %}
+    {% elseif multidomain is defined and multidomain %}
         <div class="form-line__side form-line__side--multidomain">
             <div class="form-line__item">
                 <div class="input__wrap">
@@ -217,7 +217,7 @@
 {%- endblock text_row %}
 
 {% block money_row %}
-    {% if multidomain is defined %}
+    {% if multidomain is defined and multidomain %}
         <div class="form-line__side form-line__side--multidomain">
             <div class="form-line__item">
                 <div class="input__wrap">
@@ -269,8 +269,8 @@
             {% if js_container is not null %}
                 <div class="{{ js_container.container_class }}" data-type="{{ js_container.data_type }}">
             {% endif %}
-            <div class="form-line{% if multidomain is defined and isMultidomain() %} form-line--no-horizontal-gap{% endif %}">
-            {% if multidomain is defined %}
+            <div class="form-line{% if multidomain is defined and multidomain and isMultidomain() %} form-line--no-horizontal-gap{% endif %}">
+            {% if multidomain is defined and multidomain %}
                 {% if isMultidomain() %}
                     {{ form_label(form, getDomainName(domainId)) }}
                 {% endif %}
@@ -279,7 +279,7 @@
             {% endif %}
             {{- form_errors(form) -}}
             {% if newline is not defined %}
-                {% if multidomain is defined and isMultidomain() %}
+                {% if multidomain is defined and multidomain and isMultidomain() %}
                     <div class="form-line__side form-line__side--multidomain">
                         <div class="input__wrap">
                             {{- form_widget(form, { attr: { class: 'input--domain' }}) -}}
@@ -868,7 +868,7 @@
 {% endmacro %}
 
 {% block yes_no_row %}
-    {% if multidomain is defined %}
+    {% if multidomain is defined and multidomain %}
         <div class="form-line__side">
             {% if isMultidomain() %}
                 {{ domainIcon(domainId, 'long-bordered') }}
