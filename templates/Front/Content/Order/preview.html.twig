@@ -46,18 +46,10 @@
                     {% if orderPreview.totalPriceDiscount.priceWithVat.isZero() == false %}
                         <tr class="table-cart-preview__row">
                             <td class="table-cart-preview__cell">
-                                {{ 'Místo'|trans }}
+                                {{ 'Výše slevy'|trans }}
                             </td>
                             <td class="table-cart-preview__cell table-cart-preview__cell--price">
-                                <strong>{{ orderPreview.totalPriceDiscount.priceWithVat|price }}</strong>
-                            </td>
-                        </tr>
-                        <tr class="table-cart-preview__row">
-                            <td class="table-cart-preview__cell">
-                                <strong>{{ 'Sleva'|trans }} - {{ promoCodeCode }}</strong>
-                            </td>
-                            <td class="table-cart-preview__cell table-cart-preview__cell--price">
-                                <strong class="cart-price cart-price--promo cart-price--promo-preview">- {{ orderPreview.totalPriceDiscount.priceWithVat|price }}</strong>
+                                <strong class="cart-price cart-price--promo cart-price--promo-preview">{{ orderPreview.totalPriceDiscount.priceWithVat|price }}</strong>
                             </td>
                         </tr>
                     {% endif %}

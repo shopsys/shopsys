@@ -163,17 +163,18 @@
             font-size: @font-size-small;
             color: @color-base-lighter;
 
-            &--main {
-                font-size: @font-size;
+            &--sale, &--action {
                 color: @color-price-sale;
             }
+        }
 
-            &--sale {
-                color: @color-price-sale;
-            }
+        &__price-main {
+            font-size: @font-size;
+            color: @color-price-sale;
 
-            &--action {
+            &--sale, &--action {
                 color: @color-price-sale;
+                font-weight: 700;
             }
         }
 

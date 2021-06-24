@@ -2077,8 +2077,8 @@ msgstr ""
 msgid "Shipping"
 msgstr "Doprava"
 
-msgid "Shipping and payment"
-msgstr "Doprava a platba"
+msgid "Shipping<br> and payment"
+msgstr "Doprava<br> a platba"
 
 msgid "Shipping and payment <strong>for free!</strong>"
 msgstr "Dopravu i platbu máte <strong>zdarma!</strong>"

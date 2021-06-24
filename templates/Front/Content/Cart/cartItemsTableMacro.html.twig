@@ -16,12 +16,14 @@
             {% if product.id in maximumOrderQuantity|keys %}
                 {% set dataSpinboxMax = maximumOrderQuantity[product.id] %}
             {% endif %}
-            {% set priceFlag = null %}
+            {% set priceFlag, priceMainFlag = null, null %}
             {% if (product.hasFlagByAkeneoCodeForDomain(constant('App\\Model\\Product\\Flag\\Flag::AKENEO_CODE_SALE'), getDomain().id)) %}
                 {% set priceFlag = 'table-cart__cell__price--sale' %}
+                {% set priceMainFlag = 'table-cart__cell__price-main--sale' %}
             {% else %}
                 {% if (product.hasFlagByAkeneoCodeForDomain(constant('App\\Model\\Product\\Flag\\Flag::AKENEO_CODE_ACTION'), getDomain().id)) %}
                     {% set priceFlag = 'table-cart__cell__price--action' %}
+                    {% set priceMainFlag = 'table-cart__cell__price-main--action' %}
                 {% endif %}
             {% endif %}
             <div class="table-cart__row js-cart-item">
@@ -87,9 +89,9 @@
                 </div>
 
                 <div class="table-cart__cell table-cart__cell--price js-cart-item-total-price">
-                    <strong class="table-cart__cell__price table-cart__cell__price--main {{ priceFlag }}">
+                    <span class="table-cart__cell__price-main {{ priceMainFlag }}">
                         {{ cartItemPrice.totalPrice.priceWithVat|price }}
-                    </strong>
+                    </span>
                 </div>
 
                 <div class="table-cart__cell table-cart__cell--action">

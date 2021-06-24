@@ -562,7 +562,7 @@ msgstr ""
 msgid "Shipping"
 msgstr ""
 
-msgid "Shipping and payment"
+msgid "Shipping<br> and payment"
 msgstr ""
 
 msgid "Shipping and payment <strong>for free!</strong>"

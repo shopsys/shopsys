@@ -3016,8 +3016,8 @@ msgstr "Zoradiť"
 msgid "Shipping"
 msgstr "Doprava"
 
-msgid "Shipping and payment"
-msgstr "Doprava a platba"
+msgid "Shipping<br> and payment"
+msgstr "Doprava<br>a platba"
 
 msgid "Shipping instructions"
 msgstr "Inštrukcie pre dopravu"

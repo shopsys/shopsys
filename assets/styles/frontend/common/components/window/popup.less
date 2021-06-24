@@ -2,7 +2,7 @@
 @window-popup-wide-width: 750px;
 
 @window-popup-inner-padding: 20px;
-@window-popup-inner-padding-md: 20px;
+@window-popup-inner-padding-md: 15px;
 @window-popup-close-position: 15px;
 @window-popup-close-size: 36px;
 
@@ -116,7 +116,7 @@
 
     &--wide {
         @media @query-md {
-            width: calc( ~"100vw - 2 * @{window-popup-inner-padding}" );
+            width: calc( ~"100% - 2 * @{window-popup-inner-padding}" );
             max-height: calc( ~"100% - 2 * @{window-popup-inner-padding} - 2 * @{window-popup-space-around-big}" );
             left: @window-popup-space-around-big;
             top: @window-popup-space-around-big;
@@ -139,12 +139,6 @@
     }
 
     &--personal-pickup {
-        @media @query-md {
-            width: 100%;
-            margin-left: 0;
-            left: 0;
-        }
-
         @media @query-mobile {
             padding-bottom: 0;
         }
@@ -183,12 +177,7 @@
         }
 
         .window-popup__actions--multiple-buttons {
-            padding-top: 20px;
             justify-content: space-between;
-
-            @media @query-mobile {
-                padding: 1rem 1rem 0;
-            }
         }
 
         .window-popup__actions__btn--cancel {
@@ -287,12 +276,12 @@
     }
 
     &__actions {
-        padding: 5px 15px @window-popup-inner-padding/2 15px;
+        padding: 0 @window-popup-inner-padding-md @window-popup-inner-padding-md @window-popup-inner-padding-md;
         width: 100%;
         text-align: center;
 
-        @media @query-sm {
-            padding: 5px @window-popup-inner-padding 0 @window-popup-inner-padding;
+        @media @query-md {
+            padding: 0 @window-popup-inner-padding;
         }
 
         &--multiple-buttons {
@@ -311,7 +300,7 @@
             align-items: center;
             justify-content: center;
             width: 100%;
-            min-height: 0;
+            margin-top: @window-popup-inner-padding-md;
 
             font-size: 15px;
             font-weight: 400;
@@ -321,6 +310,7 @@
             @media @query-sm {
                 width: auto;
                 justify-content: flex-start;
+                margin-top: @window-popup-inner-padding;
             }
 
             &--cancel {

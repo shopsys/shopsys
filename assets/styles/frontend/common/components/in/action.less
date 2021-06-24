@@ -25,6 +25,11 @@
     &__right {
         margin-bottom: 30px;
         order: 1;
+        width: 100%;
+
+        @media @query-sm {
+            width: auto;
+        }
 
         @media @query-lg {
             order: 2;
@@ -62,7 +67,7 @@
 
     &__next {
         @media @query-mobile-xs {
-            border-radius: @radius-medium;
+            width: 100%;
         }
 
         &:before {
