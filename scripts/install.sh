@@ -17,7 +17,6 @@ echo "Start with specifying your operating system: \
 
     1) Linux or Windows with WSL 2
     2) Mac
-    3) Windows with docker-sync
     "
 
 while [[ 1 -eq 1 ]]
@@ -64,13 +63,6 @@ case "$operatingSystem" in
         fi
 
         mkdir -p ${projectPathPrefix}var/postgres-data ${projectPathPrefix}var/elasticsearch-data vendor
-        docker-sync start
-        ;;
-    "3")
-        cp -f docker/conf/docker-compose-win.yml.dist docker-compose.yml
-        cp -f docker/conf/docker-sync-win.yml.dist docker-sync.yml
-
-        mkdir -p "${projectPathPrefix}var/postgres-data" "${projectPathPrefix}var/elasticsearch-data" vendor
         docker-sync start
         ;;
 esac
