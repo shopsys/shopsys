@@ -869,13 +869,11 @@
 
 {% block yes_no_row %}
     {% if multidomain is defined and multidomain %}
-        <div class="form-line__side">
-            {% if isMultidomain() %}
-                {{ domainIcon(domainId, 'long-bordered') }}
-            {% endif %}
-            {{ form_widget(form, { isSimple: isSimple|default(isMultidomain()) }) }}
-            {{ form_errors(form) }}
-        </div>
+        {% if isMultidomain() %}
+            {{ domainIcon(domainId, 'long-bordered') }}
+        {% endif %}
+        {{ form_widget(form, { isSimple: isSimple|default(isMultidomain()) }) }}
+        {{ form_errors(form) }}
     {% else %}
         {{ block('form_row') }}
     {% endif %}
