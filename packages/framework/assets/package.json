@@ -1,6 +1,6 @@
 {
   "name": "@shopsys/framework",
-  "version": "9.1.1",
+  "version": "9.1.2-rc.1",
   "description": "Shopsys framework assets files",
   "repository": "https://github.com/shopsys/shopsys",
   "author": "Shopsys",
@@ -23,9 +23,9 @@
     "waypoints": "^4.0.1"
   },
   "devDependencies": {
-    "@babel/preset-env": "^7.8.3",
-    "babel-jest": "^25.1.0",
-    "core-js": "^3.0.0",
-    "jest": "^25.1.0"
+    "@babel/preset-env": "^7.14.4",
+    "babel-jest": "^27.0.1",
+    "core-js": "^3.13.1",
+    "jest": "^27.0.1"
   }
 }
