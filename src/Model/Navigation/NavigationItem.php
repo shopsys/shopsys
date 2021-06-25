@@ -2,17 +2,17 @@
 
 declare(strict_types=1);
 
-namespace App\Model\HorizontalMenu;
+namespace App\Model\Navigation;
 
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Shopsys\FrameworkBundle\Component\Grid\Ordering\OrderableEntityInterface;
 
 /**
- * @ORM\Table(name="horizontal_menu_items", indexes={@ORM\Index(name="domain_id_idx", columns={"domain_id"})})
+ * @ORM\Table(name="navigation_items", indexes={@ORM\Index(name="domain_id_idx", columns={"domain_id"})})
  * @ORM\Entity
  */
-class HorizontalMenuItem implements OrderableEntityInterface
+class NavigationItem implements OrderableEntityInterface
 {
     /**
      * @var int
@@ -48,23 +48,23 @@ class HorizontalMenuItem implements OrderableEntityInterface
     private $domainId;
 
     /**
-     * @param \App\Model\HorizontalMenu\HorizontalMenuItemData $horizontalMenuItemData
+     * @param \App\Model\Navigation\NavigationItemData $navigationItemData
      */
-    public function __construct(HorizontalMenuItemData $horizontalMenuItemData)
+    public function __construct(NavigationItemData $navigationItemData)
     {
-        $this->name = $horizontalMenuItemData->name;
-        $this->url = $horizontalMenuItemData->url;
-        $this->domainId = $horizontalMenuItemData->domainId;
+        $this->name = $navigationItemData->name;
+        $this->url = $navigationItemData->url;
+        $this->domainId = $navigationItemData->domainId;
     }
 
     /**
-     * @param \App\Model\HorizontalMenu\HorizontalMenuItemData $horizontalMenuItemData
+     * @param \App\Model\Navigation\NavigationItemData $navigationItemData
      */
-    public function edit(HorizontalMenuItemData $horizontalMenuItemData): void
+    public function edit(NavigationItemData $navigationItemData): void
     {
-        $this->name = $horizontalMenuItemData->name;
-        $this->url = $horizontalMenuItemData->url;
-        $this->domainId = $horizontalMenuItemData->domainId;
+        $this->name = $navigationItemData->name;
+        $this->url = $navigationItemData->url;
+        $this->domainId = $navigationItemData->domainId;
     }
 
     /**

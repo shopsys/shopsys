@@ -5,38 +5,38 @@ declare(strict_types=1);
 namespace App\Controller\Front;
 
 use App\Model\Category\CategoryFacade;
-use App\Model\HorizontalMenu\HorizontalMenuItemFacade;
+use App\Model\Navigation\NavigationItemFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Symfony\Component\HttpFoundation\Response;
 
-class HorizontalMenuController extends FrontBaseController
+class NavigationController extends FrontBaseController
 {
     /**
-     * @var \App\Model\HorizontalMenu\HorizontalMenuItemFacade
+     * @var \App\Model\Navigation\NavigationItemFacade
      */
-    private $horizontalMenuItemFacade;
+    private NavigationItemFacade $navigationItemFacade;
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
      */
-    private $domain;
+    private Domain $domain;
 
     /**
      * @var \App\Model\Category\CategoryFacade
      */
-    private $categoryFacade;
+    private CategoryFacade $categoryFacade;
 
     /**
-     * @param \App\Model\HorizontalMenu\HorizontalMenuItemFacade $horizontalMenuItemFacade
+     * @param \App\Model\Navigation\NavigationItemFacade $navigationItemFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \App\Model\Category\CategoryFacade $categoryFacade
      */
     public function __construct(
-        HorizontalMenuItemFacade $horizontalMenuItemFacade,
+        NavigationItemFacade $navigationItemFacade,
         Domain $domain,
         CategoryFacade $categoryFacade
     ) {
-        $this->horizontalMenuItemFacade = $horizontalMenuItemFacade;
+        $this->navigationItemFacade = $navigationItemFacade;
         $this->domain = $domain;
         $this->categoryFacade = $categoryFacade;
     }
@@ -47,10 +47,10 @@ class HorizontalMenuController extends FrontBaseController
     public function menuAction(): Response
     {
         $domainId = $this->domain->getId();
-        $itemDetails = $this->horizontalMenuItemFacade->getOrderedHorizontalMenuItemDetails($domainId);
+        $itemDetails = $this->navigationItemFacade->getOrderedNavigationItemDetails($domainId);
         $countOfRecentlyBoughtProducts = 0;
 
-        return $this->render('Front/Inline/HorizontalMenu/menu.html.twig', [
+        return $this->render('Front/Inline/Navigation/menu.html.twig', [
             'itemDetails' => $itemDetails,
             'countOfRecentlyBoughtProducts' => $countOfRecentlyBoughtProducts,
             'saleCategory' => $this->categoryFacade->findSaleCategory(),

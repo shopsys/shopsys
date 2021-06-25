@@ -574,6 +574,9 @@ msgstr ""
 msgid "Cash on delivery"
 msgstr ""
 
+msgid "Catalog"
+msgstr "Katalóg"
+
 msgid "Circumaural"
 msgstr ""
 

@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Model\HorizontalMenu;
+namespace App\Model\Navigation;
 
-class HorizontalMenuItemData
+class NavigationItemData
 {
     /**
      * @var string|null
