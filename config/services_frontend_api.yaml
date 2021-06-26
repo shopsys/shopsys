@@ -1,4 +1,15 @@
 services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+
+    resolverMaps:
+        namespace: App\FrontendApi\
+        resource: '../src/FrontendApi/**/*{Map}.php'
+        tags:
+            - { name: overblog_graphql.resolver_map, schema: default }
+
     Shopsys\FrontendApiBundle\Model\Resolver\Products\PromotedProductsResolver:
         alias: App\FrontendApi\Model\Resolver\Products\PromotedProductsResolver
 
@@ -11,6 +22,3 @@ services:
     Shopsys\FrontendApiBundle\Model\Order\OrderDataFactory:
         alias: App\FrontendApi\Model\Order\OrderDataFactory
 
-    App\FrontendApi\Model\Resolver\Navigation\NavigationItemResolverMap:
-        tags:
-            - { name: overblog_graphql.resolver_map, schema: default }
