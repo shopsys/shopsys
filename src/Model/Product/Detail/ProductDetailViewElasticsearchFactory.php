@@ -141,7 +141,7 @@ class ProductDetailViewElasticsearchFactory extends BaseProductDetailViewElastic
         /** @var \App\Model\Product\Detail\ProductDetailView $productDetailView */
         $productDetailView = parent::createFromProductArray($productArray);
 
-        $productDetailView->nameFirstLine = $productArray['name_prefix'];
+        $productDetailView->nameFirstLine = $productArray['name_prefix'] ?? '';
         $productDetailView->nameSecondLine = $this->getNameSecondLine($productArray);
         $productDetailView->fullname = $this->getFullname($productArray);
         $productDetailView->usps = $productArray['usps'];

@@ -52,27 +52,27 @@ class ProductArrayFieldMapper extends BaseProductArrayFieldMapper
 
     /**
      * @param array $data
-     * @return string
+     * @return string|null
      */
-    public function getNamePrefix(array $data): string
+    public function getNamePrefix(array $data): ?string
     {
         return $data['name_prefix'];
     }
 
     /**
      * @param array $data
-     * @return string
+     * @return string|null
      */
-    public function getNameSuffix(array $data): string
+    public function getNameSuffix(array $data): ?string
     {
         return $data['name_sufix'];
     }
 
     /**
      * @param array $data
-     * @return string
+     * @return string|null
      */
-    public function getPartNumber(array $data): string
+    public function getPartNumber(array $data): ?string
     {
         return $data['partno'];
     }
