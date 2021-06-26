@@ -274,6 +274,12 @@
           "parameter_name": {
             "type": "text"
           },
+          "parameter_unit": {
+            "type": "text"
+          },
+          "parameter_group": {
+            "type": "text"
+          },
           "parameter_value_id": {
             "type": "integer"
           },
