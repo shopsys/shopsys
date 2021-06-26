@@ -28,6 +28,17 @@ services:
         ports:
             - "8000:8080"
 
+    storefront:
+        build:
+            context: ./storefront/docker
+            dockerfile: Dockerfile
+            target: development
+        container_name: shopsys-framework-storefront
+        volumes:
+            - shopsys-storefront-sync:/app
+        ports:
+            - "3000:3000"
+
     php-fpm:
         build:
             context: .
@@ -101,4 +112,6 @@ services:
 
 volumes:
     shopsys-framework-sync:
+        external: true
+    shopsys-storefront-sync:
         external: true

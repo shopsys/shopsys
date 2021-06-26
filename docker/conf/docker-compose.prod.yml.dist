@@ -15,6 +15,15 @@ services:
         networks:
             - shopsys-network
 
+    storefront:
+        build:
+            context: ./storefront/docker
+            dockerfile: Dockerfile
+            target: production
+        container_name: shopsys-framework-storefront
+        volumes:
+            - ./storefront:/app
+
     php-fpm:
         restart: always
         image: production-php-fpm

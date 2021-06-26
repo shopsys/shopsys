@@ -1,11 +1,12 @@
-version: "3.4"
+version: "3.7"
+
 services:
     postgres:
         image: postgres:12.1-alpine
         container_name: shopsys-framework-postgres
         volumes:
-            - pgdata:/var/lib/postgresql/data
-            - ./docker/postgres/postgres.conf:/var/lib/postgresql/data/postgresql.conf
+            - ./docker/postgres/postgres.conf:/var/lib/postgresql/data/postgresql.conf:delegated
+            - ./var/postgres-data:/var/lib/postgresql/data:cached
         environment:
             - PGDATA=/var/lib/postgresql/data/pgdata
             - POSTGRES_USER=root
@@ -22,10 +23,21 @@ services:
         depends_on:
             - php-fpm
         volumes:
-            - shopsys-framework-web-sync:/var/www/html/web
-            - ./docker/nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+            - ./web:/var/www/html/web:cached
+            - ./docker/nginx/nginx.conf:/etc/nginx/conf.d/default.conf:delegated
         ports:
             - "8000:8080"
+
+    storefront:
+        build:
+            context: ./storefront/docker
+            dockerfile: Dockerfile
+            target: development
+        container_name: shopsys-framework-storefront
+        volumes:
+            - storefront:/app
+        ports:
+            - "3000:3000"
 
     php-fpm:
         build:
@@ -33,13 +45,12 @@ services:
             dockerfile: docker/php-fpm/Dockerfile
             target: development
             args:
-                www_data_uid: 1000
-                www_data_gid: 1000
+                www_data_uid: 501
+                www_data_gid: 20
         container_name: shopsys-framework-php-fpm
         volumes:
-            - shopsys-framework-sync:/var/www/html
-            - shopsys-framework-vendor-sync:/var/www/html/vendor
-            - shopsys-framework-web-sync:/var/www/html/web
+            - source-code:/var/www/html
+            - ./.npm-global:/var/www/html/.npm-global
         ports:
             - "35729:35729"
 
@@ -56,10 +67,11 @@ services:
             - "1600:80"
 
     selenium-server:
-        image: selenium/standalone-chrome:3.11
+        image: selenium/standalone-chrome-debug:3.141.5
         container_name: shopsys-framework-acceptance-tests
         ports:
             - "4400:4444"
+            - "5900:5900"
         environment:
             - HUB_PORT_4444_TCP_ADDR=hub
             - HUB_PORT_4444_TCP_PORT=4444
@@ -86,9 +98,10 @@ services:
         ports:
             - "9200:9200"
         volumes:
-            - elasticsearch-data:/usr/share/elasticsearch/data
+            - ./var/elasticsearch-data:/usr/share/elasticsearch/data:cached
         environment:
             - discovery.type=single-node
+            - cluster.routing.allocation.disk.watermark.flood_stage=0.99
 
     kibana:
         image: docker.elastic.co/kibana/kibana-oss:7.6.0
@@ -96,16 +109,41 @@ services:
         depends_on:
             - elasticsearch
         ports:
-            - "5601:5601"
+            - "5602:5601"
 
 volumes:
-    pgdata:
-        driver: local
-    elasticsearch-data:
-        driver: local
-    shopsys-framework-sync:
-        external: true
-    shopsys-framework-vendor-sync:
-        external: true
-    shopsys-framework-web-sync:
-        external: true
+    source-code:
+    storefront:
+
+x-mutagen:
+    sync:
+        defaults:
+            ignore:
+                vcs: true
+            permissions:
+                defaultOwner: "id:501"
+        source-code:
+            alpha: "."
+            beta: "volume://source-code"
+            mode: "two-way-resolved"
+            configurationBeta:
+                permissions:
+                    defaultOwner: "id:501"
+                    defaultDirectoryMode: 0777
+            ignore:
+                paths:
+                    - ./.DS_Store
+                    - ./.idea
+                    - ./.npm-global
+                    - ./nbproject
+                    - ./storefront
+                    - ./var/elasticsearch-data
+                    - ./var/postgres-data
+        storefront:
+            alpha: "./storefront"
+            beta: "volume://storefront"
+            mode: "two-way-resolved"
+            configurationBeta:
+                permissions:
+                    defaultOwner: "id:501"
+                    defaultDirectoryMode: 0777
