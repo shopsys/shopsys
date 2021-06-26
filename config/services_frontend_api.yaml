@@ -22,3 +22,8 @@ services:
     Shopsys\FrontendApiBundle\Model\Order\OrderDataFactory:
         alias: App\FrontendApi\Model\Order\OrderDataFactory
 
+    Shopsys\FrontendApiBundle\Model\Resolver\Products\DataMapper\ProductArrayFieldMapper:
+        alias: App\FrontendApi\Model\Resolver\Products\DataMapper\ProductArrayFieldMapper
+
+    Shopsys\FrontendApiBundle\Model\Parameter\ParameterWithValuesFactory:
+        alias: App\FrontendApi\Model\Parameter\ParameterWithValuesFactory

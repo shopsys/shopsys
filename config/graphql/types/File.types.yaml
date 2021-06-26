@@ -1,0 +1,11 @@
+File:
+    type: object
+    config:
+        description: "Represents a downloadable file"
+        fields:
+            anchorText:
+                type: "String!"
+                description: "Clickable text for a hyperlink"
+            url:
+                type: "String!"
+                description: "Url to download the file"

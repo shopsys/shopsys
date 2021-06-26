@@ -57,45 +57,65 @@ class ProductTest extends GraphQlTestCase
         $query = '
             query {
                 product(uuid: "' . $this->product->getUuid() . '") {
-                    name,
-                    shortDescription,
-                    seoH1,
-                    seoTitle,
+                    name
+                    shortDescription
+                    seoH1
+                    seoTitle
                     seoMetaDescription
-                    link,
+                    link
                     unit {
                         name
-                    },
-                    availability{
+                    }
+                    availability {
                         name
-                    },
-                    stockQuantity,
+                        status
+                    }
+                    stockQuantity
                     categories {
                         name
-                    },
+                    }
                     flags {
-                        name, 
+                        name
                         rgbColor
-                    },
+                    }
                     price {
-                        priceWithVat,
-                        priceWithoutVat,
+                        priceWithVat
+                        priceWithoutVat
                         vatAmount
                     },
                     brand {
                         name
-                    },
+                    }
                     accessories {
                         name
-                    },
-                    isSellingDenied,
-                    description,
+                    }
+                    isSellingDenied
+                    description
                     orderingPriority
                     parameters {
                         name
+                        group
+                        unit {
+                            name
+                        }
                         values {
                             text
                         }
+                    }
+                    isUsingStock
+                    namePrefix
+                    nameSuffix
+                    fullName
+                    catalogNumber
+                    partNumber
+                    ean
+                    usps
+                    isInSale
+                    hasPreorder
+                    hasSaleExclusion
+                    files {
+                      anchorText
+                      url
                     }
                 }
             }
@@ -149,6 +169,7 @@ class ProductTest extends GraphQlTestCase
                     ],
                     'availability' => [
                         'name' => t('In stock', [], 'dataFixtures', $firstDomainLocale),
+                        'status' => 'in-stock',
                     ],
                     'stockQuantity' => 2700,
                     'categories' => [
@@ -193,6 +214,8 @@ class ProductTest extends GraphQlTestCase
                     'parameters' => [
                         [
                             'name' => t('Screen size', [], 'dataFixtures', $firstDomainLocale),
+                            'group' => t('Hlavní údaje', [], 'dataFixtures', $firstDomainLocale),
+                            'unit' => null,
                             'values' => [
                                 [
                                     'text' => t('27"', [], 'dataFixtures', $firstDomainLocale),
@@ -201,6 +224,8 @@ class ProductTest extends GraphQlTestCase
                         ],
                         [
                             'name' => t('Technology', [], 'dataFixtures', $firstDomainLocale),
+                            'group' => t('Hlavní údaje', [], 'dataFixtures', $firstDomainLocale),
+                            'unit' => null,
                             'values' => [
                                 [
                                     'text' => t('LED', [], 'dataFixtures', $firstDomainLocale),
@@ -209,6 +234,8 @@ class ProductTest extends GraphQlTestCase
                         ],
                         [
                             'name' => t('Resolution', [], 'dataFixtures', $firstDomainLocale),
+                            'group' => t('Hlavní údaje', [], 'dataFixtures', $firstDomainLocale),
+                            'unit' => null,
                             'values' => [
                                 [
                                     'text' => t('1920×1080 (Full HD)', [], 'dataFixtures', $firstDomainLocale),
@@ -217,6 +244,8 @@ class ProductTest extends GraphQlTestCase
                         ],
                         [
                             'name' => t('USB', [], 'dataFixtures', $firstDomainLocale),
+                            'group' => t('Způsob připojení', [], 'dataFixtures', $firstDomainLocale),
+                            'unit' => null,
                             'values' => [
                                 [
                                     'text' => t('Yes', [], 'dataFixtures', $firstDomainLocale),
@@ -225,6 +254,8 @@ class ProductTest extends GraphQlTestCase
                         ],
                         [
                             'name' => t('HDMI', [], 'dataFixtures', $firstDomainLocale),
+                            'group' => t('Způsob připojení', [], 'dataFixtures', $firstDomainLocale),
+                            'unit' => null,
                             'values' => [
                                 [
                                     'text' => t('Yes', [], 'dataFixtures', $firstDomainLocale),
@@ -233,15 +264,12 @@ class ProductTest extends GraphQlTestCase
                         ],
                         [
                             'name' => t('Barva', [], 'dataFixtures', $firstDomainLocale),
+                            'group' => null,
+                            'unit' => null,
                             'values' => [
                                 [
                                     'text' => t('červená', [], 'dataFixtures', $firstDomainLocale),
                                 ],
-                            ],
-                        ],
-                        [
-                            'name' => t('Barva', [], 'dataFixtures', $firstDomainLocale),
-                            'values' => [
                                 [
                                     'text' => t('černá', [], 'dataFixtures', $firstDomainLocale),
                                 ],
@@ -249,29 +277,38 @@ class ProductTest extends GraphQlTestCase
                         ],
                         [
                             'name' => t('Materiál', [], 'dataFixtures', $firstDomainLocale),
+                            'group' => null,
+                            'unit' => null,
                             'values' => [
                                 [
                                     'text' => t('kov', [], 'dataFixtures', $firstDomainLocale),
                                 ],
-                            ],
-                        ],
-                        [
-                            'name' => t('Materiál', [], 'dataFixtures', $firstDomainLocale),
-                            'values' => [
                                 [
                                     'text' => t('dřevo', [], 'dataFixtures', $firstDomainLocale),
                                 ],
-                            ],
-                        ],
-                        [
-                            'name' => t('Materiál', [], 'dataFixtures', $firstDomainLocale),
-                            'values' => [
                                 [
                                     'text' => t('plast', [], 'dataFixtures', $firstDomainLocale),
                                 ],
                             ],
                         ],
                     ],
+                    'isUsingStock' => true,
+                    'namePrefix' => t('Televize', [], 'dataFixtures', $firstDomainLocale),
+                    'nameSuffix' => t('plazmová', [], 'dataFixtures', $firstDomainLocale),
+                    'fullName' => sprintf(
+                        '%s %s %s',
+                        t('Televize', [], 'dataFixtures', $firstDomainLocale),
+                        t('22" Sencor SLE 22F46DM4 HELLO KITTY', [], 'dataFixtures', $firstDomainLocale),
+                        t('plazmová', [], 'dataFixtures', $firstDomainLocale),
+                    ),
+                    'catalogNumber' => '9177759',
+                    'partNumber' => 'SLE 22F46DM4',
+                    'ean' => '8845781245930',
+                    'usps' => [],
+                    'isInSale' => false,
+                    'hasPreorder' => false,
+                    'hasSaleExclusion' => false,
+                    'files' => [],
                 ],
             ],
         ];
