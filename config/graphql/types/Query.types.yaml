@@ -12,3 +12,7 @@ Query:
                 type: 'CurrentCompanyCustomerUser'
             CurrentRegularCustomerUser:
                 type: 'CurrentRegularCustomerUser'
+            promotedCategories:
+                type: '[Category!]!'
+                resolve: "@=resolver('promotedCategoriesResolver')"
+                description: "Returns promoted categories"
