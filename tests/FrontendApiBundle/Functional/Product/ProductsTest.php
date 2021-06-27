@@ -43,12 +43,16 @@ class ProductsTest extends ProductsGraphQlTestCase
                         node {
                             name
                             shortDescription
+                            seoH1
+                            seoTitle
+                            seoMetaDescription
                             link
                             unit {
                                 name
                             }
                             availability {
                                 name
+                                status
                             }
                             stockQuantity
                             categories {
@@ -74,9 +78,28 @@ class ProductsTest extends ProductsGraphQlTestCase
                             orderingPriority
                             parameters {
                                 name
+                                group
+                                unit {
+                                    name
+                                }
                                 values {
                                     text
                                 }
+                            }
+                            isUsingStock
+                            namePrefix
+                            nameSuffix
+                            fullName
+                            catalogNumber
+                            partNumber
+                            ean
+                            usps
+                            isInSale
+                            hasPreorder
+                            hasSaleExclusion
+                            files {
+                              anchorText
+                              url
                             }
                         }
                     }
@@ -120,12 +143,16 @@ class ProductsTest extends ProductsGraphQlTestCase
                     'dataFixtures',
                     $firstDomainLocale
                 ),
+                'seoH1' => null,
+                'seoTitle' => null,
+                'seoMetaDescription' => null,
                 'link' => $this->getLocalizedPathOnFirstDomainByRouteName('front_product_detail', ['id' => 77]),
                 'unit' => [
                     'name' => t('pcs', [], 'dataFixtures', $firstDomainLocale),
                 ],
                 'availability' => [
                     'name' => t('In stock', [], 'dataFixtures', $firstDomainLocale),
+                    'status' => 'in-stock',
                 ],
                 'stockQuantity' => 900,
                 'categories' => [
@@ -150,6 +177,8 @@ class ProductsTest extends ProductsGraphQlTestCase
                 'parameters' => [
                     [
                         'name' => t('Screen size', [], 'dataFixtures', $firstDomainLocale),
+                        'group' => t('Hlavní údaje', [], 'dataFixtures', $firstDomainLocale),
+                        'unit' => null,
                         'values' => [
                             [
                                 'text' => t('30"', [], 'dataFixtures', $firstDomainLocale),
@@ -158,6 +187,8 @@ class ProductsTest extends ProductsGraphQlTestCase
                     ],
                     [
                         'name' => t('Technology', [], 'dataFixtures', $firstDomainLocale),
+                        'group' => t('Hlavní údaje', [], 'dataFixtures', $firstDomainLocale),
+                        'unit' => null,
                         'values' => [
                             [
                                 'text' => t('LED', [], 'dataFixtures', $firstDomainLocale),
@@ -166,6 +197,8 @@ class ProductsTest extends ProductsGraphQlTestCase
                     ],
                     [
                         'name' => t('Resolution', [], 'dataFixtures', $firstDomainLocale),
+                        'group' => t('Hlavní údaje', [], 'dataFixtures', $firstDomainLocale),
+                        'unit' => null,
                         'values' => [
                             [
                                 'text' => t('1920×1080 (Full HD)', [], 'dataFixtures', $firstDomainLocale),
@@ -174,6 +207,8 @@ class ProductsTest extends ProductsGraphQlTestCase
                     ],
                     [
                         'name' => t('USB', [], 'dataFixtures', $firstDomainLocale),
+                        'group' => t('Způsob připojení', [], 'dataFixtures', $firstDomainLocale),
+                        'unit' => null,
                         'values' => [
                             [
                                 'text' => t('Yes', [], 'dataFixtures', $firstDomainLocale),
@@ -182,6 +217,8 @@ class ProductsTest extends ProductsGraphQlTestCase
                     ],
                     [
                         'name' => t('HDMI', [], 'dataFixtures', $firstDomainLocale),
+                        'group' => t('Způsob připojení', [], 'dataFixtures', $firstDomainLocale),
+                        'unit' => null,
                         'values' => [
                             [
                                 'text' => t('Yes', [], 'dataFixtures', $firstDomainLocale),
@@ -189,6 +226,18 @@ class ProductsTest extends ProductsGraphQlTestCase
                         ],
                     ],
                 ],
+                'isUsingStock' => true,
+                'namePrefix' => null,
+                'nameSuffix' => null,
+                'fullName' => t('30” Hyundai 22MT44D', [], 'dataFixtures', $firstDomainLocale),
+                'catalogNumber' => '7700769',
+                'partNumber' => '22MT44D',
+                'ean' => '8845781245931',
+                'usps' => [],
+                'isInSale' => false,
+                'hasPreorder' => false,
+                'hasSaleExclusion' => false,
+                'files' => [],
             ],
         ];
     }
@@ -218,18 +267,20 @@ class ProductsTest extends ProductsGraphQlTestCase
     private function getExpectedDataForLastProduct(): string
     {
         $firstDomainLocale = $this->getLocaleForFirstDomain();
+        $productName = t(
+            'ZN-8009 steam iron Ferrato stainless steel 2200 Watt Blue',
+            [],
+            'dataFixtures',
+            $firstDomainLocale
+        );
+
         return '{
     "data": {
         "products": {
             "edges": [
                 {
                     "node": {
-                        "name": "' . t(
-            'ZN-8009 steam iron Ferrato stainless steel 2200 Watt Blue',
-            [],
-            'dataFixtures',
-            $firstDomainLocale
-        ) . '"
+                        "name": "' . $productName . '"
                     }
                 }
             ]
