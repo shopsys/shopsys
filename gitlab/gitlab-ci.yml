@@ -87,6 +87,7 @@ review:
         - docker-compose exec -T php-fpm sed -i "s/http:\/\/127.0.0.1:8000/https:\/\/${HOST}/g" config/domains_urls.yaml
         - docker-compose exec -T php-fpm sed -i "s/http:\/\/127.0.0.2:8000/https:\/\/en.${HOST}/g" config/domains_urls.yaml
         - docker-compose exec -T php-fpm php phing -D production.confirm.action=y clean db-create build-review-ci
+        - echo -e "Available hosts \n - https://${HOST}\n - https://en.${HOST}\n - https://storefront.${HOST}\n - https://en.storefront.${HOST}"
     tags:
         - review
 
