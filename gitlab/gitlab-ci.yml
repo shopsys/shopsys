@@ -13,8 +13,10 @@ stages:
 
 variables:
     TAG: ${CI_REGISTRY_IMAGE}/${CI_COMMIT_REF_SLUG}:${CI_COMMIT_SHA}
+    STOREFRONT_TAG: ${CI_REGISTRY_IMAGE}/${CI_COMMIT_REF_SLUG}:${CI_COMMIT_SHA}-storefront
     HOST: ${CI_COMMIT_REF_SLUG}.${CI_PROJECT_NAME}.${REVIEW_URL}
     HOSTS: ${CI_COMMIT_REF_SLUG}.${CI_PROJECT_NAME}.${REVIEW_URL}, en.${CI_COMMIT_REF_SLUG}.${CI_PROJECT_NAME}.${REVIEW_URL}
+    STOREFRONT_HOSTS: storefront.${CI_COMMIT_REF_SLUG}.${CI_PROJECT_NAME}.${REVIEW_URL}, en.storefront.${CI_COMMIT_REF_SLUG}.${CI_PROJECT_NAME}.${REVIEW_URL}
     COMPOSE_PROJECT_NAME: ${CI_PROJECT_NAME}__${CI_COMMIT_REF_SLUG}
 
 before_script:
@@ -26,6 +28,13 @@ build:
     script:
         - docker build -f ./docker/php-fpm/Dockerfile --target production --compress -t ${TAG} .
         - docker push ${TAG}
+
+build-storefront:
+    stage: build
+    <<: *only-default
+    script:
+        - docker build -f ./storefront/docker/Dockerfile --target production --compress -t ${STOREFRONT_TAG} .
+        - docker push ${STOREFRONT_TAG}
 
 test:standards:
     stage: test
@@ -68,9 +77,10 @@ review:
         on_stop: review:stop
     needs:
         - build
+        - build-storefront
     <<: *only-default
     script:
-        - cp /home/ci/docker-compose-review.yml ./docker-compose.yml
+        - cp /home/ci/docker-compose-review-storefront.yml ./docker-compose.yml
         - docker-compose down --rmi all -v
         - docker-compose up -d
         - "docker-compose exec -T php-fpm sed -i \"s/database_name:.*/database_name: ${COMPOSE_PROJECT_NAME}/\" config/parameters.yaml"
