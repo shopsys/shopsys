@@ -47,7 +47,7 @@
                     <div class="list-products__item__hover">
                         <div class="list-products__item__hover__wrap">
                             <div class="list-products__item__hover__wrap__in">
-                                {{ render(controller('App\\Controller\\Front\\CartController:productActionAction', { productActionView: productView.action, type: 'large'} )) }}
+                                {{ render(controller('App\\Controller\\Front\\CartController:productActionAction', { productActionView: productView.action } )) }}
                             </div>
                         </div>
                     </div>
@@ -112,7 +112,7 @@
                             <div class="list-slider-products__item__hover">
                                 <div class="list-slider-products__item__wrap">
                                     <div class="list-slider-products__item__wrap__in">
-                                        {{ render(controller('App\\Controller\\Front\\CartController:productActionAction', { productActionView: productView.action, type: 'large'} )) }}
+                                        {{ render(controller('App\\Controller\\Front\\CartController:productActionAction', { productActionView: productView.action } )) }}
                                     </div>
                                 </div>
                             </div>
