@@ -18,6 +18,7 @@ class UnitDataFixture extends AbstractReferenceFixture
     public const UNIT_PIECES = 'unit_pcs';
     public const UNIT_GRAM = 'unit_gram';
     public const UNIT_CENTIMETER = 'unit_centimeter';
+    public const UNIT_INCH = 'unit_inch';
     public const UNIT_TON = 'unit_ton';
     public const UNIT_KILOWATT = 'unit_kilowatt';
     public const UNIT_KILOGRAM = 'unit_kilogram';
@@ -91,6 +92,12 @@ class UnitDataFixture extends AbstractReferenceFixture
         }
         $unitData->akeneoCode = 'CENTIMETER';
         $this->createUnit($unitData, self::UNIT_CENTIMETER);
+
+        foreach ($this->domain->getAllLocales() as $locale) {
+            $unitData->name[$locale] = t('in', [], 'dataFixtures', $locale);
+        }
+        $unitData->akeneoCode = 'INCH';
+        $this->createUnit($unitData, self::UNIT_INCH);
 
         foreach ($this->domain->getAllLocales() as $locale) {
             $unitData->name[$locale] = t('t', [], 'dataFixtures', $locale);

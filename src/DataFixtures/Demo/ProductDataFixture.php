@@ -199,7 +199,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->seoMetaDescriptions[$domain->getId()] = t('Hello Kitty TV, LED, 55 cm diagonal, 1920x1080 Full HD.', [], 'dataFixtures', $domain->getLocale());
 
             $i = 0;
-            $this->addParameterTranslations($parameterTranslations, t('Screen size', [], 'dataFixtures', $locale), t('27"', [], 'dataFixtures', $locale), $locale, $i, t('Hlavní údaje', [], 'dataFixtures', $locale));
+            $this->addParameterTranslations($parameterTranslations, t('Screen size', [], 'dataFixtures', $locale), t('27"', [], 'dataFixtures', $locale), $locale, $i, t('Hlavní údaje', [], 'dataFixtures', $locale), UnitDataFixture::UNIT_INCH);
             $this->addParameterTranslations($parameterTranslations, t('Technology', [], 'dataFixtures', $locale), t('LED', [], 'dataFixtures', $locale), $locale, $i, t('Hlavní údaje', [], 'dataFixtures', $locale));
             $this->addParameterTranslations($parameterTranslations, t('Resolution', [], 'dataFixtures', $locale), t('1920×1080 (Full HD)', [], 'dataFixtures', $locale), $locale, $i, t('Hlavní údaje', [], 'dataFixtures', $locale));
             $this->addParameterTranslations($parameterTranslations, t('USB', [], 'dataFixtures', $locale), t('Yes', [], 'dataFixtures', $locale), $locale, $i, t('Způsob připojení', [], 'dataFixtures', $locale));
@@ -6157,9 +6157,10 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
     /**
      * @param string[] $parameterNamesByLocale
      * @param string[]|null $parameterGroupNamesByLocale
+     * @param string|null $unitReferenceName
      * @return \App\Model\Product\Parameter\Parameter
      */
-    private function findParameterByNamesOrCreateNew(array $parameterNamesByLocale, ?array $parameterGroupNamesByLocale): BaseParameter
+    private function findParameterByNamesOrCreateNew(array $parameterNamesByLocale, ?array $parameterGroupNamesByLocale, ?string $unitReferenceName = null): BaseParameter
     {
         /** @var \App\Model\Product\Parameter\Parameter|null $parameter */
         $parameter = $this->parameterFacade->findParameterByNames($parameterNamesByLocale);
@@ -6173,6 +6174,13 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $parameterData = $this->parameterDataFactory->create();
             $parameterData->name = $parameterNamesByLocale;
             $parameterData->group = $parameterGroup;
+
+            if ($unitReferenceName !== null) {
+                /** @var \App\Model\Product\Unit\Unit $unit */
+                $unit = $this->persistentReferenceFacade->getReference($unitReferenceName);
+                $parameterData->unit = $unit;
+            }
+
             if ($parameterNamesByLocale['cs'] === 'Barva') {
                 $parameterData->akeneoCode = Parameter::COLOR_PARAMETER_AKENEO_CODE;
             }
@@ -6191,7 +6199,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
     private function setParametersByTranslations(ProductData $productData, array $parametersTranslations): void
     {
         foreach ($parametersTranslations as $parameterTranslations) {
-            $parameter = $this->findParameterByNamesOrCreateNew($parameterTranslations['names'], $parameterTranslations['group_name']);
+            $parameter = $this->findParameterByNamesOrCreateNew($parameterTranslations['names'], $parameterTranslations['group_name'], $parameterTranslations['unit_name']);
 
             foreach ($parameterTranslations['values'] as $locale => $parameterValue) {
                 $productParameterValueData = $this->productParameterValueDataFactory->create();
@@ -6233,12 +6241,14 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
      * @param string $locale
      * @param int $i
      * @param string|null $parameterGroupName
+     * @param string|null $unitReferenceName
      */
-    private function addParameterTranslations(array &$parameterTranslations, string $parameterName, string $parameterValue, string $locale, int &$i, ?string $parameterGroupName = null): void
+    private function addParameterTranslations(array &$parameterTranslations, string $parameterName, string $parameterValue, string $locale, int &$i, ?string $parameterGroupName = null, ?string $unitReferenceName = null): void
     {
         $parameterTranslations[$i]['names'][$locale] = $parameterName;
         $parameterTranslations[$i]['values'][$locale] = $parameterValue;
         $parameterTranslations[$i]['group_name'][$locale] = $parameterGroupName;
+        $parameterTranslations[$i]['unit_name'] = $unitReferenceName;
 
         if ($parameterGroupName === null) {
             $parameterTranslations[$i]['group_name'] = null;

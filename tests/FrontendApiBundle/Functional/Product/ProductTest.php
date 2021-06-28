@@ -215,7 +215,9 @@ class ProductTest extends GraphQlTestCase
                         [
                             'name' => t('Screen size', [], 'dataFixtures', $firstDomainLocale),
                             'group' => t('Hlavní údaje', [], 'dataFixtures', $firstDomainLocale),
-                            'unit' => null,
+                            'unit' => [
+                                'name' => t('in', [], 'dataFixtures', $firstDomainLocale),
+                            ],
                             'values' => [
                                 [
                                     'text' => t('27"', [], 'dataFixtures', $firstDomainLocale),

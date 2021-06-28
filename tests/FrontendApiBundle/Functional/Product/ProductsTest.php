@@ -178,7 +178,9 @@ class ProductsTest extends ProductsGraphQlTestCase
                     [
                         'name' => t('Screen size', [], 'dataFixtures', $firstDomainLocale),
                         'group' => t('Hlavní údaje', [], 'dataFixtures', $firstDomainLocale),
-                        'unit' => null,
+                        'unit' => [
+                            'name' => t('in', [], 'dataFixtures', $firstDomainLocale),
+                        ],
                         'values' => [
                             [
                                 'text' => t('30"', [], 'dataFixtures', $firstDomainLocale),
