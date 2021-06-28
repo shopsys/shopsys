@@ -373,11 +373,11 @@ msgstr "Nejprve vyberte novou hodnotu"
 msgid "Choose product"
 msgstr "Vyberte produkt"
 
-msgid "Chosen payment name"
-msgstr "Název zvolené platby"
-
 msgid "Choose replacement"
 msgstr "Vyberte náhradu"
+
+msgid "Chosen payment name"
+msgstr "Název zvolené platby"
 
 msgid "Chosen shipping name"
 msgstr "Název zvolené dopravy"

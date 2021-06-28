@@ -373,10 +373,10 @@ msgstr ""
 msgid "Choose product"
 msgstr ""
 
-msgid "Chosen payment name"
+msgid "Choose replacement"
 msgstr ""
 
-msgid "Choose replacement"
+msgid "Chosen payment name"
 msgstr ""
 
 msgid "Chosen shipping name"
