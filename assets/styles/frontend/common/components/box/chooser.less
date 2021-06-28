@@ -7,12 +7,18 @@
 @box-chooser-item-price-width: 100px;
 
 .box-chooser {
+    &__in {
+        display: flex;
+        flex-direction: column;
+    }
+
     &__item {
         position: relative;
         display: flex;
         flex-wrap: wrap;
         min-width: 100%;
         padding: 12px 10px;
+        order: 1;
 
         border-bottom: 1px solid @color-border;
         cursor: pointer;
@@ -28,14 +34,8 @@
         }
 
         &.is-disabled {
-            padding-top: 0;
-            padding-bottom: 0;
-            max-height: 0;
-            min-height: 0;
-            overflow: hidden;
-
-            opacity: 0;
-            border-bottom: 0;
+            order: 2;
+            opacity: 0.3;
             pointer-events: none;
         }
 
@@ -241,6 +241,7 @@
 
     &__toggle {
         position: relative;
+        order: 3;
 
         &__btn {
             display: flex;

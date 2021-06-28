@@ -30,7 +30,7 @@
                                     <span class="js-validation-errors-list js-validation-error-list-{{ transportFormId }} form-error form-error--inline display-none"></span>
                                 {% endif %}
 
-                                <div id="{{ transportFormId }}">
+                                <div class="box-chooser__in" id="{{ transportFormId }}">
                                     {% for transport in transports %}
                                         {% set transportPrice = transportsPrices[transport.id] %}
                                         <label class="box-chooser__item js-payment-transport-checkbox-container" for="{{ transportFormId ~ '_' ~ transport.id }}">
@@ -145,7 +145,7 @@
                         <div class="box-chooser box-chooser--smaller js-form-group">
                             {{ form_errors(form.payment, { errors_attr: {class: 'form-error--inline'} }) }}
 
-                            <div id="{{ form.payment.vars.id }}" class="js-payments-wrapper">
+                            <div id="{{ form.payment.vars.id }}" class="box-chooser__in js-payments-wrapper">
                                 {% set bankTransferRendered = false %}
                                 {% set goPayBankSwiftForm = form.goPayBankSwift %}
 

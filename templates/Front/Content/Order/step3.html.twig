@@ -41,7 +41,7 @@
                                                 <div class="in-message--error display-none js-order-form-login-error"></div>
                                                 <div class="form-line">
                                                     <div class="form-line__input">
-                                                        <input type="password" class="input js-order-form-login-password" placeholder="{{ 'Vaše heslo'|trans }}" id="form-login-window-password"/>
+                                                        <input type="password" id="form-login-window-password" name="form-login-window-password" class="input js-order-form-login-password" placeholder="{{ 'Vaše heslo'|trans }}" id="form-login-window-password"/>
                                                         <label for="form-login-window-password" class="input-label">{{ 'Vaše heslo'|trans }}</label>
                                                     </div>
                                                 </div>
@@ -224,7 +224,11 @@
                                                 'data-checkbox-toggle-container-id': 'js-order-delivery-address'} }) }}
                                             {% endif %}
                                             <label for="{{ form.deliveryAddressFilled.vars.id }}" class="css-checkbox__image input-label input-label--checkbox">
-                                                {{ 'Přidat novou dodací adresu'|trans }}
+                                                {% if not isUserLogged %}
+                                                    {{ 'Zadat dodací adresu'|trans }}
+                                                {% else %}
+                                                    {{ 'Přidat novou dodací adresu'|trans }}
+                                                {% endif %}
                                             </label>
                                             {{ form_errors(form.deliveryAddressFilled) }}
                                         </div>
