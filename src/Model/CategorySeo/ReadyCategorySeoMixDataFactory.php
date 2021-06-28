@@ -33,7 +33,7 @@ class ReadyCategorySeoMixDataFactory
     private $readyCategorySeoMixFacade;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade
+     * @var \App\Component\Router\FriendlyUrl\FriendlyUrlFacade
      */
     private $friendlyUrlFacade;
 
@@ -42,7 +42,7 @@ class ReadyCategorySeoMixDataFactory
      * @param \App\Model\Product\Flag\FlagFacade $flagFacade
      * @param \App\Model\Product\Parameter\ParameterFacade $parameterFacade
      * @param \App\Model\CategorySeo\ReadyCategorySeoMixFacade $readyCategorySeoMixFacade
-     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
+     * @param \App\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
      */
     public function __construct(
         CategoryFacade $categoryFacade,

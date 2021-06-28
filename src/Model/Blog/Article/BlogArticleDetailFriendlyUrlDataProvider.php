@@ -40,7 +40,7 @@ class BlogArticleDetailFriendlyUrlDataProvider implements FriendlyUrlDataProvide
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @return \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlData[]
+     * @return \App\Component\Router\FriendlyUrl\FriendlyUrlData[]
      */
     public function getFriendlyUrlData(DomainConfig $domainConfig): array
     {
@@ -77,10 +77,11 @@ class BlogArticleDetailFriendlyUrlDataProvider implements FriendlyUrlDataProvide
     /**
      * @param int $id
      * @param string $name
-     * @return \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlData
+     * @return \App\Component\Router\FriendlyUrl\FriendlyUrlData
      */
     public function createFromIdAndName(int $id, string $name): FriendlyUrlData
     {
+        /** @var \App\Component\Router\FriendlyUrl\FriendlyUrlData $friendlyUrlData */
         $friendlyUrlData = $this->friendlyUrlDataFactory->create();
         $friendlyUrlData->id = $id;
         $friendlyUrlData->name = $name;

@@ -34,13 +34,14 @@ use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityRepository;
  * @method array extractVisibility(int $domainId, \App\Model\Product\Product $product)
  * @property \App\Model\Product\Parameter\ParameterRepository $parameterRepository
  * @property \App\Model\Product\ProductVisibilityRepository $productVisibilityRepository
- * @property \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRepository $friendlyUrlRepository
+ * @property \App\Component\Router\FriendlyUrl\FriendlyUrlRepository $friendlyUrlRepository
  * @property \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
  * @method array extractParameters(string $locale, \App\Model\Product\Product $product)
  * @property \App\Model\Category\CategoryFacade $categoryFacade
  * @method setCategoryFacade(\App\Model\Category\CategoryFacade $categoryFacade)
  * @method string getBrandUrlForDomainByProduct(\App\Model\Product\Product $product, int $domainId)
  * @method array extractAccessoriesIds(\App\Model\Product\Product $product)
+ * @property \App\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
  */
 class ProductExportRepository extends BaseProductExportRepository
 {
@@ -68,10 +69,10 @@ class ProductExportRepository extends BaseProductExportRepository
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \App\Model\Product\Parameter\ParameterRepository $parameterRepository
      * @param \App\Model\Product\ProductFacade $productFacade
-     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRepository $friendlyUrlRepository
+     * @param \App\Component\Router\FriendlyUrl\FriendlyUrlRepository $friendlyUrlRepository
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \App\Model\Product\ProductVisibilityRepository $productVisibilityRepository
-     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
+     * @param \App\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
      * @param \App\Model\Product\Availability\ProductAvailabilityFacade $productAvailabilityFacade
      * @param \App\Model\Product\ProductRepository $productRepository
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade $pricingGroupSettingFacade

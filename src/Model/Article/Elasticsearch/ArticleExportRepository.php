@@ -16,13 +16,13 @@ class ArticleExportRepository
     private ArticleRepository $articleRepository;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade
+     * @var \App\Component\Router\FriendlyUrl\FriendlyUrlFacade
      */
     private FriendlyUrlFacade $friendlyUrlFacade;
 
     /**
      * @param \App\Model\Article\ArticleRepository $articleRepository
-     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
+     * @param \App\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
      */
     public function __construct(
         ArticleRepository $articleRepository,

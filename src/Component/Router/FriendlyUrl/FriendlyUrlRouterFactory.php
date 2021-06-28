@@ -15,6 +15,9 @@ use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\Routing\RequestContext;
 use Symfony\Contracts\Cache\CacheInterface;
 
+/**
+ * @property \App\Component\Router\FriendlyUrl\FriendlyUrlRepository $friendlyUrlRepository
+ */
 class FriendlyUrlRouterFactory extends BaseFriendlyUrlRouterFactory
 {
     /**
@@ -25,7 +28,7 @@ class FriendlyUrlRouterFactory extends BaseFriendlyUrlRouterFactory
     /**
      * @param mixed $friendlyUrlRouterResourceFilepath
      * @param \Symfony\Component\Config\Loader\LoaderInterface $configLoader
-     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRepository $friendlyUrlRepository
+     * @param \App\Component\Router\FriendlyUrl\FriendlyUrlRepository $friendlyUrlRepository
      * @param \App\Model\CategorySeo\ReadyCategorySeoMixRepository $readyCategorySeoMixRepository
      * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlCacheKeyProvider $friendlyUrlCacheKeyProvider
      * @param \Symfony\Contracts\Cache\CacheInterface $mainFriendlyUrlSlugCache

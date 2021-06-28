@@ -18,6 +18,7 @@ use Shopsys\FrameworkBundle\Model\Article\ArticleRepository;
 /**
  * @property \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
  * @property \App\Model\Article\ArticleRepository $articleRepository
+ * @property \App\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
  * @method \App\Model\Article\Article|null findById(int $articleId)
  * @method \App\Model\Article\Article getById(int $articleId)
  * @method \App\Model\Article\Article getVisibleById(int $articleId)
@@ -40,7 +41,7 @@ class ArticleFacade extends BaseArticleFacade
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \App\Model\Article\ArticleRepository $articleRepository
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
+     * @param \App\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
      * @param \Shopsys\FrameworkBundle\Model\Article\ArticleFactoryInterface $articleFactory
      * @param \App\Twig\Cache\TwigCacheFacade $twigCacheFacade
      * @param \App\Model\Article\Elasticsearch\ArticleExportScheduler $articleExportScheduler

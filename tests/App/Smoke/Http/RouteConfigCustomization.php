@@ -320,6 +320,24 @@ class RouteConfigCustomization
                     ->setParameter('id', 17)
                     ->setExpectedStatusCode(302);
             })
+            ->customizeByRouteName('admin_unused_friendly_url_delete', function (RouteConfig $config) {
+                $config->changeDefaultRequestDataSet('Unused friendly URL may be deleted only when there is any and CSRF token is provided')
+                    ->addCallDuringTestExecution(function (RequestDataSet $requestDataSet, ContainerInterface $container) {
+                        $container = $container->get('test.service_container');
+                        /** @var \Shopsys\FrameworkBundle\Component\Router\Security\RouteCsrfProtector $routeCsrfProtector */
+                        $routeCsrfProtector = $container->get(RouteCsrfProtector::class);
+                        /** @var \Symfony\Component\Security\Csrf\CsrfTokenManager $csrfTokenManager */
+                        $csrfTokenManager = $container->get('security.csrf.token_manager');
+
+                        $tokenId = $routeCsrfProtector->getCsrfTokenId($requestDataSet->getRouteName());
+                        $token = $csrfTokenManager->getToken($tokenId);
+
+                        $parameterName = RouteCsrfProtector::CSRF_TOKEN_REQUEST_PARAMETER;
+                        $requestDataSet->setParameter($parameterName, $token->getValue());
+                    })
+                    ->setParameter('domainId', Domain::FIRST_DOMAIN_ID)
+                    ->setParameter('slug', 'unused-friendly-url');
+            })
             ->customizeByRouteName('admin_administrator_enable-two-factor-authentication', function (RouteConfig $config) {
                 $config->changeDefaultRequestDataSet('Standard admin is not allowed to edit superadmin (with ID 1)')
                     ->setParameter('twoFactorAuthenticationType', Administrator::TWO_FACTOR_AUTHENTICATION_TYPE_GOOGLE_AUTH)

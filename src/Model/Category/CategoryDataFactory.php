@@ -29,7 +29,7 @@ class CategoryDataFactory extends BaseCategoryDataFactory
     /**
      * @param \App\Model\Category\CategoryRepository $categoryRepository
      * @param \App\Model\Category\CategoryParameterRepository $categoryParameterRepository
-     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
+     * @param \App\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
      * @param \Shopsys\FrameworkBundle\Component\Plugin\PluginCrudExtensionFacade $pluginCrudExtensionFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \App\Component\Image\ImageFacade $imageFacade

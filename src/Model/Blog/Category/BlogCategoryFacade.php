@@ -25,7 +25,7 @@ class BlogCategoryFacade
     private $blogCategoryRepository;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade
+     * @var \App\Component\Router\FriendlyUrl\FriendlyUrlFacade
      */
     private $friendlyUrlFacade;
 
@@ -52,7 +52,7 @@ class BlogCategoryFacade
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \App\Model\Blog\Category\BlogCategoryRepository $blogCategoryRepository
-     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
+     * @param \App\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
      * @param \App\Component\Image\ImageFacade $imageFacade
      * @param \App\Model\Blog\Category\BlogCategoryFactory $blogCategoryFactory
      * @param \App\Model\Blog\Category\BlogCategoryWithPreloadedChildrenFactory $blogCategoryWithPreloadedChildrenFactory

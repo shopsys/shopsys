@@ -13,6 +13,9 @@ use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRepository;
 use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 use Symfony\Component\Routing\RouteCollection;
 
+/**
+ * @property \App\Component\Router\FriendlyUrl\FriendlyUrlRepository $friendlyUrlRepository
+ */
 class FriendlyUrlMatcher extends BaseFriendlyUrlMatcher
 {
     /**
@@ -21,7 +24,7 @@ class FriendlyUrlMatcher extends BaseFriendlyUrlMatcher
     private $readyCategorySeoMixRepository;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRepository $friendlyUrlRepository
+     * @param \App\Component\Router\FriendlyUrl\FriendlyUrlRepository $friendlyUrlRepository
      * @param \App\Model\CategorySeo\ReadyCategorySeoMixRepository $readyCategorySeoMixRepository
      */
     public function __construct(
@@ -46,6 +49,15 @@ class FriendlyUrlMatcher extends BaseFriendlyUrlMatcher
 
         if ($friendlyUrl === null) {
             throw new ResourceNotFoundException();
+        }
+
+        if ($friendlyUrl->getRedirectTo() !== null) {
+            $matchedParameters['_route'] = $friendlyUrl->getRouteName();
+            $matchedParameters['_controller'] = 'Symfony\Bundle\FrameworkBundle\Controller\RedirectController::urlRedirectAction';
+            $matchedParameters['path'] = $friendlyUrl->getRedirectTo();
+            $matchedParameters['permanent'] = $friendlyUrl->getRedirectCode() !== 302;
+
+            return $matchedParameters;
         }
 
         $route = $routeCollection->get($friendlyUrl->getRouteName());
@@ -76,7 +88,7 @@ class FriendlyUrlMatcher extends BaseFriendlyUrlMatcher
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrl $friendlyUrl
+     * @param \App\Component\Router\FriendlyUrl\FriendlyUrl $friendlyUrl
      * @param array $matchedParameters
      * @return array
      */
@@ -96,7 +108,7 @@ class FriendlyUrlMatcher extends BaseFriendlyUrlMatcher
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrl $friendlyUrl
+     * @param \App\Component\Router\FriendlyUrl\FriendlyUrl $friendlyUrl
      * @param array $matchedParameters
      * @return array
      */

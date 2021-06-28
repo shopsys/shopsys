@@ -37,7 +37,7 @@ class StockFriendlyUrlProvider implements FriendlyUrlDataProviderInterface
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @return \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlData[]
+     * @return \App\Component\Router\FriendlyUrl\FriendlyUrlData[]
      */
     public function getFriendlyUrlData(DomainConfig $domainConfig): array
     {
@@ -53,7 +53,9 @@ class StockFriendlyUrlProvider implements FriendlyUrlDataProviderInterface
 
         $friendlyUrlsData = [];
         foreach ($scalarData as $data) {
-            $friendlyUrlsData[] = $this->friendlyUrlDataFactory->createFromIdAndName($data['id'], $data['name']);
+            /** @var \App\Component\Router\FriendlyUrl\FriendlyUrlData $friendlyUrlData */
+            $friendlyUrlData = $this->friendlyUrlDataFactory->createFromIdAndName($data['id'], $data['name']);
+            $friendlyUrlsData[] = $friendlyUrlData;
         }
 
         return $friendlyUrlsData;

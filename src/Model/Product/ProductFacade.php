@@ -41,7 +41,7 @@ use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFactoryInterface;
  * @property \App\Model\Product\ProductRepository $productRepository
  * @property \App\Model\Product\Parameter\ParameterRepository $parameterRepository
  * @property \App\Component\Image\ImageFacade $imageFacade
- * @property \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
+ * @property \App\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
  * @property \App\Model\Product\ProductHiddenRecalculator $productHiddenRecalculator
  * @property \App\Model\Product\ProductSellingDeniedRecalculator $productSellingDeniedRecalculator
  * @property \App\Model\Product\Availability\AvailabilityFacade $availabilityFacade
@@ -83,7 +83,7 @@ class ProductFacade extends BaseProductFacade
     private $productFilesUrlPrefix;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRepository
+     * @var \App\Component\Router\FriendlyUrl\FriendlyUrlRepository
      */
     private FriendlyUrlRepository $friendlyUrlRepository;
 
@@ -99,7 +99,7 @@ class ProductFacade extends BaseProductFacade
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupRepository $pricingGroupRepository
      * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductManualInputPriceFacade $productManualInputPriceFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityRecalculationScheduler $productAvailabilityRecalculationScheduler
-     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
+     * @param \App\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
      * @param \App\Model\Product\ProductHiddenRecalculator $productHiddenRecalculator
      * @param \App\Model\Product\ProductSellingDeniedRecalculator $productSellingDeniedRecalculator
      * @param \Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryRepository $productAccessoryRepository
@@ -114,7 +114,7 @@ class ProductFacade extends BaseProductFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductExportScheduler $productExportScheduler
      * @param \App\Model\Stock\ProductStockFacade $productStockFacade
      * @param \App\Model\Stock\StockFacade $stockFacade
-     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRepository $friendlyUrlRepository
+     * @param \App\Component\Router\FriendlyUrl\FriendlyUrlRepository $friendlyUrlRepository
      */
     public function __construct(
         string $productFilesUrlPrefix,
