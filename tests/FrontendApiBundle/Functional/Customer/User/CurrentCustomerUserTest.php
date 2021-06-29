@@ -13,10 +13,21 @@ class CurrentCustomerUserTest extends GraphQlWithLoginTestCase
         $query = '
 {
     query: currentCustomerUser {
-        firstName,
-        lastName,
+        __typename
+        firstName
+        lastName
         email
         telephone
+        newsletterSubscription
+        street
+        city
+        postcode
+        country
+        ... on CurrentCompanyCustomerUser {
+            companyName
+            companyNumber
+            companyTaxNumber
+        }
     }
 }
         ';
@@ -25,10 +36,19 @@ class CurrentCustomerUserTest extends GraphQlWithLoginTestCase
 {
     "data": {
         "query": {
+            "__typename": "CurrentCompanyCustomerUser",
             "firstName": "Jaromír",
             "lastName": "Jágr",
             "email": "no-reply@shopsys.com",
-            "telephone": "605000123"
+            "telephone": "605000123",
+            "newsletterSubscription": true,
+            "street": "Hlubinská 5",
+            "city": "Ostrava",
+            "postcode": "70200",
+            "country": "CZ",
+            "companyName": "Shopsys",
+            "companyNumber": "12345678",
+            "companyTaxNumber": "CZ65432123"
         }
     }
 }';
@@ -54,6 +74,10 @@ mutation {
         lastName,
         telephone,
         email
+        street
+        city
+        country
+        postcode
     }
 }';
 
@@ -64,7 +88,11 @@ mutation {
             "firstName": "John",
             "lastName": "Doe",
             "telephone": "123456321",
-            "email": "no-reply@shopsys.com"
+            "email": "no-reply@shopsys.com",
+            "street": "123 Fake street",
+            "city": "Springfield",
+            "country": "CZ",
+            "postcode": "54321"
         }
     }
 }';
