@@ -33,3 +33,6 @@ services:
 
     Shopsys\FrontendApiBundle\Model\Parameter\ParameterWithValuesFactory:
         alias: App\FrontendApi\Model\Parameter\ParameterWithValuesFactory
+
+    Shopsys\FrontendApiBundle\Model\Mutation\Customer\User\CustomerUserMutation:
+        alias: App\FrontendApi\Model\Mutation\Customer\User\CustomerUserMutation
