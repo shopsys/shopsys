@@ -36,3 +36,6 @@ services:
 
     Shopsys\FrontendApiBundle\Model\Mutation\Customer\User\CustomerUserMutation:
         alias: App\FrontendApi\Model\Mutation\Customer\User\CustomerUserMutation
+
+    Shopsys\FrontendApiBundle\Model\Customer\User\CustomerUserUpdateDataFactory:
+        alias: App\FrontendApi\Model\Customer\User\CustomerUserUpdateDataFactory

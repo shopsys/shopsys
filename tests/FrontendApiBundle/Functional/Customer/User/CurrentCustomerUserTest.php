@@ -44,6 +44,11 @@ mutation {
         telephone: "123456321"
         firstName: "John"
         lastName: "Doe"
+        newsletterSubscription: false
+        street: "123 Fake street"
+        city: "Springfield"
+        country: "CZ"
+        postcode: "54321"
     }) {
         firstName
         lastName,
@@ -75,6 +80,11 @@ mutation {
         telephone: "1234567890123456789012345678901"
         firstName: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent suscipit ultrices molestie. Donec s"
         lastName: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent suscipit ultrices molestie. Donec s"
+        newsletterSubscription: false
+        street: "123 Fake street"
+        city: "Springfield"
+        country: "CZ"
+        postcode: "54321"
     }) {
     firstName
         lastName,
@@ -87,13 +97,13 @@ mutation {
         $expectedViolationMessages = [
             0 => t(
                 'First name cannot be longer than {{ limit }} characters',
-                ['{{ limit }}' => 100],
+                ['{{ limit }}' => 30],
                 'validators',
                 $firstDomainLocale
             ),
             1 => t(
                 'Last name cannot be longer than {{ limit }} characters',
-                ['{{ limit }}' => 100],
+                ['{{ limit }}' => 30],
                 'validators',
                 $firstDomainLocale
             ),
