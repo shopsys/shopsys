@@ -1,0 +1,17 @@
+resources:
+    - ../../deployments/webserver-php-fpm.yaml
+    - ../../deployments/storefront.yaml
+    - ../../services/webserver-php-fpm.yaml
+    - ../../services/storefront.yaml
+    - ../../namespace.yaml
+    - ../../configmap/nginx.yaml
+    - ../../configmap/production-php-fpm.yaml
+    - ../../configmap/production-php-opcache.yaml
+namespace: "{{PROJECT_NAME}}"
+configMapGenerator:
+    -   name: domains-urls
+        files:
+            - ../../../../../{{DOMAINS_URLS_FILEPATH}}
+    -   name: parameters
+        files:
+            - ../../../../../{{PARAMETERS_FILEPATH}}
