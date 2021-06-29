@@ -87,6 +87,8 @@
         </exec>
     </target>
 
+    <target name="build-review-ci" depends="production-protection,wipe,build-version-generate,redis-check,db-demo,error-pages-generate,warmup,elasticsearch-index-recreate,elasticsearch-export,clean-redis-old" description="Builds application for review with clean demo DB."/>
+
     <target name="cron" description="Disabled - use new cron instances instead.">
         <fail message="Default cron instance is disabled. All modules are in new instances."/>
     </target>
