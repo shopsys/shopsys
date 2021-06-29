@@ -80,3 +80,7 @@ There you can find links to upgrade notes for other versions too.
 - increase minimal version of `doctrine/dbal` package ([#2360](https://github.com/shopsys/shopsys/pull/2360))
     - see #project-base-diff to update your project
     - don't forget to update dependency with `composer update doctrine/dbal` 
+
+- increase minimal version of `league/flysystem` package ([#2365](https://github.com/shopsys/shopsys/pull/2365))
+    - see #project-base-diff to update your project
+    - don't forget to update dependency with `composer update league/flysystem`
