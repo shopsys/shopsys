@@ -1,46 +1,34 @@
 <div class="web__line">
     <div class="web__container">
         <ul class="box-progress">
-            <li class="box-progress__item {% if step == 1 %}box-progress__item--active{% elseif step > 1 %}box-progress__item--done{% endif %}{% if step == 2 %} box-progress__item--previous-active{% endif %}">
+            <li class="box-progress__item{% if step == 1 %} box-progress__item--active{% endif %}">
                 {% if step == 1 %}
-                    <span class="box-progress__item__inner">
-                        <span class="box-progress__item__title">{{ 'Nákupní košík'|trans }}</span>
-                    </span>
+                    <span class="box-progress__item__title">1.&nbsp;{{ 'Nákupní<br> košík'|trans|raw }}</span>
                 {% else %}
                     <a
-                        class="box-progress__item__inner box-progress__item__inner--link"
+                        class="box-progress__item__title"
                         href="{{ url('front_cart') }}"
                     >
-                        <span class="box-progress__item__title">{{ 'Nákupní košík'|trans }}</span>
+                        1.&nbsp;{{ 'Nákupní<br> košík'|trans|raw }}
                     </a>
                 {% endif %}
-                <span class="box-progress__item__sep">
-                    <i class="svg svg-arrow"></i>
-                </span>
             </li>
 
-            <li class="box-progress__item {% if step == 2 %}box-progress__item--active{% elseif step > 2 %}box-progress__item--done{% endif %}{% if step == 3 %} box-progress__item--previous-active{% endif %}">
+            <li class="box-progress__item{% if step == 2 %} box-progress__item--active{% endif %}">
                 {% if step == 3 %}
                     <a
-                        class="box-progress__item__inner box-progress__item__inner--link"
+                        class="box-progress__item__title"
                         href="{{ url('front_order_step_transport_payment') }}"
                     >
-                        <span class="box-progress__item__title">{{ 'Shipping and payment'|trans }}</span>
+                        2.&nbsp;{{ 'Shipping<br> and payment'|trans|raw }}
                     </a>
                 {% else %}
-                    <span class="box-progress__item__inner">
-                        <span class="box-progress__item__title">{{ 'Shipping and payment'|trans }}</span>
-                    </span>
+                    <span class="box-progress__item__title">2.&nbsp;{{ 'Shipping<br> and payment'|trans|raw }}</span>
                 {% endif %}
-                <span class="box-progress__item__sep">
-                    <i class="svg svg-arrow"></i>
-                </span>
             </li>
 
-            <li class="box-progress__item {% if step == 3 %}box-progress__item--active{% endif %}">
-                <span class="box-progress__item__inner">
-                    <span class="box-progress__item__title">{{ 'Vaše údaje'|trans }}</span>
-                </span>
+            <li class="box-progress__item{% if step == 3 %} box-progress__item--active{% endif %}">
+                <span class="box-progress__item__title">3.&nbsp;{{ 'Dodací<br> údaje'|trans|raw }}</span>
             </li>
         </ul>
     </div>

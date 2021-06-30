@@ -508,6 +508,7 @@ class OrderController extends FrontBaseController
         $showProducts = $request->get('showProducts', true);
         $showAdvert = $request->get('showAdvert', true);
         $showPromo = $request->get('showPromo', true);
+        $orderStep = $request->get('orderStep');
 
         if ($transportId === null) {
             $transport = null;
@@ -529,6 +530,7 @@ class OrderController extends FrontBaseController
             'orderPreview' => $orderPreview,
             'showAdvert' => $showAdvert,
             'showPromo' => $showPromo,
+            'orderStep' => $orderStep,
         ]);
     }
 

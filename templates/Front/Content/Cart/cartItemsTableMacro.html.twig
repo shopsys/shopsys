@@ -1,19 +1,5 @@
 {% macro table(form, orderPreview, maximumOrderQuantity) %}
-    <table class="table-cart js-cart">
-        <thead>
-            <tr class="table-cart__row table-cart__row--head">
-                <th class="table-cart__cell table-cart__cell--head table-cart__cell--image">{{ 'Váš nákup'|trans }}</th>
-                <th class="table-cart__cell table-cart__cell--head table-cart__cell--name">
-                    <span class="visibility-hidden">{{ 'Name'|trans }}</span>
-                </th>
-                <th class="table-cart__cell table-cart__cell--head table-cart__cell--avail">{{ 'Dostupnost'|trans }}</th>
-                <th class="table-cart__cell table-cart__cell--head table-cart__cell--price">{{ 'Cena za kus'|trans }}</th>
-                <th class="table-cart__cell table-cart__cell--head table-cart__cell--amount">{{ 'Počet kusů'|trans }}</th>
-                <th class="table-cart__cell table-cart__cell--head table-cart__cell--price-final">{{ 'Zaplatíte'|trans }}</th>
-                <th class="table-cart__cell table-cart__cell--head table-cart__cell--action">&nbsp;</th>
-            </tr>
-        </thead>
-        <tbody>
+    <div class="table-cart js-cart">
         {% set cartItemPrices = orderPreview.quantifiedItemsPrices %}
         {% set cartItemDiscounts = orderPreview.quantifiedItemsDiscounts %}
         {% set cartItemDiscountPrices = orderPreview.quantifiedItemsDiscountPrices %}
@@ -30,57 +16,61 @@
             {% if product.id in maximumOrderQuantity|keys %}
                 {% set dataSpinboxMax = maximumOrderQuantity[product.id] %}
             {% endif %}
-            {% set priceFlag = null %}
+            {% set priceFlag, priceMainFlag = null, null %}
             {% if (product.hasFlagByAkeneoCodeForDomain(constant('App\\Model\\Product\\Flag\\Flag::AKENEO_CODE_SALE'), getDomain().id)) %}
-                {% set priceFlag = 'cart-price--sale' %}
+                {% set priceFlag = 'table-cart__cell__price--sale' %}
+                {% set priceMainFlag = 'table-cart__cell__price-main--sale' %}
             {% else %}
                 {% if (product.hasFlagByAkeneoCodeForDomain(constant('App\\Model\\Product\\Flag\\Flag::AKENEO_CODE_ACTION'), getDomain().id)) %}
-                    {% set priceFlag = 'cart-price--action' %}
+                    {% set priceFlag = 'table-cart__cell__price--action' %}
+                    {% set priceMainFlag = 'table-cart__cell__price-main--action' %}
                 {% endif %}
             {% endif %}
-            <tr class="table-cart__row table-cart__row--content js-cart-item">
-                <td class="table-cart__cell table-cart__cell--image">
+            <div class="table-cart__row js-cart-item">
+                <div class="table-cart__cell table-cart__cell--image">
                     <a href="{{ url('front_product_detail', {id: product.id}) }}" title="{{ product.fullname }}" class="table-cart__cell__image">
                         {{ image(product, { size: 'thumbnail' }) }}
                     </a>
-                </td>
+                </div>
 
-                <td class="table-cart__cell table-cart__cell--name js-cart-item-name">
-                    <a class="table-cart__cell__product-name" href="{{ url('front_product_detail', {id: product.id}) }}">
-                        {% if product.namePrefix is not empty %}
-                            <span class="table-cart__cell__product-name__prefix">{{ product.namePrefix }}</span>
-                        {% endif %}
-                        <span class="js-cart-item-name-text">
-                            {{ product.name }}
-                        </span>
-                    </a>
-                    <div class="table-cart__cell__price-mobile">
-                        {{ cartItemPrice.totalPrice.priceWithVat|price }}
-                        {% if cartItemDiscount is not null %}
-                            <div>
-                                {{ 'Discount'|trans }}:
-                                {{ cartItemDiscount.priceWithVat|price }}
+                <div class="table-cart__cell table-cart__cell--info">
+                    <div class="table-cart__cell__name js-cart-item-name">
+                        <a class="table-cart__cell__name__title" href="{{ url('front_product_detail', {id: product.id}) }}">
+                            {% if product.namePrefix is not empty %}
+                                <span>{{ product.namePrefix }}</span>
+                            {% endif %}
+
+                            <span class="js-cart-item-name-text">{{ product.name }}</span>
+
+                            <div class="in-flag in-flag--in-checkout">
+                                {% if (product.hasFlagByAkeneoCodeForDomain(constant('App\\Model\\Product\\Flag\\Flag::AKENEO_CODE_ACTION'), getDomain().id)) %}
+                                    <div class="in-flag__item flag__product_action">
+                                        {{ "Akční cena"|trans }}
+                                    </div>
+                                {% endif %}
+                                {% if (product.hasFlagByAkeneoCodeForDomain(constant('App\\Model\\Product\\Flag\\Flag::AKENEO_CODE_SALE'), getDomain().id)) %}
+                                    <div class="in-flag__item flag__product_sale">
+                                        {{ "Výprodej"|trans }}
+                                    </div>
+                                {% endif %}
+                                {% if (product.hasFlagByAkeneoCodeForDomain(constant('App\\Model\\Product\\Flag\\Flag::AKENEO_CODE_HIT'), getDomain().id)) %}
+                                    <div class="in-flag__item flag__product_hit">
+                                        {{ "Cenový hit"|trans }}
+                                    </div>
+                                {% endif %}
                             </div>
-                        {% endif %}
+                        </a>
+                        <div class="table-cart__cell__name__catnum">
+                            {{ 'Kód'|trans }}: {{ product.catnum }}
+                        </div>
                     </div>
-                    <div class="table-cart__product-sku">
-                        {{ 'č. produktu: ' }}{{ product.catnum }}
-                    </div>
-                </td>
-
-                <td class="table-cart__cell table-cart__cell--avail">
-                    <strong class="table-cart__cell__avail">
+                    <div class="table-cart__cell__availability">
                         {{ orderPreview.productsAvailability[product.id] }}
-                    </strong>
-                </td>
+                        <span class="table-cart__cell__availability__text js-not-implemented-yet">nebo ihned na 2 prodejnách</span>
+                    </div>
+                </div>
 
-                <td class="table-cart__cell table-cart__cell--price js-cart-item-price">
-                    <strong class="cart-price cart-price--secondary {{ priceFlag }}">
-                        {{ cartItemPrice.unitPrice.priceWithVat|price }}
-                    </strong>
-                </td>
-
-                <td class="table-cart__cell table-cart__cell--amount">
+                <div class="table-cart__cell table-cart__cell--spinbox">
                     <span class="form-input-spinbox js-spinbox">
                         <button type="button" class="btn-no-style form-input-spinbox__btn js-spinbox-minus">
                             <i class="svg svg-minus"></i>
@@ -90,46 +80,29 @@
                             <i class="svg svg-plus"></i>
                         </button>
                     </span>
-                </td>
+                </div>
 
-                <td class="table-cart__cell table-cart__cell--price-final js-cart-item-total-price">
-                    {% if cartItemDiscount is not null %}
-                        <strong class="cart-price cart-price--primary cart-price--promo">{{ cartItemDiscountPrice.priceWithVat|price }}</strong>
-                        <strong class="cart-tag cart-tag--promo cart-tag--promo-in-table">{{ orderPreview.promoCodeCode }}</strong>
-                    {% else %}
-                        <strong class="cart-price cart-price--primary {{ priceFlag }}">
-                            {{ cartItemPrice.totalPrice.priceWithVat|price }}
-                        </strong>
-                    {% endif %}
-                    <div class="in-flag in-flag--in-checkout">
-                        {% if (product.hasFlagByAkeneoCodeForDomain(constant('App\\Model\\Product\\Flag\\Flag::AKENEO_CODE_ACTION'), getDomain().id)) %}
-                            <div class="in-flag__item flag__product_action">
-                                {{ "Akční cena"|trans }}
-                            </div>
-                        {% endif %}
-                        {% if (product.hasFlagByAkeneoCodeForDomain(constant('App\\Model\\Product\\Flag\\Flag::AKENEO_CODE_SALE'), getDomain().id)) %}
-                            <div class="in-flag__item flag__product_sale">
-                                {{ "Výprodej"|trans }}
-                            </div>
-                        {% endif %}
-                        {% if (product.hasFlagByAkeneoCodeForDomain(constant('App\\Model\\Product\\Flag\\Flag::AKENEO_CODE_HIT'), getDomain().id)) %}
-                            <div class="in-flag__item flag__product_hit">
-                                {{ "Cenový hit"|trans }}
-                            </div>
-                        {% endif %}
-                    </div>
-                </td>
+                <div class="table-cart__cell table-cart__cell--price-unit js-cart-item-price">
+                    <span class="table-cart__cell__price {{ priceFlag }}">
+                        {{ cartItemPrice.unitPrice.priceWithVat|price }} / {{ '%unit%' |trans({ '%unit%': product.unit.name }) }}
+                    </span>
+                </div>
 
-                <td class="table-cart__cell table-cart__cell--action">
+                <div class="table-cart__cell table-cart__cell--price js-cart-item-total-price">
+                    <span class="table-cart__cell__price-main {{ priceMainFlag }}">
+                        {{ cartItemPrice.totalPrice.priceWithVat|price }}
+                    </span>
+                </div>
+
+                <div class="table-cart__cell table-cart__cell--action">
                     <a
                         href="{{ url('front_cart_delete', { cartItemId: index, _token: csrf_token('front_cart_delete_' ~ index) }) }}"
-                        class="js-cart-item-remove-button"
+                        class="table-cart__cell__remove js-cart-item-remove-button"
                     >
-                        <i class="table-cart__cell__remove svg svg-remove"></i>
+                        <i class="svg svg-remove-bold"></i>
                     </a>
-                </td>
-            </tr>
+                </div>
+            </div>
         {% endfor %}
-        </tbody>
-    </table>
+    </div>
 {% endmacro %}

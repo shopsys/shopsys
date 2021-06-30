@@ -30,12 +30,12 @@
     class: Shopsys\FrameworkBundle\Model\Payment\Payment
     sizes:
         -   name: ~
-            width: ~
-            height: 32
+            width: 45
+            height: 25
             crop: false
             occurrence: 'Front-end: Ordering process'
             additionalSizes:
-                - {width: ~, height: 64, media: "only screen and (-webkit-min-device-pixel-ratio: 1.5)"}
+                - {width: 90, height: 50, media: "only screen and (-webkit-min-device-pixel-ratio: 1.5)"}
 
 -   name: category
     class: Shopsys\FrameworkBundle\Model\Category\Category
@@ -83,11 +83,11 @@
                 - {width: 380, height: 380, media: "only screen and (-webkit-min-device-pixel-ratio: 1.5)"}
         -   name: thumbnail
             width: 90
-            height: 90
+            height: 63
             crop: false
-            occurrence: 'Front-end: preview in cart during ordering process'
+            occurrence: 'Front-end: best selling products, variant on the product detail, cart images'
             additionalSizes:
-                - {width: 180, height: ~, media: "only screen and (-webkit-min-device-pixel-ratio: 1.5)"}
+                - {width: 180, height: 126, media: "only screen and (-webkit-min-device-pixel-ratio: 1.5)"}
         -   name: thumbnailSmall
             width: 43
             height: 28
@@ -95,6 +95,13 @@
             occurrence: 'Front-end: preview in dropdown cart'
             additionalSizes:
                 - {width: 86, height: 56, media: "only screen and (-webkit-min-device-pixel-ratio: 1.5)"}
+        -   name: thumbnailExtraSmall
+            width: 54
+            height: 54
+            crop: false
+            occurrence: 'Front-end: preview in cart during ordering process'
+            additionalSizes:
+                - {width: 108, height: 108, media: "only screen and (-webkit-min-device-pixel-ratio: 1.5)"}
         -   name: thumbnailMedium
             width: 72
             height: 48
@@ -155,12 +162,14 @@
     class: Shopsys\FrameworkBundle\Model\Transport\Transport
     sizes:
         -   name: ~
-            width: 40
-            height: ~
+            width: 35
+            height: 20
             crop: false
             occurrence: 'Front-end: Ordering process'
             additionalSizes:
-                - {width: 40, height: ~, media: "only screen and (-webkit-min-device-pixel-ratio: 1.5)"}
+                - {width: 70, height: 40, media: "only screen and (-webkit-min-device-pixel-ratio: 1.5)"}
+                - {width: 90, height: 50, media: "only screen and (min-width: 769px) and (-webkit-min-device-pixel-ratio: 1.5)"}
+                - {width: 45, height: 25, media: "(min-width: 769px)"}
 
 -   name: noticer
     class: Shopsys\FrameworkBundle\Model\Advert\Advert

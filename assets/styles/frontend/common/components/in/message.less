@@ -2,26 +2,16 @@
 @in-message-remove-size: 13px;
 
 .in-message {
-    position: fixed;
-    top: 30px;
+    position: relative;
     display: flex;
     align-items: center;
     padding: 15px 44px;
-    z-index: 20;
-    left: 15px;
-    width: calc(100% - 30px);
     line-height: 18px;
+    margin-bottom: 10px;
 
     font-size: @font-size-small;
     color: @color-0;
     border-radius: @radius;
-
-    @media screen and (min-width: 830px) {
-        width: 790px;
-        margin-left: -395px;
-        left: 50%;
-        top: 40px;
-    }
 
     &:before {
         position: absolute;
@@ -37,26 +27,12 @@
         border-radius: 100%;
     }
 
-    &:after {
-        &:extend(.svg-remove:before);
-        position: absolute;
-        top: 50%;
-        right: 18px;
-        transform: translateY(-50%);
-        line-height: @in-message-remove-size;
-
-        font-family: svg;
-        color: @color-0;
-        font-size: @in-message-remove-size;
-        cursor: pointer;
-    }
-
     &--error,
     &--alert {
         background-color: #ffc4c4;
 
         &:before {
-            &:extend(.svg-error:before);
+            &:extend(.svg-cross:before);
             color: @color-alert;
         }
     }
@@ -90,5 +66,17 @@
 
     &__list {
         .reset-ul();
+    }
+
+    &__icon {
+        position: absolute;
+        top: 50%;
+        right: 18px;
+        transform: translateY(-50%);
+        line-height: @in-message-remove-size;
+
+        color: @color-0;
+        font-size: @in-message-remove-size;
+        cursor: pointer;
     }
 }

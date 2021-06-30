@@ -94,6 +94,22 @@
     }
 }
 
+// Button with removed styles
+.btn-no-style {
+    padding: 0;
+    min-height: 0;
+
+    border: 0;
+    background: none;
+    outline: 0;
+    color: @color-0;
+
+    &:hover {
+        background: none;
+        color: @color-0;
+    }
+}
+
 // Button with icon
 .btn-with-icon {
     position: relative;
@@ -123,6 +139,7 @@
 
         &:before {
             right: 18px;
+            transform: translateY(-50%) rotate(-90deg);
         }
     }
 
@@ -139,20 +156,7 @@
 
         &:before {
             left: 18px;
+            transform: translateY(-50%) rotate(90deg);
         }
-    }
-}
-
-// Button with removed styles
-.btn-no-style {
-    padding: 0;
-    min-height: 0;
-
-    border: 0;
-    background: none;
-    outline: 0;
-
-    &:hover {
-        background: none;
     }
 }

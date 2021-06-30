@@ -7,6 +7,9 @@ msgstr ""
 msgid "%quantity%x - %productNamePrefix%"
 msgstr "%quantity%x - %productNamePrefix%"
 
+msgid "%unit%"
+msgstr ""
+
 msgid "(If I buy on the company behalf)"
 msgstr "(Pokud nakupuji na firmu)"
 
@@ -265,9 +268,6 @@ msgstr "3463 €"
 msgid "95 002 Kč"
 msgstr "3569 €"
 
-msgid "<button type=\"button\" class=\"btn-no-style link-style in-tab__password-box__link\" id=\"js-order-form-login-button\">Přihlaste se a všechny vaše údaje vyplníme za vás</button>"
-msgstr ""
-
 msgid "<h2 class=\"window-popup__heading\">Prosím zkontrolujte zadané údaje.</h2>"
 msgstr ""
 
@@ -286,12 +286,6 @@ msgstr "\n<strong class=\"box-accordion__grid-table__col__expose\">Nie je vystav
 msgid "<strong class=\"box-accordion__grid-table__col__expose\">Vystaveno</strong> na prodejně"
 msgstr "\n<strong class=\"box-accordion__grid-table__col__expose\">Vystavené</strong> na predajni"
 
-msgid "<strong class=\"box-cart-card__form__title__strong\">Ještě jste u nás nenakupovali?</strong> Pro dokončení nákupu se prosím zaregistrujte. Budete u nás nakupovat jako:"
-msgstr "\n<strong class=\"box-cart-card__form__title__strong\">Ešte ste u nás nenakupovali?</strong> Na dokončenie nákupu sa, prosím, zaregistrujte. Budete u nás nakupovať ako:"
-
-msgid "<strong class=\"box-cart-card__form__title__strong\">Vítejte zpět ve Scontu</strong> Pro dokončení nákupu se prosím přihlašte"
-msgstr "<strong class=\"box-cart-card__form__title__strong\">Vitajte späť v Sconte </strong> Na dokončenie nákupu sa, prosím, prihláste"
-
 msgid "<strong class=\"is-in-stock\">Ihned</strong> k odběru"
 msgstr "\n<strong class=\"is-in-stock\">Ihneď</strong> na odber"
 
@@ -304,6 +298,9 @@ msgstr ""
 msgid "<strong>INOX</strong> působí jako profesionální kuchyně a její dekor kartáčované oceli ladí s většinou typů vestavěných nerezových spotřebičů. Čisté jednoduché linie skvěle podtrhne bezúchytkové řešení LINE N, které si můžete zvolit. Na výběr máte také z mnoha dekorů pracovních desek a stylů úchytek. Pro více úložného prostoru volte korpusy generace XL."
 msgstr "<strong>INOX</strong> pôsobí ako profesionálna kuchyňa a jej dekor leštenej ocele ladí s väčšinou typov vstavaných antikorových spotrebičov. Čisté jednoduché línie skvele podčiarkne bezúchytkové riešenie LINE N, ktoré si môžete zvoliť. Na výber máte aj z mnohých dekorov pracovných dosiek a štýlov úchytiek. Pre viac úložného priestoru voľte korpusy generácie XL."
 
+msgid "<strong>Ještě jste u nás nenakupovali?</strong> Pro dokončení nákupu se prosím zaregistrujte. Budete u nás nakupovat jako:"
+msgstr "\n<strong>Ešte ste u nás nenakupovali?</strong> Na dokončenie nákupu sa, prosím, zaregistrujte. Budete u nás nakupovať ako:"
+
 msgid "<strong>LUX</strong> je vysoce estetická lakovaná kuchyně, která se stane chloubou každého interiéru. Všechny její hrany jsou zalakované a ručně dočištěné. Kuchyně proto bude dlouho vypadat jako nová a vy se můžete neustále kochat její krásou. Vybrat si můžete z několika dekorů a z široké nabídky pracovních desek a úchytek. Pro ještě čistší provedení zvolte bezúchytkové řešení LINE N."
 msgstr "<strong>LUX</strong> je vysokoestetická lakovaná kuchyňa, ktorá sa stane pýchou každého interiéru. Všetky jej hrany sú zalakované a ručne dočistené. Kuchyňa preto bude dlho vyzerať ako nová a vy sa môžete neustále kochať jej krásou. Vybrať si môžete z niekoľkých dekorov a zo širokej ponuky pracovných dosiek a úchytiek. Pre ešte čistejšie vyhotovenie zvoľte bezúchytkové riešenie LINE N."
 
@@ -312,6 +309,9 @@ msgstr "<strong>RIO</strong> je moderná kuchyňa v dekore duba virginia. Vďaka
 
 msgid "<strong>STONEART</strong> představuje nejnovější trend v designu kuchyní: kameninové a břidlicové dekory. Nejde jen o perfektní vzhled, ale také o kvalitní zpracování, díky čemuž jsou dvířka <strong>STONEART</strong> věrnou imitací kameninových povrchů a jsou velmi odolné vůči manuálnímu poškození. Ve stejném dekoru jsou i voděodolné pracovní desky, takže tato kuchyně přežije i náročné užívání. Pokud jste příznivci čistého designu, oceníte možnost <strong>bezúchytkového řešení.</strong> A pokud potřebujete dostatek úložného prostoru, můžete si vybrat z nové řady korpusů <strong>velikosti XL.</strong>"
 msgstr "<strong>STONEART</strong> predstavuje najnovší trend v dizajne kuchýň: kameninové a bridlicové dekory. Nejde len o perfektný vzhľad, ale aj o kvalitné vyhotovenie, vďaka čomu sú dvierka <strong>STONEART</strong> vernou imitáciou kameninových povrchov a sú veľmi odolné voči manuálnemu poškodeniu. V rovnakom dekore sú aj vodoodolné pracovné dosky, takže táto kuchyňa prežije aj náročné používanie. Ak ste priaznivci čistého dizajnu, oceníte možnosť <strong bezúchytkového riešenia.</strong> A ak potrebujete dostatok úložného priestoru, môžete si vybrať z nového radu korpusov <strong>veľkosti XL.</strong>"
+
+msgid "<strong>Vítejte zpět ve Scontu</strong> Pro dokončení nákupu se prosím přihlašte"
+msgstr "<strong>Vitajte späť v Sconte </strong> Na dokončenie nákupu sa, prosím, prihláste"
 
 msgid "AUTHORIZED"
 msgstr "Platba předautorizována"
@@ -535,6 +535,9 @@ msgstr "Prehľad značiek"
 msgid "Brands"
 msgstr ""
 
+msgid "Budete mít přehled ve svých objednávkách nebo reklamací"
+msgstr ""
+
 msgid "Budete u nás nakupovat jako:"
 msgstr "Budete u nás nakupovať ako:"
 
@@ -625,6 +628,9 @@ msgstr "\nCelý popis"
 msgid "Cementová šedá"
 msgstr "Cementovo sivá"
 
+msgid "Cena celkem"
+msgstr ""
+
 msgid "Cena do"
 msgstr "Cena do"
 
@@ -641,6 +647,9 @@ msgid "Changing password"
 msgstr "Zmena hesla"
 
 msgid "Chci aktivovat uživatelský účet"
+msgstr ""
+
+msgid "Chci se přihlásit k odběru newsletteru"
 msgstr ""
 
 msgid "Chci se registrovat s objednávkou"
@@ -910,6 +919,9 @@ msgstr ""
 msgid "Dodací lhůta dodavatele"
 msgstr ""
 
+msgid "Dodací údaje"
+msgstr ""
+
 msgid "Dodávané příslušenství"
 msgstr "Dodávané príslušenstvo"
 
@@ -917,6 +929,9 @@ msgid "Dokončení registrace"
 msgstr ""
 
 msgid "Dokončete objednávku, na e-mail vám zašleme odkaz pro potvrzení registrace a vytvoření hesla."
+msgstr ""
+
+msgid "Dokončete registraci <br>do <strong>věrnostního <br>programu</strong>."
 msgstr ""
 
 msgid "Domain"
@@ -957,6 +972,9 @@ msgstr "Doprava zadarmo"
 
 msgid "Doprava<br>až k vám domů"
 msgstr "\nDoprava<br>až k vám domov"
+
+msgid "Dopravu máte zdarma"
+msgstr ""
 
 msgid "Dostupnost"
 msgstr "Dostupnosť"
@@ -999,6 +1017,9 @@ msgstr ""
 
 msgid "Délka"
 msgstr "Dĺžka"
+
+msgid "Děkujeme vám za objednávku!"
+msgstr ""
 
 msgid "Děkujeme za vaši objednávku"
 msgstr "Ďakujeme za vašu objednávku"
@@ -1120,6 +1141,9 @@ msgstr "Ups! Nastala chyba"
 msgid "Error occurred when sending email."
 msgstr "Pri odosielaní emailu nastala chyba."
 
+msgid "Exkluzivní produkty ve věrnostním programu"
+msgstr ""
+
 msgid "Export objednávek do můstku"
 msgstr "Export objednávok do mostíka"
 
@@ -1152,6 +1176,9 @@ msgstr "Fakturačné údaje"
 
 msgid "Filtr"
 msgstr "Filter"
+
+msgid "Filtrovat"
+msgstr ""
 
 msgid "Firma"
 msgstr "Firma"
@@ -1276,9 +1303,6 @@ msgstr "Súhlasím s obchodnými podmienkami a spracovaním osobných údajov."
 msgid "I understand"
 msgstr "Rozumiem"
 
-msgid "I want to subscribe to the newsletter"
-msgstr ""
-
 msgid "ID"
 msgstr ""
 
@@ -1311,6 +1335,9 @@ msgstr ""
 
 msgid "Informace o balení"
 msgstr "Informácie o balení"
+
+msgid "Informace o zákazníkovi"
+msgstr ""
 
 msgid "Instagram"
 msgstr "\nInstagram"
@@ -1392,6 +1419,9 @@ msgstr "Klasické kuchyne sa vyznačujú prispôsobivosťou. Namiesto sledovania
 
 msgid "Klasické, ale nestárnoucí. Přesně takové jsou naše kuchyně, které jsou určeny zákazníkům preferujících klasiku před moderním designem. Při výrobě klasické kuchyně se snažíme využít osobní zvyky a zkušenosti našich zákazníků, abychom vám nabídli kuchyni nejen praktickou, ale také půvabnou. Vybírat si můžete ze široké nabídky barev i materiálů, a najít takovou kombinaci, která skvěle zapadne do konceptu vaší domácnosti."
 msgstr "Klasické, ale nestarnúce. Presne také sú naše kuchyne, ktoré sú určené zákazníkom preferujúcich klasiku pred moderným dizajnom. Pri výrobe klasickej kuchyne sa snažíme využiť osobné zvyky a skúsenosti našich zákazníkov, aby sme vám ponúkli kuchyňu nielen praktickú, ale aj pôvabnú. Vyberať si môžete zo širokej ponuky farieb aj materiálov, a nájsť takú kombináciu, ktorá skvele zapadne do konceptu vašej domácnosti."
+
+msgid "Kliknutím na tlačítko Odeslat objednávku souhlasíte s <a href=\"%termsAndConditionsUrl%\" target=\"_blank\">obchodními podmínkami</a> e-shopu a se <a href=\"%privacyPolicyUrl%\" target=\"_blank\">zpracováním osobních údajů</a>."
+msgstr ""
 
 msgid "Kliknutím na tlačítko Odeslat objednávku souhlasíte<br>s <a href=\"%termsAndConditionsUrl%\" target=\"_blank\">obchodními podmínkami</a> e-shopu a se<br><a href=\"%privacyPolicyUrl%\" target=\"_blank\">zpracováním osobních údajů</a>."
 msgstr "Kliknutím na tlačidlo Odoslať objednávku súhlasíte<br>s <a href=\"%termsAndConditionsUrl%\" target=\"_blank\">obchodnými podmienkami</a> e-shopu a so<br><a href=\"%privacyPolicyUrl%\" target=\"_blank\">spracovaním osobných údajov</a>."
@@ -1491,6 +1521,9 @@ msgstr "Kuchyňu vám namontuje náš vyškolený personál."
 
 msgid "Kuchyňské linky"
 msgstr "Kuchynské linky"
+
+msgid "Kupón"
+msgstr ""
 
 msgid "Kód"
 msgstr "Kód"
@@ -1624,6 +1657,9 @@ msgstr "Viac informácií"
 msgid "Move"
 msgstr ""
 
+msgid "Možnost nákupu za výhodné ceny"
+msgstr ""
+
 msgid "Možnosti platby"
 msgstr "Možnosti platby"
 
@@ -1632,6 +1668,9 @@ msgstr ""
 
 msgid "My orders"
 msgstr "Moje objednávky"
+
+msgid "Mám slevový kupón"
+msgstr ""
 
 msgid "Máme pro vás volné místo"
 msgstr "Máme pre vás voľné miesto"
@@ -1686,6 +1725,9 @@ msgstr ""
 
 msgid "Nakupte ještě za <strong class=\"box-free-transport__desc__strong\">%price%</strong> a získáte doručení <strong class=\"box-free-transport__desc__strong\">Zdarma</strong>"
 msgstr "Nakupte ešte za <strong class=\"box-free-transport__desc__strong\">%price%</strong> a získate doručenie <strong class=\"box-free-transport__desc__strong\">Zadarmo</strong>"
+
+msgid "Nakupte ještě za <strong>%price%</strong> a získáte doručení <strong>Zdarma</strong>"
+msgstr ""
 
 msgid "Naleznete široký sortiment rozmanitých stylů, barevných provedení i cenových úrovní. Navíc na vás čeká rozsáhlý výběr kuchyňských doplňků, textilu a bytových dekorací."
 msgstr "Nájdete široký sortiment rozmanitých štýlov, farebných vyhotovení aj cenových úrovní. Navyše na vás čaká rozsiahly výber kuchynských doplnkov, textilu a bytových dekorácií."
@@ -1747,6 +1789,12 @@ msgstr ""
 msgid "Nejmodernější kuchyně s německou kvalitou zpracování. Exkluzivní design a precizní provedení doplňují nejnovější technologie."
 msgstr "Najmodernejšie kuchyne s nemeckou kvalitou vyhotovenia. Exkluzívny dizajn a precízne vyhotovenie dopĺňajú najnovšie technológie."
 
+msgid "Nejprodávanější produkty"
+msgstr ""
+
+msgid "Nejste tu poprvé?"
+msgstr ""
+
 msgid "Nemáte ješte účet?<br>Registrujte se."
 msgstr "Nemáte ešte účet?<br>Registrujte sa."
 
@@ -1755,9 +1803,6 @@ msgstr "Nemáte ešte účet? Registrujte sa."
 
 msgid "Nemáte slevový kód? Prohlédněte si seznam našich aktuálně platných <a href=\"%url%\">akcí</a>."
 msgstr "\nNemáte zľavový kód? Pozrite si zoznam našich aktuálne platných <a href=\"%url%\">akcií</a>."
-
-msgid "Nemáte slevový kód? Prohlédněte si seznam našich<br><a class=\"box-cart__promo__desc__link\" href=\"%url%\">aktuálně platných akcí</a>."
-msgstr ""
 
 msgid "Není skladem"
 msgstr "Nie je na sklade"
@@ -1938,6 +1983,9 @@ msgstr "Objednávka nebola nájdená."
 
 msgid "Objednávka odeslána"
 msgstr "Objednávka odoslaná"
+
+msgid "Oblíbené"
+msgstr ""
 
 msgid "Oblíbené kategorie"
 msgstr "Obľúbené kategórie"
@@ -2416,7 +2464,13 @@ msgstr "Produkt sa už nepredáva"
 msgid "Product {{ name }} removed from cart"
 msgstr "Produkt {{ name }} odstránený z košíku"
 
+msgid "Products"
+msgstr ""
+
 msgid "Products excluded from sale can't be displayed on lists and can't be searched. Product detail is available by direct access from the URL, but it is not possible to add product to cart."
+msgstr ""
+
+msgid "Products in stock only"
 msgstr ""
 
 msgid "Produkt s tímto katalogovým číslem již existuje"
@@ -2578,6 +2632,9 @@ msgstr ""
 msgid "Přidejte limit"
 msgstr ""
 
+msgid "Přihlašte se"
+msgstr ""
+
 msgid "Přihlašujete se poprvé na novém e-shopu, prosím nastavte si heslo pomocí funkce “Obnovení hesla”."
 msgstr "Prihlasujete sa prvýkrát na novom e-shope, prosím, nastavte si heslo pomocou funkcie „Obnovenie hesla“."
 
@@ -2594,6 +2651,9 @@ msgid "Přijde k Vám náš odborný pracovník."
 msgstr "Príde k vám náš odborný pracovník."
 
 msgid "Příznak"
+msgstr ""
+
+msgid "Příznaky"
 msgstr ""
 
 msgid "Původně"
@@ -2640,6 +2700,9 @@ msgstr "Registrovať a odoslať objednávku"
 
 msgid "Registrujte se"
 msgstr "Registrujte sa"
+
+msgid "Rekapitulaci jsme vám zaslali také na váš e&#8209;mail"
+msgstr ""
 
 msgid "Rekapitulaci jsme zaslali také na váš e&#8209;mail"
 msgstr "Rekapituláciu sme zaslali aj na váš e-mail"
@@ -2902,6 +2965,9 @@ msgstr ""
 msgid "Sbalit"
 msgstr "Zbaliť"
 
+msgid "Sbírání bodů s každou objednávkou"
+msgstr ""
+
 msgid "Sdílet"
 msgstr "Zdieľať"
 
@@ -2950,8 +3016,8 @@ msgstr "Zoradiť"
 msgid "Shipping"
 msgstr "Doprava"
 
-msgid "Shipping and payment"
-msgstr "Doprava a platba"
+msgid "Shipping<br> and payment"
+msgstr "Doprava<br>a platba"
 
 msgid "Shipping instructions"
 msgstr "Inštrukcie pre dopravu"
@@ -3010,7 +3076,7 @@ msgstr "Sledujte nás"
 msgid "Sleva"
 msgstr "Zľava"
 
-msgid "Sleva byla uplatněna na všechny již neslevněné položky na které se akce vztahuje podle <a class=\"box-cart__promo__desc__link\" href=\"%url%\">pravidel</a>."
+msgid "Sleva byla uplatněna na všechny již neslevněné položky na které se akce vztahuje podle <a href=\"%url%\">pravidel</a>."
 msgstr ""
 
 msgid "Slevové kupóny"
@@ -3508,10 +3574,19 @@ msgstr "Vyberte predajňu, kde si vyzdvihnete zásielku"
 msgid "Vyberte prodejnu ze seznamu"
 msgstr ""
 
+msgid "Vyberte způsob dopravy"
+msgstr ""
+
+msgid "Vyberte způsob platby"
+msgstr ""
+
 msgid "Vybraná notifikační lišta neexistuje"
 msgstr ""
 
 msgid "Vybraná rubrika blogu neexistuje."
+msgstr ""
+
+msgid "Vybrané filtry"
 msgstr ""
 
 msgid "Vybrané modely kuchyní na míru"
@@ -3628,9 +3703,6 @@ msgstr "Viac informácií"
 msgid "Více než kuchyň"
 msgstr "Viac ako kuchyňa"
 
-msgid "Vítejte zpět ve Scontu"
-msgstr ""
-
 msgid "Výběr výprodejové kategorie"
 msgstr ""
 
@@ -3714,6 +3786,9 @@ msgstr "Zabezpečíme<br>profesionálnu montáž"
 
 msgid "Zaměříme kuchyň<br>u vás doma"
 msgstr "Zameriame kuchyňu<br>u vás doma"
+
+msgid "Zaokrouhlení"
+msgstr ""
 
 msgid "Zaplatit"
 msgstr "Zaplatiť"
@@ -3835,6 +3910,9 @@ msgstr "Spôsob platby bol úspešne zmenený"
 msgid "Zrušit filtry"
 msgstr "Zrušiť filtre"
 
+msgid "Zrušit vše"
+msgstr ""
+
 msgid "Zrušit úpravy"
 msgstr "Zrušiť úpravy"
 
@@ -3853,9 +3931,6 @@ msgstr "Zákaznícky servis"
 msgid "Zákaznický servis telefon"
 msgstr "Zákaznícky servis telefón"
 
-msgid "Základní údaje"
-msgstr ""
-
 msgid "Zásilka"
 msgstr "Zásielka"
 
@@ -3864,6 +3939,9 @@ msgstr "\nZásielka č. %number%"
 
 msgid "Získali jste doručení <strong class=\"box-free-transport__desc__strong\">Zdarma</strong>"
 msgstr "Získali ste doručenie <strong class=\"box-free-transport__desc__strong\">Zadarmo</strong>"
+
+msgid "[1,4] Zobrazit %count% nejprodávanější | [5,Inf] Zobrazit %count% nejprodávanějších"
+msgstr ""
 
 msgid "a slaďte svůj domov"
 msgstr "a zlaďte svoj domov"
@@ -3961,6 +4039,9 @@ msgstr ""
 msgid "relevance"
 msgstr "relevancia"
 
+msgid "seřadit"
+msgstr ""
+
 msgid "skladem"
 msgstr "na sklade"
 
@@ -3991,17 +4072,23 @@ msgstr "\n{0} <span class=\"box-chooser__item__avail__text box-chooser__item__av
 msgid "{0} <span class=\"box-chooser__item__avail__text box-chooser__item__avail__text--now\">Můžete mít <span class=\"box-chooser__item__avail__time box-chooser__item__avail__time--now\">ihned</span></span> | {1} <span class=\"box-chooser__item__avail__text\">K dispozici do <span class=\"box-chooser__item__avail__time\">1 týdne</span></span> | [2,Inf] <span class=\"box-chooser__item__avail__text\">K dispozici do <span class=\"box-chooser__item__avail__time\">%weeksAvailability% týdnů</span></span>"
 msgstr "\n{0} <span class=\"box-chooser__item__avail__text box-chooser__item__avail__text--now\">Môžete mať <span class=\"box-chooser__item__avail__time box-chooser__item__avail__time--now\">ihneď</span></span> | {1} <span class=\"box-chooser__item__avail__text\">K dispozícii do <span class=\"box-chooser__item__avail__time\">1 týždňa</span></span> | [2,Inf] <span class=\"box-chooser__item__avail__text\">K dispozícii do <span class=\"box-chooser__item__avail__time\">%weeksAvailability% týždňov</span></span>"
 
-msgid "{0} <span class=\"box-chooser__item__avail__text box-chooser__item__avail__text--now\">Můžete mít <strong class=\"now\">ihned</strong></span> | [1,Inf] <span class=\"box-chooser__item__avail__text\">Osobní odběr do <strong>%daysAvailability% dnů</strong></span>"
-msgstr ""
-
 msgid "{0} <span class=\"box-chooser__item__avail__text box-chooser__item__avail__text--now\">Můžete mít ještě <span class=\"box-chooser__item__avail__time box-chooser__item__avail__time--now\">dnes</span></span> | [1,Inf] <span class=\"box-chooser__item__avail__text\">Doručení do <span class=\"box-chooser__item__avail__time\">%daysAvailability% dnů</span></span>"
 msgstr "{0} <span class=\"box-chooser__item__avail__text box-chooser__item__avail__text--now\">Môžete mať ešte <span class=\"box-chooser__item__avail__time box-chooser__item__avail__time--now\">dnes</span></span> | [1,Inf] <span class=\"box-chooser__item__avail__text\">Doručenie do <span class=\"box-chooser__item__avail__time\">%daysAvailability% dní</span></span>"
 
-msgid "{0} Máme pro vás <strong class=\"box-list__top__info__count js-paging-total-count\">0</strong> produktů |{1} Máme pro vás <strong class=\"box-list__top__info__count js-paging-total-count\">1</strong> produkt |{2, 3, 4} Máme pro vás <strong class=\"box-list__top__info__count js-paging-total-count\">%itemsCount%</strong> produkty |]4,Inf[ Máme pro vás <strong class=\"box-list__top__info__count js-paging-total-count\">%itemsCount%</strong> produktů"
+msgid "{0} <strong class=\"js-paging-total-count\">0</strong> produktů |{1} <strong class=\"js-paging-total-count\">1</strong> produkt |{2, 3, 4} <strong class=\"js-paging-total-count\">%itemsCount%</strong> produkty |]4,Inf[ <strong class=\"js-paging-total-count\">%itemsCount%</strong> produktů"
 msgstr ""
 
 msgid "{0} Máme pro vás <strong class=\"box-list__top__info__count\">0</strong> produktů |{1} Máme pro vás <strong class=\"box-list__top__info__count\">1</strong> produkt |{2, 3, 4} Máme pro vás <strong class=\"box-list__top__info__count\">%itemsCount%</strong> produkty |]4,Inf[ Máme pro vás <strong class=\"box-list__top__info__count\">%itemsCount%</strong> produktů"
 msgstr "{0} Máme pre vás <strong class=\"box-list__top__info__count\">0</strong> produktov |{1} Máme pre vás <strong class=\"box-list__top__info__count\">1</strong> produkt |{2, 3, 4} Máme pre vás <strong class=\"box-list__top__info__count\">%itemsCount%</strong> produkty |]4,Inf[ Máme pre vás <strong class=\"box-list__top__info__count\">%itemsCount%</strong> produktov"
+
+msgid "{0} Můžete mít ihned | [1,Inf] Osobní odběr do %daysAvailability% dnů"
+msgstr ""
+
+msgid "{0} Můžete mít ihned | {1} K dispozici do 1 týdne | [2,Inf] K dispozici do %weeksAvailability% týdnů"
+msgstr ""
+
+msgid "{0} Můžete mít ještě dnes | [1,Inf] Doručení do %daysAvailability% dnů"
+msgstr ""
 
 msgid "{0} Nenalezen žádný produkt | {1} Nalezen <strong class=\"search__hint__item__strong\">1</strong> produkt | [2,Inf] Celkem nalezeno <strong class=\"search__hint__item__strong\">%totalProductCount%</strong> produktů"
 msgstr "\n{0} Nenájdený žiadny produkt | {1} Nájdený <strong class=\"search__hint__item__strong\">1</strong> produkt | [2,Inf] Celkom nájdených <strong class=\"search__hint__item__strong\">%totalProductCount%</strong> produktov"
@@ -4021,7 +4108,7 @@ msgstr "\n{1} 1 variant |{2, 3, 4} %itemsCount% varianty |]4,Inf[ %itemsCount% v
 msgid "{1} <span class=\"box-chooser__item__avail__text\">K dispozici do <span class=\"box-chooser__item__avail__time\">1 týdne</span></span> | [2,Inf] <span class=\"box-chooser__item__avail__text\">K dispozici do <span class=\"box-chooser__item__avail__time\">%weeksAvailability% týdnů</span></span>"
 msgstr "\n{1} <span class=\"box-chooser__item__avail__text\">K dispozícii do <span class=\"box-chooser__item__avail__time\">1 týždňa</span></span> | [2,Inf] <span class=\"box-chooser__item__avail__text\">K dispozícii do <span class=\"box-chooser__item__avail__time\">%weeksAvailability% týždňov</span></span>"
 
-msgid "{1} <span class=\"box-chooser__item__avail__text\">K dispozici do <strong>1 týdne</strong> </span> | [2,Inf] <span class=\"box-chooser__item__avail__text\">K dispozici do <strong>%weeksAvailability% týdnů</strong></span>"
+msgid "{1} K dispozici do 1 týdne | [2,Inf] K dispozici do %weeksAvailability% týdnů"
 msgstr ""
 
 msgid "{1}Load next %loadNextCount% item|[2,Inf]Load next %loadNextCount% items"
@@ -4046,6 +4133,9 @@ msgid "Údaje"
 msgstr "Údaje"
 
 msgid "Úprava hodnoty parametru typu barva - %name%"
+msgstr ""
+
+msgid "Úvodní strana"
 msgstr ""
 
 msgid "ČSOB<br> Č.ú. 117983223 / 0300<br> IBAN: CZ54 0300 0000 0001 1798 3223 <br> BIC / SWIFT: CEKOCZPP"
@@ -4083,6 +4173,9 @@ msgstr ""
 
 msgid "Číst dál"
 msgstr "Čítať ďalej"
+
+msgid "Číst dále"
+msgstr ""
 
 msgid "č. produktu:"
 msgstr "\nč. produktu:"

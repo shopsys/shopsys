@@ -1,67 +1,62 @@
 .box-progress {
     .reset-ul();
-    position: relative;
-    display: inline-flex;
-    margin-top: 1rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 0 -@web-padding 26px;
+
+    border-bottom: 1px solid @color-border;
 
     @media @query-lg {
-        margin-top: 3rem;
+        margin: 0 0 12px;
     }
 
     &__item {
+        width: @calc-base / 3;
         position: relative;
-        display: flex;
-        padding: 5px 5px 0;
+        padding: 12px;
 
-        text-transform: uppercase;
-        color: #979ca9;
-        font-size: 14px;
-
-        @media @query-md {
-            align-items: center;
-            padding: 0;
+        @media @query-lg {
+            padding: 12px 20px;
         }
 
         &--active {
-            color: @color-light-secondary;
-            text-decoration: underline;
-        }
+            &:before {
+                content: '';
+                position: absolute;
+                left: 0;
+                right: 0;
+                bottom: -1px;
+                height: 2px;
 
-        &--previous-active {
-            .svg {
-                color: @color-primary;
-            }
-        }
-
-        &__inner {
-            text-align: center;
-
-            font-size: 14px;
-            line-height: 1.2;
-
-            @media @query-lg {
-                text-align: left;
-                line-height: 1.4;
+                background-color: @color-primary;
             }
         }
 
         &__title {
-            @media @query-mobile {
-                display: block;
-                margin: auto;
-            }
-        }
+            display: block;
+            line-height: 14px;
 
-        &__sep {
-            display: none;
+            font-size: 12px;
+            text-decoration: none;
+            text-transform: uppercase;
 
-            @media @query-md {
-                display: block;
-                margin: 0 22px;
+            @media @query-lg {
+                line-height: 10px;
             }
 
-            .svg {
-                font-size: 18px;
+            &:hover {
+                text-decoration: none;
+            }
+
+            .box-progress__item--active & {
+                color: @color-primary;
+            }
+
+            br {
+                @media @query-md {
+                    display: none;
+                }
             }
         }
     }

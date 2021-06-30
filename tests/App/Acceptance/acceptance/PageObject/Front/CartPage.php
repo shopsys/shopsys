@@ -115,7 +115,7 @@ class CartPage extends AbstractPage
                 $nameCell = $row->findElement(WebDriverBy::cssSelector('.js-cart-item-name'));
                 $textSpan = $nameCell->findElement(WebDriverBy::cssSelector('.js-cart-item-name-text'));
 
-                if ($textSpan->getText() === $translatedProductName) {
+                if (mb_strtolower($textSpan->getText()) === mb_strtolower($translatedProductName)) {
                     return $row;
                 }
             } catch (NoSuchElementException $ex) {
@@ -167,7 +167,10 @@ class CartPage extends AbstractPage
      */
     public function applyPromoCode($promoCodeName)
     {
+        $promoCodeButton = $this->webDriver->findElement(WebDriverBy::cssSelector('.js-promo-code-button'));
         $promoCodeField = $this->webDriver->findElement(WebDriverBy::cssSelector('#js-promo-code-input'));
+        $this->tester->clickByElement($promoCodeButton);
+        $this->tester->wait(1);
         $this->tester->fillFieldByElement($promoCodeField, $promoCodeName);
         $this->tester->pressKeysByElement($promoCodeField, WebDriverKeys::ENTER);
         $this->tester->waitForAjax();
@@ -185,9 +188,10 @@ class CartPage extends AbstractPage
     /**
      * @return \Facebook\WebDriver\WebDriverElement
      */
-    public function canSeePromoCodeSubmitButtonElement()
+    public function canSeePromoCodeButton()
     {
-        return $this->tester->seeElement(WebDriverBy::cssSelector('#js-promo-code-submit-button'));
+        $promoCodeButton = WebDriverBy::cssSelector('.js-promo-code-button');
+        return $this->tester->seeElement($promoCodeButton);
     }
 
     /**

@@ -58,8 +58,9 @@
         {% endembed %}
     {% else %}
         {% if disabledFormFields == false %}
-            <div class="in-message in-message--info margin-bottom-20">
+            <div class="in-message in-message--info">
                 {{ 'In a particular domain tab it is not possible to adjust the order and plunge of categories. Please go to the category detail or to overview of categories of all domains'|trans }}
+                <i class="in-message__icon svg svg-remove js-message-close"></i>
             </div>
         {% endif %}
         <div class="wrap-divider">

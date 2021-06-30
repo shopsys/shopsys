@@ -307,7 +307,7 @@ msgstr "80x70x70 mm"
 msgid "9 Mpix"
 msgstr "9 Mpix"
 
-msgid "<a class=\"box-cart-sent__btn btn\" href=\"{order_detail_url}\">Zobrazit moje objednávky</a>"
+msgid "<a class=\"btn\" href=\"{order_detail_url}\">Zobrazit moje objednávky</a>"
 msgstr ""
 
 msgid "<b>You have chosen payment by credit card. Please finish it in two business days.</b>"

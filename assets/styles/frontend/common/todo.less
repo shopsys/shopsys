@@ -1,6 +1,3 @@
-@box-cart-info-width: (100% / 3 * 2);
-@box-cart-preview-width: ~"calc(100% - @{box-cart-info-width})";
-
 @not-implemented-bg-color: #da0000;
 
 .js-not-implemented-yet + .tooltip {
@@ -22,34 +19,6 @@
     }
 }
 
-.svg-kose:before {
-    content: "\f10f";
-}
-
-.box-cart-info {
-    width: @box-cart-info-width;
-    float: left;
-
-    &__oversized {
-        padding: 1.5em;
-        background-color: @color-add;
-
-        p {
-            margin: 0;
-        }
-    }
-}
-
-.box-cart__preview {
-    width: @box-cart-preview-width;
-    float: left;
-    padding-left: 20px;
-}
-
-.color-purple {
-    color: purple;
-}
-
 .line-through {
     text-decoration: line-through;
 }
@@ -58,17 +27,6 @@
     font-size: 70%;
     color: grey;
     display: block;
-}
-
-.hidden {
-    display: none;
-}
-
-.personal-info-order-form {
-    .in-tab__content__item {
-        padding: 0;
-        border: none;
-    }
 }
 
 .variant-parameters-wrap {

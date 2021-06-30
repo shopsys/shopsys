@@ -19,7 +19,7 @@
                     <div class="box-form box-form--registration box-form--small">
                         <div class="box-form__section">
                             <h2 class="in-title">{{ 'Personal data'|trans }}</h2>
-                        
+
                             {{ form_row(form.customerUserData.email, {
                                 label: 'Váš e-mail'|trans
                             }) }}
@@ -78,7 +78,7 @@
                                 {% do form.billingAddressData.companyTaxNumber.setRendered() %}
                             {% endif %}
                         </div>
-                        
+
                         <div class="box-form__section">
                             <h2 class="in-title">{{ 'Fakturační adresa'|trans }}</h2>
                             {{ form_row(form.billingAddressData.street, {
@@ -103,55 +103,45 @@
                             }) }}
                         </div>
 
-                        <div class="box-form__section box-form__section--without-gap" id="{{ form.deliveryAddressData.vars.id }}" class="box-chooser-check-wrap js-delivery-address-form">
+                        <div class="box-form__section box-form__section--without-gap js-delivery-address-form" id="{{ form.deliveryAddressData.vars.id }}">
                             {{ form_row(form.customerUserData.defaultDeliveryAddress) }}
-                            <div class="box-chooser-check-wrap__in">
-                                <div class="box-chooser box-chooser--check box-chooser--check--spaced">
-                                    <span class="box-chooser__item">
-                                        {{ form_row(form.deliveryAddressData.addressFilled, {
-                                            attr: { class: 'js-checkbox-toggle js-delivery-address-address-filled', 'data-checkbox-toggle-container-id': 'js-delivery-address-fields' },
-                                            label: 'Přidat dodací adresu'|trans
+                            {{ form_row(form.deliveryAddressData.addressFilled, {
+                                attr: { class: 'js-checkbox-toggle js-delivery-address-address-filled', 'data-checkbox-toggle-container-id': 'js-delivery-address-fields' },
+                                label: 'Přidat dodací adresu'|trans
+                            }) }}
+                            <div id="js-delivery-address-fields">
+                                {{ form_row(form.deliveryAddressData.companyName, {
+                                    label: 'Company'|trans
+                                }) }}
+                                {{ form_row(form.deliveryAddressData.firstName, {
+                                    label: 'First name'|trans
+                                }) }}
+                                {{ form_row(form.deliveryAddressData.lastName, {
+                                    label: 'Last name'|trans
+                                }) }}
+                                {{ form_row(form.deliveryAddressData.telephone, {
+                                    label: 'Telephone'|trans
+                                }) }}
+                                {{ form_row(form.deliveryAddressData.street, {
+                                    label: 'Ulice a č. popisné'|trans
+                                }) }}
+
+                                <div class="form-columns">
+                                    <div class="form-columns__item">
+                                        {{ form_row(form.deliveryAddressData.city, {
+                                            label: 'City'|trans
                                         }) }}
-                                        <picture>
-                                            <source srcset="{{ asset('public/frontend/images/marker_2x.png') }} 2x, {{ asset('public/frontend/images/marker.png') }} 1x" />
-                                            <img class="box-chooser__item__marker" loading="lazy" src="" data-src="{{ asset('public/frontend/images/marker.png') }}" alt="{{ 'Dodací adresa'|trans }}">
-                                        </picture>
-                                    </span>
-                                </div>
-                                <div class="box-chooser__item__in" id="js-delivery-address-fields">
-                                    {{ form_row(form.deliveryAddressData.companyName, {
-                                        label: 'Company'|trans
-                                    }) }}
-                                    {{ form_row(form.deliveryAddressData.firstName, {
-                                        label: 'First name'|trans
-                                    }) }}
-                                    {{ form_row(form.deliveryAddressData.lastName, {
-                                        label: 'Last name'|trans
-                                    }) }}
-                                    {{ form_row(form.deliveryAddressData.telephone, {
-                                        label: 'Telephone'|trans
-                                    }) }}
-                                    {{ form_row(form.deliveryAddressData.street, {
-                                        label: 'Ulice a č. popisné'|trans
-                                    }) }}
-
-                                    <div class="form-columns">
-                                        <div class="form-columns__item">
-                                            {{ form_row(form.deliveryAddressData.city, {
-                                                label: 'City'|trans
-                                            }) }}
-                                        </div>
-                                        <div class="form-columns__item">
-                                            {{ form_row(form.deliveryAddressData.postcode, {
-                                                label: 'Postcode'|trans
-                                            }) }}
-                                        </div>
                                     </div>
-
-                                    {{ form_row(form.deliveryAddressData.country, {
-                                        label: 'Country'|trans
-                                    }) }}
+                                    <div class="form-columns__item">
+                                        {{ form_row(form.deliveryAddressData.postcode, {
+                                            label: 'Postcode'|trans
+                                        }) }}
+                                    </div>
                                 </div>
+
+                                {{ form_row(form.deliveryAddressData.country, {
+                                    label: 'Country'|trans
+                                }) }}
                             </div>
                         </div>
 

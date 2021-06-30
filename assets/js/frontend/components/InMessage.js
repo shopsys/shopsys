@@ -1,7 +1,7 @@
 export default class InMessage {
 
     detachMessage () {
-        $(document).on('click', '.in-message', function () {
+        $(document).on('click', '.js-message-close', function () {
             $('.in-message').detach();
         });
     }

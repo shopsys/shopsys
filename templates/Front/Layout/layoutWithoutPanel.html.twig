@@ -7,11 +7,13 @@
                 {{ render(controller('App\\Controller\\Front\\BreadcrumbController:indexAction', { routeName: getRoute(), routeParameters: getRouteParams() } )) }}
             {% endblock %}
 
-            <div class="web__line">
-                <div class="web__container">
-                    {{ render(controller('App\\Controller\\Front\\FlashMessageController:indexAction')) }}
+            {% block flashMessage %}
+                <div class="web__line">
+                    <div class="web__container">
+                        {{ render(controller('App\\Controller\\Front\\FlashMessageController:indexAction')) }}
+                    </div>
                 </div>
-            </div>
+            {% endblock %}
 
             {% block main_content %}{% endblock %}
         </div>

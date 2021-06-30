@@ -34,9 +34,17 @@ img {
                 margin-bottom: 32px;
             }
         }
+
+        &--big-gap-desktop {
+            @media @query-lg {
+                margin-bottom: 32px;
+            }
+        }
     }
 
     &__in {
+        display: flex;
+        flex-direction: column;
         flex: 1;
         position: relative;
     }
@@ -105,19 +113,6 @@ img {
 
             @media @query-md {
                 margin-bottom: 3.5rem;
-            }
-        }
-
-        &--cart {
-            padding: 25px 0 4rem;
-
-            @media @query-mobile {
-                position: relative;
-                padding-bottom: 230px;
-            }
-
-            @media @query-lg {
-                padding: 3rem 0 8rem;
             }
         }
     }

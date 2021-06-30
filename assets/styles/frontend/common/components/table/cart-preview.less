@@ -1,155 +1,35 @@
 .table-cart-preview {
     width: 100%;
 
-    &__body {
-        display: block;
-
-        &__row,
-        &__col {
-            display: block;
-        }
-    }
-
-    &__section {
-        display: flex;
-        padding: 6px 0;
-        width: 100%;
-        margin: 0;
-
-        border: 1px solid @color-border-tertiary;
-
-        &:first-child {
-            border-top-left-radius: @radius;
-            border-top-right-radius: @radius;
-        }
-
-        &:last-child {
-            margin-bottom: 15px;
-
-            border-bottom-left-radius: @radius;
-            border-bottom-right-radius: @radius;
-        }
-
-        &__body {
-            display: flex;
-            flex-direction: column;
-            width: 100%;
-        }
-
-        & + .table-cart-preview__section {
-            border-top: 0;
-        }
-
-        &--products,
-        &--payment {
-            .table-cart-preview__row {
-                margin: 3px 0;
-            }
-
-            .table-cart-preview__cell {
-                padding-top: 1px;
-                padding-bottom: 1px;
-
-                color: @color-base-lighter;
-                line-height: 1.4;
-            }
-        }
-    }
-
     &__row {
-        display: flex;
-        justify-content: space-between;
-
-        &--previous-price {
-            padding-bottom: 4px;
-        }
-
-        &--section-price {
-            .table-cart-preview__cell {
-                color: @color-primary;
-            }
-        }
-
-        &--important {
-            padding-top: 5px;
-        }
-
-        &--promo {
-            padding-top: 5px;
-        }
-
-        &--total--discount {
-            align-items: center;
-            margin-bottom: 1rem;
-        }
-
-        &--transport {
-            padding: 8px 0 1px;
-
-            border-top: 1px solid @color-border-tertiary;
-        }
+        width: 100%;
     }
 
     &__cell {
-        padding: 3px 12px;
+        line-height: 18px;
+        padding: 6px 0;
+        vertical-align: baseline;
 
-        font-size: 13px;
-        color: @color-primary;
-
-        .table-cart-preview__row--total & {
-            font-weight: bold;
-        }
+        font-size: @font-size-small;
 
         &--price {
-            padding-left: 5px;
+            font-size: @font-size;
             text-align: right;
-
-            .table-cart-preview__row--total & {
-                color: @color-price-main;
-            }
         }
 
-        &--summary {
-            padding-top: 0;
-            padding-bottom: 0;
-        }
-
-        &--no-spacing {
-            padding: 0;
-        }
-
-        &__title {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            width: 100%;
-
-            font-size: 12px;
+        &__total-price {
+            font-size: 24px;
             color: @color-primary;
-
-            &__img {
-                width: 22px;
-            }
         }
 
-        &--transport,
-        &--payment {
-            img {
-                position: relative;
-                top: -1px;
-                display: inline-block;
-                vertical-align: middle;
-                max-height: 13px;
-                max-width: none;
-                margin-left: 3px;
-            }
-        }
-
-        &--payment {
-            display: flex;
+        &__image {
+            display: inline-block;
+            vertical-align: bottom;
+            height: 18px;
+            margin-left: 5px;
 
             img {
-                margin-left: 12px;
+                max-height: 100%;
             }
         }
     }

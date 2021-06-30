@@ -62,7 +62,7 @@ export default class Window {
 
         const displayClass = this.options.errors === '' ? 'display-none' : '';
         $windowContent.append(
-            '<div class="' + displayClass + ' in-message in-message--alert js-window-validation-errors">'
+            '<div class="' + displayClass + ' js-window-validation-errors">'
             + this.options.errors
             + '</div>'
             + this.options.content
@@ -114,14 +114,14 @@ export default class Window {
         }
 
         if (this.options.buttonContinue) {
-            const $windowButtonContinue = $('<a href="" class="window-popup__actions__btn window-popup__actions__btn--continue window-button-continue btn"><i class="svg svg-arrow"></i></a>');
+            const $windowButtonContinue = $('<a href="" class="window-popup__actions__btn js-window-button-continue btn btn-with-icon btn-with-icon--right"></a>');
             $windowButtonContinue
                 .append(document.createTextNode(this.options.textContinue))
                 .addClass(this.options.cssClassContinue)
                 .attr('href', this.options.urlContinue)
                 .bind('click.window', this.options.eventContinue)
                 .bind('click.windowContinue', function () {
-                    if ($(this).hasClass('window-popup__actions__btn--continue--disabled')) {
+                    if ($(this).hasClass('disabled')) {
                         return false;
                     }
                     _this.$window.trigger('windowClose');
@@ -133,7 +133,7 @@ export default class Window {
         }
 
         if (this.options.buttonCancel) {
-            const $windowButtonCancel = $('<a href="#" class="window-popup__actions__btn window-popup__actions__btn--cancel window-button-cancel btn"><i class="svg svg-arrow"></i></a>');
+            const $windowButtonCancel = $('<a href="#" class="window-popup__actions__btn window-popup__actions__btn--cancel window-button-cancel btn btn-with-icon btn-with-icon--left"></a>');
 
             $windowButtonCancel
                 .append(document.createTextNode(this.options.textCancel))

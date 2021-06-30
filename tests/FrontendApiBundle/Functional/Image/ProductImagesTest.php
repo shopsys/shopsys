@@ -85,7 +85,7 @@ class ProductImagesTest extends GraphQlTestCase
                     "type": null,
                     "size": "thumbnail",
                     "width": 90,
-                    "height": 90,
+                    "height": 63,
                     "position": 0
                 },
                 {
@@ -94,6 +94,14 @@ class ProductImagesTest extends GraphQlTestCase
                     "size": "thumbnailSmall",
                     "width": 43,
                     "height": 28,
+                    "position": 0
+                },
+                {
+                    "url": "' . $this->getFullUrlPath('/content-test/images/product/thumbnailExtraSmall/22-sencor-sle-22f46dm4-hello-kitty_1.jpg') . '",
+                    "type": null,
+                    "size": "thumbnailExtraSmall",
+                    "width": 54,
+                    "height": 54,
                     "position": 0
                 },
                 {
@@ -149,7 +157,7 @@ class ProductImagesTest extends GraphQlTestCase
                     "type": null,
                     "size": "thumbnail",
                     "width": 90,
-                    "height": 90,
+                    "height": 63,
                     "position": 1
                 },
                 {
@@ -158,6 +166,14 @@ class ProductImagesTest extends GraphQlTestCase
                     "size": "thumbnailSmall",
                     "width": 43,
                     "height": 28,
+                    "position": 1
+                },
+                {
+                    "url": "' . $this->getFullUrlPath('/content-test/images/product/thumbnailExtraSmall/22-sencor-sle-22f46dm4-hello-kitty_64.jpg') . '",
+                    "type": null,
+                    "size": "thumbnailExtraSmall",
+                    "width": 54,
+                    "height": 54,
                     "position": 1
                 },
                 {
