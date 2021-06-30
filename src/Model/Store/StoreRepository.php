@@ -113,4 +113,35 @@ class StoreRepository
     {
         return $this->getStoreRepository()->findOneBy(['externalId' => $externalId]);
     }
+
+    /**
+     * @param int $domainId
+     * @param int $limit
+     * @param int $offset
+     * @return \App\Model\Store\Store[]
+     */
+    public function getStoresListEnabledOnDomain(int $domainId, int $limit, int $offset): array
+    {
+        return $this->getQueryBuilder()
+            ->join(StoreDomain::class, 'sd', Join::WITH, 's.id = sd.store AND sd.isEnabled = TRUE AND sd.domainId = :domainId')
+            ->setParameter('domainId', $domainId)
+            ->setFirstResult($offset)
+            ->setMaxResults($limit)
+            ->getQuery()
+            ->execute();
+    }
+
+    /**
+     * @param int $domainId
+     * @return int
+     */
+    public function getStoresCountEnabledOnDomain(int $domainId): int
+    {
+        $queryBuilder = $this->getQueryBuilder()
+            ->select('COUNT(s)')
+            ->join(StoreDomain::class, 'sd', Join::WITH, 's.id = sd.store AND sd.isEnabled = TRUE AND sd.domainId = :domainId')
+            ->setParameter('domainId', $domainId);
+
+        return (int)$queryBuilder->getQuery()->getSingleScalarResult();
+    }
 }

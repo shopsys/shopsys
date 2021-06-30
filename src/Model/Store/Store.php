@@ -10,6 +10,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Component\Grid\Ordering\OrderableEntityInterface;
 
 /**
@@ -27,6 +28,12 @@ class Store implements OrderableEntityInterface
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     protected int $id;
+
+    /**
+     * @var string
+     * @ORM\Column(type="guid", unique=true)
+     */
+    protected string $uuid;
 
     /**
      * @var \App\Model\Store\StoreDomain[]|\Doctrine\Common\Collections\Collection
@@ -116,6 +123,7 @@ class Store implements OrderableEntityInterface
         $this->domains = new ArrayCollection();
         $this->position = static::GEDMO_SORTABLE_LAST_POSITION;
         $this->createDomains($storeData);
+        $this->uuid = $storeData->uuid ?: Uuid::uuid4()->toString();
         $this->setData($storeData);
     }
 
@@ -178,6 +186,14 @@ class Store implements OrderableEntityInterface
     public function getId(): int
     {
         return $this->id;
+    }
+
+    /**
+     * @return string
+     */
+    public function getUuid(): ?string
+    {
+        return $this->uuid;
     }
 
     /**

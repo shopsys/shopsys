@@ -1,5 +1,15 @@
 Query:
     type: object
+    config:
+        fields:
+            stores:
+                type: "StoreConnection"
+                argsBuilder: "Relay::Connection"
+                resolve: "@=resolver('stores', [args, args['placement']])"
+                args:
+                    placement:
+                        type: "String"
+                description: "Returns list of stores that can be paginated using `first`, `last`, `before` and `after` keywords and filtered by `placement`"
     inherits:
         - 'QueryDecorator'
     config:

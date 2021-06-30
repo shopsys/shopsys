@@ -1,0 +1,34 @@
+Store:
+    type: object
+    config:
+        fields:
+            uuid:
+                type: "Uuid!"
+                description: "UUID"
+            isDefault:
+                type: "Boolean!"
+                description: "Is set as default store"
+            name:
+                type: "String!"
+                description: "Store name"
+            description:
+                type: "String"
+                description: "Store description"
+            address:
+                type: "String"
+                description: "Store address"
+            openingHours:
+                type: "String"
+                description: "Store opening hours"
+            contactInfo:
+                type: "String"
+                description: ""
+            specialMessage:
+                type: "String"
+                description: ""
+            locationLatitude:
+                type: "String"
+                description: "Store location latitude"
+            locationLongitude:
+                type: "String"
+                description: "Store location longitude"
