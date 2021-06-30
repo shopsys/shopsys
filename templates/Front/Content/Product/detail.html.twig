@@ -28,24 +28,26 @@
                 <div class="box-detail">
                     <div class="box-detail__image">
                         {% if showGallery %}
-                            {% set galleryImagesCount = productView.galleryImageViews|length %}
-                            <div class="box-gallery dont-print js-gallery js-gallery-slick-carousel">
-                                {% for galleryImage in productView.galleryImageViews %}
-                                    <a class="box-gallery__item js-gallery-slide-link" href="{{ imageUrl(galleryImage, 'original') }}">
-                                        <div class="box-gallery__item__in">
-                                            {{ image(galleryImage, {size: 'galleryThumbnail', lazy: false, alt: productView.fullname ~ ' ' ~ loop.index}) }}
-                                        </div>
-                                    </a>
-                                {% endfor %}
+                            <div class="box-detail__image__gallery">
+                                {% set galleryImagesCount = productView.galleryImageViews|length %}
+                                <div class="box-gallery dont-print js-gallery js-image-carousel">
+                                    {% for galleryImage in productView.galleryImageViews %}
+                                        <a class="box-gallery__item js-gallery-slide-link" href="{{ imageUrl(galleryImage, 'original') }}">
+                                            <div class="box-gallery__item__in">
+                                                {{ image(galleryImage, {size: 'galleryThumbnail', lazy: false, alt: productView.fullname ~ ' ' ~ loop.index}) }}
+                                            </div>
+                                        </a>
+                                    {% endfor %}
+                                </div>
                             </div>
                         {% endif %}
 
-                        <div class="box-detail__image__main js-main-image-carousel">
-                            {% for galleryImage in productView.galleryImageViews %}
+                        <div class="box-detail__image__main{{ showGallery ? '' : ' box-detail__image__main--mobile-visible' }}">
+                            {% for galleryImage in productView.galleryImageViews|slice(0, 1) %}
                                 <div class="box-detail__image__main__item">
                                     {% if productView.mainImageView %}
                                         <a
-                                            href="{{ imageUrl(productView.mainImageView, 'original') }}"
+                                            href="{{ imageUrl(galleryImage, 'original') }}"
                                             class="box-detail__image__main__item__link {{ showGallery ? 'js-gallery-main-image' : 'js-popup-image' }}"
                                         >
                                             {{ image(galleryImage, {lazy: false, alt: productView.fullname ~ ' ' ~ loop.index}) }}
@@ -73,11 +75,13 @@
                             {% endif %}
                         {% endif %}
 
-                        <ul class="list-simple list-simple--multiple-columns margin-bottom-20">
-                            {% for usp in productView.usps %}
-                                <li class="list-simple__item">{{ usp }}</li>
-                            {% endfor %}
-                        </ul>
+                        {% if productView.usps|length > 0 %}
+                            <ul class="list-simple list-simple--multiple-columns margin-bottom-20">
+                                {% for usp in productView.usps %}
+                                    <li class="list-simple__item">{{ usp }}</li>
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
 
                         <div class="box-detail__info__description js-not-implemented-yet">
                             Moderní elektrokolo se spolehlivým motorem Bafang M 500 se středovým pohonem s výkonem až 250 w.
@@ -140,6 +144,7 @@
                 </div>
             </div>
         </div>
+
         <div class="web__line">
             <div class="web__container">
                 {% if productView.isMainVariant and not productView.isSellingDenied %}
@@ -376,7 +381,7 @@
         </div>
 
         {% if productView.categoryViews %}
-            <div class="web__line web__line--spacing--big">
+            <div class="web__line">
                 <div class="web__container">
                     <h2>{{ 'Zařazeno v kategoriích:'|trans }}</h2>
                     <ul class="list-simple">

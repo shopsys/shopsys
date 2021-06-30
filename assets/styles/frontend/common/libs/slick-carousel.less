@@ -1,6 +1,8 @@
 // Slick Carousel
 // Custom styles
 
+@slick-carousel-arrow-size: 32px;
+
 .slick-slider {
     .slick-slide {
         outline: 0;
@@ -12,59 +14,34 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        width: 40px;
-        height: 50px;
-        min-width: 40px;
-        margin-top: -25px;
-        text-indent: -9999px;
-        z-index: 10;
-        overflow: hidden;
-
-        background-color: @color-primary;
-        color: @color-primary;
-        border: 0;
-        border-radius: @radius;
-        transition: background-color .3s ease-in-out;
+        position: absolute;
+        transform: translateY(-50%);
         cursor: pointer;
-        outline: 0;
+        height: @slick-carousel-arrow-size;
+        width: @slick-carousel-arrow-size;
+        z-index: @z-index-above + 1;
+
+        color: @color-f;
+        background-color: @color-grey;
+        border-radius: @radius-small;
+        transition: @transition;
+        border: 0;
 
         &:hover {
-            background-color: lighten(@color-primary, 10%);
+            background-color: darken(@color-grey, 5%);
         }
 
-        &::before {
-            position: absolute;
-            left: 11px;
-            top: 19px;
-            width: 15px;
-            height: 3px;
-            content: '';
-            transform: rotate(45deg);
-
-            background-color: @color-f;
-        }
-
-        &::after {
-            position: absolute;
-            left: 11px;
-            bottom: 19px;
-            width: 15px;
-            height: 3px;
-            content: '';
-            transform: rotate(-45deg);
-
-            background-color: @color-f;
+        &:before {
+            &:extend(.svg-arrow:before);
+            font-family: SVG;
+            transform: rotate(270deg);
         }
 
         &.slick-prev {
             left: 0;
 
-            &::before {
-                transform: rotate(-45deg);
-            }
-
-            &::after {
-                transform: rotate(45deg);
+            &:before {
+                transform: rotate(90deg);
             }
         }
 
@@ -73,8 +50,11 @@
         }
 
         &.slick-disabled {
-            opacity: 0.25;
-            cursor: default;
+            opacity: 0.4;
+            cursor: auto;
+
+            color: @color-grey;
+            background-color: @color-base-lighter;
         }
     }
 }
