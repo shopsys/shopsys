@@ -300,9 +300,13 @@
     &--in-popup {
         .box-chooser__item {
             margin: 0 -15px;
+            padding-left: 15px;
+            padding-right: 15px;
 
             @media @query-md {
                 margin: 0 -@window-popup-inner-padding;
+                padding-left: @window-popup-inner-padding;
+                padding-right: @window-popup-inner-padding;
             }
 
             &:first-child {
