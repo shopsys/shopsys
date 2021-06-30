@@ -17,7 +17,8 @@ import Timeout from 'framework/common/utils/Timeout';
             const types = {
                 'top-products': [1, 2, 3, 4, 5],
                 'in-sales': [1, 2, 3, 4, 5],
-                'similar-products': [1, 2, 3, 4, 5]
+                'similar-products': [1, 2, 3, 4, 5],
+                'accessories-products': [1, 2, 3, 4, 5]
             };
 
             const selectedType = types[galleryType];

@@ -27,41 +27,37 @@
                 {% set showGallery = productView.galleryImageViews|length > 1 %}
                 <div class="box-detail">
                     <div class="box-detail__image">
-                        <div class="box-detail__image__wrap js-main-image-carousel">
-                            <div class="box-detail__image__main js-gallery-wrap">
-                                {% for galleryImage in productView.galleryImageViews %}
-                                    <div class="box-detail__image__main__item">
-                                        {% if productView.mainImageView %}
-                                            <a
-                                                href="{{ imageUrl(productView.mainImageView, 'original') }}"
-                                                class="box-detail__image__main__item__link {{ showGallery ? 'js-gallery-main-image' : 'js-popup-image' }}"
-                                            >
-                                                {{ image(galleryImage, {lazy: false, alt: productView.fullname ~ ' ' ~ loop.index}) }}
-                                            </a>
-                                        {% else %}
-                                            {{ noimage({ alt: productView.fullname }) }}
-                                        {% endif %}
-                                    </div>
-                                {% endfor %}
-                            </div>
-                            {{ renderFlagsByIds(productView.flagIds) }}
-                        </div>
-
                         {% if showGallery %}
                             {% set galleryImagesCount = productView.galleryImageViews|length %}
-                            <div class="box-gallery dont-print js-gallery{{ galleryImagesCount > 1 ? ' js-gallery-slick-carousel' }}">
-                                <div class="box-gallery__in{{ galleryImagesCount <= 4 ? ' box-gallery__in--centered' }} js-gallery-wrap">
-                                    {% for galleryImage in productView.galleryImageViews %}
-                                        <div class="box-gallery__item">
-                                            <a href="{{ imageUrl(galleryImage, 'original') }}"
-                                                class="box-gallery__item__link js-gallery-slide-link">
-                                                {{ image(galleryImage, {size: 'galleryThumbnail', lazy: false, alt: productView.fullname ~ ' ' ~ loop.index}) }}
-                                            </a>
+                            <div class="box-gallery dont-print js-gallery js-gallery-slick-carousel">
+                                {% for galleryImage in productView.galleryImageViews %}
+                                    <a class="box-gallery__item js-gallery-slide-link" href="{{ imageUrl(galleryImage, 'original') }}">
+                                        <div class="box-gallery__item__in">
+                                            {{ image(galleryImage, {size: 'galleryThumbnail', lazy: false, alt: productView.fullname ~ ' ' ~ loop.index}) }}
                                         </div>
-                                    {% endfor %}
-                                </div>
+                                    </a>
+                                {% endfor %}
                             </div>
                         {% endif %}
+
+                        <div class="box-detail__image__main js-main-image-carousel">
+                            {% for galleryImage in productView.galleryImageViews %}
+                                <div class="box-detail__image__main__item">
+                                    {% if productView.mainImageView %}
+                                        <a
+                                            href="{{ imageUrl(productView.mainImageView, 'original') }}"
+                                            class="box-detail__image__main__item__link {{ showGallery ? 'js-gallery-main-image' : 'js-popup-image' }}"
+                                        >
+                                            {{ image(galleryImage, {lazy: false, alt: productView.fullname ~ ' ' ~ loop.index}) }}
+                                        </a>
+                                    {% else %}
+                                        {{ noimage({ alt: productView.fullname }) }}
+                                    {% endif %}
+                                </div>
+                            {% endfor %}
+                        </div>
+                        
+                        {{ renderFlagsByIds(productView.flagIds, 'in-flag--in-detail') }}
                     </div>
                     <div class="box-detail__info">
                         <h1 class="box-detail__heading" itemprop="name">
@@ -368,10 +364,8 @@
 
                 {% if productView.accessories|length > 0 %}
                     <div class="box-detail gtm-scroll" data-gtm-event="{{ gtmAccessoriesScrollEvent|json_encode() }}">
-                        <h2 class="box-detail__title">{{ 'Můžete si dokoupit'|trans }}</h2>
-                        <div class="box-products-accessories js-products-slick-carousel-cols">
-                            {{ productList.list(productView.accessories, null, null, constant('App\\Model\\Gtm\\DataLayer::LIST_NAME_PRODUCT_ACCESSORIES')) }}
-                        </div>
+                        <h2>{{ 'Můžete si dokoupit'|trans }}</h2>
+                        {{ productList.sliderList(productView.accessories, 'accessories-products', constant('App\\Model\\Gtm\\DataLayer::LIST_NAME_PRODUCT_ACCESSORIES')) }}
                     </div>
                 {% endif %}
 

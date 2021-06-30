@@ -12,10 +12,6 @@ export default class Gtm {
     static clickPush (e) {
         /* eslint-disable camelcase */
         if (typeof google_tag_manager != 'undefined') {
-            if ($(this).parents('.is-not-clickable').length) {
-                return;
-            }
-
             /* eslint-disable camelcase */
             if (typeof google_tag_manager != 'undefined') {
                 e.preventDefault();

@@ -1,8 +1,11 @@
-@box-detail-info-width: 486px;
-
 .box-detail {
     display: flex;
+    flex-direction: column;
     flex-wrap: wrap;
+
+    @media @query-lg {
+        flex-direction: row;
+    }
 
     &__heading {
         margin-bottom: 8px;
@@ -19,16 +22,18 @@
         }
     }
 
-    &__title {
-        margin-bottom: 1.5rem;
-        text-align: center;
-    }
-
     &__image {
-        flex: 1;
-        padding-right: 26px;
+        display: flex;
+        width: 100%;
+        margin-bottom: 15px;
         position: relative;
-        margin-bottom: @margin-gap;
+
+        @media @query-lg {
+            flex: 1;
+            width: auto;
+            margin-right: 26px;
+            margin-bottom: 0;
+        }
 
         &__main {
             position: relative;
@@ -36,21 +41,16 @@
             align-items: center;
             justify-content: center;
             width: 100%;
-            height: 345px;
             margin-bottom: @margin-gap;
             overflow: hidden;
 
-            border: 1px solid @color-border;
             border-radius: @radius;
             font-size: 0;
 
-            @media @query-md {
-                height: 500px;
-            }
-
-            @media @query-lg-up {
-                height: 645px;
-                max-width: 645px;
+            @media @query-lg {
+                flex: 1;
+                width: auto;
+                margin-left: 24px;
             }
 
             &.slick-initialized {
@@ -80,40 +80,42 @@
             }
 
             .slick-list {
-                position: absolute;
-                left: 0;
-                top: 0;
-                width: 100%;
-                height: 100%;
                 overflow: hidden;
+
+                @media @query-lg {
+                    position: absolute;
+                    left: 0;
+                    top: 0;
+                    width: 100%;
+                    height: 100%;
+                }
             }
 
             .slick-track {
                 display: flex;
                 align-items: center;
-                position: absolute;
-                left: 0;
-                top: 0;
-                height: 100%;
-            }
 
-            .slick-arrow.slick-next {
                 @media @query-lg {
-                    right: -20px;
-                }
-            }
-
-            .slick-arrow.slick-prev {
-                @media @query-lg {
-                    left: -20px;
+                    position: absolute;
+                    left: 0;
+                    top: 0;
+                    height: 100%;
                 }
             }
         }
     }
 
     &__info {
-        width: @box-detail-info-width;
+        width: 100%;
         margin-bottom: @margin-gap;
+
+        @media @query-lg {
+            width: 320px
+        }
+
+        @media @query-vl {
+            width: 486px;
+        }
 
         &__code {
             margin-bottom: 20px;
