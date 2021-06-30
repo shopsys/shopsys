@@ -111,7 +111,7 @@ class GetStoreTest extends GraphQlTestCase
     private function getStoreDataProviderByUrlSlug(): array
     {
         $data = [];
-        $urlSlugs = ['praha-stodulky', 'modrice-u-brna'];
+        $urlSlugs = ['ostrava', 'pardubice'];
         foreach ($urlSlugs as $urlSlug) {
             $friendlyUrl = $this->friendlyUrlFacade->getFriendlyUrlByRouteNameAndSlug(
                 Domain::FIRST_DOMAIN_ID,

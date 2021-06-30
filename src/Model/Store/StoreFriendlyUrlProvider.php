@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Model\Stock;
+namespace App\Model\Store;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query\Expr\Join;
@@ -11,7 +11,7 @@ use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrl;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlDataFactoryInterface;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlDataProviderInterface;
 
-class StockFriendlyUrlProvider implements FriendlyUrlDataProviderInterface
+class StoreFriendlyUrlProvider implements FriendlyUrlDataProviderInterface
 {
     public const ROUTE_NAME = 'front_stores_detail';
 
@@ -44,7 +44,7 @@ class StockFriendlyUrlProvider implements FriendlyUrlDataProviderInterface
         $queryBuilder = $this->em->createQueryBuilder()
             ->select('s.id, s.name')
             ->distinct()
-            ->from(Stock::class, 's')
+            ->from(Store::class, 's')
             ->leftJoin(FriendlyUrl::class, 'f', Join::WITH, 's.id = f.entityId AND f.routeName = :routeName AND f.domainId = :domainId')
             ->where('f.entityId IS NULL')
             ->setParameter('routeName', static::ROUTE_NAME)

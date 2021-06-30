@@ -2,24 +2,25 @@
 
 declare(strict_types=1);
 
-namespace App\Model\Stock;
+namespace App\Model\Store;
 
 use Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbGeneratorInterface;
 use Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbItem;
+use function t;
 
-class StockBreadcrumbGenerator implements BreadcrumbGeneratorInterface
+class StoresBreadcrumbGenerator implements BreadcrumbGeneratorInterface
 {
     /**
-     * @var \App\Model\Stock\StockFacade
+     * @var \App\Model\Store\StoreFacade
      */
-    private StockFacade $stockFacade;
+    private StoreFacade $storeFacade;
 
     /**
-     * @param \App\Model\Stock\StockFacade $stockFacade
+     * @param \App\Model\Store\StoreFacade $storeFacade
      */
-    public function __construct(StockFacade $stockFacade)
+    public function __construct(StoreFacade $storeFacade)
     {
-        $this->stockFacade = $stockFacade;
+        $this->storeFacade = $storeFacade;
     }
 
     /**
@@ -35,7 +36,7 @@ class StockBreadcrumbGenerator implements BreadcrumbGeneratorInterface
         );
 
         if (array_key_exists('id', $routeParameters)) {
-            $store = $this->stockFacade->getById((int)$routeParameters['id']);
+            $store = $this->storeFacade->getById((int)$routeParameters['id']);
 
             $breadcrumbItems[] = new BreadcrumbItem(
                 $store->getName()
