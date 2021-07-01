@@ -1,47 +1,90 @@
 .in-tab {
-    &__heading {
-        position: relative;
-        display: flex;
-        align-items: center;
-        margin-top: 33px;
-        margin-bottom: 6px;
-
-        text-transform: none;
-        font-size: 18px;
-        color: @color-primary;
-    }
-
     &__head {
-        display: inline-flex;
-        position: relative;
-        z-index: 2;
-        margin-bottom: 15px;
+        display: flex;
+        flex-direction: row;
+        padding: 0 10px;
+        z-index: @z-index-above;
+
+        border-bottom: 1px solid @color-border;
+
+        &__item {
+            position: relative;
+            margin: 0 16px;
+            padding: 3px 8px;
+
+            text-decoration: none;
+            color: @color-0;
+
+            &:hover {
+                text-decoration: none;
+            }
+
+            &.active {
+                color: @color-primary;
+
+                &:before {
+                    content: '';
+                    position: absolute;
+                    left: 0;
+                    right: 0;
+                    bottom: -1px;
+                    height: 2px;
+
+                    background-color: @color-primary;
+                }
+            }
+        }
     }
 
     &__content {
-        &--spaced {
-            padding-top: 30px;
-
-            &-small {
-                padding-top: 15px;
-            }
+        &__title {
+            margin-bottom: 8px;
         }
 
         &__item {
             display: none;
-            padding-top: 30px;
-
-            &--no-padding {
-                padding-top: 0;
-            }
-
-            &--no-spacing {
-                padding-top: 0;
-            }
+            padding-top: 48px;
+            flex-direction: row;
+            flex-wrap: wrap;
+            margin-bottom: 10px;
 
             &.active {
-                display: block;
-                margin-bottom: 10px;
+                display: flex;
+            }
+        }
+
+        &__left {
+            width: 100%;
+
+            @media @query-lg {
+                flex: 1;
+                margin-right: 126px;
+            }
+        }
+
+        &__right {
+            width: 100%;
+
+            @media @query-lg {
+                width: 300px;
+            }
+
+            @media @query-vl {
+                width: 485px;
+            }
+        }
+
+        &__block {
+            margin-bottom: 32px;
+            padding: 16px;
+
+            border-radius: @radius;
+            background-color: @color-light-secondary;
+
+            &--without-background {
+                padding: 0;
+                
+                background-color: transparent;
             }
         }
     }

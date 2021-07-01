@@ -1,4 +1,3 @@
-import './Accordion';
 import './AjaxMoreLoader';
 import './CategoryPanel';
 import './cookieInit';

@@ -8,7 +8,6 @@
 {% endblock %}
 
 {% block main_content %}
-    {%  set commonTabActiveClass = form.companyCustomer.vars.data ? "" : "active" %}
     {%  set companyTabActiveClass = form.companyCustomer.vars.data ? "active" : "" %}
 
     <div class="web__line web__line--spacing--big web__line--margin-bottom-up-big">
@@ -38,8 +37,8 @@
                 {{ form_row(form.firstName, { label: 'First name'|trans }) }}
                 {{ form_row(form.lastName, { label: 'Last name'|trans }) }}
                 {{ form_row(form.telephone, { label: 'Telefon'|trans }) }}
-                <div class="in-tab js-responsive-tabs js-tabs-only">
-                    <div class="in-tab__head dont-print js-registration-form-customer-type-selector">
+                <div class="js-responsive-tabs js-tabs-only">
+                    <div class="dont-print js-registration-form-customer-type-selector">
                         <input type="checkbox" class="css-radio"></input>
                         <label class="css-radio__image js-tabs-button" data-tab-id="common-customer">
                             {{ "Koncový zákazník"|trans }}
@@ -49,57 +48,55 @@
                             {{ "Firma"|trans }}
                         </label>
                     </div>
-                    <div class="in-tab__content">
-                        <div class="in-tab__content__item js-tabs-content {{ companyTabActiveClass }}" data-tab-id="company-customer">
-                            <h2>{{ 'Company data'|trans }}</h2>
-                            {{ form_row(form.companyName, { label: 'Název společnosti'|trans }) }}
-                            {{ form_row(form.companyNumber, { label: 'Company number'|trans }) }}
-                            {{ form_row(form.companyTaxNumber, { label: 'Tax number'|trans }) }}
+                    <div class="box-form__item-hidden js-tabs-content {{ companyTabActiveClass }}" data-tab-id="company-customer">
+                        <h2>{{ 'Company data'|trans }}</h2>
+                        {{ form_row(form.companyName, { label: 'Název společnosti'|trans }) }}
+                        {{ form_row(form.companyNumber, { label: 'Company number'|trans }) }}
+                        {{ form_row(form.companyTaxNumber, { label: 'Tax number'|trans }) }}
+                    </div>
+                    <div id="js-registration-form-password-container">
+                        <h2>{{ 'Password'|trans }}</h2>
+                        {{ form_row(form.password.first, { label: 'Password'|trans }) }}
+                        {{ form_row(form.password.second, { label: 'Password again'|trans }) }}
+                    </div>
+                    <div id="js-registration-form-activation-info">
+                        <p>{{ 'Po odeslání formuláře Vám zašleme e-mail s instrukcemi pro dokončení registrace'|trans }}</p>
+                    </div>
+                    <h2>{{ 'Fakturační adresa'|trans }}</h2>
+                    {{ form_row(form.street, { label: 'Ulice a č. popisné'|trans }) }}
+                    <div class="form-columns">
+                        <div class="form-columns__item">
+                            {{ form_row(form.city, { label: 'Město'|trans }) }}
                         </div>
-                        <div id="js-registration-form-password-container">
-                            <h2>{{ 'Password'|trans }}</h2>
-                            {{ form_row(form.password.first, { label: 'Password'|trans }) }}
-                            {{ form_row(form.password.second, { label: 'Password again'|trans }) }}
+                        <div class="form-columns__item">
+                            {{ form_row(form.postcode, { label: 'PSČ'|trans }) }}
                         </div>
-                        <div id="js-registration-form-activation-info">
-                            <p>{{ 'Po odeslání formuláře Vám zašleme e-mail s instrukcemi pro dokončení registrace'|trans }}</p>
-                        </div>
-                        <h2>{{ 'Fakturační adresa'|trans }}</h2>
-                        {{ form_row(form.street, { label: 'Ulice a č. popisné'|trans }) }}
-                        <div class="form-columns">
-                            <div class="form-columns__item">
-                                {{ form_row(form.city, { label: 'Město'|trans }) }}
-                            </div>
-                            <div class="form-columns__item">
-                                {{ form_row(form.postcode, { label: 'PSČ'|trans }) }}
-                            </div>
-                        </div>
-                        {{ form_row(form.country, { label: 'Country'|trans }) }}
-                        <div class="form-line">
-                            <div class="form-choice">
-                                {{ form_widget(form.privacyPolicy, { attr: { class: "css-checkbox" } }) }}
-                                <label for="{{ form.privacyPolicy.vars.id }}" class="css-checkbox__image">
-                                    {% if privacyPolicyArticle is not null %}
-                                        {% set articleUrl = url('front_article_detail', {'id': privacyPolicyArticle.id}) %}
-                                        {{ 'I agree with <a href="%url%" target="_blank">privacy policy</a>.'|trans({'%url%': articleUrl})|raw }}
-                                    {% else %}
-                                        {{ 'I agree with privacy policy.'|trans }}
-                                    {% endif %}
-                                    <span class="form-input-required">*</span>
-                                </label>
-                                <div class="js-validation-errors-list js-validation-error-list-{{ form.privacyPolicy.vars.id }} form-error form-error--choice display-none">
-                                    <span class="form-error__icon">
-                                        <i class="svg svg-cross"></i>
-                                    </span>
-                                    <ul class="form-error__list"></ul>
-                                </div>
+                    </div>
+                    {{ form_row(form.country, { label: 'Country'|trans }) }}
+                    <div class="form-line">
+                        <div class="form-choice">
+                            {{ form_widget(form.privacyPolicy, { attr: { class: "css-checkbox" } }) }}
+                            <label for="{{ form.privacyPolicy.vars.id }}" class="css-checkbox__image">
+                                {% if privacyPolicyArticle is not null %}
+                                    {% set articleUrl = url('front_article_detail', {'id': privacyPolicyArticle.id}) %}
+                                    {{ 'I agree with <a href="%url%" target="_blank">privacy policy</a>.'|trans({'%url%': articleUrl})|raw }}
+                                {% else %}
+                                    {{ 'I agree with privacy policy.'|trans }}
+                                {% endif %}
+                                <span class="form-input-required">*</span>
+                            </label>
+                            <div class="js-validation-errors-list js-validation-error-list-{{ form.privacyPolicy.vars.id }} form-error form-error--choice display-none">
+                                <span class="form-error__icon">
+                                    <i class="svg svg-cross"></i>
+                                </span>
+                                <ul class="form-error__list"></ul>
                             </div>
                         </div>
-                        {{ form_row(form.newsletterSubscription, { label: 'Souhlasím se zasíláním newsletteru'|trans }) }}
+                    </div>
+                    {{ form_row(form.newsletterSubscription, { label: 'Souhlasím se zasíláním newsletteru'|trans }) }}
 
-                        <div class="box-form__submit">
-                            {{ form_widget(form.save, { label: 'Register'|trans }) }}
-                        </div>
+                    <div class="box-form__submit">
+                        {{ form_widget(form.save, { label: 'Register'|trans }) }}
                     </div>
                 </div>
             </div>
