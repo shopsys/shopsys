@@ -84,3 +84,6 @@ There you can find links to upgrade notes for other versions too.
 - increase minimal version of `league/flysystem` package ([#2365](https://github.com/shopsys/shopsys/pull/2365))
     - see #project-base-diff to update your project
     - don't forget to update dependency with `composer update league/flysystem`
+
+- update form setting for quantity in cart ([#2367](https://github.com/shopsys/shopsys/pull/2367))
+    - see #project-base-diff to update your project
