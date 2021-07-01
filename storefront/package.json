@@ -6,14 +6,19 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "translate": "i18next 'pages/**/*.js' --config config/i18next-parser.config.js"
   },
   "dependencies": {
     "graphql": "^15.5.1",
+    "i18next": "^20.3.2",
+    "i18next-browser-languagedetector": "^6.1.2",
+    "i18next-http-backend": "^1.2.6",
     "next": "11.0.0",
     "next-urql": "^3.1.0",
     "react": "17.0.2",
     "react-dom": "17.0.2",
+    "react-i18next": "^11.11.0",
     "react-is": "^17.0.2",
     "urql": "^2.0.4"
   },
