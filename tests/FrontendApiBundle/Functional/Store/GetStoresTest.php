@@ -33,6 +33,7 @@ class GetStoresTest extends GraphQlTestCase
                         'name',
                         'isDefault',
                         'description',
+                        'contactInfo',
                         'address',
                         'openingHours',
                         'specialMessage',
@@ -85,27 +86,7 @@ class GetStoresTest extends GraphQlTestCase
      */
     private function getAllStoresQuery(): string
     {
-        $graphQlTypeWithFilters = 'stores';
-
-        return '
-            {
-                ' . $graphQlTypeWithFilters . ' {
-                    edges {
-                        node {
-                            uuid
-                            name
-                            isDefault
-                            description
-                            address
-                            openingHours
-                            specialMessage
-                            locationLatitude
-                            locationLongitude
-                        }
-                    }
-                }
-            }
-        ';
+        return $this->getStoresQuery('stores');
     }
 
     /**
@@ -113,27 +94,7 @@ class GetStoresTest extends GraphQlTestCase
      */
     private function getFirstStoreQuery(): string
     {
-        $graphQlTypeWithFilters = 'stores (first: 1)';
-
-        return '
-            {
-                ' . $graphQlTypeWithFilters . ' {
-                    edges {
-                        node {
-                            uuid
-                            name
-                            isDefault
-                            description
-                            address
-                            openingHours
-                            specialMessage
-                            locationLatitude
-                            locationLongitude
-                        }
-                    }
-                }
-            }
-        ';
+        return $this->getStoresQuery('stores (first: 1)');
     }
 
     /**
@@ -141,8 +102,15 @@ class GetStoresTest extends GraphQlTestCase
      */
     private function getLastStoreQuery(): string
     {
-        $graphQlTypeWithFilters = 'stores (last: 1)';
+        return $this->getStoresQuery('stores (last: 1)');
+    }
 
+    /**
+     * @param string $graphQlTypeWithFilters
+     * @return string
+     */
+    private function getStoresQuery(string $graphQlTypeWithFilters): string
+    {
         return '
             {
                 ' . $graphQlTypeWithFilters . ' {
@@ -152,6 +120,7 @@ class GetStoresTest extends GraphQlTestCase
                             name
                             isDefault
                             description
+                            contactInfo
                             address
                             openingHours
                             specialMessage
@@ -175,7 +144,7 @@ class GetStoresTest extends GraphQlTestCase
                 'name' => t('Ostrava', [], 'dataFixtures', $firstDomainLocale),
                 'isDefault' => true,
                 'description' => null,
-                'address' => t('Koksární 10\\n702 00 Ostrava', [], 'dataFixtures', $firstDomainLocale),
+                'address' => "Koksární 10\n702 00 Ostrava",
                 'contactInfo' => null,
                 'openingHours' => t('Po-Pa: 8:00-16:00', [], 'dataFixtures', $firstDomainLocale),
                 'specialMessage' => null,
@@ -185,7 +154,7 @@ class GetStoresTest extends GraphQlTestCase
                 'name' => t('Pardubice', [], 'dataFixtures', $firstDomainLocale),
                 'isDefault' => false,
                 'description' => null,
-                'address' => t('Bratranců Veverkových 2722\\n530 02 Pardubice', [], 'dataFixtures', $firstDomainLocale),
+                'address' => "Bratranců Veverkových 2722\n530 02 Pardubice",
                 'contactInfo' => null,
                 'openingHours' => t('Po-Pa: 8:00-17:00', [], 'dataFixtures', $firstDomainLocale),
                 'specialMessage' => null,

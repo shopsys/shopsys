@@ -165,4 +165,13 @@ class StoreFacade
     {
         return $this->storeRepository->getStoresCountEnabledOnDomain($domainId);
     }
+
+    /**
+     * @param string $uuid
+     * @return \App\Model\Store\Store
+     */
+    public function getByUuid(string $uuid): Store
+    {
+        return $this->storeRepository->getOneByUuid($uuid);
+    }
 }

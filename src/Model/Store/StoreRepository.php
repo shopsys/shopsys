@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\Store;
 
+use App\Model\Store\Exception\StoreByUuidNotFoundException;
 use App\Model\Store\Exception\StoreNotFoundException;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
@@ -143,5 +144,20 @@ class StoreRepository
             ->setParameter('domainId', $domainId);
 
         return (int)$queryBuilder->getQuery()->getSingleScalarResult();
+    }
+
+    /**
+     * @param string $uuid
+     * @return \App\Model\Store\Store
+     */
+    public function getOneByUuid(string $uuid): Store
+    {
+        $store = $this->getStoreRepository()->findOneBy(['uuid' => $uuid], ['position' => 'ASC', 'id' => 'ASC']);
+
+        if ($store === null) {
+            throw new StoreByUuidNotFoundException(sprintf('Store with UUID "%s" does not exist.', $uuid));
+        }
+
+        return $store;
     }
 }
