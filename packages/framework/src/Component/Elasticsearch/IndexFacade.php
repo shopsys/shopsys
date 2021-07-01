@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Component\Elasticsearch;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Console\ProgressBarFactory;
+use Shopsys\FrameworkBundle\Component\Deprecations\DeprecationHelper;
 use Shopsys\FrameworkBundle\Component\Doctrine\SqlLoggerFacade;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\Exception\ElasticsearchIndexAlreadyExistsException;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\Exception\ElasticsearchIndexException;
@@ -63,12 +64,9 @@ class IndexFacade
             !isset(debug_backtrace()[1]['object'])
             || !(debug_backtrace()[1]['object'] instanceof self)
         ) {
-            trigger_error(
-                sprintf(
-                    'Method "%s" will change its visibility from "public" to "protected" in next major version. Use method "migrate()" from same class instead.',
-                    __METHOD__
-                ),
-                E_USER_DEPRECATED
+            DeprecationHelper::trigger(
+                'Method "%s()" will change its visibility from "public" to "protected" in next major version. Use method "migrate()" from same class instead.',
+                __METHOD__
             );
         }
 

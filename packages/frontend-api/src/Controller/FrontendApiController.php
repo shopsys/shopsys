@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Shopsys\FrontendApiBundle\Controller;
 
-use BadMethodCallException;
 use Overblog\GraphQLBundle\Controller\GraphController;
+use Shopsys\FrameworkBundle\DependencyInjection\SetterInjectionTrait;
 use Shopsys\FrontendApiBundle\Component\Domain\EnabledOnDomainChecker;
 use Shopsys\FrontendApiBundle\Model\GraphqlConfigurator;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -14,6 +14,8 @@ use Symfony\Component\HttpFoundation\Response;
 
 class FrontendApiController
 {
+    use SetterInjectionTrait;
+
     /**
      * @var \Shopsys\FrontendApiBundle\Component\Domain\EnabledOnDomainChecker
      */
@@ -91,24 +93,6 @@ class FrontendApiController
      */
     public function setGraphqlConfigurator(GraphqlConfigurator $graphqlConfigurator): void
     {
-        if ($this->graphqlConfigurator !== null && $this->graphqlConfigurator !== $graphqlConfigurator) {
-            throw new BadMethodCallException(sprintf(
-                'Method "%s" has been already called and cannot be called multiple times.',
-                __METHOD__
-            ));
-        }
-        if ($this->graphqlConfigurator !== null) {
-            return;
-        }
-
-        @trigger_error(
-            sprintf(
-                'The %s() method is deprecated and will be removed in the next major. Use the constructor injection instead.',
-                __METHOD__
-            ),
-            E_USER_DEPRECATED
-        );
-
-        $this->graphqlConfigurator = $graphqlConfigurator;
+        $this->setDependency($graphqlConfigurator, 'graphqlConfigurator');
     }
 }

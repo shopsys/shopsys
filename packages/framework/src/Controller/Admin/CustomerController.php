@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Controller\Admin;
 
-use BadMethodCallException;
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
@@ -12,6 +11,7 @@ use Shopsys\FrameworkBundle\Component\Grid\MoneyConvertingDataSourceDecorator;
 use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSource;
 use Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory;
 use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
+use Shopsys\FrameworkBundle\DependencyInjection\SetterInjectionTrait;
 use Shopsys\FrameworkBundle\Form\Admin\Customer\User\CustomerUserUpdateFormType;
 use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData;
 use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormType;
@@ -31,6 +31,8 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class CustomerController extends AdminBaseController
 {
+    use SetterInjectionTrait;
+
     protected const LOGIN_AS_TOKEN_ID_PREFIX = 'loginAs';
 
     /**
@@ -142,26 +144,7 @@ class CustomerController extends AdminBaseController
      */
     public function setDomain(Domain $domain): void
     {
-        if ($this->domain !== null && $this->domain !== $domain) {
-            throw new BadMethodCallException(sprintf(
-                'Method "%s" has been already called and cannot be called multiple times.',
-                __METHOD__
-            ));
-        }
-
-        if ($this->domain !== null) {
-            return;
-        }
-
-        @trigger_error(
-            sprintf(
-                'The %s() method is deprecated and will be removed in the next major. Use the constructor injection instead.',
-                __METHOD__
-            ),
-            E_USER_DEPRECATED
-        );
-
-        $this->domain = $domain;
+        $this->setDependency($domain, 'domain');
     }
 
     /**

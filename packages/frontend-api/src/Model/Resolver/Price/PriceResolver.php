@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Shopsys\FrontendApiBundle\Model\Resolver\Price;
 
-use BadMethodCallException;
 use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
 use Overblog\GraphQLBundle\Definition\Resolver\ResolverInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\DependencyInjection\SetterInjectionTrait;
 use Shopsys\FrameworkBundle\Model\Payment\Payment;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
@@ -22,6 +22,8 @@ use Shopsys\FrontendApiBundle\Model\Price\PriceFacade;
 
 class PriceResolver implements ResolverInterface, AliasedInterface
 {
+    use SetterInjectionTrait;
+
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\ProductCachedAttributesFacade
      */
@@ -91,23 +93,7 @@ class PriceResolver implements ResolverInterface, AliasedInterface
      */
     public function setPriceFacade(PriceFacade $priceFacade): void
     {
-        if ($this->priceFacade !== null && $this->priceFacade !== $priceFacade) {
-            throw new BadMethodCallException(
-                sprintf('Method "%s" has been already called and cannot be called multiple times.', __METHOD__)
-            );
-        }
-        if ($this->priceFacade !== null) {
-            return;
-        }
-
-        @trigger_error(
-            sprintf(
-                'The %s() method is deprecated and will be removed in the next major. Use the constructor injection instead.',
-                __METHOD__
-            ),
-            E_USER_DEPRECATED
-        );
-        $this->priceFacade = $priceFacade;
+        $this->setDependency($priceFacade, 'priceFacade');
     }
 
     /**

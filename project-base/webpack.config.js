@@ -1,7 +1,6 @@
 const Encore = require('@symfony/webpack-encore');
 const EventHooksPlugin = require('event-hooks-webpack-plugin');
 const processTrans = require('./assets/js/commands/translations/process');
-const generateWebFont = require('./assets/js/commands/svg/generateWebFont');
 const CopyPlugin = require('copy-webpack-plugin');
 const yaml = require('js-yaml');
 const fs = require('fs');
@@ -31,10 +30,8 @@ Encore
     .enableSingleRuntimeChunk()
     .enableSourceMaps(!Encore.isProduction())
     .enableVersioning(Encore.isProduction())
-    .configureBabel(() => {}, {
+    .configureBabel(null, {
         includeNodeModules: ['@shopsys'],
-        useBuiltIns: 'usage',
-        corejs: 3
     })
     .enableBuildNotifications()
     .configureWatchOptions(function (watchOptions) {
@@ -42,16 +39,6 @@ Encore
     })
     .addPlugin(new EventHooksPlugin({
         beforeRun: () => {
-            generateWebFont(
-                'frontend',
-                './assets/public/frontend/svg/'
-            );
-            generateWebFont(
-                'admin',
-                sources.getFrameworkNodeModulesDir() + '/public/admin/svg/',
-                './web/public/admin/svg/'
-            );
-
             const dirWithJsFiles = [
                 sources.getFrameworkNodeModulesDir() + '/js/**/*.js',
                 './assets/js/**/*.js'
@@ -69,11 +56,28 @@ Encore
             }
         }
     }))
-    .addPlugin(new CopyPlugin([
-        { from: 'web/bundles/fpjsformvalidator', to: '../../assets/js/bundles/fpjsformvalidator', force: true },
-        { from: 'node_modules/@shopsys/framework/public/admin', to: '../../web/public/admin', force: true },
-        { from: 'assets/public', to: '../../web/public', ignore: ['assets/public/admin/svg/**/*'], force: true }
-    ]))
+    .addPlugin(new CopyPlugin({
+        patterns: [
+            {
+                from: 'web/bundles/fpjsformvalidator',
+                to: '../../assets/js/bundles/fpjsformvalidator',
+                force: true
+            },
+            {
+                from: sources.getFrameworkNodeModulesDir() + '/public/admin',
+                to: '../../web/public/admin',
+                force: true
+            },
+            {
+                from: 'assets/public',
+                to: '../../web/public',
+                globOptions: {
+                    ignore: ['assets/public/admin/svg/**/*']
+                },
+                force: true
+            }
+        ]
+    }))
     .addPlugin(new LiveReloadPlugin())
 ;
 

@@ -2,10 +2,11 @@
 
 namespace Shopsys\FrameworkBundle\Component\Router\FriendlyUrl;
 
-use BadMethodCallException;
+use Shopsys\FrameworkBundle\Component\Deprecations\DeprecationHelper;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\Exception\FriendlyUrlNotFoundException;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\Exception\MethodGenerateIsNotSupportedException;
+use Shopsys\FrameworkBundle\DependencyInjection\SetterInjectionTrait;
 use Symfony\Component\Routing\Exception\MissingMandatoryParametersException;
 use Symfony\Component\Routing\Exception\RouteNotFoundException;
 use Symfony\Component\Routing\Generator\UrlGenerator as BaseUrlGenerator;
@@ -17,6 +18,8 @@ use Symfony\Contracts\Cache\CacheInterface;
 
 class FriendlyUrlGenerator extends BaseUrlGenerator
 {
+    use SetterInjectionTrait;
+
     /**
      * @var \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRepository
      */
@@ -45,11 +48,10 @@ class FriendlyUrlGenerator extends BaseUrlGenerator
         ?CacheInterface $mainFriendlyUrlSlugCache = null
     ) {
         if ($mainFriendlyUrlSlugCache === null) {
-            $deprecationMessage = sprintf(
+            DeprecationHelper::trigger(
                 'The argument "$mainFriendlyUrlSlugCache" is not provided by constructor in "%s". In the next major it will be required.',
                 self::class
             );
-            @trigger_error($deprecationMessage, E_USER_DEPRECATED);
         }
 
         parent::__construct(new RouteCollection(), $context, null);
@@ -215,25 +217,6 @@ class FriendlyUrlGenerator extends BaseUrlGenerator
      */
     public function setFriendlyUrlCacheKeyProvider(FriendlyUrlCacheKeyProvider $friendlyUrlCacheKeyProvider): void
     {
-        if (
-            $this->friendlyUrlCacheKeyProvider !== null
-            && $this->friendlyUrlCacheKeyProvider !== $friendlyUrlCacheKeyProvider
-        ) {
-            throw new BadMethodCallException(
-                sprintf('Method "%s" has been already called and cannot be called multiple times.', __METHOD__)
-            );
-        }
-        if ($this->friendlyUrlCacheKeyProvider !== null) {
-            return;
-        }
-
-        @trigger_error(
-            sprintf(
-                'The %s() method is deprecated and will be removed in the next major. Use the constructor injection instead.',
-                __METHOD__
-            ),
-            E_USER_DEPRECATED
-        );
-        $this->friendlyUrlCacheKeyProvider = $friendlyUrlCacheKeyProvider;
+        $this->setDependency($friendlyUrlCacheKeyProvider, 'friendlyUrlCacheKeyProvider');
     }
 }

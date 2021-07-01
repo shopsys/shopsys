@@ -119,17 +119,22 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
      */
     private function setPriceForAllDomains(TransportData $transportData, Money $price): void
     {
-        foreach ($this->domain->getAllIncludingDomainConfigsWithoutDataCreated() as $domain) {
-            $price = $this->priceConverter->convertPriceWithoutVatToPriceInDomainDefaultCurrency(
-                $price,
-                $domain->getId()
-            );
+        /** @var \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currencyCzk */
+        $currencyCzk = $this->getReference(CurrencyDataFixture::CURRENCY_CZK);
 
+        foreach ($this->domain->getAllIncludingDomainConfigsWithoutDataCreated() as $domain) {
             /** @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vat */
             $vat = $this->getReferenceForDomain(VatDataFixture::VAT_HIGH, $domain->getId());
 
+            $convertedPrice = $this->priceConverter->convertPriceToInputPriceWithoutVatInDomainDefaultCurrency(
+                $price,
+                $currencyCzk,
+                $vat->getPercent(),
+                $domain->getId()
+            );
+
             $transportData->vatsIndexedByDomainId[$domain->getId()] = $vat;
-            $transportData->pricesIndexedByDomainId[$domain->getId()] = $price;
+            $transportData->pricesIndexedByDomainId[$domain->getId()] = $convertedPrice;
         }
     }
 

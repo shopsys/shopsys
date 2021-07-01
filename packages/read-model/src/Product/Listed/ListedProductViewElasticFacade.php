@@ -4,9 +4,10 @@ declare(strict_types=1);
 
 namespace Shopsys\ReadModelBundle\Product\Listed;
 
-use BadMethodCallException;
+use Shopsys\FrameworkBundle\Component\Deprecations\DeprecationHelper;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Paginator\PaginationResult;
+use Shopsys\FrameworkBundle\DependencyInjection\SetterInjectionTrait;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Pricing\Exception\NoProductPriceForPricingGroupException;
 use Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryFacade;
@@ -22,6 +23,8 @@ use Shopsys\ReadModelBundle\Product\Action\ProductActionViewFactory;
 
 class ListedProductViewElasticFacade implements ListedProductViewFacadeInterface
 {
+    use SetterInjectionTrait;
+
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\ProductFacade
      */
@@ -293,8 +296,7 @@ class ListedProductViewElasticFacade implements ListedProductViewFacadeInterface
      */
     protected function createFromProducts(array $products): array
     {
-        $message = 'The %s() method is deprecated since Shopsys Framework 9.1. Use ListedProductViewFactory::createFromProducts() instead.';
-        @trigger_error(sprintf($message, __METHOD__), E_USER_DEPRECATED);
+        DeprecationHelper::triggerMethod(__METHOD__, 'ListedProductViewFactory::createFromProducts');
 
         return $this->listedProductViewFactory->createFromProducts($products);
     }
@@ -307,8 +309,7 @@ class ListedProductViewElasticFacade implements ListedProductViewFacadeInterface
      */
     protected function getIdsForProducts(array $products): array
     {
-        $message = 'The %s() method is deprecated since Shopsys Framework 9.1. Use ListedProductViewFactory::getIdsForProducts() instead.';
-        @trigger_error(sprintf($message, __METHOD__), E_USER_DEPRECATED);
+        DeprecationHelper::triggerMethod(__METHOD__, 'ListedProductViewFactory::getIdsForProducts');
 
         return array_map(static function (Product $product): int {
             return $product->getId();
@@ -322,26 +323,7 @@ class ListedProductViewElasticFacade implements ListedProductViewFacadeInterface
      */
     public function setProductActionViewFactory(ProductActionViewFactory $productActionViewFactory): void
     {
-        if (
-            $this->productActionViewFactory !== null
-            && $this->productActionViewFactory !== $productActionViewFactory
-        ) {
-            throw new BadMethodCallException(
-                sprintf('Method "%s" has been already called and cannot be called multiple times.', __METHOD__)
-            );
-        }
-        if ($this->productActionViewFactory !== null) {
-            return;
-        }
-
-        @trigger_error(
-            sprintf(
-                'The %s() method is deprecated and will be removed in the next major. Use the constructor injection instead.',
-                __METHOD__
-            ),
-            E_USER_DEPRECATED
-        );
-        $this->productActionViewFactory = $productActionViewFactory;
+        $this->setDependency($productActionViewFactory, 'productActionViewFactory');
     }
 
     /**
@@ -351,25 +333,6 @@ class ListedProductViewElasticFacade implements ListedProductViewFacadeInterface
      */
     public function setProductElasticsearchProvider(ProductElasticsearchProvider $productElasticsearchProvider): void
     {
-        if (
-            $this->productElasticsearchProvider !== null
-            && $this->productElasticsearchProvider !== $productElasticsearchProvider
-        ) {
-            throw new BadMethodCallException(
-                sprintf('Method "%s" has been already called and cannot be called multiple times.', __METHOD__)
-            );
-        }
-        if ($this->productElasticsearchProvider !== null) {
-            return;
-        }
-
-        @trigger_error(
-            sprintf(
-                'The %s() method is deprecated and will be removed in the next major. Use the constructor injection instead.',
-                __METHOD__
-            ),
-            E_USER_DEPRECATED
-        );
-        $this->productElasticsearchProvider = $productElasticsearchProvider;
+        $this->setDependency($productElasticsearchProvider, 'productElasticsearchProvider');
     }
 }

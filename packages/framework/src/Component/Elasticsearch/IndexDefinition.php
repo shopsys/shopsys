@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Component\Elasticsearch;
 
+use Shopsys\FrameworkBundle\Component\Deprecations\DeprecationHelper;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\Exception\ElasticsearchIndexException;
 
 class IndexDefinition
@@ -117,10 +118,7 @@ class IndexDefinition
      */
     public function getLegacyIndexAlias(): string
     {
-        @trigger_error(
-            sprintf('The %s() method is deprecated and will be removed in the next major.', __METHOD__),
-            E_USER_DEPRECATED
-        );
+        DeprecationHelper::triggerMethod(__METHOD__);
 
         return $this->indexPrefix . $this->getIndexName() . $this->getDomainId();
     }

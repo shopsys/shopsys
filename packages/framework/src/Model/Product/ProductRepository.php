@@ -7,6 +7,7 @@ namespace Shopsys\FrameworkBundle\Model\Product;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
+use Shopsys\FrameworkBundle\Component\Deprecations\DeprecationHelper;
 use Shopsys\FrameworkBundle\Component\Doctrine\QueryBuilderExtender;
 use Shopsys\FrameworkBundle\Component\Paginator\PaginationResult;
 use Shopsys\FrameworkBundle\Component\Paginator\QueryPaginator;
@@ -223,13 +224,11 @@ class ProductRepository
         PricingGroup $pricingGroup,
         Brand $brand
     ) {
-        @trigger_error(
-            sprintf(
-                'The %s() method is deprecated and will be removed in the next major. It will be replaced by getListableForBrandQueryBuilder() which will change its visibility to public.',
-                __METHOD__
-            ),
-            E_USER_DEPRECATED
+        DeprecationHelper::trigger(
+            'The %s() method is deprecated and will be removed in the next major. It will be replaced by getListableForBrandQueryBuilder() which will change its visibility to public.',
+            __METHOD__
         );
+
         return $this->getListableForBrandQueryBuilder($domainId, $pricingGroup, $brand);
     }
 
@@ -675,12 +674,9 @@ class ProductRepository
      */
     public function getSellableByUuid(string $uuid, int $domainId, PricingGroup $pricingGroup): Product
     {
-        @trigger_error(
-            sprintf(
-                'The %s() method is deprecated and will be removed in the next major. It was used only in FE API, so it has been replaced by \Shopsys\FrontendApiBundle\Model\Product\ProductRepository::getSellableByUuid().',
-                __METHOD__
-            ),
-            E_USER_DEPRECATED
+        DeprecationHelper::trigger(
+            'The %s() method is deprecated and will be removed in the next major. It was used only in FE API, so it has been replaced by \Shopsys\FrontendApiBundle\Model\Product\ProductRepository::getSellableByUuid().',
+            __METHOD__
         );
 
         $qb = $this->getAllSellableQueryBuilder($domainId, $pricingGroup);

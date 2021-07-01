@@ -12,6 +12,7 @@ use CommerceGuys\Intl\NumberFormat\NumberFormatRepository;
 use Shopsys\FrameworkBundle\Component\CurrencyFormatter\CurrencyFormatterFactory;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
+use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\PriceConverter;
 use Shopsys\FrameworkBundle\Model\Pricing\Rounding;
@@ -140,8 +141,10 @@ class NumberFormatHelper extends Module
      */
     public function getPriceWithVatConvertedToDomainDefaultCurrency(string $price): string
     {
-        $money = $this->priceConverter->convertPriceWithVatToPriceInDomainDefaultCurrency(
+        $currency = $this->currencyFacade->getByCode(Currency::CODE_CZK);
+        $money = $this->priceConverter->convertPriceWithVatToDomainDefaultCurrencyPrice(
             Money::create($price),
+            $currency,
             Domain::FIRST_DOMAIN_ID
         );
 

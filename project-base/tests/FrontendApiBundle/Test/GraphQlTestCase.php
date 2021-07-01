@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\FrontendApiBundle\Test;
 
+use App\DataFixtures\Demo\CurrencyDataFixture;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
@@ -249,10 +250,13 @@ abstract class GraphQlTestCase extends FunctionalTestCase
     ): Price {
         $domainId = $this->domain->getId();
         $currency = $this->currencyFacade->getDomainDefaultCurrencyByDomainId($domainId);
+        /** @var \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currencyCzk */
+        $currencyCzk = $this->getReference(CurrencyDataFixture::CURRENCY_CZK);
 
         $basePrice = $this->basePriceCalculation->calculateBasePriceRoundedByCurrency(
-            $this->priceConverter->convertPriceWithoutVatToPriceInDomainDefaultCurrency(
+            $this->priceConverter->convertPriceWithoutVatToDomainDefaultCurrencyPrice(
                 Money::create($priceWithoutVat),
+                $currencyCzk,
                 $domainId
             ),
             PricingSetting::INPUT_PRICE_TYPE_WITHOUT_VAT,
@@ -312,8 +316,11 @@ abstract class GraphQlTestCase extends FunctionalTestCase
      */
     protected function getFormattedMoneyAmountConvertedToDomainDefaultCurrency(string $price): string
     {
-        $money = $this->priceConverter->convertPriceWithoutVatToPriceInDomainDefaultCurrency(
+        /** @var \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currencyCzk */
+        $currencyCzk = $this->getReference(CurrencyDataFixture::CURRENCY_CZK);
+        $money = $this->priceConverter->convertPriceWithoutVatToDomainDefaultCurrencyPrice(
             Money::create($price),
+            $currencyCzk,
             Domain::FIRST_DOMAIN_ID
         );
 

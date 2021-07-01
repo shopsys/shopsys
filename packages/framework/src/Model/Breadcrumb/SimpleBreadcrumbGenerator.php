@@ -4,6 +4,7 @@ namespace Shopsys\FrameworkBundle\Model\Breadcrumb;
 
 use Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbGeneratorInterface;
 use Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbItem;
+use Shopsys\FrameworkBundle\Component\Deprecations\DeprecationHelper;
 
 /**
  * @deprecated Class will be changed to abstract class in next major version. Extend this class to your project and implement corresponding methods instead.
@@ -18,12 +19,8 @@ class SimpleBreadcrumbGenerator implements BreadcrumbGeneratorInterface
     public function __construct()
     {
         if (static::class === self::class) {
-            trigger_error(
-                sprintf(
-                    'Class "%s" will be changed to abstract class in next major version. Extend this class to your project and implement corresponding methods instead.',
-                    self::class
-                ),
-                E_USER_DEPRECATED
+            DeprecationHelper::triggerAbstractClass(
+                self::class
             );
         }
     }
@@ -64,18 +61,12 @@ class SimpleBreadcrumbGenerator implements BreadcrumbGeneratorInterface
     }
 
     /**
-     * @deprecated Method will be changed to abstract in next major version. Extend this class to your project and implement method by yourself instead.
      * @return array<string, string>
+     * @deprecated Method will be changed to abstract in next major version. Extend this class to your project and implement method by yourself instead.
      */
     protected function getTranslatedBreadcrumbsByRouteNames(): array
     {
-        trigger_error(
-            sprintf(
-                'Method "%s" will be changed to abstract in next major version. Extend this class to your project and implement method by yourself instead.',
-                __METHOD__
-            ),
-            E_USER_DEPRECATED
-        );
+        DeprecationHelper::triggerAbstractMethod(__METHOD__);
 
         return [
             'front_customer_edit' => t('Edit data'),

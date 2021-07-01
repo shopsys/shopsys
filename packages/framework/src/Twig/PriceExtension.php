@@ -175,7 +175,7 @@ class PriceExtension extends AbstractExtension
     public function priceTextWithCurrencyByCurrencyIdAndLocaleFilter(Money $price, int $currencyId, string $locale): string
     {
         if ($price->isZero()) {
-            return t('Free');
+            return t('Free', [], 'messages', $locale);
         }
         $currency = $this->currencyFacade->getById($currencyId);
         return $this->formatCurrency($price, $currency, $locale);

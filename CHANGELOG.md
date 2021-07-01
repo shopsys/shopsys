@@ -29,6 +29,90 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 The changelog is generated during the release process using [Github Changelog Generator](https://github.com/github-changelog-generator/github-changelog-generator) since `v9.1.1` release.
 
+## [v9.1.2](https://github.com/shopsys/shopsys/compare/v9.1.1...v9.1.2) (2021-07-01)
+
+:bug: Bug Fixes
+
+- \[project-base\] update form setting for quantity in cart ([#2367](https://github.com/shopsys/shopsys/pull/2367)) ([s3tezsky](https://github.com/s3tezsky))
+- \[shopsys\] increase minimal version of league/flysystem package [\#2365](https://github.com/shopsys/shopsys/pull/2365) ([s3tezsky](https://github.com/s3tezsky))
+- \[framework\] bump minimal version of litipk/php-bignumbers package [\#2361](https://github.com/shopsys/shopsys/pull/2361) ([s3tezsky](https://github.com/s3tezsky))
+- \[shopsys\] bump minimal version of doctrine/dbal package [\#2360](https://github.com/shopsys/shopsys/pull/2360) ([s3tezsky](https://github.com/s3tezsky))
+- \[shopsys\] increase minimal supported version of symfony/proxy-manager-bridge [\#2359](https://github.com/shopsys/shopsys/pull/2359) ([grossmannmartin](https://github.com/grossmannmartin))
+- \[framework\] restrict symfony to version 4 [\#2358](https://github.com/shopsys/shopsys/pull/2358) ([grossmannmartin](https://github.com/grossmannmartin))
+- \[framework\] free text in order is now correctly translated to orders language [\#2357](https://github.com/shopsys/shopsys/pull/2357) ([TomasLudvik](https://github.com/TomasLudvik))
+- \[project-base\] data fixtures always create same prices independently on input price setting [\#2356](https://github.com/shopsys/shopsys/pull/2356) ([TomasLudvik](https://github.com/TomasLudvik))
+- \[project-base\] fixed wrong price converting in datafixtures [\#2354](https://github.com/shopsys/shopsys/pull/2354) ([s3tezsky](https://github.com/s3tezsky))
+- \[framework\] admin: fix label alignment in multidomain fields [\#2348](https://github.com/shopsys/shopsys/pull/2348) ([Srnka392](https://github.com/Srnka392))
+- \[framework\] javascript email validation works now same as server side validation [\#2346](https://github.com/shopsys/shopsys/pull/2346) ([TomasLudvik](https://github.com/TomasLudvik))
+- \[framework\] handled FileNotFoundException on main filesystem [\#2342](https://github.com/shopsys/shopsys/pull/2342) ([s3tezsky](https://github.com/s3tezsky))
+- \[framework\] company name is return when is not null [\#2338](https://github.com/shopsys/shopsys/pull/2338) ([malyMiso](https://github.com/malyMiso))
+- \[shopsys\] moved translations on front to project-base [\#2337](https://github.com/shopsys/shopsys/pull/2337) ([s3tezsky](https://github.com/s3tezsky))
+- \[framework\] cron overview now can display duration of crons over one hour [\#2334](https://github.com/shopsys/shopsys/pull/2334) ([TomasLudvik](https://github.com/TomasLudvik))
+- \[framework\] exchange rate recalculation after changing default currency [\#2332](https://github.com/shopsys/shopsys/pull/2332) ([vitek-rostislav](https://github.com/vitek-rostislav))
+- \[project-base\] ProductFilterPage now uses mb\_stripos instead of stripos [\#2330](https://github.com/shopsys/shopsys/pull/2330) ([vitek-rostislav](https://github.com/vitek-rostislav))
+- \[framework\] fixed order validation of company customers [\#2329](https://github.com/shopsys/shopsys/pull/2329) ([TomasLudvik](https://github.com/TomasLudvik))
+- \[framework\] fixed rendering of DisplayOnlyType in inline data grid [\#2327](https://github.com/shopsys/shopsys/pull/2327) ([s3tezsky](https://github.com/s3tezsky))
+- \[framework\] annotation cache don't use doctrine file cache [\#2326](https://github.com/shopsys/shopsys/pull/2326) ([grossmannmartin](https://github.com/grossmannmartin))
+- \[shopsys\] fix calculation of transport and payment visibilities [\#2325](https://github.com/shopsys/shopsys/pull/2325) ([TomasLudvik](https://github.com/TomasLudvik))
+- \[shopsys\] prevent admin to log as customer user on a different domain than user is registered on [\#2323](https://github.com/shopsys/shopsys/pull/2323) ([TomasLudvik](https://github.com/TomasLudvik))
+- \[framework\] admin: dashboard: deleted orders are no longer included in statistics [\#2322](https://github.com/shopsys/shopsys/pull/2322) ([LuKillman](https://github.com/LuKillman))
+- \[shopsys\] excluded friendsofphp/php-cs-fixer v2.19.0 [\#2318](https://github.com/shopsys/shopsys/pull/2318) ([s3tezsky](https://github.com/s3tezsky))
+- \[framework\] fixed title of modal window for deleting with setting replacement [\#2301](https://github.com/shopsys/shopsys/pull/2301) ([s3tezsky](https://github.com/s3tezsky))
+- \[framework\] fixed validation of customer email edit in administration [\#2300](https://github.com/shopsys/shopsys/pull/2300) ([s3tezsky](https://github.com/s3tezsky))
+- \[framework\] fix homepage slider items not ordered by position [\#2271](https://github.com/shopsys/shopsys/pull/2271) ([CarabineSK](https://github.com/CarabineSK))
+- \[framework\] FileUploadType widget checks if uploaded file exists [\#2234](https://github.com/shopsys/shopsys/pull/2234) ([malyMiso](https://github.com/malyMiso))
+
+:hammer: Developer experience and refactoring
+
+- \[shopsys\] extract setter injection methods into trait [\#2351](https://github.com/shopsys/shopsys/pull/2351) ([grossmannmartin](https://github.com/grossmannmartin))
+- \[shopsys\] trigger deprecations wrapped to helper class [\#2349](https://github.com/shopsys/shopsys/pull/2349) ([grossmannmartin](https://github.com/grossmannmartin))
+- \[shopsys\] allowed install new version of symfony/dependency-injection [\#2344](https://github.com/shopsys/shopsys/pull/2344) ([grossmannmartin](https://github.com/grossmannmartin))
+- \[frontend-api\] removed deprecated use of `Token::getClaim` in FrontendApiUserFactory [\#2339](https://github.com/shopsys/shopsys/pull/2339) ([malyMiso](https://github.com/malyMiso))
+- \[shopsys\] updated node and npm packages [\#2336](https://github.com/shopsys/shopsys/pull/2336) ([grossmannmartin](https://github.com/grossmannmartin))
+- \[monorepo\] added release candidate step for generating Apiary.io blueprint [\#2335](https://github.com/shopsys/shopsys/pull/2335) ([TomasLudvik](https://github.com/TomasLudvik))
+- \[shopsys\] class names are get from `::class` constant instead of FQCN string [\#2319](https://github.com/shopsys/shopsys/pull/2319) ([s3tezsky](https://github.com/s3tezsky))
+- \[shopsys\] bumped version of composer dependency composer/composer [\#2313](https://github.com/shopsys/shopsys/pull/2313) ([s3tezsky](https://github.com/s3tezsky))
+- \[project-base\] removed unused multipleProductsInOrder.graphql file [\#2306](https://github.com/shopsys/shopsys/pull/2306) ([CarabineSK](https://github.com/CarabineSK))
+- \[framework\] fix entity name in FrontendCustomerUserProvider [\#2261](https://github.com/shopsys/shopsys/pull/2261) ([vitek-rostislav](https://github.com/vitek-rostislav))
+
+:book: Documentation
+
+- \[docs\] typo in database-migrations.md [\#2363](https://github.com/shopsys/shopsys/pull/2363) ([grossmannmartin](https://github.com/grossmannmartin))
+- \[docs\] introduction-to-frontend-api.md: fix graphiql links [\#2355](https://github.com/shopsys/shopsys/pull/2355) ([vitek-rostislav](https://github.com/vitek-rostislav))
+- \[docs\] fix basic-data-import.md  [\#2352](https://github.com/shopsys/shopsys/pull/2352) ([vitek-rostislav](https://github.com/vitek-rostislav))
+- \[shopsys\] removed Travis badge [\#2341](https://github.com/shopsys/shopsys/pull/2341) ([grossmannmartin](https://github.com/grossmannmartin))
+- \[docs\] introduction-to-frontend-api.md: fix typos [\#2324](https://github.com/shopsys/shopsys/pull/2324) ([vitek-rostislav](https://github.com/vitek-rostislav))
+- \[shopsys\] added 9.1.1 upgrade notes link [\#2317](https://github.com/shopsys/shopsys/pull/2317) ([grossmannmartin](https://github.com/grossmannmartin))
+- \[docs\] added upgrade note for upgrading symfony/security\* packages [\#2316](https://github.com/shopsys/shopsys/pull/2316) ([s3tezsky](https://github.com/s3tezsky))
+- \[docs\] updated apiary.apib to be up to date [\#2312](https://github.com/shopsys/shopsys/pull/2312) ([s3tezsky](https://github.com/s3tezsky))
+- \[shopsys\] fix incorrect deprecated annotation in ProductOnCurrentDomainElasticFacade [\#2299](https://github.com/shopsys/shopsys/pull/2299) ([CarabineSK](https://github.com/CarabineSK))
+- \[docs\] added hints for upgradable application [\#2289](https://github.com/shopsys/shopsys/pull/2289) ([grossmannmartin](https://github.com/grossmannmartin))
+
+:rocket: Performance
+
+- \[framework\] optimized category sorting in admin [\#2328](https://github.com/shopsys/shopsys/pull/2328) ([grossmannmartin](https://github.com/grossmannmartin))
+- \[framework\] destroy intervention image after it is saved in filesystem in order to prevent memory leaks [\#2304](https://github.com/shopsys/shopsys/pull/2304) ([malyMiso](https://github.com/malyMiso))
+
+## [v7.3.7](https://github.com/shopsys/shopsys/compare/v7.3.6...v7.3.7) (2021-06-10)
+
+:hammer: Developer experience and refactoring
+
+- \[product-feed-heureka\] ignored errors reported by new squizlabs/php\_codesniffer version 3.6.0 in 7.3 [\#2321](https://github.com/shopsys/shopsys/pull/2321) ([s3tezsky](https://github.com/s3tezsky))
+- \[shopsys\] added --resume-step option for release command [\#2340](https://github.com/shopsys/shopsys/pull/2340) ([vitek-rostislav](https://github.com/vitek-rostislav))
+
+:bug: Bug fixes
+
+- \[shopsys\] excluded friendsofphp/php-cs-fixer v2.19.0 in 7.3 [\#2320](https://github.com/shopsys/shopsys/pull/2320) ([s3tezsky](https://github.com/s3tezsky))
+
+:cloud: Infrastructure
+
+- \[shopsys\] fix travis for version 7.3 [\#2331](https://github.com/shopsys/shopsys/pull/2331) ([TomasLudvik](https://github.com/TomasLudvik))
+
+:warning: Security
+
+- \[shopsys\] bumped version of composer dependency composer/composer in 7.3 [\#2314](https://github.com/shopsys/shopsys/pull/2314) ([s3tezsky](https://github.com/s3tezsky))
+- \[shopsys\] set minimal version of symfony/symfony to 3.4.48 [\#2315](https://github.com/shopsys/shopsys/pull/2315) ([s3tezsky](https://github.com/s3tezsky))
+
 ## [v9.1.1](https://github.com/shopsys/shopsys/compare/v9.1.0...v9.1.1) (2021-04-19)
 
 :sparkles: Enhancements and features
@@ -272,6 +356,14 @@ The changelog is generated during the release process using [Github Changelog Ge
 
 - [#2135] locked composer to version 1.x for 9.0 branch
 
+## [v7.3.6](https://github.com/shopsys/shopsys/compare/v7.3.5...v7.3.6) - 2020-11-29
+
+### [shopsys/project-base]
+
+#### Fixed
+
+- [#2136] lock composer to version 1.x for 7.3 branch
+
 ## [v9.0.3](https://github.com/shopsys/shopsys/compare/v9.0.2...v9.0.3) - 2020-09-30
 
 ### [shopsys/framework]
@@ -300,6 +392,82 @@ The changelog is generated during the release process using [Github Changelog Ge
 #### Fixed
 
 - [#2026] fixed import path in ecs configurations
+
+## [v7.3.5](https://github.com/shopsys/shopsys/compare/v7.3.4...v7.3.5) - 2020-09-10
+
+### [shopsys/framework]
+
+#### Added
+- [#1994] added link into breadcrumb item in admin if uri is not null, Thanks to [@pesektomas]
+
+#### Changed
+
+- [#1972] fixed removing friendly urls
+
+#### Fixed
+
+- [#1651] fixed call sleep() on null on sleep cron module between two feeds, Thanks to [@pk16011990]
+- [#1672] edit transport and payment names in order items after order is changed, Thanks to [@pk16011990]
+- [#1719] ProductExportRepository: prevent Undefined offset notice
+- [#1723] default product data now have availability set
+- [#1760] added array_key_exists condition into to NotNullableColumnsFinder method, Thanks to [@pesektomas]
+- [#1794] fix condition for plus numbers of parameters in the product filter, Thanks to [@RostislavKreisinger]
+- [#1885] fixed calculate availability for new product
+- [#1909] fixed error 500 during logout when the user is already logged out
+- [#1915] datepicker.js assigns options per instance, Thanks to [@milanStano]
+- [#1916] fixed throwing OrderItemNotFoundException
+- [#1919] fixed saving thumbnails in elfinder
+- [#1920] fixed renaming files in elfinder
+- [#1959] fixed property annotation in ProductAvailabilityCalculation
+- [#1966] fixed clearing form options in product picker
+- [#1967] select distinct product for vat replace, Thanks to [@mposchl]
+- [#1971] fixed joining the same table with different alias
+- [#1979] spinbox plus now works correctly with min value
+- [#1982] categories in administration are now loaded using admin locale
+- [#2010] cart items are now correctly deleted when cart is deleted
+
+### [shopsys/project-base]
+
+#### Added
+
+- [#1861] added extra_host for elasticsearch in production docker-compose.yml file, Thanks to [@ondrejbohac]
+
+#### Changed
+
+- [#1644] order can now be completed when successful flash message exists, Thanks to [@pk16011990]
+- [#1842] automatically delete sessions after 7 days of user inactivity, Thanks to [@stanoMilan]
+- [#1990] added condition for get accessories if module is enabled only, Thanks to [@pesektomas]
+
+#### Fixed
+
+- [#1662] delete backup index if exists before creating new backup, Thanks to [@pk16011990]
+- [#1827] container log now catches all lines from first command output, Thanks to [@pk16011990]
+- [#1906] windowForm: fix initialization of JS validation
+- [#1926] fixed wrong url of freshly uploaded files in wysiwyg
+- [#1970] fixed displaying errors in popup window
+
+### [shopsys/shopsys]
+
+#### Added
+
+- [#1944] added note about possibility of credentials caching while releasing
+- [#1975] added cron limitation documentation
+
+#### Changed
+
+- [#1946] updated releaser list of excluded packages
+- [#1985] redis build-version now includes application environment
+
+#### Fixed
+
+- [#1713] fixed installation documentation for Windows 10 via Docker
+- [#1947] fixed checking builds in after-release stage
+
+### [shopsys/read-model]
+
+#### Changed
+
+- [#1730] ProductActionView creation: use calculatedSellingDenied
 
 ## [v9.0.2](https://github.com/shopsys/shopsys/compare/v9.0.1...v9.0.2) - 2020-09-01
 

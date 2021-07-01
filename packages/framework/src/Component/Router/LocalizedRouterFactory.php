@@ -4,9 +4,10 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Component\Router;
 
-use BadMethodCallException;
+use Shopsys\FrameworkBundle\Component\Deprecations\DeprecationHelper;
 use Shopsys\FrameworkBundle\Component\Environment\EnvironmentType;
 use Shopsys\FrameworkBundle\Component\Router\Exception\LocalizedRoutingConfigFileNotFoundException;
+use Shopsys\FrameworkBundle\DependencyInjection\SetterInjectionTrait;
 use Symfony\Bundle\FrameworkBundle\Routing\Router;
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -14,6 +15,8 @@ use Symfony\Component\Routing\RequestContext;
 
 class LocalizedRouterFactory
 {
+    use SetterInjectionTrait;
+
     /**
      * @deprecated This loader is deprecated and will be removed in the next major. Use Symfony\Bundle\FrameworkBundle\Routing\Router instead of Symfony\Component\Routing\Router without this dependency.
      * @var \Symfony\Component\Config\Loader\LoaderInterface
@@ -66,23 +69,7 @@ class LocalizedRouterFactory
      */
     public function setContainer(ContainerInterface $container): void
     {
-        if ($this->container !== null && $this->container !== $container) {
-            throw new BadMethodCallException(
-                sprintf('Method "%s" has been already called and cannot be called multiple times.', __METHOD__)
-            );
-        }
-        if ($this->container !== null) {
-            return;
-        }
-
-        @trigger_error(
-            sprintf(
-                'The %s() method is deprecated and will be removed in the next major. Use the constructor injection instead.',
-                __METHOD__
-            ),
-            E_USER_DEPRECATED
-        );
-        $this->container = $container;
+        $this->setDependency($container, 'container');
     }
 
     /**
@@ -128,11 +115,10 @@ class LocalizedRouterFactory
     protected function getRoutingCacheDir(string $locale): string
     {
         if ($this->cacheDir === null) {
-            $deprecationMessage = sprintf(
+            DeprecationHelper::trigger(
                 'The argument "$cacheDir" is not provided by constructor in "%s". In the next major it will be required.',
                 self::class
             );
-            @trigger_error($deprecationMessage, E_USER_DEPRECATED);
 
             $this->cacheDir = $this->container->getParameter('shopsys.router.localized.cache_dir');
         }

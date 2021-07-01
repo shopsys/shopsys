@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Product\Pricing;
 
+use Shopsys\FrameworkBundle\Component\Deprecations\DeprecationHelper;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
@@ -28,12 +29,9 @@ class PriceFactory
             }
         }
 
-        @trigger_error(
-            sprintf(
-                'Returning null value from method "%s" is deprecated. Exception "NoProductPriceForPricingGroupException" will be thrown.',
-                __METHOD__
-            ),
-            E_USER_DEPRECATED
+        DeprecationHelper::trigger(
+            'Returning null value from method "%s" is deprecated. Exception "NoProductPriceForPricingGroupException" will be thrown.',
+            __METHOD__
         );
 
         return null;

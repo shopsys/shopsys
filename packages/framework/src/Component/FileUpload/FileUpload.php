@@ -2,19 +2,21 @@
 
 namespace Shopsys\FrameworkBundle\Component\FileUpload;
 
-use BadMethodCallException;
 use League\Flysystem\FileNotFoundException;
 use League\Flysystem\FilesystemInterface;
 use League\Flysystem\MountManager;
 use Shopsys\FrameworkBundle\Component\FileUpload\Exception\MoveToEntityFailedException;
 use Shopsys\FrameworkBundle\Component\FileUpload\Exception\UploadFailedException;
 use Shopsys\FrameworkBundle\Component\String\TransformString;
+use Shopsys\FrameworkBundle\DependencyInjection\SetterInjectionTrait;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Filesystem\Exception\IOException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class FileUpload
 {
+    use SetterInjectionTrait;
+
     protected const TEMPORARY_DIRECTORY = 'fileUploads';
     protected const DELETE_OLD_FILES_SECONDS = 86400;
 
@@ -87,23 +89,7 @@ class FileUpload
      */
     public function setEventDispatcher(ParameterBagInterface $parameterBag): void
     {
-        if ($this->parameterBag !== null && $this->parameterBag !== $parameterBag) {
-            throw new BadMethodCallException(
-                sprintf('Method "%s" has been already called and cannot be called multiple times.', __METHOD__)
-            );
-        }
-        if ($this->parameterBag !== null) {
-            return;
-        }
-
-        @trigger_error(
-            sprintf(
-                'The %s() method is deprecated and will be removed in the next major. Use the constructor injection instead.',
-                __METHOD__
-            ),
-            E_USER_DEPRECATED
-        );
-        $this->parameterBag = $parameterBag;
+        $this->setDependency($parameterBag, 'parameterBag');
     }
 
     /**

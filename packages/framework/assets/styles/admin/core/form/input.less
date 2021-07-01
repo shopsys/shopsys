@@ -15,6 +15,8 @@
 @input-width-with-domain: 408px;
 @input-bg-color: @color-f;
 
+@input-domain-top-offset: 9px;
+
 .input {
     width: @input-width;
     max-width: 100%;
@@ -190,14 +192,15 @@
     }
 
     &__domain {
+        display: flex;
+        align-items: center;
         position: absolute;
-        top: 22px;
+        top: @input-domain-top-offset;
         left: 10px;
         width: 46px;
-        height: calc(~"@{input-height} - 2*10px");
+        height: calc(~"@{input-height} - 2* @{input-domain-top-offset}");
 
         img {
-            .center-image();
             max-width: @in-image-width;
             max-height: @in-image-height;
         }

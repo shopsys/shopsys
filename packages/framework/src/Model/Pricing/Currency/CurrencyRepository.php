@@ -49,6 +49,22 @@ class CurrencyRepository
     }
 
     /**
+     * @param string $currencyCode
+     * @return \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency
+     */
+    public function getByCode(string $currencyCode): Currency
+    {
+        $currency = $this->findByCode($currencyCode);
+
+        if ($currency === null) {
+            $message = 'Currency with code "' . $currencyCode . '" not found.';
+            throw new CurrencyNotFoundException($message);
+        }
+
+        return $currency;
+    }
+
+    /**
      * @param int $currencyId
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency
      */

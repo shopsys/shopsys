@@ -4,17 +4,20 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Component\Router\FriendlyUrl;
 
-use BadMethodCallException;
 use Doctrine\ORM\EntityManagerInterface;
+use Shopsys\FrameworkBundle\Component\Deprecations\DeprecationHelper;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\Exception\FriendlyUrlNotFoundException;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\Exception\ReachMaxUrlUniqueResolveAttemptException;
+use Shopsys\FrameworkBundle\DependencyInjection\SetterInjectionTrait;
 use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 use Symfony\Contracts\Cache\CacheInterface;
 
 class FriendlyUrlFacade
 {
+    use SetterInjectionTrait;
+
     protected const MAX_URL_UNIQUE_RESOLVE_ATTEMPT = 100;
 
     /**
@@ -78,11 +81,10 @@ class FriendlyUrlFacade
         ?CacheInterface $mainFriendlyUrlSlugCache = null
     ) {
         if ($mainFriendlyUrlSlugCache === null) {
-            $deprecationMessage = sprintf(
+            DeprecationHelper::trigger(
                 'The argument "$mainFriendlyUrlSlugCache" is not provided by constructor in "%s". In the next major it will be required.',
                 self::class
             );
-            @trigger_error($deprecationMessage, E_USER_DEPRECATED);
         }
 
         $this->em = $em;
@@ -300,26 +302,7 @@ class FriendlyUrlFacade
      */
     public function setFriendlyUrlCacheKeyProvider(FriendlyUrlCacheKeyProvider $friendlyUrlCacheKeyProvider): void
     {
-        if (
-            $this->friendlyUrlCacheKeyProvider !== null
-            && $this->friendlyUrlCacheKeyProvider !== $friendlyUrlCacheKeyProvider
-        ) {
-            throw new BadMethodCallException(
-                sprintf('Method "%s" has been already called and cannot be called multiple times.', __METHOD__)
-            );
-        }
-        if ($this->friendlyUrlCacheKeyProvider !== null) {
-            return;
-        }
-
-        @trigger_error(
-            sprintf(
-                'The %s() method is deprecated and will be removed in the next major. Use the constructor injection instead.',
-                __METHOD__
-            ),
-            E_USER_DEPRECATED
-        );
-        $this->friendlyUrlCacheKeyProvider = $friendlyUrlCacheKeyProvider;
+        $this->setDependency($friendlyUrlCacheKeyProvider, 'friendlyUrlCacheKeyProvider');
     }
 
     /**

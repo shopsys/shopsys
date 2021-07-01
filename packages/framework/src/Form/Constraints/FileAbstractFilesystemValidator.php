@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Form\Constraints;
 
+use League\Flysystem\FileNotFoundException;
 use League\Flysystem\MountManager;
 use Shopsys\FrameworkBundle\Component\FileUpload\FileUpload;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
@@ -49,21 +50,22 @@ class FileAbstractFilesystemValidator extends FileValidator
     public function validate($value, Constraint $constraint)
     {
         $abstractPath = $this->fileUpload->getTemporaryFilepath($value->getFilename());
+        $localFileUniqueName = $this->fileUpload->getTemporaryFilepath(uniqid() . $value->getFilename());
+        $localPath = $this->parameterBag->get('shopsys.root_dir') . $localFileUniqueName;
 
-        if ($this->mountManager->has('main://' . $abstractPath)) {
-            $localFileUniqueName = $this->fileUpload->getTemporaryFilepath(uniqid() . $value->getFilename());
-            $localPath = $this->parameterBag->get('shopsys.root_dir') . $localFileUniqueName;
+        try {
             $this->mountManager->copy('main://' . $abstractPath, 'local://' . $localPath);
-
-            parent::validate(new FileObject($localPath), $constraint);
-
-            $this->mountManager->delete('local://' . $localPath);
-        } else {
+        } catch (FileNotFoundException $exception) {
             $this->context->buildViolation(
                 'This file could not be found. Please remove it and try to upload it again.'
             )
                 ->setCode((string)UPLOAD_ERR_NO_FILE)
                 ->addViolation();
+            return;
         }
+
+        parent::validate(new FileObject($localPath), $constraint);
+
+        $this->mountManager->delete('local://' . $localPath);
     }
 }

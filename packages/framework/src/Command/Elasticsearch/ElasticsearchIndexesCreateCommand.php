@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Command\Elasticsearch;
 
+use Shopsys\FrameworkBundle\Component\Deprecations\DeprecationHelper;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinition;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -22,13 +23,11 @@ class ElasticsearchIndexesCreateCommand extends AbstractElasticsearchIndexComman
      */
     protected function executeCommand(IndexDefinition $indexDefinition, OutputInterface $output): void
     {
-        trigger_error(
-            sprintf(
-                'Command "%s" is deprecated and will be removed in next major version. Use "shopsys:elasticsearch:indexes-migrate" instead.',
-                static::$defaultName
-            ),
-            E_USER_DEPRECATED
+        DeprecationHelper::trigger(
+            'Command "%s" is deprecated and will be removed in next major version. Use "shopsys:elasticsearch:indexes-migrate" instead.',
+            static::$defaultName
         );
+
         $this->indexFacade->create($indexDefinition, $output);
     }
 

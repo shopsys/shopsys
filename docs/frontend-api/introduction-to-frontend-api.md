@@ -86,7 +86,7 @@ You can read more in [OverblogGraphQLBundle documentation](https://github.com/ov
 Frontend API package also integrates graphical interactive in-browser GraphQL IDE [GraphiQL](https://github.com/graphql/graphiql/tree/master/packages/graphiql#readme).
 With it, you can debug your query easily and also browse the endpoint documentation for available objects, fields and their meaning.
 
-You can access it in development mode on `http://127.0.0.1/graphql/graphiql` (respectively `http://127.0.0.2/graphql/graphiql` for the second domain).
+You can access it in development mode on `http://127.0.0.1:8000/graphql/graphiql` (respectively `http://127.0.0.2:8000/graphql/graphiql` for the second domain).
 
 You can also use other tools like Postman (<https://www.getpostman.com>) or GraphQL Playground (<https://github.com/prisma-labs/graphql-playground>).
 

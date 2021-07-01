@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Shopsys\FrontendApiBundle\Model\Resolver\Image;
 
-use BadMethodCallException;
 use Overblog\GraphQLBundle\Definition\Resolver\ResolverInterface;
 use Overblog\GraphQLBundle\Error\UserError;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
@@ -15,6 +14,7 @@ use Shopsys\FrameworkBundle\Component\Image\Config\ImageEntityConfig;
 use Shopsys\FrameworkBundle\Component\Image\Config\ImageSizeConfig;
 use Shopsys\FrameworkBundle\Component\Image\Image;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
+use Shopsys\FrameworkBundle\DependencyInjection\SetterInjectionTrait;
 use Shopsys\FrameworkBundle\Model\Advert\Advert;
 use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Payment\Payment;
@@ -25,6 +25,8 @@ use Shopsys\FrontendApiBundle\Component\Image\ImageFacade as FrontendApiImageFac
 
 class ImagesResolver implements ResolverInterface
 {
+    use SetterInjectionTrait;
+
     protected const IMAGE_ENTITY_PRODUCT = 'product';
     protected const IMAGE_ENTITY_CATEGORY = 'category';
     protected const IMAGE_ENTITY_PAYMENT = 'payment';
@@ -77,25 +79,7 @@ class ImagesResolver implements ResolverInterface
      */
     public function setFrontendApiImageFacade(FrontendApiImageFacade $frontendApiImageFacade): void
     {
-        if ($this->frontendApiImageFacade !== null && $this->frontendApiImageFacade !== $frontendApiImageFacade) {
-            throw new BadMethodCallException(sprintf(
-                'Method "%s" has been already called and cannot be called multiple times.',
-                __METHOD__
-            ));
-        }
-        if ($this->frontendApiImageFacade !== null) {
-            return;
-        }
-
-        @trigger_error(
-            sprintf(
-                'The %s() method is deprecated and will be removed in the next major. Use the constructor injection instead.',
-                __METHOD__
-            ),
-            E_USER_DEPRECATED
-        );
-
-        $this->frontendApiImageFacade = $frontendApiImageFacade;
+        $this->setDependency($frontendApiImageFacade, 'frontendApiImageFacade');
     }
 
     /**

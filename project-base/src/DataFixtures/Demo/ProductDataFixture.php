@@ -9307,9 +9307,17 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
      */
     private function setPriceForAllPricingGroups(ProductData $productData, string $price): void
     {
+        /** @var \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currencyCzk */
+        $currencyCzk = $this->getReference(CurrencyDataFixture::CURRENCY_CZK);
+
         foreach ($this->pricingGroupFacade->getAll() as $pricingGroup) {
-            $money = $this->priceConverter->convertPriceWithoutVatToPriceInDomainDefaultCurrency(
+            /** @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vat */
+            $vat = $this->getReferenceForDomain(VatDataFixture::VAT_HIGH, $pricingGroup->getDomainId());
+
+            $money = $this->priceConverter->convertPriceToInputPriceWithoutVatInDomainDefaultCurrency(
                 Money::create($price),
+                $currencyCzk,
+                $vat->getPercent(),
                 $pricingGroup->getDomainId()
             );
 

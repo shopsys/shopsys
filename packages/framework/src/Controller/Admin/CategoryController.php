@@ -2,6 +2,7 @@
 
 namespace Shopsys\FrameworkBundle\Controller\Admin;
 
+use Nette\Utils\Json;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Domain\Exception\InvalidDomainIdException;
 use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
@@ -190,10 +191,20 @@ class CategoryController extends AdminBaseController
 
     /**
      * @Route("/category/save-order/", methods={"post"})
+     * @deprecated method saveOrderAction is deprecated. Use applySortingAction() instead.
      * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function saveOrderAction(Request $request)
     {
+        @trigger_error(
+            sprintf(
+                'The %s() method is deprecated and will be removed in the next major. Use applySortingAction() instead.',
+                __METHOD__
+            ),
+            E_USER_DEPRECATED
+        );
+
         $categoriesOrderingData = $request->get('categoriesOrderingData');
 
         $parentIdByCategoryId = [];
@@ -204,6 +215,22 @@ class CategoryController extends AdminBaseController
         }
 
         $this->categoryFacade->editOrdering($parentIdByCategoryId);
+
+        return new Response('OK - dummy');
+    }
+
+    /**
+     * @Route("/category/apply-sorting/", methods={"post"})
+     * @see node_modules/@shopsys/framework/js/admin/components/CategoryTreeSorting.js
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function applySortingAction(Request $request): Response
+    {
+        $categoriesOrderingDataJson = $request->request->get('categoriesOrderingData');
+        $categoriesOrderingData = Json::decode($categoriesOrderingDataJson, Json::FORCE_ARRAY);
+
+        $this->categoryFacade->reorderByNestedSetValues($categoriesOrderingData);
 
         return new Response('OK - dummy');
     }
