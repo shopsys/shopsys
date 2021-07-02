@@ -335,9 +335,6 @@
       "unit": {
         "type": "text"
       },
-      "is_using_stock": {
-        "type": "boolean"
-      },
       "stock_quantity": {
         "type": "integer"
       },

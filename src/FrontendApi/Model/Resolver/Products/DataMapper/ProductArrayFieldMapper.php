@@ -10,6 +10,15 @@ class ProductArrayFieldMapper extends BaseProductArrayFieldMapper
 {
     /**
      * @param array $data
+     * @return bool
+     */
+    public function isUsingStock(array $data): bool
+    {
+        return true;
+    }
+
+    /**
+     * @param array $data
      * @return string
      */
     public function getFullname(array $data): string
