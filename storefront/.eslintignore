@@ -1,0 +1,9 @@
+.next/
+public/
+node_modules/
+coverage/
+__snapshots__/
+__tests__/
+package-lock.json
+generated/
+*/dist/

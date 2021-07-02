@@ -1,13 +1,12 @@
 import React from 'react';
-import { useQuery } from "urql";
+import { useQuery } from 'urql';
 import { withUrqlClient } from 'next-urql';
-import i18n from '../config/i18n';
 import { I18nextProvider, useTranslation } from 'react-i18next';
 import CONFIG from '../config/global';
 
 const Index = () => {
     const { t, i18n } = useTranslation();
-    
+
     const [result] = useQuery({
         query: `
             query categories {
@@ -21,9 +20,9 @@ const Index = () => {
 
     function CategoryList() {
         if (result.fetching) {
-            return "Loading...";
+            return 'Loading...';
         } else if (result.error) {
-            return "Oh no! Máme tam chybu ";
+            return 'Oh no! Máme tam chybu';
         } else if (result.data) {
             return (
                 <>
@@ -32,7 +31,7 @@ const Index = () => {
                             <li key={uuid}>{name}</li>
                         ))}
                     </ul>
-                </> 
+                </>
             );
         } else {
             return null;
@@ -44,9 +43,9 @@ const Index = () => {
             <h1>{t('List of categories')}</h1>
             <CategoryList />
         </I18nextProvider>
-    )
+    );
 };
 
 export default withUrqlClient((_ssrExchange, ctx) => ({
-    url: CONFIG.API_URL,
+    url: CONFIG.API_URL
 }))(Index);
