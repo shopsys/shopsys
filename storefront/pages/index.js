@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import CONFIG from '../config/global';
 
 const Index = () => {
-    const { t, i18n } = useTranslation();
+    const { t } = useTranslation();
 
     const [result] = useQuery({
         query: `
@@ -20,9 +20,13 @@ const Index = () => {
 
     function CategoryList() {
         if (result.fetching) {
-            return 'Loading...';
+            return <>{t('Loading')}...</>;
         } else if (result.error) {
-            return 'Oh no! Máme tam chybu';
+            return (
+                <>
+                    {t('Oh no! Error')} - {result.error.message}
+                </>
+            );
         } else if (result.data) {
             return (
                 <ul>
