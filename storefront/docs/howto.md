@@ -1,11 +1,13 @@
-Vlastní komponenty
-- pro lepší orientaci používat prefix ssfw - tedy SsfwProductItem
-- Ssfw - prefix, Product = Složka, Item = název soboru
-- projekt bude obsahovat mnoho cizích komponent a takto bude jasné, které jsou interní a které externí
-- pro psaní názvů PascalCase - některé komponenty jsou psány s malým některé naopak s velkým - pro zjednodušení a nemusím nad tím přemýšlet - psát všude velké na začátku a těch, které si to vyžádají malé.
--- (jak používat názvy složek? pro zjednodušení taky vše PascalCasem?)
+Custom components
+- for better orientation in code use prefix ssfw - for example SsfwProductItem
+- Ssfw - prefix, Product = Folder, Item = filename
+- project will contain a lot of 3rd party comoponents, so we will see, which are SSFW components and which are 3rd party
+- as possible use PascalCase - some components are lowercase, come are PascalCase 
+-- much easier without thinking about it - use Upper first letter 
+-- use lower first letter only on components which force it
+-- (how to use folder names? PascalCase too?)
 
-Struktura SSFW
+SSFW Storefront folder structure
 
 api
 - init 
@@ -32,13 +34,13 @@ pages
 - Shipping-payment
 - Order-finish
 
-config/* - nastavení jednotlivých pluginů
+config/* - all plugins config files
 
-config/global.js - globalni nastaveni 
+config/global.js - global settings 
 
-docs - dokumentace ke kompontentám a nastavení
+docs - docs for components, settings, pages, global mindset
 
-public - soubory v této složce jsou dostupné v URL 
+public - in this folder are public files 
 
 ```javascript
 http://localhost:3000/favicon.ico
@@ -53,7 +55,7 @@ import CONFIG from '../config/global'
 
 ```
 
-Přidání nové globální config proměnné - editovat sobuor config/global.js a použít pro odlišení kapitálkami.
+Adding new global config variable - edit file config/global.js and add use UPPERCASE.
 
 ```javascript
 module.exports  = {
