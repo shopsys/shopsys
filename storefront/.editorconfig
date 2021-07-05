@@ -10,6 +10,7 @@ insert_final_newline = true
 trim_trailing_whitespace = true
 quote_type = single
 traillingComma = none
+insert_final_newline = true
 
 [*.md]
 max_line_length = 0

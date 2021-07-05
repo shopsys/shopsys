@@ -6,7 +6,7 @@ function MyApp({ Component, pageProps }) {
         <I18nextProvider i18n={i18n}>
             <Component {...pageProps} />
         </I18nextProvider>
-    )
+    );
 }
 
-export default MyApp
+export default MyApp;
