@@ -1,7 +1,7 @@
 import React from 'react';
 import { useQuery } from 'urql';
 import { withUrqlClient } from 'next-urql';
-import { I18nextProvider, useTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import CONFIG from '../config/global';
 
 const Index = () => {
@@ -25,13 +25,11 @@ const Index = () => {
             return 'Oh no! Máme tam chybu';
         } else if (result.data) {
             return (
-                <>
-                    <ul>
-                        {result.data.categories.map(({ uuid, name }) => (
-                            <li key={uuid}>{name}</li>
-                        ))}
-                    </ul>
-                </>
+                <ul>
+                    {result.data.categories.map(({ uuid, name }) => (
+                        <li key={uuid}>{name}</li>
+                    ))}
+                </ul>
             );
         } else {
             return null;
@@ -39,10 +37,10 @@ const Index = () => {
     }
 
     return (
-        <I18nextProvider i18n={i18n}>
+        <>
             <h1>{t('List of categories')}</h1>
             <CategoryList />
-        </I18nextProvider>
+        </>
     );
 };
 
