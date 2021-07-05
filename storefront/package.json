@@ -10,6 +10,7 @@
     "translate": "i18next 'pages/**/*.js' --config config/i18next-parser.config.js"
   },
   "dependencies": {
+    "eslint-plugin-prettier": "^3.4.0",
     "graphql": "^15.5.1",
     "i18next": "^20.3.2",
     "i18next-browser-languagedetector": "^6.1.2",
