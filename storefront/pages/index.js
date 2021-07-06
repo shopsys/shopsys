@@ -48,6 +48,6 @@ const Index = () => {
     );
 };
 
-export default withUrqlClient((_ssrExchange, ctx) => ({
+export default withUrqlClient(() => ({
     url: CONFIG.API_URL
 }))(Index);

@@ -13,17 +13,32 @@ Start the development server.
 npm run dev
 ```
 
-Builds the app for production.
+Build the app for production.
 ```javascript
 npm run build
 ```
 
-Runs the built app in production mode.
+Run the built app in production mode.
 ```javascript
 npm start
 ```
 
-Runs translation files generator.
+Run eslint for code
+```javascript
+npm run lint
+```
+
+Run eslint and fix code
+```javascript
+npm run lint--fix
+```
+
+Run prettier format code
+```javascript
+npm run format 
+```
+
+Run translation files generator.
 ```javascript
 npm run translate
 ```

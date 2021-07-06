@@ -17,7 +17,8 @@
         "sourceType": "module"
     },
     "plugins": [
-        "react"
+        "react",
+        "unused-imports"
     ],
     "rules": {
         "semi": ["error", "always"],
@@ -30,6 +31,16 @@
         "eqeqeq": "off",
         "no-eval": "off",
         "no-new": "off",
-        "import/no-named-default": "off"
+        "import/no-named-default": "off",
+        "react/react-in-jsx-scope": "off",
+        "react/jsx-props-no-spreading": "off",
+        "react/require-default-props": "off",
+        "react/prop-types": "off",
+        "unused-imports/no-unused-imports": "error"
+    },
+    "settings": {
+        "react": {
+            "version": "detect"
+        }
     }
 }
