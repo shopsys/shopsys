@@ -1,5 +1,8 @@
 {
+    "Default": "Default",
     "List of categories": "List of categories",
     "Loading": "Loading",
-    "Oh no! Error": "Oh no! Error"
+    "Oh no! Error": "Oh no! Error",
+    "Primary": "Primary",
+    "Secondary": "Secondary"
 }

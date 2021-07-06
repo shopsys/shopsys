@@ -1,5 +1,8 @@
 {
+    "Default": "Základní",
     "List of categories": "Výpis kategorií",
     "Loading": "Načítám",
-    "Oh no! Error": "Oh no! Chyba"
+    "Oh no! Error": "Oh no! Chyba",
+    "Primary": "Primární",
+    "Secondary": "Sekundární"
 }
