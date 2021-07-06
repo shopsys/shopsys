@@ -2,8 +2,8 @@ import React from 'react';
 import { useQuery } from 'urql';
 import { withUrqlClient } from 'next-urql';
 import { useTranslation } from 'react-i18next';
+import SsfwButton from '../components/forms/SsfwButton';
 import getConfig from 'next/config';
-
 const { publicRuntimeConfig } = getConfig();
 
 const Index = () => {
@@ -46,6 +46,15 @@ const Index = () => {
         <>
             <h1>{t('List of categories')}</h1>
             <CategoryList />
+            <div>
+                <SsfwButton name="button1">{t('Default')}</SsfwButton>
+                <SsfwButton name="button2" additionalClassName="btn--primary">
+                    {t('Primary')}
+                </SsfwButton>
+                <SsfwButton name="button3" additionalClassName="btn--secondary">
+                    {t('Secondary')}
+                </SsfwButton>
+            </div>
         </>
     );
 };
