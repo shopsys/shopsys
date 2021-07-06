@@ -36,7 +36,7 @@ module.exports = {
         jsx: ['JsxLexer'],
         tsx: ['JsxLexer'],
 
-        default: ['JavascriptLexer']
+        default: ['JavascriptLexer'],
     },
 
     lineEnding: 'lf',
@@ -80,7 +80,7 @@ module.exports = {
     failOnWarnings: false,
     // Exit with an exit code of 1 on warnings
 
-    customValueTemplate: null
+    customValueTemplate: null,
     // If you wish to customize the value output the value as an object, you can set your own format.
     // ${defaultValue} is the default value you set in your translation function.
     // Any other custom property will be automatically extracted.

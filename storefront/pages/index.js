@@ -15,7 +15,7 @@ const Index = () => {
                     name
                 }
             }
-            `
+            `,
     });
 
     function CategoryList() {
@@ -49,5 +49,5 @@ const Index = () => {
 };
 
 export default withUrqlClient(() => ({
-    url: CONFIG.API_URL
+    url: CONFIG.API_URL,
 }))(Index);

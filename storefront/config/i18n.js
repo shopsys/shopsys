@@ -26,12 +26,12 @@ i18n
         saveMissingTo: 'all',
 
         interpolation: {
-            escapeValue: false // not needed for react as it escapes by default
+            escapeValue: false, // not needed for react as it escapes by default
         },
 
         react: {
-            useSuspense: false
-        }
+            useSuspense: false,
+        },
     });
 
 // debug
