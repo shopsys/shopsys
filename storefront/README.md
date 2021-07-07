@@ -1,34 +1,62 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-## Getting Started
+This is documentation for Shopsys Framework StoreFront. Let's start with first two steps.
 
-First, run the development server:
-
-```bash
-npm run dev
-# or
-yarn dev
+## Install 
+1 - Install all dependencies.
+```plain
+npm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Start app
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+2 - Start the development server.
+```plain
+npm run dev
+```
+After this command open http://localhost:3000/ in your browser.
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+### Optional
+Build the app for production.
+```plain
+npm run build
+```
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+Run the built app in production mode.
+```plain
+npm start
+```
 
-## Learn More
+Run eslint for code
+```plain
+npm run lint
+```
 
-To learn more about Next.js, take a look at the following resources:
+Run eslint and fix code
+```plain
+npm run lint--fix
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Run prettier format code
+```plain
+npm run format 
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+Run translation files generator. You can find generated files in /public/locales/ folder.
+```plain
+npm run translate
+```
 
-## Deploy on Vercel
+Run styleguide generator, which will watch your files and compiles changes and displays it with hot-reload. 
+After start and first compile you can usually find your online styleguide on http://localhost:6060/
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+You may restart stuleguide-server when adding new component or new md file.
+```plain
+npm run styleguide-server
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+One-time compile all stand alone styleguide files as static page. You can find generated files in /docs/styleguide/ folder.
+```plain
+npm run styleguide-build
+```
+
+For full documentation please visit /docs/ folder or after styleguide-build you can visit /docs/styleguide/index.html

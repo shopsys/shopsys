@@ -7,3 +7,4 @@ __tests__/
 package-lock.json
 generated/
 */dist/
+docs/styleguide/

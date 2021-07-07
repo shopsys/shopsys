@@ -1,126 +1,79 @@
-# Install 
-Install all dependencies.
-```javascript
-npm install
+This is documentation for Shopsys Framework Storefront.
+
+## Ways to use Shopsys Storefront
+There are two ways to use Shopsys Storefront on your machine.
+First and easiest way is when you have installed your project using Docker.
+With Docker, you have everything running already.
+If Docker way is too robust for you or you do not need whole application running, you can run Shopsys Storefront natively.
+
+### Docker way
+With Docker, you have already Shopsys Storefront and its styleguide already running.
+Storefront is running on http://127.0.0.1:3000 and styleguide on http://127.0.0.1:6060.
+
+#### Restart NPM
+When you change `next.config.js` file, and you want new settings to be applied, you need to restart NPM.
+You might also want to restart NPM when something is not working correctly.
+In such cases, you do not need to stop all running containers and start them again, just to recreate container of the storefront.
+To do that run this command outside the container:
+
+```plain
+docker-compose up -d --force-recreate storefront
 ```
 
-After install open http://localhost:3000/ in your browser.
+### Native way
 
-## Start app
+#### Install all dependencies
+```plain
+npm install --legacy-peer-deps
+```
 
-Start the development server.
-```javascript
+#### Start app
+```plain
 npm run dev
 ```
+After this command open http://127.0.0.1:3000/ in your browser.
 
-Build the app for production.
-```javascript
+#### Run styleguide generator, which will watch your files and compiles changes and displays it with hot-reload
+After start and first compile you can usually find your online styleguide on http://127.0.0.1:6060/
+
+#### You may restart styleguide-server when adding new component or new md file.
+```plain
+npm run styleguide-server
+```
+
+#### One-time compile all stand alone styleguide files as static page. You can find generated files in /docs/styleguide/ folder
+```plain
+npm run styleguide-build
+```
+
+### Additional commands available for both ways (in Docker way they need to be run inside the storefront container)
+
+#### Build the app for production.
+```plain
 npm run build
 ```
 
-Run the built app in production mode.
-```javascript
+#### Run the built app in production mode
+```plain
 npm start
 ```
 
-Run eslint for code
-```javascript
+#### Run eslint for code
+```plain
 npm run lint
 ```
 
-Run eslint and fix code
-```javascript
+#### Run eslint and fix code
+```plain
 npm run lint--fix
 ```
 
-Run prettier format code
-```javascript
+#### Run prettier format code
+```plain
 npm run format 
 ```
 
-Run translation files generator.
-```javascript
+#### Run translation files generator. You can find generated files in /public/locales/ folder.
+```plain
 npm run translate
-```
-
-# Components
-
-## Next.js
-https://nextjs.org/learn/basics/create-nextjs-app
-```javascript
-npx create-next-app [your_app_name] --use-npm --example "https://github.com/vercel/next-learn-starter/tree/master/learn-starter"
-```
-
-Next.js creates folders
-- pages - pages are generated from there, no need to create special route
-- public - files in this folder are accessable after typing domain_name-cz/file_name_in_public_folder.jpg (without folder "public")
-
-Pluses - it solves routing, SSR, static pages, it is globally used, better debug, there are a lot of plugins
-
-## API client 
-URQL
-
-https://formidable.com/open-source/urql/docs/advanced/server-side-rendering/#nextjs
-
-```javascript
-npm install --save next-urql react-is urql graphql
-```
-
-Apollo Client 
-- we decided to not use Apollo, package is much greater in kb 
-- urql has next.js plugin and we will have more control on loading sources - cache, pre-fetch data, fetch date on build...
-
-https://formidable.com/open-source/urql/docs/comparison/ comparison uqrl, Apollo, Relay
-
-### Endpoint configuration
-GraphQL endpoint is configurable via environment variable `PUBLIC_GRAPHQL_ENDPOINT`.
-Default value is set in `.env` file and this value can be overridden with local config file `.env.local` (ignored by git),
-or by setting a real environment variable (for example on CI and deployed application).
-
-## React-i18next i18next
-https://react.i18next.com/
-
-```javascript
-npm install react-i18next i18next --save
-npm install i18next-http-backend i18next-browser-languagedetector --save
-```
-Pluses 
-- command line export
-- using BabelEdit for translate (not tried yet https://www.codeandweb.com/babeledit)
-
-### React-i18next translate file export
-setup is in file config/i18next-parser.config.js
-
-Command line export
-```javascript
-i18next 'pages/**/*.{js, tsx}' --config config/i18next-parser.config.js
-```
-or
-
-```javascript
-npm run translate
-```
-
-Translate files are created to folder public/locales/[language]/translation.json - and are pre-filled by constants from en language
-
-
-
-# Coding standards
-## Eslint 
-- can show you error on demand when you are writing your code - and I have to install editor plugin for using it (can be used on server side in any test)
-- rules are defined in files:
-```
-- .eslintignore, .eslintrc.json
-```
-## Prettier 
-- can format you code on save or can be fired by key shortcut - and I have to install editor plugin for using it
-- rules are defined in file:
-```
-- .prettierrc
-```
-## Editorconfig 
-- can say to your editor coding standards even if you dont have any plugin installed
-- rules are defined in file:
-```
-- .editorconfig
 ```
