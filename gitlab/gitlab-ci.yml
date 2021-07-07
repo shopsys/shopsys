@@ -100,6 +100,8 @@ review:
     after_script:
         - docker-compose exec -T php-fpm php phing frontend-api-generate-graphql-schema
         - docker cp ${COMPOSE_PROJECT_NAME}_php-fpm_1:/var/www/html/schema.graphql ./schema.graphql
+        - docker-compose exec -T storefront npm run styleguide-build
+        - docker-compose exec -T storefront cp -R /app/docs/styleguide /app/public/styleguide
     tags:
         - review
     interruptible: true

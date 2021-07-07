@@ -5,7 +5,7 @@ WORKDIR /app
 #=====================================================================
 FROM base as development
 
-CMD npm install && npm run dev
+CMD npm install --legacy-peer-deps && npm run dev
 
 #=====================================================================
 FROM base as production

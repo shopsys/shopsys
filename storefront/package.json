@@ -9,9 +9,13 @@
     "lint": "next lint",
     "lint--fix": "eslint '*/**/*.js' --fix",
     "format": "prettier --ignore-path .eslintignore --write '*/**/*.js'",
-    "translate": "i18next 'pages/**/*.js' 'components/**/*.js' --config config/i18next-parser.config.js"
+    "translate": "i18next 'pages/**/*.js' 'components/**/*.js' --config config/i18next-parser.config.js",
+    "styleguide-server": "styleguidist server --config config/styleguide.config.js",
+    "styleguide-build": "styleguidist build --config config/styleguide.config.js"
   },
   "dependencies": {
+    "@babel/preset-react": "^7.14.5",
+    "babel-loader": "^8.2.2",
     "eslint-plugin-prettier": "^3.4.0",
     "eslint-plugin-unused-imports": "^1.1.2",
     "graphql": "^15.5.1",
@@ -22,9 +26,11 @@
     "next-urql": "^3.1.0",
     "prettier": "^2.3.2",
     "react": "17.0.2",
+    "react-docgen": "^5.4.0",
     "react-dom": "17.0.2",
     "react-i18next": "^11.11.0",
     "react-is": "^17.0.2",
+    "react-styleguidist": "^11.1.7",
     "styled-components": "^5.3.0",
     "urql": "^2.0.4"
   },
@@ -32,6 +38,7 @@
     "eslint": "^7.29.0",
     "eslint-config-next": "11.0.0",
     "eslint-config-prettier": "^8.3.0",
-    "eslint-plugin-react": "^7.24.0"
+    "eslint-plugin-react": "^7.24.0",
+    "webpack": "^5.44.0"
   }
 }
