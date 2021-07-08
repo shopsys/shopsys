@@ -11,3 +11,5 @@ overblog_graphql:
             args:
                 -   alias: "PaginatorArgumentsBuilder"
                     class: Shopsys\FrontendApiBundle\Component\Arguments\PaginatorArgumentsBuilder
+    security:
+        handle_cors: true
