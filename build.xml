@@ -195,6 +195,18 @@
         </exec>
     </target>
 
+    <target name="frontend-api-generate-graphql-schema" description="Generates schema.graphql in root directory">
+        <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
+            <arg value="${path.bin-console}"/>
+            <arg value="graphql:dump-schema"/>
+            <arg value="--file"/>
+            <arg value="${path.root}/schema.graphql"/>
+            <arg value="--format"/>
+            <arg value="graphql"/>
+            <arg value="--modern"/>
+        </exec>
+    </target>
+
     <target name="tests-acceptance-after" description="Actions necessary to run after acceptance tests." hidden="true">
         <available file="${path.env.acc}" type="file" property="path.env.acc.existed"/>
         <if>
