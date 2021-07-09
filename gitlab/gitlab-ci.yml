@@ -101,7 +101,7 @@ review:stop:
     tags:
         - review
     script:
-        - cp /home/ci/docker-compose-review.yml ./docker-compose.yml
+        - cp /home/ci/docker-compose-review-storefront.yml ./docker-compose.yml
         - docker-compose exec -T php-fpm php phing -D production.confirm.action=y elasticsearch-index-delete
         - docker-compose down --rmi all -v
         - /home/ci/clean.sh ${COMPOSE_PROJECT_NAME}
