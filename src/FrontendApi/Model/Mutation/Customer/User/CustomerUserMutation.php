@@ -1,0 +1,115 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\FrontendApi\Model\Mutation\Customer\User;
+
+use App\Model\Customer\User\RegistrationDataFactoryInterface;
+use App\Model\Customer\User\RegistrationFacadeInterface;
+use Overblog\GraphQLBundle\Definition\Argument;
+use Overblog\GraphQLBundle\Validator\InputValidator;
+use Ramsey\Uuid\Uuid;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserPasswordFacade;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRefreshTokenChainFacade;
+use Shopsys\FrameworkBundle\Model\Customer\User\FrontendCustomerUserProvider;
+use Shopsys\FrontendApiBundle\Model\Customer\User\CustomerUserDataFactory;
+use Shopsys\FrontendApiBundle\Model\Customer\User\CustomerUserUpdateDataFactory;
+use Shopsys\FrontendApiBundle\Model\Mutation\Customer\User\CustomerUserMutation as BaseCustomerUserMutation;
+use Shopsys\FrontendApiBundle\Model\Token\TokenFacade;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+
+class CustomerUserMutation extends BaseCustomerUserMutation
+{
+    public const VALIDATION_GROUP_COMPANY_CUSTOMER = 'companyCustomer';
+
+    /**
+     * @var \App\Model\Customer\User\RegistrationFacadeInterface
+     */
+    protected RegistrationFacadeInterface $registrationFacade;
+
+    /**
+     * @var \App\Model\Customer\User\RegistrationDataFactoryInterface
+     */
+    protected RegistrationDataFactoryInterface $registrationDataFactory;
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\FrontendCustomerUserProvider $frontendCustomerUserProvider
+     * @param \Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface $userPasswordEncoder
+     * @param \App\Model\Customer\User\CustomerUserPasswordFacade $customerUserPasswordFacade
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRefreshTokenChainFacade $customerUserRefreshTokenChainFacade
+     * @param \Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface $tokenStorage
+     * @param \Shopsys\FrontendApiBundle\Model\Customer\User\CustomerUserUpdateDataFactory $customerUserUpdateDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade $customerUserFacade
+     * @param \Shopsys\FrontendApiBundle\Model\Customer\User\CustomerUserDataFactory $customerUserDataFactory
+     * @param \Shopsys\FrontendApiBundle\Model\Token\TokenFacade $tokenFacade
+     * @param \App\Model\Customer\User\RegistrationFacadeInterface $registrationFacade
+     * @param \App\Model\Customer\User\RegistrationDataFactoryInterface $registrationDataFactory
+     */
+    public function __construct(
+        FrontendCustomerUserProvider $frontendCustomerUserProvider,
+        UserPasswordEncoderInterface $userPasswordEncoder,
+        CustomerUserPasswordFacade $customerUserPasswordFacade,
+        CustomerUserRefreshTokenChainFacade $customerUserRefreshTokenChainFacade,
+        TokenStorageInterface $tokenStorage,
+        CustomerUserUpdateDataFactory $customerUserUpdateDataFactory,
+        CustomerUserFacade $customerUserFacade,
+        CustomerUserDataFactory $customerUserDataFactory,
+        TokenFacade $tokenFacade,
+        RegistrationFacadeInterface $registrationFacade,
+        RegistrationDataFactoryInterface $registrationDataFactory
+    ) {
+        parent::__construct(
+            $frontendCustomerUserProvider,
+            $userPasswordEncoder,
+            $customerUserPasswordFacade,
+            $customerUserRefreshTokenChainFacade,
+            $tokenStorage,
+            $customerUserUpdateDataFactory,
+            $customerUserFacade,
+            $customerUserDataFactory,
+            $tokenFacade
+        );
+
+        $this->registrationFacade = $registrationFacade;
+        $this->registrationDataFactory = $registrationDataFactory;
+    }
+
+    /**
+     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
+     * @param \Overblog\GraphQLBundle\Validator\InputValidator $validator
+     * @return array
+     */
+    public function register(Argument $argument, InputValidator $validator): array
+    {
+        $validationGroups = $this->computeValidationGroups($argument);
+        $validator->validate($validationGroups);
+
+        $registrationData = $this->registrationDataFactory->createWithArgument($argument);
+        $customerUser = $this->registrationFacade->register($registrationData);
+
+        $deviceId = Uuid::uuid4()->toString();
+
+        return [
+            'accessToken' => $this->tokenFacade->createAccessTokenAsString($customerUser, $deviceId),
+            'refreshToken' => $this->tokenFacade->createRefreshTokenAsString($customerUser, $deviceId),
+        ];
+    }
+
+    /**
+     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
+     * @return string[]
+     */
+    private function computeValidationGroups(Argument $argument): array
+    {
+        $input = $argument['input'];
+        $validationGroups = ['Default'];
+
+        if ($input[self::VALIDATION_GROUP_COMPANY_CUSTOMER] === true) {
+            $validationGroups[] = self::VALIDATION_GROUP_COMPANY_CUSTOMER;
+        }
+
+        return $validationGroups;
+    }
+}

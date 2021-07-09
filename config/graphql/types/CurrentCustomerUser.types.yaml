@@ -1,4 +1,24 @@
 CurrentCustomerUser:
-    type: object
+    type: interface
     inherits:
         - 'CurrentCustomerUserDecorator'
+    heirs:
+        - 'CurrentCompanyCustomerUser'
+        - 'CurrentRegularCustomerUser'
+    config:
+        fields:
+            street:
+                type: "String!"
+                description: "Billing address street name "
+            city:
+                type: "String!"
+                description: "Billing address city name"
+            postcode:
+                type: "String!"
+                description: "Billing address zip code"
+            country:
+                type: "String!"
+                description: "Billing address country code"
+            newsletterSubscription:
+                type: "Boolean!"
+                description: "Whether customer user receives newsletters or not"

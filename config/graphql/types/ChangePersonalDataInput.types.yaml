@@ -2,3 +2,11 @@ ChangePersonalDataInput:
     type: input-object
     inherits:
         - 'ChangePersonalDataInputDecorator'
+        - 'NameInputObjectDecorator'
+        - 'TelephoneInputObjectDecorator'
+        - 'BillingAddressInputObjectDecorator'
+    config:
+        fields:
+            newsletterSubscription:
+                type: "Boolean!"
+                description: "Whether customer user should receive newsletters or not"

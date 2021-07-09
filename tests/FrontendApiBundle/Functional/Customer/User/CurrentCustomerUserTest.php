@@ -13,10 +13,21 @@ class CurrentCustomerUserTest extends GraphQlWithLoginTestCase
         $query = '
 {
     query: currentCustomerUser {
-        firstName,
-        lastName,
+        __typename
+        firstName
+        lastName
         email
         telephone
+        newsletterSubscription
+        street
+        city
+        postcode
+        country
+        ... on CurrentCompanyCustomerUser {
+            companyName
+            companyNumber
+            companyTaxNumber
+        }
     }
 }
         ';
@@ -25,10 +36,19 @@ class CurrentCustomerUserTest extends GraphQlWithLoginTestCase
 {
     "data": {
         "query": {
+            "__typename": "CurrentCompanyCustomerUser",
             "firstName": "Jaromír",
             "lastName": "Jágr",
             "email": "no-reply@shopsys.com",
-            "telephone": "605000123"
+            "telephone": "605000123",
+            "newsletterSubscription": true,
+            "street": "Hlubinská 5",
+            "city": "Ostrava",
+            "postcode": "70200",
+            "country": "CZ",
+            "companyName": "Shopsys",
+            "companyNumber": "12345678",
+            "companyTaxNumber": "CZ65432123"
         }
     }
 }';
@@ -44,11 +64,20 @@ mutation {
         telephone: "123456321"
         firstName: "John"
         lastName: "Doe"
+        newsletterSubscription: false
+        street: "123 Fake street"
+        city: "Springfield"
+        country: "CZ"
+        postcode: "54321"
     }) {
         firstName
         lastName,
         telephone,
         email
+        street
+        city
+        country
+        postcode
     }
 }';
 
@@ -59,7 +88,11 @@ mutation {
             "firstName": "John",
             "lastName": "Doe",
             "telephone": "123456321",
-            "email": "no-reply@shopsys.com"
+            "email": "no-reply@shopsys.com",
+            "street": "123 Fake street",
+            "city": "Springfield",
+            "country": "CZ",
+            "postcode": "54321"
         }
     }
 }';
@@ -75,6 +108,11 @@ mutation {
         telephone: "1234567890123456789012345678901"
         firstName: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent suscipit ultrices molestie. Donec s"
         lastName: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent suscipit ultrices molestie. Donec s"
+        newsletterSubscription: false
+        street: "123 Fake street"
+        city: "Springfield"
+        country: "CZ"
+        postcode: "54321"
     }) {
     firstName
         lastName,
@@ -87,13 +125,13 @@ mutation {
         $expectedViolationMessages = [
             0 => t(
                 'First name cannot be longer than {{ limit }} characters',
-                ['{{ limit }}' => 100],
+                ['{{ limit }}' => 30],
                 'validators',
                 $firstDomainLocale
             ),
             1 => t(
                 'Last name cannot be longer than {{ limit }} characters',
-                ['{{ limit }}' => 100],
+                ['{{ limit }}' => 30],
                 'validators',
                 $firstDomainLocale
             ),

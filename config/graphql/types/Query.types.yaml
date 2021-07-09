@@ -8,3 +8,7 @@ Query:
                 type: '[NavigationItem!]!'
                 resolve: "@=resolver('navigationResolver')"
                 description: "Returns complete navigation menu"
+            CurrentCompanyCustomerUser:
+                type: 'CurrentCompanyCustomerUser'
+            CurrentRegularCustomerUser:
+                type: 'CurrentRegularCustomerUser'
