@@ -81,6 +81,7 @@ class BlogCategoryDataFactory
         $blogCategoryData->names = $blogCategory->getNames();
         $blogCategoryData->descriptions = $blogCategory->getDescriptions();
         $blogCategoryData->parent = $blogCategory->getParent();
+        $blogCategoryData->uuid = $blogCategory->getUuid();
 
         foreach ($this->domain->getAllIds() as $domainId) {
             $blogCategoryData->seoMetaDescriptions[$domainId] = $blogCategory->getSeoMetaDescription($domainId);
