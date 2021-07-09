@@ -128,6 +128,7 @@ class BlogArticleExportRepository
             'seoTitle' => $blogArticle->getSeoTitle($domainId),
             'seoMetaDescription' => $blogArticle->getSeoMetaDescription($domainId),
             'seoH1' => $blogArticle->getSeoH1($domainId),
+            'slug' => $this->friendlyUrlFacade->getAllSlugsByRouteNameAndEntityId($domainId, 'front_blogarticle_detail', $blogArticle->getId()),
         ];
     }
 }

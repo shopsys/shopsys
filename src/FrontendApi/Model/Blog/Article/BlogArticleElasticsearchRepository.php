@@ -66,17 +66,26 @@ class BlogArticleElasticsearchRepository
      */
     public function getByUuid(string $uuid): array
     {
-        $filterQuery = $this->filterQueryFactory
+        $query = $this->filterQueryFactory
             ->create($this->getIndexName())
             ->filterByUuid($uuid)
             ->getQuery();
-        $result = $this->client->search($filterQuery);
-        $hits = $this->extractHits($result);
-        if (count($hits) === 0) {
-            throw new BlogArticleNotFoundException(sprintf('Blog article not found by UUID "%s"', $uuid));
-        }
 
-        return array_shift($hits);
+        return $this->getSingleResult($query, sprintf('Blog article not found by UUID "%s"', $uuid));
+    }
+
+    /**
+     * @param string $slug
+     * @return array
+     */
+    public function getBySlug(string $slug): array
+    {
+        $query = $this->filterQueryFactory
+            ->create($this->getIndexName())
+            ->filterBySlug($slug)
+            ->getQuery();
+
+        return $this->getSingleResult($query, sprintf('Blog article not found by slug "%s"', $slug));
     }
 
     /**
@@ -100,5 +109,21 @@ class BlogArticleElasticsearchRepository
     private function getIndexName(): string
     {
         return $this->indexDefinitionLoader->getIndexDefinition(BlogArticleIndex::getName(), $this->domain->getId())->getIndexAlias();
+    }
+
+    /**
+     * @param array $query
+     * @param string $notFoundExceptionMessage
+     * @return array
+     */
+    private function getSingleResult(array $query, string $notFoundExceptionMessage): array
+    {
+        $result = $this->client->search($query);
+        $hits = $this->extractHits($result);
+        if (count($hits) === 0) {
+            throw new BlogArticleNotFoundException($notFoundExceptionMessage);
+        }
+
+        return array_shift($hits);
     }
 }

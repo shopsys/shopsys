@@ -101,4 +101,15 @@ class FriendlyUrlFacade extends BaseFriendlyUrlFacade
 
         return $undefinedRouteNameMappings;
     }
+
+    /**
+     * @param int $domainId
+     * @param string $routeName
+     * @param int $entityId
+     * @return string[]
+     */
+    public function getAllSlugsByRouteNameAndEntityId(int $domainId, string $routeName, int $entityId): array
+    {
+        return $this->friendlyUrlRepository->getAllSlugsByRouteNameAndDomainId($domainId, $routeName, $entityId);
+    }
 }

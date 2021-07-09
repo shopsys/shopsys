@@ -76,6 +76,22 @@ class FilterQuery
     }
 
     /**
+     * @param string $slug
+     * @return \App\Model\Blog\Article\Elasticsearch\FilterQuery
+     */
+    public function filterBySlug(string $slug): self
+    {
+        $clone = clone $this;
+        $clone->filters[] = [
+            'term' => [
+                'slug' => $slug,
+            ],
+        ];
+
+        return $clone;
+    }
+
+    /**
      * @return array
      */
     public function getQuery(): array

@@ -10,7 +10,6 @@ use DateTime;
 use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
 use Overblog\GraphQLBundle\Definition\Resolver\ResolverInterface;
 use Overblog\GraphQLBundle\Error\UserError;
-use Ramsey\Uuid\Uuid;
 
 class BlogArticleResolver implements ResolverInterface, AliasedInterface
 {
@@ -28,17 +27,20 @@ class BlogArticleResolver implements ResolverInterface, AliasedInterface
     }
 
     /**
-     * @param string $uuid
+     * @param string|null $uuid
+     * @param string|null $urlSlug
      * @return array
      */
-    public function resolver(string $uuid): array
+    public function resolveByUuidOrUrlSlug(?string $uuid = null, ?string $urlSlug = null): array
     {
-        if (Uuid::isValid($uuid) === false) {
-            throw new UserError('Provided argument is not valid UUID.');
-        }
-
         try {
-            $blogArticleData = $this->blogArticleElasticsearchFacade->getByUuid($uuid);
+            if ($uuid !== null) {
+                $blogArticleData = $this->blogArticleElasticsearchFacade->getByUuid($uuid);
+            } elseif ($urlSlug !== null) {
+                $blogArticleData = $this->blogArticleElasticsearchFacade->getBySlug($urlSlug);
+            } else {
+                throw new UserError('You need to provide argument \'uuid\' or \'urlSlug\'.');
+            }
         } catch (BlogArticleNotFoundException $blogArticleNotFoundException) {
             throw new UserError($blogArticleNotFoundException->getMessage());
         }
@@ -54,7 +56,7 @@ class BlogArticleResolver implements ResolverInterface, AliasedInterface
     public static function getAliases(): array
     {
         return [
-            'resolver' => 'blogArticle',
+            'resolveByUuidOrUrlSlug' => 'blogArticleByUuidOrUrlSlug',
         ];
     }
 

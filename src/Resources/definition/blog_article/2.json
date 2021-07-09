@@ -184,6 +184,9 @@
       },
       "seoH1": {
         "type": "text"
+      },
+      "slug": {
+        "type": "keyword"
       }
     }
   }

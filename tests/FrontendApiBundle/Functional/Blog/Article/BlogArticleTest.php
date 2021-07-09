@@ -37,6 +37,32 @@ class BlogArticleTest extends GraphQlTestCase
         $this->assertQueryWithExpectedArray($query, $arrayExpected);
     }
 
+    public function testGetBlogArticleBySlug(): void
+    {
+        /** @var \App\Model\Blog\Article\BlogArticle $blogArticle */
+        $blogArticle = $this->getReference(BlogArticleDataFixture::FIRST_DEMO_BLOG_ARTICLE);
+        $query = '
+            query {
+                blogArticle(urlSlug: "ukazkovy-clanek-blogu-1-cs") {
+                    name
+                    uuid
+                    text
+                    createdAt
+                    visibleOnHomepage    
+                    publishDate
+                    perex
+                    seoTitle
+                    seoMetaDescription
+                    seoH1
+                }
+            }
+        ';
+
+        $arrayExpected = $this->getExpectedBlogArticleArray($blogArticle);
+
+        $this->assertQueryWithExpectedArray($query, $arrayExpected);
+    }
+
     /**
      * @param \App\Model\Blog\Article\BlogArticle $blogArticle
      * @return array

@@ -27,4 +27,13 @@ class BlogArticleElasticsearchFacade
     {
         return $this->blogArticleElasticsearchRepository->getByUuid($uuid);
     }
+
+    /**
+     * @param string $slug
+     * @return array
+     */
+    public function getBySlug(string $slug): array
+    {
+        return $this->blogArticleElasticsearchRepository->getBySlug($slug);
+    }
 }
