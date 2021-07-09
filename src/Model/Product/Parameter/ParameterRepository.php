@@ -380,13 +380,18 @@ class ParameterRepository extends BaseParameterRepository
                 pt.name as parameter_name,
                 pv.uuid as parameter_value_uuid,
                 pv.text as parameter_value_text,
-                CASE WHEN pg.akeneoCode = :akeneoCodeDimensions THEN TRUE ELSE FALSE END as parameter_is_dimensional'
+                CASE WHEN pg.akeneoCode = :akeneoCodeDimensions THEN TRUE ELSE FALSE END as parameter_is_dimensional,
+                pgt.name as parameter_group,
+                put.name as parameter_unit'
             )
             ->distinct()
             ->from(ProductParameterValue::class, 'ppv')
             ->join('ppv.parameter', 'p')
             ->join('p.translations', 'pt', Join::WITH, 'pt.locale = :locale AND pt.name IS NOT NULL')
             ->leftjoin('p.group', 'pg')
+            ->leftJoin('pg.translations', 'pgt', Join::WITH, 'pgt.locale = :locale AND pgt.name IS NOT NULL')
+            ->leftJoin('p.unit', 'pu')
+            ->leftJoin('pu.translations', 'put', Join::WITH, 'put.locale = :locale AND put.name IS NOT NULL')
             ->join('ppv.value', 'pv', Join::WITH, 'pv.locale = :locale')
             ->where('ppv.product IN (:products)')
             ->setParameters([

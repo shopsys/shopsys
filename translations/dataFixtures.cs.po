@@ -1807,6 +1807,9 @@ msgstr ""
 msgid "hardcover"
 msgstr "pevný"
 
+msgid "in"
+msgstr ""
+
 msgid "inkjet"
 msgstr "inkoustové"
 
