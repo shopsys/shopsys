@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace App\FrontendApi\Model\Resolver\Products;
 
 use App\FrontendApi\Model\Product\ProductFacade;
-use App\Model\Product\Product;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
+use Shopsys\FrameworkBundle\Model\Product\TopProduct\TopProduct;
 use Shopsys\FrameworkBundle\Model\Product\TopProduct\TopProductFacade;
 use Shopsys\FrontendApiBundle\Model\Resolver\Products\PromotedProductsResolver as BasePromotedProductsResolver;
 
@@ -40,17 +40,14 @@ class PromotedProductsResolver extends BasePromotedProductsResolver
      */
     public function resolve(): array
     {
-        $allOfferedProducts = $this->topProductFacade->getAllOfferedProducts(
-            $this->domain->getId(),
-            $this->currentCustomerUser->getPricingGroup()
-        );
+        $allSortedPromotedProductsOnDomain = $this->topProductFacade->getAll($this->domain->getId());
 
         return $this->productFacade->getSellableProductsByIds(
             array_map(
-                static function (Product $product) {
-                    return $product->getId();
+                static function (TopProduct $product) {
+                    return $product->getProduct()->getId();
                 },
-                $allOfferedProducts
+                $allSortedPromotedProductsOnDomain
             )
         );
     }

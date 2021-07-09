@@ -43,13 +43,16 @@ class PromotedProductsTest extends GraphQlTestCase
                     uuid
                     name
                     shortDescription
+                    seoH1
+                    seoTitle
+                    seoMetaDescription
                     link
                     unit {
                         name
                     }
-                    isUsingStock
                     availability {
                         name
+                        status
                     }
                     stockQuantity
                     categories {
@@ -63,9 +66,40 @@ class PromotedProductsTest extends GraphQlTestCase
                         priceWithVat
                         priceWithoutVat
                         vatAmount
-                    }
+                    },
                     brand {
                         name
+                    }
+                    accessories {
+                        name
+                    }
+                    isSellingDenied
+                    description
+                    orderingPriority
+                    parameters {
+                        name
+                        group
+                        unit {
+                            name
+                        }
+                        values {
+                            text
+                        }
+                    }
+                    isUsingStock
+                    namePrefix
+                    nameSuffix
+                    fullName
+                    catalogNumber
+                    partNumber
+                    ean
+                    usps
+                    isInSale
+                    hasPreorder
+                    hasSaleExclusion
+                    files {
+                      anchorText
+                      url
                     }
                 }
             }
@@ -88,13 +122,16 @@ class PromotedProductsTest extends GraphQlTestCase
                     uuid
                     name
                     shortDescription
+                    seoH1
+                    seoTitle
+                    seoMetaDescription
                     link
                     unit {
                         name
                     }
-                    isUsingStock
                     availability {
                         name
+                        status
                     }
                     stockQuantity
                     categories {
@@ -108,9 +145,40 @@ class PromotedProductsTest extends GraphQlTestCase
                         priceWithVat
                         priceWithoutVat
                         vatAmount
-                    }
+                    },
                     brand {
                         name
+                    }
+                    accessories {
+                        name
+                    }
+                    isSellingDenied
+                    description
+                    orderingPriority
+                    parameters {
+                        name
+                        group
+                        unit {
+                            name
+                        }
+                        values {
+                            text
+                        }
+                    }
+                    isUsingStock
+                    namePrefix
+                    nameSuffix
+                    fullName
+                    catalogNumber
+                    partNumber
+                    ean
+                    usps
+                    isInSale
+                    hasPreorder
+                    hasSaleExclusion
+                    files {
+                      anchorText
+                      url
                     }
                 }
             }
