@@ -72,6 +72,11 @@ Apollo Client
 
 https://formidable.com/open-source/urql/docs/comparison/ comparison uqrl, Apollo, Relay
 
+### Endpoint configuration
+GraphQL endpoint is configurable via environment variable `PUBLIC_GRAPHQL_ENDPOINT`.
+Default value is set in `.env` file and this value can be overridden with local config file `.env.local` (ignored by git),
+or by setting a real environment variable (for example on CI and deployed application).
+
 ## React-i18next i18next
 https://react.i18next.com/
 

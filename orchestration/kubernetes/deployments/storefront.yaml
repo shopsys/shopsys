@@ -25,6 +25,9 @@ spec:
                     name: storefront
                     imagePullPolicy: Always
                     workingDir: /app
+                    env:
+                        -   name: PUBLIC_GRAPHQL_ENDPOINT
+                            value: "https://{{DOMAIN_HOSTNAME_1}}/graphql/"
                     resources:
                         limits:
                             cpu: "3"

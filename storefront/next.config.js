@@ -1,3 +1,6 @@
 module.exports = {
-  reactStrictMode: true,
-}
+    reactStrictMode: true,
+    publicRuntimeConfig: {
+        publicGraphqlEndpoint: process.env.PUBLIC_GRAPHQL_ENDPOINT,
+    },
+};
