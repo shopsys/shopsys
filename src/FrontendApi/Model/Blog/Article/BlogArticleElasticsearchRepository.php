@@ -12,7 +12,7 @@ use Elasticsearch\Client;
 use Shopsys\Cdn\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionLoader;
 
-class BlogArticleElasticRepository
+class BlogArticleElasticsearchRepository
 {
     /**
      * @var \Elasticsearch\Client

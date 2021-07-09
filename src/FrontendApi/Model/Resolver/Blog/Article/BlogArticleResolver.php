@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\FrontendApi\Model\Resolver\Blog\Article;
 
-use App\FrontendApi\Model\Blog\Article\BlogArticleElasticFacade;
+use App\FrontendApi\Model\Blog\Article\BlogArticleElasticsearchFacade;
 use App\Model\Blog\Article\Exception\BlogArticleNotFoundException;
 use DateTime;
 use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
@@ -15,16 +15,16 @@ use Ramsey\Uuid\Uuid;
 class BlogArticleResolver implements ResolverInterface, AliasedInterface
 {
     /**
-     * @var \App\FrontendApi\Model\Blog\Article\BlogArticleElasticFacade
+     * @var \App\FrontendApi\Model\Blog\Article\BlogArticleElasticsearchFacade
      */
-    private BlogArticleElasticFacade $blogArticleElasticFacade;
+    private BlogArticleElasticsearchFacade $blogArticleElasticsearchFacade;
 
     /**
-     * @param \App\FrontendApi\Model\Blog\Article\BlogArticleElasticFacade $blogArticleElasticFacade
+     * @param \App\FrontendApi\Model\Blog\Article\BlogArticleElasticsearchFacade $blogArticleElasticsearchFacade
      */
-    public function __construct(BlogArticleElasticFacade $blogArticleElasticFacade)
+    public function __construct(BlogArticleElasticsearchFacade $blogArticleElasticsearchFacade)
     {
-        $this->blogArticleElasticFacade = $blogArticleElasticFacade;
+        $this->blogArticleElasticsearchFacade = $blogArticleElasticsearchFacade;
     }
 
     /**
@@ -38,7 +38,7 @@ class BlogArticleResolver implements ResolverInterface, AliasedInterface
         }
 
         try {
-            $blogArticleData = $this->blogArticleElasticFacade->getByUuid($uuid);
+            $blogArticleData = $this->blogArticleElasticsearchFacade->getByUuid($uuid);
         } catch (BlogArticleNotFoundException $blogArticleNotFoundException) {
             throw new UserError($blogArticleNotFoundException->getMessage());
         }
