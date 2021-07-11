@@ -8,6 +8,10 @@ class ProductStoreData
 {
     public bool $productExposed;
 
+    public string $name;
+
+    public int $storeId;
+
     public function __construct()
     {
         $this->productExposed = false;

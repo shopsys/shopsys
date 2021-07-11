@@ -20,6 +20,27 @@ class ProductStoreDataFactory
      */
     public function createFromStore(Store $store): ProductStoreData
     {
-        return $this->createInstance();
+        $productStoreData = $this->createInstance();
+
+        $productStoreData->name = $store->getName();
+        $productStoreData->storeId = $store->getId();
+
+        return $productStoreData;
+    }
+
+    /**
+     * @param \App\Model\Store\ProductStore $productStore
+     * @return \App\Model\Store\ProductStoreData
+     */
+    public function createFromProductStore(ProductStore $productStore): ProductStoreData
+    {
+        $productStoreData = $this->createInstance();
+
+        $productStoreData->productExposed = $productStore->isProductExposed();
+        $productStoreData->name = $productStore->getStore()->getName();
+
+        $productStoreData->storeId = $productStore->getStore()->getId();
+
+        return $productStoreData;
     }
 }

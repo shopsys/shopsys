@@ -769,6 +769,9 @@ msgstr "Nastala chyba při odesílání e-mailu."
 msgid "Exkluzivní produkty ve věrnostním programu"
 msgstr ""
 
+msgid "Exposed in Stores"
+msgstr "Vystavení na prodejnách"
+
 msgid "External ID"
 msgstr "Externí ID"
 

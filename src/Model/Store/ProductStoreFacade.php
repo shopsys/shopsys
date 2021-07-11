@@ -59,6 +59,15 @@ class ProductStoreFacade
     }
 
     /**
+     * @param \App\Model\Product\Product $product
+     * @return \App\Model\Store\ProductStore[]
+     */
+    public function getProductStoresByProduct(Product $product): array
+    {
+        return $this->productStoreRepository->getProductStoresByProduct($product);
+    }
+
+    /**
      * @param string $productCatnum
      * @param int $storeId
      * @return \App\Model\Store\ProductStore|null

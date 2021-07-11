@@ -1150,6 +1150,9 @@ msgstr "Export objednávok do mostíka"
 msgid "Export zákazníků do můstku"
 msgstr "Export zákazníkov do mostíka"
 
+msgid "Exposed in Stores"
+msgstr ""
+
 msgid "External ID"
 msgstr ""
 

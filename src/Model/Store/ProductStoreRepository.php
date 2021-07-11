@@ -70,6 +70,19 @@ class ProductStoreRepository
     }
 
     /**
+     * @param \App\Model\Product\Product $product
+     * @return \App\Model\Store\ProductStore[]
+     */
+    public function getProductStoresByProduct(Product $product): array
+    {
+        return $this->getProductStoreQueryBuilderByProduct($product)
+            ->join('ps.store', 's')
+            ->orderBy('s.position', 'ASC')
+            ->getQuery()
+            ->execute();
+    }
+
+    /**
      * @param \App\Model\Store\Store $store
      * @param \App\Model\Product\Product $product
      * @return \App\Model\Store\ProductStore|null
