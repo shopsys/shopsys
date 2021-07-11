@@ -24,7 +24,7 @@ class ListedProductView extends BaseListedProductView
     /**
      * @var string|null
      */
-    private $productAvailableStocksCountInformation;
+    private $productAvailableStoresCountInformation;
 
     /**
      * @var string|null
@@ -52,7 +52,7 @@ class ListedProductView extends BaseListedProductView
      * @param \Shopsys\ReadModelBundle\Image\ImageView|null $image
      * @param string|null $namePrefix
      * @param string|null $nameSufix
-     * @param string $productAvailableStocksCountInformation
+     * @param string $productAvailableStoresCountInformation
      * @param string $productCountExposedInStores
      * @param string $mainCategoryPath
      * @param bool $isAvailable
@@ -68,7 +68,7 @@ class ListedProductView extends BaseListedProductView
         ?ImageView $image,
         ?string $namePrefix,
         ?string $nameSufix,
-        string $productAvailableStocksCountInformation,
+        string $productAvailableStoresCountInformation,
         string $productCountExposedInStores,
         string $mainCategoryPath,
         bool $isAvailable
@@ -77,7 +77,7 @@ class ListedProductView extends BaseListedProductView
 
         $this->namePrefix = $namePrefix;
         $this->nameSufix = $nameSufix;
-        $this->productAvailableStocksCountInformation = $productAvailableStocksCountInformation;
+        $this->productAvailableStoresCountInformation = $productAvailableStoresCountInformation;
         $this->productCountExposedInStores = $productCountExposedInStores;
         $this->mainCategoryPath = $mainCategoryPath;
         $this->isAvailable = $isAvailable;
@@ -102,9 +102,9 @@ class ListedProductView extends BaseListedProductView
     /**
      * @return string|null
      */
-    public function getProductAvailableStocksCountInformation(): ?string
+    public function getProductAvailableStoresCountInformation(): ?string
     {
-        return $this->productAvailableStocksCountInformation;
+        return $this->productAvailableStoresCountInformation;
     }
 
     /**

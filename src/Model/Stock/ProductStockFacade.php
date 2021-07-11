@@ -42,6 +42,16 @@ class ProductStockFacade
 
     /**
      * @param \App\Model\Product\Product $product
+     * @param int $domainId
+     * @return \App\Model\Stock\ProductStock[]
+     */
+    public function getProductStocksByProductAndDomainId(Product $product, int $domainId): array
+    {
+        return $this->productStockRepository->getProductStocksByProductAndDomainId($product, $domainId);
+    }
+
+    /**
+     * @param \App\Model\Product\Product $product
      * @return \App\Model\Stock\ProductStock[]
      */
     public function getProductStocksByProductIndexedByStockId(Product $product): array
@@ -97,5 +107,15 @@ class ProductStockFacade
     public function findProductStockByProductCatnumAndStockId(string $productCatnum, int $stockId): ?ProductStock
     {
         return $this->productStockRepository->findProductStockByProductCatnumAndStockId($stockId, $productCatnum);
+    }
+
+    /**
+     * @param \App\Model\Product\Product $product
+     * @param int $domainId
+     * @return bool
+     */
+    public function isProductAvailableOnDomain(Product $product, int $domainId): bool
+    {
+        return $this->productStockRepository->isProductAvailableOnDomain($product, $domainId);
     }
 }

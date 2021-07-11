@@ -36,12 +36,6 @@ class ProductStock
     protected $productQuantity;
 
     /**
-     * @var bool
-     * @ORM\Column(type="boolean")
-     */
-    protected $productExposed;
-
-    /**
      * @param \App\Model\Stock\Stock $stock
      * @param \App\Model\Product\Product $product
      */
@@ -50,7 +44,6 @@ class ProductStock
         $this->stock = $stock;
         $this->product = $product;
         $this->productQuantity = 0;
-        $this->productExposed = false;
     }
 
     /**
@@ -59,7 +52,6 @@ class ProductStock
     public function edit(ProductStockData $productStockData): void
     {
         $this->productQuantity = $productStockData->productQuantity;
-        $this->productExposed = $productStockData->productExposed;
     }
 
     /**
@@ -92,21 +84,5 @@ class ProductStock
     public function getProductQuantity(): int
     {
         return $this->productQuantity;
-    }
-
-    /**
-     * @param int $productQuantity
-     */
-    public function setProductQuantity(int $productQuantity): void
-    {
-        $this->productQuantity = $productQuantity;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isProductExposed(): bool
-    {
-        return $this->productExposed;
     }
 }

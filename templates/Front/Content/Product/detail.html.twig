@@ -104,8 +104,8 @@
                                 <div class="box-detail__info__availability__value">
                                     <span class="box-detail__avail box-detail__avail--{{ productView.availabilityStatus }}">{{ productView.availability }}</span>
                                     {% if productView.availabilityStatus == "in-stock" %}
-                                        {% if productView.availableStocksCountInformation is not empty %}
-                                            <span class="box-detail__avail__text">{{ productView.availableStocksCountInformation|raw }}</span>
+                                        {% if productView.availableStoresCountInformation is not empty %}
+                                            <span class="box-detail__avail__text">{{ productView.availableStoresCountInformation|raw }}</span>
                                         {% endif %}
                                         {% if productView.countExposedInStores is not empty %}
                                             <span class="box-detail__avail__text">{{ productView.countExposedInStores|raw }}</span>
@@ -376,7 +376,7 @@
                     </div>
                 {% endif %}
 
-                {% if productView.stocksAvailabilitiesInformation|length > 0 %}
+                {% if productView.storeAvailabilitiesInformation|length > 0 %}
                     <div class="box-accordion box-accordion--opened js-accordion js-accordion-mobile" id="stocks-availabilities">
                         <div class="box-accordion__header box-accordion__header--with-desc">
                             <strong class="box-accordion__heading">{{ 'Dostupnost na prodejnách'|trans }}</strong>
@@ -387,10 +387,10 @@
                         <div class="box-accordion__body box-accordion__body--no-spacing">
                             <div class="box-accordion__grid-table box-accordion__grid-table--mobile-accords">
                                 <div class="box-accordion__grid-table__body">
-                                {% for productStockAvailabilityInformation in productView.stocksAvailabilitiesInformation %}
+                                {% for productStockAvailabilityInformation in productView.storeAvailabilitiesInformation %}
                                     <div class="box-accordion__grid-table__row">
                                         <div class="box-accordion__grid-table__col box-accordion__grid-table__col--mobile-accord-header js-accordion-mobile-header">
-                                            <strong class="box-accordion__grid-table__title">{{ productStockAvailabilityInformation.stockName }}</strong>
+                                            <strong class="box-accordion__grid-table__title">{{ productStockAvailabilityInformation.storeName }}</strong>
                                             <i class="box-accordion__grid-table__col__toggle svg svg-arrow"></i>
                                         </div>
                                         <div class="box-accordion__grid-table__col box-accordion__grid-table__col--mobile-accord-content js-accordion-mobile-section">

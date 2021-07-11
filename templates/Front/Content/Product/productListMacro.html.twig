@@ -36,8 +36,8 @@
 
                         <div class="list-products__item__info__availability">
                             <strong>{{ productView.availability }}</br></strong>
-                            {% if productView.productAvailableStocksCountInformation is not empty %}
-                                <span>{{ productView.productAvailableStocksCountInformation|raw }}</span>
+                            {% if productView.productAvailableStoresCountInformation is not empty %}
+                                <span>{{ productView.productAvailableStoresCountInformation|raw }}</span>
                             {% endif %}
                             {% if productView.productCountExposedInStores is not empty %}
                                 <span>{{ productView.productCountExposedInStores|raw }}</span>

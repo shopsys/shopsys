@@ -90,8 +90,8 @@ class ListedProductViewFactory extends BaseListedProductViewFactory
             $imageView,
             $product->getNamePrefix(),
             $product->getNameSufix(),
-            $this->productAvailabilityFacade->getProductAvailableStocksCountInformationByDomainId($product, $domainId),
-            $this->productAvailabilityFacade->getProductCountExposedInStocksInformationByDomainId($product, $domainId),
+            $this->productAvailabilityFacade->getProductAvailableStoresCountInformationByDomainId($product, $domainId),
+            $this->productAvailabilityFacade->getProductCountExposedInStoresInformationByDomainId($product, $domainId),
             $this->categoryFacade->getCategoriesNamesInPathAsString(
                 $this->categoryFacade->getProductMainCategoryByDomainId($product, $domainId),
                 $this->domain->getLocale()
@@ -120,7 +120,7 @@ class ListedProductViewFactory extends BaseListedProductViewFactory
             $imageView,
             $productArray['name_prefix'],
             $productArray['name_sufix'],
-            $productArray['product_available_stocks_count_information'],
+            $productArray['product_available_stores_count_information'],
             $productArray['product_count_exposed_in_stores'],
             $productArray['main_category_path'],
             array_key_exists('is_available', $productArray) ? $productArray['is_available'] : true,

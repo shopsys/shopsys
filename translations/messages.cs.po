@@ -2494,6 +2494,9 @@ msgstr "Nepodařilo se odstranit položku z košíku. Zřejmě vypršela platnos
 msgid "Unable to send some emails, please contact us for order verification."
 msgstr "Nepodařilo se odeslat některé e-maily, pro ověření objednávky nás prosím kontaktujte."
 
+msgid "Unavailable"
+msgstr "Nedostupné"
+
 msgid "Unit"
 msgstr "Jednotka"
 
