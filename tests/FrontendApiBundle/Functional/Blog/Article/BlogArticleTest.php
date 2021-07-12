@@ -63,6 +63,27 @@ class BlogArticleTest extends GraphQlTestCase
         $this->assertQueryWithExpectedArray($query, $arrayExpected);
     }
 
+    public function testGetBlogArticleReturnsError(): void
+    {
+        $wrongUuid = '123e4567-e89b-12d3-a456-426614174000';
+        $expectedErrorMessage = sprintf('Blog article not found by UUID "%s"', $wrongUuid);
+
+        $query = '
+            query {
+                blogArticle(uuid: "' . $wrongUuid . '") {
+                    name
+                }
+            }
+        ';
+        $response = $this->getResponseContentForQuery($query);
+        $this->assertResponseContainsArrayOfErrors($response);
+        $errors = $this->getErrorsFromResponse($response);
+
+        $this->assertArrayHasKey(0, $errors);
+        $this->assertArrayHasKey('message', $errors[0]);
+        $this->assertSame($expectedErrorMessage, $errors[0]['message']);
+    }
+
     /**
      * @param \App\Model\Blog\Article\BlogArticle $blogArticle
      * @return array
