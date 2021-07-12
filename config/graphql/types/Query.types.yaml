@@ -48,3 +48,7 @@ Query:
                     urlSlug:
                         type: "String"
                 description: "Returns blog category filtered using UUID or URL slug"
+            blogCategories:
+                type: '[BlogCategory!]!'
+                resolve: "@=resolver('blogCategories')"
+                description: "Returns a complete list of the blog categories"
