@@ -28,6 +28,7 @@ build:
     script:
         - docker build -f ./docker/php-fpm/Dockerfile --target production --compress -t ${TAG} .
         - docker push ${TAG}
+    interruptible: true
 
 build-storefront:
     stage: build
@@ -35,6 +36,7 @@ build-storefront:
     script:
         - docker build -f ./storefront/docker/Dockerfile --target production --compress -t ${STOREFRONT_TAG} .
         - docker push ${STOREFRONT_TAG}
+    interruptible: true
 
 test:standards:
     stage: test
@@ -43,6 +45,7 @@ test:standards:
         GIT_STRATEGY: none
     script:
         - docker run -i ${TAG} /bin/bash -c "mv PRODUCTION DEVELOPMENT; php phing composer-dev standards"
+    interruptible: true
 
 test:functional:
     image: tmaier/docker-compose:latest
@@ -52,6 +55,8 @@ test:functional:
         - cp -f ./gitlab/docker-compose-ci.yml ./docker-compose.yml
         - docker-compose up -d
         - docker-compose exec -T php-fpm /bin/bash -c "mv PRODUCTION DEVELOPMENT; php phing composer-dev db-create test-db-create build-demo-dev-quick frontend-api-generate-new-keys error-pages-generate tests"
+    interruptible: true
+
 test:acceptance:
     image: tmaier/docker-compose:latest
     stage: test
@@ -68,6 +73,7 @@ test:acceptance:
     after_script:
         - mkdir -p codeception/
         - docker cp shopsys-framework-php-fpm:/var/www/html/var/log/codeception/ ./
+    interruptible: true
 
 review:
     stage: review
@@ -90,6 +96,7 @@ review:
         - echo -e "Available hosts \n - https://${HOST}\n - https://en.${HOST}\n - https://storefront.${HOST}\n - https://en.storefront.${HOST}"
     tags:
         - review
+    interruptible: true
 
 review:stop:
     stage: review
