@@ -1,0 +1,28 @@
+BlogCategory:
+    type: object
+    config:
+        fields:
+            uuid:
+                type: "Uuid!"
+                description: "The blog category UUID"
+            name:
+                type: "String"
+                description: "The blog category name"
+            description:
+                type: "String"
+                description: "The blog category description"
+            parent:
+                type: "BlogCategory!"
+                description: "The blog category parent"
+            children:
+                type: "[BlogCategory!]!"
+                description: "The blog category children"
+            seoTitle:
+                type: "String"
+                description: "The blog category SEO title"
+            seoMetaDescription:
+                type: "String"
+                description: "The blog category SEO meta description"
+            seoH1:
+                type: "String"
+                description: "The blog category SEO H1 heading"

@@ -24,6 +24,7 @@ class BlogArticleDataFixture extends AbstractReferenceFixture
     public const LOCALES = DomainHelper::LOCALES;
 
     public const FIRST_DEMO_BLOG_ARTICLE = 'first_demo_blog_article';
+    public const FIRST_DEMO_BLOG_SUBCATEGORY = 'first_demo_blog_subcategory';
 
     /**
      * @var \App\Model\Blog\Article\BlogArticleFacade
@@ -109,6 +110,7 @@ class BlogArticleDataFixture extends AbstractReferenceFixture
 
         $firstSubcategoryData = $this->createSubcategory($mainPageBlogCategory, 1);
         $firstSubcategory = $this->blogCategoryFacade->create($firstSubcategoryData);
+        $this->addReference(self::FIRST_DEMO_BLOG_SUBCATEGORY, $firstSubcategory);
 
         //in first subcategory
         for ($i = 0; $i < self::PAGES_IN_CATEGORY; $i++) {

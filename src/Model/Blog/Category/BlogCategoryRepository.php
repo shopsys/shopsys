@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\Blog\Category;
 
+use App\Component\Router\FriendlyUrl\FriendlyUrl;
 use App\Model\Blog\Article\BlogArticle;
 use App\Model\Blog\Article\BlogArticleBlogCategoryDomain;
 use App\Model\Blog\Category\Exception\BlogCategoryNotFoundException;
@@ -352,5 +353,46 @@ class BlogCategoryRepository extends NestedTreeRepository
         return $this->getAllVisibleByDomainIdQueryBuilder($domainId)
             ->andWhere('bc.parent IS NOT NULL')
             ->getQuery()->getResult();
+    }
+
+    /**
+     * @param string $uuid
+     * @return \App\Model\Blog\Category\BlogCategory
+     */
+    public function getByUuid(string $uuid): BlogCategory
+    {
+        $blogCategory = $this->getBlogCategoryRepository()->findOneBy(['uuid' => $uuid]);
+
+        if ($blogCategory === null) {
+            throw new BlogCategoryNotFoundException(sprintf('Blog category with UUID "%s" does not exist.', $uuid));
+        }
+
+        return $blogCategory;
+    }
+
+    /**
+     * @param int $domainId
+     * @param string $urlSlug
+     * @return \App\Model\Blog\Category\BlogCategory
+     */
+    public function getVisibleByUrlSlug(int $domainId, string $urlSlug): BlogCategory
+    {
+        $blogCategory = $this->getAllVisibleByDomainIdQueryBuilder($domainId)
+            ->join(FriendlyUrl::class, 'fu', Join::WITH, 'bc.id = fu.entityId')
+            ->andWhere('fu.domainId = :domainId')
+            ->andWhere('fu.routeName = :routeName')
+            ->andWhere('fu.slug = :slug')
+            ->setParameters([
+                'domainId' => $domainId,
+                'routeName' => 'front_blogcategory_detail',
+                'slug' => $urlSlug,
+            ])
+            ->getQuery()->getOneOrNullResult();
+
+        if ($blogCategory === null) {
+            throw new BlogCategoryNotFoundException(sprintf('No visible blog category was found by slug "%s"', $urlSlug));
+        }
+
+        return $blogCategory;
     }
 }

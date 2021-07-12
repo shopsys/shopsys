@@ -39,3 +39,12 @@ Query:
                     urlSlug:
                         type: "String"
                 description: "Returns blog article filtered using UUID or URL slug"
+            blogCategory:
+                type: 'BlogCategory'
+                resolve: "@=resolver('blogCategoryByUuidOrUrlSlug', [args['uuid'], args['urlSlug']])"
+                args:
+                    uuid:
+                        type: "Uuid"
+                    urlSlug:
+                        type: "String"
+                description: "Returns blog category filtered using UUID or URL slug"
