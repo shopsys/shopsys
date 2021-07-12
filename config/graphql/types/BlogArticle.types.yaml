@@ -32,3 +32,6 @@ BlogArticle:
             seoH1:
                 type: "String"
                 description: "The blog article SEO H1 heading"
+            blogCategories:
+                type: "[BlogCategory!]!"
+                description: "The list of the blog article blog categories"

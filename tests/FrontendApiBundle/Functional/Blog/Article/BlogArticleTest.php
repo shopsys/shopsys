@@ -28,6 +28,9 @@ class BlogArticleTest extends GraphQlTestCase
                     seoTitle
                     seoMetaDescription
                     seoH1
+                    blogCategories {
+                        name
+                    }
                 }
             }
         ';
@@ -54,6 +57,9 @@ class BlogArticleTest extends GraphQlTestCase
                     seoTitle
                     seoMetaDescription
                     seoH1
+                    blogCategories {
+                        name
+                    }
                 }
             }
         ';
@@ -105,6 +111,9 @@ class BlogArticleTest extends GraphQlTestCase
                     'seoTitle' => t('title - Ukázkový článek blogu %counter% %locale%', ['%counter%' => 1, '%locale%' => $locale], 'dataFixtures', $locale),
                     'seoMetaDescription' => null,
                     'seoH1' => t('Ukázkový článek blogu %counter% %locale% - H1', ['%counter%' => 1, '%locale%' => $locale], 'dataFixtures', $locale),
+                    'blogCategories' => [
+                        ['name' => t('Hlavní stránka blogu - %locale%', ['%locale%' => $locale], 'dataFixtures', $locale)],
+                    ],
                 ],
             ],
         ];

@@ -28,6 +28,7 @@ class BlogArticleElasticsearchConverter
         $result['seoTitle'] = $blogArticle['seoTitle'] ?? null;
         $result['seoMetaDescription'] = $blogArticle['seoMetaDescription'] ?? null;
         $result['seoH1'] = $blogArticle['seoH1'] ?? null;
+        $result['categories'] = $blogArticle['categories'] ?? [];
 
         return $result;
     }

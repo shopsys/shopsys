@@ -6,6 +6,7 @@ namespace App\Model\Blog\Article\Elasticsearch;
 
 use App\Model\Blog\Article\BlogArticle;
 use App\Model\Blog\Article\BlogArticleRepository;
+use App\Model\Blog\Category\BlogCategory;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query\Expr\Join;
@@ -112,6 +113,8 @@ class BlogArticleExportRepository
      */
     public function extractBlogArticle(BlogArticle $blogArticle, int $domainId, string $locale): array
     {
+        $blogArticleCategories = $blogArticle->getBlogCategoriesIndexedByDomainId()[$domainId];
+
         return [
             'name' => $blogArticle->getName($locale),
             'text' => $blogArticle->getDescription($locale),
@@ -129,6 +132,7 @@ class BlogArticleExportRepository
             'seoMetaDescription' => $blogArticle->getSeoMetaDescription($domainId),
             'seoH1' => $blogArticle->getSeoH1($domainId),
             'slug' => $this->friendlyUrlFacade->getAllSlugsByRouteNameAndEntityId($domainId, 'front_blogarticle_detail', $blogArticle->getId()),
+            'categories' => array_map(fn (BlogCategory $blogCategory) => $blogCategory->getId(), $blogArticleCategories),
         ];
     }
 }

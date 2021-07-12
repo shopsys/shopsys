@@ -187,6 +187,9 @@
       },
       "slug": {
         "type": "keyword"
+      },
+      "categories": {
+        "type": "integer"
       }
     }
   }
