@@ -1,0 +1,4 @@
+BlogArticleConnection:
+    type: relay-connection
+    config:
+        nodeType: BlogArticle

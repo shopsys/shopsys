@@ -75,6 +75,28 @@ class BlogArticleElasticsearchRepository
     }
 
     /**
+     * @return int
+     */
+    public function getAllBlogArticlesTotalCount(): int
+    {
+        $result = $this->getAllBlogArticlesResult();
+
+        return $this->extractTotalCount($result);
+    }
+
+    /**
+     * @param int $offset
+     * @param int $limit
+     * @return array
+     */
+    public function getAllBlogArticles(int $offset, int $limit): array
+    {
+        $result = $this->getAllBlogArticlesResult($offset, $limit);
+
+        return $this->extractHits($result);
+    }
+
+    /**
      * @param string $slug
      * @return array
      */
@@ -125,5 +147,32 @@ class BlogArticleElasticsearchRepository
         }
 
         return array_shift($hits);
+    }
+
+    /**
+     * @param int|null $offset
+     * @param int|null $limit
+     * @return array
+     */
+    private function getAllBlogArticlesResult(?int $offset = null, ?int $limit = null): array
+    {
+        $query = $this->filterQueryFactory->create($this->getIndexName());
+        if ($offset !== null) {
+            $query = $query->setFrom($offset);
+        }
+        if ($limit !== null) {
+            $query = $query->setLimit($limit);
+        }
+
+        return $this->client->search($query->getQuery());
+    }
+
+    /**
+     * @param array $result
+     * @return int
+     */
+    private function extractTotalCount(array $result): int
+    {
+        return (int)$result['hits']['total']['value'];
     }
 }

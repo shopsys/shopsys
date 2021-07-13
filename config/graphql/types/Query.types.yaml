@@ -39,6 +39,11 @@ Query:
                     urlSlug:
                         type: "String"
                 description: "Returns blog article filtered using UUID or URL slug"
+            blogArticles:
+                type: "BlogArticleConnection"
+                argsBuilder: "Relay::Connection"
+                resolve: "@=resolver('blogArticles', [args])"
+                description: "Returns a list of the blog articles that can be paginated using `first`, `last`, `before` and `after` keywords"
             blogCategory:
                 type: 'BlogCategory'
                 resolve: "@=resolver('blogCategoryByUuidOrUrlSlug', [args['uuid'], args['urlSlug']])"

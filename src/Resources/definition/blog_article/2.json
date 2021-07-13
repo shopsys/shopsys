@@ -151,7 +151,14 @@
       "name": {
         "type": "text",
         "analyzer": "edge_ngram_without_diacritic",
-        "search_analyzer": "full_without_diacritic"
+        "search_analyzer": "full_without_diacritic",
+        "fields": {
+          "keyword": {
+            "type": "icu_collation_keyword",
+            "language": "cs",
+            "index": false
+          }
+        }
       },
       "text": {
         "type": "text",
@@ -171,7 +178,7 @@
         "type": "boolean"
       },
       "publishDate": {
-        "type": "text"
+        "type": "keyword"
       },
       "perex": {
         "type": "text"

@@ -36,4 +36,22 @@ class BlogArticleElasticsearchFacade
     {
         return $this->blogArticleElasticsearchRepository->getBySlug($slug);
     }
+
+    /**
+     * @param int $offset
+     * @param int $limit
+     * @return array
+     */
+    public function getAllBlogArticles(int $offset, int $limit): array
+    {
+        return $this->blogArticleElasticsearchRepository->getAllBlogArticles($offset, $limit);
+    }
+
+    /**
+     * @return int
+     */
+    public function getAllBlogArticlesTotalCount(): int
+    {
+        return $this->blogArticleElasticsearchRepository->getAllBlogArticlesTotalCount();
+    }
 }

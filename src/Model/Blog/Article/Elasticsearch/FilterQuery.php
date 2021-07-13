@@ -26,7 +26,10 @@ class FilterQuery
     /**
      * @var array
      */
-    private array $sorting = [];
+    private array $sorting = [
+        'publishDate' => 'asc',
+        'name.keyword' => 'asc',
+    ];
 
     /**
      * @var int
@@ -57,6 +60,32 @@ class FilterQuery
         $this->match = [
             'match_all' => new stdClass(),
         ];
+    }
+
+    /**
+     * @param int $limit
+     * @return \App\Model\Blog\Article\Elasticsearch\FilterQuery
+     */
+    public function setLimit(int $limit): self
+    {
+        $clone = clone $this;
+
+        $clone->limit = $limit;
+
+        return $clone;
+    }
+
+    /**
+     * @param int $from
+     * @return \App\Model\Blog\Article\Elasticsearch\FilterQuery
+     */
+    public function setFrom(int $from): self
+    {
+        $clone = clone $this;
+
+        $clone->from = $from;
+
+        return $clone;
     }
 
     /**
