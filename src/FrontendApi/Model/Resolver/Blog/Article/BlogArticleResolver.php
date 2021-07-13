@@ -6,7 +6,6 @@ namespace App\FrontendApi\Model\Resolver\Blog\Article;
 
 use App\FrontendApi\Model\Blog\Article\BlogArticleElasticsearchFacade;
 use App\Model\Blog\Article\Exception\BlogArticleNotFoundException;
-use DateTime;
 use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
 use Overblog\GraphQLBundle\Definition\Resolver\ResolverInterface;
 use Overblog\GraphQLBundle\Error\UserError;
@@ -45,8 +44,6 @@ class BlogArticleResolver implements ResolverInterface, AliasedInterface
             throw new UserError($blogArticleNotFoundException->getMessage());
         }
 
-        $this->setDateTimeBlogArticleData($blogArticleData);
-
         return $blogArticleData;
     }
 
@@ -58,14 +55,5 @@ class BlogArticleResolver implements ResolverInterface, AliasedInterface
         return [
             'resolveByUuidOrUrlSlug' => 'blogArticleByUuidOrUrlSlug',
         ];
-    }
-
-    /**
-     * @param array $blogArticleData
-     */
-    private function setDateTimeBlogArticleData(array &$blogArticleData)
-    {
-        $blogArticleData['createdAt'] = new DateTime($blogArticleData['createdAt']);
-        $blogArticleData['publishDate'] = new DateTime($blogArticleData['publishDate']);
     }
 }
