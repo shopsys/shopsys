@@ -37,3 +37,6 @@ Product:
             files:
                 type: "[File!]!"
                 description: "List of downloadable files"
+            storeAvailabilities:
+                type: "[StoreAvailability!]!"
+                description: "List of availabilities in individual stores"
