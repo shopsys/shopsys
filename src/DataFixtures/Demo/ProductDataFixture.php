@@ -12,6 +12,7 @@ use App\Model\Product\Product;
 use App\Model\Product\ProductData;
 use App\Model\Stock\ProductStockDataFactory;
 use App\Model\Stock\StockRepository;
+use App\Model\Store\ProductStoreDataFactory;
 use DateTime;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\ORM\EntityManagerInterface;
@@ -106,12 +107,17 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
     /**
      * @var \App\Model\Stock\StockRepository
      */
-    protected $stockRepository;
+    private $stockRepository;
 
     /**
      * @var \App\Model\Stock\ProductStockDataFactory
      */
-    protected $productStockDataFactory;
+    private $productStockDataFactory;
+
+    /**
+     * @var \App\Model\Store\ProductStoreDataFactory
+     */
+    private ProductStoreDataFactory $productStoreDataFactory;
 
     /**
      * @var \Doctrine\ORM\EntityManagerInterface
@@ -133,6 +139,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
      * @param \App\Model\Product\Parameter\ParameterGroupFacade $parameterGroupFacade
      * @param \App\Model\Stock\StockRepository $stockRepository
      * @param \App\Model\Stock\ProductStockDataFactory $productStockDataFactory
+     * @param \App\Model\Store\ProductStoreDataFactory $productStoreDataFactory
      * @param \Doctrine\ORM\EntityManagerInterface $em
      */
     public function __construct(
@@ -150,6 +157,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         ParameterGroupFacade $parameterGroupFacade,
         StockRepository $stockRepository,
         ProductStockDataFactory $productStockDataFactory,
+        ProductStoreDataFactory $productStoreDataFactory,
         EntityManagerInterface $em
     ) {
         $this->productFacade = $productFacade;
@@ -167,6 +175,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->stockRepository = $stockRepository;
         $this->productStockDataFactory = $productStockDataFactory;
         $this->em = $em;
+        $this->productStoreDataFactory = $productStoreDataFactory;
     }
 
     /**
@@ -217,6 +226,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $productData->stockQuantity = 300;
         $productData->outOfStockAction = Product::OUT_OF_STOCK_ACTION_HIDE;
         $this->setStocksQuantity($productData, 300);
+        $productData->productStoreData = $this->getProductStoreDataWithExposedOnStores(['store_1', 'store_3']);
 
         $this->setUnit($productData, UnitDataFixture::UNIT_PIECES);
         $this->setAvailability($productData, AvailabilityDataFixture::AVAILABILITY_IN_STOCK);
@@ -6443,5 +6453,23 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productStockData->productQuantity = $quantity;
             $productData->stockProductData[$stock->getId()] = $productStockData;
         }
+    }
+
+    /**
+     * @param string[] $storeReferenceNames
+     * @return \App\Model\Store\ProductStoreData[]
+     */
+    private function getProductStoreDataWithExposedOnStores(array $storeReferenceNames): array
+    {
+        $productStoreDataArray = [];
+        foreach ($storeReferenceNames as $storeReferenceName) {
+            /** @var \App\Model\Store\Store $store */
+            $store = $this->getReference($storeReferenceName);
+            $productStoreData = $this->productStoreDataFactory->createFromStore($store);
+            $productStoreData->productExposed = true;
+            $productStoreDataArray[] = $productStoreData;
+        }
+
+        return $productStoreDataArray;
     }
 }
