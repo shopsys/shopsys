@@ -276,8 +276,11 @@ class OrderFacade extends BaseOrderFacade
      * @param \App\Model\Order\FrontOrderData $frontOrderData
      * @return \App\Model\Order\OrderCreatedResult
      */
-    public function createOrderFromFrontWithRegistration(OrderData $orderData, ?DeliveryAddress $deliveryAddress, FrontOrderData $frontOrderData): OrderCreatedResult
-    {
+    public function createOrderFromFrontWithRegistration(
+        OrderData $orderData,
+        ?DeliveryAddress $deliveryAddress,
+        FrontOrderData $frontOrderData
+    ): OrderCreatedResult {
         $this->updateOrderDataWithDeliveryAddress($orderData, $deliveryAddress);
 
         $customerUser = $this->findCustomerForOrder($orderData);
@@ -292,7 +295,7 @@ class OrderFacade extends BaseOrderFacade
         $promoCode = $this->currentPromoCodeFacade->getValidEnteredPromoCodeOrNull();
         $this->gtmHelper->amendGtmCouponToOrderData($orderData, $promoCode);
 
-        $orderPreview = $this->orderPreviewFactory->createForCurrentUser($orderData->transport, $orderData->payment);
+        $orderPreview = $this->orderPreviewFactory->createForCurrentUser($orderData->transport, $orderData->payment, $orderData->personalPickupStore);
         $order = $this->createOrder($orderData, $orderPreview, $customerUser);
 
         $this->currentPromoCodeFacade->removeEnteredPromoCode();
@@ -682,10 +685,10 @@ class OrderFacade extends BaseOrderFacade
         $orderItemData = $this->orderItemDataFactory->create();
 
         $transportName = $transport->getName($locale);
-        $stock = $orderPreview->getPersonalPickupStock();
-        if ($stock !== null) {
-            $transportName = sprintf('%s %s', $transportName, $stock->getName());
-            $orderItemData->personalPickupStock = $stock;
+        $pickupStore = $orderPreview->getPersonalPickupStore();
+        if ($pickupStore !== null) {
+            $transportName = sprintf('%s %s', $transportName, $pickupStore->getName());
+            $orderItemData->personalPickupStore = $pickupStore;
         }
 
         $orderItemData->name = $transportName;

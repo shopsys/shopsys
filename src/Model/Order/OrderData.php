@@ -19,9 +19,9 @@ use Shopsys\FrameworkBundle\Model\Order\OrderData as BaseOrderData;
 class OrderData extends BaseOrderData
 {
     /**
-     * @var \App\Model\Stock\Stock|null
+     * @var \App\Model\Store\Store|null
      */
-    public $personalPickupStock;
+    public $personalPickupStore;
 
     /**
      * @var \App\Model\GoPay\GoPayTransaction[]

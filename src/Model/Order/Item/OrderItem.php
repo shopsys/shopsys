@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Model\Order\Item;
 
 use App\Model\Order\Item\Exception\OrderItemRelatedException;
-use App\Model\Stock\Stock;
+use App\Model\Store\Store;
 use Doctrine\ORM\Mapping as ORM;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItem as BaseOrderItem;
@@ -31,11 +31,11 @@ use Shopsys\FrameworkBundle\Model\Pricing\Price;
 class OrderItem extends BaseOrderItem
 {
     /**
-     * @var \App\Model\Stock\Stock|null
-     * @ORM\ManyToOne(targetEntity="App\Model\Stock\Stock")
-     * @ORM\JoinColumn(name="personal_pickup_stock_id", referencedColumnName="id", nullable=true)
+     * @var \App\Model\Store\Store|null
+     * @ORM\ManyToOne(targetEntity="App\Model\Store\Store")
+     * @ORM\JoinColumn(name="personal_pickup_store_id", referencedColumnName="id", nullable=true)
      */
-    private $personalPickupStock;
+    private $personalPickupStore;
 
     /**
      * @var string|null
@@ -83,11 +83,11 @@ class OrderItem extends BaseOrderItem
     }
 
     /**
-     * @param \App\Model\Stock\Stock|null $personalPickupStock
+     * @param \App\Model\Store\Store|null $personalPickupStore
      */
-    public function setPersonalPickupStock(?Stock $personalPickupStock): void
+    public function setPersonalPickupStore(?Store $personalPickupStore): void
     {
-        $this->personalPickupStock = $personalPickupStock;
+        $this->personalPickupStore = $personalPickupStore;
     }
 
     /**

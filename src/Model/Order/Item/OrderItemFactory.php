@@ -142,7 +142,7 @@ class OrderItemFactory extends BaseOrderItemFactory
             $orderItemData->quantity,
             $orderItemData->transport
         );
-        $orderItem->setPersonalPickupStock($orderItemData->personalPickupStock);
+        $orderItem->setPersonalPickupStore($orderItemData->personalPickupStore);
 
         return $orderItem;
     }

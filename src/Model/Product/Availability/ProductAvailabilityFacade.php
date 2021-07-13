@@ -397,41 +397,46 @@ class ProductAvailabilityFacade
 
     /**
      * @param int $domainId
-     * @param \App\Model\Stock\Stock[] $stocks
+     * @param \App\Model\Store\Store[] $stores
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct[] $quantifiedProducts
      * @return int[]
      */
-    public function getStockDayAvailabilitiesIndexedByStockId(int $domainId, array $stocks, array $quantifiedProducts)
+    public function getStoreDayAvailabilitiesIndexedByStoreId(int $domainId, array $stores, array $quantifiedProducts): array
     {
-        $maximumDayAvailabilityByStockId = [];
-        foreach ($stocks as $stock) {
-            $maximumDayAvailabilityByStockId[$stock->getId()] = 0;
+        $maximumDayAvailabilityByStoreId = [];
+        foreach ($stores as $store) {
+            $maximumDayAvailabilityByStoreId[$store->getId()] = 0;
         }
 
         foreach ($quantifiedProducts as $quantifiedProduct) {
-            $maximumDayAvailabilityByStockId = $this->getMaximumDayAvailabilityForProductIndexedByStockId(
+            $maximumDayAvailabilityByStoreId = $this->getMaximumDayAvailabilityForProductIndexedByStockId(
                 $quantifiedProduct,
-                $maximumDayAvailabilityByStockId,
-                $domainId
+                $maximumDayAvailabilityByStoreId,
+                $domainId,
+                $stores
             );
         }
 
-        return $maximumDayAvailabilityByStockId;
+        return $maximumDayAvailabilityByStoreId;
     }
 
     /**
      * @param int $domainId
-     * @param \App\Model\Stock\Stock[] $stocks
+     * @param \App\Model\Store\Store[] $stores
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct[] $quantifiedProducts
      * @param \App\Model\Transport\Transport[] $transports
      * @return int[]
      */
-    public function getMinimalDaysAvailabilityIndexedByTransportIds(int $domainId, array $stocks, array $quantifiedProducts, array $transports): array
-    {
-        $stockDayAvailabilities = $this->getStockDayAvailabilitiesIndexedByStockId($domainId, $stocks, $quantifiedProducts);
-        asort($stockDayAvailabilities);
+    public function getMinimalDaysAvailabilityIndexedByTransportIds(
+        int $domainId,
+        array $stores,
+        array $quantifiedProducts,
+        array $transports
+    ): array {
+        $storeDayAvailabilities = $this->getStoreDayAvailabilitiesIndexedByStoreId($domainId, $stores, $quantifiedProducts);
+        asort($storeDayAvailabilities);
 
-        $minimalStockDaysAvailability = reset($stockDayAvailabilities);
+        $minimalStockDaysAvailability = reset($storeDayAvailabilities);
 
         $minimalDaysAvailabilityIndexedByTransportIds = [];
         foreach ($transports as $transport) {
@@ -443,39 +448,50 @@ class ProductAvailabilityFacade
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct $quantifiedProduct
-     * @param int[] $maximumDayAvailabilityByStockId
+     * @param int[] $maximumDayAvailabilityByStoreId
      * @param int $domainId
+     * @param \App\Model\Store\Store[] $stores
      * @return int[]
      */
     private function getMaximumDayAvailabilityForProductIndexedByStockId(
         QuantifiedProduct $quantifiedProduct,
-        array $maximumDayAvailabilityByStockId,
-        int $domainId
+        array $maximumDayAvailabilityByStoreId,
+        int $domainId,
+        array $stores
     ): array {
         /** @var \App\Model\Product\Product $product */
         $product = $quantifiedProduct->getProduct();
+
         $productStocksByDomainIdIndexedByStockId = $this->productStockFacade->getProductStocksByProductAndDomainIdIndexedByStockId(
             $product,
             $domainId
         );
-        $quantityOnAllStocks = $this->sumProductStockQuantities($productStocksByDomainIdIndexedByStockId);
 
-        foreach ($maximumDayAvailabilityByStockId as $stockId => $maximumDayAvailability) {
+        $productStocksFromStoresIndexedByStoreId = [];
+        foreach ($stores as $store) {
+            $stockFromStore = $store->getStock();
+            if ($stockFromStore !== null && array_key_exists($stockFromStore->getId(), $productStocksByDomainIdIndexedByStockId)) {
+                $productStocksFromStoresIndexedByStoreId[$store->getId()] = $productStocksByDomainIdIndexedByStockId[$stockFromStore->getId()];
+            }
+        }
+
+        $quantityOnAllStocks = $this->sumProductStockQuantities($productStocksFromStoresIndexedByStoreId);
+
+        foreach ($maximumDayAvailabilityByStoreId as $storeId => $maximumDayAvailability) {
             $productDayAvailability = $this->getDayAvailabilityForProductAndStock(
                 $quantifiedProduct,
-                $productStocksByDomainIdIndexedByStockId[$stockId] ?? null,
+                $productStocksFromStoresIndexedByStoreId[$storeId] ?? null,
                 $quantityOnAllStocks,
-                $domainId,
-                $productStocksByDomainIdIndexedByStockId
+                $domainId
             );
 
-            $maximumDayAvailabilityByStockId[$stockId] = max(
+            $maximumDayAvailabilityByStoreId[$storeId] = max(
                 $maximumDayAvailability,
                 $productDayAvailability
             );
         }
 
-        return $maximumDayAvailabilityByStockId;
+        return $maximumDayAvailabilityByStoreId;
     }
 
     /**
@@ -497,15 +513,13 @@ class ProductAvailabilityFacade
      * @param \App\Model\Stock\ProductStock|null $productStock
      * @param int $quantityOnAllStocks
      * @param int $domainId
-     * @param \App\Model\Stock\ProductStock[] $productStocks
      * @return int
      */
     private function getDayAvailabilityForProductAndStock(
         QuantifiedProduct $quantifiedProduct,
         ?ProductStock $productStock,
         int $quantityOnAllStocks,
-        int $domainId,
-        array $productStocks
+        int $domainId
     ): int {
         //php_int_max serves as a numerical indicator of unavailability of goods
         $productBetweenStockTransferDays = PHP_INT_MAX;

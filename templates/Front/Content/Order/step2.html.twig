@@ -7,9 +7,9 @@
                         {% set transportForm = form.transport %}
                         {% set transportFormId = transportForm.vars.id %}
 
-                        {% set transportPersonalPickupForm = form.personalPickupStock %}
+                        {% set transportPersonalPickupForm = form.personalPickupStore %}
                         {% set transportPersonalPickupFormId = transportPersonalPickupForm.vars.id %}
-                        {% set personalPickupStock = form.personalPickupStock.vars.value %}
+                        {% set personalPickupStore = form.personalPickupStore.vars.value %}
 
                         <div class="js-payment-transport-group">
                             <h3 class="box-order__title" id="js-label-{{ transportFormId }}">
@@ -18,9 +18,9 @@
 
                             <input type="hidden"
                                 id="{{ transportPersonalPickupFormId }}"
-                                name="{{ form.personalPickupStock.vars.full_name }}"
+                                name="{{ form.personalPickupStore.vars.full_name }}"
                                 class="js-order-transport-personal-pickup-input"
-                                value="{{ personalPickupStock }}"
+                                value="{{ personalPickupStore }}"
                             >
 
                             <div class="box-chooser js-form-group">
@@ -62,23 +62,21 @@
                                                         {{ transport.name }}
                                                     </span>
                                                     {% if transport.description %}
-                                                        <span class="box-chooser__item__title__description{% if transport.isPersonalPickup() != false and personalPickupStock != null %} full-width{% endif %}" data-origin="{{ transport.description }}">
+                                                        <span class="box-chooser__item__title__description{% if transport.isPersonalPickup() != false and personalPickupStore != null %} full-width{% endif %}" data-origin="{{ transport.description }}">
                                                             {% if transport.isPersonalPickup() == false %}
                                                                 <div class="box-chooser__item__tooltip__wrap">
                                                                     <i class="box-chooser__item__tooltip__handler">i</i>
                                                                     <div class="box-chooser__item__tooltip">{{ transport.description }}</div>
                                                                 </div>
-                                                            {% elseif personalPickupStock == null %}
+                                                            {% elseif personalPickupStore == null %}
                                                                 <div class="box-chooser__item__tooltip__wrap">
                                                                     <i class="box-chooser__item__tooltip__handler">i</i>
                                                                     <div class="box-chooser__item__tooltip">{{ transport.description }}</div>
                                                                 </div>
                                                             {% else %}
-                                                                <span class="js-not-implemented-yet">
-                                                                    {{ 'xxx' }}, {{ 'xxx' }} <br>
-                                                                    {{ 'Otevřeno'|trans }}: {{ 'xxx' }} <br>
-                                                                </span>
-                                                                {% set minimalDaysAvailability = stockDayAvailabilitiesByStockId[personalPickupStock] %}
+                                                                {{ storesById[personalPickupStore].name }}, {{ storesById[personalPickupStore].address }} <br>
+                                                                {{ 'Otevřeno'|trans }}: {{ storesById[personalPickupStore].openingHours|nl2br }} <br>
+                                                                {% set minimalDaysAvailability = storeDayAvailabilitiesByStoreId[personalPickupStore] %}
                                                                 {% if minimalDaysAvailability < 7 %}
                                                                     {% transchoice minimalDaysAvailability with {'%daysAvailability%': minimalDaysAvailability} %}
                                                                         {0} Můžete mít ihned
@@ -96,7 +94,7 @@
                                                     {% endif %}
                                                 </span>
 
-                                                <span class="box-chooser__item__availability js-chooser-delivery-information {% if transport.isPersonalPickup() and personalPickupStock != null %}display-none{% endif %}">
+                                                <span class="box-chooser__item__availability js-chooser-delivery-information {% if transport.isPersonalPickup() and personalPickupStore != null %}display-none{% endif %}">
                                                     {% set minimalDaysAvailability = minimalDaysAvailabilityIndexedByTransportIds[transport.id] %}
                                                     {% if minimalDaysAvailability < 7 %}
                                                         {% if transport.isPersonalPickup() %}
@@ -135,7 +133,7 @@
                                 </div>
                             </div>
                         {% do form.transport.setRendered %} {# When session contains transport for productType without products with them, it must be skipped #}
-                        {% do form.personalPickupStock.setRendered %} {# When session contains transport for productType without products with them, it must be skipped #}
+                        {% do form.personalPickupStore.setRendered %} {# When session contains transport for productType without products with them, it must be skipped #}
                         </div>
                     </div>
 

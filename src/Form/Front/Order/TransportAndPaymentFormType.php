@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Form\Front\Order;
 
-use App\Form\Admin\Transformer\StockIdToStockTransformer;
+use App\Form\Admin\Transformer\StoreIdToStoreTransformer;
 use App\Model\GoPay\BankSwift\GoPayBankSwiftFacade;
 use App\Model\Order\FrontOrderData;
 use App\Model\Transport\Transport;
@@ -44,27 +44,27 @@ class TransportAndPaymentFormType extends AbstractType
     private $goPayBankSwiftFacade;
 
     /**
-     * @var \App\Form\Admin\Transformer\StockIdToStockTransformer
+     * @var \App\Form\Admin\Transformer\StoreIdToStoreTransformer
      */
-    private $stockIdToStockTransformer;
+    private StoreIdToStoreTransformer $storeIdToStoreTransformer;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Transport\TransportFacade $transportFacade
      * @param \App\Model\Payment\PaymentFacade $paymentFacade
-     * @param \App\Form\Admin\Transformer\StockIdToStockTransformer $stockIdToStockTransformer
+     * @param \App\Form\Admin\Transformer\StoreIdToStoreTransformer $storeIdToStoreTransformer
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
      * @param \App\Model\GoPay\BankSwift\GoPayBankSwiftFacade $goPayBankSwiftFacade
      */
     public function __construct(
         TransportFacade $transportFacade,
         PaymentFacade $paymentFacade,
-        StockIdToStockTransformer $stockIdToStockTransformer,
+        StoreIdToStoreTransformer $storeIdToStoreTransformer,
         CurrencyFacade $currencyFacade,
         GoPayBankSwiftFacade $goPayBankSwiftFacade
     ) {
         $this->transportFacade = $transportFacade;
         $this->paymentFacade = $paymentFacade;
-        $this->stockIdToStockTransformer = $stockIdToStockTransformer;
+        $this->storeIdToStoreTransformer = $storeIdToStoreTransformer;
         $this->currencyFacade = $currencyFacade;
         $this->goPayBankSwiftFacade = $goPayBankSwiftFacade;
     }
@@ -89,7 +89,7 @@ class TransportAndPaymentFormType extends AbstractType
                 ],
                 'invalid_message' => 'Please choose shipping type',
             ])
-            ->add('personalPickupStock', HiddenType::class)
+            ->add('personalPickupStore', HiddenType::class)
             ->add('payment', SingleCheckboxChoiceType::class, [
                 'choices' => $payments,
                 'choice_label' => 'name',
@@ -106,7 +106,7 @@ class TransportAndPaymentFormType extends AbstractType
             ])
             ->add('save', SubmitType::class);
 
-        $builder->get('personalPickupStock')->addModelTransformer($this->stockIdToStockTransformer);
+        $builder->get('personalPickupStore')->addModelTransformer($this->storeIdToStoreTransformer);
     }
 
     /**

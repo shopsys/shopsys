@@ -27,7 +27,7 @@ use App\Model\Order\Preview\OrderPreview;
 use App\Model\Order\Preview\OrderPreviewFactory;
 use App\Model\Payment\Payment;
 use App\Model\Product\Availability\ProductAvailabilityFacade;
-use App\Model\Stock\StockFacade;
+use App\Model\Store\StoreFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\HttpFoundation\DownloadFileResponse;
 use Shopsys\FrameworkBundle\Model\Cart\CartFacade;
@@ -142,9 +142,9 @@ class OrderController extends FrontBaseController
     private $goPayFacadeOnCurrentDomain;
 
     /**
-     * @var \App\Model\Stock\StockFacade
+     * @var \App\Model\Store\StoreFacade
      */
-    private $stockFacade;
+    private StoreFacade $storeFacade;
 
     /**
      * @var \App\Model\GoPay\GoPayTransactionFacade
@@ -201,7 +201,7 @@ class OrderController extends FrontBaseController
      * @param \App\Model\GoPay\GoPayOnCurrentDomainFacade $goPayFacadeOnCurrentDomain
      * @param \App\Model\GoPay\GoPayTransactionFacade $goPayTransactionFacade
      * @param \Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade $newsletterFacade
-     * @param \App\Model\Stock\StockFacade $stockFacade
+     * @param \App\Model\Store\StoreFacade $storeFacade
      * @param \App\Model\Gtm\GtmFacade $gtmFacade
      * @param \Shopsys\FrameworkBundle\Model\Security\Authenticator $authenticator
      * @param \App\Model\Product\Availability\ProductAvailabilityFacade $productAvailabilityFacade
@@ -228,7 +228,7 @@ class OrderController extends FrontBaseController
         GoPayOnCurrentDomainFacade $goPayFacadeOnCurrentDomain,
         GoPayTransactionFacade $goPayTransactionFacade,
         NewsletterFacade $newsletterFacade,
-        StockFacade $stockFacade,
+        StoreFacade $storeFacade,
         GtmFacade $gtmFacade,
         Authenticator $authenticator,
         ProductAvailabilityFacade $productAvailabilityFacade,
@@ -252,7 +252,7 @@ class OrderController extends FrontBaseController
         $this->legalConditionsFacade = $legalConditionsFacade;
         $this->goPayBankSwiftFacade = $goPayBankSwiftFacade;
         $this->goPayFacadeOnCurrentDomain = $goPayFacadeOnCurrentDomain;
-        $this->stockFacade = $stockFacade;
+        $this->storeFacade = $storeFacade;
         $this->goPayTransactionFacade = $goPayTransactionFacade;
         $this->newsletterFacade = $newsletterFacade;
         $this->gtmFacade = $gtmFacade;
@@ -329,7 +329,7 @@ class OrderController extends FrontBaseController
 
         $isCompanyCustomer = $frontOrderFormData->companyCustomer;
 
-        $stocksById = $this->stockFacade->getStocksEnabledOnDomainIndexedByStockId($domainId);
+        $storesById = $this->storeFacade->getStoresEnabledOnDomainIndexedByStoreId($domainId);
 
         $this->checkTransportAndPaymentChanges($orderData, $orderPreview, $transports, $payments);
 
@@ -391,17 +391,17 @@ class OrderController extends FrontBaseController
         }
 
         $minimalDaysAvailabilityIndexedByTransportIds = [];
-        $stockDayAvailabilitiesByStockId = [];
+        $storeDayAvailabilitiesByStoreId = [];
         if ($orderFlow->getCurrentStepNumber() === OrderFlow::STEP_SECOND) {
-            $stocks = $this->stockFacade->getStocksEnabledOnDomainIndexedByStockId($domainId);
-            $stockDayAvailabilitiesByStockId = $this->productAvailabilityFacade->getStockDayAvailabilitiesIndexedByStockId(
+            $stores = $this->storeFacade->getStoresEnabledOnDomainIndexedByStoreId($domainId);
+            $storeDayAvailabilitiesByStoreId = $this->productAvailabilityFacade->getStoreDayAvailabilitiesIndexedByStoreId(
                 $domainId,
-                $stocks,
+                $stores,
                 $cart->getQuantifiedProducts()
             );
             $minimalDaysAvailabilityIndexedByTransportIds = $this->productAvailabilityFacade->getMinimalDaysAvailabilityIndexedByTransportIds(
                 $domainId,
-                $stocks,
+                $stores,
                 $cart->getQuantifiedProducts(),
                 $transports
             );
@@ -428,7 +428,7 @@ class OrderController extends FrontBaseController
                 $domainId
             ),
             'transports' => $transports,
-            'stocksById' => $stocksById,
+            'storesById' => $storesById,
             'termsAndConditionsArticle' => $this->legalConditionsFacade->findTermsAndConditions($this->domain->getId()),
             'privacyPolicyArticle' => $this->legalConditionsFacade->findPrivacyPolicy($this->domain->getId()),
             'goPayBankSwifts' => $goPayBankSwifts,
@@ -436,7 +436,7 @@ class OrderController extends FrontBaseController
             'paymentTransportRelations' => $this->getPaymentTransportRelations($payments),
             'isCompanyCustomer' => $isCompanyCustomer,
             'minimalDaysAvailabilityIndexedByTransportIds' => $minimalDaysAvailabilityIndexedByTransportIds,
-            'stockDayAvailabilitiesByStockId' => $stockDayAvailabilitiesByStockId,
+            'storeDayAvailabilitiesByStoreId' => $storeDayAvailabilitiesByStoreId,
             'customerInfo' => $customerInfo,
             'customerUser' => $customerUser,
             'orderPreview' => $orderPreview,
