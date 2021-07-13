@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\FrontendApi\Model\Blog\Article;
 
+use App\Model\Blog\Category\BlogCategory;
+
 class BlogArticleElasticsearchFacade
 {
     /**
@@ -53,5 +55,25 @@ class BlogArticleElasticsearchFacade
     public function getAllBlogArticlesTotalCount(): int
     {
         return $this->blogArticleElasticsearchRepository->getAllBlogArticlesTotalCount();
+    }
+
+    /**
+     * @param \App\Model\Blog\Category\BlogCategory $blogCategory
+     * @param int $offset
+     * @param int $limit
+     * @return array
+     */
+    public function getByBlogCategory(BlogCategory $blogCategory, int $offset, int $limit): array
+    {
+        return $this->blogArticleElasticsearchRepository->getByBlogCategory($blogCategory, $offset, $limit);
+    }
+
+    /**
+     * @param \App\Model\Blog\Category\BlogCategory $blogCategory
+     * @return int
+     */
+    public function getByBlogCategoryTotalCount(BlogCategory $blogCategory): int
+    {
+        return $this->blogArticleElasticsearchRepository->getByBlogCategoryTotalCount($blogCategory);
     }
 }

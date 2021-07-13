@@ -74,6 +74,41 @@ class BlogCategoryTest extends GraphQlTestCase
         $this->assertQueryWithExpectedArray($query, $arrayExpected);
     }
 
+    public function testGetBlogCategoryArticles(): void
+    {
+        $uuid = $this->blogCategory->getUuid();
+        $query = '
+            query {
+                blogCategory(uuid: "' . $uuid . '") {
+                    articles(first:3) {
+                        edges {
+                            node {
+                              name
+                            }
+                        }
+                    }
+                }
+            }
+        ';
+
+        $locale = $this->getFirstDomainLocale();
+        $arrayExpected = [
+            'data' => [
+                'blogCategory' => [
+                    'articles' => [
+                        'edges' => [
+                            ['node' => ['name' => t('Ukázkový článek blogu %counter% %locale%', ['%counter%' => 16, '%locale%' => $locale], 'dataFixtures', $locale)]],
+                            ['node' => ['name' => t('Ukázkový článek blogu %counter% %locale%', ['%counter%' => 17, '%locale%' => $locale], 'dataFixtures', $locale)]],
+                            ['node' => ['name' => t('Ukázkový článek blogu %counter% %locale%', ['%counter%' => 18, '%locale%' => $locale], 'dataFixtures', $locale)]],
+                        ],
+                    ],
+                ],
+            ],
+        ];
+
+        $this->assertQueryWithExpectedArray($query, $arrayExpected);
+    }
+
     public function testGetBlogCategoryReturnsError(): void
     {
         $wrongUuid = '123e4567-e89b-12d3-a456-426614174000';

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\FrontendApi\Model\Resolver\Blog\Article;
 
 use App\FrontendApi\Model\Blog\Article\BlogArticleElasticsearchFacade;
+use App\Model\Blog\Category\BlogCategory;
 use Overblog\GraphQLBundle\Definition\Argument;
 use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
 use Overblog\GraphQLBundle\Definition\Resolver\ResolverInterface;
@@ -42,12 +43,28 @@ class BlogArticlesResolver implements ResolverInterface, AliasedInterface
     }
 
     /**
+     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
+     * @param \App\Model\Blog\Category\BlogCategory $blogCategory
+     * @return object|\Overblog\GraphQLBundle\Relay\Connection\ConnectionInterface
+     */
+    public function resolveByCategory(Argument $argument, BlogCategory $blogCategory)
+    {
+        $this->setDefaultFirstOffsetIfNecessary($argument);
+        $paginator = new Paginator(function ($offset, $limit) use ($blogCategory) {
+            return $this->blogArticleElasticsearchFacade->getByBlogCategory($blogCategory, $offset, $limit);
+        });
+
+        return $paginator->auto($argument, $this->blogArticleElasticsearchFacade->getByBlogCategoryTotalCount($blogCategory));
+    }
+
+    /**
      * @return string[]
      */
     public static function getAliases(): array
     {
         return [
             'resolveAll' => 'blogArticles',
+            'resolveByCategory' => 'blogArticlesByCategory',
         ];
     }
 

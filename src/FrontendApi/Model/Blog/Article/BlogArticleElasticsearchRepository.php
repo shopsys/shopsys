@@ -8,6 +8,7 @@ use App\Model\Blog\Article\Elasticsearch\BlogArticleElasticsearchConverter;
 use App\Model\Blog\Article\Elasticsearch\BlogArticleIndex;
 use App\Model\Blog\Article\Elasticsearch\FilterQueryFactory;
 use App\Model\Blog\Article\Exception\BlogArticleNotFoundException;
+use App\Model\Blog\Category\BlogCategory;
 use Elasticsearch\Client;
 use Shopsys\Cdn\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionLoader;
@@ -111,6 +112,30 @@ class BlogArticleElasticsearchRepository
     }
 
     /**
+     * @param \App\Model\Blog\Category\BlogCategory $blogCategory
+     * @param int $offset
+     * @param int $limit
+     * @return array
+     */
+    public function getByBlogCategory(BlogCategory $blogCategory, int $offset, int $limit): array
+    {
+        $result = $this->getByBlogCategoryResult($blogCategory, $offset, $limit);
+
+        return $this->extractHits($result);
+    }
+
+    /**
+     * @param \App\Model\Blog\Category\BlogCategory $blogCategory
+     * @return int
+     */
+    public function getByBlogCategoryTotalCount(BlogCategory $blogCategory): int
+    {
+        $result = $this->getByBlogCategoryResult($blogCategory);
+
+        return $this->extractTotalCount($result);
+    }
+
+    /**
      * @param array $result
      * @return array
      */
@@ -174,5 +199,24 @@ class BlogArticleElasticsearchRepository
     private function extractTotalCount(array $result): int
     {
         return (int)$result['hits']['total']['value'];
+    }
+
+    /**
+     * @param \App\Model\Blog\Category\BlogCategory $blogCategory
+     * @param int|null $offset
+     * @param int|null $limit
+     * @return array
+     */
+    private function getByBlogCategoryResult(BlogCategory $blogCategory, ?int $offset = null, ?int $limit = null): array
+    {
+        $query = $this->filterQueryFactory->create($this->getIndexName())->filterByCategory($blogCategory);
+        if ($offset !== null) {
+            $query = $query->setFrom($offset);
+        }
+        if ($limit !== null) {
+            $query = $query->setLimit($limit);
+        }
+
+        return $this->client->search($query->getQuery());
     }
 }

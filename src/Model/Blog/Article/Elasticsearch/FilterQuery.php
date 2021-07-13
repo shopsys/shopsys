@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\Blog\Article\Elasticsearch;
 
+use App\Model\Blog\Category\BlogCategory;
 use stdClass;
 
 /**
@@ -114,6 +115,22 @@ class FilterQuery
         $clone->filters[] = [
             'term' => [
                 'slug' => $slug,
+            ],
+        ];
+
+        return $clone;
+    }
+
+    /**
+     * @param \App\Model\Blog\Category\BlogCategory $blogCategory
+     * @return \App\Model\Blog\Article\Elasticsearch\FilterQuery
+     */
+    public function filterByCategory(BlogCategory $blogCategory): self
+    {
+        $clone = clone $this;
+        $clone->filters[] = [
+            'term' => [
+                'categories' => $blogCategory->getId(),
             ],
         ];
 
