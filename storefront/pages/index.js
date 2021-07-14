@@ -2,7 +2,9 @@ import React from 'react';
 import { useQuery } from 'urql';
 import { withUrqlClient } from 'next-urql';
 import { useTranslation } from 'react-i18next';
-import CONFIG from '../config/global';
+import getConfig from 'next/config';
+
+const { publicRuntimeConfig } = getConfig();
 
 const Index = () => {
     const { t } = useTranslation();
@@ -48,6 +50,9 @@ const Index = () => {
     );
 };
 
-export default withUrqlClient(() => ({
-    url: CONFIG.API_URL,
-}))(Index);
+export default withUrqlClient(
+    () => ({
+        url: publicRuntimeConfig.publicGraphqlEndpoint,
+    }),
+    { ssr: true },
+)(Index);
