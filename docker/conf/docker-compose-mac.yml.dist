@@ -43,6 +43,7 @@ services:
         build:
             context: ./storefront/docker/styleguide
             dockerfile: Dockerfile
+            target: development
         container_name: shopsys-framework-storefront-styleguide
         volumes:
             - hopsys-storefront-sync:/app
