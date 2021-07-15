@@ -2,19 +2,19 @@
 
 declare(strict_types=1);
 
-namespace App\FrontendApi\Model\Blog\Article;
+namespace App\Model\Blog\Article\Elasticsearch;
 
 use App\Model\Blog\Category\BlogCategory;
 
 class BlogArticleElasticsearchFacade
 {
     /**
-     * @var \App\FrontendApi\Model\Blog\Article\BlogArticleElasticsearchRepository
+     * @var \App\Model\Blog\Article\Elasticsearch\BlogArticleElasticsearchRepository
      */
     private BlogArticleElasticsearchRepository $blogArticleElasticsearchRepository;
 
     /**
-     * @param \App\FrontendApi\Model\Blog\Article\BlogArticleElasticsearchRepository $blogArticleElasticsearchRepository
+     * @param \App\Model\Blog\Article\Elasticsearch\BlogArticleElasticsearchRepository $blogArticleElasticsearchRepository
      */
     public function __construct(BlogArticleElasticsearchRepository $blogArticleElasticsearchRepository)
     {

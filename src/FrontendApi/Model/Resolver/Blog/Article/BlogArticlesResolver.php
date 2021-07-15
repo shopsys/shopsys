@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\FrontendApi\Model\Resolver\Blog\Article;
 
-use App\FrontendApi\Model\Blog\Article\BlogArticleElasticsearchFacade;
+use App\Model\Blog\Article\Elasticsearch\BlogArticleElasticsearchFacade;
 use App\Model\Blog\Category\BlogCategory;
 use Overblog\GraphQLBundle\Definition\Argument;
 use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
@@ -16,12 +16,12 @@ class BlogArticlesResolver implements ResolverInterface, AliasedInterface
     private const DEFAULT_FIRST_LIMIT = 10;
 
     /**
-     * @var \App\FrontendApi\Model\Blog\Article\BlogArticleElasticsearchFacade
+     * @var \App\Model\Blog\Article\Elasticsearch\BlogArticleElasticsearchFacade
      */
     private BlogArticleElasticsearchFacade $blogArticleElasticsearchFacade;
 
     /**
-     * @param \App\FrontendApi\Model\Blog\Article\BlogArticleElasticsearchFacade $blogArticleElasticsearchFacade
+     * @param \App\Model\Blog\Article\Elasticsearch\BlogArticleElasticsearchFacade $blogArticleElasticsearchFacade
      */
     public function __construct(BlogArticleElasticsearchFacade $blogArticleElasticsearchFacade)
     {

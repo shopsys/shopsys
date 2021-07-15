@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\FrontendApi\Model\Blog\Article;
+namespace App\Model\Blog\Article\Elasticsearch;
 
 use App\Component\Elasticsearch\AbstractElasticsearchDataFetcher;
 

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\FrontendApi\Model\Resolver\Blog\Article;
 
-use App\FrontendApi\Model\Blog\Article\BlogArticleElasticsearchFacade;
+use App\Model\Blog\Article\Elasticsearch\BlogArticleElasticsearchFacade;
 use App\Model\Blog\Article\Exception\BlogArticleNotFoundException;
 use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
 use Overblog\GraphQLBundle\Definition\Resolver\ResolverInterface;
@@ -13,12 +13,12 @@ use Overblog\GraphQLBundle\Error\UserError;
 class BlogArticleResolver implements ResolverInterface, AliasedInterface
 {
     /**
-     * @var \App\FrontendApi\Model\Blog\Article\BlogArticleElasticsearchFacade
+     * @var \App\Model\Blog\Article\Elasticsearch\BlogArticleElasticsearchFacade
      */
     private BlogArticleElasticsearchFacade $blogArticleElasticsearchFacade;
 
     /**
-     * @param \App\FrontendApi\Model\Blog\Article\BlogArticleElasticsearchFacade $blogArticleElasticsearchFacade
+     * @param \App\Model\Blog\Article\Elasticsearch\BlogArticleElasticsearchFacade $blogArticleElasticsearchFacade
      */
     public function __construct(BlogArticleElasticsearchFacade $blogArticleElasticsearchFacade)
     {

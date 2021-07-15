@@ -2,10 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\FrontendApi\Model\Blog\Article;
+namespace App\Model\Blog\Article\Elasticsearch;
 
 use App\Component\Elasticsearch\NoResultException;
-use App\Model\Blog\Article\Elasticsearch\FilterQueryFactory;
 use App\Model\Blog\Article\Exception\BlogArticleNotFoundException;
 use App\Model\Blog\Category\BlogCategory;
 
@@ -17,13 +16,13 @@ class BlogArticleElasticsearchRepository
     private FilterQueryFactory $filterQueryFactory;
 
     /**
-     * @var \App\FrontendApi\Model\Blog\Article\BlogArticleElasticsearchDataFetcher
+     * @var \App\Model\Blog\Article\Elasticsearch\BlogArticleElasticsearchDataFetcher
      */
     private BlogArticleElasticsearchDataFetcher $blogArticleElasticsearchDataFetcher;
 
     /**
      * @param \App\Model\Blog\Article\Elasticsearch\FilterQueryFactory $filterQueryFactory
-     * @param \App\FrontendApi\Model\Blog\Article\BlogArticleElasticsearchDataFetcher $blogArticleElasticsearchDataFetcher
+     * @param \App\Model\Blog\Article\Elasticsearch\BlogArticleElasticsearchDataFetcher $blogArticleElasticsearchDataFetcher
      */
     public function __construct(
         FilterQueryFactory $filterQueryFactory,
