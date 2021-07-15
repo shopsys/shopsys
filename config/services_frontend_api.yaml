@@ -39,3 +39,5 @@ services:
 
     Shopsys\FrontendApiBundle\Model\Customer\User\CustomerUserUpdateDataFactory:
         alias: App\FrontendApi\Model\Customer\User\CustomerUserUpdateDataFactory
+
+    App\FrontendApi\Model\Blog\Article\BlogArticleElasticsearchDataFetcher: ~
