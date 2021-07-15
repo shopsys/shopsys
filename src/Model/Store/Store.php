@@ -294,6 +294,14 @@ class Store implements OrderableEntityInterface
     }
 
     /**
+     * @return \App\Model\Store\StoreDomain[]
+     */
+    public function getEnabledDomains(): array
+    {
+        return array_filter($this->domains->toArray(), static fn (StoreDomain $storeDomain) => $storeDomain->isEnabled());
+    }
+
+    /**
      * @param int $domainId
      * @return \App\Model\Store\StoreDomain
      */
