@@ -1,16 +1,26 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { SsfwButtonStyled } from './SsfwButton.style.js';
+import { StyledSsfwButton, StyledSsfwButtonPrimary, StyledSsfwButtonSecondary } from './SsfwButton.style.js';
 
 /**
- * Global component for Buttons
+ * Global component for Buttons.
+ * We have for every modification of buttons special nametag element from styled-component. This method is used because we want to use the benefits of critical css and for this function is necessary to have it special styled-component element for each modification.
  */
 
 const SsfwButton = (props) => {
+    const { variant, children, type, additionalClassName, name } = props;
+    let Component = StyledSsfwButton;
+
+    if (variant == 'primary') {
+        Component = StyledSsfwButtonPrimary;
+    } else if (variant == 'secondary') {
+        Component = StyledSsfwButtonSecondary;
+    }
+
     return (
-        <SsfwButtonStyled type={props.type} className={'btn ' + props.additionalClassName} name={props.name}>
-            {props.children}
-        </SsfwButtonStyled>
+        <Component type={type} className={'btn ' + additionalClassName} name={name}>
+            {children}
+        </Component>
     );
 };
 
@@ -33,6 +43,10 @@ SsfwButton.propTypes = {
      * Type for change input type button/submit etc.
      */
     type: PropTypes.string,
+    /**
+     * Type for change variant of button. If you don't fill this prop then the button will be in default modification.
+     */
+    variant: PropTypes.string,
 };
 
 /* @component */

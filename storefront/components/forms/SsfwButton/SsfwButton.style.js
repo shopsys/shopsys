@@ -1,5 +1,6 @@
 import styled from 'styled-components';
-export const SsfwButtonStyled = styled.button`
+
+export const StyledSsfwButton = styled.button`
     width: auto;
     min-height: ${(props) => props.theme.btnHeight};
     padding: 10px 32px 10px 32px;
@@ -25,8 +26,10 @@ export const SsfwButtonStyled = styled.button`
         background-color: #dea700;
         text-decoration: none;
     }
+`;
 
-    &.btn--primary {
+export const StyledSsfwButtonPrimary = styled(StyledSsfwButton)`
+    && {
         color: ${(props) => props.theme.color.white};
         background-color: ${(props) => props.theme.color.primary};
 
@@ -35,8 +38,10 @@ export const SsfwButtonStyled = styled.button`
             background-color: #3b4cfc;
         }
     }
+`;
 
-    &.btn--secondary {
+export const StyledSsfwButtonSecondary = styled(StyledSsfwButton)`
+    && {
         color: ${(props) => props.theme.color.black};
         background-color: ${(props) => props.theme.color.orangeLight};
 

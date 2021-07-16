@@ -112,10 +112,10 @@ const Index = () => {
             <ShopsysInUserText htmlContent={content} />
             <div>
                 <SsfwButton name="button1">{t('Default')}</SsfwButton>
-                <SsfwButton name="button2" additionalClassName="btn--primary">
+                <SsfwButton variant="primary" name="button2" additionalClassName="someAdditionalClass">
                     {t('Primary')}
                 </SsfwButton>
-                <SsfwButton name="button3" additionalClassName="btn--secondary">
+                <SsfwButton variant="secondary" name="button3" additionalClassName="someAdditionalClass">
                     {t('Secondary')}
                 </SsfwButton>
             </div>
