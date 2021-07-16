@@ -109,7 +109,7 @@ class BlogCategoryTest extends GraphQlTestCase
         $this->assertQueryWithExpectedArray($query, $arrayExpected);
     }
 
-    public function testGetBlogCategoryReturnsError(): void
+    public function testGetBlogCategoryReturnsErrorWithWrongUuid(): void
     {
         $wrongUuid = '123e4567-e89b-12d3-a456-426614174000';
         $expectedErrorMessage = sprintf('Blog category with UUID "%s" does not exist.', $wrongUuid);
@@ -117,6 +117,27 @@ class BlogCategoryTest extends GraphQlTestCase
         $query = '
             query {
                 blogCategory(uuid: "' . $wrongUuid . '") {
+                    name
+                }
+            }
+        ';
+        $response = $this->getResponseContentForQuery($query);
+        $this->assertResponseContainsArrayOfErrors($response);
+        $errors = $this->getErrorsFromResponse($response);
+
+        $this->assertArrayHasKey(0, $errors);
+        $this->assertArrayHasKey('message', $errors[0]);
+        $this->assertSame($expectedErrorMessage, $errors[0]['message']);
+    }
+
+    public function testGetBlogCategoryReturnsErrorWithWrongSlug(): void
+    {
+        $wrongSlug = 'wrong-slug';
+        $expectedErrorMessage = sprintf('No visible blog category was found by slug "%s"', $wrongSlug);
+
+        $query = '
+            query {
+                blogCategory(urlSlug: "' . $wrongSlug . '") {
                     name
                 }
             }
