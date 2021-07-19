@@ -42,10 +42,11 @@ class BlogCategoryResolver implements ResolverInterface, AliasedInterface
     public function resolveByUuidOrUrlSlug(?string $uuid = null, ?string $urlSlug = null): BlogCategory
     {
         try {
+            $domainId = $this->domain->getId();
             if ($uuid !== null) {
-                $blogCategory = $this->blogCategoryFacade->getByUuid($uuid);
+                $blogCategory = $this->blogCategoryFacade->getVisibleByUuid($domainId, $uuid);
             } elseif ($urlSlug !== null) {
-                $blogCategory = $this->blogCategoryFacade->getVisibleByUrlSlug($this->domain->getId(), $urlSlug);
+                $blogCategory = $this->blogCategoryFacade->getVisibleByUrlSlug($domainId, $urlSlug);
             } else {
                 throw new UserError('You need to provide argument \'uuid\' or \'urlSlug\'.');
             }

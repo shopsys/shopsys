@@ -315,12 +315,13 @@ class BlogCategoryFacade
     }
 
     /**
+     * @param int $domainId
      * @param string $uuid
      * @return \App\Model\Blog\Category\BlogCategory
      */
-    public function getByUuid(string $uuid): BlogCategory
+    public function getVisibleByUuid(int $domainId, string $uuid): BlogCategory
     {
-        return $this->blogCategoryRepository->getByUuid($uuid);
+        return $this->blogCategoryRepository->getVisibleByUuid($domainId, $uuid);
     }
 
     /**

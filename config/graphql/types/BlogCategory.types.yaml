@@ -6,7 +6,7 @@ BlogCategory:
                 type: "Uuid!"
                 description: "The blog category UUID"
             name:
-                type: "String"
+                type: "String!"
                 description: "The blog category name"
             description:
                 type: "String"

@@ -112,7 +112,7 @@ class BlogCategoryTest extends GraphQlTestCase
     public function testGetBlogCategoryReturnsErrorWithWrongUuid(): void
     {
         $wrongUuid = '123e4567-e89b-12d3-a456-426614174000';
-        $expectedErrorMessage = sprintf('Blog category with UUID "%s" does not exist.', $wrongUuid);
+        $expectedErrorMessage = sprintf('No visible blog category was found by UUID "%s"', $wrongUuid);
 
         $query = '
             query {
