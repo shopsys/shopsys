@@ -18,11 +18,11 @@
     },
     "plugins": [
         "react",
-        "unused-imports"
+        "unused-imports",
+        "prettier"
     ],
     "rules": {
-        "semi": ["error", "always"],
-        "indent": ["error", 4, {"SwitchCase": 1}],
+        "prettier/prettier": "error",
         "padded-blocks": "off",
         "no-undef": "off",
         "no-multi-str": "off",
