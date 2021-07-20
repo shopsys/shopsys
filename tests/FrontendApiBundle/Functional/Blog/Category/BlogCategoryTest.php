@@ -80,7 +80,7 @@ class BlogCategoryTest extends GraphQlTestCase
         $query = '
             query {
                 blogCategory(uuid: "' . $uuid . '") {
-                    articles(first:3) {
+                    blogArticles(first:3) {
                         edges {
                             node {
                               name
@@ -95,7 +95,7 @@ class BlogCategoryTest extends GraphQlTestCase
         $arrayExpected = [
             'data' => [
                 'blogCategory' => [
-                    'articles' => [
+                    'blogArticles' => [
                         'edges' => [
                             ['node' => ['name' => t('Ukázkový článek blogu %counter% %locale%', ['%counter%' => 16, '%locale%' => $locale], 'dataFixtures', $locale)]],
                             ['node' => ['name' => t('Ukázkový článek blogu %counter% %locale%', ['%counter%' => 17, '%locale%' => $locale], 'dataFixtures', $locale)]],

@@ -26,7 +26,7 @@ BlogCategory:
             seoH1:
                 type: "String"
                 description: "The blog category SEO H1 heading"
-            articles:
+            blogArticles:
                 type: "BlogArticleConnection"
                 description: "Paginated blog articles of the given blog category"
                 argsBuilder: "Relay::Connection"
