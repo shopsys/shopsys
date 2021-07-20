@@ -4,10 +4,22 @@ declare(strict_types=1);
 
 namespace Tests\FrontendApiBundle\Functional\Blog\Article;
 
+use App\Model\Blog\Article\Elasticsearch\BlogArticleElasticsearchFacade;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class BlogArticlesTest extends GraphQlTestCase
 {
+    private int $totalBlogArticlesCount = 0;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        /** @var \App\Model\Blog\Article\Elasticsearch\BlogArticleElasticsearchFacade $blogArticleFacade */
+        $blogArticleFacade = $this->getContainer()->get(BlogArticleElasticsearchFacade::class);
+        $this->totalBlogArticlesCount = $blogArticleFacade->getAllBlogArticlesTotalCount();
+    }
+
     /**
      * @return array
      */
@@ -44,6 +56,9 @@ class BlogArticlesTest extends GraphQlTestCase
             $this->assertResponseContainsArrayOfDataForGraphQlType($response, $graphQlType);
             $responseData = $this->getResponseDataForGraphQlType($response, $graphQlType);
 
+            $this->assertArrayHasKey('totalCount', $responseData);
+            $this->assertSame($this->totalBlogArticlesCount, $responseData['totalCount']);
+
             $this->assertArrayHasKey('edges', $responseData);
             $this->assertCount(count($expectedBlogArticlesData), $responseData['edges']);
             foreach ($responseData['edges'] as $key => $edge) {
@@ -67,6 +82,7 @@ class BlogArticlesTest extends GraphQlTestCase
                             name
                         }
                     }
+                    totalCount
                 }
             }
         ';
@@ -86,6 +102,7 @@ class BlogArticlesTest extends GraphQlTestCase
                             name
                         }
                     }
+                    totalCount
                 }
             }
         ';
@@ -104,6 +121,7 @@ class BlogArticlesTest extends GraphQlTestCase
                             name
                         }
                     }
+                    totalCount
                 }
             }
         ';
