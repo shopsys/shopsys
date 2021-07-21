@@ -4,5 +4,9 @@
     "Loading": "Načítám",
     "Oh no! Error": "Oh no! Chyba",
     "Primary": "Primárny",
-    "Secondary": "Sekundárne"
+    "Secondary": "Sekundárne",
+    "name": "meno",
+    "password": "heslo",
+    "disabled": "zakázaný",
+    "name cannot contain special characters or numbers": "meno nemôže obsahovať špeciálne znaky alebo čísla "
 }
