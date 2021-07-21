@@ -1,0 +1,3 @@
+We are using styled-components for styling: https://styled-components.com/
+### Best practices for styled-component
+Here will be best practices for styling as soon as possible...

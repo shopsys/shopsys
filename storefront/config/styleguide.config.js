@@ -42,6 +42,10 @@ module.exports = {
                     name: 'New component',
                     content: '../docs/new-component.md',
                 },
+                {
+                    name: 'Styled-component',
+                    content: '../docs/styled-component.md',
+                },
             ],
         },
         {

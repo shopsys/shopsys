@@ -1,53 +1,81 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
+
+const localVariables = {
+    btnPaddingVertical: '10px',
+    btnPaddingHorizontal: '32px',
+    btnBackgroundColorHover: '#dea700', // darken version of theme.color.orange
+    btnSmallPaddingVertical: '3px',
+    btnPrimaryBackgroundColorHover: '#3b4cfc', // darken version of theme.color.primary
+};
+
+const getSize = (size, theme) => {
+    switch (size) {
+        default:
+            return `
+                padding: ${localVariables.btnPaddingVertical} ${localVariables.btnPaddingHorizontal};
+                min-height: ${theme.btnHeight};
+                line-height: 27px;
+
+                font-size: ${theme.fontSize.default};
+            `;
+        case 'small':
+            return `
+                padding: ${localVariables.btnSmallPaddingVertical} 17px ${localVariables.btnSmallPaddingVertical};
+                min-height: 30px;
+                line-height: 23px;
+
+                font-size: ${theme.fontSize.small};
+            `;
+    }
+};
 
 export const StyledSsfwButton = styled.button`
-    width: auto;
-    min-height: ${(props) => props.theme.btnHeight};
-    padding: 10px 32px 10px 32px;
-    vertical-align: middle;
-    display: inline-block;
-    transition: ${(props) => props.theme.transition} background-color, ${(props) => props.theme.transition} color;
-    text-align: center;
-    line-height: 27px;
+    ${({ size, theme }) => css`
+        ${getSize(size, theme)};
+        width: auto;
+        vertical-align: middle;
+        display: inline-block;
+        transition: ${theme.transition} background-color, ${theme.transition} color;
+        text-align: center;
 
-    border: 0;
-    border-radius: ${(props) => props.theme.radius.medium};
-    color: ${(props) => props.theme.color.white};
-    background-color: ${(props) => props.theme.color.orange};
-    cursor: pointer;
-    text-decoration: none;
-    font-size: ${(props) => props.theme.fontSize.default};
-    font-weight: 700;
-    outline: 0;
-    text-transform: uppercase;
-
-    &:hover {
-        color: ${(props) => props.theme.color.white};
-        background-color: #dea700;
+        border: 0;
+        border-radius: ${theme.radius.medium};
+        color: ${theme.color.white};
+        background-color: ${theme.color.orange};
+        cursor: pointer;
         text-decoration: none;
-    }
+        font-weight: 700;
+        outline: 0;
+        text-transform: uppercase;
+
+        &:hover {
+            color: ${theme.color.white};
+            background-color: ${localVariables.btnBackgroundColorHover};
+            text-decoration: none;
+        }
+    `}
 `;
 
 export const StyledSsfwButtonPrimary = styled(StyledSsfwButton)`
-    && {
-        color: ${(props) => props.theme.color.white};
-        background-color: ${(props) => props.theme.color.primary};
+    ${({ theme }) => `
+        color: ${theme.color.white};
+        background-color: ${theme.color.primary};
 
         &:hover {
-            color: ${(props) => props.theme.color.white};
-            background-color: #3b4cfc;
+            color: ${theme.color.white};
+            background-color: ${localVariables.btnPrimaryBackgroundColorHover};
         }
-    }
+    `}
 `;
 
 export const StyledSsfwButtonSecondary = styled(StyledSsfwButton)`
-    && {
-        color: ${(props) => props.theme.color.black};
-        background-color: ${(props) => props.theme.color.orangeLight};
+    ${({ theme }) => `
+        color: ${theme.color.black};
+        background-color: ${theme.color.orangeLight};
 
         &:hover {
-            color: ${(props) => props.theme.color.black};
-            background-color: ${(props) => props.theme.color.white};
+            color: ${theme.color.black};
+            background-color: ${theme.color.white};
         }
-    }
+    `}
 `;

@@ -112,11 +112,20 @@ const Index = () => {
             <ShopsysInUserText htmlContent={content} />
             <div>
                 <SsfwButton name="button1">{t('Default')}</SsfwButton>
-                <SsfwButton variant="primary" name="button2" additionalClassName="someAdditionalClass">
+                <SsfwButton variant="secondary" name="button2">
                     {t('Primary')}
                 </SsfwButton>
-                <SsfwButton variant="secondary" name="button3" additionalClassName="someAdditionalClass">
+                <SsfwButton variant="primary" name="button3">
                     {t('Secondary')}
+                </SsfwButton>
+                <SsfwButton size="small" name="button4">
+                    {t('Small')}
+                </SsfwButton>
+                <SsfwButton variant="primary" size="small" name="button5">
+                    {t('Small primary')}
+                </SsfwButton>
+                <SsfwButton variant="secondary" size="small" name="button6">
+                    {t('Small secondary')}
                 </SsfwButton>
             </div>
             <FormProvider {...formProviderMethods}>

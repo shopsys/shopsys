@@ -10,7 +10,6 @@ At the end of component you can define default props of the component.
 
 ```plain
 SsfwButton.defaultProps = {
-    additionalClassName: 'default',
     type: 'button'
 };
  ```
