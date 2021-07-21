@@ -7,6 +7,7 @@ namespace App\Model\Blog\Article\Elasticsearch;
 use App\Component\Elasticsearch\NoResultException;
 use App\Model\Blog\Article\Exception\BlogArticleNotFoundException;
 use App\Model\Blog\Category\BlogCategory;
+use Shopsys\FrameworkBundle\Component\String\TransformString;
 
 class BlogArticleElasticsearchRepository
 {
@@ -74,12 +75,30 @@ class BlogArticleElasticsearchRepository
      */
     public function getBySlug(string $slug): array
     {
+        $blogArticle = $this->findBySlug($slug);
+        if ($blogArticle === null) {
+            $blogArticle = $this->findBySlug(TransformString::addOrRemoveTrailingSlashFromString($slug));
+        }
+
+        if ($blogArticle === null) {
+            throw new BlogArticleNotFoundException(sprintf('Blog article not found by slug "%s"', $slug));
+        }
+
+        return $blogArticle;
+    }
+
+    /**
+     * @param string $slug
+     * @return array|null
+     */
+    private function findBySlug(string $slug): ?array
+    {
         $filterQuery = $this->filterQueryFactory->createFilteredBySlug($slug);
 
         try {
             return $this->blogArticleElasticsearchDataFetcher->getSingleResult($filterQuery);
         } catch (NoResultException $exception) {
-            throw new BlogArticleNotFoundException(sprintf('Blog article not found by slug "%s"', $slug));
+            return null;
         }
     }
 
