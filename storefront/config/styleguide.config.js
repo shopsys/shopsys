@@ -61,4 +61,5 @@ module.exports = {
             disableHostCheck: true,
         },
     },
+    assetsDir: '../public/',
 };
