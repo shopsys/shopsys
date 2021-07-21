@@ -286,8 +286,8 @@ msgstr "\n<strong class=\"box-accordion__grid-table__col__expose\">Nie je vystav
 msgid "<strong class=\"box-accordion__grid-table__col__expose\">Vystaveno</strong> na prodejně"
 msgstr "\n<strong class=\"box-accordion__grid-table__col__expose\">Vystavené</strong> na predajni"
 
-msgid "<strong class=\"is-in-stock\">Ihned</strong> k odběru"
-msgstr "\n<strong class=\"is-in-stock\">Ihneď</strong> na odber"
+msgid "Ihned k odběru"
+msgstr "Ihneď na odber"
 
 msgid "<strong><a href=\"{{ url }}\">Notifikační lišta</a></strong> byla úspešne upravená"
 msgstr ""

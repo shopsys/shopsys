@@ -221,7 +221,7 @@
                         {% endif %}
 
                         {% if parameterValuesViewsData > 0 %}
-                            <a href="#" class="in-tab__head__item js-tabs-button" data-tab-id="accessories">
+                            <a href="#" class="in-tab__head__item js-tabs-button" data-tab-id="parameters">
                                 {{ 'Parametry'|trans }}
                             </a>
                         {% endif %}
@@ -230,29 +230,44 @@
                         {% if productView.description %}
                             <div class="in-tab__content__item js-tabs-content active" data-tab-id="description">
                                 <div class="in-tab__content__left">
-                                    {{ productView.description|raw }}
+                                    <div class="in-tab__dropdown">
+                                        <h3 class="in-tab__dropdown__title js-responsive-toggle" data-element="description">
+                                            {{ 'Vlastnosti'|trans }}
+                                            <i class="svg svg-arrow"></i>
+                                        </h3>
+                                        <div class="display-none-tablet" id="description">
+                                            {{ productView.description|raw }}
+                                        </div>
+                                    </div>
                                 </div>
 
                                 <div class="in-tab__content__right">
                                     {% if productView.productFileViews|length > 0 %}
-                                        <div class="in-tab__content__block">
-                                            <h3 class="in-tab__content__title">{{ 'Ke stažení'|trans }}</h3>
+                                        <div class="in-tab__dropdown">
+                                            <h3 class="in-tab__dropdown__title js-responsive-toggle" data-element="productFileViews">
+                                                {{ 'Ke stažení'|trans }}
+                                                <i class="svg svg-arrow"></i>
+                                            </h3>
 
-                                            <ul class="list-minimalistic">
-                                                {% for productFileView in productView.productFileViews %}
-                                                    <li class="list-minimalistic__item">
-                                                        <a target="_blank" href="{{ productFileView.url }}">
-                                                            {{ productFileView.anchorText|trans }}
-                                                        </a>
-                                                    </li>
-                                                {% endfor %}
-                                            </ul>
+                                            <div class="in-tab__content__block display-none-tablet" id="productFileViews">
+                                                <h3 class="in-tab__title in-tab__title--only-desktop">{{ 'Ke stažení'|trans }}</h3>
+
+                                                <ul class="list-minimalistic">
+                                                    {% for productFileView in productView.productFileViews %}
+                                                        <li class="list-minimalistic__item">
+                                                            <a target="_blank" href="{{ productFileView.url }}">
+                                                                {{ productFileView.anchorText|trans }}
+                                                            </a>
+                                                        </li>
+                                                    {% endfor %}
+                                                </ul>
+                                            </div>
                                         </div>
                                     {% endif %}
 
                                     {% if productView.categoryViews %}
-                                        <div class="in-tab__content__block in-tab__content__block--without-background">
-                                            <h3 class="in-tab__content__title">{{ 'Objevte více'|trans }}</h3>
+                                        <div class="display-none-tablet">
+                                            <h3 class="in-tab__title">{{ 'Objevte více'|trans }}</h3>
                                             
                                             <div class="in-breadcrumb">
                                                 {% for categoryView in productView.categoryViews %}
@@ -278,51 +293,58 @@
                         {% endif %}
 
                         {% if parameterValuesViewsData > 0 %}
-                            <div class="in-tab__content__item js-tabs-content" data-tab-id="accessories">
+                            <div class="in-tab__content__item in-tab__content__item--with-gap js-tabs-content" data-tab-id="parameters">
                                 <div class="in-tab__content__left">
-                                    <h3 class="in-tab__content__title">{{ 'Parametry'|trans }}</h3>
-                                    <ul>
-                                        {% for parameterValuesViewData in parameterValuesViewsData %}
-                                            <li>
-                                                {{ parameterValuesViewData.parameterName }}:
-                                                {{ parameterValuesViewData.valueTextsWithUnit|join(', ') }}
-                                            </li>
-                                        {% endfor %}
-                                    </ul>
+                                    <div class="in-tab__dropdown">
+                                        <h3 class="in-tab__dropdown__title js-responsive-toggle" data-element="parameters">
+                                            {{ 'Parametry'|trans }}
+                                            <i class="svg svg-arrow"></i>
+                                        </h3>
+
+                                        <div class="display-none-tablet" id="parameters">
+                                            <h3 class="in-tab__title in-tab__title--only-desktop">{{ 'Parametry'|trans }}</h3>
+                                            <table class="table-params">
+                                                <tbody>
+                                                    {% for parameterValuesViewData in parameterValuesViewsData %}
+                                                        <tr>
+                                                            <th>
+                                                                {{ parameterValuesViewData.parameterName }}
+                                                            </th>
+                                                            <td>
+                                                                {{ parameterValuesViewData.valueTextsWithUnit|join(', ') }}
+                                                            </td>
+                                                        </tr>
+                                                    {% endfor %}
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         {% endif %}
                     </div>
-                </div>
 
-                {% if productView.storeAvailabilitiesInformation|length > 0 %}
-                    <h3 class="in-tab__content__title">{{ 'Dostupnost na prodejnách'|trans }}</h3>
-                    <ul id="stocks-availabilities">
-                        {% for productStockAvailabilityInformation in productView.storeAvailabilitiesInformation %}
-                            <li>
-                                {{ productStockAvailabilityInformation.storeName }}
-                                {{ productStockAvailabilityInformation.availabilityInformation|raw }}
-                                {% if productStockAvailabilityInformation.exposedProduct %}
-                                    <img
-                                        loading="lazy"
-                                        src="{{ imgLazyloadPlaceholder }}"
-                                        data-src="{{ asset('public/frontend/images/vystaveno.svg') }}"
-                                        alt="{{ 'Vystaveno'|trans }}"
-                                    >
-                                    {{ '<strong>Vystaveno</strong> na prodejně'|transHtml }}
-                                {% else %}
-                                    <img
-                                        loading="lazy"
-                                        src="{{ imgLazyloadPlaceholder }}"
-                                        data-src="{{ asset('public/frontend/images/nevystaveno.svg') }}"
-                                        alt="{{ 'Není vystaveno'|trans }}"
-                                    >
-                                    {{ '<strong>Není vystaveno</strong> na prodejně'|transHtml }}
-                                {% endif %}
-                            </li>
-                        {% endfor %}
-                    </ul>
-                {% endif %}
+                    {% if productView.storeAvailabilitiesInformation|length > 0 %}
+                        <div class="in-tab__section">
+                            <h3 class="in-tab__title in-tab__title--big-gap">{{ 'Dostupnost na prodejnách'|trans }}</h3>
+                            <ul class="list-stocks-availabilities" id="stocks-availabilities">
+                                {% for productStockAvailabilityInformation in productView.storeAvailabilitiesInformation %}
+                                    <li class="list-stocks-availabilities__item">
+                                        <strong class="list-stocks-availabilities__item__name">
+                                            {{ productStockAvailabilityInformation.storeName }}
+                                        </strong>
+                                        <span class="list-stocks-availabilities__item__availability">
+                                            {{ productStockAvailabilityInformation.availabilityInformation|raw }}
+                                        </span>
+                                        <a href="#" class="list-stocks-availabilities__item__detail js-not-implemented-yet">
+                                            {{ 'Detail prodejny'|trans }}<i class="svg svg-arrow-right"></i>
+                                        </a>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    {% endif %}
+                </div>
 
                 {% if productView.accessories|length > 0 %}
                     <div class="box-products-carousel gtm-scroll" data-gtm-event="{{ gtmAccessoriesScrollEvent|json_encode() }}">
@@ -340,6 +362,30 @@
                 {% cache 'products_similar_id_' ~ productView.id {lifetime:getCacheLifetimeByHours(1), domainId:getDomain().id} %}
                     {{ render(controller('App\\Controller\\Front\\ProductController:similarProductsAction', {id: productView.id} ))|spaceless }}
                 {% endcache %}
+
+                {% if productView.categoryViews %}
+                    <div class="in-tab display-block-tablet display-none">
+                        <h3 class="in-tab__title">{{ 'Objevte více'|trans }}</h3>
+                        
+                        <div class="in-breadcrumb">
+                            {% for categoryView in productView.categoryViews %}
+                                {% if not loop.first %}
+                                    <span class="in-breadcrumb__item in-breadcrumb__item--separator"></span>
+                                {% endif %}
+
+                                {% if not loop.last %}
+                                    <a class="in-breadcrumb__item" href="{{ categoryView.url }}">
+                                        {{ categoryView.name }}
+                                    </a>
+                                {% else %}
+                                    <span class="in-breadcrumb__item in-breadcrumb__item--current">
+                                        {{ categoryView.name }}
+                                    </span>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endif %}
             </div>
         </div>
     </div>

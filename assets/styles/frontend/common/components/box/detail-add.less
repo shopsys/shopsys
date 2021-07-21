@@ -1,9 +1,13 @@
 .box-detail-add {
     padding: 10px;
-    margin-bottom: 12px;
+    margin-bottom: 16px;
 
     background-color: @color-light-secondary;
     border-radius: @radius-big;
+
+    @media @query-lg {
+        margin-bottom: 12px;
+    }
 
     &__price {
         margin-bottom: 15px;
