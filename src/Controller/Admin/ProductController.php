@@ -63,6 +63,6 @@ class ProductController extends BaseProductController
             'productParameterValuesData' => $productData->parameters,
         ];
 
-        return $this->render('/Admin/Content/Product/edit.html.twig', $viewParameters);
+        return $this->render('@ShopsysFramework/Admin/Content/Product/edit.html.twig', $viewParameters);
     }
 }

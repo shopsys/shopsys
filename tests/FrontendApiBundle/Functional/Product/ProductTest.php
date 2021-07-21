@@ -278,9 +278,6 @@ class ProductTest extends GraphQlTestCase
                                 [
                                     'text' => t('červená', [], 'dataFixtures', $firstDomainLocale),
                                 ],
-                                [
-                                    'text' => t('černá', [], 'dataFixtures', $firstDomainLocale),
-                                ],
                             ],
                         ],
                         [
@@ -290,12 +287,6 @@ class ProductTest extends GraphQlTestCase
                             'values' => [
                                 [
                                     'text' => t('kov', [], 'dataFixtures', $firstDomainLocale),
-                                ],
-                                [
-                                    'text' => t('dřevo', [], 'dataFixtures', $firstDomainLocale),
-                                ],
-                                [
-                                    'text' => t('plast', [], 'dataFixtures', $firstDomainLocale),
                                 ],
                             ],
                         ],
