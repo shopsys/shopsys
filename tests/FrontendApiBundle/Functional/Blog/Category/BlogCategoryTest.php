@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\FrontendApiBundle\Functional\Blog\Category;
 
+use App\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use App\DataFixtures\Demo\BlogArticleDataFixture;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
@@ -14,9 +15,15 @@ class BlogCategoryTest extends GraphQlTestCase
      */
     private $blogCategory;
 
+    /**
+     * @var \App\Component\Router\FriendlyUrl\FriendlyUrlFacade
+     */
+    private $friendlyUrlFacade;
+
     protected function setUp(): void
     {
         $this->blogCategory = $this->getReference(BlogArticleDataFixture::FIRST_DEMO_BLOG_SUBCATEGORY);
+        $this->friendlyUrlFacade = $this->getContainer()->get(FriendlyUrlFacade::class);
 
         parent::setUp();
     }
@@ -39,6 +46,8 @@ class BlogCategoryTest extends GraphQlTestCase
                     seoTitle
                     seoH1
                     seoMetaDescription
+                    link
+                    slug
                 }
             }
         ';
@@ -65,6 +74,8 @@ class BlogCategoryTest extends GraphQlTestCase
                     seoTitle
                     seoH1
                     seoMetaDescription
+                    link
+                    slug
                 }
             }
         ';
@@ -157,6 +168,7 @@ class BlogCategoryTest extends GraphQlTestCase
     private function getExpectedBlogCategoryArray(): array
     {
         $locale = $this->getFirstDomainLocale();
+        $friendlyUrl = $this->friendlyUrlFacade->getMainFriendlyUrl(1, 'front_blogcategory_detail', $this->blogCategory->getId());
 
         return [
             'data' => [
@@ -171,6 +183,8 @@ class BlogCategoryTest extends GraphQlTestCase
                     'seoTitle' => t('title - První podsekce %locale%', ['%locale%' => $locale], 'dataFixtures', $locale),
                     'seoH1' => t('První podsekce %locale% - h1', ['%locale%' => $locale], 'dataFixtures', $locale),
                     'seoMetaDescription' => null,
+                    'link' => $this->friendlyUrlFacade->getAbsoluteUrlByFriendlyUrl($friendlyUrl),
+                    'slug' => $friendlyUrl->getSlug(),
                 ],
             ],
         ];

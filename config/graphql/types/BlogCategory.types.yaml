@@ -31,3 +31,9 @@ BlogCategory:
                 description: "Paginated blog articles of the given blog category"
                 argsBuilder: "Relay::Connection"
                 resolve: '@=service("App\\FrontendApi\\Model\\Resolver\\Blog\\Article\\BlogArticlesResolver").resolveByCategory(args, value)'
+            link:
+                type: "String!"
+                description: "The blog category absolute URL"
+            slug:
+                type: "String!"
+                description: "The blog category URL slug"

@@ -7,6 +7,7 @@ namespace App\Component\Router\FriendlyUrl;
 use DateTime;
 use DateTimeZone;
 use Doctrine\ORM\QueryBuilder;
+use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\Exception\FriendlyUrlNotFoundException;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrl as BaseFriendlyUrl;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade as BaseFriendlyUrlFacade;
 use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData;
@@ -111,5 +112,21 @@ class FriendlyUrlFacade extends BaseFriendlyUrlFacade
     public function getAllSlugsByRouteNameAndEntityId(int $domainId, string $routeName, int $entityId): array
     {
         return $this->friendlyUrlRepository->getAllSlugsByRouteNameAndDomainId($domainId, $routeName, $entityId);
+    }
+
+    /**
+     * @param int $domainId
+     * @param string $routeName
+     * @param int $entityId
+     * @return \App\Component\Router\FriendlyUrl\FriendlyUrl
+     */
+    public function getMainFriendlyUrl(int $domainId, string $routeName, int $entityId): FriendlyUrl
+    {
+        $friendlyUrl = $this->findMainFriendlyUrl($domainId, $routeName, $entityId);
+        if ($friendlyUrl === null) {
+            throw new FriendlyUrlNotFoundException(sprintf('Main friendly URL not found for route "%s", domain ID "%d", and entity ID "%d".', $routeName, $domainId, $entityId));
+        }
+
+        return $friendlyUrl;
     }
 }

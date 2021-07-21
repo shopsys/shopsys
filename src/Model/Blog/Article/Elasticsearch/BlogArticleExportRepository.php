@@ -114,15 +114,12 @@ class BlogArticleExportRepository
     public function extractBlogArticle(BlogArticle $blogArticle, int $domainId, string $locale): array
     {
         $blogArticleCategories = $blogArticle->getBlogCategoriesIndexedByDomainId()[$domainId];
+        $mainFriendlyUrl = $this->friendlyUrlFacade->getMainFriendlyUrl($domainId, 'front_blogarticle_detail', $blogArticle->getId());
 
         return [
             'name' => $blogArticle->getName($locale),
             'text' => $blogArticle->getDescription($locale),
-            'url' => $this->friendlyUrlFacade->getAbsoluteUrlByRouteNameAndEntityId(
-                $domainId,
-                'front_blogarticle_detail',
-                $blogArticle->getId()
-            ),
+            'url' => $this->friendlyUrlFacade->getAbsoluteUrlByFriendlyUrl($mainFriendlyUrl),
             'uuid' => $blogArticle->getUuid(),
             'createdAt' => $blogArticle->getCreatedAt()->format('Y-m-d H:i:s'),
             'visibleOnHomepage' => $blogArticle->isVisibleOnHomepage(),
@@ -133,6 +130,7 @@ class BlogArticleExportRepository
             'seoH1' => $blogArticle->getSeoH1($domainId),
             'slug' => $this->friendlyUrlFacade->getAllSlugsByRouteNameAndEntityId($domainId, 'front_blogarticle_detail', $blogArticle->getId()),
             'categories' => array_map(fn (BlogCategory $blogCategory) => $blogCategory->getId(), $blogArticleCategories),
+            'mainSlug' => $mainFriendlyUrl->getSlug(),
         ];
     }
 }

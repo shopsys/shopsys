@@ -35,3 +35,9 @@ BlogArticle:
             blogCategories:
                 type: "[BlogCategory!]!"
                 description: "The list of the blog article blog categories"
+            link:
+                type: "String!"
+                description: "The blog article absolute URL"
+            slug:
+                type: "String!"
+                description: "The blog article URL slug"

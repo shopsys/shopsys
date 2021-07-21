@@ -39,6 +39,12 @@ class BlogArticleResolverMap extends ResolverMap
                 'createdAt' => static function (array $blogArticleData) {
                     return new DateTime($blogArticleData['createdAt']);
                 },
+                'slug' => static function (array $blogArticleData) {
+                    return $blogArticleData['mainSlug'];
+                },
+                'link' => static function (array $blogArticleData) {
+                    return $blogArticleData['url'];
+                },
             ],
         ];
     }

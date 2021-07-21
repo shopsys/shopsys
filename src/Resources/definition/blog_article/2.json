@@ -197,6 +197,9 @@
       },
       "categories": {
         "type": "integer"
+      },
+      "mainSlug": {
+        "type": "text"
       }
     }
   }
