@@ -39,6 +39,11 @@ class BlogCategoryResolverMap extends ResolverMap
                 'seoMetaDescription' => function (BlogCategory $blogCategory) {
                     return $blogCategory->getSeoMetaDescription($this->domain->getId());
                 },
+                'parent' => function (BlogCategory $blogCategory) {
+                    $parent = $blogCategory->getParent();
+
+                    return $parent !== null && $parent->getParent() !== null ? $parent : null;
+                },
             ],
         ];
     }

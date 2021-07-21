@@ -12,7 +12,7 @@ BlogCategory:
                 type: "String"
                 description: "The blog category description"
             parent:
-                type: "BlogCategory!"
+                type: "BlogCategory"
                 description: "The blog category parent"
             children:
                 type: "[BlogCategory!]!"
