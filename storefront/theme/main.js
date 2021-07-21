@@ -7,6 +7,7 @@ export const theme = {
         orange: '#ecb200',
         orangeLight: '#fff0c4',
         primary: '#4c5bfd',
+        baseLighter: '#a4a7c1',
     },
 
     /* Fonts */
@@ -23,6 +24,7 @@ export const theme = {
 
     /* Buttons */
     btnHeight: '48px',
+
     /* Transition */
     transition: '0.2s cubic-bezier(.8, .20, .48, 1.0)',
 };
