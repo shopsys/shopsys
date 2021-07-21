@@ -190,6 +190,9 @@
       },
       "mainSlug": {
         "type": "text"
+      },
+      "products": {
+        "type": "integer"
       }
     }
   }

@@ -49,6 +49,9 @@ class BlogArticleTest extends GraphQlTestCase
                     }
                     link
                     slug
+                    products {
+                        name
+                    }
                 }
             }
         ';
@@ -80,6 +83,9 @@ class BlogArticleTest extends GraphQlTestCase
                     }
                     link
                     slug
+                    products {
+                        name
+                    }
                 }
             }
         ';
@@ -157,6 +163,7 @@ class BlogArticleTest extends GraphQlTestCase
                     ],
                     'link' => $this->friendlyUrlFacade->getAbsoluteUrlByFriendlyUrl($friendlyUrl),
                     'slug' => $friendlyUrl->getSlug(),
+                    'products' => [],
                 ],
             ],
         ];

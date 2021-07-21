@@ -7,6 +7,7 @@ namespace App\Model\Blog\Article\Elasticsearch;
 use App\Model\Blog\Article\BlogArticle;
 use App\Model\Blog\Article\BlogArticleRepository;
 use App\Model\Blog\Category\BlogCategory;
+use App\Model\Product\Product;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query\Expr\Join;
@@ -131,6 +132,7 @@ class BlogArticleExportRepository
             'slug' => $this->friendlyUrlFacade->getAllSlugsByRouteNameAndEntityId($domainId, 'front_blogarticle_detail', $blogArticle->getId()),
             'categories' => array_map(fn (BlogCategory $blogCategory) => $blogCategory->getId(), $blogArticleCategories),
             'mainSlug' => $mainFriendlyUrl->getSlug(),
+            'products' => array_map(fn (Product $product) => $product->getId(), $blogArticle->getProducts()),
         ];
     }
 }

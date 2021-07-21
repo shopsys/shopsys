@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\FrontendApi\Model\Resolver\Blog\Article;
 
 use App\Model\Blog\Category\BlogCategoryFacade;
+use App\Model\Product\ProductElasticsearchProvider;
 use DateTime;
 use Overblog\GraphQLBundle\Resolver\ResolverMap;
 
@@ -16,11 +17,18 @@ class BlogArticleResolverMap extends ResolverMap
     private BlogCategoryFacade $blogCategoryFacade;
 
     /**
-     * @param \App\Model\Blog\Category\BlogCategoryFacade $blogCategoryFacade
+     * @var \App\Model\Product\ProductElasticsearchProvider
      */
-    public function __construct(BlogCategoryFacade $blogCategoryFacade)
+    private ProductElasticsearchProvider $productElasticsearchProvider;
+
+    /**
+     * @param \App\Model\Blog\Category\BlogCategoryFacade $blogCategoryFacade
+     * @param \App\Model\Product\ProductElasticsearchProvider $productElasticsearchProvider
+     */
+    public function __construct(BlogCategoryFacade $blogCategoryFacade, ProductElasticsearchProvider $productElasticsearchProvider)
     {
         $this->blogCategoryFacade = $blogCategoryFacade;
+        $this->productElasticsearchProvider = $productElasticsearchProvider;
     }
 
     /**
@@ -44,6 +52,9 @@ class BlogArticleResolverMap extends ResolverMap
                 },
                 'link' => static function (array $blogArticleData) {
                     return $blogArticleData['url'];
+                },
+                'products' => function (array $blogArticleData) {
+                    return $this->productElasticsearchProvider->getVisibleProductsArrayByIds($blogArticleData['products']);
                 },
             ],
         ];

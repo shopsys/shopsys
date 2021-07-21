@@ -41,3 +41,6 @@ BlogArticle:
             slug:
                 type: "String!"
                 description: "The blog article URL slug"
+            products:
+                type: "[Product!]!"
+                description: "The list of the products assigned to the blog article"
