@@ -323,14 +323,4 @@ class BlogCategoryFacade
     {
         return $this->blogCategoryRepository->getVisibleByUuid($domainId, $uuid);
     }
-
-    /**
-     * @param int $domainId
-     * @param string $urlSlug
-     * @return \App\Model\Blog\Category\BlogCategory
-     */
-    public function getVisibleByUrlSlug(int $domainId, string $urlSlug): BlogCategory
-    {
-        return $this->blogCategoryRepository->getVisibleByUrlSlug($domainId, $urlSlug);
-    }
 }

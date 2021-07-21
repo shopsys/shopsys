@@ -11,6 +11,8 @@ use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
 use Overblog\GraphQLBundle\Definition\Resolver\ResolverInterface;
 use Overblog\GraphQLBundle\Error\UserError;
 use Shopsys\Cdn\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\Exception\FriendlyUrlNotFoundException;
+use Shopsys\FrontendApiBundle\Model\FriendlyUrl\FriendlyUrlFacade;
 
 class BlogCategoryResolver implements ResolverInterface, AliasedInterface
 {
@@ -25,13 +27,20 @@ class BlogCategoryResolver implements ResolverInterface, AliasedInterface
     private Domain $domain;
 
     /**
+     * @var \Shopsys\FrontendApiBundle\Model\FriendlyUrl\FriendlyUrlFacade
+     */
+    private FriendlyUrlFacade $friendlyUrlFacade;
+
+    /**
      * @param \App\Model\Blog\Category\BlogCategoryFacade $blogCategoryFacade
      * @param \Shopsys\Cdn\Component\Domain\Domain $domain
+     * @param \Shopsys\FrontendApiBundle\Model\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
      */
-    public function __construct(BlogCategoryFacade $blogCategoryFacade, Domain $domain)
+    public function __construct(BlogCategoryFacade $blogCategoryFacade, Domain $domain, FriendlyUrlFacade $friendlyUrlFacade)
     {
         $this->blogCategoryFacade = $blogCategoryFacade;
         $this->domain = $domain;
+        $this->friendlyUrlFacade = $friendlyUrlFacade;
     }
 
     /**
@@ -46,7 +55,7 @@ class BlogCategoryResolver implements ResolverInterface, AliasedInterface
             if ($uuid !== null) {
                 $blogCategory = $this->blogCategoryFacade->getVisibleByUuid($domainId, $uuid);
             } elseif ($urlSlug !== null) {
-                $blogCategory = $this->blogCategoryFacade->getVisibleByUrlSlug($domainId, $urlSlug);
+                $blogCategory = $this->getVisibleOnDomainAndSlug($urlSlug);
             } else {
                 throw new UserError('You need to provide argument \'uuid\' or \'urlSlug\'.');
             }
@@ -55,6 +64,25 @@ class BlogCategoryResolver implements ResolverInterface, AliasedInterface
         }
 
         return $blogCategory;
+    }
+
+    /**
+     * @param string $urlSlug
+     * @return \App\Model\Blog\Category\BlogCategory
+     */
+    private function getVisibleOnDomainAndSlug(string $urlSlug): BlogCategory
+    {
+        try {
+            $friendlyUrl = $this->friendlyUrlFacade->getFriendlyUrlByRouteNameAndSlug(
+                $this->domain->getId(),
+                'front_blogcategory_detail',
+                $urlSlug
+            );
+
+            return $this->blogCategoryFacade->getVisibleOnDomainById($this->domain->getId(), $friendlyUrl->getEntityId());
+        } catch (FriendlyUrlNotFoundException | BlogCategoryNotFoundException $blogCategoryNotFoundException) {
+            throw new UserError(sprintf('No visible blog category was found by slug "%s"', $urlSlug));
+        }
     }
 
     /**
