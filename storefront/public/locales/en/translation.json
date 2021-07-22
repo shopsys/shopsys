@@ -4,5 +4,9 @@
     "Loading": "Loading",
     "Oh no! Error": "Oh no! Error",
     "Primary": "Primary",
-    "Secondary": "Secondary"
+    "Secondary": "Secondary",
+    "name": "name",
+    "password": "password",
+    "disabled": "disabled",
+    "name cannot contain special characters or numbers": "name cannot contain special characters or numbers"
 }
