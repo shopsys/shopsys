@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
 import {
-    ShopsysTextInputStyled,
-    ShopsysFormFieldErrorStyled,
     ShopsysErrorIcon,
     ShopsysErrorMessage,
-    ShopsysPasswordVisibilityToggle,
+    ShopsysFormFieldErrorStyled,
     ShopsysInputFormLine,
+    ShopsysPasswordVisibilityToggle,
+    ShopsysTextInputStyled,
 } from './ShopsysTextInput.style.js';
 import { ErrorMessage } from '@hookform/error-message';
+import PropTypes from 'prop-types';
 import { useFormContext } from 'react-hook-form';
 
 /**

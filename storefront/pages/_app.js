@@ -1,8 +1,8 @@
-import { I18nextProvider } from 'react-i18next';
+import { useEffect, useState } from 'react';
 import i18n from '../config/i18n';
-import { useState, useEffect } from 'react';
-import { theme } from '../theme/main';
+import { I18nextProvider } from 'react-i18next';
 import SsfwGlobalProvider from '../components/SsfwGlobalProvider';
+import { theme } from '../theme/main';
 
 function MyApp({ Component, pageProps }) {
     const [isLoaded, setIsLoaded] = useState(false);

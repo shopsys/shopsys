@@ -31,6 +31,10 @@ module.exports = {
                     content: '../docs/coding-standards.md',
                 },
                 {
+                    name: 'ESlint rules',
+                    content: '../docs/eslint-rules.md',
+                },
+                {
                     name: 'Basic principles',
                     content: '../docs/basic-principles.md',
                 },

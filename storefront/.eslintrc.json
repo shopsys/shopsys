@@ -35,7 +35,8 @@
         "react/jsx-props-no-spreading": "off",
         "react/require-default-props": "off",
         "react/prop-types": "off",
-        "unused-imports/no-unused-imports": "error"
+        "unused-imports/no-unused-imports": "error",
+        "sort-imports":["error", {"ignoreCase": true}]
     },
     "settings": {
         "react": {
