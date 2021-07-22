@@ -8,9 +8,9 @@ import {
 
 /**
  * Global component for Buttons.
- * We have for every modification of buttons special nametag element from styled-component.
- * This method is used because we want to use the benefits of critical css and for this function is necessary to have it special styled-component element for each modification.
- * We can also combinate variants and sizes.
+ * We have a special nametag for every modification of button which correlates to the styled components.
+ * This method is used because we want to take advantage of the benefits of critical CSS and for that, it is necessary to have a styled-component element for each modification.
+ * We can also combine variants and sizes.
  */
 
 const ShopsysButton = (props) => {
@@ -31,12 +31,11 @@ const ShopsysButton = (props) => {
 
 ShopsysButton.defaultProps = {
     type: 'button',
-    size: '',
 };
 
 ShopsysButton.propTypes = {
     /**
-     * Attr name value for input Html element.
+     * Attr name value for input HTML element.
      */
     name: PropTypes.string.isRequired,
     /**

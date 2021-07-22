@@ -10,8 +10,8 @@
 <ShopsysButton size="small" name="button5">Small</ShopsysButton>
 ```
 
-### Combinates of variant and size
+### Combinations of variants and sizes
 ```jsx padded
-<ShopsysButton size="small" variant="secondary">Default</ShopsysButton>
-<ShopsysButton size="small" variant="primary" name="button5">Small</ShopsysButton>
+<ShopsysButton size="small" variant="secondary" name="button6">Default</ShopsysButton>
+<ShopsysButton size="small" variant="primary" name="button7">Small</ShopsysButton>
 ```

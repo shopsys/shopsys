@@ -112,10 +112,10 @@ const Index = () => {
             <ShopsysInUserText htmlContent={content} />
             <div>
                 <ShopsysButton name="button1">{t('Default')}</ShopsysButton>
-                <ShopsysButton variant="secondary" name="button2">
+                <ShopsysButton variant="primary" name="button3">
                     {t('Primary')}
                 </ShopsysButton>
-                <ShopsysButton variant="primary" name="button3">
+                <ShopsysButton variant="secondary" name="button2">
                     {t('Secondary')}
                 </ShopsysButton>
                 <ShopsysButton size="small" name="button4">
