@@ -31,6 +31,9 @@ class CategoryTest extends GraphQlTestCase
                     seoH1
                     seoTitle
                     seoMetaDescription
+                    bestsellers {
+                        name
+                    }
                 }
             }
         ';
@@ -47,6 +50,12 @@ class CategoryTest extends GraphQlTestCase
                         'dataFixtures',
                         $this->getLocaleForFirstDomain()
                     ),
+                    'bestsellers' => [
+                        ['name' => t('47" LG 47LA790V (FHD)', [], 'dataFixtures', $this->getLocaleForFirstDomain())],
+                        ['name' => t('32" Philips 32PFL4308', [], 'dataFixtures', $this->getLocaleForFirstDomain())],
+                        ['name' => t('22" Sencor SLE 22F46DM4 HELLO KITTY', [], 'dataFixtures', $this->getLocaleForFirstDomain())],
+                        ['name' => t('A4tech mouse X-710BK, OSCAR Game, 2000DPI, black,', [], 'dataFixtures', $this->getLocaleForFirstDomain())],
+                    ],
                 ],
             ],
         ];

@@ -2,3 +2,9 @@ Category:
     type: object
     inherits:
         - 'CategoryDecorator'
+    config:
+        fields:
+            bestsellers:
+                type: "[Product!]!"
+                description: "Best selling products"
+                resolve: '@=service("App\\FrontendApi\\Model\\Resolver\\Products\\BestsellingProductsResolver").resolveByCategory(value)'
