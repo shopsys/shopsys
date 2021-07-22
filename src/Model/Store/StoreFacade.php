@@ -145,4 +145,33 @@ class StoreFacade
     {
         return $this->storeRepository->findStoreByExternalId($externalId);
     }
+
+    /**
+     * @param int $domainId
+     * @param int $limit
+     * @param int $offset
+     * @return \App\Model\Store\Store[]
+     */
+    public function getStoresListEnabledOnDomain(int $domainId, int $limit, int $offset): array
+    {
+        return $this->storeRepository->getStoresListEnabledOnDomain($domainId, $limit, $offset);
+    }
+
+    /**
+     * @param int $domainId
+     * @return int
+     */
+    public function getStoresCountEnabledOnDomain(int $domainId): int
+    {
+        return $this->storeRepository->getStoresCountEnabledOnDomain($domainId);
+    }
+
+    /**
+     * @param string $uuid
+     * @return \App\Model\Store\Store
+     */
+    public function getByUuid(string $uuid): Store
+    {
+        return $this->storeRepository->getOneByUuid($uuid);
+    }
 }

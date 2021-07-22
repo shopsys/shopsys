@@ -35,6 +35,8 @@ class StoreData
 
     public ImageUploadData $image;
 
+    public ?string $uuid = null;
+
     public function __construct()
     {
         $this->image = new ImageUploadData();
