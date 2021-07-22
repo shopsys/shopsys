@@ -29,7 +29,7 @@ const getSize = (size, theme) => {
     }
 };
 
-export const StyledSsfwButton = styled.button`
+export const StyledShopsysButton = styled.button`
     ${({ size, theme }) => css`
         ${getSize(size, theme)};
         width: auto;
@@ -56,7 +56,7 @@ export const StyledSsfwButton = styled.button`
     `}
 `;
 
-export const StyledSsfwButtonPrimary = styled(StyledSsfwButton)`
+export const StyledShopsysButtonPrimary = styled(StyledShopsysButton)`
     ${({ theme }) => `
         color: ${theme.color.white};
         background-color: ${theme.color.primary};
@@ -68,7 +68,7 @@ export const StyledSsfwButtonPrimary = styled(StyledSsfwButton)`
     `}
 `;
 
-export const StyledSsfwButtonSecondary = styled(StyledSsfwButton)`
+export const StyledShopsysButtonSecondary = styled(StyledShopsysButton)`
     ${({ theme }) => `
         color: ${theme.color.black};
         background-color: ${theme.color.orangeLight};

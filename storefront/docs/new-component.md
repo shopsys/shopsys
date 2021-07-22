@@ -9,14 +9,14 @@ https://react-styleguidist.js.org/docs/documenting/
 At the end of component you can define default props of the component. 
 
 ```plain
-SsfwButton.defaultProps = {
+ShopsysButton.defaultProps = {
     type: 'button'
 };
  ```
 You can even check if passed props are in correct type:
 
 ```plain
-SsfwButton.propTypes = {
+ShopsysButton.propTypes = {
     name: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
     type: PropTypes.string,

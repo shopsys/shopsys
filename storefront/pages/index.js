@@ -6,7 +6,7 @@ import ShopsysCheckbox from '../components/forms/ShopsysCheckbox';
 import ShopsysInUserText from '../components/in/ShopsysInUserText';
 import ShopsysRadiobutton from '../components/forms/ShopsysRadiobutton';
 import ShopsysTextInput from '../components/forms/ShopsysTextInput';
-import SsfwButton from '../components/forms/SsfwButton';
+import ShopsysButton from '../components/forms/ShopsysButton';
 import { useQuery } from 'urql';
 import { useTranslation } from 'react-i18next';
 import { withUrqlClient } from 'next-urql';
@@ -111,22 +111,22 @@ const Index = () => {
             <CategoryList />
             <ShopsysInUserText htmlContent={content} />
             <div>
-                <SsfwButton name="button1">{t('Default')}</SsfwButton>
-                <SsfwButton variant="secondary" name="button2">
+                <ShopsysButton name="button1">{t('Default')}</ShopsysButton>
+                <ShopsysButton variant="secondary" name="button2">
                     {t('Primary')}
-                </SsfwButton>
-                <SsfwButton variant="primary" name="button3">
+                </ShopsysButton>
+                <ShopsysButton variant="primary" name="button3">
                     {t('Secondary')}
-                </SsfwButton>
-                <SsfwButton size="small" name="button4">
+                </ShopsysButton>
+                <ShopsysButton size="small" name="button4">
                     {t('Small')}
-                </SsfwButton>
-                <SsfwButton variant="primary" size="small" name="button5">
+                </ShopsysButton>
+                <ShopsysButton variant="primary" size="small" name="button5">
                     {t('Small primary')}
-                </SsfwButton>
-                <SsfwButton variant="secondary" size="small" name="button6">
+                </ShopsysButton>
+                <ShopsysButton variant="secondary" size="small" name="button6">
                     {t('Small secondary')}
-                </SsfwButton>
+                </ShopsysButton>
             </div>
             <FormProvider {...formProviderMethods}>
                 <form style={{ marginTop: '15px' }}>

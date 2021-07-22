@@ -1,6 +1,10 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { StyledSsfwButton, StyledSsfwButtonPrimary, StyledSsfwButtonSecondary } from './SsfwButton.style.js';
+import {
+    StyledShopsysButton,
+    StyledShopsysButtonPrimary,
+    StyledShopsysButtonSecondary,
+} from './ShopsysButton.style.js';
 
 /**
  * Global component for Buttons.
@@ -9,13 +13,13 @@ import { StyledSsfwButton, StyledSsfwButtonPrimary, StyledSsfwButtonSecondary } 
  * We can also combinate variants and sizes.
  */
 
-const SsfwButton = (props) => {
-    let Component = StyledSsfwButton;
+const ShopsysButton = (props) => {
+    let Component = StyledShopsysButton;
 
     if (props.variant == 'primary') {
-        Component = StyledSsfwButtonPrimary;
+        Component = StyledShopsysButtonPrimary;
     } else if (props.variant == 'secondary') {
-        Component = StyledSsfwButtonSecondary;
+        Component = StyledShopsysButtonSecondary;
     }
 
     return (
@@ -25,12 +29,12 @@ const SsfwButton = (props) => {
     );
 };
 
-SsfwButton.defaultProps = {
+ShopsysButton.defaultProps = {
     type: 'button',
     size: '',
 };
 
-SsfwButton.propTypes = {
+ShopsysButton.propTypes = {
     /**
      * Attr name value for input Html element.
      */
@@ -50,4 +54,4 @@ SsfwButton.propTypes = {
 };
 
 /* @component */
-export default SsfwButton;
+export default ShopsysButton;
