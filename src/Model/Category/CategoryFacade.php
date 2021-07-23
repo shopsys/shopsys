@@ -18,6 +18,7 @@ use Shopsys\FrameworkBundle\Model\Category\Category as BaseCategory;
 use Shopsys\FrameworkBundle\Model\Category\CategoryData;
 use Shopsys\FrameworkBundle\Model\Category\CategoryFacade as BaseCategoryFacade;
 use Shopsys\FrameworkBundle\Model\Category\CategoryFactoryInterface;
+use Shopsys\FrameworkBundle\Model\Category\CategoryNestedSetCalculator;
 use Shopsys\FrameworkBundle\Model\Category\CategoryRepository;
 use Shopsys\FrameworkBundle\Model\Category\CategoryVisibilityRecalculationScheduler;
 use Shopsys\FrameworkBundle\Model\Category\CategoryWithLazyLoadedVisibleChildrenFactory;
@@ -162,11 +163,28 @@ class CategoryFacade extends BaseCategoryFacade
     }
 
     /**
+     * @deprecated this method is slow for the large number of categories. Use reorderByNestedSetValues() instead
      * @param int[]|null[] $parentIdByCategoryId
      */
     public function editOrdering($parentIdByCategoryId)
     {
-        parent::editOrdering($parentIdByCategoryId);
+        @trigger_error(
+            sprintf(
+                'The %s() method is deprecated and will be removed in the next major. Use reorderByNestedSetValues() instead.',
+                __METHOD__
+            ),
+            E_USER_DEPRECATED
+        );
+
+        $this->reorderByNestedSetValues(CategoryNestedSetCalculator::calculateNestedSetFromAdjacencyList($parentIdByCategoryId));
+    }
+
+    /**
+     * @param array<int, array{id: string|int, parent_id: string|int|null, depth: int, left: int, right: int}> $categoriesOrderingData
+     */
+    public function reorderByNestedSetValues(array $categoriesOrderingData): void
+    {
+        parent::reorderByNestedSetValues($categoriesOrderingData);
 
         $this->twigCachedMenuFacade->invalidateCachedMenuByCategory($this->getRootCategory());
     }

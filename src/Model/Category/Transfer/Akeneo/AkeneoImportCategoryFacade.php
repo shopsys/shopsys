@@ -10,6 +10,7 @@ use App\Model\Category\Category;
 use App\Model\Category\CategoryDataFactory;
 use App\Model\Category\CategoryFacade;
 use Generator;
+use Shopsys\FrameworkBundle\Model\Category\CategoryNestedSetCalculator;
 use Shopsys\FrameworkBundle\Model\Category\CategoryVisibilityRepository;
 use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade;
 
@@ -189,7 +190,10 @@ class AkeneoImportCategoryFacade extends AbstractAkeneoImportTransfer
             $ordering = [
                 $categoryId => $parentCategoryId,
             ];
-            $this->categoryFacade->editOrdering($ordering);
+
+            $this->categoryFacade->reorderByNestedSetValues(
+                CategoryNestedSetCalculator::calculateNestedSetFromAdjacencyList($ordering)
+            );
         }
     }
 
