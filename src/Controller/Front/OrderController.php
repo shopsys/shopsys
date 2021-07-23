@@ -309,6 +309,7 @@ class OrderController extends FrontBaseController
 
         $payment = $frontOrderFormData->payment;
         $transport = $frontOrderFormData->transport;
+        $personalPickupStore = $frontOrderFormData->personalPickupStore;
 
         $orderPreview = $this->orderPreviewFactory->createForCurrentUser($transport, $payment);
 
@@ -341,7 +342,10 @@ class OrderController extends FrontBaseController
             if ($orderFlow->nextStep()) {
                 $form = $orderFlow->createForm();
             } elseif (count($this->getErrorMessages()) === 0 && count($this->getInfoMessages()) === 0) {
-                $deliveryAddress = $orderData->deliveryAddressSameAsBillingAddress === false ? $frontOrderFormData->deliveryAddress : null;
+                $deliveryAddress = null;
+                if ($orderData->deliveryAddressSameAsBillingAddress === false && $orderData->personalPickupStore === null) {
+                    $deliveryAddress = $frontOrderFormData->deliveryAddress;
+                }
                 $orderCreatedResult = $this->orderFacade->createOrderFromFrontWithRegistration($orderData, $deliveryAddress, $frontOrderFormData);
                 $order = $orderCreatedResult->getOrder();
 
@@ -414,6 +418,7 @@ class OrderController extends FrontBaseController
             'flow' => $orderFlow,
             'transport' => $transport,
             'payment' => $payment,
+            'personalPickupStore' => $personalPickupStore,
             'payments' => $payments,
             'transportsPrices' => $this->transportPriceCalculation->getCalculatedPricesIndexedByTransportId(
                 $transports,

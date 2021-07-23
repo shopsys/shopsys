@@ -125,7 +125,7 @@
                                     <div class="form-columns__item">
                                         {{ form_row(form.telephone, { label: 'Telephone'|trans }) }}
                                     </div>
-                                </div>        
+                                </div>
                             </div>
 
                             <div class="box-order__info__block active js-tabs-content">
@@ -137,35 +137,35 @@
                                         <div class="form-columns__item">
                                             {{ form_row(form.lastName, { label: 'Last name'|trans }) }}
                                         </div>
-                                    </div>        
+                                    </div>
                                 </div>
                             </div>
 
                             <div class="box-order__info__block js-tabs-content {{ companyTabActiveClass }}" data-tab-id="company-customer">
                                 <h3 class="box-order__title">{{ 'Company data'|trans }}</h3>
                                 {{ form_row(form.companyCustomer, { rowClass: "display-none" }) }}
-                                
+
                                 <div id="js-company-fields">
                                     <div class="form-columns">
                                         <div class="form-columns__left">
                                             <div class="form-columns__item">
                                                 {{ form_row(form.companyName, { label: 'Název společnosti'|trans }) }}
                                             </div>
-                                        </div>        
+                                        </div>
                                     </div>
                                     <div class="form-columns">
                                         <div class="form-columns__left">
                                             <div class="form-columns__item">
                                                 {{ form_row(form.companyNumber, { label: 'Company number'|trans }) }}
                                             </div>
-                                        </div>        
+                                        </div>
                                     </div>
                                     <div class="form-columns">
                                         <div class="form-columns__left">
                                             <div class="form-columns__item">
                                                 {{ form_row(form.companyTaxNumber, { label: 'Tax number'|trans }) }}
                                             </div>
-                                        </div>        
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -202,91 +202,114 @@
                             </div>
 
                             <div class="box-order__info__block box-order__info__block--small-gap active js-delivery-address-form">
-                                {% set hasEmptyAddresses = true %}
-                                {% if customerUser is null or customerUser.customer.deliveryAddresses is null and app.user is null %}
-                                    {% set hasEmptyAddresses = false %}
-                                {% endif %}
-                                {% if customerUser is not null and customerUser.customer.deliveryAddresses is empty %}
-                                    {% set hasEmptyAddresses = false %}
-                                {% endif %}
-                                {% if app.user is not null %}
-                                    {{ form_row(form.deliveryAddress) }}
-                                {% endif %}
-                                <div class="form-columns{{ hasEmptyAddresses == true ? ' display-none' }}">
-                                    <div class="form-columns__left">
-                                        <div class="form-columns__item">
-                                            {% if hasEmptyAddresses == true %}
-                                                {{ form_widget(form.deliveryAddressFilled, { attr: { class: 'css-checkbox js-checkbox-toggle js-order-delivery-address',
-                                                'data-checkbox-toggle-container-id': 'js-order-delivery-address',
-                                                checked: 'checked' } }) }}
-                                            {% else %}
-                                                {{ form_widget(form.deliveryAddressFilled, { attr: { class: 'css-checkbox js-checkbox-toggle js-order-delivery-address',
-                                                'data-checkbox-toggle-container-id': 'js-order-delivery-address'} }) }}
-                                            {% endif %}
-                                            <label for="{{ form.deliveryAddressFilled.vars.id }}" class="css-checkbox__image input-label input-label--checkbox">
-                                                {% if not isUserLogged %}
-                                                    {{ 'Zadat dodací adresu'|trans }}
-                                                {% else %}
-                                                    {{ 'Přidat novou dodací adresu'|trans }}
-                                                {% endif %}
-                                            </label>
-                                            {{ form_errors(form.deliveryAddressFilled) }}
-                                        </div>
+                                {% if transport is not empty and transport.isPersonalPickup is same as(true) and personalPickupStore is not empty %}
+                                    <div>
+                                        <div>{{ 'Goods will be delivered to the store %storeName%'|trans({'%storeName%': personalPickupStore.name}) }}</div>
+                                        <div><span>{{ 'Street'|trans }}</span>&nbsp;{{ personalPickupStore.street }}</div>
+                                        <div><span>{{ 'City'|trans }}</span>&nbsp;{{ personalPickupStore.city }}</div>
+                                        <div><span>{{ 'Postcode'|trans }}</span>&nbsp;{{ personalPickupStore.postcode }}</div>
+                                        <div><span>{{ 'Country'|trans }}</span>&nbsp;{{ personalPickupStore.country.name }}</div>
                                     </div>
-                                </div>
 
-                                <div class="margin-bottom-40" id="js-order-delivery-address">
-                                    <div class="margin-top-10 js-order-delivery-address-fields{% if app.user is not null and form.deliveryAddress.vars.value is not same as('') %} display-none{% endif %}">
-                                        <div class="form-columns">
-                                            <div class="form-columns__left">
-                                                <div class="form-columns__item">
-                                                    {{ form_row(form.deliveryFirstName, { label: 'First name'|trans }) }}
-                                                </div>
-                                                <div class="form-columns__item">
-                                                    {{ form_row(form.deliveryLastName, { label: 'Last name'|trans }) }}
-                                                </div>
+                                    {% do form.deliveryAddressFilled.setRendered %}
+                                    {% do form.deliveryFirstName.setRendered %}
+                                    {% do form.deliveryLastName.setRendered %}
+                                    {% do form.deliveryTelephone.setRendered %}
+                                    {% do form.deliveryCompanyName.setRendered %}
+                                    {% do form.deliveryStreet.setRendered %}
+                                    {% do form.deliveryCity.setRendered %}
+                                    {% do form.deliveryPostcode.setRendered %}
+                                    {% do form.deliveryCountry.setRendered %}
+                                    {% if app.user is not null %}
+                                        {% do form.deliveryAddress.setRendered %}
+                                    {% endif %}
+                                {% else %}
+                                    {% set hasEmptyAddresses = true %}
+                                    {% if customerUser is null or customerUser.customer.deliveryAddresses is null and app.user is null %}
+                                        {% set hasEmptyAddresses = false %}
+                                    {% endif %}
+                                    {% if customerUser is not null and customerUser.customer.deliveryAddresses is empty %}
+                                        {% set hasEmptyAddresses = false %}
+                                    {% endif %}
+                                    {% if app.user is not null %}
+                                        {{ form_row(form.deliveryAddress) }}
+                                    {% endif %}
+                                    <div class="form-columns{{ hasEmptyAddresses == true ? ' display-none' }}">
+                                        <div class="form-columns__left">
+                                            <div class="form-columns__item">
+                                                {% if hasEmptyAddresses == true %}
+                                                    {{ form_widget(form.deliveryAddressFilled, { attr: { class: 'css-checkbox js-checkbox-toggle js-order-delivery-address',
+                                                    'data-checkbox-toggle-container-id': 'js-order-delivery-address',
+                                                    checked: 'checked' } }) }}
+                                                {% else %}
+                                                    {{ form_widget(form.deliveryAddressFilled, { attr: { class: 'css-checkbox js-checkbox-toggle js-order-delivery-address',
+                                                    'data-checkbox-toggle-container-id': 'js-order-delivery-address'} }) }}
+                                                {% endif %}
+                                                <label for="{{ form.deliveryAddressFilled.vars.id }}" class="css-checkbox__image input-label input-label--checkbox">
+                                                    {% if not isUserLogged %}
+                                                        {{ 'Zadat dodací adresu'|trans }}
+                                                    {% else %}
+                                                        {{ 'Přidat novou dodací adresu'|trans }}
+                                                    {% endif %}
+                                                </label>
+                                                {{ form_errors(form.deliveryAddressFilled) }}
                                             </div>
                                         </div>
-                                        <div class="form-columns">
-                                            <div class="form-columns__left">
-                                                <div class="form-columns__item">
-                                                    {{ form_row(form.deliveryCompanyName, { label: 'Company'|trans }) }}
+                                    </div>
+
+                                    <div class="margin-bottom-40" id="js-order-delivery-address">
+                                        <div class="margin-top-10 js-order-delivery-address-fields{% if app.user is not null and form.deliveryAddress.vars.value is not same as('') %} display-none{% endif %}">
+                                            <div class="form-columns">
+                                                <div class="form-columns__left">
+                                                    <div class="form-columns__item">
+                                                        {{ form_row(form.deliveryFirstName, { label: 'First name'|trans }) }}
+                                                    </div>
+                                                    <div class="form-columns__item">
+                                                        {{ form_row(form.deliveryLastName, { label: 'Last name'|trans }) }}
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="form-columns">
-                                            <div class="form-columns__left">
-                                                <div class="form-columns__item">
-                                                    {{ form_row(form.deliveryTelephone, { label: 'Telephone'|trans }) }}
+                                            <div class="form-columns">
+                                                <div class="form-columns__left">
+                                                    <div class="form-columns__item">
+                                                        {{ form_row(form.deliveryCompanyName, { label: 'Company'|trans }) }}
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="form-columns">
-                                            <div class="form-columns__left">
-                                                <div class="form-columns__item">
-                                                    {{ form_row(form.deliveryStreet, { label: 'Ulice a č. popisné'|trans}) }}
+                                            <div class="form-columns">
+                                                <div class="form-columns__left">
+                                                    <div class="form-columns__item">
+                                                        {{ form_row(form.deliveryTelephone, { label: 'Telephone'|trans }) }}
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="form-columns">
-                                            <div class="form-columns__left">
-                                                <div class="form-columns__item">
-                                                    {{ form_row(form.deliveryCity, { label: 'City'|trans }) }}
-                                                </div>
-                                                <div class="form-columns__item form-columns__item--postcode">
-                                                    {{ form_row(form.deliveryPostcode, { label: 'Postcode'|trans }) }}
+                                            <div class="form-columns">
+                                                <div class="form-columns__left">
+                                                    <div class="form-columns__item">
+                                                        {{ form_row(form.deliveryStreet, { label: 'Ulice a č. popisné'|trans}) }}
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="form-columns">
-                                            <div class="form-columns__left">
-                                                <div class="form-columns__item">
-                                                    {{ form_row(form.deliveryCountry, { label: 'Country'|trans }) }}
+                                            <div class="form-columns">
+                                                <div class="form-columns__left">
+                                                    <div class="form-columns__item">
+                                                        {{ form_row(form.deliveryCity, { label: 'City'|trans }) }}
+                                                    </div>
+                                                    <div class="form-columns__item form-columns__item--postcode">
+                                                        {{ form_row(form.deliveryPostcode, { label: 'Postcode'|trans }) }}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-columns">
+                                                <div class="form-columns__left">
+                                                    <div class="form-columns__item">
+                                                        {{ form_row(form.deliveryCountry, { label: 'Country'|trans }) }}
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                {% endif %}
                             </div>
                         </div>
                     </div>
