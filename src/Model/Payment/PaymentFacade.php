@@ -36,6 +36,7 @@ use Shopsys\FrameworkBundle\Model\Transport\TransportRepository;
  * @property \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
  * @property \App\Component\Image\ImageFacade $imageFacade
  * @property \Shopsys\FrameworkBundle\Model\Transport\TransportRepository $transportRepository
+ * @method \App\Model\Payment\Payment getEnabledOnDomainByUuid(string $uuid, int $domainId)
  */
 class PaymentFacade extends BasePaymentFacade
 {
