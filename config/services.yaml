@@ -882,3 +882,5 @@ services:
 
     Shopsys\ProductFeed\HeurekaBundle\Model\FeedItem\HeurekaFeedItemFactory:
         alias: App\ProductFeed\Heureka\Model\FeedItem\HeurekaFeedItemFactory
+
+    App\Model\Blog\Article\Elasticsearch\BlogArticleElasticsearchDataFetcher: ~

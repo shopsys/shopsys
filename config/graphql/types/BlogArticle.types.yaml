@@ -1,0 +1,46 @@
+BlogArticle:
+    type: object
+    config:
+        fields:
+            uuid:
+                type: "Uuid!"
+                description: "The blog article UUID"
+            name:
+                type: "String!"
+                description: "The blog article title"
+            text:
+                type: "String"
+                description: "The blog article text"
+            createdAt:
+                type: "DateTime!"
+                description: "Date and time of the blog article creation"
+            visibleOnHomepage:
+                type: "Boolean!"
+                description: "Indicates whether the blog article is displayed on homepage"
+            publishDate:
+                type: "DateTime!"
+                description: "Date and time of the blog article publishing"
+            perex:
+                type: "String"
+                description: "The blog article perex"
+            seoTitle:
+                type: "String"
+                description: "The blog article SEO title"
+            seoMetaDescription:
+                type: "String"
+                description: "The blog article SEO meta description"
+            seoH1:
+                type: "String"
+                description: "The blog article SEO H1 heading"
+            blogCategories:
+                type: "[BlogCategory!]!"
+                description: "The list of the blog article blog categories"
+            link:
+                type: "String!"
+                description: "The blog article absolute URL"
+            slug:
+                type: "String!"
+                description: "The blog article URL slug"
+            products:
+                type: "[Product!]!"
+                description: "The list of the products assigned to the blog article"

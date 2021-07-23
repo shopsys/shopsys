@@ -9,6 +9,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Prezent\Doctrine\Translatable\Annotation as Prezent;
+use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Model\Localization\AbstractTranslatableEntity;
 
 /**
@@ -78,6 +79,12 @@ class BlogCategory extends AbstractTranslatableEntity
     private $domains;
 
     /**
+     * @var string
+     * @ORM\Column(type="guid", unique=true)
+     */
+    private string $uuid;
+
+    /**
      * @param \App\Model\Blog\Category\BlogCategoryData $blogCategoryData
      */
     public function __construct(BlogCategoryData $blogCategoryData)
@@ -87,6 +94,7 @@ class BlogCategory extends AbstractTranslatableEntity
         $this->domains = new ArrayCollection();
 
         $this->setTranslations($blogCategoryData);
+        $this->uuid = $blogCategoryData->uuid ?: Uuid::uuid4()->toString();
     }
 
     /**
@@ -325,5 +333,13 @@ class BlogCategory extends AbstractTranslatableEntity
     public function isMainPage(): bool
     {
         return $this->id === self::BLOG_MAIN_PAGE_CATEGORY_ID;
+    }
+
+    /**
+     * @return string
+     */
+    public function getUuid(): string
+    {
+        return $this->uuid;
     }
 }

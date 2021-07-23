@@ -353,4 +353,23 @@ class BlogCategoryRepository extends NestedTreeRepository
             ->andWhere('bc.parent IS NOT NULL')
             ->getQuery()->getResult();
     }
+
+    /**
+     * @param int $domainId
+     * @param string $uuid
+     * @return \App\Model\Blog\Category\BlogCategory
+     */
+    public function getVisibleByUuid(int $domainId, string $uuid): BlogCategory
+    {
+        $blogCategory = $this->getAllVisibleByDomainIdQueryBuilder($domainId)
+            ->andWhere('bc.uuid = :uuid')
+            ->setParameter('uuid', $uuid)
+            ->getQuery()->getOneOrNullResult();
+
+        if ($blogCategory === null) {
+            throw new BlogCategoryNotFoundException(sprintf('No visible blog category was found by UUID "%s"', $uuid));
+        }
+
+        return $blogCategory;
+    }
 }

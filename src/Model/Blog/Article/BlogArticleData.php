@@ -84,6 +84,11 @@ class BlogArticleData
      */
     public $products;
 
+    /**
+     * @var string|null
+     */
+    public ?string $uuid = null;
+
     public function __construct()
     {
         $this->names = [];

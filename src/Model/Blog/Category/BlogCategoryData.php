@@ -54,6 +54,11 @@ class BlogCategoryData
      */
     public $image;
 
+    /**
+     * @var string|null
+     */
+    public ?string $uuid = null;
+
     public function __construct()
     {
         $this->names = [];

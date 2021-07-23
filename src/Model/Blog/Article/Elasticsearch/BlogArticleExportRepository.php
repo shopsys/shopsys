@@ -6,6 +6,8 @@ namespace App\Model\Blog\Article\Elasticsearch;
 
 use App\Model\Blog\Article\BlogArticle;
 use App\Model\Blog\Article\BlogArticleRepository;
+use App\Model\Blog\Category\BlogCategory;
+use App\Model\Product\Product;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query\Expr\Join;
@@ -98,6 +100,7 @@ class BlogArticleExportRepository
             ->join('ba.domains', 'bad', Join::WITH, 'bad.domainId = :domainId')
             ->andWhere('ba.publishDate <= :todayDate')
             ->andWhere('bad.visible = true')
+            ->andWhere('ba.hidden = false')
             ->setParameter('todayDate', (new DateTime())->format('Y-m-d'))
             ->setParameter('domainId', $domainId)
             ->getQuery()->getSingleScalarResult());
@@ -111,14 +114,25 @@ class BlogArticleExportRepository
      */
     public function extractBlogArticle(BlogArticle $blogArticle, int $domainId, string $locale): array
     {
+        $blogArticleCategories = $blogArticle->getBlogCategoriesIndexedByDomainId()[$domainId];
+        $mainFriendlyUrl = $this->friendlyUrlFacade->getMainFriendlyUrl($domainId, 'front_blogarticle_detail', $blogArticle->getId());
+
         return [
             'name' => $blogArticle->getName($locale),
             'text' => $blogArticle->getDescription($locale),
-            'url' => $this->friendlyUrlFacade->getAbsoluteUrlByRouteNameAndEntityId(
-                $domainId,
-                'front_blogarticle_detail',
-                $blogArticle->getId()
-            ),
+            'url' => $this->friendlyUrlFacade->getAbsoluteUrlByFriendlyUrl($mainFriendlyUrl),
+            'uuid' => $blogArticle->getUuid(),
+            'createdAt' => $blogArticle->getCreatedAt()->format('Y-m-d H:i:s'),
+            'visibleOnHomepage' => $blogArticle->isVisibleOnHomepage(),
+            'publishDate' => $blogArticle->getPublishDate()->format('Y-m-d'),
+            'perex' => $blogArticle->getPerex($locale),
+            'seoTitle' => $blogArticle->getSeoTitle($domainId),
+            'seoMetaDescription' => $blogArticle->getSeoMetaDescription($domainId),
+            'seoH1' => $blogArticle->getSeoH1($domainId),
+            'slug' => $this->friendlyUrlFacade->getAllSlugsByRouteNameAndEntityId($domainId, 'front_blogarticle_detail', $blogArticle->getId()),
+            'categories' => array_map(fn (BlogCategory $blogCategory) => $blogCategory->getId(), $blogArticleCategories),
+            'mainSlug' => $mainFriendlyUrl->getSlug(),
+            'products' => array_map(fn (Product $product) => $product->getId(), $blogArticle->getProducts()),
         ];
     }
 }

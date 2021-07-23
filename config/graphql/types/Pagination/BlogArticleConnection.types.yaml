@@ -1,0 +1,8 @@
+BlogArticleConnection:
+    type: relay-connection
+    config:
+        nodeType: BlogArticle
+        connectionFields:
+            totalCount:
+                type: "Int!"
+                description: "Total number of the blog articles"

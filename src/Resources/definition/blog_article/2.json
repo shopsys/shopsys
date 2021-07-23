@@ -151,7 +151,14 @@
       "name": {
         "type": "text",
         "analyzer": "edge_ngram_without_diacritic",
-        "search_analyzer": "full_without_diacritic"
+        "search_analyzer": "full_without_diacritic",
+        "fields": {
+          "keyword": {
+            "type": "icu_collation_keyword",
+            "language": "cs",
+            "index": false
+          }
+        }
       },
       "text": {
         "type": "text",
@@ -160,6 +167,42 @@
       },
       "url": {
         "type": "text"
+      },
+      "uuid": {
+        "type": "keyword"
+      },
+      "createdAt": {
+        "type": "text"
+      },
+      "visibleOnHomepage": {
+        "type": "boolean"
+      },
+      "publishDate": {
+        "type": "keyword"
+      },
+      "perex": {
+        "type": "text"
+      },
+      "seoTitle": {
+        "type": "text"
+      },
+      "seoMetaDescription": {
+        "type": "text"
+      },
+      "seoH1": {
+        "type": "text"
+      },
+      "slug": {
+        "type": "keyword"
+      },
+      "categories": {
+        "type": "integer"
+      },
+      "mainSlug": {
+        "type": "text"
+      },
+      "products": {
+        "type": "integer"
       }
     }
   }

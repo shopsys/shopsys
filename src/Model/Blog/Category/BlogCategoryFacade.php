@@ -313,4 +313,14 @@ class BlogCategoryFacade
     {
         return $this->blogCategoryRepository->getAllVisibleBlogCategoriesByDomainId($domainId);
     }
+
+    /**
+     * @param int $domainId
+     * @param string $uuid
+     * @return \App\Model\Blog\Category\BlogCategory
+     */
+    public function getVisibleByUuid(int $domainId, string $uuid): BlogCategory
+    {
+        return $this->blogCategoryRepository->getVisibleByUuid($domainId, $uuid);
+    }
 }
