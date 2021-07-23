@@ -14,6 +14,9 @@ services:
         arguments:
             - '%shopsys.root_dir%'
 
+    Shopsys\FrameworkBundle\Command\ExtendedClassesAnnotationsCommand:
+        alias: App\Command\ExtendedClassesAnnotationsCommand
+
     App\Component\Collector\TwigCacheDataCollector:
         arguments:
             - '%env(bool:TWIG_CACHE_ENABLED)%'
