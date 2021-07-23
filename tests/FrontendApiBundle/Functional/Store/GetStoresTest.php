@@ -34,7 +34,10 @@ class GetStoresTest extends GraphQlTestCase
                         'isDefault',
                         'description',
                         'contactInfo',
-                        'address',
+                        'street',
+                        'city',
+                        'postcode',
+                        'country',
                         'openingHours',
                         'specialMessage',
                         'locationLatitude',
@@ -121,7 +124,10 @@ class GetStoresTest extends GraphQlTestCase
                             isDefault
                             description
                             contactInfo
-                            address
+                            street
+                            city
+                            postcode
+                            country
                             openingHours
                             specialMessage
                             locationLatitude
@@ -144,7 +150,10 @@ class GetStoresTest extends GraphQlTestCase
                 'name' => t('Ostrava', [], 'dataFixtures', $firstDomainLocale),
                 'isDefault' => true,
                 'description' => null,
-                'address' => "Koksární 10\n702 00 Ostrava",
+                'street' => 'Koksární 10',
+                'city' => 'Ostrava',
+                'postcode' => '70200',
+                'country' => 'CZ',
                 'contactInfo' => null,
                 'openingHours' => t('Po-Pa: 8:00-16:00', [], 'dataFixtures', $firstDomainLocale),
                 'specialMessage' => null,
@@ -154,7 +163,10 @@ class GetStoresTest extends GraphQlTestCase
                 'name' => t('Pardubice', [], 'dataFixtures', $firstDomainLocale),
                 'isDefault' => false,
                 'description' => null,
-                'address' => "Bratranců Veverkových 2722\n530 02 Pardubice",
+                'street' => 'Bratranců Veverkových 2722',
+                'city' => 'Pardubice',
+                'postcode' => '53002',
+                'country' => 'CZ',
                 'contactInfo' => null,
                 'openingHours' => t('Po-Pa: 8:00-17:00', [], 'dataFixtures', $firstDomainLocale),
                 'specialMessage' => null,

@@ -1,4 +1,5 @@
 {% extends 'Front/Layout/layoutWithoutPanel.html.twig' %}
+{% import 'Front/Content/Store/storeAddressMacro.html.twig' as storeAddressMacro %}
 
 {% block breadcrumb %}
 {% endblock %}
@@ -48,7 +49,7 @@
                             </button>
 
                             <h2 class="box-stores__store__title">{{ store.name }}</h2>
-                            {{ store.address }} <br>
+                            {{ storeAddressMacro.storeAddress(store) }}
                             {% if store.openingHours is not empty %}
                                 <strong class="box-stores__store__subtitle">{{ 'Otevírací doba'|trans }}</strong>
                                 <div class="box-stores__store__hours">

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Form\Admin\Store;
 
+use App\Model\Country\CountryFacade;
 use App\Model\Stock\StockFacade;
 use App\Model\Store\Store;
 use App\Model\Store\StoreData;
@@ -26,6 +27,11 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
 class StoreFormType extends AbstractType
 {
     /**
+     * @var \App\Model\Country\CountryFacade
+     */
+    private CountryFacade $countryFacade;
+
+    /**
      * @var \App\Model\Stock\StockFacade
      */
     private StockFacade $stockFacade;
@@ -43,11 +49,16 @@ class StoreFormType extends AbstractType
     /**
      * @param \App\Model\Stock\StockFacade $stockFacade
      * @param \App\Model\Store\StoreFacade $storeFacade
+     * @param \App\Model\Country\CountryFacade $countryFacade
      */
-    public function __construct(StockFacade $stockFacade, StoreFacade $storeFacade)
-    {
+    public function __construct(
+        StockFacade $stockFacade,
+        StoreFacade $storeFacade,
+        CountryFacade $countryFacade
+    ) {
         $this->stockFacade = $stockFacade;
         $this->storeFacade = $storeFacade;
+        $this->countryFacade = $countryFacade;
     }
 
     /**
@@ -117,8 +128,48 @@ class StoreFormType extends AbstractType
                 'required' => false,
                 'scale' => 8,
             ])
-            ->add('address', TextareaType::class, [
-                'required' => false,
+            ->add('street', TextType::class, [
+                'label' => t('Street'),
+                'required' => true,
+                'constraints' => [
+                    new Constraints\NotBlank(['message' => 'Please enter street']),
+                    new Constraints\Length([
+                        'max' => 100,
+                        'maxMessage' => 'Street name cannot be longer than {{ limit }} characters',
+                    ]),
+                ],
+            ])
+            ->add('city', TextType::class, [
+                'label' => t('City'),
+                'required' => true,
+                'constraints' => [
+                    new Constraints\NotBlank(['message' => 'Please enter city']),
+                    new Constraints\Length([
+                        'max' => 100,
+                        'maxMessage' => 'City name cannot be longer than {{ limit }} characters',
+                    ]),
+                ],
+            ])
+            ->add('postcode', TextType::class, [
+                'label' => t('Postcode'),
+                'required' => true,
+                'constraints' => [
+                    new Constraints\NotBlank(['message' => 'Please enter zip code']),
+                    new Constraints\Length([
+                        'max' => 30,
+                        'maxMessage' => 'Zip code cannot be longer than {{ limit }} characters',
+                    ]),
+                ],
+            ])
+            ->add('country', ChoiceType::class, [
+                'label' => t('Country'),
+                'required' => true,
+                'choices' => $this->countryFacade->getAll(),
+                'choice_label' => 'name',
+                'choice_value' => 'id',
+                'constraints' => [
+                    new Constraints\NotBlank(['message' => 'Please choose country']),
+                ],
             ])
             ->add('openingHours', TextareaType::class, [
                 'required' => false,

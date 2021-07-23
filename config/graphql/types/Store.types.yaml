@@ -14,9 +14,18 @@ Store:
             description:
                 type: "String"
                 description: "Store description"
-            address:
-                type: "String"
-                description: "Store address"
+            street:
+                type: "String!"
+                description: "Store address street"
+            city:
+                type: "String!"
+                description: "Store address city"
+            postcode:
+                type: "String!"
+                description: "Store address postcode"
+            country:
+                type: "String!"
+                description: "Store address country code"
             openingHours:
                 type: "String"
                 description: "Store opening hours"

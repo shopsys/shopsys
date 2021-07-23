@@ -82,11 +82,14 @@ export default class PersonalPickup {
             .trigger('orderRememberData.littleDelayedSaveData');
 
         const storeName = $personalPickupStoreRadio.data('store-name');
-        const storeAddress = $personalPickupStoreRadio.data('store-address');
+        const storeStreet = $personalPickupStoreRadio.data('store-street');
+        const storeCity = $personalPickupStoreRadio.data('store-city');
+        const storePostcode = $personalPickupStoreRadio.data('store-postcode');
         const storeOpeningHours = $personalPickupStoreRadio.data('store-openingHours');
         const storeAvailability = $personalPickupStoreRadio.data('store-availability');
         const address = `
-            ${storeName}, ${storeAddress} <br>
+            ${storeName} <br>
+            ${storeStreet}, ${storePostcode} ${storeCity} <br>
             ${Translator.trans('Otevřeno')}: ${storeOpeningHours} <br>
             ${storeAvailability}
         `;

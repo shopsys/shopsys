@@ -74,7 +74,8 @@
                                                                     <div class="box-chooser__item__tooltip">{{ transport.description }}</div>
                                                                 </div>
                                                             {% else %}
-                                                                {{ storesById[personalPickupStore].name }}, {{ storesById[personalPickupStore].address }} <br>
+                                                                {{ storesById[personalPickupStore].name }} <br>
+                                                                {{ storesById[personalPickupStore].street }}, {{ storesById[personalPickupStore].postcode }} {{ storesById[personalPickupStore].city }}<br>
                                                                 {{ 'Otevřeno'|trans }}: {{ storesById[personalPickupStore].openingHours|nl2br }} <br>
                                                                 {% set minimalDaysAvailability = storeDayAvailabilitiesByStoreId[personalPickupStore] %}
                                                                 {% if minimalDaysAvailability < 7 %}
