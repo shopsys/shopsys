@@ -39,3 +39,6 @@ services:
 
     Shopsys\FrontendApiBundle\Model\Customer\User\CustomerUserUpdateDataFactory:
         alias: App\FrontendApi\Model\Customer\User\CustomerUserUpdateDataFactory
+
+    Shopsys\FrontendApiBundle\Model\Resolver\Order\OrderResolverMap:
+        alias: App\FrontendApi\Model\Order\OrderResolverMap
