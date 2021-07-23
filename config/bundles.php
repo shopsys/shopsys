@@ -18,6 +18,7 @@ return [
     Shopsys\GoogleCloudBundle\ShopsysGoogleCloudBundle::class => ['all' => true],
     Shopsys\MigrationBundle\ShopsysMigrationBundle::class => ['all' => true],
     Shopsys\ProductFeed\HeurekaBundle\ShopsysProductFeedHeurekaBundle::class => ['all' => true],
+    Shopsys\ProductFeed\GoogleBundle\ShopsysProductFeedGoogleBundle::class => ['all' => true],
     Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle::class => ['all' => true],
     Snc\RedisBundle\SncRedisBundle::class => ['all' => true],
     Symfony\Bundle\FrameworkBundle\FrameworkBundle::class => ['all' => true],

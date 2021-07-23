@@ -706,3 +706,9 @@
 20210709155038:
     class: App\Migrations\Version20210709155038
     skip: false
+20180329092348:
+    class: Shopsys\ProductFeed\GoogleBundle\Migrations\Version20180329092348
+    skip: false
+20180413102102:
+    class: Shopsys\ProductFeed\GoogleBundle\Migrations\Version20180413102102
+    skip: false
