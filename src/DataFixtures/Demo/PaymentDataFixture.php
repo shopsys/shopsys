@@ -39,7 +39,7 @@ class PaymentDataFixture extends AbstractReferenceFixture implements DependentFi
     private $domain;
 
     /**
-     * @var \App\Model\Pricing\PriceConverter
+     * @var \Shopsys\FrameworkBundle\Model\Pricing\PriceConverter
      */
     private $priceConverter;
 
@@ -47,7 +47,7 @@ class PaymentDataFixture extends AbstractReferenceFixture implements DependentFi
      * @param \App\Model\Payment\PaymentFacade $paymentFacade
      * @param \App\Model\Payment\PaymentDataFactory $paymentDataFactory
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \App\Model\Pricing\PriceConverter $priceConverter
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceConverter $priceConverter
      */
     public function __construct(
         PaymentFacade $paymentFacade,
@@ -184,9 +184,12 @@ class PaymentDataFixture extends AbstractReferenceFixture implements DependentFi
         foreach ($this->domain->getAllIncludingDomainConfigsWithoutDataCreated() as $domain) {
             /** @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vat */
             $vat = $this->getReferenceForDomain(VatDataFixture::VAT_ZERO, $domain->getId());
+            /** @var \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currencyCzk */
+            $currencyCzk = $this->getReference(CurrencyDataFixture::CURRENCY_CZK);
 
             $convertedPrice = $this->priceConverter->convertPriceToInputPriceWithoutVatInDomainDefaultCurrency(
                 $price,
+                $currencyCzk,
                 $vat->getPercent(),
                 $domain->getId()
             );

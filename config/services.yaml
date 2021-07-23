@@ -880,9 +880,6 @@ services:
         tags:
             - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse }
 
-    Shopsys\FrameworkBundle\Model\Pricing\PriceConverter:
-        alias: App\Model\Pricing\PriceConverter
-
     Shopsys\ProductFeed\HeurekaBundle\Model\FeedItem\HeurekaFeedItemFactory:
         alias: App\ProductFeed\Heureka\Model\FeedItem\HeurekaFeedItemFactory
 

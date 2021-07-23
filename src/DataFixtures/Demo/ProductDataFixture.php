@@ -85,7 +85,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
     private $productIdsByCatnum = [];
 
     /**
-     * @var \App\Model\Pricing\PriceConverter
+     * @var \Shopsys\FrameworkBundle\Model\Pricing\PriceConverter
      */
     private $priceConverter;
 
@@ -133,7 +133,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
      * @param \App\Model\Product\Parameter\ParameterValueDataFactory $parameterValueDataFactory
      * @param \App\Model\Product\Parameter\ParameterFacade $parameterFacade
      * @param \App\Model\Product\Parameter\ParameterDataFactory $parameterDataFactory
-     * @param \App\Model\Pricing\PriceConverter $priceConverter
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceConverter $priceConverter
      * @param \App\Model\Product\Parameter\ParameterGroupDataFactory $parameterGroupDataFactory
      * @param \Faker\Generator $generator
      * @param \App\Model\Product\Parameter\ParameterGroupFacade $parameterGroupFacade
@@ -6220,9 +6220,12 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         foreach ($this->pricingGroupFacade->getAll() as $pricingGroup) {
             /** @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vat */
             $vat = $this->getReferenceForDomain(VatDataFixture::VAT_HIGH, $pricingGroup->getDomainId());
+            /** @var \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currencyCzk */
+            $currencyCzk = $this->getReference(CurrencyDataFixture::CURRENCY_CZK);
 
             $money = $this->priceConverter->convertPriceToInputPriceWithoutVatInDomainDefaultCurrency(
                 Money::create($price),
+                $currencyCzk,
                 $vat->getPercent(),
                 $pricingGroup->getDomainId()
             );

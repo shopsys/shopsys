@@ -37,7 +37,7 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
     private $domain;
 
     /**
-     * @var \App\Model\Pricing\PriceConverter
+     * @var \Shopsys\FrameworkBundle\Model\Pricing\PriceConverter
      */
     private $priceConverter;
 
@@ -45,7 +45,7 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
      * @param \Shopsys\FrameworkBundle\Model\Transport\TransportFacade $transportFacade
      * @param \App\Model\Transport\TransportDataFactory $transportDataFactory
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \App\Model\Pricing\PriceConverter $priceConverter
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceConverter $priceConverter
      */
     public function __construct(
         TransportFacade $transportFacade,
@@ -142,9 +142,12 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
         foreach ($this->domain->getAllIncludingDomainConfigsWithoutDataCreated() as $domain) {
             /** @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vat */
             $vat = $this->getReferenceForDomain(VatDataFixture::VAT_HIGH, $domain->getId());
+            /** @var \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currencyCzk */
+            $currencyCzk = $this->getReference(CurrencyDataFixture::CURRENCY_CZK);
 
             $convertedPrice = $this->priceConverter->convertPriceToInputPriceWithoutVatInDomainDefaultCurrency(
                 $price,
+                $currencyCzk,
                 $vat->getPercent(),
                 $domain->getId()
             );
