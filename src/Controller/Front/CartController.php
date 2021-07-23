@@ -12,7 +12,6 @@ use App\Model\Gtm\GtmFacade;
 use App\Model\Gtm\GtmJsPushFacade;
 use App\Model\Order\Preview\OrderPreviewFactory;
 use App\Model\Product\Availability\ProductAvailabilityFacade;
-use BadMethodCallException;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\FlashMessage\ErrorExtractor;
 use Shopsys\FrameworkBundle\Model\Cart\AddProductResult;
@@ -109,7 +108,7 @@ class CartController extends FrontBaseController
      * @param \App\Model\Product\Availability\ProductAvailabilityFacade $productAvailabilityFacade
      * @param \App\Model\Gtm\GtmFacade $gtmFacade
      * @param \App\Model\Gtm\GtmJsPushFacade $gtmJsPushFacade
-     * @param \Shopsys\FrameworkBundle\Model\Module\ModuleFacade|null $moduleFacade
+     * @param \Shopsys\FrameworkBundle\Model\Module\ModuleFacade $moduleFacade
      * @param \App\Model\Category\CategoryFacade $categoryFacade
      */
     public function __construct(
@@ -122,7 +121,7 @@ class CartController extends FrontBaseController
         ProductAvailabilityFacade $productAvailabilityFacade,
         GtmFacade $gtmFacade,
         GtmJsPushFacade $gtmJsPushFacade,
-        ?ModuleFacade $moduleFacade = null,
+        ModuleFacade $moduleFacade,
         CategoryFacade $categoryFacade
     ) {
         $this->cartFacade = $cartFacade;
@@ -589,24 +588,6 @@ class CartController extends FrontBaseController
                 ]
             );
         }
-    }
-
-    /**
-     * @required
-     * @param \Shopsys\FrameworkBundle\Model\Module\ModuleFacade $moduleFacade
-     * @internal This function will be replaced by constructor injection in next major
-     */
-    public function setModuleFacade(ModuleFacade $moduleFacade): void
-    {
-        if ($this->moduleFacade !== null && $this->moduleFacade !== $moduleFacade) {
-            throw new BadMethodCallException(sprintf('Method "%s" has been already called and cannot be called multiple times.', __METHOD__));
-        }
-        if ($this->moduleFacade !== null) {
-            return;
-        }
-
-        @trigger_error(sprintf('The %s() method is deprecated and will be removed in the next major. Use the constructor injection instead.', __METHOD__), E_USER_DEPRECATED);
-        $this->moduleFacade = $moduleFacade;
     }
 
     /**
