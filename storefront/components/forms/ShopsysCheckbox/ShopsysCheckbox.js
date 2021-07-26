@@ -1,14 +1,13 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import {
-    StyledShopsysFormFieldError,
-    StyledShopsysErrorIcon,
-    StyledShopsysErrorMessage,
     StyledShopsysCheckbox,
     StyledShopsysChoiceFormLine,
+    StyledShopsysErrorIcon,
+    StyledShopsysErrorMessage,
+    StyledShopsysFormFieldError,
     StyledShopsysRequiredSymbol,
 } from './ShopsysCheckbox.style.js';
 import { ErrorMessage } from '@hookform/error-message';
+import PropTypes from 'prop-types';
 import { useFormContext } from 'react-hook-form';
 
 /**

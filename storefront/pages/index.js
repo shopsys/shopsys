@@ -2,22 +2,14 @@ import * as Yup from 'yup';
 import { FormProvider, useForm } from 'react-hook-form';
 import getConfig from 'next/config';
 import React from 'react';
+import ShopsysCheckbox from '../components/forms/ShopsysCheckbox';
 import ShopsysInUserText from '../components/in/ShopsysInUserText';
 import ShopsysTextInput from '../components/forms/ShopsysTextInput';
 import SsfwButton from '../components/forms/SsfwButton';
 import { useQuery } from 'urql';
 import { useTranslation } from 'react-i18next';
-<<<<<<< HEAD
 import { withUrqlClient } from 'next-urql';
 import { yupResolver } from '@hookform/resolvers/yup';
-=======
-import SsfwButton from '../components/forms/SsfwButton';
-import getConfig from 'next/config';
-import { FormProvider, useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
-import * as Yup from 'yup';
-import ShopsysCheckbox from '../components/forms/ShopsysCheckbox';
->>>>>>> eafa925c3... checkbox examples in index.js
 const { publicRuntimeConfig } = getConfig();
 
 const content = `<h1>Heading</h1>
@@ -47,11 +39,20 @@ const content = `<h1>Heading</h1>
 
 const Index = () => {
     const { t } = useTranslation();
-    const validationSchema = Yup.object().shape({
-        checkboxRequired: Yup.bool().oneOf([true], t('Checkbox is required')),
+
+    const [result] = useQuery({
+        query: `
+        query categories {
+            categories {
+                uuid
+                name
+            }
+        }
+        `,
     });
 
     const validationSchema = Yup.object().shape({
+        checkboxRequired: Yup.bool().oneOf([true], t('Checkbox is required')),
         name: Yup.string()
             .notRequired()
             .matches(
@@ -63,21 +64,8 @@ const Index = () => {
             ),
     });
 
-    const [result] = useQuery({
-        query: `
-            query categories {
-                categories {
-                    uuid
-                    name
-                }
-            }
-            `,
-    });
-
     const formProviderMethods = useForm({
         mode: 'onBlur',
-<<<<<<< HEAD
-=======
         defaultValues: {
             checkboxDefault: false,
             checkboxRequired: false,
@@ -86,7 +74,6 @@ const Index = () => {
             checkboxDisabledChecked: true,
             checkboxWithLink: false,
         },
->>>>>>> eafa925c3... checkbox examples in index.js
         criteriaMode: 'firstError',
         shouldFocusError: true,
         resolver: yupResolver(validationSchema),
@@ -129,13 +116,10 @@ const Index = () => {
                 </SsfwButton>
             </div>
             <FormProvider {...formProviderMethods}>
-<<<<<<< HEAD
                 <form style={{ marginTop: '15px' }}>
                     <ShopsysTextInput id="my-form_name" name="name" label={t('name')} shouldUseSuccess={true} />
                     <ShopsysTextInput id="my-form_password" name="password" label={t('password')} type="password" />
                     <ShopsysTextInput id="my-form_disabled" name="disabled" label={t('disabled')} disabled={true} />
-=======
-                <form>
                     <div style={{ width: '350px' }}>
                         <ShopsysCheckbox id="my-form_checkbox-default" name="checkboxDefault" label={t('Default')} />
                         <ShopsysCheckbox
@@ -163,7 +147,6 @@ const Index = () => {
                             label={<a href="#">{t('this is a link')}</a>}
                         />
                     </div>
->>>>>>> eafa925c3... checkbox examples in index.js
                 </form>
             </FormProvider>
         </>
