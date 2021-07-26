@@ -8,5 +8,11 @@
     "name": "jméno",
     "password": "heslo",
     "disabled": "zakázaný",
-    "name cannot contain special characters or numbers": "jméno nemůže obsahovat speciální znaky nebo číslice"
+    "name cannot contain special characters or numbers": "jméno nemůže obsahovat speciální znaky nebo číslice",
+    "Required": "Vyžadován",
+    "Checked": "Zaškrtnutý",
+    "Disabled": "Zakázaný",
+    "Disabled checked": "Zakázaný zaškrtnutý",
+    "Checkbox is required": "Checkbox je vyžadován",
+    "this is a link": "toto je odkaz"
 }
