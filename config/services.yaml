@@ -442,6 +442,15 @@ services:
     Shopsys\ReadModelBundle\Product\Action\ProductActionViewFactory:
         alias: App\Model\Product\Action\ProductActionViewFactory
 
+    Shopsys\FrameworkBundle\Model\Breadcrumb\ErrorPageBreadcrumbGenerator:
+        alias: App\Model\Breadcrumb\ErrorPageBreadcrumbGenerator
+
+    Shopsys\FrameworkBundle\Model\Breadcrumb\SimpleBreadcrumbGenerator:
+        alias: App\Model\Breadcrumb\SimpleBreadcrumbGenerator
+
+    Shopsys\FrameworkBundle\Model\LegalConditions\LegalConditionsFacade:
+        alias: App\Model\LegalConditions\LegalConditionsFacade
+
     Shopsys\FrameworkBundle\Model\Mail\Grid\MailTemplateGridFactory:
         alias: App\Model\Mail\Grid\MailTemplateGridFactory
 

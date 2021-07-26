@@ -16,20 +16,15 @@ use Symfony\Component\HttpFoundation\Request;
 class ProductListOrderingModeForListFacade extends BaseProductListOrderingModeForListFacade
 {
     /**
-     * @return \Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingConfig
+     * @return array<string, string>
      */
-    public function getProductListOrderingConfig()
+    protected function getSupportedOrderingModesNamesById(): array
     {
-        // Removing of ordering mode needs remove App\Model\CategorySeo\ReadyCategorySeoMix that use it
-        return new ProductListOrderingConfig(
-            [
-                ProductListOrderingConfig::ORDER_BY_PRIORITY => t('TOP'),
-                ProductListOrderingConfig::ORDER_BY_PRICE_ASC => t('from the cheapest'),
-                ProductListOrderingConfig::ORDER_BY_PRICE_DESC => t('from most expensive'),
-            ],
-            ProductListOrderingConfig::ORDER_BY_PRIORITY,
-            static::COOKIE_NAME
-        );
+        return [
+            ProductListOrderingConfig::ORDER_BY_PRIORITY => t('TOP'),
+            ProductListOrderingConfig::ORDER_BY_PRICE_ASC => t('from the cheapest'),
+            ProductListOrderingConfig::ORDER_BY_PRICE_DESC => t('from most expensive'),
+        ];
     }
 
     /**

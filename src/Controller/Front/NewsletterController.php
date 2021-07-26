@@ -22,7 +22,7 @@ class NewsletterController extends FrontBaseController
     private $newsletterFacade;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\LegalConditions\LegalConditionsFacade
+     * @var \App\Model\LegalConditions\LegalConditionsFacade
      */
     private $legalConditionsFacade;
 
@@ -38,7 +38,7 @@ class NewsletterController extends FrontBaseController
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade $newsletterFacade
-     * @param \Shopsys\FrameworkBundle\Model\LegalConditions\LegalConditionsFacade $legalConditionsFacade
+     * @param \App\Model\LegalConditions\LegalConditionsFacade $legalConditionsFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Component\Form\FormTimeProvider $formTimeProvider
      */

@@ -33,7 +33,7 @@ class RegistrationController extends FrontBaseController
     private $authenticator;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\LegalConditions\LegalConditionsFacade
+     * @var \App\Model\LegalConditions\LegalConditionsFacade
      */
     private $legalConditionsFacade;
 
@@ -51,7 +51,7 @@ class RegistrationController extends FrontBaseController
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \App\Model\Customer\User\CustomerUserFacade $customerUserFacade
      * @param \Shopsys\FrameworkBundle\Model\Security\Authenticator $authenticator
-     * @param \Shopsys\FrameworkBundle\Model\LegalConditions\LegalConditionsFacade $legalConditionsFacade
+     * @param \App\Model\LegalConditions\LegalConditionsFacade $legalConditionsFacade
      * @param \App\Model\Customer\User\RegistrationDataFactoryInterface $registrationDataFactory
      * @param \App\Model\Customer\User\RegistrationFacadeInterface $registrationFacade
      */
