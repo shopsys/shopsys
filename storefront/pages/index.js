@@ -7,8 +7,17 @@ import ShopsysTextInput from '../components/forms/ShopsysTextInput';
 import SsfwButton from '../components/forms/SsfwButton';
 import { useQuery } from 'urql';
 import { useTranslation } from 'react-i18next';
+<<<<<<< HEAD
 import { withUrqlClient } from 'next-urql';
 import { yupResolver } from '@hookform/resolvers/yup';
+=======
+import SsfwButton from '../components/forms/SsfwButton';
+import getConfig from 'next/config';
+import { FormProvider, useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as Yup from 'yup';
+import ShopsysCheckbox from '../components/forms/ShopsysCheckbox';
+>>>>>>> eafa925c3... checkbox examples in index.js
 const { publicRuntimeConfig } = getConfig();
 
 const content = `<h1>Heading</h1>
@@ -38,6 +47,9 @@ const content = `<h1>Heading</h1>
 
 const Index = () => {
     const { t } = useTranslation();
+    const validationSchema = Yup.object().shape({
+        checkboxRequired: Yup.bool().oneOf([true], t('Checkbox is required')),
+    });
 
     const validationSchema = Yup.object().shape({
         name: Yup.string()
@@ -64,6 +76,17 @@ const Index = () => {
 
     const formProviderMethods = useForm({
         mode: 'onBlur',
+<<<<<<< HEAD
+=======
+        defaultValues: {
+            checkboxDefault: false,
+            checkboxRequired: false,
+            checkboxChecked: true,
+            checkboxDisabled: false,
+            checkboxDisabledChecked: true,
+            checkboxWithLink: false,
+        },
+>>>>>>> eafa925c3... checkbox examples in index.js
         criteriaMode: 'firstError',
         shouldFocusError: true,
         resolver: yupResolver(validationSchema),
@@ -106,10 +129,41 @@ const Index = () => {
                 </SsfwButton>
             </div>
             <FormProvider {...formProviderMethods}>
+<<<<<<< HEAD
                 <form style={{ marginTop: '15px' }}>
                     <ShopsysTextInput id="my-form_name" name="name" label={t('name')} shouldUseSuccess={true} />
                     <ShopsysTextInput id="my-form_password" name="password" label={t('password')} type="password" />
                     <ShopsysTextInput id="my-form_disabled" name="disabled" label={t('disabled')} disabled={true} />
+=======
+                <form>
+                    <div style={{ width: '350px' }}>
+                        <ShopsysCheckbox id="my-form_checkbox-default" name="checkboxDefault" label={t('Default')} />
+                        <ShopsysCheckbox
+                            id="my-form_checkbox-required"
+                            name="checkboxRequired"
+                            label={t('Required')}
+                            required={true}
+                        />
+                        <ShopsysCheckbox id="my-form_checkbox-checked" name="checkboxChecked" label={t('Checked')} />
+                        <ShopsysCheckbox
+                            id="my-form_checkbox-disabled"
+                            name="checkboxDisabled"
+                            label={t('Disabled')}
+                            disabled={true}
+                        />
+                        <ShopsysCheckbox
+                            id="my-form_checkbox-disabled-checked"
+                            name="checkboxDisabledChecked"
+                            label={t('Disabled checked')}
+                            disabled={true}
+                        />
+                        <ShopsysCheckbox
+                            id="my-form_checkbox-with-link"
+                            name="checkboxWithLink"
+                            label={<a href="#">{t('this is a link')}</a>}
+                        />
+                    </div>
+>>>>>>> eafa925c3... checkbox examples in index.js
                 </form>
             </FormProvider>
         </>

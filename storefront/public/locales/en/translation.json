@@ -8,5 +8,11 @@
     "name": "name",
     "password": "password",
     "disabled": "disabled",
-    "name cannot contain special characters or numbers": "name cannot contain special characters or numbers"
+    "name cannot contain special characters or numbers": "name cannot contain special characters or numbers",
+    "Required": "Required",
+    "Checked": "Checked",
+    "Disabled": "Disabled",
+    "Disabled checked": "Disabled checked",
+    "Checkbox is required": "Checkbox is required",
+    "this is a link": "this is a link"
 }
