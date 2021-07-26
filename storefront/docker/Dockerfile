@@ -10,7 +10,7 @@ CMD npm install --legacy-peer-deps && npm run dev
 #=====================================================================
 FROM base as production
 
-COPY /storefront /app
+COPY . /app
 RUN npm install --no-dev
 
 RUN npm run build

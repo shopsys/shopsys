@@ -17,8 +17,8 @@ services:
 
     storefront:
         build:
-            context: ./storefront/docker
-            dockerfile: Dockerfile
+            context: ./storefront
+            dockerfile: docker/Dockerfile
             target: production
         container_name: shopsys-framework-storefront
         volumes:

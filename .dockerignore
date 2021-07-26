@@ -25,3 +25,6 @@ docker
 !docker/nginx
 !docker/php-fpm
 docker/php-fpm/Dockerfile
+
+# ignore storefront folder as storefront has own container
+storefront

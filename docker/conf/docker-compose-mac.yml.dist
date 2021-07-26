@@ -30,8 +30,8 @@ services:
 
     storefront:
         build:
-            context: ./storefront/docker
-            dockerfile: Dockerfile
+            context: ./storefront
+            dockerfile: ./docker/Dockerfile
             target: development
         container_name: shopsys-framework-storefront
         volumes:
@@ -41,12 +41,12 @@ services:
 
     storefront-styleguide:
         build:
-            context: ./storefront/docker/styleguide
-            dockerfile: Dockerfile
+            context: ./storefront
+            dockerfile: ./docker/styleguide/Dockerfile
             target: development
         container_name: shopsys-framework-storefront-styleguide
         volumes:
-            - hopsys-storefront-sync:/app
+            - shopsys-storefront-sync:/app
         ports:
             - "6060:6060"
 
