@@ -1686,22 +1686,22 @@ body {
 
 .styleguide-header__breakpoints__item__link#small:before {
     width: 17px;
-    background-image: url("/public/styleguide/images/icon_small_up.svg")
+    background-image: url("/web/public/styleguide/images/icon_small_up.svg")
 }
 
 .styleguide-header__breakpoints__item__link#medium:before {
     width: 26px;
-    background-image: url("/public/styleguide/images/icon_medium_up.svg")
+    background-image: url("/web/public/styleguide/images/icon_medium_up.svg")
 }
 
 .styleguide-header__breakpoints__item__link#large:before {
     width: 53px;
-    background-image: url("/public/styleguide/images/icon_large_up.svg")
+    background-image: url("/web/public/styleguide/images/icon_large_up.svg")
 }
 
 .styleguide-header__breakpoints__item__link#full:before {
     width: 51px;
-    background-image: url("/public/styleguide/images/icon_full.svg")
+    background-image: url("/web/public/styleguide/images/icon_full.svg")
 }
 
 body.opened .styleguide-header {

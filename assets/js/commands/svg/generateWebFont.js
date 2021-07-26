@@ -1,8 +1,7 @@
-const WebfontsGenerator = require('webfonts-generator');
+const WebfontsGenerator = require('@vusion/webfonts-generator');
 const optimizeSvg = require('./optimizeSvg');
 
 function generateWebFont (type, svgSourceFolder, svgDestinationFolder = null) {
-
     optimizeSvg(svgSourceFolder, svgDestinationFolder).then(svgFilesPath => {
         WebfontsGenerator({
             files: svgFilesPath,
