@@ -1,14 +1,14 @@
-import React from 'react';
-import { useQuery } from 'urql';
-import { withUrqlClient } from 'next-urql';
-import { useTranslation } from 'react-i18next';
-import SsfwButton from '../components/forms/SsfwButton';
-import ShopsysInUserText from '../components/in/ShopsysInUserText';
-import getConfig from 'next/config';
-import ShopsysTextInput from '../components/forms/ShopsysTextInput';
-import { FormProvider, useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
+import { FormProvider, useForm } from 'react-hook-form';
+import getConfig from 'next/config';
+import React from 'react';
+import ShopsysInUserText from '../components/in/ShopsysInUserText';
+import ShopsysTextInput from '../components/forms/ShopsysTextInput';
+import SsfwButton from '../components/forms/SsfwButton';
+import { useQuery } from 'urql';
+import { useTranslation } from 'react-i18next';
+import { withUrqlClient } from 'next-urql';
+import { yupResolver } from '@hookform/resolvers/yup';
 const { publicRuntimeConfig } = getConfig();
 
 const content = `<h1>Heading</h1>
