@@ -21,6 +21,11 @@ class MethodAnnotationsFactory
     protected $annotationsReplacer;
 
     /**
+     * @var \InvalidArgumentException[]
+     */
+    public array $warningBag = [];
+
+    /**
      * @param \Shopsys\FrameworkBundle\Component\ClassExtension\AnnotationsReplacementsMap $annotationsReplacementsMap
      * @param \Shopsys\FrameworkBundle\Component\ClassExtension\AnnotationsReplacer $annotationsReplacer
      */
@@ -69,9 +74,16 @@ class MethodAnnotationsFactory
                 continue;
             }
 
+            try {
+                $docBlockReturnTypes = $reflectionMethodFromFrameworkClass->getDocBlockReturnTypes();
+            } catch (InvalidArgumentException $exception) {
+                $this->warningBag[md5($exception->getMessage())] = $exception;
+                continue;
+            }
+
             $methodReturnTypeIsExtended = $this->methodReturningTypeIsExtendedInProject(
                 $frameworkClassPattern,
-                $reflectionMethodFromFrameworkClass->getDocBlockReturnTypes()
+                $docBlockReturnTypes
             );
 
             $methodParameterTypeIsExtended = $this->methodParameterTypeIsExtendedInProject(
