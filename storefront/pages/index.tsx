@@ -5,6 +5,7 @@ import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import { initUrqlClient, withUrqlClient } from 'next-urql';
 import getConfig from 'next/config';
 import { GetServerSideProps } from 'next';
+import Header from '../components/layout/Header';
 import PromotedCategories from '../components/blocks/categories/PromotedCategories/PromotedCategories';
 import { promotedCategoriesQuery } from '../connectors/categories/PromotedCategories';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
@@ -42,99 +43,113 @@ const Index: FC = () => {
     };
 
     return (
-        <div
-            style={{ width: '100vw', height: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center' }}
-        >
+        <>
+            <Header></Header>
             <div
                 style={{
-                    width: '50%',
-                    padding: '20px',
-                    boxShadow: '0 5px 10px rgba(25,84,63,0.3)',
-                    borderRadius: '10px',
+                    width: '100vw',
+                    height: '100vh',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
                 }}
             >
-                <h2>{t('Promoted categories')}</h2>
-                <PromotedCategories />
-                <div>
-                    <ShopsysButton
-                        style={{ margin: '5px' }}
-                        size="small"
-                        variant="secondary"
-                        name="button1"
-                        onClick={() => {
-                            formProviderMethods.setValue(
-                                'htmlContent',
-                                `${formProviderMethods.getValues('htmlContent')} <h1>${t('Hello, world!')}</h1>`,
-                                {
-                                    shouldDirty: true,
-                                },
-                            );
-                        }}
-                    >
-                        {`<h1>${t('Hello, world!')}</h1>`}
-                    </ShopsysButton>
-                    <ShopsysButton
-                        style={{ margin: '5px' }}
-                        size="small"
-                        variant="secondary"
-                        name="button2"
-                        onClick={() => {
-                            formProviderMethods.setValue(
-                                'htmlContent',
-                                `${formProviderMethods.getValues(
+                <div
+                    style={{
+                        width: '50%',
+                        padding: '20px',
+                        boxShadow: '0 5px 10px rgba(25,84,63,0.3)',
+                        borderRadius: '10px',
+                    }}
+                >
+                    <h2>{t('Promoted categories')}</h2>
+                    <PromotedCategories />
+                    <div>
+                        <ShopsysButton
+                            style={{ margin: '5px' }}
+                            size="small"
+                            variant="secondary"
+                            name="button1"
+                            onClick={() => {
+                                formProviderMethods.setValue(
                                     'htmlContent',
-                                )} <img src="https://picsum.photos/200/300" />`,
-                                {
-                                    shouldDirty: true,
-                                },
-                            );
-                        }}
-                    >
-                        {'<img src="https://picsum.photos/200/300" />'}
-                    </ShopsysButton>
-                    <ShopsysButton
-                        style={{ margin: '5px' }}
-                        size="small"
-                        variant="secondary"
-                        name="button3"
-                        onClick={() => {
-                            formProviderMethods.setValue(
-                                'htmlContent',
-                                `${formProviderMethods.getValues('htmlContent')} <p>${t('Just some random text')}</p>`,
-                                {
-                                    shouldDirty: true,
-                                },
-                            );
-                        }}
-                    >
-                        {`<p>${t('Just some random text')}</p>`}
-                    </ShopsysButton>
-                </div>
-                <FormProvider {...formProviderMethods}>
-                    <form style={{ marginTop: '15px' }} onSubmit={formProviderMethods.handleSubmit(formSubmitHandler)}>
-                        <ShopsysTextInput
-                            id="my_form-html_content"
-                            name="htmlContent"
-                            label={t('HTML content')}
-                            markSuccessfulWhenValid={true}
-                        />
-                        <ShopsysCheckbox
-                            name="formConsent"
-                            id="my_form-consent"
-                            label={t('Do you agree with sharing your HTML content')}
-                        />
-                        <ShopsysButton type="submit" variant="primary" name="button3">
-                            {t('Render raw HTML')}
+                                    `${formProviderMethods.getValues('htmlContent')} <h1>${t('Hello, world!')}</h1>`,
+                                    {
+                                        shouldDirty: true,
+                                    },
+                                );
+                            }}
+                        >
+                            {`<h1>${t('Hello, world!')}</h1>`}
                         </ShopsysButton>
-                    </form>
-                </FormProvider>
-                {rawHtml && (
-                    <div style={{ marginTop: '30px' }}>
-                        <ShopsysInUserText htmlContent={rawHtml} />
+                        <ShopsysButton
+                            style={{ margin: '5px' }}
+                            size="small"
+                            variant="secondary"
+                            name="button2"
+                            onClick={() => {
+                                formProviderMethods.setValue(
+                                    'htmlContent',
+                                    `${formProviderMethods.getValues(
+                                        'htmlContent',
+                                    )} <img src="https://picsum.photos/200/300" />`,
+                                    {
+                                        shouldDirty: true,
+                                    },
+                                );
+                            }}
+                        >
+                            {'<img src="https://picsum.photos/200/300" />'}
+                        </ShopsysButton>
+                        <ShopsysButton
+                            style={{ margin: '5px' }}
+                            size="small"
+                            variant="secondary"
+                            name="button3"
+                            onClick={() => {
+                                formProviderMethods.setValue(
+                                    'htmlContent',
+                                    `${formProviderMethods.getValues('htmlContent')} <p>${t(
+                                        'Just some random text',
+                                    )}</p>`,
+                                    {
+                                        shouldDirty: true,
+                                    },
+                                );
+                            }}
+                        >
+                            {`<p>${t('Just some random text')}</p>`}
+                        </ShopsysButton>
                     </div>
-                )}
+                    <FormProvider {...formProviderMethods}>
+                        <form
+                            style={{ marginTop: '15px' }}
+                            onSubmit={formProviderMethods.handleSubmit(formSubmitHandler)}
+                        >
+                            <ShopsysTextInput
+                                id="my_form-html_content"
+                                name="htmlContent"
+                                label={t('HTML content')}
+                                markSuccessfulWhenValid={true}
+                            />
+                            <ShopsysCheckbox
+                                name="formConsent"
+                                id="my_form-consent"
+                                label={t('Do you agree with sharing your HTML content')}
+                            />
+                            <ShopsysButton type="submit" variant="primary" name="button3">
+                                {t('Render raw HTML')}
+                            </ShopsysButton>
+                        </form>
+                    </FormProvider>
+                    {rawHtml && (
+                        <div style={{ marginTop: '30px' }}>
+                            <ShopsysInUserText htmlContent={rawHtml} />
+                        </div>
+                    )}
+                </div>
             </div>
-        </div>
+        </>
     );
 };
 

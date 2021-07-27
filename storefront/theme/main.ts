@@ -1,4 +1,5 @@
 import { DefaultTheme } from 'styled-components';
+import mediaQueries from './mediaQueries';
 
 /* Main theme */
 export const theme: DefaultTheme = {
@@ -45,4 +46,7 @@ export const theme: DefaultTheme = {
 
     /* Transition */
     transition: '0.2s cubic-bezier(.8, .20, .48, 1.0)',
+
+    /* Media queries */
+    ...mediaQueries,
 };
