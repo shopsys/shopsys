@@ -1,16 +1,14 @@
 import styled, { css } from 'styled-components';
 
 const localVariables = {
-    inputHeight: '54px',
-    inputPaddingVertical: '20px',
-    inputPaddingHorizontal: '10px',
-    inputBorderWidth: '2px',
-    inputLabelPositionTop: '50%',
-    inputLabelFontSizeSmall: '11px',
-    inputLabelActivePositionTop: '9px',
+    textareaPaddingVertical: '20px',
+    textareaPaddingHorizontal: '10px',
+    textareaBorderWidth: '2px',
+    textareaLabelFontSizeSmall: '11px',
+    textareaLabelActivePositionTop: '9px',
 };
 
-type ShopsysTextInputStyledProps = {
+type ShopsysTextareaStyledProps = {
     inputState?: string;
 };
 
@@ -18,18 +16,17 @@ export const StyledShopsysInputFormLine = styled.div`
     margin-bottom: 12px;
 `;
 
-export const StyledShopsysTextInput = styled.div<ShopsysTextInputStyledProps>`
+export const StyledShopsysTextarea = styled.div<ShopsysTextareaStyledProps>`
     position: relative;
     width: 100%;
 
-    input {
+    textarea {
+        resize: vertical;
         box-sizing: border-box;
-        height: ${localVariables.inputHeight};
         width: 100%;
-        padding: ${localVariables.inputPaddingVertical} ${localVariables.inputPaddingHorizontal} 0
-            ${localVariables.inputPaddingHorizontal};
+        padding: ${localVariables.textareaPaddingVertical} ${localVariables.textareaPaddingHorizontal};
 
-        border: ${localVariables.inputBorderWidth} solid ${(props) => props.theme.color.border};
+        border: ${localVariables.textareaBorderWidth} solid ${(props) => props.theme.color.border};
         color: ${(props) => props.theme.color.base};
         background-color: ${(props) => props.theme.color.white};
         border-radius: ${(props) => props.theme.radius.default};
@@ -71,21 +68,6 @@ export const StyledShopsysTextInput = styled.div<ShopsysTextInputStyledProps>`
             }
         }
 
-        &[type='password'] {
-            font-size: 24px;
-            color: ${(props) => props.theme.color.greyLight};
-
-            &:focus-visible {
-                color: ${(props) => props.theme.color.base};
-            }
-        }
-
-        &::-webkit-outer-spin-button,
-        &::-webkit-inner-spin-button {
-            -webkit-appearance: none;
-            margin: 0;
-        }
-
         &:-webkit-autofill,
         &:-webkit-autofill:hover,
         &:-webkit-autofill:focus,
@@ -99,27 +81,27 @@ export const StyledShopsysTextInput = styled.div<ShopsysTextInputStyledProps>`
 
             ~ label {
                 transform: none;
-                top: ${localVariables.inputLabelActivePositionTop};
+                top: ${localVariables.textareaLabelActivePositionTop};
 
-                font-size: ${localVariables.inputLabelFontSizeSmall};
+                font-size: ${localVariables.textareaLabelFontSizeSmall};
             }
         }
 
         :not(:placeholder-shown) {
             ~ label {
                 transform: none;
-                top: ${localVariables.inputLabelActivePositionTop};
+                top: ${localVariables.textareaLabelActivePositionTop};
 
-                font-size: ${localVariables.inputLabelFontSizeSmall};
+                font-size: ${localVariables.textareaLabelFontSizeSmall};
             }
         }
     }
 
     label {
         position: absolute;
-        top: ${localVariables.inputLabelPositionTop};
-        transform: translateY(-50%);
-        left: ${`calc(${localVariables.inputPaddingHorizontal} + ${localVariables.inputBorderWidth})`};
+        transform: translateY(0);
+        top: ${localVariables.textareaPaddingVertical};
+        left: ${`calc(${localVariables.textareaPaddingHorizontal} + ${localVariables.textareaBorderWidth})`};
         display: block;
 
         transition: ${(props) => props.theme.transition};
@@ -144,20 +126,6 @@ export const StyledShopsysRequiredSymbol = styled.span`
     `}
 `;
 
-export const StyledShopsysPasswordVisibilityToggle = styled.img`
-    width: 25px;
-    position: absolute;
-    top: 50%;
-    right: 15px;
-    transform: translateY(-50%);
-
-    cursor: pointer;
-
-    &.not-visible {
-        opacity: 50%;
-    }
-`;
-
 export const StyledShopsysFormFieldError = styled.div`
     position: relative;
     margin-top: 6px;
@@ -170,10 +138,9 @@ export const StyledShopsysErrorMessage = styled.span`
 `;
 
 export const StyledShopsysErrorIcon = styled.img`
-    transform: translateY(-50%);
     display: flex;
     width: 16px;
     position: absolute;
-    top: -33px;
+    top: 2px;
     right: 19px;
 `;

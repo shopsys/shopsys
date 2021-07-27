@@ -6,6 +6,7 @@ import {
     StyledShopsysFormFieldError,
     StyledShopsysInputFormLine,
     StyledShopsysPasswordVisibilityToggle,
+    StyledShopsysRequiredSymbol,
     StyledShopsysTextInput,
 } from './ShopsysTextInput.style';
 import { ErrorMessage } from '@hookform/error-message';
@@ -35,10 +36,10 @@ function ShopsysTextInput(props: InferProps<typeof ShopsysTextInput.propTypes>):
     useEffect(() => {
         if (formState.errors[props.name]) {
             setInputState('error');
-        } else if (props.shouldUseSuccess && formState.touchedFields[props.name]) {
+        } else if (props.markSuccessfulWhenValid && formState.touchedFields[props.name]) {
             setInputState('success');
         }
-    }, [formState.touchedFields[props.name], formState.errors[props.name], props.shouldUseSuccess]);
+    }, [formState.touchedFields[props.name], formState.errors[props.name], props.markSuccessfulWhenValid]);
 
     return (
         <StyledShopsysInputFormLine>
@@ -70,7 +71,7 @@ function ShopsysTextInput(props: InferProps<typeof ShopsysTextInput.propTypes>):
                     {/**
                      * The star for required HTML input elements
                      */}
-                    {props.required && <span className={'required'}>*</span>}
+                    {props.required && <StyledShopsysRequiredSymbol>*</StyledShopsysRequiredSymbol>}
                 </label>
             </StyledShopsysTextInput>
             {/**
@@ -100,7 +101,7 @@ ShopsysTextInput.defaultProps = {
     disabled: false,
     required: false,
     type: 'text',
-    shouldUseSuccess: false,
+    markSuccessfulWhenValid: false,
 };
 
 ShopsysTextInput.propTypes = {
@@ -131,7 +132,7 @@ ShopsysTextInput.propTypes = {
     /**
      * A prop to define if the HTML input element should receive the .success CSS class when the input is correct
      */
-    shouldUseSuccess: PropTypes.bool.isRequired,
+    markSuccessfulWhenValid: PropTypes.bool.isRequired,
 };
 
 /* @component */

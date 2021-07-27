@@ -24,7 +24,7 @@ const formProviderMethods = useForm({
 
 <FormProvider {...formProviderMethods}>
     <form>
-        <ShopsysTextInput id="my-form_name" name="name" label={'name'} shouldUseSuccess={true} />
+        <ShopsysTextInput id="my-form_name" name="name" label={'name'} markSuccessfulWhenValid={true} />
         <ShopsysTextInput id="my-form_password" name="password" label={'password'} type="password" />
         <ShopsysTextInput id="my-form_disabled" name="disabled" label={'disabled'} disabled={true} />
     </form>
