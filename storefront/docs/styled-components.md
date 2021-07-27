@@ -50,3 +50,9 @@ We define breakpoints in the **mediaQueries.js** file, where you can see breakpo
   margin-top: 20px;
 }
 ```
+
+**Performance of styling**<br>
+The best way to styling and achieve the best performance (critical CSS):
+- we have for every element specific styled-component element but for example, if you have in your styled-component child-element like input and he is rendered every time, then you can use simple html element input
+- for every modification of styled-component we create its extension (best performance of critical css)
+- We can also use props but only if is needed, because when you use props in your styled-component then in your rendered CSS will be a specific class with duplicated CSS. For example, you have styled-component with 20 CSS attributes and when you change only 1 CSS attribute with props then in your rendered CSS will be 2 specific classes with the same code but with 1 different attribute which you defined with props.
