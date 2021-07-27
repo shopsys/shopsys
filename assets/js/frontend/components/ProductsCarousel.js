@@ -5,6 +5,7 @@
 import 'slick-carousel';
 import Responsive from '../utils/Responsive';
 import Register from 'framework/common/utils/Register';
+import Translator from 'bazinga-translator';
 
 export default class SlickCarousel {
     static init () {
@@ -20,8 +21,8 @@ export default class SlickCarousel {
                     infinite: false,
                     arrows: true,
                     dots: false,
-                    prevArrow: '<button type="button" data-role="none" class="slick-prev slick-arrow" aria-label="Předchozí" role="button"></button>',
-                    nextArrow: '<button type="button" data-role="none" class="slick-next slick-arrow" aria-label="Další" role="button"></button>'
+                    prevArrow: '<button type="button" data-role="none" class="slick-prev slick-arrow" aria-label="' + Translator.trans('Předchozí') + '" role="button"></button>',
+                    nextArrow: '<button type="button" data-role="none" class="slick-next slick-arrow" aria-label="' + Translator.trans('Další') + '" role="button"></button>'
                 });
             } else {
                 if ($mainImageCarousel.hasClass('slick-initialized')) {

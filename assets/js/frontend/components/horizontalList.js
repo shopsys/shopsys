@@ -107,9 +107,9 @@ import Timeout from 'framework/common/utils/Timeout';
             }
 
             function toggleSlickArrow (minCountForShowArrows) {
-                const countOfProduct = $currentGallery.data('count-of-product');
+                const productCount = $currentGallery.data('count-of-product');
 
-                if (countOfProduct > minCountForShowArrows) {
+                if (productCount > minCountForShowArrows) {
                     prevArrow.show();
                     nextArrow.show();
                 } else {

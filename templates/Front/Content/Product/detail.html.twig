@@ -39,7 +39,7 @@
                             </div>
                         {% endif %}
 
-                        <div class="box-detail__image__main{{ showGallery ? '' : ' box-detail__image__main--mobile-visible' }}">
+                        <div class="box-detail__image__main{{ showGallery ? '' : ' box-detail__image__main--everytime-visible' }}">
                             {% for galleryImage in productView.galleryImageViews|slice(0, 1) %}
                                 <div class="box-detail__image__main__item">
                                     {% if productView.mainImageView %}
@@ -60,7 +60,9 @@
                     </div>
                     <div class="box-detail__info">
                         <h1 class="box-detail__heading" itemprop="name">
-                            <div class="box-detail__heading__prefix">{{ productView.nameFirstLine }}</div>
+                            {% if productView.nameFirstLine %}
+                                <div class="box-detail__heading__prefix">{{ productView.nameFirstLine }}</div>
+                            {% endif %}
                             {{ productView.nameSecondLine }}
                         </h1>
 
@@ -226,7 +228,7 @@
                             </a>
                         {% endif %}
                     </div>
-                    <div class="in-tab__content">
+                    <div class="in-tab__content" id="product-desc">
                         {% if productView.description %}
                             <div class="in-tab__content__item js-tabs-content active" data-tab-id="description">
                                 <div class="in-tab__content__left">
