@@ -35,6 +35,10 @@ module.exports = {
                     content: '../docs/eslint-rules.md',
                 },
                 {
+                    name: 'Styled-components',
+                    content: '../docs/styled-components.md',
+                },
+                {
                     name: 'Basic principles',
                     content: '../docs/basic-principles.md',
                 },

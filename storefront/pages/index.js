@@ -2,11 +2,11 @@ import * as Yup from 'yup';
 import { FormProvider, useForm } from 'react-hook-form';
 import getConfig from 'next/config';
 import React from 'react';
+import ShopsysButton from '../components/forms/ShopsysButton';
 import ShopsysCheckbox from '../components/forms/ShopsysCheckbox';
 import ShopsysInUserText from '../components/in/ShopsysInUserText';
 import ShopsysRadiobutton from '../components/forms/ShopsysRadiobutton';
 import ShopsysTextInput from '../components/forms/ShopsysTextInput';
-import SsfwButton from '../components/forms/SsfwButton';
 import { useQuery } from 'urql';
 import { useTranslation } from 'react-i18next';
 import { withUrqlClient } from 'next-urql';
@@ -111,13 +111,22 @@ const Index = () => {
             <CategoryList />
             <ShopsysInUserText htmlContent={content} />
             <div>
-                <SsfwButton name="button1">{t('Default')}</SsfwButton>
-                <SsfwButton name="button2" additionalClassName="btn--primary">
+                <ShopsysButton name="button1">{t('Default')}</ShopsysButton>
+                <ShopsysButton variant="primary" name="button3">
                     {t('Primary')}
-                </SsfwButton>
-                <SsfwButton name="button3" additionalClassName="btn--secondary">
+                </ShopsysButton>
+                <ShopsysButton variant="secondary" name="button2">
                     {t('Secondary')}
-                </SsfwButton>
+                </ShopsysButton>
+                <ShopsysButton size="small" name="button4">
+                    {t('Small')}
+                </ShopsysButton>
+                <ShopsysButton variant="primary" size="small" name="button5">
+                    {t('Small primary')}
+                </ShopsysButton>
+                <ShopsysButton variant="secondary" size="small" name="button6">
+                    {t('Small secondary')}
+                </ShopsysButton>
             </div>
             <FormProvider {...formProviderMethods}>
                 <form style={{ marginTop: '15px' }}>

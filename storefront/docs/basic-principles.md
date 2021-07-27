@@ -18,7 +18,7 @@ config/*
 
 docs/ 
 - docs for components, settings, pages, global mindset (these files are included to styleguide)
-- For writing documentation we use MarkDown - https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet
+- For writing documentation we use MarkDown - https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet, https://www.markdownguide.org/cheat-sheet/
 
 - docs/styleguide/ stand alone generated html page with all docs - generate your styleguide by 
 ```plain
