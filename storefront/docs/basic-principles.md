@@ -1,11 +1,11 @@
 ### Custom components
-- for better orientation in code use prefix ssfw - for example SsfwProductItem
-- project will contain a lot of 3rd party components, so we will see, which are SSFW components and which are 3rd party
+- for better orientation in code use prefix shopsys - for example ShopsysProductItem
+- project will contain a lot of 3rd party components, so we will see, which are Shopsys components and which are 3rd party
 - as possible use PascalCase - some components are lowercase, some are PascalCase 
 -- much easier without thinking about it - use Upper first letter 
 -- use lower first letter only on components which force it
 
-### SSFW Storefront folder structure
+### Shopsys Storefront folder structure
 components/
 - This folder contains both stateless and statefull components.
 

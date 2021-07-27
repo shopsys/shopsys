@@ -7,6 +7,7 @@ const localVariables = {
 };
 
 export const StyledShopsysChoiceFormLine = styled.div`
+    width: fit-content;
     margin-bottom: 16px;
 `;
 

@@ -10,11 +10,15 @@ const localVariables = {
     inputLabelActivePositionTop: '9px',
 };
 
-export const ShopsysInputFormLine = styled.div`
+type ShopsysTextInputStyledProps = {
+    inputState?: string;
+};
+
+export const StyledShopsysInputFormLine = styled.div`
     margin-bottom: 12px;
 `;
 
-export const ShopsysTextInputStyled = styled.div`
+export const StyledShopsysTextInput = styled.div<ShopsysTextInputStyledProps>`
     position: relative;
     width: 100%;
 
@@ -132,7 +136,7 @@ export const ShopsysTextInputStyled = styled.div`
     }
 `;
 
-export const ShopsysPasswordVisibilityToggle = styled.img`
+export const StyledShopsysPasswordVisibilityToggle = styled.img`
     width: 25px;
     position: absolute;
     top: 50%;
@@ -146,18 +150,18 @@ export const ShopsysPasswordVisibilityToggle = styled.img`
     }
 `;
 
-export const ShopsysFormFieldErrorStyled = styled.div`
+export const StyledShopsysFormFieldError = styled.div`
     position: relative;
     margin-top: 6px;
 `;
 
-export const ShopsysErrorMessage = styled.span`
+export const StyledShopsysErrorMessage = styled.span`
     line-height: 21px;
     color: ${(props) => props.theme.color.red};
     font-size: ${(props) => props.theme.fontSize.small};
 `;
 
-export const ShopsysErrorIcon = styled.img`
+export const StyledShopsysErrorIcon = styled.img`
     transform: translateY(-50%);
     display: flex;
     width: 16px;
