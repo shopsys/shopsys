@@ -99,7 +99,7 @@ review:
         paths:
             - schema.graphql
     script:
-        - cp /home/ci/docker-compose-review-storefront-styleguide.yml ./docker-compose.yml
+        - cp -f ./gitlab/docker-compose-ci-review.yml ./docker-compose.yml
         - docker-compose down --rmi all -v
         - docker-compose up -d
         - "docker-compose exec -T php-fpm sed -i \"s/database_name:.*/database_name: ${COMPOSE_PROJECT_NAME}/\" config/parameters.yaml"
@@ -124,7 +124,7 @@ review:stop:
     tags:
         - review
     script:
-        - cp /home/ci/docker-compose-review-storefront.yml ./docker-compose.yml
+        - cp -f ./gitlab/docker-compose-ci-review.yml ./docker-compose.yml
         - docker-compose exec -T php-fpm php phing -D production.confirm.action=y elasticsearch-index-delete
         - docker-compose down --rmi all -v
         - /home/ci/clean.sh ${COMPOSE_PROJECT_NAME}
