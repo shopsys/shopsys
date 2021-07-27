@@ -2,6 +2,7 @@ import * as Yup from 'yup';
 import { FC, useState } from 'react';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import { GetServerSideProps } from 'next';
+import PromotedCategories from '../components/blocks/categories/PromotedCategories/PromotedCategories';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import ShopsysButton from 'components/forms/ShopsysButton';
 import ShopsysCheckbox from 'components/forms/ShopsysCheckbox';
@@ -46,6 +47,8 @@ const Index: FC = () => {
                     borderRadius: '10px',
                 }}
             >
+                <h2>{t('Promoted categories')}</h2>
+                <PromotedCategories />
                 <div>
                     <ShopsysButton
                         style={{ margin: '5px' }}
