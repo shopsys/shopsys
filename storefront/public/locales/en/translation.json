@@ -14,5 +14,11 @@
     "Disabled": "Disabled",
     "Disabled checked": "Disabled checked",
     "Checkbox is required": "Checkbox is required",
-    "this is a link": "this is a link"
+    "this is a link": "this is a link",
+    "Selected": "Selected",
+    "Unselected": "Unselected",
+    "Selected disabled": "Selected disabled",
+    "Unselected disabled": "Unselected disabled",
+    "Selected with image": "Selected with image",
+    "Unselected with image": "Unselected with image"
 }

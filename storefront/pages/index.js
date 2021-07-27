@@ -4,6 +4,7 @@ import getConfig from 'next/config';
 import React from 'react';
 import ShopsysCheckbox from '../components/forms/ShopsysCheckbox';
 import ShopsysInUserText from '../components/in/ShopsysInUserText';
+import ShopsysRadiobutton from '../components/forms/ShopsysRadiobutton';
 import ShopsysTextInput from '../components/forms/ShopsysTextInput';
 import SsfwButton from '../components/forms/SsfwButton';
 import { useQuery } from 'urql';
@@ -73,6 +74,9 @@ const Index = () => {
             checkboxDisabled: false,
             checkboxDisabledChecked: true,
             checkboxWithLink: false,
+            radiobuttonGroup: 'selected',
+            radiobuttonGroupDisabled: 'selected',
+            radiobuttonGroupWithImages: 'selected',
         },
         criteriaMode: 'firstError',
         shouldFocusError: true,
@@ -145,6 +149,46 @@ const Index = () => {
                             id="my-form_checkbox-with-link"
                             name="checkboxWithLink"
                             label={<a href="#">{t('this is a link')}</a>}
+                        />
+                        <ShopsysRadiobutton
+                            id="my-form_radiobutton-selected"
+                            name="radiobuttonGroup"
+                            label={t('Selected')}
+                            value="selected"
+                        />
+                        <ShopsysRadiobutton
+                            id="my-form_radiobutton"
+                            name="radiobuttonGroup"
+                            label={t('Unselected')}
+                            value="not-selected"
+                        />
+                        <ShopsysRadiobutton
+                            id="my-form_radiobutton-disabled-selected"
+                            name="radiobuttonGroupDisabled"
+                            label={t('Selected disabled')}
+                            value="selected"
+                            disabled={true}
+                        />
+                        <ShopsysRadiobutton
+                            id="my-form_radiobutton-disabled"
+                            name="radiobuttonGroupDisabled"
+                            label={t('Unselected disabled')}
+                            value="not-selected"
+                            disabled={true}
+                        />
+                        <ShopsysRadiobutton
+                            id="my-form_radiobutton-with-images-selected"
+                            name="radiobuttonGroupWithImages"
+                            label={t('Selected with image')}
+                            image="/images/czech_post.png"
+                            value="selected"
+                        />
+                        <ShopsysRadiobutton
+                            id="my-form_radiobutton-with-images"
+                            name="radiobuttonGroupWithImages"
+                            label={t('Unselected with image')}
+                            image="/images/czech_post.png"
+                            value="not-selected"
                         />
                     </div>
                 </form>
