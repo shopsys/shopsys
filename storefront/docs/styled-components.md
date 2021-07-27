@@ -11,7 +11,15 @@ We are using a custom function in style.js for some special modifications, for e
 **css function:**<br/>
 https://styled-components.com/docs/api#css<br/>
 If you want to use the function in your styled-component you have to use **css** before your code. 
-If you don't use **css** then your function doesn't return css attributes
+If you don't use **css** then your function doesn't return css attributes.<br/>
+**You can see something like this in the code:**
+```plain
+css`
+  ${getSize(size, theme)};
+  width: auto;
+`
+```
+
 
 **Destructuring props**<br/>
 https://domhabersack.com/styled-components-props-destructuring<br/>
@@ -24,7 +32,7 @@ const Post = styled.article`
   };
 `;
 ```
-**Instead this:**
+**Instead of this:**
 ```plain
 const Post = styled.article`
   background: ${props =>
