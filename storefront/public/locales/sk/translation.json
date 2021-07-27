@@ -14,5 +14,11 @@
     "Disabled": "Zakázaný",
     "Disabled checked": "Zakázaný zaškrtnutý",
     "Checkbox is required": "Checkbox je vyžadovaný",
-    "this is a link": "toto je odkaz"
+    "this is a link": "toto je odkaz",
+    "Selected": "Vybraný",
+    "Unselected": "Nevybraný",
+    "Selected disabled": "Vybraný zakázaný",
+    "Unselected disabled": "Nevybraný zakázaný",
+    "Selected with image": "Vybraný s obrázkom",
+    "Unselected with image": "Nevybraný s obrázkom"
 }
