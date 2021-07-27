@@ -99,8 +99,8 @@ review:
         paths:
             - schema.graphql
     script:
-        - cp /home/ci/docker-compose-review-storefront-styleguide.yml ./docker-compose.yml
-        - docker-compose down --rmi all -v
+        - cp -f ./gitlab/docker-compose-ci-review.yml ./docker-compose.yml
+        - docker-compose down --rmi all -v --remove-orphans
         - docker-compose up -d
         - "docker-compose exec -T php-fpm sed -i \"s/database_name:.*/database_name: ${COMPOSE_PROJECT_NAME}/\" config/parameters.yaml"
         - docker-compose exec -T php-fpm sed -i "s/http:\/\/127.0.0.1:8000/https:\/\/${HOST}/g" config/domains_urls.yaml
@@ -124,9 +124,9 @@ review:stop:
     tags:
         - review
     script:
-        - cp /home/ci/docker-compose-review-storefront.yml ./docker-compose.yml
+        - cp -f ./gitlab/docker-compose-ci-review.yml ./docker-compose.yml
         - docker-compose exec -T php-fpm php phing -D production.confirm.action=y elasticsearch-index-delete
-        - docker-compose down --rmi all -v
+        - docker-compose down --rmi all -v --remove-orphans
         - /home/ci/clean.sh ${COMPOSE_PROJECT_NAME}
     rules:
         -   if: '$CI_COMMIT_BRANCH && $CI_PIPELINE_SOURCE != "schedule"'
@@ -197,7 +197,7 @@ deploy:devel:
         - build
         - test:standards
         - test:functional
-    #   - test:acceptance #test:acceptance is temporarily disabled as it is not configured well
+        - test:acceptance
     rules:
         -   if: '$CI_PIPELINE_SOURCE == "schedule"'
             when: never
