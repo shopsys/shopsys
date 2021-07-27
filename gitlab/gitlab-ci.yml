@@ -197,7 +197,7 @@ deploy:devel:
         - build
         - test:standards
         - test:functional
-    #   - test:acceptance #test:acceptance is temporarily disabled as it is not configured well
+        - test:acceptance
     rules:
         -   if: '$CI_PIPELINE_SOURCE == "schedule"'
             when: never
