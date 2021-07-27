@@ -36,7 +36,7 @@ build-storefront:
     stage: build
     <<: *only-default
     script:
-        - docker build -f ./storefront/docker/Dockerfile --target production --compress -t ${STOREFRONT_TAG} .
+        - docker build -f ./storefront/docker/Dockerfile --target production --compress -t ${STOREFRONT_TAG} ./storefront
         - docker push ${STOREFRONT_TAG}
     interruptible: true
 
@@ -44,7 +44,7 @@ build-storefront-styleguide:
     stage: build
     <<: *only-default
     script:
-        - docker build -f ./storefront/docker/styleguide/Dockerfile --target ci --compress -t ${STOREFRONT_STYLEGUIDE_TAG} .
+        - docker build -f ./storefront/docker/styleguide/Dockerfile --target ci --compress -t ${STOREFRONT_STYLEGUIDE_TAG} ./storefront
         - docker push ${STOREFRONT_STYLEGUIDE_TAG}
     interruptible: true
 
