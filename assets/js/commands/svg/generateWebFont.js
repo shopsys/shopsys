@@ -10,7 +10,7 @@ function generateWebFont (type, svgSourceFolder, svgDestinationFolder = null) {
             cssFontsUrl: type + '/fonts',
             fontName: 'svg',
             fontHeight: '512',
-            fixedWidth: '512',
+            fontWidth: '512',
             centerHorizontally: true,
             normalize: true,
             html: true,
