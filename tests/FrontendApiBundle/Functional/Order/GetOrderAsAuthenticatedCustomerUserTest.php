@@ -32,6 +32,21 @@ class GetOrderAsAuthenticatedCustomerUserTest extends GraphQlWithLoginTestCase
             $this->assertArrayHasKey('totalPrice', $responseData);
             $this->assertArrayHasKey('priceWithVat', $responseData['totalPrice']);
             $this->assertSame($expectedOrderData['totalPriceWithVat'], $responseData['totalPrice']['priceWithVat']);
+
+            $this->assertArrayHasKey('firstName', $responseData);
+            $this->assertSame($expectedOrderData['firstName'], $responseData['firstName']);
+
+            $this->assertArrayHasKey('lastName', $responseData);
+            $this->assertSame($expectedOrderData['lastName'], $responseData['lastName']);
+
+            $this->assertArrayHasKey('promoCode', $responseData);
+            $this->assertSame($expectedOrderData['promoCode'], $responseData['promoCode']);
+
+            $this->assertArrayHasKey('trackingNumber', $responseData);
+            $this->assertSame($expectedOrderData['trackingNumber'], $responseData['trackingNumber']);
+
+            $this->assertArrayHasKey('trackingUrl', $responseData);
+            $this->assertSame($expectedOrderData['trackingUrl'], $responseData['trackingUrl']);
         }
     }
 
@@ -55,8 +70,9 @@ class GetOrderAsAuthenticatedCustomerUserTest extends GraphQlWithLoginTestCase
     private function getOrderDataForCurrentlyLoggedCustomerUserProvider(): array
     {
         $data = [];
-        $orderIds = [1, 2, 3];
+        $orderIds = [1, 2, 3, 4];
         foreach ($orderIds as $orderId) {
+            /** @var \App\Model\Order\Order $order */
             $order = $this->orderFacade->getById($orderId);
             $data[] = [
                 $order->getUuid(),
@@ -65,6 +81,11 @@ class GetOrderAsAuthenticatedCustomerUserTest extends GraphQlWithLoginTestCase
                     'totalPriceWithVat' => MoneyFormatterHelper::formatWithMaxFractionDigits(
                         $order->getTotalPriceWithVat()
                     ),
+                    'firstName' => $order->getFirstName(),
+                    'lastName' => $order->getLastName(),
+                    'promoCode' => $order->getGtmCoupon(),
+                    'trackingNumber' => $order->getTrackingNumber(),
+                    'trackingUrl' => $order->getTrackingUrl(),
                 ],
             ];
         }
@@ -84,6 +105,11 @@ class GetOrderAsAuthenticatedCustomerUserTest extends GraphQlWithLoginTestCase
                     totalPrice {
                         priceWithVat
                     }
+                    firstName
+                    lastName
+                    promoCode
+                    trackingNumber
+                    trackingUrl
                 }
             }
         ';

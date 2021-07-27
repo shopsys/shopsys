@@ -145,6 +145,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
         $orderData->createdAt = (new DateTime('now -11 day'))->setTime(4, 34, 19);
         $orderData->createdAsAdministrator = $this->getReference(AdministratorDataFixture::ADMINISTRATOR);
         $orderData->isOverLimit = false;
+        $orderData->gtmCoupon = 'promoCode123';
         $this->createOrder(
             $orderData,
             [
@@ -348,6 +349,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
         $orderData->transport = $this->getReference(TransportDataFixture::TRANSPORT_PPL);
         $orderData->payment = $this->getReference(PaymentDataFixture::PAYMENT_CARD);
         $orderData->status = $this->getReference(OrderStatusDataFixture::ORDER_STATUS_NEW);
+        $orderData->trackingNumber = '1234567890';
         $orderData->firstName = 'Adam';
         $orderData->lastName = 'Bořič';
         $orderData->email = 'no-reply@shopsys.com';
@@ -361,6 +363,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
         $orderData->currency = $domainDefaultCurrency;
         $orderData->createdAt = (new DateTime('now -7 day'))->setTime(7, 2, 31);
         $orderData->isOverLimit = false;
+        $orderData->gtmCoupon = 'promoCode123';
         $this->createOrder(
             $orderData,
             [
