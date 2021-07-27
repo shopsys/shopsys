@@ -47,7 +47,7 @@ class SliderItemData extends BaseSliderItemData
     /**
      * @var string|null
      */
-    public ?string $uuid;
+    public ?string $uuid = null;
 
     public function __construct()
     {
