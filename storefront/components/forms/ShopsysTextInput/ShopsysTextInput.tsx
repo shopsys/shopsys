@@ -1,3 +1,4 @@
+import { FieldValues, FormState, useFormContext } from 'react-hook-form';
 import PropTypes, { InferProps } from 'prop-types';
 import { ReactElement, useEffect, useState } from 'react';
 import {
@@ -10,14 +11,13 @@ import {
     StyledShopsysTextInput,
 } from './ShopsysTextInput.style';
 import { ErrorMessage } from '@hookform/error-message';
-import { useFormContext } from 'react-hook-form';
 
 /**
  * An HTML Input element used for text inputs of types: text, password, email, tel,
  */
 function ShopsysTextInput(props: InferProps<typeof ShopsysTextInput.propTypes>): ReactElement {
     const { register, formState } = useFormContext();
-    const [inputState, setInputState] = useState('');
+    const [inputState, setInputState] = useState<string | undefined>(undefined);
     const [inputType, setInputType] = useState(props.type);
 
     /**
@@ -28,17 +28,8 @@ function ShopsysTextInput(props: InferProps<typeof ShopsysTextInput.propTypes>):
         inputType === 'text' ? setInputType('password') : setInputType('text');
     };
 
-    /**
-     * Every time this field gets inserted or removed from the touched fields list
-     * or error field list, we determine if the CSS class of the HTML element
-     * should be updated
-     */
     useEffect(() => {
-        if (formState.errors[props.name]) {
-            setInputState('error');
-        } else if (props.markSuccessfulWhenValid && formState.touchedFields[props.name]) {
-            setInputState('success');
-        }
+        setInputState(getStateAfterValidation(formState, props));
     }, [formState.touchedFields[props.name], formState.errors[props.name], props.markSuccessfulWhenValid]);
 
     return (
@@ -96,6 +87,19 @@ function ShopsysTextInput(props: InferProps<typeof ShopsysTextInput.propTypes>):
         </StyledShopsysInputFormLine>
     );
 }
+
+const getStateAfterValidation = (
+    formState: FormState<FieldValues>,
+    props: InferProps<typeof ShopsysTextInput.propTypes>,
+) => {
+    if (formState.errors[props.name]) {
+        return 'error';
+    }
+
+    if (props.markSuccessfulWhenValid && formState.touchedFields[props.name]) {
+        return 'success';
+    }
+};
 
 ShopsysTextInput.defaultProps = {
     disabled: false,
