@@ -6,6 +6,7 @@ declare module 'styled-components' {
         color: {
             base: '#0d0d0d';
             primary: '#4c5bfd';
+            heading: '#0e0e0e';
             white: '#fff';
             black: '#000';
             orange: '#ecb200';
