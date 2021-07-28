@@ -884,3 +884,9 @@ services:
         alias: App\ProductFeed\Heureka\Model\FeedItem\HeurekaFeedItemFactory
 
     App\Model\Blog\Article\Elasticsearch\BlogArticleElasticsearchDataFetcher: ~
+
+    Shopsys\ProductFeed\GoogleBundle\Model\FeedItem\GoogleFeedItemFactory:
+        alias: App\ProductFeed\Google\Model\FeedItem\GoogleFeedItemFactory
+
+    Shopsys\ProductFeed\GoogleBundle\Model\Product\GoogleProductRepository:
+        alias: App\ProductFeed\Google\Model\Product\GoogleProductRepository
