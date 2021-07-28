@@ -1,40 +1,67 @@
 import styled, { css } from 'styled-components';
 import { Theme } from 'theme/main';
 
-export const StyledShopsysHeading1 = styled.h1`
-    ${({ theme }) => css`
-        font-size: 32px;
-        font-weight: 700;
-        line-height: 36px;
-        letter-spacing: 0.4;
+const baseStyleOfHeading = (theme: Theme) => {
+    return `
         color: ${theme.color.base};
+        font-weight: 700;
+        text-rendering: optimizelegibility;
+        word-wrap: break-word;
+    `;
+};
+
+export const StyledShopsysHeading1 = styled.h1`
+    ${({ theme }: { theme: Theme }) => css`
+        ${baseStyleOfHeading(theme)};
+        margin: 0 0 10px 0;
+
+        font-size: 24px;
+
+        @media ${theme.mediaQueries.queryLg} {
+            margin-bottom: 15px;
+
+            font-size: 32px;
+        }
     `}
 `;
 
 export const StyledShopsysHeading2 = styled.h2`
     ${({ theme }: { theme: Theme }) => css`
-        font-size: 24px;
-        font-weight: 700;
-        line-height: 30px;
-        letter-spacing: 0.3;
-        color: ${theme.color.heading};
+        ${baseStyleOfHeading(theme)};
+        margin: 0 0 10px 0;
+
+        font-size: 18px;
+
+        @media ${theme.mediaQueries.queryLg} {
+            font-size: 24px;
+        }
     `}
 `;
 
 export const StyledShopsysHeading3 = styled.h3`
     ${({ theme }: { theme: Theme }) => css`
-        font-size: 18px;
-        font-weight: 700;
-        line-height: 22px;
-        color: ${theme.color.heading};
+        ${baseStyleOfHeading(theme)};
+        margin: 0 0 10px 0;
+
+        font-size: ${theme.fontSize.default};
+
+        @media ${theme.mediaQueries.queryLg} {
+            margin-bottom: 15px;
+
+            font-size: 18px;
+        }
     `}
 `;
 
 export const StyledShopsysHeading4 = styled.h4`
     ${({ theme }: { theme: Theme }) => css`
-        font-size: 16px;
-        font-weight: 700;
-        line-height: 20px;
-        color: ${theme.color.heading};
+        ${baseStyleOfHeading(theme)};
+        margin: 0 0 10px 0;
+
+        font-size: ${theme.fontSize.small};
+
+        @media ${theme.mediaQueries.queryLg} {
+            font-size: ${theme.fontSize.default};
+        }
     `}
 `;

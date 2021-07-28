@@ -6,7 +6,6 @@ export const theme = {
     color: {
         base: '#0d0d0d',
         primary: '#4c5bfd',
-        heading: '#0e0e0e',
         white: '#fff',
         black: '#000',
         orange: '#ecb200',
@@ -15,6 +14,7 @@ export const theme = {
         border: '#c4c9ff',
         red: '#ec5353',
         green: '#00ecb1',
+        grey: '#414353',
         greyLight: '#a4a7c1',
         greyDark: '#555764',
     },
@@ -23,6 +23,22 @@ export const theme = {
     fontSize: {
         default: '16px',
         small: '14px',
+    },
+
+    /* Fonts family */
+    fontFamily: {
+        base: 'DM Sans, Arial, Helvetica, sans-serif',
+    },
+
+    /* Line heights */
+    lineHeight: {
+        default: 1.3,
+    },
+
+    /* Layouts */
+    layout: {
+        width: '1240px',
+        padding: '20px',
     },
 
     /* Default border radius value */
