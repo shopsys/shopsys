@@ -319,14 +319,14 @@ class ProductTest extends GraphQlTestCase
                     'files' => [],
                     'storeAvailabilities' => [
                         [
-                            'storeName' => 'Pardubice',
-                            'exposed' => false,
-                            'availabilityInformation' => 'K dispozici za týden',
-                            'availabilityStatus' => 'in-stock',
-                        ], [
                             'storeName' => 'Ostrava',
                             'exposed' => true,
                             'availabilityInformation' => '<strong class="is-in-stock">Ihned</strong> k odběru',
+                            'availabilityStatus' => 'in-stock',
+                        ], [
+                            'storeName' => 'Pardubice',
+                            'exposed' => false,
+                            'availabilityInformation' => 'K dispozici za týden',
                             'availabilityStatus' => 'in-stock',
                         ],
                     ],

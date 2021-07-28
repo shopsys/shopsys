@@ -184,7 +184,7 @@ class StoreFacade
      */
     public function getStoresListEnabledOnDomain(int $domainId, int $limit, int $offset): array
     {
-        return $this->storeRepository->getStoresListEnabledOnDomain($domainId, $limit, $offset);
+        return $this->storeRepository->getStoresEnabledOnDomain($domainId, $limit, $offset);
     }
 
     /**

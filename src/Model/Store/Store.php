@@ -20,7 +20,7 @@ use Shopsys\FrameworkBundle\Model\Country\Country;
  */
 class Store implements OrderableEntityInterface
 {
-    private const GEDMO_SORTABLE_LAST_POSITION = 1;
+    private const GEDMO_SORTABLE_LAST_POSITION = -1;
 
     /**
      * @var int

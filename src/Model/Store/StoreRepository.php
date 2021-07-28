@@ -75,7 +75,7 @@ class StoreRepository
      */
     public function getAllStoresQueryBuilder(): QueryBuilder
     {
-        return $this->getQueryBuilder()->orderBy('s.position', 'ASC');
+        return $this->getQueryBuilder()->orderBy('s.position, s.id', 'ASC');
     }
 
     /**
@@ -95,15 +95,23 @@ class StoreRepository
 
     /**
      * @param int $domainId
+     * @param int|null $limit
+     * @param int|null $offset
      * @return \App\Model\Store\Store[]
      */
-    public function getStoresEnabledOnDomain(int $domainId): array
+    public function getStoresEnabledOnDomain(int $domainId, ?int $limit = null, ?int $offset = null): array
     {
-        return $this->getQueryBuilder()
+        $queryBuilder = $this->getAllStoresQueryBuilder()
             ->join(StoreDomain::class, 'sd', Join::WITH, 's.id = sd.store AND sd.isEnabled = TRUE AND sd.domainId = :domainId')
-            ->setParameter('domainId', $domainId)
-            ->getQuery()
-            ->execute();
+            ->setParameter('domainId', $domainId);
+        if ($limit !== null) {
+            $queryBuilder->setMaxResults($limit);
+        }
+        if ($offset !== null) {
+            $queryBuilder->setFirstResult($offset);
+        }
+
+        return $queryBuilder->getQuery()->execute();
     }
 
     /**
@@ -113,23 +121,6 @@ class StoreRepository
     public function findStoreByExternalId(string $externalId): ?Store
     {
         return $this->getStoreRepository()->findOneBy(['externalId' => $externalId]);
-    }
-
-    /**
-     * @param int $domainId
-     * @param int $limit
-     * @param int $offset
-     * @return \App\Model\Store\Store[]
-     */
-    public function getStoresListEnabledOnDomain(int $domainId, int $limit, int $offset): array
-    {
-        return $this->getQueryBuilder()
-            ->join(StoreDomain::class, 'sd', Join::WITH, 's.id = sd.store AND sd.isEnabled = TRUE AND sd.domainId = :domainId')
-            ->setParameter('domainId', $domainId)
-            ->setFirstResult($offset)
-            ->setMaxResults($limit)
-            ->getQuery()
-            ->execute();
     }
 
     /**
