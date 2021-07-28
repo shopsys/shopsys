@@ -22,7 +22,7 @@ function ShopsysCheckbox(props: InferProps<typeof ShopsysCheckbox.propTypes>): R
             <StyledShopsysCheckbox>
                 <input
                     /**
-                     * Registering the HTML checkbox element with the React Hook Form's Form Provider
+                     * @see https://react-hook-form.com/api/useform/register
                      */
                     {...register(props.name)}
                     {...props}
@@ -30,27 +30,18 @@ function ShopsysCheckbox(props: InferProps<typeof ShopsysCheckbox.propTypes>): R
                 />
                 <label htmlFor={props.id}>
                     {props.label}
-                    {/**
-                     * The star for required HTML checkbox elements
-                     */}
                     {props.required && <StyledShopsysRequiredSymbol>*</StyledShopsysRequiredSymbol>}
                 </label>
             </StyledShopsysCheckbox>
-            {/**
-             * Error section which is displayed or hidden based on the error fields list
-             * and touched fields list
-             */}
             {formState.errors[props.name] && (
                 <StyledShopsysFormFieldError>
                     <StyledShopsysErrorIcon src="/svg/cross.svg" />
+                    {/**
+                     * @see https://react-hook-form.com/api/useformstate/errormessage
+                     */}
                     <ErrorMessage
                         errors={formState.errors}
                         name={props.name}
-                        /**
-                         * We get object {message, messages} as an argument of the render method in ErrorMessage component
-                         * These messages are the result of validation resolver defined on the form itself
-                         * To display single message, we can destructure the object
-                         */
                         render={({ message }) => <StyledShopsysErrorMessage>{message}</StyledShopsysErrorMessage>}
                     />
                 </StyledShopsysFormFieldError>

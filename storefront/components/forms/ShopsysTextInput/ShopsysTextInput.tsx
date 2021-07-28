@@ -20,10 +20,6 @@ function ShopsysTextInput(props: InferProps<typeof ShopsysTextInput.propTypes>):
     const [inputState, setInputState] = useState<string | undefined>(undefined);
     const [inputType, setInputType] = useState(props.type);
 
-    /**
-     * onClick handler which toggles the type of the HTML Input element
-     * between text and password to allow user to display his password
-     */
     const togglePasswordVisibilityHandler = () => {
         inputType === 'text' ? setInputType('password') : setInputType('text');
     };
@@ -37,7 +33,7 @@ function ShopsysTextInput(props: InferProps<typeof ShopsysTextInput.propTypes>):
             <StyledShopsysTextInput inputState={inputState}>
                 <input
                     /**
-                     * Registering the HTML input element with the React Hook Form Form Provider
+                     * @see https://react-hook-form.com/api/useform/register
                      */
                     {...register(props.name)}
                     name={props.name}
@@ -47,9 +43,6 @@ function ShopsysTextInput(props: InferProps<typeof ShopsysTextInput.propTypes>):
                     type={inputType}
                     placeholder={props.label}
                 />
-                {/**
-                 * The eye icon for HTML input elements of type password
-                 */}
                 {props.type === 'password' && (
                     <StyledShopsysPasswordVisibilityToggle
                         src="/svg/eye.svg"
@@ -59,27 +52,18 @@ function ShopsysTextInput(props: InferProps<typeof ShopsysTextInput.propTypes>):
                 )}
                 <label htmlFor={props.id}>
                     {props.label}
-                    {/**
-                     * The star for required HTML input elements
-                     */}
                     {props.required && <StyledShopsysRequiredSymbol>*</StyledShopsysRequiredSymbol>}
                 </label>
             </StyledShopsysTextInput>
-            {/**
-             * Error section which is displayed or hidden based on the error fields list
-             * and touched fields list
-             */}
             {formState.errors[props.name] && (
                 <StyledShopsysFormFieldError>
                     <StyledShopsysErrorIcon src="/svg/cross.svg" />
+                    {/**
+                     * @see https://react-hook-form.com/api/useformstate/errormessage
+                     */}
                     <ErrorMessage
                         errors={formState.errors}
                         name={props.name}
-                        /**
-                         * We get object {message, messages} as an argument of the render method in ErrorMessage component
-                         * These messages are the result of validation resolver defined on the form itself
-                         * To display single message, we can destructure the object
-                         */
                         render={({ message }) => <StyledShopsysErrorMessage>{message}</StyledShopsysErrorMessage>}
                     />
                 </StyledShopsysFormFieldError>
