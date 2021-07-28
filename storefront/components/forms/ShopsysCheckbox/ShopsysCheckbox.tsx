@@ -1,3 +1,4 @@
+import PropTypes, { InferProps } from 'prop-types';
 import {
     StyledShopsysCheckbox,
     StyledShopsysChoiceFormLine,
@@ -5,30 +6,27 @@ import {
     StyledShopsysErrorMessage,
     StyledShopsysFormFieldError,
     StyledShopsysRequiredSymbol,
-} from './ShopsysCheckbox.style.js';
+} from './ShopsysCheckbox.style';
 import { ErrorMessage } from '@hookform/error-message';
-import PropTypes from 'prop-types';
+import { ReactElement } from 'react';
 import { useFormContext } from 'react-hook-form';
 
 /**
  * An HTML Checkbox element of type checkbox
  */
-const ShopsysCheckbox = (props) => {
+function ShopsysCheckbox(props: InferProps<typeof ShopsysCheckbox.propTypes>): ReactElement {
     const { register, formState } = useFormContext();
 
     return (
         <StyledShopsysChoiceFormLine>
             <StyledShopsysCheckbox>
                 <input
-                    id={props.id}
-                    type="checkbox"
-                    name={props.name}
-                    required={props.required}
-                    disabled={props.disabled}
                     /**
                      * Registering the HTML checkbox element with the React Hook Form's Form Provider
                      */
                     {...register(props.name)}
+                    {...props}
+                    type="checkbox"
                 />
                 <label htmlFor={props.id}>
                     {props.label}
@@ -42,7 +40,7 @@ const ShopsysCheckbox = (props) => {
              * Error section which is displayed or hidden based on the error fields list
              * and touched fields list
              */}
-            {formState.errors[props.name] && formState.touchedFields[props.name] && (
+            {formState.errors[props.name] && (
                 <StyledShopsysFormFieldError>
                     <StyledShopsysErrorIcon src="/svg/cross.svg" />
                     <ErrorMessage
@@ -59,7 +57,7 @@ const ShopsysCheckbox = (props) => {
             )}
         </StyledShopsysChoiceFormLine>
     );
-};
+}
 
 ShopsysCheckbox.defaultProps = {
     disabled: false,
@@ -78,15 +76,15 @@ ShopsysCheckbox.propTypes = {
     /**
      * Display Label of the HTML checkbox element
      */
-    label: PropTypes.oneOfType([PropTypes.string.isRequired, PropTypes.object.isRequired]),
+    label: PropTypes.oneOfType([PropTypes.string.isRequired, PropTypes.arrayOf(PropTypes.node), PropTypes.node]),
     /**
      * A prop to define if the HTML checkbox element is disabled
      */
-    disabled: PropTypes.bool,
+    disabled: PropTypes.bool.isRequired,
     /**
      * A prop to define if the HTML checkbox element is required
      */
-    required: PropTypes.bool,
+    required: PropTypes.bool.isRequired,
 };
 
 /* @component */

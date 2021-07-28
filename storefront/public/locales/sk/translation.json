@@ -20,5 +20,12 @@
     "Selected disabled": "Vybraný zakázaný",
     "Unselected disabled": "Nevybraný zakázaný",
     "Selected with image": "Vybraný s obrázkom",
-    "Unselected with image": "Nevybraný s obrázkom"
+    "Unselected with image": "Nevybraný s obrázkom",
+    "HTML content field is required": "Pole \"HTML obsah\" je povinné",
+    "You have to agree with sharing your HTML content": "Musíte súhlasiť so zdieľaním vášho HTML obsahu",
+    "Hello, world!": "Ahoj, svet!",
+    "Just some random text": "Iba nejaký náhodný text",
+    "HTML content": "HTML obsah",
+    "Do you agree with sharing your HTML content": "Súhlasíte so zdieľaním vášho HTML obsahu",
+    "Render raw HTML": "Vykresľiť HTML"
 }

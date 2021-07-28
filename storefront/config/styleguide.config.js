@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 const { version } = require('../package.json');
 const path = require('path');
 
@@ -11,11 +12,11 @@ module.exports = {
         favicon: 'https://www.shopsys.com/favicon.ico',
     },
     styleguideComponents: {
-        Wrapper: path.join(__dirname, '../components/SsfwGlobalProvider'),
+        Wrapper: path.join(__dirname, '../components/ShopsysGlobalProvider'),
     },
-    propsParser(filePath, source, resolver, handlers) {
-        return require('react-docgen').parse(source, resolver, handlers);
-    },
+    propsParser: require('react-docgen-typescript').withCustomConfig('./tsconfig.json', {
+        compilerOptions: { noEmit: false },
+    }).parse,
     resolver: require('react-docgen').resolver.findAllComponentDefinitions,
     sections: [
         {
@@ -39,6 +40,10 @@ module.exports = {
                     content: '../docs/styled-components.md',
                 },
                 {
+                    name: 'TypeScript',
+                    content: '../docs/typescript.md',
+                },
+                {
                     name: 'Basic principles',
                     content: '../docs/basic-principles.md',
                 },
@@ -51,15 +56,15 @@ module.exports = {
         {
             name: 'UI Components',
             content: '../docs/components.md',
-            components: '../components/**/*.js',
-            ignore: ['../components/**/*.style.js', '../components/**/index.js'],
+            components: '../components/**/*.{tsx,js}',
+            ignore: ['../components/**/*.style.{ts,js}', '../components/**/index.{ts,js}'],
         },
     ],
     webpackConfig: {
         module: {
             rules: [
                 {
-                    test: /\.jsx?$/,
+                    test: /\.tsx?$/,
                     exclude: /node_modules/,
                     loader: 'babel-loader',
                 },

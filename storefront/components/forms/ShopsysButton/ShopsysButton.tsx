@@ -1,10 +1,7 @@
-import {
-    StyledShopsysButton,
-    StyledShopsysButtonPrimary,
-    StyledShopsysButtonSecondary,
-} from './ShopsysButton.style.js';
-import PropTypes from 'prop-types';
-import React from 'react';
+import PropTypes, { InferProps } from 'prop-types';
+import { ReactElement, ReactNode } from 'react';
+import { StyledShopsysButton, StyledShopsysButtonPrimary, StyledShopsysButtonSecondary } from './ShopsysButton.style';
+import { CSSProperties } from 'styled-components';
 
 /**
  * Global component for Buttons.
@@ -12,7 +9,13 @@ import React from 'react';
  * This method is used because we want to take advantage of the benefits of critical CSS and for that, it is necessary to have a styled-component element for each modification.
  * We can also combine variants and sizes.
  */
-const ShopsysButton = (props) => {
+type nativeProps = {
+    children: ReactNode;
+    onClick?: React.MouseEventHandler<HTMLButtonElement>;
+    style?: CSSProperties;
+};
+
+function ShopsysButton(props: InferProps<typeof ShopsysButton.propTypes> & nativeProps): ReactElement {
     let Component = StyledShopsysButton;
 
     if (props.variant === 'primary') {
@@ -21,15 +24,13 @@ const ShopsysButton = (props) => {
         Component = StyledShopsysButtonSecondary;
     }
 
-    return (
-        <Component type={props.type} name={props.name} {...props}>
-            {props.children}
-        </Component>
-    );
-};
+    return <Component {...props}>{props.children}</Component>;
+}
 
 ShopsysButton.defaultProps = {
     type: 'button',
+    variant: 'default',
+    size: 'default',
 };
 
 ShopsysButton.propTypes = {
@@ -40,15 +41,15 @@ ShopsysButton.propTypes = {
     /**
      * Type for change input type button/submit etc.
      */
-    type: PropTypes.string,
+    type: PropTypes.oneOf<'button' | 'submit'>(['button', 'submit']).isRequired,
     /**
      * Type for change variant of button. If you don't fill this prop then the button will be in default modification.
      */
-    variant: PropTypes.oneOf(['primary', 'secondary']),
+    variant: PropTypes.oneOf<'default' | 'primary' | 'secondary'>(['default', 'primary', 'secondary']).isRequired,
     /**
      * Type for change size of button. If you don't fill this prop then the button will be in default size.
      */
-    size: PropTypes.oneOf(['small']),
+    size: PropTypes.oneOf<'default' | 'small'>(['default', 'small']).isRequired,
 };
 
 /* @component */

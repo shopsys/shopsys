@@ -20,5 +20,12 @@
     "Selected disabled": "Selected disabled",
     "Unselected disabled": "Unselected disabled",
     "Selected with image": "Selected with image",
-    "Unselected with image": "Unselected with image"
+    "Unselected with image": "Unselected with image",
+    "HTML content field is required": "HTML content field is required",
+    "You have to agree with sharing your HTML content": "You have to agree with sharing your HTML content",
+    "Hello, world!": "Hello, world!",
+    "Just some random text": "Just some random text",
+    "HTML content": "HTML content",
+    "Do you agree with sharing your HTML content": "Do you agree with sharing your HTML content",
+    "Render raw HTML": "Render raw HTML"
 }

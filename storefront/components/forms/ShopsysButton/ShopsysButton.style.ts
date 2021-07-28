@@ -1,4 +1,10 @@
-import styled, { css } from 'styled-components';
+import styled, { css, DefaultTheme } from 'styled-components';
+
+type StyledShopsysButtonSize = 'default' | 'small';
+
+type StyledShopsysButtonProps = {
+    size: StyledShopsysButtonSize;
+};
 
 const localVariables = {
     btnPaddingVertical: '10px',
@@ -8,9 +14,9 @@ const localVariables = {
     btnPrimaryBackgroundColorHover: '#3b4cfc', // darken version of theme.color.primary
 };
 
-const getSize = (size, theme) => {
+const getSize = (size: StyledShopsysButtonSize, theme: DefaultTheme) => {
     switch (size) {
-        default:
+        case 'default':
             return `
                 padding: ${localVariables.btnPaddingVertical} ${localVariables.btnPaddingHorizontal};
                 min-height: ${theme.btnHeight};
@@ -29,7 +35,7 @@ const getSize = (size, theme) => {
     }
 };
 
-export const StyledShopsysButton = styled.button`
+export const StyledShopsysButton = styled.button<StyledShopsysButtonProps>`
     ${({ size, theme }) => css`
         ${getSize(size, theme)};
         width: auto;

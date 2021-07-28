@@ -1,32 +1,29 @@
+import PropTypes, { InferProps } from 'prop-types';
 import {
     StyledShopsysChoiceFormLine,
     StyledShopsysRadiobutton,
     StyledShopsysRadiobuttonImage,
     StyledShopsysRadiobuttonLabel,
-} from './ShopsysRadiobutton.style.js';
-import PropTypes from 'prop-types';
-import React from 'react';
+} from './ShopsysRadiobutton.style';
+import { ReactElement } from 'react';
 import { useFormContext } from 'react-hook-form';
 
 /**
  * An HTML Radiobutton element of type radiobutton
  */
-const ShopsysRadiobutton = (props) => {
+function ShopsysRadiobutton(props: InferProps<typeof ShopsysRadiobutton.propTypes>): ReactElement {
     const { register } = useFormContext();
 
     return (
         <StyledShopsysChoiceFormLine>
             <StyledShopsysRadiobutton>
                 <input
-                    id={props.id}
-                    type="radio"
-                    name={props.name}
-                    disabled={props.disabled}
-                    value={props.value}
                     /**
                      * Registering the HTML radiobutton element with the React Hook Form Form Provider
                      */
                     {...register(props.name)}
+                    {...props}
+                    type="radio"
                 />
                 <StyledShopsysRadiobuttonLabel>
                     {props.image && <StyledShopsysRadiobuttonImage alt="" src={props.image} />}
@@ -35,7 +32,7 @@ const ShopsysRadiobutton = (props) => {
             </StyledShopsysRadiobutton>
         </StyledShopsysChoiceFormLine>
     );
-};
+}
 
 ShopsysRadiobutton.defaultProps = {
     disabled: false,
@@ -58,11 +55,11 @@ ShopsysRadiobutton.propTypes = {
     /**
      * Display Label of the HTML radiobutton element
      */
-    label: PropTypes.oneOfType([PropTypes.string.isRequired, PropTypes.object.isRequired]),
+    label: PropTypes.oneOfType([PropTypes.string.isRequired, PropTypes.arrayOf(PropTypes.node), PropTypes.node]),
     /**
      * A prop to define if the HTML radiobutton element is disabled
      */
-    disabled: PropTypes.bool,
+    disabled: PropTypes.bool.isRequired,
     /**
      * A prop which, if present, provides a URL for an image
      * which then gets rendered next to the label

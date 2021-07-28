@@ -3,12 +3,23 @@
         "browser": true,
         "es2021": true
     },
-    "ignorePatterns": ["node_modules/*", ".next/*", "public/*", "!.prettierrc.js", "coverage/*", "generated/*", "*/__tests__/*"],
+    "ignorePatterns": [
+        "node_modules/*",
+        ".next/*",
+        "public/*",
+        "!.prettierrc.js",
+        "coverage/*",
+        "generated/*",
+        "*/__tests__/*"
+    ],
     "extends": [
         "eslint:recommended",
         "plugin:react/recommended",
-        "plugin:prettier/recommended"
+        "plugin:prettier/recommended",
+        "plugin:@typescript-eslint/eslint-recommended",
+        "plugin:@typescript-eslint/recommended"
     ],
+    "parser": "@typescript-eslint/parser",
     "parserOptions": {
         "ecmaFeatures": {
             "jsx": true
@@ -16,11 +27,7 @@
         "ecmaVersion": 12,
         "sourceType": "module"
     },
-    "plugins": [
-        "react",
-        "unused-imports",
-        "prettier"
-    ],
+    "plugins": ["react", "unused-imports", "prettier", "@typescript-eslint"],
     "rules": {
         "prettier/prettier": "error",
         "padded-blocks": "off",
@@ -36,7 +43,7 @@
         "react/require-default-props": "off",
         "react/prop-types": "off",
         "unused-imports/no-unused-imports": "error",
-        "sort-imports":["error", {"ignoreCase": true}]
+        "sort-imports": ["error", { "ignoreCase": true }]
     },
     "settings": {
         "react": {

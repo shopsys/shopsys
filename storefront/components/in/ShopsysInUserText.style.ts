@@ -10,7 +10,7 @@ const styleVariables = {
     inUserTextLineHeight: '1.6',
 };
 
-export const ShopsysInUserTextStyled = styled.section`
+export const StyledShopsysInUserText = styled.section`
     font-size: ${styleVariables.inUserTextFontSize};
     line-height: ${styleVariables.inUserTextLineHeight};
     -webkit-font-smoothing: antialiased;
@@ -89,10 +89,5 @@ export const ShopsysInUserTextStyled = styled.section`
         display: block;
         height: auto;
         border-radius: ${(props) => props.theme.radius.default};
-    }
-
-    &.static-page {
-        font-size: ${(props) => props.theme.fontSize.default};
-        line-height: 1.8;
     }
 `;
