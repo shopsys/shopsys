@@ -14,8 +14,8 @@
     ],
     "extends": [
         "eslint:recommended",
-        "plugin:react/recommended",
         "plugin:prettier/recommended",
+        "plugin:react/recommended",
         "plugin:@typescript-eslint/eslint-recommended",
         "plugin:@typescript-eslint/recommended"
     ],
@@ -29,21 +29,21 @@
     },
     "plugins": ["react", "unused-imports", "prettier", "@typescript-eslint"],
     "rules": {
-        "prettier/prettier": "error",
-        "padded-blocks": "off",
-        "no-undef": "off",
-        "no-multi-str": "off",
-        "no-redeclare": "off",
         "eqeqeq": "off",
-        "no-eval": "off",
-        "no-new": "off",
         "import/no-named-default": "off",
-        "react/react-in-jsx-scope": "off",
+        "no-eval": "off",
+        "no-multi-str": "off",
+        "no-new": "off",
+        "no-redeclare": "off",
+        "no-undef": "off",
+        "padded-blocks": "off",
+        "prettier/prettier": "error",
         "react/jsx-props-no-spreading": "off",
-        "react/require-default-props": "off",
         "react/prop-types": "off",
-        "unused-imports/no-unused-imports": "error",
-        "sort-imports": ["error", { "ignoreCase": true }]
+        "react/react-in-jsx-scope": "off",
+        "react/require-default-props": "off",
+        "sort-imports": ["error", { "ignoreCase": true }],
+        "unused-imports/no-unused-imports": "error"
     },
     "settings": {
         "react": {
