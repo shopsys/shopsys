@@ -37,6 +37,11 @@ services:
             - ./storefront:/app
         ports:
             - "3000:3000"
+        healthcheck:
+            test: ["CMD", "curl", "-f", "http://127.0.0.1:3000"]
+            interval: 5s
+            timeout: 5s
+            retries: 10
 
     storefront-styleguide:
         build:
@@ -44,6 +49,9 @@ services:
             dockerfile: ./docker/styleguide/Dockerfile
             target: development
         container_name: shopsys-framework-storefront-styleguide
+        depends_on:
+            storefront:
+                condition: service_healthy
         volumes:
             - ./storefront:/app
         ports:

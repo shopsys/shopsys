@@ -5,6 +5,8 @@ WORKDIR /app
 #=====================================================================
 FROM base as development
 
+RUN apk --no-cache add curl
+
 CMD npm install --legacy-peer-deps && npm run dev
 
 #=====================================================================
