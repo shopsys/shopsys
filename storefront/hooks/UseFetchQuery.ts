@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { CombinedError, useQuery, UseQueryArgs, UseQueryState } from 'urql';
 import { useContext, useEffect } from 'react';
-import { SsfwGlobalErrorContext } from '../components/SsfwGlobalErrorProvider/SsfwGlobalErrorProvider';
+import { ShopsysGlobalErrorContext } from '../components/ShopsysGlobalErrorProvider/ShopsysGlobalErrorProvider';
 import { TFunction } from 'i18next';
 import { useTranslation } from 'react-i18next';
 
@@ -14,7 +14,7 @@ type ShopsysUseQueryState = UseQueryState & { parsedErrors: ParsedErrors };
 
 export const useFetchQuery = (query: UseQueryArgs): ShopsysUseQueryState => {
     const { t } = useTranslation();
-    const { state, setState } = useContext(SsfwGlobalErrorContext);
+    const { state, setState } = useContext(ShopsysGlobalErrorContext);
     const result: ShopsysUseQueryState = {
         ...useQuery(query)[0],
         parsedErrors: {

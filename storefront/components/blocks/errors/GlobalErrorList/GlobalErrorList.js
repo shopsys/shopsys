@@ -1,10 +1,10 @@
-import { SsfwGlobalErrorContext } from '../../../SsfwGlobalErrorProvider/SsfwGlobalErrorProvider';
+import { ShopsysGlobalErrorContext } from '../../../ShopsysGlobalErrorProvider/ShopsysGlobalErrorProvider';
 import { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 
 export const GlobalErrorList = () => {
     const { t } = useTranslation();
-    const { state } = useContext(SsfwGlobalErrorContext);
+    const { state } = useContext(ShopsysGlobalErrorContext);
     const errors = state;
 
     if (errors && errors.length > 0) {
