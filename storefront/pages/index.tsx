@@ -1,11 +1,12 @@
 import * as Yup from 'yup';
 import { cacheExchange, dedupExchange, fetchExchange, ssrExchange } from 'urql';
-import { initUrqlClient, withUrqlClient } from 'next-urql';
 import { FC, useState } from 'react';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
+import { initUrqlClient, withUrqlClient } from 'next-urql';
 import getConfig from 'next/config';
 import { GetServerSideProps } from 'next';
 import PromotedCategories from '../components/blocks/categories/PromotedCategories/PromotedCategories';
+import { promotedCategoriesQuery } from '../connectors/categories/PromotedCategories';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import ShopsysButton from 'components/forms/ShopsysButton';
 import ShopsysCheckbox from 'components/forms/ShopsysCheckbox';
@@ -13,7 +14,6 @@ import ShopsysInUserText from 'components/in/ShopsysInUserText';
 import ShopsysTextInput from 'components/forms/ShopsysTextInput';
 import { useTranslation } from 'react-i18next';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { promotedCategoriesQueryObject } from '../connectors/categories/PromotedCategories';
 
 type FormValues = {
     htmlContent: string;
@@ -150,9 +150,9 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
     let serversideTranslationConfig;
 
-    if (context.defaultLocale && client !== null) {
+    if (context.defaultLocale !== undefined && client !== null) {
         serversideTranslationConfig = await serverSideTranslations(context.defaultLocale);
-        await client.query(promotedCategoriesQueryObject).toPromise();
+        await client.query(promotedCategoriesQuery).toPromise();
 
         return {
             props: {

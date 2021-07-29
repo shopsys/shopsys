@@ -1,35 +1,49 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { CombinedError, useQuery, UseQueryArgs, UseQueryState } from 'urql';
 import { useContext, useEffect } from 'react';
 import { SsfwGlobalErrorContext } from '../components/SsfwGlobalErrorProvider/SsfwGlobalErrorProvider';
-import { useQuery } from 'urql';
+import { TFunction } from 'i18next';
 import { useTranslation } from 'react-i18next';
 
-export const useFetchQuery = (query) => {
+type ParsedErrors = {
+    applicationError: undefined | string;
+    userError: undefined | any;
+};
+
+type ShopsysUseQueryState = UseQueryState & { parsedErrors: ParsedErrors };
+
+export const useFetchQuery = (query: UseQueryArgs): ShopsysUseQueryState => {
     const { t } = useTranslation();
     const { state, setState } = useContext(SsfwGlobalErrorContext);
-    const [result] = useQuery(query);
+    const result: ShopsysUseQueryState = {
+        ...useQuery(query)[0],
+        parsedErrors: {
+            applicationError: undefined,
+            userError: undefined,
+        },
+    };
 
     useEffect(() => {
-        result.parsedErrors = undefined;
-        if (!result.error) {
+        if (result.error === undefined) {
             return;
         }
 
-        const parsedErrors = getUserFriendlyErrorMessage(result.error, t);
-        result.parsedErrors = parsedErrors;
+        result.parsedErrors = getUserFriendlyErrorMessage(result.error, t);
 
-        if (!parsedErrors.applicationError) {
+        if (result.parsedErrors.applicationError === undefined) {
             return;
         }
 
         const stateErrors = [...state];
-        stateErrors.push(parsedErrors.applicationError);
+        stateErrors.push(result.parsedErrors.applicationError);
         setState(stateErrors);
     }, [result.fetching]);
+
     return result;
 };
 
-const getUserFriendlyErrorMessage = (originalError, t) => {
-    let errors = {
+const getUserFriendlyErrorMessage = (originalError: CombinedError, t: TFunction) => {
+    const errors: ParsedErrors = {
         applicationError: undefined,
         userError: undefined,
     };
