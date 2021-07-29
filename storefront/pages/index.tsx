@@ -1,15 +1,14 @@
 import * as Yup from 'yup';
 import { FC, useState } from 'react';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
-import getConfig from 'next/config';
+import { GetServerSideProps } from 'next';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import ShopsysButton from 'components/forms/ShopsysButton';
 import ShopsysCheckbox from 'components/forms/ShopsysCheckbox';
 import ShopsysInUserText from 'components/in/ShopsysInUserText';
 import ShopsysTextInput from 'components/forms/ShopsysTextInput';
 import { useTranslation } from 'react-i18next';
-import { withUrqlClient } from 'next-urql';
 import { yupResolver } from '@hookform/resolvers/yup';
-const { publicRuntimeConfig } = getConfig();
 
 type FormValues = {
     htmlContent: string;
@@ -17,7 +16,7 @@ type FormValues = {
 };
 
 const Index: FC = () => {
-    const { t, i18n } = useTranslation();
+    const { t } = useTranslation();
     const [rawHtml, setRawHtml] = useState<string | undefined>(undefined);
     const formProviderMethods = useForm<FormValues>({
         mode: 'all',
@@ -48,41 +47,6 @@ const Index: FC = () => {
                 }}
             >
                 <div>
-                    <div>
-                        <ShopsysButton
-                            style={{ margin: '5px' }}
-                            size="small"
-                            variant="primary"
-                            name="buttonEN"
-                            onClick={() => {
-                                i18n.changeLanguage('en');
-                            }}
-                        >
-                            EN
-                        </ShopsysButton>
-                        <ShopsysButton
-                            style={{ margin: '5px' }}
-                            size="small"
-                            variant="primary"
-                            name="buttonCS"
-                            onClick={() => {
-                                i18n.changeLanguage('cs');
-                            }}
-                        >
-                            CS
-                        </ShopsysButton>
-                        <ShopsysButton
-                            style={{ margin: '5px' }}
-                            size="small"
-                            variant="primary"
-                            name="buttonSK"
-                            onClick={() => {
-                                i18n.changeLanguage('sk');
-                            }}
-                        >
-                            SK
-                        </ShopsysButton>
-                    </div>
                     <ShopsysButton
                         style={{ margin: '5px' }}
                         size="small"
@@ -165,9 +129,19 @@ const Index: FC = () => {
     );
 };
 
-export default withUrqlClient(
-    () => ({
-        url: publicRuntimeConfig.publicGraphqlEndpoint,
-    }),
-    { ssr: true },
-)(Index);
+export const getServerSideProps: GetServerSideProps = async (context) => {
+    let serversideTranslationConfig;
+
+    if (context.defaultLocale) {
+        serversideTranslationConfig = await serverSideTranslations(context.defaultLocale);
+        return {
+            props: {
+                ...serversideTranslationConfig,
+            },
+        };
+    } else {
+        return { props: {} };
+    }
+};
+
+export default Index;
