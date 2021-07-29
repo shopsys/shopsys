@@ -50,7 +50,7 @@ class ProductDetailView extends BaseProductDetailView
     /**
      * @var string
      */
-    public string $availableStocksCountInformation;
+    public string $availableStoresCountInformation;
 
     /**
      * @var string
@@ -58,9 +58,9 @@ class ProductDetailView extends BaseProductDetailView
     public string $countExposedInStores;
 
     /**
-     * @var \App\Model\Product\Availability\ProductStockAvailabilityInformation[]
+     * @var \App\Model\Product\Availability\ProductStoreAvailabilityInformation[]
      */
-    public array $stocksAvailabilitiesInformation;
+    public array $storeAvailabilitiesInformation;
 
     /**
      * @var \App\Model\Category\Listed\CategoryView[]

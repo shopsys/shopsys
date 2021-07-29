@@ -4,7 +4,10 @@ declare(strict_types=1);
 
 namespace App\Model\Customer\User;
 
+use Shopsys\FrameworkBundle\Component\Utils\Utils;
 use Shopsys\FrameworkBundle\Model\Customer\BillingAddress;
+use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateData;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactory as BaseCustomerUserUpdateDataFactory;
 use Shopsys\FrameworkBundle\Model\Order\Order;
@@ -44,6 +47,44 @@ class CustomerUserUpdateDataFactory extends BaseCustomerUserUpdateDataFactory
         $customerUserUpdateData->billingAddressData = $billingAddressData;
         $customerUserUpdateData->customerUserData = $customerUserData;
         $customerUserUpdateData->sendRegistrationMail = $registrationData->activated;
+
+        return $customerUserUpdateData;
+    }
+
+    /**
+     * @param \App\Model\Customer\User\CustomerUser $customerUser
+     * @param \App\Model\Order\Order $order
+     * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress|null $deliveryAddress
+     * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateData
+     */
+    public function createAmendedByOrder(CustomerUser $customerUser, Order $order, ?DeliveryAddress $deliveryAddress): CustomerUserUpdateData
+    {
+        /** @var \App\Model\Customer\BillingAddress $billingAddress */
+        $billingAddress = $customerUser->getCustomer()->getBillingAddress();
+
+        $customerUserUpdateData = $this->createFromCustomerUser($customerUser);
+
+        $customerUserUpdateData->customerUserData->firstName = Utils::ifNull(
+            $customerUser->getFirstName(),
+            $order->getFirstName()
+        );
+        $customerUserUpdateData->customerUserData->lastName = Utils::ifNull(
+            $customerUser->getLastName(),
+            $order->getLastName()
+        );
+        $customerUserUpdateData->billingAddressData = $this->getAmendedBillingAddressDataByOrder(
+            $order,
+            $billingAddress
+        );
+
+        /** @var \App\Model\Transport\Transport $transport */
+        $transport = $order->getTransport();
+        if (!$transport->isPersonalPickup()) {
+            $customerUserUpdateData->deliveryAddressData = $this->getAmendedDeliveryAddressDataByOrder(
+                $order,
+                $deliveryAddress
+            );
+        }
 
         return $customerUserUpdateData;
     }

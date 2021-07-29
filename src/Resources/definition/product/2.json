@@ -367,19 +367,19 @@
       "is_sale_exclusion": {
         "type": "boolean"
       },
-      "product_available_stocks_count_information": {
+      "product_available_stores_count_information": {
         "type": "text"
       },
       "product_count_exposed_in_stores": {
         "type": "text"
       },
-      "stock_availabilities_information": {
+      "store_availabilities_information": {
         "type": "nested",
         "properties": {
-          "stock_name": {
+          "store_name": {
             "type": "text"
           },
-          "stock_id": {
+          "store_id": {
             "type": "integer"
           },
           "availability_information": {

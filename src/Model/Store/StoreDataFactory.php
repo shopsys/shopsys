@@ -38,7 +38,10 @@ class StoreDataFactory
         $storeData->isDefault = $store->isDefault();
         $storeData->description = $store->getDescription();
         $storeData->externalId = $store->getExternalId();
-        $storeData->address = $store->getAddress();
+        $storeData->street = $store->getStreet();
+        $storeData->city = $store->getCity();
+        $storeData->postcode = $store->getPostcode();
+        $storeData->country = $store->getCountry();
         $storeData->openingHours = $store->getOpeningHours();
         $storeData->contactInfo = $store->getContactInfo();
         $storeData->specialMessage = $store->getSpecialMessage();

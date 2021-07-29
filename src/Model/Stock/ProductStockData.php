@@ -17,11 +17,6 @@ class ProductStockData
     public $productQuantity;
 
     /**
-     * @var bool|null
-     */
-    public $productExposed;
-
-    /**
      * @var string|null
      */
     public $name;
@@ -29,6 +24,5 @@ class ProductStockData
     public function __construct()
     {
         $this->productQuantity = 0;
-        $this->productExposed = false;
     }
 }

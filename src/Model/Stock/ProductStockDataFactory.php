@@ -37,7 +37,6 @@ class ProductStockDataFactory
         $productStockData->name = $productStock->getStock()->getName();
         $productStockData->stockId = $productStock->getStock()->getId();
         $productStockData->productQuantity = $productStock->getProductQuantity();
-        $productStockData->productExposed = $productStock->isProductExposed();
 
         return $productStockData;
     }

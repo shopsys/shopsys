@@ -7,7 +7,7 @@ namespace App\Model\Order\Preview;
 use App\Model\Cart\CartFacade;
 use App\Model\Order\PromoCode\CurrentPromoCodeFacade;
 use App\Model\Order\PromoCode\PromoCodeLimitResolver;
-use App\Model\Stock\Stock;
+use App\Model\Store\Store;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
@@ -63,11 +63,13 @@ class OrderPreviewFactory extends BaseOrderPreviewFactory
     /**
      * @param \App\Model\Transport\Transport|null $transport
      * @param \App\Model\Payment\Payment|null $payment
+     * @param \App\Model\Store\Store|null $personalPickupStore
      * @return \App\Model\Order\Preview\OrderPreview
      */
     public function createForCurrentUser(
         ?Transport $transport = null,
-        ?Payment $payment = null
+        ?Payment $payment = null,
+        ?Store $personalPickupStore = null
     ): OrderPreview {
         $currency = $this->currencyFacade->getDomainDefaultCurrencyByDomainId($this->domain->getId());
         $validEnteredPromoCode = $this->currentPromoCodeFacade->getValidEnteredPromoCodeOrNull();
@@ -93,7 +95,8 @@ class OrderPreviewFactory extends BaseOrderPreviewFactory
             $transport,
             $payment,
             $currentCustomerUser,
-            $validEnteredPromoCodePercent
+            $validEnteredPromoCodePercent,
+            $personalPickupStore
         );
     }
 
@@ -105,7 +108,7 @@ class OrderPreviewFactory extends BaseOrderPreviewFactory
      * @param \App\Model\Payment\Payment|null $payment
      * @param \App\Model\Customer\User\CustomerUser|null $customerUser
      * @param string|null $promoCodeDiscountPercent
-     * @param \App\Model\Stock\Stock|null $personalPickupStock
+     * @param \App\Model\Store\Store|null $personalPickupStore
      * @return \App\Model\Order\Preview\OrderPreview
      */
     public function create(
@@ -116,7 +119,7 @@ class OrderPreviewFactory extends BaseOrderPreviewFactory
         ?Payment $payment = null,
         ?CustomerUser $customerUser = null,
         ?string $promoCodeDiscountPercent = null,
-        ?Stock $personalPickupStock = null
+        ?Store $personalPickupStore = null
     ): OrderPreview {
         return $this->orderPreviewCalculation->calculatePreview(
             $currency,
@@ -126,7 +129,7 @@ class OrderPreviewFactory extends BaseOrderPreviewFactory
             $payment,
             $customerUser,
             $promoCodeDiscountPercent,
-            $personalPickupStock
+            $personalPickupStore
         );
     }
 }

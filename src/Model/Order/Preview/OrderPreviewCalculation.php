@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Model\Order\Preview;
 
 use App\Model\Product\Availability\ProductAvailabilityFacade;
-use App\Model\Stock\Stock;
+use App\Model\Store\Store;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Order\OrderPriceCalculation;
@@ -77,7 +77,7 @@ class OrderPreviewCalculation extends BaseOrderPreviewCalculation
      * @param \App\Model\Payment\Payment|null $payment
      * @param \App\Model\Customer\User\CustomerUser|null $customerUser
      * @param string|null $promoCodeDiscountPercent
-     * @param \App\Model\Stock\Stock|null $personalPickupStock
+     * @param \App\Model\Store\Store|null $personalPickupStore
      * @return \App\Model\Order\Preview\OrderPreview
      */
     public function calculatePreview(
@@ -88,7 +88,7 @@ class OrderPreviewCalculation extends BaseOrderPreviewCalculation
         ?Payment $payment = null,
         ?CustomerUser $customerUser = null,
         ?string $promoCodeDiscountPercent = null,
-        ?Stock $personalPickupStock = null
+        ?Store $personalPickupStore = null
     ): BaseOrderPreview {
         $promoCodePerProduct = $this->currentPromoCodeFacade->getPromoCodePerProductByDomainId($quantifiedProducts, $domainId);
         $quantifiedItemsPrices = $this->quantifiedProductPriceCalculation->calculatePrices(
@@ -179,7 +179,7 @@ class OrderPreviewCalculation extends BaseOrderPreviewCalculation
             $paymentPrice,
             $roundingPrice,
             $promoCodeDiscountPercent,
-            $personalPickupStock,
+            $personalPickupStore,
             $restToFreeTransportPrice,
             $percentageOfFreeTransport,
             $transportForFree,

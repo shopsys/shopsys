@@ -117,6 +117,12 @@ class ProductTest extends GraphQlTestCase
                       anchorText
                       url
                     }
+                    storeAvailabilities {
+                        storeName
+                        exposed
+                        availabilityInformation
+                        availabilityStatus
+                    }
                 }
             }
         ';
@@ -311,6 +317,19 @@ class ProductTest extends GraphQlTestCase
                     'hasPreorder' => false,
                     'hasSaleExclusion' => false,
                     'files' => [],
+                    'storeAvailabilities' => [
+                        [
+                            'storeName' => 'Ostrava',
+                            'exposed' => true,
+                            'availabilityInformation' => '<strong class="is-in-stock">Ihned</strong> k odběru',
+                            'availabilityStatus' => 'in-stock',
+                        ], [
+                            'storeName' => 'Pardubice',
+                            'exposed' => false,
+                            'availabilityInformation' => 'K dispozici za týden',
+                            'availabilityStatus' => 'in-stock',
+                        ],
+                    ],
                 ],
             ],
         ];

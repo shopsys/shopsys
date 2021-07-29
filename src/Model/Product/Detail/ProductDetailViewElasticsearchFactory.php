@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Model\Product\Detail;
 
 use App\Model\Category\Listed\CategoryViewFacade;
-use App\Model\Product\Availability\ProductStockAvailabilityInformation;
+use App\Model\Product\Availability\ProductStoreAvailabilityInformation;
 use App\Model\Product\Parameter\ParameterValuesViewFactory;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
@@ -146,9 +146,9 @@ class ProductDetailViewElasticsearchFactory extends BaseProductDetailViewElastic
         $productDetailView->fullname = $this->getFullname($productArray);
         $productDetailView->usps = $productArray['usps'];
         $productDetailView->availabilityStatus = $productArray['availability_status'];
-        $productDetailView->availableStocksCountInformation = $productArray['product_available_stocks_count_information'];
+        $productDetailView->availableStoresCountInformation = $productArray['product_available_stores_count_information'];
         $productDetailView->countExposedInStores = $productArray['product_count_exposed_in_stores'];
-        $productDetailView->stocksAvailabilitiesInformation = $this->createProductStockAvailabilitiesInformationFromArray($productArray['stock_availabilities_information']);
+        $productDetailView->storeAvailabilitiesInformation = $this->createProductStoreAvailabilitiesInformationFromArray($productArray['store_availabilities_information']);
         $productDetailView->mainCategoryPath = $productArray['main_category_path'];
         $productDetailView->dimensionParameterViews = $this->parameterValuesViewFactory->getDimensionParametersFromArray($productArray['parameters']);
         $productDetailView->nonDimensionParameterViews = $this->parameterValuesViewFactory->getNonDimensionParametersFromArray($productArray['parameters']);
@@ -187,17 +187,17 @@ class ProductDetailViewElasticsearchFactory extends BaseProductDetailViewElastic
     }
 
     /**
-     * @param array $productStockAvailabilitiesInformationArray
-     * @return \App\Model\Product\Availability\ProductStockAvailabilityInformation[]
+     * @param array $productStoreAvailabilitiesInformationArray
+     * @return \App\Model\Product\Availability\ProductStoreAvailabilityInformation[]
      */
-    private function createProductStockAvailabilitiesInformationFromArray(array $productStockAvailabilitiesInformationArray): array
+    private function createProductStoreAvailabilitiesInformationFromArray(array $productStoreAvailabilitiesInformationArray): array
     {
         $result = [];
 
-        foreach ($productStockAvailabilitiesInformationArray as $item) {
-            $result[] = new ProductStockAvailabilityInformation(
-                $item['stock_name'],
-                $item['stock_id'],
+        foreach ($productStoreAvailabilitiesInformationArray as $item) {
+            $result[] = new ProductStoreAvailabilityInformation(
+                $item['store_name'],
+                $item['store_id'],
                 $item['availability_information'],
                 $item['exposed'],
                 $item['availability_status']

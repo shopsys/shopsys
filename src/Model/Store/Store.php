@@ -12,6 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Component\Grid\Ordering\OrderableEntityInterface;
+use Shopsys\FrameworkBundle\Model\Country\Country;
 
 /**
  * @ORM\Table(name="stores")
@@ -19,7 +20,7 @@ use Shopsys\FrameworkBundle\Component\Grid\Ordering\OrderableEntityInterface;
  */
 class Store implements OrderableEntityInterface
 {
-    private const GEDMO_SORTABLE_LAST_POSITION = 1;
+    private const GEDMO_SORTABLE_LAST_POSITION = -1;
 
     /**
      * @var int
@@ -73,10 +74,29 @@ class Store implements OrderableEntityInterface
     protected ?string $externalId;
 
     /**
-     * @var string|null
-     * @ORM\Column(type="text", nullable=true)
+     * @var string
+     * @ORM\Column(type="string", length=100)
      */
-    protected ?string $address;
+    protected string $street;
+
+    /**
+     * @var string
+     * @ORM\Column(type="string", length=100)
+     */
+    protected string $city;
+
+    /**
+     * @var string
+     * @ORM\Column(type="string", length=30)
+     */
+    protected string $postcode;
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Country\Country
+     * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Country\Country")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    protected Country $country;
 
     /**
      * @var string|null
@@ -146,7 +166,10 @@ class Store implements OrderableEntityInterface
         $this->stock = $storeData->stock;
         $this->description = $storeData->description;
         $this->externalId = $storeData->externalId;
-        $this->address = $storeData->address;
+        $this->street = $storeData->street;
+        $this->city = $storeData->city;
+        $this->postcode = $storeData->postcode;
+        $this->country = $storeData->country;
         $this->openingHours = $storeData->openingHours;
         $this->contactInfo = $storeData->contactInfo;
         $this->specialMessage = $storeData->specialMessage;
@@ -237,11 +260,35 @@ class Store implements OrderableEntityInterface
     }
 
     /**
-     * @return string|null
+     * @return string
      */
-    public function getAddress(): ?string
+    public function getStreet(): string
     {
-        return $this->address;
+        return $this->street;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCity(): string
+    {
+        return $this->city;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPostcode(): string
+    {
+        return $this->postcode;
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Country\Country
+     */
+    public function getCountry(): Country
+    {
+        return $this->country;
     }
 
     /**
@@ -291,6 +338,14 @@ class Store implements OrderableEntityInterface
     public function isEnabled(int $domainId): bool
     {
         return $this->getStoreDomain($domainId)->isEnabled();
+    }
+
+    /**
+     * @return \App\Model\Store\StoreDomain[]
+     */
+    public function getEnabledDomains(): array
+    {
+        return array_filter($this->domains->toArray(), static fn (StoreDomain $storeDomain) => $storeDomain->isEnabled());
     }
 
     /**

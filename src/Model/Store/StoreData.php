@@ -6,6 +6,7 @@ namespace App\Model\Store;
 
 use App\Model\Stock\Stock;
 use Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadData;
+use Shopsys\FrameworkBundle\Model\Country\Country;
 
 class StoreData
 {
@@ -21,7 +22,13 @@ class StoreData
 
     public ?string $externalId = null;
 
-    public ?string $address = null;
+    public ?string $street = null;
+
+    public ?string $city = null;
+
+    public ?string $postcode = null;
+
+    public ?Country $country = null;
 
     public ?string $openingHours = null;
 

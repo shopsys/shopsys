@@ -25,7 +25,7 @@ class ProductStockRepository
     }
 
     /**
-     * @return \App\Model\Stock\ProductStockRepository|\Doctrine\Common\Persistence\ObjectRepository
+     * @return \App\Model\Stock\ProductStockRepository|\Doctrine\Persistence\ObjectRepository
      */
     public function getProductStockRepository()
     {

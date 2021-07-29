@@ -4,44 +4,44 @@ declare(strict_types=1);
 
 namespace App\Model\Product\Availability;
 
-class ProductStockAvailabilityInformation
+class ProductStoreAvailabilityInformation
 {
     /**
      * @var string
      */
-    private $stockName;
+    private string $storeName;
 
     /**
      * @var int
      */
-    private int $stockId;
+    private int $storeId;
 
     /**
      * @var string
      */
-    private $availabilityInformation;
+    private string $availabilityInformation;
 
     /**
      * @var bool
      */
-    private $exposedProduct;
+    private bool $exposedProduct;
 
     /**
      * @var string
      */
-    private $availabilityStatus;
+    private string $availabilityStatus;
 
     /**
-     * @param string $stockName
-     * @param int $stockId
+     * @param string $storeName
+     * @param int $storeId
      * @param string $availabilityInformation
      * @param bool $exposedProduct
      * @param string $availabilityStatus
      */
-    public function __construct(string $stockName, int $stockId, string $availabilityInformation, bool $exposedProduct, string $availabilityStatus)
+    public function __construct(string $storeName, int $storeId, string $availabilityInformation, bool $exposedProduct, string $availabilityStatus)
     {
-        $this->stockName = $stockName;
-        $this->stockId = $stockId;
+        $this->storeName = $storeName;
+        $this->storeId = $storeId;
         $this->availabilityInformation = $availabilityInformation;
         $this->exposedProduct = $exposedProduct;
         $this->availabilityStatus = $availabilityStatus;
@@ -50,17 +50,17 @@ class ProductStockAvailabilityInformation
     /**
      * @return string
      */
-    public function getStockName(): string
+    public function getStoreName(): string
     {
-        return $this->stockName;
+        return $this->storeName;
     }
 
     /**
      * @return int
      */
-    public function getStockId(): int
+    public function getStoreId(): int
     {
-        return $this->stockId;
+        return $this->storeId;
     }
 
     /**

@@ -2,9 +2,9 @@ import Register from 'framework/common/utils/Register';
 import Translator from 'bazinga-translator';
 import Window from '../utils/Window';
 
-const PERSONAL_PICKUP_WINDOW_ID = '#js-order-transport-stocks';
+const PERSONAL_PICKUP_WINDOW_ID = '#js-order-transport-stores';
 const TRANSPORT_PERSONAL_PICKUP_CHECKBOX_CLASS = '.js-transport-personal-pickup-checkbox';
-const PERSONAL_PICKUP_STOCK_RADIO_CLASS = '.personal-pickup-stock';
+const PERSONAL_PICKUP_STORE_RADIO_CLASS = '.personal-pickup-store';
 
 export default class PersonalPickup {
 
@@ -16,9 +16,9 @@ export default class PersonalPickup {
         this.cleanPersonalPickupWindowRadioValues();
 
         const transportPersonalPickupHiddenId = '#' + $transportPersonalPickupCheckboxes.data('hidden-id');
-        const stockId = $(transportPersonalPickupHiddenId).val();
+        const storeId = $(transportPersonalPickupHiddenId).val();
 
-        if ($transportPersonalPickupCheckboxes.is(':checked') && stockId == 0) {
+        if ($transportPersonalPickupCheckboxes.is(':checked') && storeId == 0) {
             $transportPersonalPickupCheckboxes.prop('checked', false);
         }
 
@@ -49,8 +49,8 @@ export default class PersonalPickup {
     }
 
     cleanPersonalPickupWindowRadioValues () {
-        this.$personalPickupWindow.filterAllNodes(PERSONAL_PICKUP_STOCK_RADIO_CLASS).prop('checked', false);
-        $(PERSONAL_PICKUP_STOCK_RADIO_CLASS).click(function () {
+        this.$personalPickupWindow.filterAllNodes(PERSONAL_PICKUP_STORE_RADIO_CLASS).prop('checked', false);
+        $(PERSONAL_PICKUP_STORE_RADIO_CLASS).click(function () {
             $('.js-window-button-continue').removeClass('disabled');
         });
     }
@@ -63,33 +63,35 @@ export default class PersonalPickup {
         this.resetCurrentCheckboxToOrigin($transportCheckbox);
     }
 
-    savePersonalPickupStockId ($transportCheckbox, $window) {
+    savePersonalPickupStoreId ($transportCheckbox, $window) {
         if ($('.js-window-button-continue').hasClass('disabled')) {
             return false;
         }
 
         const transportPersonalPickupHiddenId = '#' + $transportCheckbox.data('hidden-id');
-        const $personalPickupStockRadio = $window.filterAllNodes(PERSONAL_PICKUP_STOCK_RADIO_CLASS + ':checked');
+        const $personalPickupStoreRadio = $window.filterAllNodes(PERSONAL_PICKUP_STORE_RADIO_CLASS + ':checked');
 
-        if ($personalPickupStockRadio.length === 0) {
+        if ($personalPickupStoreRadio.length === 0) {
             $transportCheckbox.prop('checked', false).change();
             this.resetPersonalPickupId($transportCheckbox);
             return;
         }
 
         $(transportPersonalPickupHiddenId)
-            .val($personalPickupStockRadio.val())
+            .val($personalPickupStoreRadio.val())
             .trigger('orderRememberData.littleDelayedSaveData');
 
-        const stockName = 'xxx';
-        const stockStreet = 'xxx';
-        const stockOpeningHours = 'xxx';
-        const stockAvailability = 'xxx';
-        const address = `<span id="js-pickup-info" class="js-not-implemented-yet">
-            ${stockName}, ${stockStreet} <br>
-            ${Translator.trans('Otevřeno')}: ${stockOpeningHours} <br>
-            ${stockAvailability}
-            </span>
+        const storeName = $personalPickupStoreRadio.data('store-name');
+        const storeStreet = $personalPickupStoreRadio.data('store-street');
+        const storeCity = $personalPickupStoreRadio.data('store-city');
+        const storePostcode = $personalPickupStoreRadio.data('store-postcode');
+        const storeOpeningHours = $personalPickupStoreRadio.data('store-openingHours');
+        const storeAvailability = $personalPickupStoreRadio.data('store-availability');
+        const address = `
+            ${storeName} <br>
+            ${storeStreet}, ${storePostcode} ${storeCity} <br>
+            ${Translator.trans('Otevřeno')}: ${storeOpeningHours} <br>
+            ${storeAvailability}
         `;
         this.setCurrentCheckboxDescription($transportCheckbox, address);
         $transportCheckbox.parents('.box-chooser__item').find('.box-chooser__item__title__description').addClass('full-width');
@@ -98,10 +100,8 @@ export default class PersonalPickup {
     }
 
     setCurrentCheckboxDescription ($transportCheckbox, description) {
-        const $descriptionContainer = $transportCheckbox.parents('.box-chooser__item').find('.box-chooser__item__title__description');
-        $descriptionContainer.html(description);
+        $transportCheckbox.parents('.box-chooser__item').find('.box-chooser__item__title__description').html(description);
         $transportCheckbox.parents('.box-chooser__item').find('.js-chooser-delivery-information').hide();
-        new Register().registerNewContent($descriptionContainer.find('#js-pickup-info'));
     }
 
     resetCurrentCheckboxToOrigin ($transportCheckbox) {
@@ -119,14 +119,14 @@ export default class PersonalPickup {
         $transportCheckbox.parents('.box-chooser__item').find('.box-chooser__item__title__description').removeClass('full-width');
     }
 
-    setupRadioPersonalPickupByHiddenStockId ($transportCheckbox, $window) {
+    setupRadioPersonalPickupByHiddenStoreId ($transportCheckbox, $window) {
 
         const transportPersonalPickupHiddenId = '#' + $transportCheckbox.data('hidden-id');
-        const stockId = $(transportPersonalPickupHiddenId).val();
-        const $personalPickupStockRadios = $window.filterAllNodes(PERSONAL_PICKUP_STOCK_RADIO_CLASS);
+        const storeId = $(transportPersonalPickupHiddenId).val();
+        const $personalPickupStoreRadios = $window.filterAllNodes(PERSONAL_PICKUP_STORE_RADIO_CLASS);
 
-        $personalPickupStockRadios.each((index, element) => {
-            if ($(element).val() === stockId) {
+        $personalPickupStoreRadios.each((index, element) => {
+            if ($(element).val() === storeId) {
                 $(element).prop('checked', true);
             }
         });
@@ -134,9 +134,9 @@ export default class PersonalPickup {
 
     uncheckTransportCheckbox ($transportCheckbox) {
         const transportPersonalPickupHiddenId = '#' + $transportCheckbox.data('hidden-id');
-        const stockId = $(transportPersonalPickupHiddenId).val();
+        const storeId = $(transportPersonalPickupHiddenId).val();
 
-        if (stockId === '') {
+        if (storeId === '') {
             $transportCheckbox.prop('checked', false).change();
         }
     }
@@ -152,8 +152,8 @@ export default class PersonalPickup {
             textCancel: Translator.trans('Zavřít okno'),
             cssClass: 'window-popup--wide window-popup--personal-pickup',
             cssClassContinue: 'disabled',
-            eventContinue: () => this.savePersonalPickupStockId($transportCheckbox, $window),
-            eventOnLoad: () => this.setupRadioPersonalPickupByHiddenStockId($transportCheckbox, $window),
+            eventContinue: () => this.savePersonalPickupStoreId($transportCheckbox, $window),
+            eventOnLoad: () => this.setupRadioPersonalPickupByHiddenStoreId($transportCheckbox, $window),
             eventCancel: () => this.uncheckTransportCheckbox($transportCheckbox),
             eventClose: () => this.uncheckTransportCheckbox($transportCheckbox)
         });

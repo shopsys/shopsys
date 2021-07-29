@@ -121,4 +121,13 @@ class ProductArrayFieldMapper extends BaseProductArrayFieldMapper
             $data['files']
         );
     }
+
+    /**
+     * @param array $data
+     * @return array
+     */
+    public function getStoreAvailabilities(array $data): array
+    {
+        return $data['store_availabilities_information'];
+    }
 }

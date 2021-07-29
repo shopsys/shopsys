@@ -13,9 +13,9 @@ use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemData as BaseOrderItemData;
 class OrderItemData extends BaseOrderItemData
 {
     /**
-     * @var \App\Model\Stock\Stock|null
+     * @var \App\Model\Store\Store|null
      */
-    public $personalPickupStock;
+    public $personalPickupStore;
 
     /**
      * @var string|null

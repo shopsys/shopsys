@@ -224,4 +224,12 @@ class Stock implements OrderableEntityInterface
 
         throw new StockDomainNotFoundException($this->id, $domainId);
     }
+
+    /**
+     * @return \App\Model\Store\Store[]
+     */
+    public function getStores(): array
+    {
+        return $this->stores->toArray();
+    }
 }

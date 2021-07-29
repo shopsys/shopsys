@@ -1150,6 +1150,9 @@ msgstr "Export objednávok do mostíka"
 msgid "Export zákazníků do můstku"
 msgstr "Export zákazníkov do mostíka"
 
+msgid "Exposed in Stores"
+msgstr ""
+
 msgid "External ID"
 msgstr ""
 
@@ -3444,6 +3447,9 @@ msgstr "Odstránenie položky z košíka sa nepodarilo. Platnosť odkazu na jej 
 
 msgid "Unable to send some emails, please contact us for order verification."
 msgstr "Pri odosielaní e-mailu nastala chyba, prosím kontaktujte nás pre potvrdenie objednávky."
+
+msgid "Unavailable"
+msgstr ""
 
 msgid "Unit"
 msgstr ""

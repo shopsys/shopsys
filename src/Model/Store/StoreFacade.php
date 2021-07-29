@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Model\Store;
 
 use App\Component\Image\ImageFacade;
+use App\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
 
@@ -31,14 +32,21 @@ class StoreFacade
     private EntityManagerInterface $em;
 
     /**
+     * @var \App\Component\Router\FriendlyUrl\FriendlyUrlFacade
+     */
+    private FriendlyUrlFacade $friendlyUrlFacade;
+
+    /**
      * @param \App\Model\Store\StoreRepository $storeRepository
      * @param \App\Model\Store\StoreFactory $storeFactory
+     * @param \App\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
      * @param \App\Component\Image\ImageFacade $imageFacade
      * @param \Doctrine\ORM\EntityManagerInterface $em
      */
     public function __construct(
         StoreRepository $storeRepository,
         StoreFactory $storeFactory,
+        FriendlyUrlFacade $friendlyUrlFacade,
         ImageFacade $imageFacade,
         EntityManagerInterface $em
     ) {
@@ -46,6 +54,7 @@ class StoreFacade
         $this->storeFactory = $storeFactory;
         $this->imageFacade = $imageFacade;
         $this->em = $em;
+        $this->friendlyUrlFacade = $friendlyUrlFacade;
     }
 
     /**
@@ -66,6 +75,8 @@ class StoreFacade
         $this->em->persist($store);
         $this->em->flush();
 
+        $this->createFriendlyUrl($store);
+
         $this->imageFacade->manageImages($store, $storeData->image);
 
         return $store;
@@ -84,7 +95,26 @@ class StoreFacade
 
         $this->imageFacade->manageImages($store, $storeData->image);
 
+        $this->createFriendlyUrl($store);
+
         return $store;
+    }
+
+    /**
+     * @param \App\Model\Store\Store $store
+     */
+    private function createFriendlyUrl(Store $store): void
+    {
+        foreach ($store->getEnabledDomains() as $storeDomain) {
+            $this->friendlyUrlFacade->createFriendlyUrlForDomain(
+                'front_stores_detail',
+                $store->getId(),
+                $store->getName(),
+                $storeDomain->getDomainId()
+            );
+        }
+
+        $this->em->flush();
     }
 
     /**
@@ -154,7 +184,7 @@ class StoreFacade
      */
     public function getStoresListEnabledOnDomain(int $domainId, int $limit, int $offset): array
     {
-        return $this->storeRepository->getStoresListEnabledOnDomain($domainId, $limit, $offset);
+        return $this->storeRepository->getStoresEnabledOnDomain($domainId, $limit, $offset);
     }
 
     /**

@@ -1,4 +1,5 @@
 {% extends 'Front/Layout/layoutWithoutPanel.html.twig' %}
+{% import 'Front/Content/Store/storeAddressMacro.html.twig' as storeAddressMacro %}
 
 {% block breadcrumb %}
 {% endblock %}
@@ -25,7 +26,7 @@
                             <strong class="box-stores__store__subtitle box-stores__store__subtitle--detail">
                                 {{ 'Adresa obchodu'|trans }}
                             </strong>
-                            {{ store.address }}
+                            {{ storeAddressMacro.storeAddress(store) }}
                         </div>
                         <div class="box-stores__info__grid__item">
                             <strong class="box-stores__store__subtitle box-stores__store__subtitle--detail">

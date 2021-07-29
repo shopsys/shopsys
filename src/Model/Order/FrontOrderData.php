@@ -19,9 +19,9 @@ use Shopsys\FrameworkBundle\Model\Order\FrontOrderData as BaseFrontOrderData;
 class FrontOrderData extends BaseFrontOrderData
 {
     /**
-     * @var \App\Model\Stock\Stock|null
+     * @var \App\Model\Store\Store|null
      */
-    public $personalPickupStock;
+    public $personalPickupStore;
 
     /**
      * @var \App\Model\GoPay\BankSwift\GoPayBankSwift

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\Order\Preview;
 
-use App\Model\Stock\Stock;
+use App\Model\Store\Store;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreview as BaseOrderPreview;
 use Shopsys\FrameworkBundle\Model\Payment\Payment;
@@ -14,9 +14,9 @@ use Shopsys\FrameworkBundle\Model\Transport\Transport;
 class OrderPreview extends BaseOrderPreview
 {
     /**
-     * @var \App\Model\Stock\Stock|null
+     * @var \App\Model\Store\Store|null
      */
-    private $personalPickupStock;
+    private $personalPickupStore;
 
     /**
      * @var string[]
@@ -79,12 +79,12 @@ class OrderPreview extends BaseOrderPreview
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Price|null $paymentPrice
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Price|null $roundingPrice
      * @param null $promoCodeDiscountPercent
-     * @param \App\Model\Stock\Stock|null $personalPickupStock
+     * @param \App\Model\Store\Store|null $personalPickupStore
      * @param \Shopsys\FrameworkBundle\Component\Money\Money|null $restToFreeTransportPrice
      * @param int|null $percentageOfFreeTransport
      * @param bool|null $transportForFree
-     * @param string|null $promoCodeCode;
-     * @param string|null $promoCodeIdentifier;
+     * @param string|null $promoCodeCode
+     * @param string|null $promoCodeIdentifier
      */
     public function __construct(
         array $quantifiedProductsByIndex,
@@ -102,7 +102,7 @@ class OrderPreview extends BaseOrderPreview
         ?Price $paymentPrice = null,
         ?Price $roundingPrice = null,
         $promoCodeDiscountPercent = null,
-        ?Stock $personalPickupStock = null,
+        ?Store $personalPickupStore = null,
         ?Money $restToFreeTransportPrice = null,
         ?int $percentageOfFreeTransport = null,
         ?bool $transportForFree = false,
@@ -123,7 +123,7 @@ class OrderPreview extends BaseOrderPreview
             $promoCodeDiscountPercent
         );
 
-        $this->personalPickupStock = $personalPickupStock;
+        $this->personalPickupStore = $personalPickupStore;
         $this->productsAvailability = $productsAvailability;
         $this->restToFreeTransportPrice = $restToFreeTransportPrice;
         $this->percentageOfFreeTransport = $percentageOfFreeTransport;
@@ -136,11 +136,11 @@ class OrderPreview extends BaseOrderPreview
     }
 
     /**
-     * @return \App\Model\Stock\Stock|null
+     * @return \App\Model\Store\Store|null
      */
-    public function getPersonalPickupStock(): ?Stock
+    public function getPersonalPickupStore(): ?Store
     {
-        return $this->personalPickupStock;
+        return $this->personalPickupStore;
     }
 
     /**

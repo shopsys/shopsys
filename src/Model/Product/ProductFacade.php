@@ -6,6 +6,8 @@ namespace App\Model\Product;
 
 use App\Model\Stock\ProductStockFacade;
 use App\Model\Stock\StockFacade;
+use App\Model\Store\ProductStoreFacade;
+use App\Model\Store\StoreFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator;
@@ -88,6 +90,16 @@ class ProductFacade extends BaseProductFacade
     private FriendlyUrlRepository $friendlyUrlRepository;
 
     /**
+     * @var \App\Model\Store\StoreFacade
+     */
+    private StoreFacade $storeFacade;
+
+    /**
+     * @var \App\Model\Store\ProductStoreFacade
+     */
+    private ProductStoreFacade $productStoreFacade;
+
+    /**
      * @param string $productFilesUrlPrefix
      * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator $em
      * @param \App\Model\Product\ProductRepository $productRepository
@@ -114,6 +126,8 @@ class ProductFacade extends BaseProductFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductExportScheduler $productExportScheduler
      * @param \App\Model\Stock\ProductStockFacade $productStockFacade
      * @param \App\Model\Stock\StockFacade $stockFacade
+     * @param \App\Model\Store\ProductStoreFacade $productStoreFacade
+     * @param \App\Model\Store\StoreFacade $storeFacade
      * @param \App\Component\Router\FriendlyUrl\FriendlyUrlRepository $friendlyUrlRepository
      */
     public function __construct(
@@ -143,6 +157,8 @@ class ProductFacade extends BaseProductFacade
         ProductExportScheduler $productExportScheduler,
         ProductStockFacade $productStockFacade,
         StockFacade $stockFacade,
+        ProductStoreFacade $productStoreFacade,
+        StoreFacade $storeFacade,
         FriendlyUrlRepository $friendlyUrlRepository
     ) {
         parent::__construct(
@@ -175,6 +191,8 @@ class ProductFacade extends BaseProductFacade
         $this->productStockFacade = $productStockFacade;
         $this->productFilesUrlPrefix = $productFilesUrlPrefix;
         $this->friendlyUrlRepository = $friendlyUrlRepository;
+        $this->storeFacade = $storeFacade;
+        $this->productStoreFacade = $productStoreFacade;
     }
 
     /**
@@ -186,10 +204,7 @@ class ProductFacade extends BaseProductFacade
         /** @var \App\Model\Product\Product $product */
         $product = parent::create($productData);
 
-        foreach ($productData->stockProductData as $productStockData) {
-            $stock = $this->stockFacade->getById($productStockData->stockId);
-            $this->productStockFacade->editProductStockRelation($product, $stock, $productStockData);
-        }
+        $this->editProductStockAndStoreRelation($productData, $product);
 
         $this->productSellingDeniedRecalculator->calculateSellingDeniedForProduct($product);
 
@@ -254,10 +269,7 @@ class ProductFacade extends BaseProductFacade
         $productToExport = $product->isVariant() ? $product->getMainVariant() : $product;
         $this->productExportScheduler->scheduleRowIdForImmediateExport($productToExport->getId());
 
-        foreach ($productData->stockProductData as $productStockData) {
-            $stock = $this->stockFacade->getById($productStockData->stockId);
-            $this->productStockFacade->editProductStockRelation($product, $stock, $productStockData);
-        }
+        $this->editProductStockAndStoreRelation($productData, $product);
 
         $this->productSellingDeniedRecalculator->calculateSellingDeniedForProduct($product);
 
@@ -457,5 +469,22 @@ class ProductFacade extends BaseProductFacade
     public function refreshProductAccessories(BaseProduct $product, array $accessories): void
     {
         parent::refreshProductAccessories($product, $accessories);
+    }
+
+    /**
+     * @param \App\Model\Product\ProductData $productData
+     * @param \App\Model\Product\Product $product
+     */
+    private function editProductStockAndStoreRelation(ProductData $productData, Product $product): void
+    {
+        foreach ($productData->stockProductData as $productStockData) {
+            $stock = $this->stockFacade->getById($productStockData->stockId);
+            $this->productStockFacade->editProductStockRelation($product, $stock, $productStockData);
+        }
+
+        foreach ($productData->productStoreData as $productStoreData) {
+            $store = $this->storeFacade->getById($productStoreData->storeId);
+            $this->productStoreFacade->editProductStoreRelation($product, $store, $productStoreData);
+        }
     }
 }

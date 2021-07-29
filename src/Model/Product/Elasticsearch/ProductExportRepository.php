@@ -184,9 +184,9 @@ class ProductExportRepository extends BaseProductExportRepository
             'name_sufix' => $product->getNameSufix($locale),
             'is_in_sale' => $product->isProductInSale($domainId) && !$product->getCalculatedSaleExclusion($domainId),
             'is_sale_exclusion' => $product->getSaleExclusion($domainId),
-            'product_available_stocks_count_information' => $this->productAvailabilityFacade->getProductAvailableStocksCountInformationByDomainId($product, $domainId),
-            'product_count_exposed_in_stores' => $this->productAvailabilityFacade->getProductCountExposedInStocksInformationByDomainId($product, $domainId),
-            'stock_availabilities_information' => $this->extractStockAvailabilitiesInformation($product, $domainId),
+            'product_available_stores_count_information' => $this->productAvailabilityFacade->getProductAvailableStoresCountInformationByDomainId($product, $domainId),
+            'product_count_exposed_in_stores' => $this->productAvailabilityFacade->getProductCountExposedInStoresInformationByDomainId($product, $domainId),
+            'store_availabilities_information' => $this->extractStoreAvailabilitiesInformation($product, $domainId),
             'files' => $this->productFacade->getDownloadFilesForProductByDomainConfig($product, $this->domain->getDomainConfigById($domainId)),
             'usps' => $product->getAllNonEmptyShortDescriptionUsp($domainId),
             'searching_names' => $searchingNames,
@@ -457,15 +457,15 @@ class ProductExportRepository extends BaseProductExportRepository
      * @param int $domainId
      * @return array
      */
-    private function extractStockAvailabilitiesInformation(Product $product, int $domainId): array
+    private function extractStoreAvailabilitiesInformation(Product $product, int $domainId): array
     {
-        $stockAvailabilitiesInformation = $this->productAvailabilityFacade->getProductStocksAvailabilitiesInformationByDomainIdIndexedByStockId($product, $domainId);
+        $storeAvailabilitiesInformation = $this->productAvailabilityFacade->getProductStoresAvailabilitiesInformationByDomainIdIndexedByStoreId($product, $domainId);
 
         $result = [];
-        foreach ($stockAvailabilitiesInformation as $item) {
+        foreach ($storeAvailabilitiesInformation as $item) {
             $result[] = [
-                'stock_name' => $item->getStockName(),
-                'stock_id' => $item->getStockId(),
+                'store_name' => $item->getStoreName(),
+                'store_id' => $item->getStoreId(),
                 'availability_information' => $item->getAvailabilityInformation(),
                 'exposed' => $item->isExposedProduct(),
                 'availability_status' => $item->getAvailabilityStatus(),

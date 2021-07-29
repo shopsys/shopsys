@@ -712,3 +712,12 @@
 20180413102102:
     class: Shopsys\ProductFeed\GoogleBundle\Migrations\Version20180413102102
     skip: false
+20210711163712:
+    class: App\Migrations\Version20210711163712
+    skip: false
+20210712170052:
+    class: App\Migrations\Version20210712170052
+    skip: false
+20210723064416:
+    class: App\Migrations\Version20210723064416
+    skip: false
