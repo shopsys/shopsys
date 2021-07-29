@@ -1,6 +1,8 @@
 import * as Yup from 'yup';
+import { initUrqlClient, withUrqlClient } from 'next-urql';
 import { FC, useState } from 'react';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
+import getConfig from 'next/config';
 import { GetServerSideProps } from 'next';
 import PromotedCategories from '../components/blocks/categories/PromotedCategories/PromotedCategories';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
@@ -8,6 +10,7 @@ import ShopsysButton from 'components/forms/ShopsysButton';
 import ShopsysCheckbox from 'components/forms/ShopsysCheckbox';
 import ShopsysInUserText from 'components/in/ShopsysInUserText';
 import ShopsysTextInput from 'components/forms/ShopsysTextInput';
+import { ssrExchange } from 'urql';
 import { useTranslation } from 'react-i18next';
 import { yupResolver } from '@hookform/resolvers/yup';
 
@@ -15,6 +18,8 @@ type FormValues = {
     htmlContent: string;
     formConsent: boolean;
 };
+
+const { publicRuntimeConfig } = getConfig();
 
 const Index: FC = () => {
     const { t } = useTranslation();
@@ -133,6 +138,15 @@ const Index: FC = () => {
 };
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
+    const ssrCache = ssrExchange({ isClient: false });
+    const client = initUrqlClient(
+        {
+            url: publicRuntimeConfig.publicGraphqlEndpoint,
+            exchanges: [ssrCache],
+        },
+        false,
+    );
+
     let serversideTranslationConfig;
 
     if (context.defaultLocale) {
@@ -140,6 +154,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         return {
             props: {
                 ...serversideTranslationConfig,
+                urqlState: ssrCache.extractData(),
             },
         };
     } else {
@@ -147,4 +162,9 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     }
 };
 
-export default Index;
+export default withUrqlClient(
+    () => ({
+        url: publicRuntimeConfig.publicGraphqlEndpoint,
+    }),
+    { ssr: false },
+)(Index);
