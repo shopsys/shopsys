@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Model\Store;
 
 use App\Model\Product\Product;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
@@ -98,18 +99,18 @@ class ProductStoreRepository
 
     /**
      * @param int $storeId
-     * @param string $productCatnum
-     * @return \App\Model\Store\ProductStore|null
      */
-    public function findProductStoreByProductCatnumAndStoreId(int $storeId, string $productCatnum): ?ProductStore
+    public function createProductStoreRelationForStoreId(int $storeId): void
     {
-        return $this->getQueryBuilder()
-            ->join(Product::class, 'p', JOIN::WITH, 'ps.product = p')
-            ->andWhere('ps.store = :storeId')
-            ->andWhere('p.catnum = :productCatnum')
-            ->setParameter('storeId', $storeId)
-            ->setParameter('productCatnum', $productCatnum)
-            ->getQuery()
-            ->getOneOrNullResult();
+        $this->em->getConnection()->executeStatement(
+            'INSERT INTO product_stores (store_id, product_id, product_exposed)
+            SELECT :store_id, id, false FROM products;',
+            [
+                'store_id' => $storeId,
+            ],
+            [
+                'store_id' => Types::INTEGER,
+            ],
+        );
     }
 }

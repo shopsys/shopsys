@@ -252,12 +252,4 @@ class ProductRepository extends BaseProductRepository
 
         return $queryBuilder;
     }
-
-    /**
-     * @return \App\Model\Product\Product[]
-     */
-    public function getAll(): array
-    {
-        return $this->getProductRepository()->findAll();
-    }
 }

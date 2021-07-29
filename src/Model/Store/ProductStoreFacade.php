@@ -68,12 +68,10 @@ class ProductStoreFacade
     }
 
     /**
-     * @param string $productCatnum
      * @param int $storeId
-     * @return \App\Model\Store\ProductStore|null
      */
-    public function findProductStoreByProductCatnumAndStoreId(string $productCatnum, int $storeId): ?ProductStore
+    public function createProductStoreRelationForStoreId(int $storeId): void
     {
-        return $this->productStoreRepository->findProductStoreByProductCatnumAndStoreId($storeId, $productCatnum);
+        $this->productStoreRepository->createProductStoreRelationForStoreId($storeId);
     }
 }
