@@ -29,12 +29,6 @@
     },
     "plugins": ["react", "unused-imports", "prettier", "@typescript-eslint"],
     "rules": {
-        "eqeqeq": "off",
-        "import/no-named-default": "off",
-        "no-eval": "off",
-        "no-multi-str": "off",
-        "no-new": "off",
-        "no-redeclare": "off",
         "no-undef": "off",
         "padded-blocks": "off",
         "prettier/prettier": "error",
