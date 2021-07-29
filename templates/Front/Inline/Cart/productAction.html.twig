@@ -1,3 +1,8 @@
+{% set isLarge = false %}
+{% if type is defined and type == 'large' %}
+    {% set isLarge = true %}
+{% endif %}
+
 {% if productActionView.mainVariant %}
     <a href="{{ productActionView.detailUrl }}" class="btn">
         {{- 'Choose variant'|trans -}}
@@ -8,8 +13,8 @@
     </a>
 {% else %}
     {{ form_start(form, {attr: {class: 'js-add-product dont-print', 'data-ajax-url': url('front_cart_add_product_ajax'), 'multipleForm': true}}) }}
-    <div class="in-add-to-cart">
-        <span class="form-input-spinbox form-input-spinbox--small js-spinbox {% if productActionView.isProductAvailable == false %}disabled{% endif %}">
+    <div class="in-add-to-cart{% if isLarge %} in-add-to-cart--large{% endif %}">
+        <span class="form-input-spinbox{% if not isLarge %} form-input-spinbox--small{% endif %} js-spinbox {% if productActionView.isProductAvailable == false %}disabled{% endif %}">
             <button type="button" class="btn-no-style form-input-spinbox__btn js-spinbox-minus">
                 <i class="svg svg-minus"></i>
             </button>
@@ -18,11 +23,18 @@
                 <i class="svg svg-plus"></i>
             </button>
         </span>
-        {% if productActionView.isProductAvailable == true %}
-            {{ form_widget(form.add, { label: 'Do košíku'|trans, attr: { class: 'btn btn--small' }} )}}
-        {% else %}
-            {{ form_widget(form.add, { label: 'Temporarily sold out'|trans, disabled: 'disabled'} )}}
-        {% endif %}
+        <div class="in-add-to-cart__spinbox">
+            {% set buttonClass = 'btn btn--small' %}
+            {% if isLarge %}
+                {% set buttonClass = 'btn btn--primary btn--big-radius full-width' %}
+            {% endif %}
+
+            {% if productActionView.isProductAvailable == true %}
+                {{ form_widget(form.add, { label: 'Do košíku'|trans, attr: { class: buttonClass }} )}}
+            {% else %}
+                {{ form_widget(form.add, { label: 'Temporarily sold out'|trans, disabled: 'disabled'} )}}
+            {% endif %}
+        </div>
     </div>
     {{ form_end(form) }}
 {% endif %}

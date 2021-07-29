@@ -321,7 +321,7 @@ class ProductTest extends GraphQlTestCase
                         [
                             'storeName' => 'Ostrava',
                             'exposed' => true,
-                            'availabilityInformation' => '<strong class="is-in-stock">Ihned</strong> k odběru',
+                            'availabilityInformation' => 'Ihned k odběru',
                             'availabilityStatus' => 'in-stock',
                         ], [
                             'storeName' => 'Pardubice',

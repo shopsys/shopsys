@@ -1,0 +1,48 @@
+@list-stocks-availabilities-item-gap: 10px;
+
+.list-stocks-availabilities {
+    .reset-ul();
+
+    &__item {
+        display: flex;
+        align-items: center;
+        padding: 14px 0;
+
+        border-bottom: 1px solid @color-border;
+
+        &:last-child {
+            border-bottom: 0;
+        }
+
+        &__name {
+            width: 148px;
+            margin-right: @list-stocks-availabilities-item-gap;
+        }
+
+        &__availability {
+            flex: 1;
+            padding-right: @list-stocks-availabilities-item-gap;
+
+            color: @color-green-secondary;
+            font-size: @font-size-small;
+        }
+
+        &__detail {
+            display: flex;
+            align-items: center;
+            margin-left: auto;
+
+            text-decoration: none;
+            color: @color-0;
+
+            &:hover {
+                color: @color-0;
+                text-decoration: none;
+            }
+
+            .svg {
+                margin-left: 10px;
+            }
+        }
+    }
+}

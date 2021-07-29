@@ -1,48 +1,175 @@
-.in-tab {
-    &__heading {
-        position: relative;
-        display: flex;
-        align-items: center;
-        margin-top: 33px;
-        margin-bottom: 6px;
+@in-tab-content-left-width: 588px;
+@in-tab-content-left-width-small: 400px;
 
-        text-transform: none;
-        font-size: 18px;
-        color: @color-primary;
+.in-tab {
+    margin-bottom: 40px;
+
+    @media @query-lg {
+        margin-bottom: 80px;
+    }
+
+    &__title {
+        margin-bottom: 8px;
+
+        &--big-gap {
+            margin-bottom: 20px;
+        }
+
+        &--only-desktop {
+            display: none;
+
+            @media @query-lg {
+                display: flex;
+            }
+        }
     }
 
     &__head {
-        display: inline-flex;
-        position: relative;
-        z-index: 2;
-        margin-bottom: 15px;
-    }
+        display: none;
+        flex-direction: row;
+        padding: 0 10px;
+        z-index: @z-index-above;
 
-    &__content {
-        &--spaced {
-            padding-top: 30px;
+        border-bottom: 1px solid @color-border;
 
-            &-small {
-                padding-top: 15px;
-            }
+        @media @query-lg {
+            display: flex;
         }
 
         &__item {
-            display: none;
-            padding-top: 30px;
+            position: relative;
+            margin: 0 16px;
+            padding: 3px 8px;
 
-            &--no-padding {
-                padding-top: 0;
-            }
+            text-decoration: none;
+            color: @color-0;
 
-            &--no-spacing {
-                padding-top: 0;
+            &:hover {
+                text-decoration: none;
             }
 
             &.active {
-                display: block;
-                margin-bottom: 10px;
+                color: @color-primary;
+
+                &:before {
+                    content: '';
+                    position: absolute;
+                    left: 0;
+                    right: 0;
+                    bottom: -1px;
+                    height: 2px;
+
+                    background-color: @color-primary;
+                }
             }
+        }
+    }
+
+    &__content {
+        margin-bottom: 30px;
+
+        @media @query-lg {
+            margin-bottom: 0;
+        }
+
+        &__item {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+
+            @media @query-lg {
+                display: none;
+                padding-top: 48px;
+            }
+
+            &--with-gap {
+                @media @query-lg {
+                    margin-bottom: 30px;
+                }
+            }
+
+            &.active {
+                display: flex;
+            }
+        }
+
+        &__left {
+            width: 100%;
+
+            @media @query-lg {
+                width: @in-tab-content-left-width-small;
+                margin-right: 20px;
+            }
+
+            @media @query-vl {
+                width: @in-tab-content-left-width;
+                margin-right: 126px;
+            }
+        }
+
+        &__right {
+            width: 100%;
+
+            @media @query-lg {
+                flex: 1;
+            }
+        }
+
+        &__block {
+            @media @query-lg {
+                margin-bottom: 32px;
+                padding: 16px;
+
+                border-radius: @radius;
+                background-color: @color-light-secondary;
+            }
+        }
+    }
+
+    &__section {
+        width: 100%;
+
+        @media @query-vl {
+            width: @in-tab-content-left-width;
+        }
+    }
+
+    &__dropdown {
+        @media @query-tablet {
+            padding: 0 20px;
+            margin-bottom: 16px;
+
+            background-color: @color-light-secondary;
+            border-radius: @radius-big;
+        }
+
+        &__title {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 0;
+            padding: 14px 0;
+
+            cursor: pointer;
+
+            @media @query-lg {
+                display: none;
+            }
+
+            &.active {
+                .svg {
+                    transform: rotate(180deg);
+                }
+            }
+
+            .svg {
+                transform: rotate(0);
+                transition: @transition;
+            }
+        }
+
+        img {
+            mix-blend-mode: multiply;
         }
     }
 }

@@ -262,7 +262,7 @@ class ProductAvailabilityFacade
 
         $productStoresAvailabilityInformationList = [];
         foreach ($productStores as $productStore) {
-            $availabilityInformation = t('<strong class="is-in-stock">Ihned</strong> k odběru');
+            $availabilityInformation = t('Ihned k odběru');
             $availabilityStatus = self::AVAILABILITY_STATUS_IN_STOCK;
 
             if ($isOutOfStock) {

@@ -60,8 +60,8 @@ class ProductImagesTest extends GraphQlTestCase
                     "url": "' . $this->getFullUrlPath('/content-test/images/product/galleryThumbnail/22-sencor-sle-22f46dm4-hello-kitty_1.jpg') . '",
                     "type": null,
                     "size": "galleryThumbnail",
-                    "width": 200,
-                    "height": null,
+                    "width": 64,
+                    "height": 64,
                     "position": 0
                 },
                 {
@@ -76,8 +76,8 @@ class ProductImagesTest extends GraphQlTestCase
                     "url": "' . $this->getFullUrlPath('/content-test/images/product/list/22-sencor-sle-22f46dm4-hello-kitty_1.jpg') . '",
                     "type": null,
                     "size": "list",
-                    "width": 190,
-                    "height": 190,
+                    "width": 160,
+                    "height": 160,
                     "position": 0
                 },
                 {
@@ -132,8 +132,8 @@ class ProductImagesTest extends GraphQlTestCase
                     "url": "' . $this->getFullUrlPath('/content-test/images/product/galleryThumbnail/22-sencor-sle-22f46dm4-hello-kitty_64.jpg') . '",
                     "type": null,
                     "size": "galleryThumbnail",
-                    "width": 200,
-                    "height": null,
+                    "width": 64,
+                    "height": 64,
                     "position": 1
                 },
                 {
@@ -148,8 +148,8 @@ class ProductImagesTest extends GraphQlTestCase
                     "url": "' . $this->getFullUrlPath('/content-test/images/product/list/22-sencor-sle-22f46dm4-hello-kitty_64.jpg') . '",
                     "type": null,
                     "size": "list",
-                    "width": 190,
-                    "height": 190,
+                    "width": 160,
+                    "height": 160,
                     "position": 1
                 },
                 {
@@ -226,16 +226,16 @@ class ProductImagesTest extends GraphQlTestCase
                     "url": "' . $this->getFullUrlPath('/content-test/images/product/list/22-sencor-sle-22f46dm4-hello-kitty_1.jpg') . '",
                     "type": null,
                     "size": "list",
-                    "width": 190,
-                    "height": 190,
+                    "width": 160,
+                    "height": 160,
                     "position": 0
                 },
                 {
                     "url": "' . $this->getFullUrlPath('/content-test/images/product/list/22-sencor-sle-22f46dm4-hello-kitty_64.jpg') . '",
                     "type": null,
                     "size": "list",
-                    "width": 190,
-                    "height": 190,
+                    "width": 160,
+                    "height": 160,
                     "position": 1
                 }
             ]

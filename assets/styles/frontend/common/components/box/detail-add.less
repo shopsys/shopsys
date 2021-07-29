@@ -1,94 +1,19 @@
 .box-detail-add {
-    padding: 0.75rem 0.5rem;
-    margin-bottom: @margin-gap + 5px;
+    padding: 10px;
+    margin-bottom: 16px;
 
-    border-radius: @radius * 2;
-    border: 2px solid #ffe9bc;
+    background-color: @color-light-secondary;
+    border-radius: @radius-big;
 
     @media @query-lg {
-        padding: 1.25rem;
+        margin-bottom: 12px;
     }
 
-    &__info {
+    &__price {
+        margin-bottom: 15px;
 
-        @media screen and (min-width: 1350px) {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        &__actions {
-            display: flex;
-            justify-content: space-between;
-            width: 100%;
-            margin-top: 12px;
-
-            @media @query-lg {
-                display: block;
-                width: auto;
-            }
-
-            @media screen and (min-width: 1350px) {
-                margin-top: 0;
-            }
-        }
-    }
-
-    &__prices {
-        display: flex;
-        align-items: center;
-
-        &__item {
-            color: @color-price;
-            line-height: 1;
-
-            &--main {
-                font-size: 24px;
-                color: @color-price-main;
-
-                @media @query-lg {
-                    font-size: 30px;
-                }
-            }
-
-            &--high-price {
-                margin-bottom: 6px;
-
-                text-decoration: line-through;
-                font-size: 16px;
-
-                @media @query-lg {
-                    font-size: 18px;
-                }
-            }
-        }
-    }
-
-    &__discount {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 60px;
-        height: 60px;
-        margin-right: 20px;
-
-        border-radius: 100%;
-        background-color: @color-add-light;
-        color: @color-f;
-        font-size: 15px;
-
-        @media @query-lg {
-            width: 50px;
-            height: 50px;
-        }
-    }
-
-    .box-detail-add__discount {
-        @media @query-vl {
-            width: 70px;
-            height: 70px;
-
-            font-size: 18px;
-        }
+        color: @color-primary;
+        font-size: 24px;
+        font-weight: 700;
     }
 }

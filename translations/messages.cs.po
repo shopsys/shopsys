@@ -55,7 +55,7 @@ msgstr ""
 msgid "<strong class=\"box-accordion__grid-table__col__expose\">Vystaveno</strong> na prodejně"
 msgstr ""
 
-msgid "<strong class=\"is-in-stock\">Ihned</strong> k odběru"
+msgid "Ihned k odběru"
 msgstr ""
 
 msgid "<strong><a href=\"{{ url }}\">Notifikační lišta</a></strong> byla úspešne upravená"

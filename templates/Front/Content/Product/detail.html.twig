@@ -2,9 +2,6 @@
 {% import 'Front/Content/Product/productListMacro.html.twig' as productList %}
 
 {% set domain = getDomain() %}
-{% set descriptionHeadline = 'Product information'|trans %}
-{% set parametersHeadline = 'Technical parameters'|trans %}
-{% set accessoriesHeadline = 'Accessories'|trans %}
 {% set sellingPriceWithVat = productView.sellingPrice.priceWithVat %}
 
 {% block meta_description %}
@@ -19,171 +16,135 @@
 {% endblock %}
 
 {% block main_content %}
-    <div class="box-detail-breadcrumb">
-        {{ render(controller('App\\Controller\\Front\\BreadcrumbController:indexAction', { routeName: getRoute(), routeParameters: getRouteParams() } )) }}
-    </div>
+    {{ render(controller('App\\Controller\\Front\\BreadcrumbController:indexAction', { routeName: getRoute(), routeParameters: getRouteParams() } )) }}
+
     <div itemscope itemtype="http://schema.org/Product">
         <div class="web__line">
             <div class="web__container">
                 {% set showGallery = productView.galleryImageViews|length > 1 %}
-                <div class="box-detail box-detail--primary{{ showGallery ? '' : ' box-detail--no-gallery' }}">
-                    <h1 class="box-detail__heading" itemprop="name">
-                        <span class="box-detail__heading__prefix">{{ productView.nameFirstLine }}</span>
-                        {{ productView.nameSecondLine }}
-                    </h1>
-                    <div class="box-detail__wrap">
-                        <div class="box-detail__image">
-                            <div class="box-detail__image__wrap js-main-image-carousel">
-                                <div class="box-detail__image__main js-gallery-wrap">
+                <div class="box-detail">
+                    <div class="box-detail__image">
+                        {% if showGallery %}
+                            <div class="box-detail__image__gallery">
+                                {% set galleryImagesCount = productView.galleryImageViews|length %}
+                                <div class="box-gallery dont-print js-gallery js-image-carousel">
                                     {% for galleryImage in productView.galleryImageViews %}
-                                        <div class="box-detail__image__main__item">
-                                            {% if productView.mainImageView %}
-                                                <a
-                                                    href="{{ imageUrl(productView.mainImageView, 'original') }}"
-                                                    class="box-detail__image__main__item__link {{ showGallery ? 'js-gallery-main-image' : 'js-popup-image' }}"
-                                                >
-                                                    {{ image(galleryImage, {lazy: false, alt: productView.fullname ~ ' ' ~ loop.index}) }}
-                                                </a>
-                                            {% else %}
-                                                {{ noimage({ alt: productView.fullname }) }}
-                                            {% endif %}
-                                        </div>
+                                        <a class="box-gallery__item js-gallery-slide-link" href="{{ imageUrl(galleryImage, 'original') }}">
+                                            <div class="box-gallery__item__in">
+                                                {{ image(galleryImage, {size: 'galleryThumbnail', lazy: false, alt: productView.fullname ~ ' ' ~ loop.index}) }}
+                                            </div>
+                                        </a>
                                     {% endfor %}
                                 </div>
-                                {{ renderFlagsByIds(productView.flagIds) }}
                             </div>
+                        {% endif %}
 
-                            {% if showGallery %}
-                                {% set galleryImagesCount = productView.galleryImageViews|length %}
-                                <div class="box-gallery dont-print js-gallery{{ galleryImagesCount > 1 ? ' js-gallery-slick-carousel' }}">
-                                    <div class="box-gallery__in{{ galleryImagesCount <= 4 ? ' box-gallery__in--centered' }} js-gallery-wrap">
-                                        {% for galleryImage in productView.galleryImageViews %}
-                                            <div class="box-gallery__item">
-                                                <a href="{{ imageUrl(galleryImage, 'original') }}"
-                                                   class="box-gallery__item__link js-gallery-slide-link">
-                                                    {{ image(galleryImage, {size: 'galleryThumbnail', lazy: false, alt: productView.fullname ~ ' ' ~ loop.index}) }}
-                                                </a>
-                                            </div>
-                                        {% endfor %}
-                                    </div>
+                        <div class="box-detail__image__main{{ showGallery ? '' : ' box-detail__image__main--everytime-visible' }}">
+                            {% for galleryImage in productView.galleryImageViews|slice(0, 1) %}
+                                <div class="box-detail__image__main__item">
+                                    {% if productView.mainImageView %}
+                                        <a
+                                            href="{{ imageUrl(galleryImage, 'original') }}"
+                                            class="box-detail__image__main__item__link {{ showGallery ? 'js-gallery-main-image' : 'js-popup-image' }}"
+                                        >
+                                            {{ image(galleryImage, {lazy: false, alt: productView.fullname ~ ' ' ~ loop.index}) }}
+                                        </a>
+                                    {% else %}
+                                        {{ noimage({ alt: productView.fullname }) }}
+                                    {% endif %}
                                 </div>
+                            {% endfor %}
+                        </div>
+                        
+                        {{ renderFlagsByIds(productView.flagIds, 'in-flag--in-detail') }}
+                    </div>
+                    <div class="box-detail__info">
+                        <h1 class="box-detail__heading" itemprop="name">
+                            {% if productView.nameFirstLine %}
+                                <div class="box-detail__heading__prefix">{{ productView.nameFirstLine }}</div>
+                            {% endif %}
+                            {{ productView.nameSecondLine }}
+                        </h1>
+
+                        {% if not productView.isMainVariant %}
+                            {% if productView.catnum %}
+                                <div class="box-detail__info__code">
+                                    {{ 'Code'|trans }}: {{ productView.catnum }}
+                                </div>
+                            {% endif %}
+                        {% endif %}
+
+                        {% if productView.usps|length > 0 %}
+                            <ul class="list-simple list-simple--multiple-columns margin-bottom-20">
+                                {% for usp in productView.usps %}
+                                    <li class="list-simple__item">{{ usp }}</li>
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
+
+                        <div class="box-detail__info__description js-not-implemented-yet">
+                            Moderní elektrokolo se spolehlivým motorem Bafang M 500 se středovým pohonem s výkonem až 250 w.
+                            {% if productView.description %}
+                                <a class="js-smooth-scroll-anchor" href="#product-desc">
+                                    {{ 'Celý popis'|trans }}
+                                </a>
                             {% endif %}
                         </div>
-                        <div class="box-detail__info">
-                            {% apply spaceless %}
-                                <dl class="box-detail__info__params">
-                                    {% if not productView.isMainVariant %}
-                                        {% if productView.catnum %}
-                                            <dt>
-                                                {{ 'č. produktu:'|trans }}
-                                            </dt>
-                                            <dd>
-                                                {{ productView.catnum }}
-                                            </dd>
-                                        {% endif %}
-                                    {% endif %}
-                                </dl>
-                            {% endapply %}
 
-                            <div class="box-detail__info__desc">
-                                <ul class="box-detail-list box-detail-list--columns">
-                                    {% for usp in productView.usps %}
-                                        <li class="box-detail-list__item">{{ usp }}</li>
-                                    {% endfor %}
-                                    {% if productView.description %}
-                                        <li class="box-detail-list__item box-detail-list__item--anchor">
-                                            <a class="box-detail__info__anchor js-smooth-scroll-anchor" href="#product-desc">
-                                                <span class="box-detail__info__anchor__underline">{{ 'Celý popis'|trans }}</span>
-                                            </a>
-                                        </li>
-                                    {% endif %}
-                                </ul>
-                            </div>
-
-                            <div class="box-detail__info__availability box-detail__info__availability--{{ productView.availabilityStatus }}">
-                                <div class="box-detail__info__availability__value">
-                                    <span class="box-detail__avail box-detail__avail--{{ productView.availabilityStatus }}">{{ productView.availability }}</span>
-                                    {% if productView.availabilityStatus == "in-stock" %}
-                                        {% if productView.availableStoresCountInformation is not empty %}
-                                            <span class="box-detail__avail__text">{{ productView.availableStoresCountInformation|raw }}</span>
-                                        {% endif %}
-                                        {% if productView.countExposedInStores is not empty %}
-                                            <span class="box-detail__avail__text">{{ productView.countExposedInStores|raw }}</span>
-                                        {% endif %}
-                                    {% endif %}
-                                    <span class="box-detail__avail__icon box-detail__avail__icon--{{ productView.availabilityStatus }}">
-                                        {% if productView.availabilityStatus == "in-stock" %}
-                                            <picture>
-                                                <source
-                                                    srcset="{{ asset('public/frontend/images/package-in-stock2x.png') }} 2x, {{ asset('public/frontend/images/package-in-stock.png') }} 1x"
-                                                >
-                                                <img
-                                                    class="box-detail__avail__icon__image"
-                                                    loading="lazy"
-                                                    data-src="{{ asset('public/frontend/images/package-in-stock.png') }}"
-                                                    alt="{{ 'Skladem'|trans }}"
-                                                >
-                                            </picture>
-                                        {% else %}
-                                            <picture>
-                                                <source
-                                                    srcset="{{ asset('public/frontend/images/package-in-stock2x.png') }} 2x, {{ asset('public/frontend/images/package-in-stock.png') }} 1x"
-                                                >
-                                                <img
-                                                    class="box-detail__avail__icon__image"
-                                                    loading="lazy"
-                                                    data-src="{{ asset('public/frontend/images/package-in-stock.png') }}"
-                                                    alt="{{ 'Není skladem'|trans }}"
-                                                >
-                                            </picture>
-                                        {% endif %}
-                                    </span>
-                                </div>
-                                {% if productView.availabilityStatus != "out-of-stock" %}
-                                    <div class="box-detail__info__availability__anchor">
-                                        <a class="box-detail__info__anchor js-smooth-scroll-anchor" href="#stocks-availabilities">
-                                            {{ 'Dostupnost'|trans }}
-                                            <i class="box-detail__info__anchor__icon svg svg-arrow"></i>
-                                        </a>
+                        {% if not productView.isMainVariant %}
+                            <div class="js-product-detail-main-add-to-cart-wrapper box-detail-add">
+                                {% if productView.inStock %}
+                                    <div itemprop="offers"
+                                        itemscope
+                                        itemtype="http://schema.org/Offer"
+                                        class="box-detail-add__price">
+                                        {{ sellingPriceWithVat|price }}
+                                        <meta itemprop="priceCurrency"
+                                            content="{{ currencyCode(domain.id) }}"
+                                        >
+                                        <meta itemprop="price"
+                                            content="{{ productView.sellingPrice.priceWithVat|moneyFormat }}"
+                                        >
+                                        <link itemprop="availability"
+                                            href="{{ productView.isInStock ? 'http://schema.org/InStock' : 'http://schema.org/OutOfStock' }}"
+                                        >
                                     </div>
+                                    {{ render(controller('App\\Controller\\Front\\CartController:productActionAction', { productActionView: productView.actionView, type: 'large'} )) }}
+                                {% else %}
+                                    {{ 'This product is no longer available for purchase. Have a look at similar products <a href="%url%">here</a>.'|transHtml({"%url%": url('front_product_list', { id: productView.mainCategoryId })}) }}
                                 {% endif %}
                             </div>
+                        {% endif %}
 
-                            {% if not productView.isMainVariant %}
-                                <div class="js-product-detail-main-add-to-cart-wrapper box-detail-add">
-                                     {% if productView.inStock %}
-                                        <div class="box-detail-add__info">
-                                            <div itemprop="offers"
-                                                itemscope
-                                                itemtype="http://schema.org/Offer"
-                                                class="box-detail-add__prices">
-                                                <div class="box-detail-add__prices__item box-detail-add__prices__item--main">
-                                                    {{ sellingPriceWithVat|price }}
-                                                </div>
-                                                <meta itemprop="priceCurrency"
-                                                    content="{{ currencyCode(domain.id) }}"
-                                                >
-                                                <meta itemprop="price"
-                                                    content="{{ productView.sellingPrice.priceWithVat|moneyFormat }}"
-                                                >
-                                                <link itemprop="availability"
-                                                    href="{{ productView.isInStock ? 'http://schema.org/InStock' : 'http://schema.org/OutOfStock' }}"
-                                                >
-                                            </div>
-                                            {{ render(controller('App\\Controller\\Front\\CartController:productActionAction', { productActionView: productView.actionView, type: 'large'} )) }}
-                                        </div>
-                                    {% else %}
-                                        <div>
-                                            {{ 'This product is no longer available for purchase. Have a look at similar products <a href="%url%">here</a>.'|transHtml({"%url%": url('front_product_list', { id: productView.mainCategoryId })}) }}
-                                        </div>
+                        <div class="box-detail__info__availability">
+                            <div class="box-detail__info__availability__value">
+                                {% if productView.availabilityStatus != "out-of-stock" %}
+                                    <a href="#stocks-availabilities" class="box-detail__info__availability__text box-detail__info__availability__text--{{ productView.availabilityStatus }} js-smooth-scroll-anchor">
+                                        {{ productView.availability }}
+                                        <i class="svg svg-arrow"></i>
+                                    </a>
+                                {% else %}
+                                    <span class="box-detail__info__availability__text box-detail__info__availability__text--{{ productView.availabilityStatus }}">
+                                        {{ productView.availability }}
+                                    </span>
+                                {% endif %}
+
+                                {% if productView.availabilityStatus == "in-stock" %}
+                                    {% if productView.availableStoresCountInformation is not empty %}
+                                        <span class="box-detail__info__availability__info">{{ productView.availableStoresCountInformation|raw }}.</span>
                                     {% endif %}
-                                </div>
-                            {% endif %}
+
+                                    {% if productView.countExposedInStores is not empty %}
+                                        <span class="box-detail__info__availability__info">{{ productView.countExposedInStores|raw }}.</span>
+                                    {% endif %}
+                                {% endif %}
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+
         <div class="web__line">
             <div class="web__container">
                 {% if productView.isMainVariant and not productView.isSellingDenied %}
@@ -254,241 +215,181 @@
 
                 {% set parameterValuesViewsData = productView.nonDimensionParameterViews %}
 
-                {% if productView.description %}
-                    <div class="box-accordion js-accordion js-accordion-closed-on-mobile is-opened" id="product-desc">
-                        <a class="box-accordion__header js-accordion-header" href="#">
-                            <strong class="box-accordion__heading">{{ 'Popis a parametry'|trans }}</strong>
-                            <span class="box-accordion__header__toggle">
-                                <span
-                                    class="box-accordion__header__toggle__text js-accordion-toggle-text"
-                                    data-text-more="{{ 'Zobrazit víc'|trans }}"
-                                    data-text-less="{{ 'Skrýt'|trans }}"
-                                >
-                                    {{ 'Skrýt'|trans }}
-                                </span>
-                                <i class="box-accordion__header__toggle__icon svg svg-arrow"></i>
-                            </span>
-                        </a>
-                        <div class="box-accordion__body{% if parameterValuesViewsData > 0 %} box-accordion__body--cols{% endif %} js-accordion-body">
-                            <div class="box-accordion__body__content box-accordion__body__content--desc">
-                                {{ productView.description|raw }}
-                            </div>
-                            {% if parameterValuesViewsData > 0 %}
-                                <div class="box-accordion__body__content box-accordion__body__content--params">
-                                    {% set lastParameterGroupName = null %}
-                                    {% for parameterValuesViewData in parameterValuesViewsData %}
-                                        {% set parameterGroupName = parameterValuesViewData.parameterGroupName %}
-                                        {% if parameterGroupName != lastParameterGroupName and parameterGroupName is not empty %}
-                                            {% if not loop.first %}
-                                                </ul>
-                                                <ul class="box-detail-list box-detail-list--params">
-                                            {% else %}
-                                                <ul class="box-detail-list box-detail-list--params">
-                                            {% endif %}
-                                            <li class="box-detail-list__item box-detail-list__item--heading">
-                                                <h2>{{ parameterGroupName }}</h2>
-                                            </li>
-                                        {% endif %}
-                                        {% if loop.first and parameterGroupName == lastParameterGroupName %}
-                                            <ul class="box-detail-list box-detail-list--params">
-                                        {% endif %}
-                                            <li class="box-detail-list__item">
-                                                {{ parameterValuesViewData.parameterName }}:
-                                                {{ parameterValuesViewData.valueTextsWithUnit|join(', ') }}
-                                            </li>
-                                        {% set lastParameterGroupName = parameterGroupName %}
-                                        {% if loop.last %}
-                                            </ul>
-                                        {% endif %}
-                                    {% endfor %}
-                                </div>
-                            {% endif %}
-                        </div>
-                    </div>
-                {% endif %}
+                <div class="in-tab js-responsive-tabs">
+                    <div class="in-tab__head dont-print">
+                        {% if productView.description %}
+                            <a href="#" class="in-tab__head__item js-tabs-button active" data-tab-id="description">
+                                {{ 'Přehled'|trans }}
+                            </a>
+                        {% endif %}
 
-                {% set dimensionParameterValuesViewsData = productView.dimensionParameterViews %}
-                {% if existProductImageByIdAndAkeneoType(productView.id, 'image_dimensions') or dimensionParameterValuesViewsData|length > 0 %}
-                    <div class="box-accordion js-accordion">
-                        <a class="box-accordion__header js-accordion-header" href="#">
-                            <strong class="box-accordion__heading">{{ 'Rozměry'|trans }}</strong>
-                            <span class="box-accordion__header__toggle">
-                                <span
-                                    class="box-accordion__header__toggle__text js-accordion-toggle-text"
-                                    data-text-more="{{ 'Zobrazit víc'|trans }}"
-                                    data-text-less="{{ 'Skrýt'|trans }}"
-                                >
-                                    {{ 'Zobrazit víc'|trans }}
-                                </span>
-                                <i class="box-accordion__header__toggle__icon svg svg-arrow"></i>
-                            </span>
-                        </a>
-                        <div class="box-accordion__body box-accordion__body--cols box-accordion__body--measures js-accordion-body">
-                            <div class="box-accordion__body__content box-accordion__body__content--measures">
-                                <table class="table table--params">
-                                    <thead>
-                                        <tr>
-                                            <th colspan="2">{{ 'Rozměry'|trans }}</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {% for parameterValuesViewData in dimensionParameterValuesViewsData %}
-                                            <tr>
-                                                <td>{{ parameterValuesViewData.parameterName }}</td>
-                                                <td>{{ parameterValuesViewData.valueTextsWithUnit|join(', ') }}</td>
-                                            </tr>
-                                        {% endfor %}
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div class="box-accordion__body__content box-accordion__body__content--img">{{ productImageByIdAndAkeneoType(productView.id, 'image_dimensions', { itemprop: 'image', alt: 'Rozměry'|trans }) }}</div>
-                        </div>
+                        {% if parameterValuesViewsData > 0 %}
+                            <a href="#" class="in-tab__head__item js-tabs-button" data-tab-id="parameters">
+                                {{ 'Parametry'|trans }}
+                            </a>
+                        {% endif %}
                     </div>
-                {% endif %}
-
-                {% if productView.productFileViews|length > 0 %}
-                    <div class="box-accordion js-accordion">
-                        <a class="box-accordion__header js-accordion-header" href="#">
-                            <strong class="box-accordion__heading">{{ 'Ke stažení'|trans }}</strong>
-                            <span class="box-accordion__header__toggle">
-                                <span
-                                    class="box-accordion__header__toggle__text js-accordion-toggle-text"
-                                    data-text-more="{{ 'Zobrazit víc'|trans }}"
-                                    data-text-less="{{ 'Skrýt'|trans }}"
-                                >
-                                    {{ 'Zobrazit víc'|trans }}
-                                </span>
-                                <i class="box-accordion__header__toggle__icon svg svg-arrow"></i>
-                            </span>
-                        </a>
-                        <div class="box-accordion__body box-accordion__body--cols js-accordion-body">
-                            <div class="box-detail-files">
-                                {% for productFileView in productView.productFileViews %}
-                                    <a target="_blank" class="box-detail-files__item" href="{{ productFileView.url }}">
-                                        <span class="box-detail-files__item__name">{{ productFileView.anchorText|trans }}</span>
-                                        <span class="box-detail-files__item__download">
-                                            {{ 'Stáhnout'|trans }}<i class="box-detail-files__item__download__icon svg svg-download"></i>
-                                        </span>
-                                    </a>
-                                {% endfor %}
-                            </div>
-                        </div>
-                    </div>
-                {% endif %}
-
-                {% if productView.storeAvailabilitiesInformation|length > 0 %}
-                    <div class="box-accordion box-accordion--opened js-accordion js-accordion-mobile" id="stocks-availabilities">
-                        <div class="box-accordion__header box-accordion__header--with-desc">
-                            <strong class="box-accordion__heading">{{ 'Dostupnost na prodejnách'|trans }}</strong>
-                            <p class="box-accordion__header__desc">
-                                {{ 'Vyberte prodejnu ze seznamu'|trans }}
-                            </p>
-                        </div>
-                        <div class="box-accordion__body box-accordion__body--no-spacing">
-                            <div class="box-accordion__grid-table box-accordion__grid-table--mobile-accords">
-                                <div class="box-accordion__grid-table__body">
-                                {% for productStockAvailabilityInformation in productView.storeAvailabilitiesInformation %}
-                                    <div class="box-accordion__grid-table__row">
-                                        <div class="box-accordion__grid-table__col box-accordion__grid-table__col--mobile-accord-header js-accordion-mobile-header">
-                                            <strong class="box-accordion__grid-table__title">{{ productStockAvailabilityInformation.storeName }}</strong>
-                                            <i class="box-accordion__grid-table__col__toggle svg svg-arrow"></i>
-                                        </div>
-                                        <div class="box-accordion__grid-table__col box-accordion__grid-table__col--mobile-accord-content js-accordion-mobile-section">
-                                            {% if productStockAvailabilityInformation.availabilityStatus == "in-stock" %}
-                                                <picture>
-                                                    <source
-                                                        srcset="{{ asset('public/frontend/images/package-in-stock2x.png') }} 2x, {{ asset('public/frontend/images/package-in-stock.png') }} 1x"
-                                                    >
-                                                    <img
-                                                        class="box-accordion__grid-table__col__icon"
-                                                        loading="lazy"
-                                                        data-src="{{ asset('public/frontend/images/package-in-stock.png') }}"
-                                                        alt="{{ 'Skladem'|trans }}"
-                                                    >
-                                                </picture>
-                                            {% else %}
-                                                <picture>
-                                                    <source
-                                                        srcset="{{ asset('public/frontend/images/package-in-stock2x.png') }} 2x, {{ asset('public/frontend/images/package-in-stock.png') }} 1x"
-                                                    >
-                                                    <img
-                                                        class="box-accordion__grid-table__col__icon box-accordion__grid-table__col__icon--out-of-stock"
-                                                        loading="lazy"
-                                                        data-src="{{ asset('public/frontend/images/package-in-stock.png') }}"
-                                                        alt="{{ 'Není skladem'|trans }}"
-                                                    >
-                                                </picture>
-                                            {% endif %}
-                                            {{ productStockAvailabilityInformation.availabilityInformation|raw }}
-                                        </div>
-                                        <div class="box-accordion__grid-table__col box-accordion__grid-table__col--expose box-accordion__grid-table__col--mobile-accord-content js-accordion-mobile-section">
-                                            {% if productStockAvailabilityInformation.exposedProduct %}
-                                                <img
-                                                    class="box-accordion__grid-table__col__icon"
-                                                    loading="lazy"
-                                                    src="{{ imgLazyloadPlaceholder }}"
-                                                    data-src="{{ asset('public/frontend/images/vystaveno.svg') }}"
-                                                    alt="{{ 'Vystaveno'|trans }}"
-                                                >
-                                                {{ '<strong class="box-accordion__grid-table__col__expose">Vystaveno</strong> na prodejně'|transHtml }}
-                                            {% else %}
-                                                <img
-                                                    class="box-accordion__grid-table__col__icon"
-                                                    loading="lazy"
-                                                    src="{{ imgLazyloadPlaceholder }}"
-                                                    data-src="{{ asset('public/frontend/images/nevystaveno.svg') }}"
-                                                    alt="{{ 'Není vystaveno'|trans }}"
-                                                >
-                                                {{ '<strong class="box-accordion__grid-table__col__expose">Není vystaveno</strong> na prodejně'|transHtml }}
-                                            {% endif %}
-                                        </div>
-                                        <div class="box-accordion__grid-table__col box-accordion__grid-table__col--showrooms box-accordion__grid-table__col--mobile-accord-content js-accordion-mobile-section">
-                                            {# @todo: implement after stores
-                                            <a class="box-detail__info__anchor" href="{{ url('front_stores_detail', { id: productStockAvailabilityInformation.stockId }) }}">
-                                                {{ 'Detail prodejny'|trans }}
-                                                <i class="box-detail__info__anchor__icon box-detail__info__anchor__icon--spaced svg svg-arrow"></i>
-                                            </a>
-                                            #}
+                    <div class="in-tab__content" id="product-desc">
+                        {% if productView.description %}
+                            <div class="in-tab__content__item js-tabs-content active" data-tab-id="description">
+                                <div class="in-tab__content__left">
+                                    <div class="in-tab__dropdown">
+                                        <h3 class="in-tab__dropdown__title js-responsive-toggle" data-element="description">
+                                            {{ 'Vlastnosti'|trans }}
+                                            <i class="svg svg-arrow"></i>
+                                        </h3>
+                                        <div class="display-none-tablet" id="description">
+                                            {{ productView.description|raw }}
                                         </div>
                                     </div>
-                                {% endfor %}
+                                </div>
+
+                                <div class="in-tab__content__right">
+                                    {% if productView.productFileViews|length > 0 %}
+                                        <div class="in-tab__dropdown">
+                                            <h3 class="in-tab__dropdown__title js-responsive-toggle" data-element="productFileViews">
+                                                {{ 'Ke stažení'|trans }}
+                                                <i class="svg svg-arrow"></i>
+                                            </h3>
+
+                                            <div class="in-tab__content__block display-none-tablet" id="productFileViews">
+                                                <h3 class="in-tab__title in-tab__title--only-desktop">{{ 'Ke stažení'|trans }}</h3>
+
+                                                <ul class="list-minimalistic">
+                                                    {% for productFileView in productView.productFileViews %}
+                                                        <li class="list-minimalistic__item">
+                                                            <a target="_blank" href="{{ productFileView.url }}">
+                                                                {{ productFileView.anchorText|trans }}
+                                                            </a>
+                                                        </li>
+                                                    {% endfor %}
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    {% endif %}
+
+                                    {% if productView.categoryViews %}
+                                        <div class="display-none-tablet">
+                                            <h3 class="in-tab__title">{{ 'Objevte více'|trans }}</h3>
+                                            
+                                            <div class="in-breadcrumb">
+                                                {% for categoryView in productView.categoryViews %}
+                                                    {% if not loop.first %}
+                                                        <span class="in-breadcrumb__item in-breadcrumb__item--separator"></span>
+                                                    {% endif %}
+
+                                                    {% if not loop.last %}
+                                                        <a class="in-breadcrumb__item" href="{{ categoryView.url }}">
+                                                            {{ categoryView.name }}
+                                                        </a>
+                                                    {% else %}
+                                                        <span class="in-breadcrumb__item in-breadcrumb__item--current">
+                                                            {{ categoryView.name }}
+                                                        </span>
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </div>
+                                        </div>
+                                    {% endif %}
                                 </div>
                             </div>
-                        </div>
+                        {% endif %}
+
+                        {% if parameterValuesViewsData > 0 %}
+                            <div class="in-tab__content__item in-tab__content__item--with-gap js-tabs-content" data-tab-id="parameters">
+                                <div class="in-tab__content__left">
+                                    <div class="in-tab__dropdown">
+                                        <h3 class="in-tab__dropdown__title js-responsive-toggle" data-element="parameters">
+                                            {{ 'Parametry'|trans }}
+                                            <i class="svg svg-arrow"></i>
+                                        </h3>
+
+                                        <div class="display-none-tablet" id="parameters">
+                                            <h3 class="in-tab__title in-tab__title--only-desktop">{{ 'Parametry'|trans }}</h3>
+                                            <table class="table-params">
+                                                <tbody>
+                                                    {% for parameterValuesViewData in parameterValuesViewsData %}
+                                                        <tr>
+                                                            <th>
+                                                                {{ parameterValuesViewData.parameterName }}
+                                                            </th>
+                                                            <td>
+                                                                {{ parameterValuesViewData.valueTextsWithUnit|join(', ') }}
+                                                            </td>
+                                                        </tr>
+                                                    {% endfor %}
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
                     </div>
-                {% endif %}
+
+                    {% if productView.storeAvailabilitiesInformation|length > 0 %}
+                        <div class="in-tab__section">
+                            <h3 class="in-tab__title in-tab__title--big-gap">{{ 'Dostupnost na prodejnách'|trans }}</h3>
+                            <ul class="list-stocks-availabilities" id="stocks-availabilities">
+                                {% for productStockAvailabilityInformation in productView.storeAvailabilitiesInformation %}
+                                    <li class="list-stocks-availabilities__item">
+                                        <strong class="list-stocks-availabilities__item__name">
+                                            {{ productStockAvailabilityInformation.storeName }}
+                                        </strong>
+                                        <span class="list-stocks-availabilities__item__availability">
+                                            {{ productStockAvailabilityInformation.availabilityInformation|raw }}
+                                        </span>
+                                        <a href="#" class="list-stocks-availabilities__item__detail js-not-implemented-yet">
+                                            {{ 'Detail prodejny'|trans }}<i class="svg svg-arrow-right"></i>
+                                        </a>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    {% endif %}
+                </div>
 
                 {% if productView.accessories|length > 0 %}
-                    <div class="box-detail box-detail--accessories gtm-scroll" data-gtm-event="{{ gtmAccessoriesScrollEvent|json_encode() }}">
-                        <h2 class="box-detail__title">{{ 'Můžete si dokoupit'|trans }}</h2>
-                        <div class="box-products-accessories js-products-slick-carousel-cols">
-                            {{ productList.list(productView.accessories, null, null, constant('App\\Model\\Gtm\\DataLayer::LIST_NAME_PRODUCT_ACCESSORIES')) }}
+                    <div class="box-products-carousel gtm-scroll" data-gtm-event="{{ gtmAccessoriesScrollEvent|json_encode() }}">
+                        <div class="box-products-carousel__title">
+                            <h2 class="in-title">
+                                <span class="in-title__separator in-title__separator--without-separator">
+                                    {{ 'Můžete si dokoupit'|trans }}
+                                </span>
+                            </h2>
                         </div>
+                        {{ productList.sliderList(productView.accessories, 'accessories-products', constant('App\\Model\\Gtm\\DataLayer::LIST_NAME_PRODUCT_ACCESSORIES')) }}
                     </div>
                 {% endif %}
 
                 {% cache 'products_similar_id_' ~ productView.id {lifetime:getCacheLifetimeByHours(1), domainId:getDomain().id} %}
                     {{ render(controller('App\\Controller\\Front\\ProductController:similarProductsAction', {id: productView.id} ))|spaceless }}
                 {% endcache %}
-            </div>
-        </div>
 
-        {% if productView.categoryViews %}
-            <div class="web__line web__line--spacing--big">
-                <div class="web__container">
-                    <div class="box-detail-cats">
-                        <h2 class="box-detail-cats__heading">{{ 'Zařazeno v kategoriích:'|trans }}</h2>
-                        <div class="box-detail-cats__wrap">
+                {% if productView.categoryViews %}
+                    <div class="in-tab display-block-tablet display-none">
+                        <h3 class="in-tab__title">{{ 'Objevte více'|trans }}</h3>
+                        
+                        <div class="in-breadcrumb">
                             {% for categoryView in productView.categoryViews %}
-                                <a class="box-detail-cats__item" href="{{ categoryView.url }}">
-                                    <img class="box-detail-cats__item__icon" loading="lazy" data-src="{{ asset('public/frontend/images/category_icon.svg') }}" alt="{{ categoryView.name }}">
-                                    {{ categoryView.name }}
-                                </a>
+                                {% if not loop.first %}
+                                    <span class="in-breadcrumb__item in-breadcrumb__item--separator"></span>
+                                {% endif %}
+
+                                {% if not loop.last %}
+                                    <a class="in-breadcrumb__item" href="{{ categoryView.url }}">
+                                        {{ categoryView.name }}
+                                    </a>
+                                {% else %}
+                                    <span class="in-breadcrumb__item in-breadcrumb__item--current">
+                                        {{ categoryView.name }}
+                                    </span>
+                                {% endif %}
                             {% endfor %}
                         </div>
                     </div>
-                </div>
+                {% endif %}
             </div>
-        {% endif %}
+        </div>
     </div>
 {% endblock %}

@@ -1,7 +1,7 @@
 {% extends '@!ShopsysFramework/Front/Form/deliveryAddressChoiceFields.html.twig' %}
 {% block delivery_address_choice_row %}
     {% if deliveryAddresses|length > 0 %}
-        <h2 class="in-title">{{ 'Dodací adresy'|trans }}</h2>
+        <h2>{{ 'Dodací adresy'|trans }}</h2>
         <ul class="list-addresses">
             {% for child in form %}
                 {% if child.vars.value|isInteger %}
