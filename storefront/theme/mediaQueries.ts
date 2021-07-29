@@ -5,7 +5,7 @@ const sizes = {
     lg: 769,
     vl: 1024,
     xl: 1240,
-};
+} as const;
 
 const mobileFirst = {
     queryXs: `(min-width: ${sizes.xs}px)`,
@@ -14,14 +14,14 @@ const mobileFirst = {
     queryLg: `(min-width: ${sizes.lg}px)`,
     queryVl: `(min-width: ${sizes.vl}px)`,
     queryXl: `(min-width: ${sizes.xl}px)`,
-};
+} as const;
 
 const desktopFirst = {
     queryMobileXs: `(max-width: ${sizes.sm - 1}px)`,
     queryMobile: `(max-width: ${sizes.md - 1}px)`,
     queryTablet: `(max-width: ${sizes.lg - 1}px)`,
     queryNotLargeDesktop: `(max-width: ${sizes.vl - 1}px)`,
-};
+} as const;
 
 const mediaQueries = {
     ...mobileFirst,

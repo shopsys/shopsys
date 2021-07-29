@@ -4,7 +4,7 @@ import {
     StyledHeaderLinks,
     StyledHeaderLogo,
     StyledHeaderMiddle,
-} from './Header.style.js';
+} from './Header.style';
 import { ReactElement } from 'react';
 
 const Header = (): ReactElement => {
