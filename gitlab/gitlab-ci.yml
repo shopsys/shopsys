@@ -91,6 +91,7 @@ review:
         name: "review/${CI_COMMIT_REF_SLUG}"
         url: https://${CI_COMMIT_REF_SLUG}.${CI_PROJECT_NAME}.${REVIEW_URL}
         on_stop: review:stop
+        auto_stop_in: 1 week
     needs:
         - build
         - build-storefront
