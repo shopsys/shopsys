@@ -26,18 +26,26 @@ class StockFacade
     protected EventDispatcherInterface $eventDispatcher;
 
     /**
+     * @var \App\Model\Stock\ProductStockFacade
+     */
+    private ProductStockFacade $productStockFacade;
+
+    /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \App\Model\Stock\StockRepository $stockRepository
      * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher
+     * @param \App\Model\Stock\ProductStockFacade $productStockFacade
      */
     public function __construct(
         EntityManagerInterface $em,
         StockRepository $stockRepository,
-        EventDispatcherInterface $eventDispatcher
+        EventDispatcherInterface $eventDispatcher,
+        ProductStockFacade $productStockFacade
     ) {
         $this->stockRepository = $stockRepository;
         $this->em = $em;
         $this->eventDispatcher = $eventDispatcher;
+        $this->productStockFacade = $productStockFacade;
     }
 
     /**
@@ -49,6 +57,8 @@ class StockFacade
         $stock = new Stock($stockData);
         $this->em->persist($stock);
         $this->em->flush();
+
+        $this->productStockFacade->createProductStockRelationForStockId($stock->getId());
 
         return $stock;
     }
