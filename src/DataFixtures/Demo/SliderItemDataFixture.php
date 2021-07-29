@@ -23,15 +23,23 @@ class SliderItemDataFixture extends AbstractReferenceFixture
     private $sliderItemDataFactory;
 
     /**
+     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
+     */
+    private Domain $domain;
+
+    /**
      * @param \App\Model\Slider\SliderItemFacade $sliderItemFacade
      * @param \Shopsys\FrameworkBundle\Model\Slider\SliderItemDataFactoryInterface $sliderItemDataFactory
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
         SliderItemFacade $sliderItemFacade,
-        SliderItemDataFactoryInterface $sliderItemDataFactory
+        SliderItemDataFactoryInterface $sliderItemDataFactory,
+        Domain $domain
     ) {
         $this->sliderItemFacade = $sliderItemFacade;
         $this->sliderItemDataFactory = $sliderItemDataFactory;
+        $this->domain = $domain;
     }
 
     /**
@@ -39,27 +47,31 @@ class SliderItemDataFixture extends AbstractReferenceFixture
      */
     public function load(ObjectManager $manager)
     {
-        /** @var \App\Model\Slider\SliderItemData $sliderItemData */
-        $sliderItemData = $this->sliderItemDataFactory->create();
-        $sliderItemData->domainId = Domain::FIRST_DOMAIN_ID;
-        $sliderItemData->hidden = false;
-        $sliderItemData->gtmId = 'sliderItemTest';
-        $sliderItemData->sliderExtendedText = 'Pravidla akce';
-        $sliderItemData->sliderExtendedTextLink = 'https://www.shopsys.cz';
+        foreach ($this->domain->getAllIds() as $domainId) {
+            $locale = $this->domain->getDomainConfigById($domainId)->getLocale();
 
-        $sliderItemData->name = '40% SLEVA NA ÚLOŽNÉ PROSTORY';
-        $sliderItemData->link = 'https://www.shopsys.cz';
+            /** @var \App\Model\Slider\SliderItemData $sliderItemData */
+            $sliderItemData = $this->sliderItemDataFactory->create();
+            $sliderItemData->domainId = $domainId;
+            $sliderItemData->hidden = false;
+            $sliderItemData->gtmId = 'sliderItemTest';
+            $sliderItemData->sliderExtendedText = t('Pravidla akce', [], 'dataFixtures', $locale);
+            $sliderItemData->sliderExtendedTextLink = 'https://www.shopsys.cz';
 
-        $this->sliderItemFacade->create($sliderItemData);
+            $sliderItemData->name = t('40% SLEVA NA ÚLOŽNÉ PROSTORY', [], 'dataFixtures', $locale);
+            $sliderItemData->link = 'https://www.shopsys.cz';
 
-        $sliderItemData->name = '40% SLEVA NA POSTELE, MATRACE A ROŠTY';
-        $sliderItemData->link = 'https://shopsys.cz';
+            $this->sliderItemFacade->create($sliderItemData);
 
-        $this->sliderItemFacade->create($sliderItemData);
+            $sliderItemData->name = t('40% SLEVA NA POSTELE, MATRACE A ROŠTY', [], 'dataFixtures', $locale);
+            $sliderItemData->link = 'https://shopsys.cz';
 
-        $sliderItemData->name = 'SLEVA 20% + 21% DPH NAVÍC';
-        $sliderItemData->link = 'https://shopsys.cz';
+            $this->sliderItemFacade->create($sliderItemData);
 
-        $this->sliderItemFacade->create($sliderItemData);
+            $sliderItemData->name = t('SLEVA 20% + 21% DPH NAVÍC', [], 'dataFixtures', $locale);
+            $sliderItemData->link = 'https://shopsys.cz';
+
+            $this->sliderItemFacade->create($sliderItemData);
+        }
     }
 }

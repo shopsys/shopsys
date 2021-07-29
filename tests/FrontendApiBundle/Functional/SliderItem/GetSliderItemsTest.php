@@ -16,23 +16,24 @@ class GetSliderItemsTest extends GraphQlTestCase
         $this->assertResponseContainsArrayOfDataForGraphQlType($response, $graphQlType);
         $responseData = $this->getResponseDataForGraphQlType($response, $graphQlType);
 
+        $firstDomainLocale = $this->getLocaleForFirstDomain();
         $expectedSliderItemsData = [
             [
-                'name' => '40% SLEVA NA ÚLOŽNÉ PROSTORY',
+                'name' => t('40% SLEVA NA ÚLOŽNÉ PROSTORY', [], 'dataFixtures', $firstDomainLocale),
                 'link' => 'https://www.shopsys.cz',
-                'extendedText' => 'Pravidla akce',
+                'extendedText' => t('Pravidla akce', [], 'dataFixtures', $firstDomainLocale),
                 'extendedTextLink' => 'https://www.shopsys.cz',
             ],
             [
-                'name' => '40% SLEVA NA POSTELE, MATRACE A ROŠTY',
+                'name' => t('40% SLEVA NA POSTELE, MATRACE A ROŠTY', [], 'dataFixtures', $firstDomainLocale),
                 'link' => 'https://shopsys.cz',
-                'extendedText' => 'Pravidla akce',
+                'extendedText' => t('Pravidla akce', [], 'dataFixtures', $firstDomainLocale),
                 'extendedTextLink' => 'https://www.shopsys.cz',
             ],
             [
-                'name' => 'SLEVA 20% + 21% DPH NAVÍC',
+                'name' => t('SLEVA 20% + 21% DPH NAVÍC', [], 'dataFixtures', $firstDomainLocale),
                 'link' => 'https://shopsys.cz',
-                'extendedText' => 'Pravidla akce',
+                'extendedText' => t('Pravidla akce', [], 'dataFixtures', $firstDomainLocale),
                 'extendedTextLink' => 'https://www.shopsys.cz',
             ],
         ];

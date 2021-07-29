@@ -196,6 +196,12 @@ msgstr "4 W"
 msgid "4.5\""
 msgstr "4.5\""
 
+msgid "40% SLEVA NA POSTELE, MATRACE A ROŠTY"
+msgstr ""
+
+msgid "40% SLEVA NA ÚLOŽNÉ PROSTORY"
+msgstr ""
+
 msgid "400 g"
 msgstr "400 g"
 
@@ -1300,6 +1306,9 @@ msgstr "Tato USB myš funguje spolehlivě na téměř libovolném povrchu a je u
 msgid "Practical and stylish optical mouse ideal for everyday office use.With its ergonomic shape fits perfect and is suitable for left and for right-handers.Using an optical sensor with high sensitivity is move the cursor on the screen fast and smooth.Benefits are also programmable buttons to help with easy access to the programs and documents you use most often.The computer mouse simply connect using a cable with a USB connector and the support Plug and Play, no need to install drivers and you can immediately get to work."
 msgstr "Tato USB myš funguje spolehlivě na téměř libovolném povrchu a je uzpůsobená pro ovládání pravou i levou rukou."
 
+msgid "Pravidla akce"
+msgstr ""
+
 msgid "PremiumCord micro USB, A-B, 1m"
 msgstr "PremiumCord micro USB, A-B, 1m"
 
@@ -1395,6 +1404,9 @@ msgstr "SDV-3360 Sklokeramická deska vestavná 60 cm"
 
 msgid "SDV 3460-built ceramic plate 60 cm"
 msgstr "SDV-3460 Sklokeramická deska vestavná 60 cm"
+
+msgid "SLEVA 20% + 21% DPH NAVÍC"
+msgstr ""
 
 msgid "SLR"
 msgstr "zrcadlovky"
