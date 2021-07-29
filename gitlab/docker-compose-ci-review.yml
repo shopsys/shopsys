@@ -31,6 +31,18 @@ services:
             - default
             - traefik-network
 
+    storefront-styleguide:
+        restart: always
+        image: ${STOREFRONT_STYLEGUIDE_TAG}
+        labels:
+            - traefik.backend=${COMPOSE_PROJECT_NAME}_storefront_styleguide
+            - traefik.frontend.rule=Host:${STOREFRONT_STYLEGUIDE_HOSTS}
+            - traefik.docker.network=ci_traefik-network
+            - traefik.port=6060
+        networks:
+            - default
+            - traefik-network
+
     php-fpm:
         restart: always
         image: ${TAG}
