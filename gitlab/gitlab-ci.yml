@@ -17,8 +17,8 @@ variables:
     STOREFRONT_STYLEGUIDE_TAG: ${CI_REGISTRY_IMAGE}/${CI_COMMIT_REF_SLUG}:${CI_COMMIT_SHA}-storefront-styleguide
     HOST: ${CI_COMMIT_REF_SLUG}.${CI_PROJECT_NAME}.${REVIEW_URL}
     HOSTS: ${CI_COMMIT_REF_SLUG}.${CI_PROJECT_NAME}.${REVIEW_URL}, en.${CI_COMMIT_REF_SLUG}.${CI_PROJECT_NAME}.${REVIEW_URL}
-    STOREFRONT_HOSTS: storefront.${CI_COMMIT_REF_SLUG}.${CI_PROJECT_NAME}.${REVIEW_URL}, en.storefront.${CI_COMMIT_REF_SLUG}.${CI_PROJECT_NAME}.${REVIEW_URL}
-    STOREFRONT_STYLEGUIDE_HOSTS: storefront-styleguide.${CI_COMMIT_REF_SLUG}.${CI_PROJECT_NAME}.${REVIEW_URL}, en.storefront-styleguide.${CI_COMMIT_REF_SLUG}.${CI_PROJECT_NAME}.${REVIEW_URL}
+    STOREFRONT_HOSTS: sf.${CI_COMMIT_REF_SLUG}.${CI_PROJECT_NAME}.${REVIEW_URL}, en.sf.${CI_COMMIT_REF_SLUG}.${CI_PROJECT_NAME}.${REVIEW_URL}
+    STOREFRONT_STYLEGUIDE_HOSTS: sfs.${CI_COMMIT_REF_SLUG}.${CI_PROJECT_NAME}.${REVIEW_URL}, en.sfs.${CI_COMMIT_REF_SLUG}.${CI_PROJECT_NAME}.${REVIEW_URL}
     COMPOSE_PROJECT_NAME: ${CI_PROJECT_NAME}__${CI_COMMIT_REF_SLUG}
 
 before_script:
@@ -107,7 +107,7 @@ review:
         - docker-compose exec -T php-fpm sed -i "s/http:\/\/127.0.0.1:8000/https:\/\/${HOST}/g" config/domains_urls.yaml
         - docker-compose exec -T php-fpm sed -i "s/http:\/\/127.0.0.2:8000/https:\/\/en.${HOST}/g" config/domains_urls.yaml
         - docker-compose exec -T php-fpm php phing -D production.confirm.action=y clean db-create build-review-ci
-        - echo -e "Available hosts \n - https://${HOST}\n - https://en.${HOST}\n - https://storefront.${HOST}\n - https://en.storefront.${HOST}\n - https://storefront-styleguide.${HOST}\n - https://en.storefront-styleguide.${HOST}"
+        - echo -e "Available hosts \n - https://${HOST}\n - https://en.${HOST}\n - https://sf.${HOST}\n - https://en.sf.${HOST}\n - https://sfs.${HOST}\n - https://en.sfs.${HOST}"
     after_script:
         - docker-compose exec -T php-fpm php phing frontend-api-generate-graphql-schema
         - docker cp ${COMPOSE_PROJECT_NAME}_php-fpm_1:/var/www/html/schema.graphql ./schema.graphql
