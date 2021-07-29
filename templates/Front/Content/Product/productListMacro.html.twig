@@ -35,12 +35,14 @@
                         {% endif %}
 
                         <div class="list-products__item__info__availability">
-                            <strong>{{ productView.availability }}</br></strong>
+                            <strong>{{ productView.availability }}</strong>
+
                             {% if productView.productAvailableStoresCountInformation is not empty %}
-                                <span>{{ productView.productAvailableStoresCountInformation|raw }}</span>
+                                <div>{{ productView.productAvailableStoresCountInformation|raw }}</div>
                             {% endif %}
+
                             {% if productView.productCountExposedInStores is not empty %}
-                                <span>{{ productView.productCountExposedInStores|raw }}</span>
+                                <div>{{ productView.productCountExposedInStores|raw }}</div>
                             {% endif %}
                         </div>
                     </a>
@@ -99,12 +101,14 @@
                                 {% endif %}
 
                                 <div class="list-slider-products__item__info__availability">
-                                    <strong>{{ productView.availability }}</br></strong>
-                                    {% if productView.productAvailableStocksCountInformation is not empty %}
-                                        <span>{{ productView.productAvailableStocksCountInformation|raw }}</span>
+                                    <strong>{{ productView.availability }}</strong>
+                                    
+                                    {% if productView.productAvailableStoresCountInformation is not empty %}
+                                        <div>{{ productView.productAvailableStoresCountInformation|raw }}</div>
                                     {% endif %}
+
                                     {% if productView.productCountExposedInStores is not empty %}
-                                        <span>{{ productView.productCountExposedInStores|raw }}</span>
+                                        <div>{{ productView.productCountExposedInStores|raw }}</div>
                                     {% endif %}
                                 </div>
                             </a>

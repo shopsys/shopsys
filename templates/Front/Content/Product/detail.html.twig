@@ -131,10 +131,11 @@
 
                                 {% if productView.availabilityStatus == "in-stock" %}
                                     {% if productView.availableStoresCountInformation is not empty %}
-                                        <span class="box-detail__info__availability__info">{{ productView.availableStoresCountInformation|raw }}</span>
+                                        <span class="box-detail__info__availability__info">{{ productView.availableStoresCountInformation|raw }}.</span>
                                     {% endif %}
+
                                     {% if productView.countExposedInStores is not empty %}
-                                        <span class="box-detail__info__availability__info">{{ productView.countExposedInStores|raw }}</span>
+                                        <span class="box-detail__info__availability__info">{{ productView.countExposedInStores|raw }}.</span>
                                     {% endif %}
                                 {% endif %}
                             </div>
