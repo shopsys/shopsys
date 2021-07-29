@@ -1,4 +1,5 @@
 import * as Yup from 'yup';
+import { cacheExchange, dedupExchange, fetchExchange, ssrExchange } from 'urql';
 import { initUrqlClient, withUrqlClient } from 'next-urql';
 import { FC, useState } from 'react';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
@@ -10,9 +11,9 @@ import ShopsysButton from 'components/forms/ShopsysButton';
 import ShopsysCheckbox from 'components/forms/ShopsysCheckbox';
 import ShopsysInUserText from 'components/in/ShopsysInUserText';
 import ShopsysTextInput from 'components/forms/ShopsysTextInput';
-import { ssrExchange } from 'urql';
 import { useTranslation } from 'react-i18next';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { promotedCategoriesQueryObject } from '../connectors/categories/PromotedCategories';
 
 type FormValues = {
     htmlContent: string;
@@ -142,15 +143,17 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     const client = initUrqlClient(
         {
             url: publicRuntimeConfig.publicGraphqlEndpoint,
-            exchanges: [ssrCache],
+            exchanges: [dedupExchange, cacheExchange, ssrCache, fetchExchange],
         },
         false,
     );
 
     let serversideTranslationConfig;
 
-    if (context.defaultLocale) {
+    if (context.defaultLocale && client !== null) {
         serversideTranslationConfig = await serverSideTranslations(context.defaultLocale);
+        await client.query(promotedCategoriesQueryObject).toPromise();
+
         return {
             props: {
                 ...serversideTranslationConfig,

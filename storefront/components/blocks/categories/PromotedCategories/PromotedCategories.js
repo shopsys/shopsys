@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 
 export default function PromotedCategories() {
     const { t } = useTranslation();
-    const result = useFetchQuery(promotedCategoriesQueryObject);
+    const result = useFetchQuery({ query: promotedCategoriesQueryObject });
 
     if (result.fetching) {
         return <>{t('Loading')}...</>;

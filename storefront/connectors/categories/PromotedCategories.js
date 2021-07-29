@@ -1,13 +1,11 @@
-export const promotedCategoriesQueryObject = {
-    query: `
+export const promotedCategoriesQueryObject = `
         query promotedCategories {
             promotedCategories {
                 name
                 uuid
             }
         }
-    `,
-};
+    `;
 
 export function mapPromotedCategories(data) {
     const categories = data?.promotedCategories;
