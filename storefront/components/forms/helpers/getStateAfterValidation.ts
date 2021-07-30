@@ -12,4 +12,6 @@ export const getStateAfterValidation = (
     if (markSuccessfulWhenValid && formState.touchedFields[name]) {
         return 'success';
     }
+
+    return undefined;
 };

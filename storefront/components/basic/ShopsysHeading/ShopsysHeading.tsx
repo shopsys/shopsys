@@ -18,6 +18,8 @@ const renderHeading = (type: 'h1' | 'h2' | 'h3' | 'h4') => {
         case 'h4':
             return StyledShopsysHeading4;
     }
+
+    throw new Error('Wrong type provided for ShopsysHeading.');
 };
 
 /**
