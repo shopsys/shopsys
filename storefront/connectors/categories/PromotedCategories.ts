@@ -1,3 +1,5 @@
+import { useFetchQuery } from '../../hooks/UseFetchQuery';
+
 export const promotedCategoriesQuery = `
         query promotedCategories {
             promotedCategories {
@@ -12,26 +14,7 @@ type Category = {
     uuid: string;
 };
 
-type ResponseCategory = {
-    name: string;
-    uuid: string;
-};
-
-export function mapPromotedCategories(data: { promotedCategories: ResponseCategory[] }): Category[] {
-    const categories = data?.promotedCategories;
-
-    if (!categories) {
-        return [];
-    }
-
-    const mapped: Category[] = [];
-
-    categories.map((category) => {
-        mapped.push({
-            uuid: category.uuid,
-            name: category.name,
-        });
-    });
-
-    return mapped;
+export function getPromotedCategories(): Category[] | undefined {
+    const result = useFetchQuery({ query: promotedCategoriesQuery });
+    return result?.data?.promotedCategories;
 }

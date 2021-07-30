@@ -1,12 +1,10 @@
-import { mapPromotedCategories, promotedCategoriesQuery } from 'connectors/categories/PromotedCategories';
+import { getPromotedCategories } from 'connectors/categories/PromotedCategories';
 import { ReactElement } from 'react';
-import { useFetchQuery } from 'hooks/UseFetchQuery';
 
 export default function PromotedCategories(): ReactElement | null {
-    const result = useFetchQuery({ query: promotedCategoriesQuery });
-    const promotedCategories = mapPromotedCategories(result?.data);
+    const promotedCategories = getPromotedCategories();
 
-    if (promotedCategories.length > 0) {
+    if (promotedCategories !== undefined) {
         return (
             <ul>
                 {promotedCategories.map(({ uuid, name }) => (
