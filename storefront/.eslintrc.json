@@ -29,6 +29,8 @@
     },
     "plugins": ["react", "unused-imports", "prettier", "@typescript-eslint"],
     "rules": {
+        "array-callback-return": "error",
+        "block-scoped-var": "error",
         "no-console": "error",
         "no-undef": "off",
         "no-unreachable-loop": "error",

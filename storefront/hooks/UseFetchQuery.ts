@@ -51,7 +51,7 @@ const getUserFriendlyErrorMessage = (originalError: CombinedError, t: TFunction)
     if (originalError.networkError) {
         errors.applicationError = t('Could not connect to server. Check your network.');
     } else if (originalError.graphQLErrors.length > 0) {
-        originalError.graphQLErrors.map((error) => {
+        originalError.graphQLErrors.forEach((error) => {
             if (error.message === 'validation') {
                 errors.userError = error?.extensions?.validation;
             } else {
