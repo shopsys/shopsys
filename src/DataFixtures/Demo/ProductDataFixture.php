@@ -2970,12 +2970,6 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->shortDescriptions[$domain->getId()] = t('TV LED, 100Hz, diagonal 80cm 100Hz, Full HD 1920 x 1080, DVB-T / C, 2x HDMI, USB, CI +, VGA, SCART, speakers 16W, energy. Class A + ', [], 'dataFixtures', $domain->getLocale());
 
             $i = 0;
-            $this->addParameterTranslations($parameterTranslations, t('Screen size', [], 'dataFixtures', $locale), t('36"', [], 'dataFixtures', $locale), $locale, $i);
-            $this->addParameterTranslations($parameterTranslations, t('Color', [], 'dataFixtures', $locale), t('black', [], 'dataFixtures', $locale), $locale, $i);
-            $this->addParameterTranslations($parameterTranslations, t('Technology', [], 'dataFixtures', $locale), t('CRT', [], 'dataFixtures', $locale), $locale, $i);
-            $this->addParameterTranslations($parameterTranslations, t('Resolution', [], 'dataFixtures', $locale), t('1366×768 (HD Ready)', [], 'dataFixtures', $locale), $locale, $i);
-            $this->addParameterTranslations($parameterTranslations, t('USB', [], 'dataFixtures', $locale), t('Yes', [], 'dataFixtures', $locale), $locale, $i);
-            $this->addParameterTranslations($parameterTranslations, t('HDMI', [], 'dataFixtures', $locale), t('No', [], 'dataFixtures', $locale), $locale, $i);
         }
         $this->setParametersByTranslations($productData, $parameterTranslations);
 
@@ -3510,11 +3504,6 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->shortDescriptions[$domain->getId()] = t('TV LED, 100Hz, diagonal 32 inches 100Hz, Full HD 1920 x 1080, DVB-T / C, 2x HDMI, USB, CI +, VGA, SCART, speakers 16W, energy. Class A + ', [], 'dataFixtures', $domain->getLocale());
 
             $i = 0;
-            $this->addParameterTranslations($parameterTranslations, t('Screen size', [], 'dataFixtures', $locale), t('54"', [], 'dataFixtures', $locale), $locale, $i);
-            $this->addParameterTranslations($parameterTranslations, t('Technology', [], 'dataFixtures', $locale), t('LED', [], 'dataFixtures', $locale), $locale, $i);
-            $this->addParameterTranslations($parameterTranslations, t('Resolution', [], 'dataFixtures', $locale), t('1366×768 (HD Ready)', [], 'dataFixtures', $locale), $locale, $i);
-            $this->addParameterTranslations($parameterTranslations, t('USB', [], 'dataFixtures', $locale), t('Yes', [], 'dataFixtures', $locale), $locale, $i);
-            $this->addParameterTranslations($parameterTranslations, t('HDMI', [], 'dataFixtures', $locale), t('Yes', [], 'dataFixtures', $locale), $locale, $i);
         }
         $this->setParametersByTranslations($productData, $parameterTranslations);
 
@@ -3550,8 +3539,6 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
             $productData->name[$locale] = t('Hyundai 22HD44D', [], 'dataFixtures', $locale);
             $productData->descriptions[$domain->getId()] = t('Television monitor IPS, 16: 9, 5M: 1, 200cd/m2, 5ms GTG, FullHD 1920x1080, DVB-S2/T2/C, 2x HDMI, USB, SCART, 2 x 5W speakers, energ. Class A ', [], 'dataFixtures', $domain->getLocale());
             $productData->shortDescriptions[$domain->getId()] = t('Television monitor IPS, 16: 9, 5M: 1, 200cd/m2, 5ms GTG, FullHD 1920x1080, DVB-S2/T2/C, 2x HDMI, USB, SCART, 2 x 5W speakers, energ. Class A ', [], 'dataFixtures', $domain->getLocale());
-
-            $this->addParameterTranslations($parameterTranslations, t('Screen size', [], 'dataFixtures', $locale), t('22"', [], 'dataFixtures', $locale), $locale, $i);
         }
         $this->setParametersByTranslations($productData, $parameterTranslations);
 

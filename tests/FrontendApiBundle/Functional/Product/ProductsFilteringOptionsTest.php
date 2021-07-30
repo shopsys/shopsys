@@ -91,7 +91,7 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
             'dataFixtures',
             $this->firstDomainLocale
         ) . '",
-                                    "count": 2,
+                                    "count": 1,
                                     "isAbsolute": true
                                 },
                                 {
@@ -111,7 +111,7 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
             'dataFixtures',
             $this->firstDomainLocale
         ) . '",
-                                    "count": 4,
+                                    "count": 1,
                                     "isAbsolute": true
                                 }
                             ]
@@ -121,22 +121,12 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
                             "values": [
                                 {
                                     "text": "' . t(
-            'bílá',
-            [],
-            'dataFixtures',
-            $this->firstDomainLocale
-        ) . '",
-                                    "count": 3,
-                                    "isAbsolute": true
-                                },
-                                {
-                                    "text": "' . t(
             'černá',
             [],
             'dataFixtures',
             $this->firstDomainLocale
         ) . '",
-                                    "count": 2,
+                                    "count": 1,
                                     "isAbsolute": true
                                 },
                                 {
@@ -393,7 +383,7 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
             'dataFixtures',
             $this->firstDomainLocale
         ) . '",
-                "count": 2,
+                "count": 1,
                 "isAbsolute": true
             }
         ]
@@ -401,16 +391,6 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
     {
         "name": "' . t('Color', [], 'dataFixtures', $this->firstDomainLocale) . '",
         "values": [
-            {
-                "text": "' . t(
-            'bílá',
-            [],
-            'dataFixtures',
-            $this->firstDomainLocale
-        ) . '",
-                "count": 2,
-                "isAbsolute": true
-            },
             {
                 "text": "' . t(
             'černá',

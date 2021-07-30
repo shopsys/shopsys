@@ -136,8 +136,6 @@ class ProductFormTypeExtension extends AbstractTypeExtension
         $this->setPricesGroup($builder, $this->product);
         $this->setTransferredFilesGroup($builder, $this->product);
 
-        $builder->remove('parametersGroup');
-
         $this->formBuilderHelper->disableFieldsByConfigurations($builder, self::DISABLED_FIELDS);
     }
 

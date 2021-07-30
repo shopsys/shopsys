@@ -108,7 +108,6 @@ class ParameterDataFixture extends AbstractReferenceFixture implements Dependent
         $parameterValueRedSk = $this->getParameterValue('sk', 'červená', '#ff0000');
         $parameterValueBlackCs = $this->getParameterValue('cs', 'černá', '#000000');
         $parameterValueBlackSk = $this->getParameterValue('sk', 'čierná', '#000000');
-        $parameterValueWhiteCs = $this->getParameterValue('cs', 'bílá', '#ffffff');
 
         $parameterValueMetalCs = $this->getParameterValue('cs', 'kov');
         $parameterValueMetalSk = $this->getParameterValue('sk', 'kov');
@@ -120,38 +119,28 @@ class ParameterDataFixture extends AbstractReferenceFixture implements Dependent
         $product1 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1');
         $this->addParameterValueToProduct($product1, $parameterColor, $parameterValueRedCs);
         $this->addParameterValueToProduct($product1, $parameterColor, $parameterValueRedSk);
-        $this->addParameterValueToProduct($product1, $parameterColor, $parameterValueBlackCs);
-        $this->addParameterValueToProduct($product1, $parameterColor, $parameterValueBlackSk);
         $this->addParameterValueToProduct($product1, $parameterMaterial, $parameterValueMetalCs);
         $this->addParameterValueToProduct($product1, $parameterMaterial, $parameterValueMetalSk);
-        $this->addParameterValueToProduct($product1, $parameterMaterial, $parameterValueWoodCs);
-        $this->addParameterValueToProduct($product1, $parameterMaterial, $parameterValueWoodSk);
-        $this->addParameterValueToProduct($product1, $parameterMaterial, $parameterValuePlasticCs);
 
-        /** @var \App\Model\Product\Product $product1 */
-        $product1 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '2');
-        $this->addParameterValueToProduct($product1, $parameterColor, $parameterValueBlackCs);
-        $this->addParameterValueToProduct($product1, $parameterColor, $parameterValueBlackSk);
-        $this->addParameterValueToProduct($product1, $parameterColor, $parameterValueWhiteCs);
-        $this->addParameterValueToProduct($product1, $parameterMaterial, $parameterValueMetalCs);
-        $this->addParameterValueToProduct($product1, $parameterMaterial, $parameterValueMetalSk);
-        $this->addParameterValueToProduct($product1, $parameterMaterial, $parameterValuePlasticCs);
+        /** @var \App\Model\Product\Product $product2 */
+        $product2 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '2');
+        $this->addParameterValueToProduct($product2, $parameterColor, $parameterValueBlackCs);
+        $this->addParameterValueToProduct($product2, $parameterColor, $parameterValueBlackSk);
+        $this->addParameterValueToProduct($product2, $parameterMaterial, $parameterValueMetalCs);
+        $this->addParameterValueToProduct($product2, $parameterMaterial, $parameterValueMetalSk);
 
-        /** @var \App\Model\Product\Product $product1 */
-        $product1 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '3');
-        $this->addParameterValueToProduct($product1, $parameterColor, $parameterValueRedCs);
-        $this->addParameterValueToProduct($product1, $parameterColor, $parameterValueRedSk);
-        $this->addParameterValueToProduct($product1, $parameterColor, $parameterValueWhiteCs);
-        $this->addParameterValueToProduct($product1, $parameterMaterial, $parameterValuePlasticCs);
+        /** @var \App\Model\Product\Product $product3 */
+        $product3 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '3');
+        $this->addParameterValueToProduct($product3, $parameterColor, $parameterValueRedCs);
+        $this->addParameterValueToProduct($product3, $parameterColor, $parameterValueRedSk);
+        $this->addParameterValueToProduct($product3, $parameterMaterial, $parameterValuePlasticCs);
 
-        /** @var \App\Model\Product\Product $product1 */
-        $product1 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '4');
-        $this->addParameterValueToProduct($product1, $parameterColor, $parameterValueRedCs);
-        $this->addParameterValueToProduct($product1, $parameterColor, $parameterValueRedSk);
-        $this->addParameterValueToProduct($product1, $parameterColor, $parameterValueWhiteCs);
-        $this->addParameterValueToProduct($product1, $parameterMaterial, $parameterValueWoodCs);
-        $this->addParameterValueToProduct($product1, $parameterMaterial, $parameterValueWoodSk);
-        $this->addParameterValueToProduct($product1, $parameterMaterial, $parameterValuePlasticCs);
+        /** @var \App\Model\Product\Product $product4 */
+        $product4 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '4');
+        $this->addParameterValueToProduct($product4, $parameterColor, $parameterValueRedCs);
+        $this->addParameterValueToProduct($product4, $parameterColor, $parameterValueRedSk);
+        $this->addParameterValueToProduct($product4, $parameterMaterial, $parameterValueWoodCs);
+        $this->addParameterValueToProduct($product4, $parameterMaterial, $parameterValueWoodSk);
     }
 
     /**
