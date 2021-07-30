@@ -1,7 +1,12 @@
 import * as Yup from 'yup';
+import { cacheExchange, dedupExchange, fetchExchange, ssrExchange } from 'urql';
 import { FC, useState } from 'react';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
+import { initUrqlClient, withUrqlClient } from 'next-urql';
+import getConfig from 'next/config';
 import { GetServerSideProps } from 'next';
+import PromotedCategories from '../components/blocks/categories/PromotedCategories/PromotedCategories';
+import { promotedCategoriesQuery } from '../connectors/categories/PromotedCategories';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import ShopsysButton from 'components/forms/ShopsysButton';
 import ShopsysCheckbox from 'components/forms/ShopsysCheckbox';
@@ -14,6 +19,8 @@ type FormValues = {
     htmlContent: string;
     formConsent: boolean;
 };
+
+const { publicRuntimeConfig } = getConfig();
 
 const Index: FC = () => {
     const { t } = useTranslation();
@@ -46,6 +53,8 @@ const Index: FC = () => {
                     borderRadius: '10px',
                 }}
             >
+                <h2>{t('Promoted categories')}</h2>
+                <PromotedCategories />
                 <div>
                     <ShopsysButton
                         style={{ margin: '5px' }}
@@ -130,13 +139,25 @@ const Index: FC = () => {
 };
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
+    const ssrCache = ssrExchange({ isClient: false });
+    const client = initUrqlClient(
+        {
+            url: publicRuntimeConfig.publicGraphqlEndpoint,
+            exchanges: [dedupExchange, cacheExchange, ssrCache, fetchExchange],
+        },
+        false,
+    );
+
     let serversideTranslationConfig;
 
-    if (context.defaultLocale) {
+    if (context.defaultLocale !== undefined && client !== null) {
         serversideTranslationConfig = await serverSideTranslations(context.defaultLocale);
+        await client.query(promotedCategoriesQuery).toPromise();
+
         return {
             props: {
                 ...serversideTranslationConfig,
+                urqlState: ssrCache.extractData(),
             },
         };
     } else {
@@ -144,4 +165,9 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     }
 };
 
-export default Index;
+export default withUrqlClient(
+    () => ({
+        url: publicRuntimeConfig.publicGraphqlEndpoint,
+    }),
+    { ssr: false },
+)(Index);
