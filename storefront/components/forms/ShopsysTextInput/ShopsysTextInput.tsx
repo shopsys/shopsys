@@ -17,7 +17,7 @@ import { ErrorMessage } from '@hookform/error-message';
  */
 function ShopsysTextInput(props: InferProps<typeof ShopsysTextInput.propTypes>): ReactElement {
     const { register, formState } = useFormContext();
-    const [inputState, setInputState] = useState<string | undefined>(undefined);
+    const [inputState, setInputState] = useState<'error' | 'success' | undefined>(undefined);
     const [inputType, setInputType] = useState(props.type);
 
     const togglePasswordVisibilityHandler = () => {
@@ -118,7 +118,7 @@ ShopsysTextInput.propTypes = {
      */
     type: PropTypes.oneOf(['text', 'password', 'email', 'tel']).isRequired,
     /**
-     * A prop to define if the HTML input element should receive the .success CSS class when the input is correct
+     * A prop to define if the HTML textarea element should receive the .success CSS class when the input is correct
      */
     markSuccessfulWhenValid: PropTypes.bool.isRequired,
 };

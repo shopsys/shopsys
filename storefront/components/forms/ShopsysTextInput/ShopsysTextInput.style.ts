@@ -11,7 +11,7 @@ const localVariables = {
     inputLabelActivePositionTop: '9px',
 };
 
-type StyledShopsysInputState = 'error' | 'success';
+type StyledShopsysInputState = 'error' | 'success' | undefined;
 
 type ShopsysTextInputStyledProps = {
     inputState: StyledShopsysInputState;
