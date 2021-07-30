@@ -31,12 +31,15 @@
     "rules": {
         "no-console": "error",
         "no-undef": "off",
+        "no-unreachable-loop": "error",
+        "no-unsafe-optional-chaining": "error",
         "padded-blocks": "off",
         "prettier/prettier": "error",
         "react/jsx-props-no-spreading": "off",
         "react/prop-types": "off",
         "react/react-in-jsx-scope": "off",
         "react/require-default-props": "off",
+        "require-atomic-updates": "error",
         "sort-imports": ["error", { "ignoreCase": true }],
         "unused-imports/no-unused-imports": "error"
     },
