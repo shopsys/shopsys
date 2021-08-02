@@ -18,34 +18,11 @@ function ShopsysCheckbox(props: InferProps<typeof ShopsysCheckbox.propTypes>): R
     const { register, formState } = useFormContext();
 
     return (
-        <StyledShopsysChoiceFormLine>
-            <StyledShopsysCheckbox>
-                <input
-                    /**
-                     * @see https://react-hook-form.com/api/useform/register
-                     */
-                    {...register(props.name)}
-                    {...props}
-                    type="checkbox"
-                />
-                <label htmlFor={props.id}>
-                    {props.label}
-                    {props.required && <StyledShopsysRequiredSymbol>*</StyledShopsysRequiredSymbol>}
-                </label>
-            </StyledShopsysCheckbox>
-            {formState.errors[props.name] && (
-                <StyledShopsysFormFieldError>
-                    <StyledShopsysErrorIcon src="/svg/cross.svg" />
-                    {/**
-                     * @see https://react-hook-form.com/api/useformstate/errormessage
-                     */}
-                    <ErrorMessage
-                        errors={formState.errors}
-                        name={props.name}
-                        render={({ message }) => <StyledShopsysErrorMessage>{message}</StyledShopsysErrorMessage>}
-                    />
-                </StyledShopsysFormFieldError>
-            )}
+        <StyledShopsysChoiceFormLine className="checkbox">
+            <ShopsysLabelWrapper htmlFor={props.id} required={props.required} label={props.label}>
+                <StyledShopsysCheckbox {...register(props.name)} {...props} type="checkbox" />
+            </ShopsysLabelWrapper>
+            <ShopsysFormLineError htmlElement="checkbox" errors={formState.errors} for={props.name} />
         </StyledShopsysChoiceFormLine>
     );
 }
