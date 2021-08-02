@@ -6,6 +6,7 @@ namespace Tests\FrontendApiBundle\Test;
 
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
+use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
 use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
@@ -251,8 +252,9 @@ abstract class GraphQlTestCase extends FunctionalTestCase
         $currency = $this->currencyFacade->getDomainDefaultCurrencyByDomainId($domainId);
 
         $basePrice = $this->basePriceCalculation->calculateBasePriceRoundedByCurrency(
-            $this->priceConverter->convertPriceWithoutVatToPriceInDomainDefaultCurrency(
+            $this->priceConverter->convertPriceWithoutVatToDomainDefaultCurrencyPrice(
                 Money::create($priceWithoutVat),
+                $currency,
                 $domainId
             ),
             PricingSetting::INPUT_PRICE_TYPE_WITHOUT_VAT,
@@ -312,8 +314,9 @@ abstract class GraphQlTestCase extends FunctionalTestCase
      */
     protected function getFormattedMoneyAmountConvertedToDomainDefaultCurrency(string $price): string
     {
-        $money = $this->priceConverter->convertPriceWithoutVatToPriceInDomainDefaultCurrency(
+        $money = $this->priceConverter->convertPriceWithoutVatToDomainDefaultCurrencyPrice(
             Money::create($price),
+            $this->currencyFacade->getByCode(Currency::CODE_CZK),
             Domain::FIRST_DOMAIN_ID
         );
 

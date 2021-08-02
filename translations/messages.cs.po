@@ -1414,6 +1414,9 @@ msgstr ""
 msgid "Online shop"
 msgstr "Internetový obchod"
 
+msgid "Oops! Error occurred"
+msgstr "Jejda! Nastala chyba"
+
 msgid "Oops! Error occurred."
 msgstr "Jejda! Nastala chyba."
 
@@ -1521,6 +1524,9 @@ msgstr ""
 
 msgid "Package tracking"
 msgstr "Sledování zásilky"
+
+msgid "Page not found"
+msgstr "Stránka nenalezena"
 
 msgid "Page not found!"
 msgstr "Stránka nenalezena!"
@@ -1747,6 +1753,9 @@ msgstr "Do košíku bylo vloženo zboží <strong>{{ name }}</strong> ({{ quanti
 msgid "Product <strong>{{ name }}</strong> added to the cart (total amount {{ quantity|formatNumber }} {{ unitName }})"
 msgstr "Do košíku bylo vloženo zboží <strong>{{ name }}</strong> (celkem již {{ quantity|formatNumber }} {{ unitName }})"
 
+msgid "Product <strong>{{ name }}</strong> you had in cart is no longer available. Please check your order."
+msgstr "Zboží <strong>{{ name }}</strong>, které jste měli v košíku, již není v nabídce. Prosím, překontrolujte si objednávku."
+
 msgid "Product In Action"
 msgstr "Produkt v akci"
 
@@ -1764,6 +1773,9 @@ msgstr "Informace o produktu"
 
 msgid "Product no longer on sale"
 msgstr "Zboží se již neprodává"
+
+msgid "Product you had in cart is no longer in available. Please check your order."
+msgstr "Zboží, které jste měli v košíku, již není v nabídce. Prosím, překontrolujte si objednávku."
 
 msgid "Product {{ name }} removed from cart"
 msgstr "Z košíku bylo odstraněno zboží {{ name }}"
@@ -2299,6 +2311,9 @@ msgstr ""
 msgid "Terms and conditions"
 msgstr "Obchodní podmínky"
 
+msgid "Terms-and-conditions.html"
+msgstr "Obchodní-podmínky.html"
+
 msgid "Text"
 msgstr ""
 
@@ -2322,6 +2337,9 @@ msgstr "V průběhu objednávkového procesu byla změněna cena platby {{ payme
 
 msgid "The price of shipping {{ transportName }} changed during ordering process. Check your order, please."
 msgstr "V průběhu objednávkového procesu byla změněna cena dopravy {{ transportName }}. Prosím, překontrolujte si objednávku."
+
+msgid "The price of the product <strong>{{ name }}</strong> you have in cart has changed. Please, check your order."
+msgstr "Byla změněna cena zboží <strong>{{ name }}</strong>, které máte v košíku. Prosím, překontrolujte si objednávku."
 
 msgid "There were problems during payment of created order with number %orderNumber%."
 msgstr "Během placení dokončené a odeslané objednávky č. %orderNumber% došlo k potížím."

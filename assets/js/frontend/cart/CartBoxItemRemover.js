@@ -6,7 +6,7 @@ import Gtm from '../../gtm';
 export default class CartBoxItemRemover {
 
     static init () {
-        document.getElementsByClassName('js-cart-box-item-remove-button').forEach(element => {
+        document.querySelectorAll('.js-cart-box-item-remove-button').forEach(element => {
             element.addEventListener('click', event => {
                 event.preventDefault();
 

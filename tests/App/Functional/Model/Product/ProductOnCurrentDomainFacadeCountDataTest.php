@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\App\Functional\Model\Product;
 
 use App\DataFixtures\Demo\CategoryDataFixture;
+use App\DataFixtures\Demo\CurrencyDataFixture;
 use App\DataFixtures\Demo\FlagDataFixture;
 use App\Model\Product\Filter\ParameterFilterData;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
@@ -241,10 +242,13 @@ abstract class ProductOnCurrentDomainFacadeCountDataTest extends ParameterTransa
      */
     private function categoryPriceTestCase(): array
     {
+        /** @var \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currencyCzk */
+        $currencyCzk = $this->getReference(CurrencyDataFixture::CURRENCY_CZK);
         $category = $this->getReference(CategoryDataFixture::CATEGORY_PRINTERS);
+
         $filterData = new ProductFilterData();
-        $filterData->minimalPrice = $this->priceConverter->convertPriceWithVatToPriceInDomainDefaultCurrency(Money::create((1000 * 1.21) . ''), Domain::FIRST_DOMAIN_ID);
-        $filterData->maximalPrice = $this->priceConverter->convertPriceWithVatToPriceInDomainDefaultCurrency(Money::create((80000 * 1.21) . ''), Domain::FIRST_DOMAIN_ID);
+        $filterData->minimalPrice = $this->priceConverter->convertPriceWithVatToDomainDefaultCurrencyPrice(Money::create((1000 * 1.21) . ''), $currencyCzk, Domain::FIRST_DOMAIN_ID);
+        $filterData->maximalPrice = $this->priceConverter->convertPriceWithVatToDomainDefaultCurrencyPrice(Money::create((80000 * 1.21) . ''), $currencyCzk, Domain::FIRST_DOMAIN_ID);
 
         $countData = new ProductFilterCountData();
 
@@ -504,9 +508,12 @@ abstract class ProductOnCurrentDomainFacadeCountDataTest extends ParameterTransa
      */
     private function searchPriceTestCase(): array
     {
+        /** @var \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currencyCzk */
+        $currencyCzk = $this->getReference(CurrencyDataFixture::CURRENCY_CZK);
+
         $filterData = new ProductFilterData();
-        $filterData->minimalPrice = $this->priceConverter->convertPriceWithVatToPriceInDomainDefaultCurrency(Money::create(5000), Domain::FIRST_DOMAIN_ID);
-        $filterData->maximalPrice = $this->priceConverter->convertPriceWithVatToPriceInDomainDefaultCurrency(Money::create(50000), Domain::FIRST_DOMAIN_ID);
+        $filterData->minimalPrice = $this->priceConverter->convertPriceWithVatToDomainDefaultCurrencyPrice(Money::create(5000), $currencyCzk, Domain::FIRST_DOMAIN_ID);
+        $filterData->maximalPrice = $this->priceConverter->convertPriceWithVatToDomainDefaultCurrencyPrice(Money::create(50000), $currencyCzk, Domain::FIRST_DOMAIN_ID);
         $countData = new ProductFilterCountData();
         $countData->countInStock = 9;
         $countData->countByBrandId = [];
@@ -549,10 +556,13 @@ abstract class ProductOnCurrentDomainFacadeCountDataTest extends ParameterTransa
      */
     private function searchPriceStockFlagBrandsTestCase(): array
     {
+        /** @var \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currencyCzk */
+        $currencyCzk = $this->getReference(CurrencyDataFixture::CURRENCY_CZK);
+
         $filterData = new ProductFilterData();
         $filterData->inStock = true;
         $filterData->flags[] = $this->getReference(FlagDataFixture::FLAG_PRODUCT_NEW);
-        $filterData->maximalPrice = $this->priceConverter->convertPriceWithVatToPriceInDomainDefaultCurrency(Money::create(20000), Domain::FIRST_DOMAIN_ID);
+        $filterData->maximalPrice = $this->priceConverter->convertPriceWithVatToDomainDefaultCurrencyPrice(Money::create(20000), $currencyCzk, Domain::FIRST_DOMAIN_ID);
 
         $countData = new ProductFilterCountData();
         $countData->countInStock = 3;

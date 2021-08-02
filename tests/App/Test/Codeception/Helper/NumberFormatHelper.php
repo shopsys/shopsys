@@ -140,8 +140,10 @@ class NumberFormatHelper extends Module
      */
     public function getPriceWithVatConvertedToDomainDefaultCurrency(string $price): string
     {
-        $money = $this->priceConverter->convertPriceWithVatToPriceInDomainDefaultCurrency(
+        $currencyCzk = $this->currencyFacade->getDomainDefaultCurrencyByDomainId(Domain::FIRST_DOMAIN_ID);
+        $money = $this->priceConverter->convertPriceWithVatToDomainDefaultCurrencyPrice(
             Money::create($price),
+            $currencyCzk,
             Domain::FIRST_DOMAIN_ID
         );
 

@@ -14,19 +14,15 @@ use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingModeForSear
 class ProductListOrderingModeForSearchFacade extends BaseProductListOrderingModeForSearchFacade
 {
     /**
-     * @return \Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingConfig
+     * @return array<string, string>
      */
-    public function getProductListOrderingConfig()
+    protected function getSupportedOrderingModesNamesById(): array
     {
-        return new ProductListOrderingConfig(
-            [
-                ProductListOrderingConfig::ORDER_BY_RELEVANCE => t('relevance'),
-                ProductListOrderingConfig::ORDER_BY_PRIORITY => t('TOP'),
-                ProductListOrderingConfig::ORDER_BY_PRICE_ASC => t('from the cheapest'),
-                ProductListOrderingConfig::ORDER_BY_PRICE_DESC => t('from most expensive'),
-            ],
-            ProductListOrderingConfig::ORDER_BY_RELEVANCE,
-            static::COOKIE_NAME
-        );
+        return [
+            ProductListOrderingConfig::ORDER_BY_RELEVANCE => t('relevance'),
+            ProductListOrderingConfig::ORDER_BY_PRIORITY => t('TOP'),
+            ProductListOrderingConfig::ORDER_BY_PRICE_ASC => t('from the cheapest'),
+            ProductListOrderingConfig::ORDER_BY_PRICE_DESC => t('from most expensive'),
+        ];
     }
 }

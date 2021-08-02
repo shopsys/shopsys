@@ -2044,6 +2044,9 @@ msgstr "Ok"
 msgid "Online shop"
 msgstr "E-shop"
 
+msgid "Oops! Error occurred"
+msgstr "Ups! Nastala chyba"
+
 msgid "Oops! Error occurred."
 msgstr "Ups! Nastala chyba."
 
@@ -2184,6 +2187,9 @@ msgstr "PURA"
 
 msgid "Package tracking"
 msgstr ""
+
+msgid "Page not found"
+msgstr "Stránka nenájdená"
 
 msgid "Page not found!"
 msgstr "Stránka nenájdená!"
@@ -2449,6 +2455,9 @@ msgstr "Produkt <strong>{{ name }}</strong> ({{ quantity|formatNumber }} {{ unit
 msgid "Product <strong>{{ name }}</strong> added to the cart (total amount {{ quantity|formatNumber }} {{ unitName }})"
 msgstr "Produkt <strong>{{ name }}</strong> bol pridaný do košíka (total amount {{ quantity|formatNumber }} {{ unitName }})"
 
+msgid "Product <strong>{{ name }}</strong> you had in cart is no longer available. Please check your order."
+msgstr ""
+
 msgid "Product In Action"
 msgstr ""
 
@@ -2463,6 +2472,9 @@ msgstr "Informácie o produkte"
 
 msgid "Product no longer on sale"
 msgstr "Produkt sa už nepredáva"
+
+msgid "Product you had in cart is no longer in available. Please check your order."
+msgstr ""
 
 msgid "Product {{ name }} removed from cart"
 msgstr "Produkt {{ name }} odstránený z košíku"
@@ -3250,6 +3262,9 @@ msgstr ""
 msgid "Tento způsob platby je skrytý systémem GoPay."
 msgstr "Tento spôsob platby je skrytý systémom GoPay."
 
+msgid "Terms-and-conditions.html"
+msgstr ""
+
 msgid "Text"
 msgstr ""
 
@@ -3272,6 +3287,9 @@ msgid "The price of payment {{ paymentName }} changed during ordering process. C
 msgstr ""
 
 msgid "The price of shipping {{ transportName }} changed during ordering process. Check your order, please."
+msgstr ""
+
+msgid "The price of the product <strong>{{ name }}</strong> you have in cart has changed. Please, check your order."
 msgstr ""
 
 msgid "There were problems during payment of created order with number %orderNumber%."

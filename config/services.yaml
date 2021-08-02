@@ -53,6 +53,9 @@ services:
     Shopsys\FrameworkBundle\Component\FileUpload\FileUpload:
         alias: App\Component\FileUpload\FileUpload
 
+    Shopsys\FrameworkBundle\Component\ClassExtension\MethodAnnotationsFactory:
+        alias: App\Component\ClassExtension\MethodAnnotationsFactory
+
     Symfony\Component\Validator\Constraints\FileValidator:
 
     app.component.validator.file_validator:
@@ -438,6 +441,15 @@ services:
 
     Shopsys\ReadModelBundle\Product\Action\ProductActionViewFactory:
         alias: App\Model\Product\Action\ProductActionViewFactory
+
+    Shopsys\FrameworkBundle\Model\Breadcrumb\ErrorPageBreadcrumbGenerator:
+        alias: App\Model\Breadcrumb\ErrorPageBreadcrumbGenerator
+
+    Shopsys\FrameworkBundle\Model\Breadcrumb\SimpleBreadcrumbGenerator:
+        alias: App\Model\Breadcrumb\SimpleBreadcrumbGenerator
+
+    Shopsys\FrameworkBundle\Model\LegalConditions\LegalConditionsFacade:
+        alias: App\Model\LegalConditions\LegalConditionsFacade
 
     Shopsys\FrameworkBundle\Model\Mail\Grid\MailTemplateGridFactory:
         alias: App\Model\Mail\Grid\MailTemplateGridFactory
@@ -876,9 +888,6 @@ services:
         class: App\Component\Domain\DomainAwareSecurityHeadersSetter
         tags:
             - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse }
-
-    Shopsys\FrameworkBundle\Model\Pricing\PriceConverter:
-        alias: App\Model\Pricing\PriceConverter
 
     Shopsys\ProductFeed\HeurekaBundle\Model\FeedItem\HeurekaFeedItemFactory:
         alias: App\ProductFeed\Heureka\Model\FeedItem\HeurekaFeedItemFactory

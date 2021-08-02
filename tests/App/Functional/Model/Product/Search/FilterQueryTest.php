@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\App\Functional\Model\Product\Search;
 
+use App\DataFixtures\Demo\CurrencyDataFixture;
 use App\DataFixtures\Demo\PricingGroupDataFixture;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
@@ -80,12 +81,18 @@ class FilterQueryTest extends ParameterTransactionFunctionalTestCase
 
         /** @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup */
         $pricingGroup = $this->getReferenceForDomain(PricingGroupDataFixture::PRICING_GROUP_ORDINARY, Domain::FIRST_DOMAIN_ID);
+        /** @var \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currencyCzk */
+        $currencyCzk = $this->getReference(CurrencyDataFixture::CURRENCY_CZK);
 
         $filter = $this->createFilter()
             ->filterOnlyInStock()
             ->filterByCategory([9])
             ->filterByFlags([1])
-            ->filterByPrices($pricingGroup, null, $this->priceConverter->convertPriceWithVatToPriceInDomainDefaultCurrency(Money::create(20), Domain::FIRST_DOMAIN_ID));
+            ->filterByPrices(
+                $pricingGroup,
+                null,
+                $this->priceConverter->convertPriceWithVatToDomainDefaultCurrencyPrice(Money::create(20), $currencyCzk, Domain::FIRST_DOMAIN_ID)
+            );
 
         $this->assertIdWithFilter($filter, [50]);
     }
