@@ -1,11 +1,10 @@
-import { ShopsysGlobalErrorContext } from '../../../ShopsysGlobalErrorProvider/ShopsysGlobalErrorProvider';
-import { useContext } from 'react';
+import { FC, useContext } from 'react';
+import { ShopsysGlobalErrorContext } from '../../../../context/ShopsysGlobalErrorProvider/ShopsysGlobalErrorProvider';
 import { useTranslation } from 'react-i18next';
 
-export const GlobalErrorList = () => {
+export const GlobalErrorList: FC = () => {
     const { t } = useTranslation();
-    const { state } = useContext(ShopsysGlobalErrorContext);
-    const errors = state;
+    const { errors } = useContext(ShopsysGlobalErrorContext);
 
     if (errors && errors.length > 0) {
         return (
@@ -22,3 +21,5 @@ export const GlobalErrorList = () => {
 
     return null;
 };
+
+export default GlobalErrorList;

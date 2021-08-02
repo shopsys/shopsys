@@ -12,7 +12,7 @@ module.exports = {
         favicon: 'https://www.shopsys.com/favicon.ico',
     },
     styleguideComponents: {
-        Wrapper: path.join(__dirname, '../components/ShopsysGlobalProvider'),
+        Wrapper: path.join(__dirname, '../context/ShopsysGlobalProvider'),
     },
     propsParser: require('react-docgen-typescript').withCustomConfig('./tsconfig.json', {
         compilerOptions: { noEmit: false },
@@ -57,7 +57,22 @@ module.exports = {
             name: 'UI Components',
             content: '../docs/components.md',
             components: '../components/**/*.{tsx,js}',
-            ignore: ['../components/**/*.style.{ts,js}', '../components/**/index.{ts,js}'],
+            ignore: [
+                '../components/**/*.style.{ts,js}',
+                '../components/**/index.{ts,js}',
+                '../components/blocks/**/*.*',
+            ],
+        },
+        {
+            name: 'Blocks',
+            content: '../docs/blocks.md',
+            components: '../components/blocks/**/*.{tsx,js}',
+        },
+        {
+            name: 'Global Providers',
+            content: '../docs/global-providers.md',
+            components: '../context/**/*.{tsx,js}',
+            ignore: '../context/**/index.{ts,js}',
         },
     ],
     webpackConfig: {
