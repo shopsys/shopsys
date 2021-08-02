@@ -116,7 +116,7 @@ const Index: FC = () => {
                             id="my_form-html_content"
                             name="htmlContent"
                             label={t('HTML content')}
-                            shouldUseSuccess={true}
+                            markSuccessfulWhenValid={true}
                         />
                         <ShopsysCheckbox
                             name="formConsent"

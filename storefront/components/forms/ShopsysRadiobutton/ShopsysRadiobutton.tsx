@@ -19,7 +19,7 @@ function ShopsysRadiobutton(props: InferProps<typeof ShopsysRadiobutton.propType
             <StyledShopsysRadiobutton>
                 <input
                     /**
-                     * Registering the HTML radiobutton element with the React Hook Form Form Provider
+                     * @see https://react-hook-form.com/api/useform/register
                      */
                     {...register(props.name)}
                     {...props}

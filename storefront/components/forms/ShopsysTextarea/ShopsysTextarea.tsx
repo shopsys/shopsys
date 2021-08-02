@@ -6,23 +6,17 @@ import {
     StyledShopsysErrorMessage,
     StyledShopsysFormFieldError,
     StyledShopsysInputFormLine,
-    StyledShopsysPasswordVisibilityToggle,
     StyledShopsysRequiredSymbol,
-    StyledShopsysTextInput,
-} from './ShopsysTextInput.style';
+    StyledShopsysTextarea,
+} from './ShopsysTextarea.style';
 import { ErrorMessage } from '@hookform/error-message';
 
 /**
- * An HTML Input element used for text inputs of types: text, password, email, tel,
+ * An HTML Textarea element
  */
-function ShopsysTextInput(props: InferProps<typeof ShopsysTextInput.propTypes>): ReactElement {
+function ShopsysTextarea(props: InferProps<typeof ShopsysTextarea.propTypes>): ReactElement {
     const { register, formState } = useFormContext();
     const [inputState, setInputState] = useState<string | undefined>(undefined);
-    const [inputType, setInputType] = useState(props.type);
-
-    const togglePasswordVisibilityHandler = () => {
-        inputType === 'text' ? setInputType('password') : setInputType('text');
-    };
 
     useEffect(() => {
         setInputState(getStateAfterValidation(formState, props));
@@ -30,8 +24,8 @@ function ShopsysTextInput(props: InferProps<typeof ShopsysTextInput.propTypes>):
 
     return (
         <StyledShopsysInputFormLine>
-            <StyledShopsysTextInput inputState={inputState}>
-                <input
+            <StyledShopsysTextarea inputState={inputState}>
+                <textarea
                     /**
                      * @see https://react-hook-form.com/api/useform/register
                      */
@@ -40,21 +34,14 @@ function ShopsysTextInput(props: InferProps<typeof ShopsysTextInput.propTypes>):
                     id={props.id}
                     disabled={props.disabled}
                     required={props.required}
-                    type={inputType}
                     placeholder={props.label}
+                    rows={props.rows}
                 />
-                {props.type === 'password' && (
-                    <StyledShopsysPasswordVisibilityToggle
-                        src="/svg/eye.svg"
-                        className={inputType === 'password' ? 'not-visible' : undefined}
-                        onClick={togglePasswordVisibilityHandler}
-                    />
-                )}
                 <label htmlFor={props.id}>
                     {props.label}
                     {props.required && <StyledShopsysRequiredSymbol>*</StyledShopsysRequiredSymbol>}
                 </label>
-            </StyledShopsysTextInput>
+            </StyledShopsysTextarea>
             {formState.errors[props.name] && (
                 <StyledShopsysFormFieldError>
                     <StyledShopsysErrorIcon src="/svg/cross.svg" />
@@ -74,7 +61,7 @@ function ShopsysTextInput(props: InferProps<typeof ShopsysTextInput.propTypes>):
 
 const getStateAfterValidation = (
     formState: FormState<FieldValues>,
-    props: InferProps<typeof ShopsysTextInput.propTypes>,
+    props: InferProps<typeof ShopsysTextarea.propTypes>,
 ) => {
     if (formState.errors[props.name]) {
         return 'error';
@@ -85,43 +72,43 @@ const getStateAfterValidation = (
     }
 };
 
-ShopsysTextInput.defaultProps = {
+ShopsysTextarea.defaultProps = {
     disabled: false,
     required: false,
-    type: 'text',
+    rows: 4,
     markSuccessfulWhenValid: false,
 };
 
-ShopsysTextInput.propTypes = {
+ShopsysTextarea.propTypes = {
     /**
-     * The ID of the HTML input element which is used for identification
+     * The ID of the HTML textarea element which is used for identification
      */
     id: PropTypes.string.isRequired,
     /**
-     * The name of the HTML input element which is used by React Hook Form to manage the field
+     * The name of the HTML textarea element which is used by React Hook Form to manage the field
      */
     name: PropTypes.string.isRequired,
     /**
-     * Display Label of the HTML input element
+     * Display Label of the HTML textarea element
      */
     label: PropTypes.string.isRequired,
     /**
-     * A prop to define if the HTML input element is disabled
+     * A prop to define if the HTML textarea element is disabled
      */
     disabled: PropTypes.bool.isRequired,
     /**
-     * A prop to define if the HTML input element is required
+     * A prop to define if the HTML textarea element is required
      */
     required: PropTypes.bool.isRequired,
     /**
-     * A enumerator-like list of all available types of the custom TextInput element
+     * A prop to define number of rows for the html textarea element
      */
-    type: PropTypes.oneOf(['text', 'password', 'email', 'tel']).isRequired,
+    rows: PropTypes.number.isRequired,
     /**
-     * A prop to define if the HTML input element should receive the .success CSS class when the input is correct
+     * A prop to define if the HTML textarea element should receive the .success CSS class when the input is correct
      */
     markSuccessfulWhenValid: PropTypes.bool.isRequired,
 };
 
 /* @component */
-export default ShopsysTextInput;
+export default ShopsysTextarea;
