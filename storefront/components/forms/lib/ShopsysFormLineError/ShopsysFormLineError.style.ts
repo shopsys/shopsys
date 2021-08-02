@@ -1,7 +1,7 @@
 import styled, { css } from 'styled-components';
 
 type StyledShopsysErrorIconProps = {
-    htmlElement: 'textarea' | 'text-input' | 'checkbox';
+    inputType: 'textarea' | 'text-input' | 'checkbox';
 };
 
 export const StyledShopsysFormFieldError = styled.div`
@@ -18,25 +18,25 @@ export const StyledShopsysErrorMessage = styled.span`
 `;
 
 export const StyledShopsysErrorIcon = styled.img<StyledShopsysErrorIconProps>`
-    ${({ htmlElement }) => css`
+    ${({ inputType }) => css`
         display: flex;
         width: 16px;
         position: absolute;
 
-        ${htmlElement === 'textarea' &&
+        ${inputType === 'textarea' &&
         `
             top: 2px;
             right: 0;
         `}
 
-        ${htmlElement === 'text-input' &&
+        ${inputType === 'text-input' &&
         `
             transform: translateY(-50%);
             top: -33px;
             right: 19px;
         `}
 
-        ${htmlElement === 'checkbox' &&
+        ${inputType === 'checkbox' &&
         `
             top: 2px;
             right: -19px;

@@ -1,20 +1,20 @@
+import { InputHTMLAttributes, ReactElement } from 'react';
 import PropTypes, { InferProps } from 'prop-types';
-import {
-    StyledShopsysCheckbox,
-    StyledShopsysChoiceFormLine,
-    StyledShopsysErrorIcon,
-    StyledShopsysErrorMessage,
-    StyledShopsysFormFieldError,
-    StyledShopsysRequiredSymbol,
-} from './ShopsysCheckbox.style';
-import { ErrorMessage } from '@hookform/error-message';
-import { ReactElement } from 'react';
+import { StyledShopsysCheckbox, StyledShopsysChoiceFormLine } from './ShopsysCheckbox.style';
+import { OptionalExceptFor } from 'typeHelpers/OptionalExceptFor';
+import ShopsysFormLineError from '../lib/ShopsysFormLineError';
+import ShopsysLabelWrapper from '../lib/ShopsysLabelWrapper';
 import { useFormContext } from 'react-hook-form';
+
+type NativeProps = OptionalExceptFor<
+    Pick<InputHTMLAttributes<HTMLInputElement>, 'id' | 'name' | 'disabled' | 'required'>,
+    'name' | 'id'
+>;
 
 /**
  * An HTML Checkbox element of type checkbox
  */
-function ShopsysCheckbox(props: InferProps<typeof ShopsysCheckbox.propTypes>): ReactElement {
+function ShopsysCheckbox(props: InferProps<typeof ShopsysCheckbox.propTypes> & NativeProps): ReactElement {
     const { register, formState } = useFormContext();
 
     return (
@@ -27,32 +27,11 @@ function ShopsysCheckbox(props: InferProps<typeof ShopsysCheckbox.propTypes>): R
     );
 }
 
-ShopsysCheckbox.defaultProps = {
-    disabled: false,
-    required: false,
-};
-
 ShopsysCheckbox.propTypes = {
-    /**
-     * The ID of the HTML checkbox element which is used for identification
-     */
-    id: PropTypes.string.isRequired,
-    /**
-     * The name of the HTML checkbox element which is used by React Hook Form to manage the field
-     */
-    name: PropTypes.string.isRequired,
     /**
      * Display Label of the HTML checkbox element
      */
     label: PropTypes.oneOfType([PropTypes.string.isRequired, PropTypes.arrayOf(PropTypes.node), PropTypes.node]),
-    /**
-     * A prop to define if the HTML checkbox element is disabled
-     */
-    disabled: PropTypes.bool.isRequired,
-    /**
-     * A prop to define if the HTML checkbox element is required
-     */
-    required: PropTypes.bool.isRequired,
 };
 
 /* @component */

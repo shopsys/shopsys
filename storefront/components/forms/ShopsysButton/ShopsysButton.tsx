@@ -5,7 +5,7 @@ import { OptionalExceptFor } from 'typeHelpers/OptionalExceptFor';
 
 type NativeProps = OptionalExceptFor<
     Pick<ButtonHTMLAttributes<HTMLButtonElement>, 'children' | 'onClick' | 'style' | 'type' | 'name'>,
-    'children' | 'onClick'
+    'children'
 >;
 
 /**

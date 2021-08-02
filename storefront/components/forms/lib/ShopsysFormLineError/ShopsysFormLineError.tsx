@@ -14,7 +14,7 @@ function ShopsysFormLineError(
     if (props.errors[props.for]) {
         return (
             <StyledShopsysFormFieldError>
-                <StyledShopsysErrorIcon htmlElement={props.htmlElement} src="/svg/cross.svg" />
+                <StyledShopsysErrorIcon inputType={props.inputType} src="/svg/cross.svg" />
                 <ErrorMessage
                     errors={props.errors}
                     name={props.for}
@@ -29,7 +29,11 @@ function ShopsysFormLineError(
 
 ShopsysFormLineError.propTypes = {
     for: PropTypes.string.isRequired,
-    htmlElement: PropTypes.oneOf<'textarea' | 'text-input' | 'checkbox'>(['textarea', 'text-input', 'checkbox'])
+    /**
+     * A prop based on which the CSS stzling is applied, as there is a slightly different
+     * styling for each of the elements below.
+     */
+    inputType: PropTypes.oneOf<'textarea' | 'text-input' | 'checkbox'>(['textarea', 'text-input', 'checkbox'])
         .isRequired,
 };
 
