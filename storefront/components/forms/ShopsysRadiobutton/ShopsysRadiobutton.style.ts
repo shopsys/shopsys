@@ -1,4 +1,5 @@
 import styled, { css } from 'styled-components';
+import { Theme } from 'theme/main';
 
 const localVariables = {
     inputMarginLeft: '30px',
@@ -11,7 +12,7 @@ export const StyledShopsysChoiceFormLine = styled.div`
 `;
 
 export const StyledShopsysRadiobutton = styled.div`
-    ${({ theme }) => css`
+    ${({ theme }: { theme: Theme }) => css`
         input {
             position: absolute !important;
             height: 1px;

@@ -1,4 +1,5 @@
-import styled, { css, DefaultTheme } from 'styled-components';
+import styled, { css } from 'styled-components';
+import { Theme } from 'theme/main';
 
 type StyledShopsysButtonSize = 'default' | 'small';
 
@@ -14,7 +15,7 @@ const localVariables = {
     btnPrimaryBackgroundColorHover: '#3b4cfc', // darken version of theme.color.primary
 };
 
-const getSize = (size: StyledShopsysButtonSize, theme: DefaultTheme) => {
+const getSize = (size: StyledShopsysButtonSize, theme: Theme) => {
     switch (size) {
         case 'default':
             return `
@@ -36,7 +37,7 @@ const getSize = (size: StyledShopsysButtonSize, theme: DefaultTheme) => {
 };
 
 export const StyledShopsysButton = styled.button<StyledShopsysButtonProps>`
-    ${({ size, theme }) => css`
+    ${({ size, theme }: { size: StyledShopsysButtonSize; theme: Theme }) => css`
         ${getSize(size, theme)};
         width: auto;
         vertical-align: middle;
@@ -63,7 +64,7 @@ export const StyledShopsysButton = styled.button<StyledShopsysButtonProps>`
 `;
 
 export const StyledShopsysButtonPrimary = styled(StyledShopsysButton)`
-    ${({ theme }) => `
+    ${({ theme }: { theme: Theme }) => `
         color: ${theme.color.white};
         background-color: ${theme.color.primary};
 
@@ -75,7 +76,7 @@ export const StyledShopsysButtonPrimary = styled(StyledShopsysButton)`
 `;
 
 export const StyledShopsysButtonSecondary = styled(StyledShopsysButton)`
-    ${({ theme }) => `
+    ${({ theme }: { theme: Theme }) => `
         color: ${theme.color.black};
         background-color: ${theme.color.orangeLight};
 

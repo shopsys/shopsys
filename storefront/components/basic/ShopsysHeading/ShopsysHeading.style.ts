@@ -1,4 +1,5 @@
 import styled, { css } from 'styled-components';
+import { Theme } from 'theme/main';
 
 export const StyledShopsysHeading1 = styled.h1`
     ${({ theme }) => css`
@@ -11,7 +12,7 @@ export const StyledShopsysHeading1 = styled.h1`
 `;
 
 export const StyledShopsysHeading2 = styled.h2`
-    ${({ theme }) => css`
+    ${({ theme }: { theme: Theme }) => css`
         font-size: 24px;
         font-weight: 700;
         line-height: 30px;
@@ -21,7 +22,7 @@ export const StyledShopsysHeading2 = styled.h2`
 `;
 
 export const StyledShopsysHeading3 = styled.h3`
-    ${({ theme }) => css`
+    ${({ theme }: { theme: Theme }) => css`
         font-size: 18px;
         font-weight: 700;
         line-height: 22px;
@@ -30,7 +31,7 @@ export const StyledShopsysHeading3 = styled.h3`
 `;
 
 export const StyledShopsysHeading4 = styled.h4`
-    ${({ theme }) => css`
+    ${({ theme }: { theme: Theme }) => css`
         font-size: 16px;
         font-weight: 700;
         line-height: 20px;

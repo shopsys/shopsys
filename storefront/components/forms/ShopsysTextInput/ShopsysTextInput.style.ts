@@ -1,4 +1,5 @@
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
+import { Theme } from 'theme/main';
 
 const localVariables = {
     inputHeight: '54px',
@@ -10,8 +11,10 @@ const localVariables = {
     inputLabelActivePositionTop: '9px',
 };
 
+type StyledShopsysInputState = 'error' | 'success' | undefined;
+
 type ShopsysTextInputStyledProps = {
-    inputState?: string;
+    inputState: StyledShopsysInputState;
 };
 
 export const StyledShopsysInputFormLine = styled.div`
@@ -19,125 +22,129 @@ export const StyledShopsysInputFormLine = styled.div`
 `;
 
 export const StyledShopsysTextInput = styled.div<ShopsysTextInputStyledProps>`
-    position: relative;
-    width: 100%;
-
-    input {
-        box-sizing: border-box;
-        height: ${localVariables.inputHeight};
+    ${({ inputState, theme }: { inputState: StyledShopsysInputState; theme: Theme }) => `
+        position: relative;
         width: 100%;
-        padding: ${localVariables.inputPaddingVertical} ${localVariables.inputPaddingHorizontal} 0
-            ${localVariables.inputPaddingHorizontal};
 
-        border: ${localVariables.inputBorderWidth} solid ${(props) => props.theme.color.border};
-        color: ${(props) => props.theme.color.base};
-        background-color: ${(props) => props.theme.color.white};
-        border-radius: ${(props) => props.theme.radius.default};
-        font-size: ${(props) => props.theme.fontSize.default};
+        input {
+            box-sizing: border-box;
+            height: ${localVariables.inputHeight};
+            width: 100%;
+            padding: ${localVariables.inputPaddingVertical} ${localVariables.inputPaddingHorizontal} 0
+                ${localVariables.inputPaddingHorizontal};
 
-        // iOS ugly appearance fix
-        -webkit-appearance: none !important;
+            border: ${localVariables.inputBorderWidth} solid ${theme.color.border};
+            color: ${theme.color.base};
+            background-color: ${theme.color.white};
+            border-radius: ${theme.radius.default};
+            font-size: ${theme.fontSize.default};
 
-        &::placeholder {
-            color: transparent;
-        }
+            // iOS ugly appearance fix
+            -webkit-appearance: none !important;
 
-        ${(props) =>
-            props.inputState === 'error' &&
+            &::placeholder {
+                color: transparent;
+            }
+
+            ${
+                inputState === 'error' &&
+                `
+                box-shadow: none;
+                background-color: ${theme.color.white};
+                border-color: ${theme.color.red};
             `
-            box-shadow: none;
-            background-color: ${props.theme.color.white};
-            border-color: ${props.theme.color.red};
-        `}
+            }
 
-        ${(props) =>
-            props.inputState === 'success' &&
+            ${
+                inputState === 'success' &&
+                `
+                border: 1px solid ${theme.color.green};
+                border-radius: ${theme.radius.medium};
+                box-shadow: ${theme.boxShadow.green};
             `
-            border: 1px solid ${props.theme.color.green};
-            border-radius: ${props.theme.radius.medium};
-            box-shadow: ${props.theme.boxShadow.green};
-        `};
+            }
 
-        &:disabled,
-        &[readonly] {
-            opacity: 0.5;
-            pointer-events: none;
-            cursor: no-drop;
-
-            ~ label {
+            &:disabled,
+            &[readonly] {
                 opacity: 0.5;
                 pointer-events: none;
                 cursor: no-drop;
+
+                ~ label {
+                    opacity: 0.5;
+                    pointer-events: none;
+                    cursor: no-drop;
+                }
+            }
+
+            &[type='password'] {
+                font-size: 24px;
+                color: ${theme.color.greyLight};
+
+                &:focus-visible {
+                    color: ${theme.color.base};
+                }
+            }
+
+            &::-webkit-outer-spin-button,
+            &::-webkit-inner-spin-button {
+                -webkit-appearance: none;
+                margin: 0;
+            }
+
+            &:-webkit-autofill,
+            &:-webkit-autofill:hover,
+            &:-webkit-autofill:focus,
+            &:-internal-autofill-selected {
+                box-shadow: 0 0 0 1000px ${theme.color.white} inset !important;
+                background-color: ${theme.color.white} !important;
+            }
+
+            &:focus {
+                outline: 0;
+
+                ~ label {
+                    transform: none;
+                    top: ${localVariables.inputLabelActivePositionTop};
+
+                    font-size: ${localVariables.inputLabelFontSizeSmall};
+                }
+            }
+
+            :not(:placeholder-shown) {
+                ~ label {
+                    transform: none;
+                    top: ${localVariables.inputLabelActivePositionTop};
+
+                    font-size: ${localVariables.inputLabelFontSizeSmall};
+                }
             }
         }
 
-        &[type='password'] {
-            font-size: 24px;
-            color: ${(props) => props.theme.color.greyLight};
+        label {
+            position: absolute;
+            top: ${localVariables.inputLabelPositionTop};
+            transform: translateY(-50%);
+            left: ${`calc(${localVariables.inputPaddingHorizontal} + ${localVariables.inputBorderWidth})`};
+            display: block;
 
-            &:focus-visible {
-                color: ${(props) => props.theme.color.base};
+            transition: ${theme.transition};
+            z-index: ${theme.zIndex.above + 1};
+            line-height: 14px;
+            color: ${theme.color.greyDark};
+            font-size: ${theme.fontSize.small};
+
+            .required {
+                margin-left: 5px;
+
+                color: ${theme.color.red};
             }
         }
-
-        &::-webkit-outer-spin-button,
-        &::-webkit-inner-spin-button {
-            -webkit-appearance: none;
-            margin: 0;
-        }
-
-        &:-webkit-autofill,
-        &:-webkit-autofill:hover,
-        &:-webkit-autofill:focus,
-        &:-internal-autofill-selected {
-            box-shadow: 0 0 0 1000px ${(props) => props.theme.color.white} inset !important;
-            background-color: ${(props) => props.theme.color.white} !important;
-        }
-
-        &:focus {
-            outline: 0;
-
-            ~ label {
-                transform: none;
-                top: ${localVariables.inputLabelActivePositionTop};
-
-                font-size: ${localVariables.inputLabelFontSizeSmall};
-            }
-        }
-
-        :not(:placeholder-shown) {
-            ~ label {
-                transform: none;
-                top: ${localVariables.inputLabelActivePositionTop};
-
-                font-size: ${localVariables.inputLabelFontSizeSmall};
-            }
-        }
-    }
-
-    label {
-        position: absolute;
-        top: ${localVariables.inputLabelPositionTop};
-        transform: translateY(-50%);
-        left: ${`calc(${localVariables.inputPaddingHorizontal} + ${localVariables.inputBorderWidth})`};
-        display: block;
-
-        transition: ${(props) => props.theme.transition};
-        z-index: ${(props) => props.theme.zIndex.above + 1};
-        line-height: 14px;
-        color: ${(props) => props.theme.color.greyDark};
-        font-size: ${(props) => props.theme.fontSize.small};
-
-        .required {
-            margin-left: 5px;
-
-            color: ${(props) => props.theme.color.red};
-        }
-    }
+    `}
 `;
 
 export const StyledShopsysRequiredSymbol = styled.span`
-    ${({ theme }) => css`
+    ${({ theme }: { theme: Theme }) => `
         margin-left: 5px;
 
         color: ${theme.color.red};
@@ -164,9 +171,11 @@ export const StyledShopsysFormFieldError = styled.div`
 `;
 
 export const StyledShopsysErrorMessage = styled.span`
-    line-height: 21px;
-    color: ${(props) => props.theme.color.red};
-    font-size: ${(props) => props.theme.fontSize.small};
+    ${({ theme }: { theme: Theme }) => `
+        line-height: 21px;
+        color: ${theme.color.red};
+        font-size: ${theme.fontSize.small};
+    `}
 `;
 
 export const StyledShopsysErrorIcon = styled.img`

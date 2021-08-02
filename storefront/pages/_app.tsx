@@ -4,11 +4,10 @@ import { GlobalErrorList } from '../components/blocks/errors/GlobalErrorList/Glo
 import { ReactElement } from 'react';
 import { ShopsysGlobalErrorProvider } from '../components/ShopsysGlobalErrorProvider/ShopsysGlobalErrorProvider';
 import ShopsysGlobalProvider from 'components/ShopsysGlobalProvider';
-import { theme } from 'theme/main';
 
 function MyApp({ Component, pageProps }: AppProps): ReactElement {
     return (
-        <ShopsysGlobalProvider theme={theme}>
+        <ShopsysGlobalProvider>
             <ShopsysGlobalErrorProvider>
                 <GlobalErrorList />
                 <Component {...pageProps} />

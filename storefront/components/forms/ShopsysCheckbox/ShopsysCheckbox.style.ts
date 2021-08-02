@@ -1,4 +1,5 @@
 import styled, { css } from 'styled-components';
+import { Theme } from 'theme/main';
 
 const localVariables = {
     inputMarginLeft: '30px',
@@ -12,7 +13,7 @@ export const StyledShopsysChoiceFormLine = styled.div`
 `;
 
 export const StyledShopsysCheckbox = styled.div`
-    ${({ theme }) => css`
+    ${({ theme }: { theme: Theme }) => css`
         input {
             position: absolute;
             height: 1px;
@@ -112,7 +113,7 @@ export const StyledShopsysCheckbox = styled.div`
 `;
 
 export const StyledShopsysRequiredSymbol = styled.span`
-    ${({ theme }) => css`
+    ${({ theme }: { theme: Theme }) => css`
         margin-left: 5px;
 
         color: ${theme.color.red};
@@ -125,7 +126,7 @@ export const StyledShopsysFormFieldError = styled.div`
 `;
 
 export const StyledShopsysErrorMessage = styled.span`
-    ${({ theme }) => css`
+    ${({ theme }: { theme: Theme }) => css`
         line-height: 21px;
         color: ${theme.color.red};
         font-size: ${theme.fontSize.small};

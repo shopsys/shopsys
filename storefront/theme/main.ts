@@ -1,7 +1,7 @@
-import { DefaultTheme } from 'styled-components';
+import mediaQueries from './mediaQueries';
 
 /* Main theme */
-export const theme: DefaultTheme = {
+export const theme = {
     /* Colors */
     color: {
         base: '#0d0d0d',
@@ -45,4 +45,8 @@ export const theme: DefaultTheme = {
 
     /* Transition */
     transition: '0.2s cubic-bezier(.8, .20, .48, 1.0)',
-};
+
+    mediaQueries: { ...mediaQueries },
+} as const;
+
+export type Theme = typeof theme;
