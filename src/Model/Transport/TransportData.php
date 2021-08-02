@@ -57,11 +57,17 @@ class TransportData extends BaseTransportData
      */
     public array $trackingInstructions;
 
+    /**
+     * @var int|null
+     */
+    public ?int $maxWeight;
+
     public function __construct()
     {
         parent::__construct();
 
         $this->personalPickup = false;
         $this->isOverLimitTransport = false;
+        $this->maxWeight = null;
     }
 }

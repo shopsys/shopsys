@@ -93,6 +93,10 @@ class TransportFormTypeExtension extends AbstractTypeExtension
                     new GreaterThan(0),
                     new LessThanOrEqual(99),
                 ],
+            ])
+            ->add('maxWeight', IntegerType::class, [
+                'label' => t('Maximum weight (g)'),
+                'required' => false,
             ]);
 
         $builderPackageTrackingGroup = $builder->create('packageTracking', GroupType::class, [

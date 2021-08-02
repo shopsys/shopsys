@@ -724,3 +724,6 @@
 20210727191108:
     class: App\Migrations\Version20210727191108
     skip: false
+20210729062922:
+    class: App\Migrations\Version20210729062922
+    skip: false

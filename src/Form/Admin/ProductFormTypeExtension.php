@@ -20,6 +20,7 @@ use Symfony\Component\Form\AbstractTypeExtension;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -187,6 +188,10 @@ class ProductFormTypeExtension extends AbstractTypeExtension
                 'required' => false,
                 'display_format' => FormRenderingConfigurationExtension::DISPLAY_FORMAT_MULTIDOMAIN_ROWS_NO_PADDING,
                 'label' => t('Flags'),
+            ])
+            ->add('weight', IntegerType::class, [
+                'label' => t('Weight (g)'),
+                'required' => false,
             ]);
     }
 

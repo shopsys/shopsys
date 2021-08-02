@@ -28,6 +28,7 @@ use App\Model\Order\Preview\OrderPreviewFactory;
 use App\Model\Payment\Payment;
 use App\Model\Product\Availability\ProductAvailabilityFacade;
 use App\Model\Store\StoreFacade;
+use App\Model\Transport\TransportFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\HttpFoundation\DownloadFileResponse;
 use Shopsys\FrameworkBundle\Model\Cart\CartFacade;
@@ -43,7 +44,6 @@ use Shopsys\FrameworkBundle\Model\Payment\PaymentPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 use Shopsys\FrameworkBundle\Model\Security\Authenticator;
 use Shopsys\FrameworkBundle\Model\Security\Roles;
-use Shopsys\FrameworkBundle\Model\Transport\TransportFacade;
 use Shopsys\FrameworkBundle\Model\Transport\TransportPriceCalculation;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -112,7 +112,7 @@ class OrderController extends FrontBaseController
     private $currencyFacade;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Transport\TransportFacade
+     * @var \App\Model\Transport\TransportFacade
      */
     private $transportFacade;
 
@@ -188,7 +188,7 @@ class OrderController extends FrontBaseController
      * @param \Shopsys\FrameworkBundle\Model\Transport\TransportPriceCalculation $transportPriceCalculation
      * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentPriceCalculation $paymentPriceCalculation
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Transport\TransportFacade $transportFacade
+     * @param \App\Model\Transport\TransportFacade $transportFacade
      * @param \App\Model\Payment\PaymentFacade $paymentFacade
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
      * @param \App\Model\Order\OrderDataMapper $orderDataMapper
@@ -322,8 +322,7 @@ class OrderController extends FrontBaseController
         /** @var \App\Model\Payment\Payment[] $payments */
         $payments = $this->paymentFacade->getVisibleOnCurrentDomain();
 
-        /** @var \App\Model\Transport\Transport[] $transports */
-        $transports = $this->transportFacade->getVisibleOnCurrentDomain($payments);
+        $transports = $this->transportFacade->getVisibleOnCurrentDomainAcceptingWeight($payments, $cart->getTotalWeight());
 
         $frontOrderFormData = $this->orderFacade->revalidatePaymentAndTransport($frontOrderFormData, $payments, $transports);
         $orderData = $this->orderDataMapper->getOrderDataFromFrontOrderData($frontOrderFormData);

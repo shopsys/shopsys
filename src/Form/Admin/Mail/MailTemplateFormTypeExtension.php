@@ -19,7 +19,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 class MailTemplateFormTypeExtension extends AbstractTypeExtension
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Transport\TransportFacade
+     * @var \App\Model\Transport\TransportFacade
      */
     private TransportFacade $transportFacade;
 
@@ -34,7 +34,7 @@ class MailTemplateFormTypeExtension extends AbstractTypeExtension
     private OrderStatusFacade $orderStatusFacade;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Transport\TransportFacade $transportFacade
+     * @param \App\Model\Transport\TransportFacade $transportFacade
      * @param \App\Model\Payment\PaymentFacade $paymentFacade
      * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusFacade $orderStatusFacade
      */

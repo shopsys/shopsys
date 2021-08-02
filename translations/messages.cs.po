@@ -1063,6 +1063,9 @@ msgstr ""
 msgid "Main image"
 msgstr ""
 
+msgid "Maximum weight (g)"
+msgstr "Maximální hmotnost (g)"
+
 msgid "Measurement units"
 msgstr "Měrné jednotky"
 
@@ -2742,6 +2745,9 @@ msgstr "Sklad"
 
 msgid "We will remember your login on this computer for 30 days."
 msgstr "Zapamatujeme si vaše přihlášení na tomto počítači po dobu 30 dní."
+
+msgid "Weight (g)"
+msgstr "Hmotnost (g)"
 
 msgid "Yes"
 msgstr "Ano"
