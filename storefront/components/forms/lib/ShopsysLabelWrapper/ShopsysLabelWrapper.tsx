@@ -6,7 +6,7 @@ type NativeProps = Pick<LabelHTMLAttributes<HTMLLabelElement>, 'children' | 'htm
 
 function ShopsysLabelWrapper(props: InferProps<typeof ShopsysLabelWrapper.propTypes> & NativeProps): ReactElement {
     return (
-        <StyledShopsysLabelWrapper>
+        <StyledShopsysLabelWrapper inputType={props.inputType}>
             {props.children}
             <label htmlFor={props.htmlFor}>
                 {props.label}
@@ -25,6 +25,16 @@ ShopsysLabelWrapper.propTypes = {
      * Display Label of the given HTML element
      */
     label: PropTypes.oneOfType([PropTypes.string.isRequired, PropTypes.arrayOf(PropTypes.node), PropTypes.node]),
+    /**
+     * A prop based on which the CSS stzling is applied, as there is a slightly different
+     * styling for each of the elements below.
+     */
+    inputType: PropTypes.oneOf<'textarea' | 'text-input' | 'checkbox' | 'radio'>([
+        'textarea',
+        'text-input',
+        'checkbox',
+        'radio',
+    ]).isRequired,
 };
 
 export default ShopsysLabelWrapper;

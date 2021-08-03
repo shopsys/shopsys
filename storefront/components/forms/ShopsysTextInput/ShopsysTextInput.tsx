@@ -35,7 +35,12 @@ function ShopsysTextInput(props: InferProps<typeof ShopsysTextInput.propTypes> &
 
     return (
         <StyledShopsysInputFormLine className="text-input">
-            <ShopsysLabelWrapper htmlFor={props.id} required={props.required} label={props.label}>
+            <ShopsysLabelWrapper
+                htmlFor={props.id}
+                required={props.required}
+                label={props.label}
+                inputType="text-input"
+            >
                 <StyledShopsysTextInput
                     /**
                      * @see https://react-hook-form.com/api/useform/register

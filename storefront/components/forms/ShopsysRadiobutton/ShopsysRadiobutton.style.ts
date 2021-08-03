@@ -6,7 +6,7 @@ export const StyledShopsysChoiceFormLine = styled.div`
 `;
 
 export const StyledShopsysRadiobutton = styled.input`
-    position: absolute !important;
+    position: absolute;
     height: 1px;
     width: 1px;
     left: -1000px;

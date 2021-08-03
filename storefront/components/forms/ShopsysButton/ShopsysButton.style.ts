@@ -18,7 +18,7 @@ const localVariables = {
 const getSize = (size: StyledShopsysButtonSize, theme: Theme) => {
     switch (size) {
         case 'default':
-            return `
+            return css`
                 padding: ${localVariables.btnPaddingVertical} ${localVariables.btnPaddingHorizontal};
                 min-height: ${theme.btnHeight};
                 line-height: 27px;
@@ -26,7 +26,7 @@ const getSize = (size: StyledShopsysButtonSize, theme: Theme) => {
                 font-size: ${theme.fontSize.default};
             `;
         case 'small':
-            return `
+            return css`
                 padding: ${localVariables.btnSmallPaddingVertical} 17px ${localVariables.btnSmallPaddingVertical};
                 min-height: 30px;
                 line-height: 23px;
@@ -64,7 +64,7 @@ export const StyledShopsysButton = styled.button<StyledShopsysButtonProps>`
 `;
 
 export const StyledShopsysButtonPrimary = styled(StyledShopsysButton)`
-    ${({ theme }: { theme: Theme }) => `
+    ${({ theme }: { theme: Theme }) => css`
         color: ${theme.color.white};
         background-color: ${theme.color.primary};
 
@@ -76,7 +76,7 @@ export const StyledShopsysButtonPrimary = styled(StyledShopsysButton)`
 `;
 
 export const StyledShopsysButtonSecondary = styled(StyledShopsysButton)`
-    ${({ theme }: { theme: Theme }) => `
+    ${({ theme }: { theme: Theme }) => css`
         color: ${theme.color.black};
         background-color: ${theme.color.orangeLight};
 

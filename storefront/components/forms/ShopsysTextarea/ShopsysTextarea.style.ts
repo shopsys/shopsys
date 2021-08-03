@@ -37,14 +37,14 @@ export const StyledShopsysTextarea = styled.textarea<ShopsysTextareaStyledProps>
         }
 
         ${inputState === 'error' &&
-        `
+        css`
             box-shadow: none;
             background-color: ${theme.color.white};
             border-color: ${theme.color.red};
         `}
 
         ${inputState === 'success' &&
-        `
+        css`
             border: 1px solid ${theme.color.green};
             border-radius: ${theme.radius.medium};
             box-shadow: ${theme.boxShadow.green};
