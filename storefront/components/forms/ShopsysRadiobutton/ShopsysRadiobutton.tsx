@@ -1,13 +1,14 @@
 import { InputHTMLAttributes, ReactElement } from 'react';
 import PropTypes, { InferProps } from 'prop-types';
 import { StyledShopsysChoiceFormLine, StyledShopsysRadiobutton } from './ShopsysRadiobutton.style';
-import { OptionalExceptFor } from 'typeHelpers/OptionalExceptFor';
+import { ExtractNativePropsFromDefault } from 'typeHelpers/ExtractNativePropsFromDefault';
 import ShopsysLabelWrapper from '../lib/ShopsysLabelWrapper';
 import { useFormContext } from 'react-hook-form';
 
-type NativeProps = OptionalExceptFor<
-    Pick<InputHTMLAttributes<HTMLInputElement>, 'id' | 'name' | 'value' | 'disabled'>,
-    'id' | 'name' | 'value'
+type NativeProps = ExtractNativePropsFromDefault<
+    InputHTMLAttributes<HTMLInputElement>,
+    'id' | 'name' | 'value',
+    'disabled'
 >;
 
 /**
@@ -27,7 +28,14 @@ function ShopsysRadiobutton(props: InferProps<typeof ShopsysRadiobutton.propType
                     </div>
                 }
             >
-                <StyledShopsysRadiobutton {...register(props.name)} {...props} type="radio" />
+                <StyledShopsysRadiobutton
+                    /**
+                     * @see https://react-hook-form.com/api/useform/register
+                     */
+                    {...register(props.name)}
+                    {...props}
+                    type="radio"
+                />
             </ShopsysLabelWrapper>
         </StyledShopsysChoiceFormLine>
     );

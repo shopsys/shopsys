@@ -3,18 +3,18 @@ import PropTypes, { InferProps } from 'prop-types';
 import {
     StyledShopsysInputFormLine,
     StyledShopsysPasswordVisibilityToggle,
-    StyledShopsysRequiredSymbol,
     StyledShopsysTextInput,
 } from './ShopsysTextInput.style';
+import { ExtractNativePropsFromDefault } from 'typeHelpers/ExtractNativePropsFromDefault';
 import { getStateAfterValidation } from '../helpers/getStateAfterValidation';
-import { OptionalExceptFor } from 'typeHelpers/OptionalExceptFor';
 import ShopsysFormLineError from '../lib/ShopsysFormLineError';
 import ShopsysLabelWrapper from '../lib/ShopsysLabelWrapper';
 import { useFormContext } from 'react-hook-form';
 
-type NativeProps = OptionalExceptFor<
-    Pick<InputHTMLAttributes<HTMLInputElement>, 'name' | 'id' | 'disabled' | 'required'>,
-    'name' | 'id'
+type NativeProps = ExtractNativePropsFromDefault<
+    InputHTMLAttributes<HTMLInputElement>,
+    'name' | 'id',
+    'disabled' | 'required'
 >;
 
 /**
@@ -37,6 +37,9 @@ function ShopsysTextInput(props: InferProps<typeof ShopsysTextInput.propTypes> &
         <StyledShopsysInputFormLine className="text-input">
             <ShopsysLabelWrapper htmlFor={props.id} required={props.required} label={props.label}>
                 <StyledShopsysTextInput
+                    /**
+                     * @see https://react-hook-form.com/api/useform/register
+                     */
                     {...register(props.name)}
                     {...props}
                     inputState={inputState}
@@ -51,23 +54,10 @@ function ShopsysTextInput(props: InferProps<typeof ShopsysTextInput.propTypes> &
                     />
                 )}
             </ShopsysLabelWrapper>
-            <ShopsysFormLineError htmlElement="text-input" errors={formState.errors} for={props.name} />
+            <ShopsysFormLineError inputType="text-input" errors={formState.errors} for={props.name} />
         </StyledShopsysInputFormLine>
     );
 }
-
-const getStateAfterValidation = (
-    formState: FormState<FieldValues>,
-    props: InferProps<typeof ShopsysTextInput.propTypes>,
-) => {
-    if (formState.errors[props.name]) {
-        return 'error';
-    }
-
-    if (props.markSuccessfulWhenValid && formState.touchedFields[props.name]) {
-        return 'success';
-    }
-};
 
 ShopsysTextInput.defaultProps = {
     type: 'text',

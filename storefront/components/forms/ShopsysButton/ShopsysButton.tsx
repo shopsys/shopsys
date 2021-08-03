@@ -1,11 +1,12 @@
 import { ButtonHTMLAttributes, ReactElement } from 'react';
 import PropTypes, { InferProps } from 'prop-types';
 import { StyledShopsysButton, StyledShopsysButtonPrimary, StyledShopsysButtonSecondary } from './ShopsysButton.style';
-import { OptionalExceptFor } from 'typeHelpers/OptionalExceptFor';
+import { ExtractNativePropsFromDefault } from 'typeHelpers/ExtractNativePropsFromDefault';
 
-type NativeProps = OptionalExceptFor<
-    Pick<ButtonHTMLAttributes<HTMLButtonElement>, 'children' | 'onClick' | 'style' | 'type' | 'name'>,
-    'children'
+type NativeProps = ExtractNativePropsFromDefault<
+    ButtonHTMLAttributes<HTMLButtonElement>,
+    'children',
+    'onClick' | 'style' | 'type' | 'name'
 >;
 
 /**

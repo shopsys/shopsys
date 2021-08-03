@@ -18,10 +18,6 @@ function ShopsysLabelWrapper(props: InferProps<typeof ShopsysLabelWrapper.propTy
 
 ShopsysLabelWrapper.propTypes = {
     /**
-     * A prop which defines the elements that is being described by the label.
-     */
-    htmlFor: PropTypes.string,
-    /**
      * A prop based on which the "required symbol" (star) is displayed next to the label
      */
     required: PropTypes.bool,

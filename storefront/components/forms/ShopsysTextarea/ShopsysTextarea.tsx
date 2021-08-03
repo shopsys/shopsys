@@ -1,15 +1,16 @@
 import PropTypes, { InferProps } from 'prop-types';
 import { ReactElement, TextareaHTMLAttributes, useEffect, useState } from 'react';
 import { StyledShopsysTextarea, StyledShopsysTextareaFormLine } from './ShopsysTextarea.style';
+import { ExtractNativePropsFromDefault } from 'typeHelpers/ExtractNativePropsFromDefault';
 import { getStateAfterValidation } from '../helpers/getStateAfterValidation';
-import { OptionalExceptFor } from 'typeHelpers/OptionalExceptFor';
 import ShopsysFormLineError from '../lib/ShopsysFormLineError';
 import ShopsysLabelWrapper from '../lib/ShopsysLabelWrapper';
 import { useFormContext } from 'react-hook-form';
 
-type NativeProps = OptionalExceptFor<
-    Pick<TextareaHTMLAttributes<HTMLTextAreaElement>, 'name' | 'id' | 'disabled' | 'required' | 'rows'>,
-    'name' | 'id'
+type NativeProps = ExtractNativePropsFromDefault<
+    TextareaHTMLAttributes<HTMLTextAreaElement>,
+    'name' | 'id',
+    'disabled' | 'required' | 'rows'
 >;
 
 /**
@@ -36,7 +37,7 @@ function ShopsysTextarea(props: InferProps<typeof ShopsysTextarea.propTypes> & N
                     placeholder={props.label}
                 />
             </ShopsysLabelWrapper>
-            <ShopsysFormLineError htmlElement="textarea" errors={formState.errors} for={props.name} />
+            <ShopsysFormLineError inputType="textarea" errors={formState.errors} for={props.name} />
         </StyledShopsysTextareaFormLine>
     );
 }

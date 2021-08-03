@@ -138,7 +138,7 @@ const Index: FC = () => {
                                 label={t('Do you agree with sharing your HTML content')}
                             />
                             <ShopsysButton type="submit" variant="primary" name="button3">
-                                {t('Render raw HTML')}
+                                {t<string>('Render raw HTML')}
                             </ShopsysButton>
                         </form>
                     </FormProvider>

@@ -1,14 +1,15 @@
 import { InputHTMLAttributes, ReactElement } from 'react';
 import PropTypes, { InferProps } from 'prop-types';
 import { StyledShopsysCheckbox, StyledShopsysChoiceFormLine } from './ShopsysCheckbox.style';
-import { OptionalExceptFor } from 'typeHelpers/OptionalExceptFor';
+import { ExtractNativePropsFromDefault } from 'typeHelpers/ExtractNativePropsFromDefault';
 import ShopsysFormLineError from '../lib/ShopsysFormLineError';
 import ShopsysLabelWrapper from '../lib/ShopsysLabelWrapper';
 import { useFormContext } from 'react-hook-form';
 
-type NativeProps = OptionalExceptFor<
-    Pick<InputHTMLAttributes<HTMLInputElement>, 'id' | 'name' | 'disabled' | 'required'>,
-    'name' | 'id'
+type NativeProps = ExtractNativePropsFromDefault<
+    InputHTMLAttributes<HTMLInputElement>,
+    'id' | 'name',
+    'disabled' | 'required'
 >;
 
 /**
@@ -20,9 +21,16 @@ function ShopsysCheckbox(props: InferProps<typeof ShopsysCheckbox.propTypes> & N
     return (
         <StyledShopsysChoiceFormLine className="checkbox">
             <ShopsysLabelWrapper htmlFor={props.id} required={props.required} label={props.label}>
-                <StyledShopsysCheckbox {...register(props.name)} {...props} type="checkbox" />
+                <StyledShopsysCheckbox
+                    /**
+                     * @see https://react-hook-form.com/api/useform/register
+                     */
+                    {...register(props.name)}
+                    {...props}
+                    type="checkbox"
+                />
             </ShopsysLabelWrapper>
-            <ShopsysFormLineError htmlElement="checkbox" errors={formState.errors} for={props.name} />
+            <ShopsysFormLineError inputType="checkbox" errors={formState.errors} for={props.name} />
         </StyledShopsysChoiceFormLine>
     );
 }
