@@ -12,9 +12,9 @@ const baseStyleOfHeading = (theme: Theme) => {
 
 export const StyledShopsysHeading1 = styled.h1`
     ${({ theme }: { theme: Theme }) => css`
-        ${baseStyleOfHeading(theme)};
         margin: 0 0 10px 0;
 
+        ${baseStyleOfHeading(theme)};
         font-size: 24px;
 
         @media ${theme.mediaQueries.queryLg} {
@@ -27,9 +27,9 @@ export const StyledShopsysHeading1 = styled.h1`
 
 export const StyledShopsysHeading2 = styled.h2`
     ${({ theme }: { theme: Theme }) => css`
-        ${baseStyleOfHeading(theme)};
         margin: 0 0 10px 0;
 
+        ${baseStyleOfHeading(theme)};
         font-size: 18px;
 
         @media ${theme.mediaQueries.queryLg} {
@@ -40,9 +40,9 @@ export const StyledShopsysHeading2 = styled.h2`
 
 export const StyledShopsysHeading3 = styled.h3`
     ${({ theme }: { theme: Theme }) => css`
-        ${baseStyleOfHeading(theme)};
         margin: 0 0 10px 0;
 
+        ${baseStyleOfHeading(theme)};
         font-size: ${theme.fontSize.default};
 
         @media ${theme.mediaQueries.queryLg} {
@@ -55,9 +55,9 @@ export const StyledShopsysHeading3 = styled.h3`
 
 export const StyledShopsysHeading4 = styled.h4`
     ${({ theme }: { theme: Theme }) => css`
-        ${baseStyleOfHeading(theme)};
         margin: 0 0 10px 0;
 
+        ${baseStyleOfHeading(theme)};
         font-size: ${theme.fontSize.small};
 
         @media ${theme.mediaQueries.queryLg} {

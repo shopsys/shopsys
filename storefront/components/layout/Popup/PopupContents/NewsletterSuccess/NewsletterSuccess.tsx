@@ -19,7 +19,7 @@ function NewsletterSuccess(): ReactElement {
 
     return (
         <StyledNewsletterSuccess>
-            <ShopsysHeading type="h3">{t('You have successfully subscribed to our newsletter')}</ShopsysHeading>
+            <ShopsysHeading type="h3">{t<string>('You have successfully subscribed to our newsletter')}</ShopsysHeading>
             <div>
                 <ShopsysButton onClick={onCloseButtonClickHandler}>{t<string>('Close')}</ShopsysButton>
             </div>
