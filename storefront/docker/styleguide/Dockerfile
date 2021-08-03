@@ -5,7 +5,7 @@ WORKDIR /app
 FROM base as ci
 COPY . /app
 
-CMD npm install --legacy-peer-deps && npm run styleguide-server
+CMD npm install --legacy-peer-deps && npm run styleguide-build
 
 FROM base as development
 
