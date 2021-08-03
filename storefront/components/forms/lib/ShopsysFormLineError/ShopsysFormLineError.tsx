@@ -28,6 +28,10 @@ function ShopsysFormLineError(
 }
 
 ShopsysFormLineError.propTypes = {
+    /**
+     * A prop which originally is the name of the component for which the error should be shown.
+     * Here as a "for" prop it defines which errors should be displayed inside this error message.
+     */
     for: PropTypes.string.isRequired,
     /**
      * A prop based on which the CSS stzling is applied, as there is a slightly different
