@@ -17,20 +17,14 @@ const formProviderMethods = useForm({
 <FormProvider {...formProviderMethods}>
     <form>
         <ShopsysTextInput
-            id="my_form-input_required"
-            name="required"
-            label={'required'}
-            required={true}
-            markSuccessfulWhenValid={true}
-        />
-        <ShopsysTextInput
-            id="my_form-input_success"
+            id="my_form-text_input_success"
             name="success"
-            label={'I get green when you touch me'}
+            label="I get green when you touch me"
             markSuccessfulWhenValid={true}
         />
-        <ShopsysTextInput id="my_form_password" name="password" label={'password'} type="password" />
-        <ShopsysTextInput id="my_form_disabled" name="disabled" label={'disabled'} disabled={true} />
+        <ShopsysTextInput id="my_form-text_input_required" name="required" label="required" required={true} />
+        <ShopsysTextInput id="my_form-text_input_password" name="password" label="password" type="password" />
+        <ShopsysTextInput id="my_form-text_input_disabled" name="disabled" label="disabled" disabled={true} />
     </form>
 </FormProvider>;
 ```

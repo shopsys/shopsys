@@ -1,23 +1,34 @@
+import { InputHTMLAttributes, ReactElement } from 'react';
 import PropTypes, { InferProps } from 'prop-types';
-import {
-    StyledShopsysChoiceFormLine,
-    StyledShopsysRadiobutton,
-    StyledShopsysRadiobuttonImage,
-    StyledShopsysRadiobuttonLabel,
-} from './ShopsysRadiobutton.style';
-import { ReactElement } from 'react';
+import { StyledShopsysChoiceFormLine, StyledShopsysRadiobutton } from './ShopsysRadiobutton.style';
+import { ExtractNativePropsFromDefault } from 'typeHelpers/ExtractNativePropsFromDefault';
+import ShopsysLabelWrapper from '../lib/ShopsysLabelWrapper';
 import { useFormContext } from 'react-hook-form';
+
+type NativeProps = ExtractNativePropsFromDefault<
+    InputHTMLAttributes<HTMLInputElement>,
+    'id' | 'name' | 'value',
+    'disabled'
+>;
 
 /**
  * An HTML Radiobutton element of type radiobutton
  */
-function ShopsysRadiobutton(props: InferProps<typeof ShopsysRadiobutton.propTypes>): ReactElement {
+function ShopsysRadiobutton(props: InferProps<typeof ShopsysRadiobutton.propTypes> & NativeProps): ReactElement {
     const { register } = useFormContext();
 
     return (
         <StyledShopsysChoiceFormLine>
-            <StyledShopsysRadiobutton>
-                <input
+            <ShopsysLabelWrapper
+                htmlFor={props.id}
+                label={
+                    <div>
+                        {props.image && <img alt="" src={props.image} />}
+                        <span>{props.label}</span>
+                    </div>
+                }
+            >
+                <StyledShopsysRadiobutton
                     /**
                      * @see https://react-hook-form.com/api/useform/register
                      */
@@ -25,41 +36,16 @@ function ShopsysRadiobutton(props: InferProps<typeof ShopsysRadiobutton.propType
                     {...props}
                     type="radio"
                 />
-                <StyledShopsysRadiobuttonLabel>
-                    {props.image && <StyledShopsysRadiobuttonImage alt="" src={props.image} />}
-                    <label htmlFor={props.id}>{props.label}</label>
-                </StyledShopsysRadiobuttonLabel>
-            </StyledShopsysRadiobutton>
+            </ShopsysLabelWrapper>
         </StyledShopsysChoiceFormLine>
     );
 }
 
-ShopsysRadiobutton.defaultProps = {
-    disabled: false,
-};
-
 ShopsysRadiobutton.propTypes = {
-    /**
-     * The ID of the HTML radiobutton element which is used for identification
-     */
-    id: PropTypes.string.isRequired,
-    /**
-     * The name of the HTML radiobutton element which is used by React Hook Form to manage the field
-     * and group it together with other radiobuttons (options) from the same radiobutton group
-     */
-    name: PropTypes.string.isRequired,
-    /**
-     * A prop to define value of the HTML radiobutton element
-     */
-    value: PropTypes.string.isRequired,
     /**
      * Display Label of the HTML radiobutton element
      */
     label: PropTypes.oneOfType([PropTypes.string.isRequired, PropTypes.arrayOf(PropTypes.node), PropTypes.node]),
-    /**
-     * A prop to define if the HTML radiobutton element is disabled
-     */
-    disabled: PropTypes.bool.isRequired,
     /**
      * A prop which, if present, provides a URL for an image
      * which then gets rendered next to the label

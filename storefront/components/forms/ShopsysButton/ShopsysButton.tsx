@@ -1,7 +1,13 @@
+import { ButtonHTMLAttributes, ReactElement } from 'react';
 import PropTypes, { InferProps } from 'prop-types';
-import { ReactElement, ReactNode } from 'react';
 import { StyledShopsysButton, StyledShopsysButtonPrimary, StyledShopsysButtonSecondary } from './ShopsysButton.style';
-import { CSSProperties } from 'styled-components';
+import { ExtractNativePropsFromDefault } from 'typeHelpers/ExtractNativePropsFromDefault';
+
+type NativeProps = ExtractNativePropsFromDefault<
+    ButtonHTMLAttributes<HTMLButtonElement>,
+    'children',
+    'onClick' | 'style' | 'type' | 'name'
+>;
 
 /**
  * Global component for Buttons.
@@ -9,13 +15,7 @@ import { CSSProperties } from 'styled-components';
  * This method is used because we want to take advantage of the benefits of critical CSS and for that, it is necessary to have a styled-component element for each modification.
  * We can also combine variants and sizes.
  */
-type nativeProps = {
-    children: ReactNode;
-    onClick?: React.MouseEventHandler<HTMLButtonElement>;
-    style?: CSSProperties;
-};
-
-function ShopsysButton(props: InferProps<typeof ShopsysButton.propTypes> & nativeProps): ReactElement {
+function ShopsysButton(props: InferProps<typeof ShopsysButton.propTypes> & NativeProps): ReactElement {
     let Component = StyledShopsysButton;
 
     if (props.variant === 'primary') {
@@ -34,14 +34,6 @@ ShopsysButton.defaultProps = {
 };
 
 ShopsysButton.propTypes = {
-    /**
-     * Attr name value for input HTML element.
-     */
-    name: PropTypes.string.isRequired,
-    /**
-     * Type for change input type button/submit etc.
-     */
-    type: PropTypes.oneOf<'button' | 'submit'>(['button', 'submit']).isRequired,
     /**
      * Type for change variant of button. If you don't fill this prop then the button will be in default modification.
      */

@@ -1,23 +1,28 @@
-import { FieldValues, FormState, useFormContext } from 'react-hook-form';
+import { InputHTMLAttributes, ReactElement, useEffect, useState } from 'react';
 import PropTypes, { InferProps } from 'prop-types';
-import { ReactElement, useEffect, useState } from 'react';
 import {
-    StyledShopsysErrorIcon,
-    StyledShopsysErrorMessage,
-    StyledShopsysFormFieldError,
     StyledShopsysInputFormLine,
     StyledShopsysPasswordVisibilityToggle,
-    StyledShopsysRequiredSymbol,
     StyledShopsysTextInput,
 } from './ShopsysTextInput.style';
-import { ErrorMessage } from '@hookform/error-message';
+import { ExtractNativePropsFromDefault } from 'typeHelpers/ExtractNativePropsFromDefault';
+import { getStateAfterValidation } from '../helpers/getStateAfterValidation';
+import ShopsysFormLineError from '../lib/ShopsysFormLineError';
+import ShopsysLabelWrapper from '../lib/ShopsysLabelWrapper';
+import { useFormContext } from 'react-hook-form';
+
+type NativeProps = ExtractNativePropsFromDefault<
+    InputHTMLAttributes<HTMLInputElement>,
+    'name' | 'id',
+    'disabled' | 'required'
+>;
 
 /**
  * An HTML Input element used for text inputs of types: text, password, email, tel,
  */
-function ShopsysTextInput(props: InferProps<typeof ShopsysTextInput.propTypes>): ReactElement {
+function ShopsysTextInput(props: InferProps<typeof ShopsysTextInput.propTypes> & NativeProps): ReactElement {
     const { register, formState } = useFormContext();
-    const [inputState, setInputState] = useState<'error' | 'success' | undefined>(undefined);
+    const [inputState, setInputState] = useState<'success' | 'error' | undefined>(undefined);
     const [inputType, setInputType] = useState(props.type);
 
     const togglePasswordVisibilityHandler = () => {
@@ -25,21 +30,19 @@ function ShopsysTextInput(props: InferProps<typeof ShopsysTextInput.propTypes>):
     };
 
     useEffect(() => {
-        setInputState(getStateAfterValidation(formState, props));
+        setInputState(getStateAfterValidation(formState, props.name, props.markSuccessfulWhenValid));
     }, [formState.touchedFields[props.name], formState.errors[props.name], props.markSuccessfulWhenValid]);
 
     return (
-        <StyledShopsysInputFormLine>
-            <StyledShopsysTextInput inputState={inputState}>
-                <input
+        <StyledShopsysInputFormLine className="text-input">
+            <ShopsysLabelWrapper htmlFor={props.id} required={props.required} label={props.label}>
+                <StyledShopsysTextInput
                     /**
                      * @see https://react-hook-form.com/api/useform/register
                      */
                     {...register(props.name)}
-                    name={props.name}
-                    id={props.id}
-                    disabled={props.disabled}
-                    required={props.required}
+                    {...props}
+                    inputState={inputState}
                     type={inputType}
                     placeholder={props.label}
                 />
@@ -50,69 +53,22 @@ function ShopsysTextInput(props: InferProps<typeof ShopsysTextInput.propTypes>):
                         onClick={togglePasswordVisibilityHandler}
                     />
                 )}
-                <label htmlFor={props.id}>
-                    {props.label}
-                    {props.required && <StyledShopsysRequiredSymbol>*</StyledShopsysRequiredSymbol>}
-                </label>
-            </StyledShopsysTextInput>
-            {formState.errors[props.name] && (
-                <StyledShopsysFormFieldError>
-                    <StyledShopsysErrorIcon src="/svg/cross.svg" />
-                    {/**
-                     * @see https://react-hook-form.com/api/useformstate/errormessage
-                     */}
-                    <ErrorMessage
-                        errors={formState.errors}
-                        name={props.name}
-                        render={({ message }) => <StyledShopsysErrorMessage>{message}</StyledShopsysErrorMessage>}
-                    />
-                </StyledShopsysFormFieldError>
-            )}
+            </ShopsysLabelWrapper>
+            <ShopsysFormLineError inputType="text-input" errors={formState.errors} for={props.name} />
         </StyledShopsysInputFormLine>
     );
 }
 
-const getStateAfterValidation = (
-    formState: FormState<FieldValues>,
-    props: InferProps<typeof ShopsysTextInput.propTypes>,
-) => {
-    if (formState.errors[props.name]) {
-        return 'error';
-    }
-
-    if (props.markSuccessfulWhenValid && formState.touchedFields[props.name]) {
-        return 'success';
-    }
-};
-
 ShopsysTextInput.defaultProps = {
-    disabled: false,
-    required: false,
     type: 'text',
     markSuccessfulWhenValid: false,
 };
 
 ShopsysTextInput.propTypes = {
     /**
-     * The ID of the HTML input element which is used for identification
-     */
-    id: PropTypes.string.isRequired,
-    /**
-     * The name of the HTML input element which is used by React Hook Form to manage the field
-     */
-    name: PropTypes.string.isRequired,
-    /**
      * Display Label of the HTML input element
      */
     label: PropTypes.string.isRequired,
-    /**
-     * A prop to define if the HTML input element is disabled
-     */
-    disabled: PropTypes.bool.isRequired,
-    /**
-     * A prop to define if the HTML input element is required
-     */
-    required: PropTypes.bool.isRequired,
     /**
      * A enumerator-like list of all available types of the custom TextInput element
      */
