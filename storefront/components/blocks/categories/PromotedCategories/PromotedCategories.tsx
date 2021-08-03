@@ -1,7 +1,7 @@
-import { getPromotedCategories } from 'connectors/categories/PromotedCategories';
-import { ReactElement } from 'react';
+import { FC } from 'react';
+import { getPromotedCategories } from '../../../../connectors/categories/PromotedCategories';
 
-export default function PromotedCategories(): ReactElement | null {
+const PromotedCategories: FC = () => {
     const promotedCategories = getPromotedCategories();
 
     if (promotedCategories !== undefined) {
@@ -15,4 +15,6 @@ export default function PromotedCategories(): ReactElement | null {
     }
 
     return null;
-}
+};
+
+export default PromotedCategories;
