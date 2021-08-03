@@ -2,6 +2,7 @@ import { cacheExchange, dedupExchange, fetchExchange, ssrExchange } from 'urql';
 import { GetServerSidePropsContext, GetServerSidePropsResult } from 'next';
 import getConfig from 'next/config';
 import { initUrqlClient } from 'next-urql';
+import nextI18NextConfig from '../next-i18next.config';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 export async function initServerSideProps(
@@ -28,7 +29,7 @@ export async function initServerSideProps(
     let serversideTranslationConfig;
 
     if (context.defaultLocale !== undefined && client !== null) {
-        serversideTranslationConfig = await serverSideTranslations(context.defaultLocale);
+        serversideTranslationConfig = await serverSideTranslations(context.defaultLocale, undefined, nextI18NextConfig);
 
         for (const query of prefetchedQueries) {
             await client.query(query).toPromise();

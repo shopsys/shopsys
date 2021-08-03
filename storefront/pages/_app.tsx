@@ -2,6 +2,7 @@ import { AppProps } from 'next/app';
 import { appWithTranslation } from 'next-i18next';
 import getConfig from 'next/config';
 import { GlobalErrorList } from 'components/blocks/errors/GlobalErrorList/GlobalErrorList';
+import nextI18NextConfig from '../next-i18next.config.js';
 import Popup from 'components/layout/Popup';
 import { Provider } from 'react-redux';
 import { ReactElement } from 'react';
@@ -34,5 +35,5 @@ export default withUrqlClient(
 )(
     // eslint-disable-next-line
     // @ts-ignore
-    appWithTranslation(MyApp),
+    appWithTranslation(MyApp, nextI18NextConfig),
 );

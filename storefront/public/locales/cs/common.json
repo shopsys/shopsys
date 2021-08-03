@@ -41,5 +41,9 @@
     "Customer service": "Zákaznický servis",
     "Stores": "Prodejny",
     "Sign in": "Přihlásit se",
-    "Your cart is currently empty.": "Váš košík je zatím prázdný."
+    "Your cart is currently empty.": "Váš košík je zatím prázdný.",
+    "Choose variant": "Vybrat variantu",
+    "Add to cart": "Do košíku",
+    "(1)[This item is available immediately in {{ count }} store];(2-inf)[This item is available immediately in {{ count }} stores];": "(1)[Můžete mít ihned na {{ count }} prodejně];(2-inf)[Můžete mít ihned na {{ count }} prodejnách];",
+    "(1)[You can check this item in {{ count }} store];(2-inf)[You can check this item in {{ count }} stores];": "(1)[Můžete si prohlédnout na {{ count }} prodejně];(2-inf)[Můžete si prohlédnout na {{ count }} prodejnách];"
 }

@@ -13,4 +13,9 @@ module.exports = {
     eslint: {
         ignoreDuringBuilds: true,
     },
+    images: {
+        domains: i18n.domains.map((domainConfig) => {
+            return domainConfig.backendHost;
+        }),
+    },
 };
