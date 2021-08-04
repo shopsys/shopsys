@@ -2,3 +2,8 @@ Brand:
     type: object
     inherits:
         - 'BrandDecorator'
+    config:
+        fields:
+            slug:
+                type: "String!"
+                description: "Brand URL slug"
