@@ -58,6 +58,7 @@ class ProductTest extends GraphQlTestCase
             query {
                 product(uuid: "' . $this->product->getUuid() . '") {
                     name
+                    slug
                     shortDescription
                     seoH1
                     seoTitle
@@ -150,6 +151,7 @@ class ProductTest extends GraphQlTestCase
             'data' => [
                 'product' => [
                     'name' => t('22" Sencor SLE 22F46DM4 HELLO KITTY', [], 'dataFixtures', $firstDomainLocale),
+                    'slug' => 'televize-22-sencor-sle-22f46dm4-hello-kitty-plazmova',
                     'shortDescription' => $shortDescription,
                     'seoH1' => t(
                         'Hello Kitty Television',

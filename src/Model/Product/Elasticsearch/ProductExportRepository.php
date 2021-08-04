@@ -139,6 +139,8 @@ class ProductExportRepository extends BaseProductExportRepository
         $searchingPartnos = $this->extractSearchingPartnos($product);
         $searchingShortDescriptions = $this->extractSearchingShortDescriptions($product, $domainId);
 
+        $mainFriendlyUrl = $this->friendlyUrlFacade->getMainFriendlyUrl($domainId, 'front_product_detail', $product->getId());
+
         return [
             'id' => $product->getId(),
             'catnum' => $product->getCatnum(),
@@ -195,6 +197,7 @@ class ProductExportRepository extends BaseProductExportRepository
             'searching_eans' => $searchingEans,
             'searching_partnos' => $searchingPartnos,
             'searching_short_descriptions' => $searchingShortDescriptions,
+            'slug' => $mainFriendlyUrl->getSlug(),
         ];
     }
 
