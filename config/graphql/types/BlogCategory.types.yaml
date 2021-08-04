@@ -1,6 +1,8 @@
 BlogCategory:
     type: object
     config:
+        interfaces:
+            - 'Slug'
         fields:
             uuid:
                 type: "Uuid!"

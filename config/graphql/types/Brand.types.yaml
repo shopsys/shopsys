@@ -3,6 +3,8 @@ Brand:
     inherits:
         - 'BrandDecorator'
     config:
+        interfaces:
+            - 'Slug'
         fields:
             slug:
                 type: "String!"

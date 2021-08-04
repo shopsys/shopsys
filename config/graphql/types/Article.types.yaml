@@ -3,6 +3,8 @@ Article:
     inherits:
         - 'ArticleDecorator'
     config:
+        interfaces:
+            - 'Slug'
         fields:
             slug:
                 type: "String!"

@@ -3,6 +3,8 @@ Category:
     inherits:
         - 'CategoryDecorator'
     config:
+        interfaces:
+            - 'Slug'
         fields:
             bestsellers:
                 type: "[Product!]!"
