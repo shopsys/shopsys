@@ -34,6 +34,7 @@ class GetStoreTest extends GraphQlTestCase
             $this->assertKeysAreSameAsExpected(
                 [
                     'name',
+                    'slug',
                     'isDefault',
                     'description',
                     'street',
@@ -64,6 +65,7 @@ class GetStoreTest extends GraphQlTestCase
             $this->assertKeysAreSameAsExpected(
                 [
                     'name',
+                    'slug',
                     'isDefault',
                     'description',
                     'street',
@@ -163,6 +165,7 @@ class GetStoreTest extends GraphQlTestCase
             query {
                 ' . $graphQlTypeWithFilters . ' { 
                     name
+                    slug
                     isDefault
                     description
                     street
@@ -188,6 +191,7 @@ class GetStoreTest extends GraphQlTestCase
         $data = [
             1 => [
                 'name' => t('Ostrava', [], 'dataFixtures', $firstDomainLocale),
+                'slug' => 'ostrava',
                 'isDefault' => true,
                 'description' => null,
                 'street' => 'Koksární 10',
@@ -202,6 +206,7 @@ class GetStoreTest extends GraphQlTestCase
             ],
             2 => [
                 'name' => t('Pardubice', [], 'dataFixtures', $firstDomainLocale),
+                'slug' => 'pardubice',
                 'isDefault' => false,
                 'description' => null,
                 'street' => 'Bratranců Veverkových 2722',

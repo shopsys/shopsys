@@ -2,6 +2,9 @@ Store:
     type: object
     config:
         fields:
+            slug:
+                type: "String!"
+                description: "Store URL slug"
             uuid:
                 type: "Uuid!"
                 description: "UUID"
