@@ -6,7 +6,7 @@
         "dev": "next dev",
         "build": "next build",
         "start": "next start",
-        "lint": "next lint",
+        "lint": "eslint '*/**/*.{js,ts,tsx}'",
         "lint--fix": "eslint '*/**/*.{js,ts,tsx}' --fix",
         "format": "prettier --ignore-path .eslintignore --write '*/**/*.{js,ts,tsx}'",
         "translate": "i18next 'pages/**/*.{tsx,js}' 'components/**/*.{tsx,js}' --config config/i18next-parser.config.js",
