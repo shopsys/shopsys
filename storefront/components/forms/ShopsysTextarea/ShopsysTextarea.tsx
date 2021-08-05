@@ -26,7 +26,7 @@ function ShopsysTextarea(props: InferProps<typeof ShopsysTextarea.propTypes> & N
 
     return (
         <StyledShopsysTextareaFormLine>
-            <ShopsysLabelWrapper htmlFor={props.id} required={props.required} label={props.label}>
+            <ShopsysLabelWrapper htmlFor={props.id} required={props.required} label={props.label} inputType="textarea">
                 <StyledShopsysTextarea
                     /**
                      * @see https://react-hook-form.com/api/useform/register

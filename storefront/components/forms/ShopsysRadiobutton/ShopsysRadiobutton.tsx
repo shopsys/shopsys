@@ -27,6 +27,7 @@ function ShopsysRadiobutton(props: InferProps<typeof ShopsysRadiobutton.propType
                         <span>{props.label}</span>
                     </div>
                 }
+                inputType="radio"
             >
                 <StyledShopsysRadiobutton
                     /**

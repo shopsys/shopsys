@@ -20,7 +20,7 @@ function ShopsysCheckbox(props: InferProps<typeof ShopsysCheckbox.propTypes> & N
 
     return (
         <StyledShopsysChoiceFormLine className="checkbox">
-            <ShopsysLabelWrapper htmlFor={props.id} required={props.required} label={props.label}>
+            <ShopsysLabelWrapper htmlFor={props.id} required={props.required} label={props.label} inputType="checkbox">
                 <StyledShopsysCheckbox
                     /**
                      * @see https://react-hook-form.com/api/useform/register
