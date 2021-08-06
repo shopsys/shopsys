@@ -57,3 +57,7 @@ Query:
                 type: '[BlogCategory!]!'
                 resolve: "@=resolver('blogCategories')"
                 description: "Returns a complete list of the blog categories"
+            sliderItems:
+                type: '[SliderItem!]!'
+                resolve: "@=resolver('sliderItems')"
+                description: "Returns a complete list of the slider items"

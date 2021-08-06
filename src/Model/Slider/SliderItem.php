@@ -6,6 +6,7 @@ namespace App\Model\Slider;
 
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
+use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Model\Slider\SliderItem as BaseSliderItem;
 
 /**
@@ -54,6 +55,12 @@ class SliderItem extends BaseSliderItem
     protected $gtmCreative;
 
     /**
+     * @var string
+     * @ORM\Column(type="guid", unique=true)
+     */
+    protected string $uuid;
+
+    /**
      * @param \App\Model\Slider\SliderItemData $sliderItemData
      */
     public function __construct($sliderItemData)
@@ -66,6 +73,7 @@ class SliderItem extends BaseSliderItem
         $this->sliderExtendedTextLink = $sliderItemData->sliderExtendedTextLink;
         $this->gtmId = $sliderItemData->gtmId;
         $this->gtmCreative = $sliderItemData->gtmCreative;
+        $this->uuid = $sliderItemData->uuid ?: Uuid::uuid4()->toString();
     }
 
     /**
@@ -161,5 +169,13 @@ class SliderItem extends BaseSliderItem
     public function setGtmCreative($gtmCreative): void
     {
         $this->gtmCreative = $gtmCreative;
+    }
+
+    /**
+     * @return string
+     */
+    public function getUuid(): string
+    {
+        return $this->uuid;
     }
 }

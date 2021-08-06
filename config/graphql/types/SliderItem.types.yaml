@@ -1,0 +1,35 @@
+SliderItem:
+    type: object
+    config:
+        fields:
+            uuid:
+                type: "Uuid!"
+                description: "UUID"
+            name:
+                type: "String!"
+                description: "Slider name"
+            link:
+                type: "String!"
+                description: "Target link"
+            extendedText:
+                type: "String"
+                description: "Text below slider"
+            extendedTextLink:
+                type: "String"
+                description: "Target link of text below slider"
+            gtmId:
+                type: "String!"
+                description: "GTM ID"
+            gtmCreative:
+                type: "String"
+                description: "GTM creative"
+            images:
+                type: "[Image!]!"
+                description: "Slider item images"
+                resolve: '@=service("App\\FrontendApi\\Model\\Resolver\\Image\\ImagesResolver").resolveBySliderItem(value, args["type"], args["size"])'
+                args:
+                    type:
+                        type: "String"
+                        defaultValue: null
+                    size:
+                        type: "String"

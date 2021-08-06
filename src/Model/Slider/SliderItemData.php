@@ -44,6 +44,11 @@ class SliderItemData extends BaseSliderItemData
      */
     public $gtmCreative;
 
+    /**
+     * @var string|null
+     */
+    public ?string $uuid = null;
+
     public function __construct()
     {
         parent::__construct();
