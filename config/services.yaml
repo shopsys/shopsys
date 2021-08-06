@@ -805,8 +805,6 @@ services:
 
     App\Command\CleanOpcacheCommand: ~
 
-    App\Command\CreateProductStocksCommand: ~
-
     App\Command\CronLockCommand: ~
 
     App\Command\CronWatcherCommand: ~

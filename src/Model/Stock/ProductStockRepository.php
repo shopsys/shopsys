@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Model\Stock;
 
 use App\Model\Product\Product;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
@@ -69,24 +70,6 @@ class ProductStockRepository
     }
 
     /**
-     * @param int $stockId
-     * @param string $productCatnum
-     * @return \App\Model\Stock\ProductStock|null
-     */
-    public function findProductStockByProductCatnumAndStockId(int $stockId, string $productCatnum): ?ProductStock
-    {
-        return $this->getQueryBuilder()
-            ->join(Product::class, 'p', JOIN::WITH, 'ps.product = p')
-            ->join(Stock::class, 's', JOIN::WITH, 'ps.stock = s')
-            ->andWhere('s.id = :stockId')
-            ->andWhere('p.catnum = :productCatnum')
-            ->setParameter('stockId', $stockId)
-            ->setParameter('productCatnum', $productCatnum)
-            ->getQuery()
-            ->getOneOrNullResult();
-    }
-
-    /**
      * @param \App\Model\Product\Product $product
      * @return \App\Model\Stock\ProductStock[]
      */
@@ -135,5 +118,22 @@ class ProductStockRepository
             ->setParameter('domainId', $domainId)
             ->getQuery()
             ->execute();
+    }
+
+    /**
+     * @param int $stockId
+     */
+    public function createProductStockRelationForStockId(int $stockId): void
+    {
+        $this->em->getConnection()->executeStatement(
+            'INSERT INTO product_stocks (stock_id, product_id, product_quantity)
+            SELECT :stock_id, id, 0 FROM products;',
+            [
+                'stock_id' => $stockId,
+            ],
+            [
+                'stock_id' => Types::INTEGER,
+            ],
+        );
     }
 }

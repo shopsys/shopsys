@@ -100,16 +100,6 @@ class ProductStockFacade
     }
 
     /**
-     * @param string $productCatnum
-     * @param int $stockId
-     * @return \App\Model\Stock\ProductStock|null
-     */
-    public function findProductStockByProductCatnumAndStockId(string $productCatnum, int $stockId): ?ProductStock
-    {
-        return $this->productStockRepository->findProductStockByProductCatnumAndStockId($stockId, $productCatnum);
-    }
-
-    /**
      * @param \App\Model\Product\Product $product
      * @param int $domainId
      * @return bool
@@ -117,5 +107,13 @@ class ProductStockFacade
     public function isProductAvailableOnDomain(Product $product, int $domainId): bool
     {
         return $this->productStockRepository->isProductAvailableOnDomain($product, $domainId);
+    }
+
+    /**
+     * @param int $stockId
+     */
+    public function createProductStockRelationForStockId(int $stockId): void
+    {
+        $this->productStockRepository->createProductStockRelationForStockId($stockId);
     }
 }

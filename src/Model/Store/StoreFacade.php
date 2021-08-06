@@ -6,6 +6,7 @@ namespace App\Model\Store;
 
 use App\Component\Image\ImageFacade;
 use App\Component\Router\FriendlyUrl\FriendlyUrlFacade;
+use App\Model\Product\ProductRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
 
@@ -37,24 +38,40 @@ class StoreFacade
     private FriendlyUrlFacade $friendlyUrlFacade;
 
     /**
+     * @var \App\Model\Store\ProductStoreFacade
+     */
+    private ProductStoreFacade $productStoreFacade;
+
+    /**
+     * @var \App\Model\Product\ProductRepository
+     */
+    private ProductRepository $productRepository;
+
+    /**
      * @param \App\Model\Store\StoreRepository $storeRepository
      * @param \App\Model\Store\StoreFactory $storeFactory
      * @param \App\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
      * @param \App\Component\Image\ImageFacade $imageFacade
      * @param \Doctrine\ORM\EntityManagerInterface $em
+     * @param \App\Model\Store\ProductStoreFacade $productStoreFacade
+     * @param \App\Model\Product\ProductRepository $productRepository
      */
     public function __construct(
         StoreRepository $storeRepository,
         StoreFactory $storeFactory,
         FriendlyUrlFacade $friendlyUrlFacade,
         ImageFacade $imageFacade,
-        EntityManagerInterface $em
+        EntityManagerInterface $em,
+        ProductStoreFacade $productStoreFacade,
+        ProductRepository $productRepository
     ) {
         $this->storeRepository = $storeRepository;
         $this->storeFactory = $storeFactory;
         $this->imageFacade = $imageFacade;
         $this->em = $em;
         $this->friendlyUrlFacade = $friendlyUrlFacade;
+        $this->productStoreFacade = $productStoreFacade;
+        $this->productRepository = $productRepository;
     }
 
     /**
@@ -78,6 +95,8 @@ class StoreFacade
         $this->createFriendlyUrl($store);
 
         $this->imageFacade->manageImages($store, $storeData->image);
+        $this->productStoreFacade->createProductStoreRelationForStoreId($store->getId());
+        $this->productRepository->markAllProductsForExport();
 
         return $store;
     }
@@ -96,6 +115,7 @@ class StoreFacade
         $this->imageFacade->manageImages($store, $storeData->image);
 
         $this->createFriendlyUrl($store);
+        $this->productRepository->markAllProductsForExport();
 
         return $store;
     }
