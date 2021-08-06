@@ -189,9 +189,8 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
                 urqlState: ssrCache.extractData(),
             },
         };
-    } else {
-        return { props: {} };
     }
+    return { props: {} };
 };
 
 export default withUrqlClient(

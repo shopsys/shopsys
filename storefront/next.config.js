@@ -7,4 +7,7 @@ module.exports = {
     publicRuntimeConfig: {
         publicGraphqlEndpoint: process.env.PUBLIC_GRAPHQL_ENDPOINT,
     },
+    eslint: {
+        ignoreDuringBuilds: true,
+    },
 };

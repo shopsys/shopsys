@@ -34,6 +34,8 @@ const getSize = (size: StyledShopsysButtonSize, theme: Theme) => {
                 font-size: ${theme.fontSize.small};
             `;
     }
+
+    throw new Error('Wrong size provided for ShopsysButton.');
 };
 
 export const StyledShopsysButton = styled.button<StyledShopsysButtonProps>`

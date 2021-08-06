@@ -26,7 +26,7 @@ function ShopsysTextInput(props: InferProps<typeof ShopsysTextInput.propTypes> &
     const [inputType, setInputType] = useState(props.type);
 
     const togglePasswordVisibilityHandler = () => {
-        inputType === 'text' ? setInputType('password') : setInputType('text');
+        setInputType(inputType === 'text' ? 'text' : 'password');
     };
 
     useEffect(() => {
