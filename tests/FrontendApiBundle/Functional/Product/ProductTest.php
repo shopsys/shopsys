@@ -124,6 +124,8 @@ class ProductTest extends GraphQlTestCase
                         availabilityInformation
                         availabilityStatus
                     }
+                    availableStoresCount
+                    exposedStoresCount
                 }
             }
         ';
@@ -323,6 +325,8 @@ class ProductTest extends GraphQlTestCase
                             'availabilityStatus' => 'in-stock',
                         ],
                     ],
+                    'availableStoresCount' => 1,
+                    'exposedStoresCount' => 1,
                 ],
             ],
         ];

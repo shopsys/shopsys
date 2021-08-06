@@ -43,3 +43,9 @@ Product:
             storeAvailabilities:
                 type: "[StoreAvailability!]!"
                 description: "List of availabilities in individual stores"
+            availableStoresCount:
+                type: "Int!"
+                description: "Number of the stores where the product is available"
+            exposedStoresCount:
+                type: "Int!"
+                description: "Number of the stores where the product is exposed"

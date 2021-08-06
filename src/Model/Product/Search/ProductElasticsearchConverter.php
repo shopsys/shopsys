@@ -25,6 +25,8 @@ class ProductElasticsearchConverter extends BaseProductElasticsearchConverter
         $result['store_availabilities_information'] = $product['store_availabilities_information'] ?? [];
         $result['has_preorder'] = $product['has_preorder'] ?? false;
         $result['slug'] = $product['slug'] ?? '';
+        $result['available_stores_count'] = $product['available_stores_count'] ?? 0;
+        $result['exposed_stores_count'] = $product['exposed_stores_count'] ?? 0;
 
         return $result;
     }

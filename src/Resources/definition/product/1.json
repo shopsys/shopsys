@@ -407,6 +407,12 @@
       },
       "slug": {
         "type": "text"
+      },
+      "available_stores_count": {
+        "type": "integer"
+      },
+      "exposed_stores_count": {
+        "type": "integer"
       }
     }
   }
