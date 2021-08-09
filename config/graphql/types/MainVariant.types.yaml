@@ -2,3 +2,6 @@ MainVariant:
     type: object
     inherits:
         - 'MainVariantDecorator'
+    config:
+        interfaces:
+            - 'Slug'

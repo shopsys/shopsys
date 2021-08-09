@@ -3,8 +3,13 @@ Category:
     inherits:
         - 'CategoryDecorator'
     config:
+        interfaces:
+            - 'Slug'
         fields:
             bestsellers:
                 type: "[Product!]!"
                 description: "Best selling products"
                 resolve: '@=service("App\\FrontendApi\\Model\\Resolver\\Products\\BestsellingProductsResolver").resolveByCategory(value)'
+            slug:
+                type: "String!"
+                description: "Category URL slug"

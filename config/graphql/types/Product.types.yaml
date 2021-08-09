@@ -4,6 +4,9 @@ Product:
         - 'ProductDecorator'
     config:
         fields:
+            slug:
+                type: "String!"
+                description: "Product URL slug"
             catalogNumber:
                 type: "String!"
                 description: "Product catalog number"

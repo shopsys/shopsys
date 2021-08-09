@@ -61,3 +61,10 @@ Query:
                 type: '[SliderItem!]!'
                 resolve: "@=resolver('sliderItems')"
                 description: "Returns a complete list of the slider items"
+            slug:
+                type: 'Slug'
+                resolve: "@=resolver('slugResolver', [args['slug']])"
+                description: "Returns entity by slug"
+                args:
+                    slug:
+                        type: "String!"

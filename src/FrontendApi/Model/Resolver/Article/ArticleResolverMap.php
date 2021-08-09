@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace App\FrontendApi\Model\Resolver\Store;
+namespace App\FrontendApi\Model\Resolver\Article;
 
 use App\Component\Router\FriendlyUrl\FriendlyUrlFacade;
-use App\Model\Store\Store;
+use App\Model\Article\Article;
 use Overblog\GraphQLBundle\Resolver\ResolverMap;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 
-class StoreResolverMap extends ResolverMap
+class ArticleResolverMap extends ResolverMap
 {
     /**
      * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
@@ -22,10 +22,10 @@ class StoreResolverMap extends ResolverMap
     private FriendlyUrlFacade $friendlyUrlFacade;
 
     /**
-     * @param \App\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     * @param \App\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
      */
-    public function __construct(FriendlyUrlFacade $friendlyUrlFacade, Domain $domain)
+    public function __construct(Domain $domain, FriendlyUrlFacade $friendlyUrlFacade)
     {
         $this->friendlyUrlFacade = $friendlyUrlFacade;
         $this->domain = $domain;
@@ -34,30 +34,27 @@ class StoreResolverMap extends ResolverMap
     /**
      * @return array
      */
-    protected function map()
+    protected function map(): array
     {
-        return [
-            'Store' => [
-                'country' => static function (Store $store) {
-                    return $store->getCountry()->getCode();
-                },
-                'slug' => function (Store $store) {
-                    return $this->getSlug($store);
-                },
-            ],
+        $map['Article'] = [
+            'slug' => function (Article $article) {
+                return $this->getSlug($article);
+            },
         ];
+
+        return $map;
     }
 
     /**
-     * @param \App\Model\Store\Store $store
+     * @param \App\Model\Article\Article $article
      * @return string
      */
-    private function getSlug(Store $store): string
+    private function getSlug(Article $article): string
     {
         $friendlyUrl = $this->friendlyUrlFacade->getMainFriendlyUrl(
             $this->domain->getId(),
-            'front_stores_detail',
-            $store->getId()
+            'front_article_detail',
+            $article->getId()
         );
 
         return $friendlyUrl->getSlug();

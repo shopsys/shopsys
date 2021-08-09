@@ -28,6 +28,7 @@ class BrandTest extends GraphQlTestCase
             query {
                 brand(uuid: "' . $this->brand->getUuid() . '") {
                     name
+                    slug
                     description
                     link
                     seoTitle
@@ -56,6 +57,7 @@ class BrandTest extends GraphQlTestCase
     "data": {
         "brand": {
             "name": "' . t('Canon', [], 'dataFixtures', $this->getFirstDomainLocale()) . '",
+            "slug": "canon",
             "description": "' . t(
             'This is description of brand %brandName%.',
             ['%brandName%' => 'Canon'],

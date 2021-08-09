@@ -2,3 +2,10 @@ Article:
     type: object
     inherits:
         - 'ArticleDecorator'
+    config:
+        interfaces:
+            - 'Slug'
+        fields:
+            slug:
+                type: "String!"
+                description: "Article URL slug"

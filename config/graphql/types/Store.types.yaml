@@ -1,7 +1,12 @@
 Store:
     type: object
     config:
+        interfaces:
+            - 'Slug'
         fields:
+            slug:
+                type: "String!"
+                description: "Store URL slug"
             uuid:
                 type: "Uuid!"
                 description: "UUID"
