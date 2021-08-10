@@ -9,12 +9,12 @@ export const promotedCategoriesQuery = `
         }
     ` as const;
 
-type Category = {
+type CategoryType = {
     name: string;
     uuid: string;
 };
 
-export function getPromotedCategories(): Category[] | undefined {
+export function getPromotedCategories(): CategoryType[] | undefined {
     const result = useFetchQuery({ query: promotedCategoriesQuery });
     return result?.data?.promotedCategories;
 }
