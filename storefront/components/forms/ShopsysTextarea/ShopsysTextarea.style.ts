@@ -13,7 +13,7 @@ type ShopsysTextareaStyledProps = {
 };
 
 export const StyledShopsysTextareaFormLine = styled.div`
-    margin-bottom: 12px;
+    width: 100%;
 `;
 
 export const StyledShopsysTextarea = styled.textarea<ShopsysTextareaStyledProps>`

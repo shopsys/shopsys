@@ -12,7 +12,7 @@ type ShopsysTextInputStyledProps = {
 };
 
 export const StyledShopsysInputFormLine = styled.div`
-    margin-bottom: 12px;
+    width: 100%;
 `;
 
 export const StyledShopsysTextInput = styled.input<ShopsysTextInputStyledProps>`
