@@ -5,6 +5,7 @@ type StyledShopsysButtonSize = 'default' | 'small';
 
 type StyledShopsysButtonProps = {
     size: StyledShopsysButtonSize;
+    borderRadius: 'big' | 'medium';
 };
 
 const localVariables = {
@@ -39,7 +40,7 @@ const getSize = (size: StyledShopsysButtonSize, theme: Theme) => {
 };
 
 export const StyledShopsysButton = styled.button<StyledShopsysButtonProps>`
-    ${({ size, theme }: { size: StyledShopsysButtonSize; theme: Theme }) => css`
+    ${({ theme, size, borderRadius }: { theme: Theme } & StyledShopsysButtonProps) => css`
         ${getSize(size, theme)};
         width: auto;
         vertical-align: middle;
@@ -48,7 +49,7 @@ export const StyledShopsysButton = styled.button<StyledShopsysButtonProps>`
         text-align: center;
 
         border: 0;
-        border-radius: ${theme.radius.medium};
+        border-radius: ${borderRadius === 'big' ? theme.radius.big : theme.radius.medium};
         color: ${theme.color.white};
         background-color: ${theme.color.orange};
         cursor: pointer;

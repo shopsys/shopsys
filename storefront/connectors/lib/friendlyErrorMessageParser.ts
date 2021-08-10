@@ -17,6 +17,11 @@ export const getUserFriendlyErrorMessage = (originalError: CombinedError, t: TFu
     } else if (originalError.graphQLErrors.length > 0) {
         originalError.graphQLErrors.map((error) => {
             if (error.message === 'validation') {
+                for (const errorName in error?.extensions?.validation) {
+                    delete Object.assign(error?.extensions?.validation, {
+                        [errorName.replace('input.', '')]: error?.extensions?.validation[errorName],
+                    })[errorName];
+                }
                 errors.userError = error?.extensions?.validation;
             } else {
                 // @todo: add real exception to error handler to deal with this

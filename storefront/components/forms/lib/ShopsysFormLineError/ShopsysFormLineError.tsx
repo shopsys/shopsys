@@ -14,7 +14,11 @@ function ShopsysFormLineError(
     if (props.errors[props.for]) {
         return (
             <StyledShopsysFormFieldError>
-                <StyledShopsysErrorIcon inputType={props.inputType} src="/svg/cross.svg" />
+                <StyledShopsysErrorIcon
+                    inputType={props.inputType}
+                    textInputSize={props.textInputSize}
+                    src="/svg/cross.svg"
+                />
                 <ErrorMessage
                     errors={props.errors}
                     name={props.for}
@@ -27,6 +31,10 @@ function ShopsysFormLineError(
     return null;
 }
 
+ShopsysFormLineError.defaultProps = {
+    textInputSize: 'default',
+};
+
 ShopsysFormLineError.propTypes = {
     /**
      * A prop which originally is the name of the component for which the error should be shown.
@@ -34,11 +42,16 @@ ShopsysFormLineError.propTypes = {
      */
     for: PropTypes.string.isRequired,
     /**
-     * A prop based on which the CSS stzling is applied, as there is a slightly different
+     * A prop based on which the CSS styling is applied, as there is a slightly different
      * styling for each of the elements below.
      */
     inputType: PropTypes.oneOf<'textarea' | 'text-input' | 'checkbox'>(['textarea', 'text-input', 'checkbox'])
         .isRequired,
+    /**
+     * A prop which is automatically set based on the text input size.
+     * This prop then sets the top indentation for the error icon.
+     */
+    textInputSize: PropTypes.oneOf<'default' | 'small'>(['default', 'small']).isRequired,
 };
 
 export default ShopsysFormLineError;

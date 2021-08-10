@@ -48,6 +48,7 @@ function ShopsysTextInput(props: InferProps<typeof ShopsysTextInput.propTypes> &
                     {...register(props.name)}
                     {...props}
                     inputState={inputState}
+                    inputSize={props.inputSize}
                     type={inputType}
                     placeholder={props.label}
                 />
@@ -59,13 +60,19 @@ function ShopsysTextInput(props: InferProps<typeof ShopsysTextInput.propTypes> &
                     />
                 )}
             </ShopsysLabelWrapper>
-            <ShopsysFormLineError inputType="text-input" errors={formState.errors} for={props.name} />
+            <ShopsysFormLineError
+                inputType="text-input"
+                textInputSize={props.inputSize}
+                errors={formState.errors}
+                for={props.name}
+            />
         </StyledShopsysInputFormLine>
     );
 }
 
 ShopsysTextInput.defaultProps = {
     type: 'text',
+    inputSize: 'default',
     markSuccessfulWhenValid: false,
 };
 
@@ -77,7 +84,11 @@ ShopsysTextInput.propTypes = {
     /**
      * A enumerator-like list of all available types of the custom TextInput element
      */
-    type: PropTypes.oneOf(['text', 'password', 'email', 'tel']).isRequired,
+    type: PropTypes.oneOf<'text' | 'password' | 'email' | 'tel'>(['text', 'password', 'email', 'tel']).isRequired,
+    /**
+     * A enumerator-like list of all available sizes of the custom TextInput element
+     */
+    inputSize: PropTypes.oneOf<'default' | 'small'>(['default', 'small']).isRequired,
     /**
      * A prop to define if the HTML textarea element should receive the .success CSS class when the input is correct
      */
