@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { getUserFriendlyErrorMessage, ParsedErrors } from '../connectors/lib/friendlyErrorMessageParser';
+import { getUserFriendlyErrors, ParsedErrors } from '../connectors/lib/friendlyErrorMessageParser';
 import { useContext, useEffect } from 'react';
 import { useQuery, UseQueryArgs, UseQueryState } from 'urql';
 import { ShopsysGlobalErrorContext } from '../context/ShopsysGlobalErrorProvider/ShopsysGlobalErrorProvider';
@@ -23,7 +23,7 @@ export const useFetchQuery = (query: UseQueryArgs): ShopsysUseQueryState => {
             return;
         }
 
-        result.parsedErrors = getUserFriendlyErrorMessage(result.error, t);
+        result.parsedErrors = getUserFriendlyErrors(result.error, t);
 
         if (result.parsedErrors.applicationError === undefined) {
             return;

@@ -6,7 +6,7 @@ export type ParsedErrors = {
     userError: undefined | { [key: string]: { message: string; code: string }[] };
 };
 
-export const getUserFriendlyErrorMessage = (originalError: CombinedError, t: TFunction): ParsedErrors => {
+export const getUserFriendlyErrors = (originalError: CombinedError, t: TFunction): ParsedErrors => {
     const errors: ParsedErrors = {
         applicationError: undefined,
         userError: undefined,
@@ -15,7 +15,7 @@ export const getUserFriendlyErrorMessage = (originalError: CombinedError, t: TFu
     if (originalError.networkError) {
         errors.applicationError = t('Could not connect to server. Check your network.');
     } else if (originalError.graphQLErrors.length > 0) {
-        originalError.graphQLErrors.map((error) => {
+        originalError.graphQLErrors.forEach((error) => {
             if (error.message === 'validation') {
                 for (const errorName in error?.extensions?.validation) {
                     delete Object.assign(error?.extensions?.validation, {

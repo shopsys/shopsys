@@ -6,6 +6,7 @@ import { initUrqlClient, withUrqlClient } from 'next-urql';
 import getConfig from 'next/config';
 import { GetServerSideProps } from 'next';
 import Header from '../components/layout/Header';
+import NewsletterForm from 'components/layout/Footer/NewsletterForm';
 import PromotedCategories from '../components/blocks/categories/PromotedCategories/PromotedCategories';
 import { promotedCategoriesQuery } from '../connectors/categories/PromotedCategories';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
@@ -15,6 +16,7 @@ import ShopsysInUserText from 'components/in/ShopsysInUserText';
 import ShopsysLink from 'components/basic/ShopsysLink/ShopsysLink';
 import ShopsysTextInput from 'components/forms/ShopsysTextInput';
 import { useTranslation } from 'react-i18next';
+import Webline from '../components/layout/Webline';
 import { yupResolver } from '@hookform/resolvers/yup';
 
 type FormValues = {
@@ -45,7 +47,9 @@ const Index: FC = () => {
 
     return (
         <>
-            <Header></Header>
+            <Webline type="colored">
+                <Header></Header>
+            </Webline>
             <div
                 style={{
                     width: '100vw',
@@ -163,6 +167,9 @@ const Index: FC = () => {
                     )}
                 </div>
             </div>
+            <Webline type="light">
+                <NewsletterForm />
+            </Webline>
         </>
     );
 };

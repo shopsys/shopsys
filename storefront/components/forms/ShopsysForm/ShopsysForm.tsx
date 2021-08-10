@@ -1,7 +1,7 @@
 import { FormHTMLAttributes, ReactElement } from 'react';
 import { FormProvider, Resolver, useForm } from 'react-hook-form';
 import { ExtractNativePropsFromDefault } from '../../../typeHelpers/ExtractNativePropsFromDefault';
-import { getUserFriendlyErrorMessage } from '../../../connectors/lib/friendlyErrorMessageParser';
+import { getUserFriendlyErrors } from '../../../connectors/lib/friendlyErrorMessageParser';
 import { OperationResult } from 'urql';
 import { useTranslation } from 'react-i18next';
 
@@ -28,8 +28,7 @@ function ShopsysForm(
     const formSubmitHandler = (data: never) => {
         props.onSubmitHandler(data).then((result) => {
             if (result.error !== undefined) {
-                const { userError } = getUserFriendlyErrorMessage(result.error, t);
-                console.log(userError);
+                const { userError } = getUserFriendlyErrors(result.error, t);
                 for (const error in userError) {
                     formProviderMethods.setError(error, { message: userError[error][0]?.message });
                 }

@@ -9,7 +9,6 @@ export const StyledShopsysRadiobutton = styled.input`
     position: absolute;
     height: 1px;
     width: 1px;
-    left: -1000px;
     margin: -1px;
     padding: 0;
     z-index: -1000;
