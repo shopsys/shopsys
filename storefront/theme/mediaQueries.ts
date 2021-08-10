@@ -1,4 +1,4 @@
-const sizes = {
+const mobileFirstSizes = {
     xs: 320,
     sm: 480,
     md: 600,
@@ -7,20 +7,27 @@ const sizes = {
     xl: 1240,
 } as const;
 
+const desktopFirstSizes = {
+    mobileXs: 479,
+    mobile: 599,
+    tablet: 768,
+    notLargeDesktop: 1023,
+} as const;
+
 const mobileFirst = {
-    queryXs: `(min-width: ${sizes.xs}px)`,
-    querySm: `(min-width: ${sizes.sm}px)`,
-    queryMd: `(min-width: ${sizes.md}px)`,
-    queryLg: `(min-width: ${sizes.lg}px)`,
-    queryVl: `(min-width: ${sizes.vl}px)`,
-    queryXl: `(min-width: ${sizes.xl}px)`,
+    queryXs: `(min-width: ${mobileFirstSizes.xs}px)`,
+    querySm: `(min-width: ${mobileFirstSizes.sm}px)`,
+    queryMd: `(min-width: ${mobileFirstSizes.md}px)`,
+    queryLg: `(min-width: ${mobileFirstSizes.lg}px)`,
+    queryVl: `(min-width: ${mobileFirstSizes.vl}px)`,
+    queryXl: `(min-width: ${mobileFirstSizes.xl}px)`,
 } as const;
 
 const desktopFirst = {
-    queryMobileXs: `(max-width: ${sizes.sm - 1}px)`,
-    queryMobile: `(max-width: ${sizes.md - 1}px)`,
-    queryTablet: `(max-width: ${sizes.lg - 1}px)`,
-    queryNotLargeDesktop: `(max-width: ${sizes.vl - 1}px)`,
+    queryMobileXs: `(max-width: ${desktopFirstSizes.mobileXs}px)`,
+    queryMobile: `(max-width: ${desktopFirstSizes.mobile}px)`,
+    queryTablet: `(max-width: ${desktopFirstSizes.tablet}px)`,
+    queryNotLargeDesktop: `(max-width: ${desktopFirstSizes.notLargeDesktop}px)`,
 } as const;
 
 const mediaQueries = {
