@@ -21,6 +21,7 @@
         "@types/styled-components": "^5.1.11",
         "babel-loader": "^8.2.2",
         "graphql": "^15.5.1",
+        "i18next-intervalplural-postprocessor": "^3.0.0",
         "i18next-parser": "^4.3.0",
         "keen-slider": "^5.5.1",
         "next": "11.0.0",

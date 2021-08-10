@@ -1,3 +1,6 @@
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const intervalPlural = require('i18next-intervalplural-postprocessor');
+
 module.exports = {
     i18n: {
         locales: ['cs', 'sk', 'en'],
@@ -31,5 +34,6 @@ module.exports = {
                 return value;
             },
         },
+        use: [intervalPlural],
     },
 };
