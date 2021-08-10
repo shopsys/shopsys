@@ -1,7 +1,9 @@
 import * as Yup from 'yup';
+import { DomainConfigType, getDomainConfig } from '../utils/Domain/Domain';
 import { FC, useState } from 'react';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import BannersSlider from 'components/blocks/HomePage/BannersSlider';
+import { domainActions } from '../redux/store/DomainStore';
 import { GetServerSideProps } from 'next';
 import Header from '../components/layout/Header';
 import { initServerSideProps } from '../helpers/InitServerSideProps';
@@ -14,6 +16,7 @@ import ShopsysInUserText from 'components/in/ShopsysInUserText';
 import ShopsysLink from 'components/basic/ShopsysLink/ShopsysLink';
 import ShopsysTextInput from 'components/forms/ShopsysTextInput';
 import { sliderItemsQuery } from 'connectors/sliderItems/SliderItems';
+import { useShopsysDispatch } from '../redux/store';
 import { useTranslation } from 'react-i18next';
 import Webline from '../components/layout/Webline';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -23,7 +26,10 @@ type FormValues = {
     formConsent: boolean;
 };
 
-const Index: FC = () => {
+type IndexProps = { domainConfig?: DomainConfigType };
+
+const Index: FC<IndexProps> = (props) => {
+    const dispatch = useShopsysDispatch();
     const { t } = useTranslation();
     const [rawHtml, setRawHtml] = useState<string | undefined>(undefined);
     const formProviderMethods = useForm<FormValues>({
@@ -37,6 +43,7 @@ const Index: FC = () => {
             }),
         ),
     });
+    dispatch(domainActions.setDomain(getDomainConfig(props.domainConfig?.domain)));
 
     const formSubmitHandler: SubmitHandler<FormValues> = ({ htmlContent }) => {
         setRawHtml(htmlContent);

@@ -10,12 +10,14 @@ module.exports = {
                 backendHost: '127.0.0.1',
                 defaultLocale: 'cs',
                 http: true,
+                currencyCode: 'CZK',
             },
             {
                 domain: '127.0.0.2:3000',
                 backendHost: '127.0.0.2',
                 defaultLocale: 'sk',
                 http: true,
+                currencyCode: 'EUR',
             },
         ],
         interpolation: {
