@@ -7,10 +7,12 @@ module.exports = {
             {
                 domain: '127.0.0.1:3000',
                 defaultLocale: 'cs',
+                http: true,
             },
             {
                 domain: '127.0.0.2:3000',
                 defaultLocale: 'sk',
+                http: true,
             },
         ],
     },
