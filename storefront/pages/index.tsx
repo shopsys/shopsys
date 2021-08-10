@@ -10,6 +10,8 @@ import { initServerSideProps } from '../helpers/InitServerSideProps';
 import NewsletterForm from 'components/layout/Footer/NewsletterForm';
 import PromotedCategories from '../components/blocks/categories/PromotedCategories/PromotedCategories';
 import { promotedCategoriesQuery } from '../connectors/categories/PromotedCategories';
+import PromotedProducts from '../components/blocks/product/PromotedProducts/PromotedProducts';
+import { promotedProductsQuery } from '../connectors/products/Products';
 import ShopsysButton from 'components/forms/ShopsysButton';
 import ShopsysCheckbox from 'components/forms/ShopsysCheckbox';
 import ShopsysInUserText from 'components/in/ShopsysInUserText';
@@ -76,6 +78,8 @@ const Index: FC<IndexProps> = (props) => {
                 >
                     <h2>{t('Promoted categories')}</h2>
                     <PromotedCategories />
+                    <h2>{t('Promoted products')}</h2>
+                    <PromotedProducts />
                     <div>
                         <ShopsysLink href="/404">Internal link</ShopsysLink>
                         <br />
@@ -182,7 +186,7 @@ const Index: FC<IndexProps> = (props) => {
 };
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-    return initServerSideProps(context, [promotedCategoriesQuery, sliderItemsQuery]);
+    return initServerSideProps(context, [promotedCategoriesQuery, sliderItemsQuery, promotedProductsQuery]);
 };
 
 export default Index;
