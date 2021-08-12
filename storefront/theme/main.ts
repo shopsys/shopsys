@@ -50,6 +50,8 @@ export const theme = {
 
     zIndex: {
         above: 1,
+        overlay: 499,
+        popup: 10001,
     },
 
     boxShadow: {

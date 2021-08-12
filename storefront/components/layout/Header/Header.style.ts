@@ -7,7 +7,7 @@ const localVariables = {
 };
 
 export const StyledHeader = styled.div`
-    ${({ theme }: { theme: Theme }) => `
+    ${({ theme }: { theme: Theme }) => css`
         display: flex;
         flex-wrap: wrap;
         padding: 8px 0 11px;
@@ -45,7 +45,7 @@ export const StyledHeaderLogo = styled.div`
 `;
 
 export const StyledHeaderMiddle = styled.div`
-    ${({ theme }: { theme: Theme }) => `
+    ${({ theme }: { theme: Theme }) => css`
         width: 100%;
         order: 6;
         margin-top: 11px;
@@ -72,7 +72,7 @@ export const StyledHeaderMiddle = styled.div`
 `;
 
 export const StyledHeaderLinks = styled.div`
-    ${({ theme }: { theme: Theme }) => `
+    ${({ theme }: { theme: Theme }) => css`
         order: 2;
         display: flex;
 
@@ -93,7 +93,7 @@ export const StyledHeaderLinks = styled.div`
 `;
 
 export const StyledHeaderCart = styled.div`
-    ${({ theme }: { theme: Theme }) => `
+    ${({ theme }: { theme: Theme }) => css`
         order: 3;
         position: relative;
         display: flex;

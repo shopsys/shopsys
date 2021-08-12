@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+
 import { getUserFriendlyErrors, ParsedErrors } from '../connectors/lib/friendlyErrorMessageParser';
 import { useContext, useEffect } from 'react';
 import { useQuery, UseQueryArgs, UseQueryState } from 'urql';
