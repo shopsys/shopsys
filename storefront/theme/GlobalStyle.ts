@@ -79,7 +79,7 @@ const GlobalStyle = createGlobalStyle`
             }
         }
 
-        img {
+        img:not(.icon) {
             max-width: 100%;
             height: auto;
 
