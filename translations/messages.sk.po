@@ -1606,6 +1606,9 @@ msgstr "\nMatná"
 msgid "Matné přední plochy kuchyně <strong>TOUCH</strong> jsou dostupné v mnoha dekorech. Díky tomu si můžete vybrat kuchyni přesně na míru vašemu interiéru. Materiál povrchu je nejen velmi estetický, ale též příjemný na dotek a snadný na údržbu. Čistý minimalistický design podpoří bezúchytkové řešení LINE N. Více úložného prostoru poskytnou korpusy generace XL, které je možné si pro svou kuchyni zvolit."
 msgstr "Matné predné plochy kuchyne <strong>TOUCH</strong> sú dostupné v mnohých dekoroch. Vďaka tomu si môžete vybrať kuchyňu presne na mieru vášmu interiéru. Materiál povrchu je nielen veľmi estetický, ale tiež príjemný na dotyk a jednoduchý na údržbu. Čistý minimalistický dizajn podporí bezúchytkové riešenie LINE N. Viac úložného priestoru poskytnú korpusy generácie XL, ktoré si možno pre svoju kuchyňu zvoliť."
 
+msgid "Maximum weight (g)"
+msgstr ""
+
 msgid "Measurement units"
 msgstr ""
 
@@ -3753,6 +3756,9 @@ msgstr ""
 
 msgid "We will remember your login on this computer for 30 days."
 msgstr "Zapamätáme si prihlásenie na tomto počítači po dobu 30 dní"
+
+msgid "Weight (g)"
+msgstr ""
 
 msgid "YORK"
 msgstr "YORK"

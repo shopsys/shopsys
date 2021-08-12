@@ -22,7 +22,7 @@ class TransportDataFactory extends BaseTransportDataFactory
     protected TransportTypeFacade $transportTypeFacade;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Transport\TransportFacade $transportFacade
+     * @param \App\Model\Transport\TransportFacade $transportFacade
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade $vatFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \App\Component\Image\ImageFacade $imageFacade
@@ -93,6 +93,7 @@ class TransportDataFactory extends BaseTransportDataFactory
         $transportData->transportType = $transport->getTransportType();
 
         $transportData->trackingUrl = $transport->getTrackingUrl();
+        $transportData->maxWeight = $transport->getMaxWeight();
 
         /** @var \App\Model\Transport\TransportTranslation[] $translations */
         $translations = $transport->getTranslations();

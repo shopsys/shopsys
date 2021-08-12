@@ -121,6 +121,11 @@ class ProductData extends BaseProductData
      */
     public $domainOrderingPriority;
 
+    /**
+     * @var int|null
+     */
+    public ?int $weight;
+
     public function __construct()
     {
         parent::__construct();
@@ -143,5 +148,6 @@ class ProductData extends BaseProductData
         $this->flags = [];
         $this->domainHidden = [];
         $this->domainOrderingPriority = [];
+        $this->weight = null;
     }
 }

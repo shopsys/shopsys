@@ -77,4 +77,18 @@ class Cart extends BaseCart
 
         $this->setModifiedNow();
     }
+
+    /**
+     * @return int
+     */
+    public function getTotalWeight(): int
+    {
+        $totalWeight = 0;
+        foreach ($this->items as $item) {
+            $product = $item->getProduct();
+            $totalWeight += $product->getWeight() * $item->getQuantity();
+        }
+
+        return $totalWeight;
+    }
 }

@@ -113,6 +113,12 @@ class Product extends BaseProduct
     protected $calculatedAvailability;
 
     /**
+     * @var int|null
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    protected ?int $weight;
+
+    /**
      * @param \App\Model\Product\ProductData $productData
      * @param \App\Model\Product\Product[]|null $variants
      */
@@ -145,6 +151,7 @@ class Product extends BaseProduct
         $this->downloadProductTypePlanFiles = $productData->downloadProductTypePlanFiles;
         $this->preorder = $productData->preorder;
         $this->vendorDeliveryDate = $productData->vendorDeliveryDate;
+        $this->weight = $productData->weight;
     }
 
     /**
@@ -691,5 +698,13 @@ class Product extends BaseProduct
         }
 
         return false;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getWeight(): ?int
+    {
+        return $this->weight;
     }
 }

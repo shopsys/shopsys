@@ -22,7 +22,7 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
     public const TRANSPORT_OVER_LIMIT = 'transport_over_limit';
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Transport\TransportFacade
+     * @var \App\Model\Transport\TransportFacade
      */
     private $transportFacade;
 
@@ -42,7 +42,7 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
     private $priceConverter;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Transport\TransportFacade $transportFacade
+     * @param \App\Model\Transport\TransportFacade $transportFacade
      * @param \App\Model\Transport\TransportDataFactory $transportDataFactory
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceConverter $priceConverter
@@ -68,6 +68,7 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
         $transportData->daysUntilDelivery = 5;
         $transportData->deliveryCode = 'A';
         $transportData->typeOfDeliveryKey = 1;
+        $transportData->maxWeight = 5000;
 
         foreach ($this->domain->getAllLocales() as $locale) {
             $transportData->name[$locale] = t('Czech post', [], 'dataFixtures', $locale);

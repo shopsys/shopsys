@@ -192,6 +192,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $productData->partno = 'SLE 22F46DM4';
         $productData->ean = '8845781245930';
         $productData->orderingPriority = 1;
+        $productData->weight = 3000;
 
         $parameterTranslations = [];
 
@@ -292,6 +293,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $productData->catnum = '5965879P';
         $productData->partno = '47LA790V';
         $productData->ean = '8845781245928';
+        $productData->weight = 4000;
 
         $parameterTranslations = [];
 

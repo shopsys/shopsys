@@ -71,6 +71,12 @@ class Transport extends BaseTransport
     private ?string $trackingUrl;
 
     /**
+     * @var int|null
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private ?int $maxWeight;
+
+    /**
      * @param \App\Model\Transport\TransportData $transportData
      */
     public function __construct(BaseTransportData $transportData)
@@ -100,6 +106,7 @@ class Transport extends BaseTransport
         $this->typeOfDeliveryKey = $transportData->typeOfDeliveryKey;
         $this->trackingUrl = $transportData->trackingUrl;
         $this->transportType = $transportData->transportType;
+        $this->maxWeight = $transportData->maxWeight > 0 ? $transportData->maxWeight : null;
     }
 
     /**
@@ -185,5 +192,13 @@ class Transport extends BaseTransport
     public function getTransportType(): TransportType
     {
         return $this->transportType;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getMaxWeight(): ?int
+    {
+        return $this->maxWeight;
     }
 }
