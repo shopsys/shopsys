@@ -19,12 +19,11 @@ export const StyledShopsysLink = styled.a`
         &:hover {
             color: ${theme.color.primary};
         }
-    `}
-`;
 
-export const StyledShopsysLinkIcon = styled.img`
-    ${({ iconWidth }: StyledShopsysLinkIconProps) => css`
-        width: ${iconWidth}px;
-        margin-right: 15px;
+        img {
+            margin-right: 15px;
+
+            font-size: 0;
+        }
     `}
 `;
