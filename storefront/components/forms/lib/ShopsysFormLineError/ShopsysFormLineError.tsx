@@ -7,6 +7,7 @@ import {
 } from './ShopsysFormLineError.style';
 import { ErrorMessage } from '@hookform/error-message';
 import { ReactElement } from 'react';
+import ShopsysIcon from '../../../basic/ShopsysIcon';
 
 function ShopsysFormLineError(
     props: InferProps<typeof ShopsysFormLineError.propTypes> & { errors: DeepMap<FieldValues, FieldError> },
@@ -14,11 +15,9 @@ function ShopsysFormLineError(
     if (props.errors[props.for]) {
         return (
             <StyledShopsysFormFieldError>
-                <StyledShopsysErrorIcon
-                    inputType={props.inputType}
-                    textInputSize={props.textInputSize}
-                    src="/svg/cross.svg"
-                />
+                <StyledShopsysErrorIcon inputType={props.inputType} textInputSize="default">
+                    <ShopsysIcon icon="cross" iconHeight={16} />
+                </StyledShopsysErrorIcon>
                 <ErrorMessage
                     errors={props.errors}
                     name={props.for}

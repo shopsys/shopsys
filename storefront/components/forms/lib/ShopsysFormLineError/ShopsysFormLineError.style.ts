@@ -24,10 +24,9 @@ export const StyledShopsysErrorMessage = styled.span`
     `}
 `;
 
-export const StyledShopsysErrorIcon = styled.img<StyledShopsysErrorIconProps>`
+export const StyledShopsysErrorIcon = styled.div<StyledShopsysErrorIconProps>`
     ${({ inputType, textInputSize }: StyledShopsysErrorIconProps) => css`
         display: flex;
-        width: 16px;
         position: absolute;
 
         ${inputType === 'textarea' &&
