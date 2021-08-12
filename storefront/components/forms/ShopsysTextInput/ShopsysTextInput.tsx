@@ -83,6 +83,7 @@ ShopsysTextInput.propTypes = {
     label: PropTypes.string.isRequired,
     /**
      * A enumerator-like list of all available types of the custom TextInput element
+     * @see https://www.w3schools.com/html/html_form_input_types.asp
      */
     type: PropTypes.oneOf<'text' | 'password' | 'email' | 'tel'>(['text', 'password', 'email', 'tel']).isRequired,
     /**

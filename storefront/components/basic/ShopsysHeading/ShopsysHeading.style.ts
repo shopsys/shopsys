@@ -2,7 +2,7 @@ import styled, { css } from 'styled-components';
 import { Theme } from 'theme/main';
 
 const baseStyleOfHeading = (theme: Theme) => {
-    return `
+    return css`
         color: ${theme.color.base};
         font-weight: 700;
         text-rendering: optimizelegibility;

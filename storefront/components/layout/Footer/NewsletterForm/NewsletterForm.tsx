@@ -6,6 +6,7 @@ import {
     NewsletterFormWrapper,
 } from './NewsletterForm.style';
 import { FC } from 'react';
+import { popupActions } from 'redux/store/PopupStore';
 import ShopsysButton from '../../../forms/ShopsysButton';
 import ShopsysCheckbox from '../../../forms/ShopsysCheckbox';
 import ShopsysForm from '../../../forms/ShopsysForm';
@@ -13,6 +14,7 @@ import ShopsysHeading from '../../../basic/ShopsysHeading';
 import ShopsysTextInput from '../../../forms/ShopsysTextInput';
 import { TFunction } from 'next-i18next';
 import { useNewsletterSubscription } from '../../../../connectors/newsletter/Newsletter';
+import { useShopsysDispatch } from 'redux/store';
 import { useTranslation } from 'react-i18next';
 import { yupResolver } from '@hookform/resolvers/yup';
 
@@ -32,6 +34,7 @@ const getNewsletterFormResolver = (t: TFunction) => {
 const NewsletterForm: FC = () => {
     const { t } = useTranslation();
     const [, subscribeToNewsletter] = useNewsletterSubscription();
+    const dispatch = useShopsysDispatch();
 
     return (
         <NewsletterFormWrapper>
@@ -39,7 +42,11 @@ const NewsletterForm: FC = () => {
                 {t('Sign up for our newsletter and get 35% discount on running apparel')}
             </ShopsysHeading>
             <NewsletterFormColumn>
-                <ShopsysForm onSubmitHandler={subscribeToNewsletter} resolver={getNewsletterFormResolver(t)}>
+                <ShopsysForm
+                    onSubmitHandler={subscribeToNewsletter}
+                    onSuccessHandler={() => dispatch(popupActions.showPopup('NewsletterSuccess'))}
+                    resolver={getNewsletterFormResolver(t)}
+                >
                     <NewsletterFormInputWrapper>
                         <ShopsysTextInput
                             inputSize="small"

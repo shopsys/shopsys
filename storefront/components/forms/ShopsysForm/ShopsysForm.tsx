@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { FormHTMLAttributes, ReactElement } from 'react';
 import { FormProvider, Resolver, useForm } from 'react-hook-form';
 import { ExtractNativePropsFromDefault } from '../../../typeHelpers/ExtractNativePropsFromDefault';
@@ -12,8 +13,8 @@ type NativeProps = ExtractNativePropsFromDefault<FormHTMLAttributes<HTMLFormElem
  */
 function ShopsysForm(
     props: {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         onSubmitHandler: (variables?: any | undefined) => Promise<OperationResult<any, any>>;
+        onSuccessHandler: (...params: any) => any;
         resolver: Resolver;
     } & NativeProps,
 ): ReactElement {
@@ -34,6 +35,7 @@ function ShopsysForm(
                 }
             } else {
                 formProviderMethods.reset();
+                props.onSuccessHandler();
             }
         });
     };
