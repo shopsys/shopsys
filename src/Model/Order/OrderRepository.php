@@ -6,6 +6,8 @@ namespace App\Model\Order;
 
 use App\Model\GoPay\GoPayTransaction;
 use App\Model\Payment\Payment;
+use App\Model\Transport\Transport;
+use App\Model\Transport\Type\TransportType;
 use DateTime;
 use Doctrine\ORM\Query\Expr\Join;
 use GoPay\Definition\Response\PaymentStatus;
@@ -58,5 +60,20 @@ class OrderRepository extends BaseOrderRepository
     public function findByNumber(string $number): ?Order
     {
         return $this->getOrderRepository()->findOneBy(['number' => $number]);
+    }
+
+    /**
+     * @param \App\Model\Transport\Type\TransportType $transportType
+     * @return \App\Model\Order\Order[]
+     */
+    public function getAllWithoutTrackingNumberByTransportType(TransportType $transportType): array
+    {
+        $queryBuilder = $this->createOrderQueryBuilder()
+            ->join(Transport::class, 't', Join::WITH, 'o.transport = t.id')
+            ->andWhere('o.trackingNumber IS NULL')
+            ->andWhere('t.transportType = :transportType')
+            ->setParameter('transportType', $transportType);
+
+        return $queryBuilder->getQuery()->execute();
     }
 }

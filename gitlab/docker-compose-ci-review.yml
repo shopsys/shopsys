@@ -47,6 +47,10 @@ services:
             ELASTIC_SEARCH_INDEX_PREFIX: ${COMPOSE_PROJECT_NAME}
             IGNORE_DEFAULT_ADMIN_PASSWORD_CHECK: 1
             REDIS_PREFIX: ${COMPOSE_PROJECT_NAME}
+            PACKETERY_ENABLED: ~
+            PACKETERY_REST_API_URL: ~
+            PACKETERY_API_PASSWORD: ~
+            PACKETERY_SENDER: ~
         labels:
             - traefik.enable=false
         networks:
