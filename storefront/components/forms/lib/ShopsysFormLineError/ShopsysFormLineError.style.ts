@@ -1,7 +1,13 @@
 import styled, { css } from 'styled-components';
 
+const localVariables = {
+    smallTextInputErrorIconTopOffset: '-29px',
+    defaultTextInputErrorIconTopOffset: '-33px',
+} as const;
+
 type StyledShopsysErrorIconProps = {
     inputType: 'textarea' | 'text-input' | 'checkbox';
+    textInputSize: 'default' | 'small';
 };
 
 export const StyledShopsysFormFieldError = styled.div`
@@ -18,7 +24,7 @@ export const StyledShopsysErrorMessage = styled.span`
 `;
 
 export const StyledShopsysErrorIcon = styled.img<StyledShopsysErrorIconProps>`
-    ${({ inputType }: StyledShopsysErrorIconProps) => css`
+    ${({ inputType, textInputSize }: StyledShopsysErrorIconProps) => css`
         display: flex;
         width: 16px;
         position: absolute;
@@ -32,7 +38,9 @@ export const StyledShopsysErrorIcon = styled.img<StyledShopsysErrorIconProps>`
         ${inputType === 'text-input' &&
         css`
             transform: translateY(-50%);
-            top: -33px;
+            top: ${textInputSize === 'small'
+                ? localVariables.smallTextInputErrorIconTopOffset
+                : localVariables.defaultTextInputErrorIconTopOffset};
             right: 19px;
         `}
 

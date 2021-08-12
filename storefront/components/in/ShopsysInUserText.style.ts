@@ -90,7 +90,7 @@ export const StyledShopsysInUserText = styled.section`
         img {
             display: block;
             height: auto;
-            border-radius: ${theme.radius.default};
+            border-radius: ${theme.radius.big};
         }
     `}
 `;

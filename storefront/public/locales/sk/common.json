@@ -27,5 +27,15 @@
     "Just some random text": "Iba nejaký náhodný text",
     "HTML content": "HTML obsah",
     "Do you agree with sharing your HTML content": "Súhlasíte so zdieľaním vášho HTML obsahu",
-    "Render raw HTML": "Vykresľiť HTML"
+    "Render raw HTML": "Vykresliť HTML",
+    "Sign up for our newsletter and get 35% discount on running apparel": "Zaregistrujte sa k odberu newsletteru a získajte zľavu 35% na bežecké vybavenie",
+    "email": "email",
+    "This field is required": "Toto pole je povinné",
+    "You have to agree with our privacy policy": "Musíte súhlasiť so spracovaním osobných údajov",
+    "see how we process your data": "ako pracujeme s vašimi dátami",
+    "I take note of the processing of personal data": "Musíte súhlasiť so spracovaním osobných údajov",
+    "You have successfully subscribed to our newsletter": "Boli ste úspešně prihlásený k odberu nášho newsletteru.",
+    "Send": "Odoslať",
+    "Close": "Zatvoriť",
+    "This value is not a valid email": "Táto hodnota nie je platný email"
 }

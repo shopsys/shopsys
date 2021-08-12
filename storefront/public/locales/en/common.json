@@ -27,5 +27,15 @@
     "Just some random text": "Just some random text",
     "HTML content": "HTML content",
     "Do you agree with sharing your HTML content": "Do you agree with sharing your HTML content",
-    "Render raw HTML": "Render raw HTML"
+    "Render raw HTML": "Render raw HTML",
+    "Sign up for our newsletter and get 35% discount on running apparel": "Sign up for our newsletter and get 35% discount on running apparel",
+    "email": "email",
+    "This field is required": "This field is required",
+    "You have to agree with our privacy policy": "You have to agree with our privacy policy",
+    "see how we process your data": "see how we process your data",
+    "I take note of the processing of personal data": "I take note of the processing of personal data",
+    "You have successfully subscribed to our newsletter": "You have successfully subscribed to our newsletter.",
+    "Send": "Send",
+    "Close": "Close",
+    "This value is not a valid email": "This value is not a valid email"
 }

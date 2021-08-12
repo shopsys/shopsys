@@ -13,7 +13,7 @@ type ShopsysTextareaStyledProps = {
 };
 
 export const StyledShopsysTextareaFormLine = styled.div`
-    margin-bottom: 12px;
+    width: 100%;
 `;
 
 export const StyledShopsysTextarea = styled.textarea<ShopsysTextareaStyledProps>`
@@ -26,7 +26,7 @@ export const StyledShopsysTextarea = styled.textarea<ShopsysTextareaStyledProps>
         border: ${localVariables.textareaBorderWidth} solid ${theme.color.border};
         color: ${theme.color.base};
         background-color: ${theme.color.white};
-        border-radius: ${theme.radius.default};
+        border-radius: ${theme.radius.big};
         font-size: ${theme.fontSize.default};
 
         // iOS ugly appearance fix

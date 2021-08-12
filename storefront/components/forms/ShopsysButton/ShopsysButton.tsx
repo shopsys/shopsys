@@ -29,11 +29,16 @@ function ShopsysButton(props: InferProps<typeof ShopsysButton.propTypes> & Nativ
 
 ShopsysButton.defaultProps = {
     type: 'button',
+    borderRadius: 'medium',
     variant: 'default',
     size: 'default',
 };
 
 ShopsysButton.propTypes = {
+    /**
+     * A prop to define border radius of the button. If not provided, the default value will be set.
+     */
+    borderRadius: PropTypes.oneOf<'medium' | 'big'>(['medium', 'big']).isRequired,
     /**
      * Type for change variant of button. If you don't fill this prop then the button will be in default modification.
      */

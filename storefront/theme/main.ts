@@ -43,7 +43,7 @@ export const theme = {
 
     /* Default border radius value */
     radius: {
-        default: '11px',
+        big: '11px',
         medium: '4px',
         small: '2px',
     },

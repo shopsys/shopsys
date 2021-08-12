@@ -1,7 +1,9 @@
 import styled, { css } from 'styled-components';
+import { Theme } from 'theme/main';
 
 const localVariables = {
-    inputHeight: '54px',
+    inputHeightDefault: '54px',
+    inputHeightSmall: '48px',
     inputPaddingVertical: '20px',
     inputPaddingHorizontal: '10px',
     inputBorderWidth: '2px',
@@ -9,16 +11,17 @@ const localVariables = {
 
 type ShopsysTextInputStyledProps = {
     inputState?: 'success' | 'error' | undefined;
+    inputSize: 'default' | 'small' | undefined;
 };
 
 export const StyledShopsysInputFormLine = styled.div`
-    margin-bottom: 12px;
+    width: 100%;
 `;
 
 export const StyledShopsysTextInput = styled.input<ShopsysTextInputStyledProps>`
-    ${({ theme, inputState }) => css`
+    ${({ theme, inputSize, inputState }: { theme: Theme } & ShopsysTextInputStyledProps) => css`
         box-sizing: border-box;
-        height: ${localVariables.inputHeight};
+        height: ${inputSize === 'small' ? localVariables.inputHeightSmall : localVariables.inputHeightDefault};
         width: 100%;
         padding: ${localVariables.inputPaddingVertical} ${localVariables.inputPaddingHorizontal} 0
             ${localVariables.inputPaddingHorizontal};
@@ -26,7 +29,7 @@ export const StyledShopsysTextInput = styled.input<ShopsysTextInputStyledProps>`
         border: ${localVariables.inputBorderWidth} solid ${theme.color.border};
         color: ${theme.color.base};
         background-color: ${theme.color.white};
-        border-radius: ${theme.radius.default};
+        border-radius: ${theme.radius.big};
         font-size: ${theme.fontSize.default};
 
         // iOS ugly appearance fix
