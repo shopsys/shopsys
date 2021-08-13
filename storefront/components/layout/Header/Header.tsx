@@ -5,6 +5,7 @@ import {
     StyledHeaderLogo,
     StyledHeaderMiddle,
 } from './Header.style';
+import Cart from './Cart';
 import Logo from './Logo';
 import MenuIconic from './MenuIconic';
 import { ReactElement } from 'react';
@@ -22,7 +23,9 @@ const Header = (): ReactElement => {
             <StyledHeaderLinks>
                 <MenuIconic />
             </StyledHeaderLinks>
-            <StyledHeaderCart>Cart</StyledHeaderCart>
+            <StyledHeaderCart>
+                <Cart />
+            </StyledHeaderCart>
         </StyledHeader>
     );
 };
