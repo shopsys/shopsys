@@ -1,4 +1,4 @@
-import { StyledPromotedCategoryList, StyledPromotedCategoryListItem } from './PromotedCategories.style';
+import { PromotedCategoryListItemStyled, PromotedCategoryListStyled } from './PromotedCategories.style';
 import CategoryItem from '../CategoryItem';
 import { FC } from 'react';
 import { getPromotedCategories } from '../../../../connectors/categories/PromotedCategories';
@@ -8,13 +8,13 @@ const PromotedCategories: FC = () => {
 
     if (promotedCategories !== undefined) {
         return (
-            <StyledPromotedCategoryList>
+            <PromotedCategoryListStyled>
                 {promotedCategories.map((category) => (
-                    <StyledPromotedCategoryListItem key={category.uuid}>
+                    <PromotedCategoryListItemStyled key={category.uuid}>
                         <CategoryItem category={category} />
-                    </StyledPromotedCategoryListItem>
+                    </PromotedCategoryListItemStyled>
                 ))}
-            </StyledPromotedCategoryList>
+            </PromotedCategoryListStyled>
         );
     }
 

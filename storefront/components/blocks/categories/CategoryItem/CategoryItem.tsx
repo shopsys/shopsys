@@ -1,3 +1,4 @@
+import { CategoryItemBlockStyled, CategoryItemImageStyled, CategoryItemNameStyled } from './CategoryItem.style';
 import { CategoryItemType } from './types';
 import { FC } from 'react';
 import Link from 'next/link';
@@ -9,11 +10,13 @@ type CategoryItemProps = {
 
 const CategoryItem: FC<CategoryItemProps> = (props) => {
     return (
-        <Link href={props.category.slug}>
-            <div>
-                <ShopsysImage image={props.category.image} alt={props.category.name} />
-                <p>{props.category.name}</p>
-            </div>
+        <Link href={props.category.slug} passHref>
+            <CategoryItemBlockStyled>
+                <CategoryItemImageStyled>
+                    <ShopsysImage image={props.category.image} alt={props.category.name} />
+                </CategoryItemImageStyled>
+                <CategoryItemNameStyled>{props.category.name}</CategoryItemNameStyled>
+            </CategoryItemBlockStyled>
         </Link>
     );
 };
