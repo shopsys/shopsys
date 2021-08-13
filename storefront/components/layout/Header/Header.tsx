@@ -1,10 +1,10 @@
 import {
-    StyledHeader,
-    StyledHeaderCart,
-    StyledHeaderLinks,
-    StyledHeaderLogo,
-    StyledHeaderMenuButton,
-    StyledHeaderMiddle,
+    HeaderCartStyled,
+    HeaderLinksStyled,
+    HeaderLogoStyled,
+    HeaderMenuButtonStyled,
+    HeaderMiddleStyled,
+    HeaderStyled,
 } from './Header.style';
 import Cart from './Cart';
 import HamburgerMenu from './HamburgerMenu';
@@ -15,23 +15,23 @@ import Search from './Search';
 
 const Header = (): ReactElement => {
     return (
-        <StyledHeader>
-            <StyledHeaderLogo>
+        <HeaderStyled>
+            <HeaderLogoStyled>
                 <Logo />
-            </StyledHeaderLogo>
-            <StyledHeaderMiddle>
+            </HeaderLogoStyled>
+            <HeaderMiddleStyled>
                 <Search />
-            </StyledHeaderMiddle>
-            <StyledHeaderLinks>
+            </HeaderMiddleStyled>
+            <HeaderLinksStyled>
                 <MenuIconic />
-            </StyledHeaderLinks>
-            <StyledHeaderMenuButton>
+            </HeaderLinksStyled>
+            <HeaderMenuButtonStyled>
                 <HamburgerMenu />
-            </StyledHeaderMenuButton>
-            <StyledHeaderCart>
+            </HeaderMenuButtonStyled>
+            <HeaderCartStyled>
                 <Cart />
-            </StyledHeaderCart>
-        </StyledHeader>
+            </HeaderCartStyled>
+        </HeaderStyled>
     );
 };
 
