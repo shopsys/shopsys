@@ -4,6 +4,7 @@ import { Theme } from 'theme/main';
 const localVariables = {
     headerItemGapSmall: '20px',
     headerItemGap: '32px',
+    headerMobileButtonSize: '40px',
 };
 
 export const StyledHeader = styled.div`
@@ -100,6 +101,26 @@ export const StyledHeaderCart = styled.div`
 
         @media ${theme.mediaQueries.queryVl} {
             order: 4;
+        }
+    `}
+`;
+
+export const StyledHeaderMenuButton = styled.div`
+    ${({ theme }: { theme: Theme }) => css`
+        display: none;
+
+        @media ${theme.mediaQueries.queryTablet} {
+            display: flex;
+            order: 4;
+            align-items: center;
+            justify-content: center;
+            width: auto;
+            height: ${localVariables.headerMobileButtonSize};
+            margin-left: 16px;
+
+            outline: 0;
+            cursor: pointer;
+            font-size: 18px;
         }
     `}
 `;

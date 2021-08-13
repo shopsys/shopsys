@@ -3,9 +3,11 @@ import {
     StyledHeaderCart,
     StyledHeaderLinks,
     StyledHeaderLogo,
+    StyledHeaderMenuButton,
     StyledHeaderMiddle,
 } from './Header.style';
 import Cart from './Cart';
+import HamburgerMenu from './HamburgerMenu';
 import Logo from './Logo';
 import MenuIconic from './MenuIconic';
 import { ReactElement } from 'react';
@@ -23,6 +25,9 @@ const Header = (): ReactElement => {
             <StyledHeaderLinks>
                 <MenuIconic />
             </StyledHeaderLinks>
+            <StyledHeaderMenuButton>
+                <HamburgerMenu />
+            </StyledHeaderMenuButton>
             <StyledHeaderCart>
                 <Cart />
             </StyledHeaderCart>
