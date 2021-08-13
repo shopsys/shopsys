@@ -7,6 +7,7 @@ import {
 } from './Header.style';
 import Logo from './Logo';
 import { ReactElement } from 'react';
+import Search from './Search';
 
 const Header = (): ReactElement => {
     return (
@@ -14,7 +15,9 @@ const Header = (): ReactElement => {
             <StyledHeaderLogo>
                 <Logo />
             </StyledHeaderLogo>
-            <StyledHeaderMiddle>Middle</StyledHeaderMiddle>
+            <StyledHeaderMiddle>
+                <Search />
+            </StyledHeaderMiddle>
             <StyledHeaderLinks>Links</StyledHeaderLinks>
             <StyledHeaderCart>Cart</StyledHeaderCart>
         </StyledHeader>
