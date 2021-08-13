@@ -24,7 +24,7 @@ type FormValues = {
     formConsent: boolean;
 };
 
-const { publicRuntimeConfig } = getConfig();
+const { publicRuntimeConfig, serverRuntimeConfig } = getConfig();
 
 const Index: FC = () => {
     const { t } = useTranslation();
@@ -178,8 +178,13 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     const ssrCache = ssrExchange({ isClient: false });
     const client = initUrqlClient(
         {
-            url: publicRuntimeConfig.publicGraphqlEndpoint,
+            url: serverRuntimeConfig.internalGraphqlEndpoint,
             exchanges: [dedupExchange, cacheExchange, ssrCache, fetchExchange],
+            fetchOptions: {
+                headers: {
+                    OriginalHost: new URL(publicRuntimeConfig.publicGraphqlEndpoint).host,
+                },
+            },
         },
         false,
     );
