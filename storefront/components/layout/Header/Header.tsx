@@ -6,6 +6,7 @@ import {
     StyledHeaderMiddle,
 } from './Header.style';
 import Logo from './Logo';
+import MenuIconic from './MenuIconic';
 import { ReactElement } from 'react';
 import Search from './Search';
 
@@ -18,7 +19,9 @@ const Header = (): ReactElement => {
             <StyledHeaderMiddle>
                 <Search />
             </StyledHeaderMiddle>
-            <StyledHeaderLinks>Links</StyledHeaderLinks>
+            <StyledHeaderLinks>
+                <MenuIconic />
+            </StyledHeaderLinks>
             <StyledHeaderCart>Cart</StyledHeaderCart>
         </StyledHeader>
     );
