@@ -3,7 +3,7 @@ import DefaultErrorPage from 'next/error';
 import { FC } from 'react';
 import { GetServerSideProps } from 'next';
 import { initServerSideProps } from '../helpers/InitServerSideProps';
-import ProductDetail from '../components/blocks/products/ProductDetail';
+import ProductDetailPage from '../components/pages/ProductDetail';
 import { ProductDetailType } from '../connectors/products/ProductDetailType';
 import { useRouter } from 'next/router';
 
@@ -21,7 +21,7 @@ function renderContent(data: ProductDetailType | undefined | null) {
     }
 
     if (data.__typename === 'RegularProduct') {
-        return <ProductDetail data={data} />;
+        return <ProductDetailPage data={data} />;
     }
 
     return <DefaultErrorPage statusCode={404} />;
