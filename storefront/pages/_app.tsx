@@ -1,5 +1,6 @@
-import { AppProps } from 'next/dist/next-server/lib/router/router';
+import { AppProps } from 'next/app';
 import { appWithTranslation } from 'next-i18next';
+import getConfig from 'next/config';
 import { GlobalErrorList } from 'components/blocks/errors/GlobalErrorList/GlobalErrorList';
 import Popup from 'components/layout/Popup';
 import { Provider } from 'react-redux';
@@ -7,6 +8,9 @@ import { ReactElement } from 'react';
 import ShopsysGlobalErrorProvider from 'context/ShopsysGlobalErrorProvider';
 import ShopsysGlobalProvider from 'context/ShopsysGlobalProvider';
 import store from 'redux/store';
+import { withUrqlClient } from 'next-urql';
+
+const { publicRuntimeConfig } = getConfig();
 
 function MyApp({ Component, pageProps }: AppProps): ReactElement {
     return (
@@ -22,4 +26,13 @@ function MyApp({ Component, pageProps }: AppProps): ReactElement {
     );
 }
 
-export default appWithTranslation(MyApp);
+export default withUrqlClient(
+    () => ({
+        url: publicRuntimeConfig.publicGraphqlEndpoint,
+    }),
+    { ssr: false },
+)(
+    // eslint-disable-next-line
+    // @ts-ignore
+    appWithTranslation(MyApp),
+);
