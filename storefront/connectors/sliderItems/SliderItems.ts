@@ -1,0 +1,27 @@
+import { SliderItem } from './types';
+import { useFetchQuery } from '../../hooks/UseFetchQuery';
+
+export const sliderItemsQuery = `
+query sliderItems {
+    sliderItems {
+        uuid
+        name
+        link
+        extendedText
+        extendedTextLink
+        images (type: "web", size: "default") {
+            type
+            position
+            size
+            url
+            width
+            height
+        }
+    }
+}
+    ` as const;
+
+export function getSliderItems(): SliderItem[] | undefined {
+    const result = useFetchQuery({ query: sliderItemsQuery });
+    return result?.data?.sliderItems;
+}

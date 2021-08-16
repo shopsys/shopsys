@@ -17,6 +17,9 @@ export const theme = {
         grey: '#414353',
         greyLight: '#a4a7c1',
         greyDark: '#555764',
+        blueLight: '#f2f2ff',
+        blue: '#d9d9ff',
+        creamWhite: '#fefefe',
     },
 
     /* Fonts */

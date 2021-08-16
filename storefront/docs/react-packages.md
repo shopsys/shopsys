@@ -99,3 +99,12 @@ npm install -S yup
 ```
 
 https://github.com/jquense/yup#api
+
+### Keen slider - library-agnostic touch slider with native touch/swipe behavior and great performance
+
+We use this package for sliders and carousels. It provides great API and performance.
+
+https://keen-slider.io/
+
+```plain
+npm install -S keen-slider
