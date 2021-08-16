@@ -5,6 +5,8 @@ import { FC } from 'react';
 import { GetServerSideProps } from 'next';
 import Header from '../components/layout/Header';
 import { initServerSideProps } from '../helpers/InitServerSideProps';
+import Navigation from '../components/layout/Navigation';
+import { navigationQuery } from '../connectors/navigation/Navigation';
 import NewsletterForm from 'components/layout/Footer/NewsletterForm';
 import PromotedCategories from '../components/blocks/categories/PromotedCategories/PromotedCategories';
 import { promotedCategoriesQuery } from '../connectors/categories/PromotedCategories';
