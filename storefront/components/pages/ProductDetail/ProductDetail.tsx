@@ -7,18 +7,17 @@ import {
     StyledProductDetailPrefix,
 } from './ProductDetail.style';
 import { FC } from 'react';
-import { ProductDetailType } from '../../../connectors/products/ProductDetailType';
+import { ProductDetailType } from './types';
 import ShopsysInUserText from 'components/in/ShopsysInUserText';
 import { useTranslation } from 'next-i18next';
 import Webline from '../../layout/Webline';
 
 type ProductDetailProps = {
-    data: ProductDetailType;
+    product: ProductDetailType;
 };
 
 const ProductDetail: FC<ProductDetailProps> = (props) => {
     const { t } = useTranslation();
-    const data = props.data;
 
     return (
         <Webline>
@@ -27,15 +26,15 @@ const ProductDetail: FC<ProductDetailProps> = (props) => {
                     <img src="http://placeimg.com/946/406/any" />
                 </StyledProductDetailImage>
                 <StyledProductDetailInfo>
-                    <StyledProductDetailPrefix>{data.namePrefix}</StyledProductDetailPrefix>
+                    <StyledProductDetailPrefix>{props.product.namePrefix}</StyledProductDetailPrefix>
                     <StyledProductDetailHeading>
-                        {data.name} {data.nameSuffix}
+                        {props.product.name} {props.product.nameSuffix}
                     </StyledProductDetailHeading>
                     <StyledProductDetailCode>
-                        {t('Code')}: {data.catalogNumber}
+                        {t('Code')}: {props.product.catalogNumber}
                     </StyledProductDetailCode>
                 </StyledProductDetailInfo>
-                <ShopsysInUserText htmlContent={data.description} />
+                <ShopsysInUserText htmlContent={props.product.description} />
             </StyledProductDetail>
         </Webline>
     );

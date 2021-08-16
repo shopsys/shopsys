@@ -4,7 +4,7 @@ import { FC } from 'react';
 import { GetServerSideProps } from 'next';
 import { initServerSideProps } from '../helpers/InitServerSideProps';
 import ProductDetailPage from '../components/pages/ProductDetail';
-import { ProductDetailType } from '../connectors/products/ProductDetailType';
+import { ProductDetailType } from '../components/pages/ProductDetail/types';
 import { useRouter } from 'next/router';
 
 const FriendlyUrlPage: FC = () => {
@@ -16,12 +16,8 @@ const FriendlyUrlPage: FC = () => {
 };
 
 function renderContent(data: ProductDetailType | undefined | null) {
-    if (data === undefined || data === null) {
-        return <DefaultErrorPage statusCode={404} />;
-    }
-
-    if (data.__typename === 'RegularProduct') {
-        return <ProductDetailPage data={data} />;
+    if (data?.__typename === 'RegularProduct') {
+        return <ProductDetailPage product={data as ProductDetailType} />;
     }
 
     return <DefaultErrorPage statusCode={404} />;
