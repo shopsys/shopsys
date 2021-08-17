@@ -1,12 +1,13 @@
 import { FormProvider, useForm } from 'react-hook-form';
 import { FC } from 'react';
-import { ProductItemType } from '../types';
+import Link from 'next/link';
+import { ProductActionStyled } from './ProductAction.style';
 import ShopsysButton from '../../../forms/ShopsysButton';
-import ShopsysLink from '../../../basic/ShopsysLink';
-import ShopsysTextInput from '../../../forms/ShopsysTextInput';
+import ShopsysSpinbox from '../../../forms/ShopsysSpinbox';
+import { SliderProductItemType } from '../types';
 import { useTranslation } from 'react-i18next';
 
-const ProductAction: FC<ProductItemType> = (props) => {
+const ProductAction: FC<SliderProductItemType> = (props) => {
     const { t } = useTranslation();
     const formProviderMethods = useForm({
         mode: 'onBlur',
@@ -16,21 +17,25 @@ const ProductAction: FC<ProductItemType> = (props) => {
 
     if (props.isMainVariant) {
         return (
-            <div>
-                <ShopsysLink href={props.detailSlug}>
-                    <div>{t('Choose variant')}</div>
-                </ShopsysLink>
-            </div>
+            <ProductActionStyled>
+                <Link href={props.detailSlug} passHref>
+                    <ShopsysButton name="choose-variant">{t<string>('Choose variant')}</ShopsysButton>
+                </Link>
+            </ProductActionStyled>
         );
     }
     return (
         /** TODO KOD should be probably changed to ShopsysForm */
-        <FormProvider {...formProviderMethods}>
-            <form>
-                <ShopsysTextInput id="addToCartQuantity" name="addToCartQuantity" label="quantity" required={true} />
-                <ShopsysButton name="add-to-cart">{t<string>('Add to cart')}</ShopsysButton>
-            </form>
-        </FormProvider>
+        <ProductActionStyled>
+            <FormProvider {...formProviderMethods}>
+                <form>
+                    <ShopsysSpinbox size="small" />
+                    <ShopsysButton size="small" name="add-to-cart">
+                        {t<string>('Add to cart')}
+                    </ShopsysButton>
+                </form>
+            </FormProvider>
+        </ProductActionStyled>
     );
 };
 
