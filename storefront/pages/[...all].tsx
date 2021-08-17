@@ -1,4 +1,6 @@
 import { friendlyUrlQuery, getFriendlyUrlResolvedData } from '../connectors/friendlyUrls/FriendlyUrls';
+import CategoryDetailPage from '../components/pages/CategoryDetail';
+import { CategoryDetailType } from '../components/pages/CategoryDetail/types';
 import DefaultErrorPage from 'next/error';
 import { FC } from 'react';
 import { GetServerSideProps } from 'next';
@@ -15,9 +17,11 @@ const FriendlyUrlPage: FC = () => {
     return <>{renderContent(data)}</>;
 };
 
-function renderContent(data: ProductDetailType | undefined | null) {
+function renderContent(data: ProductDetailType | CategoryDetailType | undefined | null) {
     if (data?.__typename === 'RegularProduct') {
         return <ProductDetailPage product={data as ProductDetailType} />;
+    } else if (data?.__typename === 'Category') {
+        return <CategoryDetailPage category={data as CategoryDetailType} />;
     }
 
     return <DefaultErrorPage statusCode={404} />;
