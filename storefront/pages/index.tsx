@@ -5,7 +5,7 @@ import { FC } from 'react';
 import { GetServerSideProps } from 'next';
 import Header from '../components/layout/Header';
 import { initServerSideProps } from '../helpers/InitServerSideProps';
-import Navigation from '../components/layout/Navigation';
+import Navigation from '../components/layout/Header/Navigation';
 import { navigationQuery } from '../connectors/navigation/Navigation';
 import NewsletterForm from 'components/layout/Footer/NewsletterForm';
 import PromotedCategories from '../components/blocks/categories/PromotedCategories/PromotedCategories';
@@ -29,6 +29,7 @@ const Index: FC<IndexProps> = (props) => {
         <>
             <Webline type="colored">
                 <Header></Header>
+                <Navigation></Navigation>
             </Webline>
             <Webline>
                 <Banners />
@@ -49,7 +50,12 @@ const Index: FC<IndexProps> = (props) => {
 };
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-    return initServerSideProps(context, [promotedCategoriesQuery, sliderItemsQuery, promotedProductsQuery]);
+    return initServerSideProps(context, [
+        promotedCategoriesQuery,
+        sliderItemsQuery,
+        promotedProductsQuery,
+        navigationQuery,
+    ]);
 };
 
 export default Index;
