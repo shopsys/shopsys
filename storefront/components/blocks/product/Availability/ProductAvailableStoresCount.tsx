@@ -1,8 +1,9 @@
 import { FC } from 'react';
-import { ProductItemType } from '../types';
+import { ProductAvailableStoreCountStyled } from './ProductAvailableStoresCount.style';
+import { SliderProductItemType } from '../types';
 import { useTranslation } from 'react-i18next';
 
-const ProductAvailableStoresCount: FC<ProductItemType> = (props) => {
+const ProductAvailableStoresCount: FC<SliderProductItemType> = (props) => {
     const { t } = useTranslation();
 
     if (props.isMainVariant || props.availableStoresCount === 0) {
@@ -10,12 +11,12 @@ const ProductAvailableStoresCount: FC<ProductItemType> = (props) => {
     }
 
     return (
-        <div>
+        <ProductAvailableStoreCountStyled>
             {t(
                 '(1)[This item is available immediately in {{ count }} store];(2-inf)[This item is available immediately in {{ count }} stores];',
                 { postProcess: 'interval', count: props.availableStoresCount },
             )}
-        </div>
+        </ProductAvailableStoreCountStyled>
     );
 };
 
