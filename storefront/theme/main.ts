@@ -20,10 +20,12 @@ export const theme = {
         blueLight: '#f2f2ff',
         blue: '#d9d9ff',
         creamWhite: '#fefefe',
+        inStock: '#01946f',
     },
 
     /* Fonts */
     fontSize: {
+        bigger: '18px',
         default: '16px',
         small: '14px',
     },

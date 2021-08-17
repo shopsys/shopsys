@@ -13,7 +13,7 @@ export type ProductPriceType = {
     currencyCode: string;
 };
 
-export type ProductItemType = {
+export type SliderProductItemType = {
     detailSlug: string;
     name: string;
     flags: FlagType[];

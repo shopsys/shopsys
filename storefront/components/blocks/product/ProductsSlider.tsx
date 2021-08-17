@@ -1,18 +1,17 @@
 import { FC } from 'react';
-import ProductItem from './ProductItem';
-import { ProductItemType } from './types';
+import { ProductSliderStyled } from './ProductsSlider.style';
+import SliderProductItem from './SliderProductItem';
+import { SliderProductItemType } from './types';
 
-type ProductsSliderProps = { products: ProductItemType[] };
+type ProductsSliderProps = { products: SliderProductItemType[] };
 
 const ProductsSlider: FC<ProductsSliderProps> = (props) => {
     return (
-        <ul>
+        <ProductSliderStyled>
             {props.products.map((productItemData, index) => (
-                <li key={index}>
-                    <ProductItem {...productItemData} />
-                </li>
+                <SliderProductItem key={index} {...productItemData} />
             ))}
-        </ul>
+        </ProductSliderStyled>
     );
 };
 

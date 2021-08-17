@@ -59,6 +59,14 @@ const Index: FC<IndexProps> = (props) => {
             <Webline>
                 <BannersSlider />
             </Webline>
+            <Webline>
+                <h2>{t('Promoted categories')}</h2>
+                <PromotedCategories />
+            </Webline>
+            <Webline>
+                <h2>{t('Promoted products')}</h2>
+                <PromotedProducts />
+            </Webline>
             <div
                 style={{
                     width: '100vw',
@@ -76,10 +84,6 @@ const Index: FC<IndexProps> = (props) => {
                         borderRadius: '10px',
                     }}
                 >
-                    <h2>{t('Promoted categories')}</h2>
-                    <PromotedCategories />
-                    <h2>{t('Promoted products')}</h2>
-                    <PromotedProducts />
                     <div>
                         <ShopsysLink href="/404">Internal link</ShopsysLink>
                         <br />
