@@ -1,16 +1,15 @@
 import styled, { css } from 'styled-components';
+import { Theme } from 'theme/main';
 
 export const ProductPriceStyled = styled.div`
-    ${() => css`
-        display: flex;
-        flex-direction: row;
-        flex-wrap: wrap;
-        align-items: center;
-    `}
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
 `;
 
 export const ProductPriceMainStyled = styled.div`
-    ${({ theme }) => css`
+    ${({ theme }: { theme: Theme }) => css`
         order: 2;
         margin-right: 10px;
         line-height: 22px;

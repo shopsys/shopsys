@@ -20,24 +20,22 @@ const ProductItem: FC<SliderProductItemType> = (props) => {
     return (
         <SliderProductItemStyled>
             <Link href={props.detailSlug} passHref>
-                <>
-                    <SliderProductItemInStyled>
-                        <SliderProductItemImageStyled>
-                            <ShopsysImage image={props.image} alt={props.name} />
-                            <ProductFlags flags={props.flags} />
-                        </SliderProductItemImageStyled>
-                        <SliderProductItemInfoStyled>
-                            <SliderProductItemTitleStyled>{props.name}</SliderProductItemTitleStyled>
-                            <ProductPrice {...props.price} />
-                            <ProductAvailabilityStyled>
-                                {props.availability}
-                                <ProductAvailableStoresCount {...props} />
-                                <ProductExposedStoresCount {...props} />
-                            </ProductAvailabilityStyled>
-                        </SliderProductItemInfoStyled>
-                        <ProductAction {...props} />
-                    </SliderProductItemInStyled>
-                </>
+                <SliderProductItemInStyled>
+                    <SliderProductItemImageStyled>
+                        <ShopsysImage image={props.image} alt={props.name} />
+                        <ProductFlags flags={props.flags} />
+                    </SliderProductItemImageStyled>
+                    <SliderProductItemInfoStyled>
+                        <SliderProductItemTitleStyled>{props.name}</SliderProductItemTitleStyled>
+                        <ProductPrice {...props.price} />
+                        <ProductAvailabilityStyled>
+                            {props.availability}
+                            <ProductAvailableStoresCount {...props} />
+                            <ProductExposedStoresCount {...props} />
+                        </ProductAvailabilityStyled>
+                    </SliderProductItemInfoStyled>
+                    <ProductAction {...props} />
+                </SliderProductItemInStyled>
             </Link>
         </SliderProductItemStyled>
     );

@@ -1,19 +1,22 @@
 import styled, { css } from 'styled-components';
+import { Theme } from 'theme/main';
+
+const localVariables = {
+    flagItemDefaultBg: '#cdb3ff',
+} as const;
 
 export const ProductFlagsStyled = styled.div`
-    ${() => css`
-        position: absolute;
-        display: flex;
-        flex-direction: column;
-        top: 10px;
-        left: 14px;
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    top: 10px;
+    left: 14px;
 
-        font-size: 0;
-    `}
+    font-size: 0;
 `;
 
 export const ProductFlagsItemStyled = styled.div`
-    ${({ theme }) => css`
+    ${({ theme }: { theme: Theme }) => css`
         display: inline-flex;
         margin-bottom: 2px;
         margin-right: auto;
@@ -26,10 +29,10 @@ export const ProductFlagsItemStyled = styled.div`
         border-radius: ${theme.radius.small};
         color: ${theme.color.black};
         text-decoration: none;
-        background-color: #cdb3ff;
+        background-color: ${localVariables.flagItemDefaultBg};
 
         &:hover {
-            color: @color-0;
+            color: ${theme.color.black};
             text-decoration: none;
         }
     `}

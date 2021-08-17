@@ -263,7 +263,7 @@ export const StyledShopsysLabelWrapper = styled.div<StyledShopsysLabelWrapperPro
 `;
 
 export const StyledShopsysRequiredSymbol = styled.span`
-    ${({ theme }) => css`
+    ${({ theme }: { theme: Theme }) => css`
         margin-left: 5px;
 
         color: ${theme.color.red};

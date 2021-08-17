@@ -1,4 +1,5 @@
 import styled, { css } from 'styled-components';
+import { Theme } from 'theme/main';
 
 const localVariables = {
     shopsysSpinboxHeight: '48px',
@@ -9,7 +10,7 @@ const localVariables = {
 };
 
 export const ShopsysSpinboxStyled = styled.div`
-    ${({ theme }) => css`
+    ${({ theme }: { theme: Theme }) => css`
         display: inline-flex;
         width: ${localVariables.shopsysSpinboxWidth};
         height: ${localVariables.shopsysSpinboxHeight};
@@ -22,14 +23,12 @@ export const ShopsysSpinboxStyled = styled.div`
 `;
 
 export const ShopsysSpinboxSmallStyled = styled(ShopsysSpinboxStyled)`
-    ${() => css`
-        height: ${localVariables.shopsysSpinboxHeightSmall};
-        width: ${localVariables.shopsysSpinboxWidthSmall};
-    `}
+    height: ${localVariables.shopsysSpinboxHeightSmall};
+    width: ${localVariables.shopsysSpinboxWidthSmall};
 `;
 
 export const ShopsysSpinboxInputStyled = styled.input`
-    ${({ theme }) => css`
+    ${({ theme }: { theme: Theme }) => css`
         flex: 1;
         text-align: center;
         padding: 0;
@@ -44,7 +43,7 @@ export const ShopsysSpinboxInputStyled = styled.input`
 `;
 
 export const ShopsysSpinboxButtonStyled = styled.button`
-    ${({ theme }) => css`
+    ${({ theme }: { theme: Theme }) => css`
         display: flex;
         justify-content: center;
         align-items: center;

@@ -14,6 +14,7 @@ import PromotedProducts from '../components/blocks/product/PromotedProducts/Prom
 import { promotedProductsQuery } from '../connectors/products/Products';
 import ShopsysButton from 'components/forms/ShopsysButton';
 import ShopsysCheckbox from 'components/forms/ShopsysCheckbox';
+import ShopsysHeading from '../components/basic/ShopsysHeading';
 import ShopsysInUserText from 'components/in/ShopsysInUserText';
 import ShopsysLink from 'components/basic/ShopsysLink/ShopsysLink';
 import ShopsysTextInput from 'components/forms/ShopsysTextInput';
@@ -60,11 +61,11 @@ const Index: FC<IndexProps> = (props) => {
                 <BannersSlider />
             </Webline>
             <Webline>
-                <h2>{t('Promoted categories')}</h2>
+                <ShopsysHeading type="h2">{t('Promoted categories')}</ShopsysHeading>
                 <PromotedCategories />
             </Webline>
             <Webline>
-                <h2>{t('Promoted products')}</h2>
+                <ShopsysHeading type="h2">{t('Promoted products')}</ShopsysHeading>
                 <PromotedProducts />
             </Webline>
             <div

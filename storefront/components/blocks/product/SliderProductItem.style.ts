@@ -1,4 +1,5 @@
 import styled, { css } from 'styled-components';
+import { Theme } from 'theme/main';
 
 const localVariables = {
     listSliderProductsItemGap: '20px',
@@ -10,7 +11,7 @@ const localVariables = {
 };
 
 export const SliderProductItemStyled = styled.div`
-    ${({ theme }) => css`
+    ${({ theme }: { theme: Theme }) => css`
         width: 250px;
         min-width: 250px;
         margin-left: ${localVariables.listSliderProductsItemGap};
@@ -30,7 +31,7 @@ export const SliderProductItemStyled = styled.div`
 `;
 
 export const SliderProductItemInStyled = styled.div`
-    ${({ theme }) => css`
+    ${({ theme }: { theme: Theme }) => css`
         position: relative;
         display: flex;
         flex-direction: column;
@@ -51,38 +52,34 @@ export const SliderProductItemInStyled = styled.div`
 `;
 
 export const SliderProductItemImageStyled = styled.div`
-    ${() => css`
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        height: ${localVariables.listSliderProductsItemImageHeight} + 25px;
-        position: relative;
-        width: 100%;
-        padding: 15px ${localVariables.listSliderProductsItemVerticalPadding} 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: ${localVariables.listSliderProductsItemImageHeight} + 25px;
+    position: relative;
+    width: 100%;
+    padding: 15px ${localVariables.listSliderProductsItemVerticalPadding} 10px;
 
-        font-size: 0;
-        background: transparent;
+    font-size: 0;
+    background: transparent;
 
-        img {
-            mix-blend-mode: multiply;
-        }
-    `}
+    img {
+        mix-blend-mode: multiply;
+    }
 `;
 
 export const SliderProductItemInfoStyled = styled.div`
-    ${() => css`
-        display: block;
-        flex: 1;
-        padding: 0 ${localVariables.listSliderProductsItemVerticalPadding} 20px;
-        margin-top: auto;
+    display: block;
+    flex: 1;
+    padding: 0 ${localVariables.listSliderProductsItemVerticalPadding} 20px;
+    margin-top: auto;
 
-        background: transparent;
-        text-decoration: none;
-    `}
+    background: transparent;
+    text-decoration: none;
 `;
 
 export const SliderProductItemTitleStyled = styled.h3`
-    ${({ theme }) => css`
+    ${({ theme }: { theme: Theme }) => css`
         display: block;
         height: ${localVariables.listSliderProductsItemTitleRows} *
             ${localVariables.listSliderProductsItemTitleLineHeight};

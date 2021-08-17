@@ -1,4 +1,5 @@
 import styled, { css } from 'styled-components';
+import { Theme } from 'theme/main';
 
 const localVariables = {
     listSliderProductsItemGap: '20px',
@@ -7,7 +8,7 @@ const localVariables = {
 };
 
 export const ProductSliderStyled = styled.div`
-    ${({ theme }) => css`
+    ${({ theme }: { theme: Theme }) => css`
         position: relative;
         z-index: ${theme.zIndex.above};
         display: flex;
