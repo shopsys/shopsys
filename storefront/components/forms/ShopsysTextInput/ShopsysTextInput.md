@@ -23,8 +23,10 @@ const formProviderMethods = useForm({
             markSuccessfulWhenValid={true}
         />
         <ShopsysTextInput id="my_form-text_input_required" name="required" label="required" required={true} />
+        <ShopsysTextInput id="my_form-text_input_disabled" name="disabled" label="small input size" inputSize="small" />
         <ShopsysTextInput id="my_form-text_input_password" name="password" label="password" type="password" />
         <ShopsysTextInput id="my_form-text_input_disabled" name="disabled" label="disabled" disabled={true} />
+        <ShopsysTextInput id="my_form-text_input_disabled" name="disabled" label="static placeholder" placeholderType="static" />
     </form>
 </FormProvider>;
 ```

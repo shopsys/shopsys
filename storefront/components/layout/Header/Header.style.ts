@@ -4,9 +4,10 @@ import { Theme } from 'theme/main';
 const localVariables = {
     headerItemGapSmall: '20px',
     headerItemGap: '32px',
+    headerMobileButtonSize: '40px',
 };
 
-export const StyledHeader = styled.div`
+export const HeaderStyled = styled.div`
     ${({ theme }: { theme: Theme }) => css`
         display: flex;
         flex-wrap: wrap;
@@ -22,7 +23,7 @@ export const StyledHeader = styled.div`
     `}
 `;
 
-export const StyledHeaderLogo = styled.div`
+export const HeaderLogoStyled = styled.div`
     ${({ theme }: { theme: Theme }) => css`
         order: 1;
         flex: 1;
@@ -44,7 +45,7 @@ export const StyledHeaderLogo = styled.div`
     `}
 `;
 
-export const StyledHeaderMiddle = styled.div`
+export const HeaderMiddleStyled = styled.div`
     ${({ theme }: { theme: Theme }) => css`
         width: 100%;
         order: 6;
@@ -71,7 +72,7 @@ export const StyledHeaderMiddle = styled.div`
     `}
 `;
 
-export const StyledHeaderLinks = styled.div`
+export const HeaderLinksStyled = styled.div`
     ${({ theme }: { theme: Theme }) => css`
         order: 2;
         display: flex;
@@ -92,7 +93,7 @@ export const StyledHeaderLinks = styled.div`
     `}
 `;
 
-export const StyledHeaderCart = styled.div`
+export const HeaderCartStyled = styled.div`
     ${({ theme }: { theme: Theme }) => css`
         order: 3;
         position: relative;
@@ -100,6 +101,26 @@ export const StyledHeaderCart = styled.div`
 
         @media ${theme.mediaQueries.queryVl} {
             order: 4;
+        }
+    `}
+`;
+
+export const HeaderMenuButtonStyled = styled.div`
+    ${({ theme }: { theme: Theme }) => css`
+        display: none;
+
+        @media ${theme.mediaQueries.queryTablet} {
+            display: flex;
+            order: 4;
+            align-items: center;
+            justify-content: center;
+            width: auto;
+            height: ${localVariables.headerMobileButtonSize};
+            margin-left: 16px;
+
+            outline: 0;
+            cursor: pointer;
+            font-size: 18px;
         }
     `}
 `;

@@ -7,11 +7,14 @@ const localVariables = {
     inputPaddingVertical: '20px',
     inputPaddingHorizontal: '10px',
     inputBorderWidth: '2px',
+    inputSearchIconSize: '20px',
 } as const;
 
 type ShopsysTextInputStyledProps = {
-    inputState?: 'success' | 'error' | undefined;
-    inputSize: 'default' | 'small' | undefined;
+    placeholderType: 'static' | 'adaptive';
+    inputState?: 'success' | 'error';
+    inputSize?: 'default' | 'small';
+    variant?: 'default' | 'searchInHeader';
 };
 
 export const StyledShopsysInputFormLine = styled.div`
@@ -19,14 +22,31 @@ export const StyledShopsysInputFormLine = styled.div`
 `;
 
 export const StyledShopsysTextInput = styled.input<ShopsysTextInputStyledProps>`
-    ${({ theme, inputSize, inputState }: { theme: Theme } & ShopsysTextInputStyledProps) => css`
+    ${({
+        theme,
+        inputState,
+        placeholderType,
+        inputSize,
+        variant,
+    }: { theme: Theme } & ShopsysTextInputStyledProps) => css`
         box-sizing: border-box;
         height: ${inputSize === 'small' ? localVariables.inputHeightSmall : localVariables.inputHeightDefault};
         width: 100%;
-        padding: ${localVariables.inputPaddingVertical} ${localVariables.inputPaddingHorizontal} 0
-            ${localVariables.inputPaddingHorizontal};
+        ${variant === 'searchInHeader'
+            ? css`
+                  padding: 0 45px 0 15px;
+              `
+            : placeholderType === 'static'
+            ? css`
+                  padding: 0 ${localVariables.inputPaddingHorizontal};
+              `
+            : css`
+                  padding: ${localVariables.inputPaddingVertical} ${localVariables.inputPaddingHorizontal} 0
+                      ${localVariables.inputPaddingHorizontal};
+              `};
 
-        border: ${localVariables.inputBorderWidth} solid ${theme.color.border};
+        border: ${localVariables.inputBorderWidth} solid
+            ${variant === 'searchInHeader' ? `${theme.color.white}` : `${theme.color.border}`};
         color: ${theme.color.base};
         background-color: ${theme.color.white};
         border-radius: ${theme.radius.big};
@@ -36,7 +56,14 @@ export const StyledShopsysTextInput = styled.input<ShopsysTextInputStyledProps>`
         -webkit-appearance: none !important;
 
         &::placeholder {
-            color: transparent;
+            ${placeholderType === 'adaptive'
+                ? css`
+                      color: transparent;
+                  `
+                : css`
+                      color: ${theme.color.grey};
+                      opacity: 1;
+                  `}
         }
 
         ${inputState === 'error' &&
@@ -101,4 +128,13 @@ export const StyledShopsysPasswordVisibilityToggle = styled.img`
     &.not-visible {
         opacity: 50%;
     }
+`;
+
+export const StyledShopsysSearchButton = styled.img`
+    position: absolute;
+    top: 14px;
+    right: 15px;
+    width: ${localVariables.inputSearchIconSize};
+    height: ${localVariables.inputSearchIconSize};
+    cursor: pointer;
 `;

@@ -52,3 +52,16 @@ module.exports  = {
     NEW_VARIABLE: 'New Variable value'
  }
  ```
+
+### Creating a link with next.js Link and with styling
+If you want to use a link with styling you have to use passHref and your code will look like something this:
+
+```plain
+<Link href="/" passHref>
+    <ComponentLinkWithStyle>
+        ...
+    </ComponentLinkWithStyle>
+</Link>
+ ```
+
+Styled-component element (in our example ComponentLinkWithStyle) will be set to `<a>` element.

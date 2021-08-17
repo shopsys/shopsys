@@ -6,15 +6,21 @@ type NativeProps = Pick<LabelHTMLAttributes<HTMLLabelElement>, 'children' | 'htm
 
 function ShopsysLabelWrapper(props: InferProps<typeof ShopsysLabelWrapper.propTypes> & NativeProps): ReactElement {
     return (
-        <StyledShopsysLabelWrapper inputType={props.inputType}>
+        <StyledShopsysLabelWrapper placeholderType={props.placeholderType} inputType={props.inputType}>
             {props.children}
-            <label htmlFor={props.htmlFor}>
-                {props.label}
-                {props.required && <StyledShopsysRequiredSymbol>*</StyledShopsysRequiredSymbol>}
-            </label>
+            {props.placeholderType === 'adaptive' && (
+                <label htmlFor={props.htmlFor}>
+                    {props.label}
+                    {props.required && <StyledShopsysRequiredSymbol>*</StyledShopsysRequiredSymbol>}
+                </label>
+            )}
         </StyledShopsysLabelWrapper>
     );
 }
+
+ShopsysLabelWrapper.defaultProps = {
+    placeholderType: 'adaptive',
+};
 
 ShopsysLabelWrapper.propTypes = {
     /**
@@ -35,6 +41,10 @@ ShopsysLabelWrapper.propTypes = {
         'checkbox',
         'radio',
     ]).isRequired,
+    /**
+     * Type of placeholder for check if the placeholder is static or adaptive.
+     */
+    placeholderType: PropTypes.oneOf<'static' | 'adaptive'>(['static', 'adaptive']).isRequired,
 };
 
 export default ShopsysLabelWrapper;

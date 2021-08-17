@@ -12,6 +12,7 @@ const localVariables = {
 
 type StyledShopsysLabelWrapperProps = {
     inputType: 'text-input' | 'textarea' | 'checkbox' | 'radio';
+    placeholderType: 'static' | 'adaptive';
 };
 
 export const StyledShopsysLabelWrapper = styled.div<StyledShopsysLabelWrapperProps>`

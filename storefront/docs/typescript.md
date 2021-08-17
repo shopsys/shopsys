@@ -27,6 +27,14 @@ function MyComponent(
 )
 ```
 - generally, every prop you would not explicitly define with PropTypes, you would define like this
+- in the code, you can see native props, where we define props in two separate rows. **The first one is for required props** and **the second one is for optional props**
+```plain
+type NativeProps = ExtractNativePropsFromDefault<
+    InputHTMLAttributes<HTMLInputElement>,
+    'name' | 'id',
+    'disabled' | 'style' | 'required'
+>
+```
 
 **Defining PropTypes with TypeScript**
 - for PropTypes and TypeScript to correctly work together, you need to specify all props as required

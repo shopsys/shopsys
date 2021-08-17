@@ -1,7 +1,12 @@
 import styled, { css } from 'styled-components';
+import { Theme } from 'theme/main';
+
+type StyledShopsysLinkIconProps = {
+    iconWidth: number;
+};
 
 export const StyledShopsysLink = styled.a`
-    ${({ theme }) => css`
+    ${({ theme }: { theme: Theme }) => css`
         display: inline-flex;
         align-items: center;
 
@@ -18,6 +23,8 @@ export const StyledShopsysLink = styled.a`
 `;
 
 export const StyledShopsysLinkIcon = styled.img`
-    width: 16px;
-    margin-right: 15px;
+    ${({ iconWidth }: StyledShopsysLinkIconProps) => css`
+        width: ${iconWidth}px;
+        margin-right: 15px;
+    `}
 `;
