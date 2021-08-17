@@ -1,5 +1,5 @@
 import 'keen-slider/keen-slider.min.css';
-import { FC, useEffect, useState } from 'react';
+import { FC, useEffect, useRef, useState } from 'react';
 import {
     StyledBannersSlider,
     StyledBannersSliderBox,
@@ -17,8 +17,11 @@ const BannersSlider: FC = () => {
 
     const [loadedImageUrls, setLoadedImageUrls] = useState<{ [key: string]: boolean }>({});
     const [currentSlide, setCurrentSlide] = useState(0);
+    const [pause, setPause] = useState(false);
+    const timer = useRef<NodeJS.Timer | null>(null);
     const [sliderRef, slider] = useKeenSlider<HTMLDivElement>({
         loop: true,
+        duration: 1000,
         breakpoints: {
             [theme.mediaQueries.queryTablet]: {
                 slidesPerView: 2,
@@ -29,6 +32,12 @@ const BannersSlider: FC = () => {
         slideChanged(slider) {
             setCurrentSlide(slider.details().relativeSlide);
         },
+        dragStart: () => {
+            setPause(true);
+        },
+        dragEnd: () => {
+            setPause(false);
+        },
     });
     useEffect(() => {
         setLoadedImageUrls((currentLoadedImageUrls) => {
@@ -37,6 +46,28 @@ const BannersSlider: FC = () => {
             return newLoadedImageUrls;
         });
     }, [currentSlide]);
+    useEffect(() => {
+        if (sliderRef.current !== null) {
+            sliderRef.current.addEventListener('mouseover', () => {
+                setPause(true);
+            });
+            sliderRef.current.addEventListener('mouseout', () => {
+                setPause(false);
+            });
+        }
+    }, [sliderRef]);
+    useEffect(() => {
+        timer.current = setInterval(() => {
+            if (!pause && slider) {
+                slider.next();
+            }
+        }, 5000);
+        return () => {
+            if (timer.current !== null) {
+                clearInterval(timer.current);
+            }
+        };
+    }, [pause, slider]);
 
     const onMoveToSlideHandler = (newSlideIndex: number) => {
         setCurrentSlide(newSlideIndex);
