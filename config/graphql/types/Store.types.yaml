@@ -2,6 +2,7 @@ Store:
     type: object
     config:
         interfaces:
+            - 'Breadcrumb'
             - 'Slug'
         fields:
             slug:
@@ -46,3 +47,7 @@ Store:
             locationLongitude:
                 type: "String"
                 description: "Store location longitude"
+            breadcrumb:
+                type: "[Link!]!"
+                description: "Hierarchy of the current element in relation to the structure"
+                resolve: '@=resolver("resolveBreadcrumb", [value.getId(), "front_stores_detail"])'

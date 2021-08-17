@@ -4,6 +4,7 @@ Category:
         - 'CategoryDecorator'
     config:
         interfaces:
+            - 'Breadcrumb'
             - 'Slug'
         fields:
             bestsellers:
@@ -13,3 +14,7 @@ Category:
             slug:
                 type: "String!"
                 description: "Category URL slug"
+            breadcrumb:
+                type: "[Link!]!"
+                description: "Hierarchy of the current element in relation to the structure"
+                resolve: '@=resolver("resolveBreadcrumb", [value.getId(), "front_product_list"])'

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\FrontendApiBundle\Functional\Store;
 
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class GetStoreTest extends GraphQlTestCase
@@ -20,6 +21,12 @@ class GetStoreTest extends GraphQlTestCase
      * @inject
      */
     private $friendlyUrlFacade;
+
+    /**
+     * @var \Symfony\Component\Routing\Generator\UrlGeneratorInterface
+     * @inject
+     */
+    protected UrlGeneratorInterface $urlGenerator;
 
     public function testGetStoreByUuid(): void
     {
@@ -45,6 +52,7 @@ class GetStoreTest extends GraphQlTestCase
                     'specialMessage',
                     'locationLatitude',
                     'locationLongitude',
+                    'breadcrumb',
                 ],
                 $responseData,
                 $expectedStoreData
@@ -76,6 +84,7 @@ class GetStoreTest extends GraphQlTestCase
                     'specialMessage',
                     'locationLatitude',
                     'locationLongitude',
+                    'breadcrumb',
                 ],
                 $responseData,
                 $expectedStoreData
@@ -176,6 +185,10 @@ class GetStoreTest extends GraphQlTestCase
                     specialMessage
                     locationLatitude
                     locationLongitude
+                    breadcrumb {
+                        name
+                        slug
+                    }
                 }
             }
         ';
@@ -187,6 +200,8 @@ class GetStoreTest extends GraphQlTestCase
      */
     private function getExpectedStore(int $storeId): array
     {
+        $storesSlug = $this->urlGenerator->generate('front_stores');
+
         $firstDomainLocale = $this->getLocaleForFirstDomain();
         $data = [
             1 => [
@@ -203,6 +218,16 @@ class GetStoreTest extends GraphQlTestCase
                 'specialMessage' => null,
                 'locationLatitude' => '49.8574975000000',
                 'locationLongitude' => '18.2738861000000',
+                'breadcrumb' => [
+                    [
+                        'name' => t('Obchodní domy'),
+                        'slug' => $storesSlug,
+                    ],
+                    [
+                        'name' => t('Ostrava', [], 'dataFixtures', $firstDomainLocale),
+                        'slug' => $this->urlGenerator->generate('front_stores_detail', ['id' => 1]),
+                    ],
+                ],
             ],
             2 => [
                 'name' => t('Pardubice', [], 'dataFixtures', $firstDomainLocale),
@@ -218,6 +243,16 @@ class GetStoreTest extends GraphQlTestCase
                 'specialMessage' => null,
                 'locationLatitude' => '50.0346875000000',
                 'locationLongitude' => '15.7707169000000',
+                'breadcrumb' => [
+                    [
+                        'name' => t('Obchodní domy'),
+                        'slug' => $storesSlug,
+                    ],
+                    [
+                        'name' => t('Pardubice', [], 'dataFixtures', $firstDomainLocale),
+                        'slug' => $this->urlGenerator->generate('front_stores_detail', ['id' => 2]),
+                    ],
+                ],
             ],
         ];
         return $data[$storeId];

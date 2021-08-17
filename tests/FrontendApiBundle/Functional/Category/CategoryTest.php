@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\FrontendApiBundle\Functional\Category;
 
 use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class CategoryTest extends GraphQlTestCase
@@ -13,6 +14,12 @@ class CategoryTest extends GraphQlTestCase
      * @var \Shopsys\FrameworkBundle\Model\Category\Category
      */
     protected $category;
+
+    /**
+     * @var \Symfony\Component\Routing\Generator\UrlGeneratorInterface
+     * @inject
+     */
+    protected UrlGeneratorInterface $urlGenerator;
 
     protected function setUp(): void
     {
@@ -34,6 +41,10 @@ class CategoryTest extends GraphQlTestCase
                     seoMetaDescription
                     bestsellers {
                         name
+                    }
+                    breadcrumb {
+                        name
+                        slug
                     }
                 }
             }
@@ -57,6 +68,12 @@ class CategoryTest extends GraphQlTestCase
                         ['name' => t('32" Philips 32PFL4308', [], 'dataFixtures', $this->getLocaleForFirstDomain())],
                         ['name' => t('22" Sencor SLE 22F46DM4 HELLO KITTY', [], 'dataFixtures', $this->getLocaleForFirstDomain())],
                         ['name' => t('A4tech mouse X-710BK, OSCAR Game, 2000DPI, black,', [], 'dataFixtures', $this->getLocaleForFirstDomain())],
+                    ],
+                    'breadcrumb' => [
+                        [
+                            'name' => t('Electronics', [], 'dataFixtures', $this->getLocaleForFirstDomain()),
+                            'slug' => $this->urlGenerator->generate('front_product_list', ['id' => $this->category->getId()]),
+                        ],
                     ],
                 ],
             ],

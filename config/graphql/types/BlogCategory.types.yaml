@@ -2,6 +2,7 @@ BlogCategory:
     type: object
     config:
         interfaces:
+            - 'Breadcrumb'
             - 'Slug'
         fields:
             uuid:
@@ -39,3 +40,7 @@ BlogCategory:
             slug:
                 type: "String!"
                 description: "The blog category URL slug"
+            breadcrumb:
+                type: "[Link!]!"
+                description: "Hierarchy of the current element in relation to the structure"
+                resolve: '@=resolver("resolveBreadcrumb", [value.getId(), "front_blogcategory_detail"])'

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\FrontendApiBundle\Functional\Brand;
 
 use Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class BrandTest extends GraphQlTestCase
@@ -13,6 +14,12 @@ class BrandTest extends GraphQlTestCase
      * @var \Shopsys\FrameworkBundle\Model\Product\Brand\Brand
      */
     protected $brand;
+
+    /**
+     * @var \Symfony\Component\Routing\Generator\UrlGeneratorInterface
+     * @inject
+     */
+    protected UrlGeneratorInterface $urlGenerator;
 
     protected function setUp(): void
     {
@@ -48,6 +55,10 @@ class BrandTest extends GraphQlTestCase
                         width,
                         height,
                         position
+                    }
+                    breadcrumb {
+                        name
+                        slug
                     }
                 }
             }
@@ -118,6 +129,16 @@ class BrandTest extends GraphQlTestCase
                     "width": null,
                     "height": null,
                     "position": null
+                }
+            ],
+            "breadcrumb": [
+                {
+                    "name": "' . t('Brand overview') . '",
+                    "slug": "' . $this->urlGenerator->generate('front_brand_list') . '"
+                },
+                {
+                  "name": "Canon",
+                  "slug": "' . $this->urlGenerator->generate('front_brand_detail', ['id' => $this->brand->getId()]) . '"
                 }
             ]
         }
