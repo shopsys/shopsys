@@ -124,3 +124,26 @@ useEffect(() => {
     smoothscroll.polyfill();
 }, []);
 ```
+
+### Simple React Lightbox 
+
+https://simple-react-lightbox.dev/documentation
+
+```plain
+npm install --save simple-react-lightbox
+```
+This package needs its own syntax with 'a' and 'img'
+```plain
+ <SimpleReactLightbox>
+    <SRLWrapper>
+        <a href="link/to/the/full/width/image.jpg">
+            <img src="src/for/the/thumbnail/image.jpg" alt="Umbrella" />
+        </a>
+        <a href="link/to/the/full/width/image_two.jpg">
+            <img src="src/for/the/thumbnail/image_two.jpg" alt="Blue sky" />
+        </a>
+    </SRLWrapper>
+</SimpleReactLightbox>
+```
+
+

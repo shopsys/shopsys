@@ -9,7 +9,8 @@ import {
 } from './ProductDetail.style';
 import ProductDetailAvailability from './ProductDetailStoresAvailability/ProductDetailAvailability';
 import ProductDetailAvailabilityList from './ProductDetailStoresAvailability/ProductDetailAvailabilityList';
-import { ProductDetailType } from './types';
+import ProductDetailGallery from './ProductDetailGallery';
+import { ProductDetailType } from '../../../connectors/products/ProductDetailType';
 import ShopsysInUserText from 'components/in/ShopsysInUserText';
 import { useTranslation } from 'next-i18next';
 import Webline from '../../layout/Webline';
@@ -26,7 +27,7 @@ const ProductDetail: FC<ProductDetailProps> = (props) => {
         <Webline>
             <StyledProductDetail>
                 <StyledProductDetailImage>
-                    <img src="http://placeimg.com/946/406/any" />
+                    <ProductDetailGallery />
                 </StyledProductDetailImage>
                 <StyledProductDetailInfo>
                     <StyledProductDetailPrefix>{props.product.namePrefix}</StyledProductDetailPrefix>
