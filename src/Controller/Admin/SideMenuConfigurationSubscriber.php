@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Controller\Admin;
 
 use App\Model\Security\Roles;
+use Knp\Menu\ItemInterface;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\ConfigureMenuEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
@@ -30,6 +31,7 @@ class SideMenuConfigurationSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents(): array
     {
         return [
+            ConfigureMenuEvent::SIDE_MENU_CUSTOMERS => 'configureCustomersMenu',
             ConfigureMenuEvent::SIDE_MENU_MARKETING => 'configureMarketingMenu',
             ConfigureMenuEvent::SIDE_MENU_PRICING => 'configurePricingMenu',
             ConfigureMenuEvent::SIDE_MENU_DASHBOARD => 'configureDashboardMenu',
@@ -43,14 +45,18 @@ class SideMenuConfigurationSubscriber implements EventSubscriberInterface
      */
     public function configureRootMenu(ConfigureMenuEvent $event)
     {
-        if ($this->authorizationChecker->isGranted(Roles::ROLE_CUSTOMER_CARE)) {
-            $rootMenu = $event->getMenu();
-            $rootMenu->removeChild('products');
-            $rootMenu->removeChild('pricing');
-            $rootMenu->removeChild('marketing');
-            $rootMenu->removeChild('administrators');
-            $rootMenu->removeChild('settings');
+        $rootMenu = $event->getMenu();
+        $rootMenu->addChild($this->createIntegrationsMenu($event));
+
+        if (!$this->authorizationChecker->isGranted(Roles::ROLE_CUSTOMER_CARE)) {
+            return;
         }
+
+        $rootMenu->removeChild('products');
+        $rootMenu->removeChild('pricing');
+        $rootMenu->removeChild('marketing');
+        $rootMenu->removeChild('administrators');
+        $rootMenu->removeChild('settings');
     }
 
     /**
@@ -60,6 +66,27 @@ class SideMenuConfigurationSubscriber implements EventSubscriberInterface
     {
         $dashboardMenu = $event->getMenu();
         $dashboardMenu->addChild('transferList', ['route' => 'admin_transfer_list', 'display' => false, 'label' => t('Přehled problémů v přenosech')]);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\AdminNavigation\ConfigureMenuEvent $event
+     */
+    public function configureCustomersMenu(ConfigureMenuEvent $event): void
+    {
+        $customersMenu = $event->getMenu();
+        $customersMenu->setUri('');
+        $customersExtras = $customersMenu->getExtras();
+        unset($customersExtras['routes']);
+        $customersMenu->setExtras($customersExtras);
+
+        $customersMenu->addChild('customers_overview', ['route' => 'admin_customer_list', 'label' => t('Customers overview')]);
+        $customersMenu->addChild('newsletter', ['route' => 'admin_newsletter_list', 'label' => t('Email newsletter')]);
+
+        $promoCodeMenu = $customersMenu->addChild('promo_codes', ['route' => 'admin_promocode_list', 'label' => t('Slevové kupóny')]);
+        $promoCodeMenu->addChild('admin_promocode_listmassgeneratebatch', ['route' => 'admin_promocode_listmassgeneratebatch', 'display' => true, 'label' => t('Vygenerované dávky')]);
+        $promoCodeMenu->addChild('promo_codes_new', ['route' => 'admin_promocode_new', 'display' => false, 'label' => t('Nový slevový kupóny')]);
+        $promoCodeMenu->addChild('promo_codes_edit', ['route' => 'admin_promocode_edit', 'display' => false, 'label' => t('Editace slevového kupónu')]);
+        $promoCodeMenu->addChild('promo_codes_newmassgenerate', ['route' => 'admin_promocode_newmassgenerate', 'label' => t('Hromadné vytvoření slevových kupónů'), 'display' => false]);
     }
 
     /**
@@ -78,6 +105,21 @@ class SideMenuConfigurationSubscriber implements EventSubscriberInterface
     public function configureMarketingMenu(ConfigureMenuEvent $event): void
     {
         $marketingMenu = $event->getMenu();
+        $marketingMenu->setLabel(t('CMS'));
+
+        $marketingMenu->removeChild('slider');
+        $marketingMenu->removeChild('top_products');
+        $marketingMenu->removeChild('top_categories');
+        $marketingMenu->removeChild('feeds');
+        $marketingMenu->removeChild('newsletter');
+
+        $homepageMenu = $marketingMenu->addChild('homepage', ['label' => t('Home page')]);
+        $bannersMenu = $homepageMenu->addChild('banners', ['route' => 'admin_slider_list', 'label' => t('Banners')]);
+        $bannersMenu->addChild('new_page', ['route' => 'admin_slider_new', 'label' => t('New page'), 'display' => false]);
+        $bannersMenu->addChild('edit_page', ['route' => 'admin_slider_edit', 'label' => t('Editing page'), 'display' => false]);
+
+        $homepageMenu->addChild('promoted_products', ['route' => 'admin_topproduct_list', 'label' => t('Promoted products')]);
+        $homepageMenu->addChild('promoted_categories', ['route' => 'admin_topcategory_list', 'label' => t('Promoted categories')]);
 
         $navigationMenu = $marketingMenu->addChild('navigation', ['route' => 'admin_navigation_list', 'label' => t('Navigation')]);
         $navigationMenu->addChild('navigation_edit', ['route' => 'admin_navigation_edit', 'display' => false, 'label' => t('Editace položky')]);
@@ -93,15 +135,17 @@ class SideMenuConfigurationSubscriber implements EventSubscriberInterface
         $blogArticles->addChild('newBlogArticles', ['route' => 'admin_blogarticle_new', 'display' => false, 'label' => t('Nový článek blogu')]);
         $blogArticles->addChild('editBlogArticles', ['route' => 'admin_blogarticle_edit', 'display' => false]);
 
-        $promoCodeMenu = $marketingMenu->addChild('promo_codes', ['route' => 'admin_promocode_list', 'label' => t('Slevové kupóny')]);
-        $promoCodeMenu->addChild('admin_promocode_listmassgeneratebatch', ['route' => 'admin_promocode_listmassgeneratebatch', 'display' => true, 'label' => t('Vygenerované dávky')]);
-        $promoCodeMenu->addChild('promo_codes_new', ['route' => 'admin_promocode_new', 'display' => false, 'label' => t('Nový slevový kupóny')]);
-        $promoCodeMenu->addChild('promo_codes_edit', ['route' => 'admin_promocode_edit', 'display' => false, 'label' => t('Editace slevového kupónu')]);
-        $promoCodeMenu->addChild('promo_codes_newmassgenerate', ['route' => 'admin_promocode_newmassgenerate', 'label' => t('Hromadné vytvoření slevových kupónů'), 'display' => false]);
-
         $notificationBar = $marketingMenu->addChild('notification_bar', ['route' => 'admin_notificationbar_list', 'label' => t('Notifikační lišta')]);
         $notificationBar->addChild('notification_bar_new', ['route' => 'admin_notificationbar_new', 'label' => t('Nová notifikační lišta'), 'display' => false]);
         $notificationBar->addChild('notification_bar_edit', ['route' => 'admin_notificationbar_edit', 'label' => t('Editace notifikační lišty'), 'display' => false]);
+
+        $marketingMenu->addChild('order_confirmation', ['route' => 'admin_customercommunication_ordersubmitted', 'label' => t('Order confirmation page')]);
+
+        $legalMenu = $marketingMenu->addChild('legal', ['label' => t('Legal conditions')]);
+        $legalMenu->addChild('terms_and_conditions', ['route' => 'admin_legalconditions_termsandconditions', 'label' => t('Terms and Conditions')]);
+        $legalMenu->addChild('privace_policy', ['route' => 'admin_legalconditions_privacypolicy', 'label' => t('Privacy Policy')]);
+        $legalMenu->addChild('personal_data', ['route' => 'admin_personaldata_setting', 'label' => t('Personal data access')]);
+        $legalMenu->addChild('cookies', ['route' => 'admin_cookies_setting', 'label' => t('Cookies information')]);
     }
 
     /**
@@ -110,6 +154,10 @@ class SideMenuConfigurationSubscriber implements EventSubscriberInterface
     public function configureSettingsMenu(ConfigureMenuEvent $event): void
     {
         $settingsMenu = $event->getMenu();
+        $settingsMenu->removeChild('heureka');
+        $settingsMenu->removeChild('external_scripts');
+        $settingsMenu->removeChild('legal');
+        $settingsMenu->getChild('communication')->removeChild('order_confirmation');
 
         $seoMenu = $settingsMenu->getChild('seo');
         $categorySeoMenu = $seoMenu->addChild('categorySeo', ['route' => 'admin_categoryseo_list', 'label' => t('Rozšířené SEO kategorií')]);
@@ -135,11 +183,9 @@ class SideMenuConfigurationSubscriber implements EventSubscriberInterface
         $transportTypeMenu->addChild('transport_type_edit', ['route' => 'admin_transporttype_edit', 'display' => false, 'label' => t('Edit transport type')]);
 
         $stockMenu = $settingsMenu->addChild('stocks', ['label' => t('Skladovost')]);
-
         $stockMenu->addChild('stock', ['route' => 'admin_stock_list', 'label' => t('Sklady')]);
         $stockMenu->addChild('new_stock', ['route' => 'admin_stock_new', 'display' => false, 'label' => t('Nový sklad')]);
         $stockMenu->addChild('edit_stock', ['route' => 'admin_stock_edit', 'display' => false, 'label' => t('Detail skladu')]);
-
         $stockMenu->addChild('stock_settings', ['route' => 'admin_stock_settings', 'label' => t('Nastavení skladů')]);
 
         $communicationMenu = $settingsMenu->getChild('communication');
@@ -150,5 +196,28 @@ class SideMenuConfigurationSubscriber implements EventSubscriberInterface
         if ($superadminSettingMenu !== null) {
             $superadminSettingMenu->addChild('cspHeader', ['route' => 'admin_cspheader_setting', 'label' => t('Content-Security-Policy header')]);
         }
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\AdminNavigation\ConfigureMenuEvent $event
+     * @return \Knp\Menu\ItemInterface
+     */
+    protected function createIntegrationsMenu(ConfigureMenuEvent $event): ItemInterface
+    {
+        $integrationsMenu = $event->getMenuFactory()->createItem('integrations', ['label' => t('Integrations')]);
+        $integrationsMenu->setExtra('icon', 'gear');
+
+        $integrationsMenu->addChild('feeds', ['route' => 'admin_feed_list', 'label' => t('XML Feeds')]);
+
+        $heurekaMenu = $integrationsMenu->addChild('heureka', ['label' => t('Heureka')]);
+        $heurekaMenu->addChild('settings', ['route' => 'admin_heureka_setting', 'label' => t('Heureka')]);
+
+        $externalScriptsMenu = $integrationsMenu->addChild('external_scripts', ['label' => t('External scripts')]);
+        $scriptsMenu = $externalScriptsMenu->addChild('scripts', ['route' => 'admin_script_list', 'label' => t('Scripts overview')]);
+        $scriptsMenu->addChild('new', ['route' => 'admin_script_new', 'label' => t('New script'), 'display' => false]);
+        $scriptsMenu->addChild('edit', ['route' => 'admin_script_edit', 'label' => t('Editing script'), 'display' => false]);
+        $externalScriptsMenu->addChild('google_analytics', ['route' => 'admin_script_googleanalytics', 'label' => t('Google analytics')]);
+
+        return $integrationsMenu;
     }
 }
