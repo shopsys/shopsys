@@ -1,3 +1,4 @@
+import { ProductFlagsItemStyled, ProductFlagsStyled } from './ProductFlags.style';
 import { FC } from 'react';
 import { FlagType } from '../types';
 
@@ -9,13 +10,13 @@ const ProductFlags: FC<ProductFlagsProps> = (props) => {
     }
 
     return (
-        <ul>
+        <ProductFlagsStyled>
             {props.flags.map(({ name, rgbColor }, key) => (
-                <li key={key}>
-                    {name} - {rgbColor}
-                </li>
+                <ProductFlagsItemStyled key={key} color={{ rgbColor }}>
+                    {name}
+                </ProductFlagsItemStyled>
             ))}
-        </ul>
+        </ProductFlagsStyled>
     );
 };
 
