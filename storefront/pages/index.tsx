@@ -1,6 +1,7 @@
 import * as Yup from 'yup';
 import { FC, useState } from 'react';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
+import BannersSlider from 'components/blocks/HomePage/BannersSlider';
 import { GetServerSideProps } from 'next';
 import Header from '../components/layout/Header';
 import { initServerSideProps } from '../helpers/InitServerSideProps';
@@ -12,6 +13,7 @@ import ShopsysCheckbox from 'components/forms/ShopsysCheckbox';
 import ShopsysInUserText from 'components/in/ShopsysInUserText';
 import ShopsysLink from 'components/basic/ShopsysLink/ShopsysLink';
 import ShopsysTextInput from 'components/forms/ShopsysTextInput';
+import { sliderItemsQuery } from 'connectors/sliderItems/SliderItems';
 import { useTranslation } from 'react-i18next';
 import Webline from '../components/layout/Webline';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -44,6 +46,9 @@ const Index: FC = () => {
         <>
             <Webline type="colored">
                 <Header></Header>
+            </Webline>
+            <Webline>
+                <BannersSlider />
             </Webline>
             <div
                 style={{
@@ -170,7 +175,7 @@ const Index: FC = () => {
 };
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-    return initServerSideProps(context, [promotedCategoriesQuery]);
+    return initServerSideProps(context, [promotedCategoriesQuery, sliderItemsQuery]);
 };
 
 export default Index;
