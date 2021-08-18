@@ -24,7 +24,7 @@ const mobileFirst = {
 } as const;
 
 const desktopFirst = {
-    queryMobileXs: `(max-width: ${mobileFirstSizes.xs - 1}px)`,
+    queryMobileXs: `(max-width: ${desktopFirstSizes.mobileXs}px)`,
     queryMobile: `(max-width: ${desktopFirstSizes.mobile}px)`,
     queryTablet: `(max-width: ${desktopFirstSizes.tablet}px)`,
     queryNotLargeDesktop: `(max-width: ${desktopFirstSizes.notLargeDesktop}px)`,

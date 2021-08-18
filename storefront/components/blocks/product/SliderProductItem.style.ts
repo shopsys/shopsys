@@ -55,7 +55,7 @@ export const SliderProductItemImageStyled = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    height: ${localVariables.listSliderProductsItemImageHeight} + 25px;
+    height: ${`calc(${localVariables.listSliderProductsItemImageHeight} + 25px)`};
     position: relative;
     width: 100%;
     padding: 15px ${localVariables.listSliderProductsItemVerticalPadding} 10px;
