@@ -1,3 +1,4 @@
+import { categoryDetailBody } from '../categories/CategoryDetail';
 import { productDetailBody } from '../products/ProductDetailType';
 import { ProductDetailType } from '../../components/pages/ProductDetail/types';
 import { useFetchQuery } from '../../hooks/UseFetchQuery';
@@ -9,6 +10,9 @@ export function friendlyUrlQuery(slug: string): string {
                 __typename
                 ... on Product {
                     ${productDetailBody}
+                }
+                ... on Category {
+                    ${categoryDetailBody}
                 }
             }
         }
