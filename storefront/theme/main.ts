@@ -21,6 +21,9 @@ export const theme = {
         blue: '#d9d9ff',
         creamWhite: '#fefefe',
         inStock: '#01946f',
+        blueLight: '#f2f2ff',
+        blue: '#d9d9ff',
+        creamWhite: '#fefefe',
     },
 
     /* Fonts */

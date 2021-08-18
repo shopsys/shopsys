@@ -1,5 +1,5 @@
 import { DomainConfigType, getDomainConfig } from '../utils/Domain/Domain';
-import BannersSlider from 'components/blocks/HomePage/BannersSlider';
+import Banners from 'components/blocks/banners';
 import { domainActions } from '../redux/store/DomainStore';
 import { FC } from 'react';
 import { GetServerSideProps } from 'next';
@@ -29,7 +29,7 @@ const Index: FC<IndexProps> = (props) => {
                 <Header></Header>
             </Webline>
             <Webline>
-                <BannersSlider />
+                <Banners />
             </Webline>
             <Webline>
                 <ShopsysHeading type="h2">{t('Promoted categories')}</ShopsysHeading>
