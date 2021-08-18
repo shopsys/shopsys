@@ -14,15 +14,9 @@ export const SliderProductItemStyled = styled.div`
     ${({ theme }: { theme: Theme }) => css`
         width: 250px;
         min-width: 250px;
-        margin-left: ${localVariables.listSliderProductsItemGap};
+        padding: 10px;
 
-        @media ${theme.mediaQueries.queryLg} {
-            min-width: calc(~'100% / 3 - ${localVariables.listSliderProductsItemGap}');
-        }
-
-        @media ${theme.mediaQueries.queryVl} {
-            min-width: calc(~'25% - ${localVariables.listSliderProductsItemGap}');
-        }
+        color: ${theme.color.base};
 
         &:hover {
             color: ${theme.color.primary};
@@ -36,9 +30,8 @@ export const SliderProductItemInStyled = styled.div`
         display: flex;
         flex-direction: column;
         height: 100%;
-        text-align: left;
 
-        color: ${theme.color.base};
+        text-align: left;
         border-radius: ${theme.radius.big};
 
         &:hover {
@@ -81,8 +74,8 @@ export const SliderProductItemInfoStyled = styled.div`
 export const SliderProductItemTitleStyled = styled.h3`
     ${({ theme }: { theme: Theme }) => css`
         display: block;
-        height: ${localVariables.listSliderProductsItemTitleRows} *
-            ${localVariables.listSliderProductsItemTitleLineHeight};
+        height: ${`calc(${localVariables.listSliderProductsItemTitleRows} *
+            ${localVariables.listSliderProductsItemTitleLineHeight})`};
         line-height: ${localVariables.listSliderProductsItemTitleLineHeight};
         margin-bottom: 5px;
         overflow: hidden;

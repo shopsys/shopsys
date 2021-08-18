@@ -18,7 +18,7 @@ import { SliderProductItemType } from './types';
 
 const ProductItem: FC<SliderProductItemType> = (props) => {
     return (
-        <SliderProductItemStyled>
+        <SliderProductItemStyled className="keen-slider__slide">
             <Link href={props.detailSlug} passHref>
                 <SliderProductItemInStyled>
                     <SliderProductItemImageStyled>
