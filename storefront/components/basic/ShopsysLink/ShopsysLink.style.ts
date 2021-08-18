@@ -10,7 +10,7 @@ export const StyledShopsysLink = styled.a`
         display: inline-flex;
         align-items: center;
 
-        color: ${theme.color.grey};
+        color: ${theme.color.greyDark};
         text-decoration: underline;
         cursor: pointer;
         outline: none;

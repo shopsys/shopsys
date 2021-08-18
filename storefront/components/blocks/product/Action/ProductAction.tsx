@@ -1,13 +1,14 @@
 import { FormProvider, useForm } from 'react-hook-form';
 import { FC } from 'react';
-import Link from 'next/link';
 import { ProductActionStyled } from './ProductAction.style';
 import ShopsysButton from '../../../forms/ShopsysButton';
 import ShopsysSpinbox from '../../../forms/ShopsysSpinbox';
 import { SliderProductItemType } from '../types';
+import { useRouter } from 'next/dist/client/router';
 import { useTranslation } from 'react-i18next';
 
 const ProductAction: FC<SliderProductItemType> = (props) => {
+    const router = useRouter();
     const { t } = useTranslation();
     const formProviderMethods = useForm({
         mode: 'onBlur',
@@ -17,16 +18,16 @@ const ProductAction: FC<SliderProductItemType> = (props) => {
 
     if (props.isMainVariant) {
         return (
-            <ProductActionStyled>
-                <Link href={props.detailSlug} passHref>
-                    <ShopsysButton name="choose-variant">{t<string>('Choose variant')}</ShopsysButton>
-                </Link>
+            <ProductActionStyled isButtonFullWidth={true}>
+                <ShopsysButton onClick={() => router.push(props.detailSlug)} name="choose-variant">
+                    {t<string>('Choose variant')}
+                </ShopsysButton>
             </ProductActionStyled>
         );
     }
     return (
         /** TODO KOD should be probably changed to ShopsysForm */
-        <ProductActionStyled>
+        <ProductActionStyled isButtonFullWidth={false}>
             <FormProvider {...formProviderMethods}>
                 <form>
                     <ShopsysSpinbox size="small" />

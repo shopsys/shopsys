@@ -24,7 +24,7 @@ export const StyledBannersSliderBox = styled.div`
 
 export const StyledBannersSlider = styled.div`
     ${({ theme }: { theme: Theme }) => css`
-        width: calc(100% - 307px);
+        width: calc(100% - ${localVariables.bannersSliderThumbnailControlsWidth});
 
         cursor: pointer;
 

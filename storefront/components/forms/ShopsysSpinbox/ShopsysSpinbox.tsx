@@ -20,7 +20,7 @@ function ShopsysSpinbox(props: InferProps<typeof ShopsysSpinbox.propTypes>): Rea
     return (
         <Component {...props}>
             <ShopsysSpinboxButtonStyled>-</ShopsysSpinboxButtonStyled>
-            <ShopsysSpinboxInputStyled />
+            <ShopsysSpinboxInputStyled defaultValue="1" />
             <ShopsysSpinboxButtonStyled>+</ShopsysSpinboxButtonStyled>
         </Component>
     );

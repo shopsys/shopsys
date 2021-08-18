@@ -43,16 +43,16 @@ export const ProductSliderControlsStyled = styled.div`
             height: 32px;
             margin-left: 5px;
             
-            color: #fefefe;
+            color: ${theme.color.creamWhite};
             outline: none;
             border: none;
-            background-color: #414353;
-            border-radius: 2px;
-            transition: 0.2s cubic-bezier(0.8, 0.2, 0.48, 1);
+            background-color: ${theme.color.greyDark};
+            border-radius: ${theme.radius.small};;
+            transition: ${theme.transition};
             cursor: pointer;
 
             &:hover {
-                background-color: #363745;
+                background-color: ${theme.color.greyDarker};
             }
         }
 

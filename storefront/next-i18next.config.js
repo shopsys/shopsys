@@ -14,6 +14,7 @@ module.exports = {
                 defaultLocale: 'cs',
                 http: true,
                 currencyCode: 'CZK',
+                http: true,
             },
             {
                 domain: '127.0.0.2:3000',
@@ -21,6 +22,7 @@ module.exports = {
                 defaultLocale: 'sk',
                 http: true,
                 currencyCode: 'EUR',
+                http: true,
             },
         ],
         interpolation: {

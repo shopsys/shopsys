@@ -19,7 +19,7 @@ import { SliderProductItemType } from './types';
 const ProductItem: FC<SliderProductItemType> = (props) => {
     return (
         <SliderProductItemStyled className="keen-slider__slide">
-            <Link href={props.detailSlug} passHref>
+            <Link href={'/' + props.detailSlug} passHref>
                 <SliderProductItemInStyled>
                     <SliderProductItemImageStyled>
                         <ShopsysImage image={props.image} alt={props.name} />

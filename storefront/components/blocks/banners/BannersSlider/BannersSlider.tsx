@@ -7,7 +7,6 @@ import {
     StyledBannersSliderItem,
     StyledBannersSliderThumbnailControls,
 } from './BannersSlider.style';
-import Link from 'next/link';
 import { SliderItem } from 'connectors/sliderItems/types';
 import { theme } from 'theme/main';
 import { useKeenSlider } from 'keen-slider/react';
@@ -80,14 +79,12 @@ const BannersSlider: FC<BannersSliderProps> = (props) => {
         <StyledBannersSliderBox>
             <StyledBannersSlider ref={sliderRef} className="keen-slider">
                 {props.sliderItems.map((sliderItem, index) => (
-                    <Link href={sliderItem.link} key={sliderItem.uuid}>
-                        <a className="keen-slider__slide">
-                            <StyledBannersSliderItem
-                                sliderItemImageHeight={sliderItem.images[0].height}
-                                sliderItemImageUrl={loadedImageUrls[index] ? sliderItem.images[0].url : ''}
-                            />
-                        </a>
-                    </Link>
+                    <a href={sliderItem.link} key={sliderItem.uuid} className="keen-slider__slide">
+                        <StyledBannersSliderItem
+                            sliderItemImageHeight={sliderItem.images[0].height}
+                            sliderItemImageUrl={loadedImageUrls[index] ? sliderItem.images[0].url : ''}
+                        />
+                    </a>
                 ))}
             </StyledBannersSlider>
             <StyledBannersSliderThumbnailControls>
