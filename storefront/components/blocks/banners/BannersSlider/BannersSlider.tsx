@@ -39,11 +39,30 @@ const BannersSlider: FC<BannersSliderProps> = (props) => {
         dragEnd: () => {
             setPause(false);
         },
+        created(slider) {
+            setLoadedImageUrls((currentLoadedImageUrls) => {
+                const newLoadedImageUrls = { ...currentLoadedImageUrls };
+                const slidesPerView = slider.options().slidesPerView;
+                if (slidesPerView !== undefined) {
+                    for (let i = 0; i < slidesPerView; i++) {
+                        newLoadedImageUrls[i] = true;
+                    }
+
+                    if (slider.options().centered) {
+                        newLoadedImageUrls[props.sliderItems.length - 1] = true;
+                    }
+                }
+                return newLoadedImageUrls;
+            });
+        },
     });
     useEffect(() => {
         setLoadedImageUrls((currentLoadedImageUrls) => {
             const newLoadedImageUrls = { ...currentLoadedImageUrls };
             newLoadedImageUrls[currentSlide] = true;
+            if (slider !== null && slider.options().centered) {
+                newLoadedImageUrls[Math.min(currentSlide + 1, props.sliderItems.length - 1)] = true;
+            }
             return newLoadedImageUrls;
         });
     }, [currentSlide]);
