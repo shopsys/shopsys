@@ -1,4 +1,4 @@
-import { ProductPriceStyled, ProductPriceMainStyled} from './ProductPrice.style';
+import { ProductPriceMainStyled, ProductPriceStyled } from './ProductPrice.style';
 
 import { FC } from 'react';
 import { formatPrice } from '../../../../utils/formatting';

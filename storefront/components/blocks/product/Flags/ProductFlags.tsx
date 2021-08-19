@@ -12,7 +12,7 @@ const ProductFlags: FC<ProductFlagsProps> = (props) => {
     return (
         <ProductFlagsStyled>
             {props.flags.map(({ name, rgbColor }, key) => (
-                <ProductFlagsItemStyled key={key} color={{ rgbColor }}>
+                <ProductFlagsItemStyled key={key} color={rgbColor}>
                     {name}
                 </ProductFlagsItemStyled>
             ))}

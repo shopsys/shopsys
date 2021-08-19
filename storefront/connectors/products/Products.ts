@@ -1,4 +1,4 @@
-import { ProductItemApiType, ProductItemType } from '../../components/blocks/product/types';
+import { ProductItemApiType, SliderProductItemType } from '../../components/blocks/product/types';
 import { useFetchQuery } from '../../hooks/UseFetchQuery';
 import { useShopsysSelector } from '../../redux/store';
 
@@ -48,7 +48,7 @@ const mapProductApiData = (apiData: ProductItemApiType[], currencyCode: string) 
     });
 };
 
-export const getPromotedProducts = (): ProductItemType[] | undefined => {
+export const getPromotedProducts = (): SliderProductItemType[] | undefined => {
     const result = useFetchQuery({ query: promotedProductsQuery });
     const currentDomainConfig = useShopsysSelector((state) => state.domain);
     const apiData = result?.data?.promotedProducts;

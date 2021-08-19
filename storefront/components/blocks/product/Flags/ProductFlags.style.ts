@@ -5,6 +5,10 @@ const localVariables = {
     flagItemDefaultBg: '#cdb3ff',
 } as const;
 
+type ProductFlagsItemStyledProps = {
+    color?: string;
+};
+
 export const ProductFlagsStyled = styled.div`
     position: absolute;
     display: flex;
@@ -15,8 +19,8 @@ export const ProductFlagsStyled = styled.div`
     font-size: 0;
 `;
 
-export const ProductFlagsItemStyled = styled.div`
-    ${({ theme }: { theme: Theme }) => css`
+export const ProductFlagsItemStyled = styled.div<ProductFlagsItemStyledProps>`
+    ${({ theme, color }: { theme: Theme } & ProductFlagsItemStyledProps) => css`
         display: inline-flex;
         margin-bottom: 2px;
         margin-right: auto;
@@ -29,7 +33,7 @@ export const ProductFlagsItemStyled = styled.div`
         border-radius: ${theme.radius.small};
         color: ${theme.color.black};
         text-decoration: none;
-        background-color: ${localVariables.flagItemDefaultBg};
+        background-color: ${color || localVariables.flagItemDefaultBg};
 
         &:hover {
             color: ${theme.color.black};
