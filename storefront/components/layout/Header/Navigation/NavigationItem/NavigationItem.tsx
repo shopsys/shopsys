@@ -1,3 +1,4 @@
+import { FC, useState } from 'react';
 import {
     NavigationItemLinkIconStyled,
     NavigationItemLinkStyled,
@@ -9,35 +10,18 @@ import {
     NavigationItemSubStyled,
     NavigationItemSubWrapStyled,
 } from './NavigationItem.style';
-import { ReactElement, useState } from 'react';
 import { debounce } from 'lodash';
 import Link from 'next/link';
+import { NavigationItem as NavigationItemType } from '../../../../../connectors/navigation/Navigation';
 
-type navigationItem = {
-    navigationItem: {
-        name: string;
-        link: string;
-        categoriesByColumns: Array<{
-            columnNumber: number;
-            categories: Array<{
-                name: string;
-                slug: string;
-                image: {
-                    url: string;
-                    width: number;
-                    height: number;
-                };
-                children: Array<{
-                    name: string;
-                    slug: string;
-                }>;
-            }>;
-        }>;
-    };
+type NavigationItemProps = {
+    navigationItem: NavigationItemType;
+    asKey: number;
 };
 
-const NavigationItem = ({ asKey, navigationItem }: { asKey: number } & navigationItem): ReactElement => {
+const NavigationItem: FC<NavigationItemProps> = (props) => {
     const [isHovered, setIsHovered] = useState<boolean>(false);
+
     const openSubmenu = () => {
         if (hasChildren) {
             setIsHovered(true);
@@ -48,20 +32,20 @@ const NavigationItem = ({ asKey, navigationItem }: { asKey: number } & navigatio
             setIsHovered(false);
         }
     }, 300);
-    const hasChildren = navigationItem.categoriesByColumns.length > 0;
+    const hasChildren = props.navigationItem.categoriesByColumns.length > 0;
 
     return (
-        <NavigationItemStyled key={asKey} onMouseEnter={openSubmenu} onMouseLeave={hideSubmenu} open={isHovered}>
-            <Link href={navigationItem.link} passHref>
+        <NavigationItemStyled onMouseEnter={openSubmenu} onMouseLeave={hideSubmenu} isOpen={isHovered}>
+            <Link href={props.navigationItem.link} passHref>
                 <NavigationItemLinkStyled>
-                    {navigationItem.name}
+                    {props.navigationItem.name}
                     {hasChildren && <NavigationItemLinkIconStyled src="/svg/arrow.svg" alt="" width={14} />}
                 </NavigationItemLinkStyled>
             </Link>
             {hasChildren && (
                 <NavigationItemSubStyled>
                     <NavigationItemSubWrapStyled>
-                        {navigationItem.categoriesByColumns.map((columnCategories, columnKey) => (
+                        {props.navigationItem.categoriesByColumns.map((columnCategories, columnKey) => (
                             <NavigationItemSubListStyled key={columnKey}>
                                 {columnCategories.categories.map((columnCategory, categoryKey) => (
                                     <NavigationItemSubListItemStyled key={categoryKey}>

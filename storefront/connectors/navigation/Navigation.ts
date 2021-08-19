@@ -39,7 +39,7 @@ type NavigationCategory = {
     children: Array<NavigationSubCategory>;
 };
 
-type NavigationItem = {
+export type NavigationItem = {
     name: string;
     link: string;
     categoriesByColumns: Array<{
