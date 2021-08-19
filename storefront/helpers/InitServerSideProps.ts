@@ -17,6 +17,8 @@ export async function initServerSideProps(
             fetchOptions: {
                 headers: {
                     OriginalHost: new URL(publicRuntimeConfig.publicGraphqlEndpoint).host,
+                    'X-Forwarded-Proto':
+                        new URL(publicRuntimeConfig.publicGraphqlEndpoint).protocol === 'https:' ? 'on' : 'off',
                 },
             },
         },
