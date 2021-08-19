@@ -45,5 +45,6 @@
     "Choose variant": "Choose variant",
     "Add to cart": "Add to cart",
     "(1)[This item is available immediately in {{ count }} store];(2-inf)[This item is available immediately in {{ count }} stores];": "(1)[This item is available immediately in {{ count }} store];(2-inf)[This item is available immediately in {{ count }} stores];",
-    "(1)[You can check this item in {{ count }} store];(2-inf)[You can check this item in {{ count }} stores];": "(1)[You can check this item in {{ count }} store];(2-inf)[You can check this item in {{ count }} stores];"
+    "(1)[You can check this item in {{ count }} store];(2-inf)[You can check this item in {{ count }} stores];": "(1)[You can check this item in {{ count }} store];(2-inf)[You can check this item in {{ count }} stores];",
+    "Home page": "Home page"
 }

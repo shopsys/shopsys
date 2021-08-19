@@ -1,4 +1,5 @@
 import { friendlyUrlQuery, getFriendlyUrlResolvedData } from '../connectors/friendlyUrls/FriendlyUrls';
+import Breadcrumbs from 'components/layout/Breadcrumbs';
 import CategoryDetailPage from '../components/pages/CategoryDetail';
 import { CategoryDetailType } from '../components/pages/CategoryDetail/types';
 import DefaultErrorPage from 'next/error';
@@ -6,7 +7,7 @@ import { FC } from 'react';
 import { GetServerSideProps } from 'next';
 import { initServerSideProps } from '../helpers/InitServerSideProps';
 import ProductDetailPage from '../components/pages/ProductDetail';
-import { ProductDetailType } from '../components/pages/ProductDetail/types';
+import { ProductDetailType } from 'components/pages/ProductDetail/types';
 import { useRouter } from 'next/router';
 
 const FriendlyUrlPage: FC = () => {
@@ -14,7 +15,12 @@ const FriendlyUrlPage: FC = () => {
 
     const data = getFriendlyUrlResolvedData(router.asPath);
 
-    return <>{renderContent(data)}</>;
+    return (
+        <>
+            {data && <Breadcrumbs key="breadcrumb" breadcrumb={data.breadcrumb} />}
+            {renderContent(data)}
+        </>
+    );
 };
 
 function renderContent(data: ProductDetailType | CategoryDetailType | undefined | null) {

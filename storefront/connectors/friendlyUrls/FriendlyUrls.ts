@@ -1,5 +1,5 @@
 import { categoryDetailBody } from '../categories/CategoryDetail';
-import { productDetailBody } from '../products/ProductDetailType';
+import { productDetailBody } from '../products/ProductDetail';
 import { ProductDetailType } from '../../components/pages/ProductDetail/types';
 import { useFetchQuery } from '../../hooks/UseFetchQuery';
 
