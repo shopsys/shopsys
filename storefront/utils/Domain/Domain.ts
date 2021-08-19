@@ -1,4 +1,6 @@
-import nextI18NextConfig from '../../next-i18next.config.js';
+import getConfig from 'next/config';
+
+const { publicRuntimeConfig } = getConfig();
 
 export type DomainConfigType = {
     domain: string;
@@ -20,7 +22,7 @@ export function getDomainConfig(domain?: string): DomainConfigType {
         // eslint-disable-next-line no-param-reassign
         domain = getCurrentDomainFromWindow();
     }
-    for (const domainConfig of nextI18NextConfig.i18n.domains) {
+    for (const domainConfig of publicRuntimeConfig.domains) {
         if (domainConfig.domain === domain) {
             return domainConfig;
         }
