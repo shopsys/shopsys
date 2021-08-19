@@ -36,40 +36,46 @@ type NavigationCategory = {
         width: number;
         height: number;
     };
-    children: Array<NavigationSubCategory>;
+    children: NavigationSubCategory[];
+};
+
+type NavigationCategoriesColumn = {
+    columnNumber: number;
+    categories: NavigationCategory[];
 };
 
 export type NavigationItem = {
     name: string;
     link: string;
-    categoriesByColumns: Array<{
-        columnNumber: number;
-        categories: Array<NavigationCategory>;
-    }>;
+    categoriesByColumns: NavigationCategoriesColumn[];
+};
+
+type NavigationCategoryApiData = {
+    name: string;
+    slug: string;
+    images: {
+        url: string;
+        width: number;
+        height: number;
+    }[];
+    children: {
+        name: string;
+        slug: string;
+    }[];
+};
+
+type NavigationCategoriesColumnApiData = {
+    columnNumber: number;
+    categories: NavigationCategoryApiData[];
 };
 
 type NavigationItemApiData = {
     name: string;
     link: string;
-    categoriesByColumns: Array<{
-        columnNumber: number;
-        categories: Array<{
-            name: string;
-            slug: string;
-            images: Array<{
-                url: string;
-                width: number;
-                height: number;
-            }>;
-            children: Array<{
-                name: string;
-                slug: string;
-            }>;
-        }>;
-    }>;
+    categoriesByColumns: NavigationCategoriesColumnApiData[];
 };
 
-function mapCategories(data) {
+function mapCategories(data: NavigationCategoryApiData[]): NavigationCategory[] {
     const mappedCategories = [];
     for (const category of data) {
         mappedCategories.push({
@@ -80,7 +86,9 @@ function mapCategories(data) {
     return mappedCategories;
 }
 
-function mapNavigationCategoriesByColumns(categoriesByColumns) {
+function mapNavigationCategoriesByColumns(
+    categoriesByColumns: NavigationCategoriesColumnApiData[],
+): NavigationCategoriesColumn[] {
     const mappedCategoriesByColumns = [];
     for (const categoriesByColumn of categoriesByColumns) {
         mappedCategoriesByColumns.push({
