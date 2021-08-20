@@ -28,7 +28,7 @@ type NavigationSubCategory = {
     slug: string;
 };
 
-type NavigationCategory = {
+export type NavigationCategory = {
     name: string;
     slug: string;
     image: {
@@ -39,7 +39,7 @@ type NavigationCategory = {
     children: NavigationSubCategory[];
 };
 
-type NavigationCategoriesColumn = {
+export type NavigationCategoriesColumn = {
     columnNumber: number;
     categories: NavigationCategory[];
 };

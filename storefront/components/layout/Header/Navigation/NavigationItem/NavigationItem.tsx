@@ -3,16 +3,13 @@ import {
     NavigationItemLinkIconStyled,
     NavigationItemLinkStyled,
     NavigationItemStyled,
-    NavigationItemSubListItemImageStyled,
-    NavigationItemSubListItemLinkStyled,
-    NavigationItemSubListItemStyled,
-    NavigationItemSubListStyled,
     NavigationItemSubStyled,
     NavigationItemSubWrapStyled,
 } from './NavigationItem.style';
 import { debounce } from 'lodash';
 import Link from 'next/link';
 import { NavigationItem as NavigationItemType } from '../../../../../connectors/navigation/Navigation';
+import NavigationLeaf from '../NavigationLeaf';
 import ShopsysIcon from '../../../../basic/ShopsysIcon';
 
 type NavigationItemProps = {
@@ -50,45 +47,7 @@ const NavigationItem: FC<NavigationItemProps> = (props) => {
             {hasChildren && (
                 <NavigationItemSubStyled>
                     <NavigationItemSubWrapStyled>
-                        {props.navigationItem.categoriesByColumns.map((columnCategories, columnKey) => (
-                            <NavigationItemSubListStyled key={columnKey}>
-                                {columnCategories.categories.map((columnCategory, categoryKey) => (
-                                    <NavigationItemSubListItemStyled key={categoryKey}>
-                                        <Link href="/" passHref>
-                                            <NavigationItemSubListItemImageStyled>
-                                                <img
-                                                    src={columnCategory.image.url}
-                                                    width={columnCategory.image.width}
-                                                />
-                                            </NavigationItemSubListItemImageStyled>
-                                        </Link>
-                                        <Link href={columnCategory.slug} passHref>
-                                            <NavigationItemSubListItemLinkStyled>
-                                                {columnCategory.name}
-                                            </NavigationItemSubListItemLinkStyled>
-                                        </Link>
-                                        {columnCategory.children.length > 0 && (
-                                            <NavigationItemSubListStyled isChildren>
-                                                {columnCategory.children.map(
-                                                    (columnCategoryChild, categoryChildKey) => (
-                                                        <NavigationItemSubListItemStyled
-                                                            isChildren
-                                                            key={categoryChildKey}
-                                                        >
-                                                            <Link href={columnCategoryChild.slug} passHref>
-                                                                <NavigationItemSubListItemLinkStyled isChildren>
-                                                                    {columnCategoryChild.name}
-                                                                </NavigationItemSubListItemLinkStyled>
-                                                            </Link>
-                                                        </NavigationItemSubListItemStyled>
-                                                    ),
-                                                )}
-                                            </NavigationItemSubListStyled>
-                                        )}
-                                    </NavigationItemSubListItemStyled>
-                                ))}
-                            </NavigationItemSubListStyled>
-                        ))}
+                        <NavigationLeaf columnCategories={props.navigationItem.categoriesByColumns} />
                     </NavigationItemSubWrapStyled>
                 </NavigationItemSubStyled>
             )}
