@@ -34,8 +34,12 @@ export async function initServerSideProps(
 
     let serversideTranslationConfig;
 
-    if (context.defaultLocale !== undefined && client !== null) {
-        serversideTranslationConfig = await serverSideTranslations(context.defaultLocale, undefined, nextI18NextConfig);
+    if (domainConfig?.defaultLocale !== undefined && client !== null) {
+        serversideTranslationConfig = await serverSideTranslations(
+            domainConfig.defaultLocale,
+            undefined,
+            nextI18NextConfig,
+        );
 
         for (const query of prefetchedQueries) {
             await client.query(query).toPromise();
