@@ -23,7 +23,7 @@ const Search = (): ReactElement => {
                             id="search"
                             variant="searchInHeader"
                             name="search"
-                            label={t('Napište co hledáte')}
+                            label={t("Type what you're looking for")}
                             style={{ width: '100%', marginBottom: '0' }}
                         />
                     </FormProvider>
