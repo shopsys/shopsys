@@ -11,21 +11,19 @@ export async function initServerSideProps(
     prefetchedQueries: string[] = [],
 ): Promise<GetServerSidePropsResult<{ [key: string]: any }>> {
     const domain = context.req.headers.host;
-    let domainConfig;
-    if (domain !== undefined) {
-        domainConfig = getDomainConfig(domain);
-    }
-    const { publicRuntimeConfig, serverRuntimeConfig } = getConfig();
+    const domainConfig = getDomainConfig(domain);
+    const { serverRuntimeConfig } = getConfig();
     const ssrCache = ssrExchange({ isClient: false });
+
+    const publicGraphqlEndpoint = new URL(domainConfig.publicGraphqlEndpoint);
     const client = initUrqlClient(
         {
             url: serverRuntimeConfig.internalGraphqlEndpoint,
             exchanges: [dedupExchange, cacheExchange, ssrCache, fetchExchange],
             fetchOptions: {
                 headers: {
-                    OriginalHost: new URL(publicRuntimeConfig.publicGraphqlEndpoint).host,
-                    'X-Forwarded-Proto':
-                        new URL(publicRuntimeConfig.publicGraphqlEndpoint).protocol === 'https:' ? 'on' : 'off',
+                    OriginalHost: publicGraphqlEndpoint.host,
+                    'X-Forwarded-Proto': publicGraphqlEndpoint.protocol === 'https:' ? 'on' : 'off',
                 },
             },
         },
@@ -34,7 +32,7 @@ export async function initServerSideProps(
 
     let serversideTranslationConfig;
 
-    if (domainConfig?.defaultLocale !== undefined && client !== null) {
+    if (domainConfig.defaultLocale !== undefined && client !== null) {
         serversideTranslationConfig = await serverSideTranslations(
             domainConfig.defaultLocale,
             undefined,

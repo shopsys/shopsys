@@ -8,15 +8,16 @@ module.exports = {
         internalGraphqlEndpoint: process.env.INTERNAL_GRAPHQL_ENDPOINT,
     },
     publicRuntimeConfig: {
-        publicGraphqlEndpoint: process.env.PUBLIC_GRAPHQL_ENDPOINT,
         domains: [
             {
                 domain: process.env.DOMAIN_HOST_1,
+                publicGraphqlEndpoint: process.env.PUBLIC_GRAPHQL_ENDPOINT_1,
                 defaultLocale: 'cs',
                 currencyCode: 'CZK',
             },
             {
                 domain: process.env.DOMAIN_HOST_2,
+                publicGraphqlEndpoint: process.env.PUBLIC_GRAPHQL_ENDPOINT_2,
                 defaultLocale: 'sk',
                 currencyCode: 'EUR',
             },
