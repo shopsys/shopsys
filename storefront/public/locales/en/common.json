@@ -41,5 +41,9 @@
     "Customer service": "Customer service",
     "Stores": "Stores",
     "Sign in": "Sign in",
-    "Your cart is currently empty.": "Your cart is currently empty."
+    "Your cart is currently empty.": "Your cart is currently empty.",
+    "Choose variant": "Choose variant",
+    "Add to cart": "Add to cart",
+    "(1)[This item is available immediately in {{ count }} store];(2-inf)[This item is available immediately in {{ count }} stores];": "(1)[This item is available immediately in {{ count }} store];(2-inf)[This item is available immediately in {{ count }} stores];",
+    "(1)[You can check this item in {{ count }} store];(2-inf)[You can check this item in {{ count }} stores];": "(1)[You can check this item in {{ count }} store];(2-inf)[You can check this item in {{ count }} stores];"
 }

@@ -146,14 +146,7 @@ class ProductAvailabilityFacade
      */
     public function getProductAvailableStoresCountInformationByDomainId(Product $product, int $domainId): string
     {
-        $productStocks = $this->productStockFacade->getProductStocksByProduct($product);
-
-        $count = 0;
-        foreach ($productStocks as $productStock) {
-            if ($productStock->getProductQuantity() > 0 && $productStock->getStock()->isEnabled($domainId)) {
-                $count += count($productStock->getStock()->getStores());
-            }
-        }
+        $count = $this->getAvailableStoresCount($product, $domainId);
 
         return tc(
             '{0}|{1}Můžete mít ihned na <span class="box-detail__avail__text__strong">%count%</span> prodejně|[2,Inf]Můžete mít ihned na <span class="box-detail__avail__text__strong">%count%</span> prodejnách',
@@ -165,9 +158,44 @@ class ProductAvailabilityFacade
     /**
      * @param \App\Model\Product\Product $product
      * @param int $domainId
+     * @return int
+     */
+    public function getAvailableStoresCount(Product $product, int $domainId): int
+    {
+        $productStocks = $this->productStockFacade->getProductStocksByProduct($product);
+
+        $count = 0;
+        foreach ($productStocks as $productStock) {
+            if ($productStock->getProductQuantity() > 0 && $productStock->getStock()->isEnabled($domainId)) {
+                $count += count($productStock->getStock()->getStores());
+            }
+        }
+
+        return  $count;
+    }
+
+    /**
+     * @param \App\Model\Product\Product $product
+     * @param int $domainId
      * @return string
      */
     public function getProductCountExposedInStoresInformationByDomainId(Product $product, int $domainId): string
+    {
+        $count = $this->getExposedStoresCount($product, $domainId);
+
+        return tc(
+            '{0}|{1}Můžete si prohlédnout na <span class="box-detail__avail__text__strong">%count%</span> prodejně|[2,Inf]Můžete si prohlédnout na <span class="box-detail__avail__text__strong">%count%</span> prodejnách',
+            $count,
+            ['%count%' => $count]
+        );
+    }
+
+    /**
+     * @param \App\Model\Product\Product $product
+     * @param int $domainId
+     * @return int
+     */
+    public function getExposedStoresCount(Product $product, int $domainId): int
     {
         $productStores = $this->productStoreFacade->getProductStoresByProductAndDomainId($product, $domainId);
 
@@ -178,11 +206,7 @@ class ProductAvailabilityFacade
             }
         }
 
-        return tc(
-            '{0}|{1}Můžete si prohlédnout na <span class="box-detail__avail__text__strong">%count%</span> prodejně|[2,Inf]Můžete si prohlédnout na <span class="box-detail__avail__text__strong">%count%</span> prodejnách',
-            $count,
-            ['%count%' => $count]
-        );
+        return $count;
     }
 
     /**

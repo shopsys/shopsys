@@ -108,7 +108,7 @@ const GlobalStyle = createGlobalStyle`
 
         a {
             text-decoration: underline;
-            color: ${theme.color.grey};
+            color: ${theme.color.greyDark};
             cursor: pointer;
             outline: none;
 

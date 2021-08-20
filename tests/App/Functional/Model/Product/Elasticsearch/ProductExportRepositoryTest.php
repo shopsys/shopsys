@@ -91,6 +91,8 @@ class ProductExportRepositoryTest extends TransactionFunctionalTestCase
             'searching_partnos',
             'searching_short_descriptions',
             'slug',
+            'available_stores_count',
+            'exposed_stores_count',
         ];
     }
 }

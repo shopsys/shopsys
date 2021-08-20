@@ -198,6 +198,8 @@ class ProductExportRepository extends BaseProductExportRepository
             'searching_partnos' => $searchingPartnos,
             'searching_short_descriptions' => $searchingShortDescriptions,
             'slug' => $mainFriendlyUrl->getSlug(),
+            'available_stores_count' => $this->productAvailabilityFacade->getAvailableStoresCount($product, $domainId),
+            'exposed_stores_count' => $this->productAvailabilityFacade->getExposedStoresCount($product, $domainId),
         ];
     }
 

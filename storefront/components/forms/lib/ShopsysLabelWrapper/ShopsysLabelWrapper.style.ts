@@ -48,7 +48,7 @@ export const StyledShopsysLabelWrapper = styled.div<StyledShopsysLabelWrapperPro
                           transition: ${theme.transition};
                           z-index: ${theme.zIndex.above + 1};
                           line-height: 14px;
-                          color: ${theme.color.greyDark};
+                          color: ${theme.color.grey};
                           font-size: ${theme.fontSize.small};
                       }
                   }
@@ -263,7 +263,7 @@ export const StyledShopsysLabelWrapper = styled.div<StyledShopsysLabelWrapperPro
 `;
 
 export const StyledShopsysRequiredSymbol = styled.span`
-    ${({ theme }) => css`
+    ${({ theme }: { theme: Theme }) => css`
         margin-left: 5px;
 
         color: ${theme.color.red};

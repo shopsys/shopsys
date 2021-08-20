@@ -15,7 +15,7 @@ const getWeblineType = (type: StyledWeblineType, theme: Theme) => {
             `;
         case 'dark':
             return css`
-                background-color: ${theme.color.grey};
+                background-color: ${theme.color.greyDark};
             `;
         case 'light':
             return css`

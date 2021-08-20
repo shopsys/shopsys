@@ -130,4 +130,22 @@ class ProductArrayFieldMapper extends BaseProductArrayFieldMapper
     {
         return $data['store_availabilities_information'];
     }
+
+    /**
+     * @param array $data
+     * @return int
+     */
+    public function getAvailableStoresCount(array $data): int
+    {
+        return $data['available_stores_count'];
+    }
+
+    /**
+     * @param array $data
+     * @return int
+     */
+    public function getExposedStoresCount(array $data): int
+    {
+        return $data['exposed_stores_count'];
+    }
 }

@@ -14,16 +14,19 @@ export const theme = {
         border: '#c4c9ff',
         red: '#ec5353',
         green: '#00ecb1',
-        grey: '#414353',
+        grey: '#555764',
         greyLight: '#a4a7c1',
-        greyDark: '#555764',
+        greyDark: '#414353',
+        greyDarker: '#363745',
         blueLight: '#f2f2ff',
         blue: '#d9d9ff',
         creamWhite: '#fefefe',
+        inStock: '#01946f',
     },
 
     /* Fonts */
     fontSize: {
+        bigger: '18px',
         default: '16px',
         small: '14px',
     },
