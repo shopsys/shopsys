@@ -13,6 +13,7 @@ import {
 import { debounce } from 'lodash';
 import Link from 'next/link';
 import { NavigationItem as NavigationItemType } from '../../../../../connectors/navigation/Navigation';
+import ShopsysIcon from '../../../../basic/ShopsysIcon';
 
 type NavigationItemProps = {
     navigationItem: NavigationItemType;
@@ -39,7 +40,11 @@ const NavigationItem: FC<NavigationItemProps> = (props) => {
             <Link href={props.navigationItem.link} passHref>
                 <NavigationItemLinkStyled>
                     {props.navigationItem.name}
-                    {hasChildren && <NavigationItemLinkIconStyled src="/svg/arrow.svg" alt="" width={14} />}
+                    {hasChildren && (
+                        <NavigationItemLinkIconStyled>
+                            <ShopsysIcon icon="arrow" iconHeight={14} />
+                        </NavigationItemLinkIconStyled>
+                    )}
                 </NavigationItemLinkStyled>
             </Link>
             {hasChildren && (

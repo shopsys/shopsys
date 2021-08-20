@@ -22,7 +22,9 @@ const hoveredItem = (theme: Theme) => {
         }
 
         ${NavigationItemLinkIconStyled} {
-            transform: rotate(180deg);
+            img {
+                transform: rotate(180deg);
+            }
         }
 
         ${NavigationItemSubStyled} {
@@ -94,7 +96,7 @@ export const NavigationItemLinkStyled = styled.a`
     `}
 `;
 
-export const NavigationItemLinkIconStyled = styled.img`
+export const NavigationItemLinkIconStyled = styled.span`
     margin-left: 8px;
 `;
 

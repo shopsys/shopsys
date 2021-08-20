@@ -7,13 +7,13 @@ import {
     CartDetailImageStyled,
     CartDetailStyled,
     CartDetailTextStyled,
-    CartIconStyled,
     CartPiecesStyled,
     CartStyled,
     CartValueStyled,
 } from './Cart.style';
 import Link from 'next/link';
 import { ReactElement } from 'react';
+import ShopsysIcon from '../../../basic/ShopsysIcon';
 import { useTranslation } from 'react-i18next';
 
 const Cart = (): ReactElement => {
@@ -23,7 +23,7 @@ const Cart = (): ReactElement => {
         <CartStyled>
             <CartBlockStyled>
                 <CartPiecesStyled>
-                    <CartIconStyled src="/svg/cart.svg" alt="" />
+                    <ShopsysIcon icon="cart" iconHeight={18} />
                     <CartCountStyled>0</CartCountStyled>
                 </CartPiecesStyled>
                 <CartValueStyled>0 Kč</CartValueStyled>
@@ -37,7 +37,7 @@ const Cart = (): ReactElement => {
             <CartButtonMobileStyled>
                 <Link href="/" passHref>
                     <CartButtonMobileLinkStyled>
-                        <CartIconStyled src="/svg/cart.svg" alt="" />
+                        <ShopsysIcon icon="cart" iconHeight={18} />
                         <CartCountStyled>0</CartCountStyled>
                     </CartButtonMobileLinkStyled>
                 </Link>
