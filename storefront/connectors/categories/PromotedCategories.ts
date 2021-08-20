@@ -1,20 +1,36 @@
+import { CategoryItemApiType, CategoryItemType } from '../../components/blocks/categories/CategoryItem/types';
 import { useFetchQuery } from '../../hooks/UseFetchQuery';
 
 export const promotedCategoriesQuery = `
         query promotedCategories {
             promotedCategories {
-                name
                 uuid
+                name
+                slug
+                images(size: "default") {
+                    url
+                    width
+                    height
+                }
             }
         }
     ` as const;
 
-type CategoryType = {
-    name: string;
-    uuid: string;
+const mapCategoryApiData = (apiData: CategoryItemApiType[]) => {
+    return apiData.map((apiCategory) => {
+        return {
+            ...apiCategory,
+            image: apiCategory.images.length > 0 ? apiCategory.images[0] : null,
+        };
+    });
 };
 
-export function getPromotedCategories(): CategoryType[] | undefined {
+export function getPromotedCategories(): CategoryItemType[] | undefined {
     const result = useFetchQuery({ query: promotedCategoriesQuery });
-    return result?.data?.promotedCategories;
+    const apiData = result?.data?.promotedCategories;
+    if (apiData === undefined) {
+        return undefined;
+    }
+
+    return mapCategoryApiData(apiData);
 }

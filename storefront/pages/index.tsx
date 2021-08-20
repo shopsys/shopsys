@@ -14,7 +14,7 @@ import ShopsysHeading from '../components/basic/ShopsysHeading';
 import { sliderItemsQuery } from 'connectors/sliderItems/SliderItems';
 import { useShopsysDispatch } from '../redux/store';
 import { useTranslation } from 'react-i18next';
-import Webline from '../components/layout/Webline';
+import Webline from 'components/layout/Webline';
 
 type IndexProps = { domainConfig?: DomainConfigType };
 
