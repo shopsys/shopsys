@@ -1354,7 +1354,7 @@ msgstr ""
 msgid "Název suffix"
 msgstr ""
 
-msgid "O Scontu"
+msgid "O Commerce Cloudu"
 msgstr ""
 
 msgid "O nákupu"
