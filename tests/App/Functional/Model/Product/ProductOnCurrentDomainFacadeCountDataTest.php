@@ -66,7 +66,11 @@ abstract class ProductOnCurrentDomainFacadeCountDataTest extends ParameterTransa
             /** @var \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData $expectedCountData */
             $expectedCountData = $dataProvider[2];
 
-            $filterConfig = $this->productFilterConfigFactory->createForCategory($this->domain->getLocale(), $category);
+            $filterConfig = $this->productFilterConfigFactory->createForCategory(
+                $this->domain->getId(),
+                $this->domain->getLocale(),
+                $category
+            );
             $countData = $this->productOnCurrentDomainFacade->getProductFilterCountDataInCategory($category->getId(), $filterConfig, $filterData);
             $this->assertEquals($expectedCountData, $this->removeEmptyParameters($countData), 'TestCase: ' . $testCaseName);
         }
@@ -98,7 +102,11 @@ abstract class ProductOnCurrentDomainFacadeCountDataTest extends ParameterTransa
             /** @var \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData $expectedCountData */
             $expectedCountData = $dataProvider[2];
 
-            $filterConfig = $this->productFilterConfigFactory->createForSearch($this->domain->getLocale(), $searchText);
+            $filterConfig = $this->productFilterConfigFactory->createForSearch(
+                $this->domain->getId(),
+                $this->domain->getLocale(),
+                $searchText
+            );
             $countData = $this->productOnCurrentDomainFacade->getProductFilterCountDataForSearch($searchText, $filterConfig, $filterData);
 
             $this->assertEquals($expectedCountData, $this->removeEmptyParameters($countData));

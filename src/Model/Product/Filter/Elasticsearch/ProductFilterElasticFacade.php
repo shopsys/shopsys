@@ -73,4 +73,34 @@ class ProductFilterElasticFacade
 
         return $this->productFilterConfigIdsDataFactory->createFromElasticsearchAggregationResult($aggregationResult);
     }
+
+    /**
+     * @param int $brandId
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
+     * @return \App\Model\Product\Filter\Elasticsearch\ProductFilterConfigIdsData
+     */
+    public function getProductFilterDataInBrand(int $brandId, PricingGroup $pricingGroup): ProductFilterConfigIdsData
+    {
+        $aggregationQuery = $this->filterQueryFactory->createVisible()
+            ->filterOnlySellable()
+            ->filterByBrands([$brandId])
+            ->getAggregationQueryForProductFilterConfig($pricingGroup->getId());
+        $aggregationResult = $this->client->search($aggregationQuery)['aggregations'];
+
+        return $this->productFilterConfigIdsDataFactory->createFromElasticsearchAggregationResult($aggregationResult);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
+     * @return \App\Model\Product\Filter\Elasticsearch\ProductFilterConfigIdsData
+     */
+    public function getProductFilterDataForAll(PricingGroup $pricingGroup): ProductFilterConfigIdsData
+    {
+        $aggregationQuery = $this->filterQueryFactory->createVisible()
+            ->filterOnlySellable()
+            ->getAggregationQueryForProductFilterConfig($pricingGroup->getId());
+        $aggregationResult = $this->client->search($aggregationQuery)['aggregations'];
+
+        return $this->productFilterConfigIdsDataFactory->createFromElasticsearchAggregationResult($aggregationResult);
+    }
 }

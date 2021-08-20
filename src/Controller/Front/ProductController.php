@@ -678,7 +678,11 @@ class ProductController extends FrontBaseController
      */
     private function createProductFilterConfigForCategory(Category $category): ProductFilterConfig
     {
-        return $this->productFilterConfigFactory->createForCategory($this->domain->getLocale(), $category);
+        return $this->productFilterConfigFactory->createForCategory(
+            $this->domain->getId(),
+            $this->domain->getLocale(),
+            $category
+        );
     }
 
     /**
@@ -687,7 +691,11 @@ class ProductController extends FrontBaseController
      */
     private function createProductFilterConfigForSearch($searchText)
     {
-        return $this->productFilterConfigFactory->createForSearch($this->domain->getLocale(), $searchText);
+        return $this->productFilterConfigFactory->createForSearch(
+            $this->domain->getId(),
+            $this->domain->getLocale(),
+            $searchText
+        );
     }
 
     /**
