@@ -4,8 +4,13 @@ Brand:
         - 'BrandDecorator'
     config:
         interfaces:
+            - 'Breadcrumb'
             - 'Slug'
         fields:
             slug:
                 type: "String!"
                 description: "Brand URL slug"
+            breadcrumb:
+                type: "[Link!]!"
+                description: "Hierarchy of the current element in relation to the structure"
+                resolve: '@=resolver("resolveBreadcrumb", [value.getId(), "front_brand_detail"])'

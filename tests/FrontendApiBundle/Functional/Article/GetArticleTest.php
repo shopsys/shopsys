@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace Tests\FrontendApiBundle\Functional\Article;
 
+use App\DataFixtures\Demo\ArticleDataFixture;
 use App\Model\Article\Article;
 use Ramsey\Uuid\Uuid;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class GetArticleTest extends GraphQlTestCase
@@ -15,6 +17,12 @@ class GetArticleTest extends GraphQlTestCase
      * @inject
      */
     private $articleFacade;
+
+    /**
+     * @var \Symfony\Component\Routing\Generator\UrlGeneratorInterface
+     * @inject
+     */
+    protected UrlGeneratorInterface $urlGenerator;
 
     public function testGetArticle(): void
     {
@@ -69,6 +77,7 @@ class GetArticleTest extends GraphQlTestCase
                     'seoH1',
                     'seoTitle',
                     'seoMetaDescription',
+                    'breadcrumb',
                 ],
                 $responseData,
                 $expectedData
@@ -114,6 +123,13 @@ class GetArticleTest extends GraphQlTestCase
      */
     private function getSpecialArticleDataProvider(): array
     {
+        /** @var \App\Model\Article\Article $termsAndConditionsArticle */
+        $termsAndConditionsArticle = $this->getReferenceForDomain(ArticleDataFixture::ARTICLE_TERMS_AND_CONDITIONS, 1);
+        /** @var \App\Model\Article\Article $privacyPolicyArticle */
+        $privacyPolicyArticle = $this->getReferenceForDomain(ArticleDataFixture::ARTICLE_PRIVACY_POLICY, 1);
+        /** @var \App\Model\Article\Article $cookiesArticle */
+        $cookiesArticle = $this->getReferenceForDomain(ArticleDataFixture::ARTICLE_COOKIES, 1);
+
         $firstDomainLocale = $this->getLocaleForFirstDomain();
         return [
             [
@@ -131,6 +147,12 @@ class GetArticleTest extends GraphQlTestCase
                     'seoH1' => null,
                     'seoTitle' => null,
                     'seoMetaDescription' => null,
+                    'breadcrumb' => [
+                        [
+                            'name' => t('Obchodní podmínky OD', [], 'dataFixtures', $firstDomainLocale),
+                            'slug' => $this->urlGenerator->generate('front_article_detail', ['id' => $termsAndConditionsArticle->getId()]),
+                        ],
+                    ],
                 ],
             ],
             [
@@ -148,6 +170,12 @@ class GetArticleTest extends GraphQlTestCase
                     'seoH1' => null,
                     'seoTitle' => null,
                     'seoMetaDescription' => null,
+                    'breadcrumb' => [
+                        [
+                            'name' => t('Privacy policy', [], 'dataFixtures', $firstDomainLocale),
+                            'slug' => $this->urlGenerator->generate('front_article_detail', ['id' => $privacyPolicyArticle->getId()]),
+                        ],
+                    ],
                 ],
             ],
             [
@@ -165,6 +193,12 @@ class GetArticleTest extends GraphQlTestCase
                     'seoH1' => null,
                     'seoTitle' => null,
                     'seoMetaDescription' => null,
+                    'breadcrumb' => [
+                        [
+                            'name' => t('Information about cookies', [], 'dataFixtures', $firstDomainLocale),
+                            'slug' => $this->urlGenerator->generate('front_article_detail', ['id' => $cookiesArticle->getId()]),
+                        ],
+                    ],
                 ],
             ],
         ];
@@ -203,6 +237,10 @@ class GetArticleTest extends GraphQlTestCase
                     seoH1
                     seoTitle
                     seoMetaDescription
+                    breadcrumb {
+                        name
+                        slug
+                    }
                 }
             }
         ';

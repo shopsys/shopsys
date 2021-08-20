@@ -4,4 +4,5 @@ MainVariant:
         - 'MainVariantDecorator'
     config:
         interfaces:
+            - 'Breadcrumb'
             - 'Slug'

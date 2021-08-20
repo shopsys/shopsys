@@ -25,6 +25,7 @@ class BlogArticleDataFixture extends AbstractReferenceFixture
 
     public const FIRST_DEMO_BLOG_ARTICLE = 'first_demo_blog_article';
     public const FIRST_DEMO_BLOG_SUBCATEGORY = 'first_demo_blog_subcategory';
+    public const FIRST_DEMO_BLOG_CATEGORY = 'first_demo_blog_category';
 
     /**
      * @var \App\Model\Blog\Article\BlogArticleFacade
@@ -98,6 +99,8 @@ class BlogArticleDataFixture extends AbstractReferenceFixture
             $mainPageBlogCategoryData->descriptions[$locale] = t('description - Hlavní stránka blogu - %locale%', ['%locale%' => $locale], 'dataFixtures', $locale);
         }
         $this->blogCategoryFacade->edit($mainPageBlogCategory->getId(), $mainPageBlogCategoryData);
+
+        $this->addReference(self::FIRST_DEMO_BLOG_CATEGORY, $mainPageBlogCategory);
 
         //only in main category
         for ($i = 0; $i < self::PAGES_IN_CATEGORY; $i++) {

@@ -1,0 +1,8 @@
+Breadcrumb:
+    type: interface
+    config:
+        description: "Represents entity able to return breadcrumb"
+        fields:
+            breadcrumb:
+                type: "[Link!]!"
+                description: "Hierarchy of the current element in relation to the structure"

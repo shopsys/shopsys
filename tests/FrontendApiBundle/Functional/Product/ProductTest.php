@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace Tests\FrontendApiBundle\Functional\Product;
 
+use App\DataFixtures\Demo\CategoryDataFixture;
 use App\DataFixtures\Demo\VatDataFixture;
 use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class ProductTest extends GraphQlTestCase
@@ -14,6 +16,12 @@ class ProductTest extends GraphQlTestCase
      * @var \App\Model\Product\Product
      */
     private $product;
+
+    /**
+     * @var \Symfony\Component\Routing\Generator\UrlGeneratorInterface
+     * @inject
+     */
+    protected UrlGeneratorInterface $urlGenerator;
 
     protected function setUp(): void
     {
@@ -126,6 +134,10 @@ class ProductTest extends GraphQlTestCase
                     }
                     availableStoresCount
                     exposedStoresCount
+                    breadcrumb {
+                        name
+                        slug
+                    }
                 }
             }
         ';
@@ -148,6 +160,19 @@ class ProductTest extends GraphQlTestCase
 
         /** @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vatHigh */
         $vatHigh = $this->getReferenceForDomain(VatDataFixture::VAT_HIGH, $this->domain->getId());
+
+        $fullName = sprintf(
+            '%s %s %s',
+            t('Televize', [], 'dataFixtures', $firstDomainLocale),
+            t('22" Sencor SLE 22F46DM4 HELLO KITTY', [], 'dataFixtures', $firstDomainLocale),
+            t('plazmová', [], 'dataFixtures', $firstDomainLocale),
+        );
+
+        /** @var \App\Model\Category\Category $mainCategory */
+        $mainCategory = $this->getReference(CategoryDataFixture::CATEGORY_ELECTRONICS);
+
+        /** @var \App\Model\Category\Category $subCategory */
+        $subCategory = $this->getReference(CategoryDataFixture::CATEGORY_TV);
 
         return [
             'data' => [
@@ -298,12 +323,7 @@ class ProductTest extends GraphQlTestCase
                     'isUsingStock' => true,
                     'namePrefix' => t('Televize', [], 'dataFixtures', $firstDomainLocale),
                     'nameSuffix' => t('plazmová', [], 'dataFixtures', $firstDomainLocale),
-                    'fullName' => sprintf(
-                        '%s %s %s',
-                        t('Televize', [], 'dataFixtures', $firstDomainLocale),
-                        t('22" Sencor SLE 22F46DM4 HELLO KITTY', [], 'dataFixtures', $firstDomainLocale),
-                        t('plazmová', [], 'dataFixtures', $firstDomainLocale),
-                    ),
+                    'fullName' => $fullName,
                     'catalogNumber' => '9177759',
                     'partNumber' => 'SLE 22F46DM4',
                     'ean' => '8845781245930',
@@ -327,6 +347,20 @@ class ProductTest extends GraphQlTestCase
                     ],
                     'availableStoresCount' => 1,
                     'exposedStoresCount' => 1,
+                    'breadcrumb' => [
+                        [
+                            'name' => $mainCategory->getName($firstDomainLocale),
+                            'slug' => $this->urlGenerator->generate('front_product_list', ['id' => $mainCategory->getId()]),
+                        ],
+                        [
+                            'name' => $subCategory->getName($firstDomainLocale),
+                            'slug' => $this->urlGenerator->generate('front_product_list', ['id' => $subCategory->getId()]),
+                        ],
+                        [
+                            'name' => $fullName,
+                            'slug' => $this->urlGenerator->generate('front_product_detail', ['id' => $this->product->getId()]),
+                        ],
+                    ],
                 ],
             ],
         ];

@@ -6,6 +6,7 @@ namespace Tests\FrontendApiBundle\Functional\Blog\Category;
 
 use App\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use App\DataFixtures\Demo\BlogArticleDataFixture;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class BlogCategoryTest extends GraphQlTestCase
@@ -19,6 +20,12 @@ class BlogCategoryTest extends GraphQlTestCase
      * @var \App\Component\Router\FriendlyUrl\FriendlyUrlFacade
      */
     private $friendlyUrlFacade;
+
+    /**
+     * @var \Symfony\Component\Routing\Generator\UrlGeneratorInterface
+     * @inject
+     */
+    protected UrlGeneratorInterface $urlGenerator;
 
     protected function setUp(): void
     {
@@ -48,6 +55,10 @@ class BlogCategoryTest extends GraphQlTestCase
                     seoMetaDescription
                     link
                     slug
+                    breadcrumb {
+                        name
+                        slug
+                    }
                 }
             }
         ';
@@ -76,6 +87,10 @@ class BlogCategoryTest extends GraphQlTestCase
                     seoMetaDescription
                     link
                     slug
+                    breadcrumb {
+                        name
+                        slug
+                    }
                 }
             }
         ';
@@ -170,6 +185,10 @@ class BlogCategoryTest extends GraphQlTestCase
         $locale = $this->getFirstDomainLocale();
         $friendlyUrl = $this->friendlyUrlFacade->getMainFriendlyUrl(1, 'front_blogcategory_detail', $this->blogCategory->getId());
 
+        /** @var \App\Model\Blog\Category\BlogCategory $firstBlogCategory */
+        $firstBlogCategory = $this->getReference(BlogArticleDataFixture::FIRST_DEMO_BLOG_CATEGORY);
+        $firstBlogCategorySlug = $this->urlGenerator->generate('front_blogcategory_detail', ['id' => $firstBlogCategory->getId()]);
+
         return [
             'data' => [
                 'blogCategory' => [
@@ -185,6 +204,16 @@ class BlogCategoryTest extends GraphQlTestCase
                     'seoMetaDescription' => null,
                     'link' => $this->friendlyUrlFacade->getAbsoluteUrlByFriendlyUrl($friendlyUrl),
                     'slug' => $friendlyUrl->getSlug(),
+                    'breadcrumb' => [
+                        [
+                            'name' => $firstBlogCategory->getName($locale),
+                            'slug' => $firstBlogCategorySlug,
+                        ],
+                        [
+                            'name' => t('První podsekce %locale%', ['%locale%' => $locale], 'dataFixtures', $locale),
+                            'slug' => $this->urlGenerator->generate('front_blogcategory_detail', ['id' => $this->blogCategory->getId()]),
+                        ],
+                    ],
                 ],
             ],
         ];

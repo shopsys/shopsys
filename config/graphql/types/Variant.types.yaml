@@ -4,4 +4,5 @@ Variant:
         - 'VariantDecorator'
     config:
         interfaces:
+            - 'Breadcrumb'
             - 'Slug'

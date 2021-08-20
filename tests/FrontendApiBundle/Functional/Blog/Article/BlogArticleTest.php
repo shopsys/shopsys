@@ -6,6 +6,7 @@ namespace Tests\FrontendApiBundle\Functional\Blog\Article;
 
 use App\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use App\DataFixtures\Demo\BlogArticleDataFixture;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class BlogArticleTest extends GraphQlTestCase
@@ -19,6 +20,12 @@ class BlogArticleTest extends GraphQlTestCase
      * @var \App\Model\Blog\Article\BlogArticle
      */
     private $blogArticle;
+
+    /**
+     * @var \Symfony\Component\Routing\Generator\UrlGeneratorInterface
+     * @inject
+     */
+    protected UrlGeneratorInterface $urlGenerator;
 
     protected function setUp(): void
     {
@@ -51,6 +58,10 @@ class BlogArticleTest extends GraphQlTestCase
                     slug
                     products {
                         name
+                    }
+                    breadcrumb {
+                        name
+                        slug
                     }
                 }
             }
@@ -85,6 +96,10 @@ class BlogArticleTest extends GraphQlTestCase
                     slug
                     products {
                         name
+                    }
+                    breadcrumb {
+                        name
+                        slug
                     }
                 }
             }
@@ -145,6 +160,10 @@ class BlogArticleTest extends GraphQlTestCase
         $locale = $this->getFirstDomainLocale();
         $friendlyUrl = $this->friendlyUrlFacade->getMainFriendlyUrl(1, 'front_blogarticle_detail', $this->blogArticle->getId());
 
+        /** @var \App\Model\Blog\Category\BlogCategory $firstBlogCategory */
+        $firstBlogCategory = $this->getReference(BlogArticleDataFixture::FIRST_DEMO_BLOG_CATEGORY);
+        $firstBlogCategorySlug = $this->urlGenerator->generate('front_blogcategory_detail', ['id' => $firstBlogCategory->getId()]);
+
         return [
             'data' => [
                 'blogArticle' => [
@@ -164,6 +183,16 @@ class BlogArticleTest extends GraphQlTestCase
                     'link' => $this->friendlyUrlFacade->getAbsoluteUrlByFriendlyUrl($friendlyUrl),
                     'slug' => $friendlyUrl->getSlug(),
                     'products' => [],
+                    'breadcrumb' => [
+                        [
+                            'name' => $firstBlogCategory->getName($locale),
+                            'slug' => $firstBlogCategorySlug,
+                        ],
+                        [
+                            'name' => t('Ukázkový článek blogu %counter% %locale%', ['%counter%' => 1, '%locale%' => $locale], 'dataFixtures', $locale),
+                            'slug' => '/' . $friendlyUrl->getSlug(),
+                        ],
+                    ],
                 ],
             ],
         ];
