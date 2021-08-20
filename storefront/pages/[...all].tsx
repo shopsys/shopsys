@@ -28,7 +28,11 @@ function renderContent(data: ProductDetailType | CategoryDetailType | undefined 
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-    return initServerSideProps(context, [friendlyUrlQuery(context.resolvedUrl)]);
+    return initServerSideProps(context, [friendlyUrlQuery(getUrlWithoutGetParameters(context.resolvedUrl))]);
+};
+
+const getUrlWithoutGetParameters = (originalUrl: string) => {
+    return originalUrl.split('?')[0];
 };
 
 export default FriendlyUrlPage;
