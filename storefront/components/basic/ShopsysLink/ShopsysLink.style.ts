@@ -1,10 +1,6 @@
 import styled, { css } from 'styled-components';
 import { Theme } from 'theme/main';
 
-type StyledShopsysLinkIconProps = {
-    iconWidth: number;
-};
-
 export const StyledShopsysLink = styled.a`
     ${({ theme }: { theme: Theme }) => css`
         display: inline-flex;

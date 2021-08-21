@@ -45,5 +45,6 @@
     "Choose variant": "Vybrať variantu",
     "Add to cart": "Do košíka",
     "(1)[This item is available immediately in {{ count }} store];(2-inf)[This item is available immediately in {{ count }} stores];": "(1)[Môžete mať ihneď na {{ count }} predajni];(2-inf)[Môžete mať ihneď na {{ count }} predajniach];",
-    "(1)[You can check this item in {{ count }} store];(2-inf)[You can check this item in {{ count }} stores];": "(1)[Môžete si prezrieť na {{ count }} predajni];(2-inf)[Můžete si prohlédnout na {{ count }} predajniach];"
+    "(1)[You can check this item in {{ count }} store];(2-inf)[You can check this item in {{ count }} stores];": "(1)[Môžete si prezrieť na {{ count }} predajni];(2-inf)[Můžete si prohlédnout na {{ count }} predajniach];",
+    "Home page": "Úvodná strana"
 }

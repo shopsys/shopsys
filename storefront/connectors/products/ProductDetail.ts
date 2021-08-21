@@ -5,4 +5,8 @@ export const productDetailBody = `
     nameSuffix
     description
     catalogNumber
+    breadcrumb {
+        name
+        slug
+    }
 `;
