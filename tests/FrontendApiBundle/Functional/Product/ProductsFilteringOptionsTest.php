@@ -83,6 +83,7 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
                     "parameters": [
                         {
                             "name": "' . t('Materiál', [], 'dataFixtures', $this->firstDomainLocale) . '",
+                            "type": "checkbox",
                             "values": [
                                 {
                                     "text": "' . t(
@@ -92,7 +93,8 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
             $this->firstDomainLocale
         ) . '",
                                     "count": 1,
-                                    "isAbsolute": true
+                                    "isAbsolute": true,
+                                    "rgbHex": null
                                 },
                                 {
                                     "text": "' . t(
@@ -102,7 +104,8 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
             $this->firstDomainLocale
         ) . '",
                                     "count": 2,
-                                    "isAbsolute": true
+                                    "isAbsolute": true,
+                                    "rgbHex": null
                                 },
                                 {
                                     "text": "' . t(
@@ -112,12 +115,14 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
             $this->firstDomainLocale
         ) . '",
                                     "count": 1,
-                                    "isAbsolute": true
+                                    "isAbsolute": true,
+                                    "rgbHex": null
                                 }
                             ]
                         },
                         {
                             "name": "' . t('Color', [], 'dataFixtures', $this->firstDomainLocale) . '",
+                            "type": "colorPicker",
                             "values": [
                                 {
                                     "text": "' . t(
@@ -127,7 +132,8 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
             $this->firstDomainLocale
         ) . '",
                                     "count": 1,
-                                    "isAbsolute": true
+                                    "isAbsolute": true,
+                                    "rgbHex": "#000000"
                                 },
                                 {
                                     "text": "' . t(
@@ -137,12 +143,14 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
             $this->firstDomainLocale
         ) . '",
                                     "count": 3,
-                                    "isAbsolute": true
+                                    "isAbsolute": true,
+                                    "rgbHex": "#ff0000"
                                 }
                             ]
                         },
                         {
                             "name": "' . t('Supported OS', [], 'dataFixtures', $this->firstDomainLocale) . '",
+                            "type": "checkbox",
                             "values": [
                                 {
                                     "text": "' . t(
@@ -152,22 +160,26 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
             $this->firstDomainLocale
         ) . '",
                                     "count": 1,
-                                    "isAbsolute": true
+                                    "isAbsolute": true,
+                                    "rgbHex": null
                                 }
                             ]
                         },
                         {
                             "name": "' . t('Number of buttons', [], 'dataFixtures', $this->firstDomainLocale) . '",
+                            "type": "checkbox",
                             "values": [
                                 {
                                     "text": "' . t('5', [], 'dataFixtures', $this->firstDomainLocale) . '",
                                     "count": 1,
-                                    "isAbsolute": true
+                                    "isAbsolute": true,
+                                    "rgbHex": null
                                 }
                             ]
                         },
                         {
                             "name": "' . t('Ergonomics', [], 'dataFixtures', $this->firstDomainLocale) . '",
+                            "type": "checkbox",
                             "values": [
                                 {
                                     "text": "' . t(
@@ -177,77 +189,92 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
             $this->firstDomainLocale
         ) . '",
                                     "count": 1,
-                                    "isAbsolute": true
+                                    "isAbsolute": true,
+                                    "rgbHex": null
                                 }
                             ]
                         },
                         {
                             "name": "' . t('Screen size', [], 'dataFixtures', $this->firstDomainLocale) . '",
+                            "type": "checkbox",
                             "values": [
                                 {
                                     "text": "' . t('27\"', [], 'dataFixtures', $this->firstDomainLocale) . '",
                                     "count": 1,
-                                    "isAbsolute": true
+                                    "isAbsolute": true,
+                                    "rgbHex": null
                                 },
                                 {
                                     "text": "' . t('30\"', [], 'dataFixtures', $this->firstDomainLocale) . '",
                                     "count": 1,
-                                    "isAbsolute": true
+                                    "isAbsolute": true,
+                                    "rgbHex": null
                                 },
                                 {
                                     "text": "' . t('47\"', [], 'dataFixtures', $this->firstDomainLocale) . '",
                                     "count": 1,
-                                    "isAbsolute": true
+                                    "isAbsolute": true,
+                                    "rgbHex": null
                                 }
                             ]
                         },
                         {
                             "name": "' . t('HDMI', [], 'dataFixtures', $this->firstDomainLocale) . '",
+                            "type": "checkbox",
                             "values": [
                                 {
                                     "text": "' . t('Yes', [], 'dataFixtures', $this->firstDomainLocale) . '",
                                     "count": 1,
-                                    "isAbsolute": true
+                                    "isAbsolute": true,
+                                    "rgbHex": null
                                 },
                                 {
                                     "text": "' . t('No', [], 'dataFixtures', $this->firstDomainLocale) . '",
                                     "count": 2,
-                                    "isAbsolute": true
+                                    "isAbsolute": true,
+                                    "rgbHex": null
                                 }
                             ]
                         },
                         {
                             "name": "' . t('USB', [], 'dataFixtures', $this->firstDomainLocale) . '",
+                            "type": "checkbox",
                             "values": [
                                 {
                                     "text": "' . t('Yes', [], 'dataFixtures', $this->firstDomainLocale) . '",
                                     "count": 3,
-                                    "isAbsolute": true
+                                    "isAbsolute": true,
+                                    "rgbHex": null
                                 }
                             ]
                         },
                         {
                             "name": "' . t('Technology', [], 'dataFixtures', $this->firstDomainLocale) . '",
+                            "type": "checkbox",
                             "values": [
                                 {
                                     "text": "' . t('LED', [], 'dataFixtures', $this->firstDomainLocale) . '",
                                     "count": 3,
-                                    "isAbsolute": true
+                                    "isAbsolute": true,
+                                    "rgbHex": null
                                 }
                             ]
                         },
                         {
                             "name": "' . t('Gaming mouse', [], 'dataFixtures', $this->firstDomainLocale) . '",
+                            "type": "checkbox",
                             "values": [
                                 {
                                     "text": "' . t('Yes', [], 'dataFixtures', $this->firstDomainLocale) . '",
                                     "count": 1,
-                                    "isAbsolute": true
+                                    "isAbsolute": true,
+                                    "rgbHex": null
                                 }
                             ]
                         },
                         {
                             "name": "' . t('Resolution', [], 'dataFixtures', $this->firstDomainLocale) . '",
+                            "type": "checkbox",
                             "values": [
                                 {
                                     "text": "' . t(
@@ -257,7 +284,8 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
             $this->firstDomainLocale
         ) . '",
                                     "count": 3,
-                                    "isAbsolute": true
+                                    "isAbsolute": true,
+                                    "rgbHex": null
                                 }
                             ]
                         }
@@ -355,6 +383,7 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
         $expectedJson = '[
     {
         "name": "' . t('Materiál', [], 'dataFixtures', $this->firstDomainLocale) . '",
+        "type": "checkbox",
         "values": [
             {
                 "text": "' . t(
@@ -364,7 +393,8 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
             $this->firstDomainLocale
         ) . '",
                 "count": 0,
-                "isAbsolute": true
+                "isAbsolute": true,
+                "rgbHex": null
             },
             {
                 "text": "' . t(
@@ -374,7 +404,8 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
             $this->firstDomainLocale
         ) . '",
                 "count": 1,
-                "isAbsolute": true
+                "isAbsolute": true,
+                "rgbHex": null
             },
             {
                 "text": "' . t(
@@ -384,12 +415,14 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
             $this->firstDomainLocale
         ) . '",
                 "count": 1,
-                "isAbsolute": true
+                "isAbsolute": true,
+                "rgbHex": null
             }
         ]
     },
     {
         "name": "' . t('Color', [], 'dataFixtures', $this->firstDomainLocale) . '",
+        "type": "colorPicker",
         "values": [
             {
                 "text": "' . t(
@@ -399,7 +432,8 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
             $this->firstDomainLocale
         ) . '",
                 "count": 1,
-                "isAbsolute": true
+                "isAbsolute": true,
+                "rgbHex": "#000000"
             },
             {
                 "text": "' . t(
@@ -409,12 +443,14 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
             $this->firstDomainLocale
         ) . '",
                 "count": 1,
-                "isAbsolute": true
+                "isAbsolute": true,
+                "rgbHex": "#ff0000"
             }
         ]
     },
     {
         "name": "' . t('Supported OS', [], 'dataFixtures', $this->firstDomainLocale) . '",
+        "type": "checkbox",
         "values": [
             {
                 "text": "' . t(
@@ -424,22 +460,26 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
             $this->firstDomainLocale
         ) . '",
                 "count": 0,
-                "isAbsolute": true
+                "isAbsolute": true,
+                "rgbHex": null
             }
         ]
     },
     {
         "name": "' . t('Number of buttons', [], 'dataFixtures', $this->firstDomainLocale) . '",
+        "type": "checkbox",
         "values": [
             {
                 "text": "' . t('5', [], 'dataFixtures', $this->firstDomainLocale) . '",
                 "count": 0,
-                "isAbsolute": true
+                "isAbsolute": true,
+                "rgbHex": null
             }
         ]
     },
     {
         "name": "' . t('Ergonomics', [], 'dataFixtures', $this->firstDomainLocale) . '",
+        "type": "checkbox",
         "values": [
             {
                 "text": "' . t(
@@ -449,77 +489,92 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
             $this->firstDomainLocale
         ) . '",
                 "count": 0,
-                "isAbsolute": true
+                "isAbsolute": true,
+                "rgbHex": null
             }
         ]
     },
     {
         "name": "' . t('Screen size', [], 'dataFixtures', $this->firstDomainLocale) . '",
+        "type": "checkbox",
         "values": [
             {
                 "text": "' . t('27\"', [], 'dataFixtures', $this->firstDomainLocale) . '",
                 "count": 0,
-                "isAbsolute": true
+                "isAbsolute": true,
+                "rgbHex": null
             },
             {
                 "text": "' . t('30\"', [], 'dataFixtures', $this->firstDomainLocale) . '",
                 "count": 1,
-                "isAbsolute": true
+                "isAbsolute": true,
+                "rgbHex": null
             },
             {
                 "text": "' . t('47\"', [], 'dataFixtures', $this->firstDomainLocale) . '",
                 "count": 1,
-                "isAbsolute": true
+                "isAbsolute": true,
+                "rgbHex": null
             }
         ]
     },
     {
         "name": "' . t('HDMI', [], 'dataFixtures', $this->firstDomainLocale) . '",
+        "type": "checkbox",
         "values": [
             {
                 "text": "' . t('Yes', [], 'dataFixtures', $this->firstDomainLocale) . '",
                 "count": 1,
-                "isAbsolute": false
+                "isAbsolute": false,
+                "rgbHex": null
             },
             {
                 "text": "' . t('No', [], 'dataFixtures', $this->firstDomainLocale) . '",
                 "count": 0,
-                "isAbsolute": false
+                "isAbsolute": false,
+                "rgbHex": null
             }
         ]
     },
     {
         "name": "' . t('USB', [], 'dataFixtures', $this->firstDomainLocale) . '",
+        "type": "checkbox",
         "values": [
             {
                 "text": "' . t('Yes', [], 'dataFixtures', $this->firstDomainLocale) . '",
                 "count": 2,
-                "isAbsolute": true
+                "isAbsolute": true,
+                "rgbHex": null
             }
         ]
     },
     {
         "name": "' . t('Technology', [], 'dataFixtures', $this->firstDomainLocale) . '",
+        "type": "checkbox",
         "values": [
             {
                 "text": "' . t('LED', [], 'dataFixtures', $this->firstDomainLocale) . '",
                 "count": 2,
-                "isAbsolute": true
+                "isAbsolute": true,
+                "rgbHex": null
             }
         ]
     },
     {
         "name": "' . t('Gaming mouse', [], 'dataFixtures', $this->firstDomainLocale) . '",
+        "type": "checkbox",
         "values": [
             {
                 "text": "' . t('Yes', [], 'dataFixtures', $this->firstDomainLocale) . '",
                 "count": 0,
-                "isAbsolute": true
+                "isAbsolute": true,
+                "rgbHex": null
             }
         ]
     },
     {
         "name": "' . t('Resolution', [], 'dataFixtures', $this->firstDomainLocale) . '",
+        "type": "checkbox",
         "values": [
             {
                 "text": "' . t(
@@ -529,7 +584,8 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
             $this->firstDomainLocale
         ) . '",
                 "count": 2,
-                "isAbsolute": true
+                "isAbsolute": true,
+                "rgbHex": null
             }
         ]
     }
@@ -578,10 +634,12 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
                             maximalPrice,
                             parameters {
                                 name
+                                type
                                 values {
                                     text
                                     count
                                     isAbsolute
+                                    rgbHex
                                 }
                             }
                         }
