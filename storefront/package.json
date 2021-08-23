@@ -9,7 +9,7 @@
         "lint": "eslint '*/**/*.{js,ts,tsx}'",
         "lint--fix": "eslint '*/**/*.{js,ts,tsx}' --fix",
         "format": "prettier --ignore-path .eslintignore --write '*/**/*.{js,ts,tsx}'",
-        "translate": "i18next 'pages/**/*.{tsx,js}' 'components/**/*.{tsx,js}' --config config/i18next-parser.config.js",
+        "translate": "i18next --config config/i18next-parser.config.js",
         "styleguide-server": "styleguidist server --config config/styleguide.config.js",
         "styleguide-build": "styleguidist build --config config/styleguide.config.js"
     },
