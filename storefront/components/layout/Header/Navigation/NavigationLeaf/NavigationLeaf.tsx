@@ -10,14 +10,10 @@ type NavigationLeafProps = {
 const NavigationLeaf: FC<NavigationLeafProps> = (props) => {
     return (
         <>
-            {props.columnCategories.map((columnCategories, columnKey) => (
-                <NavigationLeafColumnStyled key={columnKey}>
-                    {columnCategories.categories.map((columnCategory, categoryKey) => (
-                        <NavigationColumnCategory
-                            key={categoryKey}
-                            columnCategory={columnCategory}
-                            categoryKey={categoryKey}
-                        />
+            {props.columnCategories.map((columnCategories, columnIndex) => (
+                <NavigationLeafColumnStyled key={columnIndex}>
+                    {columnCategories.categories.map((columnCategory, columnCategoryIndex) => (
+                        <NavigationColumnCategory key={columnCategoryIndex} columnCategory={columnCategory} />
                     ))}
                 </NavigationLeafColumnStyled>
             ))}

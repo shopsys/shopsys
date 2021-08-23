@@ -10,12 +10,11 @@ import { NavigationCategory } from '../../../../../connectors/navigation/Navigat
 
 type NavigationColumnCategoryProps = {
     columnCategory: NavigationCategory;
-    categoryKey: number;
 };
 
 const NavigationColumnCategory: FC<NavigationColumnCategoryProps> = (props) => {
     return (
-        <NavigationItemSubListItemStyled key={props.categoryKey}>
+        <NavigationItemSubListItemStyled>
             <Link href={props.columnCategory.slug} passHref>
                 <NavigationItemSubListItemImageStyled>
                     <img src={props.columnCategory.image.url} width={props.columnCategory.image.width} />
@@ -26,8 +25,8 @@ const NavigationColumnCategory: FC<NavigationColumnCategoryProps> = (props) => {
             </Link>
             {props.columnCategory.children.length > 0 && (
                 <NavigationItemSubListStyled isChildren>
-                    {props.columnCategory.children.map((columnCategoryChild, categoryChildKey) => (
-                        <NavigationItemSubListItemStyled isChildren key={categoryChildKey}>
+                    {props.columnCategory.children.map((columnCategoryChild, index) => (
+                        <NavigationItemSubListItemStyled isChildren key={index}>
                             <Link href={columnCategoryChild.slug} passHref>
                                 <NavigationItemSubListItemLinkStyled isChildren>
                                     {columnCategoryChild.name}

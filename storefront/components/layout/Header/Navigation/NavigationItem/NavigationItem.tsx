@@ -14,7 +14,6 @@ import ShopsysIcon from '../../../../basic/ShopsysIcon';
 
 type NavigationItemProps = {
     navigationItem: NavigationItemType;
-    asKey: number;
 };
 
 const NavigationItem: FC<NavigationItemProps> = (props) => {

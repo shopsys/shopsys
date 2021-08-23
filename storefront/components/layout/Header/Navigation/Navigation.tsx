@@ -12,8 +12,8 @@ const Navigation = (): ReactElement | null => {
 
     return (
         <NavigationStyled>
-            {navigationItems.map((navigationItem, key) => (
-                <NavigationItem navigationItem={navigationItem} key={key} asKey={key} />
+            {navigationItems.map((navigationItem, index) => (
+                <NavigationItem navigationItem={navigationItem} key={index} />
             ))}
         </NavigationStyled>
     );
