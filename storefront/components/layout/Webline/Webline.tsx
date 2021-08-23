@@ -3,7 +3,7 @@ import PropTypes, { InferProps } from 'prop-types';
 import { StyledContainer, StyledWebline } from './Webline.style';
 import { ExtractNativePropsFromDefault } from 'typeHelpers/ExtractNativePropsFromDefault';
 
-type NativeProps = ExtractNativePropsFromDefault<HTMLAttributes<HTMLDivElement>, 'children', never>;
+type NativeProps = ExtractNativePropsFromDefault<HTMLAttributes<HTMLDivElement>, 'children', 'style'>;
 
 function Webline(props: InferProps<typeof Webline.propTypes> & NativeProps): ReactElement {
     return (

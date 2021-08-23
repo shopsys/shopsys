@@ -27,7 +27,7 @@ const Index: FC<IndexProps> = (props) => {
 
     return (
         <>
-            <Webline type="colored">
+            <Webline type="colored" style={{ marginBottom: '32px' }}>
                 <Header></Header>
                 <Navigation></Navigation>
             </Webline>
