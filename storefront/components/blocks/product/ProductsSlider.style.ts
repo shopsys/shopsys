@@ -42,20 +42,18 @@ export const ProductSliderControlsStyled = styled.div`
             width: 32px;
             height: 32px;
             margin-left: 5px;
-            
+
             color: ${theme.color.creamWhite};
             outline: none;
             border: none;
             background-color: ${theme.color.greyDark};
-            border-radius: ${theme.radius.small};;
+            border-radius: ${theme.radius.small};
             transition: ${theme.transition};
             cursor: pointer;
 
             &:hover {
                 background-color: ${theme.color.greyDarker};
             }
-        }
-
         }
 
         @media ${theme.mediaQueries.queryTablet} {
