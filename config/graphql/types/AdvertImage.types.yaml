@@ -2,3 +2,16 @@ AdvertImage:
     type: object
     inherits:
         - 'AdvertImageDecorator'
+    config:
+        fields:
+            image:
+                type: "[Image]"
+                description: "Advert image"
+                resolve: '@=service("App\\FrontendApi\\Model\\Resolver\\Image\\ImagesResolver").resolveByAdvert(value, args["type"], args["size"])'
+                args:
+                    type:
+                        type: "String"
+                        defaultValue: null
+                    size:
+                        type: "String"
+                        defaultValue: null

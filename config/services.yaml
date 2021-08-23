@@ -903,3 +903,8 @@ services:
 
     Shopsys\FrameworkBundle\Model\Transport\TransportRepository:
         alias: App\Model\Transport\TransportRepository
+
+    App\FrontendApi\Model\Resolver\Image\ImagesResolver: ~
+
+    Shopsys\FrontendApiBundle\Model\Resolver\Image\ImagesResolver:
+        alias: App\FrontendApi\Model\Resolver\Image\ImagesResolver

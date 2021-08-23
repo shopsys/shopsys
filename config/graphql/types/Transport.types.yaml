@@ -2,3 +2,15 @@ Transport:
     type: object
     inherits:
         - 'TransportDecorator'
+    config:
+        fields:
+            images:
+                type: "[Image]!"
+                description: "Transport images"
+                resolve: '@=service("App\\FrontendApi\\Model\\Resolver\\Image\\ImagesResolver").resolveByTransport(value, args["type"], args["size"])'
+                args:
+                    type:
+                        type: "String"
+                        defaultValue: null
+                    size:
+                        type: "String"
