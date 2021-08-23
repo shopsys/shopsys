@@ -10,24 +10,32 @@ Category:
             bestsellers:
                 type: "[Product!]!"
                 description: "Best selling products"
-                resolve: '@=service("App\\FrontendApi\\Model\\Resolver\\Products\\BestsellingProductsResolver").resolveByCategory(value)'
+                resolve: '@=service("App\\FrontendApi\\Model\\Resolver\\Products\\BestsellingProductsResolver").resolveByCategoryOrReadyCategorySeoMix(value)'
             slug:
                 type: "String!"
                 description: "Category URL slug"
             breadcrumb:
                 type: "[Link!]!"
                 description: "Hierarchy of the current element in relation to the structure"
-                resolve: '@=resolver("resolveBreadcrumb", [value.getId(), "front_product_list"])'
+                resolve: '@=resolver("resolveCategoryBreadcrumb", [value])'
             images:
                 type: "[Image]!"
                 description: "Category images"
-                resolve: '@=service("App\\FrontendApi\\Model\\Resolver\\Image\\ImagesResolver").resolveByCategory(value, args["type"], args["size"])'
+                resolve: '@=service("App\\FrontendApi\\Model\\Resolver\\Image\\ImagesResolver").resolveByCategoryOrReadyCategorySeoMix(value, args["type"], args["size"])'
                 args:
                     type:
                         type: "String"
                         defaultValue: null
                     size:
                         type: "String"
+            products:
+                type: "ProductConnection"
+                description: "Paginated and ordered products of category"
+                argsBuilder:
+                    builder: "PaginatorArgumentsBuilder"
+                    config:
+                        orderingModeType: 'ProductOrderingModeEnum'
+                resolve: '@=service("App\\FrontendApi\\Model\\Resolver\\Products\\ProductsResolver").resolveByCategoryOrReadyCategorySeoMix(args, value)'
             readyCategorySeoMixLinks:
                 type: "[Link!]!"
                 description: "An array of links of prepared category SEO mixes of a given category"

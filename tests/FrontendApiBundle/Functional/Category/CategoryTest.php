@@ -121,9 +121,7 @@ class CategoryTest extends GraphQlTestCase
                         ['name' => t('Mobile Phones', [], 'dataFixtures', $locale)],
                         ['name' => t('Coffee Machines', [], 'dataFixtures', $locale)],
                     ],
-                    'parent' => [
-                        'name' => null,
-                    ],
+                    'parent' => null,
                 ],
             ],
         ];

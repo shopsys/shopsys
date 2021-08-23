@@ -42,3 +42,6 @@ services:
 
     Shopsys\FrontendApiBundle\Model\Resolver\Order\OrderResolverMap:
         alias: App\FrontendApi\Model\Order\OrderResolverMap
+
+    Shopsys\FrontendApiBundle\Model\Resolver\Category\CategoryResolverMap:
+        alias: App\FrontendApi\Model\Resolver\Category\CategoryResolverMap

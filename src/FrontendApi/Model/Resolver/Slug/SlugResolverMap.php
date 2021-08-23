@@ -7,6 +7,7 @@ namespace App\FrontendApi\Model\Resolver\Slug;
 use App\Model\Article\Article;
 use App\Model\Blog\Category\BlogCategory;
 use App\Model\Category\Category;
+use App\Model\CategorySeo\ReadyCategorySeoMix;
 use App\Model\Product\Brand\Brand;
 use App\Model\Store\Store;
 use Overblog\GraphQLBundle\Resolver\ResolverMap;
@@ -33,7 +34,7 @@ class SlugResolverMap extends ResolverMap
                         return 'Brand';
                     }
 
-                    if ($data instanceof Category) {
+                    if ($data instanceof Category || $data instanceof ReadyCategorySeoMix) {
                         return 'Category';
                     }
 
