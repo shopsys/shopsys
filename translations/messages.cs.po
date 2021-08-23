@@ -2266,7 +2266,7 @@ msgstr "Mimořádné oznámení"
 msgid "Special offers"
 msgstr "Akční zboží"
 
-msgid "Společnost je zapsaná v obchodním<br> rejstříku vedeném Městským soudem<br> v Praze, oddíl C, vložka 145176"
+msgid "Společnost je zapsaná v obchodním<br> rejstříku vedeném Městským soudem<br> v Praze, oddíl C, vložka 123456"
 msgstr ""
 
 msgid "Status"
@@ -3133,9 +3133,6 @@ msgstr ""
 msgid "Úvodní strana"
 msgstr ""
 
-msgid "ČSOB<br> Č.ú. 117983223 / 0300<br> IBAN: CZ54 0300 0000 0001 1798 3223 <br> BIC / SWIFT: CEKOCZPP"
-msgstr ""
-
 msgid "Česko"
 msgstr ""
 
@@ -3158,6 +3155,9 @@ msgid "Číst dále"
 msgstr ""
 
 msgid "č. produktu:"
+msgstr ""
+
+msgid "My bank<br> Č.ú. 123456789 / 9876<br> IBAN: CZ12 0000 0000 0001 2345 6789 <br> BIC / SWIFT: MBNKCZPP"
 msgstr ""
 
 msgid "Řazení"
