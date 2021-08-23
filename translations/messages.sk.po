@@ -460,6 +460,12 @@ msgstr "Balík č."
 msgid "Bankovní spojení"
 msgstr "Bankové spojenie"
 
+msgid "Banner"
+msgstr ""
+
+msgid "Banners"
+msgstr ""
+
 msgid "Barevné varianty dvířek"
 msgstr "Farebné varianty dvierok"
 
@@ -582,6 +588,9 @@ msgstr "CEMENTO"
 
 msgid "CHALET"
 msgstr "CHALET"
+
+msgid "CMS"
+msgstr ""
 
 msgid "CREATED"
 msgstr "Platba založena"
@@ -736,6 +745,9 @@ msgstr "Krajina"
 msgid "Create and download CSV"
 msgstr ""
 
+msgid "Create new banner"
+msgstr ""
+
 msgid "Create new customer"
 msgstr ""
 
@@ -762,6 +774,9 @@ msgstr ""
 
 msgid "Customer with email address <strong>{{ email }}</strong> doesn't exist. <a href=\"{{ registrationLink }}\"> Register</a>"
 msgstr "Zákazník s emailovou schránkou <strong>{{ email }}</strong> neexistuje. <a href=\"{{ registrationLink }}\"> Registrovať </a>"
+
+msgid "Customers overview"
+msgstr ""
 
 msgid "DPH {{domainName}}"
 msgstr ""
@@ -1090,7 +1105,13 @@ msgstr ""
 msgid "Editace článku blogu - %name%"
 msgstr ""
 
+msgid "Editing banner"
+msgstr ""
+
 msgid "Editing product - %name%"
+msgstr ""
+
+msgid "Editing script"
 msgstr ""
 
 msgid "Editing transport type"
@@ -1101,6 +1122,9 @@ msgstr ""
 
 msgid "Email"
 msgstr "Email"
+
+msgid "Email newsletter"
+msgstr ""
 
 msgid "Email with a link to the export of your personal data was sent to your email address."
 msgstr "Email s odkazom na export vašich osobných informácií bol odoslaný na vašu emailovú adresu."
@@ -1151,6 +1175,9 @@ msgid "Exposed in Stores"
 msgstr ""
 
 msgid "External ID"
+msgstr ""
+
+msgid "External scripts"
 msgstr ""
 
 msgid "Externí ID můstku"
@@ -1225,6 +1252,9 @@ msgstr ""
 msgid "GoPay payment method"
 msgstr ""
 
+msgid "Google analytics"
+msgstr ""
+
 msgid "Grafitová černá"
 msgstr "Grafitovo čierna"
 
@@ -1238,6 +1268,9 @@ msgid "Heslo"
 msgstr "Heslo"
 
 msgid "Heslo musí obsahovat velké, malé písmena, číslice a musí být delší než 10 znaků."
+msgstr ""
+
+msgid "Heureka"
 msgstr ""
 
 msgid "Hidden"
@@ -1277,6 +1310,9 @@ msgid "Hodnota parametru typu barva"
 msgstr ""
 
 msgid "Hodnoty parameterů typu barva"
+msgstr ""
+
+msgid "Home page"
 msgstr ""
 
 msgid "Hromadné kupony s prefixem"
@@ -1347,6 +1383,9 @@ msgstr "Inštalácie"
 
 msgid "Instalační manuál"
 msgstr "Inštalačný manuál"
+
+msgid "Integrations"
+msgstr ""
 
 msgid "Interní poznámka"
 msgstr ""
@@ -1544,6 +1583,12 @@ msgid "Last name"
 msgstr "Priezvisko"
 
 msgid "Last order"
+msgstr ""
+
+msgid "Legal conditions"
+msgstr ""
+
+msgid "Legal conditions settings modified."
 msgstr ""
 
 msgid "Legenda:"
@@ -1825,10 +1870,16 @@ msgstr "Neplatné zoradenie"
 msgid "Nepodporovaný datový typ pro validaci souboru. Kontaktujte, prosím, správce obchodu."
 msgstr "Nepodporovaný dátový typ pre validáciu súboru. Kontaktujte, prosím, správcu obchodu."
 
+msgid "New banner"
+msgstr ""
+
 msgid "New orders"
 msgstr ""
 
 msgid "New registered customers"
+msgstr ""
+
+msgid "New script"
 msgstr ""
 
 msgid "New store"
@@ -2082,6 +2133,9 @@ msgstr "Objednávka"
 
 msgid "Order completed"
 msgstr "Objednávka dokončená"
+
+msgid "Order confirmation page"
+msgstr ""
 
 msgid "Order could not be paid"
 msgstr "Objednávku sa nepodarilo zaplatiť"
@@ -2413,6 +2467,12 @@ msgstr "Cena s DPH"
 msgid "Pricing group"
 msgstr ""
 
+msgid "Privacy Policy"
+msgstr ""
+
+msgid "Privacy Policy settings"
+msgstr ""
+
 msgid "Pro přesné umístění veškerých rozvodů."
 msgstr "Na presné umiestnenie všetkých rozvodov."
 
@@ -2541,6 +2601,12 @@ msgstr "Promo kód nie je možné uplatniť na žiadny produkt v košíku. Skont
 
 msgid "Promo kód už není platný. Zkontrolujte ho, prosím."
 msgstr "Promo kód už nie je platný. Skontrolujte ho, prosím."
+
+msgid "Promoted categories"
+msgstr ""
+
+msgid "Promoted products"
+msgstr ""
 
 msgid "Propojené kategorie"
 msgstr ""
@@ -2983,6 +3049,9 @@ msgstr "Zbaliť"
 msgid "Sbírání bodů s každou objednávkou"
 msgstr ""
 
+msgid "Scripts overview"
+msgstr ""
+
 msgid "Sdílet"
 msgstr "Zdieľať"
 
@@ -3261,6 +3330,12 @@ msgstr ""
 
 msgid "Tento způsob platby je skrytý systémem GoPay."
 msgstr "Tento spôsob platby je skrytý systémom GoPay."
+
+msgid "Terms and Conditions"
+msgstr ""
+
+msgid "Terms and Conditions settings"
+msgstr ""
 
 msgid "Terms-and-conditions.html"
 msgstr ""
@@ -3755,6 +3830,9 @@ msgid "We will remember your login on this computer for 30 days."
 msgstr "Zapamätáme si prihlásenie na tomto počítači po dobu 30 dní"
 
 msgid "Weight (g)"
+msgstr ""
+
+msgid "XML Feeds"
 msgstr ""
 
 msgid "YORK"

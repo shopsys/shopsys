@@ -217,6 +217,12 @@ msgstr "Zpět do obchodu"
 msgid "Bankovní spojení"
 msgstr ""
 
+msgid "Banner"
+msgstr "Banner"
+
+msgid "Banners"
+msgstr "Bannery"
+
 msgid "Barva pozadí"
 msgstr ""
 
@@ -288,6 +294,9 @@ msgstr ""
 
 msgid "CANCELED"
 msgstr "Platba zrušena"
+
+msgid "CMS"
+msgstr "CMS"
 
 msgid "CREATED"
 msgstr "Platba založena"
@@ -433,6 +442,9 @@ msgstr "Stát"
 msgid "Create and download CSV"
 msgstr "Vytvořit a stáhnout CSV"
 
+msgid "Create new banner"
+msgstr "Vytvořit nový banner"
+
 msgid "Create new customer"
 msgstr ""
 
@@ -462,6 +474,9 @@ msgstr ""
 
 msgid "Customer with email address <strong>{{ email }}</strong> doesn't exist. <a href=\"{{ registrationLink }}\"> Register</a>"
 msgstr "Zákazník s e-mailovou adresou <strong>{{ email }}</strong> neexistuje. <a href=\"{{ registrationLink }}\">Zaregistrovat</a>"
+
+msgid "Customers overview"
+msgstr "Přehled zákazníků"
 
 msgid "DPH {{domainName}}"
 msgstr ""
@@ -715,8 +730,14 @@ msgstr ""
 msgid "Editace článku blogu - %name%"
 msgstr ""
 
+msgid "Editing banner"
+msgstr "Upravit banner"
+
 msgid "Editing product - %name%"
 msgstr ""
+
+msgid "Editing script"
+msgstr "Upravit script"
 
 msgid "Editing transport type"
 msgstr "Editace typu dopravy"
@@ -726,6 +747,9 @@ msgstr "Editace typu dopravy - %code%"
 
 msgid "Email"
 msgstr "E-mail"
+
+msgid "Email newsletter"
+msgstr "E-maily zpravodaje"
 
 msgid "Email with a link to the export of your personal data was sent to your email address."
 msgstr "E-mail s odkazem na stránku exportu osobních údajů byl odeslán na vaši e-mailovou adresu."
@@ -774,6 +798,9 @@ msgstr "Vystavení na prodejnách"
 
 msgid "External ID"
 msgstr "Externí ID"
+
+msgid "External scripts"
+msgstr "Měřící skripty"
 
 msgid "Externí ID můstku"
 msgstr ""
@@ -838,6 +865,9 @@ msgstr "Platební metoda GoPay"
 msgid "GoPay payment status"
 msgstr "Status platby GoPay"
 
+msgid "Google analytics"
+msgstr ""
+
 msgid "Heading (H1)"
 msgstr ""
 
@@ -845,6 +875,9 @@ msgid "Heslo"
 msgstr ""
 
 msgid "Heslo musí obsahovat velké, malé písmena, číslice a musí být delší než 10 znaků."
+msgstr ""
+
+msgid "Heureka"
 msgstr ""
 
 msgid "Hidden"
@@ -876,6 +909,9 @@ msgstr ""
 
 msgid "Hodnoty parameterů typu barva"
 msgstr ""
+
+msgid "Home page"
+msgstr "Domovská stránka"
 
 msgid "Hromadné kupony s prefixem"
 msgstr ""
@@ -942,6 +978,9 @@ msgstr ""
 
 msgid "Instalační manuál"
 msgstr ""
+
+msgid "Integrations"
+msgstr "Integrace"
 
 msgid "Interní poznámka"
 msgstr ""
@@ -1029,6 +1068,12 @@ msgstr "Příjmení"
 
 msgid "Last order"
 msgstr ""
+
+msgid "Legal conditions"
+msgstr "Právní podmínky"
+
+msgid "Legal conditions settings modified."
+msgstr "Nastavení právních podmínek upraveno."
 
 msgid "Legenda:"
 msgstr ""
@@ -1234,6 +1279,9 @@ msgstr ""
 msgid "Nepodporovaný datový typ pro validaci souboru. Kontaktujte, prosím, správce obchodu."
 msgstr ""
 
+msgid "New banner"
+msgstr "Nový banner"
+
 msgid "New delivery address"
 msgstr "Nová dodací adresa"
 
@@ -1242,6 +1290,9 @@ msgstr ""
 
 msgid "New registered customers"
 msgstr ""
+
+msgid "New script"
+msgstr "Nový script"
 
 msgid "New store"
 msgstr "Nová prodejna"
@@ -1458,6 +1509,9 @@ msgstr "Objednat"
 
 msgid "Order completed"
 msgstr "Objednávka dokončena"
+
+msgid "Order confirmation page"
+msgstr "Stránka s potvrzením objednávky"
 
 msgid "Order could not be paid"
 msgstr "Objednávku se nepodařio zaplatit"
@@ -1723,6 +1777,12 @@ msgstr ""
 msgid "Print"
 msgstr "Vytisknout"
 
+msgid "Privacy Policy"
+msgstr "Zásady ochrany osobních údajů"
+
+msgid "Privacy Policy settings"
+msgstr "Nastavení zásad ochrany osobních údajů"
+
 msgid "Pro tento výraz jsme bohužel nenašli žádné výsledky."
 msgstr ""
 
@@ -1830,6 +1890,12 @@ msgstr ""
 
 msgid "Promo kód už není platný. Zkontrolujte ho, prosím."
 msgstr ""
+
+msgid "Promoted categories"
+msgstr "Promované kategorie"
+
+msgid "Promoted products"
+msgstr "Promované produkty"
 
 msgid "Propojené kategorie"
 msgstr ""
@@ -2046,6 +2112,9 @@ msgstr ""
 
 msgid "Sbírání bodů s každou objednávkou"
 msgstr ""
+
+msgid "Scripts overview"
+msgstr "Přehled skriptů"
 
 msgid "Search [verb]"
 msgstr "Vyhledat"
@@ -2310,6 +2379,12 @@ msgstr ""
 
 msgid "Tento způsob platby je skrytý systémem GoPay."
 msgstr ""
+
+msgid "Terms and Conditions"
+msgstr "Obchodní podmínky"
+
+msgid "Terms and Conditions settings"
+msgstr "Nastavení obchodních podmínek"
 
 msgid "Terms and conditions"
 msgstr "Obchodní podmínky"
@@ -2748,6 +2823,9 @@ msgstr "Zapamatujeme si vaše přihlášení na tomto počítači po dobu 30 dn�
 
 msgid "Weight (g)"
 msgstr "Hmotnost (g)"
+
+msgid "XML Feeds"
+msgstr "XML Feedy"
 
 msgid "Yes"
 msgstr "Ano"
