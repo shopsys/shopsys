@@ -15,6 +15,15 @@ use Tests\App\Test\Codeception\AcceptanceTester;
 class CartCest
 {
     /**
+     * @param \Tests\App\Test\Codeception\AcceptanceTester $me
+     */
+    public function _before(AcceptanceTester $me)
+    {
+        $me->amOnPage('/non-existing-url-because-of-loading-time');
+        $me->setCookie('twigFrontend', 'true');
+    }
+
+    /**
      * @param \Tests\App\Acceptance\acceptance\PageObject\Front\CartPage $cartPage
      * @param \Tests\App\Acceptance\acceptance\PageObject\Front\ProductDetailPage $productDetailPage
      * @param \Tests\App\Acceptance\acceptance\PageObject\Front\CartBoxPage $cartBoxPage

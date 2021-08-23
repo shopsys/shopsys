@@ -12,6 +12,15 @@ class ErrorHandlingCest
     /**
      * @param \Tests\App\Test\Codeception\AcceptanceTester $me
      */
+    public function _before(AcceptanceTester $me)
+    {
+        $me->amOnPage('/non-existing-url-because-of-loading-time');
+        $me->setCookie('twigFrontend', 'true');
+    }
+
+    /**
+     * @param \Tests\App\Test\Codeception\AcceptanceTester $me
+     */
     public function testDisplayNotice(AcceptanceTester $me)
     {
         $me->wantTo('display notice error page');
