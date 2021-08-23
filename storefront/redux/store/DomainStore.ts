@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { DomainConfigType } from '../../utils/Domain/Domain';
 
 const initialState = {
-    domain: '127.0.0.1:3000',
+    domain: '127.0.0.1:8000',
     publicGraphqlEndpoint: '127.0.0.1:8000/graphql/',
     defaultLocale: 'cs',
     currencyCode: 'CZK',
