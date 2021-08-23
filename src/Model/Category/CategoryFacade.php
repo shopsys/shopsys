@@ -341,4 +341,14 @@ class CategoryFacade extends BaseCategoryFacade
 
         return array_merge($children, $categoriesFromLinkedCategories);
     }
+
+    /**
+     * @param \App\Model\Category\Category $parentCategory
+     * @param int $domainId
+     * @return \App\Model\Category\Category[]
+     */
+    public function getVisibleLinkedCategories(Category $parentCategory, int $domainId): array
+    {
+        return $this->categoryRepository->getVisibleCategoriesByLinkedCategories($parentCategory, $domainId, []);
+    }
 }

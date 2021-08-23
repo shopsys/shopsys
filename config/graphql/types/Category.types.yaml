@@ -41,4 +41,4 @@ Category:
                 description: "An array of links of prepared category SEO mixes of a given category"
             linkedCategories:
                 type: "[Category!]!"
-                description: "An array of categories linked to the given category"
+                description: "A list of categories linked to the given category"

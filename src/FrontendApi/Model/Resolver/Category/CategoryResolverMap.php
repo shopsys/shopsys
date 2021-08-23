@@ -142,8 +142,10 @@ class CategoryResolverMap extends BaseCategoryResolverMap
                 return $this->getSlug($category->getId(), 'front_product_list');
             case 'readyCategorySeoMixLinks':
                 return $this->getLinksByCategory($category);
+            case 'linkedCategories':
+                return $this->categoryFacade->getVisibleLinkedCategories($category, $this->domain->getId());
             default:
-                return null;
+                throw new InvalidArgumentException(sprintf('Unknown field name "%s".', $fieldName));
         }
     }
 
@@ -176,8 +178,10 @@ class CategoryResolverMap extends BaseCategoryResolverMap
                 return $this->getSlug($readyCategorySeoMix->getId(), 'front_category_seo');
             case 'readyCategorySeoMixLinks':
                 return $this->getLinksByCategory($category);
+            case 'linkedCategories':
+                return $this->categoryFacade->getVisibleLinkedCategories($category, $this->domain->getId());
             default:
-                return null;
+                throw new InvalidArgumentException(sprintf('Unknown field name "%s".', $fieldName));
         }
     }
 }

@@ -50,6 +50,9 @@ class CategoryTest extends GraphQlTestCase
                         name
                         slug
                     }
+                    linkedCategories {
+                        name
+                    }
                 }
             }
         ';
@@ -85,6 +88,10 @@ class CategoryTest extends GraphQlTestCase
                         ['name' => 'Elektro nejprodávanější - A-Z - 27" - bez HDMI', 'slug' => 'elektro-nejprodavanejsi-a-z-27-bez-hdmi'],
                         ['name' => 'Elektro Novinky - TOP - 27" - HDMI', 'slug' => 'elektro-novinky-top-27-hdmi'],
                         ['name' => 'Elektro s HDMI', 'slug' => 'elektro-s-hdmi'],
+                    ],
+                    'linkedCategories' => [
+                        ['name' => t('Food', [], 'dataFixtures', $this->getLocaleForFirstDomain())],
+                        ['name' => t('Garden tools', [], 'dataFixtures', $this->getLocaleForFirstDomain())],
                     ],
                 ],
             ],
