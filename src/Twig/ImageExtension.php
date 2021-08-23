@@ -6,6 +6,7 @@ namespace App\Twig;
 
 use App\Model\Product\Product;
 use Shopsys\FrameworkBundle\Component\Image\Exception\ImageNotFoundException;
+use Shopsys\ReadModelBundle\Image\ImageView;
 use Shopsys\ReadModelBundle\Twig\ImageExtension as BaseImageExtension;
 use Twig\TwigFunction;
 
@@ -15,7 +16,6 @@ use Twig\TwigFunction;
  * @method \App\Component\Image\Image[] getImages(object $entity, string|null $type)
  * @method __construct(string $frontDesignImageUrlPrefix, \Shopsys\FrameworkBundle\Component\Domain\Domain $domain, \App\Component\Image\ImageLocator $imageLocator, \App\Component\Image\ImageFacade $imageFacade, \Twig\Environment $twigEnvironment, bool $isLazyLoadEnabled)
  * @method bool imageExists(\App\Component\Image\Image|object $imageOrEntity, string|null $type)
- * @method string getImageUrl(\App\Component\Image\Image|object $imageOrEntity, string|null $sizeName, string|null $type)
  * @property \App\Component\Image\ImageLocator $imageLocator
  */
 class ImageExtension extends BaseImageExtension
@@ -116,5 +116,33 @@ class ImageExtension extends BaseImageExtension
             'additionalImagesData' => $additionalImagesData,
             'imageCssClass' => $this->getImageCssClass($entityName, $attributes['type'], $attributes['size']),
         ]);
+    }
+
+    /**
+     * @param \App\Component\Image\Image|\Shopsys\ReadModelBundle\Image\ImageView|object $imageView
+     * @param string|null $sizeName
+     * @param string|null $type
+     * @return string
+     */
+    public function getImageUrl($imageView, $sizeName = null, $type = null)
+    {
+        if ($imageView instanceof ImageView) {
+            $entityName = $imageView->getEntityName();
+
+            try {
+                return $this->imageFacade->getImageUrlFromAttributes(
+                    $this->domain->getCurrentDomainConfig(),
+                    $imageView->getId(),
+                    $imageView->getExtension(),
+                    $entityName,
+                    $type,
+                    $sizeName
+                );
+            } catch (ImageNotFoundException $exception) {
+                return $this->getEmptyImageUrl();
+            }
+        }
+
+        return parent::getImageUrl($imageView, $sizeName, $type);
     }
 }

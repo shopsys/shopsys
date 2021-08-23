@@ -310,9 +310,6 @@ msgstr "<strong>RIO</strong> je moderná kuchyňa v dekore duba virginia. Vďaka
 msgid "<strong>STONEART</strong> představuje nejnovější trend v designu kuchyní: kameninové a břidlicové dekory. Nejde jen o perfektní vzhled, ale také o kvalitní zpracování, díky čemuž jsou dvířka <strong>STONEART</strong> věrnou imitací kameninových povrchů a jsou velmi odolné vůči manuálnímu poškození. Ve stejném dekoru jsou i voděodolné pracovní desky, takže tato kuchyně přežije i náročné užívání. Pokud jste příznivci čistého designu, oceníte možnost <strong>bezúchytkového řešení.</strong> A pokud potřebujete dostatek úložného prostoru, můžete si vybrat z nové řady korpusů <strong>velikosti XL.</strong>"
 msgstr "<strong>STONEART</strong> predstavuje najnovší trend v dizajne kuchýň: kameninové a bridlicové dekory. Nejde len o perfektný vzhľad, ale aj o kvalitné vyhotovenie, vďaka čomu sú dvierka <strong>STONEART</strong> vernou imitáciou kameninových povrchov a sú veľmi odolné voči manuálnemu poškodeniu. V rovnakom dekore sú aj vodoodolné pracovné dosky, takže táto kuchyňa prežije aj náročné používanie. Ak ste priaznivci čistého dizajnu, oceníte možnosť <strong bezúchytkového riešenia.</strong> A ak potrebujete dostatok úložného priestoru, môžete si vybrať z nového radu korpusov <strong>veľkosti XL.</strong>"
 
-msgid "<strong>Vítejte zpět ve Scontu</strong> Pro dokončení nákupu se prosím přihlašte"
-msgstr "<strong>Vitajte späť v Sconte </strong> Na dokončenie nákupu sa, prosím, prihláste"
-
 msgid "AUTHORIZED"
 msgstr "Platba předautorizována"
 
@@ -1972,8 +1969,8 @@ msgstr ""
 msgid "Německá kvalita"
 msgstr "Nemecká kvalita"
 
-msgid "O Scontu"
-msgstr "\nO Sconte"
+msgid "O Commerce Cloudu"
+msgstr "\nO Commerce Cloude"
 
 msgid "O nákupu"
 msgstr "O nákupe"
