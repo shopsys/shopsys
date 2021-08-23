@@ -13,7 +13,9 @@ CMD npm install --legacy-peer-deps && npm run dev
 FROM base as production
 
 COPY . /app
-RUN npm install --no-dev
+
+# CI = clear install, don't try to update dependencies
+RUN npm ci --no-dev
 
 RUN npm run build
 CMD npm run start

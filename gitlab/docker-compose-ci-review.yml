@@ -17,25 +17,16 @@ services:
             - default
             - traefik-network
 
-    storefront:
+    frontend:
         restart: always
         image: ${STOREFRONT_TAG}
-        environment:
-            INTERNAL_GRAPHQL_ENDPOINT: http://${COMPOSE_PROJECT_NAME}_webserver_1:8080/graphql/
-            DOMAIN_HOST_1: sf.${HOST}
-            DOMAIN_HOST_2: en.sf.${HOST}
-            DOMAIN_BACKEND_HOST_1: ${HOST}
-            DOMAIN_BACKEND_HOST_2: en.${HOST}
-            PUBLIC_GRAPHQL_ENDPOINT_1: https://${HOST}/graphql/
-            PUBLIC_GRAPHQL_ENDPOINT_2: https://en.${HOST}/graphql/
         labels:
-            - traefik.backend=${COMPOSE_PROJECT_NAME}_storefront
-            - traefik.frontend.rule=Host:${STOREFRONT_HOSTS}
-            - traefik.docker.network=ci_traefik-network
-            - traefik.port=3000
+            - traefik.enable=false
+        environment:
+            PUBLIC_GRAPHQL_ENDPOINT_1: https://${HOST}/graphql/
+            DOMAIN_HOST_1: ${HOST}
         networks:
             - default
-            - traefik-network
 
     php-fpm:
         restart: always
