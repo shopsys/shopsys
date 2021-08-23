@@ -1,4 +1,9 @@
-import { ProductItemApiType, SliderProductItemType } from '../../components/blocks/product/types';
+import {
+    ListedProductItemApiType,
+    ListedProductItemType,
+    ProductItemApiType,
+    SliderProductItemType,
+} from '../../components/blocks/product/types';
 import { useFetchQuery } from '../../hooks/UseFetchQuery';
 import { useShopsysSelector } from '../../redux/store';
 
@@ -58,3 +63,17 @@ export const getPromotedProducts = (): SliderProductItemType[] | undefined => {
 
     return mapProductApiData(apiData, currentDomainConfig.currencyCode);
 };
+
+export function mapListedProductNode(data: ListedProductItemApiType, currencyCode: string): ListedProductItemType {
+    return {
+        ...data,
+        detailSlug: data.slug,
+        image: data.images.length === 0 ? null : data.images[0],
+        price: {
+            ...data.price,
+            currencyCode: currencyCode,
+        },
+        isMainVariant: data.__typename === 'MainVariant',
+        availability: data.availability.name,
+    };
+}
