@@ -39,7 +39,7 @@ const NewsletterForm: FC = () => {
     return (
         <NewsletterFormWrapper>
             <ShopsysHeading type="h2">
-                {t('Sign up for our newsletter and get 35% discount on running apparel')}
+                {t<string>('Sign up for our newsletter and get 35% discount on running apparel')}
             </ShopsysHeading>
             <NewsletterFormColumn>
                 <ShopsysForm

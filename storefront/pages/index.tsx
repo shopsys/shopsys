@@ -32,11 +32,11 @@ const Index: FC<IndexProps> = (props) => {
                 <Banners />
             </Webline>
             <Webline>
-                <ShopsysHeading type="h2">{t('Promoted categories')}</ShopsysHeading>
+                <ShopsysHeading type="h2">{t<string>('Promoted categories')}</ShopsysHeading>
                 <PromotedCategories />
             </Webline>
             <Webline>
-                <ShopsysHeading type="h2">{t('Promoted products')}</ShopsysHeading>
+                <ShopsysHeading type="h2">{t<string>('Promoted products')}</ShopsysHeading>
                 <PromotedProducts />
             </Webline>
             <Webline type="light">

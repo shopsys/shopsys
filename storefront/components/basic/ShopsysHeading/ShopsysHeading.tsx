@@ -1,4 +1,4 @@
-import { CSSProperties, ReactElement, ReactNode } from 'react';
+import { HTMLAttributes, ReactElement } from 'react';
 import PropTypes, { InferProps } from 'prop-types';
 import {
     StyledShopsysHeading1,
@@ -6,6 +6,17 @@ import {
     StyledShopsysHeading3,
     StyledShopsysHeading4,
 } from './ShopsysHeading.style';
+import { ExtractNativePropsFromDefault } from 'typeHelpers/ExtractNativePropsFromDefault';
+
+type NativeProps = ExtractNativePropsFromDefault<HTMLAttributes<HTMLHeadingElement>, 'children', 'style'>;
+
+/**
+ * A global heading element, which takes a "type" prop, and based on that displays a heading of type h1 - h4
+ */
+function ShopsysHeading(props: InferProps<typeof ShopsysHeading.propTypes> & NativeProps): ReactElement {
+    const Component = renderHeading(props.type);
+    return <Component {...props}>{props.children}</Component>;
+}
 
 const renderHeading = (type: 'h1' | 'h2' | 'h3' | 'h4') => {
     switch (type) {
@@ -21,16 +32,6 @@ const renderHeading = (type: 'h1' | 'h2' | 'h3' | 'h4') => {
 
     throw new Error('Wrong type provided for ShopsysHeading.');
 };
-
-/**
- * A global heading element, which takes a "type" prop, and based on that displays a heading of type h1 - h4
- */
-function ShopsysHeading(
-    props: InferProps<typeof ShopsysHeading.propTypes> & { style?: CSSProperties; children: ReactNode },
-): ReactElement {
-    const Component = renderHeading(props.type);
-    return <Component {...props}>{props.children}</Component>;
-}
 
 ShopsysHeading.propTypes = {
     /**
