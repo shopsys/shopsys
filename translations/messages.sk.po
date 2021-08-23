@@ -3202,8 +3202,8 @@ msgstr ""
 msgid "Special message"
 msgstr ""
 
-msgid "Společnost je zapsaná v obchodním<br> rejstříku vedeném Městským soudem<br> v Praze, oddíl C, vložka 145176"
-msgstr "Spoločnosť je zapísaná v obchodnom registri Okresného súdu Trnava, oddiel Sro, vložka 25761/T"
+msgid "Společnost je zapsaná v obchodním<br> rejstříku vedeném Městským soudem<br> v Praze, oddíl C, vložka 123456"
+msgstr "Spoločnosť je zapísaná v obchodnom registri Okresného súdu Trnava, oddiel Sro, vložka 12345/T"
 
 msgid "Spustit prezentaci"
 msgstr "Spustiť prezentáciu"
@@ -4243,9 +4243,6 @@ msgstr ""
 msgid "Úvodní strana"
 msgstr ""
 
-msgid "ČSOB<br> Č.ú. 117983223 / 0300<br> IBAN: CZ54 0300 0000 0001 1798 3223 <br> BIC / SWIFT: CEKOCZPP"
-msgstr "SWIFT: GIBASKBX\nIBAN: SK62 0900 0000 0006 3380 8333"
-
 msgid "Černá"
 msgstr "Čierna"
 
@@ -4287,6 +4284,9 @@ msgstr "\nč. produktu:"
 
 msgid "částečně skladem"
 msgstr "čiastočne na sklade"
+
+msgid "My bank<br> Č.ú. 123456789 / 9876<br> IBAN: CZ12 0000 0000 0001 2345 6789 <br> BIC / SWIFT: MBNKCZPP"
+msgstr "SWIFT: MBNKSKRE\nIBAN: SK12 0000 0000 0001 2345 6789"
 
 msgid "Řazení"
 msgstr ""
