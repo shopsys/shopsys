@@ -1,9 +1,9 @@
-import { createGlobalStyle } from 'styled-components';
+import { createGlobalStyle, css } from 'styled-components';
 import reset from 'styled-reset';
 import { Theme } from './main';
 
 const GlobalStyle = createGlobalStyle`
-    ${({ theme }: { theme: Theme }) => `
+    ${({ theme }: { theme: Theme }) => css`
         ${reset};
 
         @font-face {
@@ -54,7 +54,9 @@ const GlobalStyle = createGlobalStyle`
             src: url('/fonts/dmSans700.woff2') format('woff2');
         }
 
-        *, *::before, *::after {
+        *,
+        *::before,
+        *::after {
             box-sizing: border-box;
         }
 
@@ -62,13 +64,35 @@ const GlobalStyle = createGlobalStyle`
             height: 100%;
         }
 
-        html, body {
+        html,
+        body {
             min-height: 100%;
         }
 
-        body, form, input, select, button, p, pre, dfn, address, ul, ol, li,
-        h1, h2, h3, h4, h5, h6, img,
-        table, tr, td, th, textarea {
+        body,
+        form,
+        input,
+        select,
+        button,
+        p,
+        pre,
+        dfn,
+        address,
+        ul,
+        ol,
+        li,
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6,
+        img,
+        table,
+        tr,
+        td,
+        th,
+        textarea {
             color: ${theme.color.base};
             font-size: ${theme.fontSize.small};
             line-height: ${theme.lineHeight.default};
@@ -86,7 +110,8 @@ const GlobalStyle = createGlobalStyle`
             image-rendering: -webkit-optimize-contrast;
         }
 
-        td, th {
+        td,
+        th {
             text-align: left;
         }
 
@@ -116,6 +141,11 @@ const GlobalStyle = createGlobalStyle`
                 text-decoration: underline;
                 color: ${theme.color.primary};
             }
+        }
+
+        b,
+        strong {
+            font-weight: 800;
         }
     `}
 `;

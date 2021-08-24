@@ -1,3 +1,4 @@
+import { FC, useRef } from 'react';
 import {
     StyledProductDetail,
     StyledProductDetailCode,
@@ -6,7 +7,8 @@ import {
     StyledProductDetailInfo,
     StyledProductDetailPrefix,
 } from './ProductDetail.style';
-import { FC } from 'react';
+import ProductDetailAvailability from './ProductDetailStoresAvailability/ProductDetailAvailability';
+import ProductDetailAvailabilityList from './ProductDetailStoresAvailability/ProductDetailAvailabilityList';
 import { ProductDetailType } from './types';
 import ShopsysInUserText from 'components/in/ShopsysInUserText';
 import { useTranslation } from 'next-i18next';
@@ -18,6 +20,7 @@ type ProductDetailProps = {
 
 const ProductDetail: FC<ProductDetailProps> = (props) => {
     const { t } = useTranslation();
+    const scrollTarget = useRef<HTMLUListElement>(null);
 
     return (
         <Webline>
@@ -33,8 +36,10 @@ const ProductDetail: FC<ProductDetailProps> = (props) => {
                     <StyledProductDetailCode>
                         {t('Code')}: {props.product.catalogNumber}
                     </StyledProductDetailCode>
+                    <ProductDetailAvailability scrollTarget={scrollTarget} {...props} />
                 </StyledProductDetailInfo>
                 <ShopsysInUserText htmlContent={props.product.description} />
+                <ProductDetailAvailabilityList ref={scrollTarget} {...props} />
             </StyledProductDetail>
         </Webline>
     );

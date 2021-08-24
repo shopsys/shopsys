@@ -5,8 +5,20 @@ export const productDetailBody = `
     nameSuffix
     description
     catalogNumber
+    availability {
+        name 
+        status
+    }
+    storeAvailabilities {
+        storeName
+        exposed
+        availabilityInformation
+        availabilityStatus
+    }
     breadcrumb {
         name
         slug
     }
+    availableStoresCount
+    exposedStoresCount
 `;
