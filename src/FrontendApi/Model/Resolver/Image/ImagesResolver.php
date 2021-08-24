@@ -6,6 +6,7 @@ namespace App\FrontendApi\Model\Resolver\Image;
 
 use App\Model\Category\Category;
 use App\Model\CategorySeo\ReadyCategorySeoMix;
+use App\Model\NotificationBar\NotificationBar;
 use App\Model\Slider\SliderItem;
 use InvalidArgumentException;
 use Shopsys\FrameworkBundle\Component\Image\Exception\ImageNotFoundException;
@@ -14,6 +15,7 @@ use Shopsys\FrontendApiBundle\Model\Resolver\Image\ImagesResolver as BaseImagesR
 class ImagesResolver extends BaseImagesResolver
 {
     protected const IMAGE_ENTITY_SLIDER_ITEM = 'sliderItem';
+    protected const IMAGE_ENTITY_NOTIFICATION_BAR = 'notificationBar';
 
     /**
      * @param \App\Model\Slider\SliderItem $sliderItem
@@ -24,6 +26,17 @@ class ImagesResolver extends BaseImagesResolver
     public function resolveBySliderItem(SliderItem $sliderItem, ?string $type, ?string $size): array
     {
         return $this->resolveByEntityId($sliderItem->getId(), static::IMAGE_ENTITY_SLIDER_ITEM, $type, $size);
+    }
+
+    /**
+     * @param \App\Model\NotificationBar\NotificationBar $notificationBar
+     * @param string|null $type
+     * @param string|null $size
+     * @return array
+     */
+    public function resolveByNotificationBar(NotificationBar $notificationBar, ?string $type, ?string $size): array
+    {
+        return $this->resolveByEntityId($notificationBar->getId(), static::IMAGE_ENTITY_NOTIFICATION_BAR, $type, $size);
     }
 
     /**

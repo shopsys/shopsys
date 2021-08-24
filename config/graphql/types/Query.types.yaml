@@ -68,3 +68,7 @@ Query:
                 args:
                     slug:
                         type: "String!"
+            notificationBars:
+                type: '[NotificationBar!]'
+                resolve: "@=resolver('notificationBars')"
+                description: "Returns a list of notifications supposed to be displayed on all pages"
