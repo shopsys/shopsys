@@ -23,7 +23,7 @@ export const navigationQuery = `
         }
     ` as const;
 
-type NavigationSubCategory = {
+export type NavigationSubCategory = {
     name: string;
     slug: string;
 };

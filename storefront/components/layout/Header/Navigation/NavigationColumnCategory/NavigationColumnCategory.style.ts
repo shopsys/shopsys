@@ -1,46 +1,28 @@
 import styled, { css } from 'styled-components';
 import { Theme } from 'theme/main';
 
-type NavigationColumnCategoryProps = {
-    isChildren?: boolean;
-};
-
 const localVariables = {
     navigationHeight: '64px',
     navigationSubListItemGap: '45px',
 } as const;
 
-export const NavigationItemSubListStyled = styled.ul<NavigationColumnCategoryProps>`
-    ${({ isChildren }: NavigationColumnCategoryProps) => css`
-        display: flex;
-        flex-direction: column;
-        width: calc(100% / 4);
-        padding-left: ${localVariables.navigationSubListItemGap};
-
-        ${isChildren &&
-        css`
-            padding-left: 0;
-        `}
-    `}
+export const NavigationItemSubListStyled = styled.ul`
+    display: flex;
+    flex-direction: column;
+    width: calc(100% / 4);
+    padding-left: ${localVariables.navigationSubListItemGap};
 `;
 
-export const NavigationItemSubListItemStyled = styled.li<NavigationColumnCategoryProps>`
-    ${({ isChildren }: NavigationColumnCategoryProps) => css`
-        width: 100%;
-        margin-bottom: 35px;
+export const NavigationColumnCategoryStyled = styled.li`
+    width: 100%;
+    margin-bottom: 35px;
 
-        ${isChildren &&
-        css`
-            margin-bottom: 0;
-        `}
-
-        &:last-child {
-            margin-bottom: 0;
-        }
-    `}
+    &:last-child {
+        margin-bottom: 0;
+    }
 `;
 
-export const NavigationItemSubListItemImageStyled = styled.a`
+export const NavigationColumnCategoryImageStyled = styled.a`
     ${({ theme }: { theme: Theme }) => css`
         display: flex;
         justify-content: center;
@@ -58,8 +40,8 @@ export const NavigationItemSubListItemImageStyled = styled.a`
     `}
 `;
 
-export const NavigationItemSubListItemLinkStyled = styled.a<NavigationColumnCategoryProps>`
-    ${({ theme, isChildren }: { theme: Theme } & NavigationColumnCategoryProps) => css`
+export const NavigationColumnCategoryLinkStyled = styled.a`
+    ${({ theme }: { theme: Theme }) => css`
         display: block;
         margin-bottom: 4px;
 
@@ -67,13 +49,5 @@ export const NavigationItemSubListItemLinkStyled = styled.a<NavigationColumnCate
         font-weight: 700;
         font-size: ${theme.fontSize.default};
         color: ${theme.color.base};
-
-        ${isChildren &&
-        css`
-            margin-bottom: 5px;
-
-            font-weight: 400;
-            font-size: ${theme.fontSize.small};
-        `}
     `}
 `;

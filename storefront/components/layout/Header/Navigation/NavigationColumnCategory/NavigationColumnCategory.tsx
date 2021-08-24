@@ -1,12 +1,12 @@
 import {
-    NavigationItemSubListItemImageStyled,
-    NavigationItemSubListItemLinkStyled,
-    NavigationItemSubListItemStyled,
-    NavigationItemSubListStyled,
+    NavigationColumnCategoryImageStyled,
+    NavigationColumnCategoryLinkStyled,
+    NavigationColumnCategoryStyled,
 } from './NavigationColumnCategory.style';
 import { FC } from 'react';
 import Link from 'next/link';
 import { NavigationCategory } from '../../../../../connectors/navigation/Navigation';
+import NavigationSubList from '../NavigationSubList';
 
 type NavigationColumnCategoryProps = {
     columnCategory: NavigationCategory;
@@ -14,29 +14,19 @@ type NavigationColumnCategoryProps = {
 
 const NavigationColumnCategory: FC<NavigationColumnCategoryProps> = (props) => {
     return (
-        <NavigationItemSubListItemStyled>
+        <NavigationColumnCategoryStyled>
             <Link href={props.columnCategory.slug} passHref>
-                <NavigationItemSubListItemImageStyled>
+                <NavigationColumnCategoryImageStyled>
                     <img src={props.columnCategory.image.url} width={props.columnCategory.image.width} />
-                </NavigationItemSubListItemImageStyled>
+                </NavigationColumnCategoryImageStyled>
             </Link>
             <Link href={props.columnCategory.slug} passHref>
-                <NavigationItemSubListItemLinkStyled>{props.columnCategory.name}</NavigationItemSubListItemLinkStyled>
+                <NavigationColumnCategoryLinkStyled>{props.columnCategory.name}</NavigationColumnCategoryLinkStyled>
             </Link>
             {props.columnCategory.children.length > 0 && (
-                <NavigationItemSubListStyled isChildren>
-                    {props.columnCategory.children.map((columnCategoryChild, index) => (
-                        <NavigationItemSubListItemStyled isChildren key={index}>
-                            <Link href={columnCategoryChild.slug} passHref>
-                                <NavigationItemSubListItemLinkStyled isChildren>
-                                    {columnCategoryChild.name}
-                                </NavigationItemSubListItemLinkStyled>
-                            </Link>
-                        </NavigationItemSubListItemStyled>
-                    ))}
-                </NavigationItemSubListStyled>
+                <NavigationSubList columnCategoryChildren={props.columnCategory.children} />
             )}
-        </NavigationItemSubListItemStyled>
+        </NavigationColumnCategoryStyled>
     );
 };
 
