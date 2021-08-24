@@ -1,6 +1,6 @@
 import { CategoryDetailType } from './types';
 import { FC } from 'react';
-import ProductsList from '../../blocks/product/Listed/ProductsList';
+import ProductsList from '../../blocks/product/List/ProductsList';
 import ShopsysHeading from '../../basic/ShopsysHeading';
 import ShopsysLink from '../../basic/ShopsysLink';
 import Webline from '../../layout/Webline';
