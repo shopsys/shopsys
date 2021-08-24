@@ -39,9 +39,7 @@ export async function initServerSideProps(
             nextI18NextConfig,
         );
 
-        for (const query of prefetchedQueries) {
-            await client.query(query).toPromise();
-        }
+        await Promise.all(prefetchedQueries.map((query) => client.query(query).toPromise()));
 
         return {
             props: {
