@@ -6,6 +6,7 @@ services:
         container_name: production-webserver
         depends_on:
             - php-fpm
+            - frontend
         volumes:
             - /var/www/production-content:/var/www/html/web/content
             - web-volume:/var/www/html/web
@@ -15,7 +16,7 @@ services:
         networks:
             - shopsys-network
 
-    storefront:
+    frontend:
         build:
             context: ./storefront
             dockerfile: docker/Dockerfile
