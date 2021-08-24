@@ -1,5 +1,5 @@
-import styled, { css } from 'styled-components';
-import { Theme } from 'theme/main';
+import { css } from 'styled-components';
+import { styled } from 'theme/main';
 
 const localVariables = {
     labelFontSizeSmall: '11px',
@@ -16,7 +16,7 @@ type StyledShopsysLabelWrapperProps = {
 };
 
 export const StyledShopsysLabelWrapper = styled.div<StyledShopsysLabelWrapperProps>`
-    ${({ theme, inputType }: { theme: Theme } & StyledShopsysLabelWrapperProps) => css`
+    ${({ theme, inputType }) => css`
         position: relative;
         width: 100%;
 
@@ -263,7 +263,7 @@ export const StyledShopsysLabelWrapper = styled.div<StyledShopsysLabelWrapperPro
 `;
 
 export const StyledShopsysRequiredSymbol = styled.span`
-    ${({ theme }: { theme: Theme }) => css`
+    ${({ theme }) => css`
         margin-left: 5px;
 
         color: ${theme.color.red};

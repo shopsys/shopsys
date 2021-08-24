@@ -1,8 +1,8 @@
-import styled, { css } from 'styled-components';
-import { Theme } from 'theme/main';
+import { css } from 'styled-components';
+import { styled } from 'theme/main';
 
 export const StyledOverlay = styled.div`
-    ${({ theme }: { theme: Theme }) => css`
+    ${({ theme }) => css`
         bottom: 0;
         left: 0;
         position: fixed;
@@ -22,7 +22,7 @@ export const StyledOverlay = styled.div`
 `;
 
 export const StyledPopup = styled.div`
-    ${({ theme }: { theme: Theme }) => css`
+    ${({ theme }) => css`
         display: flex;
         flex-direction: column;
         max-height: calc(100% - 20px);

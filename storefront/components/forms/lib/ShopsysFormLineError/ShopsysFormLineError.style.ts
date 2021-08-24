@@ -1,5 +1,5 @@
-import styled, { css } from 'styled-components';
-import { Theme } from 'theme/main';
+import { css } from 'styled-components';
+import { styled } from 'theme/main';
 
 const localVariables = {
     smallTextInputErrorIconTopOffset: '-29px',
@@ -17,7 +17,7 @@ export const StyledShopsysFormFieldError = styled.div`
 `;
 
 export const StyledShopsysErrorMessage = styled.span`
-    ${({ theme }: { theme: Theme }) => css`
+    ${({ theme }) => css`
         line-height: 21px;
         color: ${theme.color.red};
         font-size: ${theme.fontSize.small};

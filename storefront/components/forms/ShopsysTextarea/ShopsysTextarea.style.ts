@@ -1,4 +1,5 @@
-import styled, { css } from 'styled-components';
+import { css } from 'styled-components';
+import { styled } from 'theme/main';
 
 const localVariables = {
     textareaPaddingVertical: '20px',

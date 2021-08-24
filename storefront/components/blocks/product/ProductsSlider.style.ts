@@ -1,5 +1,5 @@
-import styled, { css } from 'styled-components';
-import { Theme } from 'theme/main';
+import { css } from 'styled-components';
+import { styled } from 'theme/main';
 
 const localVariables = {
     listSliderProductsItemGap: '20px',
@@ -12,7 +12,7 @@ export const ProductSliderWrapperStyled = styled.div`
 `;
 
 export const ProductSliderStyled = styled.div`
-    ${({ theme }: { theme: Theme }) => css`
+    ${({ theme }) => css`
         position: relative;
         margin: 0 -10px;
         display: flex;
@@ -30,7 +30,7 @@ export const ProductSliderStyled = styled.div`
 `;
 
 export const ProductSliderControlsStyled = styled.div`
-    ${({ theme }: { theme: Theme }) => css`
+    ${({ theme }) => css`
         align-items: center;
         justify-content: center;
         position: absolute;

@@ -1,5 +1,5 @@
-import styled, { css } from 'styled-components';
-import { Theme } from 'theme/main';
+import { css } from 'styled-components';
+import { styled } from 'theme/main';
 
 const localVariables = {
     listSliderProductsItemGap: '20px',
@@ -11,7 +11,7 @@ const localVariables = {
 };
 
 export const SliderProductItemStyled = styled.div`
-    ${({ theme }: { theme: Theme }) => css`
+    ${({ theme }) => css`
         width: 250px;
         min-width: 250px;
         padding: 10px;
@@ -25,7 +25,7 @@ export const SliderProductItemStyled = styled.div`
 `;
 
 export const SliderProductItemInStyled = styled.a`
-    ${({ theme }: { theme: Theme }) => css`
+    ${({ theme }) => css`
         position: relative;
         display: flex;
         flex-direction: column;
@@ -74,7 +74,7 @@ export const SliderProductItemInfoStyled = styled.div`
 `;
 
 export const SliderProductItemTitleStyled = styled.h3`
-    ${({ theme }: { theme: Theme }) => css`
+    ${({ theme }) => css`
         display: block;
         height: ${`calc(${localVariables.listSliderProductsItemTitleRows} *
             ${localVariables.listSliderProductsItemTitleLineHeight})`};

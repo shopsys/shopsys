@@ -1,9 +1,8 @@
 import Image from 'next/image';
-import styled from 'styled-components';
-import { Theme } from 'theme/main';
+import { styled } from 'theme/main';
 
 export const LogoStyled = styled(Image)`
-    ${({ theme }: { theme: Theme }) => `
+    ${({ theme }) => `
         display: flex;
         width: 100%;
         max-width: 120px;

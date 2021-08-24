@@ -1,8 +1,7 @@
-import styled from 'styled-components';
-import { Theme } from 'theme/main';
+import { styled } from 'theme/main';
 
 export const SearchStyled = styled.div`
-    ${({ theme }: { theme: Theme }) => `
+    ${({ theme }) => `
         height: 48px;
 
         @media ${theme.mediaQueries.queryLg} {
@@ -12,7 +11,7 @@ export const SearchStyled = styled.div`
 `;
 
 export const SearchInStyled = styled.div`
-    ${({ theme }: { theme: Theme }) => `
+    ${({ theme }) => `
         @media ${theme.mediaQueries.queryLg} {
             position: absolute;
             left: 0;
@@ -24,7 +23,7 @@ export const SearchInStyled = styled.div`
 `;
 
 export const SearchFormStyled = styled.div`
-    ${({ theme }: { theme: Theme }) => `
+    ${({ theme }) => `
         position: relative;
         display: flex;
         width: 100%;

@@ -1,5 +1,5 @@
-import styled, { css } from 'styled-components';
-import { Theme } from 'theme/main';
+import { styled, Theme } from 'theme/main';
+import { css } from 'styled-components';
 
 const baseStyleOfHeading = (theme: Theme) => {
     return css`
@@ -11,7 +11,7 @@ const baseStyleOfHeading = (theme: Theme) => {
 };
 
 export const StyledShopsysHeading1 = styled.h1`
-    ${({ theme }: { theme: Theme }) => css`
+    ${({ theme }) => css`
         margin: 0 0 10px 0;
 
         ${baseStyleOfHeading(theme)};
@@ -26,7 +26,7 @@ export const StyledShopsysHeading1 = styled.h1`
 `;
 
 export const StyledShopsysHeading2 = styled.h2`
-    ${({ theme }: { theme: Theme }) => css`
+    ${({ theme }) => css`
         margin: 0 0 10px 0;
 
         ${baseStyleOfHeading(theme)};
@@ -39,7 +39,7 @@ export const StyledShopsysHeading2 = styled.h2`
 `;
 
 export const StyledShopsysHeading3 = styled.h3`
-    ${({ theme }: { theme: Theme }) => css`
+    ${({ theme }) => css`
         margin: 0 0 10px 0;
 
         ${baseStyleOfHeading(theme)};
@@ -54,7 +54,7 @@ export const StyledShopsysHeading3 = styled.h3`
 `;
 
 export const StyledShopsysHeading4 = styled.h4`
-    ${({ theme }: { theme: Theme }) => css`
+    ${({ theme }) => css`
         margin: 0 0 10px 0;
 
         ${baseStyleOfHeading(theme)};
