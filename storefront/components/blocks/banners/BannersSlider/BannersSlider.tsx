@@ -4,9 +4,9 @@ import {
     StyledBannersSlider,
     StyledBannersSliderBox,
     StyledBannersSliderDotControls,
-    StyledBannersSliderItem,
     StyledBannersSliderThumbnailControls,
 } from './BannersSlider.style';
+import BannersSliderItem from '../BannersSliderItem/BannersSliderItem';
 import { SliderItem } from 'connectors/sliderItems/types';
 import { theme } from 'theme/main';
 import { useKeenSlider } from 'keen-slider/react';
@@ -98,12 +98,11 @@ const BannersSlider: FC<BannersSliderProps> = (props) => {
         <StyledBannersSliderBox>
             <StyledBannersSlider ref={sliderRef} className="keen-slider">
                 {props.sliderItems.map((sliderItem, index) => (
-                    <a href={sliderItem.link} key={sliderItem.uuid} className="keen-slider__slide">
-                        <StyledBannersSliderItem
-                            sliderItemImageHeight={sliderItem.images[0].height}
-                            sliderItemImageUrl={loadedImageUrls[index] ? sliderItem.images[0].url : ''}
-                        />
-                    </a>
+                    <BannersSliderItem
+                        key={index}
+                        imageUrl={getBannersSliderItemImageUrl(sliderItem, loadedImageUrls[index] === true)}
+                        link={sliderItem.link}
+                    />
                 ))}
             </StyledBannersSlider>
             <StyledBannersSliderThumbnailControls>
@@ -128,6 +127,10 @@ const BannersSlider: FC<BannersSliderProps> = (props) => {
             </StyledBannersSliderDotControls>
         </StyledBannersSliderBox>
     );
+};
+
+export const getBannersSliderItemImageUrl = (sliderItem: SliderItem, isImageLoaded: boolean) => {
+    return isImageLoaded ? sliderItem.images[0]?.url || 'images/optimized-noimage.png' : '';
 };
 
 export default BannersSlider;

@@ -21,7 +21,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 const getNewsletterFormResolver = (t: TFunction) => {
     return yupResolver(
         Yup.object().shape({
-            email: Yup.string().required(t('This field is required')).email(t('This value is not a valid')),
+            email: Yup.string().required(t('This field is required')).email(t('This value is not a valid email')),
             privacyPolicy: Yup.bool().oneOf([true], t('You have to agree with our privacy policy')),
         }),
     );

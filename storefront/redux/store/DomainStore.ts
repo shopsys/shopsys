@@ -3,7 +3,7 @@ import { DomainConfigType } from '../../utils/Domain/Domain';
 
 const initialState = {
     domain: '127.0.0.1:3000',
-    backendHost: '127.0.0.1',
+    publicGraphqlEndpoint: '127.0.0.1:8000/graphql/',
     defaultLocale: 'cs',
     currencyCode: 'CZK',
 };
@@ -16,7 +16,7 @@ export const domainSlice = createSlice({
             state.currencyCode = action.payload.currencyCode;
             state.domain = action.payload.domain;
             state.defaultLocale = action.payload.defaultLocale;
-            state.backendHost = action.payload.backendHost;
+            state.publicGraphqlEndpoint = action.payload.publicGraphqlEndpoint;
         },
     },
 });

@@ -5,11 +5,6 @@ const localVariables = {
     bannersSliderThumbnailControlsWidth: '307px',
 } as const;
 
-type StyledBannersSliderItemProps = {
-    sliderItemImageUrl: string;
-    sliderItemImageHeight: number;
-};
-
 export const StyledBannersSliderBox = styled.div`
     ${({ theme }: { theme: Theme }) => css`
         display: flex;
@@ -25,21 +20,19 @@ export const StyledBannersSliderBox = styled.div`
 export const StyledBannersSlider = styled.div`
     ${({ theme }: { theme: Theme }) => css`
         width: calc(100% - ${localVariables.bannersSliderThumbnailControlsWidth});
+        height: 290px;
 
         cursor: pointer;
 
         @media ${theme.mediaQueries.queryNotLargeDesktop} {
+            height: 250px;
             width: 100%;
         }
-    `}
-`;
 
-export const StyledBannersSliderItem = styled.div<StyledBannersSliderItemProps>`
-    ${({ theme, sliderItemImageUrl, sliderItemImageHeight }: { theme: Theme } & StyledBannersSliderItemProps) => css`
-        height: ${`${sliderItemImageHeight}px`};
-
-        background: ${`url(${sliderItemImageUrl}) center  no-repeat`};
-        border-radius: ${theme.radius.big};
+        @media ${theme.mediaQueries.queryTablet} {
+            height: 200px;
+            width: 100%;
+        }
     `}
 `;
 

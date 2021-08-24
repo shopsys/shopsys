@@ -4,7 +4,7 @@ const { publicRuntimeConfig } = getConfig();
 
 export type DomainConfigType = {
     domain: string;
-    backendHost: string;
+    publicGraphqlEndpoint: string;
     defaultLocale: string;
     currencyCode: string;
 };

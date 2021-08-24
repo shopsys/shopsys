@@ -24,7 +24,7 @@ const FriendlyUrlPage: FC = () => {
 };
 
 function renderContent(data: ProductDetailType | CategoryDetailType | undefined | null) {
-    if (data?.__typename === 'RegularProduct') {
+    if (data?.__typename === 'RegularProduct' || data?.__typename === 'MainVariant' || data?.__typename === 'Variant') {
         return <ProductDetailPage product={data as ProductDetailType} />;
     } else if (data?.__typename === 'Category') {
         return <CategoryDetailPage category={data as CategoryDetailType} />;
