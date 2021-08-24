@@ -6,3 +6,5 @@ ParameterFilterOption:
         fields:
             type:
                 type: "String!"
+            unit:
+                type: "Unit"

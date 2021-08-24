@@ -84,6 +84,7 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
                         {
                             "name": "' . t('Materiál', [], 'dataFixtures', $this->firstDomainLocale) . '",
                             "type": "checkbox",
+                            "unit": null,
                             "values": [
                                 {
                                     "text": "' . t(
@@ -123,6 +124,7 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
                         {
                             "name": "' . t('Color', [], 'dataFixtures', $this->firstDomainLocale) . '",
                             "type": "colorPicker",
+                            "unit": null,
                             "values": [
                                 {
                                     "text": "' . t(
@@ -151,6 +153,7 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
                         {
                             "name": "' . t('Supported OS', [], 'dataFixtures', $this->firstDomainLocale) . '",
                             "type": "checkbox",
+                            "unit": null,
                             "values": [
                                 {
                                     "text": "' . t(
@@ -168,6 +171,7 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
                         {
                             "name": "' . t('Number of buttons', [], 'dataFixtures', $this->firstDomainLocale) . '",
                             "type": "checkbox",
+                            "unit": null,
                             "values": [
                                 {
                                     "text": "' . t('5', [], 'dataFixtures', $this->firstDomainLocale) . '",
@@ -180,6 +184,7 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
                         {
                             "name": "' . t('Ergonomics', [], 'dataFixtures', $this->firstDomainLocale) . '",
                             "type": "checkbox",
+                            "unit": null,
                             "values": [
                                 {
                                     "text": "' . t(
@@ -197,6 +202,9 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
                         {
                             "name": "' . t('Screen size', [], 'dataFixtures', $this->firstDomainLocale) . '",
                             "type": "checkbox",
+                            "unit": {
+                                "name": "in"
+                            },
                             "values": [
                                 {
                                     "text": "' . t('27\"', [], 'dataFixtures', $this->firstDomainLocale) . '",
@@ -221,6 +229,7 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
                         {
                             "name": "' . t('HDMI', [], 'dataFixtures', $this->firstDomainLocale) . '",
                             "type": "checkbox",
+                            "unit": null,
                             "values": [
                                 {
                                     "text": "' . t('Yes', [], 'dataFixtures', $this->firstDomainLocale) . '",
@@ -239,6 +248,7 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
                         {
                             "name": "' . t('USB', [], 'dataFixtures', $this->firstDomainLocale) . '",
                             "type": "checkbox",
+                            "unit": null,
                             "values": [
                                 {
                                     "text": "' . t('Yes', [], 'dataFixtures', $this->firstDomainLocale) . '",
@@ -251,6 +261,7 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
                         {
                             "name": "' . t('Technology', [], 'dataFixtures', $this->firstDomainLocale) . '",
                             "type": "checkbox",
+                            "unit": null,
                             "values": [
                                 {
                                     "text": "' . t('LED', [], 'dataFixtures', $this->firstDomainLocale) . '",
@@ -263,6 +274,7 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
                         {
                             "name": "' . t('Gaming mouse', [], 'dataFixtures', $this->firstDomainLocale) . '",
                             "type": "checkbox",
+                            "unit": null,
                             "values": [
                                 {
                                     "text": "' . t('Yes', [], 'dataFixtures', $this->firstDomainLocale) . '",
@@ -275,6 +287,7 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
                         {
                             "name": "' . t('Resolution', [], 'dataFixtures', $this->firstDomainLocale) . '",
                             "type": "checkbox",
+                            "unit": null,
                             "values": [
                                 {
                                     "text": "' . t(
@@ -384,6 +397,7 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
     {
         "name": "' . t('Materiál', [], 'dataFixtures', $this->firstDomainLocale) . '",
         "type": "checkbox",
+        "unit": null,
         "values": [
             {
                 "text": "' . t(
@@ -423,6 +437,7 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
     {
         "name": "' . t('Color', [], 'dataFixtures', $this->firstDomainLocale) . '",
         "type": "colorPicker",
+        "unit": null,
         "values": [
             {
                 "text": "' . t(
@@ -451,6 +466,7 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
     {
         "name": "' . t('Supported OS', [], 'dataFixtures', $this->firstDomainLocale) . '",
         "type": "checkbox",
+        "unit": null,
         "values": [
             {
                 "text": "' . t(
@@ -468,6 +484,7 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
     {
         "name": "' . t('Number of buttons', [], 'dataFixtures', $this->firstDomainLocale) . '",
         "type": "checkbox",
+        "unit": null,
         "values": [
             {
                 "text": "' . t('5', [], 'dataFixtures', $this->firstDomainLocale) . '",
@@ -480,6 +497,7 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
     {
         "name": "' . t('Ergonomics', [], 'dataFixtures', $this->firstDomainLocale) . '",
         "type": "checkbox",
+        "unit": null,
         "values": [
             {
                 "text": "' . t(
@@ -497,6 +515,9 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
     {
         "name": "' . t('Screen size', [], 'dataFixtures', $this->firstDomainLocale) . '",
         "type": "checkbox",
+        "unit": {
+            "name": "in"
+        },
         "values": [
             {
                 "text": "' . t('27\"', [], 'dataFixtures', $this->firstDomainLocale) . '",
@@ -521,6 +542,7 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
     {
         "name": "' . t('HDMI', [], 'dataFixtures', $this->firstDomainLocale) . '",
         "type": "checkbox",
+        "unit": null,
         "values": [
             {
                 "text": "' . t('Yes', [], 'dataFixtures', $this->firstDomainLocale) . '",
@@ -539,6 +561,7 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
     {
         "name": "' . t('USB', [], 'dataFixtures', $this->firstDomainLocale) . '",
         "type": "checkbox",
+        "unit": null,
         "values": [
             {
                 "text": "' . t('Yes', [], 'dataFixtures', $this->firstDomainLocale) . '",
@@ -551,6 +574,7 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
     {
         "name": "' . t('Technology', [], 'dataFixtures', $this->firstDomainLocale) . '",
         "type": "checkbox",
+        "unit": null,
         "values": [
             {
                 "text": "' . t('LED', [], 'dataFixtures', $this->firstDomainLocale) . '",
@@ -563,6 +587,7 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
     {
         "name": "' . t('Gaming mouse', [], 'dataFixtures', $this->firstDomainLocale) . '",
         "type": "checkbox",
+        "unit": null,
         "values": [
             {
                 "text": "' . t('Yes', [], 'dataFixtures', $this->firstDomainLocale) . '",
@@ -575,6 +600,7 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
     {
         "name": "' . t('Resolution', [], 'dataFixtures', $this->firstDomainLocale) . '",
         "type": "checkbox",
+        "unit": null,
         "values": [
             {
                 "text": "' . t(
@@ -635,6 +661,9 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
                             parameters {
                                 name
                                 type
+                                unit {
+                                    name
+                                }
                                 values {
                                     text
                                     count
