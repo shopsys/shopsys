@@ -1,5 +1,5 @@
-import styled, { css } from 'styled-components';
-import { Theme } from 'theme/main';
+import { css } from 'styled-components';
+import { styled } from 'theme/main';
 
 const localVariables = {
     inputHeightDefault: '54px',
@@ -22,13 +22,7 @@ export const StyledShopsysInputFormLine = styled.div`
 `;
 
 export const StyledShopsysTextInput = styled.input<ShopsysTextInputStyledProps>`
-    ${({
-        theme,
-        inputState,
-        placeholderType,
-        inputSize,
-        variant,
-    }: { theme: Theme } & ShopsysTextInputStyledProps) => css`
+    ${({ theme, inputState, placeholderType, inputSize, variant }) => css`
         box-sizing: border-box;
         height: ${inputSize === 'small' ? localVariables.inputHeightSmall : localVariables.inputHeightDefault};
         width: 100%;

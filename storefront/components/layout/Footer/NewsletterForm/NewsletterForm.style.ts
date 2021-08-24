@@ -1,8 +1,8 @@
-import styled, { css } from 'styled-components';
-import { Theme } from 'theme/main';
+import { css } from 'styled-components';
+import { styled } from 'theme/main';
 
 export const NewsletterFormWrapper = styled.div`
-    ${({ theme }: { theme: Theme }) => css`
+    ${({ theme }) => css`
         display: flex;
         flex-direction: column;
         padding: 33px 0 26px;
@@ -36,7 +36,7 @@ export const NewsletterFormWrapper = styled.div`
 `;
 
 export const NewsletterFormColumn = styled.div`
-    ${({ theme }: { theme: Theme }) => css`
+    ${({ theme }) => css`
         width: 100%;
 
         @media ${theme.mediaQueries.queryLg} {
@@ -56,7 +56,7 @@ export const NewsletterFormColumn = styled.div`
 `;
 
 export const NewsletterFormInputWrapper = styled.div`
-    ${({ theme }: { theme: Theme }) => css`
+    ${({ theme }) => css`
         display: flex;
         margin-bottom: 12px;
 
@@ -68,7 +68,7 @@ export const NewsletterFormInputWrapper = styled.div`
 `;
 
 export const NewsletterFormButtonWrapper = styled.div`
-    ${({ theme }: { theme: Theme }) => css`
+    ${({ theme }) => css`
         display: flex;
         flex-direction: column;
 

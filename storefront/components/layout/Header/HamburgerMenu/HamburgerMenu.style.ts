@@ -1,8 +1,8 @@
-import styled, { css } from 'styled-components';
-import { Theme } from 'theme/main';
+import { css } from 'styled-components';
+import { styled } from 'theme/main';
 
 export const HamburgerMenuStyled = styled.div`
-    ${({ theme }: { theme: Theme }) => css`
+    ${({ theme }) => css`
         display: flex;
         align-items: center;
         padding: 0 10px;

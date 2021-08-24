@@ -1,5 +1,5 @@
-import styled, { css } from 'styled-components';
-import { Theme } from 'theme/main';
+import { css } from 'styled-components';
+import { styled } from 'theme/main';
 
 export const ProductPriceStyled = styled.div`
     display: flex;
@@ -9,7 +9,7 @@ export const ProductPriceStyled = styled.div`
 `;
 
 export const ProductPriceMainStyled = styled.div`
-    ${({ theme }: { theme: Theme }) => css`
+    ${({ theme }) => css`
         order: 2;
         margin-right: 10px;
         line-height: 22px;

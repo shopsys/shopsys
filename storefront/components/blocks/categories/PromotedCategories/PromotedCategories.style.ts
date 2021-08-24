@@ -1,5 +1,5 @@
-import styled, { css } from 'styled-components';
-import { Theme } from 'theme/main';
+import { css } from 'styled-components';
+import { styled } from 'theme/main';
 
 const localVariables = {
     listCategoriesItemGapMobile: '10px',
@@ -8,7 +8,7 @@ const localVariables = {
 };
 
 export const PromotedCategoryListStyled = styled.ul`
-    ${({ theme }: { theme: Theme }) => css`
+    ${({ theme }) => css`
         display: flex;
         padding: 0 ${theme.layout.padding};
         margin: 0 -${theme.layout.padding} 0 calc(-${theme.layout.padding} - ${localVariables.listCategoriesItemGapMobile});
@@ -26,7 +26,7 @@ export const PromotedCategoryListStyled = styled.ul`
 `;
 
 export const PromotedCategoryListItemStyled = styled.li`
-    ${({ theme }: { theme: Theme }) => css`
+    ${({ theme }) => css`
         width: ${localVariables.listCategoriesItemWidthMobile};
         min-width: ${localVariables.listCategoriesItemWidthMobile};
         margin-left: ${localVariables.listCategoriesItemGapMobile};

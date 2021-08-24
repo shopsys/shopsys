@@ -1,5 +1,5 @@
-import styled, { css } from 'styled-components';
-import { Theme } from 'theme/main';
+import { css } from 'styled-components';
+import { styled } from 'theme/main';
 
 const localVariables = {
     cartItemCountSize: '15px',
@@ -7,7 +7,7 @@ const localVariables = {
 };
 
 export const CartStyled = styled.div`
-    ${({ theme }: { theme: Theme }) => css`
+    ${({ theme }) => css`
         position: relative;
 
         @media ${theme.mediaQueries.queryLg} {
@@ -31,7 +31,7 @@ export const CartStyled = styled.div`
 `;
 
 export const CartBlockStyled = styled.a`
-    ${({ theme }: { theme: Theme }) => css`
+    ${({ theme }) => css`
         display: none;
         align-items: center;
         padding: 15px 7px 15px 15px;
@@ -63,7 +63,7 @@ export const CartPiecesStyled = styled.span`
 `;
 
 export const CartValueStyled = styled.span`
-    ${({ theme }: { theme: Theme }) => css`
+    ${({ theme }) => css`
         display: none;
         margin-left: 15px;
         line-height: 18px;
@@ -84,7 +84,7 @@ export const CartIconStyled = styled.img`
 `;
 
 export const CartCountStyled = styled.span`
-    ${({ theme }: { theme: Theme }) => css`
+    ${({ theme }) => css`
         display: flex;
         align-items: center;
         justify-content: center;
@@ -108,7 +108,7 @@ export const CartCountStyled = styled.span`
 `;
 
 export const CartDetailStyled = styled.div`
-    ${({ theme }: { theme: Theme }) => css`
+    ${({ theme }) => css`
         display: none;
 
         @media ${theme.mediaQueries.queryLg} {
@@ -146,7 +146,7 @@ export const CartDetailFigureStyled = styled.div`
 `;
 
 export const CartDetailTextStyled = styled.span`
-    ${({ theme }: { theme: Theme }) => css`
+    ${({ theme }) => css`
         max-width: 150px;
 
         font-size: ${theme.fontSize.default};
@@ -163,7 +163,7 @@ export const CartDetailImageStyled = styled.img`
 `;
 
 export const CartButtonMobileStyled = styled.div`
-    ${({ theme }: { theme: Theme }) => css`
+    ${({ theme }) => css`
         display: none;
 
         @media ${theme.mediaQueries.queryTablet} {
@@ -182,7 +182,7 @@ export const CartButtonMobileStyled = styled.div`
 `;
 
 export const CartButtonMobileLinkStyled = styled.a`
-    ${({ theme }: { theme: Theme }) => css`
+    ${({ theme }) => css`
         display: flex;
         align-items: center;
         justify-content: center;

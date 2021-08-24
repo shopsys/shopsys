@@ -1,5 +1,5 @@
-import styled, { css } from 'styled-components';
-import { Theme } from 'theme/main';
+import { styled, Theme } from 'theme/main';
+import { css } from 'styled-components';
 
 type StyledShopsysButtonSize = 'default' | 'small';
 
@@ -40,7 +40,7 @@ const getSize = (size: StyledShopsysButtonSize, theme: Theme) => {
 };
 
 export const StyledShopsysButton = styled.button<StyledShopsysButtonProps>`
-    ${({ theme, size, borderRadius }: { theme: Theme } & StyledShopsysButtonProps) => css`
+    ${({ theme, size, borderRadius }) => css`
         ${getSize(size, theme)};
         width: auto;
         vertical-align: middle;
@@ -67,7 +67,7 @@ export const StyledShopsysButton = styled.button<StyledShopsysButtonProps>`
 `;
 
 export const StyledShopsysButtonPrimary = styled(StyledShopsysButton)`
-    ${({ theme }: { theme: Theme }) => css`
+    ${({ theme }) => css`
         color: ${theme.color.white};
         background-color: ${theme.color.primary};
 
@@ -79,7 +79,7 @@ export const StyledShopsysButtonPrimary = styled(StyledShopsysButton)`
 `;
 
 export const StyledShopsysButtonSecondary = styled(StyledShopsysButton)`
-    ${({ theme }: { theme: Theme }) => css`
+    ${({ theme }) => css`
         color: ${theme.color.black};
         background-color: ${theme.color.orangeLight};
 

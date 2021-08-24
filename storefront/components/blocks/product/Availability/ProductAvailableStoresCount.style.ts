@@ -1,8 +1,8 @@
-import styled, { css } from 'styled-components';
-import { Theme } from 'theme/main';
+import { css } from 'styled-components';
+import { styled } from 'theme/main';
 
 export const ProductAvailableStoreCountStyled = styled.div`
-    ${({ theme }: { theme: Theme }) => css`
+    ${({ theme }) => css`
         line-height: 18px;
         margin-bottom: 10px;
 

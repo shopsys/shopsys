@@ -1,8 +1,8 @@
-import styled, { css } from 'styled-components';
-import { Theme } from 'theme/main';
+import { css } from 'styled-components';
+import { styled } from 'theme/main';
 
 export const BreadcrumbsStyled = styled.div`
-    ${({ theme }: { theme: Theme }) => css`
+    ${({ theme }) => css`
         margin-bottom: 36px;
 
         @media ${theme.mediaQueries.queryTablet} {
@@ -16,7 +16,7 @@ export const BreadcrumbsStyled = styled.div`
 `;
 
 export const BreadcrumbsLinkStyled = styled.a`
-    ${({ theme }: { theme: Theme }) => css`
+    ${({ theme }) => css`
         color: ${theme.color.primary};
 
         @media ${theme.mediaQueries.queryTablet} {
@@ -35,7 +35,7 @@ export const BreadcrumbsLinkStyled = styled.a`
 `;
 
 export const BreadcrumbsSpanStyled = styled.a`
-    ${({ theme }: { theme: Theme }) => css`
+    ${({ theme }) => css`
         margin-right: 11px;
 
         color: ${theme.color.baseLighter};

@@ -1,5 +1,5 @@
-import styled, { css } from 'styled-components';
-import { Theme } from 'theme/main';
+import { css } from 'styled-components';
+import { styled } from 'theme/main';
 
 const localVariables = {
     flagItemDefaultBg: '#cdb3ff',
@@ -20,7 +20,7 @@ export const ProductFlagsStyled = styled.div`
 `;
 
 export const ProductFlagsItemStyled = styled.div<ProductFlagsItemStyledProps>`
-    ${({ theme, color }: { theme: Theme } & ProductFlagsItemStyledProps) => css`
+    ${({ theme, color }) => css`
         display: inline-flex;
         margin-bottom: 2px;
         margin-right: auto;

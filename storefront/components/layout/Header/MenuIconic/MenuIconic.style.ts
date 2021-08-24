@@ -1,12 +1,12 @@
-import styled, { css } from 'styled-components';
-import { Theme } from 'theme/main';
+import { css } from 'styled-components';
+import { styled } from 'theme/main';
 
 const localVariables = {
     menuIconicMobileButtonSize: '40px',
 };
 
 export const MenuIconicListStyled = styled.ul`
-    ${({ theme }: { theme: Theme }) => css`
+    ${({ theme }) => css`
         display: none;
 
         @media ${theme.mediaQueries.queryLg} {
@@ -16,7 +16,7 @@ export const MenuIconicListStyled = styled.ul`
 `;
 
 export const MenuIconicItemStyled = styled.li`
-    ${({ theme }: { theme: Theme }) => css`
+    ${({ theme }) => css`
         display: flex;
         position: relative;
         margin-right: 20px;
@@ -32,7 +32,7 @@ export const MenuIconicItemStyled = styled.li`
 `;
 
 export const MenuIconicItemLinkStyled = styled.a`
-    ${({ theme }: { theme: Theme }) => css`
+    ${({ theme }) => css`
         display: flex;
         flex-direction: row;
         justify-content: center;
@@ -56,7 +56,7 @@ export const MenuIconicItemLinkStyled = styled.a`
 `;
 
 export const MenuIconicButtonMobileStyled = styled.div`
-    ${({ theme }: { theme: Theme }) => css`
+    ${({ theme }) => css`
         display: none;
 
         @media ${theme.mediaQueries.queryTablet} {
@@ -76,7 +76,7 @@ export const MenuIconicButtonMobileStyled = styled.div`
 `;
 
 export const MenuIconicButtonMobileLinkStyled = styled.a`
-    ${({ theme }: { theme: Theme }) => css`
+    ${({ theme }) => css`
         display: flex;
         align-items: center;
         justify-content: center;

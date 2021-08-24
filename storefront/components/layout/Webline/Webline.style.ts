@@ -1,5 +1,5 @@
-import styled, { css } from 'styled-components';
-import { Theme } from 'theme/main';
+import { styled, Theme } from 'theme/main';
+import { css } from 'styled-components';
 
 type StyledWeblineType = 'default' | 'colored' | 'dark' | 'light';
 
@@ -33,7 +33,7 @@ export const StyledWebline = styled.div<StyledWeblineProps>`
 `;
 
 export const StyledContainer = styled.div`
-    ${({ theme }: { theme: Theme }) => css`
+    ${({ theme }) => css`
         padding: 0 ${theme.layout.padding};
 
         @media ${theme.mediaQueries.queryXl} {

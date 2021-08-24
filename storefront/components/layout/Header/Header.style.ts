@@ -1,5 +1,5 @@
-import styled, { css } from 'styled-components';
-import { Theme } from 'theme/main';
+import { css } from 'styled-components';
+import { styled } from 'theme/main';
 
 const localVariables = {
     headerItemGapSmall: '20px',
@@ -8,7 +8,7 @@ const localVariables = {
 };
 
 export const HeaderStyled = styled.div`
-    ${({ theme }: { theme: Theme }) => css`
+    ${({ theme }) => css`
         display: flex;
         flex-wrap: wrap;
         padding: 8px 0 11px;
@@ -24,7 +24,7 @@ export const HeaderStyled = styled.div`
 `;
 
 export const HeaderLogoStyled = styled.div`
-    ${({ theme }: { theme: Theme }) => css`
+    ${({ theme }) => css`
         order: 1;
         flex: 1;
         display: flex;
@@ -46,7 +46,7 @@ export const HeaderLogoStyled = styled.div`
 `;
 
 export const HeaderMiddleStyled = styled.div`
-    ${({ theme }: { theme: Theme }) => css`
+    ${({ theme }) => css`
         width: 100%;
         order: 6;
         margin-top: 11px;
@@ -73,7 +73,7 @@ export const HeaderMiddleStyled = styled.div`
 `;
 
 export const HeaderLinksStyled = styled.div`
-    ${({ theme }: { theme: Theme }) => css`
+    ${({ theme }) => css`
         order: 2;
         display: flex;
 
@@ -94,7 +94,7 @@ export const HeaderLinksStyled = styled.div`
 `;
 
 export const HeaderCartStyled = styled.div`
-    ${({ theme }: { theme: Theme }) => css`
+    ${({ theme }) => css`
         order: 3;
         position: relative;
         display: flex;
@@ -106,7 +106,7 @@ export const HeaderCartStyled = styled.div`
 `;
 
 export const HeaderMenuButtonStyled = styled.div`
-    ${({ theme }: { theme: Theme }) => css`
+    ${({ theme }) => css`
         display: none;
 
         @media ${theme.mediaQueries.queryTablet} {

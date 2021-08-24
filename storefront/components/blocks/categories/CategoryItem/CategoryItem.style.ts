@@ -1,8 +1,8 @@
-import styled, { css } from 'styled-components';
-import { Theme } from 'theme/main';
+import { css } from 'styled-components';
+import { styled } from 'theme/main';
 
 export const CategoryItemBlockStyled = styled.div`
-    ${({ theme }: { theme: Theme }) => css`
+    ${({ theme }) => css`
         display: flex;
         align-items: center;
         flex-direction: column;
@@ -29,7 +29,7 @@ export const CategoryItemBlockStyled = styled.div`
 `;
 
 export const CategoryItemImageStyled = styled.div`
-    ${({ theme }: { theme: Theme }) => css`
+    ${({ theme }) => css`
         position: relative;
         width: 64px;
         height: 48px;
@@ -47,7 +47,7 @@ export const CategoryItemImageStyled = styled.div`
 `;
 
 export const CategoryItemNameStyled = styled.div`
-    ${({ theme }: { theme: Theme }) => css`
+    ${({ theme }) => css`
         flex: 1;
         margin: 0;
         line-height: 18px;
@@ -61,7 +61,7 @@ export const CategoryItemNameStyled = styled.div`
 `;
 
 export const CategoryItemCountStyled = styled.div`
-    ${({ theme }: { theme: Theme }) => css`
+    ${({ theme }) => css`
         color: ${theme.color.baseLighter};
         font-size: 11px;
     `}

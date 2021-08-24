@@ -1,5 +1,4 @@
-import styled from 'styled-components';
-import { Theme } from 'theme/main';
+import { styled } from 'theme/main';
 
 const styleVariables = {
     inUserTextUlPointSize: '5px',
@@ -12,7 +11,7 @@ const styleVariables = {
 };
 
 export const StyledShopsysInUserText = styled.section`
-    ${({ theme }: { theme: Theme }) => `
+    ${({ theme }) => `
         font-size: ${styleVariables.inUserTextFontSize};
         line-height: ${styleVariables.inUserTextLineHeight};
         -webkit-font-smoothing: antialiased;

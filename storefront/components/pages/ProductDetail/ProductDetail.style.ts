@@ -1,4 +1,5 @@
-import styled, { css } from 'styled-components';
+import { css } from 'styled-components';
+import { styled } from 'theme/main';
 
 const localVariables = {
     detailInfoWidthSmall: '346px',
@@ -26,7 +27,7 @@ export const StyledProductDetailImage = styled.div`
         width: 100%;
         margin-bottom: 20px;
 
-        border-radius: ${theme.radius.default};
+        border-radius: ${theme.radius.big};
         font-size: 0;
         overflow: hidden;
 

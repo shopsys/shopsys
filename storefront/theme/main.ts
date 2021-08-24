@@ -1,3 +1,4 @@
+import initialStyled, { ThemedStyledInterface } from 'styled-components';
 import mediaQueries from './mediaQueries';
 
 /* Main theme */
@@ -76,3 +77,5 @@ export const theme = {
 } as const;
 
 export type Theme = typeof theme;
+
+export const styled = initialStyled as ThemedStyledInterface<Theme>;
