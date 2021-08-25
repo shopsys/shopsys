@@ -3,13 +3,15 @@ import {
     CategoryDetailAdvancedSeoCategoriesItem as AdvancedSeoCategoriesItem,
     CategoryDetailAdvancedSeoCategoriesWrapperStyled as AdvancedSeoCategoriesWrapperStyled,
 } from './CategoryDetailAdvancedSeoCategories.style';
-import { FC, useEffect, useState } from 'react';
+import { FC, useState } from 'react';
 import AdvancedSeoCategoriesSlider from './CategoryDetailAdvancedSeoCategoriesSlider';
 import { desktopFirstSizes } from 'theme/mediaQueries';
+import { getIsElementVisible } from 'helpers/GetIsItemVisible';
 import Link from 'next/link';
 import { ReadyCategorySeoMixLink } from '../types';
 import ShopsysHeading from 'components/basic/ShopsysHeading';
 import { useGetWindowSize } from 'hooks/UseGetWindowSize';
+import { useResizeWidthEffect } from 'hooks/UseResizeWidthEffect';
 import { useTranslation } from 'next-i18next';
 
 type CategoryDetailAdvancedSeoCategoriesProps = {
@@ -18,19 +20,15 @@ type CategoryDetailAdvancedSeoCategoriesProps = {
 
 const CategoryDetailAdvancedSeoCategories: FC<CategoryDetailAdvancedSeoCategoriesProps> = (props) => {
     const { t } = useTranslation();
-    const [previousWindowWidth, setPreviousWindowWidth] = useState(0);
-    const [isAdvancedSeoCategoriesSliderVisible, setAdvancedSeoCategoriesSliderVisibility] = useState(false);
     const { width } = useGetWindowSize();
-
-    useEffect(() => {
-        if (previousWindowWidth > desktopFirstSizes.tablet && width <= desktopFirstSizes.tablet) {
-            setAdvancedSeoCategoriesSliderVisibility(true);
-        }
-        if (previousWindowWidth <= desktopFirstSizes.tablet && width > desktopFirstSizes.tablet) {
-            setAdvancedSeoCategoriesSliderVisibility(false);
-        }
-        setPreviousWindowWidth(width);
-    }, [width]);
+    const [isAdvancedSeoCategoriesSliderVisible, setAdvancedSeoCategoriesSliderVisibility] = useState(true);
+    useResizeWidthEffect(
+        width,
+        desktopFirstSizes.tablet,
+        () => setAdvancedSeoCategoriesSliderVisibility(false),
+        () => setAdvancedSeoCategoriesSliderVisibility(true),
+        () => setAdvancedSeoCategoriesSliderVisibility(getIsElementVisible([{ min: 0, max: 768 }], width)),
+    );
 
     return (
         <>

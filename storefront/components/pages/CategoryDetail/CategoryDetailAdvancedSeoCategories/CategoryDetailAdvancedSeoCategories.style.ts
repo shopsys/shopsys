@@ -14,13 +14,13 @@ export const CategoryDetailAdvancedSeoCategoriesItem = styled.a`
         display: flex;
         justify-content: center;
         align-items: center;
+        text-align: center;
 
         background-color: ${theme.color.greyVeryLight};
         border-radius: ${theme.radius.big};
         color: ${theme.color.base};
         font-size: ${theme.fontSize.small};
         line-height: 18px;
-        text-align: center;
         text-decoration: none;
 
         @media ${theme.mediaQueries.queryLg} {
@@ -29,7 +29,7 @@ export const CategoryDetailAdvancedSeoCategoriesItem = styled.a`
 
         &:hover,
         &:active {
-            background-color: #e8e8ea;
+            background-color: ${theme.color.whitesmoke};
             color: ${theme.color.base};
             text-decoration: none;
         }

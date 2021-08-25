@@ -22,7 +22,7 @@ export const CategoryItemBlockStyled = styled.div`
         }
 
         &:hover {
-            background-color: #e8e8ea;
+            background-color: ${theme.color.whitesmoke};
             text-decoration: none;
         }
     `}
