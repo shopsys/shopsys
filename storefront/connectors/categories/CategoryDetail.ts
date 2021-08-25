@@ -40,4 +40,8 @@ export const categoryDetailBody = `
             }
         }
     }
+    readyCategorySeoMixLinks {
+        name
+        slug
+    }
 `;

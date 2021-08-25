@@ -1,3 +1,4 @@
+import CategoryDetailAdvancedSeoCategories from './CategoryDetailAdvancedSeoCategories';
 import { CategoryDetailType } from './types';
 import { FC } from 'react';
 import ProductsList from '../../blocks/product/List/ProductsList';
@@ -22,6 +23,7 @@ const CategoryDetail: FC<CategoryDetailProps> = (props) => {
                     </li>
                 ))}
             </ul>
+            <CategoryDetailAdvancedSeoCategories readyCategorySeoMixLinks={props.category.readyCategorySeoMixLinks} />
             {props.category.products.edges.length !== 0 && <ProductsList products={props.category.products.edges} />}
         </Webline>
     );
