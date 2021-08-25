@@ -5,10 +5,12 @@ declare(strict_types=1);
 namespace App\FrontendApi\Model\Resolver\Products;
 
 use App\FrontendApi\Model\Product\ProductFacade;
+use App\Model\Category\Category;
+use App\Model\CategorySeo\ReadyCategorySeoMix;
 use App\Model\Product\Product;
+use InvalidArgumentException;
 use Overblog\GraphQLBundle\Definition\Resolver\ResolverInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Product\BestsellingProduct\CachedBestsellingProductFacade;
 
@@ -53,11 +55,25 @@ class BestsellingProductsResolver implements ResolverInterface
     }
 
     /**
-     * @param \App\Model\Category\Category $category
+     * @param \App\Model\Category\Category|\App\Model\CategorySeo\ReadyCategorySeoMix $categoryOrReadyCategorySeoMix
      * @return array
      */
-    public function resolveByCategory(Category $category): array
+    public function resolveByCategoryOrReadyCategorySeoMix($categoryOrReadyCategorySeoMix): array
     {
+        if ($categoryOrReadyCategorySeoMix instanceof Category) {
+            $category = $categoryOrReadyCategorySeoMix;
+        } elseif ($categoryOrReadyCategorySeoMix instanceof ReadyCategorySeoMix) {
+            $category = $categoryOrReadyCategorySeoMix->getCategory();
+        } else {
+            throw new InvalidArgumentException(
+                sprintf(
+                    'The "$categoryOrReadyCategorySeoMix" argument must be an instance of "%s" or "%s".',
+                    Category::class,
+                    ReadyCategorySeoMix::class
+                ),
+            );
+        }
+
         $bestsellingProducts = $this->cachedBestsellingProductFacade->getAllOfferedBestsellingProducts(
             $this->domain->getId(),
             $category,

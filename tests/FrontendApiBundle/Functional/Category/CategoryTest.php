@@ -46,6 +46,13 @@ class CategoryTest extends GraphQlTestCase
                         name
                         slug
                     }
+                    readyCategorySeoMixLinks {
+                        name
+                        slug
+                    }
+                    linkedCategories {
+                        name
+                    }
                 }
             }
         ';
@@ -74,6 +81,17 @@ class CategoryTest extends GraphQlTestCase
                             'name' => t('Electronics', [], 'dataFixtures', $this->getLocaleForFirstDomain()),
                             'slug' => $this->urlGenerator->generate('front_product_list', ['id' => $this->category->getId()]),
                         ],
+                    ],
+                    'readyCategorySeoMixLinks' => [
+                        ['name' => 'Elektro Akce - od nejlevnějšího - 47 - bez hdmi', 'slug' => 'elektro-akce-od-nejlevnejsiho-47-bez-hdmi'],
+                        ['name' => 'Elektro bez HDMI', 'slug' => 'elektro-bez-hdmi'],
+                        ['name' => 'Elektro nejprodávanější - A-Z - 27" - bez HDMI', 'slug' => 'elektro-nejprodavanejsi-a-z-27-bez-hdmi'],
+                        ['name' => 'Elektro Novinky - TOP - 27" - HDMI', 'slug' => 'elektro-novinky-top-27-hdmi'],
+                        ['name' => 'Elektro s HDMI', 'slug' => 'elektro-s-hdmi'],
+                    ],
+                    'linkedCategories' => [
+                        ['name' => t('Food', [], 'dataFixtures', $this->getLocaleForFirstDomain())],
+                        ['name' => t('Garden tools', [], 'dataFixtures', $this->getLocaleForFirstDomain())],
                     ],
                 ],
             ],
@@ -110,9 +128,7 @@ class CategoryTest extends GraphQlTestCase
                         ['name' => t('Mobile Phones', [], 'dataFixtures', $locale)],
                         ['name' => t('Coffee Machines', [], 'dataFixtures', $locale)],
                     ],
-                    'parent' => [
-                        'name' => null,
-                    ],
+                    'parent' => null,
                 ],
             ],
         ];

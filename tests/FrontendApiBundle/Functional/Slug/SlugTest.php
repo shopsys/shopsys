@@ -16,6 +16,7 @@ class SlugTest extends GraphQlTestCase
             ['slug' => '/27-hyundai-t27d590ey', 'typename' => 'Variant', 'name' => '27” Hyundai T27D590EY'],
             ['slug' => '/hyundai-32pfl4400', 'typename' => 'MainVariant', 'name' => 'Hyundai 32PFL4400'],
             ['slug' => '/televize-audio', 'typename' => 'Category', 'name' => 'Televize, audio'],
+            ['slug' => '/elektro-bez-hdmi', 'typename' => 'Category', 'name' => 'Elektro'],
             ['slug' => '/hlavni-stranka-blogu-cs', 'typename' => 'BlogCategory', 'name' => 'Hlavní stránka blogu - cs'],
             ['slug' => '/ukazkovy-clanek-blogu-37-cs', 'typename' => 'BlogArticle', 'name' => 'Ukázkový článek blogu 37 cs'],
             ['slug' => '/brother', 'typename' => 'Brand', 'name' => 'Brother'],

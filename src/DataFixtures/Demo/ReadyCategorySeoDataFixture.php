@@ -15,6 +15,8 @@ use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingConfig;
 
 class ReadyCategorySeoDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
 {
+    public const READY_CATEGORY_SEO_ELECTRONICS_WITHOUT_HDMI = 'ready_category_seo_electronics_without_hdmi';
+
     /**
      * @var \App\Model\CategorySeo\ReadyCategorySeoMixDataFactory
      */
@@ -141,7 +143,8 @@ class ReadyCategorySeoDataFixture extends AbstractReferenceFixture implements De
             ChoseCategorySeoMixCombination::createFromArray($choseCategorySeoMixCombinationArray),
             'Elektro bez HDMI',
             ['elektro-bez-hdmi', 'nakupte-elektro-bez-hdmi'],
-            1
+            1,
+            self::READY_CATEGORY_SEO_ELECTRONICS_WITHOUT_HDMI
         );
     }
 
@@ -150,12 +153,14 @@ class ReadyCategorySeoDataFixture extends AbstractReferenceFixture implements De
      * @param string $h1
      * @param string[] $slugs
      * @param int $domainId
+     * @param string|null $referenceName
      */
     private function createReadyCategorySeoMix(
         ChoseCategorySeoMixCombination $choseCategorySeoMixCombination,
         string $h1,
         array $slugs,
-        int $domainId
+        int $domainId,
+        ?string $referenceName = null
     ): void {
         $readyCategorySeoMixDataForForm = $this->readyCategorySeoMixDataFactory->createReadyCategorySeoMixDataForForm(
             $choseCategorySeoMixCombination
@@ -177,11 +182,15 @@ class ReadyCategorySeoDataFixture extends AbstractReferenceFixture implements De
             ];
         }
 
-        $this->readyCategorySeoMixFacade->createOrEdit(
+        $readyCategorySeoMix = $this->readyCategorySeoMixFacade->createOrEdit(
             $choseCategorySeoMixCombination,
             $readyCategorySeoMixData,
             $urlListData
         );
+
+        if ($referenceName !== null) {
+            $this->persistentReferenceFacade->persistReferenceForDomain($referenceName, $readyCategorySeoMix, $domainId);
+        }
     }
 
     /**

@@ -4,7 +4,10 @@ declare(strict_types=1);
 
 namespace App\FrontendApi\Model\Resolver\Image;
 
+use App\Model\Category\Category;
+use App\Model\CategorySeo\ReadyCategorySeoMix;
 use App\Model\Slider\SliderItem;
+use InvalidArgumentException;
 use Shopsys\FrameworkBundle\Component\Image\Exception\ImageNotFoundException;
 use Shopsys\FrontendApiBundle\Model\Resolver\Image\ImagesResolver as BaseImagesResolver;
 
@@ -43,5 +46,30 @@ class ImagesResolver extends BaseImagesResolver
         }
 
         return $resolvedImages;
+    }
+
+    /**
+     * @param \App\Model\Category\Category|\App\Model\CategorySeo\ReadyCategorySeoMix $categoryOrReadyCategorySeoMix
+     * @param string|null $type
+     * @param string|null $size
+     * @return array
+     */
+    public function resolveByCategoryOrReadyCategorySeoMix($categoryOrReadyCategorySeoMix, ?string $type, ?string $size): array
+    {
+        if ($categoryOrReadyCategorySeoMix instanceof Category) {
+            $categoryId = $categoryOrReadyCategorySeoMix->getId();
+        } elseif ($categoryOrReadyCategorySeoMix instanceof ReadyCategorySeoMix) {
+            $categoryId = $categoryOrReadyCategorySeoMix->getCategory()->getId();
+        } else {
+            throw new InvalidArgumentException(
+                sprintf(
+                    'The "$categoryOrReadyCategorySeoMix" argument must be an instance of "%s" or "%s".',
+                    Category::class,
+                    ReadyCategorySeoMix::class
+                ),
+            );
+        }
+
+        return $this->resolveByEntityId($categoryId, static::IMAGE_ENTITY_CATEGORY, $type, $size);
     }
 }

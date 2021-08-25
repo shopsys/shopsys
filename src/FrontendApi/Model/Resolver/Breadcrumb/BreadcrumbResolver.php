@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace App\FrontendApi\Model\Resolver\Breadcrumb;
 
+use App\Model\Category\Category;
+use App\Model\CategorySeo\ReadyCategorySeoMix;
+use InvalidArgumentException;
 use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
 use Overblog\GraphQLBundle\Definition\Resolver\ResolverInterface;
 use Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbItem;
@@ -61,10 +64,36 @@ class BreadcrumbResolver implements ResolverInterface, AliasedInterface
     }
 
     /**
+     * @param \App\Model\Category\Category|\App\Model\CategorySeo\ReadyCategorySeoMix $categoryOrReadyCategorySeoMix
+     * @return array[]
+     */
+    public function resolveCategoryBreadcrumb($categoryOrReadyCategorySeoMix): array
+    {
+        if ($categoryOrReadyCategorySeoMix instanceof Category) {
+            $categoryId = $categoryOrReadyCategorySeoMix->getId();
+        } elseif ($categoryOrReadyCategorySeoMix instanceof ReadyCategorySeoMix) {
+            $categoryId = $categoryOrReadyCategorySeoMix->getCategory()->getId();
+        } else {
+            throw new InvalidArgumentException(
+                sprintf(
+                    'The "$categoryOrReadyCategorySeoMix" argument must be an instance of "%s" or "%s".',
+                    Category::class,
+                    ReadyCategorySeoMix::class
+                ),
+            );
+        }
+
+        return $this->resolveBreadcrumb($categoryId, 'front_product_list');
+    }
+
+    /**
      * @return array<string, string>
      */
     public static function getAliases(): array
     {
-        return ['resolveBreadcrumb' => 'resolveBreadcrumb'];
+        return [
+            'resolveBreadcrumb' => 'resolveBreadcrumb',
+            'resolveCategoryBreadcrumb' => 'resolveCategoryBreadcrumb',
+        ];
     }
 }
