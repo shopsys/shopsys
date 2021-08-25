@@ -108,3 +108,19 @@ https://keen-slider.io/
 
 ```plain
 npm install -S keen-slider
+
+### Smooth Scroll Polyfill 
+We use it for scroll function support for all modern browsers.
+
+https://www.npmjs.com/package/smoothscroll-polyfill
+
+Adding to App:
+```plain
+import * as smoothscroll from 'smoothscroll-polyfill';
+
+// kick off the polyfill - start using it only in browser
+// add to your component these lines.
+useEffect(() => {
+    smoothscroll.polyfill();
+}, []);
+```

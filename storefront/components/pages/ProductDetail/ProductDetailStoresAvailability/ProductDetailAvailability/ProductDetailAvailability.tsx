@@ -1,9 +1,10 @@
+import * as smoothscroll from 'smoothscroll-polyfill';
 import {
     ProductDetailAvailabilityInfoStyled as AvailabilityInfoStyled,
     ProductDetailAvailabilityLinkStyled as AvailabilityLinkStyled,
     ProductDetailAvailabilityStyled as AvailabilityStyled,
 } from './ProductDetailAvailability.style';
-import { FC, RefObject } from 'react';
+import { FC, RefObject, useEffect } from 'react';
 import { ProductDetailType } from '../../types';
 import ShopsysIcon from 'components/basic/ShopsysIcon';
 import { useTranslation } from 'next-i18next';
@@ -21,6 +22,10 @@ const ProductDetailAvailability: FC<ProductDetailAvailabilityProps> = (props) =>
             props.scrollTarget.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
     };
+
+    useEffect(() => {
+        smoothscroll.polyfill();
+    }, []);
 
     return (
         <AvailabilityStyled>
