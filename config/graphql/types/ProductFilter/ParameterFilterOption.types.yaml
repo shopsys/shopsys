@@ -2,3 +2,9 @@ ParameterFilterOption:
     type: object
     inherits:
         - 'ParameterFilterOptionDecorator'
+    config:
+        fields:
+            type:
+                type: "String!"
+            unit:
+                type: "Unit"

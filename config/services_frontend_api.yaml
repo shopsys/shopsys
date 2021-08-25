@@ -45,3 +45,6 @@ services:
 
     Shopsys\FrontendApiBundle\Model\Resolver\Category\CategoryResolverMap:
         alias: App\FrontendApi\Model\Resolver\Category\CategoryResolverMap
+
+    Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterOptionsFactory:
+        alias: App\FrontendApi\Model\Product\Filter\ProductFilterOptionsFactory

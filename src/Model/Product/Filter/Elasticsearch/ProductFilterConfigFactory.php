@@ -8,20 +8,27 @@ use App\Model\Category\Category;
 use App\Model\Product\Brand\BrandFacade;
 use App\Model\Product\Flag\FlagFacade;
 use App\Model\Product\Parameter\ParameterFacade;
+use Shopsys\FrameworkBundle\Model\Category\Category as BaseCategory;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
+use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
+use Shopsys\FrameworkBundle\Model\Product\Filter\BrandFilterChoiceRepository;
+use Shopsys\FrameworkBundle\Model\Product\Filter\FlagFilterChoiceRepository;
+use Shopsys\FrameworkBundle\Model\Product\Filter\ParameterFilterChoiceRepository;
+use Shopsys\FrameworkBundle\Model\Product\Filter\PriceRangeRepository;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig;
+use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfigFactory as BaseProductFilterConfigFactory;
 
-class ProductFilterConfigFactory
+/**
+ * @property \App\Model\Product\Filter\ParameterFilterChoiceRepository $parameterFilterChoiceRepository
+ * @property \App\Model\Product\Filter\FlagFilterChoiceRepository $flagFilterChoiceRepository
+ * @property \App\Model\Product\Filter\PriceRangeRepository $priceRangeRepository
+ */
+class ProductFilterConfigFactory extends BaseProductFilterConfigFactory
 {
     /**
      * @var \App\Model\Product\Filter\Elasticsearch\ProductFilterElasticFacade
      */
     private ProductFilterElasticFacade $productFilterElasticFacade;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser
-     */
-    private CurrentCustomerUser $currentCustomerUser;
 
     /**
      * @var \App\Model\Product\Flag\FlagFacade
@@ -39,19 +46,35 @@ class ProductFilterConfigFactory
     private ParameterFacade $parameterFacade;
 
     /**
-     * @param \App\Model\Product\Filter\Elasticsearch\ProductFilterElasticFacade $productFilterElasticFacade
+     * @param \App\Model\Product\Filter\ParameterFilterChoiceRepository $parameterFilterChoiceRepository
+     * @param \App\Model\Product\Filter\FlagFilterChoiceRepository $flagFilterChoiceRepository
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
+     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\BrandFilterChoiceRepository $brandFilterChoiceRepository
+     * @param \App\Model\Product\Filter\PriceRangeRepository $priceRangeRepository
+     * @param \App\Model\Product\Filter\Elasticsearch\ProductFilterElasticFacade $productFilterElasticFacade
      * @param \App\Model\Product\Flag\FlagFacade $flagFacade
      * @param \App\Model\Product\Brand\BrandFacade $brandFacade
      * @param \App\Model\Product\Parameter\ParameterFacade $parameterFacade
      */
     public function __construct(
-        ProductFilterElasticFacade $productFilterElasticFacade,
+        ParameterFilterChoiceRepository $parameterFilterChoiceRepository,
+        FlagFilterChoiceRepository $flagFilterChoiceRepository,
         CurrentCustomerUser $currentCustomerUser,
+        BrandFilterChoiceRepository $brandFilterChoiceRepository,
+        PriceRangeRepository $priceRangeRepository,
+        ProductFilterElasticFacade $productFilterElasticFacade,
         FlagFacade $flagFacade,
         BrandFacade $brandFacade,
         ParameterFacade $parameterFacade
     ) {
+        parent::__construct(
+            $parameterFilterChoiceRepository,
+            $flagFilterChoiceRepository,
+            $currentCustomerUser,
+            $brandFilterChoiceRepository,
+            $priceRangeRepository
+        );
+
         $this->productFilterElasticFacade = $productFilterElasticFacade;
         $this->currentCustomerUser = $currentCustomerUser;
         $this->flagFacade = $flagFacade;
@@ -60,11 +83,12 @@ class ProductFilterConfigFactory
     }
 
     /**
+     * @param int $domainId
      * @param string $locale
      * @param \App\Model\Category\Category $category
      * @return \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig
      */
-    public function createForCategory(string $locale, Category $category): ProductFilterConfig
+    public function createForCategory($domainId, $locale, BaseCategory $category): ProductFilterConfig
     {
         $productFilterConfigIdsData = $this->productFilterElasticFacade->getProductFilterDataInCategory(
             $category->getId(),
@@ -85,14 +109,55 @@ class ProductFilterConfigFactory
     }
 
     /**
+     * @param int $domainId
      * @param string $locale
      * @param string|null $searchText
      * @return \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig
      */
-    public function createForSearch(string $locale, ?string $searchText = null): ProductFilterConfig
+    public function createForSearch($domainId, $locale, $searchText = null): ProductFilterConfig
     {
         $productFilterConfigIdsData = $this->productFilterElasticFacade->getProductFilterDataForSearch(
             $searchText,
+            $this->currentCustomerUser->getPricingGroup()
+        );
+
+        return new ProductFilterConfig(
+            [],
+            $this->flagFacade->getVisibleFlagsByIds($productFilterConfigIdsData->getFlagIds(), $locale),
+            $this->brandFacade->getBrandsByIds($productFilterConfigIdsData->getBrandIds()),
+            $productFilterConfigIdsData->getPriceRange()
+        );
+    }
+
+    /**
+     * @param int $domainId
+     * @param string $locale
+     * @param \App\Model\Product\Brand\Brand $brand
+     * @return \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig
+     */
+    public function createForBrand(int $domainId, string $locale, Brand $brand): ProductFilterConfig
+    {
+        $productFilterConfigIdsData = $this->productFilterElasticFacade->getProductFilterDataInBrand(
+            $brand->getId(),
+            $this->currentCustomerUser->getPricingGroup()
+        );
+
+        return new ProductFilterConfig(
+            [],
+            $this->flagFacade->getVisibleFlagsByIds($productFilterConfigIdsData->getFlagIds(), $locale),
+            [],
+            $productFilterConfigIdsData->getPriceRange()
+        );
+    }
+
+    /**
+     * @param int $domainId
+     * @param string $locale
+     * @return \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig
+     */
+    public function createForAll(int $domainId, string $locale): ProductFilterConfig
+    {
+        $productFilterConfigIdsData = $this->productFilterElasticFacade->getProductFilterDataForAll(
             $this->currentCustomerUser->getPricingGroup()
         );
 

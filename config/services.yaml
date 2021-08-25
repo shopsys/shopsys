@@ -908,3 +908,6 @@ services:
 
     Shopsys\FrontendApiBundle\Model\Resolver\Image\ImagesResolver:
         alias: App\FrontendApi\Model\Resolver\Image\ImagesResolver
+
+    Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfigFactory:
+        alias: App\Model\Product\Filter\Elasticsearch\ProductFilterConfigFactory
