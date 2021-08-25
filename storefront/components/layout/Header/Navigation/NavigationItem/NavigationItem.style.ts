@@ -1,5 +1,5 @@
-import styled, { css } from 'styled-components';
-import { Theme } from 'theme/main';
+import { styled, Theme } from 'theme/main';
+import { css } from 'styled-components';
 
 type NavigationProps = {
     isOpen?: boolean;
@@ -35,7 +35,7 @@ const hoveredItem = (theme: Theme) => {
 };
 
 export const NavigationItemStyled = styled.li<NavigationProps>`
-    ${({ theme, isOpen }: { theme: Theme } & NavigationProps) => css`
+    ${({ theme, isOpen }) => css`
         padding: 0;
         display: inline-block;
         vertical-align: middle;
@@ -64,7 +64,7 @@ export const NavigationItemStyled = styled.li<NavigationProps>`
 `;
 
 export const NavigationItemLinkStyled = styled.a`
-    ${({ theme }: { theme: Theme }) => css`
+    ${({ theme }) => css`
         position: relative;
         display: block;
         padding: 0 10px;
@@ -101,7 +101,7 @@ export const NavigationItemLinkIconStyled = styled.span`
 `;
 
 export const NavigationItemSubStyled = styled.div`
-    ${({ theme }: { theme: Theme }) => css`
+    ${({ theme }) => css`
         display: block;
         position: absolute;
         width: 100%;

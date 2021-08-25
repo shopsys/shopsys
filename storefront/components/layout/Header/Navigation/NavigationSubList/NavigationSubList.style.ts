@@ -1,5 +1,5 @@
-import styled, { css } from 'styled-components';
-import { Theme } from 'theme/main';
+import { css } from 'styled-components';
+import { styled } from 'theme/main';
 
 export const NavigationSubListStyled = styled.ul`
     display: flex;
@@ -18,7 +18,7 @@ export const NavigationSubListItemStyled = styled.li`
 `;
 
 export const NavigationSubListItemLinkStyled = styled.a`
-    ${({ theme }: { theme: Theme }) => css`
+    ${({ theme }) => css`
         display: block;
         margin-bottom: 5px;
 
