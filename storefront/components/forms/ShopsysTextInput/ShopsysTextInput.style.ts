@@ -124,7 +124,7 @@ export const StyledShopsysPasswordVisibilityToggle = styled.img`
     }
 `;
 
-export const StyledShopsysSearchButton = styled.img`
+export const StyledShopsysSearchButton = styled.div`
     position: absolute;
     top: 14px;
     right: 15px;

@@ -7,6 +7,7 @@ import {
 } from './MenuIconic.style';
 import Link from 'next/link';
 import { ReactElement } from 'react';
+import ShopsysIcon from '../../../basic/ShopsysIcon';
 import { useTranslation } from 'react-i18next';
 
 const MenuIconic = (): ReactElement => {
@@ -18,7 +19,7 @@ const MenuIconic = (): ReactElement => {
                 <MenuIconicItemStyled>
                     <Link href="/" passHref>
                         <MenuIconicItemLinkStyled>
-                            <img src="/svg/chat.svg" alt="" width={18} />
+                            <ShopsysIcon icon="chat" iconHeight={18} />
                             {t<string>('Customer service')}
                         </MenuIconicItemLinkStyled>
                     </Link>
@@ -26,7 +27,7 @@ const MenuIconic = (): ReactElement => {
                 <MenuIconicItemStyled>
                     <Link href="/" passHref>
                         <MenuIconicItemLinkStyled>
-                            <img src="/svg/marker.svg" alt="" width={18} />
+                            <ShopsysIcon icon="marker" iconHeight={18} />
                             {t<string>('Stores')}
                         </MenuIconicItemLinkStyled>
                     </Link>
@@ -34,7 +35,7 @@ const MenuIconic = (): ReactElement => {
                 <MenuIconicItemStyled>
                     <Link href="/" passHref>
                         <MenuIconicItemLinkStyled>
-                            <img src="/svg/user.svg" alt="" width={18} />
+                            <ShopsysIcon icon="user" iconHeight={18} />
                             {t<string>('Sign in')}
                         </MenuIconicItemLinkStyled>
                     </Link>
@@ -43,7 +44,7 @@ const MenuIconic = (): ReactElement => {
             <MenuIconicButtonMobileStyled>
                 <Link href="/" passHref>
                     <MenuIconicButtonMobileLinkStyled>
-                        <img src="/svg/user.svg" alt="" width={18} />
+                        <ShopsysIcon icon="user" iconHeight={18} />
                     </MenuIconicButtonMobileLinkStyled>
                 </Link>
             </MenuIconicButtonMobileStyled>

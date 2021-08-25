@@ -77,12 +77,6 @@ export const CartValueStyled = styled.span`
     `}
 `;
 
-export const CartIconStyled = styled.img`
-    ${() => css`
-        width: 18px;
-    `}
-`;
-
 export const CartCountStyled = styled.span`
     ${({ theme }) => css`
         display: flex;
