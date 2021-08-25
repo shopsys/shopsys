@@ -2,15 +2,3 @@ Payment:
     type: object
     inherits:
         - 'PaymentDecorator'
-    config:
-        fields:
-            images:
-                type: "[Image]!"
-                description: "Payment images"
-                resolve: '@=service("App\\FrontendApi\\Model\\Resolver\\Image\\ImagesResolver").resolveByPayment(value, args["type"], args["size"])'
-                args:
-                    type:
-                        type: "String"
-                        defaultValue: null
-                    size:
-                        type: "String"

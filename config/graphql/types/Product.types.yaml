@@ -53,13 +53,3 @@ Product:
                 type: "[Link!]!"
                 description: "Hierarchy of the current element in relation to the structure"
                 resolve: '@=resolver("resolveBreadcrumb", [value["id"], "front_product_detail"])'
-            images:
-                type: "[Image]!"
-                description: "Product images"
-                resolve: '@=service("App\\FrontendApi\\Model\\Resolver\\Image\\ImagesResolver").resolveByProduct(value, args["type"], args["size"])'
-                args:
-                    type:
-                        type: "String"
-                        defaultValue: null
-                    size:
-                        type: "String"

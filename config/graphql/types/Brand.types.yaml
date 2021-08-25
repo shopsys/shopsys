@@ -14,13 +14,3 @@ Brand:
                 type: "[Link!]!"
                 description: "Hierarchy of the current element in relation to the structure"
                 resolve: '@=resolver("resolveBreadcrumb", [value.getId(), "front_brand_detail"])'
-            images:
-                type: "[Image]!"
-                description: "Brand images"
-                resolve: '@=service("App\\FrontendApi\\Model\\Resolver\\Image\\ImagesResolver").resolveByBrand(value, args["type"], args["size"])'
-                args:
-                    type:
-                        type: "String"
-                        defaultValue: null
-                    size:
-                        type: "String"

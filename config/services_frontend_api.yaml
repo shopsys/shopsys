@@ -50,8 +50,6 @@ services:
     Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterOptionsFactory:
         alias: App\FrontendApi\Model\Product\Filter\ProductFilterOptionsFactory
 
-    App\FrontendApi\Model\Resolver\Image\ImagesResolver: ~
-
     Shopsys\FrontendApiBundle\Model\Resolver\Image\ImagesResolver:
         alias: App\FrontendApi\Model\Resolver\Image\ImagesResolver
         public: true
