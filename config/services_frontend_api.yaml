@@ -15,6 +15,7 @@ services:
 
     Shopsys\FrontendApiBundle\Model\Resolver\Products\PromotedProductsResolver:
         alias: App\FrontendApi\Model\Resolver\Products\PromotedProductsResolver
+        public: true
 
     Shopsys\FrontendApiBundle\Model\Product\ProductFacade:
         alias: App\FrontendApi\Model\Product\ProductFacade
@@ -48,3 +49,13 @@ services:
 
     Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterOptionsFactory:
         alias: App\FrontendApi\Model\Product\Filter\ProductFilterOptionsFactory
+
+    App\FrontendApi\Model\Resolver\Image\ImagesResolver: ~
+
+    Shopsys\FrontendApiBundle\Model\Resolver\Image\ImagesResolver:
+        alias: App\FrontendApi\Model\Resolver\Image\ImagesResolver
+        public: true
+
+    Shopsys\FrontendApiBundle\Model\Resolver\Products\ProductsResolver:
+        alias: App\FrontendApi\Model\Resolver\Products\ProductsResolver
+        public: true
