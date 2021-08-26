@@ -12,7 +12,6 @@ use Shopsys\FrameworkBundle\Component\Environment\EnvironmentType;
 use Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
-use Zalas\Injector\PHPUnit\Symfony\TestCase\SymfonyTestContainer;
 use Zalas\Injector\PHPUnit\TestCase\ServiceContainerTestCase;
 
 abstract class FunctionalTestCase extends WebTestCase implements ServiceContainerTestCase
@@ -71,17 +70,12 @@ abstract class FunctionalTestCase extends WebTestCase implements ServiceContaine
 
     protected function tearDown(): void
     {
-        parent::tearDown();
-
-        $reflectionClass = new ReflectionClass($this);
-        $properties = $reflectionClass->getProperties();
-        $excludedProperties = self::getPhpUnitTestCaseProperties();
-        foreach ($properties as $property) {
-            if (in_array($property->getName(), $excludedProperties, true) === false) {
-                $property->setAccessible(true);
-                $property->setValue($this, null);
-            }
+        if ($this->client !== null) {
+            $this->client->getKernel()->shutdown();
+            unset($this->client);
         }
+
+        parent::tearDown();
     }
 
     /**
