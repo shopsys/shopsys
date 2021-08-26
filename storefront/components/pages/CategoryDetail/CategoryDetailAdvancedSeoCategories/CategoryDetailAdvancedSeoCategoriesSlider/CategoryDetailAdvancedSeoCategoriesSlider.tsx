@@ -1,5 +1,5 @@
 import 'keen-slider/keen-slider.min.css';
-import { CategoryDetailAdvancedSeoCategoriesItem as AdvancedSeoCategoriesItem } from '../CategoryDetailAdvancedSeoCategories.style';
+import { CategoryDetailAdvancedSeoCategoriesItemStyled as AdvancedSeoCategoriesItemStyled } from '../CategoryDetailAdvancedSeoCategories.style';
 import { FC } from 'react';
 import Link from 'next/link';
 import { ReadyCategorySeoMixLink } from '../../types';
@@ -28,9 +28,9 @@ const CategoryDetailAdvancedSeoCategoriesSlider: FC<CategoryDetailAdvancedSeoCat
         <div ref={sliderRef} className="keen-slider">
             {props.readyCategorySeoMixLinks.map((seoMixLink, index) => (
                 <Link key={index} href={seoMixLink.slug} passHref>
-                    <AdvancedSeoCategoriesItem className="keen-slider__slide">
+                    <AdvancedSeoCategoriesItemStyled className="keen-slider__slide">
                         {seoMixLink.name}
-                    </AdvancedSeoCategoriesItem>
+                    </AdvancedSeoCategoriesItemStyled>
                 </Link>
             ))}
         </div>

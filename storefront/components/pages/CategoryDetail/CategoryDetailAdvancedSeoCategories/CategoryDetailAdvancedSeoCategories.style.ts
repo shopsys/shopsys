@@ -8,7 +8,7 @@ export const CategoryDetailAdvancedSeoCategoriesWrapperStyled = styled.div`
     margin-right: -24px;
 `;
 
-export const CategoryDetailAdvancedSeoCategoriesItem = styled.a`
+export const CategoryDetailAdvancedSeoCategoriesItemStyled = styled.a`
     ${({ theme }) => css`
         padding: 11px 12px;
         display: flex;

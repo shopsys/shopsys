@@ -44,6 +44,10 @@ module.exports = {
                     content: '../docs/typescript.md',
                 },
                 {
+                    name: 'Hooks',
+                    content: '../hooks/hooks.md',
+                },
+                {
                     name: 'Basic principles',
                     content: '../docs/basic-principles.md',
                 },
