@@ -27,7 +27,7 @@
         "ecmaVersion": 12,
         "sourceType": "module"
     },
-    "plugins": ["react", "unused-imports", "prettier", "@typescript-eslint"],
+    "plugins": ["react", "unused-imports", "prettier", "@typescript-eslint", "react-hooks"],
     "rules": {
         "array-callback-return": "error",
         "block-scoped-var": "error",
@@ -70,7 +70,9 @@
         "@typescript-eslint/no-explicit-any": "off",
         "unused-imports/no-unused-imports": "error",
         "vars-on-top": "error",
-        "yoda": "error"
+        "yoda": "error",
+        "react-hooks/rules-of-hooks": "error",
+        "react-hooks/exhaustive-deps": "warn"
     },
     "settings": {
         "react": {
