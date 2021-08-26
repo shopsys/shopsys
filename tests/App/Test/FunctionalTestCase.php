@@ -75,7 +75,10 @@ abstract class FunctionalTestCase extends WebTestCase implements ServiceContaine
     ): KernelBrowser {
         $client = $this->getCurrentClient();
 
-        $serverOptions = $this->getClientServerParameters($username, $password, $clientOptions);
+        /** @var \Symfony\Component\DependencyInjection\ContainerInterface $container */
+        $container = $client->getContainer()->get('test.service_container');
+
+        $serverOptions = $this->getClientServerParameters($container, $username, $password, $clientOptions);
         $client->setServerParameters($serverOptions);
 
         return $client;
@@ -111,7 +114,7 @@ abstract class FunctionalTestCase extends WebTestCase implements ServiceContaine
 
         $container->get(Domain::class)->switchDomainById(Domain::FIRST_DOMAIN_ID);
 
-        $serverOptions = $this->getClientServerParameters($username, $password, $clientOptions);
+        $serverOptions = $this->getClientServerParameters($container, $username, $password, $clientOptions);
         $client->setServerParameters($serverOptions);
 
         $client->disableReboot();
@@ -120,22 +123,34 @@ abstract class FunctionalTestCase extends WebTestCase implements ServiceContaine
     }
 
     /**
+     * @param \Psr\Container\ContainerInterface $container
      * @param string|null $username
      * @param string|null $password
      * @param array $clientOptions
      * @return array
      */
     private function getClientServerParameters(
+        ContainerInterface $container,
         ?string $username,
         ?string $password,
         array $clientOptions
     ): array {
+        $currentDomainUrl = $container->get(Domain::class)->getCurrentDomainConfig()->getUrl();
+
+        $clientServerParameters = array_replace(
+            [
+                'HTTP_HOST' => preg_replace('#^https?://#', '', $currentDomainUrl),
+                'HTTPS' => parse_url($currentDomainUrl, PHP_URL_SCHEME) === 'https'
+            ],
+            $clientOptions
+        );
+
         if ($username !== null) {
-            $clientOptions['PHP_AUTH_USER'] = $username;
-            $clientOptions['PHP_AUTH_PW'] = $password;
+            $clientServerParameters['PHP_AUTH_USER'] = $username;
+            $clientServerParameters['PHP_AUTH_PW'] = $password;
         }
 
-        return $clientOptions;
+        return $clientServerParameters;
     }
 
     /**
