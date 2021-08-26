@@ -49,7 +49,7 @@ class ProductRenameRedirectPreviousUrlTest extends TransactionFunctionalTestCase
 
         $firstDomainUrl = preg_replace('#^https?://#', '', $firstDomainUrl);
 
-        $client = $this->findClient(false, null, null, [], ['HTTP_HOST' => $firstDomainUrl, 'HTTPS' => $isSecured]);
+        $client = $this->$this->configureCurrentClient(null, null, [], ['HTTP_HOST' => $firstDomainUrl, 'HTTPS' => $isSecured]);
         $client->request('GET', '/' . $previousFriendlyUrlSlug);
 
         // Should be 301 (moved permanently), because old product urls should be permanently redirected

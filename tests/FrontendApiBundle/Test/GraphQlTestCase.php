@@ -60,13 +60,11 @@ abstract class GraphQlTestCase extends TransactionFunctionalTestCase
     {
         parent::setUp();
 
-        $this->client = $this->findClient();
+        $this->client = $this->getCurrentClient();
 
         $this->runCheckTestEnabledOnCurrentDomain();
 
         $this->firstDomainUrl = $this->domain->getCurrentDomainConfig()->getUrl();
-
-        $this->client = $this->findClient(true);
     }
 
     protected function runCheckTestEnabledOnCurrentDomain(): void

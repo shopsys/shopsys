@@ -47,24 +47,38 @@ abstract class FunctionalTestCase extends WebTestCase implements ServiceContaine
     }
 
     /**
-     * @param bool $createNew
+     * Returns the instance of currently used client; creates one if none exists
+     *
+     * @return \Symfony\Bundle\FrameworkBundle\KernelBrowser
+     */
+    protected function getCurrentClient(): KernelBrowser
+    {
+        if (!isset($this->client)) {
+            $this->client = $this->createNewClient();
+        }
+
+        return $this->client;
+    }
+
+    /**
+     * Configures the instance of currently used client; creates one if none exists
+     *
      * @param string|null $username
      * @param string|null $password
-     * @param array $kernelOptions
      * @param array $clientOptions
      * @return \Symfony\Bundle\FrameworkBundle\KernelBrowser
      */
-    protected function findClient(
-        bool $createNew = false,
-        ?string $username = null,
-        ?string $password = null,
-        array $kernelOptions = [],
-        array $clientOptions = []): KernelBrowser
-    {
-        if ($createNew || !isset($this->client)) {
-            $this->client = $this->createNewClient($username, $password, $kernelOptions, $clientOptions);
-        }
-        return $this->client;
+    protected function configureCurrentClient(
+        ?string $username,
+        ?string $password,
+        array $clientOptions = []
+    ): KernelBrowser {
+        $client = $this->getCurrentClient();
+
+        $serverOptions = $this->getClientServerParameters($username, $password, $clientOptions);
+        $client->setServerParameters($serverOptions);
+
+        return $client;
     }
 
     /**
@@ -90,17 +104,15 @@ abstract class FunctionalTestCase extends WebTestCase implements ServiceContaine
         ];
         $kernelOptions = array_replace($defaultKernelOptions, $kernelOptions);
 
-        $client = self::createClient($kernelOptions, $clientOptions);
+        $client = self::createClient($kernelOptions);
 
         /** @var \Symfony\Component\DependencyInjection\ContainerInterface $container */
         $container = $client->getContainer()->get('test.service_container');
 
         $container->get(Domain::class)->switchDomainById(Domain::FIRST_DOMAIN_ID);
 
-        if ($username !== null) {
-            $client->setServerParameter('PHP_AUTH_USER', $username);
-            $client->setServerParameter('PHP_AUTH_PW', $password);
-        }
+        $serverOptions = $this->getClientServerParameters($username, $password, $clientOptions);
+        $client->setServerParameters($serverOptions);
 
         $client->disableReboot();
 
@@ -108,11 +120,30 @@ abstract class FunctionalTestCase extends WebTestCase implements ServiceContaine
     }
 
     /**
+     * @param string|null $username
+     * @param string|null $password
+     * @param array $clientOptions
+     * @return array
+     */
+    private function getClientServerParameters(
+        ?string $username,
+        ?string $password,
+        array $clientOptions
+    ): array {
+        if ($username !== null) {
+            $clientOptions['PHP_AUTH_USER'] = $username;
+            $clientOptions['PHP_AUTH_PW'] = $password;
+        }
+
+        return $clientOptions;
+    }
+
+    /**
      * @return \Symfony\Component\DependencyInjection\ContainerInterface
      */
     protected function getContainer(): ContainerInterface
     {
-        return $this->findClient()->getContainer()->get('test.service_container');
+        return $this->getCurrentClient()->getContainer()->get('test.service_container');
     }
 
     /**

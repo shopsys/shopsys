@@ -10,7 +10,7 @@ class HomepageControllerTest extends FunctionalTestCase
 {
     public function testHomepageHttpStatus200()
     {
-        $client = $this->findClient();
+        $client = $this->getCurrentClient();
 
         $client->request('GET', '/');
         $code = $client->getResponse()->getStatusCode();
@@ -20,7 +20,7 @@ class HomepageControllerTest extends FunctionalTestCase
 
     public function testHomepageHasBodyEnd()
     {
-        $client = $this->findClient();
+        $client = $this->getCurrentClient();
 
         $client->request('GET', '/');
         $content = $client->getResponse()->getContent();
