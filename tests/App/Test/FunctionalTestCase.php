@@ -4,36 +4,39 @@ declare(strict_types=1);
 
 namespace Tests\App\Test;
 
-use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerInterface;
-use ReflectionClass;
+use Shopsys\FrameworkBundle\Component\DataFixture\PersistentReferenceFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Environment\EnvironmentType;
 use Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory;
+use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Zalas\Injector\PHPUnit\Symfony\TestCase\SymfonyTestContainer;
 use Zalas\Injector\PHPUnit\TestCase\ServiceContainerTestCase;
 
 abstract class FunctionalTestCase extends WebTestCase implements ServiceContainerTestCase
 {
+    use SymfonyTestContainer;
+
     /**
-     * @var \Symfony\Bundle\FrameworkBundle\Client
+     * @var \Symfony\Bundle\FrameworkBundle\KernelBrowser
      */
-    private $client;
+    private KernelBrowser $client;
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\DataFixture\PersistentReferenceFacade
      * @inject
      */
-    protected $persistentReferenceFacade;
+    protected PersistentReferenceFacade $persistentReferenceFacade;
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
      * @inject
      */
-    protected $domain;
+    protected Domain $domain;
 
-    protected function setUpDomain()
+    protected function setUpDomain(): void
     {
         $this->domain->switchDomainById(Domain::FIRST_DOMAIN_ID);
     }
@@ -43,29 +46,6 @@ abstract class FunctionalTestCase extends WebTestCase implements ServiceContaine
         parent::setUp();
 
         $this->setUpDomain();
-    }
-
-    /**
-     * @var string[]|null
-     */
-    private static $phpUnitTestCaseProperties = null;
-
-    /**
-     * @return string[]
-     */
-    private static function getPhpUnitTestCaseProperties(): array
-    {
-        if (self::$phpUnitTestCaseProperties === null) {
-            self::$phpUnitTestCaseProperties = [];
-
-            $testCaseReflectionClass = new ReflectionClass(TestCase::class);
-            $properties = $testCaseReflectionClass->getProperties();
-            foreach ($properties as $property) {
-                self::$phpUnitTestCaseProperties[] = $property->getName();
-            }
-        }
-
-        return self::$phpUnitTestCaseProperties;
     }
 
     protected function tearDown(): void
@@ -80,19 +60,19 @@ abstract class FunctionalTestCase extends WebTestCase implements ServiceContaine
 
     /**
      * @param bool $createNew
-     * @param string $username
-     * @param string $password
+     * @param string|null $username
+     * @param string|null $password
      * @param array $kernelOptions
      * @param array $clientOptions
-     * @return \Symfony\Bundle\FrameworkBundle\Client
+     * @return \Symfony\Bundle\FrameworkBundle\KernelBrowser
      */
     protected function findClient(
-        $createNew = false,
-        $username = null,
-        $password = null,
-        $kernelOptions = [],
-        $clientOptions = []
-    ) {
+        bool $createNew = false,
+        ?string $username = null,
+        ?string $password = null,
+        array $kernelOptions = [],
+        array $clientOptions = []
+    ): KernelBrowser {
         $defaultKernelOptions = [
             'environment' => EnvironmentType::TEST,
             'debug' => EnvironmentType::isDebug(EnvironmentType::TEST),
@@ -122,7 +102,7 @@ abstract class FunctionalTestCase extends WebTestCase implements ServiceContaine
     /**
      * @return \Symfony\Component\DependencyInjection\ContainerInterface
      */
-    protected function getContainer()
+    protected function getContainer(): ContainerInterface
     {
         return $this->findClient()->getContainer()->get('test.service_container');
     }
@@ -131,7 +111,7 @@ abstract class FunctionalTestCase extends WebTestCase implements ServiceContaine
      * @param string $referenceName
      * @return object
      */
-    protected function getReference($referenceName)
+    protected function getReference(string $referenceName): object
     {
         return $this->persistentReferenceFacade->getReference($referenceName);
     }
@@ -151,12 +131,12 @@ abstract class FunctionalTestCase extends WebTestCase implements ServiceContaine
      * @param int $domainId
      * @return object
      */
-    protected function getReferenceForDomain(string $referenceName, int $domainId)
+    protected function getReferenceForDomain(string $referenceName, int $domainId): object
     {
         return $this->persistentReferenceFacade->getReferenceForDomain($referenceName, $domainId);
     }
 
-    protected function skipTestIfFirstDomainIsNotInEnglish()
+    protected function skipTestIfFirstDomainIsNotInEnglish(): void
     {
         if ($this->getFirstDomainLocale() !== 'en') {
             $this->markTestSkipped('Tests for product searching are run only when the first domain has English locale');
