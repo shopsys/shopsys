@@ -19,7 +19,7 @@ import Search from './Search';
 const Header: FC = () => {
     const [isMenuOpened, setIsMenuOpened] = useState(false);
 
-    const toggleMenu = () => {
+    const onMenuToggleHandler = () => {
         setIsMenuOpened(!isMenuOpened);
     };
 

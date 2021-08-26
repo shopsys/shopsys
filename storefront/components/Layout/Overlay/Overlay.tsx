@@ -1,6 +1,6 @@
-import { OverlayStyled, OverlayWrappStyled } from './Overlay.style';
+import { OverlayStyled, OverlayWrapperStyled } from './Overlay.style';
 import { CSSTransition } from 'react-transition-group';
-import { ReactElement } from 'react';
+import { FC } from 'react';
 
 type OverlayProps = {
     isActive: boolean;
@@ -12,7 +12,7 @@ const Overlay: FC<OverlayProps> = (props) => {
             <CSSTransition in={props.isActive} timeout={500} classNames="overlay" unmountOnExit>
                 <OverlayStyled />
             </CSSTransition>
-        </OverlayWrappStyled>
+        </OverlayWrapperStyled>
     );
 };
 

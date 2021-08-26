@@ -1,41 +1,55 @@
 import { DropdownItemLinkStyled, DropdownItemStyled } from './DropdownItem.style';
+import {
+    NavigationCategory as NavigationCategoryType,
+    NavigationItem as NavigationItemType,
+    NavigationSubCategory as NavigationSubCategoryType,
+} from '../../../../../connectors/navigation/Navigation';
+import { DropdownItemType } from '../types';
 import DropdownSlideTo from '../SlideTo';
+import { FC } from 'react';
 import Link from 'next/link';
-import { ReactElement } from 'react';
 
-const DropdownItem = (props): ReactElement => {
-    const hasChildren = () => {
-        if (props.level === 'main') {
-            return props.itemData.categoriesByColumns.length > 0;
-        } else if (props.level === 'secondary') {
-            return props.itemData.children.length > 0;
-        }
+type DropdownItemProps = {
+    variant?: 'small';
+    level: 'primary' | 'secondary' | 'tertiary';
+    navigationItem?: NavigationItemType;
+    columnCategory?: NavigationCategoryType;
+    columnCategoryChild?: NavigationSubCategoryType;
+};
 
-        return false;
-    };
+const DropdownItem: FC<DropdownItemProps & DropdownItemType> = (props) => {
+    let hasChildren, itemName;
+    let itemLink = '';
 
-    const itemLink = () => {
-        if (props.level === 'main') {
-            return props.itemData.link;
-        } else if (props.level === 'secondary' || props.level === 'third') {
-            return props.itemData.slug;
-        }
+    if (props.navigationItem !== undefined) {
+        hasChildren = props.navigationItem.categoriesByColumns.length > 0;
+        itemLink = props.navigationItem.link;
+        itemName = props.navigationItem.name;
+    }
 
-        return false;
-    };
+    if (props.columnCategory !== undefined) {
+        hasChildren = props.columnCategory.children.length > 0;
+        itemLink = props.columnCategory.slug;
+        itemName = props.columnCategory.name;
+    }
+
+    if (props.columnCategoryChild !== undefined) {
+        hasChildren = false;
+        itemLink = props.columnCategoryChild.slug;
+        itemName = props.columnCategoryChild.name;
+    }
 
     return (
         <DropdownItemStyled variant={props.variant}>
-            <Link href={itemLink()} passHref>
-                <DropdownItemLinkStyled variant={props.variant}>{props.itemData.name}</DropdownItemLinkStyled>
+            <Link href={itemLink} passHref>
+                <DropdownItemLinkStyled variant={props.variant}>{itemName}</DropdownItemLinkStyled>
             </Link>
-            {hasChildren() && (
+            {hasChildren && (
                 <DropdownSlideTo
                     changeState={props.changeState}
                     goToMenu={props.goToMenu}
                     slideTo={props.slideTo}
-                    activeChild={props.activeChild}
-                    indexes={props.indexes}
+                    index={props.index}
                 />
             )}
         </DropdownItemStyled>

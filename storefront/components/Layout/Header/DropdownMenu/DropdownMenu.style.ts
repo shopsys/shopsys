@@ -1,6 +1,10 @@
 import { css } from 'styled-components';
 import { styled } from 'theme/main';
 
+type DropdownMenuProps = {
+    slideTo: 'left' | 'right';
+};
+
 export const DropdownMenuWrapperStyled = styled.div`
     .dropdown-enter {
         transform: translateY(-110%);
@@ -125,10 +129,8 @@ export const DropdownMenuStyled = styled.div<DropdownMenuProps>`
 `;
 
 export const DropdownMenuListStyled = styled.div`
-    ${({ theme }: { theme: Theme }) => css`
-        width: 100%;
-        padding-top: 48px;
-    `}
+    width: 100%;
+    padding-top: 48px;
 `;
 
 export const DropdownMenuListTitleStyled = styled.div`

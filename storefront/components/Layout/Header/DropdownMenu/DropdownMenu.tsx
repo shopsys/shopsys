@@ -4,7 +4,7 @@ import {
     DropdownMenuStyled,
     DropdownMenuWrapperStyled,
 } from './DropdownMenu.style';
-import { Fragment, ReactElement, useState } from 'react';
+import { FC, Fragment, useState } from 'react';
 import { CSSTransition } from 'react-transition-group';
 import DropdownItem from './Item';
 import DropdownSlideTo from './SlideTo';
@@ -12,24 +12,28 @@ import { getNavigationItems } from '../../../../connectors/navigation/Navigation
 import SubMenu from './SubMenu';
 import { useTranslation } from 'react-i18next';
 
-const DropdownMenu = (props): ReactElement | null => {
+type DropdownMenuProps = {
+    isMenuOpened: boolean;
+};
+
+const DropdownMenu: FC<DropdownMenuProps> = (props) => {
     const { t } = useTranslation();
     const navigationItems = getNavigationItems();
-    const [activeMenu, setActiveMenu] = useState('main');
-    const [indexes, setIndexes] = useState([]);
-    const [slideTo, setSlideTo] = useState('right');
-    const [menuHeight, setMenuHeight] = useState(null);
+    const [activeMenu, setActiveMenu] = useState<'primary' | 'secondary' | 'tertiary'>('primary');
+    const [indexes, setIndexes] = useState<number[] | string[] | []>([]);
+    const [slideTo, setSlideTo] = useState<'right' | 'left'>('right');
+    const [menuHeight, setMenuHeight] = useState<number>();
 
     if (navigationItems === undefined || (Array.isArray(navigationItems) && navigationItems.length === 0)) {
         return null;
     }
 
-    const calcHeight = (el) => {
+    const calcHeight = (el: HTMLElement) => {
         const height = el.offsetHeight;
         setMenuHeight(height);
     };
 
-    const changeState = (props) => {
+    const changeState = (props: any) => {
         if (props.goToMenu !== undefined) {
             setActiveMenu(props.goToMenu);
         }
@@ -38,8 +42,8 @@ const DropdownMenu = (props): ReactElement | null => {
             setSlideTo(props.slideTo);
         }
 
-        if (props.indexes !== undefined) {
-            setIndexes((oldArray) => [...oldArray, props.indexes]);
+        if (props.index !== undefined) {
+            setIndexes((oldArray: number[] | string[]) => [...oldArray, props.index]);
         }
 
         if (props.slideTo === 'left') {
@@ -48,7 +52,7 @@ const DropdownMenu = (props): ReactElement | null => {
             if (indexes.length === 0) {
                 setIndexes([]);
             } else {
-                setIndexes([indexes]);
+                setIndexes([...indexes]);
             }
         }
     };
@@ -64,7 +68,7 @@ const DropdownMenu = (props): ReactElement | null => {
             >
                 <DropdownMenuStyled slideTo={slideTo} style={{ height: menuHeight }}>
                     <CSSTransition
-                        in={activeMenu === 'main'}
+                        in={activeMenu === 'primary'}
                         timeout={500}
                         classNames="menu-primary"
                         unmountOnExit
@@ -74,10 +78,10 @@ const DropdownMenu = (props): ReactElement | null => {
                             {navigationItems.map((navigationItem, index) => (
                                 <DropdownItem
                                     key={index}
-                                    itemData={navigationItem}
+                                    navigationItem={navigationItem}
                                     changeState={changeState}
-                                    indexes={index}
-                                    level="main"
+                                    index={index}
+                                    level="primary"
                                     goToMenu="secondary"
                                     slideTo="right"
                                 />
@@ -96,9 +100,9 @@ const DropdownMenu = (props): ReactElement | null => {
                         <DropdownMenuListStyled>
                             <DropdownSlideTo
                                 changeState={changeState}
-                                goToMenu="main"
+                                goToMenu="primary"
                                 slideTo="left"
-                                variant="stepBack"
+                                type="stepBack"
                                 iconText={t('Back')}
                             />
                             {navigationItems
@@ -111,11 +115,11 @@ const DropdownMenu = (props): ReactElement | null => {
                                                     (columnCategory, columnCategoryIndex) => (
                                                         <DropdownItem
                                                             key={columnCategoryIndex}
-                                                            itemData={columnCategory}
+                                                            columnCategory={columnCategory}
                                                             changeState={changeState}
                                                             level="secondary"
-                                                            goToMenu="third"
-                                                            indexes={
+                                                            goToMenu="tertiary"
+                                                            index={
                                                                 columnCategories.columnNumber +
                                                                 '-' +
                                                                 columnCategoryIndex
@@ -129,14 +133,14 @@ const DropdownMenu = (props): ReactElement | null => {
                                         ))}
                                     </Fragment>
                                 ))
-                                .filter((item, index) => index == indexes[0])}
+                                .filter((_, index) => index === indexes[0])}
                         </DropdownMenuListStyled>
                     </CSSTransition>
 
                     <CSSTransition
-                        in={activeMenu === 'third'}
+                        in={activeMenu === 'tertiary'}
                         timeout={500}
-                        classNames="menu-third"
+                        classNames="menu-tertiary"
                         unmountOnExit
                         onEnter={calcHeight}
                     >
@@ -145,7 +149,7 @@ const DropdownMenu = (props): ReactElement | null => {
                                 changeState={changeState}
                                 goToMenu="secondary"
                                 slideTo="left"
-                                variant="stepBack"
+                                type="stepBack"
                                 iconText={t('Back')}
                             />
                             {navigationItems
@@ -163,8 +167,8 @@ const DropdownMenu = (props): ReactElement | null => {
                                                                 (columnCategoryChild, subListIndex) => (
                                                                     <DropdownItem
                                                                         key={subListIndex}
-                                                                        itemData={columnCategoryChild}
-                                                                        level="third"
+                                                                        columnCategoryChild={columnCategoryChild}
+                                                                        level="tertiary"
                                                                         variant="small"
                                                                     />
                                                                 ),
@@ -172,15 +176,17 @@ const DropdownMenu = (props): ReactElement | null => {
                                                         </Fragment>
                                                     ))
                                                     .filter(
-                                                        (item, columnCategoryIndex) =>
-                                                            columnCategories.columnNumber + '-' + columnCategoryIndex ==
+                                                        (_, columnCategoryIndex) =>
+                                                            columnCategories.columnNumber +
+                                                                '-' +
+                                                                columnCategoryIndex ===
                                                             indexes[1],
                                                     )}
                                             </Fragment>
                                         ))}
                                     </Fragment>
                                 ))
-                                .filter((item, index) => index == indexes[0])}
+                                .filter((_, index) => index === indexes[0])}
                         </DropdownMenuListStyled>
                     </CSSTransition>
                 </DropdownMenuStyled>

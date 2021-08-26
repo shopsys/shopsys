@@ -1,12 +1,18 @@
 import { DropdownSlideToBackStyled, DropdownSlideToStyled } from './DropdownSlideTo.style';
-import { ReactElement } from 'react';
+import { DropdownItemType } from '../types';
+import { FC } from 'react';
 import ShopsysIcon from '../../../../basic/ShopsysIcon';
 
-const DropdownSlideTo = (props): ReactElement => {
+type DropdownSlideToProps = {
+    iconText?: string;
+    type?: 'stepBack';
+};
+
+const DropdownSlideTo: FC<DropdownSlideToProps & DropdownItemType> = (props) => {
     let Component = DropdownSlideToStyled;
     let iconHeight = 18;
 
-    if (props.variant === 'stepBack') {
+    if (props.type === 'stepBack') {
         Component = DropdownSlideToBackStyled;
         iconHeight = 14;
     }
