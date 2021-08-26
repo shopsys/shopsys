@@ -7,14 +7,14 @@ export const DropdownMenuWrapperStyled = styled.div`
     }
     .dropdown-enter-active {
         transform: translateY(0);
-        transition: all 0.3s ease;
+        transition: all 0.5s ease;
     }
     .dropdown-exit {
         transform: translateY(0);
     }
     .dropdown-exit-active {
         transform: translateY(-110%);
-        transition: all 0.3s ease;
+        transition: all 0.5s ease;
     }
 `;
 

@@ -9,6 +9,7 @@ import { CSSTransition } from 'react-transition-group';
 import DropdownItem from './Item';
 import DropdownSlideTo from './SlideTo';
 import { getNavigationItems } from '../../../../connectors/navigation/Navigation';
+import SubMenu from './SubMenu';
 import { useTranslation } from 'react-i18next';
 
 const DropdownMenu = (props): ReactElement | null => {
@@ -54,7 +55,13 @@ const DropdownMenu = (props): ReactElement | null => {
 
     return (
         <DropdownMenuWrapperStyled>
-            <CSSTransition in={props.isMenuOpened} timeout={500} classNames="dropdown" onEnter={calcHeight} unmountOnExit>
+            <CSSTransition
+                in={props.isMenuOpened}
+                timeout={500}
+                classNames="dropdown"
+                onEnter={calcHeight}
+                unmountOnExit
+            >
                 <DropdownMenuStyled slideTo={slideTo} style={{ height: menuHeight }}>
                     <CSSTransition
                         in={activeMenu === 'main'}
@@ -75,8 +82,10 @@ const DropdownMenu = (props): ReactElement | null => {
                                     slideTo="right"
                                 />
                             ))}
+                            <SubMenu />
                         </DropdownMenuListStyled>
                     </CSSTransition>
+
                     <CSSTransition
                         in={activeMenu === 'secondary'}
                         timeout={500}
@@ -123,6 +132,7 @@ const DropdownMenu = (props): ReactElement | null => {
                                 .filter((item, index) => index == indexes[0])}
                         </DropdownMenuListStyled>
                     </CSSTransition>
+
                     <CSSTransition
                         in={activeMenu === 'third'}
                         timeout={500}
