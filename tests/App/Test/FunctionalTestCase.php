@@ -140,7 +140,7 @@ abstract class FunctionalTestCase extends WebTestCase implements ServiceContaine
         $clientServerParameters = array_replace(
             [
                 'HTTP_HOST' => preg_replace('#^https?://#', '', $currentDomainUrl),
-                'HTTPS' => parse_url($currentDomainUrl, PHP_URL_SCHEME) === 'https'
+                'HTTPS' => parse_url($currentDomainUrl, PHP_URL_SCHEME) === 'https',
             ],
             $clientOptions
         );
