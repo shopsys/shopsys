@@ -4,7 +4,7 @@ import { styled } from '../../../../Theme/main';
 export const NavigationSubListStyled = styled.ul`
     display: flex;
     flex-direction: column;
-    width: calc(100% / 4);
+    width: 100%;
     padding-left: 0;
 `;
 

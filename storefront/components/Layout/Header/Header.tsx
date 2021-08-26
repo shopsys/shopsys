@@ -1,3 +1,4 @@
+import { FC, useState } from 'react';
 import {
     HeaderCartStyled,
     HeaderLinksStyled,
@@ -7,7 +8,7 @@ import {
     HeaderStyled,
 } from './Header.style';
 import Cart from './Cart';
-import { FC } from 'react';
+import DropdownMenu from './DropdownMenu';
 import FrontendSwitcher from 'components/Blocks/FrontendSwitcher';
 import HamburgerMenu from './HamburgerMenu';
 import Logo from './Logo';
@@ -15,6 +16,12 @@ import MenuIconic from './MenuIconic';
 import Search from './Search';
 
 const Header: FC = () => {
+    const [isMenuOpened, setIsMenuOpened] = useState(false);
+
+    const toggleMenu = () => {
+        setIsMenuOpened(!isMenuOpened);
+    };
+
     return (
         <HeaderStyled>
             <HeaderLogoStyled>
@@ -27,7 +34,8 @@ const Header: FC = () => {
                 <MenuIconic />
             </HeaderLinksStyled>
             <HeaderMenuButtonStyled>
-                <HamburgerMenu />
+                <HamburgerMenu toggleMenu={toggleMenu} isMenuOpened={isMenuOpened} />
+                <DropdownMenu isMenuOpened={isMenuOpened} />
             </HeaderMenuButtonStyled>
             <HeaderCartStyled>
                 <Cart />

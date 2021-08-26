@@ -10,7 +10,7 @@ import Webline from './Webline';
 const CommonLayout: FC = (props) => {
     return (
         <>
-            <Webline type="colored" style={{ marginBottom: '32px' }}>
+            <Webline type="colored" style={{ marginBottom: '32px', position: 'relative' }}>
                 <Header></Header>
                 <Navigation></Navigation>
             </Webline>

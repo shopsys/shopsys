@@ -9,6 +9,7 @@ export const HamburgerMenuStyled = styled.div`
         padding: 0 10px;
         width: 100%;
         height: 40px;
+        z-index: calc(${theme.zIndex.menu} + 1);
 
         cursor: pointer;
         background-color: ${theme.color.orangeLight};
