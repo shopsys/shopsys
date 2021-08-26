@@ -109,10 +109,10 @@ abstract class FunctionalTestCase extends WebTestCase implements ServiceContaine
         $kernelOptions = array_replace($defaultKernelOptions, $kernelOptions);
 
         if ($createNew) {
-            $this->client = $this->createClient($kernelOptions, $clientOptions);
+            $this->client = self::createClient($kernelOptions, $clientOptions);
             $this->setUpDomain();
         } elseif (!isset($this->client)) {
-            $this->client = $this->createClient($kernelOptions, $clientOptions);
+            $this->client = self::createClient($kernelOptions, $clientOptions);
         }
 
         if ($username !== null) {
@@ -121,6 +121,8 @@ abstract class FunctionalTestCase extends WebTestCase implements ServiceContaine
                 'PHP_AUTH_PW' => $password,
             ]);
         }
+
+        $this->client->disableReboot();
 
         return $this->client;
     }

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Tests\FrontendApiBundle\Test;
 
-use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Symfony\Component\HttpFoundation\Response;
 
 abstract class GraphQlWithLoginTestCase extends GraphQlTestCase
@@ -19,18 +18,6 @@ abstract class GraphQlWithLoginTestCase extends GraphQlTestCase
 
     protected function setUp(): void
     {
-        $this->client = $this->findClient(true);
-        $this->domain = $this->client->getContainer()->get(Domain::class);
-        $this->em = $this->client->getContainer()->get('doctrine.orm.entity_manager');
-
-        $this->domain->switchDomainById(Domain::FIRST_DOMAIN_ID);
-        $firstDomain = $this->domain->getCurrentDomainConfig();
-        $this->firstDomainUrl = $firstDomain->getUrl();
-
-        $this->runCheckTestEnabledOnCurrentDomain();
-
-        $this->accessToken = $this->getAccessToken(static::DEFAULT_USER_EMAIL, static::DEFAULT_USER_PASSWORD);
-
         parent::setUp();
     }
 

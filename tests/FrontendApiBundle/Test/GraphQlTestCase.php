@@ -13,19 +13,14 @@ use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
 use Shopsys\FrontendApiBundle\Component\Domain\EnabledOnDomainChecker;
 use Shopsys\FrontendApiBundle\Component\Price\MoneyFormatterHelper;
 use Symfony\Component\HttpFoundation\Response;
-use Tests\App\Test\FunctionalTestCase;
+use Tests\App\Test\TransactionFunctionalTestCase;
 
-abstract class GraphQlTestCase extends FunctionalTestCase
+abstract class GraphQlTestCase extends TransactionFunctionalTestCase
 {
     /**
      * @var \Symfony\Bundle\FrameworkBundle\Client
      */
     protected $client;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator
-     */
-    protected $em;
 
     /**
      * @var string
@@ -58,26 +53,15 @@ abstract class GraphQlTestCase extends FunctionalTestCase
 
     protected function setUp(): void
     {
-        $this->client = $this->findClient(true);
+        parent::setUp();
 
-        /*
-         * Newly created client has its own container
-         * To be able to isolate requests made with this new client,
-         * it's necessary to start transaction on entityManager from the client's container.
-         */
-
-        $this->domain = $this->client->getContainer()->get(Domain::class);
-        $this->em = $this->client->getContainer()->get('doctrine.orm.entity_manager');
-
-        $this->domain->switchDomainById(Domain::FIRST_DOMAIN_ID);
-        $firstDomain = $this->domain->getCurrentDomainConfig();
-        $this->firstDomainUrl = $firstDomain->getUrl();
+        $this->client = $this->findClient();
 
         $this->runCheckTestEnabledOnCurrentDomain();
 
-        $this->em->beginTransaction();
+        $this->firstDomainUrl = $this->domain->getCurrentDomainConfig()->getUrl();
 
-        parent::setUp();
+        $this->client = $this->findClient(true);
     }
 
     protected function runCheckTestEnabledOnCurrentDomain(): void
@@ -87,11 +71,6 @@ abstract class GraphQlTestCase extends FunctionalTestCase
         if (!$enabledOnCurrentDomainChecker->isEnabledOnCurrentDomain()) {
             $this->markTestSkipped('Frontend API disabled on domain');
         }
-    }
-
-    protected function tearDown(): void
-    {
-        $this->em->rollback();
     }
 
     /**

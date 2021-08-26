@@ -4,14 +4,10 @@ declare(strict_types=1);
 
 namespace Tests\App\Test;
 
-use Zalas\Injector\PHPUnit\Symfony\TestCase\SymfonyTestContainer;
-
 abstract class TransactionFunctionalTestCase extends FunctionalTestCase
 {
-    use SymfonyTestContainer;
-
     /**
-     * @var \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator
+     * @var \Doctrine\ORM\EntityManagerInterface
      * @inject
      */
     protected $em;
