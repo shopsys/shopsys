@@ -10,14 +10,14 @@ module.exports = {
     publicRuntimeConfig: {
         domains: [
             {
-                domain: process.env.DOMAIN_HOST_1,
-                publicGraphqlEndpoint: process.env.PUBLIC_GRAPHQL_ENDPOINT_1,
+                publicGraphqlEndpoint: process.env.DOMAIN_HOSTNAME_1 + 'graphql/',
+                url: process.env.DOMAIN_HOSTNAME_1,
                 defaultLocale: 'cs',
                 currencyCode: 'CZK',
             },
             {
-                domain: process.env.DOMAIN_HOST_2,
-                publicGraphqlEndpoint: process.env.PUBLIC_GRAPHQL_ENDPOINT_2,
+                publicGraphqlEndpoint: process.env.DOMAIN_HOSTNAME_2 + 'graphql/',
+                url: process.env.DOMAIN_HOSTNAME_2,
                 defaultLocale: 'sk',
                 currencyCode: 'EUR',
             },
@@ -25,8 +25,5 @@ module.exports = {
     },
     eslint: {
         ignoreDuringBuilds: true,
-    },
-    images: {
-        domains: [process.env.DOMAIN_BACKEND_HOST_1, process.env.DOMAIN_BACKEND_HOST_2],
     },
 };

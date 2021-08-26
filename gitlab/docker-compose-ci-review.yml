@@ -23,8 +23,8 @@ services:
         labels:
             - traefik.enable=false
         environment:
-            PUBLIC_GRAPHQL_ENDPOINT_1: https://${HOST}/graphql/
-            DOMAIN_HOST_1: ${HOST}
+            DOMAIN_HOST_1: https://${HOST}/
+            DOMAIN_HOST_2: https://en.${HOST}/
         networks:
             - default
 
