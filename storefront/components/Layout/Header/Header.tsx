@@ -13,6 +13,7 @@ import FrontendSwitcher from 'components/Blocks/FrontendSwitcher';
 import HamburgerMenu from './HamburgerMenu';
 import Logo from './Logo';
 import MenuIconic from './MenuIconic';
+import Overlay from '../Overlay';
 import Search from './Search';
 
 const Header: FC = () => {
@@ -34,12 +35,13 @@ const Header: FC = () => {
                 <MenuIconic />
             </HeaderLinksStyled>
             <HeaderMenuButtonStyled>
-                <HamburgerMenu toggleMenu={toggleMenu} isMenuOpened={isMenuOpened} />
+                <HamburgerMenu onMenuToggleHandler={onMenuToggleHandler} isMenuOpened={isMenuOpened} />
                 <DropdownMenu isMenuOpened={isMenuOpened} />
             </HeaderMenuButtonStyled>
             <HeaderCartStyled>
                 <Cart />
             </HeaderCartStyled>
+            <Overlay isActive={isMenuOpened} />
             <FrontendSwitcher />
         </HeaderStyled>
     );
