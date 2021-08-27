@@ -8,6 +8,7 @@ export const theme = {
         base: '#0d0d0d',
         primary: '#4c5bfd',
         white: '#fff',
+        whitesmoke: '#e8e8ea',
         black: '#000',
         orange: '#ecb200',
         orangeLight: '#fff0c4',

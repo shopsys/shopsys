@@ -12,6 +12,11 @@ interface SubcategoryWithProductsCount {
     };
 }
 
+export type ReadyCategorySeoMixLink = {
+    name: string;
+    slug: string;
+};
+
 export type CategoryDetailApiType = SlugType &
     BreadcrumbType & {
         uuid: typeof uuid;
@@ -24,6 +29,7 @@ export type CategoryDetailApiType = SlugType &
             }[];
             totalCount: number;
         };
+        readyCategorySeoMixLinks: ReadyCategorySeoMixLink[];
     };
 
 export interface CategoryDetailType extends SlugType {
@@ -32,4 +38,5 @@ export interface CategoryDetailType extends SlugType {
     seoH1: string | null;
     children: SubcategoryWithProductsCount[];
     products: ListedProductEdgesType;
+    readyCategorySeoMixLinks: ReadyCategorySeoMixLink[];
 }

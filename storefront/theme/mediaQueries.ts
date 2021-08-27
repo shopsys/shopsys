@@ -1,4 +1,4 @@
-const mobileFirstSizes = {
+export const mobileFirstSizes = {
     xs: 320,
     sm: 480,
     md: 600,
@@ -7,7 +7,7 @@ const mobileFirstSizes = {
     xl: 1240,
 } as const;
 
-const desktopFirstSizes = {
+export const desktopFirstSizes = {
     mobileXs: 479,
     mobile: 599,
     tablet: 768,
