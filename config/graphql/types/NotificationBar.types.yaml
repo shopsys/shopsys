@@ -1,0 +1,21 @@
+NotificationBar:
+    type: object
+    config:
+        description: "Represents a notification supposed to be displayed on all pages"
+        fields:
+            text:
+                type: "String!"
+                description: "Message of the notification"
+            rgbColor:
+                type: "String!"
+                description: "Color of the notification"
+            images:
+                type: "[Image]!"
+                description: "Notification bar images"
+                resolve: '@=service("App\\FrontendApi\\Model\\Resolver\\Image\\ImagesResolver").resolveByNotificationBar(value, args["type"], args["size"])'
+                args:
+                    type:
+                        type: "String"
+                        defaultValue: null
+                    size:
+                        type: "String"
