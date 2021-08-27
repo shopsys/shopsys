@@ -8,12 +8,9 @@ use App\DataFixtures\Demo\AdministratorDataFixture;
 use Shopsys\FrameworkBundle\Model\Administrator\Security\AdministratorFrontSecurityFacade;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Tests\App\Test\TransactionFunctionalTestCase;
-use Zalas\Injector\PHPUnit\Symfony\TestCase\SymfonyTestContainer;
 
 class AdministratorFrontSecurityFacadeTest extends TransactionFunctionalTestCase
 {
-    use SymfonyTestContainer;
-
     /**
      * @var \Shopsys\FrameworkBundle\Model\Administrator\Security\AdministratorFrontSecurityFacade
      * @inject

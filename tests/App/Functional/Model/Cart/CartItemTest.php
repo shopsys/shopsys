@@ -13,12 +13,9 @@ use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifier;
 use Shopsys\FrameworkBundle\Model\Product\Availability\Availability;
 use Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityData;
 use Tests\App\Test\TransactionFunctionalTestCase;
-use Zalas\Injector\PHPUnit\Symfony\TestCase\SymfonyTestContainer;
 
 class CartItemTest extends TransactionFunctionalTestCase
 {
-    use SymfonyTestContainer;
-
     /**
      * @var \App\Model\Product\ProductDataFactory
      * @inject

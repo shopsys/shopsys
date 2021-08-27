@@ -14,12 +14,9 @@ use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 use Shopsys\FrameworkBundle\Twig\PriceExtension;
 use Tests\App\Test\FunctionalTestCase;
-use Zalas\Injector\PHPUnit\Symfony\TestCase\SymfonyTestContainer;
 
 class PriceExtensionTest extends FunctionalTestCase
 {
-    use SymfonyTestContainer;
-
     protected const NBSP = "\xc2\xa0";
 
     /**

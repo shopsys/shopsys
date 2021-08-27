@@ -6,12 +6,9 @@ namespace Tests\App\Functional\Model\Product;
 
 use App\DataFixtures\Demo\ProductDataFixture;
 use Tests\App\Test\TransactionFunctionalTestCase;
-use Zalas\Injector\PHPUnit\Symfony\TestCase\SymfonyTestContainer;
 
 class ProductSellingDeniedRecalculatorTest extends TransactionFunctionalTestCase
 {
-    use SymfonyTestContainer;
-
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\ProductSellingDeniedRecalculator
      * @inject

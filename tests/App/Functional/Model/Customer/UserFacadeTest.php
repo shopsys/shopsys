@@ -8,12 +8,9 @@ use App\DataFixtures\Demo\PricingGroupDataFixture;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Customer\Exception\DuplicateEmailException;
 use Tests\App\Test\TransactionFunctionalTestCase;
-use Zalas\Injector\PHPUnit\Symfony\TestCase\SymfonyTestContainer;
 
 class UserFacadeTest extends TransactionFunctionalTestCase
 {
-    use SymfonyTestContainer;
-
     protected const EXISTING_EMAIL_ON_DOMAIN_1 = 'no-reply.3@shopsys.com';
     protected const EXISTING_EMAIL_ON_DOMAIN_2 = 'no-reply.4@shopsys.com';
 

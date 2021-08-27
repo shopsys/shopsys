@@ -7,12 +7,9 @@ namespace Tests\App\Functional\Model\Article;
 use App\Model\Article\Article;
 use DateTime;
 use Tests\App\Test\TransactionFunctionalTestCase;
-use Zalas\Injector\PHPUnit\Symfony\TestCase\SymfonyTestContainer;
 
 class ArticleTest extends TransactionFunctionalTestCase
 {
-    use SymfonyTestContainer;
-
     /**
      * @var \Shopsys\FrameworkBundle\Model\Article\ArticleDataFactoryInterface
      * @inject

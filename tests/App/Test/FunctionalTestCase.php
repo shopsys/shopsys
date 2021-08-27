@@ -17,8 +17,6 @@ use Zalas\Injector\PHPUnit\TestCase\ServiceContainerTestCase;
 
 abstract class FunctionalTestCase extends WebTestCase implements ServiceContainerTestCase
 {
-    use SymfonyTestContainer;
-
     /**
      * @var \Symfony\Bundle\FrameworkBundle\Client
      */
@@ -145,9 +143,11 @@ abstract class FunctionalTestCase extends WebTestCase implements ServiceContaine
     }
 
     /**
+     * Method is declared as final, so it's not unintentionally overridden by using SymfonyTestContainer trait
+     *
      * @return \Psr\Container\ContainerInterface
      */
-    public function createContainer(): ContainerInterface
+    final public function createContainer(): ContainerInterface
     {
         return $this->getContainer()->get('test.service_container');
     }

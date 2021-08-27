@@ -8,12 +8,9 @@ use App\DataFixtures\Demo\ProductDataFixture;
 use Faker\Provider\Text;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Tests\App\Test\FunctionalTestCase;
-use Zalas\Injector\PHPUnit\Symfony\TestCase\SymfonyTestContainer;
 
 class ProductRenameRedirectPreviousUrlTest extends FunctionalTestCase
 {
-    use SymfonyTestContainer;
-
     private const TESTED_PRODUCT_ID = 100;
 
     /**

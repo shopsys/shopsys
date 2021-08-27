@@ -9,12 +9,9 @@ use App\Model\Product\Product;
 use App\Model\Product\ProductData;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Tests\App\Test\TransactionFunctionalTestCase;
-use Zalas\Injector\PHPUnit\Symfony\TestCase\SymfonyTestContainer;
 
 class ProductDomainTest extends TransactionFunctionalTestCase
 {
-    use SymfonyTestContainer;
-
     protected const FIRST_DOMAIN_ID = 1;
     protected const SECOND_DOMAIN_ID = 2;
     protected const DEMONSTRATIVE_DESCRIPTION = 'Demonstrative description';

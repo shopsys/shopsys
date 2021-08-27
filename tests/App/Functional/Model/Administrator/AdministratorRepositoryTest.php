@@ -8,12 +8,9 @@ use App\DataFixtures\Demo\AdministratorDataFixture;
 use DateTime;
 use Shopsys\FrameworkBundle\Model\Administrator\Security\Exception\InvalidTokenException;
 use Tests\App\Test\TransactionFunctionalTestCase;
-use Zalas\Injector\PHPUnit\Symfony\TestCase\SymfonyTestContainer;
 
 class AdministratorRepositoryTest extends TransactionFunctionalTestCase
 {
-    use SymfonyTestContainer;
-
     /**
      * @var \Shopsys\FrameworkBundle\Model\Administrator\AdministratorRepository
      * @inject

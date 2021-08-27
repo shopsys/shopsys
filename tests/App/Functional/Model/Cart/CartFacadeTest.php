@@ -13,12 +13,9 @@ use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifier;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifierFactory;
 use Shopsys\FrameworkBundle\Model\Product\Exception\ProductNotFoundException;
 use Tests\App\Test\TransactionFunctionalTestCase;
-use Zalas\Injector\PHPUnit\Symfony\TestCase\SymfonyTestContainer;
 
 class CartFacadeTest extends TransactionFunctionalTestCase
 {
-    use SymfonyTestContainer;
-
     /**
      * @var \Shopsys\FrameworkBundle\Model\Cart\CartFactory
      * @inject
