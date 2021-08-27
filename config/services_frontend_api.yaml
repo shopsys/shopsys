@@ -61,3 +61,11 @@ services:
     Shopsys\FrontendApiBundle\Model\Resolver\Category\CategoryResolver:
         alias: App\FrontendApi\Model\Resolver\Category\CategoryResolver
         public: true
+
+    Shopsys\FrontendApiBundle\Model\Resolver\Article\ArticleResolver:
+        alias: App\FrontendApi\Model\Resolver\Article\ArticleResolver
+        public: true
+
+    Shopsys\FrontendApiBundle\Model\Resolver\Article\ArticlesResolver:
+        alias: App\FrontendApi\Model\Resolver\Article\ArticlesResolver
+        public: true
