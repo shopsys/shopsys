@@ -36,18 +36,6 @@ abstract class FunctionalTestCase extends WebTestCase implements ServiceContaine
      */
     protected Domain $domain;
 
-    protected function setUpDomain(): void
-    {
-        $this->domain->switchDomainById(Domain::FIRST_DOMAIN_ID);
-    }
-
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        $this->setUpDomain();
-    }
-
     protected function tearDown(): void
     {
         if ($this->client !== null) {
@@ -71,32 +59,52 @@ abstract class FunctionalTestCase extends WebTestCase implements ServiceContaine
         ?string $username = null,
         ?string $password = null,
         array $kernelOptions = [],
+        array $clientOptions = []): KernelBrowser
+    {
+        if ($createNew || !isset($this->client)) {
+            $this->client = $this->createNewClient($username, $password, $kernelOptions, $clientOptions);
+        }
+        return $this->client;
+    }
+
+    /**
+     * Creates a new Client with provided options, disabled reboot and Domain switched to ID 1
+     * The Client will have its own Kernel and Container, with different instances of services
+     * This means that it will not have access to changed DB data if your other Client has EM in transaction
+     *
+     * @param string|null $username
+     * @param string|null $password
+     * @param array $kernelOptions
+     * @param array $clientOptions
+     * @return \Symfony\Bundle\FrameworkBundle\KernelBrowser
+     */
+    protected function createNewClient(
+        ?string $username = null,
+        ?string $password = null,
+        array $kernelOptions = [],
         array $clientOptions = []
     ): KernelBrowser {
         $defaultKernelOptions = [
             'environment' => EnvironmentType::TEST,
             'debug' => EnvironmentType::isDebug(EnvironmentType::TEST),
         ];
-
         $kernelOptions = array_replace($defaultKernelOptions, $kernelOptions);
 
-        if ($createNew) {
-            $this->client = self::createClient($kernelOptions, $clientOptions);
-            $this->setUpDomain();
-        } elseif (!isset($this->client)) {
-            $this->client = self::createClient($kernelOptions, $clientOptions);
-        }
+        $client = self::createClient($kernelOptions, $clientOptions);
+
+        /** @var \Symfony\Component\DependencyInjection\ContainerInterface $container */
+        $container = $client->getContainer()->get('test.service_container');
+
+        $container->get(Domain::class)->switchDomainById(Domain::FIRST_DOMAIN_ID);
 
         if ($username !== null) {
-            $this->client->setServerParameters([
-                'PHP_AUTH_USER' => $username,
-                'PHP_AUTH_PW' => $password,
-            ]);
+            $client->setServerParameter('PHP_AUTH_USER', $username);
+            $client->setServerParameter('PHP_AUTH_PW', $password);
         }
 
-        $this->client->disableReboot();
+        $client->disableReboot();
 
-        return $this->client;
+        return $client;
     }
 
     /**
