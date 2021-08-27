@@ -57,3 +57,7 @@ services:
     Shopsys\FrontendApiBundle\Model\Resolver\Products\ProductsResolver:
         alias: App\FrontendApi\Model\Resolver\Products\ProductsResolver
         public: true
+
+    Shopsys\FrontendApiBundle\Model\Resolver\Category\CategoryResolver:
+        alias: App\FrontendApi\Model\Resolver\Category\CategoryResolver
+        public: true
