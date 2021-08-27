@@ -55,7 +55,7 @@ class BlogCategoryResolverMap extends ResolverMap
                 'slug' => function (BlogCategory $blogCategory) {
                     $friendlyUrl = $this->friendlyUrlFacade->getMainFriendlyUrl($this->domain->getId(), 'front_blogcategory_detail', $blogCategory->getId());
 
-                    return $friendlyUrl->getSlug();
+                    return '/' . $friendlyUrl->getSlug();
                 },
                 'link' => function (BlogCategory $blogCategory) {
                     $friendlyUrl = $this->friendlyUrlFacade->getMainFriendlyUrl($this->domain->getId(), 'front_blogcategory_detail', $blogCategory->getId());

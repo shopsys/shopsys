@@ -60,6 +60,6 @@ class StoreResolverMap extends ResolverMap
             $store->getId()
         );
 
-        return $friendlyUrl->getSlug();
+        return '/' . $friendlyUrl->getSlug();
     }
 }

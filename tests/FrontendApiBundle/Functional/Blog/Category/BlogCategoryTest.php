@@ -203,7 +203,7 @@ class BlogCategoryTest extends GraphQlTestCase
                     'seoH1' => t('První podsekce %locale% - h1', ['%locale%' => $locale], 'dataFixtures', $locale),
                     'seoMetaDescription' => null,
                     'link' => $this->friendlyUrlFacade->getAbsoluteUrlByFriendlyUrl($friendlyUrl),
-                    'slug' => $friendlyUrl->getSlug(),
+                    'slug' => '/' . $friendlyUrl->getSlug(),
                     'breadcrumb' => [
                         [
                             'name' => $firstBlogCategory->getName($locale),

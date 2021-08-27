@@ -58,6 +58,6 @@ class BrandResolverMap extends BaseBrandResolverMap
             $brand->getId()
         );
 
-        return $friendlyUrl->getSlug();
+        return '/' . $friendlyUrl->getSlug();
     }
 }
