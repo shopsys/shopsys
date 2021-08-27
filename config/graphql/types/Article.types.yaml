@@ -6,6 +6,7 @@ Article:
         interfaces:
             - 'Breadcrumb'
             - 'Slug'
+            - 'ArticleInterface'
         fields:
             slug:
                 type: "String!"

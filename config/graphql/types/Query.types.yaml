@@ -72,3 +72,10 @@ Query:
                 type: '[NotificationBar!]'
                 resolve: "@=resolver('notificationBars')"
                 description: "Returns a list of notifications supposed to be displayed on all pages"
+            articlesSearch:
+                type: "[ArticleInterface]"
+                resolve: "@=resolver('articlesSearch', [args])"
+                args:
+                    search:
+                        type: "String!"
+                description: "Returns list of searched articles and blog articles"

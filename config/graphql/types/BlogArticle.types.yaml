@@ -4,6 +4,7 @@ BlogArticle:
         interfaces:
             - 'Breadcrumb'
             - 'Slug'
+            - 'ArticleInterface'
         fields:
             uuid:
                 type: "Uuid!"
