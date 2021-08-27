@@ -25,7 +25,7 @@ const Breadcrumbs: FC<BreadcrumbType> = (props) => {
                 <BreadcrumbsSpanStyled>/</BreadcrumbsSpanStyled>
                 {props.breadcrumb.slice(0, props.breadcrumb.length - 1).map((breadcrumb, index) => (
                     <Fragment key={index}>
-                        <Link href={'/' + breadcrumb.slug}>
+                        <Link href={breadcrumb.slug}>
                             <BreadcrumbsLinkStyled>{breadcrumb.name}</BreadcrumbsLinkStyled>
                         </Link>
                         <span>/</span>
