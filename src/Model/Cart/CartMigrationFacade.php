@@ -14,6 +14,7 @@ use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifierFactory;
 
 /**
  * @property \App\Model\Cart\CartFacade $cartFacade
+ * @property \App\Model\Customer\User\CustomerUserIdentifierFactory $customerUserIdentifierFactory
  */
 class CartMigrationFacade extends BaseCartMigrationFacade
 {
@@ -24,7 +25,7 @@ class CartMigrationFacade extends BaseCartMigrationFacade
 
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifierFactory $customerUserIdentifierFactory
+     * @param \App\Model\Customer\User\CustomerUserIdentifierFactory $customerUserIdentifierFactory
      * @param \Shopsys\FrameworkBundle\Model\Cart\Item\CartItemFactoryInterface $cartItemFactory
      * @param \App\Model\Cart\CartFacade $cartFacade
      */

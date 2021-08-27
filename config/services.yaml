@@ -912,3 +912,6 @@ services:
     App\Component\Packetery\PacketeryClient: ~
 
     App\Component\Packetery\PacketeryRenderer: ~
+
+    Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifierFactory:
+        alias: App\Model\Customer\User\CustomerUserIdentifierFactory

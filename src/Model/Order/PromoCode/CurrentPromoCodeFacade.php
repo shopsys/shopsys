@@ -31,7 +31,7 @@ class CurrentPromoCodeFacade extends BaseCurrentPromoCodeFacade
     private $domain;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifierFactory
+     * @var \App\Model\Customer\User\CustomerUserIdentifierFactory
      */
     private $customerUserIdentifierFactory;
 
@@ -55,7 +55,7 @@ class CurrentPromoCodeFacade extends BaseCurrentPromoCodeFacade
      * @param \Symfony\Component\HttpFoundation\Session\SessionInterface $session
      * @param \App\Model\Order\PromoCode\PromoCodeProductRepository $promoCodeProductRepository
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifierFactory $customerUserIdentifierFactory
+     * @param \App\Model\Customer\User\CustomerUserIdentifierFactory $customerUserIdentifierFactory
      * @param \Shopsys\FrameworkBundle\Model\Cart\CartRepository $cartRepository
      * @param \App\Model\Order\PromoCode\ProductPromoCodeFiller $productPromoCodeFiller
      * @param \App\Model\Order\PromoCode\PromoCodeLimitResolver $promoCodeLimitByCartTotalResolver
