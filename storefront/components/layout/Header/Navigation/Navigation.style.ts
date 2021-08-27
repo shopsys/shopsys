@@ -1,12 +1,12 @@
-import styled, { css } from 'styled-components';
-import { Theme } from 'theme/main';
+import { css } from 'styled-components';
+import { styled } from 'theme/main';
 
 const localVariables = {
     navigationItemLinkHorizontalGap: '10px',
 } as const;
 
 export const NavigationStyled = styled.ul`
-    ${({ theme }: { theme: Theme }) => css`
+    ${({ theme }) => css`
         display: none;
         width: 100%;
 

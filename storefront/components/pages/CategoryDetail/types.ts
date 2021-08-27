@@ -1,3 +1,5 @@
+import { ListedProductEdgesType, ListedProductItemApiType } from '../../blocks/product/types';
+import { BreadcrumbType } from '../../../connectors/breadcrumb/Breadcrumb';
 import { SlugType } from '../../../connectors/slug/Slug';
 import { v4 as uuid } from 'uuid';
 
@@ -10,9 +12,24 @@ interface SubcategoryWithProductsCount {
     };
 }
 
+export type CategoryDetailApiType = SlugType &
+    BreadcrumbType & {
+        uuid: typeof uuid;
+        name: string;
+        seoH1: string | null;
+        children: SubcategoryWithProductsCount[];
+        products: {
+            edges: {
+                node: ListedProductItemApiType;
+            }[];
+            totalCount: number;
+        };
+    };
+
 export interface CategoryDetailType extends SlugType {
     uuid: typeof uuid;
     name: string;
     seoH1: string | null;
     children: SubcategoryWithProductsCount[];
+    products: ListedProductEdgesType;
 }

@@ -1,3 +1,4 @@
+import { CategoryDetailApiType } from '../../components/pages/CategoryDetail/types';
 import { categoryDetailBody } from '../categories/CategoryDetail';
 import { productDetailBody } from '../products/ProductDetail';
 import { ProductDetailType } from '../../components/pages/ProductDetail/types';
@@ -19,7 +20,7 @@ export function friendlyUrlQuery(slug: string): string {
     `;
 }
 
-export function getFriendlyUrlResolvedData(slug: string): ProductDetailType | undefined | null {
+export function getFriendlyUrlResolvedData(slug: string): ProductDetailType | CategoryDetailApiType | undefined | null {
     const result = useFetchQuery({ query: friendlyUrlQuery(slug) });
 
     return result?.data?.slug;

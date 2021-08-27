@@ -1,8 +1,10 @@
 import { CategoryDetailType } from './types';
 import { FC } from 'react';
+import ProductsList from '../../blocks/product/List/ProductsList';
 import ShopsysHeading from '../../basic/ShopsysHeading';
 import ShopsysLink from '../../basic/ShopsysLink';
 import Webline from '../../layout/Webline';
+
 type CategoryDetailProps = {
     category: CategoryDetailType;
 };
@@ -20,6 +22,7 @@ const CategoryDetail: FC<CategoryDetailProps> = (props) => {
                     </li>
                 ))}
             </ul>
+            {props.category.products.edges.length !== 0 && <ProductsList products={props.category.products.edges} />}
         </Webline>
     );
 };

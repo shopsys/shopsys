@@ -1,5 +1,5 @@
-import styled, { css } from 'styled-components';
-import { Theme } from 'theme/main';
+import { css } from 'styled-components';
+import { styled } from 'theme/main';
 
 const localVariables = {
     navigationHeight: '64px',
@@ -23,7 +23,7 @@ export const NavigationColumnCategoryStyled = styled.li`
 `;
 
 export const NavigationColumnCategoryImageStyled = styled.a`
-    ${({ theme }: { theme: Theme }) => css`
+    ${({ theme }) => css`
         display: flex;
         justify-content: center;
         height: 64px;
@@ -41,7 +41,7 @@ export const NavigationColumnCategoryImageStyled = styled.a`
 `;
 
 export const NavigationColumnCategoryLinkStyled = styled.a`
-    ${({ theme }: { theme: Theme }) => css`
+    ${({ theme }) => css`
         display: block;
         margin-bottom: 4px;
 
