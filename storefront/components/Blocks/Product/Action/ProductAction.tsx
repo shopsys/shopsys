@@ -25,7 +25,7 @@ const ProductAction: FC<SliderProductItemType> = (props) => {
             <ProductActionStyled isButtonFullWidth={false}>
                 <Spinbox size="small" step={1} min={1} max={15} defaultValue={1} />
                 <Button type="button" size="small" name="add-to-cart">
-                    {t<string>('Add to cart')}
+                    {t('Add to cart')}
                 </Button>
             </ProductActionStyled>
         </ProductActionWrapperStyled>

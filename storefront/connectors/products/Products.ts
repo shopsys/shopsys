@@ -7,37 +7,44 @@ import {
 import { useFetchQuery } from '../../hooks/UseFetchQuery';
 import { useShopsysSelector } from '../../redux/store';
 
+export const sliderProductQuery = `
+    __typename
+    slug
+    name
+    flags {
+        name
+        rgbColor
+    }
+    images (size: "list") {
+        url
+        width
+        height
+    }
+    availability {
+        name
+    }
+    price {
+        priceWithVat
+        priceWithoutVat
+        vatAmount
+        isPriceFrom
+    }
+    availableStoresCount
+    exposedStoresCount
+`;
+
 export const promotedProductsQuery = `
         query promotedProducts {
             promotedProducts {
-                __typename
-                slug
-                name
-                flags {
-                    name
-                    rgbColor
-                }
-                images (size: "list") {
-                    url
-                    width
-                    height
-                }
-                availability {
-                    name
-                }
-                price {
-                    priceWithVat
-                    priceWithoutVat
-                    vatAmount
-                    isPriceFrom
-                }
-                availableStoresCount
-                exposedStoresCount
+                ${sliderProductQuery}
             }
         }
     ` as const;
 
-const mapProductApiData = (apiData: ProductItemApiType[], currencyCode: string) => {
+export const mapSliderProductApiData = (
+    apiData: ProductItemApiType[],
+    currencyCode: string,
+): SliderProductItemType[] => {
     return apiData.map((apiProduct) => {
         return {
             ...apiProduct,
@@ -53,17 +60,6 @@ const mapProductApiData = (apiData: ProductItemApiType[], currencyCode: string) 
     });
 };
 
-export const getPromotedProducts = (): SliderProductItemType[] | undefined => {
-    const result = useFetchQuery({ query: promotedProductsQuery });
-    const currentDomainConfig = useShopsysSelector((state) => state.domain);
-    const apiData = result?.data?.promotedProducts;
-    if (apiData === undefined) {
-        return undefined;
-    }
-
-    return mapProductApiData(apiData, currentDomainConfig.currencyCode);
-};
-
 export function mapListedProductNode(data: ListedProductItemApiType, currencyCode: string): ListedProductItemType {
     return {
         ...data,
@@ -77,3 +73,14 @@ export function mapListedProductNode(data: ListedProductItemApiType, currencyCod
         availability: data.availability.name,
     };
 }
+
+export const getPromotedProducts = (): SliderProductItemType[] | undefined => {
+    const result = useFetchQuery({ query: promotedProductsQuery });
+    const currentDomainConfig = useShopsysSelector((state) => state.domain);
+    const apiData = result?.data?.promotedProducts;
+    if (apiData === undefined) {
+        return undefined;
+    }
+
+    return mapSliderProductApiData(apiData, currentDomainConfig.currencyCode);
+};
