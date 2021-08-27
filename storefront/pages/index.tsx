@@ -1,13 +1,11 @@
 import { DomainConfigType, getDomainConfig } from '../utils/Domain/Domain';
 import Banners from 'components/blocks/banners';
+import CommonLayout from '../components/layout/CommonLayout';
 import { domainActions } from '../redux/store/DomainStore';
 import { FC } from 'react';
 import { GetServerSideProps } from 'next';
-import Header from '../components/layout/Header';
 import { initServerSideProps } from '../helpers/InitServerSideProps';
-import Navigation from '../components/layout/Header/Navigation';
 import { navigationQuery } from '../connectors/navigation/Navigation';
-import NewsletterForm from 'components/layout/Footer/NewsletterForm';
 import PromotedCategories from '../components/blocks/categories/PromotedCategories/PromotedCategories';
 import { promotedCategoriesQuery } from '../connectors/categories/PromotedCategories';
 import PromotedProducts from '../components/blocks/product/PromotedProducts/PromotedProducts';
@@ -26,11 +24,7 @@ const Index: FC<IndexProps> = (props) => {
     dispatch(domainActions.setDomain(getDomainConfig(props.domainConfig?.domain)));
 
     return (
-        <>
-            <Webline type="colored" style={{ marginBottom: '32px' }}>
-                <Header></Header>
-                <Navigation></Navigation>
-            </Webline>
+        <CommonLayout>
             <Webline>
                 <Banners />
             </Webline>
@@ -42,10 +36,7 @@ const Index: FC<IndexProps> = (props) => {
                 <ShopsysHeading type="h2">{t<string>('Promoted products')}</ShopsysHeading>
                 <PromotedProducts />
             </Webline>
-            <Webline type="light">
-                <NewsletterForm />
-            </Webline>
-        </>
+        </CommonLayout>
     );
 };
 
