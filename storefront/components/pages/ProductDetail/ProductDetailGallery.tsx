@@ -5,8 +5,36 @@ import {
     StyledProductDetailGalleryThumbnailsItem,
 } from './ProductDetailGallery.style';
 import { FC } from 'react';
+import ProductDetailImageSlider from './ProductDetailImageSlider';
 
 const ProductDetailGallery: FC = () => {
+    /* TODO PRG: join live data */
+    const productDetailSliderItems = [
+        {
+            type: 'web',
+            position: 1,
+            size: 'default',
+            url: 'http://placeimg.com/640/530/any?t=1',
+            width: 968,
+            height: 318,
+        },
+        {
+            type: 'web',
+            position: 2,
+            size: 'default',
+            url: 'http://placeimg.com/640/530/any?t=2',
+            width: 968,
+            height: 318,
+        },
+    ];
+
+    if (
+        productDetailSliderItems === undefined ||
+        (Array.isArray(productDetailSliderItems) && productDetailSliderItems.length === 0)
+    ) {
+        return null;
+    }
+
     return (
         <SimpleReactLightbox>
             <SRLWrapper
@@ -47,6 +75,7 @@ const ProductDetailGallery: FC = () => {
                         />
                     </a>
                 </StyledProductDetailGalleryMainImage>
+                <ProductDetailImageSlider galleryItems={productDetailSliderItems} />
             </SRLWrapper>
         </SimpleReactLightbox>
     );

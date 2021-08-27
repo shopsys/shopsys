@@ -1,5 +1,5 @@
-import styled, { css } from 'styled-components';
-import { Theme } from 'theme/main';
+import { css } from 'styled-components';
+import { styled } from 'theme/main';
 
 const localVariables = {
     productDetailGalleryRadius: '6px',
@@ -7,14 +7,13 @@ const localVariables = {
 };
 
 export const StyledProductDetailGalleryThumbnails = styled.div`
-    ${({ theme }: { theme: Theme }) => css`
+    ${({ theme }) => css`
         display: none;
 
-        @media ${theme.mediaQueries.queryMd} {
+        @media ${theme.mediaQueries.queryLg} {
             position: relative;
             display: flex;
             flex-direction: column;
-            overflow: hidden;
             width: 100px;
             padding-right: 24px;
             margin-bottom: 20px;
@@ -23,10 +22,9 @@ export const StyledProductDetailGalleryThumbnails = styled.div`
 `;
 
 export const StyledProductDetailGalleryThumbnailsItem = styled.div`
-    ${({ theme }: { theme: Theme }) => css`
+    ${({ theme }) => css`
         display: block;
-        width: 100%;
-        min-width: 100%;
+        width: 76px;
         position: relative;
         cursor: pointer;
 
@@ -68,10 +66,15 @@ export const StyledProductDetailGalleryThumbnailsItem = styled.div`
 `;
 
 export const StyledProductDetailGalleryMainImage = styled.div`
-    ${({ theme }: { theme: Theme }) => css`
-        padding: 15px;
+    ${({ theme }) => css`
+        display: none;
 
-        border-radius: ${theme.radius.default};
-        overflow: hidden;
+        @media ${theme.mediaQueries.queryLg} {
+            display: block;
+            padding: 15px;
+
+            border-radius: ${theme.radius.big};
+            overflow: hidden;
+        }
     `}
 `;

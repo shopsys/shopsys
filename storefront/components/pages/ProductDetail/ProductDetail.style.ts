@@ -1,6 +1,5 @@
 import { css } from 'styled-components';
 import { styled } from 'theme/main';
-import { Theme } from 'theme/main';
 
 const localVariables = {
     detailInfoWidthSmall: '346px',
@@ -8,7 +7,7 @@ const localVariables = {
 };
 
 export const StyledProductDetail = styled.div`
-    ${({ theme }: { theme: Theme }) => css`
+    ${({ theme }) => css`
         display: flex;
         flex-direction: column;
         flex-wrap: wrap;
@@ -20,7 +19,7 @@ export const StyledProductDetail = styled.div`
 `;
 
 export const StyledProductDetailImage = styled.div`
-    ${({ theme }: { theme: Theme }) => css`
+    ${({ theme }) => css`
         @media ${theme.mediaQueries.queryLg} {
             width: calc(100% - ${localVariables.detailInfoWidthSmall});
             margin-bottom: 0;
@@ -32,23 +31,23 @@ export const StyledProductDetailImage = styled.div`
 
         // this div is added automaticaly by simple-react-lightbox
         > div {
-        position: relative;
-        display: flex;
+            position: relative;
+            display: flex;
             flex-direction: row;
             align-items: flex-start;
             justify-content: flex-start;
-        width: 100%;
-        margin-bottom: 20px;
+            width: 100%;
+            margin-bottom: 20px;
 
-        border-radius: ${theme.radius.big};
-        font-size: 0;
-        overflow: hidden;
+            border-radius: ${theme.radius.big};
+            font-size: 0;
+            overflow: hidden;
         }
     `}
 `;
 
 export const StyledProductDetailInfo = styled.div`
-    ${({ theme }: { theme: Theme }) => css`
+    ${({ theme }) => css`
         width: 100%;
         margin-bottom: 16px;
 
@@ -65,7 +64,7 @@ export const StyledProductDetailInfo = styled.div`
 `;
 
 export const StyledProductDetailPrefix = styled.div`
-    ${({ theme }: { theme: Theme }) => css`
+    ${({ theme }) => css`
         margin-bottom: 4px;
 
         color: ${theme.color.greyLight};
@@ -75,7 +74,7 @@ export const StyledProductDetailPrefix = styled.div`
 `;
 
 export const StyledProductDetailHeading = styled.h1`
-    ${({ theme }: { theme: Theme }) => css`
+    ${({ theme }) => css`
         margin-bottom: 8px;
 
         color: ${theme.color.black};
@@ -85,7 +84,7 @@ export const StyledProductDetailHeading = styled.h1`
 `;
 
 export const StyledProductDetailCode = styled.div`
-    ${({ theme }: { theme: Theme }) => css`
+    ${({ theme }) => css`
         margin-bottom: 20px;
 
         color: ${theme.color.baseLighter};

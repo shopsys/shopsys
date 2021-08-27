@@ -10,7 +10,7 @@ import {
 import ProductDetailAvailability from './ProductDetailStoresAvailability/ProductDetailAvailability';
 import ProductDetailAvailabilityList from './ProductDetailStoresAvailability/ProductDetailAvailabilityList';
 import ProductDetailGallery from './ProductDetailGallery';
-import { ProductDetailType } from '../../../connectors/products/ProductDetailType';
+import { ProductDetailType } from './types';
 import ShopsysInUserText from 'components/in/ShopsysInUserText';
 import { useTranslation } from 'next-i18next';
 import Webline from '../../layout/Webline';
