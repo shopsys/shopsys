@@ -64,6 +64,9 @@ class AuthenticatedAddToCartTest extends GraphQlWithLoginTestCase
 
     public function testProductIsAddedToExistingCart(): void
     {
+        $this->markTestSkipped('skipped until https://gitlab.shopsys.cz/ss6-projects/ssfwcc/-/merge_requests/193 is resolved');
+
+        /** @phpstan-ignore-next-line */
         $initialProductQuantity = 6;
         $this->addTestingProductToCustomerCart($initialProductQuantity);
 
@@ -88,6 +91,9 @@ class AuthenticatedAddToCartTest extends GraphQlWithLoginTestCase
 
     public function testAnotherProductIsAddedToCart(): void
     {
+        $this->markTestSkipped('skipped until https://gitlab.shopsys.cz/ss6-projects/ssfwcc/-/merge_requests/193 is resolved');
+
+        /** @phpstan-ignore-next-line */
         $productQuantity = 2;
         $this->addTestingProductToCustomerCart($productQuantity);
 
@@ -118,6 +124,9 @@ class AuthenticatedAddToCartTest extends GraphQlWithLoginTestCase
 
     public function testProductQuantityIsChangedInExistingCart(): void
     {
+        $this->markTestSkipped('skipped until https://gitlab.shopsys.cz/ss6-projects/ssfwcc/-/merge_requests/193 is resolved');
+
+        /** @phpstan-ignore-next-line */
         $initialProductQuantity = 2;
         $this->addTestingProductToCustomerCart($initialProductQuantity);
 

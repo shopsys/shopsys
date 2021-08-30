@@ -48,6 +48,9 @@ class AnonymousAddToCartTest extends GraphQlTestCase
 
     public function testProductIsAddedToExistingCart(): void
     {
+        $this->markTestSkipped('skipped until https://gitlab.shopsys.cz/ss6-projects/ssfwcc/-/merge_requests/193 is resolved');
+
+        /** @phpstan-ignore-next-line */
         $initialProductQuantity = 2;
         $newlyCreatedCartUuid = $this->addTestingProductToNewCart($initialProductQuantity);
 
@@ -75,6 +78,9 @@ class AnonymousAddToCartTest extends GraphQlTestCase
 
     public function testAnotherProductIsAddedToCart(): void
     {
+        $this->markTestSkipped('skipped until https://gitlab.shopsys.cz/ss6-projects/ssfwcc/-/merge_requests/193 is resolved');
+
+        /** @phpstan-ignore-next-line */
         $productQuantity = 2;
         $newlyCreatedCartUuid = $this->addTestingProductToNewCart($productQuantity);
 
@@ -108,6 +114,9 @@ class AnonymousAddToCartTest extends GraphQlTestCase
 
     public function testProductQuantityIsChangedInExistingCart(): void
     {
+        $this->markTestSkipped('skipped until https://gitlab.shopsys.cz/ss6-projects/ssfwcc/-/merge_requests/193 is resolved');
+
+        /** @phpstan-ignore-next-line */
         $initialProductQuantity = 2;
         $newlyCreatedCartUuid = $this->addTestingProductToNewCart($initialProductQuantity);
 
