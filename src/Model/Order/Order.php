@@ -232,6 +232,14 @@ class Order extends BaseOrder
     }
 
     /**
+     * @param string $trackingNumber
+     */
+    public function setTrackingNumber(string $trackingNumber): void
+    {
+        $this->trackingNumber = $trackingNumber;
+    }
+
+    /**
      * @return string|null
      */
     public function getTrackingUrl(): ?string

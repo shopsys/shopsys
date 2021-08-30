@@ -906,3 +906,11 @@ services:
 
     Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfigFactory:
         alias: App\Model\Product\Filter\Elasticsearch\ProductFilterConfigFactory
+
+    App\Component\Packetery\PacketeryConfig:
+        arguments:
+            $packeteryConfig: "%packetery_config%"
+
+    App\Component\Packetery\PacketeryClient: ~
+
+    App\Component\Packetery\PacketeryRenderer: ~

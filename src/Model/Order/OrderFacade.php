@@ -13,6 +13,7 @@ use App\Model\Gtm\GtmHelper;
 use App\Model\Order\Item\OrderItemDataFactory;
 use App\Model\Order\Status\OrderStatus;
 use App\Model\Payment\Payment;
+use App\Model\Transport\Type\TransportType;
 use BadMethodCallException;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
@@ -34,7 +35,6 @@ use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderProductFacade;
 use Shopsys\FrameworkBundle\Model\Order\Mail\OrderMailFacade;
-use Shopsys\FrameworkBundle\Model\Order\Order;
 use Shopsys\FrameworkBundle\Model\Order\Order as BaseOrder;
 use Shopsys\FrameworkBundle\Model\Order\OrderData as BaseOrderData;
 use Shopsys\FrameworkBundle\Model\Order\OrderFacade as BaseOrderFacade;
@@ -730,5 +730,24 @@ class OrderFacade extends BaseOrderFacade
             $order,
             null
         );
+    }
+
+    /**
+     * @param \App\Model\Transport\Type\TransportType $transportType
+     * @return \App\Model\Order\Order[]
+     */
+    public function getAllWithoutTrackingNumberByTransportType(TransportType $transportType): array
+    {
+        return $this->orderRepository->getAllWithoutTrackingNumberByTransportType($transportType);
+    }
+
+    /**
+     * @param \App\Model\Order\Order $order
+     * @param string $trackingNumber
+     */
+    public function updateTrackingNumber(Order $order, string $trackingNumber): void
+    {
+        $order->setTrackingNumber($trackingNumber);
+        $this->em->flush();
     }
 }
