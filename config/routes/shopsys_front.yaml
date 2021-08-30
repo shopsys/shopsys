@@ -265,3 +265,8 @@ front_products_in_sale_on_home_page:
     path: /products-in-sale-on-home-page/
     defaults:
         _controller: App\Controller\Front\ProductController:productsInSaleOnHomePageAction
+
+front_frontend_switch:
+    path: /switch-frontend
+    defaults:
+        _controller: App\Controller\Front\FrontendSwitcherController:indexAction
