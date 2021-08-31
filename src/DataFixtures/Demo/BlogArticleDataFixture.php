@@ -130,6 +130,8 @@ class BlogArticleDataFixture extends AbstractReferenceFixture
             $this->blogArticleFacade->create($blogArticleData);
         }
 
+        $this->createBlogArticleForSearchingTest();
+
         $this->blogVisibilityFacade->refreshBlogArticlesVisibility();
         $this->blogVisibilityFacade->refreshBlogCategoriesVisibility();
     }
@@ -196,5 +198,27 @@ class BlogArticleDataFixture extends AbstractReferenceFixture
         $this->articleCounter++;
 
         return $blogArticleData;
+    }
+
+    private function createBlogArticleForSearchingTest(): void
+    {
+        $blogArticleData = $this->blogArticleDataFactory->create();
+
+        foreach ($this->domain->getAllLocales() as $locale) {
+            $blogArticleData->names[$locale] = t('Blog article for search testing', [], 'dataFixtures', $locale);
+            $blogArticleData->descriptions[$locale] = t('Article text for search testing, the search phrase is "Dina".', [], 'dataFixtures', $locale);
+            $blogArticleData->perexes[$locale] = t('perex', ['%locale%' => $locale], 'dataFixtures', $locale);
+        }
+
+        foreach ($this->domain->getAll() as $domain) {
+            $locale = $domain->getLocale();
+            $blogArticleData->blogCategoriesByDomainId[$domain->getId()] = [$this->getReference(self::FIRST_DEMO_BLOG_CATEGORY), $this->getReference(self::FIRST_DEMO_BLOG_SUBCATEGORY)];
+            $blogArticleData->seoTitles[$domain->getId()] = t('title', ['%counter%' => $this->articleCounter, '%locale%' => $locale], 'dataFixtures', $locale);
+            $blogArticleData->seoH1s[$domain->getId()] = t('Heading', ['%counter%' => $this->articleCounter, '%locale%' => $locale], 'dataFixtures', $locale);
+        }
+
+        $this->blogArticleFacade->create($blogArticleData);
+
+        $this->articleCounter++;
     }
 }

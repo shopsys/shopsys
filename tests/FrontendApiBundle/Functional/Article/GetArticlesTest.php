@@ -78,23 +78,23 @@ class GetArticlesTest extends GraphQlTestCase
             ],
             [
                 $this->getLastArticlesQuery(1),
-                array_slice($this->getExpectedArticles(), 19, 1),
+                array_slice($this->getExpectedArticles(), 20, 1),
             ],
             [
                 $this->getLastArticlesQuery(2),
-                array_slice($this->getExpectedArticles(), 18, 2),
+                array_slice($this->getExpectedArticles(), 19, 2),
             ],
             [
                 $this->getFirstArticlesQuery(1, Article::PLACEMENT_TOP_MENU),
-                array_slice($this->getExpectedArticles(), 18, 1),
-            ],
-            [
-                $this->getLastArticlesQuery(1, Article::PLACEMENT_TOP_MENU),
                 array_slice($this->getExpectedArticles(), 19, 1),
             ],
             [
+                $this->getLastArticlesQuery(1, Article::PLACEMENT_TOP_MENU),
+                array_slice($this->getExpectedArticles(), 20, 1),
+            ],
+            [
                 $this->getAllArticlesQuery(Article::PLACEMENT_TOP_MENU),
-                array_slice($this->getExpectedArticles(), 18, 2),
+                array_slice($this->getExpectedArticles(), 19, 2),
             ],
             [
                 $this->getAllArticlesQuery('non-existing-placement'),
@@ -110,9 +110,9 @@ class GetArticlesTest extends GraphQlTestCase
     private function getAllArticlesQuery(?string $placement = null): string
     {
         if ($placement !== null) {
-            $graphQlTypeWithFilters = 'articles (first:20, placement:"' . $placement . '")';
+            $graphQlTypeWithFilters = 'articles (first:21, placement:"' . $placement . '")';
         } else {
-            $graphQlTypeWithFilters = 'articles (first:20)';
+            $graphQlTypeWithFilters = 'articles (first:21)';
         }
         return '
             {
@@ -434,6 +434,14 @@ class GetArticlesTest extends GraphQlTestCase
                     'dataFixtures',
                     $firstDomainLocale
                 ),
+                'seoH1' => null,
+                'seoTitle' => null,
+                'seoMetaDescription' => null,
+            ],
+            [
+                'name' => t('Article for search testing', [], 'dataFixtures', $firstDomainLocale),
+                'placement' => Article::PLACEMENT_NONE,
+                'text' => t('Article text for search testing, the search phrase is "Dina".', [], 'dataFixtures', $firstDomainLocale),
                 'seoH1' => null,
                 'seoTitle' => null,
                 'seoMetaDescription' => null,

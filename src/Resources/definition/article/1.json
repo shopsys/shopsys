@@ -150,6 +150,30 @@
       },
       "url": {
         "type": "text"
+      },
+      "uuid": {
+        "type": "keyword"
+      },
+      "placement": {
+        "type": "keyword"
+      },
+      "seoH1": {
+        "type": "text"
+      },
+      "seoTitle": {
+        "type": "text"
+      },
+      "seoMetaDescription": {
+        "type": "text"
+      },
+      "slug": {
+        "type": "keyword"
+      },
+      "mainSlug": {
+        "type": "text"
+      },
+      "position": {
+        "type": "keyword"
       }
     }
   }

@@ -10,6 +10,9 @@ msgstr ""
 msgid "%brandName% SEO Title"
 msgstr ""
 
+msgid "%locale% perex - lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus felis nisi, tincidunt sollicitudin augue eu."
+msgstr ""
+
 msgid "(Mon - Sat: 9 - 10 a.m. to 8 - 10 p.m.)"
 msgstr ""
 
@@ -83,9 +86,6 @@ msgid "21,5” Hyundai 22MT44"
 msgstr ""
 
 msgid "210 MB"
-msgstr ""
-
-msgid "22\""
 msgstr ""
 
 msgid "22\" Sencor SLE 22F46DM4 HELLO KITTY"
@@ -472,6 +472,12 @@ msgstr ""
 msgid "Aquila Aquagym non-carbonated spring water, description."
 msgstr ""
 
+msgid "Article for search testing"
+msgstr ""
+
+msgid "Article text for search testing, the search phrase is \"Dina\"."
+msgstr ""
+
 msgid "Authentication code"
 msgstr ""
 
@@ -479,6 +485,9 @@ msgid "Authentication code for two factor authentication: {authentication_code}"
 msgstr ""
 
 msgid "BROTHER PT-H300"
+msgstr ""
+
+msgid "Blog article for search testing"
 msgstr ""
 
 msgid "Bluetooth"
@@ -760,6 +769,12 @@ msgstr ""
 msgid "Doprava a platba"
 msgstr ""
 
+msgid "Druhá podsekce %locale%"
+msgstr ""
+
+msgid "Druhá podsekce %locale% - h1"
+msgstr ""
+
 msgid "DéLonghi ECAM 44.660.B. Start the morning with your favorite drink with the DeLonghi ECAM 44.660.B Eletta automatic coffee maker"
 msgstr ""
 
@@ -892,6 +907,9 @@ msgstr ""
 msgid "Have you ever experienced an accident and didn't know how to react? Or are you going to? This book is just for you!"
 msgstr ""
 
+msgid "Heading"
+msgstr ""
+
 msgid "Hello Kitty TV"
 msgstr ""
 
@@ -908,6 +926,9 @@ msgid "Hewlett-Packard was founded in the difficult times of the Great Depressio
 msgstr ""
 
 msgid "High quality, elegant, soft, and yet reliably protecting brand case for your Canon digital camera CANON EOS 650D or 700D."
+msgstr ""
+
+msgid "Hlavní stránka blogu - %locale%"
 msgstr ""
 
 msgid "Hlavní údaje"
@@ -1069,9 +1090,6 @@ msgstr ""
 msgid "Multimedia"
 msgstr ""
 
-msgid "Máš to moc velké... takže tě víc zkásnem"
-msgstr ""
-
 msgid "NFC"
 msgstr ""
 
@@ -1091,9 +1109,6 @@ msgid "NS-9710 Prominent replacement paper bags for VP-9711/12/13"
 msgstr ""
 
 msgid "Nadlimitní"
-msgstr ""
-
-msgid "Nadlimitnís"
 msgstr ""
 
 msgid "Nejčastější dotazy FAQ"
@@ -1177,10 +1192,10 @@ msgstr ""
 msgid "OPV-3260 Built-in retractable hood is 60 cm"
 msgstr ""
 
-msgid "Obchodní podmínky e-shopu"
+msgid "Obchodní podmínky OD"
 msgstr ""
 
-msgid "Obchodní podmínky OD"
+msgid "Obchodní podmínky e-shopu"
 msgstr ""
 
 msgid "Odstoupení od smlouvy"
@@ -1216,7 +1231,7 @@ msgstr ""
 msgid "Overall performance"
 msgstr ""
 
-msgid "Očekávej to koncem příštího měsíce"
+msgid "Očekávejte dodávku koncem příštího měsíce"
 msgstr ""
 
 msgid "PANASONIC DMC FT5EP"
@@ -1316,6 +1331,12 @@ msgid "Pro média"
 msgstr ""
 
 msgid "Processor frequency"
+msgstr ""
+
+msgid "První podsekce %locale%"
+msgstr ""
+
+msgid "První podsekce %locale% - h1"
 msgstr ""
 
 msgid "Práce v Shopsys"
@@ -1681,6 +1702,12 @@ msgstr ""
 msgid "USB"
 msgstr ""
 
+msgid "Ukázkový článek blogu %counter% %locale%"
+msgstr ""
+
+msgid "Ukázkový článek blogu %counter% %locale% - H1"
+msgstr ""
+
 msgid "Using a steamer Concept is surprisingly versatile. It can be used to prepare appetizers, soups, meat, fish, vegetables, vegetarian dishes, dumplings, rice, fruit and desserts."
 msgstr ""
 
@@ -1688,6 +1715,9 @@ msgid "V"
 msgstr ""
 
 msgid "VERBATIM 1TB external HDD 2,5\" USB 3.0 GT SuperSpeed red"
+msgstr ""
+
+msgid "Vhodné pro nadměrné zboží"
 msgstr ""
 
 msgid "Video"
@@ -1774,6 +1804,18 @@ msgstr ""
 msgid "cm"
 msgstr ""
 
+msgid "description - Druhá podsekce %locale%"
+msgstr ""
+
+msgid "description - Hlavní stránka blogu - %locale%"
+msgstr ""
+
+msgid "description - Lorem ipsum dolor sit amet, {products=9177759,7700768,9146508} consectetur {products=9177759,9176508} adipiscing elit. Vivamus felis nisi, tincidunt sollicitudin augue eu, laoreet blandit sem. Donec rutrum augue a elit imperdiet, eu vehicula tortor porta. Vivamus pulvinar sem non auctor dictum. Morbi eleifend semper enim, eu faucibus tortor posuere vitae. Donec tincidunt ipsum ullamcorper nisi accumsan tincidunt. Aenean sed velit massa. Nullam interdum eget est ut convallis. Vestibulum et mauris condimentum, rutrum sem congue, suscipit arcu.\\nSed tristique vehicula ipsum, ut vulputate tortor feugiat eu. Vivamus convallis quam vulputate faucibus facilisis. Curabitur tincidunt pulvinar leo, eu dapibus augue lacinia a. Fusce sed tincidunt nunc. Morbi a nisi a odio pharetra laoreet nec eget quam. In in nisl tortor. Ut fringilla vitae lectus eu venenatis. Nullam interdum sed odio a posuere. Fusce pellentesque dui vel tortor blandit, a dictum nunc congue."
+msgstr ""
+
+msgid "description - První podsekce %locale%"
+msgstr ""
+
 msgid "fits into VP812x VP9520"
 msgstr ""
 
@@ -1822,10 +1864,25 @@ msgstr ""
 msgid "pcs"
 msgstr ""
 
+msgid "perex"
+msgstr ""
+
 msgid "plazmová"
 msgstr ""
 
 msgid "t"
+msgstr ""
+
+msgid "title"
+msgstr ""
+
+msgid "title - Druhá podsekce %locale%"
+msgstr ""
+
+msgid "title - První podsekce %locale%"
+msgstr ""
+
+msgid "title - Ukázkový článek blogu %counter% %locale%"
 msgstr ""
 
 msgid "white"

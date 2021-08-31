@@ -117,4 +117,12 @@ class Article extends BaseArticle
     {
         return $this->type === self::TYPE_SITE;
     }
+
+    /**
+     * @return int
+     */
+    public function getPosition(): int
+    {
+        return $this->position;
+    }
 }

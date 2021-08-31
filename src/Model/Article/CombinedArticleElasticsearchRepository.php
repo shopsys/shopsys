@@ -7,6 +7,7 @@ namespace App\Model\Article;
 use App\Model\Article\Elasticsearch\ArticleIndex;
 use App\Model\Blog\Article\Elasticsearch\BlogArticleIndex;
 use Elasticsearch\Client;
+use InvalidArgumentException;
 use Shopsys\Cdn\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionLoader;
 use Shopsys\FrameworkBundle\Component\Paginator\PaginationResult;
@@ -103,11 +104,17 @@ class CombinedArticleElasticsearchRepository
      */
     private function getIndexNameFromIndexVersion(string $indexVersion): string
     {
-        if (strpos($indexVersion, BlogArticleIndex::getName()) === 0) {
+        $blogArticleVersionedIndexName = $this->indexDefinitionLoader->getIndexDefinition(BlogArticleIndex::getName(), $this->domain->getId())->getVersionedIndexName();
+        if ($indexVersion === $blogArticleVersionedIndexName) {
             return BlogArticleIndex::getName();
         }
 
-        return ArticleIndex::getName();
+        $articleVersionedIndexName = $this->indexDefinitionLoader->getIndexDefinition(ArticleIndex::getName(), $this->domain->getId())->getVersionedIndexName();
+        if ($indexVersion === $articleVersionedIndexName) {
+            return ArticleIndex::getName();
+        }
+
+        throw new InvalidArgumentException(sprintf('Unsupported index version "%s"', $indexVersion));
     }
 
     /**

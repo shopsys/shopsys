@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\FrontendApi\Model\Resolver\Slug;
 
 use App\Component\Router\FriendlyUrl\FriendlyUrlRepository;
+use App\FrontendApi\Model\Resolver\Article\ArticleResolver;
 use App\FrontendApi\Model\Resolver\Blog\Article\BlogArticleResolver;
 use App\FrontendApi\Model\Resolver\Blog\Category\BlogCategoryResolver;
 use App\FrontendApi\Model\Resolver\Category\CategorySeo\ReadyCategorySeoMixResolver;
@@ -21,7 +22,6 @@ use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
 use Overblog\GraphQLBundle\Definition\Resolver\ResolverInterface;
 use Overblog\GraphQLBundle\Error\UserError;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrontendApiBundle\Model\Resolver\Article\ArticleResolver;
 use Shopsys\FrontendApiBundle\Model\Resolver\Brand\BrandResolver;
 use Shopsys\FrontendApiBundle\Model\Resolver\Category\CategoryResolver;
 use Shopsys\FrontendApiBundle\Model\Resolver\Products\ProductDetailResolver;
@@ -39,7 +39,7 @@ class SlugResolver implements ResolverInterface, AliasedInterface
     private FriendlyUrlRepository $friendlyUrlRepository;
 
     /**
-     * @var \Shopsys\FrontendApiBundle\Model\Resolver\Article\ArticleResolver
+     * @var \App\FrontendApi\Model\Resolver\Article\ArticleResolver
      */
     private ArticleResolver $articleResolver;
 
@@ -81,7 +81,7 @@ class SlugResolver implements ResolverInterface, AliasedInterface
     /**
      * @param \App\Component\Router\FriendlyUrl\FriendlyUrlRepository $friendlyUrlRepository
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrontendApiBundle\Model\Resolver\Article\ArticleResolver $articleResolver
+     * @param \App\FrontendApi\Model\Resolver\Article\ArticleResolver $articleResolver
      * @param \Shopsys\FrontendApiBundle\Model\Resolver\Brand\BrandResolver $brandResolver
      * @param \App\FrontendApi\Model\Resolver\Blog\Article\BlogArticleResolver $blogArticleResolver
      * @param \App\FrontendApi\Model\Resolver\Blog\Category\BlogCategoryResolver $blogCategoryResolver

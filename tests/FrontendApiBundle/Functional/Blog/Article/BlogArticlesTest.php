@@ -134,6 +134,7 @@ class BlogArticlesTest extends GraphQlTestCase
     private function getExpectedBlogArticlesData(string $firstDomainLocale): array
     {
         return [
+            ['name' => t('Blog article for search testing', [], 'dataFixtures', $firstDomainLocale)],
             ['name' => t('Ukázkový článek blogu %counter% %locale%', ['%counter%' => 1, '%locale%' => $firstDomainLocale], 'dataFixtures', $firstDomainLocale)],
             ['name' => t('Ukázkový článek blogu %counter% %locale%', ['%counter%' => 10, '%locale%' => $firstDomainLocale], 'dataFixtures', $firstDomainLocale)],
             ['name' => t('Ukázkový článek blogu %counter% %locale%', ['%counter%' => 11, '%locale%' => $firstDomainLocale], 'dataFixtures', $firstDomainLocale)],
@@ -143,7 +144,6 @@ class BlogArticlesTest extends GraphQlTestCase
             ['name' => t('Ukázkový článek blogu %counter% %locale%', ['%counter%' => 15, '%locale%' => $firstDomainLocale], 'dataFixtures', $firstDomainLocale)],
             ['name' => t('Ukázkový článek blogu %counter% %locale%', ['%counter%' => 16, '%locale%' => $firstDomainLocale], 'dataFixtures', $firstDomainLocale)],
             ['name' => t('Ukázkový článek blogu %counter% %locale%', ['%counter%' => 17, '%locale%' => $firstDomainLocale], 'dataFixtures', $firstDomainLocale)],
-            ['name' => t('Ukázkový článek blogu %counter% %locale%', ['%counter%' => 18, '%locale%' => $firstDomainLocale], 'dataFixtures', $firstDomainLocale)],
         ];
     }
 }

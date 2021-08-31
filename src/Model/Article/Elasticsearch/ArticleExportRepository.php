@@ -86,14 +86,22 @@ class ArticleExportRepository
      */
     public function extractArticle(Article $article): array
     {
+        $domainId = $article->getDomainId();
+        $articleId = $article->getId();
+        $mainFriendlyUrl = $this->friendlyUrlFacade->getMainFriendlyUrl($domainId, 'front_article_detail', $articleId);
+
         return [
             'name' => $article->getName(),
             'text' => $article->getText(),
-            'url' => $this->friendlyUrlFacade->getAbsoluteUrlByRouteNameAndEntityId(
-                $article->getDomainId(),
-                'front_article_detail',
-                $article->getId()
-            ),
+            'url' => $this->friendlyUrlFacade->getAbsoluteUrlByFriendlyUrl($mainFriendlyUrl),
+            'uuid' => $article->getUuid(),
+            'placement' => $article->getPlacement(),
+            'seoH1' => $article->getSeoH1(),
+            'seoTitle' => $article->getSeoTitle(),
+            'seoMetaDescription' => $article->getSeoMetaDescription(),
+            'slug' => $this->friendlyUrlFacade->getAllSlugsByRouteNameAndEntityId($domainId, 'front_article_detail', $articleId),
+            'mainSlug' => $mainFriendlyUrl->getSlug(),
+            'position' => $article->getPosition(),
         ];
     }
 }
