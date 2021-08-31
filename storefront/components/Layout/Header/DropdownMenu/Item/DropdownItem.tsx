@@ -11,29 +11,25 @@ import Link from 'next/link';
 
 type DropdownItemProps = {
     variant?: 'small';
-    level: 'primary' | 'secondary' | 'tertiary';
     navigationItem?: NavigationItemType;
     columnCategory?: NavigationCategoryType;
     columnCategoryChild?: NavigationSubCategoryType;
 };
 
 const DropdownItem: FC<DropdownItemProps & DropdownItemType> = (props) => {
-    let hasChildren, itemName;
+    let hasChildren = false;
+    let itemName = '';
     let itemLink = '';
 
     if (props.navigationItem !== undefined) {
         hasChildren = props.navigationItem.categoriesByColumns.length > 0;
         itemLink = props.navigationItem.link;
         itemName = props.navigationItem.name;
-    }
-
-    if (props.columnCategory !== undefined) {
+    } else if (props.columnCategory !== undefined) {
         hasChildren = props.columnCategory.children.length > 0;
         itemLink = props.columnCategory.slug;
         itemName = props.columnCategory.name;
-    }
-
-    if (props.columnCategoryChild !== undefined) {
+    } else if (props.columnCategoryChild !== undefined) {
         hasChildren = false;
         itemLink = props.columnCategoryChild.slug;
         itemName = props.columnCategoryChild.name;

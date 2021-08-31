@@ -1,6 +1,17 @@
+import { NavigationItem as NavigationItemType } from '../../../../connectors/navigation/Navigation';
+
+export type DropdownListLevels = 'primary' | 'secondary' | 'tertiary';
+
+export type DropdownSlideToType = 'left' | 'right';
+
 export type DropdownItemType = {
     changeState?: any;
-    goToMenu?: 'primary' | 'secondary' | 'tertiary';
-    slideTo?: 'left' | 'right';
+    goToMenu?: DropdownListLevels;
+    slideTo?: DropdownSlideToType;
     index?: number | string;
+};
+
+export type DropdownListType = {
+    navigationItems: NavigationItemType[];
+    historyOfIndexes: number[] | string[];
 };

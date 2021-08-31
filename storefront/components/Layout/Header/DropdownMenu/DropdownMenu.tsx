@@ -1,15 +1,13 @@
-import {
-    DropdownMenuListStyled,
-    DropdownMenuListTitleStyled,
-    DropdownMenuStyled,
-    DropdownMenuWrapperStyled,
-} from './DropdownMenu.style';
-import { FC, Fragment, useState } from 'react';
+import { DropdownListLevels, DropdownSlideToType } from './types';
+import { DropdownMenuListStyled, DropdownMenuStyled, DropdownMenuWrapperStyled } from './DropdownMenu.style';
+import { FC, useState } from 'react';
 import { CSSTransition } from 'react-transition-group';
-import DropdownItem from './Item';
 import DropdownSlideTo from './SlideTo';
 import { getNavigationItems } from '../../../../connectors/navigation/Navigation';
+import PrimaryList from './PrimaryList';
+import SecondaryList from './SecondaryList';
 import SubMenu from './SubMenu';
+import TertiaryList from './TertiaryList';
 import { useTranslation } from 'react-i18next';
 
 type DropdownMenuProps = {
@@ -19,23 +17,22 @@ type DropdownMenuProps = {
 const DropdownMenu: FC<DropdownMenuProps> = (props) => {
     const { t } = useTranslation();
     const navigationItems = getNavigationItems();
-    const [activeMenu, setActiveMenu] = useState<'primary' | 'secondary' | 'tertiary'>('primary');
-    const [indexes, setIndexes] = useState<number[] | string[] | []>([]);
-    const [slideTo, setSlideTo] = useState<'right' | 'left'>('right');
+    const [menuLevel, setMenuLevel] = useState<DropdownListLevels>('primary');
+    const [historyOfIndexes, setHistoryOfIndexes] = useState<number[] | string[] | []>([]);
+    const [slideTo, setSlideTo] = useState<DropdownSlideToType>('right');
     const [menuHeight, setMenuHeight] = useState<number>();
 
-    if (navigationItems === undefined || (Array.isArray(navigationItems) && navigationItems.length === 0)) {
+    if (navigationItems.length === 0) {
         return null;
     }
 
     const calcHeight = (el: HTMLElement) => {
-        const height = el.offsetHeight;
-        setMenuHeight(height);
+        setMenuHeight(el.offsetHeight);
     };
 
     const changeState = (props: any) => {
         if (props.goToMenu !== undefined) {
-            setActiveMenu(props.goToMenu);
+            setMenuLevel(props.goToMenu);
         }
 
         if (props.slideTo !== undefined) {
@@ -43,16 +40,16 @@ const DropdownMenu: FC<DropdownMenuProps> = (props) => {
         }
 
         if (props.index !== undefined) {
-            setIndexes((oldArray: number[] | string[]) => [...oldArray, props.index]);
+            setHistoryOfIndexes((oldArray: number[] | string[]) => [...oldArray, props.index]);
         }
 
         if (props.slideTo === 'left') {
-            indexes.pop();
+            historyOfIndexes.pop();
 
-            if (indexes.length === 0) {
-                setIndexes([]);
+            if (historyOfIndexes.length === 0) {
+                setHistoryOfIndexes([]);
             } else {
-                setIndexes([...indexes]);
+                setHistoryOfIndexes([...historyOfIndexes]);
             }
         }
     };
@@ -68,30 +65,20 @@ const DropdownMenu: FC<DropdownMenuProps> = (props) => {
             >
                 <DropdownMenuStyled slideTo={slideTo} style={{ height: menuHeight }}>
                     <CSSTransition
-                        in={activeMenu === 'primary'}
+                        in={menuLevel === 'primary'}
                         timeout={500}
                         classNames="menu-primary"
                         unmountOnExit
                         onEnter={calcHeight}
                     >
                         <DropdownMenuListStyled>
-                            {navigationItems.map((navigationItem, index) => (
-                                <DropdownItem
-                                    key={index}
-                                    navigationItem={navigationItem}
-                                    changeState={changeState}
-                                    index={index}
-                                    level="primary"
-                                    goToMenu="secondary"
-                                    slideTo="right"
-                                />
-                            ))}
+                            <PrimaryList navigationItems={navigationItems} changeState={changeState} />
                             <SubMenu />
                         </DropdownMenuListStyled>
                     </CSSTransition>
 
                     <CSSTransition
-                        in={activeMenu === 'secondary'}
+                        in={menuLevel === 'secondary'}
                         timeout={500}
                         classNames="menu-secondary"
                         unmountOnExit
@@ -105,40 +92,16 @@ const DropdownMenu: FC<DropdownMenuProps> = (props) => {
                                 type="stepBack"
                                 iconText={t('Back')}
                             />
-                            {navigationItems
-                                .map((navigationItem, index) => (
-                                    <Fragment key={index}>
-                                        <DropdownMenuListTitleStyled>{navigationItem.name}</DropdownMenuListTitleStyled>
-                                        {navigationItem.categoriesByColumns.map((columnCategories, columnIndex) => (
-                                            <Fragment key={columnIndex}>
-                                                {columnCategories.categories.map(
-                                                    (columnCategory, columnCategoryIndex) => (
-                                                        <DropdownItem
-                                                            key={columnCategoryIndex}
-                                                            columnCategory={columnCategory}
-                                                            changeState={changeState}
-                                                            level="secondary"
-                                                            goToMenu="tertiary"
-                                                            index={
-                                                                columnCategories.columnNumber +
-                                                                '-' +
-                                                                columnCategoryIndex
-                                                            }
-                                                            slideTo="right"
-                                                            variant="small"
-                                                        />
-                                                    ),
-                                                )}
-                                            </Fragment>
-                                        ))}
-                                    </Fragment>
-                                ))
-                                .filter((_, index) => index === indexes[0])}
+                            <SecondaryList
+                                navigationItems={navigationItems}
+                                changeState={changeState}
+                                historyOfIndexes={historyOfIndexes}
+                            />
                         </DropdownMenuListStyled>
                     </CSSTransition>
 
                     <CSSTransition
-                        in={activeMenu === 'tertiary'}
+                        in={menuLevel === 'tertiary'}
                         timeout={500}
                         classNames="menu-tertiary"
                         unmountOnExit
@@ -152,41 +115,11 @@ const DropdownMenu: FC<DropdownMenuProps> = (props) => {
                                 type="stepBack"
                                 iconText={t('Back')}
                             />
-                            {navigationItems
-                                .map((navigationItem, index) => (
-                                    <Fragment key={index}>
-                                        {navigationItem.categoriesByColumns.map((columnCategories, columnIndex) => (
-                                            <Fragment key={columnIndex}>
-                                                {columnCategories.categories
-                                                    .map((columnCategory, columnCategoryIndex) => (
-                                                        <Fragment key={columnCategoryIndex}>
-                                                            <DropdownMenuListTitleStyled>
-                                                                {columnCategory.name}
-                                                            </DropdownMenuListTitleStyled>
-                                                            {columnCategory.children.map(
-                                                                (columnCategoryChild, subListIndex) => (
-                                                                    <DropdownItem
-                                                                        key={subListIndex}
-                                                                        columnCategoryChild={columnCategoryChild}
-                                                                        level="tertiary"
-                                                                        variant="small"
-                                                                    />
-                                                                ),
-                                                            )}
-                                                        </Fragment>
-                                                    ))
-                                                    .filter(
-                                                        (_, columnCategoryIndex) =>
-                                                            columnCategories.columnNumber +
-                                                                '-' +
-                                                                columnCategoryIndex ===
-                                                            indexes[1],
-                                                    )}
-                                            </Fragment>
-                                        ))}
-                                    </Fragment>
-                                ))
-                                .filter((_, index) => index === indexes[0])}
+                            <TertiaryList
+                                navigationItems={navigationItems}
+                                changeState={changeState}
+                                historyOfIndexes={historyOfIndexes}
+                            />
                         </DropdownMenuListStyled>
                     </CSSTransition>
                 </DropdownMenuStyled>
