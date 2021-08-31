@@ -1894,3 +1894,9 @@ msgstr ""
 msgid "TV, audio from the cheapest"
 msgstr "Televízory, audio od najlacnejšieho"
 
+msgid "TV, audio in sale"
+msgstr "Televízory, audio výpredaj"
+
+msgid "TV, audio plasma with HDMI"
+msgstr "Televízory, audio plasma s HDMI"
+
