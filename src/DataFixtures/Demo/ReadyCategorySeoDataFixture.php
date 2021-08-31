@@ -9,6 +9,7 @@ use App\Model\CategorySeo\ReadyCategorySeoMixDataFactory;
 use App\Model\CategorySeo\ReadyCategorySeoMixFacade;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
+use Shopsys\Cdn\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\UrlListData;
 use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingConfig;
@@ -16,6 +17,7 @@ use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingConfig;
 class ReadyCategorySeoDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
 {
     public const READY_CATEGORY_SEO_ELECTRONICS_WITHOUT_HDMI = 'ready_category_seo_electronics_without_hdmi';
+    public const READY_CATEGORY_SEO_TV_FROM_CHEAPEST = 'ready_category_seo_tv_from_cheapest';
 
     /**
      * @var \App\Model\CategorySeo\ReadyCategorySeoMixDataFactory
@@ -28,15 +30,23 @@ class ReadyCategorySeoDataFixture extends AbstractReferenceFixture implements De
     private $readyCategorySeoMixFacade;
 
     /**
+     * @var \Shopsys\Cdn\Component\Domain\Domain
+     */
+    private Domain $domain;
+
+    /**
      * @param \App\Model\CategorySeo\ReadyCategorySeoMixDataFactory $readyCategorySeoMixDataFactory
      * @param \App\Model\CategorySeo\ReadyCategorySeoMixFacade $readyCategorySeoMixFacade
+     * @param \Shopsys\Cdn\Component\Domain\Domain $domain
      */
     public function __construct(
         ReadyCategorySeoMixDataFactory $readyCategorySeoMixDataFactory,
-        ReadyCategorySeoMixFacade $readyCategorySeoMixFacade
+        ReadyCategorySeoMixFacade $readyCategorySeoMixFacade,
+        Domain $domain
     ) {
         $this->readyCategorySeoMixDataFactory = $readyCategorySeoMixDataFactory;
         $this->readyCategorySeoMixFacade = $readyCategorySeoMixFacade;
+        $this->domain = $domain;
     }
 
     /**
@@ -145,6 +155,23 @@ class ReadyCategorySeoDataFixture extends AbstractReferenceFixture implements De
             ['elektro-bez-hdmi', 'nakupte-elektro-bez-hdmi'],
             1,
             self::READY_CATEGORY_SEO_ELECTRONICS_WITHOUT_HDMI
+        );
+
+        /** @var \App\Model\Category\Category $categoryTv */
+        $categoryTv = $this->getReference(CategoryDataFixture::CATEGORY_TV);
+        $choseCategorySeoMixCombinationArray = [
+            'domainId' => 1,
+            'categoryId' => $categoryTv->getId(),
+            'flagId' => null,
+            'ordering' => ProductListOrderingConfig::ORDER_BY_PRICE_ASC,
+            'parameterValueIdsByParameterIds' => [],
+        ];
+        $this->createReadyCategorySeoMix(
+            ChoseCategorySeoMixCombination::createFromArray($choseCategorySeoMixCombinationArray),
+            t('TV, audio from the cheapest', [], 'dataFixtures', $this->domain->getDomainConfigById(1)->getLocale()),
+            ['televize-audio-nejlevnejsi'],
+            1,
+            self::READY_CATEGORY_SEO_TV_FROM_CHEAPEST
         );
     }
 

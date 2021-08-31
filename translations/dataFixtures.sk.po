@@ -1891,3 +1891,6 @@ msgstr ""
 msgid "| Commerce Cloud"
 msgstr ""
 
+msgid "TV, audio from the cheapest"
+msgstr "Televízory, audio od najlacnejšieho"
+

@@ -20,10 +20,12 @@ class ProductsResolver extends BaseProductsResolver
      */
     public function resolveByCategoryOrReadyCategorySeoMix(Argument $argument, $categoryOrReadyCategorySeoMix): ProductConnection
     {
+        $seoMixOrderingMode = null;
         if ($categoryOrReadyCategorySeoMix instanceof Category) {
             $category = $categoryOrReadyCategorySeoMix;
         } elseif ($categoryOrReadyCategorySeoMix instanceof ReadyCategorySeoMix) {
             $category = $categoryOrReadyCategorySeoMix->getCategory();
+            $seoMixOrderingMode = $categoryOrReadyCategorySeoMix->getOrdering();
         } else {
             throw new InvalidArgumentException(
                 sprintf(
@@ -34,9 +36,30 @@ class ProductsResolver extends BaseProductsResolver
             );
         }
 
-        /** @var \Shopsys\FrontendApiBundle\Model\Product\Connection\ProductConnection $productConnection */
-        $productConnection = $this->resolveByCategory($argument, $category);
+        $search = $argument['search'] ?? '';
 
-        return $productConnection;
+        $this->setDefaultFirstOffsetIfNecessary($argument);
+
+        $productFilterData = $this->productFilterFacade->getValidatedProductFilterDataForCategory(
+            $argument,
+            $category
+        );
+
+        return $this->productConnectionFactory->createConnectionForCategory(
+            $category,
+            function ($offset, $limit) use ($argument, $category, $productFilterData, $search, $seoMixOrderingMode) {
+                return $this->productFacade->getFilteredProductsByCategory(
+                    $category,
+                    $limit,
+                    $offset,
+                    $seoMixOrderingMode ?? $this->getOrderingModeFromArgument($argument),
+                    $productFilterData,
+                    $search
+                );
+            },
+            $this->productFacade->getFilteredProductsByCategoryCount($category, $productFilterData, $search),
+            $argument,
+            $productFilterData
+        );
     }
 }

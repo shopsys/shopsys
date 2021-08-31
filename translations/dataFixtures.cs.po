@@ -1927,3 +1927,6 @@ msgstr ""
 msgid "| Demo eshop"
 msgstr "| Demo obchod"
 
+msgid "TV, audio from the cheapest"
+msgstr "Televize, audio od nejlevnějšího"
+
