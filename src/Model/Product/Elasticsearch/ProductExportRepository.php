@@ -138,6 +138,7 @@ class ProductExportRepository extends BaseProductExportRepository
         $searchingEans = $this->extractSearchingEans($product);
         $searchingPartnos = $this->extractSearchingPartnos($product);
         $searchingShortDescriptions = $this->extractSearchingShortDescriptions($product, $domainId);
+        $relatedProductsId = $this->extractRelatedProductsId($product);
 
         $mainFriendlyUrl = $this->friendlyUrlFacade->getMainFriendlyUrl($domainId, 'front_product_detail', $product->getId());
 
@@ -199,6 +200,7 @@ class ProductExportRepository extends BaseProductExportRepository
             'slug' => $mainFriendlyUrl->getSlug(),
             'available_stores_count' => $this->productAvailabilityFacade->getAvailableStoresCount($product, $domainId),
             'exposed_stores_count' => $this->productAvailabilityFacade->getExposedStoresCount($product, $domainId),
+            'related_products' => $relatedProductsId,
         ];
     }
 
@@ -477,5 +479,19 @@ class ProductExportRepository extends BaseProductExportRepository
         }
 
         return $result;
+    }
+
+    /**
+     * @param \App\Model\Product\Product $product
+     * @return int[]
+     */
+    private function extractRelatedProductsId(Product $product): array
+    {
+        $relatedProductsId = [];
+        foreach ($product->getRelatedProducts() as $relatedProduct) {
+            $relatedProductsId[] = $relatedProduct->getId();
+        }
+
+        return $relatedProductsId;
     }
 }

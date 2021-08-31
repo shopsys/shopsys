@@ -15,6 +15,7 @@ use Shopsys\FrameworkBundle\Form\Admin\Product\ProductFormType;
 use Shopsys\FrameworkBundle\Form\FormRenderingConfigurationExtension;
 use Shopsys\FrameworkBundle\Form\GroupType;
 use Shopsys\FrameworkBundle\Form\LocalizedFullWidthType;
+use Shopsys\FrameworkBundle\Form\ProductsType;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade;
 use Symfony\Component\Form\AbstractTypeExtension;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -136,6 +137,7 @@ class ProductFormTypeExtension extends AbstractTypeExtension
         $this->setDisplayAvailabilityGroup($builder, $this->product);
         $this->setPricesGroup($builder, $this->product);
         $this->setTransferredFilesGroup($builder, $this->product);
+        $this->setRelatedProductsGroup($builder, $this->product);
 
         $this->formBuilderHelper->disableFieldsByConfigurations($builder, self::DISABLED_FIELDS);
     }
@@ -415,6 +417,25 @@ class ProductFormTypeExtension extends AbstractTypeExtension
         ]);
 
         $builder->add($storeGroupBuilder);
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param \App\Model\Product\Product|null $product
+     */
+    private function setRelatedProductsGroup(FormBuilderInterface $builder, ?Product $product): void
+    {
+        if (!($product !== null && $product->isVariant())) {
+            $relatedProductsGroupBuilder = $builder
+                ->create('relatedProducts', ProductsType::class, [
+                    'required' => false,
+                    'main_product' => $product,
+                    'label' => t('Related products'),
+                    'allow_variants' => false,
+                ]);
+
+            $builder->add($relatedProductsGroupBuilder);
+        }
     }
 
     /**

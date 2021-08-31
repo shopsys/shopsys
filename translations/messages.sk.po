@@ -2824,6 +2824,9 @@ msgstr "Rekapituláciu sme zaslali aj na váš e-mail"
 msgid "Reklamace, vrácení a výměna zboží"
 msgstr "Reklamácie\n"
 
+msgid "Related products"
+msgstr ""
+
 msgid "Remaining number of uses"
 msgstr ""
 

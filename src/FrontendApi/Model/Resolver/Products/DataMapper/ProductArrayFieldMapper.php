@@ -168,4 +168,13 @@ class ProductArrayFieldMapper extends BaseProductArrayFieldMapper
     {
         return $data['exposed_stores_count'];
     }
+
+    /**
+     * @param array $data
+     * @return int[]
+     */
+    public function getRelatedProducts(array $data): array
+    {
+        return $this->productElasticsearchProvider->getSellableProductArrayByIds($data['related_products']);
+    }
 }

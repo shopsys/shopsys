@@ -119,6 +119,16 @@ class Product extends BaseProduct
     protected ?int $weight;
 
     /**
+     * @var \App\Model\Product\Product[]|\Doctrine\Common\Collections\Collection
+     * @ORM\ManyToMany(targetEntity="App\Model\Product\Product")
+     * @ORM\JoinTable(name="related_products",
+     *     joinColumns={@ORM\JoinColumn(name="main_product", referencedColumnName="id")},
+     *     inverseJoinColumns={@ORM\JoinColumn(name="related_product", referencedColumnName="id")}
+     * )
+     */
+    protected $relatedProducts;
+
+    /**
      * @param \App\Model\Product\ProductData $productData
      * @param \App\Model\Product\Product[]|null $variants
      */
@@ -135,6 +145,8 @@ class Product extends BaseProduct
      */
     public function edit(array $productCategoryDomains, BaseProductData $productData)
     {
+        $this->editRelatedProducts($productData->relatedProducts);
+
         parent::edit($productCategoryDomains, $productData);
 
         $this->markForExport();
@@ -152,6 +164,7 @@ class Product extends BaseProduct
         $this->preorder = $productData->preorder;
         $this->vendorDeliveryDate = $productData->vendorDeliveryDate;
         $this->weight = $productData->weight;
+        $this->relatedProducts = new ArrayCollection($productData->relatedProducts);
     }
 
     /**
@@ -683,5 +696,24 @@ class Product extends BaseProduct
     public function getWeight(): ?int
     {
         return $this->weight;
+    }
+
+    /**
+     * @return \App\Model\Product\Product[]
+     */
+    public function getRelatedProducts(): array
+    {
+        return $this->relatedProducts->toArray();
+    }
+
+    /**
+     * @param \App\Model\Product\Product[] $relatedProducts
+     */
+    protected function editRelatedProducts(array $relatedProducts)
+    {
+        $this->relatedProducts->clear();
+        foreach ($relatedProducts as $relatedProduct) {
+            $this->relatedProducts->add($relatedProduct);
+        }
     }
 }

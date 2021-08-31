@@ -126,6 +126,11 @@ class ProductData extends BaseProductData
      */
     public ?int $weight;
 
+    /**
+     * @var \App\Model\Product\Product[]
+     */
+    public array $relatedProducts;
+
     public function __construct()
     {
         parent::__construct();
@@ -149,5 +154,6 @@ class ProductData extends BaseProductData
         $this->domainHidden = [];
         $this->domainOrderingPriority = [];
         $this->weight = null;
+        $this->relatedProducts = [];
     }
 }
