@@ -36,6 +36,7 @@ class BlogArticleResolver implements ResolverInterface, AliasedInterface
             if ($uuid !== null) {
                 $blogArticleData = $this->blogArticleElasticsearchFacade->getByUuid($uuid);
             } elseif ($urlSlug !== null) {
+                $urlSlug = ltrim($urlSlug, '/');
                 $blogArticleData = $this->blogArticleElasticsearchFacade->getBySlug($urlSlug);
             } else {
                 throw new UserError('You need to provide argument \'uuid\' or \'urlSlug\'.');

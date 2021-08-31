@@ -48,7 +48,7 @@ class BlogArticleResolverMap extends ResolverMap
                     return new DateTime($blogArticleData['createdAt']);
                 },
                 'slug' => static function (array $blogArticleData) {
-                    return $blogArticleData['mainSlug'];
+                    return '/' . $blogArticleData['mainSlug'];
                 },
                 'link' => static function (array $blogArticleData) {
                     return $blogArticleData['url'];

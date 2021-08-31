@@ -63,6 +63,8 @@ class StoreResolver implements ResolverInterface, AliasedInterface
         }
 
         if ($urlSlug !== null) {
+            $urlSlug = ltrim($urlSlug, '/');
+
             return $this->getVisibleByDomainIdAndSlug($urlSlug);
         }
 

@@ -57,6 +57,6 @@ class ArticleResolverMap extends ResolverMap
             $article->getId()
         );
 
-        return $friendlyUrl->getSlug();
+        return '/' . $friendlyUrl->getSlug();
     }
 }

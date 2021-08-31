@@ -55,6 +55,7 @@ class BlogCategoryResolver implements ResolverInterface, AliasedInterface
             if ($uuid !== null) {
                 $blogCategory = $this->blogCategoryFacade->getVisibleByUuid($domainId, $uuid);
             } elseif ($urlSlug !== null) {
+                $urlSlug = ltrim($urlSlug, '/');
                 $blogCategory = $this->getVisibleOnDomainAndSlug($urlSlug);
             } else {
                 throw new UserError('You need to provide argument \'uuid\' or \'urlSlug\'.');

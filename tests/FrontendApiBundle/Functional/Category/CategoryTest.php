@@ -61,7 +61,7 @@ class CategoryTest extends GraphQlTestCase
             'data' => [
                 'category' => [
                     'name' => t('Electronics', [], 'dataFixtures', $this->getLocaleForFirstDomain()),
-                    'slug' => 'elektro',
+                    'slug' => '/elektro',
                     'seoH1' => t('Electronic devices', [], 'dataFixtures', $this->getLocaleForFirstDomain()),
                     'seoTitle' => t('Electronic stuff', [], 'dataFixtures', $this->getLocaleForFirstDomain()),
                     'seoMetaDescription' => t(

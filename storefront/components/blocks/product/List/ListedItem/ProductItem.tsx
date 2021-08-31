@@ -19,7 +19,7 @@ import ShopsysImage from '../../../../basic/ShopsysImage/ShopsysImage';
 const ProductItem: FC<ListedProductItemType> = (props) => {
     return (
         <ProductItemStyled>
-            <Link href={'/' + props.detailSlug} passHref>
+            <Link href={props.detailSlug} passHref>
                 <ProductItemInStyled>
                     <ProductItemImageStyled>
                         <ShopsysImage image={props.image} alt={props.name} />

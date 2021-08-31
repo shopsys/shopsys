@@ -32,6 +32,9 @@ class ProductResolverMap extends BaseProductResolverMap
                     return FieldResolver::valueFromObjectOrArray($value, $info->fieldName);
                 }
             },
+            'slug' => static function (array $product) {
+                return '/' . $product['slug'];
+            },
         ];
     }
 }

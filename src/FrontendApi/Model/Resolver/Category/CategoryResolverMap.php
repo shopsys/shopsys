@@ -92,7 +92,7 @@ class CategoryResolverMap extends BaseCategoryResolverMap
             $entityId
         );
 
-        return $friendlyUrl->getSlug();
+        return '/' . $friendlyUrl->getSlug();
     }
 
     /**

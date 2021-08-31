@@ -181,7 +181,7 @@ class BlogArticleTest extends GraphQlTestCase
                         ['name' => t('Hlavní stránka blogu - %locale%', ['%locale%' => $locale], 'dataFixtures', $locale)],
                     ],
                     'link' => $this->friendlyUrlFacade->getAbsoluteUrlByFriendlyUrl($friendlyUrl),
-                    'slug' => $friendlyUrl->getSlug(),
+                    'slug' => '/' . $friendlyUrl->getSlug(),
                     'products' => [],
                     'breadcrumb' => [
                         [

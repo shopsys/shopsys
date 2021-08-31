@@ -52,7 +52,7 @@ class ReadyCategorySeoMixTest extends GraphQlTestCase
             'data' => [
                 'slug' => [
                     'name' => t('Electronics', [], 'dataFixtures', $this->getLocaleForFirstDomain()),
-                    'slug' => 'elektro-bez-hdmi',
+                    'slug' => '/elektro-bez-hdmi',
                     'seoH1' => 'Elektro bez HDMI',
                     'seoTitle' => 'Elektro bez HDMI',
                     'seoMetaDescription' => t(
