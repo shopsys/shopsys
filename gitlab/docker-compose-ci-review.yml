@@ -23,8 +23,8 @@ services:
         labels:
             - traefik.enable=false
         environment:
-            DOMAIN_HOST_1: https://${HOST}/
-            DOMAIN_HOST_2: https://en.${HOST}/
+            DOMAIN_HOSTNAME_1: https://${HOST}/
+            DOMAIN_HOSTNAME_2: https://en.${HOST}/
         networks:
             - default
 

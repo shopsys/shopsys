@@ -11,11 +11,6 @@ function deploy() {
         DOMAIN_HOSTNAME_2
     )
 
-    STOREFRONT_DOMAINS=(
-        STOREFRONT_DOMAIN_HOSTNAME_1
-        STOREFRONT_DOMAIN_HOSTNAME_2
-    )
-
     declare -A PARAMETERS=(
         ["parameters.trusted_proxies[+]"]=10.0.0.0/8
     )
@@ -87,7 +82,7 @@ function deploy() {
     source "${DEPLOY_TARGET_PATH}/functions.sh"
     source "${DEPLOY_TARGET_PATH}/parts/parameters.sh"
     source "${DEPLOY_TARGET_PATH}/parts/domains.sh"
-    source "${BASE_PATH}/deploy/parts/domains_storefront.sh"
+    source "${BASE_PATH}/deploy/parts/domains-storefront.sh"
     source "${BASE_PATH}/deploy/parts/whitelist-ip.sh"
     source "${DEPLOY_TARGET_PATH}/parts/environment-variables.sh"
     source "${DEPLOY_TARGET_PATH}/parts/kubernetes-variables.sh"

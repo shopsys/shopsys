@@ -2,16 +2,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
     name: storefront
-    labels:
-        app: storefront
 spec:
-    progressDeadlineSeconds: 1500
     replicas: 1
-    strategy:
-        rollingUpdate:
-            maxSurge: 1
-            maxUnavailable: 0
-        type: RollingUpdate
     selector:
         matchLabels:
             app: storefront
@@ -21,17 +13,11 @@ spec:
                 app: storefront
         spec:
             containers:
-                -   image: "{{STOREFRONT_TAG}}"
-                    name: storefront
-                    imagePullPolicy: Always
-                    workingDir: /app
-                    env:
-                        -   name: PUBLIC_GRAPHQL_ENDPOINT
-                            value: "https://{{DOMAIN_HOSTNAME_1}}/graphql/"
-                    resources:
-                        limits:
-                            cpu: "3"
-                        requests:
-                            cpu: "0.5"
+                -   name: storefront
+                    image: "{{STOREFRONT_TAG}}"
+                    ports:
+                        -   name: storefront
+                            containerPort: 3000
+                            protocol: TCP
             imagePullSecrets:
                 -   name: dockerregistry

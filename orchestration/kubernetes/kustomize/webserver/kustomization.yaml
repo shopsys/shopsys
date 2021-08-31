@@ -1,7 +1,7 @@
 resources:
     - ../../deployments/webserver-php-fpm.yaml
-    - ../../deployments/storefront.yaml
     - ../../services/webserver-php-fpm.yaml
+    - ../../deployments/storefront.yaml
     - ../../services/storefront.yaml
     - ../../namespace.yaml
     - ../../configmap/nginx.yaml
