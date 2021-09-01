@@ -20,17 +20,6 @@ export const StyledProductDetail = styled.div`
 
 export const StyledProductDetailImage = styled.div`
     ${({ theme }) => css`
-        position: relative;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 100%;
-        margin-bottom: 20px;
-
-        border-radius: ${theme.radius.big};
-        font-size: 0;
-        overflow: hidden;
-
         @media ${theme.mediaQueries.queryLg} {
             width: calc(100% - ${localVariables.detailInfoWidthSmall});
             margin-bottom: 0;
@@ -38,6 +27,21 @@ export const StyledProductDetailImage = styled.div`
 
         @media ${theme.mediaQueries.queryVl} {
             width: calc(100% - ${localVariables.detailInfoWidth});
+        }
+
+        // this div is added automaticaly by simple-react-lightbox
+        > div {
+            position: relative;
+            display: flex;
+            flex-direction: row;
+            align-items: flex-start;
+            justify-content: flex-start;
+            width: 100%;
+            margin-bottom: 20px;
+
+            border-radius: ${theme.radius.big};
+            font-size: 0;
+            overflow: hidden;
         }
     `}
 `;
