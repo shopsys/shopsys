@@ -2,13 +2,16 @@ import { CategoryDetailApiType, CategoryDetailType } from '../../components/page
 import { ListedProductEdgesType } from '../../components/blocks/product/types';
 import { mapListedProductNode } from '../products/Products';
 
-export function mapCategoryData(data: CategoryDetailApiType, currencyCode: string): CategoryDetailType {
+export function mapCategoryDetailData(
+    apiCategoryDetailData: CategoryDetailApiType,
+    currencyCode: string,
+): CategoryDetailType {
     const products: ListedProductEdgesType = {
-        ...data.products,
+        ...apiCategoryDetailData.products,
         edges: [],
     };
 
-    for (const edge of data.products.edges) {
+    for (const edge of apiCategoryDetailData.products.edges) {
         products.edges.push({
             ...edge,
             node: mapListedProductNode(edge.node, currencyCode),
@@ -16,7 +19,19 @@ export function mapCategoryData(data: CategoryDetailApiType, currencyCode: strin
     }
 
     return {
-        ...data,
+        ...apiCategoryDetailData,
         products: products,
+        children: apiCategoryDetailData.children.map((child) => {
+            return {
+                ...child,
+                image: child.images.length > 0 ? child.images[0] : null,
+            };
+        }),
+        linkedCategories: apiCategoryDetailData.linkedCategories.map((child) => {
+            return {
+                ...child,
+                image: child.images.length > 0 ? child.images[0] : null,
+            };
+        }),
     };
 }

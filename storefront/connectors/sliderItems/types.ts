@@ -1,3 +1,5 @@
+import { v4 as uuid } from 'uuid';
+
 type Image = {
     type: string;
     position: number;
@@ -8,7 +10,7 @@ type Image = {
 };
 
 export type SliderItem = {
-    uuid: string;
+    uuid: typeof uuid;
     name: string;
     link: string;
     extendedText: string;

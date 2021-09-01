@@ -1,16 +1,8 @@
+import { CategoryItemApiType, CategoryItemType } from 'components/blocks/categories/CategoryItem/types';
 import { ListedProductEdgesType, ListedProductItemApiType } from '../../blocks/product/types';
-import { BreadcrumbType } from '../../../connectors/breadcrumb/Breadcrumb';
+import { BreadcrumbType } from 'connectors/breadcrumb/Breadcrumb';
 import { SlugType } from '../../../connectors/slug/Slug';
 import { v4 as uuid } from 'uuid';
-
-interface SubcategoryWithProductsCount {
-    name: string;
-    uuid: typeof uuid;
-    slug: string;
-    products: {
-        totalCount: number;
-    };
-}
 
 export type ReadyCategorySeoMixLink = {
     name: string;
@@ -22,7 +14,8 @@ export type CategoryDetailApiType = SlugType &
         uuid: typeof uuid;
         name: string;
         seoH1: string | null;
-        children: SubcategoryWithProductsCount[];
+        children: CategoryItemApiType[];
+        linkedCategories: CategoryItemApiType[];
         products: {
             edges: {
                 node: ListedProductItemApiType;
@@ -32,11 +25,12 @@ export type CategoryDetailApiType = SlugType &
         readyCategorySeoMixLinks: ReadyCategorySeoMixLink[];
     };
 
-export interface CategoryDetailType extends SlugType {
+export interface CategoryDetailType extends SlugType, BreadcrumbType {
     uuid: typeof uuid;
     name: string;
     seoH1: string | null;
-    children: SubcategoryWithProductsCount[];
+    children: CategoryItemType[];
     products: ListedProductEdgesType;
     readyCategorySeoMixLinks: ReadyCategorySeoMixLink[];
+    linkedCategories: CategoryItemType[];
 }

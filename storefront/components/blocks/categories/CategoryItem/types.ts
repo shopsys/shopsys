@@ -1,15 +1,22 @@
 import { ImageType } from '../../../basic/ShopsysImage/types';
-
-export type CategoryItemType = {
-    image: ImageType | null;
-    name: string;
-    slug: string;
-    uuid: string;
-};
+import { v4 as uuid } from 'uuid';
 
 export type CategoryItemApiType = {
-    images: ImageType[];
     name: string;
+    uuid: typeof uuid;
     slug: string;
-    uuid: string;
+    images: ImageType[];
+    products?: {
+        totalCount: number;
+    };
+};
+
+export type CategoryItemType = {
+    name: string;
+    uuid: typeof uuid;
+    slug: string;
+    image: ImageType | null;
+    products?: {
+        totalCount: number;
+    };
 };

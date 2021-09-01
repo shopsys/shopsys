@@ -110,7 +110,7 @@ const BannersSlider: FC<BannersSliderProps> = (props) => {
                     <button
                         onClick={() => onMoveToSlideHandler(index)}
                         disabled={index === currentSlide}
-                        key={sliderItem.uuid}
+                        key={sliderItem.uuid.toString()}
                     >
                         {sliderItem.name}
                     </button>
@@ -121,7 +121,7 @@ const BannersSlider: FC<BannersSliderProps> = (props) => {
                     <button
                         onClick={() => onMoveToSlideHandler(index)}
                         disabled={index === currentSlide}
-                        key={sliderItem.uuid}
+                        key={sliderItem.uuid.toString()}
                     />
                 ))}
             </StyledBannersSliderDotControls>

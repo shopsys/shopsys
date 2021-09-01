@@ -1,47 +1,65 @@
 export const categoryDetailBody = `
+uuid
+name
+seoH1
+children {
     uuid
     name
-    seoH1
-    children{
-        uuid
-        name
-        slug
-        products{
-            totalCount
-        }
-    }
-    products {
+    slug
+    images (size: "default") {
+        url
+        height
+        width
+    } 
+    products{
         totalCount
-        edges {
-            node {
-                __typename
-                slug
+    }
+}
+linkedCategories {
+    uuid
+    name
+    slug
+    images (size: "default") {
+        url
+        height
+        width
+    }
+    products{
+        totalCount
+    }
+}
+products{
+    totalCount
+    edges {
+        node {
+            __typename
+            slug
+            name
+            flags {
                 name
-                flags {
-                    name
-                    rgbColor
-                }
-                images (size: "list") {
-                    url
-                    width
-                    height
-                }
-                availability {
-                    name
-                }
-                price {
-                    priceWithVat
-                    priceWithoutVat
-                    vatAmount
-                    isPriceFrom
-                }
-                availableStoresCount
-                exposedStoresCount
+                rgbColor
             }
+            images (size: "list") {
+                url
+                width
+                height
+            }
+            availability {
+                name
+            }
+            price {
+                priceWithVat
+                priceWithoutVat
+                vatAmount
+                isPriceFrom
+            }
+            availableStoresCount
+            exposedStoresCount
         }
     }
-    readyCategorySeoMixLinks {
-        name
-        slug
-    }
+}
+readyCategorySeoMixLinks {
+    name
+    slug
+}
 `;

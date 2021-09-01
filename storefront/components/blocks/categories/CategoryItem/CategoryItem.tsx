@@ -1,4 +1,10 @@
-import { CategoryItemBlockStyled, CategoryItemImageStyled, CategoryItemNameStyled } from './CategoryItem.style';
+import {
+    CategoryItemBlockStyled,
+    CategoryItemCountStyled,
+    CategoryItemImageStyled,
+    CategoryItemNameStyled,
+    CategoryItemNameWrapperStyled,
+} from './CategoryItem.style';
 import { CategoryItemType } from './types';
 import { FC } from 'react';
 import Link from 'next/link';
@@ -15,7 +21,12 @@ const CategoryItem: FC<CategoryItemProps> = (props) => {
                 <CategoryItemImageStyled>
                     <ShopsysImage image={props.category.image} alt={props.category.name} />
                 </CategoryItemImageStyled>
-                <CategoryItemNameStyled>{props.category.name}</CategoryItemNameStyled>
+                <CategoryItemNameWrapperStyled>
+                    <CategoryItemNameStyled>{props.category.name}</CategoryItemNameStyled>
+                    {props.category.products !== undefined && (
+                        <CategoryItemCountStyled>({props.category.products.totalCount})</CategoryItemCountStyled>
+                    )}
+                </CategoryItemNameWrapperStyled>
             </CategoryItemBlockStyled>
         </Link>
     );
