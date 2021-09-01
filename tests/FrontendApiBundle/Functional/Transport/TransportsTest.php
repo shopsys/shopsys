@@ -34,6 +34,13 @@ class TransportsTest extends GraphQlTestCase
                     payments {
                         name
                     }
+                    stores {
+                        edges {
+                            node {
+                                name
+                            }
+                        }
+                    }
                 }
             }
         ';
@@ -65,6 +72,7 @@ class TransportsTest extends GraphQlTestCase
                         'payments' => [
                             ['name' => t('Cash on delivery', [], 'dataFixtures', $this->getLocaleForFirstDomain())],
                         ],
+                        'stores' => null,
                     ],
                     [
                         'name' => t('PPL', [], 'dataFixtures', $this->getLocaleForFirstDomain()),
@@ -85,6 +93,7 @@ class TransportsTest extends GraphQlTestCase
                             ['name' => t('Credit card', [], 'dataFixtures', $this->getLocaleForFirstDomain())],
                             ['name' => t('GoPay - Platba kartou', [], 'dataFixtures', $this->getLocaleForFirstDomain())],
                         ],
+                        'stores' => null,
                     ],
                     [
                         'name' => t('Personal collection', [], 'dataFixtures', $this->getLocaleForFirstDomain()),
@@ -111,6 +120,20 @@ class TransportsTest extends GraphQlTestCase
                             ['name' => t('Cash', [], 'dataFixtures', $this->getLocaleForFirstDomain())],
                             ['name' => t('GoPay - Platba kartou', [], 'dataFixtures', $this->getLocaleForFirstDomain())],
                         ],
+                        'stores' => [
+                            'edges' => [
+                                [
+                                    'node' => [
+                                        'name' => t('Ostrava', [], 'dataFixtures', $this->getFirstDomainLocale()),
+                                    ],
+                                ],
+                                [
+                                    'node' => [
+                                        'name' => t('Pardubice', [], 'dataFixtures', $this->getFirstDomainLocale()),
+                                    ],
+                                ],
+                            ],
+                        ],
                     ],
                     [
                         'name' => t('Nadlimitní', [], 'dataFixtures', $this->getLocaleForFirstDomain()),
@@ -132,6 +155,7 @@ class TransportsTest extends GraphQlTestCase
                         'payments' => [
                             ['name' => t('Nadlimitní', [], 'dataFixtures', $this->getLocaleForFirstDomain())],
                         ],
+                        'stores' => null,
                     ],
                 ],
             ],

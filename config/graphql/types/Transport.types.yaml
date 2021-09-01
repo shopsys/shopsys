@@ -10,3 +10,7 @@ Transport:
             transportType:
                 type: "TransportType!"
                 description: "Type of transport"
+            stores:
+                type: "StoreConnection"
+                description: "Stores available for personal pickup"
+                resolve: "@=resolver('storesByTransport', [value, args])"
