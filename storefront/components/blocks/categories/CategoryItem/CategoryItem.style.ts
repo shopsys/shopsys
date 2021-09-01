@@ -62,7 +62,7 @@ export const CategoryItemNameStyled = styled.div`
 
 export const CategoryItemCountStyled = styled.div`
     ${({ theme }) => css`
-        color: ${theme.color.baseLighter};
+        color: ${theme.color.greyLight};
         font-size: 11px;
     `}
 `;

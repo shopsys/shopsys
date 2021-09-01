@@ -89,7 +89,7 @@ export const StyledBannersSliderDotControls = styled.div`
 
             cursor: pointer;
             border-radius: ${theme.radius.small};
-            background-color: ${theme.color.baseLighter};
+            background-color: ${theme.color.greyLight};
             font-size: 0;
             border: 0;
 
