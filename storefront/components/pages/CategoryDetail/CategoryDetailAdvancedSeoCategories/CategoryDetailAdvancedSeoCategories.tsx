@@ -30,6 +30,10 @@ const CategoryDetailAdvancedSeoCategories: FC<CategoryDetailAdvancedSeoCategorie
         () => setAdvancedSeoCategoriesSliderVisibility(getIsElementVisible([{ min: 0, max: 768 }], width)),
     );
 
+    if (props.readyCategorySeoMixLinks.length === 0) {
+        return null;
+    }
+
     return (
         <>
             <ShopsysHeading type="h3">{t<string>('Favorite categories')}</ShopsysHeading>
