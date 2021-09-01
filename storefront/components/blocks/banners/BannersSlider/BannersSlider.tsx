@@ -20,6 +20,7 @@ const BannersSlider: FC<BannersSliderProps> = (props) => {
     const [currentSlide, setCurrentSlide] = useState(0);
     const [pause, setPause] = useState(false);
     const timer = useRef<NodeJS.Timer | null>(null);
+    const sliderBoxRef = useRef<HTMLDivElement>(null);
     const [sliderRef, slider] = useKeenSlider<HTMLDivElement>({
         loop: true,
         duration: 1000,
@@ -30,7 +31,7 @@ const BannersSlider: FC<BannersSliderProps> = (props) => {
                 centered: true,
             },
         },
-        slideChanged(slider) {
+        slideChanged: (slider) => {
             setCurrentSlide(slider.details().relativeSlide);
         },
         dragStart: () => {
@@ -67,11 +68,11 @@ const BannersSlider: FC<BannersSliderProps> = (props) => {
         });
     }, [currentSlide]);
     useEffect(() => {
-        if (sliderRef.current !== null && sliderRef.current !== undefined) {
-            sliderRef.current.addEventListener('mouseover', () => {
+        if (sliderBoxRef.current !== null) {
+            sliderBoxRef.current.addEventListener('mouseover', () => {
                 setPause(true);
             });
-            sliderRef.current.addEventListener('mouseout', () => {
+            sliderBoxRef.current.addEventListener('mouseout', () => {
                 setPause(false);
             });
         }
@@ -90,12 +91,12 @@ const BannersSlider: FC<BannersSliderProps> = (props) => {
     }, [pause, slider]);
 
     const onMoveToSlideHandler = (newSlideIndex: number) => {
+        slider.moveToSlide(slider.details().absoluteSlide - (currentSlide - newSlideIndex));
         setCurrentSlide(newSlideIndex);
-        slider.moveToSlide(newSlideIndex);
     };
 
     return (
-        <StyledBannersSliderBox>
+        <StyledBannersSliderBox ref={sliderBoxRef}>
             <StyledBannersSlider ref={sliderRef} className="keen-slider">
                 {props.sliderItems.map((sliderItem, index) => (
                     <BannersSliderItem
@@ -109,7 +110,7 @@ const BannersSlider: FC<BannersSliderProps> = (props) => {
                 {props.sliderItems.map((sliderItem, index) => (
                     <button
                         onClick={() => onMoveToSlideHandler(index)}
-                        disabled={index === currentSlide}
+                        disabled={index === currentSlide % props.sliderItems.length}
                         key={sliderItem.uuid.toString()}
                     >
                         {sliderItem.name}
@@ -120,7 +121,7 @@ const BannersSlider: FC<BannersSliderProps> = (props) => {
                 {props.sliderItems.map((sliderItem, index) => (
                     <button
                         onClick={() => onMoveToSlideHandler(index)}
-                        disabled={index === currentSlide}
+                        disabled={index === currentSlide % props.sliderItems.length}
                         key={sliderItem.uuid.toString()}
                     />
                 ))}
@@ -129,7 +130,7 @@ const BannersSlider: FC<BannersSliderProps> = (props) => {
     );
 };
 
-export const getBannersSliderItemImageUrl = (sliderItem: SliderItem, isImageLoaded: boolean) => {
+export const getBannersSliderItemImageUrl = (sliderItem: SliderItem, isImageLoaded: boolean): string => {
     return isImageLoaded ? sliderItem.images[0]?.url || 'images/optimized-noimage.png' : '';
 };
 
