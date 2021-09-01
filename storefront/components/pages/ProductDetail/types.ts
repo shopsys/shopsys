@@ -2,6 +2,18 @@ import { BreadcrumbType } from 'connectors/breadcrumb/Breadcrumb';
 import { SlugType } from '../../../connectors/slug/Slug';
 import { v4 as uuid } from 'uuid';
 
+export type Availability = {
+    name: string;
+    status: 'in-stock' | 'out-of-stock';
+};
+
+export type StoreAvailability = {
+    storeName: string;
+    exposed: boolean;
+    availabilityInformation: string;
+    availabilityStatus: 'in-stock' | 'out-of-stock';
+};
+
 export interface ProductDetailType extends SlugType, BreadcrumbType {
     uuid: typeof uuid;
     name: string;
@@ -9,4 +21,8 @@ export interface ProductDetailType extends SlugType, BreadcrumbType {
     nameSuffix: string;
     description: string;
     catalogNumber: string;
+    availability: Availability;
+    storeAvailabilities: StoreAvailability[];
+    availableStoresCount: number;
+    exposedStoresCount: number;
 }
