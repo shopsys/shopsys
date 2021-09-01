@@ -18,6 +18,11 @@ class TransportsTest extends GraphQlTestCase
                     description,
                     instruction,
                     position,
+                    daysUntilDelivery
+                    transportType {
+                        name
+                        code
+                    }
                     price {
                         priceWithVat
                         priceWithoutVat
@@ -47,6 +52,11 @@ class TransportsTest extends GraphQlTestCase
                         'description' => null,
                         'instruction' => null,
                         'position' => 0,
+                        'daysUntilDelivery' => 5,
+                        'transportType' => [
+                            'name' => t('Standardní', [], 'dataFixtures', $this->getLocaleForFirstDomain()),
+                            'code' => 'common',
+                        ],
                         'price' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('100', $vatHigh),
                         'images' => [
                             ['url' => $this->getFullUrlPath('/content-test/images/transport/default/56.jpg')],
@@ -61,6 +71,11 @@ class TransportsTest extends GraphQlTestCase
                         'description' => null,
                         'instruction' => null,
                         'position' => 1,
+                        'daysUntilDelivery' => 4,
+                        'transportType' => [
+                            'name' => t('Standardní', [], 'dataFixtures', $this->getLocaleForFirstDomain()),
+                            'code' => 'common',
+                        ],
                         'price' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('200', $vatHigh),
                         'images' => [
                             ['url' => $this->getFullUrlPath('/content-test/images/transport/default/57.jpg')],
@@ -81,6 +96,11 @@ class TransportsTest extends GraphQlTestCase
                         ),
                         'instruction' => null,
                         'position' => 2,
+                        'daysUntilDelivery' => 0,
+                        'transportType' => [
+                            'name' => t('Standardní', [], 'dataFixtures', $this->getLocaleForFirstDomain()),
+                            'code' => 'common',
+                        ],
                         'price' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('0', $vatZero),
                         'images' => [
                             ['url' => $this->getFullUrlPath('/content-test/images/transport/default/58.jpg')],
@@ -102,6 +122,11 @@ class TransportsTest extends GraphQlTestCase
                         ),
                         'instruction' => null,
                         'position' => 3,
+                        'daysUntilDelivery' => 0,
+                        'transportType' => [
+                            'name' => t('Standardní', [], 'dataFixtures', $this->getLocaleForFirstDomain()),
+                            'code' => 'common',
+                        ],
                         'price' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('0', $vatZero),
                         'images' => [],
                         'payments' => [
