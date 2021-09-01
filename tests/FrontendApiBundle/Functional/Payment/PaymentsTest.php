@@ -18,6 +18,7 @@ class PaymentsTest extends GraphQlTestCase
                     description,
                     instruction,
                     position,
+                    type,
                     price {
                         priceWithVat
                         priceWithoutVat
@@ -28,6 +29,13 @@ class PaymentsTest extends GraphQlTestCase
                     },
                     transports {
                         name
+                    }
+                    goPayPaymentMethod {
+                        identifier
+                        name
+                        imageNormalUrl
+                        imageLargeUrl
+                        paymentGroup
                     }
                 }
             }
@@ -49,6 +57,7 @@ class PaymentsTest extends GraphQlTestCase
                         ),
                         'instruction' => null,
                         'position' => 0,
+                        'type' => 'basic',
                         'price' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('100', $vatZero),
                         'images' => [
                             ['url' => $this->getFullUrlPath('/content-test/images/payment/default/53.jpg')],
@@ -58,12 +67,14 @@ class PaymentsTest extends GraphQlTestCase
                             ['name' => t('PPL', [], 'dataFixtures', $this->getLocaleForFirstDomain())],
                             ['name' => t('Personal collection', [], 'dataFixtures', $this->getLocaleForFirstDomain())],
                         ],
+                        'goPayPaymentMethod' => null,
                     ],
                     [
                         'name' => t('Cash on delivery', [], 'dataFixtures', $this->getLocaleForFirstDomain()),
                         'description' => null,
                         'instruction' => null,
                         'position' => 1,
+                        'type' => 'basic',
                         'price' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('50', $vatZero),
                         'images' => [
                             ['url' => $this->getFullUrlPath('/content-test/images/payment/default/55.jpg')],
@@ -72,12 +83,14 @@ class PaymentsTest extends GraphQlTestCase
                         'transports' => [
                             ['name' => t('Czech post', [], 'dataFixtures', $this->getLocaleForFirstDomain())],
                         ],
+                        'goPayPaymentMethod' => null,
                     ],
                     [
                         'name' => t('Cash', [], 'dataFixtures', $this->getLocaleForFirstDomain()),
                         'description' => null,
                         'instruction' => null,
                         'position' => 2,
+                        'type' => 'basic',
                         'price' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('0', $vatZero),
                         'images' => [
                             ['url' => $this->getFullUrlPath('/content-test/images/payment/default/54.jpg')],
@@ -86,17 +99,26 @@ class PaymentsTest extends GraphQlTestCase
                         'transports' => [
                             ['name' => t('Personal collection', [], 'dataFixtures', $this->getLocaleForFirstDomain())],
                         ],
+                        'goPayPaymentMethod' => null,
                     ],
                     [
                         'name' => t('GoPay - Platba kartou', [], 'dataFixtures', $this->getLocaleForFirstDomain()),
                         'description' => null,
                         'instruction' => null,
                         'position' => 3,
+                        'type' => 'goPay',
                         'price' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('0', $vatZero),
                         'images' => [],
                         'transports' => [
                             ['name' => t('PPL', [], 'dataFixtures', $this->getLocaleForFirstDomain())],
                             ['name' => t('Personal collection', [], 'dataFixtures', $this->getLocaleForFirstDomain())],
+                        ],
+                        'goPayPaymentMethod' => [
+                            'identifier' => 'PAYMENT_CARD',
+                            'name' => t('[CS] Platební karta', [], 'dataFixtures', $this->getFirstDomainLocale()),
+                            'imageNormalUrl' => 'https://gate.gopay.cz/images/checkout/payment_card.png',
+                            'imageLargeUrl' => 'https://gate.gopay.cz/images/checkout/payment_card@2x.png',
+                            'paymentGroup' => 'card-payment',
                         ],
                     ],
                     [
@@ -104,11 +126,13 @@ class PaymentsTest extends GraphQlTestCase
                         'description' => null,
                         'instruction' => null,
                         'position' => 4,
+                        'type' => 'basic',
                         'price' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('200', $vatZero),
                         'images' => [],
                         'transports' => [
                             ['name' => t('Nadlimitní', [], 'dataFixtures', $this->getLocaleForFirstDomain())],
                         ],
+                        'goPayPaymentMethod' => null,
                     ],
                 ],
             ],

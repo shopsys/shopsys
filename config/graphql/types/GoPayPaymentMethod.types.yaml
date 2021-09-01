@@ -1,0 +1,19 @@
+GoPayPaymentMethod:
+    type: object
+    config:
+        fields:
+            identifier:
+                type: "String!"
+                description: "Identifier of payment method"
+            name:
+                type: "String!"
+                description: "Name of payment method"
+            imageNormalUrl:
+                type: "String!"
+                description: "URL to normal size image of payment method"
+            imageLargeUrl:
+                type: "String!"
+                description: "URL to large size image of payment method"
+            paymentGroup:
+                type: "String!"
+                description: "Group of payment methods"
