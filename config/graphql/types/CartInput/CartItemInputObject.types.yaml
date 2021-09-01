@@ -1,0 +1,20 @@
+CartItemInput:
+    type: input-object
+    config:
+        fields:
+            cartUuid:
+                type: "Uuid"
+                description: "Cart identifier, new cart will be created if not provided and customer is not logged in"
+                defaultValue: null
+            productUuid:
+                type: "Uuid!"
+                description: "Product UUID"
+            quantity:
+                type: "Int!"
+                description: "Item quantity"
+                validation:
+                    -   Positive: ~
+            isAbsoluteQuantity:
+                type: "Boolean"
+                defaultValue: false
+                description: "True if quantity should be set no matter the current state of the cart. False if quantity should be added to the already existing same item in the cart"

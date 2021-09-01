@@ -2,3 +2,13 @@ Mutation:
     type: object
     inherits:
         - 'MutationDecorator'
+    config:
+        fields:
+            AddToCart:
+                type: Uuid
+                description: "Add product to cart for future checkout"
+                args:
+                    input:
+                        type: CartItemInput!
+                        validation: cascade
+                resolve: "@=mutation('add_to_cart', [args, validator])"

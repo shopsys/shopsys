@@ -30,6 +30,7 @@ use Twig\Environment;
  * @property \App\Model\Product\ProductRepository $productRepository
  * @property \App\Model\Order\PromoCode\CurrentPromoCodeFacade $currentPromoCodeFacade
  * @property \App\Model\Cart\Watcher\CartWatcherFacade $cartWatcherFacade
+ * @property \App\Model\Customer\User\CustomerUserIdentifierFactory $customerUserIdentifierFactory
  * @method deleteCart(\App\Model\Cart\Cart $cart)
  * @method \App\Model\Product\Product getProductByCartItemId(int $cartItemId)
  * @method \App\Model\Cart\Cart|null findCartOfCurrentCustomerUser()
@@ -63,7 +64,7 @@ class CartFacade extends BaseCartFacade
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Model\Cart\CartFactory $cartFactory
      * @param \App\Model\Product\ProductRepository $productRepository
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifierFactory $customerUserIdentifierFactory
+     * @param \App\Model\Customer\User\CustomerUserIdentifierFactory $customerUserIdentifierFactory
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
      * @param \App\Model\Order\PromoCode\CurrentPromoCodeFacade $currentPromoCodeFacade
@@ -125,9 +126,20 @@ class CartFacade extends BaseCartFacade
             $this->domain->getId(),
             $this->currentCustomerUser->getPricingGroup()
         );
-
         $cart = $this->getCartOfCurrentCustomerUserCreateIfNotExists();
 
+        return $this->addProductToExistingCart($product, $quantity, $cart);
+    }
+
+    /**
+     * @param \App\Model\Product\Product $product
+     * @param int $quantity
+     * @param \App\Model\Cart\Cart $cart
+     * @param bool $isAbsoluteQuantity
+     * @return \App\Model\Cart\AddProductResult
+     */
+    public function addProductToExistingCart(Product $product, $quantity, Cart $cart, bool $isAbsoluteQuantity = false): AddProductResult
+    {
         $maximumOrderQuantity = $this->productAvailabilityFacade->getMaximumOrderQuantity($product, $this->domain->getId());
         $notOnStockQuantity = 0;
 
@@ -139,7 +151,12 @@ class CartFacade extends BaseCartFacade
 
         foreach ($cart->getItems() as $item) {
             if ($item->getProduct() === $product) {
-                $newQuantity = $item->getQuantity() + $quantity;
+                if (!$isAbsoluteQuantity) {
+                    $newQuantity = $item->getQuantity() + $quantity;
+                } else {
+                    $newQuantity = $quantity;
+                }
+
                 if ($newQuantity > $maximumOrderQuantity) {
                     $notOnStockQuantity = $newQuantity - $maximumOrderQuantity;
                     $newQuantity = $maximumOrderQuantity;
@@ -173,6 +190,20 @@ class CartFacade extends BaseCartFacade
         $this->em->flush();
 
         return $result;
+    }
+
+    /**
+     * @param string $cartIdentifier
+     * @return \App\Model\Cart\Cart|null
+     */
+    public function findCartByCartIdentifier(string $cartIdentifier): ?Cart
+    {
+        $customerUserIdentifier = $this->customerUserIdentifierFactory->getByCartIdentifier($cartIdentifier);
+
+        /** @var \App\Model\Cart\Cart|null $cart */
+        $cart = $this->cartRepository->findByCustomerUserIdentifier($customerUserIdentifier);
+
+        return $cart;
     }
 
     /**
