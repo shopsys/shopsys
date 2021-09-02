@@ -8,12 +8,9 @@ use App\DataFixtures\Demo\ProductDataFixture;
 use App\Model\Product\Exception\DeprecatedAvailabilityPropertyFromProductException;
 use Shopsys\FrameworkBundle\Model\Product\Availability\Availability;
 use Tests\App\Test\TransactionFunctionalTestCase;
-use Zalas\Injector\PHPUnit\Symfony\TestCase\SymfonyTestContainer;
 
 final class AvailabilityFacadeTest extends TransactionFunctionalTestCase
 {
-    use SymfonyTestContainer;
-
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityDataFactoryInterface
      * @inject

@@ -9,12 +9,9 @@ use App\Component\Image\ImageFacade;
 use App\Twig\ImageExtension;
 use Shopsys\FrameworkBundle\Component\Image\AdditionalImageData;
 use Tests\App\Test\FunctionalTestCase;
-use Zalas\Injector\PHPUnit\Symfony\TestCase\SymfonyTestContainer;
 
 class ImageExtensionTest extends FunctionalTestCase
 {
-    use SymfonyTestContainer;
-
     /**
      * @var \App\Component\Image\ImageLocator
      * @inject

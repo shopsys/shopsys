@@ -6,78 +6,67 @@ namespace Tests\FrontendApiBundle\Test;
 
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
+use Shopsys\FrameworkBundle\Model\Pricing\BasePriceCalculation;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
+use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
+use Shopsys\FrameworkBundle\Model\Pricing\PriceConverter;
 use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
+use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade;
 use Shopsys\FrontendApiBundle\Component\Domain\EnabledOnDomainChecker;
 use Shopsys\FrontendApiBundle\Component\Price\MoneyFormatterHelper;
+use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Component\HttpFoundation\Response;
-use Tests\App\Test\FunctionalTestCase;
+use Tests\App\Test\TransactionFunctionalTestCase;
 
-abstract class GraphQlTestCase extends FunctionalTestCase
+abstract class GraphQlTestCase extends TransactionFunctionalTestCase
 {
     /**
-     * @var \Symfony\Bundle\FrameworkBundle\Client
+     * @var \Symfony\Bundle\FrameworkBundle\KernelBrowser
      */
-    protected $client;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator
-     */
-    protected $em;
+    protected KernelBrowser $client;
 
     /**
      * @var string
      */
-    protected $firstDomainUrl;
+    protected string $firstDomainUrl;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Pricing\BasePriceCalculation
      * @inject
      */
-    protected $basePriceCalculation;
+    protected BasePriceCalculation $basePriceCalculation;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Pricing\PriceConverter
      * @inject
      */
-    protected $priceConverter;
+    protected PriceConverter $priceConverter;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade
      * @inject
      */
-    protected $currencyFacade;
+    protected CurrencyFacade $currencyFacade;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade
      * @inject
      */
-    protected $vatFacade;
+    protected VatFacade $vatFacade;
 
     protected function setUp(): void
     {
-        $this->client = $this->findClient(true);
+        parent::setUp();
 
-        /*
-         * Newly created client has its own container
-         * To be able to isolate requests made with this new client,
-         * it's necessary to start transaction on entityManager from the client's container.
-         */
-
-        $this->domain = $this->client->getContainer()->get(Domain::class);
-        $this->em = $this->client->getContainer()->get('doctrine.orm.entity_manager');
-
-        $this->domain->switchDomainById(Domain::FIRST_DOMAIN_ID);
-        $firstDomain = $this->domain->getCurrentDomainConfig();
-        $this->firstDomainUrl = $firstDomain->getUrl();
+        $this->client = $this->getCurrentClient();
 
         $this->runCheckTestEnabledOnCurrentDomain();
 
-        $this->em->beginTransaction();
+        $this->configureCurrentClient(null, null, ['CONTENT_TYPE' => 'application/graphql']);
 
-        parent::setUp();
+        $this->firstDomainUrl = $this->domain->getCurrentDomainConfig()->getUrl();
     }
 
     protected function runCheckTestEnabledOnCurrentDomain(): void
@@ -87,11 +76,6 @@ abstract class GraphQlTestCase extends FunctionalTestCase
         if (!$enabledOnCurrentDomainChecker->isEnabledOnCurrentDomain()) {
             $this->markTestSkipped('Frontend API disabled on domain');
         }
-    }
-
-    protected function tearDown(): void
-    {
-        $this->em->rollback();
     }
 
     /**
@@ -126,12 +110,11 @@ abstract class GraphQlTestCase extends FunctionalTestCase
     /**
      * @param string $query
      * @param array $variables
-     * @param array $customServer
      * @return array
      */
-    protected function getResponseContentForQuery(string $query, array $variables = [], array $customServer = []): array
+    protected function getResponseContentForQuery(string $query, array $variables = []): array
     {
-        $content = $this->getResponseForQuery($query, $variables, $customServer)->getContent();
+        $content = $this->getResponseForQuery($query, $variables)->getContent();
 
         return json_decode($content, true);
     }
@@ -139,20 +122,16 @@ abstract class GraphQlTestCase extends FunctionalTestCase
     /**
      * @param string $query
      * @param array $variables
-     * @param array $customServer
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    private function getResponseForQuery(string $query, array $variables, array $customServer = []): Response
+    private function getResponseForQuery(string $query, array $variables): Response
     {
         $path = $this->getLocalizedPathOnFirstDomainByRouteName('overblog_graphql_endpoint');
-        $server = array_merge(['CONTENT_TYPE' => 'application/graphql'], $customServer);
 
         $this->client->request(
             'GET',
             $path,
             ['query' => $query, 'variables' => json_encode($variables)],
-            [],
-            $server
         );
 
         return $this->client->getResponse();
