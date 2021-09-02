@@ -35,7 +35,7 @@ const hoveredItem = (theme: Theme) => {
 };
 
 export const NavigationItemStyled = styled.li<NavigationProps>`
-    ${({ theme, isOpen }) => css`
+    ${({ theme }) => css`
         padding: 0;
         display: inline-block;
         vertical-align: middle;
@@ -49,13 +49,9 @@ export const NavigationItemStyled = styled.li<NavigationProps>`
             margin-right: 50px;
         }
 
-        ${isOpen
-            ? hoveredItem(theme)
-            : css`
-                  &:hover {
-                      ${hoveredItem(theme)};
-                  }
-              `};
+        &:hover {
+            ${hoveredItem(theme)};
+        }
 
         &:last-child {
             margin-right: 0;
@@ -63,8 +59,8 @@ export const NavigationItemStyled = styled.li<NavigationProps>`
     `}
 `;
 
-export const NavigationItemLinkStyled = styled.a`
-    ${({ theme }) => css`
+export const NavigationItemLinkStyled = styled.a<NavigationProps>`
+    ${({ theme, isOpen }) => css`
         position: relative;
         display: block;
         padding: 0 10px;
@@ -77,9 +73,19 @@ export const NavigationItemLinkStyled = styled.a`
         color: ${theme.color.white};
         text-transform: uppercase;
         text-decoration: none;
+        ${isOpen &&
+        css`
+            color: ${theme.color.orangeLight};
+            text-decoration: none;
+        `};
 
         @media ${theme.mediaQueries.queryVl} {
             font-size: ${theme.fontSize.default};
+        }
+
+        &:hover {
+            color: ${theme.color.orangeLight};
+            text-decoration: none;
         }
 
         &:after {
@@ -90,18 +96,31 @@ export const NavigationItemLinkStyled = styled.a`
             left: 0;
             right: 0;
             height: 4px;
+            ${isOpen &&
+            css`
+                display: block;
+            `};
 
             background-color: ${theme.color.orange};
         }
     `}
 `;
 
-export const NavigationItemLinkIconStyled = styled.span`
-    margin-left: 8px;
+export const NavigationItemLinkIconStyled = styled.span<NavigationProps>`
+    ${({ isOpen }) => css`
+        margin-left: 8px;
+
+        ${isOpen &&
+        css`
+            img {
+                transform: rotate(180deg);
+            }
+        `};
+    `};
 `;
 
-export const NavigationItemSubStyled = styled.div`
-    ${({ theme }) => css`
+export const NavigationItemSubStyled = styled.div<NavigationProps>`
+    ${({ theme, isOpen }) => css`
         display: block;
         position: absolute;
         width: 100%;
@@ -113,6 +132,12 @@ export const NavigationItemSubStyled = styled.div`
         box-shadow: 0 5px 10px 0 rgba(164, 167, 193, 0.34);
         opacity: 0;
         pointer-events: none;
+
+        ${isOpen &&
+        css`
+            opacity: 1;
+            pointer-events: auto;
+        `};
     `}
 `;
 

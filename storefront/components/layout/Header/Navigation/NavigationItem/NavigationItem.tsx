@@ -34,17 +34,17 @@ const NavigationItem: FC<NavigationItemProps> = (props) => {
     return (
         <NavigationItemStyled onMouseEnter={openSubmenu} onMouseLeave={hideSubmenu} isOpen={isHovered}>
             <Link href={props.navigationItem.link} passHref>
-                <NavigationItemLinkStyled>
+                <NavigationItemLinkStyled isOpen={isHovered}>
                     {props.navigationItem.name}
                     {hasChildren && (
-                        <NavigationItemLinkIconStyled>
+                        <NavigationItemLinkIconStyled isOpen={isHovered}>
                             <ShopsysIcon icon="arrow" iconHeight={14} />
                         </NavigationItemLinkIconStyled>
                     )}
                 </NavigationItemLinkStyled>
             </Link>
             {hasChildren && (
-                <NavigationItemSubStyled>
+                <NavigationItemSubStyled isOpen={isHovered}>
                     <NavigationItemSubWrapStyled>
                         <NavigationLeaf columnCategories={props.navigationItem.categoriesByColumns} />
                     </NavigationItemSubWrapStyled>
