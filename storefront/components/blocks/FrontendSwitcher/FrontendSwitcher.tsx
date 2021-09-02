@@ -6,14 +6,14 @@ import { useRouter } from 'next/router';
 const FrontendSwitcher: FC = () => {
     const router = useRouter();
 
-    const openTwigFrontendEvent = () => {
-        document.cookie = 'twigFrontend=true;';
+    const openTwigStorefrontEvent = () => {
+        document.cookie = 'twigStorefront=true;';
         router.reload();
     };
 
     return (
         <FrontendSwitcherWrapper>
-            <a onClick={openTwigFrontendEvent}>
+            <a onClick={openTwigStorefrontEvent}>
                 <ShopsysIcon iconTitle="Switch to Twig frontend" icon="replace" />
             </a>
         </FrontendSwitcherWrapper>

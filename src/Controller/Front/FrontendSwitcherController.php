@@ -15,7 +15,7 @@ class FrontendSwitcherController extends FrontBaseController
     public function indexAction(): Response
     {
         $response = new RedirectResponse('/');
-        $response->headers->clearCookie('twigFrontend');
+        $response->headers->clearCookie('twigStorefront');
 
         return $response;
     }
