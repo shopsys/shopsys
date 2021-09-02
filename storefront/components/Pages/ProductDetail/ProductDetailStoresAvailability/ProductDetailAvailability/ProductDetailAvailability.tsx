@@ -5,8 +5,8 @@ import {
     ProductDetailAvailabilityStyled as AvailabilityStyled,
 } from './ProductDetailAvailability.style';
 import { FC, RefObject, useEffect } from 'react';
+import Icon from 'components/Basic/Icon';
 import { ProductDetailType } from '../../types';
-import ShopsysIcon from 'components/Basic/ShopsysIcon';
 import { useTranslation } from 'next-i18next';
 
 type ProductDetailAvailabilityProps = {
@@ -31,7 +31,7 @@ const ProductDetailAvailability: FC<ProductDetailAvailabilityProps> = (props) =>
         <AvailabilityStyled>
             <AvailabilityLinkStyled status={props.product.availability.status} onClick={scrollOnClickHandler}>
                 {props.product.availability.name}
-                <ShopsysIcon icon="arrow" iconHeight={16} iconType="svg" />
+                <Icon icon="arrow" iconHeight={16} iconType="svg" />
             </AvailabilityLinkStyled>
             {props.product.availableStoresCount > 0 && (
                 <AvailabilityInfoStyled>

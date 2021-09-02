@@ -7,10 +7,10 @@ import {
     NavigationItemSubWrapStyled,
 } from './NavigationItem.style';
 import { debounce } from 'lodash';
+import Icon from '../../../../Basic/Icon';
 import Link from 'next/link';
 import { NavigationItem as NavigationItemType } from '../../../../../connectors/navigation/Navigation';
 import NavigationLeaf from '../NavigationLeaf';
-import ShopsysIcon from '../../../../Basic/ShopsysIcon';
 
 type NavigationItemProps = {
     navigationItem: NavigationItemType;
@@ -38,7 +38,7 @@ const NavigationItem: FC<NavigationItemProps> = (props) => {
                     {props.navigationItem.name}
                     {hasChildren && (
                         <NavigationItemLinkIconStyled isOpen={isHovered}>
-                            <ShopsysIcon icon="arrow" iconHeight={14} />
+                            <Icon icon="arrow" iconHeight={14} />
                         </NavigationItemLinkIconStyled>
                     )}
                 </NavigationItemLinkStyled>

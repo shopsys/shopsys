@@ -11,9 +11,9 @@ import {
     CartStyled,
     CartValueStyled,
 } from './Cart.style';
+import Icon from '../../../Basic/Icon';
 import Link from 'next/link';
 import { ReactElement } from 'react';
-import ShopsysIcon from '../../../Basic/ShopsysIcon';
 import { useTranslation } from 'react-i18next';
 
 const Cart = (): ReactElement => {
@@ -23,7 +23,7 @@ const Cart = (): ReactElement => {
         <CartStyled>
             <CartBlockStyled>
                 <CartPiecesStyled>
-                    <ShopsysIcon icon="cart" iconHeight={18} />
+                    <Icon icon="cart" iconHeight={18} />
                     <CartCountStyled>0</CartCountStyled>
                 </CartPiecesStyled>
                 <CartValueStyled>0 Kč</CartValueStyled>
@@ -37,7 +37,7 @@ const Cart = (): ReactElement => {
             <CartButtonMobileStyled>
                 <Link href="/" passHref>
                     <CartButtonMobileLinkStyled>
-                        <ShopsysIcon icon="cart" iconHeight={18} />
+                        <Icon icon="cart" iconHeight={18} />
                         <CartCountStyled>0</CartCountStyled>
                     </CartButtonMobileLinkStyled>
                 </Link>

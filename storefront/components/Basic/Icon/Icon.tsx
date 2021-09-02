@@ -1,31 +1,35 @@
 import PropTypes, { InferProps } from 'prop-types';
 import { ReactElement } from 'react';
+import * as TEST from '../../../public/svg';
 
 /**
  *  Basic icon component unifies displaying icons
  *  className .icon is used for eliminating img reset (max-width: 100%, height: auto)
  */
-function ShopsysIcon(props: InferProps<typeof ShopsysIcon.propTypes>): ReactElement {
+function Icon(props: InferProps<typeof Icon.propTypes>): ReactElement {
     let iconSrc = '';
+    let IconElement = '';
 
     if (props.iconType === 'svg') {
         iconSrc = `/svg/${props.icon}.svg`;
+        IconElement = 'svg';
     }
 
     if (props.iconType === 'png') {
         iconSrc = `/icons/${props.icon}.png`;
+        IconElement = 'img';
     }
 
-    return <img className="icon" src={iconSrc} height={props.iconHeight} title={props.iconTitle} />;
+    return <IconElement className="icon" src={iconSrc} height={props.iconHeight} title={props.iconTitle} />;
 }
 
-ShopsysIcon.defaultProps = {
+Icon.defaultProps = {
     iconType: 'svg',
     iconHeight: 24,
     iconTitle: '',
 };
 
-ShopsysIcon.propTypes = {
+Icon.propTypes = {
     /**
      * String for title attribute for generating tooltip text
      */
@@ -48,4 +52,4 @@ ShopsysIcon.propTypes = {
 };
 
 /* @component */
-export default ShopsysIcon;
+export default Icon;

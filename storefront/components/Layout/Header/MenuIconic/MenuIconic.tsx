@@ -5,9 +5,9 @@ import {
     MenuIconicItemStyled,
     MenuIconicListStyled,
 } from './MenuIconic.style';
+import Icon from '../../../Basic/Icon';
 import Link from 'next/link';
 import { ReactElement } from 'react';
-import ShopsysIcon from '../../../Basic/ShopsysIcon';
 import { useTranslation } from 'react-i18next';
 
 const MenuIconic = (): ReactElement => {
@@ -19,7 +19,7 @@ const MenuIconic = (): ReactElement => {
                 <MenuIconicItemStyled>
                     <Link href="/" passHref>
                         <MenuIconicItemLinkStyled>
-                            <ShopsysIcon icon="chat" iconHeight={18} />
+                            <Icon icon="chat" iconHeight={18} />
                             {t<string>('Customer service')}
                         </MenuIconicItemLinkStyled>
                     </Link>
@@ -27,7 +27,7 @@ const MenuIconic = (): ReactElement => {
                 <MenuIconicItemStyled>
                     <Link href="/" passHref>
                         <MenuIconicItemLinkStyled>
-                            <ShopsysIcon icon="marker" iconHeight={18} />
+                            <Icon icon="marker" iconHeight={18} />
                             {t<string>('Stores')}
                         </MenuIconicItemLinkStyled>
                     </Link>
@@ -35,7 +35,7 @@ const MenuIconic = (): ReactElement => {
                 <MenuIconicItemStyled>
                     <Link href="/" passHref>
                         <MenuIconicItemLinkStyled>
-                            <ShopsysIcon icon="user" iconHeight={18} />
+                            <Icon icon="user" iconHeight={18} />
                             {t<string>('Sign in')}
                         </MenuIconicItemLinkStyled>
                     </Link>
@@ -44,7 +44,7 @@ const MenuIconic = (): ReactElement => {
             <MenuIconicButtonMobileStyled>
                 <Link href="/" passHref>
                     <MenuIconicButtonMobileLinkStyled>
-                        <ShopsysIcon icon="user" iconHeight={18} />
+                        <Icon icon="user" iconHeight={18} />
                     </MenuIconicButtonMobileLinkStyled>
                 </Link>
             </MenuIconicButtonMobileStyled>
