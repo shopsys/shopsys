@@ -1,9 +1,9 @@
 import CategoryDetailAdvancedSeoCategories from './CategoryDetailAdvancedSeoCategories';
+import CategoryDetailSubcategories from './CategoryDetailSubcategories';
 import { CategoryDetailType } from './types';
 import { FC } from 'react';
 import ProductsList from '../../blocks/product/List/ProductsList';
 import ShopsysHeading from '../../basic/ShopsysHeading';
-import ShopsysLink from '../../basic/ShopsysLink';
 import Webline from '../../layout/Webline';
 
 type CategoryDetailProps = {
@@ -16,13 +16,9 @@ const CategoryDetail: FC<CategoryDetailProps> = (props) => {
             <ShopsysHeading type={'h1'}>
                 {props.category.seoH1 !== null ? props.category.seoH1 : props.category.name}
             </ShopsysHeading>
-            <ul>
-                {props.category.children.map((child, key) => (
-                    <li key={key}>
-                        <ShopsysLink href={child.slug}>{child.name}</ShopsysLink> ({child.products.totalCount})
-                    </li>
-                ))}
-            </ul>
+            <CategoryDetailSubcategories
+                categories={[...props.category.children, ...props.category.linkedCategories]}
+            />
             <CategoryDetailAdvancedSeoCategories readyCategorySeoMixLinks={props.category.readyCategorySeoMixLinks} />
             {props.category.products.edges.length !== 0 && <ProductsList products={props.category.products.edges} />}
         </Webline>

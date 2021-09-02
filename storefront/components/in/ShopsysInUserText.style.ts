@@ -15,7 +15,7 @@ export const StyledShopsysInUserText = styled.section`
         font-size: ${styleVariables.inUserTextFontSize};
         line-height: ${styleVariables.inUserTextLineHeight};
         -webkit-font-smoothing: antialiased;
-        color: ${theme.color.baseLighter};
+        color: ${theme.color.greyLight};
 
         p,
         ul,

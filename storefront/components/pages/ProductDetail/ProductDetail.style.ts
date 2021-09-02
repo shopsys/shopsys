@@ -87,7 +87,7 @@ export const StyledProductDetailCode = styled.div`
     ${({ theme }) => css`
         margin-bottom: 20px;
 
-        color: ${theme.color.baseLighter};
+        color: ${theme.color.greyLight};
         font-size: 13px;
     `}
 `;

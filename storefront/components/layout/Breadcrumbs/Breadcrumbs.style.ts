@@ -24,7 +24,7 @@ export const BreadcrumbsLinkStyled = styled.a`
             margin-right: 11px;
 
             font-size: 13px;
-            color: ${theme.color.baseLighter};
+            color: ${theme.color.greyLight};
             text-decoration: none;
 
             &: last-of-type {
@@ -38,7 +38,7 @@ export const BreadcrumbsSpanStyled = styled.a`
     ${({ theme }) => css`
         margin-right: 11px;
 
-        color: ${theme.color.baseLighter};
+        color: ${theme.color.greyLight};
         font-size: 13px;
 
         @media ${theme.mediaQueries.queryTablet} {

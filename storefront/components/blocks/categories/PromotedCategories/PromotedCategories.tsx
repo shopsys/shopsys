@@ -10,7 +10,7 @@ const PromotedCategories: FC = () => {
         return (
             <PromotedCategoryListStyled>
                 {promotedCategories.map((category) => (
-                    <PromotedCategoryListItemStyled key={category.uuid}>
+                    <PromotedCategoryListItemStyled key={category.uuid.toString()}>
                         <CategoryItem category={category} />
                     </PromotedCategoryListItemStyled>
                 ))}

@@ -1,7 +1,7 @@
 import { css } from 'styled-components';
 import { styled } from 'theme/main';
 
-export const CategoryItemBlockStyled = styled.div`
+export const CategoryItemBlockStyled = styled.a`
     ${({ theme }) => css`
         display: flex;
         align-items: center;
@@ -46,13 +46,22 @@ export const CategoryItemImageStyled = styled.div`
     `}
 `;
 
-export const CategoryItemNameStyled = styled.div`
-    ${({ theme }) => css`
-        flex: 1;
-        margin: 0;
-        line-height: 18px;
+export const CategoryItemNameWrapperStyled = styled.div`
+    flex: 1;
+    margin: 0;
+    line-height: 18px;
+    max-width: 100%;
+`;
 
+export const CategoryItemNameStyled = styled.span`
+    ${({ theme }) => css`
+        max-width: 100%;
+
+        word-wrap: break-word;
         font-size: ${theme.fontSize.small};
+        word-break: break-all;
+        white-space: nowrap;
+        color: ${theme.color.base};
 
         @media ${theme.mediaQueries.queryLg} {
             padding-left: 10px;
@@ -60,9 +69,12 @@ export const CategoryItemNameStyled = styled.div`
     `}
 `;
 
-export const CategoryItemCountStyled = styled.div`
+export const CategoryItemCountStyled = styled.span`
     ${({ theme }) => css`
-        color: ${theme.color.baseLighter};
+        margin-left: 8px;
+
+        white-space: nowrap;
+        color: ${theme.color.greyLight};
         font-size: 11px;
     `}
 `;

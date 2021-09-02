@@ -7,7 +7,7 @@ import DefaultErrorPage from 'next/error';
 import { FC } from 'react';
 import { GetServerSideProps } from 'next';
 import { initServerSideProps } from '../helpers/InitServerSideProps';
-import { mapCategoryData } from '../connectors/categories/Categories';
+import { mapCategoryDetailData } from '../connectors/categories/Categories';
 import { navigationQuery } from '../connectors/navigation/Navigation';
 import ProductDetailPage from '../components/pages/ProductDetail';
 import { ProductDetailType } from 'components/pages/ProductDetail/types';
@@ -37,7 +37,7 @@ function renderContent(data: ProductDetailType | CategoryDetailApiType | undefin
     } else if (data?.__typename === 'Category') {
         return (
             <CategoryDetailPage
-                category={mapCategoryData(data as CategoryDetailApiType, currentDomainConfig.currencyCode)}
+                category={mapCategoryDetailData(data as CategoryDetailApiType, currentDomainConfig.currencyCode)}
             />
         );
     }
