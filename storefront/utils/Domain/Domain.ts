@@ -3,7 +3,7 @@ import getConfig from 'next/config';
 const { publicRuntimeConfig } = getConfig();
 
 export type DomainConfigType = {
-    domain: string;
+    url: string;
     publicGraphqlEndpoint: string;
     defaultLocale: string;
     currencyCode: string;
@@ -22,11 +22,17 @@ export function getDomainConfig(domain?: string): DomainConfigType {
         // eslint-disable-next-line no-param-reassign
         domain = getCurrentDomainFromWindow();
     }
+
+    // Preventing error on localhost about unknown domain with SSR
+    const replacedDomain = domain.replace(':3000', ':8000');
+
     for (const domainConfig of publicRuntimeConfig.domains) {
-        if (domainConfig.domain === domain) {
+        const publicDomainUrl = new URL(domainConfig.url).host;
+
+        if (publicDomainUrl === replacedDomain) {
             return domainConfig;
         }
     }
 
-    throw new Error('unknown domain');
+    throw new Error('Domain `' + replacedDomain + '` is not known domain');
 }

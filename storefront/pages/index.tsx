@@ -21,7 +21,12 @@ type IndexProps = { domainConfig?: DomainConfigType };
 const Index: FC<IndexProps> = (props) => {
     const dispatch = useShopsysDispatch();
     const { t } = useTranslation();
-    dispatch(domainActions.setDomain(getDomainConfig(props.domainConfig?.domain)));
+
+    let selectedDomain;
+    if (props.domainConfig !== null) {
+        selectedDomain = new URL(props.domainConfig?.url as string).host;
+    }
+    dispatch(domainActions.setDomain(getDomainConfig(selectedDomain)));
 
     return (
         <CommonLayout>

@@ -11,6 +11,15 @@ use Tests\App\Test\Codeception\AcceptanceTester;
 class CustomerLoginCest
 {
     /**
+     * @param \Tests\App\Test\Codeception\AcceptanceTester $me
+     */
+    public function _before(AcceptanceTester $me)
+    {
+        $me->amOnPage('/non-existing-url-because-of-loading-time');
+        $me->setCookie('twigStorefront', 'true');
+    }
+
+    /**
      * @param \Tests\App\Acceptance\acceptance\PageObject\Front\LoginPage $loginPage
      * @param \Tests\App\Test\Codeception\AcceptanceTester $me
      * @param \Tests\App\Acceptance\acceptance\PageObject\Front\LayoutPage $layoutPage

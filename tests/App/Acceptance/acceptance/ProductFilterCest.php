@@ -15,6 +15,15 @@ class ProductFilterCest
 
     /**
      * @param \Tests\App\Test\Codeception\AcceptanceTester $me
+     */
+    public function _before(AcceptanceTester $me)
+    {
+        $me->amOnPage('/non-existing-url-because-of-loading-time');
+        $me->setCookie('twigStorefront', 'true');
+    }
+
+    /**
+     * @param \Tests\App\Test\Codeception\AcceptanceTester $me
      * @param \Tests\App\Acceptance\acceptance\PageObject\Front\ProductFilterPage $productFilterPage
      * @param \Tests\App\Acceptance\acceptance\PageObject\Front\ProductListPage $productListPage
      */

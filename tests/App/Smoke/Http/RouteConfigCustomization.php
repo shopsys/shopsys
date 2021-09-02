@@ -564,6 +564,9 @@ class RouteConfigCustomization
             ->customizeByRouteName('front_stores_detail', function (RouteConfig $config) {
                 $config->changeDefaultRequestDataSet('Use ID 1 as default stock.')
                     ->setParameter('id', 1);
+            })
+            ->customizeByRouteName('front_frontend_switch', function (RouteConfig $config) {
+                $config->skipRoute('Frontend switcher is not tested.');
             });
     }
 

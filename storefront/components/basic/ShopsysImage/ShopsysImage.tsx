@@ -17,6 +17,7 @@ const ShopsysImage: FC<ShopsysImageProps> = (props) => {
                 width: props.image.width,
             }}
             alt={props.alt}
+            unoptimized={true} // Images are optimized already in backend
         />
     );
 };

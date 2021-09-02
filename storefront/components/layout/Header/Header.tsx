@@ -7,6 +7,7 @@ import {
     HeaderStyled,
 } from './Header.style';
 import Cart from './Cart';
+import FrontendSwitcher from 'components/blocks/FrontendSwitcher';
 import HamburgerMenu from './HamburgerMenu';
 import Logo from './Logo';
 import MenuIconic from './MenuIconic';
@@ -31,6 +32,7 @@ const Header = (): ReactElement => {
             <HeaderCartStyled>
                 <Cart />
             </HeaderCartStyled>
+            <FrontendSwitcher />
         </HeaderStyled>
     );
 };
