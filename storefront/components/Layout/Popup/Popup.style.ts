@@ -2,26 +2,6 @@ import { css } from 'styled-components';
 import Icon from 'components/Basic/Icon';
 import { styled } from 'components/Theme/main';
 
-export const OverlayStyled = styled.div`
-    ${({ theme }) => css`
-        bottom: 0;
-        left: 0;
-        position: fixed;
-        right: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        z-index: ${theme.zIndex.overlay};
-        display: flex;
-        justify-content: center;
-        align-items: center;
-
-        background-color: rgba(0, 0, 0, 0.6);
-        transition: all 0.2s cubic-bezier(0.8, 0.2, 0.48, 1);
-        cursor: pointer;
-    `}
-`;
-
 export const PopupStyled = styled.div`
     ${({ theme }) => css`
         display: flex;
@@ -55,20 +35,20 @@ export const PopupHeaderStyled = styled.div`
 
 export const PopupButtonCloseStyled = styled.button`
     ${({ theme }) => css`
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        height: 36px;
-        width: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 36px;
+    width: 36px;
 
         background-color: ${theme.color.creamWhite};
-        border: 0;
-        border-radius: 100%;
+    border: 0;
+    border-radius: 100%;
         color: ${theme.color.grey};
-        cursor: pointer;
-        font-size: 10px;
-        outline: 0;
-        text-decoration: none;
+    cursor: pointer;
+    font-size: 10px;
+    outline: 0;
+    text-decoration: none;
     `}
 `;
 
