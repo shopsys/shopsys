@@ -5,6 +5,7 @@ services:
         image: nginx:1.13-alpine
         depends_on:
             - php-fpm
+            - storefront
         volumes:
             - web-volume:/var/www/html/web
             - nginx-conf:/etc/nginx/conf.d/
@@ -17,7 +18,7 @@ services:
             - default
             - traefik-network
 
-    frontend:
+    storefront:
         restart: always
         image: ${STOREFRONT_TAG}
         labels:

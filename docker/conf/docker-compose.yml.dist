@@ -21,14 +21,14 @@ services:
         container_name: shopsys-framework-webserver
         depends_on:
             - php-fpm
-            - frontend
+            - storefront
         volumes:
             - .:/var/www/html
             - ./docker/nginx/nginx.conf:/etc/nginx/conf.d/default.conf
         ports:
             - "8000:8080"
 
-    frontend:
+    storefront:
         build:
             context: ./storefront
             dockerfile: ./docker/Dockerfile

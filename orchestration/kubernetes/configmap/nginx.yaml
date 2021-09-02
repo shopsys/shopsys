@@ -40,7 +40,7 @@ data:
         }
 
         upstream storefront-upstream {
-            server frontend:3000;
+            server storefront:3000;
         }
 
         proxy_cache_path /var/www/cache levels=1:2 keys_zone=cache:10m max_size=2g inactive=60m use_temp_path=off;
