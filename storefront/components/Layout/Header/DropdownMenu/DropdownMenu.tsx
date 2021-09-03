@@ -1,4 +1,4 @@
-import { DropdownListLevels, DropdownSlideToType } from './types';
+import { DropdownIndexType, DropdownListLevels, DropdownSlideToType } from './types';
 import { DropdownMenuListStyled, DropdownMenuStyled, DropdownMenuWrapperStyled } from './DropdownMenu.style';
 import { FC, useState } from 'react';
 import { CSSTransition } from 'react-transition-group';
@@ -14,11 +14,17 @@ type DropdownMenuProps = {
     isMenuOpened: boolean;
 };
 
+type ChangeStateType = {
+    goToMenu: DropdownListLevels;
+    slideTo: DropdownSlideToType;
+    index: DropdownIndexType;
+};
+
 const DropdownMenu: FC<DropdownMenuProps> = (props) => {
     const { t } = useTranslation();
     const navigationItems = getNavigationItems();
     const [menuLevel, setMenuLevel] = useState<DropdownListLevels>('primary');
-    const [historyOfIndexes, setHistoryOfIndexes] = useState<number[] | string[] | []>([]);
+    const [historyOfIndexes, setHistoryOfIndexes] = useState<(number | string)[]>([]);
     const [slideTo, setSlideTo] = useState<DropdownSlideToType>('right');
     const [menuHeight, setMenuHeight] = useState<number>();
 
@@ -30,19 +36,25 @@ const DropdownMenu: FC<DropdownMenuProps> = (props) => {
         setMenuHeight(el.offsetHeight);
     };
 
-    const changeState = (props: any) => {
+    const onMenuLevel = (props: ChangeStateType) => {
         if (props.goToMenu !== undefined) {
             setMenuLevel(props.goToMenu);
         }
+    };
 
+    const onSlideTo = (props: ChangeStateType) => {
         if (props.slideTo !== undefined) {
             setSlideTo(props.slideTo);
         }
+    };
 
+    const onSlideToIn = (props: ChangeStateType) => {
         if (props.index !== undefined) {
-            setHistoryOfIndexes((oldArray: number[] | string[]) => [...oldArray, props.index]);
+            setHistoryOfIndexes((oldArray: (number | string)[]) => [...oldArray, props.index]);
         }
+    };
 
+    const onSlideToOut = (props: ChangeStateType) => {
         if (props.slideTo === 'left') {
             historyOfIndexes.pop();
 
@@ -52,6 +64,13 @@ const DropdownMenu: FC<DropdownMenuProps> = (props) => {
                 setHistoryOfIndexes([...historyOfIndexes]);
             }
         }
+    };
+
+    const changeState = (props: ChangeStateType) => {
+        onMenuLevel(props);
+        onSlideTo(props);
+        onSlideToIn(props);
+        onSlideToOut(props);
     };
 
     return (
