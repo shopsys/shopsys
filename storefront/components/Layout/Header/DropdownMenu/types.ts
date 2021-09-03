@@ -6,6 +6,12 @@ export type DropdownSlideToType = 'left' | 'right';
 
 export type DropdownIndexType = number | string;
 
+export type ChangeStateType = {
+    goToMenu: DropdownListLevels;
+    slideTo: DropdownSlideToType;
+    index: DropdownIndexType;
+};
+
 export type DropdownItemType = {
     changeState?: any;
     goToMenu?: DropdownListLevels;

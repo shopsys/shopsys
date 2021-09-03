@@ -1,4 +1,4 @@
-import { DropdownIndexType, DropdownListLevels, DropdownSlideToType } from './types';
+import { ChangeStateType, DropdownListLevels, DropdownSlideToType } from './types';
 import { DropdownMenuListStyled, DropdownMenuStyled, DropdownMenuWrapperStyled } from './DropdownMenu.style';
 import { FC, useState } from 'react';
 import { CSSTransition } from 'react-transition-group';
@@ -12,12 +12,6 @@ import { useTranslation } from 'react-i18next';
 
 type DropdownMenuProps = {
     isMenuOpened: boolean;
-};
-
-type ChangeStateType = {
-    goToMenu: DropdownListLevels;
-    slideTo: DropdownSlideToType;
-    index: DropdownIndexType;
 };
 
 const DropdownMenu: FC<DropdownMenuProps> = (props) => {
@@ -79,7 +73,7 @@ const DropdownMenu: FC<DropdownMenuProps> = (props) => {
                 in={props.isMenuOpened}
                 timeout={500}
                 classNames="dropdown"
-                onEnter={calcHeight}
+                onEntering={calcHeight}
                 unmountOnExit
             >
                 <DropdownMenuStyled slideTo={slideTo} style={{ height: menuHeight }}>
@@ -88,7 +82,7 @@ const DropdownMenu: FC<DropdownMenuProps> = (props) => {
                         timeout={500}
                         classNames="menu-primary"
                         unmountOnExit
-                        onEnter={calcHeight}
+                        onEntering={calcHeight}
                     >
                         <DropdownMenuListStyled>
                             <PrimaryList navigationItems={navigationItems} changeState={changeState} />
@@ -101,7 +95,7 @@ const DropdownMenu: FC<DropdownMenuProps> = (props) => {
                         timeout={500}
                         classNames="menu-secondary"
                         unmountOnExit
-                        onEnter={calcHeight}
+                        onEntering={calcHeight}
                     >
                         <DropdownMenuListStyled>
                             <DropdownSlideTo
@@ -124,7 +118,7 @@ const DropdownMenu: FC<DropdownMenuProps> = (props) => {
                         timeout={500}
                         classNames="menu-tertiary"
                         unmountOnExit
-                        onEnter={calcHeight}
+                        onEntering={calcHeight}
                     >
                         <DropdownMenuListStyled>
                             <DropdownSlideTo
@@ -134,11 +128,7 @@ const DropdownMenu: FC<DropdownMenuProps> = (props) => {
                                 type="stepBack"
                                 iconText={t('Back')}
                             />
-                            <TertiaryList
-                                navigationItems={navigationItems}
-                                changeState={changeState}
-                                historyOfIndexes={historyOfIndexes}
-                            />
+                            <TertiaryList navigationItems={navigationItems} historyOfIndexes={historyOfIndexes} />
                         </DropdownMenuListStyled>
                     </CSSTransition>
                 </DropdownMenuStyled>

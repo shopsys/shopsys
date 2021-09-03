@@ -1,4 +1,5 @@
 import { DropdownItemLinkStyled, DropdownItemStyled } from './DropdownItem.style';
+import { FC, useEffect, useState } from 'react';
 import {
     NavigationCategory as NavigationCategoryType,
     NavigationItem as NavigationItemType,
@@ -6,7 +7,6 @@ import {
 } from '../../../../../connectors/navigation/Navigation';
 import { DropdownItemType } from '../types';
 import DropdownSlideTo from '../SlideTo';
-import { FC } from 'react';
 import Link from 'next/link';
 
 type DropdownItemProps = {
@@ -17,23 +17,24 @@ type DropdownItemProps = {
 };
 
 const DropdownItem: FC<DropdownItemProps & DropdownItemType> = (props) => {
-    let hasChildren = false;
-    let itemName = '';
-    let itemLink = '';
+    const [hasChildren, setHasChildren] = useState<boolean>(false);
+    const [itemLink, setItemLink] = useState<string>('');
+    const [itemName, setItemName] = useState<string>('');
 
-    if (props.navigationItem !== undefined) {
-        hasChildren = props.navigationItem.categoriesByColumns.length > 0;
-        itemLink = props.navigationItem.link;
-        itemName = props.navigationItem.name;
-    } else if (props.columnCategory !== undefined) {
-        hasChildren = props.columnCategory.children.length > 0;
-        itemLink = props.columnCategory.slug;
-        itemName = props.columnCategory.name;
-    } else if (props.columnCategoryChild !== undefined) {
-        hasChildren = false;
-        itemLink = props.columnCategoryChild.slug;
-        itemName = props.columnCategoryChild.name;
-    }
+    useEffect(() => {
+        if (props.navigationItem !== undefined) {
+            setHasChildren(props.navigationItem.categoriesByColumns.length > 0);
+            setItemLink(props.navigationItem.link);
+            setItemName(props.navigationItem.name);
+        } else if (props.columnCategory !== undefined) {
+            setHasChildren(props.columnCategory.children.length > 0);
+            setItemLink(props.columnCategory.slug);
+            setItemName(props.columnCategory.name);
+        } else if (props.columnCategoryChild !== undefined) {
+            setItemLink(props.columnCategoryChild.slug);
+            setItemName(props.columnCategoryChild.name);
+        }
+    }, [hasChildren, itemLink, itemName]);
 
     return (
         <DropdownItemStyled variant={props.variant}>
