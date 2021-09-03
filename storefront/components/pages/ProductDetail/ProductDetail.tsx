@@ -10,8 +10,8 @@ import {
 import ProductDetailAvailability from './ProductDetailStoresAvailability/ProductDetailAvailability';
 import ProductDetailAvailabilityList from './ProductDetailStoresAvailability/ProductDetailAvailabilityList';
 import ProductDetailGallery from './ProductDetailGallery';
+import ProductDetailTabs from './ProductDetailTabs';
 import { ProductDetailType } from './types';
-import ShopsysInUserText from 'components/in/ShopsysInUserText';
 import { useTranslation } from 'next-i18next';
 import Webline from '../../layout/Webline';
 
@@ -24,25 +24,31 @@ const ProductDetail: FC<ProductDetailProps> = (props) => {
     const scrollTarget = useRef<HTMLUListElement>(null);
 
     return (
-        <Webline>
-            <StyledProductDetail>
-                <StyledProductDetailImage>
-                    <ProductDetailGallery />
-                </StyledProductDetailImage>
-                <StyledProductDetailInfo>
-                    <StyledProductDetailPrefix>{props.product.namePrefix}</StyledProductDetailPrefix>
-                    <StyledProductDetailHeading>
-                        {props.product.name} {props.product.nameSuffix}
-                    </StyledProductDetailHeading>
-                    <StyledProductDetailCode>
-                        {t('Code')}: {props.product.catalogNumber}
-                    </StyledProductDetailCode>
-                    <ProductDetailAvailability scrollTarget={scrollTarget} {...props} />
-                </StyledProductDetailInfo>
-                <ShopsysInUserText htmlContent={props.product.description} />
+        <>
+            <Webline>
+                <StyledProductDetail>
+                    <StyledProductDetailImage>
+                        <ProductDetailGallery />
+                    </StyledProductDetailImage>
+                    <StyledProductDetailInfo>
+                        <StyledProductDetailPrefix>{props.product.namePrefix}</StyledProductDetailPrefix>
+                        <StyledProductDetailHeading>
+                            {props.product.name} {props.product.nameSuffix}
+                        </StyledProductDetailHeading>
+                        <StyledProductDetailCode>
+                            {t('Code')}: {props.product.catalogNumber}
+                        </StyledProductDetailCode>
+                        <ProductDetailAvailability scrollTarget={scrollTarget} {...props} />
+                    </StyledProductDetailInfo>
+                </StyledProductDetail>
+            </Webline>
+            <Webline>
+                <ProductDetailTabs description={props.product.description} />
+            </Webline>
+            <Webline>
                 <ProductDetailAvailabilityList ref={scrollTarget} {...props} />
-            </StyledProductDetail>
-        </Webline>
+            </Webline>
+        </>
     );
 };
 

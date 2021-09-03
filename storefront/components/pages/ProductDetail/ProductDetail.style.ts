@@ -11,6 +11,7 @@ export const StyledProductDetail = styled.div`
         display: flex;
         flex-direction: column;
         flex-wrap: wrap;
+        margin-bottom: 20px;
 
         @media ${theme.mediaQueries.queryLg} {
             flex-direction: row;
