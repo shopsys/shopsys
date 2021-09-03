@@ -147,3 +147,16 @@ This package needs its own syntax with 'a' and 'img'
 ```
 
 
+```
+
+### React tabs - An accessible and easy tab component for ReactJS
+In background of styled tab parts we are using - react-tabs components.
+In style file are adding elements roles.
+
+```plain
+npm install --save react-tabs
+```
+
+```plain
+https://github.com/reactjs/react-tabs
+```

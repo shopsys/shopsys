@@ -65,3 +65,24 @@ If you want to use a link with styling you have to use passHref and your code wi
  ```
 
 Styled-component element (in our example ComponentLinkWithStyle) will be set to `<a>` element.
+
+### Create tabs with content switching
+If you want to create unified tabs with switching its content just use these element structure:
+
+```plain
+import { Tabs, TabsContent, TabsList, TabsListItem } from '../../basic/Tabs';
+
+<Tabs>
+    <TabsList>
+        <TabsListItem>{t('Tab A Desktop')}</TabsListItem>
+        <TabsListItem>{t('Tab B Desktop')}</TabsListItem>
+    </TabsList>
+    <TabsContent headingTextMobile={t('Tab A Mobile')}>
+        Content A
+    </TabsContent>
+    <TabsContent headingTextMobile={t('Tab B Mobile')}>
+        Content B
+    </TabsContent>
+</Tabs>
+ ```
+ Tip: you can use shorter text of Tab heading for mobile devices.
