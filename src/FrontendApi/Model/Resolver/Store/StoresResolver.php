@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\FrontendApi\Model\Resolver\Store;
 
 use App\Model\Store\StoreFacade;
+use App\Model\Transport\Transport;
 use Overblog\GraphQLBundle\Definition\Argument;
 use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
 use Overblog\GraphQLBundle\Definition\Resolver\ResolverInterface;
@@ -55,6 +56,20 @@ class StoresResolver implements ResolverInterface, AliasedInterface
     }
 
     /**
+     * @param \App\Model\Transport\Transport $transport
+     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
+     * @return \Overblog\GraphQLBundle\Relay\Connection\ConnectionInterface|object|null
+     */
+    public function resolverByTransport(Transport $transport, Argument $argument)
+    {
+        if ($transport->isPersonalPickup()) {
+            return $this->resolver($argument);
+        }
+
+        return null;
+    }
+
+    /**
      * @param \Overblog\GraphQLBundle\Definition\Argument $argument
      */
     protected function setDefaultFirstOffsetIfNecessary(Argument $argument): void
@@ -73,6 +88,7 @@ class StoresResolver implements ResolverInterface, AliasedInterface
     {
         return [
             'resolver' => 'stores',
+            'resolverByTransport' => 'storesByTransport',
         ];
     }
 }

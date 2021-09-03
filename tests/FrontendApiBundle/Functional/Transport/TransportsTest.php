@@ -18,6 +18,11 @@ class TransportsTest extends GraphQlTestCase
                     description,
                     instruction,
                     position,
+                    daysUntilDelivery
+                    transportType {
+                        name
+                        code
+                    }
                     price {
                         priceWithVat
                         priceWithoutVat
@@ -28,6 +33,13 @@ class TransportsTest extends GraphQlTestCase
                     },
                     payments {
                         name
+                    }
+                    stores {
+                        edges {
+                            node {
+                                name
+                            }
+                        }
                     }
                 }
             }
@@ -47,6 +59,11 @@ class TransportsTest extends GraphQlTestCase
                         'description' => null,
                         'instruction' => null,
                         'position' => 0,
+                        'daysUntilDelivery' => 5,
+                        'transportType' => [
+                            'name' => t('Standardní', [], 'dataFixtures', $this->getLocaleForFirstDomain()),
+                            'code' => 'common',
+                        ],
                         'price' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('100', $vatHigh),
                         'images' => [
                             ['url' => $this->getFullUrlPath('/content-test/images/transport/default/56.jpg')],
@@ -55,12 +72,18 @@ class TransportsTest extends GraphQlTestCase
                         'payments' => [
                             ['name' => t('Cash on delivery', [], 'dataFixtures', $this->getLocaleForFirstDomain())],
                         ],
+                        'stores' => null,
                     ],
                     [
                         'name' => t('PPL', [], 'dataFixtures', $this->getLocaleForFirstDomain()),
                         'description' => null,
                         'instruction' => null,
                         'position' => 1,
+                        'daysUntilDelivery' => 4,
+                        'transportType' => [
+                            'name' => t('Standardní', [], 'dataFixtures', $this->getLocaleForFirstDomain()),
+                            'code' => 'common',
+                        ],
                         'price' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('200', $vatHigh),
                         'images' => [
                             ['url' => $this->getFullUrlPath('/content-test/images/transport/default/57.jpg')],
@@ -70,6 +93,7 @@ class TransportsTest extends GraphQlTestCase
                             ['name' => t('Credit card', [], 'dataFixtures', $this->getLocaleForFirstDomain())],
                             ['name' => t('GoPay - Platba kartou', [], 'dataFixtures', $this->getLocaleForFirstDomain())],
                         ],
+                        'stores' => null,
                     ],
                     [
                         'name' => t('Personal collection', [], 'dataFixtures', $this->getLocaleForFirstDomain()),
@@ -81,6 +105,11 @@ class TransportsTest extends GraphQlTestCase
                         ),
                         'instruction' => null,
                         'position' => 2,
+                        'daysUntilDelivery' => 0,
+                        'transportType' => [
+                            'name' => t('Standardní', [], 'dataFixtures', $this->getLocaleForFirstDomain()),
+                            'code' => 'common',
+                        ],
                         'price' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('0', $vatZero),
                         'images' => [
                             ['url' => $this->getFullUrlPath('/content-test/images/transport/default/58.jpg')],
@@ -90,6 +119,20 @@ class TransportsTest extends GraphQlTestCase
                             ['name' => t('Credit card', [], 'dataFixtures', $this->getLocaleForFirstDomain())],
                             ['name' => t('Cash', [], 'dataFixtures', $this->getLocaleForFirstDomain())],
                             ['name' => t('GoPay - Platba kartou', [], 'dataFixtures', $this->getLocaleForFirstDomain())],
+                        ],
+                        'stores' => [
+                            'edges' => [
+                                [
+                                    'node' => [
+                                        'name' => t('Ostrava', [], 'dataFixtures', $this->getFirstDomainLocale()),
+                                    ],
+                                ],
+                                [
+                                    'node' => [
+                                        'name' => t('Pardubice', [], 'dataFixtures', $this->getFirstDomainLocale()),
+                                    ],
+                                ],
+                            ],
                         ],
                     ],
                     [
@@ -102,11 +145,17 @@ class TransportsTest extends GraphQlTestCase
                         ),
                         'instruction' => null,
                         'position' => 3,
+                        'daysUntilDelivery' => 0,
+                        'transportType' => [
+                            'name' => t('Standardní', [], 'dataFixtures', $this->getLocaleForFirstDomain()),
+                            'code' => 'common',
+                        ],
                         'price' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('0', $vatZero),
                         'images' => [],
                         'payments' => [
                             ['name' => t('Nadlimitní', [], 'dataFixtures', $this->getLocaleForFirstDomain())],
                         ],
+                        'stores' => null,
                     ],
                 ],
             ],

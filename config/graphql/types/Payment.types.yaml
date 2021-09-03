@@ -2,3 +2,11 @@ Payment:
     type: object
     inherits:
         - 'PaymentDecorator'
+    config:
+        fields:
+            type:
+                type: "String!"
+                description: "Type of payment"
+            goPayPaymentMethod:
+                type: "GoPayPaymentMethod"
+                description: "Additional data for GoPay payment"
