@@ -86,3 +86,7 @@ Query:
                         type: "Uuid"
                 resolve: "@=resolver('getCart', [args['uuid']])"
                 description: "Return cart of logged customer or cart by UUID for anonymous user"
+            flags:
+                type: '[Flag!]'
+                resolve: "@=resolver('flags')"
+                description: "Returns a complete list of the flags"

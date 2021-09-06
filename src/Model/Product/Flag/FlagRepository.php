@@ -61,4 +61,20 @@ class FlagRepository extends BaseFlagRepository
 
         return $flagsQueryBuilder->getQuery()->getResult();
     }
+
+    /**
+     * @param string $locale
+     * @return \App\Model\Product\Flag\Flag[]
+     */
+    public function getAllVisibleFlags(string $locale): array
+    {
+        $flagsQueryBuilder = $this->getFlagRepository()->createQueryBuilder('f')
+            ->select('f, ft')
+            ->join('f.translations', 'ft', Join::WITH, 'ft.locale = :locale')
+            ->where('f.visible = true')
+            ->orderBy('ft.name', 'asc')
+            ->setParameter('locale', $locale);
+
+        return $flagsQueryBuilder->getQuery()->getResult();
+    }
 }
