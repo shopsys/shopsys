@@ -79,4 +79,17 @@ class Flag extends BaseFlag
     {
         return $this->akeneoCode;
     }
+
+    /**
+     * @return string[]
+     */
+    public function getNames(): array
+    {
+        $namesByLocale = [];
+        foreach ($this->translations as $translation) {
+            $namesByLocale[$translation->getLocale()] = $translation->getName();
+        }
+
+        return $namesByLocale;
+    }
 }

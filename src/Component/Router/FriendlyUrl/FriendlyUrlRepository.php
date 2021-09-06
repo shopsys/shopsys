@@ -10,6 +10,7 @@ use App\Model\Blog\Category\BlogCategory;
 use App\Model\Category\Category;
 use App\Model\CategorySeo\ReadyCategorySeoMix;
 use App\Model\Product\Brand\Brand;
+use App\Model\Product\Flag\Flag;
 use App\Model\Product\Product;
 use App\Model\Store\Store;
 use Doctrine\ORM\Query\Expr\Orx;
@@ -69,6 +70,7 @@ class FriendlyUrlRepository extends BaseFriendlyUrlRepository
             'front_product_detail' => Product::class,
             'front_product_list' => Category::class,
             'front_stores_detail' => Store::class,
+            'front_flag_detail' => Flag::class,
         ];
     }
 

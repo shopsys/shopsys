@@ -5,10 +5,12 @@ declare(strict_types=1);
 namespace App\Form\Admin\Product\Flag;
 
 use App\Component\Form\FormBuilderHelper;
+use App\Model\Product\Flag\Flag;
 use Shopsys\FormTypesBundle\YesNoType;
 use Shopsys\FrameworkBundle\Form\ColorPickerType;
 use Shopsys\FrameworkBundle\Form\GroupType;
 use Shopsys\FrameworkBundle\Form\LocalizedFullWidthType;
+use Shopsys\FrameworkBundle\Form\UrlListType;
 use Shopsys\FrameworkBundle\Model\Product\Flag\FlagData;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -75,6 +77,20 @@ class FlagFormType extends AbstractType
             ]);
 
         $builder->add($builderBasicInformationGroup);
+
+        $builderSeoInformationGroup = $builder->create('seoGroup', GroupType::class, [
+            'label' => t('Seo'),
+        ]);
+
+        $builderSeoInformationGroup
+            ->add('urls', UrlListType::class, [
+                'route_name' => 'front_flag_detail',
+                'entity_id' => $options['flag']->getId(),
+                'label' => t('URL addresses'),
+            ]);
+
+        $builder->add($builderSeoInformationGroup);
+
         $builder->add('save', SubmitType::class);
 
         $this->formBuilderHelper->disableFieldsByConfigurations($builder, self::DISABLED_FIELDS);
@@ -86,6 +102,8 @@ class FlagFormType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver
+            ->setRequired(['flag'])
+            ->setAllowedTypes('flag', [Flag::class, 'null'])
             ->setDefaults([
                 'data_class' => FlagData::class,
                 'attr' => ['novalidate' => 'novalidate'],

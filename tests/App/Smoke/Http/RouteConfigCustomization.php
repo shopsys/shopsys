@@ -567,6 +567,9 @@ class RouteConfigCustomization
             })
             ->customizeByRouteName('front_frontend_switch', function (RouteConfig $config) {
                 $config->skipRoute('Frontend switcher is not tested.');
+            })
+            ->customizeByRouteName('front_flag_detail', function (RouteConfig $config) {
+                $config->skipRoute('Frontend flag detail will not be implemented in twig.');
             });
     }
 

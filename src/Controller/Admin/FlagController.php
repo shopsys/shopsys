@@ -93,7 +93,9 @@ class FlagController extends BaseFlagController
         $flag = $this->flagFacade->getById($id);
         $flagData = $this->flagDataFactory->createFromFlag($flag);
 
-        $form = $this->createForm(FlagFormType::class, $flagData);
+        $form = $this->createForm(FlagFormType::class, $flagData, [
+            'flag' => $flag,
+        ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

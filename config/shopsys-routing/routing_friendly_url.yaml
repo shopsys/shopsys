@@ -32,3 +32,6 @@ front_category_seo:
 front_stores_detail:
     path: friendly-url
     defaults: { _controller: App\Controller\Front\StoreController:detailAction }
+
+front_flag_detail:
+    path: friendly-url

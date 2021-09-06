@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Model\Product\Flag;
 
+use App\Component\Router\FriendlyUrl\FriendlyUrlFacade;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Product\Flag\Flag;
 use Shopsys\FrameworkBundle\Model\Product\Flag\FlagData as BaseFlagData;
 use Shopsys\FrameworkBundle\Model\Product\Flag\FlagDataFactory as BaseFlagDataFactory;
@@ -13,10 +15,25 @@ use Shopsys\FrameworkBundle\Model\Product\Flag\FlagDataFactory as BaseFlagDataFa
  * @property \App\Model\Product\Flag\Flag $flag
  * @property \App\Model\Product\Flag\FlagData $flagData
  * @property \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
- * @method __construct(\Shopsys\FrameworkBundle\Component\Domain\Domain $domain)
  */
 class FlagDataFactory extends BaseFlagDataFactory
 {
+    /**
+     * @var \App\Component\Router\FriendlyUrl\FriendlyUrlFacade
+     */
+    private FriendlyUrlFacade $friendlyUrlFacade;
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     * @param \App\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
+     */
+    public function __construct(Domain $domain, FriendlyUrlFacade $friendlyUrlFacade)
+    {
+        parent::__construct($domain);
+
+        $this->friendlyUrlFacade = $friendlyUrlFacade;
+    }
+
     /**
      * @return \App\Model\Product\Flag\FlagData
      */
@@ -35,6 +52,11 @@ class FlagDataFactory extends BaseFlagDataFactory
 
         $flagData->sale = $flag->isSale();
         $flagData->akeneoCode = $flag->getAkeneoCode();
+
+        foreach ($this->domain->getAllIds() as $domainId) {
+            $mainFriendlyUrl = $this->friendlyUrlFacade->findMainFriendlyUrl($domainId, 'front_flag_detail', $flag->getId());
+            $flagData->urls->mainFriendlyUrlsByDomainId[$domainId] = $mainFriendlyUrl;
+        }
     }
 
     /**
