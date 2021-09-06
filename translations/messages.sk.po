@@ -1111,6 +1111,12 @@ msgstr ""
 msgid "Editing banner"
 msgstr ""
 
+msgid "Editing flag"
+msgstr ""
+
+msgid "Editing flag - {{ name }}"
+msgstr ""
+
 msgid "Editing product - %name%"
 msgstr ""
 
@@ -1215,6 +1221,15 @@ msgstr "Firma"
 
 msgid "First name"
 msgstr "Meno"
+
+msgid "Flag"
+msgstr ""
+
+msgid "Flag color must be in valid hexadecimal code e.g. #3333ff"
+msgstr ""
+
+msgid "Flag <strong><a href=\"{{ url }}\">{{ name }}</a></strong> modified"
+msgstr ""
 
 msgid "Flags"
 msgstr ""
@@ -1898,6 +1913,9 @@ msgid "No"
 msgstr "Nie"
 
 msgid "No articles found on this domain. You have to create some first."
+msgstr ""
+
+msgid "No flags found. You have to create some first."
 msgstr ""
 
 msgid "No order so far."
@@ -4092,6 +4110,9 @@ msgstr "\ndĺžka: 250 cm"
 
 msgid "excluding VAT"
 msgstr "bez DPH"
+
+msgid "flags"
+msgstr ""
 
 msgid "from %price%"
 msgstr "od %price%"

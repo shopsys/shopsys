@@ -18,21 +18,22 @@ class FlagGridFactory extends BaseFlagGridFactory
     {
         $queryBuilder = $this->em->createQueryBuilder();
         $queryBuilder
-            ->select('a, at')
-            ->from(Flag::class, 'a')
-            ->join('a.translations', 'at', Join::WITH, 'at.locale = :locale')
+            ->select('f, ft')
+            ->from(Flag::class, 'f')
+            ->join('f.translations', 'ft', Join::WITH, 'ft.locale = :locale')
             ->setParameter('locale', $this->localization->getAdminLocale());
-        $dataSource = new QueryBuilderDataSource($queryBuilder, 'a.id');
+        $dataSource = new QueryBuilderDataSource($queryBuilder, 'f.id');
 
         $grid = $this->gridFactory->create('flagList', $dataSource);
         $grid->setDefaultOrder('name');
 
-        $grid->addColumn('name', 'at.name', t('Name'), true);
-        $grid->addColumn('rgbColor', 'a.rgbColor', t('Color'), true);
-        $grid->addColumn('visible', 'a.visible', t('Display'), true);
-        $grid->addColumn('sale', 'a.sale', t('Označení výprodeje'), true);
+        $grid->addColumn('name', 'ft.name', t('Name'), true);
+        $grid->addColumn('rgbColor', 'f.rgbColor', t('Color'), true);
+        $grid->addColumn('visible', 'f.visible', t('Display'), true);
+        $grid->addColumn('sale', 'f.sale', t('Označení výprodeje'), true);
 
         $grid->setActionColumnClassAttribute('table-col table-col-10');
+        $grid->addEditActionColumn('admin_flag_edit', ['id' => 'f.id']);
 
         $grid->setTheme('@ShopsysFramework/Admin/Content/Flag/listGrid.html.twig');
 

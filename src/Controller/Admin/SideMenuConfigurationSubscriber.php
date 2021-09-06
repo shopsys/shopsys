@@ -171,6 +171,9 @@ class SideMenuConfigurationSubscriber implements EventSubscriberInterface
         $listMenu->removeChild('availabilities');
         $listMenu->getChild('units')->setLabel(t('Measurement units'));
 
+        $flagsMenu = $listMenu->getChild('flags');
+        $flagsMenu->addChild('flagEdit', ['route' => 'admin_flag_edit', 'label' => t('Editing flag'), 'display' => false]);
+
         $storeMenu = $listMenu->addChild('stores', ['route' => 'admin_store_list', 'label' => t('Stores')]);
         $storeMenu->addChild('new_store', ['route' => 'admin_store_new', 'display' => false, 'label' => t('New store')]);
         $storeMenu->addChild('edit_store', ['route' => 'admin_store_edit', 'display' => false, 'label' => t('Edit store')]);
