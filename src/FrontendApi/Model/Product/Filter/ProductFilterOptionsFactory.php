@@ -4,8 +4,13 @@ declare(strict_types=1);
 
 namespace App\FrontendApi\Model\Product\Filter;
 
+use App\Model\Product\Filter\ProductFilterData;
+use App\Model\Product\Flag\Flag;
+use Shopsys\FrameworkBundle\Model\Module\ModuleList;
+use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter as BaseParameter;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue as BaseParameterValue;
+use Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterOptions;
 use Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterOptionsFactory as BaseProductFilterOptionsFactory;
 
 /**
@@ -45,5 +50,32 @@ class ProductFilterOptionsFactory extends BaseProductFilterOptionsFactory
     protected function createParameterFilterOption(BaseParameter $parameter, array $parameterValueFilterOptions): ParameterFilterOption
     {
         return new ParameterFilterOption($parameter, $parameterValueFilterOptions);
+    }
+
+    /**
+     * @param \App\Model\Product\Flag\Flag $flag
+     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig $productFilterConfig
+     * @param \App\Model\Product\Filter\ProductFilterData $productFilterData
+     * @return \Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterOptions
+     */
+    public function createProductFilterOptionsForFlag(
+        Flag $flag,
+        ProductFilterConfig $productFilterConfig,
+        ProductFilterData $productFilterData
+    ): ProductFilterOptions {
+        if (!$this->moduleFacade->isEnabled(ModuleList::PRODUCT_FILTER_COUNTS)) {
+            return $this->createProductFilterOptionsInstance();
+        }
+
+        $productFilterCountData = $this->productOnCurrentDomainElasticFacade->getProductFilterCountDataForFlag(
+            $flag->getId(),
+            $productFilterData
+        );
+
+        return $this->createProductFilterOptions(
+            $productFilterConfig,
+            $productFilterCountData,
+            $productFilterData
+        );
     }
 }

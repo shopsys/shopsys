@@ -91,6 +91,22 @@ class ProductFilterElasticFacade
     }
 
     /**
+     * @param int $flagId
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
+     * @return \App\Model\Product\Filter\Elasticsearch\ProductFilterConfigIdsData
+     */
+    public function getProductFilterDataInFlag(int $flagId, PricingGroup $pricingGroup): ProductFilterConfigIdsData
+    {
+        $aggregationQuery = $this->filterQueryFactory->createVisible()
+            ->filterOnlySellable()
+            ->filterByFlags([$flagId])
+            ->getAggregationQueryForProductFilterConfig($pricingGroup->getId());
+        $aggregationResult = $this->client->search($aggregationQuery)['aggregations'];
+
+        return $this->productFilterConfigIdsDataFactory->createFromElasticsearchAggregationResult($aggregationResult);
+    }
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
      * @return \App\Model\Product\Filter\Elasticsearch\ProductFilterConfigIdsData
      */

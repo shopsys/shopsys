@@ -6,6 +6,7 @@ namespace App\Model\Product\Filter\Elasticsearch;
 
 use App\Model\Category\Category;
 use App\Model\Product\Brand\BrandFacade;
+use App\Model\Product\Flag\Flag;
 use App\Model\Product\Flag\FlagFacade;
 use App\Model\Product\Parameter\ParameterFacade;
 use Shopsys\FrameworkBundle\Model\Category\Category as BaseCategory;
@@ -146,6 +147,25 @@ class ProductFilterConfigFactory extends BaseProductFilterConfigFactory
             [],
             $this->flagFacade->getVisibleFlagsByIds($productFilterConfigIdsData->getFlagIds(), $locale),
             [],
+            $productFilterConfigIdsData->getPriceRange()
+        );
+    }
+
+    /**
+     * @param \App\Model\Product\Flag\Flag $flag
+     * @return \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig
+     */
+    public function createForFlag(Flag $flag): ProductFilterConfig
+    {
+        $productFilterConfigIdsData = $this->productFilterElasticFacade->getProductFilterDataInFlag(
+            $flag->getId(),
+            $this->currentCustomerUser->getPricingGroup()
+        );
+
+        return new ProductFilterConfig(
+            [],
+            [],
+            $this->brandFacade->getBrandsByIds($productFilterConfigIdsData->getBrandIds()),
             $productFilterConfigIdsData->getPriceRange()
         );
     }

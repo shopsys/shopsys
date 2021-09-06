@@ -7,6 +7,7 @@ namespace App\FrontendApi\Model\Resolver\Products;
 use App\Model\Category\Category;
 use App\Model\CategorySeo\ReadyCategorySeoMix;
 use App\Model\Product\Filter\ProductFilterDataFactory;
+use App\Model\Product\Flag\Flag;
 use InvalidArgumentException;
 use Overblog\GraphQLBundle\Definition\Argument;
 use Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainFacadeInterface;
@@ -22,6 +23,10 @@ use Shopsys\FrontendApiBundle\Model\Resolver\Products\ProductsResolver as BasePr
  * @method setProductFacade(\App\FrontendApi\Model\Product\ProductFacade $productFacade)
  * @method \Overblog\GraphQLBundle\Relay\Connection\ConnectionInterface|object resolveByCategory(\Overblog\GraphQLBundle\Definition\Argument $argument, \App\Model\Category\Category $category)
  * @method \Overblog\GraphQLBundle\Relay\Connection\ConnectionInterface|object resolveByBrand(\Overblog\GraphQLBundle\Definition\Argument $argument, \App\Model\Product\Brand\Brand $brand)
+ * @property \App\FrontendApi\Model\Product\Filter\ProductFilterFacade|null $productFilterFacade
+ * @property \App\FrontendApi\Model\Product\Connection\ProductConnectionFactory|null $productConnectionFactory
+ * @method setProductFilterFacade(\App\FrontendApi\Model\Product\Filter\ProductFilterFacade $productFilterFacade)
+ * @method setProductConnectionFactory(\App\FrontendApi\Model\Product\Connection\ProductConnectionFactory $productConnectionFactory)
  */
 class ProductsResolver extends BaseProductsResolver
 {
@@ -33,8 +38,8 @@ class ProductsResolver extends BaseProductsResolver
     /**
      * @param \App\Model\Product\ProductOnCurrentDomainElasticFacade $productOnCurrentDomainFacade
      * @param \App\FrontendApi\Model\Product\ProductFacade $productFacade
-     * @param \Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterFacade $productFilterFacade
-     * @param \Shopsys\FrontendApiBundle\Model\Product\Connection\ProductConnectionFactory $productConnectionFactory
+     * @param \App\FrontendApi\Model\Product\Filter\ProductFilterFacade $productFilterFacade
+     * @param \App\FrontendApi\Model\Product\Connection\ProductConnectionFactory $productConnectionFactory
      * @param \App\Model\Product\Filter\ProductFilterDataFactory $productFilterDataFactory
      */
     public function __construct(
@@ -98,5 +103,52 @@ class ProductsResolver extends BaseProductsResolver
             $argument,
             $productFilterData
         );
+    }
+
+    /**
+     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
+     * @param \App\Model\Product\Flag\Flag $flag
+     * @return \Overblog\GraphQLBundle\Relay\Connection\ConnectionInterface|object
+     */
+    public function resolveByFlag(Argument $argument, Flag $flag)
+    {
+        $search = $argument['search'] ?? '';
+
+        $this->setDefaultFirstOffsetIfNecessary($argument);
+
+        $productFilterData = $this->productFilterFacade->getValidatedProductFilterDataForFlag(
+            $argument,
+            $flag
+        );
+
+        $productFilterData->flags = [$flag];
+
+        return $this->productConnectionFactory->createConnectionForFlag(
+            $flag,
+            function ($offset, $limit) use ($argument, $productFilterData, $search) {
+                return $this->productFacade->getFilteredProductsOnCurrentDomain(
+                    $limit,
+                    $offset,
+                    $this->getOrderingModeFromArgument($argument),
+                    $productFilterData,
+                    $search
+                );
+            },
+            $this->productFacade->getFilteredProductsCountOnCurrentDomain($productFilterData, $search),
+            $argument,
+            $productFilterData
+        );
+    }
+
+    /**
+     * @return string[]
+     */
+    public static function getAliases(): array
+    {
+        $aliases = parent::getAliases();
+
+        $aliases['resolveByFlag'] = 'productsByFlag';
+
+        return $aliases;
     }
 }
