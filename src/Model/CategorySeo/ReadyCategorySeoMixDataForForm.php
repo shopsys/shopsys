@@ -49,5 +49,5 @@ class ReadyCategorySeoMixDataForForm
     /**
      * @var bool
      */
-    public $showInCategory;
+    public bool $showInCategory = false;
 }

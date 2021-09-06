@@ -101,7 +101,7 @@ class ReadyCategorySeoMix
      * @var bool
      * @ORM\Column(type="boolean")
      */
-    private $showInCategory;
+    private bool $showInCategory;
 
     /**
      * @param \App\Model\CategorySeo\ReadyCategorySeoMixData $readyCategorySeoMixData
