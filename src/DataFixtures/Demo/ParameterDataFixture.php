@@ -20,6 +20,8 @@ use Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueFactory
 
 class ParameterDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
 {
+    public const PARAMETER_PREFIX = 'parameter_';
+
     /**
      * @var \App\Model\Product\Parameter\ParameterDataFactory
      */

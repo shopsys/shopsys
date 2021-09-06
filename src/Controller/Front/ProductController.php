@@ -21,7 +21,7 @@ use App\Model\Gtm\GtmFacade;
 use App\Model\Gtm\GtmJsPushFacade;
 use App\Model\Product\Brand\Brand;
 use App\Model\Product\Filter\Elasticsearch\ProductFilterConfigFactory;
-use App\Model\Product\Filter\ProductFilterData;
+use App\Model\Product\Filter\ProductFilterDataFactory;
 use App\Model\Product\Filter\ProductFilterFacade;
 use App\Model\Product\Listed\ListedProductViewElasticFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
@@ -171,6 +171,11 @@ class ProductController extends FrontBaseController
     private CombinedArticleElasticsearchFacade $combinedArticleElasticsearchFacade;
 
     /**
+     * @var \App\Model\Product\Filter\ProductFilterDataFactory
+     */
+    private ProductFilterDataFactory $productFilterDataFactory;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Twig\RequestExtension $requestExtension
      * @param \App\Model\Category\CategoryFacade $categoryFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
@@ -194,6 +199,7 @@ class ProductController extends FrontBaseController
      * @param \App\Model\Gtm\GtmContainer $gtmContainer
      * @param \Shopsys\ReadModelBundle\Product\Detail\ProductDetailViewFacadeInterface $productDetailViewFacade
      * @param \App\Model\Article\CombinedArticleElasticsearchFacade $combinedArticleElasticsearchFacade
+     * @param \App\Model\Product\Filter\ProductFilterDataFactory $productFilterDataFactory
      */
     public function __construct(
         RequestExtension $requestExtension,
@@ -218,7 +224,8 @@ class ProductController extends FrontBaseController
         GtmJsPushFacade $gtmJsPushFacade,
         GtmContainer $gtmContainer,
         ProductDetailViewFacadeInterface $productDetailViewFacade,
-        CombinedArticleElasticsearchFacade $combinedArticleElasticsearchFacade
+        CombinedArticleElasticsearchFacade $combinedArticleElasticsearchFacade,
+        ProductFilterDataFactory $productFilterDataFactory
     ) {
         $this->requestExtension = $requestExtension;
         $this->domain = $domain;
@@ -243,6 +250,7 @@ class ProductController extends FrontBaseController
         $this->gtmContainer = $gtmContainer;
         $this->productDetailViewFacade = $productDetailViewFacade;
         $this->combinedArticleElasticsearchFacade = $combinedArticleElasticsearchFacade;
+        $this->productFilterDataFactory = $productFilterDataFactory;
     }
 
     /**
@@ -341,7 +349,7 @@ class ProductController extends FrontBaseController
             $readyCategorySeoMix
         );
 
-        $productFilterData = new ProductFilterData();
+        $productFilterData = $this->productFilterDataFactory->create();
         $productFilterConfig = $this->createProductFilterConfigForCategory($category);
         $filterForm = $this->createForm(ProductFilterFormType::class, $productFilterData, [
             'product_filter_config' => $productFilterConfig,
@@ -506,7 +514,7 @@ class ProductController extends FrontBaseController
             $request
         );
 
-        $productFilterData = new ProductFilterData();
+        $productFilterData = $this->productFilterDataFactory->create();
         $productFilterData->setSearchText($searchText);
 
         $productFilterConfig = $this->createProductFilterConfigForSearch($searchText);

@@ -6186,6 +6186,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
             /** @var \App\Model\Product\Parameter\Parameter|null $parameter */
             $parameter = $this->parameterFacade->create($parameterData);
+
+            $firstDomainLocale = $this->domain->getDomainConfigById(1)->getLocale();
+            $this->addReference(ParameterDataFixture::PARAMETER_PREFIX . $parameterNamesByLocale[$firstDomainLocale], $parameter);
         }
 
         return $parameter;

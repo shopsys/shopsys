@@ -90,4 +90,107 @@ class ReadyCategorySeoMixTest extends GraphQlTestCase
 
         $this->assertQueryWithExpectedArray($query, $arrayExpected);
     }
+
+    public function testReadyCategorySeoMixProductsOrdering()
+    {
+        /** @var \App\Model\CategorySeo\ReadyCategorySeoMix $readyCategorySeoMix */
+        $readyCategorySeoMix = $this->getReferenceForDomain(ReadyCategorySeoDataFixture::READY_CATEGORY_SEO_TV_FROM_CHEAPEST, 1);
+        $urlSlug = $this->urlGenerator->generate('front_category_seo', ['id' => $readyCategorySeoMix->getId()]);
+        $query = '
+            query slug {
+                slug(slug: "' . $urlSlug . '") {
+                    ... on Category {
+                        products(first:1) {
+                            edges {
+                                node {
+                                  name
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        ';
+
+        $arrayExpected = [
+            'data' => [
+                'slug' => [
+                    'products' => [
+                        'edges' => [
+                            ['node' => ['name' => t('Defender 2.0 SPK-480', [], 'dataFixtures', $this->getLocaleForFirstDomain())]],
+                        ],
+                    ],
+                ],
+            ],
+        ];
+
+        $this->assertQueryWithExpectedArray($query, $arrayExpected);
+    }
+
+    public function testReadyCategorySeoMixProductsWithFlag()
+    {
+        /** @var \App\Model\CategorySeo\ReadyCategorySeoMix $readyCategorySeoMix */
+        $readyCategorySeoMix = $this->getReferenceForDomain(ReadyCategorySeoDataFixture::READY_CATEGORY_SEO_TV_IN_SALE, 1);
+        $urlSlug = $this->urlGenerator->generate('front_category_seo', ['id' => $readyCategorySeoMix->getId()]);
+        $query = $this->getSlugQueryForCategoryWithProductNames($urlSlug);
+
+        $arrayExpected = [
+            'data' => [
+                'slug' => [
+                    'products' => [
+                        'edges' => [
+                            ['node' => ['name' => t('Philips 32PFL4308', [], 'dataFixtures', $this->getLocaleForFirstDomain())]],
+                        ],
+                    ],
+                ],
+            ],
+        ];
+
+        $this->assertQueryWithExpectedArray($query, $arrayExpected);
+    }
+
+    public function testReadyCategorySeoMixProductsWithParameters()
+    {
+        /** @var \App\Model\CategorySeo\ReadyCategorySeoMix $readyCategorySeoMix */
+        $readyCategorySeoMix = $this->getReferenceForDomain(ReadyCategorySeoDataFixture::READY_CATEGORY_SEO_TV_PLASMA_WITH_HDMI, 1);
+        $urlSlug = $this->urlGenerator->generate('front_category_seo', ['id' => $readyCategorySeoMix->getId()]);
+        $query = $this->getSlugQueryForCategoryWithProductNames($urlSlug);
+
+        $arrayExpected = [
+            'data' => [
+                'slug' => [
+                    'products' => [
+                        'edges' => [
+                            ['node' => ['name' => t('Hyundai 32PFL4400', [], 'dataFixtures', $this->getLocaleForFirstDomain())]],
+                        ],
+                    ],
+                ],
+            ],
+        ];
+
+        $this->assertQueryWithExpectedArray($query, $arrayExpected);
+    }
+
+    /**
+     * @param string $urlSlug
+     * @return string
+     */
+    private function getSlugQueryForCategoryWithProductNames(string $urlSlug): string
+    {
+        return '
+            query slug {
+                slug(slug: "' . $urlSlug . '") {
+                    ... on Category {
+                        products {
+                            edges {
+                                node {
+                                  name
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        ';
+    }
 }

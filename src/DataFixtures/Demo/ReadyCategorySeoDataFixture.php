@@ -7,8 +7,10 @@ namespace App\DataFixtures\Demo;
 use App\Model\CategorySeo\ChoseCategorySeoMixCombination;
 use App\Model\CategorySeo\ReadyCategorySeoMixDataFactory;
 use App\Model\CategorySeo\ReadyCategorySeoMixFacade;
+use App\Model\Product\Parameter\ParameterFacade;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
+use Shopsys\Cdn\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\UrlListData;
 use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingConfig;
@@ -16,6 +18,9 @@ use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingConfig;
 class ReadyCategorySeoDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
 {
     public const READY_CATEGORY_SEO_ELECTRONICS_WITHOUT_HDMI = 'ready_category_seo_electronics_without_hdmi';
+    public const READY_CATEGORY_SEO_TV_FROM_CHEAPEST = 'ready_category_seo_tv_from_cheapest';
+    public const READY_CATEGORY_SEO_TV_IN_SALE = 'ready_category_seo_tv_in_sale';
+    public const READY_CATEGORY_SEO_TV_PLASMA_WITH_HDMI = 'ready_category_seo_tv_plasma_with_hdmi';
 
     /**
      * @var \App\Model\CategorySeo\ReadyCategorySeoMixDataFactory
@@ -28,15 +33,31 @@ class ReadyCategorySeoDataFixture extends AbstractReferenceFixture implements De
     private $readyCategorySeoMixFacade;
 
     /**
+     * @var \Shopsys\Cdn\Component\Domain\Domain
+     */
+    private Domain $domain;
+
+    /**
+     * @var \App\Model\Product\Parameter\ParameterFacade
+     */
+    private ParameterFacade $parameterFacade;
+
+    /**
      * @param \App\Model\CategorySeo\ReadyCategorySeoMixDataFactory $readyCategorySeoMixDataFactory
      * @param \App\Model\CategorySeo\ReadyCategorySeoMixFacade $readyCategorySeoMixFacade
+     * @param \Shopsys\Cdn\Component\Domain\Domain $domain
+     * @param \App\Model\Product\Parameter\ParameterFacade $parameterFacade
      */
     public function __construct(
         ReadyCategorySeoMixDataFactory $readyCategorySeoMixDataFactory,
-        ReadyCategorySeoMixFacade $readyCategorySeoMixFacade
+        ReadyCategorySeoMixFacade $readyCategorySeoMixFacade,
+        Domain $domain,
+        ParameterFacade $parameterFacade
     ) {
         $this->readyCategorySeoMixDataFactory = $readyCategorySeoMixDataFactory;
         $this->readyCategorySeoMixFacade = $readyCategorySeoMixFacade;
+        $this->domain = $domain;
+        $this->parameterFacade = $parameterFacade;
     }
 
     /**
@@ -146,6 +167,53 @@ class ReadyCategorySeoDataFixture extends AbstractReferenceFixture implements De
             1,
             self::READY_CATEGORY_SEO_ELECTRONICS_WITHOUT_HDMI
         );
+
+        /** @var \App\Model\Category\Category $categoryTv */
+        $categoryTv = $this->getReference(CategoryDataFixture::CATEGORY_TV);
+        $choseCategorySeoMixCombinationArray = [
+            'domainId' => 1,
+            'categoryId' => $categoryTv->getId(),
+            'flagId' => null,
+            'ordering' => ProductListOrderingConfig::ORDER_BY_PRICE_ASC,
+            'parameterValueIdsByParameterIds' => [],
+        ];
+        $firstDomainLocale = $this->domain->getDomainConfigById(1)->getLocale();
+        $this->createReadyCategorySeoMix(
+            ChoseCategorySeoMixCombination::createFromArray($choseCategorySeoMixCombinationArray),
+            t('TV, audio from the cheapest', [], 'dataFixtures', $firstDomainLocale),
+            ['televize-audio-nejlevnejsi'],
+            1,
+            self::READY_CATEGORY_SEO_TV_FROM_CHEAPEST
+        );
+
+        /** @var \App\Model\Product\Flag\Flag $saleFlag */
+        $saleFlag = $this->getReference(FlagDataFixture::FLAG_PRODUCT_SALE);
+        $choseCategorySeoMixCombinationArray['flagId'] = $saleFlag->getId();
+        $choseCategorySeoMixCombinationArray['ordering'] = ProductListOrderingConfig::ORDER_BY_PRIORITY;
+        $this->createReadyCategorySeoMix(
+            ChoseCategorySeoMixCombination::createFromArray($choseCategorySeoMixCombinationArray),
+            t('TV, audio in sale', [], 'dataFixtures', $firstDomainLocale),
+            ['televize-audio-vyprodej'],
+            1,
+            self::READY_CATEGORY_SEO_TV_IN_SALE
+        );
+
+        $choseCategorySeoMixCombinationArray['flagId'] = null;
+        /** @var \App\Model\Product\Parameter\Parameter $technologyParameter */
+        $technologyParameter = $this->getReference(ParameterDataFixture::PARAMETER_PREFIX . t('Technology', [], 'dataFixtures', $firstDomainLocale));
+        /** @var \App\Model\Product\Parameter\Parameter $hdmiParameter */
+        $hdmiParameter = $this->getReference(ParameterDataFixture::PARAMETER_PREFIX . t('HDMI', [], 'dataFixtures', $firstDomainLocale));
+        $choseCategorySeoMixCombinationArray['parameterValueIdsByParameterIds'] = [
+            $hdmiParameter->getId() => $this->getParameterValueId(t('Yes', [], 'dataFixtures', $firstDomainLocale), $firstDomainLocale),
+            $technologyParameter->getId() => $this->getParameterValueId(t('PLASMA', [], 'dataFixtures', $firstDomainLocale), $firstDomainLocale),
+        ];
+        $this->createReadyCategorySeoMix(
+            ChoseCategorySeoMixCombination::createFromArray($choseCategorySeoMixCombinationArray),
+            t('TV, audio plasma with HDMI', [], 'dataFixtures', $firstDomainLocale),
+            ['televize-audio-plasma-s-hdmi'],
+            1,
+            self::READY_CATEGORY_SEO_TV_PLASMA_WITH_HDMI
+        );
     }
 
     /**
@@ -191,6 +259,16 @@ class ReadyCategorySeoDataFixture extends AbstractReferenceFixture implements De
         if ($referenceName !== null) {
             $this->persistentReferenceFacade->persistReferenceForDomain($referenceName, $readyCategorySeoMix, $domainId);
         }
+    }
+
+    /**
+     * @param string $parameterValueTranslation
+     * @param string $locale
+     * @return int
+     */
+    private function getParameterValueId(string $parameterValueTranslation, string $locale): int
+    {
+        return $this->parameterFacade->getParameterValueByValueTextAndLocale($parameterValueTranslation, $locale)->getId();
     }
 
     /**

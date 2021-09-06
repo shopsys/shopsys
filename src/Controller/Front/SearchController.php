@@ -6,7 +6,7 @@ namespace App\Controller\Front;
 
 use App\Model\Article\CombinedArticleElasticsearchFacade;
 use App\Model\Product\Brand\BrandFacade;
-use App\Model\Product\Filter\ProductFilterData;
+use App\Model\Product\Filter\ProductFilterDataFactory;
 use App\Model\Product\Listed\ListedProductViewElasticFacade;
 use Shopsys\FrameworkBundle\Component\String\TransformString;
 use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
@@ -41,21 +41,29 @@ class SearchController extends FrontBaseController
     private CombinedArticleElasticsearchFacade $elasticsearchArticleFacade;
 
     /**
+     * @var \App\Model\Product\Filter\ProductFilterDataFactory
+     */
+    private ProductFilterDataFactory $productFilterDataFactory;
+
+    /**
      * @param \App\Model\Category\CategoryFacade $categoryFacade
      * @param \App\Model\Product\Listed\ListedProductViewElasticFacade $listedProductViewFacade
      * @param \App\Model\Product\Brand\BrandFacade $brandFacade
      * @param \App\Model\Article\CombinedArticleElasticsearchFacade $elasticsearchArticleFacade
+     * @param \App\Model\Product\Filter\ProductFilterDataFactory $productFilterDataFactory
      */
     public function __construct(
         CategoryFacade $categoryFacade,
         ListedProductViewElasticFacade $listedProductViewFacade,
         BrandFacade $brandFacade,
-        CombinedArticleElasticsearchFacade $elasticsearchArticleFacade
+        CombinedArticleElasticsearchFacade $elasticsearchArticleFacade,
+        ProductFilterDataFactory $productFilterDataFactory
     ) {
         $this->categoryFacade = $categoryFacade;
         $this->listedProductViewFacade = $listedProductViewFacade;
         $this->brandFacade = $brandFacade;
         $this->elasticsearchArticleFacade = $elasticsearchArticleFacade;
+        $this->productFilterDataFactory = $productFilterDataFactory;
     }
 
     /**
@@ -76,7 +84,7 @@ class SearchController extends FrontBaseController
             self::AUTOCOMPLETE_BRAND_LIMIT
         );
 
-        $productFilterData = new ProductFilterData();
+        $productFilterData = $this->productFilterDataFactory->create();
         $productFilterData->setSearchText($searchText);
         $productsPaginationResult = $this->listedProductViewFacade->getFilteredPaginatedForSearch(
             $searchText,

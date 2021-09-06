@@ -1927,3 +1927,11 @@ msgstr ""
 msgid "| Demo eshop"
 msgstr "| Demo obchod"
 
+msgid "TV, audio from the cheapest"
+msgstr "Televize, audio od nejlevnějšího"
+
+msgid "TV, audio in sale"
+msgstr "Televize, audio výprodej"
+
+msgid "TV, audio plasma with HDMI"
+msgstr "Televize, audio plasma s HDMI"

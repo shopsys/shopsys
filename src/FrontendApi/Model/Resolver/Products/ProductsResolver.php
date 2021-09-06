@@ -6,13 +6,42 @@ namespace App\FrontendApi\Model\Resolver\Products;
 
 use App\Model\Category\Category;
 use App\Model\CategorySeo\ReadyCategorySeoMix;
+use App\Model\Product\Filter\ProductFilterDataFactory;
 use InvalidArgumentException;
 use Overblog\GraphQLBundle\Definition\Argument;
+use Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainFacadeInterface;
 use Shopsys\FrontendApiBundle\Model\Product\Connection\ProductConnection;
+use Shopsys\FrontendApiBundle\Model\Product\Connection\ProductConnectionFactory;
+use Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterFacade;
+use Shopsys\FrontendApiBundle\Model\Product\ProductFacade;
 use Shopsys\FrontendApiBundle\Model\Resolver\Products\ProductsResolver as BaseProductsResolver;
 
 class ProductsResolver extends BaseProductsResolver
 {
+    /**
+     * @var \App\Model\Product\Filter\ProductFilterDataFactory
+     */
+    private ProductFilterDataFactory $productFilterDataFactory;
+
+    /**
+     * @param \App\Model\Product\ProductOnCurrentDomainElasticFacade $productOnCurrentDomainFacade
+     * @param \Shopsys\FrontendApiBundle\Model\Product\ProductFacade $productFacade
+     * @param \Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterFacade $productFilterFacade
+     * @param \Shopsys\FrontendApiBundle\Model\Product\Connection\ProductConnectionFactory $productConnectionFactory
+     * @param \App\Model\Product\Filter\ProductFilterDataFactory $productFilterDataFactory
+     */
+    public function __construct(
+        ProductOnCurrentDomainFacadeInterface $productOnCurrentDomainFacade,
+        ProductFacade $productFacade,
+        ProductFilterFacade $productFilterFacade,
+        ProductConnectionFactory $productConnectionFactory,
+        ProductFilterDataFactory $productFilterDataFactory
+    ) {
+        parent::__construct($productOnCurrentDomainFacade, $productFacade, $productFilterFacade, $productConnectionFactory);
+
+        $this->productFilterDataFactory = $productFilterDataFactory;
+    }
+
     /**
      * @param \Overblog\GraphQLBundle\Definition\Argument $argument
      * @param \App\Model\Category\Category|\App\Model\CategorySeo\ReadyCategorySeoMix $categoryOrReadyCategorySeoMix
@@ -20,10 +49,17 @@ class ProductsResolver extends BaseProductsResolver
      */
     public function resolveByCategoryOrReadyCategorySeoMix(Argument $argument, $categoryOrReadyCategorySeoMix): ProductConnection
     {
+        $seoMixOrderingMode = null;
         if ($categoryOrReadyCategorySeoMix instanceof Category) {
             $category = $categoryOrReadyCategorySeoMix;
+            $productFilterData = $this->productFilterFacade->getValidatedProductFilterDataForCategory(
+                $argument,
+                $category
+            );
         } elseif ($categoryOrReadyCategorySeoMix instanceof ReadyCategorySeoMix) {
             $category = $categoryOrReadyCategorySeoMix->getCategory();
+            $seoMixOrderingMode = $categoryOrReadyCategorySeoMix->getOrdering();
+            $productFilterData = $this->productFilterDataFactory->createProductFilterDataFromReadyCategorySeoMix($categoryOrReadyCategorySeoMix);
         } else {
             throw new InvalidArgumentException(
                 sprintf(
@@ -34,9 +70,25 @@ class ProductsResolver extends BaseProductsResolver
             );
         }
 
-        /** @var \Shopsys\FrontendApiBundle\Model\Product\Connection\ProductConnection $productConnection */
-        $productConnection = $this->resolveByCategory($argument, $category);
+        $search = $argument['search'] ?? '';
 
-        return $productConnection;
+        $this->setDefaultFirstOffsetIfNecessary($argument);
+
+        return $this->productConnectionFactory->createConnectionForCategory(
+            $category,
+            function ($offset, $limit) use ($argument, $category, $productFilterData, $search, $seoMixOrderingMode) {
+                return $this->productFacade->getFilteredProductsByCategory(
+                    $category,
+                    $limit,
+                    $offset,
+                    $seoMixOrderingMode ?? $this->getOrderingModeFromArgument($argument),
+                    $productFilterData,
+                    $search
+                );
+            },
+            $this->productFacade->getFilteredProductsByCategoryCount($category, $productFilterData, $search),
+            $argument,
+            $productFilterData
+        );
     }
 }
