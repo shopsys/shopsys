@@ -4,11 +4,14 @@ declare(strict_types=1);
 
 namespace App\Model\Order\PromoCode;
 
+use App\Model\Order\PromoCode\Exception\AvailableForRegisteredCustomerUserOnly;
 use App\Model\Order\PromoCode\Exception\NoLongerValidPromoCodeDateTimeException;
+use App\Model\Order\PromoCode\Exception\NotAvailableForCustomerUserPricingGroup;
 use App\Model\Order\PromoCode\Exception\NotYetValidPromoCodeDateTimeException;
 use App\Model\Order\PromoCode\Exception\PromoCodeWithoutRelationWithAnyProductFromCurrentCartException;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Cart\CartRepository;
+use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifierFactory;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\CurrentPromoCodeFacade as BaseCurrentPromoCodeFacade;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\Exception\InvalidPromoCodeException;
@@ -51,6 +54,16 @@ class CurrentPromoCodeFacade extends BaseCurrentPromoCodeFacade
     private PromoCodeLimitResolver $promoCodeLimitByCartTotalResolver;
 
     /**
+     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser
+     */
+    private CurrentCustomerUser $currentCustomerUser;
+
+    /**
+     * @var \App\Model\Order\PromoCode\PromoCodePricingGroupRepository
+     */
+    private PromoCodePricingGroupRepository $promoCodePricingGroupRepository;
+
+    /**
      * @param \App\Model\Order\PromoCode\PromoCodeFacade $promoCodeFacade
      * @param \Symfony\Component\HttpFoundation\Session\SessionInterface $session
      * @param \App\Model\Order\PromoCode\PromoCodeProductRepository $promoCodeProductRepository
@@ -59,6 +72,8 @@ class CurrentPromoCodeFacade extends BaseCurrentPromoCodeFacade
      * @param \Shopsys\FrameworkBundle\Model\Cart\CartRepository $cartRepository
      * @param \App\Model\Order\PromoCode\ProductPromoCodeFiller $productPromoCodeFiller
      * @param \App\Model\Order\PromoCode\PromoCodeLimitResolver $promoCodeLimitByCartTotalResolver
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
+     * @param \App\Model\Order\PromoCode\PromoCodePricingGroupRepository $promoCodePricingGroupRepository
      */
     public function __construct(
         PromoCodeFacade $promoCodeFacade,
@@ -68,7 +83,9 @@ class CurrentPromoCodeFacade extends BaseCurrentPromoCodeFacade
         CustomerUserIdentifierFactory $customerUserIdentifierFactory,
         CartRepository $cartRepository,
         ProductPromoCodeFiller $productPromoCodeFiller,
-        PromoCodeLimitResolver $promoCodeLimitByCartTotalResolver
+        PromoCodeLimitResolver $promoCodeLimitByCartTotalResolver,
+        CurrentCustomerUser $currentCustomerUser,
+        PromoCodePricingGroupRepository $promoCodePricingGroupRepository
     ) {
         parent::__construct(
             $promoCodeFacade,
@@ -81,6 +98,8 @@ class CurrentPromoCodeFacade extends BaseCurrentPromoCodeFacade
         $this->cartRepository = $cartRepository;
         $this->productPromoCodeFiller = $productPromoCodeFiller;
         $this->promoCodeLimitByCartTotalResolver = $promoCodeLimitByCartTotalResolver;
+        $this->currentCustomerUser = $currentCustomerUser;
+        $this->promoCodePricingGroupRepository = $promoCodePricingGroupRepository;
     }
 
     /**
@@ -89,9 +108,16 @@ class CurrentPromoCodeFacade extends BaseCurrentPromoCodeFacade
     public function setEnteredPromoCode($enteredCode)
     {
         $promoCode = $this->promoCodeFacade->findPromoCodeByCode($enteredCode);
+
         if ($promoCode === null) {
             throw new InvalidPromoCodeException($enteredCode);
         }
+
+        if ($promoCode->isRegisteredCustomerUserOnly() && $this->currentCustomerUser->findCurrentCustomerUser() === null) {
+            throw new AvailableForRegisteredCustomerUserOnly($enteredCode);
+        }
+
+        $this->validatePricingGroup($promoCode);
         $this->validatePromoCodeDatetime($promoCode);
         $this->validateRemainigUses($promoCode);
         $this->validatePromoCodeByProductsInCart($promoCode);
@@ -268,5 +294,27 @@ class CurrentPromoCodeFacade extends BaseCurrentPromoCodeFacade
         }
 
         return $cart->getQuantifiedProducts();
+    }
+
+    /**
+     * @param \App\Model\Order\PromoCode\PromoCode $promoCode
+     */
+    private function validatePricingGroup(PromoCode $promoCode): void
+    {
+        $limitedPricingGroups = $this->promoCodePricingGroupRepository->getPricingGroupsByPromoCodeId(
+            $promoCode->getId()
+        );
+
+        if (count($limitedPricingGroups) === 0) {
+            return;
+        }
+
+        foreach ($limitedPricingGroups as $pricingGroup) {
+            if ($pricingGroup->getId() === $this->currentCustomerUser->getPricingGroup()->getId()) {
+                return;
+            }
+        }
+
+        throw new NotAvailableForCustomerUserPricingGroup($promoCode->getCode(), $this->currentCustomerUser->findCurrentCustomerUser()->getId());
     }
 }

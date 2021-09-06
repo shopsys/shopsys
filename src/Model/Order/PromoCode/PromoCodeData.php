@@ -117,4 +117,14 @@ class PromoCodeData extends BasePromoCodeData
      * @var int
      */
     public $discountType = PromoCode::DISCOUNT_TYPE_PERCENT;
+
+    /**
+     * @var bool
+     */
+    public bool $registeredCustomerUserOnly = false;
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup[]
+     */
+    public array $limitedPricingGroups = [];
 }
