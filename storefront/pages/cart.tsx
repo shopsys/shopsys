@@ -1,4 +1,5 @@
 import { initServerSideProps, ServerSidePropsType } from 'helpers/InitServerSideProps';
+import CartProductList from 'components/Pages/Cart/CartProductList';
 import CommonLayout from 'components/Layout/CommonLayout';
 import { FC } from 'react';
 import { GetServerSideProps } from 'next';
@@ -11,7 +12,7 @@ const Cart: FC<ServerSidePropsType> = (props) => {
         <StaticUrlGuard domainUrl={props.domainConfig.url}>
             <CommonLayout>
                 <OrderSteps activeStep={1} domainUrl={props.domainConfig.url} />
-                Cart - step 1
+                <CartProductList />
             </CommonLayout>
         </StaticUrlGuard>
     );

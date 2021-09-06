@@ -40,5 +40,7 @@
     "price descending": "price descending",
     "priority": "priority",
     "Products": "Products",
-    "Sort": "Sort"
+    "Sort": "Sort",
+    "(1)[or immediately in {{ count }} store];(2-inf)[or immediately in {{ count }} stores];": "(1)[or immediately in {{ count }} store];(2-inf)[or immediately in {{ count }} stores];",
+    "pc": "pc"
 }

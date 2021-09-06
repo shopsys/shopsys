@@ -1,6 +1,6 @@
-import { ProductFlagsItemStyled, ProductFlagsStyled } from './ProductFlags.style';
 import { FC } from 'react';
 import { FlagType } from '../types';
+import { ProductFlagsItemStyled } from './ProductFlags.style';
 
 type ProductFlagsProps = { flags: FlagType[] };
 
@@ -10,13 +10,13 @@ const ProductFlags: FC<ProductFlagsProps> = (props) => {
     }
 
     return (
-        <ProductFlagsStyled>
+        <>
             {props.flags.map(({ name, rgbColor }, key) => (
                 <ProductFlagsItemStyled key={key} color={rgbColor}>
                     {name}
                 </ProductFlagsItemStyled>
             ))}
-        </ProductFlagsStyled>
+        </>
     );
 };
 
