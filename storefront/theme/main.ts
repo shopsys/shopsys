@@ -32,6 +32,7 @@ export const theme = {
         bigger: '18px',
         default: '16px',
         small: '14px',
+        extraSmall: '12px',
     },
 
     /* Fonts family */

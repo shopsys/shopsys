@@ -22,6 +22,48 @@ module.exports = {
                 currencyCode: 'EUR',
             },
         ],
+        availableStaticUrls: {
+            [process.env.DOMAIN_HOSTNAME_1]: {
+                '/cart': '/kosik',
+                '/order/shipment-and-payment': '/objednavka/doprava-a-platba',
+                '/order/contact-information': '/objednavka/kontaktni-udaje',
+            },
+            [process.env.DOMAIN_HOSTNAME_2]: {
+                '/cart': '/kosik',
+                '/order/shipment-and-payment': '/objednavka/doprava-a-platba',
+                '/order/contact-information': '/objednavka/kontaktne-udaje',
+            },
+        },
+    },
+    async rewrites() {
+        return [
+            // Czech URLs
+            {
+                source: '/kosik',
+                destination: '/cart',
+            },
+            {
+                source: '/objednavka/kontaktni-udaje',
+                destination: '/order/contact-information',
+            },
+            {
+                source: '/objednavka/doprava-a-platba',
+                destination: '/order/shipment-and-payment',
+            },
+            // Slovak URLs
+            {
+                source: '/kosik',
+                destination: '/cart',
+            },
+            {
+                source: '/objednavka/kontaktne-udaje',
+                destination: '/order/contact-information',
+            },
+            {
+                source: '/objednavka/doprava-a-platba',
+                destination: '/order/shipment-and-payment',
+            },
+        ];
     },
     eslint: {
         ignoreDuringBuilds: true,
