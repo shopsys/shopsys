@@ -1,15 +1,21 @@
 import { cacheExchange, dedupExchange, fetchExchange, ssrExchange } from 'urql';
+import { DomainConfigType, getDomainConfig } from '../utils/Domain/Domain';
 import { GetServerSidePropsContext, GetServerSidePropsResult } from 'next';
+import { initUrqlClient, SSRData } from 'next-urql';
 import getConfig from 'next/config';
-import { getDomainConfig } from '../utils/Domain/Domain';
-import { initUrqlClient } from 'next-urql';
 import nextI18NextConfig from '../next-i18next.config';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import { SSRConfig } from 'next-i18next';
+
+export type ServerSidePropsType = {
+    urqlState: SSRData;
+    domainConfig: DomainConfigType;
+} & SSRConfig;
 
 export async function initServerSideProps(
     context: GetServerSidePropsContext,
     prefetchedQueries: string[] = [],
-): Promise<GetServerSidePropsResult<{ [key: string]: any }>> {
+): Promise<GetServerSidePropsResult<ServerSidePropsType>> {
     const domain = context.req.headers.host;
     const domainConfig = getDomainConfig(domain);
     const { serverRuntimeConfig } = getConfig();
@@ -49,5 +55,5 @@ export async function initServerSideProps(
             },
         };
     }
-    return { props: {} };
+    return { props: <ServerSidePropsType>{} };
 }
