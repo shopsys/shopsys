@@ -4,19 +4,17 @@ export type DropdownListLevels = 'primary' | 'secondary' | 'tertiary';
 
 export type DropdownSlideToType = 'left' | 'right';
 
-export type DropdownIndexType = number | string;
-
 export type ChangeStateType = {
     goToMenu: DropdownListLevels;
     slideTo: DropdownSlideToType;
-    index: DropdownIndexType;
+    index: number | string;
 };
 
 export type DropdownItemType = {
     changeState?: any;
     goToMenu?: DropdownListLevels;
     slideTo?: DropdownSlideToType;
-    index?: DropdownIndexType;
+    index?: number | string;
 };
 
 export type DropdownListType = {

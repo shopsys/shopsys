@@ -30,19 +30,19 @@ const DropdownMenu: FC<DropdownMenuProps> = (props) => {
         setMenuHeight(el.offsetHeight);
     };
 
-    const onMenuLevel = (props: ChangeStateType) => {
+    const onMenuLevelChangeHandler = (props: ChangeStateType) => {
         if (props.goToMenu !== undefined) {
             setMenuLevel(props.goToMenu);
         }
     };
 
-    const onSlideTo = (props: ChangeStateType) => {
+    const onSlideToChangeHandler = (props: ChangeStateType) => {
         if (props.slideTo !== undefined) {
             setSlideTo(props.slideTo);
         }
     };
 
-    const onSlideToIn = (props: ChangeStateType) => {
+    const onSlideToInChangeHandler = (props: ChangeStateType) => {
         if (props.index !== undefined) {
             setHistoryOfIndexes((oldArray: (number | string)[]) => [...oldArray, props.index]);
         }
@@ -61,9 +61,9 @@ const DropdownMenu: FC<DropdownMenuProps> = (props) => {
     };
 
     const changeState = (props: ChangeStateType) => {
-        onMenuLevel(props);
-        onSlideTo(props);
-        onSlideToIn(props);
+        onMenuLevelChangeHandler(props);
+        onSlideToChangeHandler(props);
+        onSlideToInChangeHandler(props);
         onSlideToOut(props);
     };
 

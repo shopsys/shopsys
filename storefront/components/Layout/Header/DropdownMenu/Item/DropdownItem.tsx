@@ -17,9 +17,9 @@ type DropdownItemProps = {
 };
 
 const DropdownItem: FC<DropdownItemProps & DropdownItemType> = (props) => {
-    const [hasChildren, setHasChildren] = useState<boolean>(false);
-    const [itemLink, setItemLink] = useState<string>('');
-    const [itemName, setItemName] = useState<string>('');
+    const [hasChildren, setHasChildren] = useState(false);
+    const [itemLink, setItemLink] = useState('');
+    const [itemName, setItemName] = useState('');
 
     useEffect(() => {
         if (props.navigationItem !== undefined) {
