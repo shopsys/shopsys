@@ -30,7 +30,6 @@ class FlagGridFactory extends BaseFlagGridFactory
         $grid->addColumn('name', 'ft.name', t('Name'), true);
         $grid->addColumn('rgbColor', 'f.rgbColor', t('Color'), true);
         $grid->addColumn('visible', 'f.visible', t('Display'), true);
-        $grid->addColumn('sale', 'f.sale', t('Označení výprodeje'), true);
 
         $grid->setActionColumnClassAttribute('table-col table-col-10');
         $grid->addEditActionColumn('admin_flag_edit', ['id' => 'f.id']);

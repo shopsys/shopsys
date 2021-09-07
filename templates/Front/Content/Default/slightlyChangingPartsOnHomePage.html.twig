@@ -86,7 +86,6 @@
         {{ render(controller('App\\Controller\\Front\\CategoryController:categoryListAction', {categories: categories, showProductsCountByCategory: false})) }}
     </div>
 </div>
-{{ render(controller('App\\Controller\\Front\\ProductController:productsInSaleOnHomePageAction')) }}
 {% if homepageArticles is not null %}
     {% set domain = getDomain() %}
     <div class="web__line web__line--blog">

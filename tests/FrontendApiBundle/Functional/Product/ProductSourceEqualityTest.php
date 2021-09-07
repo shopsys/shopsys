@@ -124,7 +124,6 @@ class ProductSourceEqualityTest extends GraphQlTestCase
             partNumber
             ean
             usps
-            isInSale
             hasPreorder
             hasSaleExclusion
             files {

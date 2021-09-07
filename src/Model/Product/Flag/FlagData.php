@@ -10,11 +10,6 @@ use Shopsys\FrameworkBundle\Model\Product\Flag\FlagData as BaseFlagData;
 class FlagData extends BaseFlagData
 {
     /**
-     * @var bool
-     */
-    public $sale;
-
-    /**
      * @var string|null
      */
     public $akeneoCode;
@@ -28,7 +23,6 @@ class FlagData extends BaseFlagData
     {
         parent::__construct();
 
-        $this->sale = false;
         $this->rgbColor = '';
         $this->urls = new UrlListData();
     }

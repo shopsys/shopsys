@@ -99,22 +99,6 @@ class FilterQuery extends BaseFilterQuery
     /**
      * @return \App\Model\Product\Search\FilterQuery
      */
-    public function filterOnlyInSale(): self
-    {
-        $clone = clone $this;
-
-        $clone->filters[] = [
-            'term' => [
-                'is_in_sale' => true,
-            ],
-        ];
-
-        return $clone;
-    }
-
-    /**
-     * @return \App\Model\Product\Search\FilterQuery
-     */
     public function odrderByStockQuantity(): self
     {
         $clone = clone $this;

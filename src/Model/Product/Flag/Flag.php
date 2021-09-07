@@ -25,12 +25,6 @@ class Flag extends BaseFlag
     public const AKENEO_CODE_MADE_IN_SK = 'flag__product_made_in_sk';
 
     /**
-     * @var bool
-     * @ORM\Column(type="boolean")
-     */
-    protected $sale;
-
-    /**
      * @var string
      * @ORM\Column(type="string", length=255)
      */
@@ -60,16 +54,6 @@ class Flag extends BaseFlag
     public function setData(FlagData $flagData): void
     {
         parent::setData($flagData);
-
-        $this->sale = $flagData->sale;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isSale(): bool
-    {
-        return $this->sale;
     }
 
     /**

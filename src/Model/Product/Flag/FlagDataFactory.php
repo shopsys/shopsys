@@ -50,7 +50,6 @@ class FlagDataFactory extends BaseFlagDataFactory
     {
         parent::fillFromFlag($flagData, $flag);
 
-        $flagData->sale = $flag->isSale();
         $flagData->akeneoCode = $flag->getAkeneoCode();
 
         foreach ($this->domain->getAllIds() as $domainId) {

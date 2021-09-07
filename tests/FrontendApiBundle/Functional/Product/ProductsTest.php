@@ -94,7 +94,6 @@ class ProductsTest extends ProductsGraphQlTestCase
                             partNumber
                             ean
                             usps
-                            isInSale
                             hasPreorder
                             hasSaleExclusion
                             files {
@@ -236,7 +235,6 @@ class ProductsTest extends ProductsGraphQlTestCase
                 'partNumber' => '22MT44D',
                 'ean' => '8845781245931',
                 'usps' => [],
-                'isInSale' => false,
                 'hasPreorder' => false,
                 'hasSaleExclusion' => false,
                 'files' => [],

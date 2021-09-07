@@ -47,15 +47,6 @@ class ProductArrayFieldMapper extends BaseProductArrayFieldMapper
      * @param array $data
      * @return bool
      */
-    public function isInSale(array $data): bool
-    {
-        return $data['is_in_sale'];
-    }
-
-    /**
-     * @param array $data
-     * @return bool
-     */
     public function hasPreorder(array $data): bool
     {
         return $data['has_preorder'];

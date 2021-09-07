@@ -134,17 +134,4 @@ class ListedProductViewElasticFacade extends BaseListedProductViewElasticFacade
 
         return $this->createPaginationResultWithArray($paginationResult);
     }
-
-    /**
-     * @param int $page
-     * @param int $limit
-     * @return \Shopsys\FrameworkBundle\Component\Paginator\PaginationResult
-     */
-    public function getPaginatedSaleProducts(int $page, int $limit): PaginationResult
-    {
-        $productFilterData = $this->productFilterDataFactory->create();
-        $paginationResult = $this->productOnCurrentDomainFacade->getPaginatedProductsInSale($productFilterData, $page, $limit);
-
-        return $this->createPaginationResultWithArray($paginationResult);
-    }
 }

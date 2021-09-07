@@ -94,7 +94,6 @@ class PromotedProductsTest extends GraphQlTestCase
                     partNumber
                     ean
                     usps
-                    isInSale
                     hasPreorder
                     hasSaleExclusion
                     files {
@@ -173,7 +172,6 @@ class PromotedProductsTest extends GraphQlTestCase
                     partNumber
                     ean
                     usps
-                    isInSale
                     hasPreorder
                     hasSaleExclusion
                     files {
