@@ -9,6 +9,7 @@ use App\FrontendApi\Model\Resolver\Article\ArticleResolver;
 use App\FrontendApi\Model\Resolver\Blog\Article\BlogArticleResolver;
 use App\FrontendApi\Model\Resolver\Blog\Category\BlogCategoryResolver;
 use App\FrontendApi\Model\Resolver\Category\CategorySeo\ReadyCategorySeoMixResolver;
+use App\FrontendApi\Model\Resolver\Products\Flag\FlagResolver;
 use App\FrontendApi\Model\Resolver\Store\StoreResolver;
 use App\Model\Article\Article;
 use App\Model\Blog\Article\BlogArticle;
@@ -16,6 +17,7 @@ use App\Model\Blog\Category\BlogCategory;
 use App\Model\Category\Category;
 use App\Model\CategorySeo\ReadyCategorySeoMix;
 use App\Model\Product\Brand\Brand;
+use App\Model\Product\Flag\Flag;
 use App\Model\Product\Product;
 use App\Model\Store\Store;
 use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
@@ -79,6 +81,11 @@ class SlugResolver implements ResolverInterface, AliasedInterface
     private ReadyCategorySeoMixResolver $readyCategorySeoMixResolver;
 
     /**
+     * @var \App\FrontendApi\Model\Resolver\Products\Flag\FlagResolver
+     */
+    private FlagResolver $flagResolver;
+
+    /**
      * @param \App\Component\Router\FriendlyUrl\FriendlyUrlRepository $friendlyUrlRepository
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \App\FrontendApi\Model\Resolver\Article\ArticleResolver $articleResolver
@@ -89,6 +96,7 @@ class SlugResolver implements ResolverInterface, AliasedInterface
      * @param \Shopsys\FrontendApiBundle\Model\Resolver\Products\ProductDetailResolver $productDetailResolver
      * @param \App\FrontendApi\Model\Resolver\Store\StoreResolver $storeResolver
      * @param \App\FrontendApi\Model\Resolver\Category\CategorySeo\ReadyCategorySeoMixResolver $readyCategorySeoMixResolver
+     * @param \App\FrontendApi\Model\Resolver\Products\Flag\FlagResolver $flagResolver
      */
     public function __construct(
         FriendlyUrlRepository $friendlyUrlRepository,
@@ -100,7 +108,8 @@ class SlugResolver implements ResolverInterface, AliasedInterface
         CategoryResolver $categoryResolver,
         ProductDetailResolver $productDetailResolver,
         StoreResolver $storeResolver,
-        ReadyCategorySeoMixResolver $readyCategorySeoMixResolver
+        ReadyCategorySeoMixResolver $readyCategorySeoMixResolver,
+        FlagResolver $flagResolver
     ) {
         $this->friendlyUrlRepository = $friendlyUrlRepository;
         $this->domain = $domain;
@@ -112,11 +121,12 @@ class SlugResolver implements ResolverInterface, AliasedInterface
         $this->productDetailResolver = $productDetailResolver;
         $this->storeResolver = $storeResolver;
         $this->readyCategorySeoMixResolver = $readyCategorySeoMixResolver;
+        $this->flagResolver = $flagResolver;
     }
 
     /**
      * @param string $slug
-     * @return \App\Model\Article\Article|\App\Model\Blog\Category\BlogCategory|\App\Model\Category\Category|\App\Model\Product\Brand\Brand|\App\Model\Product\Product|\App\Model\Store\Store|\App\Model\CategorySeo\ReadyCategorySeoMix|array
+     * @return \App\Model\Article\Article|\App\Model\Blog\Category\BlogCategory|\App\Model\Category\Category|\App\Model\Product\Brand\Brand|\App\Model\Product\Product|\App\Model\Store\Store|\App\Model\CategorySeo\ReadyCategorySeoMix|\App\Model\Product\Flag\Flag|array
      */
     public function resolve(string $slug)
     {
@@ -150,6 +160,8 @@ class SlugResolver implements ResolverInterface, AliasedInterface
                 $category = $this->categoryResolver->resolveByUuidOrUrlSlug(null, $slugWithoutSlash);
 
                 return $category;
+            case Flag::class:
+                return $this->flagResolver->resolveByUuidOrUrlSlug(null, $slugWithoutSlash);
             case Product::class:
                 /** @var \App\Model\Product\Product $product */
                 $product = $this->productDetailResolver->resolver(null, $slugWithoutSlash);

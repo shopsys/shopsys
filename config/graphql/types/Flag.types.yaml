@@ -5,6 +5,7 @@ Flag:
     config:
         interfaces:
             - 'Breadcrumb'
+            - 'Slug'
         fields:
             slug:
                 type: "String!"

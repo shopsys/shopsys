@@ -9,6 +9,7 @@ use App\Model\Blog\Category\BlogCategory;
 use App\Model\Category\Category;
 use App\Model\CategorySeo\ReadyCategorySeoMix;
 use App\Model\Product\Brand\Brand;
+use App\Model\Product\Flag\Flag;
 use App\Model\Store\Store;
 use Overblog\GraphQLBundle\Resolver\ResolverMap;
 
@@ -36,6 +37,10 @@ class SlugResolverMap extends ResolverMap
 
                     if ($data instanceof Category || $data instanceof ReadyCategorySeoMix) {
                         return 'Category';
+                    }
+
+                    if ($data instanceof Flag) {
+                        return 'Flag';
                     }
 
                     if ($data instanceof Store) {
