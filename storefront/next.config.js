@@ -22,7 +22,7 @@ module.exports = {
                 currencyCode: 'EUR',
             },
         ],
-        availableStaticURLs: {
+        availableStaticUrls: {
             [process.env.DOMAIN_HOSTNAME_1]: {
                 '/cart': '/kosik',
                 '/order/shipment-and-payment': '/objednavka/doprava-a-platba',
