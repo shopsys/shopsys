@@ -130,4 +130,24 @@ class FlagFacade extends BaseFlagFacade
     {
         return $this->flagRepository->getAllVisibleFlags($locale);
     }
+
+    /**
+     * @param string $uuid
+     * @param string $locale
+     * @return \App\Model\Product\Flag\Flag
+     */
+    public function getVisibleByUuid(string $uuid, string $locale): Flag
+    {
+        return $this->flagRepository->getVisibleByUuid($uuid, $locale);
+    }
+
+    /**
+     * @param int $flagId
+     * @param string $locale
+     * @return \App\Model\Product\Flag\Flag
+     */
+    public function getVisibleFlagById(int $flagId, string $locale): Flag
+    {
+        return $this->flagRepository->getVisibleFlagById($flagId, $locale);
+    }
 }

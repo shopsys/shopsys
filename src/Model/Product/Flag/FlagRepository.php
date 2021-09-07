@@ -63,6 +63,25 @@ class FlagRepository extends BaseFlagRepository
     }
 
     /**
+     * @param int $flagId
+     * @param string $locale
+     * @return \App\Model\Product\Flag\Flag
+     */
+    public function getVisibleFlagById(int $flagId, string $locale): Flag
+    {
+        $flagsQueryBuilder = $this->getFlagRepository()->createQueryBuilder('f')
+            ->select('f, ft')
+            ->join('f.translations', 'ft', Join::WITH, 'ft.locale = :locale')
+            ->where('f.id = :flagId')
+            ->andWhere('f.visible = true')
+            ->orderBy('ft.name', 'asc')
+            ->setParameter('flagId', $flagId)
+            ->setParameter('locale', $locale);
+
+        return $flagsQueryBuilder->getQuery()->getSingleResult();
+    }
+
+    /**
      * @param string $locale
      * @return \App\Model\Product\Flag\Flag[]
      */
@@ -76,5 +95,23 @@ class FlagRepository extends BaseFlagRepository
             ->setParameter('locale', $locale);
 
         return $flagsQueryBuilder->getQuery()->getResult();
+    }
+
+    /**
+     * @param string $uuid
+     * @param string $locale
+     * @return \App\Model\Product\Flag\Flag
+     */
+    public function getVisibleByUuid(string $uuid, string $locale): Flag
+    {
+        $flagsQueryBuilder = $this->getFlagRepository()->createQueryBuilder('f')
+            ->select('f, ft')
+            ->join('f.translations', 'ft', Join::WITH, 'ft.locale = :locale')
+            ->setParameter('locale', $locale)
+            ->where('f.visible = true')
+            ->andWhere('f.uuid = :uuid')
+            ->setParameter('uuid', $uuid);
+
+        return $flagsQueryBuilder->getQuery()->getSingleResult();
     }
 }
