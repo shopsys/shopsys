@@ -37,6 +37,10 @@ class FlagTest extends GraphQlTestCase
                     name
                     rgbColor
                     slug
+                    breadcrumb {
+                        name
+                        slug
+                    }
                     products {
                         edges {
                             node {
@@ -54,6 +58,12 @@ class FlagTest extends GraphQlTestCase
             "name": "' . t('Vyrobeno v DE', [], 'dataFixtures', $this->getFirstDomainLocale()) . '",
             "rgbColor": "#ffffff",
             "slug": "' . $this->urlGenerator->generate('front_flag_detail', ['id' => $this->flag->getId()]) . '",
+            "breadcrumb": [
+                {
+                    "name": "' . t('Vyrobeno v DE', [], 'dataFixtures', $this->getFirstDomainLocale()) . '",
+                    "slug": "' . $this->urlGenerator->generate('front_flag_detail', ['id' => $this->flag->getId()]) . '"
+                }
+            ],
             "products": {
                 "edges": [
                     {

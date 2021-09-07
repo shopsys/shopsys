@@ -3,6 +3,8 @@ Flag:
     inherits:
         - 'FlagDecorator'
     config:
+        interfaces:
+            - 'Breadcrumb'
         fields:
             slug:
                 type: "String!"
@@ -15,3 +17,7 @@ Flag:
                     config:
                         orderingModeType: 'ProductOrderingModeEnum'
                 resolve: "@=resolver('productsByFlag', [args, value])"
+            breadcrumb:
+                type: "[Link!]!"
+                description: "Hierarchy of the current element in relation to the structure"
+                resolve: '@=resolver("resolveBreadcrumb", [value.getId(), "front_flag_detail"])'
