@@ -55,7 +55,7 @@ class CustomerController extends FrontBaseController
     /**
      * @var \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressFacade
      */
-    private $deliveryAddressFacade;
+    private DeliveryAddressFacade $deliveryAddressFacade;
 
     /**
      * @param \App\Model\Customer\User\CustomerUserFacade $customerUserFacade

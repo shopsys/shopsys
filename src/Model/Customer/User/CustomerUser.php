@@ -19,6 +19,9 @@ use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserData as BaseUserData
  *     }
  * )
  * @ORM\Entity
+ * @property \App\Model\Customer\DeliveryAddress $defaultDeliveryAddress
+ * @property \App\Model\Customer\DeliveryAddress|null $defaultDeliveryAddress
+ * @method \App\Model\Customer\DeliveryAddress|null getDefaultDeliveryAddress()
  */
 class CustomerUser extends BaseUser
 {

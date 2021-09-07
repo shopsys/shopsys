@@ -95,7 +95,7 @@ class CustomerUserFacade extends BaseCustomerUserFacade
     /**
      * @param int $customerUserId
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateData $customerUserUpdateData
-     * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress|null $deliveryAddress
+     * @param \App\Model\Customer\DeliveryAddress|null $deliveryAddress
      * @return \App\Model\Customer\User\CustomerUser|\App\Model\Customer\User\CustomerUser
      */
     public function edit($customerUserId, CustomerUserUpdateData $customerUserUpdateData, ?DeliveryAddress $deliveryAddress = null)

@@ -9,7 +9,7 @@ CurrentCustomerUser:
         fields:
             street:
                 type: "String!"
-                description: "Billing address street name "
+                description: "Billing address street name"
             city:
                 type: "String!"
                 description: "Billing address city name"
@@ -22,3 +22,9 @@ CurrentCustomerUser:
             newsletterSubscription:
                 type: "Boolean!"
                 description: "Whether customer user receives newsletters or not"
+            defaultDeliveryAddress:
+                type: "DeliveryAddress"
+                description: "Default customer delivery addresses"
+            deliveryAddresses:
+                type: "[DeliveryAddress!]!"
+                description: "List of delivery addresses"

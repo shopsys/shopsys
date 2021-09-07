@@ -4,12 +4,22 @@ declare(strict_types=1);
 
 namespace Tests\FrontendApiBundle\Functional\Customer\User;
 
+use App\Model\Customer\User\CustomerUserFacade;
 use Tests\FrontendApiBundle\Test\GraphQlWithLoginTestCase;
 
 class CurrentCustomerUserTest extends GraphQlWithLoginTestCase
 {
+    /**
+     * @var \App\Model\Customer\User\CustomerUserFacade
+     * @inject
+     */
+    private CustomerUserFacade $customerUserFacade;
+
     public function testCurrentCustomerUser(): void
     {
+        $customerUser = $this->customerUserFacade->findCustomerUserByEmailAndDomain(self::DEFAULT_USER_EMAIL, $this->domain->getId());
+        /** @var \App\Model\Customer\DeliveryAddress $defaultDeliveryAddress */
+        $defaultDeliveryAddress = $customerUser->getDefaultDeliveryAddress();
         $query = '
 {
     query: currentCustomerUser {
@@ -23,6 +33,28 @@ class CurrentCustomerUserTest extends GraphQlWithLoginTestCase
         city
         postcode
         country
+        defaultDeliveryAddress {
+            uuid
+            companyName
+            street
+            city
+            postcode
+            telephone
+            country
+            firstName
+            lastName
+        }
+        deliveryAddresses {
+            uuid
+            companyName
+            street
+            city
+            postcode
+            telephone
+            country
+            firstName
+            lastName
+        }
         ... on CurrentCompanyCustomerUser {
             companyName
             companyNumber
@@ -46,6 +78,30 @@ class CurrentCustomerUserTest extends GraphQlWithLoginTestCase
             "city": "Ostrava",
             "postcode": "70200",
             "country": "CZ",
+            "defaultDeliveryAddress": {
+                "uuid": "' . $defaultDeliveryAddress->getUuid() . '",
+                "companyName": "Rockpoint",
+                "street": "Rudná",
+                "city": "Ostrava",
+                "postcode": "70030",
+                "telephone": "123456789",
+                "country": "CZ",
+                "firstName": "Eva",
+                "lastName": "Wallicová"
+            },
+            "deliveryAddresses": [
+                {
+                    "uuid": "' . $defaultDeliveryAddress->getUuid() . '",
+                    "companyName": "Rockpoint",
+                    "street": "Rudná",
+                    "city": "Ostrava",
+                    "postcode": "70030",
+                    "telephone": "123456789",
+                    "country": "CZ",
+                    "firstName": "Eva",
+                    "lastName": "Wallicová"
+                }
+            ],
             "companyName": "Shopsys",
             "companyNumber": "12345678",
             "companyTaxNumber": "CZ65432123"
