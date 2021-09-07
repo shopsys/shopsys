@@ -118,7 +118,6 @@ class CategoryDataFactory extends BaseCategoryDataFactory
         $categoryData->parametersCollapsed = $this->categoryParameterRepository->getParametersCollapsedByCategory($category);
         $categoryData->overLimitQuantity = $category->getOverLimitQuantity();
         $categoryData->parametersPosition = $this->getParametersSortedByPositionFilteredByCategory($category);
-        $categoryData->isSaleCategory = $category->isSaleCategory();
 
         $linkedCategories = $this->linkedCategoryRepository->getAllByParentCategory($category);
         $categoryData->linkedCategories = array_map(function (LinkedCategory $linkedCategory) {

@@ -161,14 +161,6 @@ class CategoryRepository extends BaseCategoryRepository
     }
 
     /**
-     * @return \App\Model\Category\Category|null
-     */
-    public function findSaleCategory(): ?Category
-    {
-        return $this->getCategoryRepository()->findOneBy(['isSaleCategory' => true]);
-    }
-
-    /**
      * @param int $domainId
      * @return \App\Model\Category\Category[]
      */

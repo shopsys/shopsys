@@ -45,12 +45,6 @@ class Category extends BaseCategory
     private $overLimitQuantity;
 
     /**
-     * @var bool
-     * @ORM\Column(type="boolean", nullable=false)
-     */
-    private $isSaleCategory;
-
-    /**
      * @param \App\Model\Category\CategoryData $categoryData
      */
     public function __construct(BaseCategoryData $categoryData)
@@ -58,7 +52,6 @@ class Category extends BaseCategory
         parent::__construct($categoryData);
 
         $this->akeneoCode = $categoryData->akeneoCode;
-        $this->isSaleCategory = $categoryData->isSaleCategory;
     }
 
     /**
@@ -159,21 +152,5 @@ class Category extends BaseCategory
     public function getCategoryDomains()
     {
         return $this->domains;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isSaleCategory(): bool
-    {
-        return $this->isSaleCategory;
-    }
-
-    /**
-     * @param bool $isSaleCategory
-     */
-    public function setIsSaleCategory(bool $isSaleCategory): void
-    {
-        $this->isSaleCategory = $isSaleCategory;
     }
 }

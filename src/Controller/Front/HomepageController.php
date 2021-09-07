@@ -6,7 +6,6 @@ namespace App\Controller\Front;
 
 use App\Model\Blog\Article\BlogArticleFacade;
 use App\Model\Blog\Category\BlogCategoryFacade;
-use App\Model\Category\CategoryFacade;
 use App\Model\Gtm\DataLayer;
 use App\Model\Gtm\GtmJsPushFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
@@ -54,11 +53,6 @@ class HomepageController extends FrontBaseController
     private $gtmJsPushFacade;
 
     /**
-     * @var \App\Model\Category\CategoryFacade
-     */
-    private $categoryFacade;
-
-    /**
      * @param \Shopsys\FrameworkBundle\Model\Seo\SeoSettingFacade $seoSettingFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \App\Model\Slider\SliderItemFacade $sliderItemFacade
@@ -66,7 +60,6 @@ class HomepageController extends FrontBaseController
      * @param \App\Model\Category\TopCategory\TopCategoryFacade $topCategoryFacade
      * @param \App\Model\Blog\Article\BlogArticleFacade $blogArticleFacade
      * @param \App\Model\Gtm\GtmJsPushFacade $gtmJsPushFacade
-     * @param \App\Model\Category\CategoryFacade $categoryFacade
      */
     public function __construct(
         SeoSettingFacade $seoSettingFacade,
@@ -75,8 +68,7 @@ class HomepageController extends FrontBaseController
         ListedProductViewFacadeInterface $listedProductViewFacade,
         TopCategoryFacade $topCategoryFacade,
         BlogArticleFacade $blogArticleFacade,
-        GtmJsPushFacade $gtmJsPushFacade,
-        CategoryFacade $categoryFacade
+        GtmJsPushFacade $gtmJsPushFacade
     ) {
         $this->seoSettingFacade = $seoSettingFacade;
         $this->domain = $domain;
@@ -85,7 +77,6 @@ class HomepageController extends FrontBaseController
         $this->blogArticleFacade = $blogArticleFacade;
         $this->listedProductViewFacade = $listedProductViewFacade;
         $this->gtmJsPushFacade = $gtmJsPushFacade;
-        $this->categoryFacade = $categoryFacade;
     }
 
     public function indexAction()
@@ -127,7 +118,6 @@ class HomepageController extends FrontBaseController
                 $sliderItems,
                 DataLayer::HOMEPAGE_SLIDER_LABEL
             ),
-            'saleCategory' => $this->categoryFacade->findSaleCategory(),
         ]);
     }
 }

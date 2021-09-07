@@ -42,11 +42,6 @@ class CategoryData extends BaseCategoryData
     public $parametersPosition;
 
     /**
-     * @var bool
-     */
-    public $isSaleCategory;
-
-    /**
      * @var \App\Model\Category\Category[]
      */
     public $linkedCategories;
@@ -57,7 +52,6 @@ class CategoryData extends BaseCategoryData
 
         $this->shortDescription = [];
         $this->parametersPosition = [];
-        $this->isSaleCategory = false;
         $this->linkedCategories = [];
     }
 }
