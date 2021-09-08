@@ -8,6 +8,19 @@ use Shopsys\FrontendApiBundle\Model\Product\ProductFacade as BaseProductFacade;
 
 /**
  * @method \App\Model\Product\Product getSellableByUuid(string $uuid, int $domainId, \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup)
+ * @property \App\Model\Product\Search\FilterQueryFactory $filterQueryFactory
+ * @property \App\Model\Product\Search\ProductElasticsearchRepository $productElasticsearchRepository
+ * @method __construct(\Shopsys\FrontendApiBundle\Model\Product\ProductRepository $productRepository, \App\Model\Product\Search\FilterQueryFactory $filterQueryFactory, \App\Model\Product\Search\ProductElasticsearchRepository $productElasticsearchRepository)
+ * @method int getFilteredProductsCountOnCurrentDomain(\App\Model\Product\Filter\ProductFilterData $productFilterData, string $search)
+ * @method array getFilteredProductsOnCurrentDomain(int $limit, int $offset, string $orderingModeId, \App\Model\Product\Filter\ProductFilterData $productFilterData, string $search)
+ * @method array getProductsByCategory(\App\Model\Category\Category $category, int $limit, int $offset, string $orderingModeId)
+ * @method array getFilteredProductsByCategory(\App\Model\Category\Category $category, int $limit, int $offset, string $orderingModeId, \App\Model\Product\Filter\ProductFilterData $productFilterData, string $search)
+ * @method int getProductsByCategoryCount(\App\Model\Category\Category $category)
+ * @method int getFilteredProductsByCategoryCount(\App\Model\Category\Category $category, \App\Model\Product\Filter\ProductFilterData $productFilterData, string $search)
+ * @method array getProductsByBrand(\App\Model\Product\Brand\Brand $brand, int $limit, int $offset, string $orderingModeId)
+ * @method array getFilteredProductsByBrand(\App\Model\Product\Brand\Brand $brand, int $limit, int $offset, string $orderingModeId, \App\Model\Product\Filter\ProductFilterData $productFilterData, string $search)
+ * @method int getProductsByBrandCount(\App\Model\Product\Brand\Brand $brand)
+ * @method int getFilteredProductsByBrandCount(\App\Model\Product\Brand\Brand $brand, \App\Model\Product\Filter\ProductFilterData $productFilterData, string $search)
  */
 class ProductFacade extends BaseProductFacade
 {

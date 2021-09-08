@@ -12,6 +12,18 @@ use InvalidArgumentException;
 use Shopsys\FrameworkBundle\Component\Image\Exception\ImageNotFoundException;
 use Shopsys\FrontendApiBundle\Model\Resolver\Image\ImagesResolver as BaseImagesResolver;
 
+/**
+ * @property \App\Component\Image\ImageFacade $imageFacade
+ * @method __construct(\App\Component\Image\ImageFacade $imageFacade, \Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig $imageConfig, \Shopsys\FrameworkBundle\Component\Domain\Domain $domain, \Shopsys\FrontendApiBundle\Component\Image\ImageFacade|null $frontendApiImageFacade)
+ * @method array resolveByProduct(\App\Model\Product\Product|array $data, string|null $type, string|null $size)
+ * @method array resolveByCategory(\App\Model\Category\Category $category, string|null $type, string|null $size)
+ * @method array resolveByPayment(\App\Model\Payment\Payment $payment, string|null $type, string|null $size)
+ * @method array resolveByTransport(\App\Model\Transport\Transport $transport, string|null $type, string|null $size)
+ * @method array resolveByBrand(\App\Model\Product\Brand\Brand $brand, string|null $type, string|null $size)
+ * @method array resolveByAdvert(\App\Model\Advert\Advert $advert, string|null $type, string|null $size)
+ * @method array getResolvedImage(\App\Component\Image\Image $image, \Shopsys\FrameworkBundle\Component\Image\Config\ImageSizeConfig $sizeConfig)
+ * @method \Shopsys\FrameworkBundle\Component\Image\Config\ImageSizeConfig[] getSizeConfigsForAdvert(\App\Model\Advert\Advert $advert, string|null $type, string|null $size)
+ */
 class ImagesResolver extends BaseImagesResolver
 {
     protected const IMAGE_ENTITY_SLIDER_ITEM = 'sliderItem';

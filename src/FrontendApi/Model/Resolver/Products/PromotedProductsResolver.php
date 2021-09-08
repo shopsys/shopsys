@@ -11,6 +11,9 @@ use Shopsys\FrameworkBundle\Model\Product\TopProduct\TopProduct;
 use Shopsys\FrameworkBundle\Model\Product\TopProduct\TopProductFacade;
 use Shopsys\FrontendApiBundle\Model\Resolver\Products\PromotedProductsResolver as BasePromotedProductsResolver;
 
+/**
+ * @property \App\Model\Product\TopProduct\TopProductFacade $topProductFacade
+ */
 class PromotedProductsResolver extends BasePromotedProductsResolver
 {
     /**
