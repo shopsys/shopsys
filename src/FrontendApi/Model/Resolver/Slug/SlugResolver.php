@@ -59,7 +59,7 @@ class SlugResolver implements ResolverInterface, AliasedInterface
     private BrandResolver $brandResolver;
 
     /**
-     * @var \Shopsys\FrontendApiBundle\Model\Resolver\Category\CategoryResolver
+     * @var \App\FrontendApi\Model\Resolver\Category\CategoryResolver
      */
     private CategoryResolver $categoryResolver;
 
@@ -85,7 +85,7 @@ class SlugResolver implements ResolverInterface, AliasedInterface
      * @param \Shopsys\FrontendApiBundle\Model\Resolver\Brand\BrandResolver $brandResolver
      * @param \App\FrontendApi\Model\Resolver\Blog\Article\BlogArticleResolver $blogArticleResolver
      * @param \App\FrontendApi\Model\Resolver\Blog\Category\BlogCategoryResolver $blogCategoryResolver
-     * @param \Shopsys\FrontendApiBundle\Model\Resolver\Category\CategoryResolver $categoryResolver
+     * @param \App\FrontendApi\Model\Resolver\Category\CategoryResolver $categoryResolver
      * @param \Shopsys\FrontendApiBundle\Model\Resolver\Products\ProductDetailResolver $productDetailResolver
      * @param \App\FrontendApi\Model\Resolver\Store\StoreResolver $storeResolver
      * @param \App\FrontendApi\Model\Resolver\Category\CategorySeo\ReadyCategorySeoMixResolver $readyCategorySeoMixResolver

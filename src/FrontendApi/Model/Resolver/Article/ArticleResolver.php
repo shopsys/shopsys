@@ -14,6 +14,11 @@ use Shopsys\FrameworkBundle\Component\Setting\Exception\SettingValueNotFoundExce
 use Shopsys\FrameworkBundle\Component\Setting\Setting as BaseSetting;
 use Shopsys\FrameworkBundle\Model\Article\Exception\ArticleNotFoundException;
 
+/**
+ * @property \App\Model\LegalConditions\LegalConditionsFacade $legalConditionsFacade
+ * @method \App\Model\Article\Article getVisibleByDomainIdAndUuid(string $uuid)
+ * @method \App\Model\Article\Article getVisibleByDomainIdAndSlug(string $urlSlug)
+ */
 class ArticleResolver implements ResolverInterface, AliasedInterface
 {
     /**

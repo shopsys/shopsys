@@ -15,7 +15,7 @@ use Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct;
  * @ORM\Entity
  * @property \App\Model\Customer\User\CustomerUser|null $customerUser
  * @property \App\Model\Cart\Item\CartItem[]|\Doctrine\Common\Collections\Collection $items
- * @method __construct(string $cartIdentifier, \App\Model\Customer\User\CustomerUser|null $customerUser)
+ * @method __construct(string $cartIdentifier, \App\Model\Customer\User\CustomerUser|null $customerUser = null)
  * @method addItem(\App\Model\Cart\Item\CartItem $item)
  * @method \App\Model\Cart\Item\CartItem[] getItems()
  * @method \App\Model\Cart\Item\CartItem getItemById(int $itemId)

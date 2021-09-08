@@ -7,6 +7,15 @@ namespace App\FrontendApi\Model\Product\Filter;
 use App\Model\Product\Filter\ParameterFilterData;
 use Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterDataMapper as BaseProductFilterDataMapper;
 
+/**
+ * @property \App\Model\Product\Flag\FlagFacade $flagFacade
+ * @property \App\Model\Product\Brand\BrandFacade $brandFacade
+ * @property \App\Model\Product\Parameter\ParameterFacade $parameterFacade
+ * @property \App\Model\Product\Parameter\Parameter[] $parametersByUuid
+ * @property \App\Model\Product\Parameter\ParameterValue[] $parameterValuesByUuid
+ * @method __construct(\App\Model\Product\Flag\FlagFacade $flagFacade, \App\Model\Product\Brand\BrandFacade $brandFacade, \App\Model\Product\Parameter\ParameterFacade $parameterFacade)
+ * @method \App\Model\Product\Filter\ProductFilterData mapFrontendApiFilterToProductFilterData(array $frontendApiFilter)
+ */
 class ProductFilterDataMapper extends BaseProductFilterDataMapper
 {
     /**

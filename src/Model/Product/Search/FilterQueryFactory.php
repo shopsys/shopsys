@@ -22,7 +22,7 @@ use Shopsys\FrameworkBundle\Model\Product\Search\FilterQueryFactory as BaseFilte
  * @method \App\Model\Product\Search\FilterQuery createListableProductsBySearchTextWithPriceAndStockFilter(string $searchText, \App\Model\Product\Filter\ProductFilterData $productFilterData)
  * @method \App\Model\Product\Search\FilterQuery addPricesAndStockFromFilterDataToQuery(\App\Model\Product\Filter\ProductFilterData $productFilterData, \App\Model\Product\Search\FilterQuery $filterQuery)
  * @method \App\Model\Product\Search\FilterQuery createVisibleProductsByProductIdsFilter(int[] $productIds)
- * @method \App\Model\Product\Search\FilterQuery createSellableProductsByProductIdsFilter(int[] $productIds, int|null $limit)
+ * @method \App\Model\Product\Search\FilterQuery createSellableProductsByProductIdsFilter(int[] $productIds, int|null $limit = null)
  * @method \App\Model\Product\Search\FilterQuery createVisibleProductsByProductUuidsFilter(string[] $productUuids)
  * @method \App\Model\Product\Search\FilterQuery createSellableProductsByProductUuidsFilter(string[] $productUuids)
  * @method \App\Model\Product\Search\FilterQuery createListableWithProductFilter(\App\Model\Product\Filter\ProductFilterData $productFilterData)

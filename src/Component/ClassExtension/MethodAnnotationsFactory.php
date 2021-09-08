@@ -81,4 +81,57 @@ class MethodAnnotationsFactory extends BaseMethodAnnotationsFactory
     {
         return $this->warningBag;
     }
+
+    /**
+     * @param \Roave\BetterReflection\Reflection\ReflectionMethod $reflectionMethod
+     * @return string
+     */
+    protected function getMethodParameterNamesWithTypes(ReflectionMethod $reflectionMethod): string
+    {
+        $methodParameterNamesWithTypes = [];
+        foreach ($reflectionMethod->getParameters() as $methodParameter) {
+            $methodValue = $methodParameter->getName();
+
+            if ($methodParameter->isDefaultValueAvailable()) {
+                if ($methodParameter->isDefaultValueConstant()) {
+                    $methodValue .= ' = ' . $methodParameter->getDefaultValueConstantName();
+                } else {
+                    $methodValue .= ' = ' . $this->parseMethodParameterValue($methodParameter->getDefaultValue());
+                }
+            }
+
+            $methodParameterNamesWithTypes[] = sprintf(
+                '%s $%s',
+                $this->annotationsReplacer->replaceInParameterType($methodParameter),
+                $methodValue
+            );
+        }
+
+        return implode(', ', $methodParameterNamesWithTypes);
+    }
+
+    /**
+     * @param mixed $value
+     * @return mixed|string
+     */
+    private function parseMethodParameterValue($value)
+    {
+        if ($value === null) {
+            return 'null';
+        }
+
+        if ($value === false) {
+            return 'false';
+        }
+
+        if ($value === true) {
+            return 'true';
+        }
+
+        if ($value === []) {
+            return '[]';
+        }
+
+        return $value;
+    }
 }

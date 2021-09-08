@@ -16,6 +16,13 @@ use Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterFacade;
 use Shopsys\FrontendApiBundle\Model\Product\ProductFacade;
 use Shopsys\FrontendApiBundle\Model\Resolver\Products\ProductsResolver as BaseProductsResolver;
 
+/**
+ * @property \App\Model\Product\ProductOnCurrentDomainElasticFacade $productOnCurrentDomainFacade
+ * @property \App\FrontendApi\Model\Product\ProductFacade|null $productFacade
+ * @method setProductFacade(\App\FrontendApi\Model\Product\ProductFacade $productFacade)
+ * @method \Overblog\GraphQLBundle\Relay\Connection\ConnectionInterface|object resolveByCategory(\Overblog\GraphQLBundle\Definition\Argument $argument, \App\Model\Category\Category $category)
+ * @method \Overblog\GraphQLBundle\Relay\Connection\ConnectionInterface|object resolveByBrand(\Overblog\GraphQLBundle\Definition\Argument $argument, \App\Model\Product\Brand\Brand $brand)
+ */
 class ProductsResolver extends BaseProductsResolver
 {
     /**
@@ -25,7 +32,7 @@ class ProductsResolver extends BaseProductsResolver
 
     /**
      * @param \App\Model\Product\ProductOnCurrentDomainElasticFacade $productOnCurrentDomainFacade
-     * @param \Shopsys\FrontendApiBundle\Model\Product\ProductFacade $productFacade
+     * @param \App\FrontendApi\Model\Product\ProductFacade $productFacade
      * @param \Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterFacade $productFilterFacade
      * @param \Shopsys\FrontendApiBundle\Model\Product\Connection\ProductConnectionFactory $productConnectionFactory
      * @param \App\Model\Product\Filter\ProductFilterDataFactory $productFilterDataFactory
@@ -52,6 +59,7 @@ class ProductsResolver extends BaseProductsResolver
         $seoMixOrderingMode = null;
         if ($categoryOrReadyCategorySeoMix instanceof Category) {
             $category = $categoryOrReadyCategorySeoMix;
+            /** @var \App\Model\Product\Filter\ProductFilterData $productFilterData */
             $productFilterData = $this->productFilterFacade->getValidatedProductFilterDataForCategory(
                 $argument,
                 $category

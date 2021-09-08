@@ -6,6 +6,10 @@ namespace App\FrontendApi\Model\Parameter;
 
 use Shopsys\FrontendApiBundle\Model\Parameter\ParameterWithValuesFactory as BaseParameterWithValuesFactory;
 
+/**
+ * @method \Shopsys\FrontendApiBundle\Model\Parameter\ParameterWithValues create(\App\Model\Product\Parameter\Parameter $parameter, \App\Model\Product\Parameter\ParameterValue[] $parameterValues)
+ * @method \Shopsys\FrontendApiBundle\Model\Parameter\ParameterWithValues[] createMultipleForProduct(\App\Model\Product\Product $product)
+ */
 class ParameterWithValuesFactory extends BaseParameterWithValuesFactory
 {
     /**

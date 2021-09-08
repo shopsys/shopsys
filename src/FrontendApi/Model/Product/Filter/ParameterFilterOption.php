@@ -8,6 +8,10 @@ use App\Model\Product\Unit\Unit;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter as BaseParameter;
 use Shopsys\FrontendApiBundle\Model\Product\Filter\ParameterFilterOption as BaseParameterFilterOption;
 
+/**
+ * @property \App\FrontendApi\Model\Product\Filter\ParameterValueFilterOption[] $values
+ * @method __construct(\App\Model\Product\Parameter\Parameter $parameter, \App\FrontendApi\Model\Product\Filter\ParameterValueFilterOption[] $values)
+ */
 class ParameterFilterOption extends BaseParameterFilterOption
 {
     /**
