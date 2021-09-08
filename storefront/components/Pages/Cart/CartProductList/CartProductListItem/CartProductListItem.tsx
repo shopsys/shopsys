@@ -1,3 +1,5 @@
+import { AppDispatch, useShopsysDispatch } from 'redux/store';
+import { CartItemType, CartType } from 'connectors/cart/types';
 import {
     CartProductImageCellStyled,
     CartProductInfoCellStyled,
@@ -10,22 +12,34 @@ import {
     CartProductTotalPriceCellStyled,
     CartProductTotalPriceStyled,
 } from './CartProductListItem.style';
-import { CartItemType } from 'connectors/cart/types';
 import CartProductListItemInfo from './CartProductListItemInfo';
 import { FC } from 'react';
 import { formatPrice } from 'utils/formatting';
+// import { getUserFriendlyErrors } from 'connectors/lib/friendlyErrorMessageParser';
 import Link from 'next/link';
+import { OperationResult } from '@urql/core';
 import ShopsysIcon from 'components/basic/ShopsysIcon';
 import ShopsysImage from 'components/basic/ShopsysImage';
 import ShopsysSpinbox from 'components/forms/ShopsysSpinbox';
+import { userActions } from 'redux/store/UserStore';
+import { useRemoveItemFromCart } from 'connectors/cart/Cart';
 import { useTranslation } from 'react-i18next';
 
 type CartProductListItemProps = {
     item: CartItemType;
+    cartUuid: string;
 };
 
 const CartProductListItem: FC<CartProductListItemProps> = (props) => {
     const { t } = useTranslation();
+    const [, removeItemFromCart] = useRemoveItemFromCart();
+    const dispatch = useShopsysDispatch();
+
+    const onRemoveItemFromCartHanlder = () => {
+        removeItemFromCart({ cartItemUuid: props.item.uuid, cartUuid: props.cartUuid }).then((result) => {
+            handleCartUpdate(result, dispatch);
+        });
+    };
 
     return (
         <CartProductListItemStyled>
@@ -58,12 +72,20 @@ const CartProductListItem: FC<CartProductListItemProps> = (props) => {
                 </CartProductTotalPriceStyled>
             </CartProductTotalPriceCellStyled>
             <CartProductRemoveButtonCellStyled>
-                <CartProductRemoveButtonStyled>
+                <CartProductRemoveButtonStyled onClick={onRemoveItemFromCartHanlder}>
                     <ShopsysIcon icon="remove-bold" iconHeight={7} />
                 </CartProductRemoveButtonStyled>
             </CartProductRemoveButtonCellStyled>
         </CartProductListItemStyled>
     );
+};
+
+const handleCartUpdate = (updateResult: OperationResult<CartType>, dispatch: AppDispatch) => {
+    if (updateResult.error !== undefined) {
+        // handle errors globally?
+    } else {
+        dispatch(userActions.setCart(updateResult.data));
+    }
 };
 
 export default CartProductListItem;

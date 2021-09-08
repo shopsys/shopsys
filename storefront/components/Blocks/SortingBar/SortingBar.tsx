@@ -1,5 +1,4 @@
 import { FC, useState } from 'react';
-import { sortActions, SortType } from '../../../redux/store/UserStore';
 import {
     SortingBarItemLinkStyled,
     SortingBarItemLinkWrapStyled,
@@ -13,6 +12,7 @@ import {
     SortingBarStyled,
     SortingBarTitleStyled,
 } from './SortingBar.style';
+import { SortType, userActions } from '../../../redux/store/UserStore';
 import { useShopsysDispatch, useShopsysSelector } from 'redux/store';
 import { getIsElementVisible } from 'components/Helpers/GetIsItemVisible';
 import { mobileFirstSizes } from 'components/Theme/mediaQueries';
@@ -37,7 +37,7 @@ const SortingBar: FC = () => {
         () => setMobileSortBarVisible(true),
         () => setMobileSortBarVisible(getIsElementVisible([{ min: 0, max: 1024 }], width)),
     );
-    const selectedSort = useShopsysSelector((state) => state.sort.sort);
+    const selectedSort = useShopsysSelector((state) => state.user.sort);
     const [toggleSortMenu, setToggleSortMenu] = useState(false);
     const sortValues: SortValues[] = [
         { stateValue: 'PRIORITY', displayValue: t('priority') },
@@ -57,7 +57,7 @@ const SortingBar: FC = () => {
                                     key={value.stateValue}
                                     onClick={() => {
                                         setToggleSortMenu(!toggleSortMenu);
-                                        dispatch(sortActions.setSort({ sort: value.stateValue }));
+                                        dispatch(userActions.setSort({ sort: value.stateValue }));
                                     }}
                                 >
                                     <SortingBarSortIconStyled icon="Sort" />
@@ -80,7 +80,7 @@ const SortingBar: FC = () => {
                                             isActive={selectedSort === value.stateValue}
                                             onClick={() => {
                                                 setToggleSortMenu(!toggleSortMenu);
-                                                dispatch(sortActions.setSort({ sort: value.stateValue }));
+                                                dispatch(userActions.setSort({ sort: value.stateValue }));
                                             }}
                                         >
                                             {t(value.displayValue.toString())}
@@ -97,7 +97,7 @@ const SortingBar: FC = () => {
                                 <SortingBarItemStyled
                                     key={value.stateValue}
                                     onClick={() => {
-                                        dispatch(sortActions.setSort({ sort: value.stateValue }));
+                                        dispatch(userActions.setSort({ sort: value.stateValue }));
                                     }}
                                 >
                                     <SortingBarItemLinkStyled isActive={selectedSort === value.stateValue}>
