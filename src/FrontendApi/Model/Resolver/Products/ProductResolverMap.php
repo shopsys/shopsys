@@ -17,7 +17,7 @@ use Shopsys\FrontendApiBundle\Model\Resolver\Products\ProductResolverMap as Base
  * @property \App\Model\Product\Flag\FlagFacade $flagFacade
  * @property \App\Model\Category\CategoryFacade $categoryFacade
  * @property \App\FrontendApi\Model\Resolver\Products\DataMapper\ProductArrayFieldMapper|null $productArrayFieldMapper
- * @method __construct(\Shopsys\FrameworkBundle\Component\Domain\Domain $domain, \Shopsys\FrameworkBundle\Model\Product\Collection\ProductCollectionFacade $productCollectionFacade, \App\Model\Product\Flag\FlagFacade $flagFacade, \App\Model\Category\CategoryFacade $categoryFacade, \Shopsys\FrontendApiBundle\Model\Resolver\Products\DataMapper\ProductEntityFieldMapper|null $productEntityFieldMapper, \App\FrontendApi\Model\Resolver\Products\DataMapper\ProductArrayFieldMapper|null $productArrayFieldMapper)
+ * @method __construct(\Shopsys\FrameworkBundle\Component\Domain\Domain $domain, \Shopsys\FrameworkBundle\Model\Product\Collection\ProductCollectionFacade $productCollectionFacade, \App\Model\Product\Flag\FlagFacade $flagFacade, \App\Model\Category\CategoryFacade $categoryFacade, \Shopsys\FrontendApiBundle\Model\Resolver\Products\DataMapper\ProductEntityFieldMapper|null $productEntityFieldMapper = null, \App\FrontendApi\Model\Resolver\Products\DataMapper\ProductArrayFieldMapper|null $productArrayFieldMapper = null)
  * @method setProductArrayFieldMapper(\App\FrontendApi\Model\Resolver\Products\DataMapper\ProductArrayFieldMapper $productArrayFieldMapper)
  * @method \App\Model\Product\Flag\Flag[] getFlagsForData(\App\Model\Product\Product|array $data)
  * @method \App\Model\Category\Category[] getCategoriesForData(array $data)

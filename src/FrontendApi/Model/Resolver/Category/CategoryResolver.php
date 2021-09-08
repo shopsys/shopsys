@@ -10,7 +10,7 @@ use Shopsys\FrontendApiBundle\Model\Resolver\Category\CategoryResolver as BaseCa
 
 /**
  * @property \App\Model\Category\CategoryFacade $categoryFacade
- * @method __construct(\App\Model\Category\CategoryFacade $categoryFacade, \Shopsys\FrameworkBundle\Component\Domain\Domain|null $domain, \Shopsys\FrontendApiBundle\Model\FriendlyUrl\FriendlyUrlFacade|null $friendlyUrlFacade)
+ * @method __construct(\App\Model\Category\CategoryFacade $categoryFacade, \Shopsys\FrameworkBundle\Component\Domain\Domain|null $domain = null, \Shopsys\FrontendApiBundle\Model\FriendlyUrl\FriendlyUrlFacade|null $friendlyUrlFacade = null)
  * @method \App\Model\Category\Category resolver(string $uuid)
  * @method \App\Model\Category\Category getByUuid(string $uuid)
  * @method \App\Model\Category\Category getVisibleOnDomainAndSlug(string $urlSlug)

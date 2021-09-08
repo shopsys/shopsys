@@ -14,7 +14,7 @@ use Shopsys\FrontendApiBundle\Model\Resolver\Image\ImagesResolver as BaseImagesR
 
 /**
  * @property \App\Component\Image\ImageFacade $imageFacade
- * @method __construct(\App\Component\Image\ImageFacade $imageFacade, \Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig $imageConfig, \Shopsys\FrameworkBundle\Component\Domain\Domain $domain, \Shopsys\FrontendApiBundle\Component\Image\ImageFacade|null $frontendApiImageFacade)
+ * @method __construct(\App\Component\Image\ImageFacade $imageFacade, \Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig $imageConfig, \Shopsys\FrameworkBundle\Component\Domain\Domain $domain, \Shopsys\FrontendApiBundle\Component\Image\ImageFacade|null $frontendApiImageFacade = null)
  * @method array resolveByProduct(\App\Model\Product\Product|array $data, string|null $type, string|null $size)
  * @method array resolveByCategory(\App\Model\Category\Category $category, string|null $type, string|null $size)
  * @method array resolveByPayment(\App\Model\Payment\Payment $payment, string|null $type, string|null $size)

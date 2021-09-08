@@ -35,7 +35,7 @@ use Shopsys\FrameworkBundle\Component\String\TransformString;
  * @method \App\Component\Image\Image[] getAllImagesByEntity(object $entity)
  * @method deleteImageFiles(\App\Component\Image\Image $image)
  * @method \Shopsys\FrameworkBundle\Component\Image\AdditionalImageData[] getAdditionalImagesData(\Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig, \App\Component\Image\Image $imageOrEntity, string|null $sizeName, string|null $type)
- * @method \App\Component\Image\Image getImageByObject(\App\Component\Image\Image|object $imageOrEntity, string|null $type)
+ * @method \App\Component\Image\Image getImageByObject(\App\Component\Image\Image|object $imageOrEntity, string|null $type = null)
  * @method \App\Component\Image\Image getById(int $imageId)
  * @method \App\Component\Image\Image[] getImagesByEntitiesIndexedByEntityId(int[] $entityIds, string $entityClass)
  * @method \App\Component\Image\Image[] getImagesByEntityId(int $id, string $entityClass)
