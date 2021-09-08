@@ -59,6 +59,7 @@ class ProductsResolver extends BaseProductsResolver
         $seoMixOrderingMode = null;
         if ($categoryOrReadyCategorySeoMix instanceof Category) {
             $category = $categoryOrReadyCategorySeoMix;
+            /** @var \App\Model\Product\Filter\ProductFilterData $productFilterData */
             $productFilterData = $this->productFilterFacade->getValidatedProductFilterDataForCategory(
                 $argument,
                 $category
