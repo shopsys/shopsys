@@ -2,7 +2,7 @@ import { css } from 'styled-components';
 import { styled } from 'theme/main';
 
 type DropdownMenuProps = {
-    slideTo: 'left' | 'right';
+    slideDirection: 'left' | 'right';
 };
 
 export const DropdownMenuWrapperStyled = styled.div`
@@ -23,7 +23,7 @@ export const DropdownMenuWrapperStyled = styled.div`
 `;
 
 export const DropdownMenuStyled = styled.div<DropdownMenuProps>`
-    ${({ theme, slideTo }) => css`
+    ${({ theme, slideDirection }) => css`
         position: absolute;
         left: 10px;
         right: 10px;
@@ -56,7 +56,7 @@ export const DropdownMenuStyled = styled.div<DropdownMenuProps>`
         }
 
         .menu-secondary-enter {
-            ${slideTo === 'right'
+            ${slideDirection === 'right'
                 ? css`
                       transform: translateX(110%);
                   `
@@ -67,7 +67,7 @@ export const DropdownMenuStyled = styled.div<DropdownMenuProps>`
         }
 
         .menu-secondary-enter-active {
-            ${slideTo === 'right'
+            ${slideDirection === 'right'
                 ? css`
                       transform: translateX(0%);
                   `
@@ -78,7 +78,7 @@ export const DropdownMenuStyled = styled.div<DropdownMenuProps>`
         }
 
         .menu-secondary-exit {
-            ${slideTo === 'right' &&
+            ${slideDirection === 'right' &&
             css`
                 position: absolute;
                 transform: translateX(0%);
@@ -86,7 +86,7 @@ export const DropdownMenuStyled = styled.div<DropdownMenuProps>`
         }
 
         .menu-secondary-exit-active {
-            ${slideTo === 'right'
+            ${slideDirection === 'right'
                 ? css`
                       transform: translateX(-110%);
                   `
@@ -97,7 +97,7 @@ export const DropdownMenuStyled = styled.div<DropdownMenuProps>`
         }
 
         .menu-tertiary-enter {
-            ${slideTo === 'right'
+            ${slideDirection === 'right'
                 ? css`
                       transform: translateX(110%);
                   `
@@ -106,7 +106,7 @@ export const DropdownMenuStyled = styled.div<DropdownMenuProps>`
                   `}
         }
         .menu-tertiary-enter-active {
-            ${slideTo === 'right'
+            ${slideDirection === 'right'
                 ? css`
                       transform: translateX(0%);
                   `
@@ -116,7 +116,7 @@ export const DropdownMenuStyled = styled.div<DropdownMenuProps>`
             transition: all 0.3s ease;
         }
         .menu-tertiary-exit {
-            ${slideTo === 'left' &&
+            ${slideDirection === 'left' &&
             css`
                 transform: translateX(0%);
             `}

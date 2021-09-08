@@ -1,25 +1,32 @@
-import { ChangeStateType, DropdownListLevels, DropdownSlideToType } from './types';
+import { createContext, FC, useState } from 'react';
+import { DropdownItemType, DropdownListLevels } from './types';
 import { DropdownMenuListStyled, DropdownMenuStyled, DropdownMenuWrapperStyled } from './DropdownMenu.style';
-import { FC, useState } from 'react';
 import { CSSTransition } from 'react-transition-group';
-import DropdownSlideTo from './SlideTo';
+import DropdownSlideLeft from './SlideLeft';
 import { getNavigationItems } from '../../../../connectors/navigation/Navigation';
 import PrimaryList from './PrimaryList';
 import SecondaryList from './SecondaryList';
 import SubMenu from './SubMenu';
 import TertiaryList from './TertiaryList';
-import { useTranslation } from 'react-i18next';
+
+export const DropdownMenuContext = createContext<{
+    slideRight: (props: DropdownItemType) => void;
+    onMenuToggleHandler: () => void;
+}>({
+    slideRight: () => undefined,
+    onMenuToggleHandler: () => undefined,
+});
 
 type DropdownMenuProps = {
     isMenuOpened: boolean;
+    onMenuToggleHandler: () => void;
 };
 
 const DropdownMenu: FC<DropdownMenuProps> = (props) => {
-    const { t } = useTranslation();
     const navigationItems = getNavigationItems();
-    const [menuLevel, setMenuLevel] = useState<DropdownListLevels>('primary');
-    const [historyOfIndexes, setHistoryOfIndexes] = useState<(number | string)[]>([]);
-    const [slideTo, setSlideTo] = useState<DropdownSlideToType>('right');
+    const [menuLevel, setMenuLevel] = useState<DropdownListLevels | undefined>('primary');
+    const [historyOfIndexes, setHistoryOfIndexes] = useState<(number | string | undefined)[]>([]);
+    const [slideDirection, setSlideDirection] = useState<'left' | 'right'>('right');
     const [menuHeight, setMenuHeight] = useState<number>();
 
     if (navigationItems.length === 0) {
@@ -30,41 +37,23 @@ const DropdownMenu: FC<DropdownMenuProps> = (props) => {
         setMenuHeight(el.offsetHeight);
     };
 
-    const onMenuLevelChangeHandler = (props: ChangeStateType) => {
-        if (props.goToMenu !== undefined) {
-            setMenuLevel(props.goToMenu);
+    const slideLeft = (props: { goToMenu: DropdownListLevels }) => {
+        setMenuLevel(props.goToMenu);
+        setSlideDirection('left');
+
+        historyOfIndexes.pop();
+
+        if (historyOfIndexes.length === 0) {
+            setHistoryOfIndexes([]);
+        } else {
+            setHistoryOfIndexes([...historyOfIndexes]);
         }
     };
 
-    const onSlideToChangeHandler = (props: ChangeStateType) => {
-        if (props.slideTo !== undefined) {
-            setSlideTo(props.slideTo);
-        }
-    };
-
-    const onSlideToInChangeHandler = (props: ChangeStateType) => {
-        if (props.index !== undefined) {
-            setHistoryOfIndexes((oldArray: (number | string)[]) => [...oldArray, props.index]);
-        }
-    };
-
-    const onSlideToOut = (props: ChangeStateType) => {
-        if (props.slideTo === 'left') {
-            historyOfIndexes.pop();
-
-            if (historyOfIndexes.length === 0) {
-                setHistoryOfIndexes([]);
-            } else {
-                setHistoryOfIndexes([...historyOfIndexes]);
-            }
-        }
-    };
-
-    const changeState = (props: ChangeStateType) => {
-        onMenuLevelChangeHandler(props);
-        onSlideToChangeHandler(props);
-        onSlideToInChangeHandler(props);
-        onSlideToOut(props);
+    const slideRight = (props: DropdownItemType) => {
+        setMenuLevel(props.goToMenu);
+        setSlideDirection('right');
+        setHistoryOfIndexes((oldArray: (number | string | undefined)[]) => [...oldArray, props.index]);
     };
 
     return (
@@ -76,62 +65,50 @@ const DropdownMenu: FC<DropdownMenuProps> = (props) => {
                 onEntering={calcHeight}
                 unmountOnExit
             >
-                <DropdownMenuStyled slideTo={slideTo} style={{ height: menuHeight }}>
-                    <CSSTransition
-                        in={menuLevel === 'primary'}
-                        timeout={500}
-                        classNames="menu-primary"
-                        unmountOnExit
-                        onEntering={calcHeight}
-                    >
-                        <DropdownMenuListStyled>
-                            <PrimaryList navigationItems={navigationItems} changeState={changeState} />
-                            <SubMenu />
-                        </DropdownMenuListStyled>
-                    </CSSTransition>
+                <DropdownMenuContext.Provider
+                    value={{ slideRight: slideRight, onMenuToggleHandler: props.onMenuToggleHandler }}
+                >
+                    <DropdownMenuStyled slideDirection={slideDirection} style={{ height: menuHeight }}>
+                        <CSSTransition
+                            in={menuLevel === 'primary'}
+                            timeout={500}
+                            classNames="menu-primary"
+                            unmountOnExit
+                            onEntering={calcHeight}
+                        >
+                            <DropdownMenuListStyled>
+                                <PrimaryList navigationItems={navigationItems} />
+                                <SubMenu />
+                            </DropdownMenuListStyled>
+                        </CSSTransition>
 
-                    <CSSTransition
-                        in={menuLevel === 'secondary'}
-                        timeout={500}
-                        classNames="menu-secondary"
-                        unmountOnExit
-                        onEntering={calcHeight}
-                    >
-                        <DropdownMenuListStyled>
-                            <DropdownSlideTo
-                                changeState={changeState}
-                                goToMenu="primary"
-                                slideTo="left"
-                                type="stepBack"
-                                iconText={t('Back')}
-                            />
-                            <SecondaryList
-                                navigationItems={navigationItems}
-                                changeState={changeState}
-                                historyOfIndexes={historyOfIndexes}
-                            />
-                        </DropdownMenuListStyled>
-                    </CSSTransition>
+                        <CSSTransition
+                            in={menuLevel === 'secondary'}
+                            timeout={500}
+                            classNames="menu-secondary"
+                            unmountOnExit
+                            onEntering={calcHeight}
+                        >
+                            <DropdownMenuListStyled>
+                                <DropdownSlideLeft onClickEvent={slideLeft} goToMenu="primary" />
+                                <SecondaryList navigationItems={navigationItems} historyOfIndexes={historyOfIndexes} />
+                            </DropdownMenuListStyled>
+                        </CSSTransition>
 
-                    <CSSTransition
-                        in={menuLevel === 'tertiary'}
-                        timeout={500}
-                        classNames="menu-tertiary"
-                        unmountOnExit
-                        onEntering={calcHeight}
-                    >
-                        <DropdownMenuListStyled>
-                            <DropdownSlideTo
-                                changeState={changeState}
-                                goToMenu="secondary"
-                                slideTo="left"
-                                type="stepBack"
-                                iconText={t('Back')}
-                            />
-                            <TertiaryList navigationItems={navigationItems} historyOfIndexes={historyOfIndexes} />
-                        </DropdownMenuListStyled>
-                    </CSSTransition>
-                </DropdownMenuStyled>
+                        <CSSTransition
+                            in={menuLevel === 'tertiary'}
+                            timeout={500}
+                            classNames="menu-tertiary"
+                            unmountOnExit
+                            onEntering={calcHeight}
+                        >
+                            <DropdownMenuListStyled>
+                                <DropdownSlideLeft onClickEvent={slideLeft} goToMenu="secondary" />
+                                <TertiaryList navigationItems={navigationItems} historyOfIndexes={historyOfIndexes} />
+                            </DropdownMenuListStyled>
+                        </CSSTransition>
+                    </DropdownMenuStyled>
+                </DropdownMenuContext.Provider>
             </CSSTransition>
         </DropdownMenuWrapperStyled>
     );

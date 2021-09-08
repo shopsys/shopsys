@@ -1,9 +1,9 @@
-import { DropdownItemType, DropdownListType } from '../types';
 import { FC, Fragment } from 'react';
 import DropdownItem from '../Item';
+import { DropdownListType } from '../types';
 import { SecondaryListTitleStyled } from './SecondaryList.style';
 
-const SecondaryList: FC<DropdownListType & DropdownItemType> = (props) => {
+const SecondaryList: FC<DropdownListType> = (props) => {
     return (
         <>
             {props.navigationItems
@@ -16,10 +16,8 @@ const SecondaryList: FC<DropdownListType & DropdownItemType> = (props) => {
                                     <DropdownItem
                                         key={columnCategoryIndex}
                                         columnCategory={columnCategory}
-                                        changeState={props.changeState}
                                         goToMenu="tertiary"
                                         index={columnCategories.columnNumber + '-' + columnCategoryIndex}
-                                        slideTo="right"
                                         variant="small"
                                     />
                                 ))}

@@ -36,7 +36,7 @@ const Header: FC = () => {
             </HeaderLinksStyled>
             <HeaderMenuButtonStyled>
                 <HamburgerMenu onMenuToggleHandler={onMenuToggleHandler} isMenuOpened={isMenuOpened} />
-                <DropdownMenu isMenuOpened={isMenuOpened} />
+                <DropdownMenu onMenuToggleHandler={onMenuToggleHandler} isMenuOpened={isMenuOpened} />
             </HeaderMenuButtonStyled>
             <HeaderCartStyled>
                 <Cart />
