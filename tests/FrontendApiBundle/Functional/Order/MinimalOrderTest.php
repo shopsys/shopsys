@@ -53,23 +53,33 @@ class MinimalOrderTest extends AbstractOrderTestCase
                 ],
             ],
         ];
-        $this->assertQueryWithExpectedArray($this->getMutation(), $expected);
+
+        /** @var \Shopsys\FrameworkBundle\Model\Product\Product $product */
+        $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1');
+        $mutation = 'mutation {
+            AddToCart(input: {
+                productUuid: "' . $product->getUuid() . '",
+                quantity: 10
+            }) {
+                uuid
+            }
+        }';
+        $cartUuid = $this->getResponseContentForQuery($mutation)['data']['AddToCart']['uuid'];
+
+        $this->assertQueryWithExpectedArray($this->getMutation($cartUuid), $expected);
     }
 
     /**
+     * @param string $cartUuid
      * @return string
      */
-    private function getMutation(): string
+    private function getMutation(string $cartUuid): string
     {
         $domainId = $this->domain->getId();
         /** @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vatHigh */
         $vatHigh = $this->getReferenceForDomain(VatDataFixture::VAT_HIGH, $domainId);
         /** @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vatZero */
         $vatZero = $this->getReferenceForDomain(VatDataFixture::VAT_ZERO, $domainId);
-
-        /** @var \Shopsys\FrameworkBundle\Model\Product\Product $product1 */
-        $product1 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1');
-        $product1UnitPrice = $this->getMutationPriceConvertedToDomainDefaultCurrency('2891.70', $vatHigh);
 
         /** @var \Shopsys\FrameworkBundle\Model\Payment\Payment $paymentCashOnDelivery */
         $paymentCashOnDelivery = $this->getReference(PaymentDataFixture::PAYMENT_CASH_ON_DELIVERY);
@@ -82,6 +92,7 @@ class MinimalOrderTest extends AbstractOrderTestCase
         return 'mutation {
                     CreateOrder(
                         input: {
+                            cartUuid: "' . $cartUuid . '"
                             firstName: "firstName"
                             lastName: "lastName"
                             email: "user@example.com"
@@ -100,13 +111,6 @@ class MinimalOrderTest extends AbstractOrderTestCase
                                 price: ' . $transportPrice . '
                             }
                             differentDeliveryAddress: false
-                            products: [
-                                {
-                                    uuid: "' . $product1->getUuid() . '",
-                                    unitPrice: ' . $product1UnitPrice . ',
-                                    quantity: 10
-                                },
-                            ]
                         }
                     ) {
                         transport {
@@ -165,14 +169,11 @@ class MinimalOrderTest extends AbstractOrderTestCase
     public function testCreateMinimalOrderWithNoProductsThrowError(): void
     {
         $response = $this->getResponseContentForQuery($this->getMutationWithNoProducts());
-        $this->assertResponseContainsArrayOfExtensionValidationErrors($response);
-        $errors = $this->getErrorsExtensionValidationFromResponse($response);
-
-        static::assertArrayHasKey('input.products', $errors);
-        static::assertCount(1, $errors['input.products']);
-        static::assertArrayHasKey(0, $errors['input.products']);
-        static::assertArrayHasKey('message', $errors['input.products'][0]);
-        static::assertSame('Please enter at least one product', $errors['input.products'][0]['message']);
+        $this->assertResponseContainsArrayOfErrors($response);
+        $errors = $this->getErrorsFromResponse($response);
+        static::assertCount(1, $errors);
+        $error = array_shift($errors);
+        static::assertSame('There are no products in the cart.', $error['message']);
     }
 
     /**
@@ -194,9 +195,12 @@ class MinimalOrderTest extends AbstractOrderTestCase
         $transportCzechPost = $this->getReference(TransportDataFixture::TRANSPORT_CZECH_POST);
         $transportPrice = $this->getMutationPriceConvertedToDomainDefaultCurrency('100', $vatHigh);
 
+        $cartUuid = $this->addProductToCartAndRemoveIt();
+
         return 'mutation {
                     CreateOrder(
                         input: {
+                            cartUuid: "' . $cartUuid . '"
                             firstName: "firstName"
                             lastName: "lastName"
                             email: "user@example.com"
@@ -215,7 +219,6 @@ class MinimalOrderTest extends AbstractOrderTestCase
                                 price: ' . $transportPrice . '
                             }
                             differentDeliveryAddress: false
-                            products: []
                         }
                     ) {
                         transport {
@@ -269,5 +272,41 @@ class MinimalOrderTest extends AbstractOrderTestCase
                         note
                     }
                 }';
+    }
+
+    /**
+     * @return string
+     */
+    private function addProductToCartAndRemoveIt(): string
+    {
+        /** @var \Shopsys\FrameworkBundle\Model\Product\Product $product */
+        $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1');
+        $addToCartMutation = 'mutation {
+            AddToCart(input: {
+                productUuid: "' . $product->getUuid() . '",
+                quantity: 1
+            }) {
+                uuid
+                items {
+                    uuid
+                }
+            }
+        }';
+
+        $response = $this->getResponseContentForQuery($addToCartMutation);
+        $cartUuid = $response['data']['AddToCart']['uuid'];
+        $cartItemUuid = $response['data']['AddToCart']['items'][0]['uuid'];
+
+        $removeFromCartMutation = 'mutation {
+            RemoveFromCart(input: {
+                cartUuid: "' . $cartUuid . '",
+                cartItemUuid: "' . $cartItemUuid . '"
+            }) {
+                uuid
+            }
+        }';
+        $this->getResponseContentForQuery($removeFromCartMutation);
+
+        return $cartUuid;
     }
 }

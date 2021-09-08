@@ -72,3 +72,6 @@ services:
     Shopsys\FrontendApiBundle\Model\Resolver\Article\ArticlesResolver:
         alias: App\FrontendApi\Model\Resolver\Article\ArticlesResolver
         public: true
+
+    Shopsys\FrontendApiBundle\Model\Mutation\Order\CreateOrderMutation:
+        alias: App\FrontendApi\Model\Mutation\Order\CreateOrderMutation

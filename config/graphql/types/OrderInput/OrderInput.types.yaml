@@ -2,3 +2,13 @@ OrderInput:
     type: input-object
     inherits:
         - 'OrderInputDecorator'
+    config:
+        fields:
+            products:
+                type: "[OrderProductInput!]"
+                validation: ~
+                description: "Deprecated, this field is not used, the products are taken from the server cart instead."
+            cartUuid:
+                type: "Uuid"
+                description: "Cart identifier used for getting carts of not logged customers"
+                defaultValue: null

@@ -14,7 +14,18 @@ class DynamicFieldsInOrderTest extends AbstractOrderTestCase
     public function testHasDynamicFields(): void
     {
         $graphQlType = 'CreateOrder';
-        $response = $this->getResponseContentForQuery($this->getMutation());
+        /** @var \Shopsys\FrameworkBundle\Model\Product\Product $product */
+        $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1');
+        $mutation = 'mutation {
+            AddToCart(input: {
+                productUuid: "' . $product->getUuid() . '",
+                quantity: 10
+            }) {
+                uuid
+            }
+        }';
+        $cartUuid = $this->getResponseContentForQuery($mutation)['data']['AddToCart']['uuid'];
+        $response = $this->getResponseContentForQuery($this->getMutation($cartUuid));
 
         $this->assertResponseContainsArrayOfDataForGraphQlType($response, $graphQlType);
         $responseData = $this->getResponseDataForGraphQlType($response, $graphQlType);
@@ -33,19 +44,16 @@ class DynamicFieldsInOrderTest extends AbstractOrderTestCase
     }
 
     /**
+     * @param string $cartUuid
      * @return string
      */
-    private function getMutation(): string
+    private function getMutation(string $cartUuid): string
     {
         $domainId = $this->domain->getId();
         /** @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vatHigh */
         $vatHigh = $this->getReferenceForDomain(VatDataFixture::VAT_HIGH, $domainId);
         /** @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vatZero */
         $vatZero = $this->getReferenceForDomain(VatDataFixture::VAT_ZERO, $domainId);
-
-        /** @var \Shopsys\FrameworkBundle\Model\Product\Product $product1 */
-        $product1 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1');
-        $product1UnitPrice = $this->getMutationPriceConvertedToDomainDefaultCurrency('2891.70', $vatHigh);
 
         /** @var \Shopsys\FrameworkBundle\Model\Payment\Payment $paymentCashOnDelivery */
         $paymentCashOnDelivery = $this->getReference(PaymentDataFixture::PAYMENT_CASH_ON_DELIVERY);
@@ -58,6 +66,7 @@ class DynamicFieldsInOrderTest extends AbstractOrderTestCase
         return 'mutation {
                     CreateOrder(
                         input: {
+                            cartUuid: "' . $cartUuid . '"
                             firstName: "firstName"
                             lastName: "lastName"
                             email: "user@example.com"
@@ -86,13 +95,6 @@ class DynamicFieldsInOrderTest extends AbstractOrderTestCase
                             deliveryCity: "deliveryCity"
                             deliveryCountry: "SK"
                             deliveryPostcode: "13453"
-                            products: [
-                                {
-                                    uuid: "' . $product1->getUuid() . '",
-                                    unitPrice: ' . $product1UnitPrice . ',
-                                    quantity: 10
-                                },
-                            ]
                         }
                     ) {
                         uuid
