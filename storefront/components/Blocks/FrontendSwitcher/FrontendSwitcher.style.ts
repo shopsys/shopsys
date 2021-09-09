@@ -1,7 +1,8 @@
 import { css } from 'styled-components';
+import Icon from 'components/Basic/Icon';
 import { styled } from '../../Theme/main';
 
-export const FrontendSwitcherWrapper = styled.div`
+export const FrontendSwitcherWrapperStyled = styled.div`
     ${() => css`
         position: fixed;
         right: 0;
@@ -12,4 +13,9 @@ export const FrontendSwitcherWrapper = styled.div`
         z-index: 999;
         background-color: greenyellow;
     `}
+`;
+
+export const FrontendSwitcherIconStyled = styled(Icon)`
+    width: 20px;
+    height: 20px;
 `;

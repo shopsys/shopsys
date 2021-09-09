@@ -11,6 +11,7 @@ export const IconsSvgMap = {
     User: <Icons.User />,
     Close: <Icons.Close />,
     Menu: <Icons.Menu />,
+    Replace: <Icons.Replace />,
     NotImplementedYet: <Icons.NotImplementedYet />,
 };
 
