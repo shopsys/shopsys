@@ -1,4 +1,4 @@
-CartItemInput:
+AddToCartInput:
     type: input-object
     config:
         fields:

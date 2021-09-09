@@ -59,7 +59,7 @@ class CartWatcherFacade extends BaseCartWatcherFacade
 
     /**
      * @param \App\Model\Cart\Cart $cart
-     * @property \App\Model\Cart\Watcher\CartWatcher $cartWatcher
+     * @property \Shopsys\FrameworkBundle\Model\Cart\Watcher\CartWatcher $cartWatcher
      * @return \App\Model\Cart\Item\CartItem[]|null[]
      */
     public function checkUnavailableStockQuantityItems(Cart $cart): array
@@ -70,9 +70,11 @@ class CartWatcherFacade extends BaseCartWatcherFacade
             $maximumOrderQuantity = $this->productAvailabilityFacade->getMaximumOrderQuantity($product, $this->domain->getId());
             if ($maximumOrderQuantity === 0) {
                 $cartItemsToDelete[] = $item;
+
+                continue;
             }
 
-            if ($maximumOrderQuantity <= 0 || $item->getQuantity() <= $maximumOrderQuantity) {
+            if ($item->getQuantity() <= $maximumOrderQuantity) {
                 continue;
             }
 

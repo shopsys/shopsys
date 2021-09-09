@@ -5,21 +5,23 @@ declare(strict_types=1);
 namespace App\FrontendApi\Model\Cart;
 
 use App\FrontendApi\Model\Product\ProductFacade;
+use App\Model\Cart\AddProductResult;
 use App\Model\Cart\Cart;
-use App\Model\Cart\CartFacade;
+use App\Model\Cart\CartFacade as BaseCartFacade;
 use App\Model\Customer\User\CustomerUser;
 use App\Model\Customer\User\CustomerUserIdentifierFactory;
 use Overblog\GraphQLBundle\Error\UserError;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Model\Cart\Exception\InvalidCartItemException;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Product\Exception\ProductNotFoundException;
 
-class AddToCartFacade
+class CartFacade
 {
     /**
      * @var \App\Model\Cart\CartFacade
      */
-    protected CartFacade $cartFacade;
+    protected BaseCartFacade $cartFacade;
 
     /**
      * @var \App\FrontendApi\Model\Product\ProductFacade
@@ -49,7 +51,7 @@ class AddToCartFacade
      * @param \App\Model\Customer\User\CustomerUserIdentifierFactory $customerUserIdentifierFactory
      */
     public function __construct(
-        CartFacade $cartFacade,
+        BaseCartFacade $cartFacade,
         ProductFacade $productFacade,
         Domain $domain,
         CurrentCustomerUser $currentCustomerUser,
@@ -67,8 +69,9 @@ class AddToCartFacade
      * @param int $quantity
      * @param bool $isAbsoluteQuantity
      * @param \App\Model\Cart\Cart $cart
+     * @return \App\Model\Cart\AddProductResult
      */
-    public function addProductByUuidToCart(string $productUuid, int $quantity, bool $isAbsoluteQuantity, Cart $cart): void
+    public function addProductByUuidToCart(string $productUuid, int $quantity, bool $isAbsoluteQuantity, Cart $cart): AddProductResult
     {
         try {
             $product = $this->productFacade->getSellableByUuid(
@@ -80,7 +83,7 @@ class AddToCartFacade
             throw new UserError(sprintf('Product with UUID "%s" is not available', $productUuid));
         }
 
-        $this->cartFacade->addProductToExistingCart($product, $quantity, $cart, $isAbsoluteQuantity);
+        return $this->cartFacade->addProductToExistingCart($product, $quantity, $cart, $isAbsoluteQuantity);
     }
 
     /**
@@ -88,15 +91,10 @@ class AddToCartFacade
      * @param string|null $cartUuid
      * @return \App\Model\Cart\Cart
      */
-    public function getCart(?CustomerUser $customerUser, ?string $cartUuid): Cart
+    public function getCartCreateIfNotExists(?CustomerUser $customerUser, ?string $cartUuid): Cart
     {
         if ($customerUser === null && $cartUuid !== null) {
-            $cart = $this->cartFacade->findCartByCartIdentifier($cartUuid);
-            if ($cart === null) {
-                throw new UserError(sprintf('Cart "%s" is unavailable.', $cartUuid));
-            }
-
-            return $cart;
+            return $this->getCartByUuid($cartUuid);
         }
 
         if ($customerUser !== null) {
@@ -106,5 +104,19 @@ class AddToCartFacade
         }
 
         return $this->cartFacade->getCartByCustomerUserIdentifierCreateIfNotExists($customerUserIdentifier);
+    }
+
+    /**
+     * @param string $cartUuid
+     * @return \App\Model\Cart\Cart
+     */
+    private function getCartByUuid(string $cartUuid): Cart
+    {
+        $cart = $this->cartFacade->findCartByCartIdentifier($cartUuid);
+        if ($cart === null) {
+            throw new UserError(sprintf('Cart "%s" is unavailable.', $cartUuid));
+        }
+
+        return $cart;
     }
 }

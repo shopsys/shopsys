@@ -157,14 +157,16 @@ class CartFacade extends BaseCartFacade
                     $newQuantity = $quantity;
                 }
 
+                $addedQuantity = $quantity;
                 if ($newQuantity > $maximumOrderQuantity) {
                     $notOnStockQuantity = $newQuantity - $maximumOrderQuantity;
                     $newQuantity = $maximumOrderQuantity;
+                    $addedQuantity = $quantity - $notOnStockQuantity;
                 }
                 $isQuantityOverLimit = $this->isQuantityOverLimitReached($newQuantity, $overLimitQuantity);
                 $item->changeQuantity($newQuantity);
                 $item->changeAddedAt(new DateTime());
-                $result = new AddProductResult($item, false, $quantity, $notOnStockQuantity, $overLimitQuantity, $isQuantityOverLimit);
+                $result = new AddProductResult($item, false, $addedQuantity, $notOnStockQuantity, $overLimitQuantity, $isQuantityOverLimit);
                 $this->em->persist($result->getCartItem());
                 $this->em->flush();
 

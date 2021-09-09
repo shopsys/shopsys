@@ -4,19 +4,22 @@ declare(strict_types=1);
 
 namespace App\FrontendApi\Model\Mutation\Cart;
 
-use App\FrontendApi\Model\Cart\AddToCartFacade;
+use App\FrontendApi\Model\Cart\AddToCartResult;
+use App\FrontendApi\Model\Cart\CartFacade;
+use App\FrontendApi\Model\Cart\CartWatcherFacade;
+use App\FrontendApi\Model\Cart\CartWithModificationsResult;
 use Overblog\GraphQLBundle\Definition\Argument;
 use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
 use Overblog\GraphQLBundle\Definition\Resolver\MutationInterface;
 use Overblog\GraphQLBundle\Validator\InputValidator;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 
-class AddToCartMutation implements MutationInterface, AliasedInterface
+class CartMutation implements MutationInterface, AliasedInterface
 {
     /**
-     * @var \App\FrontendApi\Model\Cart\AddToCartFacade
+     * @var \App\FrontendApi\Model\Cart\CartFacade
      */
-    private AddToCartFacade $addToCartFacade;
+    private CartFacade $cartFacade;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser
@@ -24,23 +27,31 @@ class AddToCartMutation implements MutationInterface, AliasedInterface
     private CurrentCustomerUser $currentCustomerUser;
 
     /**
-     * @param \App\FrontendApi\Model\Cart\AddToCartFacade $addToCartFacade
+     * @var \App\FrontendApi\Model\Cart\CartWatcherFacade
+     */
+    protected CartWatcherFacade $cartWatcherFacade;
+
+    /**
+     * @param \App\FrontendApi\Model\Cart\CartFacade $cartFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
+     * @param \App\FrontendApi\Model\Cart\CartWatcherFacade $cartWatcherFacade
      */
     public function __construct(
-        AddToCartFacade $addToCartFacade,
-        CurrentCustomerUser $currentCustomerUser
+        CartFacade $cartFacade,
+        CurrentCustomerUser $currentCustomerUser,
+        CartWatcherFacade $cartWatcherFacade
     ) {
         $this->currentCustomerUser = $currentCustomerUser;
-        $this->addToCartFacade = $addToCartFacade;
+        $this->cartFacade = $cartFacade;
+        $this->cartWatcherFacade = $cartWatcherFacade;
     }
 
     /**
      * @param \Overblog\GraphQLBundle\Definition\Argument $argument
      * @param \Overblog\GraphQLBundle\Validator\InputValidator $validator
-     * @return string
+     * @return \App\FrontendApi\Model\Cart\AddToCartResult
      */
-    public function addToCart(Argument $argument, InputValidator $validator): string
+    public function addToCart(Argument $argument, InputValidator $validator): AddToCartResult
     {
         $validator->validate();
 
@@ -54,11 +65,18 @@ class AddToCartMutation implements MutationInterface, AliasedInterface
         /** @var \App\Model\Customer\User\CustomerUser|null $customerUser */
         $customerUser = $this->currentCustomerUser->findCurrentCustomerUser();
 
-        $cart = $this->addToCartFacade->getCart($customerUser, $cartUuid);
+        $cart = $this->cartFacade->getCartCreateIfNotExists($customerUser, $cartUuid);
 
-        $this->addToCartFacade->addProductByUuidToCart($productUuid, $quantity, $isAbsoluteQuantity, $cart);
+        $addProductResult = $this->cartFacade->addProductByUuidToCart(
+            $productUuid,
+            $quantity,
+            $isAbsoluteQuantity,
+            $cart
+        );
 
-        return $cart->getCartIdentifier();
+        $cartWithModifications = $this->cartWatcherFacade->getCheckedCartWithModifications($cart);
+
+        return new AddToCartResult($cartWithModifications, $addProductResult);
     }
 
     /**
@@ -67,7 +85,7 @@ class AddToCartMutation implements MutationInterface, AliasedInterface
     public static function getAliases(): array
     {
         return [
-            'addToCart' => 'add_to_cart',
+            'addToCart' => 'addToCart',
         ];
     }
 }
