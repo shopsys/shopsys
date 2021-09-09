@@ -1,14 +1,10 @@
-import { FC, ReactNode } from 'react';
+import { FC } from 'react';
 import { TableStyled } from './Table.style';
 
 /**
  * Wrapping element for html table - it gives table styling.
  */
-type nativeProps = {
-    children: ReactNode;
-};
-
-const Table: FC<nativeProps> = (props) => {
+const Table: FC = (props) => {
     return <TableStyled>{props.children}</TableStyled>;
 };
 
