@@ -243,42 +243,19 @@ class CurrentPromoCodeFacade extends BaseCurrentPromoCodeFacade
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct[] $quantifiedProducts
      * @param int $domainId
+     * @param \App\Model\Order\PromoCode\PromoCode|null $promoCode
      * @return \App\Model\Order\PromoCode\PromoCode[]
      */
-    public function getPromoCodePerProductByDomainId(array $quantifiedProducts, int $domainId): array
+    public function getPromoCodePerProductByDomainId(array $quantifiedProducts, int $domainId, ?PromoCode $promoCode = null): array
     {
-        $validEnteredPromoCode = $this->getValidEnteredPromoCodeOrNull();
-        if ($validEnteredPromoCode === null) {
+        if ($promoCode === null) {
+            $promoCode = $this->getValidEnteredPromoCodeOrNull();
+        }
+        if ($promoCode === null) {
             return [];
         }
 
-        return $this->productPromoCodeFiller->getPromoCodePerProductByDomainId($quantifiedProducts, $domainId, $validEnteredPromoCode);
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getPromoCodeCode(): ?string
-    {
-        $validEnteredPromoCode = $this->getValidEnteredPromoCodeOrNull();
-        if ($validEnteredPromoCode === null) {
-            return null;
-        }
-
-        return $validEnteredPromoCode->getCode();
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getPromoCodeIdentifier(): ?string
-    {
-        $validEnteredPromoCode = $this->getValidEnteredPromoCodeOrNull();
-        if ($validEnteredPromoCode === null) {
-            return null;
-        }
-
-        return $validEnteredPromoCode->getIdentifier();
+        return $this->productPromoCodeFiller->getPromoCodePerProductByDomainId($quantifiedProducts, $domainId, $promoCode);
     }
 
     /**

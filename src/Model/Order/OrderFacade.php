@@ -235,7 +235,7 @@ class OrderFacade extends BaseOrderFacade
 
     /**
      * @param \App\Model\Order\OrderData $orderData
-     * @param \Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreview $orderPreview
+     * @param \App\Model\Order\Preview\OrderPreview $orderPreview
      * @param \App\Model\Customer\User\CustomerUser|null $customerUser
      * @return \App\Model\Order\Order
      */
@@ -244,7 +244,7 @@ class OrderFacade extends BaseOrderFacade
         BaseOrderPreview $orderPreview,
         ?BaseCustomerUser $customerUser = null
     ): Order {
-        $promoCode = $this->currentPromoCodeFacade->getValidEnteredPromoCodeOrNull();
+        $promoCode = $orderPreview->getPromoCode();
         if ($promoCode) {
             $promoCode->decreaseRemainingUses();
         }

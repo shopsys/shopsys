@@ -17,6 +17,7 @@ use Shopsys\FrontendApiBundle\Model\Order\OrderDataFactory;
 use Shopsys\FrontendApiBundle\Model\Order\PlaceOrderFacade;
 
 /**
+ * @property \App\FrontendApi\Model\Order\PlaceOrderFacade $placeOrderFacade
  * @property \App\FrontendApi\Model\Order\OrderDataFactory $orderDataFactory
  * @property \App\Model\Order\Mail\OrderMailFacade $orderMailFacade
  * @method sendEmail(\App\Model\Order\Order $order)
@@ -35,7 +36,7 @@ class CreateOrderMutation extends BaseCreateOrderMutation
 
     /**
      * @param \App\FrontendApi\Model\Order\OrderDataFactory $orderDataFactory
-     * @param \Shopsys\FrontendApiBundle\Model\Order\PlaceOrderFacade $placeOrderFacade
+     * @param \App\FrontendApi\Model\Order\PlaceOrderFacade $placeOrderFacade
      * @param \App\Model\Order\Mail\OrderMailFacade $orderMailFacade
      * @param \App\FrontendApi\Model\Cart\CartFacade $cartFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
@@ -79,8 +80,9 @@ class CreateOrderMutation extends BaseCreateOrderMutation
             throw new UserError('There are no products in the cart.');
         }
 
-        /** @var \App\Model\Order\Order $order */
-        $order = $this->placeOrderFacade->placeOrder($orderData, $quantifiedProducts);
+        $promoCode = $input['promoCode'] ?? null;
+
+        $order = $this->placeOrderFacade->placeOrder($orderData, $quantifiedProducts, $promoCode);
 
         try {
             $this->sendEmail($order);

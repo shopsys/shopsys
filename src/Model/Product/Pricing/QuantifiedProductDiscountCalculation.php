@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Model\Product\Pricing;
 
-use App\Model\Cart\CartFacade;
 use App\Model\Order\PromoCode\PromoCode;
 use App\Model\Order\PromoCode\PromoCodeApplicableProductsTotalPriceCalculator;
 use App\Model\Order\PromoCode\PromoCodeLimit;
@@ -26,11 +25,6 @@ class QuantifiedProductDiscountCalculation extends BaseQuantifiedProductDiscount
     private PromoCodeLimitResolver $promoCodeLimitResolver;
 
     /**
-     * @var \App\Model\Cart\CartFacade
-     */
-    private CartFacade $cartFacade;
-
-    /**
      * @var \App\Model\Order\PromoCode\PromoCodeApplicableProductsTotalPriceCalculator
      */
     private PromoCodeApplicableProductsTotalPriceCalculator $totalPriceCalculator;
@@ -39,20 +33,17 @@ class QuantifiedProductDiscountCalculation extends BaseQuantifiedProductDiscount
      * @param \App\Model\Order\PromoCode\PromoCodeLimitResolver $promoCodeLimitResolver
      * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceCalculation $priceCalculation
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Rounding $rounding
-     * @param \App\Model\Cart\CartFacade $cartFacade
      * @param \App\Model\Order\PromoCode\PromoCodeApplicableProductsTotalPriceCalculator $totalPriceCalculator
      */
     public function __construct(
         PromoCodeLimitResolver $promoCodeLimitResolver,
         PriceCalculation $priceCalculation,
         Rounding $rounding,
-        CartFacade $cartFacade,
         PromoCodeApplicableProductsTotalPriceCalculator $totalPriceCalculator
     ) {
         parent::__construct($priceCalculation, $rounding);
 
         $this->promoCodeLimitResolver = $promoCodeLimitResolver;
-        $this->cartFacade = $cartFacade;
         $this->totalPriceCalculator = $totalPriceCalculator;
     }
 
@@ -76,8 +67,7 @@ class QuantifiedProductDiscountCalculation extends BaseQuantifiedProductDiscount
         }
 
         $promoCode = reset($promoCodePerProduct);
-        $cartQuantifiedProducts = $this->cartFacade->getQuantifiedProductsOfCurrentCustomer();
-        $promoCodeLimit = $this->promoCodeLimitResolver->getLimitByPromoCode($promoCode, $cartQuantifiedProducts);
+        $promoCodeLimit = $this->promoCodeLimitResolver->getLimitByPromoCode($promoCode, $quantifiedProducts);
         if ($promoCodeLimit === null) {
             return $discountsPerProduct;
         }
@@ -97,7 +87,6 @@ class QuantifiedProductDiscountCalculation extends BaseQuantifiedProductDiscount
         if ($promoCode->getDiscountType() === PromoCode::DISCOUNT_TYPE_NOMINAL) {
             return $this->calculateDiscountNominalPrices(
                 $discountsPerProduct,
-                $cartQuantifiedProducts,
                 $quantifiedProducts,
                 $promoCodePerProduct,
                 $quantifiedItemsPrices,
@@ -320,7 +309,6 @@ class QuantifiedProductDiscountCalculation extends BaseQuantifiedProductDiscount
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Price[] $discountsPerProduct
-     * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct[] $cartQuantifiedProducts ,
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct[] $quantifiedProducts
      * @param \App\Model\Order\PromoCode\PromoCode[] $promoCodePerProduct
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedItemPrice[] $quantifiedItemsPrices
@@ -331,7 +319,6 @@ class QuantifiedProductDiscountCalculation extends BaseQuantifiedProductDiscount
      */
     private function calculateDiscountNominalPrices(
         array $discountsPerProduct,
-        array $cartQuantifiedProducts,
         array $quantifiedProducts,
         array $promoCodePerProduct,
         array $quantifiedItemsPrices,
@@ -341,7 +328,7 @@ class QuantifiedProductDiscountCalculation extends BaseQuantifiedProductDiscount
     ): array {
         $cartPromoCodeApplicableProductsTotalPrice = $this->totalPriceCalculator->calculateTotalPrice(
             $promoCode,
-            $cartQuantifiedProducts
+            $quantifiedProducts
         );
         $sumPriceWithVat = $cartPromoCodeApplicableProductsTotalPrice->getPriceWithVat();
         foreach ($quantifiedProducts as $quantifiedProductIndex => $quantifiedProduct) {

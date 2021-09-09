@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\Order\Preview;
 
+use App\Model\Order\PromoCode\PromoCode;
 use App\Model\Product\Availability\ProductAvailabilityFacade;
 use App\Model\Store\Store;
 use Shopsys\FrameworkBundle\Component\Money\Money;
@@ -78,6 +79,7 @@ class OrderPreviewCalculation extends BaseOrderPreviewCalculation
      * @param \App\Model\Customer\User\CustomerUser|null $customerUser
      * @param string|null $promoCodeDiscountPercent
      * @param \App\Model\Store\Store|null $personalPickupStore
+     * @param \App\Model\Order\PromoCode\PromoCode|null $promoCode
      * @return \App\Model\Order\Preview\OrderPreview
      */
     public function calculatePreview(
@@ -88,9 +90,10 @@ class OrderPreviewCalculation extends BaseOrderPreviewCalculation
         ?Payment $payment = null,
         ?CustomerUser $customerUser = null,
         ?string $promoCodeDiscountPercent = null,
-        ?Store $personalPickupStore = null
+        ?Store $personalPickupStore = null,
+        ?PromoCode $promoCode = null
     ): BaseOrderPreview {
-        $promoCodePerProduct = $this->currentPromoCodeFacade->getPromoCodePerProductByDomainId($quantifiedProducts, $domainId);
+        $promoCodePerProduct = $this->currentPromoCodeFacade->getPromoCodePerProductByDomainId($quantifiedProducts, $domainId, $promoCode);
         $quantifiedItemsPrices = $this->quantifiedProductPriceCalculation->calculatePrices(
             $quantifiedProducts,
             $domainId,
@@ -157,9 +160,7 @@ class OrderPreviewCalculation extends BaseOrderPreviewCalculation
             $roundingPrice
         );
 
-        $promoCodeCode = $this->currentPromoCodeFacade->getPromoCodeCode();
         $productsAvailability = $this->getProductsAvailability($quantifiedProducts, $domainId);
-        $promoCodeIdentifier = $this->currentPromoCodeFacade->getPromoCodeIdentifier();
         $productsFullPrice = $this->getProductsPrice($quantifiedItemsPrices, []);
         $totalPriceDiscount = $this->getTotalPriceDiscount($quantifiedItemsDiscounts);
 
@@ -183,8 +184,7 @@ class OrderPreviewCalculation extends BaseOrderPreviewCalculation
             $restToFreeTransportPrice,
             $percentageOfFreeTransport,
             $transportForFree,
-            $promoCodeCode,
-            $promoCodeIdentifier
+            $promoCode
         );
     }
 

@@ -12,3 +12,6 @@ OrderInput:
                 type: "Uuid"
                 description: "Cart identifier used for getting carts of not logged customers"
                 defaultValue: null
+            promoCode:
+                type: "String"
+                description: "The promo code used in the order"

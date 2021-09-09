@@ -6,6 +6,7 @@ namespace App\Model\Order\Preview;
 
 use App\Model\Cart\CartFacade;
 use App\Model\Order\PromoCode\CurrentPromoCodeFacade;
+use App\Model\Order\PromoCode\PromoCode;
 use App\Model\Order\PromoCode\PromoCodeLimitResolver;
 use App\Model\Store\Store;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
@@ -96,7 +97,8 @@ class OrderPreviewFactory extends BaseOrderPreviewFactory
             $payment,
             $currentCustomerUser,
             $validEnteredPromoCodePercent,
-            $personalPickupStore
+            $personalPickupStore,
+            $validEnteredPromoCode
         );
     }
 
@@ -109,6 +111,7 @@ class OrderPreviewFactory extends BaseOrderPreviewFactory
      * @param \App\Model\Customer\User\CustomerUser|null $customerUser
      * @param string|null $promoCodeDiscountPercent
      * @param \App\Model\Store\Store|null $personalPickupStore
+     * @param \App\Model\Order\PromoCode\PromoCode|null $promoCode
      * @return \App\Model\Order\Preview\OrderPreview
      */
     public function create(
@@ -119,7 +122,8 @@ class OrderPreviewFactory extends BaseOrderPreviewFactory
         ?Payment $payment = null,
         ?CustomerUser $customerUser = null,
         ?string $promoCodeDiscountPercent = null,
-        ?Store $personalPickupStore = null
+        ?Store $personalPickupStore = null,
+        ?PromoCode $promoCode = null
     ): OrderPreview {
         return $this->orderPreviewCalculation->calculatePreview(
             $currency,
@@ -129,7 +133,8 @@ class OrderPreviewFactory extends BaseOrderPreviewFactory
             $payment,
             $customerUser,
             $promoCodeDiscountPercent,
-            $personalPickupStore
+            $personalPickupStore,
+            $promoCode
         );
     }
 }
