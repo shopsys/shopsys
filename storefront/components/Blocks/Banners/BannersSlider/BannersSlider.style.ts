@@ -1,11 +1,12 @@
 import { css } from 'styled-components';
+import Icon from 'components/Basic/Icon';
 import { styled } from '../../../Theme/main';
 
 const localVariables = {
     bannersSliderThumbnailControlsWidth: '307px',
 } as const;
 
-export const StyledBannersSliderBox = styled.div`
+export const BannersSliderBoxStyled = styled.div`
     ${({ theme }) => css`
         display: flex;
         margin-bottom: 52px;
@@ -17,7 +18,7 @@ export const StyledBannersSliderBox = styled.div`
     `}
 `;
 
-export const StyledBannersSlider = styled.div`
+export const BannersSliderStyled = styled.div`
     ${({ theme }) => css`
         width: calc(100% - ${localVariables.bannersSliderThumbnailControlsWidth});
         height: 290px;
@@ -36,7 +37,7 @@ export const StyledBannersSlider = styled.div`
     `}
 `;
 
-export const StyledBannersSliderThumbnailControls = styled.div`
+export const BannersSliderThumbnailControlsStyled = styled.div`
     ${({ theme }) => css`
         max-width: ${localVariables.bannersSliderThumbnailControlsWidth};
         min-width: ${localVariables.bannersSliderThumbnailControlsWidth};
@@ -66,6 +67,14 @@ export const StyledBannersSliderThumbnailControls = styled.div`
             &:disabled {
                 background-color: ${theme.color.creamWhite};
                 border-color: ${theme.color.primary};
+
+                i {
+                    display: block;
+                }
+            }
+
+            i {
+                display: none;
             }
         }
 
@@ -75,7 +84,7 @@ export const StyledBannersSliderThumbnailControls = styled.div`
     `}
 `;
 
-export const StyledBannersSliderDotControls = styled.div`
+export const BannersSliderDotControlsStyled = styled.div`
     ${({ theme }) => css`
         display: flex;
         justify-content: center;
@@ -101,5 +110,17 @@ export const StyledBannersSliderDotControls = styled.div`
         @media ${theme.mediaQueries.queryVl} {
             display: none;
         }
+    `}
+`;
+
+export const BannersSliderThumbnailControlsIconStyled = styled(Icon)`
+    ${({ theme }) => css`
+        position: absolute;
+        left: 14px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 6px;
+
+        color: ${theme.color.primary};
     `}
 `;

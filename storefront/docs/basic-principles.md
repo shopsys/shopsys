@@ -91,7 +91,7 @@ import { Tabs, TabsContent, TabsList, TabsListItem } from '../../basic/Tabs';
 **SVG icons must have these attributes:**
  - They must have define width and height in the viewBox and they must not have define width and height as a separate attribute.
  - Paths must have fill="currentColor" and they must not have color="".
-We optimalize every icon with https://github.com/svg/svgo.
+We optimalize every icon with https://jakearchibald.github.io/svgomg/.
 We don't use SVG icons as files but as an SVG code that is added to file IconsSvg.tsx and is used as a function.
 Every svg must be define in the IconsSvgMap.tsx.
 

@@ -5,6 +5,7 @@ export const IconsSvgMap = {
     ArrowRight: <Icons.ArrowRight />,
     Cart: <Icons.Cart />,
     NotImplementedYet: <Icons.NotImplementedYet />,
+    Triangle: <Icons.Triangle />,
 };
 
 export type IconName = keyof typeof IconsSvgMap;
