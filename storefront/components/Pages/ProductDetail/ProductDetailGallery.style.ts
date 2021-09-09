@@ -6,7 +6,7 @@ const localVariables = {
     productDetailGalleryThumbnailItemHoverBg: '#e8e8ea',
 };
 
-export const StyledProductDetailGalleryThumbnails = styled.div`
+export const ProductDetailGalleryThumbnailsStyled = styled.div`
     ${({ theme }) => css`
         display: none;
 
@@ -21,7 +21,7 @@ export const StyledProductDetailGalleryThumbnails = styled.div`
     `}
 `;
 
-export const StyledProductDetailGalleryThumbnailsItem = styled.div`
+export const ProductDetailGalleryThumbnailsItemStyled = styled.div`
     ${({ theme }) => css`
         display: block;
         width: 76px;
@@ -65,7 +65,7 @@ export const StyledProductDetailGalleryThumbnailsItem = styled.div`
     `}
 `;
 
-export const StyledProductDetailGalleryMainImage = styled.div`
+export const ProductDetailGalleryMainImageStyled = styled.div`
     ${({ theme }) => css`
         display: none;
 

@@ -1,12 +1,15 @@
-import SimpleReactLightbox, { SRLWrapper } from 'simple-react-lightbox';
 import {
-    StyledProductDetailGalleryMainImage,
-    StyledProductDetailGalleryThumbnails,
-    StyledProductDetailGalleryThumbnailsItem,
+    ProductDetailGalleryMainImageStyled,
+    ProductDetailGalleryThumbnailsItemStyled,
+    ProductDetailGalleryThumbnailsStyled,
 } from './ProductDetailGallery.style';
+import SimpleReactLightbox, { SRLWrapper } from 'simple-react-lightbox';
 import { FC } from 'react';
 import ProductDetailImageSlider from './ProductDetailImageSlider';
 
+/**
+ * Product detail gallery with simple lightbox and beside thumbnails
+ */
 const ProductDetailGallery: FC = () => {
     /* TODO PRG: join live data */
     const productDetailSliderItems = [
@@ -52,20 +55,20 @@ const ProductDetailGallery: FC = () => {
                     },
                 }}
             >
-                <StyledProductDetailGalleryThumbnails>
-                    <StyledProductDetailGalleryThumbnailsItem>
+                <ProductDetailGalleryThumbnailsStyled>
+                    <ProductDetailGalleryThumbnailsItemStyled>
                         <a href="http://placeimg.com/640/530/any?t=1">
                             <img src="http://placeimg.com/64/53/any?t=1" alt="Umbrella" width={64} height={53} />
                         </a>
-                    </StyledProductDetailGalleryThumbnailsItem>
+                    </ProductDetailGalleryThumbnailsItemStyled>
 
-                    <StyledProductDetailGalleryThumbnailsItem>
+                    <ProductDetailGalleryThumbnailsItemStyled>
                         <a href="http://placeimg.com/640/530/any?t=2">
                             <img src="http://placeimg.com/64/53/any?t=2" alt="Umbrella" width={64} height={53} />
                         </a>
-                    </StyledProductDetailGalleryThumbnailsItem>
-                </StyledProductDetailGalleryThumbnails>
-                <StyledProductDetailGalleryMainImage>
+                    </ProductDetailGalleryThumbnailsItemStyled>
+                </ProductDetailGalleryThumbnailsStyled>
+                <ProductDetailGalleryMainImageStyled>
                     <a href="http://placeimg.com/640/530/any?t=3">
                         <img
                             src="http://placeimg.com/640/530/any?t=3"
@@ -74,11 +77,12 @@ const ProductDetailGallery: FC = () => {
                             height={454}
                         />
                     </a>
-                </StyledProductDetailGalleryMainImage>
+                </ProductDetailGalleryMainImageStyled>
                 <ProductDetailImageSlider galleryItems={productDetailSliderItems} />
             </SRLWrapper>
         </SimpleReactLightbox>
     );
 };
 
+/* @component */
 export default ProductDetailGallery;
