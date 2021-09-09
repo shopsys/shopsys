@@ -1,4 +1,5 @@
 import { css } from 'styled-components';
+import Icon from '../../Basic/Icon';
 import { styled } from '../../Theme/main';
 
 const localVariables = {
@@ -124,7 +125,7 @@ export const StyledShopsysPasswordVisibilityToggle = styled.img`
     }
 `;
 
-export const StyledShopsysSearchButton = styled.div`
+export const StyledShopsysSearchButton = styled(Icon)`
     position: absolute;
     top: 14px;
     right: 15px;

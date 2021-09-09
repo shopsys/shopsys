@@ -8,7 +8,6 @@ import {
 } from './ShopsysTextInput.style';
 import { ExtractNativePropsFromDefault } from 'typeHelpers/ExtractNativePropsFromDefault';
 import { getStateAfterValidation } from '../Helpers/getStateAfterValidation';
-import Icon from '../../Basic/Icon';
 import ShopsysFormLineError from '../Lib/ShopsysFormLineError';
 import ShopsysLabelWrapper from '../Lib/ShopsysLabelWrapper';
 import { useFormContext } from 'react-hook-form';
@@ -63,11 +62,7 @@ function ShopsysTextInput(props: InferProps<typeof ShopsysTextInput.propTypes> &
                         onClick={togglePasswordVisibilityHandler}
                     />
                 )}
-                {props.variant === 'searchInHeader' && (
-                    <StyledShopsysSearchButton>
-                        <Icon icon="NotImplementedYet" iconHeight={20} />
-                    </StyledShopsysSearchButton>
-                )}
+                {props.variant === 'searchInHeader' && <StyledShopsysSearchButton icon="Search" />}
             </ShopsysLabelWrapper>
             <ShopsysFormLineError
                 inputType="text-input"
