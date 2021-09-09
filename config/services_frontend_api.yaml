@@ -29,6 +29,9 @@ services:
     Shopsys\FrontendApiBundle\Model\Resolver\Products\DataMapper\ProductArrayFieldMapper:
         alias: App\FrontendApi\Model\Resolver\Products\DataMapper\ProductArrayFieldMapper
 
+    Shopsys\FrontendApiBundle\Model\Resolver\Products\DataMapper\ProductEntityFieldMapper:
+        alias: App\FrontendApi\Model\Resolver\Products\DataMapper\ProductEntityFieldMapper
+
     Shopsys\FrontendApiBundle\Model\Resolver\Products\ProductResolverMap:
         alias: App\FrontendApi\Model\Resolver\Products\ProductResolverMap
 

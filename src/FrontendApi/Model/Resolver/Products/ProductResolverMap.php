@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\FrontendApi\Model\Resolver\Products;
 
 use ArrayObject;
-use GraphQL\Error\Error;
 use GraphQL\Type\Definition\ResolveInfo;
 use Overblog\GraphQLBundle\Definition\ArgumentInterface;
 use Overblog\GraphQLBundle\Resolver\FieldResolver;
@@ -31,18 +30,20 @@ class ProductResolverMap extends BaseProductResolverMap
     {
         return [
             self::RESOLVE_FIELD => function ($value, ArgumentInterface $args, ArrayObject $context, ResolveInfo $info) {
-                if ($value instanceof Product) {
-                    throw new Error('Product can be resolved only from Elasticsearch. You cannot return Product entity from any resolver.');
-                }
+                /** @var \App\FrontendApi\Model\Resolver\Products\DataMapper\ProductArrayFieldMapper|\App\FrontendApi\Model\Resolver\Products\DataMapper\ProductEntityFieldMapper $mapper */
+                $mapper = $value instanceof Product ? $this->productEntityFieldMapper : $this->productArrayFieldMapper;
 
                 try {
-                    return $this->getObjectMethodForField($this->productArrayFieldMapper, $info->fieldName)($value);
+                    return $this->getObjectMethodForField($mapper, $info->fieldName)($value);
                 } catch (MethodNotFoundException $exception) {
                     return FieldResolver::valueFromObjectOrArray($value, $info->fieldName);
                 }
             },
-            'slug' => static function (array $product) {
-                return '/' . $product['slug'];
+            'availability' => function ($value) {
+                /** @var \App\FrontendApi\Model\Resolver\Products\DataMapper\ProductArrayFieldMapper|\App\FrontendApi\Model\Resolver\Products\DataMapper\ProductEntityFieldMapper $mapper */
+                $mapper = $value instanceof Product ? $this->productEntityFieldMapper : $this->productArrayFieldMapper;
+
+                return $mapper->getExtendedAvailability($value);
             },
         ];
     }

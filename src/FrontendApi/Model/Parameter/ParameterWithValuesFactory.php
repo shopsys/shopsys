@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\FrontendApi\Model\Parameter;
 
+use Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter as BaseParameter;
 use Shopsys\FrontendApiBundle\Model\Parameter\ParameterWithValuesFactory as BaseParameterWithValuesFactory;
 
 /**
@@ -12,6 +13,16 @@ use Shopsys\FrontendApiBundle\Model\Parameter\ParameterWithValuesFactory as Base
  */
 class ParameterWithValuesFactory extends BaseParameterWithValuesFactory
 {
+    /**
+     * @param \App\Model\Product\Parameter\Parameter $parameter
+     * @param \App\Model\Product\Parameter\ParameterValue[] $parameterValues
+     * @return \App\FrontendApi\Model\Parameter\ParameterWithValues
+     */
+    public function create(BaseParameter $parameter, array $parameterValues): ParameterWithValues
+    {
+        return new ParameterWithValues($parameter, $parameterValues);
+    }
+
     /**
      * @param array $productData
      * @return array
