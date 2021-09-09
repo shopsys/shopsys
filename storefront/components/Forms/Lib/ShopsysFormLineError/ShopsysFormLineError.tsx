@@ -16,7 +16,7 @@ function ShopsysFormLineError(
         return (
             <StyledShopsysFormFieldError>
                 <StyledShopsysErrorIcon inputType={props.inputType} textInputSize="default">
-                    <Icon icon="cross" iconHeight={16} />
+                    <Icon icon="NotImplementedYet" iconHeight={16} />
                 </StyledShopsysErrorIcon>
                 <ErrorMessage
                     errors={props.errors}

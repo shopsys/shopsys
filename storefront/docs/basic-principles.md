@@ -86,3 +86,54 @@ import { Tabs, TabsContent, TabsList, TabsListItem } from '../../basic/Tabs';
 </Tabs>
  ```
  Tip: you can use shorter text of Tab heading for mobile devices.
+
+### SVG icons
+**SVG icons must have these attributes:**
+ - They must have define width and height in the viewBox and they must not have define width and height as a separate attribute.
+ - Paths must have fill="currentColor" and they must not have color="".
+We optimalize every icon with https://github.com/svg/svgo.
+We don't use SVG icons as files but as an SVG code that is added to file IconsSvg.tsx and is used as a function.
+Every svg must be define in the IconsSvgMap.tsx.
+
+Bad defined Icon:
+```plain
+    <svg xmlns="http://www.w3.org/2000/svg" width="512" height="512">
+        <path
+            color="currentColor"
+        />
+    </svg>
+```
+
+Good defined Icon:
+```plain
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+        <path
+            fill="currentColor"
+        />
+    </svg>
+```
+
+**Steps to add new svg icon:**
+1. Check if your icon has viewbox and fill="currentColor".
+2. Add icon to IconsSvg.tsx as a new function with source code of SVG.
+3. Add icon to IconsSvgMap.tsx
+4. Now your icon is ready to use.
+
+**How to use Icons:**
+For icons, we have a component Icon. The best practice to use is to create a new styled-component which is defined as an Icon component and here you can add your specific style like color, width, height, etc...
+
+**Example:**
+file.styled.ts
+
+```plain
+import Icon from '../../../../basic/Icon';
+
+export const ComponentIconStyled = styled(Icon)>`
+    ${({ theme }) => css`
+        height: 20px;
+        width: 20px;
+
+        color: ${theme.color.white};
+    `};
+`;
+```plain

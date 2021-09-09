@@ -9,9 +9,9 @@ const HamburgerMenu = (): ReactElement => {
 
     const MenuIcon = () => {
         if (isMenuOpened) {
-            return <Icon icon="close" iconHeight={14} />;
+            return <Icon icon="NotImplementedYet" iconHeight={14} />;
         }
-        return <Icon icon="menu" iconHeight={16} />;
+        return <Icon icon="NotImplementedYet" iconHeight={16} />;
     };
 
     const toggleMenu = () => {

@@ -1,54 +1,50 @@
-import PropTypes, { InferProps } from 'prop-types';
-import { ReactElement } from 'react';
-import * as TEST from '../../../public/svg';
+import { FC } from 'react';
+import { IconName } from './IconSvg/IconsSvgMap';
+import { IconSvg } from './IconSvg';
 
 /**
  *  Basic icon component unifies displaying icons
- *  className .icon is used for eliminating img reset (max-width: 100%, height: auto)
  */
-function Icon(props: InferProps<typeof Icon.propTypes>): ReactElement {
-    let iconSrc = '';
-    let IconElement = '';
-
-    if (props.iconType === 'svg') {
-        iconSrc = `/svg/${props.icon}.svg`;
-        IconElement = 'svg';
-    }
-
-    if (props.iconType === 'png') {
-        iconSrc = `/icons/${props.icon}.png`;
-        IconElement = 'img';
-    }
-
-    return <IconElement className="icon" src={iconSrc} height={props.iconHeight} title={props.iconTitle} />;
-}
-
-Icon.defaultProps = {
-    iconType: 'svg',
-    iconHeight: 24,
-    iconTitle: '',
-};
-
-Icon.propTypes = {
+type IconProps = {
+    /**
+     * Define which type of icon will be generated
+     */
+    iconType?: 'img';
+    /**
+     * Define name of icon which is rendered as a svg element
+     */
+    icon: IconName;
+    /**
+     * Define name of icon which is rendered as a img element
+     */
+    imageName?: string;
+    /**
+     * Icon height for img element
+     */
+    iconHeight?: number;
+    /**
+     * Icon width for img element
+     */
+    iconWidth?: number;
     /**
      * String for title attribute for generating tooltip text
      */
-    iconTitle: PropTypes.string.isRequired,
-    /**
-     * Define which type of icon will be generated
-     *
-     * @param {string} svg will generate image from public/svg/[icon].svg file<br>
-     * @param {string} png will generate image from public/icons/[icon].png file
-     */
-    iconType: PropTypes.oneOf<'svg' | 'png'>(['svg', 'png']).isRequired,
-    /**
-     * Define name of icon file without extension
-     */
-    icon: PropTypes.string.isRequired,
-    /**
-     * Icon height in px, width is auto
-     */
-    iconHeight: PropTypes.number.isRequired,
+    iconTitle?: string;
+};
+
+const Icon: FC<IconProps> = (props) => {
+    if (props.iconType === 'img') {
+        return (
+            <img
+                src={`/icons/${props.imageName}.png`}
+                height={props.iconHeight !== undefined ? props.iconHeight : '24'}
+                width={props.iconWidth !== undefined ? props.iconWidth : '24'}
+                title={props.iconTitle}
+            />
+        );
+    }
+
+    return <IconSvg {...props} icon={props.icon} />;
 };
 
 /* @component */

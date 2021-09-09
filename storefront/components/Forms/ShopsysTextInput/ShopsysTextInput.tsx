@@ -65,7 +65,7 @@ function ShopsysTextInput(props: InferProps<typeof ShopsysTextInput.propTypes> &
                 )}
                 {props.variant === 'searchInHeader' && (
                     <StyledShopsysSearchButton>
-                        <Icon icon="search" iconHeight={20} />
+                        <Icon icon="NotImplementedYet" iconHeight={20} />
                     </StyledShopsysSearchButton>
                 )}
             </ShopsysLabelWrapper>

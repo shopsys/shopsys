@@ -19,7 +19,7 @@ const MenuIconic = (): ReactElement => {
                 <MenuIconicItemStyled>
                     <Link href="/" passHref>
                         <MenuIconicItemLinkStyled>
-                            <Icon icon="chat" iconHeight={18} />
+                            <Icon icon="NotImplementedYet" iconHeight={18} />
                             {t<string>('Customer service')}
                         </MenuIconicItemLinkStyled>
                     </Link>
@@ -27,7 +27,7 @@ const MenuIconic = (): ReactElement => {
                 <MenuIconicItemStyled>
                     <Link href="/" passHref>
                         <MenuIconicItemLinkStyled>
-                            <Icon icon="marker" iconHeight={18} />
+                            <Icon icon="NotImplementedYet" iconHeight={18} />
                             {t<string>('Stores')}
                         </MenuIconicItemLinkStyled>
                     </Link>
@@ -35,7 +35,7 @@ const MenuIconic = (): ReactElement => {
                 <MenuIconicItemStyled>
                     <Link href="/" passHref>
                         <MenuIconicItemLinkStyled>
-                            <Icon icon="user" iconHeight={18} />
+                            <Icon icon="NotImplementedYet" iconHeight={18} />
                             {t<string>('Sign in')}
                         </MenuIconicItemLinkStyled>
                     </Link>
@@ -44,7 +44,7 @@ const MenuIconic = (): ReactElement => {
             <MenuIconicButtonMobileStyled>
                 <Link href="/" passHref>
                     <MenuIconicButtonMobileLinkStyled>
-                        <Icon icon="user" iconHeight={18} />
+                        <Icon icon="NotImplementedYet" iconHeight={18} />
                     </MenuIconicButtonMobileLinkStyled>
                 </Link>
             </MenuIconicButtonMobileStyled>

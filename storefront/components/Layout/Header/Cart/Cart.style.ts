@@ -1,4 +1,5 @@
 import { css } from 'styled-components';
+import Icon from '../../../Basic/Icon';
 import { styled } from '../../../Theme/main';
 
 const localVariables = {
@@ -192,5 +193,16 @@ export const CartButtonMobileLinkStyled = styled.a`
             text-decoration: none;
             color: ${theme.color.white};
         }
+    `}
+`;
+
+export const CartIconStyled = styled(Icon)`
+    height: 18px;
+    width: 18px;
+`;
+
+export const CartIconMobileStyled = styled(CartIconStyled)`
+    ${({ theme }) => css`
+        color: ${theme.color.white};
     `}
 `;
