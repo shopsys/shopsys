@@ -1,10 +1,10 @@
 import { initServerSideProps, ServerSidePropsType } from 'helpers/InitServerSideProps';
-import CommonLayout from 'components/layout/CommonLayout';
+import CommonLayout from 'components/Layout/CommonLayout';
 import { FC } from 'react';
 import { GetServerSideProps } from 'next';
 import { navigationQuery } from 'connectors/navigation/Navigation';
-import OrderSteps from 'components/blocks/orderSteps';
-import StaticUrlGuard from 'components/utils/StaticUrlGuard';
+import OrderSteps from 'components/Blocks/OrderSteps';
+import StaticUrlGuard from 'components/Helpers/StaticUrlGuard';
 
 const ShipmentAndPayment: FC<ServerSidePropsType> = (props) => {
     return (
