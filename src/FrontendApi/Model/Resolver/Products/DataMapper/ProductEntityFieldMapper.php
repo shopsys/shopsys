@@ -234,6 +234,7 @@ class ProductEntityFieldMapper extends BaseProductEntityFieldMapper
                 $flagsIndexedById[$variantFlag->getId()] = $variantFlag;
             }
         }
+        ksort($flagsIndexedById);
 
         return array_values($flagsIndexedById);
     }
