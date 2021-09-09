@@ -1,9 +1,9 @@
 import { AppProps } from 'next/app';
 import { appWithTranslation } from 'next-i18next';
 import { getDomainConfig } from '../utils/Domain/Domain';
-import { GlobalErrorList } from 'components/blocks/errors/GlobalErrorList/GlobalErrorList';
+import { GlobalErrorList } from 'components/Blocks/Errors/GlobalErrorList/GlobalErrorList';
 import nextI18NextConfig from '../next-i18next.config.js';
-import Popup from 'components/layout/Popup';
+import Popup from 'components/Layout/Popup';
 import { Provider } from 'react-redux';
 import { ReactElement } from 'react';
 import ShopsysGlobalErrorProvider from 'context/ShopsysGlobalErrorProvider';

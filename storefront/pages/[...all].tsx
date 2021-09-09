@@ -1,19 +1,19 @@
 import { friendlyUrlQuery, getFriendlyUrlResolvedData } from '../connectors/friendlyUrls/FriendlyUrls';
-import Breadcrumbs from 'components/layout/Breadcrumbs';
-import { CategoryDetailApiType } from '../components/pages/CategoryDetail/types';
-import CategoryDetailPage from '../components/pages/CategoryDetail';
-import CommonLayout from '../components/layout/CommonLayout';
+import Breadcrumbs from 'components/Layout/Breadcrumbs';
+import { CategoryDetailApiType } from '../components/Pages/CategoryDetail/types';
+import CategoryDetailPage from '../components/Pages/CategoryDetail';
+import CommonLayout from '../components/Layout/CommonLayout';
 import DefaultErrorPage from 'next/error';
 import { FC } from 'react';
 import { GetServerSideProps } from 'next';
 import { initServerSideProps } from '../helpers/InitServerSideProps';
 import { mapCategoryDetailData } from '../connectors/categories/Categories';
 import { navigationQuery } from '../connectors/navigation/Navigation';
-import ProductDetailPage from '../components/pages/ProductDetail';
-import { ProductDetailType } from 'components/pages/ProductDetail/types';
+import ProductDetailPage from '../components/Pages/ProductDetail';
+import { ProductDetailType } from 'components/Pages/ProductDetail/types';
 import { useRouter } from 'next/router';
 import { useShopsysSelector } from '../redux/store';
-import Webline from '../components/layout/Webline';
+import Webline from '../components/Layout/Webline';
 
 const FriendlyUrlPage: FC = () => {
     const router = useRouter();
