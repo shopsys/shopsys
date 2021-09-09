@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Tests\App\Functional\Model\Cart;
 
+use App\Model\Cart\CartFacade;
 use App\Model\Cart\Item\CartItem;
+use App\Model\Customer\User\CustomerUserIdentifierFactory;
 use DateTime;
 use Shopsys\FrameworkBundle\Component\Money\Money;
-use Shopsys\FrameworkBundle\Model\Cart\CartFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifier;
-use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifierFactory;
 use Tests\App\Test\TransactionFunctionalTestCase;
 
 class CartFacadeDeleteOldCartsTest extends TransactionFunctionalTestCase
@@ -21,7 +21,7 @@ class CartFacadeDeleteOldCartsTest extends TransactionFunctionalTestCase
     private $cartFactory;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\ProductRepository
+     * @var \App\Model\Product\ProductRepository
      * @inject
      */
     private $productRepository;
@@ -33,7 +33,7 @@ class CartFacadeDeleteOldCartsTest extends TransactionFunctionalTestCase
     private $currentCustomerUser;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Order\PromoCode\CurrentPromoCodeFacade
+     * @var \App\Model\Order\PromoCode\CurrentPromoCodeFacade
      * @inject
      */
     private $currentPromoCodeFacade;
@@ -57,7 +57,7 @@ class CartFacadeDeleteOldCartsTest extends TransactionFunctionalTestCase
     private $cartRepository;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Cart\Watcher\CartWatcherFacade
+     * @var \App\Model\Cart\Watcher\CartWatcherFacade
      * @inject
      */
     private $cartWatcherFacade;
@@ -73,6 +73,30 @@ class CartFacadeDeleteOldCartsTest extends TransactionFunctionalTestCase
      * @inject
      */
     private $customerUserFacade;
+
+    /**
+     * @var \App\Model\Product\Availability\ProductAvailabilityFacade
+     * @inject
+     */
+    private $productAvailabilityFacade;
+
+    /**
+     * @var \Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface
+     * @inject
+     */
+    private $flashBag;
+
+    /**
+     * @var \Twig\Environment
+     * @inject
+     */
+    private $twigEnvironment;
+
+    /**
+     * @var \App\Model\Category\CategoryFacade
+     * @inject
+     */
+    private $categoryFacade;
 
     public function testOldUnregisteredCustomerCartGetsDeleted()
     {
@@ -147,7 +171,7 @@ class CartFacadeDeleteOldCartsTest extends TransactionFunctionalTestCase
     }
 
     /**
-     * @return \Shopsys\FrameworkBundle\Model\Cart\CartFacade
+     * @return \App\Model\Cart\CartFacade
      */
     private function getCartFacadeForRegisteredCustomer()
     {
@@ -155,7 +179,7 @@ class CartFacadeDeleteOldCartsTest extends TransactionFunctionalTestCase
     }
 
     /**
-     * @return \Shopsys\FrameworkBundle\Model\Cart\CartFacade
+     * @return \App\Model\Cart\CartFacade
      */
     private function getCartFacadeForUnregisteredCustomer()
     {
@@ -164,7 +188,7 @@ class CartFacadeDeleteOldCartsTest extends TransactionFunctionalTestCase
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifier $customerUserIdentifier
-     * @return \Shopsys\FrameworkBundle\Model\Cart\CartFacade
+     * @return \App\Model\Cart\CartFacade
      */
     private function getCartFacadeForCustomerUser(CustomerUserIdentifier $customerUserIdentifier)
     {
@@ -179,13 +203,17 @@ class CartFacadeDeleteOldCartsTest extends TransactionFunctionalTestCase
             $this->productPriceCalculationForCustomerUser,
             $this->cartItemFactoryInterface,
             $this->cartRepository,
-            $this->cartWatcherFacade
+            $this->cartWatcherFacade,
+            $this->productAvailabilityFacade,
+            $this->flashBag,
+            $this->twigEnvironment,
+            $this->categoryFacade
         );
     }
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifier $customerUserIdentifier
-     * @return \PHPUnit\Framework\MockObject\MockObject|\Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifierFactory
+     * @return \PHPUnit\Framework\MockObject\MockObject|\App\Model\Customer\User\CustomerUserIdentifierFactory
      */
     private function getCustomerUserIdentifierFactoryMock(CustomerUserIdentifier $customerUserIdentifier)
     {
@@ -199,7 +227,7 @@ class CartFacadeDeleteOldCartsTest extends TransactionFunctionalTestCase
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Cart\CartFacade $cartFacade
+     * @param \App\Model\Cart\CartFacade $cartFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifier $customerUserIdentifier
      * @param string $message
      */
@@ -210,7 +238,7 @@ class CartFacadeDeleteOldCartsTest extends TransactionFunctionalTestCase
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Cart\CartFacade $cartFacade
+     * @param \App\Model\Cart\CartFacade $cartFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifier $customerUserIdentifier
      * @param string $message
      */
@@ -240,7 +268,7 @@ class CartFacadeDeleteOldCartsTest extends TransactionFunctionalTestCase
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifier $customerUserIdentifier
-     * @param \Shopsys\FrameworkBundle\Model\Cart\CartFacade $cartFacade
+     * @param \App\Model\Cart\CartFacade $cartFacade
      * @return \Shopsys\FrameworkBundle\Model\Cart\Cart
      */
     private function createCartWithProduct(CustomerUserIdentifier $customerUserIdentifier, CartFacade $cartFacade)
