@@ -12,14 +12,14 @@ import { ReadyCategorySeoMixLink } from '../types';
 import ShopsysHeading from 'components/Basic/ShopsysHeading';
 import { useGetWindowSize } from 'hooks/UseGetWindowSize';
 import { useResizeWidthEffect } from 'hooks/UseResizeWidthEffect';
-import { useTranslation } from 'next-i18next';
+import { useTypedTranslationFunction } from 'hooks/UseTypedTranslationFunction';
 
 type CategoryDetailAdvancedSeoCategoriesProps = {
     readyCategorySeoMixLinks: ReadyCategorySeoMixLink[];
 };
 
 const CategoryDetailAdvancedSeoCategories: FC<CategoryDetailAdvancedSeoCategoriesProps> = (props) => {
-    const { t } = useTranslation();
+    const t = useTypedTranslationFunction();
     const { width } = useGetWindowSize();
     const [isAdvancedSeoCategoriesSliderVisible, setAdvancedSeoCategoriesSliderVisibility] = useState(true);
     useResizeWidthEffect(

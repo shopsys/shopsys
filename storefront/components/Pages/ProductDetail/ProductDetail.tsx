@@ -12,7 +12,7 @@ import ProductDetailAvailabilityList from './ProductDetailStoresAvailability/Pro
 import ProductDetailGallery from './ProductDetailGallery';
 import ProductDetailTabs from './ProductDetailTabs';
 import { ProductDetailType } from './types';
-import { useTranslation } from 'next-i18next';
+import { useTypedTranslationFunction } from 'hooks/UseTypedTranslationFunction';
 import Webline from '../../Layout/Webline';
 
 type ProductDetailProps = {
@@ -20,7 +20,7 @@ type ProductDetailProps = {
 };
 
 const ProductDetail: FC<ProductDetailProps> = (props) => {
-    const { t } = useTranslation();
+    const t = useTypedTranslationFunction();
     const scrollTarget = useRef<HTMLUListElement>(null);
 
     return (

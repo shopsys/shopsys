@@ -8,10 +8,10 @@ import {
 import Icon from '../../../Basic/Icon';
 import Link from 'next/link';
 import { ReactElement } from 'react';
-import { useTranslation } from 'react-i18next';
+import { useTypedTranslationFunction } from 'hooks/UseTypedTranslationFunction';
 
 const MenuIconic = (): ReactElement => {
-    const { t } = useTranslation();
+    const t = useTypedTranslationFunction();
 
     return (
         <>

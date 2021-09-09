@@ -2,11 +2,11 @@ import { BreadcrumbsLinkStyled, BreadcrumbsSpanStyled, BreadcrumbsStyled } from 
 import { FC, Fragment } from 'react';
 import { BreadcrumbType } from 'connectors/breadcrumb/Breadcrumb';
 import Link from 'next/link';
-import { useTranslation } from 'next-i18next';
+import { useTypedTranslationFunction } from 'hooks/UseTypedTranslationFunction';
 import Webline from 'components/Layout/Webline';
 
 const Breadcrumbs: FC<BreadcrumbType> = (props) => {
-    const { t } = useTranslation();
+    const t = useTypedTranslationFunction();
 
     if (
         props.breadcrumb === undefined ||

@@ -2,14 +2,14 @@ import { Tabs, TabsContent, TabsList, TabsListItem } from '../../Basic/Tabs';
 import { FC } from 'react';
 import ShopsysInUserText from 'components/Helpers/ShopsysUserText';
 import Table from '../../Basic/Table';
-import { useTranslation } from 'next-i18next';
+import { useTypedTranslationFunction } from 'hooks/UseTypedTranslationFunction';
 
 type ProductDetailTabsProps = {
     description: string;
 };
 
 const ProductDetailTabs: FC<ProductDetailTabsProps> = (props) => {
-    const { t } = useTranslation();
+    const t = useTypedTranslationFunction();
 
     return (
         <Tabs>

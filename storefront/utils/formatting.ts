@@ -1,7 +1,7 @@
-import { useTranslation } from 'react-i18next';
+import { useTypedTranslationFunction } from 'hooks/UseTypedTranslationFunction';
 
 export function formatPrice(price: number, currencyCode: string): string {
-    const { t } = useTranslation();
+    const t = useTypedTranslationFunction();
 
     return t('{{ value, formatPrice }}', {
         value: { price: price, currencyCode: currencyCode },

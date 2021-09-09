@@ -2,7 +2,7 @@ import { OrderStepsListItemLinkStyled, OrderStepsListItemStyled, OrderStepsListS
 import { FC } from 'react';
 import Link from 'next/link';
 import { useGetInternationalizedStaticUrls } from 'hooks/UseGetInternationalizedStaticUrls';
-import { useTranslation } from 'next-i18next';
+import { useTypedTranslationFunction } from 'hooks/UseTypedTranslationFunction';
 import Webline from 'components/Layout/Webline';
 
 type OrderStepsProps = {
@@ -11,7 +11,7 @@ type OrderStepsProps = {
 };
 
 const OrderSteps: FC<OrderStepsProps> = (props) => {
-    const { t } = useTranslation();
+    const t = useTypedTranslationFunction();
     const [cartUrl, shipmentAndPaymentUrl, contactInformationUrl] = useGetInternationalizedStaticUrls(
         ['/cart', '/order/shipment-and-payment', '/order/contact-information'],
         props.domainUrl,

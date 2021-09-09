@@ -1,10 +1,10 @@
 import { HamburgerMenuImageStyled, HamburgerMenuStyled, HamburgerMenuTextStyled } from './HamburgerMenu.style';
 import { ReactElement, useState } from 'react';
 import Icon from '../../../Basic/Icon';
-import { useTranslation } from 'react-i18next';
+import { useTypedTranslationFunction } from 'hooks/UseTypedTranslationFunction';
 
 const HamburgerMenu = (): ReactElement => {
-    const { t } = useTranslation();
+    const t = useTypedTranslationFunction();
     const [isMenuOpened, setIsMenuOpened] = useState(false);
 
     const MenuIcon = () => {

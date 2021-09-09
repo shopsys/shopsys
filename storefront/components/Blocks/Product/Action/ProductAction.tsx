@@ -5,11 +5,11 @@ import ShopsysButton from '../../../Forms/ShopsysButton';
 import ShopsysSpinbox from '../../../Forms/ShopsysSpinbox';
 import { SliderProductItemType } from '../types';
 import { useRouter } from 'next/dist/client/router';
-import { useTranslation } from 'react-i18next';
+import { useTypedTranslationFunction } from 'hooks/UseTypedTranslationFunction';
 
 const ProductAction: FC<SliderProductItemType> = (props) => {
     const router = useRouter();
-    const { t } = useTranslation();
+    const t = useTypedTranslationFunction();
     const formProviderMethods = useForm({
         mode: 'onBlur',
         criteriaMode: 'firstError',
