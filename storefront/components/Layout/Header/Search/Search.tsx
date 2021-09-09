@@ -1,10 +1,10 @@
 import { FormProvider, useForm } from 'react-hook-form';
 import { SearchFormStyled, SearchInStyled, SearchStyled } from './Search.style';
-import { ReactElement } from 'react';
+import { FC } from 'react';
 import ShopsysTextInput from '../../../Forms/ShopsysTextInput';
 import { useTypedTranslationFunction } from 'hooks/UseTypedTranslationFunction';
 
-const Search = (): ReactElement => {
+const Search: FC = () => {
     const t = useTypedTranslationFunction();
     const formProviderMethods = useForm({
         mode: 'all',
