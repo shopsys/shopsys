@@ -3,7 +3,7 @@ import {
     ListedProductItemType,
     ProductItemApiType,
     SliderProductItemType,
-} from '../../components/blocks/product/types';
+} from '../../components/Blocks/Product/types';
 import { useFetchQuery } from '../../hooks/UseFetchQuery';
 import { useShopsysSelector } from '../../redux/store';
 

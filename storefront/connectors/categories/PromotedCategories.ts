@@ -1,4 +1,4 @@
-import { CategoryItemApiType, CategoryItemType } from '../../components/blocks/categories/CategoryItem/types';
+import { CategoryItemApiType, CategoryItemType } from '../../components/Blocks/Categories/CategoryItem/types';
 import { useFetchQuery } from '../../hooks/UseFetchQuery';
 
 export const promotedCategoriesQuery = `

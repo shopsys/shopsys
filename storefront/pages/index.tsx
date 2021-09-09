@@ -1,20 +1,20 @@
 import { DomainConfigType, getDomainConfig } from '../utils/Domain/Domain';
-import Banners from 'components/blocks/banners';
-import CommonLayout from '../components/layout/CommonLayout';
+import Banners from 'components/Blocks/Banners';
+import CommonLayout from '../components/Layout/CommonLayout';
 import { domainActions } from '../redux/store/DomainStore';
 import { FC } from 'react';
 import { GetServerSideProps } from 'next';
 import { initServerSideProps } from '../helpers/InitServerSideProps';
 import { navigationQuery } from '../connectors/navigation/Navigation';
-import PromotedCategories from '../components/blocks/categories/PromotedCategories/PromotedCategories';
+import PromotedCategories from '../components/Blocks/Categories/PromotedCategories/PromotedCategories';
 import { promotedCategoriesQuery } from '../connectors/categories/PromotedCategories';
-import PromotedProducts from '../components/blocks/product/PromotedProducts/PromotedProducts';
+import PromotedProducts from '../components/Blocks/Product/PromotedProducts/PromotedProducts';
 import { promotedProductsQuery } from '../connectors/products/Products';
-import ShopsysHeading from '../components/basic/ShopsysHeading';
+import ShopsysHeading from '../components/Basic/ShopsysHeading';
 import { sliderItemsQuery } from 'connectors/sliderItems/SliderItems';
 import { useShopsysDispatch } from '../redux/store';
 import { useTranslation } from 'react-i18next';
-import Webline from 'components/layout/Webline';
+import Webline from 'components/Layout/Webline';
 
 type IndexProps = { domainConfig?: DomainConfigType };
 

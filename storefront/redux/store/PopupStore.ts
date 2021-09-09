@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { PopupContentType } from 'components/layout/Popup/Popup';
+import { PopupContentType } from 'components/Layout/Popup/Popup';
 
 interface IinitialState {
     isPopupShown: boolean;
