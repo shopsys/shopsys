@@ -21,6 +21,19 @@ use Shopsys\FrameworkBundle\Model\Product\Product as BaseProduct;
 use Shopsys\FrontendApiBundle\Model\Product\ProductAccessoryFacade;
 use Shopsys\FrontendApiBundle\Model\Resolver\Products\DataMapper\ProductEntityFieldMapper as BaseProductEntityFieldMapper;
 
+/**
+ * @property \App\FrontendApi\Model\Parameter\ParameterWithValuesFactory $parameterWithValuesFactory
+ * @method string|null getShortDescription(\App\Model\Product\Product $product)
+ * @method string getLink(\App\Model\Product\Product $product)
+ * @method \App\Model\Category\Category[] getCategories(\App\Model\Product\Product $product)
+ * @method bool isSellingDenied(\App\Model\Product\Product $product)
+ * @method \App\Model\Product\Product[] getAccessories(\App\Model\Product\Product $product)
+ * @method string|null getDescription(\App\Model\Product\Product $product)
+ * @method \App\FrontendApi\Model\Parameter\ParameterWithValues[] getParameters(\App\Model\Product\Product $product)
+ * @method string|null getSeoH1(\App\Model\Product\Product $product)
+ * @method string|null getSeoTitle(\App\Model\Product\Product $product)
+ * @method string|null getSeoMetaDescription(\App\Model\Product\Product $product)
+ */
 class ProductEntityFieldMapper extends BaseProductEntityFieldMapper
 {
     /**

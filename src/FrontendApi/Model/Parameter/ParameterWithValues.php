@@ -9,6 +9,10 @@ use Shopsys\FrontendApiBundle\Model\Parameter\ParameterWithValues as BaseParamet
 
 /**
  * @property \App\Model\Product\Parameter\Parameter $parameter
+ * @property \App\Model\Product\Parameter\ParameterValue[] $values
+ * @method __construct(\App\Model\Product\Parameter\Parameter $parameter, \App\Model\Product\Parameter\ParameterValue[] $values)
+ * @method \App\Model\Product\Parameter\Parameter getParameter()
+ * @method \App\Model\Product\Parameter\ParameterValue[] getValues()
  */
 class ParameterWithValues extends BaseParameterWithValues
 {
