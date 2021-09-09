@@ -6,23 +6,23 @@ import {
     ProductItemTitleStyled,
 } from './ProductItem.style';
 import { FC } from 'react';
-import Link from 'next/link';
+import Image from '../../../../Basic/Image/Image';
 import { ListedProductItemType } from '../../types';
+import NextLink from 'next/link';
 import ProductAction from '../../Action/ProductAction';
 import { ProductAvailabilityStyled } from '../../Availability/ProductAvailability.style';
 import ProductAvailableStoresCount from '../../Availability/ProductAvailableStoresCount';
 import ProductExposedStoresCount from '../../Availability/ProductExposedStoresCount';
 import ProductFlags from '../../Flags/ProductFlags';
 import ProductPrice from '../../Price/ProductPrice';
-import ShopsysImage from '../../../../Basic/ShopsysImage/ShopsysImage';
 
 const ProductItem: FC<ListedProductItemType> = (props) => {
     return (
         <ProductItemStyled>
-            <Link href={props.detailSlug} passHref>
+            <NextLink href={props.detailSlug} passHref>
                 <ProductItemInStyled>
                     <ProductItemImageStyled>
-                        <ShopsysImage image={props.image} alt={props.name} />
+                        <Image image={props.image} alt={props.name} />
                         <ProductFlags flags={props.flags} />
                     </ProductItemImageStyled>
                     <ProductItemInfoStyled>
@@ -36,7 +36,7 @@ const ProductItem: FC<ListedProductItemType> = (props) => {
                     </ProductItemInfoStyled>
                     <ProductAction {...props} />
                 </ProductItemInStyled>
-            </Link>
+            </NextLink>
         </ProductItemStyled>
     );
 };

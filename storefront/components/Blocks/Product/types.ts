@@ -1,4 +1,4 @@
-import { ImageType } from '../../Basic/ShopsysImage/types';
+import { ImageType } from '../../Basic/Image/types';
 
 export type FlagType = {
     name: string;

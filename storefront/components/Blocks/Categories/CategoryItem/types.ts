@@ -1,4 +1,4 @@
-import { ImageType } from '../../../Basic/ShopsysImage/types';
+import { ImageType } from '../../../Basic/Image/types';
 import { v4 as uuid } from 'uuid';
 
 export type CategoryItemApiType = {

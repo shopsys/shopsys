@@ -1,12 +1,12 @@
+import Link from 'components/Basic/Link';
 import { LogoStyled } from './Logo.style';
 import { ReactElement } from 'react';
-import ShopsysLink from '../../../Basic/ShopsysLink/ShopsysLink';
 
 const Logo = (): ReactElement => {
     return (
-        <ShopsysLink href="/">
+        <Link href="/">
             <LogoStyled src="/images/logo.svg" width={163} height={38} />
-        </ShopsysLink>
+        </Link>
     );
 };
 

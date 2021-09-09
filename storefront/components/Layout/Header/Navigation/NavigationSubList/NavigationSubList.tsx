@@ -4,8 +4,8 @@ import {
     NavigationSubListStyled,
 } from './NavigationSubList.style';
 import { FC } from 'react';
-import Link from 'next/link';
 import { NavigationSubCategory } from '../../../../../connectors/navigation/Navigation';
+import NextLink from 'next/link';
 
 type NavigationSubListProps = {
     columnCategoryChildren: NavigationSubCategory[];
@@ -16,9 +16,9 @@ const NavigationSubList: FC<NavigationSubListProps> = (props) => {
         <NavigationSubListStyled>
             {props.columnCategoryChildren.map((columnCategoryChild, subListIndex) => (
                 <NavigationSubListItemStyled key={subListIndex}>
-                    <Link href={columnCategoryChild.slug} passHref>
+                    <NextLink href={columnCategoryChild.slug} passHref>
                         <NavigationSubListItemLinkStyled>{columnCategoryChild.name}</NavigationSubListItemLinkStyled>
-                    </Link>
+                    </NextLink>
                 </NavigationSubListItemStyled>
             ))}
         </NavigationSubListStyled>

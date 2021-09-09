@@ -7,9 +7,9 @@ import {
     NavigationItemSubWrapStyled,
 } from './NavigationItem.style';
 import { debounce } from 'lodash';
-import Link from 'next/link';
 import { NavigationItem as NavigationItemType } from '../../../../../connectors/navigation/Navigation';
 import NavigationLeaf from '../NavigationLeaf';
+import NextLink from 'next/link';
 
 type NavigationItemProps = {
     navigationItem: NavigationItemType;
@@ -32,12 +32,12 @@ const NavigationItem: FC<NavigationItemProps> = (props) => {
 
     return (
         <NavigationItemStyled onMouseEnter={openSubmenu} onMouseLeave={hideSubmenu} isOpen={isHovered}>
-            <Link href={props.navigationItem.link} passHref>
+            <NextLink href={props.navigationItem.link} passHref>
                 <NavigationItemLinkStyled isOpen={isHovered}>
                     {props.navigationItem.name}
                     {hasChildren && <NavigationItemLinkIconStyled isOpen={isHovered} icon="Arrow" />}
                 </NavigationItemLinkStyled>
-            </Link>
+            </NextLink>
             {hasChildren && (
                 <NavigationItemSubStyled isOpen={isHovered}>
                     <NavigationItemSubWrapStyled>

@@ -1,6 +1,6 @@
 import { OrderStepsListItemLinkStyled, OrderStepsListItemStyled, OrderStepsListStyled } from './OrderSteps.style';
 import { FC } from 'react';
-import Link from 'next/link';
+import NextLink from 'next/link';
 import { useGetInternationalizedStaticUrls } from 'hooks/UseGetInternationalizedStaticUrls';
 import { useTypedTranslationFunction } from 'hooks/UseTypedTranslationFunction';
 import Webline from 'components/Layout/Webline';
@@ -21,25 +21,25 @@ const OrderSteps: FC<OrderStepsProps> = (props) => {
         <Webline>
             <OrderStepsListStyled>
                 <OrderStepsListItemStyled>
-                    <Link href={cartUrl} passHref>
+                    <NextLink href={cartUrl} passHref>
                         <OrderStepsListItemLinkStyled isActive={props.activeStep === 1}>
                             {'1. ' + t('Cart')}
                         </OrderStepsListItemLinkStyled>
-                    </Link>
+                    </NextLink>
                 </OrderStepsListItemStyled>
                 <OrderStepsListItemStyled>
-                    <Link href={shipmentAndPaymentUrl} passHref>
+                    <NextLink href={shipmentAndPaymentUrl} passHref>
                         <OrderStepsListItemLinkStyled isActive={props.activeStep === 2}>
                             {'2. ' + t('Shipment and payment')}
                         </OrderStepsListItemLinkStyled>
-                    </Link>
+                    </NextLink>
                 </OrderStepsListItemStyled>
                 <OrderStepsListItemStyled>
-                    <Link href={contactInformationUrl} passHref>
+                    <NextLink href={contactInformationUrl} passHref>
                         <OrderStepsListItemLinkStyled isActive={props.activeStep === 3}>
                             {'3. ' + t('Contact information')}
                         </OrderStepsListItemLinkStyled>
-                    </Link>
+                    </NextLink>
                 </OrderStepsListItemStyled>
             </OrderStepsListStyled>
         </Webline>

@@ -6,11 +6,11 @@ import {
     NewsletterFormWrapper,
 } from './NewsletterForm.style';
 import { FC } from 'react';
+import Heading from '../../../Basic/Heading';
 import { popupActions } from 'redux/store/PopupStore';
 import ShopsysButton from '../../../Forms/ShopsysButton';
 import ShopsysCheckbox from '../../../Forms/ShopsysCheckbox';
 import ShopsysForm from '../../../Forms/ShopsysForm';
-import ShopsysHeading from '../../../Basic/ShopsysHeading';
 import ShopsysTextInput from '../../../Forms/ShopsysTextInput';
 import { TFunction } from 'next-i18next';
 import { useNewsletterSubscription } from '../../../../connectors/newsletter/Newsletter';
@@ -38,9 +38,9 @@ const NewsletterForm: FC = () => {
 
     return (
         <NewsletterFormWrapper>
-            <ShopsysHeading type="h2">
+            <Heading type="h2">
                 {t<string>('Sign up for our newsletter and get 35% discount on running apparel')}
-            </ShopsysHeading>
+            </Heading>
             <NewsletterFormColumn>
                 <ShopsysForm
                     onSubmitHandler={subscribeToNewsletter}

@@ -6,8 +6,6 @@ export type IconSvgProps = {
     icon: IconName;
 };
 
-export const IconSvg: FC<IconSvgProps> = ({ icon, ...props }) => (
-    <IconSvgStyled {...props}>{IconsSvgMap[icon] ?? <i {...props} />}</IconSvgStyled>
+export const IconSvg: FC<IconSvgProps> = (props) => (
+    <IconSvgStyled {...props}>{IconsSvgMap[props.icon] ?? <i {...props} />}</IconSvgStyled>
 );
-
-IconSvg.displayName = `IconSvg`;
