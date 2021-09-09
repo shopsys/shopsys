@@ -6,10 +6,10 @@ import {
     ProductDetailAvailabilityListWrapperStyled as AvailabilityListWrapperStyled,
 } from './ProductDetailAvailabilityList.style';
 import { forwardRef } from 'react';
+import Heading from 'components/Basic/Heading';
 import Icon from 'components/Basic/Icon';
 import Link from 'next/link';
 import { ProductDetailType } from '../../types';
-import ShopsysHeading from 'components/Basic/ShopsysHeading';
 import { useTypedTranslationFunction } from 'hooks/UseTypedTranslationFunction';
 
 type ProductDetailAvailabilityListProps = {
@@ -21,7 +21,7 @@ const ProductDetailAvailabilityList = forwardRef<HTMLUListElement, ProductDetail
 
     return (
         <AvailabilityListWrapperStyled>
-            <ShopsysHeading type="h3">{t<string>('Availability in stores')}</ShopsysHeading>
+            <Heading type="h3">{t<string>('Availability in stores')}</Heading>
             <ul ref={ref}>
                 {props.product.storeAvailabilities.map((storeAvailability, index) => (
                     <AvailabilityListItemStyled key={index}>

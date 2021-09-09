@@ -2,8 +2,8 @@ import CategoryDetailAdvancedSeoCategories from './CategoryDetailAdvancedSeoCate
 import CategoryDetailSubcategories from './CategoryDetailSubcategories';
 import { CategoryDetailType } from './types';
 import { FC } from 'react';
+import Heading from '../../Basic/Heading';
 import ProductsList from '../../Blocks/Product/List/ProductsList';
-import ShopsysHeading from '../../Basic/ShopsysHeading';
 import Webline from '../../Layout/Webline';
 
 type CategoryDetailProps = {
@@ -13,9 +13,7 @@ type CategoryDetailProps = {
 const CategoryDetail: FC<CategoryDetailProps> = (props) => {
     return (
         <Webline>
-            <ShopsysHeading type={'h1'}>
-                {props.category.seoH1 !== null ? props.category.seoH1 : props.category.name}
-            </ShopsysHeading>
+            <Heading type={'h1'}>{props.category.seoH1 !== null ? props.category.seoH1 : props.category.name}</Heading>
             <CategoryDetailSubcategories
                 categories={[...props.category.children, ...props.category.linkedCategories]}
             />

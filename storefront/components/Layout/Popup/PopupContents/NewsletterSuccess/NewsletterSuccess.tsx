@@ -1,7 +1,7 @@
+import Heading from 'components/Basic/Heading';
 import { popupActions } from 'redux/store/PopupStore';
 import { ReactElement } from 'react';
 import ShopsysButton from 'components/Forms/ShopsysButton';
-import ShopsysHeading from 'components/Basic/ShopsysHeading';
 import { StyledNewsletterSuccess } from './NewsletterSuccess.style';
 import { useShopsysDispatch } from 'redux/store';
 import { useTypedTranslationFunction } from 'hooks/UseTypedTranslationFunction';
@@ -19,7 +19,7 @@ function NewsletterSuccess(): ReactElement {
 
     return (
         <StyledNewsletterSuccess>
-            <ShopsysHeading type="h3">{t<string>('You have successfully subscribed to our newsletter')}</ShopsysHeading>
+            <Heading type="h3">{t<string>('You have successfully subscribed to our newsletter')}</Heading>
             <div>
                 <ShopsysButton onClick={onCloseButtonClickHandler}>{t<string>('Close')}</ShopsysButton>
             </div>

@@ -4,13 +4,13 @@ import CommonLayout from '../components/Layout/CommonLayout';
 import { domainActions } from '../redux/store/DomainStore';
 import { FC } from 'react';
 import { GetServerSideProps } from 'next';
+import Heading from '../components/Basic/Heading';
 import { initServerSideProps } from '../helpers/InitServerSideProps';
 import { navigationQuery } from '../connectors/navigation/Navigation';
 import PromotedCategories from '../components/Blocks/Categories/PromotedCategories/PromotedCategories';
 import { promotedCategoriesQuery } from '../connectors/categories/PromotedCategories';
 import PromotedProducts from '../components/Blocks/Product/PromotedProducts/PromotedProducts';
 import { promotedProductsQuery } from '../connectors/products/Products';
-import ShopsysHeading from '../components/Basic/ShopsysHeading';
 import { sliderItemsQuery } from 'connectors/sliderItems/SliderItems';
 import { useShopsysDispatch } from '../redux/store';
 import { useTypedTranslationFunction } from 'hooks/UseTypedTranslationFunction';
@@ -34,11 +34,11 @@ const Index: FC<IndexProps> = (props) => {
                 <Banners />
             </Webline>
             <Webline>
-                <ShopsysHeading type="h2">{t<string>('Promoted categories')}</ShopsysHeading>
+                <Heading type="h2">{t<string>('Promoted categories')}</Heading>
                 <PromotedCategories />
             </Webline>
             <Webline>
-                <ShopsysHeading type="h2">{t<string>('Promoted products')}</ShopsysHeading>
+                <Heading type="h2">{t<string>('Promoted products')}</Heading>
                 <PromotedProducts />
             </Webline>
         </CommonLayout>

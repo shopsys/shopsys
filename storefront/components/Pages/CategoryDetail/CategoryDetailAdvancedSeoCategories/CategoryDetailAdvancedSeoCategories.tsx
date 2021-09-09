@@ -7,9 +7,9 @@ import { FC, useState } from 'react';
 import AdvancedSeoCategoriesSlider from './CategoryDetailAdvancedSeoCategoriesSlider';
 import { desktopFirstSizes } from '../../../Theme/mediaQueries';
 import { getIsElementVisible } from 'components/Helpers/GetIsItemVisible';
+import Heading from 'components/Basic/Heading';
 import Link from 'next/link';
 import { ReadyCategorySeoMixLink } from '../types';
-import ShopsysHeading from 'components/Basic/ShopsysHeading';
 import { useGetWindowSize } from 'hooks/UseGetWindowSize';
 import { useResizeWidthEffect } from 'hooks/UseResizeWidthEffect';
 import { useTypedTranslationFunction } from 'hooks/UseTypedTranslationFunction';
@@ -36,7 +36,7 @@ const CategoryDetailAdvancedSeoCategories: FC<CategoryDetailAdvancedSeoCategorie
 
     return (
         <>
-            <ShopsysHeading type="h3">{t<string>('Favorite categories')}</ShopsysHeading>
+            <Heading type="h3">{t<string>('Favorite categories')}</Heading>
             {isAdvancedSeoCategoriesSliderVisible ? (
                 <AdvancedSeoCategoriesSlider readyCategorySeoMixLinks={props.readyCategorySeoMixLinks} />
             ) : (
