@@ -1,19 +1,19 @@
 import { styled } from '../../Theme/main';
 
-const styleVariables = {
-    inUserTextUlPointSize: '5px',
-    inUserTextHeadingFontSize: '18px',
-    inUserTextHeadingMarginBottom: '0.4rem',
-    inUserTextParagraphMargin: '0 0 1.75rem',
-    inUserTextComponentMargin: '0 0 1.75rem',
-    inUserTextFontSize: '15px',
-    inUserTextLineHeight: '1.6',
+const localVariables = {
+    userTextUlPointSize: '5px',
+    userTextHeadingFontSize: '18px',
+    userTextHeadingMarginBottom: '0.4rem',
+    userTextParagraphMargin: '0 0 1.75rem',
+    userTextComponentMargin: '0 0 1.75rem',
+    userTextFontSize: '15px',
+    userTextLineHeight: '1.6',
 };
 
-export const StyledShopsysInUserText = styled.section`
+export const UserTextStyled = styled.section`
     ${({ theme }) => `
-        font-size: ${styleVariables.inUserTextFontSize};
-        line-height: ${styleVariables.inUserTextLineHeight};
+        font-size: ${localVariables.userTextFontSize};
+        line-height: ${localVariables.userTextLineHeight};
         -webkit-font-smoothing: antialiased;
         color: ${theme.color.greyLight};
 
@@ -30,13 +30,13 @@ export const StyledShopsysInUserText = styled.section`
         h3,
         h4,
         h5 {
-            margin-bottom: ${styleVariables.inUserTextHeadingMarginBottom};
-            font-size: ${styleVariables.inUserTextHeadingFontSize};
+            margin-bottom: ${localVariables.userTextHeadingMarginBottom};
+            font-size: ${localVariables.userTextHeadingFontSize};
             text-transform: none;
         }
 
         p {
-            margin: ${styleVariables.inUserTextParagraphMargin};
+            margin: ${localVariables.userTextParagraphMargin};
 
             &:last-of-type {
                 margin-bottom: 0;
@@ -62,7 +62,7 @@ export const StyledShopsysInUserText = styled.section`
             padding: 0;
             margin: 0;
             list-style: none;
-            margin: ${styleVariables.inUserTextComponentMargin};
+            margin: ${localVariables.userTextComponentMargin};
 
             li {
                 position: relative;
@@ -72,10 +72,10 @@ export const StyledShopsysInUserText = styled.section`
                 &:after {
                     position: absolute;
                     content: '';
-                    top: ${styleVariables.inUserTextUlPointSize} * 2;
+                    top: ${localVariables.userTextUlPointSize} * 2;
                     left: 0;
-                    width: ${styleVariables.inUserTextUlPointSize};
-                    height: ${styleVariables.inUserTextUlPointSize};
+                    width: ${localVariables.userTextUlPointSize};
+                    height: ${localVariables.userTextUlPointSize};
                     border-radius: 100%;
                     background-color: ${theme.color.primary};
                 }
