@@ -5,7 +5,7 @@ import { styled } from '../../../Theme/main';
 const localVariables = {
     cartItemCountSize: '15px',
     cartButtonMobileSize: '40px',
-};
+} as const;
 
 export const CartStyled = styled.div`
     ${({ theme }) => css`
