@@ -240,6 +240,8 @@ class ProductEntityFieldMapper extends BaseProductEntityFieldMapper
     }
 
     /**
+     * Method is overridden, so it returns parameters for the variants too.
+     *
      * @param \App\Model\Product\Product $product
      * @return string
      */
