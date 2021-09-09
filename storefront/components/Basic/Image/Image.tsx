@@ -1,16 +1,16 @@
 import { FC } from 'react';
-import Image from 'next/image';
 import { ImageType } from './types';
+import NextImage from 'next/image';
 
-type ShopsysImageProps = { image: ImageType | null; alt: string };
+type ImageProps = { image: ImageType | null; alt: string };
 
-const ShopsysImage: FC<ShopsysImageProps> = (props) => {
+const Image: FC<ImageProps> = (props) => {
     if (props.image === null) {
-        return <Image src={'/images/optimized-noimage.png'} alt={props.alt} layout={'fill'} />;
+        return <NextImage src={'/images/optimized-noimage.png'} alt={props.alt} layout={'fill'} />;
     }
 
     return (
-        <Image
+        <NextImage
             src={{
                 src: props.image.url,
                 height: props.image.height,
@@ -22,4 +22,4 @@ const ShopsysImage: FC<ShopsysImageProps> = (props) => {
     );
 };
 
-export default ShopsysImage;
+export default Image;

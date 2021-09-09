@@ -7,8 +7,8 @@ import {
 } from './CategoryItem.style';
 import { CategoryItemType } from './types';
 import { FC } from 'react';
+import Image from '../../../Basic/Image';
 import Link from 'next/link';
-import ShopsysImage from '../../../Basic/ShopsysImage';
 
 type CategoryItemProps = {
     category: CategoryItemType;
@@ -19,7 +19,7 @@ const CategoryItem: FC<CategoryItemProps> = (props) => {
         <Link href={props.category.slug} passHref>
             <CategoryItemBlockStyled>
                 <CategoryItemImageStyled>
-                    <ShopsysImage image={props.category.image} alt={props.category.name} />
+                    <Image image={props.category.image} alt={props.category.name} />
                 </CategoryItemImageStyled>
                 <CategoryItemNameWrapperStyled>
                     <CategoryItemNameStyled>{props.category.name}</CategoryItemNameStyled>

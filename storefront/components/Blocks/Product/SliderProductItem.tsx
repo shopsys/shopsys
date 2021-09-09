@@ -6,6 +6,7 @@ import {
     SliderProductItemTitleStyled,
 } from './SliderProductItem.style';
 import { FC } from 'react';
+import Image from '../../Basic/Image/Image';
 import Link from 'next/link';
 import ProductAction from './Action/ProductAction';
 import { ProductAvailabilityStyled } from './Availability/ProductAvailability.style';
@@ -13,7 +14,6 @@ import ProductAvailableStoresCount from './Availability/ProductAvailableStoresCo
 import ProductExposedStoresCount from './Availability/ProductExposedStoresCount';
 import ProductFlags from './Flags/ProductFlags';
 import ProductPrice from './Price/ProductPrice';
-import ShopsysImage from '../../Basic/ShopsysImage/ShopsysImage';
 import { SliderProductItemType } from './types';
 
 const ProductItem: FC<SliderProductItemType> = (props) => {
@@ -22,7 +22,7 @@ const ProductItem: FC<SliderProductItemType> = (props) => {
             <Link href={props.detailSlug} passHref>
                 <SliderProductItemInStyled>
                     <SliderProductItemImageStyled>
-                        <ShopsysImage image={props.image} alt={props.name} />
+                        <Image image={props.image} alt={props.name} />
                         <ProductFlags flags={props.flags} />
                     </SliderProductItemImageStyled>
                     <SliderProductItemInfoStyled>

@@ -6,6 +6,7 @@ import {
     ProductItemTitleStyled,
 } from './ProductItem.style';
 import { FC } from 'react';
+import Image from '../../../../Basic/Image/Image';
 import Link from 'next/link';
 import { ListedProductItemType } from '../../types';
 import ProductAction from '../../Action/ProductAction';
@@ -14,7 +15,6 @@ import ProductAvailableStoresCount from '../../Availability/ProductAvailableStor
 import ProductExposedStoresCount from '../../Availability/ProductExposedStoresCount';
 import ProductFlags from '../../Flags/ProductFlags';
 import ProductPrice from '../../Price/ProductPrice';
-import ShopsysImage from '../../../../Basic/ShopsysImage/ShopsysImage';
 
 const ProductItem: FC<ListedProductItemType> = (props) => {
     return (
@@ -22,7 +22,7 @@ const ProductItem: FC<ListedProductItemType> = (props) => {
             <Link href={props.detailSlug} passHref>
                 <ProductItemInStyled>
                     <ProductItemImageStyled>
-                        <ShopsysImage image={props.image} alt={props.name} />
+                        <Image image={props.image} alt={props.name} />
                         <ProductFlags flags={props.flags} />
                     </ProductItemImageStyled>
                     <ProductItemInfoStyled>
