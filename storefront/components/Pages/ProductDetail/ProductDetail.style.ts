@@ -6,7 +6,7 @@ const localVariables = {
     detailInfoWidth: '512px',
 };
 
-export const StyledProductDetail = styled.div`
+export const ProductDetailStyled = styled.div`
     ${({ theme }) => css`
         display: flex;
         flex-direction: column;
@@ -19,7 +19,7 @@ export const StyledProductDetail = styled.div`
     `}
 `;
 
-export const StyledProductDetailImage = styled.div`
+export const ProductDetailImageStyled = styled.div`
     ${({ theme }) => css`
         @media ${theme.mediaQueries.queryLg} {
             width: calc(100% - ${localVariables.detailInfoWidthSmall});
@@ -47,7 +47,7 @@ export const StyledProductDetailImage = styled.div`
     `}
 `;
 
-export const StyledProductDetailInfo = styled.div`
+export const ProductDetailInfoStyled = styled.div`
     ${({ theme }) => css`
         width: 100%;
         margin-bottom: 16px;
@@ -64,7 +64,7 @@ export const StyledProductDetailInfo = styled.div`
     `}
 `;
 
-export const StyledProductDetailPrefix = styled.div`
+export const ProductDetailPrefixStyled = styled.div`
     ${({ theme }) => css`
         margin-bottom: 4px;
 
@@ -74,7 +74,7 @@ export const StyledProductDetailPrefix = styled.div`
     `}
 `;
 
-export const StyledProductDetailHeading = styled.h1`
+export const ProductDetailHeadingStyled = styled.h1`
     ${({ theme }) => css`
         margin-bottom: 8px;
 
@@ -84,7 +84,7 @@ export const StyledProductDetailHeading = styled.h1`
     `}
 `;
 
-export const StyledProductDetailCode = styled.div`
+export const ProductDetailCodeStyled = styled.div`
     ${({ theme }) => css`
         margin-bottom: 20px;
 
