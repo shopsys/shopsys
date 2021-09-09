@@ -7,7 +7,7 @@ import {
 } from './SliderProductItem.style';
 import { FC } from 'react';
 import Image from '../../Basic/Image/Image';
-import Link from 'next/link';
+import NextLink from 'next/link';
 import ProductAction from './Action/ProductAction';
 import { ProductAvailabilityStyled } from './Availability/ProductAvailability.style';
 import ProductAvailableStoresCount from './Availability/ProductAvailableStoresCount';
@@ -19,7 +19,7 @@ import { SliderProductItemType } from './types';
 const ProductItem: FC<SliderProductItemType> = (props) => {
     return (
         <SliderProductItemStyled className="keen-slider__slide">
-            <Link href={props.detailSlug} passHref>
+            <NextLink href={props.detailSlug} passHref>
                 <SliderProductItemInStyled>
                     <SliderProductItemImageStyled>
                         <Image image={props.image} alt={props.name} />
@@ -36,7 +36,7 @@ const ProductItem: FC<SliderProductItemType> = (props) => {
                     </SliderProductItemInfoStyled>
                     <ProductAction {...props} />
                 </SliderProductItemInStyled>
-            </Link>
+            </NextLink>
         </SliderProductItemStyled>
     );
 };

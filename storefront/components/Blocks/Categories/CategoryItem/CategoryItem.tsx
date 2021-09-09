@@ -8,7 +8,7 @@ import {
 import { CategoryItemType } from './types';
 import { FC } from 'react';
 import Image from '../../../Basic/Image';
-import Link from 'next/link';
+import NextLink from 'next/link';
 
 type CategoryItemProps = {
     category: CategoryItemType;
@@ -16,7 +16,7 @@ type CategoryItemProps = {
 
 const CategoryItem: FC<CategoryItemProps> = (props) => {
     return (
-        <Link href={props.category.slug} passHref>
+        <NextLink href={props.category.slug} passHref>
             <CategoryItemBlockStyled>
                 <CategoryItemImageStyled>
                     <Image image={props.category.image} alt={props.category.name} />
@@ -28,7 +28,7 @@ const CategoryItem: FC<CategoryItemProps> = (props) => {
                     )}
                 </CategoryItemNameWrapperStyled>
             </CategoryItemBlockStyled>
-        </Link>
+        </NextLink>
     );
 };
 

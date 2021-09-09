@@ -13,7 +13,7 @@ import {
     CartStyled,
     CartValueStyled,
 } from './Cart.style';
-import Link from 'next/link';
+import NextLink from 'next/link';
 import { ReactElement } from 'react';
 import { useTypedTranslationFunction } from 'hooks/UseTypedTranslationFunction';
 
@@ -36,12 +36,12 @@ const Cart = (): ReactElement => {
                 </CartDetailFigureStyled>
             </CartDetailStyled>
             <CartButtonMobileStyled>
-                <Link href="/" passHref>
+                <NextLink href="/" passHref>
                     <CartButtonMobileLinkStyled>
                         <CartIconMobileStyled icon="Cart" />
                         <CartCountStyled>0</CartCountStyled>
                     </CartButtonMobileLinkStyled>
-                </Link>
+                </NextLink>
             </CartButtonMobileStyled>
         </CartStyled>
     );

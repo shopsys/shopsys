@@ -8,7 +8,7 @@ import AdvancedSeoCategoriesSlider from './CategoryDetailAdvancedSeoCategoriesSl
 import { desktopFirstSizes } from '../../../Theme/mediaQueries';
 import { getIsElementVisible } from 'components/Helpers/GetIsItemVisible';
 import Heading from 'components/Basic/Heading';
-import Link from 'next/link';
+import NextLink from 'next/link';
 import { ReadyCategorySeoMixLink } from '../types';
 import { useGetWindowSize } from 'hooks/UseGetWindowSize';
 import { useResizeWidthEffect } from 'hooks/UseResizeWidthEffect';
@@ -42,9 +42,9 @@ const CategoryDetailAdvancedSeoCategories: FC<CategoryDetailAdvancedSeoCategorie
             ) : (
                 <AdvancedSeoCategoriesWrapperStyled>
                     {props.readyCategorySeoMixLinks.map((seoMixLink, index) => (
-                        <Link key={index} href={seoMixLink.slug} passHref>
+                        <NextLink key={index} href={seoMixLink.slug} passHref>
                             <AdvancedSeoCategoriesItemStyled>{seoMixLink.name}</AdvancedSeoCategoriesItemStyled>
-                        </Link>
+                        </NextLink>
                     ))}
                 </AdvancedSeoCategoriesWrapperStyled>
             )}

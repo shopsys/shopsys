@@ -7,8 +7,8 @@ import {
 } from './ProductItem.style';
 import { FC } from 'react';
 import Image from '../../../../Basic/Image/Image';
-import Link from 'next/link';
 import { ListedProductItemType } from '../../types';
+import NextLink from 'next/link';
 import ProductAction from '../../Action/ProductAction';
 import { ProductAvailabilityStyled } from '../../Availability/ProductAvailability.style';
 import ProductAvailableStoresCount from '../../Availability/ProductAvailableStoresCount';
@@ -19,7 +19,7 @@ import ProductPrice from '../../Price/ProductPrice';
 const ProductItem: FC<ListedProductItemType> = (props) => {
     return (
         <ProductItemStyled>
-            <Link href={props.detailSlug} passHref>
+            <NextLink href={props.detailSlug} passHref>
                 <ProductItemInStyled>
                     <ProductItemImageStyled>
                         <Image image={props.image} alt={props.name} />
@@ -36,7 +36,7 @@ const ProductItem: FC<ListedProductItemType> = (props) => {
                     </ProductItemInfoStyled>
                     <ProductAction {...props} />
                 </ProductItemInStyled>
-            </Link>
+            </NextLink>
         </ProductItemStyled>
     );
 };

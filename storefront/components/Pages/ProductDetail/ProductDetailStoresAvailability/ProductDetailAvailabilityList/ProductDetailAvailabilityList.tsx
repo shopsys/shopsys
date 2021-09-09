@@ -8,7 +8,7 @@ import {
 import { forwardRef } from 'react';
 import Heading from 'components/Basic/Heading';
 import Icon from 'components/Basic/Icon';
-import Link from 'next/link';
+import NextLink from 'next/link';
 import { ProductDetailType } from '../../types';
 import { useTypedTranslationFunction } from 'hooks/UseTypedTranslationFunction';
 
@@ -31,12 +31,12 @@ const ProductDetailAvailabilityList = forwardRef<HTMLUListElement, ProductDetail
                         <AvailabilityListItemStatusStyled availabilityStatus={storeAvailability.availabilityStatus}>
                             {storeAvailability.availabilityInformation}
                         </AvailabilityListItemStatusStyled>
-                        <Link href="/">
+                        <NextLink href="/">
                             <AvailabilityListItemStoreLinkStyled>
                                 {t('Store detail')}
                                 <Icon icon="ArrowRight" iconHeight={16} />
                             </AvailabilityListItemStoreLinkStyled>
-                        </Link>
+                        </NextLink>
                     </AvailabilityListItemStyled>
                 ))}
             </ul>

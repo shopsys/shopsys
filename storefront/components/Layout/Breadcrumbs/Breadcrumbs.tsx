@@ -1,7 +1,7 @@
 import { BreadcrumbsLinkStyled, BreadcrumbsSpanStyled, BreadcrumbsStyled } from './Breadcrumbs.style';
 import { FC, Fragment } from 'react';
 import { BreadcrumbType } from 'connectors/breadcrumb/Breadcrumb';
-import Link from 'next/link';
+import NextLink from 'next/link';
 import { useTypedTranslationFunction } from 'hooks/UseTypedTranslationFunction';
 import Webline from 'components/Layout/Webline';
 
@@ -19,15 +19,15 @@ const Breadcrumbs: FC<BreadcrumbType> = (props) => {
     return (
         <Webline>
             <BreadcrumbsStyled>
-                <Link href="/">
+                <NextLink href="/">
                     <BreadcrumbsLinkStyled>{t('Home page')}</BreadcrumbsLinkStyled>
-                </Link>
+                </NextLink>
                 <BreadcrumbsSpanStyled>/</BreadcrumbsSpanStyled>
                 {props.breadcrumb.slice(0, props.breadcrumb.length - 1).map((breadcrumb, index) => (
                     <Fragment key={index}>
-                        <Link href={breadcrumb.slug}>
+                        <NextLink href={breadcrumb.slug}>
                             <BreadcrumbsLinkStyled>{breadcrumb.name}</BreadcrumbsLinkStyled>
-                        </Link>
+                        </NextLink>
                         <span>/</span>
                     </Fragment>
                 ))}
