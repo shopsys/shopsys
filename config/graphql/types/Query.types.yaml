@@ -79,3 +79,10 @@ Query:
                     search:
                         type: "String!"
                 description: "Returns list of searched articles and blog articles"
+            cart:
+                type: 'Cart'
+                args:
+                    uuid:
+                        type: "Uuid"
+                resolve: "@=resolver('getCart', [args['uuid']])"
+                description: "Return cart of logged customer or cart by UUID for anonymous user"
