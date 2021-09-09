@@ -1,9 +1,9 @@
 import { FC, useContext } from 'react';
 import { ShopsysGlobalErrorContext } from '../../../../context/ShopsysGlobalErrorProvider/ShopsysGlobalErrorProvider';
-import { useTranslation } from 'react-i18next';
+import { useTypedTranslationFunction } from 'hooks/UseTypedTranslationFunction';
 
 export const GlobalErrorList: FC = () => {
-    const { t } = useTranslation();
+    const t = useTypedTranslationFunction();
     const { errors } = useContext(ShopsysGlobalErrorContext);
 
     if (errors && errors.length > 0) {

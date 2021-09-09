@@ -15,10 +15,10 @@ import {
 } from './Cart.style';
 import Link from 'next/link';
 import { ReactElement } from 'react';
-import { useTranslation } from 'react-i18next';
+import { useTypedTranslationFunction } from 'hooks/UseTypedTranslationFunction';
 
 const Cart = (): ReactElement => {
-    const { t } = useTranslation();
+    const t = useTypedTranslationFunction();
 
     return (
         <CartStyled>

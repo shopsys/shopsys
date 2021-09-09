@@ -4,13 +4,13 @@ import ShopsysButton from 'components/Forms/ShopsysButton';
 import ShopsysHeading from 'components/Basic/ShopsysHeading';
 import { StyledNewsletterSuccess } from './NewsletterSuccess.style';
 import { useShopsysDispatch } from 'redux/store';
-import { useTranslation } from 'next-i18next';
+import { useTypedTranslationFunction } from 'hooks/UseTypedTranslationFunction';
 
 /**
  * A content for the Popup component which is displayed when the user successfully subscribes to newlsetter
  */
 function NewsletterSuccess(): ReactElement {
-    const { t } = useTranslation();
+    const t = useTypedTranslationFunction();
     const dispatch = useShopsysDispatch();
 
     const onCloseButtonClickHandler = () => {

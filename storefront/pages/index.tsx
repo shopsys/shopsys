@@ -13,14 +13,14 @@ import { promotedProductsQuery } from '../connectors/products/Products';
 import ShopsysHeading from '../components/Basic/ShopsysHeading';
 import { sliderItemsQuery } from 'connectors/sliderItems/SliderItems';
 import { useShopsysDispatch } from '../redux/store';
-import { useTranslation } from 'react-i18next';
+import { useTypedTranslationFunction } from 'hooks/UseTypedTranslationFunction';
 import Webline from 'components/Layout/Webline';
 
 type IndexProps = { domainConfig?: DomainConfigType };
 
 const Index: FC<IndexProps> = (props) => {
     const dispatch = useShopsysDispatch();
-    const { t } = useTranslation();
+    const t = useTypedTranslationFunction();
 
     let selectedDomain;
     if (props.domainConfig !== null) {

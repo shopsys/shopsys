@@ -4,12 +4,12 @@ import { getUserFriendlyErrors, ParsedErrors } from '../connectors/lib/friendlyE
 import { useContext, useEffect } from 'react';
 import { useQuery, UseQueryArgs, UseQueryState } from 'urql';
 import { ShopsysGlobalErrorContext } from '../context/ShopsysGlobalErrorProvider/ShopsysGlobalErrorProvider';
-import { useTranslation } from 'react-i18next';
+import { useTypedTranslationFunction } from 'hooks/UseTypedTranslationFunction';
 
 type ShopsysUseQueryState = UseQueryState & { parsedErrors: ParsedErrors };
 
 export const useFetchQuery = (query: UseQueryArgs): ShopsysUseQueryState => {
-    const { t } = useTranslation();
+    const t = useTypedTranslationFunction();
     const errorContext = useContext(ShopsysGlobalErrorContext);
     const result: ShopsysUseQueryState = {
         ...useQuery(query)[0],

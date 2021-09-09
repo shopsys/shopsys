@@ -7,7 +7,7 @@ import {
 import { FC, RefObject, useEffect } from 'react';
 import Icon from 'components/Basic/Icon';
 import { ProductDetailType } from '../../types';
-import { useTranslation } from 'next-i18next';
+import { useTypedTranslationFunction } from 'hooks/UseTypedTranslationFunction';
 
 type ProductDetailAvailabilityProps = {
     product: ProductDetailType;
@@ -15,7 +15,7 @@ type ProductDetailAvailabilityProps = {
 };
 
 const ProductDetailAvailability: FC<ProductDetailAvailabilityProps> = (props) => {
-    const { t } = useTranslation();
+    const t = useTypedTranslationFunction();
 
     const scrollOnClickHandler = () => {
         if (props.scrollTarget.current !== null) {

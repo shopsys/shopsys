@@ -2,10 +2,10 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { SearchFormStyled, SearchInStyled, SearchStyled } from './Search.style';
 import { ReactElement } from 'react';
 import ShopsysTextInput from '../../../Forms/ShopsysTextInput';
-import { useTranslation } from 'react-i18next';
+import { useTypedTranslationFunction } from 'hooks/UseTypedTranslationFunction';
 
 const Search = (): ReactElement => {
-    const { t } = useTranslation();
+    const t = useTypedTranslationFunction();
     const formProviderMethods = useForm({
         mode: 'all',
         reValidateMode: 'onChange',

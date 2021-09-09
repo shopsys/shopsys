@@ -3,10 +3,10 @@ import { ProductPriceMainStyled, ProductPriceStyled } from './ProductPrice.style
 import { FC } from 'react';
 import { formatPrice } from '../../../../utils/formatting';
 import { ProductPriceType } from '../types';
-import { useTranslation } from 'react-i18next';
+import { useTypedTranslationFunction } from 'hooks/UseTypedTranslationFunction';
 
 const ProductPrice: FC<ProductPriceType> = (props) => {
-    const { t } = useTranslation();
+    const t = useTypedTranslationFunction();
 
     return (
         <ProductPriceStyled>

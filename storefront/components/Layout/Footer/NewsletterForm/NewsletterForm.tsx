@@ -15,7 +15,7 @@ import ShopsysTextInput from '../../../Forms/ShopsysTextInput';
 import { TFunction } from 'next-i18next';
 import { useNewsletterSubscription } from '../../../../connectors/newsletter/Newsletter';
 import { useShopsysDispatch } from 'redux/store';
-import { useTranslation } from 'react-i18next';
+import { useTypedTranslationFunction } from 'hooks/UseTypedTranslationFunction';
 import { yupResolver } from '@hookform/resolvers/yup';
 
 const getNewsletterFormResolver = (t: TFunction) => {
@@ -32,7 +32,7 @@ const getNewsletterFormResolver = (t: TFunction) => {
  * a signup form for the Newsletter.
  */
 const NewsletterForm: FC = () => {
-    const { t } = useTranslation();
+    const t = useTypedTranslationFunction();
     const [, subscribeToNewsletter] = useNewsletterSubscription();
     const dispatch = useShopsysDispatch();
 

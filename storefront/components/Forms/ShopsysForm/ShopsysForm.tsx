@@ -4,7 +4,7 @@ import { FormProvider, Resolver, useForm } from 'react-hook-form';
 import { ExtractNativePropsFromDefault } from '../../../typeHelpers/ExtractNativePropsFromDefault';
 import { getUserFriendlyErrors } from '../../../connectors/lib/friendlyErrorMessageParser';
 import { OperationResult } from 'urql';
-import { useTranslation } from 'react-i18next';
+import { useTypedTranslationFunction } from 'hooks/UseTypedTranslationFunction';
 
 type NativeProps = ExtractNativePropsFromDefault<FormHTMLAttributes<HTMLFormElement>, 'children', never>;
 
@@ -18,7 +18,7 @@ function ShopsysForm(
         resolver: Resolver;
     } & NativeProps,
 ): ReactElement {
-    const { t } = useTranslation();
+    const t = useTypedTranslationFunction();
     const formProviderMethods = useForm({
         mode: 'all',
         reValidateMode: 'onChange',

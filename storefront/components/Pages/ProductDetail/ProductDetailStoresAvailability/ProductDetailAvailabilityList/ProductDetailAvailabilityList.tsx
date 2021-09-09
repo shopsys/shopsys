@@ -10,14 +10,14 @@ import Icon from 'components/Basic/Icon';
 import Link from 'next/link';
 import { ProductDetailType } from '../../types';
 import ShopsysHeading from 'components/Basic/ShopsysHeading';
-import { useTranslation } from 'next-i18next';
+import { useTypedTranslationFunction } from 'hooks/UseTypedTranslationFunction';
 
 type ProductDetailAvailabilityListProps = {
     product: ProductDetailType;
 };
 
 const ProductDetailAvailabilityList = forwardRef<HTMLUListElement, ProductDetailAvailabilityListProps>((props, ref) => {
-    const { t } = useTranslation();
+    const t = useTypedTranslationFunction();
 
     return (
         <AvailabilityListWrapperStyled>
