@@ -13,11 +13,11 @@ import {
     CartStyled,
     CartValueStyled,
 } from './Cart.style';
+import { FC } from 'react';
 import NextLink from 'next/link';
-import { ReactElement } from 'react';
 import { useTypedTranslationFunction } from 'hooks/UseTypedTranslationFunction';
 
-const Cart = (): ReactElement => {
+const Cart: FC = () => {
     const t = useTypedTranslationFunction();
 
     return (
