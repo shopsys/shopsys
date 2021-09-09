@@ -4,6 +4,7 @@ export const IconsSvgMap = {
     Arrow: <Icons.Arrow />,
     ArrowRight: <Icons.ArrowRight />,
     Cart: <Icons.Cart />,
+    Cross: <Icons.Cross />,
     NotImplementedYet: <Icons.NotImplementedYet />,
 };
 
