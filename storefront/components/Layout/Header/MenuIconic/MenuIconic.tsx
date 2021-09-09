@@ -1,16 +1,16 @@
 import {
     MenuIconicButtonMobileLinkStyled,
     MenuIconicButtonMobileStyled,
+    MenuIconicItemIconStyled,
     MenuIconicItemLinkStyled,
     MenuIconicItemStyled,
     MenuIconicListStyled,
 } from './MenuIconic.style';
-import Icon from '../../../Basic/Icon';
+import { FC } from 'react';
 import NextLink from 'next/link';
-import { ReactElement } from 'react';
 import { useTypedTranslationFunction } from 'hooks/UseTypedTranslationFunction';
 
-const MenuIconic = (): ReactElement => {
+const MenuIconic: FC = () => {
     const t = useTypedTranslationFunction();
 
     return (
@@ -19,7 +19,7 @@ const MenuIconic = (): ReactElement => {
                 <MenuIconicItemStyled>
                     <NextLink href="/" passHref>
                         <MenuIconicItemLinkStyled>
-                            <Icon icon="NotImplementedYet" iconHeight={18} />
+                            <MenuIconicItemIconStyled icon="Chat" />
                             {t<string>('Customer service')}
                         </MenuIconicItemLinkStyled>
                     </NextLink>
@@ -27,7 +27,7 @@ const MenuIconic = (): ReactElement => {
                 <MenuIconicItemStyled>
                     <NextLink href="/" passHref>
                         <MenuIconicItemLinkStyled>
-                            <Icon icon="NotImplementedYet" iconHeight={18} />
+                            <MenuIconicItemIconStyled icon="Marker" />
                             {t<string>('Stores')}
                         </MenuIconicItemLinkStyled>
                     </NextLink>
@@ -35,7 +35,7 @@ const MenuIconic = (): ReactElement => {
                 <MenuIconicItemStyled>
                     <NextLink href="/" passHref>
                         <MenuIconicItemLinkStyled>
-                            <Icon icon="NotImplementedYet" iconHeight={18} />
+                            <MenuIconicItemIconStyled icon="User" />
                             {t<string>('Sign in')}
                         </MenuIconicItemLinkStyled>
                     </NextLink>
@@ -44,7 +44,7 @@ const MenuIconic = (): ReactElement => {
             <MenuIconicButtonMobileStyled>
                 <NextLink href="/" passHref>
                     <MenuIconicButtonMobileLinkStyled>
-                        <Icon icon="NotImplementedYet" iconHeight={18} />
+                        <MenuIconicItemIconStyled icon="User" />
                     </MenuIconicButtonMobileLinkStyled>
                 </NextLink>
             </MenuIconicButtonMobileStyled>

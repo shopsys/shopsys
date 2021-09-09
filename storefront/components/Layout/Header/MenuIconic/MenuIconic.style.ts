@@ -1,9 +1,10 @@
 import { css } from 'styled-components';
+import Icon from '../../../Basic/Icon';
 import { styled } from '../../../Theme/main';
 
 const localVariables = {
     menuIconicMobileButtonSize: '40px',
-};
+} as const;
 
 export const MenuIconicListStyled = styled.ul`
     ${({ theme }) => css`
@@ -52,6 +53,16 @@ export const MenuIconicItemLinkStyled = styled.a`
             font-size: 18px;
             margin-right: 10px;
         }
+    `}
+`;
+
+export const MenuIconicItemIconStyled = styled(Icon)`
+    ${({ theme }) => css`
+        width: 18px;
+        height: 18px;
+        margin-right: 10px;
+
+        color: ${theme.color.white};
     `}
 `;
 
