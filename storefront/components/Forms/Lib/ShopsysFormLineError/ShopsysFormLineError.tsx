@@ -6,7 +6,6 @@ import {
     StyledShopsysFormFieldError,
 } from './ShopsysFormLineError.style';
 import { ErrorMessage } from '@hookform/error-message';
-import Icon from '../../../Basic/Icon';
 import { ReactElement } from 'react';
 
 function ShopsysFormLineError(
@@ -15,9 +14,7 @@ function ShopsysFormLineError(
     if (props.errors[props.for]) {
         return (
             <StyledShopsysFormFieldError>
-                <StyledShopsysErrorIcon inputType={props.inputType} textInputSize="default">
-                    <Icon icon="NotImplementedYet" iconHeight={16} />
-                </StyledShopsysErrorIcon>
+                <StyledShopsysErrorIcon inputType={props.inputType} textInputSize="small" icon="Cross" />
                 <ErrorMessage
                     errors={props.errors}
                     name={props.for}

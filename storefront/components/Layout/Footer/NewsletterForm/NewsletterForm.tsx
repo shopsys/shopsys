@@ -1,9 +1,9 @@
 import * as Yup from 'yup';
 import {
-    NewsletterFormButtonWrapper,
-    NewsletterFormColumn,
-    NewsletterFormInputWrapper,
-    NewsletterFormWrapper,
+    NewsletterFormButtonWrapperStyled,
+    NewsletterFormColumnStyled,
+    NewsletterFormInputWrapperStyled,
+    NewsletterFormWrapperStyled,
 } from './NewsletterForm.style';
 import { FC } from 'react';
 import Heading from '../../../Basic/Heading';
@@ -37,17 +37,17 @@ const NewsletterForm: FC = () => {
     const dispatch = useShopsysDispatch();
 
     return (
-        <NewsletterFormWrapper>
+        <NewsletterFormWrapperStyled>
             <Heading type="h2">
                 {t<string>('Sign up for our newsletter and get 35% discount on running apparel')}
             </Heading>
-            <NewsletterFormColumn>
+            <NewsletterFormColumnStyled>
                 <ShopsysForm
                     onSubmitHandler={subscribeToNewsletter}
                     onSuccessHandler={() => dispatch(popupActions.showPopup('NewsletterSuccess'))}
                     resolver={getNewsletterFormResolver(t)}
                 >
-                    <NewsletterFormInputWrapper>
+                    <NewsletterFormInputWrapperStyled>
                         <ShopsysTextInput
                             inputSize="small"
                             id="newsletter_form-email"
@@ -55,12 +55,12 @@ const NewsletterForm: FC = () => {
                             label={t('email')}
                             required={true}
                         />
-                        <NewsletterFormButtonWrapper>
+                        <NewsletterFormButtonWrapperStyled>
                             <ShopsysButton type="submit" borderRadius="big">
                                 {t<string>('Send')}
                             </ShopsysButton>
-                        </NewsletterFormButtonWrapper>
-                    </NewsletterFormInputWrapper>
+                        </NewsletterFormButtonWrapperStyled>
+                    </NewsletterFormInputWrapperStyled>
                     <ShopsysCheckbox
                         id="newsletter_form-privacyPolicy"
                         name="privacyPolicy"
@@ -68,8 +68,8 @@ const NewsletterForm: FC = () => {
                         required={true}
                     />
                 </ShopsysForm>
-            </NewsletterFormColumn>
-        </NewsletterFormWrapper>
+            </NewsletterFormColumnStyled>
+        </NewsletterFormWrapperStyled>
     );
 };
 
