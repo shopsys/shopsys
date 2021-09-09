@@ -12,3 +12,11 @@ Mutation:
                         type: AddToCartInput!
                         validation: cascade
                 resolve: "@=mutation('addToCart', [args, validator])"
+            RemoveFromCart:
+                type: Cart!
+                description: "Remove product from cart"
+                args:
+                    input:
+                        type: RemoveFromCartInput!
+                        validation: cascade
+                resolve: "@=mutation('removeFromCart', [args, validator])"

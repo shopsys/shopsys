@@ -80,12 +80,40 @@ class CartMutation implements MutationInterface, AliasedInterface
     }
 
     /**
+     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
+     * @param \Overblog\GraphQLBundle\Validator\InputValidator $validator
+     * @return \App\FrontendApi\Model\Cart\CartWithModificationsResult|null
+     */
+    public function removeFromCart(Argument $argument, InputValidator $validator): ?CartWithModificationsResult
+    {
+        $validator->validate();
+
+        $input = $argument['input'];
+
+        $cartUuid = $input['cartUuid'];
+        $cartItemUuid = $input['cartItemUuid'];
+
+        /** @var \App\Model\Customer\User\CustomerUser|null $customerUser */
+        $customerUser = $this->currentCustomerUser->findCurrentCustomerUser();
+
+        $cart = $this->cartFacade->getCart($customerUser, $cartUuid);
+
+        $cart = $this->cartFacade->removeItemByUuidFromCart(
+            $cartItemUuid,
+            $cart
+        );
+
+        return $this->cartWatcherFacade->getCheckedCartWithModifications($cart);
+    }
+
+    /**
      * @return string[]
      */
     public static function getAliases(): array
     {
         return [
             'addToCart' => 'addToCart',
+            'removeFromCart' => 'removeFromCart',
         ];
     }
 }

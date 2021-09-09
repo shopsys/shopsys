@@ -87,6 +87,20 @@ class CartFacade
     }
 
     /**
+     * @param string $cartItemUuid
+     * @param \App\Model\Cart\Cart $cart
+     * @return \App\Model\Cart\Cart
+     */
+    public function removeItemByUuidFromCart(string $cartItemUuid, Cart $cart): Cart
+    {
+        try {
+            return $this->cartFacade->removeItemFromExistingCartByUuid($cartItemUuid, $cart);
+        } catch (InvalidCartItemException $e) {
+            throw new UserError($e->getMessage());
+        }
+    }
+
+    /**
      * @param \App\Model\Customer\User\CustomerUser|null $customerUser
      * @param string|null $cartUuid
      * @return \App\Model\Cart\Cart
@@ -107,6 +121,39 @@ class CartFacade
     }
 
     /**
+     * @param \App\Model\Customer\User\CustomerUser|null $customerUser
+     * @param string|null $cartUuid
+     * @return \App\Model\Cart\Cart
+     */
+    public function getCart(?CustomerUser $customerUser, ?string $cartUuid): Cart
+    {
+        $cart = $this->findCart($customerUser, $cartUuid);
+
+        if ($cart === null) {
+            throw new UserError('Cart is unavailable.');
+        }
+
+        return $cart;
+    }
+
+    /**
+     * @param \App\Model\Customer\User\CustomerUser|null $customerUser
+     * @param string|null $cartUuid
+     * @return \App\Model\Cart\Cart|null
+     */
+    public function findCart(?CustomerUser $customerUser, ?string $cartUuid): ?Cart
+    {
+        $this->assertFilledCustomerUserOrUuid($customerUser, $cartUuid);
+
+        if ($customerUser !== null) {
+            $customerUserIdentifier = $this->customerUserIdentifierFactory->getByCustomerUser($customerUser);
+            return $this->cartFacade->findCartByCustomerUserIdentifier($customerUserIdentifier);
+        }
+
+        return $this->getCartByUuid($cartUuid);
+    }
+
+    /**
      * @param string $cartUuid
      * @return \App\Model\Cart\Cart
      */
@@ -118,5 +165,16 @@ class CartFacade
         }
 
         return $cart;
+    }
+
+    /**
+     * @param \App\Model\Customer\User\CustomerUser|null $customerUser
+     * @param string|null $cartUuid
+     */
+    private function assertFilledCustomerUserOrUuid(?CustomerUser $customerUser, ?string $cartUuid): void
+    {
+        if ($customerUser === null && $cartUuid === null) {
+            throw new UserError('Either cart UUID has to be provided, or the user has to be logged in.');
+        }
     }
 }

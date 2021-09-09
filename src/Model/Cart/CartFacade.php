@@ -195,6 +195,23 @@ class CartFacade extends BaseCartFacade
     }
 
     /**
+     * @param string $cartItemUuid
+     * @param \App\Model\Cart\Cart $cart
+     * @return \App\Model\Cart\Cart
+     */
+    public function removeItemFromExistingCartByUuid(string $cartItemUuid, Cart $cart): Cart
+    {
+        $cartItemToRemove = $cart->getItemByUuid($cartItemUuid);
+
+        $cart->removeItemById($cartItemToRemove->getId());
+
+        $this->em->remove($cartItemToRemove);
+        $this->em->flush();
+
+        return $cart;
+    }
+
+    /**
      * @param string $cartIdentifier
      * @return \App\Model\Cart\Cart|null
      */
