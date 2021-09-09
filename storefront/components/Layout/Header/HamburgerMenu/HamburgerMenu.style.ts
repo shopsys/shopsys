@@ -1,4 +1,5 @@
 import { css } from 'styled-components';
+import Icon from '../../../Basic/Icon';
 import { styled } from '../../../Theme/main';
 
 export const HamburgerMenuStyled = styled.div`
@@ -27,4 +28,9 @@ export const HamburgerMenuImageStyled = styled.div`
     align-items: center;
     justify-content: center;
     width: 16px;
+`;
+
+export const HamburgerMenuIconOpenStyled = styled(Icon)`
+    width: 16px;
+    height: 16px;
 `;

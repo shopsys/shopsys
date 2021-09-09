@@ -9,6 +9,8 @@ export const IconsSvgMap = {
     Chat: <Icons.Chat />,
     Marker: <Icons.Marker />,
     User: <Icons.User />,
+    Close: <Icons.Close />,
+    Menu: <Icons.Menu />,
     NotImplementedYet: <Icons.NotImplementedYet />,
 };
 
