@@ -4,20 +4,27 @@ import {
     TabsContentInStyled,
     TabsContentMobileHeadingStyled,
     TabsContentStyled,
+    TabsIconStyled,
     TabsListItemStyled,
     TabsListStyled,
     TabsStyled,
 } from './Tabs.style';
-import Icon from '../Icon';
 
 /**
  * TabsExtended component wrapping tabs and its content
  * In background of styled tab parts we are using - react-tabs components
  * https://github.com/reactjs/react-tabs
  */
+type TabsProps = {
+    /**
+     * Text used as mobile tab variant
+     */
+    headingTextMobile: string;
+};
 
 type TabFunctionComponentType = FC & { tabsRole: string };
-type TabFunctionComponentContentType = FC<{ headingTextMobile: string }> & { tabsRole: string };
+type TabFunctionComponentContentType = FC<TabsProps> & { tabsRole: string };
+
 /*
  * TabsExtended element is wrap around all tabs and its content
  */
@@ -35,7 +42,6 @@ const TabsListExtended: TabFunctionComponentType = (props) => {
 /*
  * TabsListItemExtended element creates link with tab functionality - shows contant according to ShopsysTabsContent index order
  */
-
 const TabsListItemExtended: TabFunctionComponentType = (props) => {
     return (
         <TabsListItemStyled selectedClassName="active" {...props}>
@@ -57,9 +63,9 @@ const TabsContentExtended: TabFunctionComponentContentType = (props) => {
 
     return (
         <TabsContentStyled forceRender={true} selectedClassName="active" {...props}>
-            <TabsContentMobileHeadingStyled onClick={mobileTab} className={isActiveOnMobile ? 'active' : ''}>
+            <TabsContentMobileHeadingStyled onClick={mobileTab}>
                 {props.headingTextMobile}
-                <Icon icon="Arrow" />
+                <TabsIconStyled icon="Arrow" isActive={isActiveOnMobile} />
             </TabsContentMobileHeadingStyled>
             <TabsContentInStyled {...props} isActiveOnMobile={isActiveOnMobile}>
                 {props.children}
@@ -68,7 +74,7 @@ const TabsContentExtended: TabFunctionComponentContentType = (props) => {
     );
 };
 
-// define element roles for react tabs
+// define element roles needed for react-tabs component
 TabsListItemExtended.tabsRole = 'Tab';
 TabsListExtended.tabsRole = 'TabList';
 TabsExtended.tabsRole = 'Tabs';
