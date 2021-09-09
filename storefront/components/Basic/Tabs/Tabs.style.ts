@@ -1,9 +1,14 @@
 import { Tab, TabList, TabPanel, Tabs } from 'react-tabs';
 import { css } from 'styled-components';
+import Icon from '../../Basic/Icon';
 import { styled } from '../../Theme/main';
 
 type TabsContentProps = {
     isActiveOnMobile?: boolean;
+};
+
+type TabsIconProps = {
+    isActive?: boolean;
 };
 
 const localVariables = {
@@ -130,17 +135,21 @@ export const TabsContentMobileHeadingStyled = styled.h3`
         @media ${theme.mediaQueries.queryLg} {
             display: none;
         }
+    `}
+`;
 
-        img {
-            transform: rotate(0deg);
+export const TabsIconStyled = styled(Icon)<TabsIconProps>`
+    ${({ theme, isActive }) => css`
+        height: 18px;
+        width: 18px;
+
+        transform: rotate(0deg);
+        transition: ${theme.transition};
+
+        ${isActive &&
+        css`
+            transform: rotate(-180deg);
             transition: ${theme.transition};
-        }
-
-        &.active {
-            img {
-                transform: rotate(-180deg);
-                transition: ${theme.transition};
-            }
-        }
+        `},
     `}
 `;
