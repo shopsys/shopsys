@@ -8,8 +8,8 @@ import {
 } from './ShopsysTextInput.style';
 import { ExtractNativePropsFromDefault } from 'typeHelpers/ExtractNativePropsFromDefault';
 import { getStateAfterValidation } from '../Helpers/getStateAfterValidation';
+import Icon from '../../Basic/Icon';
 import ShopsysFormLineError from '../Lib/ShopsysFormLineError';
-import ShopsysIcon from '../../Basic/ShopsysIcon';
 import ShopsysLabelWrapper from '../Lib/ShopsysLabelWrapper';
 import { useFormContext } from 'react-hook-form';
 
@@ -65,7 +65,7 @@ function ShopsysTextInput(props: InferProps<typeof ShopsysTextInput.propTypes> &
                 )}
                 {props.variant === 'searchInHeader' && (
                     <StyledShopsysSearchButton>
-                        <ShopsysIcon icon="search" iconHeight={20} />
+                        <Icon icon="NotImplementedYet" iconHeight={20} />
                     </StyledShopsysSearchButton>
                 )}
             </ShopsysLabelWrapper>

@@ -10,7 +10,6 @@ import { debounce } from 'lodash';
 import Link from 'next/link';
 import { NavigationItem as NavigationItemType } from '../../../../../connectors/navigation/Navigation';
 import NavigationLeaf from '../NavigationLeaf';
-import ShopsysIcon from '../../../../Basic/ShopsysIcon';
 
 type NavigationItemProps = {
     navigationItem: NavigationItemType;
@@ -36,11 +35,7 @@ const NavigationItem: FC<NavigationItemProps> = (props) => {
             <Link href={props.navigationItem.link} passHref>
                 <NavigationItemLinkStyled isOpen={isHovered}>
                     {props.navigationItem.name}
-                    {hasChildren && (
-                        <NavigationItemLinkIconStyled isOpen={isHovered}>
-                            <ShopsysIcon icon="arrow" iconHeight={14} />
-                        </NavigationItemLinkIconStyled>
-                    )}
+                    {hasChildren && <NavigationItemLinkIconStyled isOpen={isHovered} icon="Arrow" />}
                 </NavigationItemLinkStyled>
             </Link>
             {hasChildren && (

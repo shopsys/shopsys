@@ -6,10 +6,10 @@ import {
     ProductDetailAvailabilityListWrapperStyled as AvailabilityListWrapperStyled,
 } from './ProductDetailAvailabilityList.style';
 import { forwardRef } from 'react';
+import Icon from 'components/Basic/Icon';
 import Link from 'next/link';
 import { ProductDetailType } from '../../types';
 import ShopsysHeading from 'components/Basic/ShopsysHeading';
-import ShopsysIcon from 'components/Basic/ShopsysIcon';
 import { useTranslation } from 'next-i18next';
 
 type ProductDetailAvailabilityListProps = {
@@ -34,7 +34,7 @@ const ProductDetailAvailabilityList = forwardRef<HTMLUListElement, ProductDetail
                         <Link href="/">
                             <AvailabilityListItemStoreLinkStyled>
                                 {t('Store detail')}
-                                <ShopsysIcon icon="arrow-right" iconHeight={16} />
+                                <Icon icon="ArrowRight" iconHeight={16} />
                             </AvailabilityListItemStoreLinkStyled>
                         </Link>
                     </AvailabilityListItemStyled>

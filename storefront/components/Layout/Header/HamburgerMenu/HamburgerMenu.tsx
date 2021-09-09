@@ -1,6 +1,6 @@
 import { HamburgerMenuImageStyled, HamburgerMenuStyled, HamburgerMenuTextStyled } from './HamburgerMenu.style';
 import { ReactElement, useState } from 'react';
-import ShopsysIcon from '../../../Basic/ShopsysIcon';
+import Icon from '../../../Basic/Icon';
 import { useTranslation } from 'react-i18next';
 
 const HamburgerMenu = (): ReactElement => {
@@ -9,9 +9,9 @@ const HamburgerMenu = (): ReactElement => {
 
     const MenuIcon = () => {
         if (isMenuOpened) {
-            return <ShopsysIcon icon="close" iconHeight={14} />;
+            return <Icon icon="NotImplementedYet" iconHeight={14} />;
         }
-        return <ShopsysIcon icon="menu" iconHeight={16} />;
+        return <Icon icon="NotImplementedYet" iconHeight={16} />;
     };
 
     const toggleMenu = () => {

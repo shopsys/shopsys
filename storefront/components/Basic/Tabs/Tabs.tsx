@@ -8,7 +8,7 @@ import {
     TabsListStyled,
     TabsStyled,
 } from './Tabs.style';
-import ShopsysIcon from '../ShopsysIcon';
+import Icon from '../Icon';
 
 /**
  * TabsExtended component wrapping tabs and its content
@@ -59,7 +59,7 @@ const TabsContentExtended: TabFunctionComponentContentType = (props) => {
         <TabsContentStyled forceRender={true} selectedClassName="active" {...props}>
             <TabsContentMobileHeadingStyled onClick={mobileTab} className={isActiveOnMobile ? 'active' : ''}>
                 {props.headingTextMobile}
-                <ShopsysIcon icon="arrow-black" iconHeight={16} />
+                <Icon icon="Arrow" />
             </TabsContentMobileHeadingStyled>
             <TabsContentInStyled {...props} isActiveOnMobile={isActiveOnMobile}>
                 {props.children}

@@ -1,5 +1,6 @@
 import { styled, Theme } from '../../../../Theme/main';
 import { css } from 'styled-components';
+import Icon from '../../../../Basic/Icon';
 
 type NavigationProps = {
     isOpen?: boolean;
@@ -106,15 +107,16 @@ export const NavigationItemLinkStyled = styled.a<NavigationProps>`
     `}
 `;
 
-export const NavigationItemLinkIconStyled = styled.span<NavigationProps>`
-    ${({ isOpen }) => css`
+export const NavigationItemLinkIconStyled = styled(Icon)<NavigationProps>`
+    ${({ theme, isOpen }) => css`
         margin-left: 8px;
+
+        color: ${theme.color.white};
 
         ${isOpen &&
         css`
-            img {
-                transform: rotate(180deg);
-            }
+            transform: rotate(180deg);
+            color: ${theme.color.orangeLight};
         `};
     `};
 `;

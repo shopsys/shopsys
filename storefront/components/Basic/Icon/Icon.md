@@ -1,7 +1,7 @@
 ```jsx
-<ShopsysIcon icon="info" iconHeight={60} />
+<Icon icon="NotImplementedYet" />
 Display info.svg from /public/svg/ folder and set height to 60px
 <br />
-<ShopsysIcon icon="info" iconType="png" /> 
+<Icon icon="NotImplementedYet" iconType="img" /> 
 Display info.png from /public/icons/ folder and let height as default 24px
 

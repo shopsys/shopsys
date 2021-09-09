@@ -1,7 +1,7 @@
-import { Tabs, TabsContent, TabsList, TabsListItem } from '../../basic/Tabs';
+import { Tabs, TabsContent, TabsList, TabsListItem } from '../../Basic/Tabs';
 import { FC } from 'react';
-import ShopsysInUserText from 'components/in/ShopsysInUserText';
-import Table from 'components/basic/Table';
+import ShopsysInUserText from 'components/Helpers/ShopsysUserText';
+import Table from '../../Basic/Table';
 import { useTranslation } from 'next-i18next';
 
 type ProductDetailTabsProps = {
