@@ -1,3 +1,4 @@
+import * as smoothscroll from 'smoothscroll-polyfill';
 import { DropdownItemLinkStyled, DropdownItemStyled } from './DropdownItem.style';
 import { FC, useContext, useEffect, useState } from 'react';
 import {
@@ -23,6 +24,14 @@ const DropdownItem: FC<DropdownItemProps & DropdownItemType> = (props) => {
     const [itemLink, setItemLink] = useState('');
     const [itemName, setItemName] = useState('');
 
+    const scrollToTop = () => {
+        window.scroll({ top: 0, left: 0, behavior: 'smooth' });
+    };
+
+    useEffect(() => {
+        smoothscroll.polyfill();
+    }, []);
+
     useEffect(() => {
         if (props.navigationItem !== undefined) {
             setHasChildren(props.navigationItem.categoriesByColumns.length > 0);
@@ -39,7 +48,7 @@ const DropdownItem: FC<DropdownItemProps & DropdownItemType> = (props) => {
     }, [hasChildren, itemLink, itemName]);
 
     return (
-        <DropdownItemStyled variant={props.variant}>
+        <DropdownItemStyled variant={props.variant} onClick={scrollToTop}>
             <Link href={itemLink} passHref>
                 <DropdownItemLinkStyled onClick={context.onMenuToggleHandler} variant={props.variant}>
                     {itemName}
