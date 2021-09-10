@@ -23,10 +23,10 @@ class BrandTest extends GraphQlTestCase
 
     protected function setUp(): void
     {
+        parent::setUp();
+
         $brandFacade = $this->getContainer()->get(BrandFacade::class);
         $this->brand = $brandFacade->getById(2);
-
-        parent::setUp();
     }
 
     public function testBrandByUuid(): void

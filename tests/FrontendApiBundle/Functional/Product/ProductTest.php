@@ -25,13 +25,13 @@ class ProductTest extends GraphQlTestCase
 
     protected function setUp(): void
     {
+        parent::setUp();
+
         $productFacade = $this->getContainer()->get(ProductFacade::class);
 
         /** @var \App\Model\Product\Product $product */
         $product = $productFacade->getById(1);
         $this->product = $product;
-
-        parent::setUp();
     }
 
     public function testProductDetailNameByUuid(): void

@@ -23,10 +23,10 @@ class CategoryTest extends GraphQlTestCase
 
     protected function setUp(): void
     {
+        parent::setUp();
+
         $categoryFacade = $this->getContainer()->get(CategoryFacade::class);
         $this->category = $categoryFacade->getById(2);
-
-        parent::setUp();
     }
 
     public function testCategoryNameByUuid(): void

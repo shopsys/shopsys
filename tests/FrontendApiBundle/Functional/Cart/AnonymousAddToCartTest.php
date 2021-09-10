@@ -15,6 +15,7 @@ class AnonymousAddToCartTest extends GraphQlTestCase
 {
     /**
      * @var \App\Model\Cart\CartFacade
+     * @inject
      */
     private CartFacade $cartFacade;
 
@@ -27,7 +28,6 @@ class AnonymousAddToCartTest extends GraphQlTestCase
     {
         parent::setUp();
 
-        $this->cartFacade = $this->getContainer()->get(CartFacade::class);
         $this->testingProduct = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1');
     }
 

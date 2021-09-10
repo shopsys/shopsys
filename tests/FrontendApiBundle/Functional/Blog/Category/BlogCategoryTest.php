@@ -29,10 +29,10 @@ class BlogCategoryTest extends GraphQlTestCase
 
     protected function setUp(): void
     {
+        parent::setUp();
+
         $this->blogCategory = $this->getReference(BlogArticleDataFixture::FIRST_DEMO_BLOG_SUBCATEGORY);
         $this->friendlyUrlFacade = $this->getContainer()->get(FriendlyUrlFacade::class);
-
-        parent::setUp();
     }
 
     public function testGetBlogCategoryByUuid(): void
