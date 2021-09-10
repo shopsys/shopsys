@@ -177,4 +177,12 @@ class CartFacade
             throw new UserError('Either cart UUID has to be provided, or the user has to be logged in.');
         }
     }
+
+    /**
+     * @param \App\Model\Cart\Cart $cart
+     */
+    public function deleteCart(Cart $cart): void
+    {
+        $this->cartFacade->deleteCart($cart);
+    }
 }

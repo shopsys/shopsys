@@ -95,6 +95,7 @@ class CreateOrderMutation extends BaseCreateOrderMutation
         }
 
         $order = $this->placeOrderFacade->placeOrder($orderData, $quantifiedProducts, $promoCode);
+        $this->cartFacade->deleteCart($cart);
 
         try {
             $this->sendEmail($order);
