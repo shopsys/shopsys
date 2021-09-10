@@ -1,0 +1,14 @@
+AddProductResult:
+    type: object
+    config:
+        fields:
+            notOnStockQuantity:
+                type: Int!
+            overLimitQuantity:
+                type: Int
+            isQuantityOverLimit:
+                type: Boolean
+            isNew:
+                type: Boolean!
+            addedQuantity:
+                type: Int!

@@ -157,14 +157,16 @@ class CartFacade extends BaseCartFacade
                     $newQuantity = $quantity;
                 }
 
+                $addedQuantity = $quantity;
                 if ($newQuantity > $maximumOrderQuantity) {
                     $notOnStockQuantity = $newQuantity - $maximumOrderQuantity;
                     $newQuantity = $maximumOrderQuantity;
+                    $addedQuantity = $quantity - $notOnStockQuantity;
                 }
                 $isQuantityOverLimit = $this->isQuantityOverLimitReached($newQuantity, $overLimitQuantity);
                 $item->changeQuantity($newQuantity);
                 $item->changeAddedAt(new DateTime());
-                $result = new AddProductResult($item, false, $quantity, $notOnStockQuantity, $overLimitQuantity, $isQuantityOverLimit);
+                $result = new AddProductResult($item, false, $addedQuantity, $notOnStockQuantity, $overLimitQuantity, $isQuantityOverLimit);
                 $this->em->persist($result->getCartItem());
                 $this->em->flush();
 
@@ -190,6 +192,23 @@ class CartFacade extends BaseCartFacade
         $this->em->flush();
 
         return $result;
+    }
+
+    /**
+     * @param string $cartItemUuid
+     * @param \App\Model\Cart\Cart $cart
+     * @return \App\Model\Cart\Cart
+     */
+    public function removeItemFromExistingCartByUuid(string $cartItemUuid, Cart $cart): Cart
+    {
+        $cartItemToRemove = $cart->getItemByUuid($cartItemUuid);
+
+        $cart->removeItemById($cartItemToRemove->getId());
+
+        $this->em->remove($cartItemToRemove);
+        $this->em->flush();
+
+        return $cart;
     }
 
     /**

@@ -8,6 +8,7 @@ use App\Model\Cart\Item\CartItem;
 use App\Model\Product\Product;
 use Doctrine\ORM\Mapping as ORM;
 use Shopsys\FrameworkBundle\Model\Cart\Cart as BaseCart;
+use Shopsys\FrameworkBundle\Model\Cart\Exception\InvalidCartItemException;
 use Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct;
 
 /**
@@ -90,5 +91,21 @@ class Cart extends BaseCart
         }
 
         return $totalWeight;
+    }
+
+    /**
+     * @param string $itemUuid
+     * @return \App\Model\Cart\Item\CartItem
+     */
+    public function getItemByUuid(string $itemUuid): CartItem
+    {
+        foreach ($this->items as $item) {
+            if ($item->getUuid() === $itemUuid) {
+                return $item;
+            }
+        }
+
+        $message = 'Cart item with UUID "' . $itemUuid . '" not found in cart.';
+        throw new InvalidCartItemException($message);
     }
 }

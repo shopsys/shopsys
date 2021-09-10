@@ -48,9 +48,9 @@ class AuthenticatedAddToCartTest extends GraphQlWithLoginTestCase
     public function testProductIsAddedToCustomerCart(): void
     {
         $productQuantity = 6;
-        $cartIdentifier = $this->addTestingProductToCustomerCart($productQuantity);
+        $newlyCreatedCart = $this->addTestingProductToCustomerCart($productQuantity);
 
-        self::assertEquals('', $cartIdentifier);
+        self::assertEquals('', $newlyCreatedCart['uuid']);
 
         $cart = $this->findCartOfCurrentCustomer();
 
@@ -64,9 +64,6 @@ class AuthenticatedAddToCartTest extends GraphQlWithLoginTestCase
 
     public function testProductIsAddedToExistingCart(): void
     {
-        $this->markTestSkipped('skipped until https://gitlab.shopsys.cz/ss6-projects/ssfwcc/-/merge_requests/193 is resolved');
-
-        /** @phpstan-ignore-next-line */
         $initialProductQuantity = 6;
         $this->addTestingProductToCustomerCart($initialProductQuantity);
 
@@ -76,7 +73,9 @@ class AuthenticatedAddToCartTest extends GraphQlWithLoginTestCase
             AddToCart(input: {
                 productUuid: "' . $this->testingProduct->getUuid() . '",
                 quantity: ' . $addedProductQuantity . '
-            })
+            }) {
+                uuid
+            }
         }';
 
         $this->getResponseContentForQuery($mutation);
@@ -91,9 +90,6 @@ class AuthenticatedAddToCartTest extends GraphQlWithLoginTestCase
 
     public function testAnotherProductIsAddedToCart(): void
     {
-        $this->markTestSkipped('skipped until https://gitlab.shopsys.cz/ss6-projects/ssfwcc/-/merge_requests/193 is resolved');
-
-        /** @phpstan-ignore-next-line */
         $productQuantity = 2;
         $this->addTestingProductToCustomerCart($productQuantity);
 
@@ -104,7 +100,9 @@ class AuthenticatedAddToCartTest extends GraphQlWithLoginTestCase
             AddToCart(input: {
                 productUuid: "' . $secondProduct->getUuid() . '",
                 quantity: ' . $secondProductQuantity . '
-            })
+            }) {
+                uuid
+            }
         }';
 
         $this->getResponseContentForQuery($mutation);
@@ -124,9 +122,6 @@ class AuthenticatedAddToCartTest extends GraphQlWithLoginTestCase
 
     public function testProductQuantityIsChangedInExistingCart(): void
     {
-        $this->markTestSkipped('skipped until https://gitlab.shopsys.cz/ss6-projects/ssfwcc/-/merge_requests/193 is resolved');
-
-        /** @phpstan-ignore-next-line */
         $initialProductQuantity = 2;
         $this->addTestingProductToCustomerCart($initialProductQuantity);
 
@@ -137,7 +132,9 @@ class AuthenticatedAddToCartTest extends GraphQlWithLoginTestCase
                 productUuid: "' . $this->testingProduct->getUuid() . '",
                 quantity: ' . $desiredProductQuantity . '
                 isAbsoluteQuantity: true
-            })
+            }) {
+                uuid
+            }
         }';
 
         $this->getResponseContentForQuery($mutation);
@@ -152,15 +149,17 @@ class AuthenticatedAddToCartTest extends GraphQlWithLoginTestCase
 
     /**
      * @param int $productQuantity
-     * @return string
+     * @return array
      */
-    private function addTestingProductToCustomerCart(int $productQuantity): string
+    private function addTestingProductToCustomerCart(int $productQuantity): array
     {
         $mutation = 'mutation {
             AddToCart(input: {
                 productUuid: "' . $this->testingProduct->getUuid() . '",
                 quantity: ' . $productQuantity . '
-            })
+            }) {
+                uuid
+            }
         }';
 
         $response = $this->getResponseContentForQuery($mutation);

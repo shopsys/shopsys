@@ -1,0 +1,11 @@
+RemoveFromCartInput:
+    type: input-object
+    config:
+        fields:
+            cartUuid:
+                type: "Uuid"
+                description: "Cart identifier, ignored when customer is logged in"
+                defaultValue: null
+            cartItemUuid:
+                type: "Uuid!"
+                description: "Cart item UUID"

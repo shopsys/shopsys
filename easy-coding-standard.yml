@@ -107,7 +107,7 @@ parameters:
             - '*/src/Model/Product/Availability/ProductAvailabilityFacade.php'
             - '*/tests/App/Test/Codeception/Module/StrictWebDriver.php'
             - '*/tests/App/Smoke/Http/RouteConfigCustomization.php'
-            - '*/tests/FrontendApiBundle/Functional/Product/ProductsFilteringOptionsTest.php'
+            - '*/tests/FrontendApiBundle/Functional/*'
 
         PHP_CodeSniffer\Standards\Generic\Sniffs\Metrics\CyclomaticComplexitySniff:
             - '*/src/DataFixtures/Demo/ProductDataFixture.php'

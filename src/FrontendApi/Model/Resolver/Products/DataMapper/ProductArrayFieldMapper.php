@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\FrontendApi\Model\Resolver\Products\DataMapper;
 
+use App\FrontendApi\Exception\DeprecatedMethodException;
 use Shopsys\FrontendApiBundle\Model\Resolver\Products\DataMapper\ProductArrayFieldMapper as BaseProductArrayFieldMapper;
 
 /**
@@ -109,12 +110,30 @@ class ProductArrayFieldMapper extends BaseProductArrayFieldMapper
      * @param array $data
      * @return array
      */
-    public function getAvailability(array $data): array
+    public function getExtendedAvailability(array $data): array
     {
         return [
             'name' => $data['availability'],
             'status' => $data['availability_status'],
         ];
+    }
+
+    /**
+     * @param array $data
+     * @return string[]
+     */
+    public function getAvailability(array $data): array
+    {
+        throw new DeprecatedMethodException();
+    }
+
+    /**
+     * @param array $data
+     * @return string
+     */
+    public function getSlug(array $data): string
+    {
+        return '/' . $data['slug'];
     }
 
     /**

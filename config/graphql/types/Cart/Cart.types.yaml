@@ -1,0 +1,12 @@
+Cart:
+    type: object
+    config:
+        fields:
+            uuid:
+                type: "Uuid"
+                description: "UUID of the cart, null for authenticated user"
+            items:
+                type: "[CartItem!]!"
+                description: "All items in the cart"
+            modifications:
+                type: "CartModificationsResult!"

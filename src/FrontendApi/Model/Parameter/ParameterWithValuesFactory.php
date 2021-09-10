@@ -4,14 +4,25 @@ declare(strict_types=1);
 
 namespace App\FrontendApi\Model\Parameter;
 
+use Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter as BaseParameter;
 use Shopsys\FrontendApiBundle\Model\Parameter\ParameterWithValuesFactory as BaseParameterWithValuesFactory;
 
 /**
- * @method \Shopsys\FrontendApiBundle\Model\Parameter\ParameterWithValues create(\App\Model\Product\Parameter\Parameter $parameter, \App\Model\Product\Parameter\ParameterValue[] $parameterValues)
- * @method \Shopsys\FrontendApiBundle\Model\Parameter\ParameterWithValues[] createMultipleForProduct(\App\Model\Product\Product $product)
+ * @method \App\FrontendApi\Model\Parameter\ParameterWithValues create(\App\Model\Product\Parameter\Parameter $parameter, \App\Model\Product\Parameter\ParameterValue[] $parameterValues)
+ * @method \App\FrontendApi\Model\Parameter\ParameterWithValues[] createMultipleForProduct(\App\Model\Product\Product $product)
  */
 class ParameterWithValuesFactory extends BaseParameterWithValuesFactory
 {
+    /**
+     * @param \App\Model\Product\Parameter\Parameter $parameter
+     * @param \App\Model\Product\Parameter\ParameterValue[] $parameterValues
+     * @return \App\FrontendApi\Model\Parameter\ParameterWithValues
+     */
+    public function create(BaseParameter $parameter, array $parameterValues): ParameterWithValues
+    {
+        return new ParameterWithValues($parameter, $parameterValues);
+    }
+
     /**
      * @param array $productData
      * @return array
