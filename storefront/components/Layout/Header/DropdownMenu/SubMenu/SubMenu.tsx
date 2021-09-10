@@ -1,10 +1,10 @@
 import { SubMenuItemStyled, SubMenuStyled } from './SubMenu.style';
 import Link from 'next/link';
 import { ReactElement } from 'react';
-import { useTranslation } from 'react-i18next';
+import { useTypedTranslationFunction } from 'hooks/UseTypedTranslationFunction';
 
 const SubMenu = (): ReactElement => {
-    const { t } = useTranslation();
+    const t = useTypedTranslationFunction();
 
     return (
         <SubMenuStyled>

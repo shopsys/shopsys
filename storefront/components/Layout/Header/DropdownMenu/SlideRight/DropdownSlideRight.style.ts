@@ -1,5 +1,6 @@
 import { css } from 'styled-components';
-import { styled } from 'theme/main';
+import Icon from '../../../../Basic/Icon';
+import { styled } from '../../../../Theme/main';
 
 export const DropdownSlideRightStyled = styled.span`
     ${({ theme }) => css`
@@ -15,4 +16,10 @@ export const DropdownSlideRightStyled = styled.span`
             transform: rotate(-90deg);
         }
     `}
+`;
+
+export const DropdownSlideRightIconStyled = styled(Icon)`
+    transform: rotate(-90deg);
+    width: 17px;
+    height: 17px;
 `;

@@ -89,12 +89,10 @@ export const Close = () => (
 );
 
 export const Menu = () => (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-        <g stroke="currentColor" stroke-width="2" fill="none" fill-rule="evenodd" stroke-linejoin="round">
-            <path 
-                d="M2.5 256.014h506.988M2.5 87.028h506.988M2.5 425h506.988" stroke-width="61.02778"
-                fill="currentColor"
-            />
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 12">
+        <g fill="none" fill-rule="evenodd">
+            <path stroke="#000" stroke-width="2" stroke-linejoin="round" d="M0 6h15.996"/>
+            <path fill="currentColor" fill-rule="nonzero" d="M16 0v2H0V0zM15.996 10v2H0v-2z"/>
         </g>
     </svg>
 );

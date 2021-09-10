@@ -1,5 +1,5 @@
 import { css } from 'styled-components';
-import { styled } from 'theme/main';
+import { styled } from '../../../Theme/main';
 
 type DropdownMenuProps = {
     slideDirection: 'left' | 'right';

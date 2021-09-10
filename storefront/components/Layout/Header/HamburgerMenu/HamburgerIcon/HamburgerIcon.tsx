@@ -1,5 +1,6 @@
 import { FC } from 'react';
-import ShopsysIcon from '../../../../basic/ShopsysIcon';
+import { HamburgerIconOpenStyled } from './HamburgerIcon.style';
+import Icon from '../../../../Basic/Icon';
 
 type HamburgerIcon = {
     isMenuOpened: boolean;
@@ -7,10 +8,10 @@ type HamburgerIcon = {
 
 const HamburgerIcon: FC<HamburgerIcon> = (props) => {
     if (props.isMenuOpened) {
-        return <ShopsysIcon icon="close" iconHeight={14} />;
+        return <Icon icon="Close" />;
     }
 
-    return <ShopsysIcon icon="menu" iconHeight={16} />;
+    return <HamburgerIconOpenStyled icon="Menu" />;
 };
 
 /* @component */

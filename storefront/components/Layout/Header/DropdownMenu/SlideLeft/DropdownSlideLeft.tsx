@@ -1,8 +1,7 @@
+import { DropdownSlideLeftIconStyled, DropdownSlideLeftStyled } from './DropdownSlideLeft.style';
 import { DropdownListLevels } from '../types';
-import { DropdownSlideLeftStyled } from './DropdownSlideLeft.style';
 import { FC } from 'react';
-import ShopsysIcon from '../../../../basic/ShopsysIcon';
-import { useTranslation } from 'react-i18next';
+import { useTypedTranslationFunction } from 'hooks/UseTypedTranslationFunction';
 
 type DropdownSlideLeftProps = {
     onClickEvent: (props: { goToMenu: DropdownListLevels }) => void;
@@ -10,11 +9,11 @@ type DropdownSlideLeftProps = {
 };
 
 const DropdownSlideLeft: FC<DropdownSlideLeftProps> = (props) => {
-    const { t } = useTranslation();
+    const t = useTypedTranslationFunction();
 
     return (
         <DropdownSlideLeftStyled onClick={() => props.onClickEvent(props)}>
-            <ShopsysIcon iconHeight={14} icon="arrow-black" />
+            <DropdownSlideLeftIconStyled icon="Arrow" />
             {t('Back')}
         </DropdownSlideLeftStyled>
     );
