@@ -4,6 +4,9 @@ import Navigation from './Header/Navigation';
 import NewsletterForm from './Footer/NewsletterForm';
 import Webline from './Webline';
 
+/**
+ * Basic page layout for common pages
+ */
 const CommonLayout: FC = (props) => {
     return (
         <>
@@ -19,4 +22,5 @@ const CommonLayout: FC = (props) => {
     );
 };
 
+/* @component */
 export default CommonLayout;
