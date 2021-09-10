@@ -1,11 +1,11 @@
 import { css } from 'styled-components';
 import { styled } from '../../../Theme/main';
 
-type StyledBannersSliderItemProps = {
+type BannersSliderItemStyledProps = {
     sliderItemImageUrl: string;
 };
 
-export const StyledBannersSliderItem = styled.div<StyledBannersSliderItemProps>`
+export const BannersSliderItemStyled = styled.div<BannersSliderItemStyledProps>`
     ${({ theme, sliderItemImageUrl }) => css`
         height: 100%;
 

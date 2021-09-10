@@ -1,11 +1,12 @@
 import 'keen-slider/keen-slider.min.css';
-import { FC, useEffect, useRef, useState } from 'react';
 import {
-    StyledBannersSlider,
-    StyledBannersSliderBox,
-    StyledBannersSliderDotControls,
-    StyledBannersSliderThumbnailControls,
+    BannersSliderBoxStyled,
+    BannersSliderDotControlsStyled,
+    BannersSliderStyled,
+    BannersSliderThumbnailControlsIconStyled,
+    BannersSliderThumbnailControlsStyled,
 } from './BannersSlider.style';
+import { FC, useEffect, useRef, useState } from 'react';
 import BannersSliderItem from '../BannersSliderItem/BannersSliderItem';
 import { SliderItem } from 'connectors/sliderItems/types';
 import { theme } from '../../../Theme/main';
@@ -92,12 +93,11 @@ const BannersSlider: FC<BannersSliderProps> = (props) => {
 
     const onMoveToSlideHandler = (newSlideIndex: number) => {
         slider.moveToSlide(slider.details().absoluteSlide - (currentSlide - newSlideIndex));
-        setCurrentSlide(newSlideIndex);
     };
 
     return (
-        <StyledBannersSliderBox ref={sliderBoxRef}>
-            <StyledBannersSlider ref={sliderRef} className="keen-slider">
+        <BannersSliderBoxStyled ref={sliderBoxRef}>
+            <BannersSliderStyled ref={sliderRef} className="keen-slider">
                 {props.sliderItems.map((sliderItem, index) => (
                     <BannersSliderItem
                         key={index}
@@ -105,19 +105,20 @@ const BannersSlider: FC<BannersSliderProps> = (props) => {
                         link={sliderItem.link}
                     />
                 ))}
-            </StyledBannersSlider>
-            <StyledBannersSliderThumbnailControls>
+            </BannersSliderStyled>
+            <BannersSliderThumbnailControlsStyled>
                 {props.sliderItems.map((sliderItem, index) => (
                     <button
                         onClick={() => onMoveToSlideHandler(index)}
                         disabled={index === currentSlide % props.sliderItems.length}
                         key={sliderItem.uuid.toString()}
                     >
+                        <BannersSliderThumbnailControlsIconStyled icon="Triangle" />
                         {sliderItem.name}
                     </button>
                 ))}
-            </StyledBannersSliderThumbnailControls>
-            <StyledBannersSliderDotControls>
+            </BannersSliderThumbnailControlsStyled>
+            <BannersSliderDotControlsStyled>
                 {props.sliderItems.map((sliderItem, index) => (
                     <button
                         onClick={() => onMoveToSlideHandler(index)}
@@ -125,8 +126,8 @@ const BannersSlider: FC<BannersSliderProps> = (props) => {
                         key={sliderItem.uuid.toString()}
                     />
                 ))}
-            </StyledBannersSliderDotControls>
-        </StyledBannersSliderBox>
+            </BannersSliderDotControlsStyled>
+        </BannersSliderBoxStyled>
     );
 };
 

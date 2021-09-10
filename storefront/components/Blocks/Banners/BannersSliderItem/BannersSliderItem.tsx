@@ -1,6 +1,6 @@
 import 'keen-slider/keen-slider.min.css';
+import { BannersSliderItemStyled } from './BannersSliderItem.style';
 import { FC } from 'react';
-import { StyledBannersSliderItem } from './BannersSliderItem.style';
 
 type BannersSliderItemProps = {
     link: string;
@@ -10,7 +10,7 @@ type BannersSliderItemProps = {
 const BannersSliderItem: FC<BannersSliderItemProps> = (props) => {
     return (
         <a href={props.link} className="keen-slider__slide">
-            <StyledBannersSliderItem sliderItemImageUrl={props.imageUrl} />
+            <BannersSliderItemStyled sliderItemImageUrl={props.imageUrl} />
         </a>
     );
 };

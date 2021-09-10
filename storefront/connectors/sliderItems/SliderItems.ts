@@ -21,7 +21,7 @@ query sliderItems {
 }
     ` as const;
 
-export function getSliderItems(): SliderItem[] | undefined {
+export const getSliderItems = (): SliderItem[] | undefined => {
     const result = useFetchQuery({ query: sliderItemsQuery });
     return result?.data?.sliderItems;
-}
+};
