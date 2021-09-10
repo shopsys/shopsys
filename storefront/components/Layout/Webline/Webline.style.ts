@@ -1,13 +1,13 @@
 import { styled, Theme } from '../../Theme/main';
 import { css } from 'styled-components';
 
-type StyledWeblineType = 'default' | 'colored' | 'dark' | 'light';
+type StyledWeblineType = 'colored' | 'dark' | 'light';
 
 type StyledWeblineProps = {
-    type: StyledWeblineType;
+    type?: StyledWeblineType;
 };
 
-const getWeblineType = (type: StyledWeblineType, theme: Theme) => {
+const getWeblineType = (type: StyledWeblineType | undefined, theme: Theme) => {
     switch (type) {
         case 'colored':
             return css`
@@ -26,13 +26,13 @@ const getWeblineType = (type: StyledWeblineType, theme: Theme) => {
     }
 };
 
-export const StyledWebline = styled.div<StyledWeblineProps>`
-    ${({ type, theme }: { type: StyledWeblineType; theme: Theme }) => css`
+export const WeblineStyled = styled.div<StyledWeblineProps>`
+    ${({ type, theme }) => css`
         ${getWeblineType(type, theme)};
     `}
 `;
 
-export const StyledContainer = styled.div`
+export const ContainerStyled = styled.div`
     ${({ theme }) => css`
         padding: 0 ${theme.layout.padding};
 

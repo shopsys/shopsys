@@ -1,6 +1,5 @@
+import { FrontendSwitcherIconStyled, FrontendSwitcherWrapperStyled } from './FrontendSwitcher.style';
 import { FC } from 'react';
-import { FrontendSwitcherWrapper } from './FrontendSwitcher.style';
-import Icon from 'components/Basic/Icon';
 import { useRouter } from 'next/router';
 
 const FrontendSwitcher: FC = () => {
@@ -12,11 +11,11 @@ const FrontendSwitcher: FC = () => {
     };
 
     return (
-        <FrontendSwitcherWrapper>
+        <FrontendSwitcherWrapperStyled>
             <a onClick={openTwigStorefrontEvent}>
-                <Icon iconTitle="Switch to Twig frontend" icon="NotImplementedYet" />
+                <FrontendSwitcherIconStyled iconTitle="Switch to Twig frontend" icon="Replace" />
             </a>
-        </FrontendSwitcherWrapper>
+        </FrontendSwitcherWrapperStyled>
     );
 };
 

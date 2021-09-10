@@ -1,7 +1,7 @@
 import { css } from 'styled-components';
 import { styled } from '../../../Theme/main';
 
-export const NewsletterFormWrapper = styled.div`
+export const NewsletterFormWrapperStyled = styled.div`
     ${({ theme }) => css`
         display: flex;
         flex-direction: column;
@@ -35,7 +35,7 @@ export const NewsletterFormWrapper = styled.div`
     `}
 `;
 
-export const NewsletterFormColumn = styled.div`
+export const NewsletterFormColumnStyled = styled.div`
     ${({ theme }) => css`
         width: 100%;
 
@@ -55,7 +55,7 @@ export const NewsletterFormColumn = styled.div`
     `}
 `;
 
-export const NewsletterFormInputWrapper = styled.div`
+export const NewsletterFormInputWrapperStyled = styled.div`
     ${({ theme }) => css`
         display: flex;
         margin-bottom: 12px;
@@ -67,7 +67,7 @@ export const NewsletterFormInputWrapper = styled.div`
     `}
 `;
 
-export const NewsletterFormButtonWrapper = styled.div`
+export const NewsletterFormButtonWrapperStyled = styled.div`
     ${({ theme }) => css`
         display: flex;
         flex-direction: column;

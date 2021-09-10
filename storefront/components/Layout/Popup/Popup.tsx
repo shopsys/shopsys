@@ -1,10 +1,11 @@
 import { FC, MouseEventHandler, ReactElement, useEffect, useRef } from 'react';
 import {
-    StyledClosePopupButton,
-    StyledOverlay,
-    StyledPopup,
-    StyledPopupContent,
-    StyledPopupHeader,
+    OverlayStyled,
+    PopupButtonCloseIconStyled,
+    PopupButtonCloseStyled,
+    PopupContentStyled,
+    PopupHeaderStyled,
+    PopupStyled,
 } from './Popup.style';
 import { useShopsysDispatch, useShopsysSelector } from 'redux/store';
 import NewsletterSuccess from './PopupContents/NewsletterSuccess/NewsletterSuccess';
@@ -43,15 +44,15 @@ const Popup: FC = () => {
     if (isPopupShown) {
         return (
             <>
-                <StyledOverlay onClick={onClickCloseActionHandler}></StyledOverlay>
-                <StyledPopup role="dialog" aria-modal={true}>
-                    <StyledPopupHeader>
-                        <StyledClosePopupButton onClick={onClickCloseActionHandler}>
-                            <img src="/svg/remove.svg" />
-                        </StyledClosePopupButton>
-                    </StyledPopupHeader>
-                    <StyledPopupContent>{renderPopupContent(popupContent)}</StyledPopupContent>
-                </StyledPopup>
+                <OverlayStyled onClick={onClickCloseActionHandler}></OverlayStyled>
+                <PopupStyled role="dialog" aria-modal={true}>
+                    <PopupHeaderStyled>
+                        <PopupButtonCloseStyled onClick={onClickCloseActionHandler}>
+                            <PopupButtonCloseIconStyled icon="Remove" />
+                        </PopupButtonCloseStyled>
+                    </PopupHeaderStyled>
+                    <PopupContentStyled>{renderPopupContent(popupContent)}</PopupContentStyled>
+                </PopupStyled>
             </>
         );
     }

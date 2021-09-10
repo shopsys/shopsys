@@ -1,7 +1,8 @@
 import { css } from 'styled-components';
+import Icon from '../../Basic/Icon';
 import { styled } from '../../Theme/main';
 
-export const StyledOverlay = styled.div`
+export const OverlayStyled = styled.div`
     ${({ theme }) => css`
         bottom: 0;
         left: 0;
@@ -21,7 +22,7 @@ export const StyledOverlay = styled.div`
     `}
 `;
 
-export const StyledPopup = styled.div`
+export const PopupStyled = styled.div`
     ${({ theme }) => css`
         display: flex;
         flex-direction: column;
@@ -34,10 +35,10 @@ export const StyledPopup = styled.div`
         transform: translateX(-50%) translateY(-50%);
 
         cursor: auto;
-        border-radius: 11px;
+        border-radius: ${theme.radius.big};
         box-shadow: 0 30px 50px rgba(0, 0, 0, 0.2);
         transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out;
-        background-color: #fefefe;
+        background-color: ${theme.color.creamWhite};
 
         @media ${theme.mediaQueries.queryTablet} {
             max-width: 96%;
@@ -45,35 +46,40 @@ export const StyledPopup = styled.div`
     `}
 `;
 
-export const StyledPopupHeader = styled.div`
+export const PopupHeaderStyled = styled.div`
     height: 36px;
     display: flex;
     justify-content: end;
     align-items: center;
 `;
 
-export const StyledClosePopupButton = styled.button`
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 36px;
-    width: 36px;
+export const PopupButtonCloseStyled = styled.button`
+    ${({ theme }) => css`
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 36px;
+        width: 36px;
 
-    background-color: #fefefe;
-    border: 0;
-    border-radius: 100%;
-    color: #777;
-    cursor: pointer;
-    font-size: 10px;
-    outline: 0;
-    text-decoration: none;
-
-    img {
-        width: 24px;
-        color: #4c5bfd;
-    }
+        background-color: ${theme.color.creamWhite};
+        border: 0;
+        border-radius: 100%;
+        color: ${theme.color.grey};
+        cursor: pointer;
+        font-size: 10px;
+        outline: 0;
+        text-decoration: none;
+    `}
 `;
 
-export const StyledPopupContent = styled.div`
+export const PopupButtonCloseIconStyled = styled(Icon)`
+    ${({ theme }) => css`
+        width: 24px;
+        height: 24px;
+        color: ${theme.color.primary};
+    `}
+`;
+
+export const PopupContentStyled = styled.div`
     padding: 0 15px 15px 15px;
 `;

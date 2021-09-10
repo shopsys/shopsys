@@ -1,17 +1,22 @@
-import { HamburgerMenuImageStyled, HamburgerMenuStyled, HamburgerMenuTextStyled } from './HamburgerMenu.style';
-import { ReactElement, useState } from 'react';
+import { FC, useState } from 'react';
+import {
+    HamburgerMenuIconOpenStyled,
+    HamburgerMenuImageStyled,
+    HamburgerMenuStyled,
+    HamburgerMenuTextStyled,
+} from './HamburgerMenu.style';
 import Icon from '../../../Basic/Icon';
 import { useTypedTranslationFunction } from 'hooks/UseTypedTranslationFunction';
 
-const HamburgerMenu = (): ReactElement => {
+const HamburgerMenu: FC = () => {
     const t = useTypedTranslationFunction();
     const [isMenuOpened, setIsMenuOpened] = useState(false);
 
     const MenuIcon = () => {
         if (isMenuOpened) {
-            return <Icon icon="NotImplementedYet" iconHeight={14} />;
+            return <Icon icon="Close" />;
         }
-        return <Icon icon="NotImplementedYet" iconHeight={16} />;
+        return <HamburgerMenuIconOpenStyled icon="Menu" />;
     };
 
     const toggleMenu = () => {
