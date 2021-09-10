@@ -43,3 +43,16 @@ services:
 
     Shopsys\Cdn\Component\Domain\DomainFactoryOverwritingDomainUrl:
         class: Shopsys\Cdn\Component\Domain\DomainFactory
+
+    Elasticsearch\Client:
+        class: Tests\App\Test\Elasticsearch\TestClient
+        factory: [ '@Elasticsearch\ClientBuilder', build ]
+
+    Elasticsearch\ClientBuilder:
+        class: Tests\App\Test\Elasticsearch\TestClientBuilder
+        factory: [ Tests\App\Test\Elasticsearch\TestElasticsearchClientFactory, create ]
+        arguments: [ '%env(default:elasticsearch_host:ELASTICSEARCH_HOST)%' ]
+        calls:
+            -   method: setTracer
+                arguments:
+                    - '@shopsys.component.elasticsearch.tracer'
