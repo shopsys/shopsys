@@ -81,7 +81,7 @@ const ProductDetailImageSlider: FC<ProductDetailImageSliderProps> = (props) => {
                     />
                 ))}
             </ProductDetailImageSliderStyled>
-            {slider && areControlsVisible ? (
+            {slider !== null && areControlsVisible ? (
                 <ProductDetailImageSliderControlsStyled>
                     <button onClick={onMoveToPreviousSlideHandler}>p</button>
                     <button onClick={onMoveToNextSlideHandler}>n</button>

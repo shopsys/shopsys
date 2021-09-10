@@ -1,7 +1,7 @@
 import { AnchorHTMLAttributes, FC, ImgHTMLAttributes } from 'react';
 import { ExtractNativePropsFromDefault } from 'typeHelpers/ExtractNativePropsFromDefault';
+import { LinkStyled } from './Link.style';
 import NextLink from 'next/link';
-import { StyledShopsysLink } from './Link.style';
 
 type NativePropsAnchor = ExtractNativePropsFromDefault<
     AnchorHTMLAttributes<HTMLAnchorElement>,
@@ -25,12 +25,12 @@ type LinkProps = NativePropsAnchor &
  */
 const Link: FC<LinkProps> = (props) => {
     if (props.linkType === 'external') {
-        return <StyledShopsysLink {...props}>{props.children}</StyledShopsysLink>;
+        return <LinkStyled {...props}>{props.children}</LinkStyled>;
     }
 
     return (
         <NextLink {...props}>
-            <StyledShopsysLink>{props.children}</StyledShopsysLink>
+            <LinkStyled>{props.children}</LinkStyled>
         </NextLink>
     );
 };

@@ -14,13 +14,13 @@ const ProductDetailTabs: FC<ProductDetailTabsProps> = (props) => {
     return (
         <Tabs>
             <TabsList>
-                <TabsListItem>{t<string>('Přehled')}</TabsListItem>
-                <TabsListItem>{t<string>('Parametry')}</TabsListItem>
+                <TabsListItem>{t('Přehled')}</TabsListItem>
+                <TabsListItem>{t('Parametry')}</TabsListItem>
             </TabsList>
-            <TabsContent headingTextMobile={t<string>('Přehled')}>
+            <TabsContent headingTextMobile={t('Přehled')}>
                 <UserText htmlContent={props.description} />
             </TabsContent>
-            <TabsContent headingTextMobile={t<string>('Parametry')}>
+            <TabsContent headingTextMobile={t('Parametry')}>
                 <Table>
                     <tbody>
                         <tr>

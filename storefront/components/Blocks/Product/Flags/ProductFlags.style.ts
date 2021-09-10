@@ -33,7 +33,7 @@ export const ProductFlagsItemStyled = styled.div<ProductFlagsItemStyledProps>`
         border-radius: ${theme.radius.small};
         color: ${theme.color.black};
         text-decoration: none;
-        background-color: ${color || localVariables.flagItemDefaultBg};
+        background-color: ${color !== undefined ? color : localVariables.flagItemDefaultBg};
 
         &:hover {
             color: ${theme.color.black};

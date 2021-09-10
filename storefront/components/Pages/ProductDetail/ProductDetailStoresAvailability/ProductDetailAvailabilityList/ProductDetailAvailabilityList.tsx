@@ -21,7 +21,7 @@ const ProductDetailAvailabilityList = forwardRef<HTMLUListElement, ProductDetail
 
     return (
         <AvailabilityListWrapperStyled>
-            <Heading type="h3">{t<string>('Availability in stores')}</Heading>
+            <Heading type="h3">{t('Availability in stores')}</Heading>
             <ul ref={ref}>
                 {props.product.storeAvailabilities.map((storeAvailability, index) => (
                     <AvailabilityListItemStyled key={index}>

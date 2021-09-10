@@ -1,15 +1,13 @@
-import { FieldValues, FormState } from 'react-hook-form';
-
 export const getStateAfterValidation = (
-    formState: FormState<FieldValues>,
-    name: string,
-    markSuccessfulWhenValid: boolean,
+    hasError?: boolean,
+    isTouched?: boolean,
+    markSuccessfulWhenValid?: boolean,
 ): 'error' | 'success' | undefined => {
-    if (formState.errors[name]) {
+    if (hasError) {
         return 'error';
     }
 
-    if (markSuccessfulWhenValid && formState.touchedFields[name]) {
+    if (markSuccessfulWhenValid && isTouched) {
         return 'success';
     }
 

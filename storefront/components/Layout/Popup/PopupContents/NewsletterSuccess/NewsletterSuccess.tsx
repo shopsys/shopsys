@@ -1,7 +1,7 @@
+import Button from 'components/Forms/Button';
 import Heading from 'components/Basic/Heading';
 import { popupActions } from 'redux/store/PopupStore';
 import { ReactElement } from 'react';
-import ShopsysButton from 'components/Forms/ShopsysButton';
 import { StyledNewsletterSuccess } from './NewsletterSuccess.style';
 import { useShopsysDispatch } from 'redux/store';
 import { useTypedTranslationFunction } from 'hooks/UseTypedTranslationFunction';
@@ -16,12 +16,13 @@ function NewsletterSuccess(): ReactElement {
     const onCloseButtonClickHandler = () => {
         dispatch(popupActions.hidePopup());
     };
-
     return (
         <StyledNewsletterSuccess>
-            <Heading type="h3">{t<string>('You have successfully subscribed to our newsletter')}</Heading>
+            <Heading type="h3">{t('You have successfully subscribed to our newsletter')}</Heading>
             <div>
-                <ShopsysButton onClick={onCloseButtonClickHandler}>{t<string>('Close')}</ShopsysButton>
+                <Button type="button" onClick={onCloseButtonClickHandler}>
+                    {t('Close')}
+                </Button>
             </div>
         </StyledNewsletterSuccess>
     );
