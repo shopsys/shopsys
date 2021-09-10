@@ -1,7 +1,7 @@
 import { FormProvider, useForm } from 'react-hook-form';
+import Button from '../../../Forms/Button';
 import { FC } from 'react';
 import { ProductActionStyled } from './ProductAction.style';
-import ShopsysButton from '../../../Forms/ShopsysButton';
 import ShopsysSpinbox from '../../../Forms/ShopsysSpinbox';
 import { SliderProductItemType } from '../types';
 import { useRouter } from 'next/dist/client/router';
@@ -19,9 +19,9 @@ const ProductAction: FC<SliderProductItemType> = (props) => {
     if (props.isMainVariant) {
         return (
             <ProductActionStyled isButtonFullWidth={true}>
-                <ShopsysButton onClick={() => router.push(props.detailSlug)} name="choose-variant">
-                    {t<string>('Choose variant')}
-                </ShopsysButton>
+                <Button type="button" onClick={() => router.push(props.detailSlug)} name="choose-variant">
+                    {t('Choose variant')}
+                </Button>
             </ProductActionStyled>
         );
     }
@@ -31,9 +31,9 @@ const ProductAction: FC<SliderProductItemType> = (props) => {
             <FormProvider {...formProviderMethods}>
                 <form>
                     <ShopsysSpinbox size="small" />
-                    <ShopsysButton size="small" name="add-to-cart">
-                        {t<string>('Add to cart')}
-                    </ShopsysButton>
+                    <Button type="button" size="small" name="add-to-cart">
+                        {t('Add to cart')}
+                    </Button>
                 </form>
             </FormProvider>
         </ProductActionStyled>

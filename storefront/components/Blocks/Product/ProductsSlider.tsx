@@ -58,7 +58,7 @@ const ProductsSlider: FC<ProductsSliderProps> = (props) => {
                     <SliderProductItem key={index} {...productItemData} />
                 ))}
             </ProductSliderStyled>
-            {slider && areControlsVisible ? (
+            {slider !== null && areControlsVisible ? (
                 <ProductSliderControlsStyled>
                     <button onClick={onMoveToPreviousSlideHandler}>p</button>
                     <button onClick={onMoveToNextSlideHandler}>n</button>

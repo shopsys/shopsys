@@ -36,7 +36,7 @@ const CategoryDetailAdvancedSeoCategories: FC<CategoryDetailAdvancedSeoCategorie
 
     return (
         <>
-            <Heading type="h3">{t<string>('Favorite categories')}</Heading>
+            <Heading type="h3">{t('Favorite categories')}</Heading>
             {isAdvancedSeoCategoriesSliderVisible ? (
                 <AdvancedSeoCategoriesSlider readyCategorySeoMixLinks={props.readyCategorySeoMixLinks} />
             ) : (

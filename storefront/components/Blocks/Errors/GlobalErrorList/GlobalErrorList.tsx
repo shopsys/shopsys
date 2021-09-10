@@ -6,7 +6,7 @@ export const GlobalErrorList: FC = () => {
     const t = useTypedTranslationFunction();
     const { errors } = useContext(ShopsysGlobalErrorContext);
 
-    if (errors && errors.length > 0) {
+    if (Array.isArray(errors) && errors.length > 0) {
         return (
             <>
                 {t('Oh no! Errors:')}

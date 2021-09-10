@@ -80,7 +80,7 @@ const BannersSlider: FC<BannersSliderProps> = (props) => {
     }, [sliderRef]);
     useEffect(() => {
         timer.current = setInterval(() => {
-            if (!pause && slider) {
+            if (!pause && slider !== null) {
                 slider.next();
             }
         }, 5000);
