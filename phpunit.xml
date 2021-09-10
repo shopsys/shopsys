@@ -51,6 +51,10 @@
         </whitelist>
     </filter>
 
+    <extensions>
+        <extension class="DAMA\DoctrineTestBundle\PHPUnit\PHPUnitExtension" />
+    </extensions>
+
     <listeners>
         <listener class="Zalas\Injector\PHPUnit\TestListener\ServiceInjectorListener" />
     </listeners>

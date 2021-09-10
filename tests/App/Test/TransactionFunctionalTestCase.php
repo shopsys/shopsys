@@ -25,21 +25,6 @@ abstract class TransactionFunctionalTestCase extends FunctionalTestCase
      */
     private EventDispatcherInterface $eventDispatcher;
 
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        $this->em->beginTransaction();
-        $this->em->getConnection()->setAutoCommit(false);
-    }
-
-    protected function tearDown(): void
-    {
-        $this->em->rollback();
-
-        parent::tearDown();
-    }
-
     /**
      * Runs scheduled recalculations that would be executed on a kernel.response event
      * This allows to clean scheduled recalculations before making request on a client that could break the application
