@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\FrontendApi\Model\Order;
 
 use App\Model\Order\PromoCode\PromoCode;
-use App\Model\Order\PromoCode\PromoCodeFacade;
 use App\Model\Order\PromoCode\PromoCodeLimitResolver;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
@@ -28,11 +27,6 @@ use Shopsys\FrontendApiBundle\Model\Order\PlaceOrderFacade as BasePlaceOrderFaca
 class PlaceOrderFacade extends BasePlaceOrderFacade
 {
     /**
-     * @var \App\Model\Order\PromoCode\PromoCodeFacade
-     */
-    private PromoCodeFacade $promoCodeFacade;
-
-    /**
      * @var \App\Model\Order\PromoCode\PromoCodeLimitResolver
      */
     private PromoCodeLimitResolver $promoCodeLimitResolver;
@@ -46,7 +40,6 @@ class PlaceOrderFacade extends BasePlaceOrderFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade $customerUserFacade
-     * @param \App\Model\Order\PromoCode\PromoCodeFacade $promoCodeFacade
      * @param \App\Model\Order\PromoCode\PromoCodeLimitResolver $promoCodeLimitResolver
      */
     public function __construct(
@@ -58,29 +51,26 @@ class PlaceOrderFacade extends BasePlaceOrderFacade
         Domain $domain,
         CurrentCustomerUser $currentCustomerUser,
         CustomerUserFacade $customerUserFacade,
-        PromoCodeFacade $promoCodeFacade,
         PromoCodeLimitResolver $promoCodeLimitResolver
     ) {
         parent::__construct($orderFacade, $orderProductFacade, $orderStatusRepository, $orderPreviewFactory, $currencyFacade, $domain, $currentCustomerUser, $customerUserFacade);
 
-        $this->promoCodeFacade = $promoCodeFacade;
         $this->promoCodeLimitResolver = $promoCodeLimitResolver;
     }
 
     /**
      * @param \App\Model\Order\OrderData $orderData
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct[] $quantifiedProducts
-     * @param string|null $promoCodeCode
+     * @param \App\Model\Order\PromoCode\PromoCode|null $promoCode
      * @return \App\Model\Order\Order
      */
-    public function placeOrder(OrderData $orderData, array $quantifiedProducts, ?string $promoCodeCode = null): Order
+    public function placeOrder(OrderData $orderData, array $quantifiedProducts, ?PromoCode $promoCode = null): Order
     {
         /** @var \App\Model\Order\Status\OrderStatus $defaultOrderStatus */
         $defaultOrderStatus = $this->orderStatusRepository->getDefault();
         $orderData->status = $defaultOrderStatus;
         /** @var \App\Model\Customer\User\CustomerUser|null $customerUser */
         $customerUser = $this->currentCustomerUser->findCurrentCustomerUser();
-        $promoCode = $this->findPromoCode($promoCodeCode);
 
         $orderPreview = $this->orderPreviewFactory->create(
             $this->currencyFacade->getDomainDefaultCurrencyByDomainId($this->domain->getId()),
@@ -102,19 +92,6 @@ class PlaceOrderFacade extends BasePlaceOrderFacade
         }
 
         return $order;
-    }
-
-    /**
-     * @param string|null $promoCodeCode
-     * @return \App\Model\Order\PromoCode\PromoCode|null
-     */
-    private function findPromoCode(?string $promoCodeCode): ?PromoCode
-    {
-        if ($promoCodeCode === null) {
-            return null;
-        }
-
-        return $this->promoCodeFacade->findPromoCodeByCode($promoCodeCode);
     }
 
     /**

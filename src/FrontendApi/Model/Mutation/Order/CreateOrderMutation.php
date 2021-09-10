@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\FrontendApi\Model\Mutation\Order;
 
 use App\FrontendApi\Model\Cart\CartFacade;
+use App\Model\Order\PromoCode\PromoCodeFacade;
 use GraphQL\Error\UserError;
 use Overblog\GraphQLBundle\Definition\Argument;
 use Overblog\GraphQLBundle\Validator\InputValidator;
@@ -35,23 +36,31 @@ class CreateOrderMutation extends BaseCreateOrderMutation
     private CurrentCustomerUser $currentCustomerUser;
 
     /**
+     * @var \App\Model\Order\PromoCode\PromoCodeFacade
+     */
+    private PromoCodeFacade $promoCodeFacade;
+
+    /**
      * @param \App\FrontendApi\Model\Order\OrderDataFactory $orderDataFactory
      * @param \App\FrontendApi\Model\Order\PlaceOrderFacade $placeOrderFacade
      * @param \App\Model\Order\Mail\OrderMailFacade $orderMailFacade
      * @param \App\FrontendApi\Model\Cart\CartFacade $cartFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
+     * @param \App\Model\Order\PromoCode\PromoCodeFacade $promoCodeFacade
      */
     public function __construct(
         OrderDataFactory $orderDataFactory,
         PlaceOrderFacade $placeOrderFacade,
         OrderMailFacade $orderMailFacade,
         CartFacade $cartFacade,
-        CurrentCustomerUser $currentCustomerUser
+        CurrentCustomerUser $currentCustomerUser,
+        PromoCodeFacade $promoCodeFacade
     ) {
         parent::__construct($orderDataFactory, $placeOrderFacade, $orderMailFacade);
 
         $this->cartFacade = $cartFacade;
         $this->currentCustomerUser = $currentCustomerUser;
+        $this->promoCodeFacade = $promoCodeFacade;
     }
 
     /**
@@ -80,7 +89,10 @@ class CreateOrderMutation extends BaseCreateOrderMutation
             throw new UserError('There are no products in the cart.');
         }
 
-        $promoCode = $input['promoCode'] ?? null;
+        $promoCode = null;
+        if (isset($input['promoCode'])) {
+            $promoCode = $this->promoCodeFacade->findPromoCodeByCode($input['promoCode']);
+        }
 
         $order = $this->placeOrderFacade->placeOrder($orderData, $quantifiedProducts, $promoCode);
 

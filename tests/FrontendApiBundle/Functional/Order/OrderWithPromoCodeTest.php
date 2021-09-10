@@ -6,8 +6,10 @@ namespace Tests\FrontendApiBundle\Functional\Order;
 
 use App\DataFixtures\Demo\PaymentDataFixture;
 use App\DataFixtures\Demo\ProductDataFixture;
+use App\DataFixtures\Demo\PromoCodeDataFixture;
 use App\DataFixtures\Demo\TransportDataFixture;
 use App\DataFixtures\Demo\VatDataFixture;
+use App\FrontendApi\Model\Component\Constraints\PromoCode;
 use Shopsys\FrameworkBundle\Twig\NumberFormatterExtension;
 
 class OrderWithPromoCodeTest extends AbstractOrderTestCase
@@ -31,20 +33,53 @@ class OrderWithPromoCodeTest extends AbstractOrderTestCase
                 ],
             ],
         ];
+        $cartUuid = $this->addProductToCart();
 
-        /** @var \Shopsys\FrameworkBundle\Model\Product\Product $product */
-        $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1');
-        $mutation = 'mutation {
-            AddToCart(input: {
-                productUuid: "' . $product->getUuid() . '",
-                quantity: 1
-            }) {
-                uuid
-            }
-        }';
-        $cartUuid = $this->getResponseContentForQuery($mutation)['data']['AddToCart']['uuid'];
+        /** @var \App\Model\Order\PromoCode\PromoCode $validPromoCode */
+        $validPromoCode = $this->getReferenceForDomain(PromoCodeDataFixture::VALID_PROMO_CODE, 1);
+        $this->assertQueryWithExpectedArray($this->getMutation($cartUuid, $validPromoCode->getCode()), $expected);
+    }
 
-        $this->assertQueryWithExpectedArray($this->getMutation($cartUuid), $expected);
+    /**
+     * @dataProvider getInvalidPromoCodesDataProvider
+     * @param string|null $promoCodeReferenceName
+     * @param string $expectedError
+     */
+    public function testCreateOrderWithInvalidPromoCode(?string $promoCodeReferenceName, string $expectedError)
+    {
+        $cartUuid = $this->addProductToCart();
+
+        $promoCodeCode = 'non-existing-promo-code';
+        if ($promoCodeReferenceName !== null) {
+            /** @var \App\Model\Order\PromoCode\PromoCode $promoCode */
+            $promoCode = $this->getReferenceForDomain($promoCodeReferenceName, 1);
+            $promoCodeCode = $promoCode->getCode();
+        }
+
+        $mutation = $this->getMutation($cartUuid, $promoCodeCode);
+        $response = $this->getResponseContentForQuery($mutation);
+
+        self::assertArrayHasKey('errors', $response);
+
+        $violations = $this->getErrorsExtensionValidationFromResponse($response);
+
+        self::assertArrayHasKey('input.promoCode', $violations);
+        self::assertEquals($expectedError, $violations['input.promoCode'][0]['code']);
+    }
+
+    /**
+     * @return array
+     */
+    public function getInvalidPromoCodesDataProvider(): array
+    {
+        return [
+            [null, PromoCode::INVALID_ERROR],
+            [PromoCodeDataFixture::PROMO_CODE_FOR_PRODUCT_ID_2, PromoCode::NO_RELATION_TO_PRODUCTS_IN_CART_ERROR],
+            [PromoCodeDataFixture::NOT_YET_VALID_PROMO_CODE, PromoCode::NOT_YET_VALID_ERROR],
+            [PromoCodeDataFixture::NO_LONGER_VALID_PROMO_CODE, PromoCode::NO_LONGER_VALID_ERROR],
+            [PromoCodeDataFixture::PROMO_CODE_FOR_REGISTERED_ONLY, PromoCode::FOR_REGISTERED_CUSTOMER_USERS_ONLY_ERROR],
+            [PromoCodeDataFixture::PROMO_CODE_FOR_VIP_PRICING_GROUP, PromoCode::NOT_AVAILABLE_FOR_CUSTOMER_USER_PRICING_GROUP_ERROR],
+        ];
     }
 
     /**
@@ -97,9 +132,10 @@ class OrderWithPromoCodeTest extends AbstractOrderTestCase
 
     /**
      * @param string $cartUuid
+     * @param string $promoCodeCode
      * @return string
      */
-    private function getMutation(string $cartUuid): string
+    private function getMutation(string $cartUuid, string $promoCodeCode): string
     {
         $domainId = $this->domain->getId();
         /** @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vatHigh */
@@ -137,7 +173,7 @@ class OrderWithPromoCodeTest extends AbstractOrderTestCase
                                 price: ' . $transportPrice . '
                             }
                             differentDeliveryAddress: false
-                            promoCode: "test"
+                            promoCode: "' . $promoCodeCode . '"
                         }
                     ) {                        
                         totalPrice {
@@ -177,5 +213,24 @@ class OrderWithPromoCodeTest extends AbstractOrderTestCase
             $this->numberFormatterExtension->formatPercent(-10, $firstDomainLocale),
             t('Televize 22" Sencor SLE 22F46DM4 HELLO KITTY plazmová', [], 'dataFixtures', $firstDomainLocale)
         );
+    }
+
+    /**
+     * @return string
+     */
+    private function addProductToCart(): string
+    {
+        /** @var \Shopsys\FrameworkBundle\Model\Product\Product $product */
+        $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1');
+        $mutation = 'mutation {
+            AddToCart(input: {
+                productUuid: "' . $product->getUuid() . '",
+                quantity: 1
+            }) {
+                uuid
+            }
+        }';
+
+        return  $this->getResponseContentForQuery($mutation)['data']['AddToCart']['uuid'];
     }
 }

@@ -3,6 +3,9 @@ OrderInput:
     inherits:
         - 'OrderInputDecorator'
     config:
+        validation:
+            -   Shopsys\FrontendApiBundle\Component\Constraints\PaymentTransportRelation: ~
+            -   App\FrontendApi\Model\Component\Constraints\PromoCode: ~
         fields:
             products:
                 type: "[OrderProductInput!]"
