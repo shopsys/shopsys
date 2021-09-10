@@ -24,5 +24,5 @@ const rawHTML = `<h1>Heading</h1>
 <strong>THIS IS A VERY BOLD TEXT</strong>
 <img src="https://picsum.photos/200" />`;
 
-<ShopsysInUserText htmlContent={rawHTML} />;
+<UserText htmlContent={rawHTML} />;
 ```

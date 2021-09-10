@@ -1,7 +1,7 @@
 import { Tabs, TabsContent, TabsList, TabsListItem } from '../../Basic/Tabs';
 import { FC } from 'react';
-import ShopsysInUserText from 'components/Helpers/ShopsysUserText';
 import Table from '../../Basic/Table';
+import UserText from 'components/Helpers/UserText';
 import { useTypedTranslationFunction } from 'hooks/UseTypedTranslationFunction';
 
 type ProductDetailTabsProps = {
@@ -18,7 +18,7 @@ const ProductDetailTabs: FC<ProductDetailTabsProps> = (props) => {
                 <TabsListItem>{t<string>('Parametry')}</TabsListItem>
             </TabsList>
             <TabsContent headingTextMobile={t<string>('Přehled')}>
-                <ShopsysInUserText htmlContent={props.description} />
+                <UserText htmlContent={props.description} />
             </TabsContent>
             <TabsContent headingTextMobile={t<string>('Parametry')}>
                 <Table>
