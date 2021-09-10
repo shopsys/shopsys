@@ -18,3 +18,6 @@ OrderInput:
             promoCode:
                 type: "String"
                 description: "The promo code used in the order"
+            personalPickupStoreUuid:
+                type: "String"
+                description: "The identifier of selected personal pickup store"
