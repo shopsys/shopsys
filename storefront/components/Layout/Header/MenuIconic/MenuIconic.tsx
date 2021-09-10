@@ -20,7 +20,7 @@ const MenuIconic: FC = () => {
                     <NextLink href="/" passHref>
                         <MenuIconicItemLinkStyled>
                             <MenuIconicItemIconStyled icon="Chat" />
-                            {t<string>('Customer service')}
+                            {t('Customer service')}
                         </MenuIconicItemLinkStyled>
                     </NextLink>
                 </MenuIconicItemStyled>
@@ -28,7 +28,7 @@ const MenuIconic: FC = () => {
                     <NextLink href="/" passHref>
                         <MenuIconicItemLinkStyled>
                             <MenuIconicItemIconStyled icon="Marker" />
-                            {t<string>('Stores')}
+                            {t('Stores')}
                         </MenuIconicItemLinkStyled>
                     </NextLink>
                 </MenuIconicItemStyled>
@@ -36,7 +36,7 @@ const MenuIconic: FC = () => {
                     <NextLink href="/" passHref>
                         <MenuIconicItemLinkStyled>
                             <MenuIconicItemIconStyled icon="User" />
-                            {t<string>('Sign in')}
+                            {t('Sign in')}
                         </MenuIconicItemLinkStyled>
                     </NextLink>
                 </MenuIconicItemStyled>
