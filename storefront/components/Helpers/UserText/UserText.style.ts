@@ -8,21 +8,23 @@ const localVariables = {
     userTextComponentMargin: '0 0 1.75rem',
     userTextFontSize: '15px',
     userTextLineHeight: '1.6',
-};
+} as const;
 
 export const UserTextStyled = styled.section`
     ${({ theme }) => `
         font-size: ${localVariables.userTextFontSize};
         line-height: ${localVariables.userTextLineHeight};
         -webkit-font-smoothing: antialiased;
+        
         color: ${theme.color.greyLight};
 
         p,
         ul,
         ol,
         li {
-            font-size: inherit;
             line-height: inherit;
+        
+            font-size: inherit;
             color: inherit;
         }
 
@@ -31,8 +33,9 @@ export const UserTextStyled = styled.section`
         h4,
         h5 {
             margin-bottom: ${localVariables.userTextHeadingMarginBottom};
-            font-size: ${localVariables.userTextHeadingFontSize};
             text-transform: none;
+        
+            font-size: ${localVariables.userTextHeadingFontSize};
         }
 
         p {
@@ -60,9 +63,8 @@ export const UserTextStyled = styled.section`
 
         ul {
             padding: 0;
-            margin: 0;
-            list-style: none;
             margin: ${localVariables.userTextComponentMargin};
+            list-style: none;
 
             li {
                 position: relative;
@@ -76,6 +78,7 @@ export const UserTextStyled = styled.section`
                     left: 0;
                     width: ${localVariables.userTextUlPointSize};
                     height: ${localVariables.userTextUlPointSize};
+                    
                     border-radius: 100%;
                     background-color: ${theme.color.primary};
                 }
@@ -89,6 +92,7 @@ export const UserTextStyled = styled.section`
         img {
             display: block;
             height: auto;
+            
             border-radius: ${theme.radius.big};
         }
     `}
