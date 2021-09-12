@@ -6,9 +6,9 @@ namespace Tests\App\Functional\Model\Article;
 
 use App\Model\Article\Article;
 use DateTime;
-use Tests\App\Test\TransactionFunctionalTestCase;
+use Tests\App\Test\FunctionalTestCase;
 
-class ArticleTest extends TransactionFunctionalTestCase
+class ArticleTest extends FunctionalTestCase
 {
     /**
      * @var \Shopsys\FrameworkBundle\Model\Article\ArticleDataFactoryInterface

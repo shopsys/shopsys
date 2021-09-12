@@ -10,9 +10,9 @@ use App\Model\Customer\User\CustomerUserIdentifierFactory;
 use DateTime;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifier;
-use Tests\App\Test\TransactionFunctionalTestCase;
+use Tests\App\Test\FunctionalTestCase;
 
-class CartFacadeDeleteOldCartsTest extends TransactionFunctionalTestCase
+class CartFacadeDeleteOldCartsTest extends FunctionalTestCase
 {
     /**
      * @var \Shopsys\FrameworkBundle\Model\Cart\CartFactory

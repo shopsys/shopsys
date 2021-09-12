@@ -6,9 +6,9 @@ namespace Tests\App\Functional\Model\Transport;
 
 use App\Model\Transport\Transport;
 use App\Model\Transport\TransportData;
-use Tests\App\Test\TransactionFunctionalTestCase;
+use Tests\App\Test\FunctionalTestCase;
 
-class TransportDomainTest extends TransactionFunctionalTestCase
+class TransportDomainTest extends FunctionalTestCase
 {
     protected const FIRST_DOMAIN_ID = 1;
     protected const SECOND_DOMAIN_ID = 2;

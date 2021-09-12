@@ -8,9 +8,9 @@ use App\Controller\Test\ExpectedTestException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpFoundation\Session\Storage\MockArraySessionStorage;
-use Tests\App\Test\TransactionFunctionalTestCase;
+use Tests\App\Test\FunctionalTestCase;
 
-class FragmentHandlerTest extends TransactionFunctionalTestCase
+class FragmentHandlerTest extends FunctionalTestCase
 {
     /**
      * @var \Symfony\Bridge\Twig\Extension\HttpKernelRuntime

@@ -7,9 +7,9 @@ namespace Tests\App\Functional\Model\Product\Availability;
 use App\DataFixtures\Demo\ProductDataFixture;
 use App\Model\Product\ProductData;
 use App\Model\Stock\StockSettingsData;
-use Tests\App\Test\TransactionFunctionalTestCase;
+use Tests\App\Test\FunctionalTestCase;
 
-class ProductAvailabilityFacadeTest extends TransactionFunctionalTestCase
+class ProductAvailabilityFacadeTest extends FunctionalTestCase
 {
     protected const FIRST_DOMAIN_ID = 1;
 

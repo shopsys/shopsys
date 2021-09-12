@@ -11,9 +11,9 @@ use App\Model\Order\Item\OrderItemData;
 use App\Model\Order\OrderData;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
-use Tests\App\Test\TransactionFunctionalTestCase;
+use Tests\App\Test\FunctionalTestCase;
 
-class OrderFacadeTest extends TransactionFunctionalTestCase
+class OrderFacadeTest extends FunctionalTestCase
 {
     /**
      * @var \Shopsys\FrameworkBundle\Model\Cart\CartFacade

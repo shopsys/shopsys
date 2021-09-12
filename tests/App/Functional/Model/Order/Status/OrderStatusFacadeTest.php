@@ -7,9 +7,9 @@ namespace Tests\App\Functional\Model\Order\Status;
 use App\DataFixtures\Demo\OrderDataFixture;
 use App\DataFixtures\Demo\OrderStatusDataFixture;
 use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusData;
-use Tests\App\Test\TransactionFunctionalTestCase;
+use Tests\App\Test\FunctionalTestCase;
 
-class OrderStatusFacadeTest extends TransactionFunctionalTestCase
+class OrderStatusFacadeTest extends FunctionalTestCase
 {
     /**
      * @var \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusFacade

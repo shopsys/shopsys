@@ -6,9 +6,9 @@ namespace Tests\App\Functional\Model\Payment;
 
 use App\Model\Payment\Payment;
 use App\Model\Transport\Transport;
-use Tests\App\Test\TransactionFunctionalTestCase;
+use Tests\App\Test\FunctionalTestCase;
 
-class PaymentTest extends TransactionFunctionalTestCase
+class PaymentTest extends FunctionalTestCase
 {
     /**
      * @var \App\Model\Payment\PaymentDataFactory

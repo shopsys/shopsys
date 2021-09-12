@@ -26,9 +26,9 @@ use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressData;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyData;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
-use Tests\App\Test\TransactionFunctionalTestCase;
+use Tests\App\Test\FunctionalTestCase;
 
-class PersonalDataExportXmlTest extends TransactionFunctionalTestCase
+class PersonalDataExportXmlTest extends FunctionalTestCase
 {
     protected const EMAIL = 'no-reply@shopsys.com';
     protected const EXPECTED_XML_FILE_NAME = 'test.xml';

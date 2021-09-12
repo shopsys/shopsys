@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Tests\App\Functional\Model\Payment;
 
 use App\Model\Payment\Payment;
-use Tests\App\Test\TransactionFunctionalTestCase;
+use Tests\App\Test\FunctionalTestCase;
 
-class IndependentPaymentVisibilityCalculationTest extends TransactionFunctionalTestCase
+class IndependentPaymentVisibilityCalculationTest extends FunctionalTestCase
 {
     protected const FIRST_DOMAIN_ID = 1;
     protected const SECOND_DOMAIN_ID = 2;

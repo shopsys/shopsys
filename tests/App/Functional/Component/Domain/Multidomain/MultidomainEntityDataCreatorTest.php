@@ -8,9 +8,9 @@ use Doctrine\DBAL\Exception\DriverException;
 use Shopsys\FrameworkBundle\Component\Doctrine\SqlQuoter;
 use Shopsys\FrameworkBundle\Component\Domain\Multidomain\MultidomainEntityClassFinderFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Multidomain\MultidomainEntityDataCreator;
-use Tests\App\Test\TransactionFunctionalTestCase;
+use Tests\App\Test\FunctionalTestCase;
 
-class MultidomainEntityDataCreatorTest extends TransactionFunctionalTestCase
+class MultidomainEntityDataCreatorTest extends FunctionalTestCase
 {
     public function testCopyAllMultidomainDataForNewDomainCopiesTestRow()
     {

@@ -14,10 +14,10 @@ use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatData;
 use Shopsys\FrameworkBundle\Model\Product\Availability\Availability;
 use Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityData;
 use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
-use Tests\App\Test\TransactionFunctionalTestCase;
+use Tests\App\Test\FunctionalTestCase;
 use Tests\FrameworkBundle\Test\IsMoneyEqual;
 
-class InputPriceRecalculationSchedulerTest extends TransactionFunctionalTestCase
+class InputPriceRecalculationSchedulerTest extends FunctionalTestCase
 {
     private const METHOD_WITH_VAT = 'scheduleSetInputPricesWithVat';
     private const METHOD_WITHOUT_VAT = 'scheduleSetInputPricesWithoutVat';

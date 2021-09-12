@@ -10,10 +10,10 @@ use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItem;
 use Shopsys\FrameworkBundle\Model\Order\Order;
 use Shopsys\FrameworkBundle\Model\Order\OrderData;
-use Tests\App\Test\TransactionFunctionalTestCase;
+use Tests\App\Test\FunctionalTestCase;
 use Tests\FrameworkBundle\Test\IsMoneyEqual;
 
-final class OrderFacadeEditTest extends TransactionFunctionalTestCase
+final class OrderFacadeEditTest extends FunctionalTestCase
 {
     private const ORDER_ID = 10;
     private const PRODUCT_ITEM_ID = 45;

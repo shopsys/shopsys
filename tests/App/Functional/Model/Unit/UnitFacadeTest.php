@@ -7,9 +7,9 @@ namespace Tests\App\Functional\Model\Unit;
 use App\DataFixtures\Demo\ProductDataFixture;
 use App\DataFixtures\Demo\UnitDataFixture;
 use App\Model\Product\Unit\UnitData;
-use Tests\App\Test\TransactionFunctionalTestCase;
+use Tests\App\Test\FunctionalTestCase;
 
-class UnitFacadeTest extends TransactionFunctionalTestCase
+class UnitFacadeTest extends FunctionalTestCase
 {
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\Unit\UnitFacade

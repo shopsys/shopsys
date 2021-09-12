@@ -15,9 +15,9 @@ use Shopsys\FrameworkBundle\Model\Cart\CartMigrationFacade;
 use Shopsys\FrameworkBundle\Model\Cart\Item\CartItem;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifier;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifierFactory;
-use Tests\App\Test\TransactionFunctionalTestCase;
+use Tests\App\Test\FunctionalTestCase;
 
-class CartMigrationFacadeTest extends TransactionFunctionalTestCase
+class CartMigrationFacadeTest extends FunctionalTestCase
 {
     /**
      * @var \Shopsys\FrameworkBundle\Model\Cart\Item\CartItemFactoryInterface

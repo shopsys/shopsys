@@ -7,9 +7,9 @@ namespace Tests\App\Functional\Component\Grid\Ordering;
 use Shopsys\FrameworkBundle\Component\Grid\Ordering\Exception\EntityIsNotOrderableException;
 use Shopsys\FrameworkBundle\Component\Grid\Ordering\GridOrderingFacade;
 use stdClass;
-use Tests\App\Test\TransactionFunctionalTestCase;
+use Tests\App\Test\FunctionalTestCase;
 
-class GridOrderingFacadeTest extends TransactionFunctionalTestCase
+class GridOrderingFacadeTest extends FunctionalTestCase
 {
     public function testSetPositionWrongEntity()
     {

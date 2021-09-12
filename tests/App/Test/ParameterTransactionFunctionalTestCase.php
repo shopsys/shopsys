@@ -7,7 +7,7 @@ namespace Tests\App\Test;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade;
 
-class ParameterTransactionFunctionalTestCase extends TransactionFunctionalTestCase
+class ParameterTransactionFunctionalTestCase extends FunctionalTestCase
 {
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade

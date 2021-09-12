@@ -8,9 +8,9 @@ use DateTimeImmutable;
 use PHPUnit\Framework\Assert;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Newsletter\NewsletterSubscriber;
-use Tests\App\Test\TransactionFunctionalTestCase;
+use Tests\App\Test\FunctionalTestCase;
 
-class NewsletterSubscriberPersistenceTest extends TransactionFunctionalTestCase
+class NewsletterSubscriberPersistenceTest extends FunctionalTestCase
 {
     public function testPersistence(): void
     {
