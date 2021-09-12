@@ -7,9 +7,9 @@ namespace Tests\App\Functional\Controller;
 use App\DataFixtures\Demo\ProductDataFixture;
 use Faker\Provider\Text;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Tests\App\Test\TransactionFunctionalTestCase;
+use Tests\App\Test\ApplicationTestCase;
 
-class ProductRenameRedirectPreviousUrlTest extends TransactionFunctionalTestCase
+class ProductRenameRedirectPreviousUrlTest extends ApplicationTestCase
 {
     private const TESTED_PRODUCT_ID = 100;
 
