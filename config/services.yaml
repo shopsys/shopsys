@@ -918,3 +918,13 @@ services:
 
     Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressDataFactory:
         alias: App\Model\Customer\DeliveryAddressDataFactory
+
+    App\Component\Redis\RedisFacade:
+        arguments:
+            $allClients: !tagged snc_redis.client
+            $persistentClients:
+                - '@snc_redis.global'
+                - '@snc_redis.session'
+
+    Shopsys\FrameworkBundle\Component\Redis\RedisFacade:
+        alias: App\Component\Redis\RedisFacade
