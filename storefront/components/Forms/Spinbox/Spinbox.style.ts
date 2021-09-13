@@ -2,18 +2,18 @@ import { css } from 'styled-components';
 import { styled } from 'components/Theme/main';
 
 const localVariables = {
-    shopsysSpinboxHeight: '48px',
-    shopsysSpinboxHeightSmall: '30px',
-    shopsysSpinboxButtonWidth: '32px',
-    shopsysSpinboxWidth: '120px',
-    shopsysSpinboxWidthSmall: '84px',
+    spinboxHeight: '48px',
+    spinboxHeightSmall: '30px',
+    spinboxButtonWidth: '32px',
+    spinboxWidth: '120px',
+    spinboxWidthSmall: '100px',
 };
 
-export const ShopsysSpinboxStyled = styled.div`
+export const SpinboxStyled = styled.div`
     ${({ theme }) => css`
         display: inline-flex;
-        width: ${localVariables.shopsysSpinboxWidth};
-        height: ${localVariables.shopsysSpinboxHeight};
+        width: ${localVariables.spinboxWidth};
+        height: ${localVariables.spinboxHeight};
 
         border: 2px solid ${theme.color.border};
         border-radius: ${theme.radius.medium};
@@ -22,12 +22,12 @@ export const ShopsysSpinboxStyled = styled.div`
     `}
 `;
 
-export const ShopsysSpinboxSmallStyled = styled(ShopsysSpinboxStyled)`
-    height: ${localVariables.shopsysSpinboxHeightSmall};
-    width: ${localVariables.shopsysSpinboxWidthSmall};
+export const SpinboxSmallStyled = styled(SpinboxStyled)`
+    height: ${localVariables.spinboxHeightSmall};
+    width: ${localVariables.spinboxWidthSmall};
 `;
 
-export const ShopsysSpinboxInputStyled = styled.input`
+export const SpinboxInputStyled = styled.input`
     ${({ theme }) => css`
         flex: 1;
         text-align: center;
@@ -39,15 +39,26 @@ export const ShopsysSpinboxInputStyled = styled.input`
         color: ${theme.color.base};
         font-weight: 700;
         border: 0;
+        outline: none;
+
+        /** hides default spinbox */
+        &::-webkit-outer-spin-button,
+        &::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        &[type='number'] {
+            -moz-appearance: textfield;
+        }
     `}
 `;
 
-export const ShopsysSpinboxButtonStyled = styled.button`
+export const SpinboxButtonStyled = styled.button`
     ${({ theme }) => css`
         display: flex;
         justify-content: center;
         align-items: center;
-        width: ${localVariables.shopsysSpinboxButtonWidth};
+        width: ${localVariables.spinboxButtonWidth};
         padding: 0;
         min-height: 0;
 

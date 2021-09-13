@@ -5,17 +5,20 @@ type ProductActionStyledProps = {
     isButtonFullWidth: boolean;
 };
 
-export const ProductActionStyled = styled.div<ProductActionStyledProps>`
-    ${({ isButtonFullWidth }: ProductActionStyledProps) => css`
-        padding: 20px 20px 19px 20px;
+export const ProductActionWrapperStyled = styled.div`
+    padding: 0 9px 10px;
+`;
 
-        /* TODO KOD: check later if this could be styled component*/
-        form {
-            display: flex;
-            flex-direction: row;
-            flex-wrap: nowrap;
-            justify-content: space-between;
-        }
+export const ProductActionStyled = styled.div<ProductActionStyledProps>`
+    ${({ theme, isButtonFullWidth }) => css`
+        padding: 10px;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        justify-content: space-between;
+
+        background-color: ${theme.color.greyVeryLight};
+        border-radius: ${theme.radius.big};
 
         ${isButtonFullWidth &&
         css`

@@ -24,19 +24,17 @@ export const SliderProductItemStyled = styled.div`
     `}
 `;
 
-export const SliderProductItemInStyled = styled.a`
+export const SliderProductItemInStyled = styled.div`
     ${({ theme }) => css`
         position: relative;
         display: flex;
         flex-direction: column;
         height: 100%;
-
-        text-decoration: none;
         text-align: left;
+
         border-radius: ${theme.radius.big};
 
         &:hover {
-            text-decoration: none;
             box-shadow: ${localVariables.listSliderProductsItemShadow};
 
             img {
@@ -44,6 +42,19 @@ export const SliderProductItemInStyled = styled.a`
             }
         }
     `}
+`;
+
+export const SliderProductItemLinkStyled = styled.a`
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+
+    text-decoration: none;
+
+    &:hover {
+        text-decoration: none;
+    }
 `;
 
 export const SliderProductItemImageStyled = styled.div`

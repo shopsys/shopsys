@@ -2,6 +2,7 @@ import {
     SliderProductItemImageStyled,
     SliderProductItemInfoStyled,
     SliderProductItemInStyled,
+    SliderProductItemLinkStyled,
     SliderProductItemStyled,
     SliderProductItemTitleStyled,
 } from './SliderProductItem.style';
@@ -19,24 +20,26 @@ import { SliderProductItemType } from './types';
 const ProductItem: FC<SliderProductItemType> = (props) => {
     return (
         <SliderProductItemStyled className="keen-slider__slide">
-            <NextLink href={props.detailSlug} passHref>
-                <SliderProductItemInStyled>
-                    <SliderProductItemImageStyled>
-                        <Image image={props.image} alt={props.name} />
-                        <ProductFlags flags={props.flags} />
-                    </SliderProductItemImageStyled>
-                    <SliderProductItemInfoStyled>
-                        <SliderProductItemTitleStyled>{props.name}</SliderProductItemTitleStyled>
-                        <ProductPrice {...props.price} />
-                        <ProductAvailabilityStyled>
-                            {props.availability}
-                            <ProductAvailableStoresCount {...props} />
-                            <ProductExposedStoresCount {...props} />
-                        </ProductAvailabilityStyled>
-                    </SliderProductItemInfoStyled>
-                    <ProductAction {...props} />
-                </SliderProductItemInStyled>
-            </NextLink>
+            <SliderProductItemInStyled>
+                <NextLink href={props.detailSlug} passHref>
+                    <SliderProductItemLinkStyled>
+                        <SliderProductItemImageStyled>
+                            <Image image={props.image} alt={props.name} />
+                            <ProductFlags flags={props.flags} />
+                        </SliderProductItemImageStyled>
+                        <SliderProductItemInfoStyled>
+                            <SliderProductItemTitleStyled>{props.name}</SliderProductItemTitleStyled>
+                            <ProductPrice {...props.price} />
+                            <ProductAvailabilityStyled>
+                                {props.availability}
+                                <ProductAvailableStoresCount {...props} />
+                                <ProductExposedStoresCount {...props} />
+                            </ProductAvailabilityStyled>
+                        </SliderProductItemInfoStyled>
+                    </SliderProductItemLinkStyled>
+                </NextLink>
+                <ProductAction {...props} />
+            </SliderProductItemInStyled>
         </SliderProductItemStyled>
     );
 };

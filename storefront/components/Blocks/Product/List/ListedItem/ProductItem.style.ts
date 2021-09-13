@@ -30,7 +30,7 @@ export const ProductItemStyled = styled.div`
     `}
 `;
 
-export const ProductItemInStyled = styled.a`
+export const ProductItemInStyled = styled.div`
     ${({ theme }) => css`
         position: relative;
         display: flex;
@@ -39,8 +39,6 @@ export const ProductItemInStyled = styled.a`
         text-align: left;
 
         border-radius: ${theme.radius.big};
-        color: ${theme.color.white};
-        text-decoration: none;
 
         &:hover {
             text-decoration: none;
@@ -50,7 +48,6 @@ export const ProductItemInStyled = styled.a`
 
                 box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.2);
                 background-color: ${theme.color.white};
-                border-radius: ${theme.radius.big};
 
                 img {
                     mix-blend-mode: multiply;
@@ -58,6 +55,19 @@ export const ProductItemInStyled = styled.a`
             }
         }
     `}
+`;
+
+export const ProductItemLinkStyled = styled.a`
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+
+    text-decoration: none;
+
+    &:hover {
+        text-decoration: none;
+    }
 `;
 
 export const ProductItemImageStyled = styled.div`

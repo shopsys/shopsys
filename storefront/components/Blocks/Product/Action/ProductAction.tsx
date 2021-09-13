@@ -1,20 +1,14 @@
-import { FormProvider, useForm } from 'react-hook-form';
+import { ProductActionStyled, ProductActionWrapperStyled } from './ProductAction.style';
 import Button from '../../../Forms/Button';
 import { FC } from 'react';
-import { ProductActionStyled } from './ProductAction.style';
-import ShopsysSpinbox from '../../../Forms/ShopsysSpinbox';
 import { SliderProductItemType } from '../types';
+import Spinbox from '../../../Forms/Spinbox';
 import { useRouter } from 'next/dist/client/router';
 import { useTypedTranslationFunction } from 'hooks/UseTypedTranslationFunction';
 
 const ProductAction: FC<SliderProductItemType> = (props) => {
     const router = useRouter();
     const t = useTypedTranslationFunction();
-    const formProviderMethods = useForm({
-        mode: 'onBlur',
-        criteriaMode: 'firstError',
-        shouldFocusError: true,
-    });
 
     if (props.isMainVariant) {
         return (
@@ -25,18 +19,16 @@ const ProductAction: FC<SliderProductItemType> = (props) => {
             </ProductActionStyled>
         );
     }
+
     return (
-        /** TODO KOD should be probably changed to ShopsysForm */
-        <ProductActionStyled isButtonFullWidth={false}>
-            <FormProvider {...formProviderMethods}>
-                <form>
-                    <ShopsysSpinbox size="small" />
-                    <Button type="button" size="small" name="add-to-cart">
-                        {t('Add to cart')}
-                    </Button>
-                </form>
-            </FormProvider>
-        </ProductActionStyled>
+        <ProductActionWrapperStyled>
+            <ProductActionStyled isButtonFullWidth={false}>
+                <Spinbox size="small" step={1} min={1} max={15} defaultValue={1} />
+                <Button type="button" size="small" name="add-to-cart">
+                    {t<string>('Add to cart')}
+                </Button>
+            </ProductActionStyled>
+        </ProductActionWrapperStyled>
     );
 };
 
