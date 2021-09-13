@@ -1,12 +1,12 @@
-import { styled } from 'theme/main';
+import { styled } from 'components/Theme/main';
 
-export const StyledShopsysChoiceFormLine = styled.div`
+export const ChoiceFormLineStyled = styled.div`
     width: fit-content;
     margin-bottom: 16px;
     margin-right: 5px;
 `;
 
-export const StyledShopsysCheckboxColor = styled.input`
+export const CheckboxColorStyled = styled.input`
     position: absolute;
     height: 1px;
     width: 1px;
