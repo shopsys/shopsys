@@ -1,8 +1,10 @@
-import { CategoryDetailApiType } from '../../components/Pages/CategoryDetail/types';
+import { mapProductDetailApiData, productDetailBody } from '../products/ProductDetail';
 import { categoryDetailBody } from '../categories/CategoryDetail';
-import { productDetailBody } from '../products/ProductDetail';
+import { CategoryDetailType } from '../../components/Pages/CategoryDetail/types';
+import { mapCategoryDetailData } from 'connectors/categories/Categories';
 import { ProductDetailType } from '../../components/Pages/ProductDetail/types';
 import { useFetchQuery } from '../../hooks/UseFetchQuery';
+import { useShopsysSelector } from 'redux/store';
 
 export function friendlyUrlQuery(slug: string): string {
     return `
@@ -20,8 +22,23 @@ export function friendlyUrlQuery(slug: string): string {
     `;
 }
 
-export function getFriendlyUrlResolvedData(slug: string): ProductDetailType | CategoryDetailApiType | undefined | null {
-    const result = useFetchQuery({ query: friendlyUrlQuery(slug) });
+export const isProductType = (typename: string): boolean => {
+    return ['RegularProduct', 'MainVariant', 'Variant'].includes(typename);
+};
 
-    return result?.data?.slug;
+export function getFriendlyUrlResolvedData(slug: string): ProductDetailType | CategoryDetailType | undefined | null {
+    const result = useFetchQuery({ query: friendlyUrlQuery(slug) });
+    const currentDomainConfig = useShopsysSelector((state) => state.domain);
+
+    if (result?.data?.slug === null || result?.data?.slug === undefined) {
+        return undefined;
+    }
+
+    if (isProductType(result.data.slug.__typename)) {
+        return mapProductDetailApiData(result.data.slug, currentDomainConfig.currencyCode);
+    } else if (result.data.slug.__typename === 'Category') {
+        return mapCategoryDetailData(result.data.slug, currentDomainConfig.currencyCode);
+    }
+
+    return result.data.slug;
 }

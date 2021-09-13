@@ -7,6 +7,7 @@ import {
     ProductDetailPrefixStyled,
     ProductDetailStyled,
 } from './ProductDetail.style';
+import ProductDetailAccessories from './ProductDetailAccessories';
 import ProductDetailAvailability from './ProductDetailStoresAvailability/ProductDetailAvailability';
 import ProductDetailAvailabilityList from './ProductDetailStoresAvailability/ProductDetailAvailabilityList';
 import ProductDetailGallery from './ProductDetailGallery';
@@ -50,6 +51,9 @@ const ProductDetail: FC<ProductDetailProps> = (props) => {
             </Webline>
             <Webline>
                 <ProductDetailAvailabilityList ref={scrollTarget} {...props} />
+            </Webline>
+            <Webline>
+                <ProductDetailAccessories accessories={props.product.accessories} />
             </Webline>
         </>
     );

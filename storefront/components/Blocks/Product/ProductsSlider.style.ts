@@ -1,32 +1,15 @@
 import { css } from 'styled-components';
 import { styled } from '../../Theme/main';
 
-const localVariables = {
-    listSliderProductsItemGap: '20px',
-    listSliderProductsItemTopSpace: '20px',
-    listSliderProductsItemBottomSpace: '125px',
-};
-
 export const ProductSliderWrapperStyled = styled.div`
     position: relative;
 `;
 
 export const ProductSliderStyled = styled.div`
-    ${({ theme }) => css`
-        position: relative;
-        margin: 0 -10px;
-        display: flex;
-        overflow: hidden;
-
-        &:hover {
-            margin-bottom: ${`-${localVariables.listSliderProductsItemBottomSpace}`};
-            padding-bottom: ${localVariables.listSliderProductsItemBottomSpace};
-
-            @media ${theme.mediaQueries.queryLg} {
-                margin-bottom: ${`-${localVariables.listSliderProductsItemBottomSpace}`};
-            }
-        }
-    `}
+    position: relative;
+    margin: 0 -10px;
+    display: flex;
+    overflow: hidden;
 `;
 
 export const ProductSliderControlsStyled = styled.div`

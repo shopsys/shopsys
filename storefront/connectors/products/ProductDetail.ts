@@ -1,3 +1,6 @@
+import { mapSliderProductApiData, sliderProductQuery } from './Products';
+import { ProductDetailApiType, ProductDetailType } from 'components/Pages/ProductDetail/types';
+
 export const productDetailBody = `
     uuid
     name
@@ -21,4 +24,17 @@ export const productDetailBody = `
     }
     availableStoresCount
     exposedStoresCount
+    accessories {
+        ${sliderProductQuery}
+    }
 `;
+
+export const mapProductDetailApiData = (
+    productDetailApiData: ProductDetailApiType,
+    currencyCode: string,
+): ProductDetailType => {
+    return {
+        ...productDetailApiData,
+        accessories: mapSliderProductApiData(productDetailApiData.accessories, currencyCode),
+    };
+};
