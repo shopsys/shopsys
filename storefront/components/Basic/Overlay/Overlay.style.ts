@@ -1,11 +1,11 @@
 import { css } from 'styled-components';
-import { styled } from 'theme/main';
+import { styled } from 'components/Theme/main';
 
 type OverlayProps = {
     isHiddenOnDesktop?: boolean;
 };
 
-export const ShopsysOverlayStyled = styled.div<OverlayProps>`
+export const OverlayStyled = styled.div<OverlayProps>`
     ${({ theme, isHiddenOnDesktop }) => css`
         bottom: 0;
         left: 0;
@@ -20,15 +20,17 @@ export const ShopsysOverlayStyled = styled.div<OverlayProps>`
         align-items: center;
 
         background-color: rgba(0, 0, 0, 0.6);
-        transition: all 0.2s cubic-bezier(0.8, 0.2, 0.48, 1);
+        transition: ${theme.transition};
         cursor: pointer;
 
-        ${isHiddenOnDesktop
-            ? css`
-                  @media ${theme.mediaQueries.queryVl} {
-                      display: none;
-                  }
-              `
-            : null};
+        ${
+            isHiddenOnDesktop &&
+            css`
+                @media ${theme.mediaQueries.queryVl} {
+                    display: none;
+                }
+            `
+        }
+        };
     `}
 `;

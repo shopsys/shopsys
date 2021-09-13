@@ -8,7 +8,7 @@ export const PopupStyled = styled.div`
         flex-direction: column;
         max-height: calc(100% - 20px);
         padding: 5px;
-        z-index: ${theme.zIndex.popup};
+        z-index: ${theme.zIndex.aboveOverlay};
         position: fixed;
         top: 50%;
         left: 50%;
@@ -35,20 +35,20 @@ export const PopupHeaderStyled = styled.div`
 
 export const PopupButtonCloseStyled = styled.button`
     ${({ theme }) => css`
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 36px;
-    width: 36px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 36px;
+        width: 36px;
 
         background-color: ${theme.color.creamWhite};
-    border: 0;
-    border-radius: 100%;
+        border: 0;
+        border-radius: 100%;
         color: ${theme.color.grey};
-    cursor: pointer;
-    font-size: 10px;
-    outline: 0;
-    text-decoration: none;
+        cursor: pointer;
+        font-size: 10px;
+        outline: 0;
+        text-decoration: none;
     `}
 `;
 

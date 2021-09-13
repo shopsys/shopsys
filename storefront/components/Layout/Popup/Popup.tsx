@@ -7,10 +7,7 @@ import {
     PopupStyled,
 } from './Popup.style';
 import { AnyStyledComponent } from 'styled-components';
-import { useShopsysDispatch, useShopsysSelector } from 'redux/store';
-import NewsletterSuccess from './PopupContents/NewsletterSuccess/NewsletterSuccess';
-import { popupActions } from 'redux/store/PopupStore';
-import ShopsysOverlay from '../../basic/ShopsysOverlay';
+import Overlay from 'components/Basic/Overlay';
 
 type PopupProps = {
     isVisible: boolean;
@@ -45,7 +42,7 @@ const Popup: FC<PopupProps> = (props) => {
     if (props.isVisible) {
         return (
             <>
-                <OverlayStyled onClick={onClickCloseActionHandler}></OverlayStyled>
+                <Overlay onClick={onClickCloseActionHandler}></Overlay>
                 <PopupWrapper role="dialog" aria-modal={true}>
                     <PopupHeaderStyled>
                         <PopupButtonCloseStyled type="button" onClick={onClickCloseActionHandler}>
