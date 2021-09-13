@@ -73,7 +73,6 @@ class CreateOrderMutation extends BaseCreateOrderMutation
         $validationGroups = $this->computeValidationGroups($argument);
         $validator->validate($validationGroups);
 
-        /** @var \App\Model\Order\OrderData $orderData */
         $orderData = $this->orderDataFactory->createOrderDataFromArgument($argument);
 
         $input = $argument['input'];

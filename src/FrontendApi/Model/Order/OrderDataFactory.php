@@ -12,7 +12,6 @@ use GraphQL\Error\UserError;
 use Overblog\GraphQLBundle\Definition\Argument;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Country\CountryFacade;
-use Shopsys\FrameworkBundle\Model\Order\OrderData as BaseOrderData;
 use Shopsys\FrameworkBundle\Model\Order\OrderDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
@@ -63,7 +62,7 @@ class OrderDataFactory extends BaseOrderDataFactory
      * @param \Overblog\GraphQLBundle\Definition\Argument $argument
      * @return \App\Model\Order\OrderData
      */
-    public function createOrderDataFromArgument(Argument $argument): BaseOrderData
+    public function createOrderDataFromArgument(Argument $argument): OrderData
     {
         /** @var \App\Model\Order\OrderData $orderData */
         $orderData = parent::createOrderDataFromArgument($argument);
