@@ -1,5 +1,6 @@
-import { CartApiType, CartType } from './types';
+import { AddProductResultType, CartApiType, CartType } from './types';
 import { useMutation, UseMutationResponse } from 'urql';
+import { mapProductPriceData } from 'connectors/products/Products';
 import { useFetchQuery } from 'hooks/UseFetchQuery';
 import { useShopsysSelector } from 'redux/store';
 
@@ -9,12 +10,11 @@ const cartBody = `
         uuid
         quantity
         product {
+            uuid
             slug
-            name
-            namePrefix
-            nameSuffix
+            fullName
             catalogNumber
-            isInSale
+            stockQuantity
             flags {
                 name
                 rgbColor
@@ -24,6 +24,7 @@ const cartBody = `
                 width
                 height
             }
+            stockQuantity
             availability {
                 name
             }
@@ -38,10 +39,9 @@ const cartBody = `
     }
 ` as const;
 
-export const cartQuery = (cartUuid: string) =>
-    `
-      query cart{
-          cart(uuid: "${cartUuid}") {
+const cartQuery = `
+      query ($cartUuid: Uuid){
+          cart(uuid: $cartUuid) {
               ${cartBody}      
           }
       }
@@ -55,10 +55,7 @@ export function mapCart(data: CartApiType, currencyCode: string): CartType {
                 ...item,
                 product: {
                     ...item.product,
-                    price: {
-                        ...item.product.price,
-                        currencyCode: currencyCode,
-                    },
+                    price: mapProductPriceData(item.product.price, currencyCode),
                     availability: item.product.availability.name,
                     image: item.product.images.length === 0 ? null : item.product.images[0],
                 },
@@ -68,14 +65,14 @@ export function mapCart(data: CartApiType, currencyCode: string): CartType {
 }
 
 export const getCart = (cartUuid: string): CartType | undefined => {
-    const result = useFetchQuery({ query: cartQuery(cartUuid.toString()) });
-    const currentDomainConfig = useShopsysSelector((state) => state.domain);
+    const result = useFetchQuery({ query: cartQuery, variables: { cartUuid } });
+    const { currencyCode } = useShopsysSelector((state) => state.domain);
 
-    if (result.data === undefined) {
+    if (result.data === undefined || result.data.cart === null) {
         return undefined;
     }
 
-    return mapCart(result?.data?.cart, currentDomainConfig.currencyCode);
+    return mapCart(result.data.cart, currencyCode);
 };
 
 const removeItemFromCartMutation = `mutation ($cartUuid: Uuid! $cartItemUuid: Uuid!) {
@@ -87,6 +84,34 @@ const removeItemFromCartMutation = `mutation ($cartUuid: Uuid! $cartItemUuid: Uu
           }
       }` as const;
 
-export const useRemoveItemFromCart = (): UseMutationResponse<CartType, { cartUuid: string; cartItemUuid: string }> => {
+export const useRemoveItemFromCart = (): UseMutationResponse<
+    { RemoveFromCart: CartApiType },
+    { cartUuid: string; cartItemUuid: string }
+> => {
     return useMutation(removeItemFromCartMutation);
+};
+
+const changeCartItemQuantityMutation =
+    `mutation ($cartUuid: Uuid! $productUuid: Uuid! $quantity: Int! $isAbsoluteQuantity: Boolean ) {
+        AddToCart(input:{
+            cartUuid: $cartUuid
+            productUuid: $productUuid
+            quantity: $quantity
+            isAbsoluteQuantity: $isAbsoluteQuantity
+        }){
+            ${cartBody}
+            addProductResult {
+                notOnStockQuantity
+                overLimitQuantity
+                isQuantityOverLimit
+                addedQuantity
+            }
+        }
+    }` as const;
+
+export const useChangeCartItemQuantity = (): UseMutationResponse<
+    { AddToCart: CartApiType & { addProductResult: AddProductResultType } },
+    { cartUuid: string; productUuid: string; quantity: number; isAbsoluteQuantity: boolean }
+> => {
+    return useMutation(changeCartItemQuantityMutation);
 };

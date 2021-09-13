@@ -1,7 +1,7 @@
 import { css } from 'styled-components';
-import { styled } from 'theme/main';
+import { styled } from 'components/Theme/main';
 
-export const CartProductNameStyled = styled.div`
+export const NameStyled = styled.div`
     ${({ theme }) => css`
         text-align: left;
         padding-right: 15px;
@@ -13,11 +13,12 @@ export const CartProductNameStyled = styled.div`
     `}
 `;
 
-export const CartProductNameTitleStyled = styled.a`
+export const NameTitleStyled = styled.a`
     ${({ theme }) => css`
+        line-height: 18px;
+
         font-size: ${theme.fontSize.small};
         font-weight: 700;
-        line-height: 18px;
         text-transform: uppercase;
         text-decoration: none;
         color: ${theme.color.base};
@@ -29,34 +30,29 @@ export const CartProductNameTitleStyled = styled.a`
     `}
 `;
 
-export const CartProductNameTitleTextStyled = styled.span`
+export const NameTitleTextStyled = styled.span`
     margin-right: 5px;
 `;
 
-export const CartProductFlagsStyled = styled.div`
-    display: inline;
-    line-height: 10px;
-    position: relative;
-    top: -1px;
-`;
-
-export const CartProductCodeStyled = styled.div`
+export const CodeStyled = styled.div`
     ${({ theme }) => css`
+        line-height: 19px;
+
         color: ${theme.color.greyLight};
         font-size: 13px;
-        line-height: 19px;
     `}
 `;
 
-export const CartProductAvailabilityStyled = styled.div`
+export const AvailabilityStyled = styled.div`
     display: block;
     flex: 1;
 `;
 
-export const CartProductAvailabilityMessageStyled = styled.span`
+export const AvailabilityMessageStyled = styled.span`
     ${({ theme }) => css`
-        font-weight: 400;
         display: block;
+
+        font-weight: 400;
 
         @media ${theme.mediaQueries.queryNotLargeDesktop} {
             display: inline;

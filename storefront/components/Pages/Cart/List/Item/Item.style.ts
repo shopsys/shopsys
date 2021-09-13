@@ -1,15 +1,12 @@
 import { css } from 'styled-components';
-import { styled } from 'theme/main';
+import { styled } from 'components/Theme/main';
 
-type CartProductItemPriceStyledProps = {
-    isInSale: boolean;
-};
+const localVariables = {
+    imageCellWidth: '93px',
+    removeButtonHoverColor: '#e3e3ff',
+} as const;
 
-type CartProductTotalPriceStyledProps = {
-    isInSale: boolean;
-};
-
-export const CartProductListItemStyled = styled.div`
+export const ItemStyled = styled.div`
     ${({ theme }) => css`
         display: flex;
         flex-direction: row;
@@ -25,9 +22,9 @@ export const CartProductListItemStyled = styled.div`
     `}
 `;
 
-export const CartProductImageCellStyled = styled.div`
+export const ImageCellStyled = styled.div`
     ${({ theme }) => css`
-        width: 93px;
+        width: ${localVariables.imageCellWidth};
         align-items: center;
         display: flex;
         padding-right: 15px;
@@ -38,10 +35,10 @@ export const CartProductImageCellStyled = styled.div`
     `}
 `;
 
-export const CartProductInfoCellStyled = styled.div`
+export const InfoCellStyled = styled.div`
     ${({ theme }) => css`
         text-align: center;
-        width: calc(100% - 93px);
+        width: calc(100% - ${localVariables.imageCellWidth});
         align-items: center;
         display: flex;
         padding-right: 15px;
@@ -62,7 +59,7 @@ export const CartProductInfoCellStyled = styled.div`
     `}
 `;
 
-export const CartProductSpinboxCellStyled = styled.div`
+export const SpinboxCellStyled = styled.div`
     ${({ theme }) => css`
         padding-right: 15px;
         width: 150px;
@@ -76,7 +73,7 @@ export const CartProductSpinboxCellStyled = styled.div`
     `}
 `;
 
-export const CartProductItemPriceCellStyled = styled.div`
+export const ItemPriceCellStyled = styled.div`
     ${({ theme }) => css`
         margin-left: 0;
         padding-right: 15px;
@@ -94,18 +91,13 @@ export const CartProductItemPriceCellStyled = styled.div`
     `}
 `;
 
-export const CartProductItemPriceStyled = styled.span<CartProductItemPriceStyledProps>`
-    ${({ theme, isInSale }) => css`
+export const ItemPriceStyled = styled.span`
+    ${({ theme }) => css`
         font-size: ${theme.fontSize.small};
-
-        ${isInSale &&
-        css`
-            color: ${theme.color.primary};
-        `}
     `}
 `;
 
-export const CartProductTotalPriceCellStyled = styled.div`
+export const TotalPriceCellStyled = styled.div`
     ${({ theme }) => css`
         margin-left: 0;
         padding-right: 15px;
@@ -122,18 +114,13 @@ export const CartProductTotalPriceCellStyled = styled.div`
     `}
 `;
 
-export const CartProductTotalPriceStyled = styled.span<CartProductTotalPriceStyledProps>`
-    ${({ theme, isInSale }) => css`
+export const TotalPriceStyled = styled.span`
+    ${({ theme }) => css`
         color: ${theme.color.primary};
-
-        ${isInSale &&
-        css`
-            font-weight: 700;
-        `}
     `}
 `;
 
-export const CartProductRemoveButtonCellStyled = styled.div`
+export const RemoveButtonCellStyled = styled.div`
     ${({ theme }) => css`
         position: static;
         align-items: center;
@@ -153,7 +140,7 @@ export const CartProductRemoveButtonCellStyled = styled.div`
     `}
 `;
 
-export const CartProductRemoveButtonStyled = styled.button`
+export const RemoveButtonStyled = styled.button`
     ${({ theme }) => css`
         align-items: center;
         display: flex;
@@ -169,7 +156,13 @@ export const CartProductRemoveButtonStyled = styled.button`
         border: none;
 
         &:hover {
-            background-color: #e3e3ff;
+            background-color: ${localVariables.removeButtonHoverColor};
         }
     `}
+`;
+
+export const ImageWrapperStyled = styled.a`
+    position: relative;
+    width: 100%;
+    height: 100%;
 `;

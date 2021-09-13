@@ -5,6 +5,13 @@ export type FlagType = {
     rgbColor: string;
 };
 
+export type PriceApiType = {
+    priceWithVat: number;
+    priceWithoutVat: number;
+    vatAmount: number;
+    isPriceFrom: boolean;
+};
+
 export type ProductPriceType = {
     priceWithVat: number;
     priceWithoutVat: number;
@@ -46,12 +53,7 @@ export type ProductItemApiType = {
     availability: {
         name: string;
     };
-    price: {
-        priceWithVat: number;
-        priceWithoutVat: number;
-        vatAmount: number;
-        isPriceFrom: boolean;
-    };
+    price: PriceApiType;
     availableStoresCount: number;
     exposedStoresCount: number;
 };
@@ -65,12 +67,7 @@ export type ListedProductItemApiType = {
     availability: {
         name: string;
     };
-    price: {
-        priceWithVat: number;
-        priceWithoutVat: number;
-        vatAmount: number;
-        isPriceFrom: boolean;
-    };
+    price: PriceApiType;
     availableStoresCount: number;
     exposedStoresCount: number;
 };

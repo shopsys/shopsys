@@ -1,18 +1,17 @@
-import { FlagType, ProductPriceType } from 'components/blocks/product/types';
-import { ImageType } from 'components/basic/ShopsysImage/types';
+import { FlagType, PriceApiType, ProductPriceType } from 'components/Blocks/Product/types';
+import { ImageType } from 'components/Basic/Image/types';
 
 export type ProductCartItemType = {
+    uuid: string;
     slug: string;
-    name: string;
+    fullName: string;
     flags: FlagType[];
     image: ImageType | null;
     price: ProductPriceType;
     availability: string;
+    stockQuantity: number;
     availableStoresCount: number;
-    namePrefix: string;
-    nameSuffix: string;
     catalogNumber: string;
-    isInSale: boolean;
 };
 
 export type CartItemType = {
@@ -27,24 +26,18 @@ export type CartType = {
 };
 
 export type ProductCartItemApiType = {
+    uuid: string;
     slug: string;
-    name: string;
+    fullName: string;
     flags: FlagType[];
     images: ImageType[];
-    price: {
-        priceWithVat: number;
-        priceWithoutVat: number;
-        vatAmount: number;
-        isPriceFrom: boolean;
-    };
+    price: PriceApiType;
     availability: {
         name: string;
     };
+    stockQuantity: number;
     availableStoresCount: number;
-    namePrefix: string;
-    nameSuffix: string;
     catalogNumber: string;
-    isInSale: boolean;
 };
 
 export type CartItemApiType = {
@@ -56,4 +49,11 @@ export type CartItemApiType = {
 export type CartApiType = {
     uuid: string;
     items: CartItemApiType[];
+};
+
+export type AddProductResultType = {
+    notOnStockQuantity: number;
+    overLimitQuantity: number;
+    isQuantityOverLimit: number;
+    addedQuantity: number;
 };

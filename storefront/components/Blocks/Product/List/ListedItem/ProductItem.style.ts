@@ -87,6 +87,16 @@ export const ProductItemImageStyled = styled.div`
     }
 `;
 
+export const ProductItemFlagsStyled = styled.div`
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    top: 10px;
+    left: 14px;
+
+    font-size: 0;
+`;
+
 export const ProductItemInfoStyled = styled.div`
     display: block;
     flex: 1;
