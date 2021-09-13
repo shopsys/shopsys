@@ -2,6 +2,7 @@ import {
     ProductItemImageStyled,
     ProductItemInfoStyled,
     ProductItemInStyled,
+    ProductItemLinkStyled,
     ProductItemStyled,
     ProductItemTitleStyled,
 } from './ProductItem.style';
@@ -19,24 +20,26 @@ import ProductPrice from '../../Price/ProductPrice';
 const ProductItem: FC<ListedProductItemType> = (props) => {
     return (
         <ProductItemStyled>
-            <NextLink href={props.detailSlug} passHref>
-                <ProductItemInStyled>
-                    <ProductItemImageStyled>
-                        <Image image={props.image} alt={props.name} />
-                        <ProductFlags flags={props.flags} />
-                    </ProductItemImageStyled>
-                    <ProductItemInfoStyled>
-                        <ProductItemTitleStyled>{props.name}</ProductItemTitleStyled>
-                        <ProductPrice {...props.price} />
-                        <ProductAvailabilityStyled>
-                            {props.availability}
-                            <ProductAvailableStoresCount {...props} />
-                            <ProductExposedStoresCount {...props} />
-                        </ProductAvailabilityStyled>
-                    </ProductItemInfoStyled>
-                    <ProductAction {...props} />
-                </ProductItemInStyled>
-            </NextLink>
+            <ProductItemInStyled>
+                <NextLink href={props.detailSlug} passHref>
+                    <ProductItemLinkStyled>
+                        <ProductItemImageStyled>
+                            <Image image={props.image} alt={props.name} />
+                            <ProductFlags flags={props.flags} />
+                        </ProductItemImageStyled>
+                        <ProductItemInfoStyled>
+                            <ProductItemTitleStyled>{props.name}</ProductItemTitleStyled>
+                            <ProductPrice {...props.price} />
+                            <ProductAvailabilityStyled>
+                                {props.availability}
+                                <ProductAvailableStoresCount {...props} />
+                                <ProductExposedStoresCount {...props} />
+                            </ProductAvailabilityStyled>
+                        </ProductItemInfoStyled>
+                    </ProductItemLinkStyled>
+                </NextLink>
+                <ProductAction {...props} />
+            </ProductItemInStyled>
         </ProductItemStyled>
     );
 };

@@ -1,6 +1,6 @@
 import { FC } from 'react';
-import GlobalStyle from '../../components/Theme/GlobalStyle';
-import { theme } from '../../components/Theme/main';
+import GlobalStyle from 'components/Theme/GlobalStyle';
+import { theme } from 'components/Theme/main';
 import { ThemeProvider } from 'styled-components';
 
 /**
