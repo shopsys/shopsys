@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\FrontendApiBundle\Functional\Product;
 
-use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
+use App\DataFixtures\Demo\ProductDataFixture;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class ProductVariantTest extends GraphQlTestCase
@@ -23,15 +23,8 @@ class ProductVariantTest extends GraphQlTestCase
     {
         parent::setUp();
 
-        $productFacade = $this->getContainer()->get(ProductFacade::class);
-
-        /** @var \App\Model\Product\Product $productAsMainVariant */
-        $productAsMainVariant = $productFacade->getById(83);
-        $this->productAsMainVariant = $productAsMainVariant;
-
-        /** @var \App\Model\Product\Product $productAsVariant */
-        $productAsVariant = $productFacade->getById(75);
-        $this->productAsVariant = $productAsVariant;
+        $this->productAsMainVariant = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 83);
+        $this->productAsVariant = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 75);
     }
 
     public function testProductMainVariantResultData(): void

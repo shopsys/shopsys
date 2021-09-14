@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\FrontendApiBundle\Functional\Brand;
 
-use Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade;
+use App\DataFixtures\Demo\BrandDataFixture;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
@@ -25,8 +25,7 @@ class BrandTest extends GraphQlTestCase
     {
         parent::setUp();
 
-        $brandFacade = $this->getContainer()->get(BrandFacade::class);
-        $this->brand = $brandFacade->getById(2);
+        $this->brand = $this->getReference(BrandDataFixture::BRAND_CANON);
     }
 
     public function testBrandByUuid(): void

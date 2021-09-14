@@ -21,20 +21,19 @@ class CartModificationsResultTest extends GraphQlTestCase
 
     /**
      * @var \App\Model\Product\ProductFacade
+     * @inject
      */
     private ProductFacade $productFacade;
 
     /**
      * @var \App\Model\Product\ProductDataFactory
+     * @inject
      */
     private ProductDataFactory $productDataFactory;
 
     protected function setUp(): void
     {
         parent::setUp();
-
-        $this->productFacade = $this->getContainer()->get(ProductFacade::class);
-        $this->productDataFactory = $this->getContainer()->get(ProductDataFactory::class);
 
         $this->testingProduct = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 1);
     }
