@@ -108,3 +108,7 @@ Query:
                     cartUuid:
                         type: "Uuid"
                 description: "Returns available transport methods based on the current cart state"
+            personalDataPage:
+                type: 'PersonalDataPage'
+                resolve: "@=resolver('personalDataPage')"
+                description: "Return personal data page content and URL"

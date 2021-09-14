@@ -1,0 +1,16 @@
+PersonalDataPage:
+    type: object
+    config:
+        fields:
+            displaySiteContent:
+                type: "String!"
+                description: "The HTML content of the site where a customer can request displaying his personal data"
+            displaySiteSlug:
+                type: "String!"
+                description: "URL slug of display site"
+            exportSiteContent:
+                type: "String!"
+                description: "The HTML content of the site where a customer can request exporting his personal data"
+            exportSiteSlug:
+                type: "String!"
+                description: "URL slug of export site"
