@@ -391,6 +391,9 @@ msgstr ""
 msgid "Apply"
 msgstr "Potvrdiť"
 
+msgid "Apply according to customer"
+msgstr ""
+
 msgid "Apply according to date and time limit"
 msgstr ""
 
@@ -1214,6 +1217,9 @@ msgid "First name"
 msgstr "Meno"
 
 msgid "Flags"
+msgstr ""
+
+msgid "For registered customers only"
 msgstr ""
 
 msgid "Forgot your password?"
@@ -2467,6 +2473,9 @@ msgstr "Cena s DPH"
 msgid "Pricing group"
 msgstr ""
 
+msgid "Pricing groups"
+msgstr ""
+
 msgid "Privacy Policy"
 msgstr ""
 
@@ -2588,6 +2597,12 @@ msgid "Promo code added to order"
 msgstr "Zľavový kód bol pridaný"
 
 msgid "Promo code identifier in IS"
+msgstr ""
+
+msgid "Promo code is available for registered customers only."
+msgstr ""
+
+msgid "Promo code is not available for your pricing group. Maybe you forgot to log in."
 msgstr ""
 
 msgid "Promo code removed from order"

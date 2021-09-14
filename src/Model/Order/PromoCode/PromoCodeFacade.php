@@ -82,6 +82,16 @@ class PromoCodeFacade extends BasePromoCodeFacade
     private PromoCodeBrandFactory $promoCodeBrandFactory;
 
     /**
+     * @var \App\Model\Order\PromoCode\PromoCodePricingGroupRepository
+     */
+    private PromoCodePricingGroupRepository $promoCodePricingGroupRepository;
+
+    /**
+     * @var \App\Model\Order\PromoCode\PromoCodePricingGroupFactory
+     */
+    private PromoCodePricingGroupFactory $promoCodePricingGroupFactory;
+
+    /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \App\Model\Order\PromoCode\PromoCodeRepository $promoCodeRepository
      * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFactoryInterface $promoCodeFactory
@@ -96,6 +106,8 @@ class PromoCodeFacade extends BasePromoCodeFacade
      * @param \App\Model\Order\PromoCode\PromoCodeLimitFactory $promoCodeLimitFactory
      * @param \App\Model\Order\PromoCode\PromoCodeBrandRepository $promoCodeBrandRepository
      * @param \App\Model\Order\PromoCode\PromoCodeBrandFactory $promoCodeBrandFactory
+     * @param \App\Model\Order\PromoCode\PromoCodePricingGroupRepository $promoCodePricingGroupRepository
+     * @param \App\Model\Order\PromoCode\PromoCodePricingGroupFactory $promoCodePricingGroupFactory
      */
     public function __construct(
         EntityManagerInterface $em,
@@ -111,7 +123,9 @@ class PromoCodeFacade extends BasePromoCodeFacade
         HashGenerator $hashGenerator,
         PromoCodeLimitFactory $promoCodeLimitFactory,
         PromoCodeBrandRepository $promoCodeBrandRepository,
-        PromoCodeBrandFactory $promoCodeBrandFactory
+        PromoCodeBrandFactory $promoCodeBrandFactory,
+        PromoCodePricingGroupRepository $promoCodePricingGroupRepository,
+        PromoCodePricingGroupFactory $promoCodePricingGroupFactory
     ) {
         parent::__construct($em, $promoCodeRepository, $promoCodeFactory);
 
@@ -126,6 +140,8 @@ class PromoCodeFacade extends BasePromoCodeFacade
         $this->promoCodeLimitFactory = $promoCodeLimitFactory;
         $this->promoCodeBrandRepository = $promoCodeBrandRepository;
         $this->promoCodeBrandFactory = $promoCodeBrandFactory;
+        $this->promoCodePricingGroupRepository = $promoCodePricingGroupRepository;
+        $this->promoCodePricingGroupFactory = $promoCodePricingGroupFactory;
     }
 
     /**
@@ -179,6 +195,7 @@ class PromoCodeFacade extends BasePromoCodeFacade
         $this->refreshPromoCodeLimits($promoCode, $promoCodeData->limits);
         $this->refreshPromoCodeProducts($promoCode, $promoCodeData->productsWithSale);
         $this->refreshPromoCodeCategories($promoCode, $promoCodeData->categoriesWithSale);
+        $this->refreshPromoCodePricingGroups($promoCode, $promoCodeData->limitedPricingGroups);
         $this->refreshPromoCodeBrands($promoCode, $promoCodeData->brandsWithSale);
 
         return $promoCode;
@@ -252,6 +269,41 @@ class PromoCodeFacade extends BasePromoCodeFacade
         }
 
         $this->em->flush();
+    }
+
+    /**
+     * @param \App\Model\Order\PromoCode\PromoCode $promoCode
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup[] $pricingGroups
+     */
+    private function refreshPromoCodePricingGroups(PromoCode $promoCode, array $pricingGroups): void
+    {
+        $needFlush = false;
+        $pricingGroupIdsFromForm = [];
+        $pricingGroupIdsFromStorage = [];
+        foreach ($pricingGroups as $pricingGroup) {
+            $pricingGroupIdsFromForm[$pricingGroup->getId()] = $pricingGroup->getId();
+        }
+
+        $promoCodePricingGroups = $this->promoCodePricingGroupRepository->getAllByPromoCodeId($promoCode->getId());
+        foreach ($promoCodePricingGroups as $promoCodePricingGroup) {
+            $pricingGroupId = $promoCodePricingGroup->getPricingGroup()->getId();
+            if (in_array($pricingGroupId, $pricingGroupIdsFromForm, true) === false) {
+                $this->em->remove($promoCodePricingGroup);
+                $needFlush = true;
+            } else {
+                $pricingGroupIdsFromStorage[$pricingGroupId] = $pricingGroupId;
+            }
+        }
+
+        if ($needFlush === true) {
+            $this->em->flush();
+        }
+
+        foreach ($pricingGroups as $pricingGroup) {
+            if (in_array($pricingGroup->getId(), $pricingGroupIdsFromStorage, true) === false) {
+                $this->promoCodePricingGroupFactory->create($promoCode, $pricingGroup);
+            }
+        }
     }
 
     /**

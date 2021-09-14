@@ -10,7 +10,7 @@ use App\Model\Order\PromoCode\PromoCodeData;
 use App\Model\Order\PromoCode\PromoCodeFacade;
 use App\Model\Product\Brand\BrandFacade;
 use Shopsys\FormTypesBundle\YesNoType;
-use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 use Shopsys\FrameworkBundle\Form\Admin\PromoCode\PromoCodeFormType;
 use Shopsys\FrameworkBundle\Form\CategoriesType;
 use Shopsys\FrameworkBundle\Form\DatePickerType;
@@ -20,8 +20,10 @@ use Shopsys\FrameworkBundle\Form\GroupType;
 use Shopsys\FrameworkBundle\Form\ProductsType;
 use Shopsys\FrameworkBundle\Form\Transformers\RemoveDuplicatesFromArrayTransformer;
 use Shopsys\FrameworkBundle\Form\ValidationGroup;
+use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade;
 use Symfony\Component\Form\AbstractTypeExtension;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -59,18 +61,34 @@ class PromoCodeFormTypeExtension extends AbstractTypeExtension
     private BrandFacade $brandFacade;
 
     /**
+     * @var \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade
+     */
+    private PricingGroupFacade $pricingGroupFacade;
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade
+     */
+    private AdminDomainTabsFacade $adminDomainTabsFacade;
+
+    /**
      * @param \App\Model\Order\PromoCode\PromoCodeFacade $promoCodeFacade
      * @param \Shopsys\FrameworkBundle\Form\Transformers\RemoveDuplicatesFromArrayTransformer $removeDuplicatesTransformer
      * @param \App\Model\Product\Brand\BrandFacade $brandFacade
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade $pricingGroupFacade
+     * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade $adminDomainTabsFacade
      */
     public function __construct(
         PromoCodeFacade $promoCodeFacade,
         RemoveDuplicatesFromArrayTransformer $removeDuplicatesTransformer,
-        BrandFacade $brandFacade
+        BrandFacade $brandFacade,
+        PricingGroupFacade $pricingGroupFacade,
+        AdminDomainTabsFacade $adminDomainTabsFacade
     ) {
         $this->promoCodeFacade = $promoCodeFacade;
         $this->removeDuplicatesTransformer = $removeDuplicatesTransformer;
         $this->brandFacade = $brandFacade;
+        $this->pricingGroupFacade = $pricingGroupFacade;
+        $this->adminDomainTabsFacade = $adminDomainTabsFacade;
     }
 
     /**
@@ -87,17 +105,21 @@ class PromoCodeFormTypeExtension extends AbstractTypeExtension
             ]);
         }
 
-        if ($this->promoCode === null) {
-            $builder->add('domainId', DomainType::class, [
-                'required' => true,
-                'label' => t('Domain'),
-            ]);
-        }
+        $builder->add('domainId', HiddenType::class, [
+            'data' => $this->getDomainId(),
+        ]);
+
+        $builder->add('shownDomainId', DomainType::class, [
+            'mapped' => false,
+            'label' => t('Domain'),
+            'disabled' => true,
+        ]);
 
         $this->buildBaseFormGroup($builder, $options);
         $this->buildLimitsFormGroup($builder);
         $this->buildTimeValidationFormGroup($builder);
         $this->buildFlagsFormGroup($builder);
+        $this->buildCustomersFormGroup($builder);
         $this->buildProductsWithSaleForm($builder);
         $this->buildCategoriesWithSaleFormGroup($builder);
         $this->buildBrandsWithSaleFormGroup($builder);
@@ -248,6 +270,29 @@ class PromoCodeFormTypeExtension extends AbstractTypeExtension
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      */
+    private function buildCustomersFormGroup(FormBuilderInterface $builder): void
+    {
+        $customersGroup = $builder->create('customersGroup', GroupType::class, [
+            'label' => t('Apply according to customer'),
+        ]);
+        $builder->add($customersGroup);
+        $customersGroup->add('registeredCustomerUserOnly', YesNoType::class, [
+            'required' => false,
+            'label' => t('For registered customers only'),
+        ])
+            ->add('limitedPricingGroups', ChoiceType::class, [
+                'required' => false,
+                'choices' => $this->pricingGroupFacade->getByDomainId($this->adminDomainTabsFacade->getSelectedDomainId()),
+                'choice_label' => 'name',
+                'choice_value' => 'id',
+                'label' => t('Pricing groups'),
+                'multiple' => true,
+            ]);
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     */
     private function buildProductsWithSaleForm(FormBuilderInterface $builder): void
     {
         $builder
@@ -269,7 +314,7 @@ class PromoCodeFormTypeExtension extends AbstractTypeExtension
         ]);
         $displayCategoriesGroup->add('categoriesWithSale', CategoriesType::class, [
             'required' => false,
-            'domain_id' => Domain::FIRST_DOMAIN_ID,
+            'domain_id' => $this->getDomainId(),
             'label' => t('Categories'),
             'display_format' => FormRenderingConfigurationExtension::DISPLAY_FORMAT_MULTIDOMAIN_ROWS_NO_PADDING,
         ]);
@@ -409,7 +454,7 @@ class PromoCodeFormTypeExtension extends AbstractTypeExtension
             return;
         }
 
-        $promoCode = $this->promoCodeFacade->findPromoCodeByCodeAndDomain($promoCodeData->code, $promoCodeData->domainId);
+        $promoCode = $this->promoCodeFacade->findPromoCodeByCodeAndDomain($promoCodeData->code, $this->getDomainId());
         if ($promoCode !== null) {
             $context->buildViolation('Promo code with this code already exists')->atPath('code')->addViolation();
         }
@@ -446,5 +491,17 @@ class PromoCodeFormTypeExtension extends AbstractTypeExtension
             ]);
 
         return $builderMassPromoCodeGroup;
+    }
+
+    /**
+     * @return int
+     */
+    private function getDomainId(): int
+    {
+        if ($this->promoCode !== null) {
+            return $this->promoCode->getDomainId();
+        }
+
+        return $this->adminDomainTabsFacade->getSelectedDomainId();
     }
 }

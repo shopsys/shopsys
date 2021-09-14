@@ -142,6 +142,9 @@ msgstr "Platí na druhý produkt v košíku"
 msgid "Apply"
 msgstr "Uplatnit"
 
+msgid "Apply according to customer"
+msgstr "Aplikovat podle zákazníka"
+
 msgid "Apply according to date and time limit"
 msgstr "Aplikovat podle časového omezení"
 
@@ -828,6 +831,9 @@ msgstr "Jméno"
 
 msgid "Flags"
 msgstr "Příznaky"
+
+msgid "For registered customers only"
+msgstr "Pouze pro registrované zákazníky"
 
 msgid "Forgot your password?"
 msgstr "Zapomněli jste své heslo?"
@@ -1772,7 +1778,10 @@ msgid "Price including VAT"
 msgstr "Cena s DPH"
 
 msgid "Pricing group"
-msgstr ""
+msgstr "Cenová skupina"
+
+msgid "Pricing groups"
+msgstr "Cenové skupiny"
 
 msgid "Print"
 msgstr "Vytisknout"
@@ -1878,6 +1887,12 @@ msgstr "Identifikátor kupónu pro IS"
 
 msgid "Promo code invalid. Check it, please."
 msgstr "Slevový kupón není platný. Prosím, zkontrolujte ho."
+
+msgid "Promo code is available for registered customers only."
+msgstr "Slevový kupón je dostupný pouze pro registrované zákazníky."
+
+msgid "Promo code is not available for your pricing group. Maybe you forgot to log in."
+msgstr "Slevový kupón není dostupný pro Vaši cenovou skupinu. Možná jste se zapomněl příhlásit."
 
 msgid "Promo code removed from order"
 msgstr "Slevový kupón byl odebrán z objednávky."

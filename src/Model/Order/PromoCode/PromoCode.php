@@ -17,7 +17,8 @@ use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeData;
  *     })}
  * )
  * @ORM\Entity
- * @method setData(\App\Model\Order\PromoCode\PromoCodeData $promoCodeData)
+ * @method __construct(\App\Model\Order\PromoCode\PromoCodeData $promoCodeData)
+ * @method edit(\App\Model\Order\PromoCode\PromoCodeData $promoCodeData)
  */
 class PromoCode extends BasePromoCode
 {
@@ -110,33 +111,17 @@ class PromoCode extends BasePromoCode
     private $priceHit;
 
     /**
-     * @param \App\Model\Order\PromoCode\PromoCodeData $promoCodeData
+     * @var bool
+     * @ORM\Column(type="boolean")
      */
-    public function __construct(PromoCodeData $promoCodeData)
-    {
-        parent::__construct($promoCodeData);
-
-        $this->domainId = $promoCodeData->domainId;
-        $this->datetimeValidFrom = $promoCodeData->datetimeValidFrom;
-        $this->datetimeValidTo = $promoCodeData->datetimeValidTo;
-        $this->remainingUses = $promoCodeData->remainingUses;
-        $this->identifier = $promoCodeData->identifier;
-        $this->massGenerate = $promoCodeData->massGenerate;
-        $this->prefix = $promoCodeData->prefix;
-        $this->massGenerateBatchId = $promoCodeData->massGenerateBatchId;
-        $this->applyOnSecondProduct = $promoCodeData->applyOnSecondProduct;
-        $this->onSale = $promoCodeData->onSale;
-        $this->inAction = $promoCodeData->inAction;
-        $this->priceHit = $promoCodeData->priceHit;
-        $this->discountType = $promoCodeData->discountType;
-    }
+    private bool $registeredCustomerUserOnly;
 
     /**
      * @param \App\Model\Order\PromoCode\PromoCodeData $promoCodeData
      */
-    public function edit(PromoCodeData $promoCodeData): void
+    protected function setData(PromoCodeData $promoCodeData): void
     {
-        parent::edit($promoCodeData);
+        parent::setData($promoCodeData);
 
         $this->domainId = $promoCodeData->domainId;
         $this->datetimeValidFrom = $promoCodeData->datetimeValidFrom;
@@ -151,6 +136,7 @@ class PromoCode extends BasePromoCode
         $this->inAction = $promoCodeData->inAction;
         $this->priceHit = $promoCodeData->priceHit;
         $this->discountType = $promoCodeData->discountType;
+        $this->registeredCustomerUserOnly = $promoCodeData->registeredCustomerUserOnly;
     }
 
     /**
@@ -264,5 +250,13 @@ class PromoCode extends BasePromoCode
     public function getDiscountType(): int
     {
         return $this->discountType;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isRegisteredCustomerUserOnly(): bool
+    {
+        return $this->registeredCustomerUserOnly;
     }
 }

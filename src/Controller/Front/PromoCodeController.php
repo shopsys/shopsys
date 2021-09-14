@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace App\Controller\Front;
 
 use App\Model\Order\PromoCode\CurrentPromoCodeFacade;
+use App\Model\Order\PromoCode\Exception\AvailableForRegisteredCustomerUserOnly;
 use App\Model\Order\PromoCode\Exception\NoLongerValidPromoCodeDateTimeException;
+use App\Model\Order\PromoCode\Exception\NotAvailableForCustomerUserPricingGroup;
 use App\Model\Order\PromoCode\Exception\NotYetValidPromoCodeDateTimeException;
 use App\Model\Order\PromoCode\Exception\PromoCodeWithoutRelationWithAnyProductFromCurrentCartException;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\Exception\InvalidPromoCodeException;
@@ -67,6 +69,18 @@ class PromoCodeController extends FrontBaseController
                 'isValidWithoutProductsInCart' => true,
                 'result' => false,
                 'message' => t('Promo kód nelze uplatnit na žádný produkt v košíku. Zkontrolujte ho, prosím.'),
+            ]);
+        } catch (AvailableForRegisteredCustomerUserOnly $exception) {
+            return new JsonResponse([
+                'isValidWithoutProductsInCart' => false,
+                'result' => false,
+                'message' => t('Promo code is available for registered customers only.'),
+            ]);
+        } catch (NotAvailableForCustomerUserPricingGroup $exception) {
+            return new JsonResponse([
+                'isValidWithoutProductsInCart' => false,
+                'result' => false,
+                'message' => t('Promo code is not available for your pricing group. Maybe you forgot to log in.'),
             ]);
         }
         $this->addSuccessFlash(t('Promo code added to order'));

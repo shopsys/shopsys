@@ -41,24 +41,32 @@ class PromoCodeDataFactory extends BasePromoCodeDataFactory
     private PromoCodeBrandRepository $promoCodeBrandRepository;
 
     /**
+     * @var \App\Model\Order\PromoCode\PromoCodePricingGroupRepository
+     */
+    private PromoCodePricingGroupRepository $promoCodePricingGroupRepository;
+
+    /**
      * @param \App\Model\Order\PromoCode\PromoCodeCategoryRepository $promoCodeCategoryRepository
      * @param \App\Model\Order\PromoCode\PromoCodeProductRepository $promoCodeProductRepository
      * @param \App\Model\Order\PromoCode\PromoCodeLimitRepository $promoCodeLimitRepository
      * @param \App\Component\DateTimeHelper\DateTimeHelper $dateTimeHelper
      * @param \App\Model\Order\PromoCode\PromoCodeBrandRepository $promoCodeBrandRepository
+     * @param \App\Model\Order\PromoCode\PromoCodePricingGroupRepository $promoCodePricingGroupRepository
      */
     public function __construct(
         PromoCodeCategoryRepository $promoCodeCategoryRepository,
         PromoCodeProductRepository $promoCodeProductRepository,
         PromoCodeLimitRepository $promoCodeLimitRepository,
         DateTimeHelper $dateTimeHelper,
-        PromoCodeBrandRepository $promoCodeBrandRepository
+        PromoCodeBrandRepository $promoCodeBrandRepository,
+        PromoCodePricingGroupRepository $promoCodePricingGroupRepository
     ) {
         $this->dateTimeHelper = $dateTimeHelper;
         $this->promoCodeCategoryRepository = $promoCodeCategoryRepository;
         $this->promoCodeProductRepository = $promoCodeProductRepository;
         $this->promoCodeLimitRepository = $promoCodeLimitRepository;
         $this->promoCodeBrandRepository = $promoCodeBrandRepository;
+        $this->promoCodePricingGroupRepository = $promoCodePricingGroupRepository;
     }
 
     /**
@@ -112,6 +120,8 @@ class PromoCodeDataFactory extends BasePromoCodeDataFactory
         $promoCodeData->inAction = $promoCode->isInAction();
         $promoCodeData->priceHit = $promoCode->isPriceHit();
         $promoCodeData->discountType = $promoCode->getDiscountType();
+        $promoCodeData->registeredCustomerUserOnly = $promoCode->isRegisteredCustomerUserOnly();
+        $promoCodeData->limitedPricingGroups = $this->promoCodePricingGroupRepository->getPricingGroupsByPromoCodeId($promoCode->getId());
     }
 
     /**
