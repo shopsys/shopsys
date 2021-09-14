@@ -16,15 +16,25 @@ export const SpinboxStyled = styled.div`
         height: ${localVariables.spinboxHeight};
 
         border: 2px solid ${theme.color.border};
-        border-radius: ${theme.radius.medium};
+        border-radius: ${theme.radius.big};
         background-color: ${theme.color.white};
         overflow: hidden;
     `}
 `;
 
 export const SpinboxSmallStyled = styled(SpinboxStyled)`
-    height: ${localVariables.spinboxHeightSmall};
-    width: ${localVariables.spinboxWidthSmall};
+    ${({ theme }) => css`
+        height: ${localVariables.spinboxHeightSmall};
+        width: ${localVariables.spinboxWidthSmall};
+
+        border-radius: ${theme.radius.medium};
+
+        ${SpinboxButtonStyled} {
+            transform: translateY(0);
+
+            font-size: 12px;
+        }
+    `}
 `;
 
 export const SpinboxInputStyled = styled.input`
@@ -61,10 +71,11 @@ export const SpinboxButtonStyled = styled.button`
         width: ${localVariables.spinboxButtonWidth};
         padding: 0;
         min-height: 0;
+        transform: translateY(-2px);
 
         color: ${theme.color.base};
         cursor: pointer;
-        font-size: 12px;
+        font-size: 24px;
         background: none;
         border: 0;
         outline: 0;
