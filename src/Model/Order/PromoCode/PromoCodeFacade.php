@@ -9,7 +9,7 @@ use App\Component\String\HashGenerator;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeData;
+use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeData as BasePromoCodeData;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFacade as BasePromoCodeFacade;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeRepository;
@@ -167,16 +167,13 @@ class PromoCodeFacade extends BasePromoCodeFacade
      * @param \App\Model\Order\PromoCode\PromoCodeData $promoCodeData
      * @return \App\Model\Order\PromoCode\PromoCode
      */
-    public function create(PromoCodeData $promoCodeData): PromoCode
+    public function create(BasePromoCodeData $promoCodeData): PromoCode
     {
         $this->prepareDatetimeValid($promoCodeData);
 
         /** @var \App\Model\Order\PromoCode\PromoCode $promoCode */
         $promoCode = parent::create($promoCodeData);
-        $this->refreshPromoCodeLimits($promoCode, $promoCodeData->limits);
-        $this->refreshPromoCodeProducts($promoCode, $promoCodeData->productsWithSale);
-        $this->refreshPromoCodeCategories($promoCode, $promoCodeData->categoriesWithSale);
-        $this->refreshPromoCodeBrands($promoCode, $promoCodeData->brandsWithSale);
+        $this->refreshPromoCodeRelations($promoCode, $promoCodeData);
 
         return $promoCode;
     }
@@ -186,17 +183,13 @@ class PromoCodeFacade extends BasePromoCodeFacade
      * @param \App\Model\Order\PromoCode\PromoCodeData $promoCodeData
      * @return \App\Model\Order\PromoCode\PromoCode
      */
-    public function edit($promoCodeId, PromoCodeData $promoCodeData): PromoCode
+    public function edit($promoCodeId, BasePromoCodeData $promoCodeData): PromoCode
     {
         $this->prepareDatetimeValid($promoCodeData);
 
         /** @var \App\Model\Order\PromoCode\PromoCode $promoCode */
         $promoCode = parent::edit($promoCodeId, $promoCodeData);
-        $this->refreshPromoCodeLimits($promoCode, $promoCodeData->limits);
-        $this->refreshPromoCodeProducts($promoCode, $promoCodeData->productsWithSale);
-        $this->refreshPromoCodeCategories($promoCode, $promoCodeData->categoriesWithSale);
-        $this->refreshPromoCodePricingGroups($promoCode, $promoCodeData->limitedPricingGroups);
-        $this->refreshPromoCodeBrands($promoCode, $promoCodeData->brandsWithSale);
+        $this->refreshPromoCodeRelations($promoCode, $promoCodeData);
 
         return $promoCode;
     }
@@ -452,5 +445,18 @@ class PromoCodeFacade extends BasePromoCodeFacade
     public function findByMassBatchId(int $batchId): ?array
     {
         return $this->promoCodeRepository->findByMassBatchId($batchId);
+    }
+
+    /**
+     * @param \App\Model\Order\PromoCode\PromoCode $promoCode
+     * @param \App\Model\Order\PromoCode\PromoCodeData $promoCodeData
+     */
+    private function refreshPromoCodeRelations(PromoCode $promoCode, PromoCodeData $promoCodeData): void
+    {
+        $this->refreshPromoCodeLimits($promoCode, $promoCodeData->limits);
+        $this->refreshPromoCodeProducts($promoCode, $promoCodeData->productsWithSale);
+        $this->refreshPromoCodeCategories($promoCode, $promoCodeData->categoriesWithSale);
+        $this->refreshPromoCodePricingGroups($promoCode, $promoCodeData->limitedPricingGroups);
+        $this->refreshPromoCodeBrands($promoCode, $promoCodeData->brandsWithSale);
     }
 }
