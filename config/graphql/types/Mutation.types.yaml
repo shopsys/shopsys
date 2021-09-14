@@ -41,3 +41,11 @@ Mutation:
                         type: RecoverPasswordInput!
                         validation: cascade
                 resolve: "@=mutation('recoverPassword', [args, validator])"
+            RequestPersonalDataAccess:
+                type: PersonalDataPage!
+                description: "Request access to personal data"
+                args:
+                    input:
+                        type: PersonalDataAccessRequestInput!
+                        validation: cascade
+                resolve: "@=mutation('requestPersonalDataAccess', [args, validator])"
