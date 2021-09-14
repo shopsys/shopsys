@@ -263,7 +263,7 @@ class CurrentPromoCodeFacade extends BaseCurrentPromoCodeFacade
             }
         }
 
-        throw new NotAvailableForCustomerUserPricingGroup($promoCode->getCode(), $this->currentCustomerUser->findCurrentCustomerUser()->getId());
+        throw new NotAvailableForCustomerUserPricingGroup($promoCode->getCode(), $this->currentCustomerUser->getPricingGroup()->getId());
     }
 
     /**
