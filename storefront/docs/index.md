@@ -24,7 +24,7 @@ docker-compose up -d --force-recreate storefront
 
 #### Install all dependencies
 ```plain
-npm install --legacy-peer-deps
+npm ci --legacy-peer-deps
 ```
 
 #### Start app
