@@ -7,15 +7,11 @@ namespace App\Model\Product\Parameter;
 use App\Model\Product\Parameter\Exception\ParameterGroupNotFoundException;
 use App\Model\Product\Parameter\Exception\ParameterValueNotFoundException;
 use App\Model\Product\Product;
-use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Model\Category\Category;
-use Shopsys\FrameworkBundle\Model\Localization\Localization;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository as BaseParameterRepository;
-use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueDataFactoryInterface;
-use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValue;
 use Shopsys\FrameworkBundle\Model\Product\Product as BaseProduct;
 use Shopsys\FrameworkBundle\Model\Product\ProductCategoryDomain;
@@ -36,31 +32,10 @@ use Shopsys\FrameworkBundle\Model\Product\ProductCategoryDomain;
  * @method \App\Model\Product\Parameter\ParameterValue getParameterValueByUuid(string $uuid)
  * @method \App\Model\Product\Parameter\Parameter[] getParametersByUuids(string[] $uuids)
  * @method \App\Model\Product\Parameter\ParameterValue[] getParameterValuesByUuids(string[] $uuids)
+ * @method __construct(\Doctrine\ORM\EntityManagerInterface $entityManager, \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueFactoryInterface $parameterValueFactory, \App\Model\Product\Parameter\ParameterValueDataFactory $parameterValueDataFactory)
  */
 class ParameterRepository extends BaseParameterRepository
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Localization\Localization
-     */
-    private Localization $localization;
-
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $entityManager
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueFactoryInterface $parameterValueFactory
-     * @param \App\Model\Product\Parameter\ParameterValueDataFactory $parameterValueDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\Localization\Localization $localization
-     */
-    public function __construct(
-        EntityManagerInterface $entityManager,
-        ParameterValueFactoryInterface $parameterValueFactory,
-        ParameterValueDataFactoryInterface $parameterValueDataFactory,
-        Localization $localization
-    ) {
-        parent::__construct($entityManager, $parameterValueFactory, $parameterValueDataFactory);
-
-        $this->localization = $localization;
-    }
-
     /**
      * @param \App\Model\Category\Category $category
      * @param int $domainId
@@ -292,42 +267,6 @@ class ParameterRepository extends BaseParameterRepository
             ->setParameter(':type', $type)
             ->groupBy('pv')
             ->orderBy('pv.text');
-    }
-
-    /**
-     * @param \App\Model\Product\Product $product
-     * @param string $locale
-     * @return \App\Model\Product\Parameter\ParameterValuesViewData[]
-     */
-    public function getParameterValuesViewDataByProduct(Product $product, string $locale): array
-    {
-        $collation = $this->localization->getCollationByLocale($locale);
-        $parameterValueRows = $this->getProductParameterValuesByProductSortedByNameQueryBuilder($product, $locale)
-            ->select('pt.id AS parameterId, pt.name AS parameterName, pv.text AS valueText, 
-                pg.akeneoCode AS parameterGroupCode, pgt.name AS parameterGroupName, ut.name AS unitName')
-            ->leftJoin('pg.translations', 'pgt', Join::WITH, 'pgt.locale = :locale')
-            ->join('ppv.value', 'pv', Join::WITH, 'pv.locale = :locale')
-            ->leftJoin('p.unit', 'u')
-            ->leftJoin('u.translations', 'ut', Join::WITH, 'pu.locale = :locale')
-            ->addOrderBy("COLLATE(pv.text, '" . $collation . "')", 'ASC')
-            ->getQuery()
-            ->getScalarResult();
-
-        $parameterValuesViewDataByParameterId = [];
-        foreach ($parameterValueRows as $parameterValueRow) {
-            $parameterId = $parameterValueRow['parameterId'];
-            if (array_key_exists($parameterId, $parameterValuesViewDataByParameterId) === false) {
-                $parameterValuesViewDataByParameterId[$parameterId] = new ParameterValuesViewData(
-                    $parameterValueRow['parameterName'],
-                    $parameterValueRow['parameterGroupName'],
-                    $parameterValueRow['parameterGroupCode'],
-                    $parameterValueRow['unitName'],
-                );
-            }
-            $parameterValuesViewDataByParameterId[$parameterId]->addParameterValueText($parameterValueRow['valueText']);
-        }
-
-        return $parameterValuesViewDataByParameterId;
     }
 
     /**

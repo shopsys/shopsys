@@ -29,7 +29,6 @@ use Shopsys\FrontendApiBundle\Model\Resolver\Products\DataMapper\ProductEntityFi
  * @method bool isSellingDenied(\App\Model\Product\Product $product)
  * @method \App\Model\Product\Product[] getAccessories(\App\Model\Product\Product $product)
  * @method string|null getDescription(\App\Model\Product\Product $product)
- * @method \App\FrontendApi\Model\Parameter\ParameterWithValues[] getParameters(\App\Model\Product\Product $product)
  * @method string|null getSeoH1(\App\Model\Product\Product $product)
  * @method string|null getSeoTitle(\App\Model\Product\Product $product)
  * @method string|null getSeoMetaDescription(\App\Model\Product\Product $product)
@@ -235,8 +234,32 @@ class ProductEntityFieldMapper extends BaseProductEntityFieldMapper
                 $flagsIndexedById[$variantFlag->getId()] = $variantFlag;
             }
         }
+        ksort($flagsIndexedById);
 
         return array_values($flagsIndexedById);
+    }
+
+    /**
+     * Method is overridden, so it returns parameters for the variants too.
+     *
+     * @param \App\Model\Product\Product $product
+     * @return array
+     */
+    public function getParameters(BaseProduct $product): array
+    {
+        $products = [];
+        if ($product->isMainVariant() === true) {
+            $products = $this->productRepository->getAllSellableVariantsByMainVariant(
+                $product,
+                $this->domain->getId(),
+                $this->currentCustomerUser->getPricingGroup()
+            );
+        }
+        $products[] = $product;
+
+        $productParameterValuesData = $this->parameterRepository->getProductParameterValuesDataByProducts($products, $this->domain->getLocale());
+
+        return $this->parameterWithValuesFactory->createParametersArrayFromProductArray(['parameters' => $productParameterValuesData]);
     }
 
     /**
