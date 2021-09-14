@@ -1,27 +1,30 @@
 import {
     AddToCartButtonStyled,
     AddToCartButtonsWrapperStyled,
+    AddToCartButtonWrapperStyled,
     AddToCartFormStyled,
     AddToCartPriceStyled,
-    AddtoCartSingleButtonWrapper,
     AddToCartWrapperStyled,
-    SpinboxStyled,
 } from './ProductDetailAddToCart.style';
 import { FC } from 'react';
-import { useTranslation } from 'react-i18next';
+import { formatPrice } from 'utils/formatting';
+import Spinbox from 'components/Forms/Spinbox';
+import { useTypedTranslationFunction } from 'hooks/UseTypedTranslationFunction';
 
 const ProductDetailAddToCart: FC = () => {
-    const { t } = useTranslation();
+    const t = useTypedTranslationFunction();
     const props = { min: 1, max: 5, defaultValue: 1, step: 1 };
+
     return (
         <AddToCartWrapperStyled>
-            <AddToCartPriceStyled>199,00 Kč</AddToCartPriceStyled>
+            {/* TODO PRG: join live data */}
+            <AddToCartPriceStyled>{formatPrice(199, 'CZK')}</AddToCartPriceStyled>
             <AddToCartFormStyled>
                 <AddToCartButtonsWrapperStyled>
-                    <SpinboxStyled {...props} />
-                    <AddtoCartSingleButtonWrapper>
-                        <AddToCartButtonStyled>{t('do košíku')}</AddToCartButtonStyled>
-                    </AddtoCartSingleButtonWrapper>
+                    <Spinbox {...props} />
+                    <AddToCartButtonWrapperStyled>
+                        <AddToCartButtonStyled>{t('Add to cart')}</AddToCartButtonStyled>
+                    </AddToCartButtonWrapperStyled>
                 </AddToCartButtonsWrapperStyled>
             </AddToCartFormStyled>
         </AddToCartWrapperStyled>
