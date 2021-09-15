@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\Order\PromoCode;
 
+use App\Model\Cart\Cart;
 use App\Model\Order\PromoCode\Exception\AvailableForRegisteredCustomerUserOnly;
 use App\Model\Order\PromoCode\Exception\NoLongerValidPromoCodeDateTimeException;
 use App\Model\Order\PromoCode\Exception\NotAvailableForCustomerUserPricingGroup;
@@ -107,22 +108,13 @@ class CurrentPromoCodeFacade extends BaseCurrentPromoCodeFacade
      */
     public function setEnteredPromoCode($enteredCode)
     {
-        $promoCode = $this->promoCodeFacade->findPromoCodeByCode($enteredCode);
-
-        if ($promoCode === null) {
-            throw new InvalidPromoCodeException($enteredCode);
+        $customerUserIdentifier = $this->customerUserIdentifierFactory->get();
+        /** @var \App\Model\Cart\Cart|null $cart */
+        $cart = $this->cartRepository->findByCustomerUserIdentifier($customerUserIdentifier);
+        if ($cart === null) {
+            return;
         }
-
-        if ($promoCode->isRegisteredCustomerUserOnly() && $this->currentCustomerUser->findCurrentCustomerUser() === null) {
-            throw new AvailableForRegisteredCustomerUserOnly($enteredCode);
-        }
-
-        $this->validatePricingGroup($promoCode);
-        $this->validatePromoCodeDatetime($promoCode);
-        $this->validateRemainigUses($promoCode);
-        $this->validatePromoCodeByProductsInCart($promoCode);
-        $this->validatePromoCodeByFlags($promoCode);
-        $this->validateLimit($promoCode);
+        $this->getValidatedPromoCode($enteredCode, $cart);
 
         $this->session->set(static::PROMO_CODE_SESSION_KEY, $enteredCode);
     }
@@ -171,8 +163,9 @@ class CurrentPromoCodeFacade extends BaseCurrentPromoCodeFacade
 
     /**
      * @param \App\Model\Order\PromoCode\PromoCode $promoCode
+     * @param \App\Model\Cart\Cart $cart
      */
-    private function validatePromoCodeByProductsInCart(PromoCode $promoCode)
+    private function validatePromoCodeByProductsInCart(PromoCode $promoCode, Cart $cart)
     {
         $domainId = $this->domain->getId();
         $allowedProductIds = $this->promoCodeProductRepository->getProductIdsByPromoCodeId($promoCode->getId());
@@ -184,12 +177,8 @@ class CurrentPromoCodeFacade extends BaseCurrentPromoCodeFacade
             return;
         }
 
-        $customerUserIdentifier = $this->customerUserIdentifierFactory->get();
-        $cart = $this->cartRepository->findByCustomerUserIdentifier($customerUserIdentifier);
-        $cartItems = $cart === null ? [] : $cart->getItems();
-
         $isValidPromoCode = false;
-        foreach ($cartItems as $cartItem) {
+        foreach ($cart->getItems() as $cartItem) {
             if (in_array($cartItem->getProduct()->getId(), $allowedProductIds, true) === true) {
                 $isValidPromoCode = true;
                 break;
@@ -203,12 +192,13 @@ class CurrentPromoCodeFacade extends BaseCurrentPromoCodeFacade
 
     /**
      * @param \App\Model\Order\PromoCode\PromoCode $promoCode
+     * @param \App\Model\Cart\Cart $cart
      */
-    private function validateLimit(PromoCode $promoCode): void
+    private function validateLimit(PromoCode $promoCode, Cart $cart): void
     {
         $limit = $this->promoCodeLimitByCartTotalResolver->getLimitByPromoCode(
             $promoCode,
-            $this->getQuantifiedProductsOfCurrentCustomer() ?? []
+            $cart->getQuantifiedProducts()
         );
         if ($limit === null) {
             throw new PromoCodeWithoutRelationWithAnyProductFromCurrentCartException($promoCode);
@@ -217,16 +207,12 @@ class CurrentPromoCodeFacade extends BaseCurrentPromoCodeFacade
 
     /**
      * @param \App\Model\Order\PromoCode\PromoCode $promoCode
+     * @param \App\Model\Cart\Cart $cart
      */
-    private function validatePromoCodeByFlags(PromoCode $promoCode)
+    private function validatePromoCodeByFlags(PromoCode $promoCode, Cart $cart)
     {
-        $customerUserIdentifier = $this->customerUserIdentifierFactory->get();
-        $cart = $this->cartRepository->findByCustomerUserIdentifier($customerUserIdentifier);
-        $cartItems = $cart === null ? [] : $cart->getItems();
-
         $isValidPromoCode = false;
-        foreach ($cartItems as $cartItem) {
-            /** @var \App\Model\Product\Product $productFromCart */
+        foreach ($cart->getItems() as $cartItem) {
             $productFromCart = $cartItem->getProduct();
             $product = $this->productPromoCodeFiller->filterProductByPromoCodeFlags($productFromCart, $promoCode);
             if ($product !== null) {
@@ -243,57 +229,19 @@ class CurrentPromoCodeFacade extends BaseCurrentPromoCodeFacade
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct[] $quantifiedProducts
      * @param int $domainId
+     * @param \App\Model\Order\PromoCode\PromoCode|null $promoCode
      * @return \App\Model\Order\PromoCode\PromoCode[]
      */
-    public function getPromoCodePerProductByDomainId(array $quantifiedProducts, int $domainId): array
+    public function getPromoCodePerProductByDomainId(array $quantifiedProducts, int $domainId, ?PromoCode $promoCode = null): array
     {
-        $validEnteredPromoCode = $this->getValidEnteredPromoCodeOrNull();
-        if ($validEnteredPromoCode === null) {
+        if ($promoCode === null) {
+            $promoCode = $this->getValidEnteredPromoCodeOrNull();
+        }
+        if ($promoCode === null) {
             return [];
         }
 
-        return $this->productPromoCodeFiller->getPromoCodePerProductByDomainId($quantifiedProducts, $domainId, $validEnteredPromoCode);
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getPromoCodeCode(): ?string
-    {
-        $validEnteredPromoCode = $this->getValidEnteredPromoCodeOrNull();
-        if ($validEnteredPromoCode === null) {
-            return null;
-        }
-
-        return $validEnteredPromoCode->getCode();
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getPromoCodeIdentifier(): ?string
-    {
-        $validEnteredPromoCode = $this->getValidEnteredPromoCodeOrNull();
-        if ($validEnteredPromoCode === null) {
-            return null;
-        }
-
-        return $validEnteredPromoCode->getIdentifier();
-    }
-
-    /**
-     * @return array|null
-     */
-    private function getQuantifiedProductsOfCurrentCustomer(): ?array
-    {
-        $customerIdentifier = $this->customerUserIdentifierFactory->get();
-
-        $cart = $this->cartRepository->findByCustomerUserIdentifier($customerIdentifier);
-        if ($cart === null) {
-            return null;
-        }
-
-        return $cart->getQuantifiedProducts();
+        return $this->productPromoCodeFiller->getPromoCodePerProductByDomainId($quantifiedProducts, $domainId, $promoCode);
     }
 
     /**
@@ -315,6 +263,31 @@ class CurrentPromoCodeFacade extends BaseCurrentPromoCodeFacade
             }
         }
 
-        throw new NotAvailableForCustomerUserPricingGroup($promoCode->getCode(), $this->currentCustomerUser->findCurrentCustomerUser()->getId());
+        throw new NotAvailableForCustomerUserPricingGroup($promoCode->getCode(), $this->currentCustomerUser->getPricingGroup()->getId());
+    }
+
+    /**
+     * @param string $enteredCode
+     * @param \App\Model\Cart\Cart $cart
+     * @return \App\Model\Order\PromoCode\PromoCode
+     */
+    public function getValidatedPromoCode(string $enteredCode, Cart $cart): PromoCode
+    {
+        $promoCode = $this->promoCodeFacade->findPromoCodeByCode($enteredCode);
+        if ($promoCode === null) {
+            throw new InvalidPromoCodeException($enteredCode);
+        }
+        if ($promoCode->isRegisteredCustomerUserOnly() && $this->currentCustomerUser->findCurrentCustomerUser() === null) {
+            throw new AvailableForRegisteredCustomerUserOnly($enteredCode);
+        }
+
+        $this->validatePricingGroup($promoCode);
+        $this->validatePromoCodeDatetime($promoCode);
+        $this->validateRemainigUses($promoCode);
+        $this->validatePromoCodeByProductsInCart($promoCode, $cart);
+        $this->validatePromoCodeByFlags($promoCode, $cart);
+        $this->validateLimit($promoCode, $cart);
+
+        return $promoCode;
     }
 }

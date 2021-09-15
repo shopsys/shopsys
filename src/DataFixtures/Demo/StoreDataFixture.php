@@ -31,7 +31,7 @@ class StoreDataFixture extends AbstractReferenceFixture implements DependentFixt
     private const ATTR_LOCATION_LONGITUDE = 'locationLongitude';
     private const ATTR_IMAGE = 'image';
 
-    private const STORE_PREFIX = 'store_';
+    public const STORE_PREFIX = 'store_';
 
     /**
      * @var \App\Model\Store\StoreFacade

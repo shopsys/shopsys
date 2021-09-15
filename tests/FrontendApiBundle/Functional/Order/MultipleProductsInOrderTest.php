@@ -53,8 +53,9 @@ class MultipleProductsInOrderTest extends AbstractOrderTestCase
                 ],
             ],
         ];
+        $cartUuid = $this->addProductsToCart();
 
-        $this->assertQueryWithExpectedArray($this->getMutation(), $expected);
+        $this->assertQueryWithExpectedArray($this->getMutation($cartUuid), $expected);
     }
 
     /**
@@ -71,38 +72,14 @@ class MultipleProductsInOrderTest extends AbstractOrderTestCase
 
         return [
             0 => [
-                'name' => t('Televize 22" Sencor SLE 22F46DM4 HELLO KITTY plazmová', [], 'dataFixtures', $firstDomainLocale),
-                'unitPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('2891.70', $vatHigh),
-                'totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('2891.70', $vatHigh, 10),
-                'quantity' => 10,
+                'name' => t('32" Philips 32PFL4308', [], 'dataFixtures', $firstDomainLocale),
+                'unitPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('8173.55', $vatHigh),
+                'totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('8173.55', $vatHigh, 3),
+                'quantity' => 3,
                 'vatRate' => '21.0000',
                 'unit' => t('pcs', [], 'dataFixtures', $firstDomainLocale),
             ],
             1 => [
-                'name' => t('100 Czech crowns ticket', [], 'dataFixtures', $firstDomainLocale),
-                'unitPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('100', $vatHigh),
-                'totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('100', $vatHigh, 100),
-                'quantity' => 100,
-                'vatRate' => '21.0000',
-                'unit' => t('pcs', [], 'dataFixtures', $firstDomainLocale),
-            ],
-            2 => [
-                'name' => t('27” Hyundai T27D590EY', [], 'dataFixtures', $firstDomainLocale),
-                'unitPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('6199', $vatHigh),
-                'totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('6199', $vatHigh),
-                'quantity' => 1,
-                'vatRate' => '21.0000',
-                'unit' => t('pcs', [], 'dataFixtures', $firstDomainLocale),
-            ],
-            3 => [
-                'name' => t('27” Hyundai T27D590EZ', [], 'dataFixtures', $firstDomainLocale),
-                'unitPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('6399', $vatHigh),
-                'totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('6399', $vatHigh, 2),
-                'quantity' => 2,
-                'vatRate' => '21.0000',
-                'unit' => t('pcs', [], 'dataFixtures', $firstDomainLocale),
-            ],
-            4 => [
                 'name' => t('30” Hyundai 22MT44D', [], 'dataFixtures', $firstDomainLocale),
                 'unitPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('3999.00', $vatHigh),
                 'totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('3999.00', $vatHigh, 5),
@@ -110,11 +87,35 @@ class MultipleProductsInOrderTest extends AbstractOrderTestCase
                 'vatRate' => '21.0000',
                 'unit' => t('pcs', [], 'dataFixtures', $firstDomainLocale),
             ],
+            2 => [
+                'name' => t('27” Hyundai T27D590EZ', [], 'dataFixtures', $firstDomainLocale),
+                'unitPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('6399', $vatHigh),
+                'totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('6399', $vatHigh, 2),
+                'quantity' => 2,
+                'vatRate' => '21.0000',
+                'unit' => t('pcs', [], 'dataFixtures', $firstDomainLocale),
+            ],
+            3 => [
+                'name' => t('27” Hyundai T27D590EY', [], 'dataFixtures', $firstDomainLocale),
+                'unitPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('6199', $vatHigh),
+                'totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('6199', $vatHigh),
+                'quantity' => 1,
+                'vatRate' => '21.0000',
+                'unit' => t('pcs', [], 'dataFixtures', $firstDomainLocale),
+            ],
+            4 => [
+                'name' => t('100 Czech crowns ticket', [], 'dataFixtures', $firstDomainLocale),
+                'unitPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('100', $vatHigh),
+                'totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('100', $vatHigh, 100),
+                'quantity' => 100,
+                'vatRate' => '21.0000',
+                'unit' => t('pcs', [], 'dataFixtures', $firstDomainLocale),
+            ],
             5 => [
-                'name' => t('32" Philips 32PFL4308', [], 'dataFixtures', $firstDomainLocale),
-                'unitPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('8173.55', $vatHigh),
-                'totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('8173.55', $vatHigh, 3),
-                'quantity' => 3,
+                'name' => t('Televize 22" Sencor SLE 22F46DM4 HELLO KITTY plazmová', [], 'dataFixtures', $firstDomainLocale),
+                'unitPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('2891.70', $vatHigh),
+                'totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('2891.70', $vatHigh, 10),
+                'quantity' => 10,
                 'vatRate' => '21.0000',
                 'unit' => t('pcs', [], 'dataFixtures', $firstDomainLocale),
             ],
@@ -138,39 +139,16 @@ class MultipleProductsInOrderTest extends AbstractOrderTestCase
     }
 
     /**
+     * @param string $cartUuid
      * @return string
      */
-    private function getMutation(): string
+    private function getMutation(string $cartUuid): string
     {
         $domainId = $this->domain->getId();
         /** @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vatHigh */
         $vatHigh = $this->getReferenceForDomain(VatDataFixture::VAT_HIGH, $domainId);
         /** @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vatZero */
         $vatZero = $this->getReferenceForDomain(VatDataFixture::VAT_ZERO, $domainId);
-
-        /** @var \Shopsys\FrameworkBundle\Model\Product\Product $product1 */
-        $product1 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1');
-        $product1UnitPrice = $this->getMutationPriceConvertedToDomainDefaultCurrency('2891.70', $vatHigh);
-
-        /** @var \Shopsys\FrameworkBundle\Model\Product\Product $product72 */
-        $product72 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '72');
-        $product72UnitPrice = $this->getMutationPriceConvertedToDomainDefaultCurrency('100', $vatHigh);
-
-        /** @var \Shopsys\FrameworkBundle\Model\Product\Product $product80 */
-        $product80 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '80');
-        $product80UnitPrice = $this->getMutationPriceConvertedToDomainDefaultCurrency('6199', $vatHigh);
-
-        /** @var \Shopsys\FrameworkBundle\Model\Product\Product $product81 */
-        $product81 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '81');
-        $product81UnitPrice = $this->getMutationPriceConvertedToDomainDefaultCurrency('3999', $vatHigh);
-
-        /** @var \Shopsys\FrameworkBundle\Model\Product\Product $product77 */
-        $product77 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '77');
-        $product77UnitPrice = $this->getMutationPriceConvertedToDomainDefaultCurrency('6399', $vatHigh);
-
-        /** @var \Shopsys\FrameworkBundle\Model\Product\Product $product2 */
-        $product2 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '2');
-        $product2UnitPrice = $this->getMutationPriceConvertedToDomainDefaultCurrency('8173.55', $vatHigh);
 
         /** @var \Shopsys\FrameworkBundle\Model\Payment\Payment $paymentCashOnDelivery */
         $paymentCashOnDelivery = $this->getReference(PaymentDataFixture::PAYMENT_CASH_ON_DELIVERY);
@@ -183,6 +161,7 @@ class MultipleProductsInOrderTest extends AbstractOrderTestCase
         return 'mutation {
                     CreateOrder(
                         input: {
+                            cartUuid: "' . $cartUuid . '"
                             firstName: "firstName"
                             lastName: "lastName"
                             email: "user@example.com"
@@ -211,38 +190,6 @@ class MultipleProductsInOrderTest extends AbstractOrderTestCase
                             deliveryCity: "deliveryCity"
                             deliveryCountry: "SK"
                             deliveryPostcode: "13453"
-                            products: [
-                                {
-                                    uuid: "' . $product1->getUuid() . '",
-                                    unitPrice: ' . $product1UnitPrice . ',
-                                    quantity: 10
-                                },
-                                {
-                                    uuid: "' . $product72->getUuid() . '",
-                                    unitPrice: ' . $product72UnitPrice . ',
-                                    quantity: 100
-                                },
-                                {
-                                    uuid: "' . $product80->getUuid() . '",
-                                    unitPrice: ' . $product80UnitPrice . ',
-                                    quantity: 1
-                                },
-                                {
-                                    uuid: "' . $product81->getUuid() . '",
-                                    unitPrice: ' . $product77UnitPrice . ',
-                                    quantity: 2
-                                },
-                                {
-                                    uuid: "' . $product77->getUuid() . '",
-                                    unitPrice: ' . $product81UnitPrice . ',
-                                    quantity: 5
-                                },
-                                {
-                                    uuid: "' . $product2->getUuid() . '",
-                                    unitPrice: ' . $product2UnitPrice . ',
-                                    quantity: 3
-                                }
-                            ]
                         }
                     ) {
                         transport {
@@ -296,5 +243,90 @@ class MultipleProductsInOrderTest extends AbstractOrderTestCase
                         note
                     }
                 }';
+    }
+
+    /**
+     * @return string
+     */
+    private function addProductsToCart(): string
+    {
+        /** @var \Shopsys\FrameworkBundle\Model\Product\Product $product1 */
+        $product1 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1');
+        $mutation = 'mutation {
+            AddToCart(input: {
+                productUuid: "' . $product1->getUuid() . '",
+                quantity: 10
+            }) {
+                uuid
+            }
+        }';
+        $cartUuid = $this->getResponseContentForQuery($mutation)['data']['AddToCart']['uuid'];
+
+        /** @var \Shopsys\FrameworkBundle\Model\Product\Product $product72 */
+        $product72 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '72');
+        $mutation = 'mutation {
+            AddToCart(input: {
+                productUuid: "' . $product72->getUuid() . '",
+                quantity: 100
+                cartUuid: "' . $cartUuid . '"
+            }) {
+                uuid
+            }
+        }';
+        $this->getResponseContentForQuery($mutation);
+
+        /** @var \Shopsys\FrameworkBundle\Model\Product\Product $product80 */
+        $product80 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '80');
+        $mutation = 'mutation {
+            AddToCart(input: {
+                productUuid: "' . $product80->getUuid() . '",
+                quantity: 1
+                cartUuid: "' . $cartUuid . '"
+            }) {
+                uuid
+            }
+        }';
+        $this->getResponseContentForQuery($mutation);
+
+        /** @var \Shopsys\FrameworkBundle\Model\Product\Product $product81 */
+        $product81 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '81');
+        $mutation = 'mutation {
+            AddToCart(input: {
+                productUuid: "' . $product81->getUuid() . '",
+                quantity: 2
+                cartUuid: "' . $cartUuid . '"
+            }) {
+                uuid
+            }
+        }';
+        $this->getResponseContentForQuery($mutation);
+
+        /** @var \Shopsys\FrameworkBundle\Model\Product\Product $product77 */
+        $product77 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '77');
+        $mutation = 'mutation {
+            AddToCart(input: {
+                productUuid: "' . $product77->getUuid() . '",
+                quantity: 5
+                cartUuid: "' . $cartUuid . '"
+            }) {
+                uuid
+            }
+        }';
+        $this->getResponseContentForQuery($mutation);
+
+        /** @var \Shopsys\FrameworkBundle\Model\Product\Product $product2 */
+        $product2 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '2');
+        $mutation = 'mutation {
+            AddToCart(input: {
+                productUuid: "' . $product2->getUuid() . '",
+                quantity: 3
+                cartUuid: "' . $cartUuid . '"
+            }) {
+                uuid
+            }
+        }';
+        $this->getResponseContentForQuery($mutation);
+
+        return $cartUuid;
     }
 }

@@ -2,3 +2,22 @@ OrderInput:
     type: input-object
     inherits:
         - 'OrderInputDecorator'
+    config:
+        validation:
+            -   Shopsys\FrontendApiBundle\Component\Constraints\PaymentTransportRelation: ~
+            -   App\FrontendApi\Model\Component\Constraints\PromoCode: ~
+        fields:
+            products:
+                type: "[OrderProductInput!]"
+                validation: ~
+                description: "Deprecated, this field is not used, the products are taken from the server cart instead."
+            cartUuid:
+                type: "Uuid"
+                description: "Cart identifier used for getting carts of not logged customers"
+                defaultValue: null
+            promoCode:
+                type: "String"
+                description: "The promo code used in the order"
+            personalPickupStoreUuid:
+                type: "String"
+                description: "The identifier of selected personal pickup store"

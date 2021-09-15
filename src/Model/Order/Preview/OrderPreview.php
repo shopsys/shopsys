@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\Order\Preview;
 
+use App\Model\Order\PromoCode\PromoCode;
 use App\Model\Store\Store;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreview as BaseOrderPreview;
@@ -39,11 +40,6 @@ class OrderPreview extends BaseOrderPreview
     private $transportForFree;
 
     /**
-     * @var string|null
-     */
-    private $promoCodeCode;
-
-    /**
      * @var \Shopsys\FrameworkBundle\Model\Pricing\Price[]
      */
     protected $quantifiedItemsDiscountPricesByIndex;
@@ -59,9 +55,9 @@ class OrderPreview extends BaseOrderPreview
     private $totalPriceDiscount;
 
     /**
-     * @var string|null
+     * @var \App\Model\Order\PromoCode\PromoCode|null
      */
-    protected $promoCodeIdentifier;
+    private ?PromoCode $promoCode;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct[] $quantifiedProductsByIndex
@@ -83,8 +79,7 @@ class OrderPreview extends BaseOrderPreview
      * @param \Shopsys\FrameworkBundle\Component\Money\Money|null $restToFreeTransportPrice
      * @param int|null $percentageOfFreeTransport
      * @param bool|null $transportForFree
-     * @param string|null $promoCodeCode
-     * @param string|null $promoCodeIdentifier
+     * @param \App\Model\Order\PromoCode\PromoCode|null $promoCode
      */
     public function __construct(
         array $quantifiedProductsByIndex,
@@ -106,8 +101,7 @@ class OrderPreview extends BaseOrderPreview
         ?Money $restToFreeTransportPrice = null,
         ?int $percentageOfFreeTransport = null,
         ?bool $transportForFree = false,
-        $promoCodeCode = null,
-        $promoCodeIdentifier = null
+        ?PromoCode $promoCode = null
     ) {
         parent::__construct(
             $quantifiedProductsByIndex,
@@ -128,11 +122,10 @@ class OrderPreview extends BaseOrderPreview
         $this->restToFreeTransportPrice = $restToFreeTransportPrice;
         $this->percentageOfFreeTransport = $percentageOfFreeTransport;
         $this->transportForFree = $transportForFree;
-        $this->promoCodeCode = $promoCodeCode;
         $this->quantifiedItemsDiscountPricesByIndex = $quantifiedItemsDiscountPricesByIndex;
         $this->productsFullPrice = $productsFullPrice;
         $this->totalPriceDiscount = $totalPriceDiscount;
-        $this->promoCodeIdentifier = $promoCodeIdentifier;
+        $this->promoCode = $promoCode;
     }
 
     /**
@@ -180,7 +173,7 @@ class OrderPreview extends BaseOrderPreview
      */
     public function getPromoCodeCode(): ?string
     {
-        return $this->promoCodeCode;
+        return $this->promoCode !== null ? $this->promoCode->getCode() : null;
     }
 
     /**
@@ -212,6 +205,14 @@ class OrderPreview extends BaseOrderPreview
      */
     public function getPromoCodeIdentifier(): ?string
     {
-        return $this->promoCodeIdentifier;
+        return $this->promoCode !== null ? $this->promoCode->getIdentifier() : null;
+    }
+
+    /**
+     * @return \App\Model\Order\PromoCode\PromoCode|null
+     */
+    public function getPromoCode(): ?PromoCode
+    {
+        return $this->promoCode;
     }
 }
