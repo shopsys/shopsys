@@ -8,10 +8,10 @@ Query:
                 type: '[NavigationItem!]!'
                 resolve: "@=resolver('navigationResolver')"
                 description: "Returns complete navigation menu"
-            CurrentCompanyCustomerUser:
-                type: 'CurrentCompanyCustomerUser'
-            CurrentRegularCustomerUser:
-                type: 'CurrentRegularCustomerUser'
+            CompanyCustomerUser:
+                type: 'CompanyCustomerUser'
+            RegularCustomerUser:
+                type: 'RegularCustomerUser'
             promotedCategories:
                 type: '[Category!]!'
                 resolve: "@=resolver('promotedCategoriesResolver')"
@@ -112,3 +112,7 @@ Query:
                 type: 'PersonalDataPage'
                 resolve: "@=resolver('personalDataPage')"
                 description: "Return personal data page content and URL"
+            currentCustomerUser:
+                type: 'CustomerUser!'
+                resolve: "@=resolver('currentCustomerUser')"
+                description: "Returns currently logged in customer user"

@@ -1,10 +1,10 @@
-CurrentCustomerUser:
+CustomerUser:
     type: interface
     inherits:
         - 'CurrentCustomerUserDecorator'
     heirs:
-        - 'CurrentCompanyCustomerUser'
-        - 'CurrentRegularCustomerUser'
+        - 'CompanyCustomerUser'
+        - 'RegularCustomerUser'
     config:
         fields:
             street:
