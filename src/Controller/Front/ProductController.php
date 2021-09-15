@@ -830,36 +830,4 @@ class ProductController extends FrontBaseController
 
         return $readyCategorySeoMix;
     }
-
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function productsInSaleOnHomePageAction(Request $request): Response
-    {
-        $requestPage = $request->get(self::PAGE_QUERY_PARAMETER);
-        if (!$this->isRequestPageValid($requestPage)) {
-            $requestPage = null;
-        }
-        $page = $requestPage === null ? 1 : (int)$requestPage;
-
-        $paginatedSaleProducts = $this->listedProductViewFacade->getPaginatedSaleProducts(
-            $page,
-            self::SALE_PRODUCTS_PER_PAGE
-        );
-
-        return $this->render(
-            'Front/Content/Product/productsInSaleOnHomePage.html.twig',
-            [
-                'paginationResult' => $paginatedSaleProducts,
-                'gtmSaleProductsScrollEvent' => $this->gtmJsPushFacade->getListedProductViewsScrollData(
-                    $paginatedSaleProducts->getResults(),
-                    DataLayer::LIST_NAME_HOME_SALE_PRODUCTS,
-                    ($page - 1) * self::SALE_PRODUCTS_PER_PAGE + 1
-                ),
-                'gtmList' => DataLayer::LIST_NAME_HOME_SALE_PRODUCTS,
-                'pageItemsCount' => self::SALE_PRODUCTS_PER_PAGE,
-            ]
-        );
-    }
 }

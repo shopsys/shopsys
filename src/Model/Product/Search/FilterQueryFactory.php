@@ -55,4 +55,34 @@ class FilterQueryFactory extends BaseFilterQueryFactory
 
         return $filterQuery;
     }
+
+    /**
+     * @param int $flagId
+     * @param \App\Model\Product\Filter\ProductFilterData $productFilterData
+     * @return \App\Model\Product\Search\FilterQuery
+     */
+    public function createListableProductsByFlagIdWithPriceAndStockFilter(int $flagId, ProductFilterData $productFilterData): FilterQuery
+    {
+        $filterQuery = $this->createListable()
+            ->filterByFlags([$flagId]);
+        $filterQuery = $this->addPricesAndStockFromFilterDataToQuery($productFilterData, $filterQuery);
+
+        return $filterQuery;
+    }
+
+    /**
+     * @param \App\Model\Product\Filter\ProductFilterData $productFilterData
+     * @param string $orderingModeId
+     * @param int $page
+     * @param int $limit
+     * @return \App\Model\Product\Search\FilterQuery
+     */
+    public function createListableProducts(
+        ProductFilterData $productFilterData,
+        string $orderingModeId,
+        int $page,
+        int $limit
+    ): FilterQuery {
+        return $this->createWithProductFilterData($productFilterData, $orderingModeId, $page, $limit);
+    }
 }

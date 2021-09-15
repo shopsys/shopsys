@@ -47,13 +47,6 @@
 			{% endif %}
 		</li>
 	{% endfor %}
-	{% if saleCategory is not null %}
-		<li class="navigation__item js-hover-intent" data-hover-intent-interval="50">
-			<a class="navigation__item__link" href="{{ url('front_product_list', { id: saleCategory.id }) }}">
-				<span class="navigation__item__link__text">{{ "Výprodej"|trans }}</span>
-			</a>
-		</li>
-	{% endif %}
 	<li class="navigation__item navigation__item--blog js-hover-intent" data-hover-intent-interval="50">
 		<a
 			href="{{ url('front_blogcategory_detail', { id: constant('App\\Model\\Blog\\Category\\BlogCategory::BLOG_MAIN_PAGE_CATEGORY_ID')}) }}"

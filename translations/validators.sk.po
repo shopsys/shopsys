@@ -40,6 +40,9 @@ msgstr "Meno kontaktnej osoby nemôže byť dlhšie, než {{ limit }} znakov"
 msgid "Flag color in must be in valid hexadecimal code e.g. #3333ff"
 msgstr ""
 
+msgid "Flag name cannot be longer than {{ limit }} characters"
+msgstr ""
+
 msgid "Heading (H1) cannot be longer than {{ limit }} characters"
 msgstr ""
 
@@ -137,6 +140,9 @@ msgid "Please enter first name of contact person"
 msgstr "Prosím zadajte meno kontaktnej osoby"
 
 msgid "Please enter flag color"
+msgstr ""
+
+msgid "Please enter flag name in all languages"
 msgstr ""
 
 msgid "Please enter full name"

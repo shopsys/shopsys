@@ -115,31 +115,6 @@ class ProductOnCurrentDomainElasticFacade extends BaseProductOnCurrentDomainElas
     }
 
     /**
-     * @param \App\Model\Product\Filter\ProductFilterData $productFilterData
-     * @param int $page
-     * @param int $limit
-     * @return \Shopsys\FrameworkBundle\Component\Paginator\PaginationResult
-     */
-    public function getPaginatedProductsInSale(
-        ProductFilterData $productFilterData,
-        int $page,
-        int $limit
-    ): PaginationResult {
-        $baseFilterQuery = $this->filterQueryFactory->create($this->filterQueryFactory->getIndexName())
-            ->filterOnlyInSale()
-            ->setLimit($limit)
-            ->setPage($page)
-            ->filterOnlyVisible($this->currentCustomerUser->getPricingGroup())
-            ->odrderByStockQuantity();
-        $baseFilterQuery = $this->productFilterDataToQueryTransformer->addPricesToQuery($productFilterData, $baseFilterQuery, $this->currentCustomerUser->getPricingGroup());
-        $baseFilterQuery = $this->productFilterDataToQueryTransformer->addStockToQuery($productFilterData, $baseFilterQuery);
-
-        $productsResult = $this->productElasticsearchRepository->getSortedProductsResultByFilterQuery($baseFilterQuery);
-
-        return new PaginationResult($page, $limit, $productsResult->getTotal(), $productsResult->getHits());
-    }
-
-    /**
      * @param int $categoryId
      * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig $productFilterConfig
      * @param \App\Model\Product\Filter\ProductFilterData $productFilterData
@@ -180,5 +155,23 @@ class ProductOnCurrentDomainElasticFacade extends BaseProductOnCurrentDomainElas
         }
 
         return $productFilterCountData;
+    }
+
+    /**
+     * @param int $flagId
+     * @param \App\Model\Product\Filter\ProductFilterData $productFilterData
+     * @return \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData
+     */
+    public function getProductFilterCountDataForFlag(
+        int $flagId,
+        ProductFilterData $productFilterData
+    ): ProductFilterCountData {
+        return $this->productFilterCountDataElasticsearchRepository->getProductFilterCountDataInCategory(
+            $productFilterData,
+            $this->filterQueryFactory->createListableProductsByFlagIdWithPriceAndStockFilter(
+                $flagId,
+                $productFilterData
+            )
+        );
     }
 }

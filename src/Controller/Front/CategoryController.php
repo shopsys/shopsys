@@ -65,7 +65,6 @@ class CategoryController extends FrontBaseController
         return $this->render('Front/Content/Category/mobilePanelMenu.html.twig', [
             'categoriesWithLazyLoadedVisibleChildren' => $categoriesWithLazyLoadedVisibleChildren,
             'isFirstLevel' => true,
-            'saleCategory' => $this->categoryFacade->findSaleCategory(),
         ]);
     }
 
@@ -94,7 +93,6 @@ class CategoryController extends FrontBaseController
             'isFirstLevel' => true,
             'openCategories' => $openCategories,
             'currentCategory' => $currentCategory,
-            'saleCategory' => $this->categoryFacade->findSaleCategory(),
         ]);
     }
 
@@ -115,7 +113,6 @@ class CategoryController extends FrontBaseController
             'isFirstLevel' => false,
             'openCategories' => [],
             'currentCategory' => null,
-            'saleCategory' => $this->categoryFacade->findSaleCategory(),
         ]);
     }
 

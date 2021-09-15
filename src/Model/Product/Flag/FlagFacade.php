@@ -4,14 +4,17 @@ declare(strict_types=1);
 
 namespace App\Model\Product\Flag;
 
+use App\Component\Router\FriendlyUrl\FriendlyUrlFacade;
+use Doctrine\ORM\EntityManagerInterface;
+use Shopsys\FrameworkBundle\Model\Product\Flag\FlagData;
 use Shopsys\FrameworkBundle\Model\Product\Flag\FlagFacade as BaseFlagFacade;
+use Shopsys\FrameworkBundle\Model\Product\Flag\FlagFactory;
+use Shopsys\FrameworkBundle\Model\Product\Flag\FlagRepository;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
  * @property \App\Model\Product\Flag\FlagRepository $flagRepository
- * @method __construct(\Doctrine\ORM\EntityManagerInterface $em, \App\Model\Product\Flag\FlagRepository $flagRepository, \Shopsys\FrameworkBundle\Model\Product\Flag\FlagFactory $flagFactory, \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher)
  * @method \App\Model\Product\Flag\Flag getById(int $flagId)
- * @method \App\Model\Product\Flag\Flag create(\App\Model\Product\Flag\FlagData $flagData)
- * @method \App\Model\Product\Flag\Flag edit(int $flagId, \App\Model\Product\Flag\FlagData $flagData)
  * @method \App\Model\Product\Flag\Flag[] getAll()
  * @method dispatchFlagEvent(\App\Model\Product\Flag\Flag $flag, string $eventType)
  * @method \App\Model\Product\Flag\Flag[] getByIds(int[] $flagIds)
@@ -20,6 +23,60 @@ use Shopsys\FrameworkBundle\Model\Product\Flag\FlagFacade as BaseFlagFacade;
  */
 class FlagFacade extends BaseFlagFacade
 {
+    /**
+     * @var \App\Component\Router\FriendlyUrl\FriendlyUrlFacade
+     */
+    private FriendlyUrlFacade $friendlyUrlFacade;
+
+    /**
+     * @param \Doctrine\ORM\EntityManagerInterface $em
+     * @param \App\Model\Product\Flag\FlagRepository $flagRepository
+     * @param \Shopsys\FrameworkBundle\Model\Product\Flag\FlagFactory $flagFactory
+     * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher
+     * @param \App\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
+     */
+    public function __construct(
+        EntityManagerInterface $em,
+        FlagRepository $flagRepository,
+        FlagFactory $flagFactory,
+        EventDispatcherInterface $eventDispatcher,
+        FriendlyUrlFacade $friendlyUrlFacade
+    ) {
+        parent::__construct($em, $flagRepository, $flagFactory, $eventDispatcher);
+
+        $this->friendlyUrlFacade = $friendlyUrlFacade;
+    }
+
+    /**
+     * @param \App\Model\Product\Flag\FlagData $flagData
+     * @return \App\Model\Product\Flag\Flag
+     */
+    public function create(FlagData $flagData)
+    {
+        /** @var \App\Model\Product\Flag\Flag $flag */
+        $flag = parent::create($flagData);
+
+        $this->friendlyUrlFacade->createFriendlyUrls('front_flag_detail', $flag->getId(), $flag->getNames());
+
+        return $flag;
+    }
+
+    /**
+     * @param int $flagId
+     * @param \App\Model\Product\Flag\FlagData $flagData
+     * @return \App\Model\Product\Flag\Flag
+     */
+    public function edit($flagId, FlagData $flagData)
+    {
+        /** @var \App\Model\Product\Flag\Flag $flag */
+        $flag = parent::edit($flagId, $flagData);
+
+        $this->friendlyUrlFacade->saveUrlListFormData('front_flag_detail', $flag->getId(), $flagData->urls);
+        $this->friendlyUrlFacade->createFriendlyUrls('front_flag_detail', $flag->getId(), $flag->getNames());
+
+        return $flag;
+    }
+
     /**
      * @param string $akeneoCode
      * @return \App\Model\Product\Flag\Flag|null
@@ -63,5 +120,34 @@ class FlagFacade extends BaseFlagFacade
     public function getVisibleFlagsByIds(array $flagsIds, string $locale): array
     {
         return $this->flagRepository->getVisibleFlagsByIds($flagsIds, $locale);
+    }
+
+    /**
+     * @param string $locale
+     * @return \App\Model\Product\Flag\Flag[]
+     */
+    public function getAllVisibleFlags(string $locale): array
+    {
+        return $this->flagRepository->getAllVisibleFlags($locale);
+    }
+
+    /**
+     * @param string $uuid
+     * @param string $locale
+     * @return \App\Model\Product\Flag\Flag
+     */
+    public function getVisibleByUuid(string $uuid, string $locale): Flag
+    {
+        return $this->flagRepository->getVisibleByUuid($uuid, $locale);
+    }
+
+    /**
+     * @param int $flagId
+     * @param string $locale
+     * @return \App\Model\Product\Flag\Flag
+     */
+    public function getVisibleFlagById(int $flagId, string $locale): Flag
+    {
+        return $this->flagRepository->getVisibleFlagById($flagId, $locale);
     }
 }

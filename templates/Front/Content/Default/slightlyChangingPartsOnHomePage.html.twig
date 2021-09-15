@@ -65,14 +65,9 @@
             <div class="box-products-carousel gtm-scroll" id="top-products" data-gtm-event="{{ gtmTopProductsScrollEvent|json_encode() }}">
                 <div class="box-products-carousel__title">
                     <h2 class="in-title">
-                        <span class="in-title__separator{% if saleCategory is null %} in-title__separator--without-separator{% endif %}">
+                        <span class="in-title__separator in-title__separator--without-separator">
                             {{ 'Top produkty'|trans }}
                         </span>
-                        {% if saleCategory is not null %}
-                            <a class="in-title__subtitle" href="{{ url('front_product_list', { id: saleCategory.id }) }}">
-                                {{ "Všechny produkty"|trans }}
-                            </a>
-                        {% endif %}
                     </h2>
                 </div>
                 {{ productList.sliderList(topProducts, 'top-products', constant('App\\Model\\Gtm\\DataLayer::LIST_NAME_HOME_TOP_PRODUCTS')) }}
@@ -86,7 +81,6 @@
         {{ render(controller('App\\Controller\\Front\\CategoryController:categoryListAction', {categories: categories, showProductsCountByCategory: false})) }}
     </div>
 </div>
-{{ render(controller('App\\Controller\\Front\\ProductController:productsInSaleOnHomePageAction')) }}
 {% if homepageArticles is not null %}
     {% set domain = getDomain() %}
     <div class="web__line web__line--blog">

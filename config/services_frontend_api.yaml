@@ -78,3 +78,9 @@ services:
 
     Shopsys\FrontendApiBundle\Model\Order\PlaceOrderFacade:
         alias: App\FrontendApi\Model\Order\PlaceOrderFacade
+
+    Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterFacade:
+        alias: App\FrontendApi\Model\Product\Filter\ProductFilterFacade
+
+    Shopsys\FrontendApiBundle\Model\Product\Connection\ProductConnectionFactory:
+        alias: App\FrontendApi\Model\Product\Connection\ProductConnectionFactory

@@ -17,7 +17,6 @@ class ProductElasticsearchConverter extends BaseProductElasticsearchConverter
         $result = parent::fillEmptyFields($product);
         $result['name_prefix'] = $product['name_prefix'] ?? null;
         $result['name_sufix'] = $product['name_sufix'] ?? null;
-        $result['is_in_sale'] = $product['is_in_sale'] ?? false;
         $result['usps'] = $product['usps'] ?? [];
         $result['availability_status'] = $product['availability_status'] ?? '';
         $result['product_available_stores_count_information'] = $product['product_available_stores_count_information'] ?? '';

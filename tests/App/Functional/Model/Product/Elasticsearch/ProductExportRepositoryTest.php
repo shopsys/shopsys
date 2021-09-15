@@ -74,7 +74,6 @@ class ProductExportRepositoryTest extends TransactionFunctionalTestCase
             'accessories',
             'name_prefix',
             'name_sufix',
-            'is_in_sale',
             'is_sale_exclusion',
             'product_available_stores_count_information',
             'product_count_exposed_in_stores',

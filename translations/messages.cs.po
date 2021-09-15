@@ -736,6 +736,12 @@ msgstr ""
 msgid "Editing banner"
 msgstr "Upravit banner"
 
+msgid "Editing flag"
+msgstr "Editace příznaku"
+
+msgid "Editing flag - {{ name }}"
+msgstr "Editace příznaku - {{ name }}"
+
 msgid "Editing product - %name%"
 msgstr ""
 
@@ -828,6 +834,15 @@ msgstr ""
 
 msgid "First name"
 msgstr "Jméno"
+
+msgid "Flag"
+msgstr "Příznak"
+
+msgid "Flag color must be in valid hexadecimal code e.g. #3333ff"
+msgstr "Barva příznaku musí být plattný hexadecimální kód např. #3333ff"
+
+msgid "Flag <strong><a href=\"{{ url }}\">{{ name }}</a></strong> modified"
+msgstr "Příznak <strong><a href=\"{{ url }}\">{{ name }}</a></strong> byl upraven"
 
 msgid "Flags"
 msgstr "Příznaky"
@@ -1308,6 +1323,9 @@ msgstr "Ne"
 
 msgid "No articles found on this domain. You have to create some first."
 msgstr ""
+
+msgid "No flags found. You have to create some first."
+msgstr "Nebyly nalezeny žádné příznaky. Musíte prvně nějaký vytvořit."
 
 msgid "No order so far."
 msgstr "Dosud nemáte žádnou objednávku."
@@ -3021,6 +3039,9 @@ msgstr ""
 
 msgid "excluding VAT"
 msgstr "bez DPH"
+
+msgid "flags"
+msgstr "příznaků"
 
 msgid "from"
 msgstr "z"

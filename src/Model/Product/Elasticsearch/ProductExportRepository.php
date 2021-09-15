@@ -184,7 +184,6 @@ class ProductExportRepository extends BaseProductExportRepository
             'accessories' => $this->extractAccessoriesIds($product),
             'name_prefix' => $product->getNamePrefix($locale),
             'name_sufix' => $product->getNameSufix($locale),
-            'is_in_sale' => $product->isProductInSale($domainId) && !$product->getCalculatedSaleExclusion($domainId),
             'is_sale_exclusion' => $product->getSaleExclusion($domainId),
             'product_available_stores_count_information' => $this->productAvailabilityFacade->getProductAvailableStoresCountInformationByDomainId($product, $domainId),
             'product_count_exposed_in_stores' => $this->productAvailabilityFacade->getProductCountExposedInStoresInformationByDomainId($product, $domainId),

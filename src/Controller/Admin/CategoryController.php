@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Controller\Admin;
 
 use App\Component\Form\FormBuilderHelper;
-use App\Form\Admin\SaleCategoryFormType;
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Domain\Exception\InvalidDomainIdException;
@@ -100,37 +99,6 @@ class CategoryController extends BaseCategoryController
             'categoriesWithPreloadedChildren' => $categoriesWithPreloadedChildren,
             'isForAllDomains' => ($domainId === static::ALL_DOMAINS),
             'disabledFormFields' => $this->formBuilderHelper->hasFormDisabledFields(),
-        ]);
-    }
-
-    /**
-     * @Route("/category/sale-category/setting/", name="admin_set_sale_category")
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     */
-    public function setSaleCategoryAction(Request $request)
-    {
-        $domainId = $this->adminDomainTabsFacade->getSelectedDomainId();
-
-        $formData = [
-            'category' => $this->categoryFacade->findSaleCategory(),
-        ];
-
-        $form = $this->createForm(SaleCategoryFormType::class, $formData, [
-            'domain_id' => $domainId,
-        ]);
-
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $saleCategory = $form->getData()['category'];
-
-            $this->categoryFacade->saveSaleCategory($saleCategory);
-
-            $this->addSuccessFlash(t('Nastavení výprodejové kategorie bylo úspěšné'));
-        }
-
-        return $this->render('Admin/Content/Blog/Category/saleCategoryList.html.twig', [
-            'form' => $form->createView(),
         ]);
     }
 }

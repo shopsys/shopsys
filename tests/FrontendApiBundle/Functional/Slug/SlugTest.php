@@ -20,6 +20,7 @@ class SlugTest extends GraphQlTestCase
             ['slug' => '/hlavni-stranka-blogu-cs', 'typename' => 'BlogCategory', 'name' => 'Hlavní stránka blogu - cs'],
             ['slug' => '/ukazkovy-clanek-blogu-37-cs', 'typename' => 'BlogArticle', 'name' => 'Ukázkový článek blogu 37 cs'],
             ['slug' => '/brother', 'typename' => 'Brand', 'name' => 'Brother'],
+            ['slug' => '/vyrobeno-v-de', 'typename' => 'Flag', 'name' => 'Vyrobeno v DE'],
         ];
     }
 

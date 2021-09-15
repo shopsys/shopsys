@@ -557,16 +557,15 @@ class RouteConfigCustomization
                 $config->changeDefaultRequestDataSet('Similar product internal route.')
                     ->setParameter('id', 1);
             })
-            ->customizeByRouteName('front_products_in_sale_on_home_page', function (RouteConfig $config) {
-                $config->changeDefaultRequestDataSet('Sale product internal route.')
-                    ->setParameter('id', 1);
-            })
             ->customizeByRouteName('front_stores_detail', function (RouteConfig $config) {
                 $config->changeDefaultRequestDataSet('Use ID 1 as default stock.')
                     ->setParameter('id', 1);
             })
             ->customizeByRouteName('front_frontend_switch', function (RouteConfig $config) {
                 $config->skipRoute('Frontend switcher is not tested.');
+            })
+            ->customizeByRouteName('front_flag_detail', function (RouteConfig $config) {
+                $config->skipRoute('Frontend flag detail will not be implemented in twig.');
             });
     }
 

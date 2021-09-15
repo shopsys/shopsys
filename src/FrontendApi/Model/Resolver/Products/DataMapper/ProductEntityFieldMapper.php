@@ -120,15 +120,6 @@ class ProductEntityFieldMapper extends BaseProductEntityFieldMapper
      * @param \App\Model\Product\Product $product
      * @return bool
      */
-    public function isInSale(Product $product): bool
-    {
-        return $product->isProductInSale($this->domain->getId());
-    }
-
-    /**
-     * @param \App\Model\Product\Product $product
-     * @return bool
-     */
     public function hasSaleExclusion(Product $product): bool
     {
         return $product->getSaleExclusion($this->domain->getId());
