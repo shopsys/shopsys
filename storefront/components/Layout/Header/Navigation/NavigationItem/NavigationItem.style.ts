@@ -125,7 +125,8 @@ export const NavigationItemSubStyled = styled.div<NavigationProps>`
     ${({ theme, isOpen }) => css`
         display: block;
         position: absolute;
-        width: 100%;
+        left: 0;
+        right: 0;
         z-index: ${theme.zIndex.menu};
         top: ${localVariables.navigationHeight};
         padding: 50px 60px 45px;

@@ -137,3 +137,6 @@ export const ComponentIconStyled = styled(Icon)>`
     `};
 `;
 ```plain
+
+### Creating animated styles
+If you want to create some animated dropdown or something similar you can use react-transition-group https://reactcommunity.org/react-transition-group/

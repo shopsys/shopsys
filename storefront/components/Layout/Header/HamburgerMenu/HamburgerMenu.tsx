@@ -1,34 +1,22 @@
-import { FC, useState } from 'react';
-import {
-    HamburgerMenuIconOpenStyled,
-    HamburgerMenuImageStyled,
-    HamburgerMenuStyled,
-    HamburgerMenuTextStyled,
-} from './HamburgerMenu.style';
-import Icon from '../../../Basic/Icon';
+import { FC, MouseEventHandler } from 'react';
+import { HamburgerMenuImageStyled, HamburgerMenuStyled, HamburgerMenuTextStyled } from './HamburgerMenu.style';
+import HamburgerIcon from './HamburgerIcon';
 import { useTypedTranslationFunction } from 'hooks/UseTypedTranslationFunction';
 
-const HamburgerMenu: FC = () => {
+type HamburgerMenuProps = {
+    isMenuOpened: boolean;
+    onMenuToggleHandler: MouseEventHandler<HTMLDivElement>;
+};
+
+const HamburgerMenu: FC<HamburgerMenuProps> = (props) => {
     const t = useTypedTranslationFunction();
-    const [isMenuOpened, setIsMenuOpened] = useState(false);
-
-    const MenuIcon = () => {
-        if (isMenuOpened) {
-            return <Icon icon="Close" />;
-        }
-        return <HamburgerMenuIconOpenStyled icon="Menu" />;
-    };
-
-    const toggleMenu = () => {
-        setIsMenuOpened(!isMenuOpened);
-    };
 
     return (
-        <HamburgerMenuStyled onClick={toggleMenu}>
+        <HamburgerMenuStyled onClick={props.onMenuToggleHandler}>
             <HamburgerMenuImageStyled>
-                <MenuIcon />
+                <HamburgerIcon isMenuOpened={props.isMenuOpened} />
             </HamburgerMenuImageStyled>
-            <HamburgerMenuTextStyled>{isMenuOpened ? t('Close') : t('Menu')}</HamburgerMenuTextStyled>
+            <HamburgerMenuTextStyled>{props.isMenuOpened ? t('Close') : t('Menu')}</HamburgerMenuTextStyled>
         </HamburgerMenuStyled>
     );
 };

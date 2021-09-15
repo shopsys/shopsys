@@ -1,5 +1,4 @@
 import { css } from 'styled-components';
-import Icon from '../../../Basic/Icon';
 import { styled } from '../../../Theme/main';
 
 export const HamburgerMenuStyled = styled.div`
@@ -9,6 +8,7 @@ export const HamburgerMenuStyled = styled.div`
         padding: 0 10px;
         width: 100%;
         height: 40px;
+        z-index: calc(${theme.zIndex.menu} + 1);
 
         cursor: pointer;
         background-color: ${theme.color.orangeLight};
@@ -28,9 +28,4 @@ export const HamburgerMenuImageStyled = styled.div`
     align-items: center;
     justify-content: center;
     width: 16px;
-`;
-
-export const HamburgerMenuIconOpenStyled = styled(Icon)`
-    width: 16px;
-    height: 16px;
 `;

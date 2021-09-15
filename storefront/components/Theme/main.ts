@@ -60,8 +60,8 @@ export const theme = {
 
     zIndex: {
         above: 1,
-        menu: 499,
         overlay: 500,
+        menu: 501,
         popup: 10001,
     },
 
