@@ -1,11 +1,13 @@
+import { enabledSortTypes, initialState, SortType, userActions } from 'redux/store/UserStore';
+import { FC, useEffect } from 'react';
 import { friendlyUrlQuery, getFriendlyUrlResolvedData, isProductType } from 'connectors/friendlyUrls/FriendlyUrls';
 import { initServerSideProps, ServerSidePropsType } from 'helpers/InitServerSideProps';
+import { useShopsysDispatch, useShopsysSelector } from 'redux/store';
 import Breadcrumbs from 'components/Layout/Breadcrumbs';
 import CategoryDetailPage from 'components/Pages/CategoryDetail';
 import { CategoryDetailType } from 'components/Pages/CategoryDetail/types';
 import CommonLayout from 'components/Layout/CommonLayout';
 import DefaultErrorPage from 'next/error';
-import { FC } from 'react';
 import { GetServerSideProps } from 'next';
 import { navigationQuery } from 'connectors/navigation/Navigation';
 import ProductDetailPage from 'components/Pages/ProductDetail';
@@ -17,7 +19,17 @@ import Webline from 'components/Layout/Webline';
 const FriendlyUrlPage: FC<ServerSidePropsType> = (props) => {
     useInitDomainConfig(props.domainConfig);
     const router = useRouter();
-    const data = getFriendlyUrlResolvedData(router.asPath);
+    const dispatch = useShopsysDispatch();
+    const categoryDetailSortQuery = router.query.sort as string;
+    const categoryDetailSortState = useShopsysSelector((state) => state.user.sort);
+    const categoryDetailSort = getCategoryDetailSort(
+        typeof categoryDetailSortQuery !== 'undefined' ? categoryDetailSortQuery : categoryDetailSortState,
+    );
+
+    useEffect(() => {
+        dispatch(userActions.setSort({ sort: categoryDetailSort as SortType }));
+    }, [categoryDetailSortQuery]);
+    const data = getFriendlyUrlResolvedData(getUrlWithoutGetParameters(router.asPath));
 
     if (data === null || data === undefined) {
         return <DefaultErrorPage statusCode={404} />;
@@ -44,14 +56,19 @@ function renderContent(data: ProductDetailType | CategoryDetailType) {
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
+    const categoryDetailSort = getCategoryDetailSort(context.query.sort as string);
     return initServerSideProps(context, [
         navigationQuery,
-        friendlyUrlQuery(getUrlWithoutGetParameters(context.resolvedUrl)),
+        friendlyUrlQuery(getUrlWithoutGetParameters(context.resolvedUrl), categoryDetailSort),
     ]);
 };
 
 const getUrlWithoutGetParameters = (originalUrl: string) => {
     return originalUrl.split('?')[0];
+};
+
+const getCategoryDetailSort = (categoryDetailSortQuery: string): string => {
+    return enabledSortTypes.includes(categoryDetailSortQuery) ? categoryDetailSortQuery : initialState.sort;
 };
 
 export default FriendlyUrlPage;

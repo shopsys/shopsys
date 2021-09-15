@@ -1,15 +1,20 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { CartType } from 'connectors/cart/types';
 
-export type SortType = 'PRIORITY' | 'PRICE_ASC' | 'PRICE_DESC';
+const sortPriority = 'PRIORITY';
+const sortPriceAsc = 'PRICE_ASC';
+const sortPriceDesc = 'PRICE_DESC';
+export const enabledSortTypes = [sortPriority, sortPriceAsc, sortPriceDesc];
+
+export type SortType = typeof sortPriority | typeof sortPriceAsc | typeof sortPriceDesc;
 
 type IinitialState = {
     sort: SortType;
     cart: CartType | undefined;
 };
 
-const initialState = {
-    sort: 'PRIORITY',
+export const initialState = {
+    sort: sortPriority,
     cart: undefined,
 } as IinitialState;
 
