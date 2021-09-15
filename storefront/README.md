@@ -4,7 +4,7 @@ This is documentation for Shopsys Framework StoreFront. Let's start with first t
 ## Install 
 1 - Install all dependencies.
 ```plain
-npm install
+npm ci
 ```
 
 ## Start app

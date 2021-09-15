@@ -7,7 +7,7 @@ FROM base as development
 
 RUN apk --no-cache add curl
 
-CMD npm install --legacy-peer-deps && npm run dev
+CMD npm ci --legacy-peer-deps && npm run dev
 
 #=====================================================================
 FROM base as production
