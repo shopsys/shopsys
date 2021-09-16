@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Tests\App\Functional\Controller;
 
-use Tests\App\Test\FunctionalTestCase;
+use Tests\App\Test\ApplicationTestCase;
 
-class HomepageControllerTest extends FunctionalTestCase
+class HomepageControllerTest extends ApplicationTestCase
 {
     public function testHomepageHttpStatus200()
     {

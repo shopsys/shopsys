@@ -12,9 +12,9 @@ use App\Model\Product\Product;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData;
 use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingConfig;
-use Tests\App\Test\TransactionFunctionalTestCase;
+use Tests\App\Test\FunctionalTestCase;
 
-class ProductRepositoryTest extends TransactionFunctionalTestCase
+class ProductRepositoryTest extends FunctionalTestCase
 {
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\ProductRepository

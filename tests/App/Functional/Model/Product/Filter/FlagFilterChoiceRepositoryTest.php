@@ -8,9 +8,9 @@ use App\DataFixtures\Demo\CategoryDataFixture;
 use App\DataFixtures\Demo\PricingGroupDataFixture;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Product\Flag\Flag;
-use Tests\App\Test\TransactionFunctionalTestCase;
+use Tests\App\Test\FunctionalTestCase;
 
-class FlagFilterChoiceRepositoryTest extends TransactionFunctionalTestCase
+class FlagFilterChoiceRepositoryTest extends FunctionalTestCase
 {
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\Filter\FlagFilterChoiceRepository

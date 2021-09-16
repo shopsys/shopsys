@@ -7,9 +7,9 @@ namespace Tests\App\Functional\Model\Order;
 use App\Model\Payment\Payment;
 use App\Model\Transport\Transport;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Tests\App\Test\TransactionFunctionalTestCase;
+use Tests\App\Test\FunctionalTestCase;
 
-class OrderTransportAndPaymentTest extends TransactionFunctionalTestCase
+class OrderTransportAndPaymentTest extends FunctionalTestCase
 {
     /**
      * @var \Shopsys\FrameworkBundle\Model\Transport\TransportFacade

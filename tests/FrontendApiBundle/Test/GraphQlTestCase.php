@@ -16,17 +16,11 @@ use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade;
 use Shopsys\FrontendApiBundle\Component\Domain\EnabledOnDomainChecker;
 use Shopsys\FrontendApiBundle\Component\Price\MoneyFormatterHelper;
-use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Component\HttpFoundation\Response;
-use Tests\App\Test\TransactionFunctionalTestCase;
+use Tests\App\Test\ApplicationTestCase;
 
-abstract class GraphQlTestCase extends TransactionFunctionalTestCase
+abstract class GraphQlTestCase extends ApplicationTestCase
 {
-    /**
-     * @var \Symfony\Bundle\FrameworkBundle\KernelBrowser
-     */
-    protected KernelBrowser $client;
-
     /**
      * @var string
      */
@@ -59,8 +53,6 @@ abstract class GraphQlTestCase extends TransactionFunctionalTestCase
     protected function setUp(): void
     {
         parent::setUp();
-
-        $this->client = $this->getCurrentClient();
 
         $this->runCheckTestEnabledOnCurrentDomain();
 
@@ -128,13 +120,13 @@ abstract class GraphQlTestCase extends TransactionFunctionalTestCase
     {
         $path = $this->getLocalizedPathOnFirstDomainByRouteName('overblog_graphql_endpoint');
 
-        $this->client->request(
+        self::$currentClient->request(
             'GET',
             $path,
             ['query' => $query, 'variables' => json_encode($variables)],
         );
 
-        return $this->client->getResponse();
+        return self::$currentClient->getResponse();
     }
 
     /**

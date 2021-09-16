@@ -10,9 +10,9 @@ use App\DataFixtures\Demo\UnitDataFixture;
 use App\Model\Product\Product;
 use App\Model\Product\ProductData;
 use ReflectionClass;
-use Tests\App\Test\TransactionFunctionalTestCase;
+use Tests\App\Test\FunctionalTestCase;
 
-class ProductFacadeTest extends TransactionFunctionalTestCase
+class ProductFacadeTest extends FunctionalTestCase
 {
     /**
      * @var \App\Model\Product\ProductDataFactory

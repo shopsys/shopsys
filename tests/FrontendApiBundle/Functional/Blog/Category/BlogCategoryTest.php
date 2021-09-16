@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Tests\FrontendApiBundle\Functional\Blog\Category;
 
-use App\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use App\DataFixtures\Demo\BlogArticleDataFixture;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
@@ -18,6 +17,7 @@ class BlogCategoryTest extends GraphQlTestCase
 
     /**
      * @var \App\Component\Router\FriendlyUrl\FriendlyUrlFacade
+     * @inject
      */
     private $friendlyUrlFacade;
 
@@ -29,10 +29,9 @@ class BlogCategoryTest extends GraphQlTestCase
 
     protected function setUp(): void
     {
-        $this->blogCategory = $this->getReference(BlogArticleDataFixture::FIRST_DEMO_BLOG_SUBCATEGORY);
-        $this->friendlyUrlFacade = $this->getContainer()->get(FriendlyUrlFacade::class);
-
         parent::setUp();
+
+        $this->blogCategory = $this->getReference(BlogArticleDataFixture::FIRST_DEMO_BLOG_SUBCATEGORY);
     }
 
     public function testGetBlogCategoryByUuid(): void

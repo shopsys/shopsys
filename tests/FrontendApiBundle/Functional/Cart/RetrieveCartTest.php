@@ -21,22 +21,26 @@ class RetrieveCartTest extends GraphQlTestCase
 
     /**
      * @var \Symfony\Component\Routing\Generator\UrlGeneratorInterface
+     * @inject
      */
     private UrlGeneratorInterface $urlGenerator;
+
+    /**
+     * @var \App\Model\Product\Availability\ProductAvailabilityFacade
+     * @inject
+     */
+    private ProductAvailabilityFacade $productAvailabilityFacade;
 
     protected function setUp(): void
     {
         parent::setUp();
-
-        $this->urlGenerator = $this->getContainer()->get(UrlGeneratorInterface::class);
 
         $this->testingProduct = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 1);
     }
 
     public function testAddToCartResultIsValidForMoreQuantityThanOnStock(): void
     {
-        $productAvailabilityFacade = $this->getContainer()->get(ProductAvailabilityFacade::class);
-        $maximumAvailableQuantity = $productAvailabilityFacade->getMaximumOrderQuantity($this->testingProduct, $this->domain->getId());
+        $maximumAvailableQuantity = $this->productAvailabilityFacade->getMaximumOrderQuantity($this->testingProduct, $this->domain->getId());
 
         $desiredQuantity = $maximumAvailableQuantity + 3000;
         $mutation = 'mutation {
@@ -73,8 +77,7 @@ class RetrieveCartTest extends GraphQlTestCase
 
     public function testAddToCartResultIsValidForMoreQuantityThanOnStockOnSecondAdd(): void
     {
-        $productAvailabilityFacade = $this->getContainer()->get(ProductAvailabilityFacade::class);
-        $maximumAvailableQuantity = $productAvailabilityFacade->getMaximumOrderQuantity($this->testingProduct, $this->domain->getId());
+        $maximumAvailableQuantity = $this->productAvailabilityFacade->getMaximumOrderQuantity($this->testingProduct, $this->domain->getId());
 
         $decrease = 200;
         $notOnStockCount = 3000;

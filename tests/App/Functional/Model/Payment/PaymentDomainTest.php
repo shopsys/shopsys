@@ -6,9 +6,9 @@ namespace Tests\App\Functional\Model\Payment;
 
 use App\Model\Payment\Payment;
 use App\Model\Payment\PaymentData;
-use Tests\App\Test\TransactionFunctionalTestCase;
+use Tests\App\Test\FunctionalTestCase;
 
-class PaymentDomainTest extends TransactionFunctionalTestCase
+class PaymentDomainTest extends FunctionalTestCase
 {
     protected const FIRST_DOMAIN_ID = 1;
     protected const SECOND_DOMAIN_ID = 2;

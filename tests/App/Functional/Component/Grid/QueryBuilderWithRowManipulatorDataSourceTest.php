@@ -7,9 +7,9 @@ namespace Tests\App\Functional\Component\Grid;
 use App\DataFixtures\Demo\ProductDataFixture;
 use App\Model\Product\Product;
 use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderWithRowManipulatorDataSource;
-use Tests\App\Test\TransactionFunctionalTestCase;
+use Tests\App\Test\FunctionalTestCase;
 
-class QueryBuilderWithRowManipulatorDataSourceTest extends TransactionFunctionalTestCase
+class QueryBuilderWithRowManipulatorDataSourceTest extends FunctionalTestCase
 {
     public function testGetOneRow()
     {

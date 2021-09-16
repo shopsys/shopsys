@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Tests\App\Functional\Model\Order;
 
-use Tests\App\Test\TransactionFunctionalTestCase;
+use Tests\App\Test\FunctionalTestCase;
 
-class OrderNumberSequenceRepositoryTest extends TransactionFunctionalTestCase
+class OrderNumberSequenceRepositoryTest extends FunctionalTestCase
 {
     /**
      * @var \Shopsys\FrameworkBundle\Model\Order\OrderNumberSequenceRepository

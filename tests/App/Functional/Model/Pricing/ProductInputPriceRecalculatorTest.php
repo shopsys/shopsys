@@ -12,10 +12,10 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductManualInputPrice;
-use Tests\App\Test\TransactionFunctionalTestCase;
+use Tests\App\Test\FunctionalTestCase;
 use Tests\FrameworkBundle\Test\IsMoneyEqual;
 
-class ProductInputPriceRecalculatorTest extends TransactionFunctionalTestCase
+class ProductInputPriceRecalculatorTest extends FunctionalTestCase
 {
     /**
      * @var \Shopsys\FrameworkBundle\Component\Setting\Setting

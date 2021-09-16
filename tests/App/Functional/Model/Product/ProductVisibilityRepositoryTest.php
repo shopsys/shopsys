@@ -18,9 +18,9 @@ use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatData;
 use Shopsys\FrameworkBundle\Model\Product\ProductVisibility;
-use Tests\App\Test\TransactionFunctionalTestCase;
+use Tests\App\Test\FunctionalTestCase;
 
-class ProductVisibilityRepositoryTest extends TransactionFunctionalTestCase
+class ProductVisibilityRepositoryTest extends FunctionalTestCase
 {
     /**
      * @var \App\Model\Product\ProductDataFactory

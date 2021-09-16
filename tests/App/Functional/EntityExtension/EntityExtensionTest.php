@@ -27,9 +27,9 @@ use Tests\App\Functional\EntityExtension\Model\ProductManyToManyBidirectionalEnt
 use Tests\App\Functional\EntityExtension\Model\ProductOneToManyBidirectionalEntity;
 use Tests\App\Functional\EntityExtension\Model\ProductOneToOneBidirectionalEntity;
 use Tests\App\Functional\EntityExtension\Model\UnidirectionalEntity;
-use Tests\App\Test\TransactionFunctionalTestCase;
+use Tests\App\Test\FunctionalTestCase;
 
-class EntityExtensionTest extends TransactionFunctionalTestCase
+class EntityExtensionTest extends FunctionalTestCase
 {
     protected const MAIN_PRODUCT_ID = 1;
     protected const ONE_TO_ONE_SELF_REFERENCING_PRODUCT_ID = 2;

@@ -16,11 +16,13 @@ class AuthenticatedAddToCartTest extends GraphQlWithLoginTestCase
 {
     /**
      * @var \App\Model\Cart\CartFacade
+     * @inject
      */
     private CartFacade $cartFacade;
 
     /**
      * @var \App\Model\Customer\User\CustomerUserIdentifierFactory
+     * @inject
      */
     private CustomerUserIdentifierFactory $customerUserIdentifierFactory;
 
@@ -31,16 +33,13 @@ class AuthenticatedAddToCartTest extends GraphQlWithLoginTestCase
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser
+     * @inject
      */
     private CurrentCustomerUser $currentCustomerUser;
 
     protected function setUp(): void
     {
         parent::setUp();
-
-        $this->cartFacade = $this->getContainer()->get(CartFacade::class);
-        $this->customerUserIdentifierFactory = $this->getContainer()->get(CustomerUserIdentifierFactory::class);
-        $this->currentCustomerUser = $this->getContainer()->get(CurrentCustomerUser::class);
 
         $this->testingProduct = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1');
     }

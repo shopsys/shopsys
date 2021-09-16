@@ -8,9 +8,9 @@ use App\DataFixtures\Demo\AvailabilityDataFixture;
 use App\Model\Product\Product;
 use App\Model\Product\ProductData;
 use Shopsys\FrameworkBundle\Component\Money\Money;
-use Tests\App\Test\TransactionFunctionalTestCase;
+use Tests\App\Test\FunctionalTestCase;
 
-class ProductDomainTest extends TransactionFunctionalTestCase
+class ProductDomainTest extends FunctionalTestCase
 {
     protected const FIRST_DOMAIN_ID = 1;
     protected const SECOND_DOMAIN_ID = 2;

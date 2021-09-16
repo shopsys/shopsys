@@ -8,9 +8,9 @@ use App\Model\Category\Category;
 use App\Model\Product\Product;
 use Doctrine\ORM\Query\Expr\Join;
 use Shopsys\FrameworkBundle\Model\Product\Product as BaseProduct;
-use Tests\App\Test\TransactionFunctionalTestCase;
+use Tests\App\Test\FunctionalTestCase;
 
-class QueryBuilderExtenderTest extends TransactionFunctionalTestCase
+class QueryBuilderExtenderTest extends FunctionalTestCase
 {
     /**
      * @var \Shopsys\FrameworkBundle\Component\Doctrine\QueryBuilderExtender

@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Tests\App\Functional\Model\Product\Elasticsearch;
 
-use Tests\App\Test\TransactionFunctionalTestCase;
+use Tests\App\Test\FunctionalTestCase;
 
-class ProductExportRepositoryTest extends TransactionFunctionalTestCase
+class ProductExportRepositoryTest extends FunctionalTestCase
 {
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductExportRepository

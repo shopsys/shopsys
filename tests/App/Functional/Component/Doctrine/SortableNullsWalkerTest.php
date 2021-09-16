@@ -7,9 +7,9 @@ namespace Tests\App\Functional\Component\Doctrine;
 use App\Model\Product\Product;
 use Doctrine\ORM\Query;
 use Shopsys\FrameworkBundle\Component\Doctrine\SortableNullsWalker;
-use Tests\App\Test\TransactionFunctionalTestCase;
+use Tests\App\Test\FunctionalTestCase;
 
-class SortableNullsWalkerTest extends TransactionFunctionalTestCase
+class SortableNullsWalkerTest extends FunctionalTestCase
 {
     public function testWalkOrderByItemAsc()
     {

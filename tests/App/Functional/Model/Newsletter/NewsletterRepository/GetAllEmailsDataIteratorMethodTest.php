@@ -7,9 +7,9 @@ namespace Tests\App\Functional\Model\Newsletter\NewsletterRepository;
 use Doctrine\ORM\Internal\Hydration\IterableResult;
 use PHPUnit\Framework\Assert;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Tests\App\Test\TransactionFunctionalTestCase;
+use Tests\App\Test\FunctionalTestCase;
 
-class GetAllEmailsDataIteratorMethodTest extends TransactionFunctionalTestCase
+class GetAllEmailsDataIteratorMethodTest extends FunctionalTestCase
 {
     protected const FIRST_DOMAIN_SUBSCRIBER_EMAIL = 'james.black@no-reply.com';
 

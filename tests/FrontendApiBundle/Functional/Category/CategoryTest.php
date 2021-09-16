@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\FrontendApiBundle\Functional\Category;
 
-use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
+use App\DataFixtures\Demo\CategoryDataFixture;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
@@ -23,10 +23,9 @@ class CategoryTest extends GraphQlTestCase
 
     protected function setUp(): void
     {
-        $categoryFacade = $this->getContainer()->get(CategoryFacade::class);
-        $this->category = $categoryFacade->getById(2);
-
         parent::setUp();
+
+        $this->category = $this->getReference(CategoryDataFixture::CATEGORY_ELECTRONICS);
     }
 
     public function testCategoryNameByUuid(): void

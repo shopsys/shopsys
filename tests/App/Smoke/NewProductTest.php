@@ -9,9 +9,9 @@ use Shopsys\FrameworkBundle\Component\FlashMessage\FlashMessage;
 use Shopsys\FrameworkBundle\Form\Admin\Product\ProductFormType;
 use Symfony\Component\DomCrawler\Form;
 use Symfony\Component\Security\Csrf\CsrfToken;
-use Tests\App\Test\FunctionalTestCase;
+use Tests\App\Test\ApplicationTestCase;
 
-class NewProductTest extends FunctionalTestCase
+class NewProductTest extends ApplicationTestCase
 {
     public function createOrEditProductProvider()
     {

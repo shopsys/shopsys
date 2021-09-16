@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Tests\FrontendApiBundle\Functional\Product;
 
 use App\DataFixtures\Demo\CategoryDataFixture;
+use App\DataFixtures\Demo\ProductDataFixture;
 use App\DataFixtures\Demo\VatDataFixture;
-use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
@@ -25,13 +25,9 @@ class ProductTest extends GraphQlTestCase
 
     protected function setUp(): void
     {
-        $productFacade = $this->getContainer()->get(ProductFacade::class);
-
-        /** @var \App\Model\Product\Product $product */
-        $product = $productFacade->getById(1);
-        $this->product = $product;
-
         parent::setUp();
+
+        $this->product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 1);
     }
 
     public function testProductDetailNameByUuid(): void

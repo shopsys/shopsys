@@ -7,9 +7,9 @@ namespace Tests\App\Functional\Model\Administrator;
 use App\DataFixtures\Demo\AdministratorDataFixture;
 use DateTime;
 use Shopsys\FrameworkBundle\Model\Administrator\Security\Exception\InvalidTokenException;
-use Tests\App\Test\TransactionFunctionalTestCase;
+use Tests\App\Test\FunctionalTestCase;
 
-class AdministratorRepositoryTest extends TransactionFunctionalTestCase
+class AdministratorRepositoryTest extends FunctionalTestCase
 {
     /**
      * @var \Shopsys\FrameworkBundle\Model\Administrator\AdministratorRepository

@@ -12,9 +12,9 @@ use Shopsys\FrameworkBundle\Model\Cart\Item\CartItem;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifier;
 use Shopsys\FrameworkBundle\Model\Product\Availability\Availability;
 use Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityData;
-use Tests\App\Test\TransactionFunctionalTestCase;
+use Tests\App\Test\FunctionalTestCase;
 
-class CartItemTest extends TransactionFunctionalTestCase
+class CartItemTest extends FunctionalTestCase
 {
     /**
      * @var \App\Model\Product\ProductDataFactory

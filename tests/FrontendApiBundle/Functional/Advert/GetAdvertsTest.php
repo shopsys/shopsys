@@ -8,7 +8,6 @@ use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadData;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
 use Shopsys\FrameworkBundle\Model\Advert\Advert;
-use Shopsys\FrameworkBundle\Model\Advert\AdvertFacade;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class GetAdvertsTest extends GraphQlTestCase
@@ -21,6 +20,7 @@ class GetAdvertsTest extends GraphQlTestCase
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Advert\AdvertFacade
+     * @inject
      */
     private $advertFacade;
 
@@ -45,7 +45,6 @@ class GetAdvertsTest extends GraphQlTestCase
     {
         parent::setUp();
 
-        $this->advertFacade = $this->getContainer()->get(AdvertFacade::class);
         $this->loadTestAdverts();
     }
 
