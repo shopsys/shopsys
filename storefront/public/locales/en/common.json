@@ -34,6 +34,11 @@
     "Cart": "Cart",
     "Shipment and payment": "Shipment and payment",
     "Contact information": "Contact information",
-    "You can also buy": "You can also buy"
-    "Back": "Back"
+    "You can also buy": "You can also buy",
+    "Back": "Back",
+    "price ascending": "price ascending",
+    "price descending": "price descending",
+    "priority": "priority",
+    "Products": "Products",
+    "Sort": "Sort"
 }
