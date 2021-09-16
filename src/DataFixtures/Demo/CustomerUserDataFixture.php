@@ -209,6 +209,17 @@ class CustomerUserDataFixture extends AbstractReferenceFixture implements Depend
                     self::KEY_ADDRESS_POSTCODE => '70200',
                     self::KEY_ADDRESS_COUNTRY => $this->getReference(CountryDataFixture::COUNTRY_CZECH_REPUBLIC),
                 ],
+                self::KEY_DELIVERY_ADDRESS => [
+                    self::KEY_ADDRESS_ADDRESS_FILLED => true,
+                    self::KEY_ADDRESS_COMPANY_NAME => 'Rockpoint',
+                    self::KEY_ADDRESS_FIRST_NAME => 'Eva',
+                    self::KEY_ADDRESS_LAST_NAME => 'Wallicová',
+                    self::KEY_ADDRESS_CITY => 'Ostrava',
+                    self::KEY_ADDRESS_POSTCODE => '70030',
+                    self::KEY_ADDRESS_STREET => 'Rudná',
+                    self::KEY_ADDRESS_TELEPHONE => '123456789',
+                    self::KEY_ADDRESS_COUNTRY => $this->getReference(CountryDataFixture::COUNTRY_CZECH_REPUBLIC),
+                ],
             ],
             [
                 self::KEY_CUSTOMER_USER_DATA => [

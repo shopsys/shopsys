@@ -27,6 +27,12 @@ class CustomerUserResolverMap extends ResolverMap
             'country' => function (CustomerUser $customerUser) {
                 return $customerUser->getCustomer()->getBillingAddress()->getCountry()->getCode();
             },
+            'defaultDeliveryAddress' => function (CustomerUser $customerUser) {
+                return $customerUser->getDefaultDeliveryAddress();
+            },
+            'deliveryAddresses' => function (CustomerUser $customerUser) {
+                return $customerUser->getCustomer()->getDeliveryAddresses();
+            },
         ];
 
         return [

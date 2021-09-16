@@ -82,7 +82,7 @@ use Shopsys\FrameworkBundle\Twig\NumberFormatterExtension;
  * @method addOrderItemDiscount(\App\Model\Order\Item\OrderItem $orderItem, \Shopsys\FrameworkBundle\Model\Pricing\Price $quantifiedItemDiscount, string $locale, float $discountPercent)
  * @method refreshOrderItemsWithoutTransportAndPayment(\App\Model\Order\Order $order, \App\Model\Order\OrderData $orderData)
  * @method calculateOrderItemDataPrices(\App\Model\Order\Item\OrderItemData $orderItemData, int $domainId)
- * @method updateOrderDataWithDeliveryAddress(\App\Model\Order\OrderData $orderData, \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress|null $deliveryAddress)
+ * @method updateOrderDataWithDeliveryAddress(\App\Model\Order\OrderData $orderData, \App\Model\Customer\DeliveryAddress|null $deliveryAddress)
  * @method updateTransportAndPaymentNamesInOrderData(\App\Model\Order\OrderData $orderData, \App\Model\Order\Order $order)
  * @method fillOrderItems(\App\Model\Order\Order $order, \Shopsys\FrameworkBundle\Model\Order\Preview\OrderPreview $orderPreview)
  */
@@ -272,7 +272,7 @@ class OrderFacade extends BaseOrderFacade
 
     /**
      * @param \App\Model\Order\OrderData $orderData
-     * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress|null $deliveryAddress
+     * @param \App\Model\Customer\DeliveryAddress|null $deliveryAddress
      * @param \App\Model\Order\FrontOrderData $frontOrderData
      * @return \App\Model\Order\OrderCreatedResult
      */
@@ -526,7 +526,7 @@ class OrderFacade extends BaseOrderFacade
         $customerUserData->telephone = $frontOrderData->telephone;
 
         if ($frontOrderData->deliveryAddressSameAsBillingAddress === false) {
-            /** @var \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressData $deliveryAddressData */
+            /** @var \App\Model\Customer\DeliveryAddressData $deliveryAddressData */
             $deliveryAddressData = $customerUserUpdateData->deliveryAddressData;
             $deliveryAddressData->firstName = $frontOrderData->deliveryFirstName;
             $deliveryAddressData->lastName = $frontOrderData->deliveryLastName;
