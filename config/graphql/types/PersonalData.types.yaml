@@ -1,0 +1,13 @@
+PersonalData:
+    type: object
+    config:
+        fields:
+            orders:
+                type: "[Order!]!"
+                description: "Customer orders"
+            customerUser:
+                type: "CustomerUser"
+                description: "Customer user data"
+            newsletterSubscriber:
+                type: "NewsletterSubscriber"
+                description: "Newsletter subscription"
