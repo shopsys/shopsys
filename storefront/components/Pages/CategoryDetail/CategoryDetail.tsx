@@ -4,6 +4,7 @@ import { CategoryDetailType } from './types';
 import { FC } from 'react';
 import Heading from '../../Basic/Heading';
 import ProductsList from '../../Blocks/Product/List/ProductsList';
+import SortingBar from 'components/Blocks/SortingBar';
 import Webline from '../../Layout/Webline';
 
 type CategoryDetailProps = {
@@ -18,6 +19,7 @@ const CategoryDetail: FC<CategoryDetailProps> = (props) => {
                 categories={[...props.category.children, ...props.category.linkedCategories]}
             />
             <CategoryDetailAdvancedSeoCategories readyCategorySeoMixLinks={props.category.readyCategorySeoMixLinks} />
+            <SortingBar />
             {props.category.products.edges.length !== 0 && <ProductsList products={props.category.products.edges} />}
         </Webline>
     );

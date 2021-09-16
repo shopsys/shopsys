@@ -34,6 +34,11 @@
     "Cart": "Nákupní košík",
     "Shipment and payment": "Doprava a platba",
     "Contact information": "Dodací údaje",
-    "You can also buy": "Můžete si dokoupit"
-    "Back": "Zpět"
+    "You can also buy": "Můžete si dokoupit",
+    "Back": "Zpět",
+    "price ascending": "od nejlevn\u011bj\u0161\u00edho",
+    "price descending": "od nejdra\u017e\u0161\u00edho",
+    "priority": "TOP",
+    "Products": "Produkty",
+    "Sort": "Se\u0159adit"
 }
