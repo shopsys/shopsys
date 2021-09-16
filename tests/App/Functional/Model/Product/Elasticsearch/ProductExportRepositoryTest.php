@@ -89,6 +89,7 @@ class ProductExportRepositoryTest extends TransactionFunctionalTestCase
             'slug',
             'available_stores_count',
             'exposed_stores_count',
+            'related_products',
         ];
     }
 }

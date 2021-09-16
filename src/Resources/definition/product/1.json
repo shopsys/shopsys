@@ -413,6 +413,9 @@
       },
       "exposed_stores_count": {
         "type": "integer"
+      },
+      "related_products": {
+        "type": "integer"
       }
     }
   }
