@@ -21,10 +21,12 @@ export type ProductPriceType = {
 };
 
 export type SliderProductItemType = {
+    uuid: string;
     detailSlug: string;
     name: string;
     flags: FlagType[];
     image: ImageType | null;
+    stockQuantity: number;
     price: ProductPriceType;
     isMainVariant: boolean;
     availability: string;
@@ -33,10 +35,12 @@ export type SliderProductItemType = {
 };
 
 export type ListedProductItemType = {
+    uuid: string;
     detailSlug: string;
     name: string;
     flags: FlagType[];
     image: ImageType | null;
+    stockQuantity: number;
     price: ProductPriceType;
     isMainVariant: boolean;
     availability: string;
@@ -46,10 +50,12 @@ export type ListedProductItemType = {
 
 export type ProductItemApiType = {
     __typename: string;
+    uuid: string;
     slug: string;
     name: string;
     flags: FlagType[];
     images: ImageType[];
+    stockQuantity: number;
     availability: {
         name: string;
     };
@@ -60,10 +66,12 @@ export type ProductItemApiType = {
 
 export type ListedProductItemApiType = {
     __typename: string;
+    uuid: string;
     slug: string;
     name: string;
     flags: FlagType[];
     images: ImageType[];
+    stockQuantity: number;
     availability: {
         name: string;
     };

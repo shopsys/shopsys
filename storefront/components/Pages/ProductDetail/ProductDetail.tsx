@@ -43,7 +43,7 @@ const ProductDetail: FC<ProductDetailProps> = (props) => {
                         <ProductDetailCodeStyled>
                             {t('Code')}: {props.product.catalogNumber}
                         </ProductDetailCodeStyled>
-                        <ProductDetailAddToCart />
+                        <ProductDetailAddToCart {...props} />
                         <ProductDetailAvailability scrollTarget={scrollTarget} {...props} />
                     </ProductDetailInfoStyled>
                 </ProductDetailStyled>

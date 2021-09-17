@@ -1,7 +1,11 @@
-import { ProductItemApiType, SliderProductItemType } from 'components/Blocks/Product/types';
+import {
+    PriceApiType,
+    ProductItemApiType,
+    ProductPriceType,
+    SliderProductItemType,
+} from 'components/Blocks/Product/types';
 import { BreadcrumbType } from 'connectors/breadcrumb/Breadcrumb';
 import { SlugType } from '../../../connectors/slug/Slug';
-import { v4 as uuid } from 'uuid';
 
 export type Availability = {
     name: string;
@@ -15,12 +19,14 @@ export type StoreAvailability = {
     availabilityStatus: 'in-stock' | 'out-of-stock';
 };
 export interface ProductDetailApiType extends SlugType, BreadcrumbType {
-    uuid: typeof uuid;
+    uuid: string;
     name: string;
     namePrefix: string;
     nameSuffix: string;
+    stockQuantity: number;
     description: string;
     catalogNumber: string;
+    price: PriceApiType;
     availability: Availability;
     storeAvailabilities: StoreAvailability[];
     availableStoresCount: number;
@@ -29,12 +35,14 @@ export interface ProductDetailApiType extends SlugType, BreadcrumbType {
 }
 
 export interface ProductDetailType extends SlugType, BreadcrumbType {
-    uuid: typeof uuid;
+    uuid: string;
     name: string;
     namePrefix: string;
     nameSuffix: string;
+    stockQuantity: number;
     description: string;
     catalogNumber: string;
+    price: ProductPriceType;
     availability: Availability;
     storeAvailabilities: StoreAvailability[];
     availableStoresCount: number;

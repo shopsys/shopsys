@@ -13,7 +13,7 @@ const ShipmentAndPayment: FC<ServerSidePropsType> = (props) => {
 
     return (
         <StaticUrlGuard domainUrl={props.domainConfig.url}>
-            <CommonLayout>
+            <CommonLayout {...props}>
                 <OrderSteps activeStep={2} domainUrl={props.domainConfig.url} />
                 Shipment and payment - step 2
                 <OrderAction activeStep={2} buttonBack={t('Back')} buttonNext={t('Contact information')} />

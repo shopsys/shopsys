@@ -22,8 +22,9 @@ export const userSlice = createSlice({
         setSort(state, action: PayloadAction<PayloadType>) {
             state.sort = action.payload.sort;
         },
-        setCart(state, action: PayloadAction<CartType | undefined>) {
+        setCart(state, action: PayloadAction<CartType>) {
             state.cart = action.payload;
+            localStorage.setItem('cartUuid', action.payload.uuid);
         },
     },
 });

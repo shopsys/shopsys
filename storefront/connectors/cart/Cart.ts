@@ -1,4 +1,4 @@
-import { AddProductResultType, CartApiType, CartType } from './types';
+import { AddToCartResultType, CartApiType, CartType } from './types';
 import { useMutation, UseMutationResponse } from 'urql';
 import { mapProductPriceData } from 'connectors/products/Products';
 import { useFetchQuery } from 'hooks/graphQl/UseFetchQuery';
@@ -35,6 +35,9 @@ const cartBody = `
                 isPriceFrom
             }
             availableStoresCount
+            unit {
+                name
+            }
         }
     }
 ` as const;
@@ -64,8 +67,13 @@ export function mapCart(data: CartApiType, currencyCode: string): CartType {
     };
 }
 
-export const getCart = (cartUuid: string): CartType | undefined => {
-    const result = useFetchQuery({ query: cartQuery, variables: { cartUuid } });
+export const getCart = (): CartType | undefined => {
+    const cartUuid = typeof localStorage !== 'undefined' ? localStorage.getItem('cartUuid') : undefined;
+    const result = useFetchQuery({
+        query: cartQuery,
+        variables: { cartUuid },
+        pause: cartUuid === undefined || cartUuid === null,
+    });
     const { currencyCode } = useShopsysSelector((state) => state.domain);
 
     if (result.data === undefined || result.data.cart === null) {
@@ -92,7 +100,7 @@ export const useRemoveItemFromCart = (): UseMutationResponse<
 };
 
 const changeCartItemQuantityMutation =
-    `mutation ($cartUuid: Uuid! $productUuid: Uuid! $quantity: Int! $isAbsoluteQuantity: Boolean ) {
+    `mutation ($cartUuid: Uuid $productUuid: Uuid! $quantity: Int! $isAbsoluteQuantity: Boolean ) {
         AddToCart(input:{
             cartUuid: $cartUuid
             productUuid: $productUuid
@@ -103,6 +111,7 @@ const changeCartItemQuantityMutation =
             addProductResult {
                 notOnStockQuantity
                 overLimitQuantity
+                isNew
                 isQuantityOverLimit
                 addedQuantity
             }
@@ -110,8 +119,8 @@ const changeCartItemQuantityMutation =
     }` as const;
 
 export const useChangeCartItemQuantity = (): UseMutationResponse<
-    { AddToCart: CartApiType & { addProductResult: AddProductResultType } },
-    { cartUuid: string; productUuid: string; quantity: number; isAbsoluteQuantity: boolean }
+    { AddToCart: AddToCartResultType },
+    { cartUuid?: string; productUuid: string; quantity: number; isAbsoluteQuantity: boolean }
 > => {
     return useMutation(changeCartItemQuantityMutation);
 };

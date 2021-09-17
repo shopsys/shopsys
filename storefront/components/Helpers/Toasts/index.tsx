@@ -2,11 +2,11 @@ import { toast } from 'react-toastify';
 
 const showMessage = (message: string, type: 'info' | 'error' | 'success'): void => {
     if (type === 'error') {
-        toast.error(message);
+        toast.error(() => message);
     } else if (type === 'info') {
-        toast.info(message);
+        toast.info(() => message);
     } else if (type === 'success') {
-        toast.success(message);
+        toast.success(() => message);
     }
 };
 

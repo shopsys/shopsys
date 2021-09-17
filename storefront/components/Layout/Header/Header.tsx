@@ -15,8 +15,9 @@ import Logo from './Logo';
 import MenuIconic from './MenuIconic';
 import Overlay from '../Overlay';
 import Search from './Search';
+import { ServerSidePropsType } from 'helpers/InitServerSideProps';
 
-const Header: FC = () => {
+const Header: FC<ServerSidePropsType> = (props) => {
     const [isMenuOpened, setIsMenuOpened] = useState(false);
 
     const onMenuToggleHandler = () => {
@@ -39,7 +40,7 @@ const Header: FC = () => {
                 <DropdownMenu onMenuToggleHandler={onMenuToggleHandler} isMenuOpened={isMenuOpened} />
             </HeaderMenuButtonStyled>
             <HeaderCartStyled>
-                <Cart />
+                <Cart {...props} />
             </HeaderCartStyled>
             <Overlay isActive={isMenuOpened} />
             <FrontendSwitcher />

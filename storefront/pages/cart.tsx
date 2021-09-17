@@ -16,7 +16,7 @@ const Cart: FC<ServerSidePropsType> = (props) => {
 
     return (
         <StaticUrlGuard domainUrl={props.domainConfig.url}>
-            <CommonLayout>
+            <CommonLayout {...props}>
                 <OrderSteps activeStep={1} domainUrl={props.domainConfig.url} />
                 <List items={cart?.items} />
                 <OrderAction activeStep={1} buttonBack={t('Back to e-shop')} buttonNext={t('Shipment and payment')} />

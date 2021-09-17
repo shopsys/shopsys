@@ -12,6 +12,9 @@ export type ProductCartItemType = {
     stockQuantity: number;
     availableStoresCount: number;
     catalogNumber: string;
+    unit: {
+        name: string;
+    };
 };
 
 export type CartItemType = {
@@ -38,6 +41,9 @@ export type ProductCartItemApiType = {
     stockQuantity: number;
     availableStoresCount: number;
     catalogNumber: string;
+    unit: {
+        name: string;
+    };
 };
 
 export type CartItemApiType = {
@@ -54,6 +60,9 @@ export type CartApiType = {
 export type AddProductResultType = {
     notOnStockQuantity: number;
     overLimitQuantity: number;
+    isNew: boolean;
     isQuantityOverLimit: number;
     addedQuantity: number;
 };
+
+export type AddToCartResultType = CartApiType & { addProductResult: AddProductResultType };

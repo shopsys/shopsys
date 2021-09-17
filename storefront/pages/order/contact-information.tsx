@@ -13,7 +13,7 @@ const ContactInformation: FC<ServerSidePropsType> = (props) => {
 
     return (
         <StaticUrlGuard domainUrl={props.domainConfig.url}>
-            <CommonLayout>
+            <CommonLayout {...props}>
                 <OrderSteps activeStep={3} domainUrl={props.domainConfig.url} />
                 Contact information - step 3
                 <OrderAction activeStep={3} buttonBack={t('Back')} buttonNext={t('Submit order')} />

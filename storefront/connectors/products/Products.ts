@@ -11,8 +11,10 @@ import { useShopsysSelector } from '../../redux/store';
 
 export const sliderProductQuery = `
     __typename
+    uuid
     slug
     name
+    stockQuantity
     flags {
         name
         rgbColor

@@ -1,11 +1,11 @@
-import { DomainConfigType, getDomainConfig } from '../utils/Domain/Domain';
+import { initServerSideProps, ServerSidePropsType } from '../helpers/InitServerSideProps';
 import Banners from 'components/Blocks/Banners';
 import CommonLayout from '../components/Layout/CommonLayout';
 import { domainActions } from '../redux/store/DomainStore';
 import { FC } from 'react';
+import { getDomainConfig } from '../utils/Domain/Domain';
 import { GetServerSideProps } from 'next';
 import Heading from '../components/Basic/Heading';
-import { initServerSideProps } from '../helpers/InitServerSideProps';
 import { navigationQuery } from '../connectors/navigation/Navigation';
 import PromotedCategories from '../components/Blocks/Categories/PromotedCategories/PromotedCategories';
 import { promotedCategoriesQuery } from '../connectors/categories/PromotedCategories';
@@ -16,9 +16,7 @@ import { useShopsysDispatch } from '../redux/store';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import Webline from 'components/Layout/Webline';
 
-type IndexProps = { domainConfig?: DomainConfigType };
-
-const Index: FC<IndexProps> = (props) => {
+const Index: FC<ServerSidePropsType> = (props) => {
     const dispatch = useShopsysDispatch();
     const t = useTypedTranslationFunction();
 
@@ -29,7 +27,7 @@ const Index: FC<IndexProps> = (props) => {
     dispatch(domainActions.setDomain(getDomainConfig(selectedDomain)));
 
     return (
-        <CommonLayout>
+        <CommonLayout {...props}>
             <Webline>
                 <Banners />
             </Webline>
