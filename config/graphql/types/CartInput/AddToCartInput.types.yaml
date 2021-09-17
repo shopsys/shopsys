@@ -1,11 +1,9 @@
 AddToCartInput:
     type: input-object
+    inherits:
+        - CartInput
     config:
         fields:
-            cartUuid:
-                type: "Uuid"
-                description: "Cart identifier, new cart will be created if not provided and customer is not logged in"
-                defaultValue: null
             productUuid:
                 type: "Uuid!"
                 description: "Product UUID"

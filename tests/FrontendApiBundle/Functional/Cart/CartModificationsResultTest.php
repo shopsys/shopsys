@@ -116,7 +116,7 @@ class CartModificationsResultTest extends GraphQlTestCase
         $this->hideTestingProduct();
 
         $getCartQuery = '{
-            cart(uuid: "' . $newlyCreatedCart['uuid'] . '") {
+            cart(cartInput: {cartUuid: "' . $newlyCreatedCart['uuid'] . '"}) {
                 modifications {
                     noLongerListableCartItems {
                         uuid
@@ -156,7 +156,7 @@ class CartModificationsResultTest extends GraphQlTestCase
         $this->modifyPriceOfTestingProduct();
 
         $getCartQuery = '{
-            cart(uuid: "' . $newlyCreatedCart['uuid'] . '") {
+            cart(cartInput: {cartUuid: "' . $newlyCreatedCart['uuid'] . '"}) {
                 modifications {
                     cartItemsWithModifiedPrice {
                         uuid
@@ -196,7 +196,7 @@ class CartModificationsResultTest extends GraphQlTestCase
         $this->setOneItemLeftOnStockForTestingProduct();
 
         $getCartQuery = '{
-            cart(uuid: "' . $newlyCreatedCart['uuid'] . '") {
+            cart(cartInput: {cartUuid: "' . $newlyCreatedCart['uuid'] . '"}) {
                 modifications {
                     cartItemsWithChangedQuantity {
                         uuid
@@ -236,7 +236,7 @@ class CartModificationsResultTest extends GraphQlTestCase
         $this->setNoItemLeftOnStockForTestingProduct();
 
         $getCartQuery = '{
-            cart(uuid: "' . $newlyCreatedCart['uuid'] . '") {
+            cart(cartInput: {cartUuid: "' . $newlyCreatedCart['uuid'] . '"}) {
                 modifications {
                     noLongerAvailableCartItemsDueToQuantity {
                         uuid

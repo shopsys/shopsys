@@ -44,16 +44,15 @@ class CartResolver implements ResolverInterface, AliasedInterface
     }
 
     /**
-     * @param string|null $uuid
+     * @param array $input
      * @return \App\FrontendApi\Model\Cart\CartWithModificationsResult|null
      */
-    public function resolve(?string $uuid): ?CartWithModificationsResult
+    public function resolve(array $input): ?CartWithModificationsResult
     {
         /** @var \App\Model\Customer\User\CustomerUser|null $customerUser */
         $customerUser = $this->currentCustomerUser->findCurrentCustomerUser();
 
-        $cart = $this->cartFacade->findCart($customerUser, $uuid);
-
+        $cart = $this->cartFacade->findCart($customerUser, $input['cartUuid']);
         if ($cart === null) {
             return null;
         }
