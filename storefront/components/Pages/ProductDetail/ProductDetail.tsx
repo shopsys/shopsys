@@ -8,6 +8,7 @@ import {
     ProductDetailStyled,
 } from './ProductDetail.style';
 import ProductDetailAccessories from './ProductDetailAccessories';
+import ProductDetailAddToCart from './ProductDetailAddToCart';
 import ProductDetailAvailability from './ProductDetailStoresAvailability/ProductDetailAvailability';
 import ProductDetailAvailabilityList from './ProductDetailStoresAvailability/ProductDetailAvailabilityList';
 import ProductDetailGallery from './ProductDetailGallery';
@@ -42,6 +43,7 @@ const ProductDetail: FC<ProductDetailProps> = (props) => {
                         <ProductDetailCodeStyled>
                             {t('Code')}: {props.product.catalogNumber}
                         </ProductDetailCodeStyled>
+                        <ProductDetailAddToCart />
                         <ProductDetailAvailability scrollTarget={scrollTarget} {...props} />
                     </ProductDetailInfoStyled>
                 </ProductDetailStyled>
