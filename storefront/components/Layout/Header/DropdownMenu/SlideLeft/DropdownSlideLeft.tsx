@@ -1,7 +1,7 @@
 import { DropdownSlideLeftIconStyled, DropdownSlideLeftStyled } from './DropdownSlideLeft.style';
 import { DropdownListLevels } from '../types';
 import { FC } from 'react';
-import { useTypedTranslationFunction } from 'hooks/UseTypedTranslationFunction';
+import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 
 type DropdownSlideLeftProps = {
     onClickEvent: (props: { goToMenu: DropdownListLevels }) => void;

@@ -3,7 +3,7 @@ import { FC, useEffect } from 'react';
 import { FormProvider, Resolver, SubmitHandler, useForm } from 'react-hook-form';
 import { getUserFriendlyErrors } from '../../../connectors/lib/friendlyErrorMessageParser';
 import { OperationResult } from 'urql';
-import { useTypedTranslationFunction } from 'hooks/UseTypedTranslationFunction';
+import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 
 type FormProps = {
     defaultValues: { [key: string]: unknown };

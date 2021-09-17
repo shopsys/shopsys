@@ -2,7 +2,7 @@ import { BreadcrumbsLinkStyled, BreadcrumbsSpanStyled, BreadcrumbsStyled } from 
 import { FC, Fragment } from 'react';
 import { BreadcrumbType } from 'connectors/breadcrumb/Breadcrumb';
 import NextLink from 'next/link';
-import { useTypedTranslationFunction } from 'hooks/UseTypedTranslationFunction';
+import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import Webline from 'components/Layout/Webline';
 
 const Breadcrumbs: FC<BreadcrumbType> = (props) => {

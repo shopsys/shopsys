@@ -1,7 +1,7 @@
 import DefaultErrorPage from 'next/error';
 import { FC } from 'react';
 import { useRouter } from 'next/router';
-import { useStaticUrlGuard } from 'hooks/UseStaticUrlGuard';
+import { useStaticUrlGuard } from 'hooks/staticUrls/UseStaticUrlGuard';
 
 type StaticUrlGuardProps = {
     domainUrl: string;

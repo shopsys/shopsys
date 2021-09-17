@@ -13,7 +13,7 @@ import PromotedProducts from '../components/Blocks/Product/PromotedProducts/Prom
 import { promotedProductsQuery } from '../connectors/products/Products';
 import { sliderItemsQuery } from 'connectors/sliderItems/SliderItems';
 import { useShopsysDispatch } from '../redux/store';
-import { useTypedTranslationFunction } from 'hooks/UseTypedTranslationFunction';
+import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import Webline from 'components/Layout/Webline';
 
 type IndexProps = { domainConfig?: DomainConfigType };

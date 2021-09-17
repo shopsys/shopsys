@@ -1,8 +1,8 @@
 import { OrderStepsListItemLinkStyled, OrderStepsListItemStyled, OrderStepsListStyled } from './OrderSteps.style';
 import { FC } from 'react';
 import NextLink from 'next/link';
-import { useGetInternationalizedStaticUrls } from 'hooks/UseGetInternationalizedStaticUrls';
-import { useTypedTranslationFunction } from 'hooks/UseTypedTranslationFunction';
+import { useGetInternationalizedStaticUrls } from 'hooks/staticUrls/UseGetInternationalizedStaticUrls';
+import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import Webline from 'components/Layout/Webline';
 
 type OrderStepsProps = {

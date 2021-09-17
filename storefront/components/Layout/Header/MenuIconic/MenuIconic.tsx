@@ -8,7 +8,7 @@ import {
 } from './MenuIconic.style';
 import { FC } from 'react';
 import NextLink from 'next/link';
-import { useTypedTranslationFunction } from 'hooks/UseTypedTranslationFunction';
+import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 
 const MenuIconic: FC = () => {
     const t = useTypedTranslationFunction();

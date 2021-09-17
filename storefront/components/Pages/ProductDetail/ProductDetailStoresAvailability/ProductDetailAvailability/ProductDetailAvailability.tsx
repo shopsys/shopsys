@@ -7,7 +7,7 @@ import {
 import { FC, RefObject, useEffect } from 'react';
 import Icon from 'components/Basic/Icon';
 import { ProductDetailType } from '../../types';
-import { useTypedTranslationFunction } from 'hooks/UseTypedTranslationFunction';
+import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 
 type ProductDetailAvailabilityProps = {
     product: ProductDetailType;

@@ -4,7 +4,7 @@ import Button from '../../../Forms/Button';
 import { SliderProductItemType } from '../types';
 import Spinbox from '../../../Forms/Spinbox';
 import { useRouter } from 'next/dist/client/router';
-import { useTypedTranslationFunction } from 'hooks/UseTypedTranslationFunction';
+import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 
 const ProductAction: FC<SliderProductItemType> = (props) => {
     const router = useRouter();

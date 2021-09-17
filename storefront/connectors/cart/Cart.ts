@@ -1,7 +1,7 @@
 import { AddProductResultType, CartApiType, CartType } from './types';
 import { useMutation, UseMutationResponse } from 'urql';
 import { mapProductPriceData } from 'connectors/products/Products';
-import { useFetchQuery } from 'hooks/UseFetchQuery';
+import { useFetchQuery } from 'hooks/graphQl/UseFetchQuery';
 import { useShopsysSelector } from 'redux/store';
 
 const cartBody = `

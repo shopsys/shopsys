@@ -16,9 +16,9 @@ import { SortType, userActions } from '../../../redux/store/UserStore';
 import { useShopsysDispatch, useShopsysSelector } from 'redux/store';
 import { getIsElementVisible } from 'components/Helpers/GetIsItemVisible';
 import { mobileFirstSizes } from 'components/Theme/mediaQueries';
-import { useGetWindowSize } from 'hooks/UseGetWindowSize';
-import { useResizeWidthEffect } from 'hooks/UseResizeWidthEffect';
-import { useTypedTranslationFunction } from 'hooks/UseTypedTranslationFunction';
+import { useGetWindowSize } from 'hooks/ui/UseGetWindowSize';
+import { useResizeWidthEffect } from 'hooks/ui/UseResizeWidthEffect';
+import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 
 export interface SortValues {
     stateValue: SortType;

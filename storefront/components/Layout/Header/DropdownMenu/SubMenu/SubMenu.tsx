@@ -1,7 +1,7 @@
 import { SubMenuItemStyled, SubMenuStyled } from './SubMenu.style';
 import Link from 'next/link';
 import { ReactElement } from 'react';
-import { useTypedTranslationFunction } from 'hooks/UseTypedTranslationFunction';
+import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 
 const SubMenu = (): ReactElement => {
     const t = useTypedTranslationFunction();

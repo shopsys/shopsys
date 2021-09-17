@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { getUserFriendlyErrors, ParsedErrors } from '../connectors/lib/friendlyErrorMessageParser';
+import { getUserFriendlyErrors, ParsedErrors } from 'connectors/lib/friendlyErrorMessageParser';
 import { useQuery, UseQueryArgs, UseQueryState } from 'urql';
 import { showErrorMessage } from 'components/Helpers/Toasts';
 import { useEffect } from 'react';
-import { useTypedTranslationFunction } from 'hooks/UseTypedTranslationFunction';
+import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 
 type ShopsysUseQueryState = UseQueryState & { parsedErrors: ParsedErrors };
 

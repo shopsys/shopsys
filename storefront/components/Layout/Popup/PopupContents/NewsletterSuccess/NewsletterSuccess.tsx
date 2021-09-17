@@ -4,7 +4,7 @@ import { popupActions } from 'redux/store/PopupStore';
 import { ReactElement } from 'react';
 import { StyledNewsletterSuccess } from './NewsletterSuccess.style';
 import { useShopsysDispatch } from 'redux/store';
-import { useTypedTranslationFunction } from 'hooks/UseTypedTranslationFunction';
+import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 
 /**
  * A content for the Popup component which is displayed when the user successfully subscribes to newlsetter

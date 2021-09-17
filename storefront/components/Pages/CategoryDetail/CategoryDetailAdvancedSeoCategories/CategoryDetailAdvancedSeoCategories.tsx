@@ -10,9 +10,9 @@ import { getIsElementVisible } from 'components/Helpers/GetIsItemVisible';
 import Heading from 'components/Basic/Heading';
 import NextLink from 'next/link';
 import { ReadyCategorySeoMixLink } from '../types';
-import { useGetWindowSize } from 'hooks/UseGetWindowSize';
-import { useResizeWidthEffect } from 'hooks/UseResizeWidthEffect';
-import { useTypedTranslationFunction } from 'hooks/UseTypedTranslationFunction';
+import { useGetWindowSize } from 'hooks/ui/UseGetWindowSize';
+import { useResizeWidthEffect } from 'hooks/ui/UseResizeWidthEffect';
+import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 
 type CategoryDetailAdvancedSeoCategoriesProps = {
     readyCategorySeoMixLinks: ReadyCategorySeoMixLink[];

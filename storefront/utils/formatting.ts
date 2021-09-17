@@ -1,4 +1,4 @@
-import { useTypedTranslationFunction } from 'hooks/UseTypedTranslationFunction';
+import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 
 export function formatPrice(price: number, currencyCode: string): string {
     const t = useTypedTranslationFunction();

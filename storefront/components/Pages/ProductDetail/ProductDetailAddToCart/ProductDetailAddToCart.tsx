@@ -9,7 +9,9 @@ import {
 import { FC } from 'react';
 import { formatPrice } from 'utils/formatting';
 import Spinbox from 'components/Forms/Spinbox';
-import { useTypedTranslationFunction } from 'hooks/UseTypedTranslationFunction';
+import { useHandleChangeCartItemQuantity } from 'hooks/cart/UseHandleChangeCartItemQuantity';
+import { userActions } from 'redux/store/UserStore';
+import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 
 const ProductDetailAddToCart: FC = () => {
     const t = useTypedTranslationFunction();

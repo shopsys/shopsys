@@ -23,7 +23,7 @@ import NextLink from 'next/link';
 import { showErrorMessage } from 'components/Helpers/Toasts';
 import Spinbox from 'components/Forms/Spinbox';
 import { userActions } from 'redux/store/UserStore';
-import { useTypedTranslationFunction } from 'hooks/UseTypedTranslationFunction';
+import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 
 type ItemProps = {
     item: CartItemType;

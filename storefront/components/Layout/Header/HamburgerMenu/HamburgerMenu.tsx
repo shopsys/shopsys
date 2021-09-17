@@ -1,7 +1,7 @@
 import { FC, MouseEventHandler } from 'react';
 import { HamburgerMenuImageStyled, HamburgerMenuStyled, HamburgerMenuTextStyled } from './HamburgerMenu.style';
 import HamburgerIcon from './HamburgerIcon';
-import { useTypedTranslationFunction } from 'hooks/UseTypedTranslationFunction';
+import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 
 type HamburgerMenuProps = {
     isMenuOpened: boolean;

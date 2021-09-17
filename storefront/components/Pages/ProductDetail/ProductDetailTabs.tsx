@@ -2,7 +2,7 @@ import { Tabs, TabsContent, TabsList, TabsListItem } from '../../Basic/Tabs';
 import { FC } from 'react';
 import Table from '../../Basic/Table';
 import UserText from 'components/Helpers/UserText';
-import { useTypedTranslationFunction } from 'hooks/UseTypedTranslationFunction';
+import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 
 type ProductDetailTabsProps = {
     description: string;

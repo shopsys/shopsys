@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { ProductAvailableStoreCountStyled } from './ProductAvailableStoresCount.style';
 import { SliderProductItemType } from '../types';
-import { useTypedTranslationFunction } from 'hooks/UseTypedTranslationFunction';
+import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 
 const ProductAvailableStoresCount: FC<SliderProductItemType> = (props) => {
     const t = useTypedTranslationFunction();
