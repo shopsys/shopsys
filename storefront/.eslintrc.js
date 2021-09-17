@@ -76,6 +76,7 @@ module.exports = {
         'vars-on-top': 'error',
         yoda: 'error',
         '@typescript-eslint/strict-boolean-expressions': ['error', { allowNullableBoolean: true }],
+        '@typescript-eslint/no-non-null-assertion': 'off',
     },
     settings: {
         react: {

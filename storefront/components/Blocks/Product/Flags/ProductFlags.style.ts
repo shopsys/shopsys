@@ -9,16 +9,6 @@ type ProductFlagsItemStyledProps = {
     color?: string;
 };
 
-export const ProductFlagsStyled = styled.div`
-    position: absolute;
-    display: flex;
-    flex-direction: column;
-    top: 10px;
-    left: 14px;
-
-    font-size: 0;
-`;
-
 export const ProductFlagsItemStyled = styled.div<ProductFlagsItemStyledProps>`
     ${({ theme, color }) => css`
         display: inline-flex;

@@ -40,5 +40,7 @@
     "Products": "Produkty",
     "Priority": "TOP",
     "Price ascending": "od najlacnejšieho",
-    "Price descending": "od najdrahšieho"
+    "Price descending": "od najdrahšieho",
+    "(1)[or immediately in {{ count }} store];(2-inf)[or immediately in {{ count }} stores];": "(1)[alebo ihneď na {{ count }} predajni];(2-inf)[alebo ihneď na {{ count }} predajniach];",
+    "pc": "ks"
 }

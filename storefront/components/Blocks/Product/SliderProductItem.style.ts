@@ -74,6 +74,16 @@ export const SliderProductItemImageStyled = styled.div`
     }
 `;
 
+export const SliderProductItemFlagsStyled = styled.div`
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    top: 10px;
+    left: 14px;
+
+    font-size: 0;
+`;
+
 export const SliderProductItemInfoStyled = styled.div`
     display: block;
     flex: 1;

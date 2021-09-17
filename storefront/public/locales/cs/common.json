@@ -40,5 +40,7 @@
     "price descending": "od nejdra\u017e\u0161\u00edho",
     "priority": "TOP",
     "Products": "Produkty",
-    "Sort": "Se\u0159adit"
+    "Sort": "Se\u0159adit",
+    "(1)[or immediately in {{ count }} store];(2-inf)[or immediately in {{ count }} stores];": "(1)[nebo ihned na {{ count }} prodejně];(2-inf)[nebo ihned na {{ count }} prodejnách];",
+    "pc": "ks"
 }

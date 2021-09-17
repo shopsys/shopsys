@@ -1,4 +1,5 @@
 import {
+    SliderProductItemFlagsStyled,
     SliderProductItemImageStyled,
     SliderProductItemInfoStyled,
     SliderProductItemInStyled,
@@ -25,7 +26,9 @@ const ProductItem: FC<SliderProductItemType> = (props) => {
                     <SliderProductItemLinkStyled>
                         <SliderProductItemImageStyled>
                             <Image image={props.image} alt={props.name} />
-                            <ProductFlags flags={props.flags} />
+                            <SliderProductItemFlagsStyled>
+                                <ProductFlags flags={props.flags} />
+                            </SliderProductItemFlagsStyled>
                         </SliderProductItemImageStyled>
                         <SliderProductItemInfoStyled>
                             <SliderProductItemTitleStyled>{props.name}</SliderProductItemTitleStyled>

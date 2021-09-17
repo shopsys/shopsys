@@ -1,21 +1,31 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-
-const initialState = {
-    sort: 'PRIORITY',
-};
+import { CartType } from 'connectors/cart/types';
 
 export type SortType = 'PRIORITY' | 'PRICE_ASC' | 'PRICE_DESC';
 
+type IinitialState = {
+    sort: SortType;
+    cart: CartType | undefined;
+};
+
+const initialState = {
+    sort: 'PRIORITY',
+    cart: undefined,
+} as IinitialState;
+
 export type PayloadType = { sort: SortType };
 
-export const sortSlice = createSlice({
-    name: 'sort',
+export const userSlice = createSlice({
+    name: 'user',
     initialState,
     reducers: {
         setSort(state, action: PayloadAction<PayloadType>) {
             state.sort = action.payload.sort;
         },
+        setCart(state, action: PayloadAction<CartType | undefined>) {
+            state.cart = action.payload;
+        },
     },
 });
 
-export const sortActions = sortSlice.actions;
+export const userActions = userSlice.actions;
