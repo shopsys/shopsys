@@ -1,16 +1,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { getUserFriendlyErrors, ParsedErrors } from '../connectors/lib/friendlyErrorMessageParser';
-import { useContext, useEffect } from 'react';
 import { useQuery, UseQueryArgs, UseQueryState } from 'urql';
-import { ShopsysGlobalErrorContext } from '../context/ShopsysGlobalErrorProvider/ShopsysGlobalErrorProvider';
+import { showErrorMessage } from 'components/Helpers/Toasts';
+import { useEffect } from 'react';
 import { useTypedTranslationFunction } from 'hooks/UseTypedTranslationFunction';
 
 type ShopsysUseQueryState = UseQueryState & { parsedErrors: ParsedErrors };
 
 export const useFetchQuery = (query: UseQueryArgs): ShopsysUseQueryState => {
     const t = useTypedTranslationFunction();
-    const errorContext = useContext(ShopsysGlobalErrorContext);
     const result: ShopsysUseQueryState = {
         ...useQuery(query)[0],
         parsedErrors: {
@@ -30,9 +29,7 @@ export const useFetchQuery = (query: UseQueryArgs): ShopsysUseQueryState => {
             return;
         }
 
-        const stateErrors = [...errorContext.errors];
-        stateErrors.push(result.parsedErrors.applicationError);
-        errorContext.actions.setErrors(stateErrors);
+        showErrorMessage(result.parsedErrors.applicationError);
     }, [result.fetching]);
 
     return result;

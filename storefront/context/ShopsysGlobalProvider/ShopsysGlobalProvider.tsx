@@ -3,6 +3,7 @@ import { getCart } from 'connectors/cart/Cart';
 import GlobalStyle from 'components/Theme/GlobalStyle';
 import { theme } from 'components/Theme/main';
 import { ThemeProvider } from 'styled-components';
+import { ToastsStyle } from 'components/Helpers/Toasts/Toasts.style';
 import { userActions } from 'redux/store/UserStore';
 import { useShopsysDispatch } from 'redux/store';
 
@@ -19,6 +20,7 @@ const ShopsysGlobalProvider: FC = ({ children }) => {
     return (
         <ThemeProvider theme={theme}>
             <GlobalStyle />
+            <ToastsStyle />
             {children}
         </ThemeProvider>
     );
