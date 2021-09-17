@@ -42,5 +42,7 @@
     "Products": "Products",
     "Sort": "Sort",
     "(1)[or immediately in {{ count }} store];(2-inf)[or immediately in {{ count }} stores];": "(1)[or immediately in {{ count }} store];(2-inf)[or immediately in {{ count }} stores];",
-    "pc": "pc"
+    "pc": "pc",
+    "pc(s)": "pc(s)",
+    "You have the maximum available amount in your cart, you cannot add more (total {{ quantity }} {{ unitName }})": "You have the maximum available amount in your cart, you cannot add more (total {{ quantity }} {{ unitName }})"
 }

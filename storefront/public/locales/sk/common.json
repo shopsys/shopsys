@@ -42,5 +42,7 @@
     "Price ascending": "od najlacnejšieho",
     "Price descending": "od najdrahšieho",
     "(1)[or immediately in {{ count }} store];(2-inf)[or immediately in {{ count }} stores];": "(1)[alebo ihneď na {{ count }} predajni];(2-inf)[alebo ihneď na {{ count }} predajniach];",
-    "pc": "ks"
+    "pc": "ks",
+    "pc(s)": "ks",
+    "You have the maximum available amount in your cart, you cannot add more (total {{ quantity }} {{ unitName }})": "V košíku máte maximálne dostupné množstvo, nemožno pridať ďalšie (celkom už {{ quantity }} {{ unitName }})"
 }

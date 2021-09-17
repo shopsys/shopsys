@@ -7,6 +7,7 @@ export const theme = {
     color: {
         base: '#0d0d0d',
         primary: '#4c5bfd',
+        primaryLight: '#a3abff',
         white: '#fff',
         whitesmoke: '#e8e8ea',
         black: '#000',
@@ -14,7 +15,9 @@ export const theme = {
         orangeLight: '#fff0c4',
         border: '#c4c9ff',
         red: '#ec5353',
+        redLight: '#f2a2a2',
         green: '#00ecb1',
+        greenLight: '#81f7da',
         grey: '#555764',
         greyLight: '#a4a7c1',
         greyVeryLight: '#f5f5f6',

@@ -1,25 +1,23 @@
+import 'react-toastify/dist/ReactToastify.css';
 import { AppProps } from 'next/app';
 import { appWithTranslation } from 'next-i18next';
 import { getDomainConfig } from '../utils/Domain/Domain';
-import { GlobalErrorList } from 'components/Blocks/Errors/GlobalErrorList/GlobalErrorList';
 import nextI18NextConfig from '../next-i18next.config.js';
 import Popup from 'components/Layout/Popup';
 import { Provider } from 'react-redux';
 import { ReactElement } from 'react';
-import ShopsysGlobalErrorProvider from 'context/ShopsysGlobalErrorProvider';
 import ShopsysGlobalProvider from 'context/ShopsysGlobalProvider';
 import store from 'redux/store';
+import { ToastContainer } from 'react-toastify';
 import { withUrqlClient } from 'next-urql';
 
 function MyApp({ Component, pageProps }: AppProps): ReactElement {
     return (
         <Provider store={store}>
             <ShopsysGlobalProvider>
-                <ShopsysGlobalErrorProvider>
-                    <Popup />
-                    <GlobalErrorList />
-                    <Component {...pageProps} />
-                </ShopsysGlobalErrorProvider>
+                <Popup />
+                <ToastContainer autoClose={6000} position="top-center" theme="colored" />
+                <Component {...pageProps} />
             </ShopsysGlobalProvider>
         </Provider>
     );

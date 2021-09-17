@@ -20,6 +20,7 @@ import Icon from 'components/Basic/Icon';
 import Image from 'components/Basic/Image';
 import ItemInfo from './ItemInfo';
 import NextLink from 'next/link';
+import { showErrorMessage } from 'components/Helpers/Toasts';
 import Spinbox from 'components/Forms/Spinbox';
 import { userActions } from 'redux/store/UserStore';
 import { useTypedTranslationFunction } from 'hooks/UseTypedTranslationFunction';
@@ -71,11 +72,22 @@ const Item: FC<ItemProps> = (props) => {
                 quantity: spinboxRef.current!.valueAsNumber,
                 isAbsoluteQuantity: true,
             }).then(({ data }) => {
-                if (data !== undefined && 'AddToCart' in data) {
-                    dispatch(userActions.setCart(mapCart(data.AddToCart, currencyCode)));
-                    if (data.AddToCart.addProductResult.notOnStockQuantity > 0) {
-                        spinboxRef.current!.valueAsNumber = data.AddToCart.addProductResult.addedQuantity;
-                    }
+                if (data === undefined || !('AddToCart' in data)) {
+                    return;
+                }
+
+                dispatch(userActions.setCart(mapCart(data.AddToCart, currencyCode)));
+                if (data.AddToCart.addProductResult.notOnStockQuantity > 0) {
+                    spinboxRef.current!.valueAsNumber = data.AddToCart.addProductResult.addedQuantity;
+                    showErrorMessage(
+                        t(
+                            'You have the maximum available amount in your cart, you cannot add more (total {{ quantity }} {{ unitName }})',
+                            {
+                                quantity: data.AddToCart.addProductResult.addedQuantity,
+                                unitName: t('pc(s)'),
+                            },
+                        ),
+                    );
                 }
             });
         }, 500);
