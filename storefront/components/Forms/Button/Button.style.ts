@@ -6,6 +6,11 @@ type ButtonSize = 'small';
 type ButtonPropsStyled = {
     size?: ButtonSize;
     borderRadius?: 'big';
+    isDisabled?: boolean;
+};
+
+type ButtonAsLinkProps = {
+    isDisabled?: boolean;
 };
 
 const localVariables = {
@@ -40,7 +45,7 @@ const getSize = (theme: Theme, size?: ButtonSize) => {
 };
 
 export const ButtonStyled = styled.button<ButtonPropsStyled>`
-    ${({ theme, size, borderRadius }) => css`
+    ${({ theme, size, borderRadius, isDisabled }) => css`
         ${getSize(theme, size)};
         width: auto;
         vertical-align: middle;
@@ -57,6 +62,13 @@ export const ButtonStyled = styled.button<ButtonPropsStyled>`
         font-weight: 700;
         outline: 0;
         text-transform: uppercase;
+
+        ${isDisabled &&
+        css`
+            opacity: 0.5;
+            cursor: no-drop;
+            pointer-events: none;
+        `}
 
         &:hover {
             color: ${theme.color.white};
@@ -86,6 +98,32 @@ export const ButtonSecondaryStyled = styled(ButtonStyled)`
         &:hover {
             color: ${theme.color.black};
             background-color: ${theme.color.white};
+        }
+    `}
+`;
+
+export const ButtonAsLinkStyled = styled.button<ButtonAsLinkProps>`
+    ${({ theme, isDisabled }) => css`
+        padding: 0;
+        min-height: 0;
+
+        border: 0;
+        background: none;
+        outline: 0;
+        color: ${theme.color.black};
+        cursor: pointer;
+
+        ${isDisabled &&
+        css`
+            opacity: 0.5;
+            cursor: no-drop;
+            pointer-events: none;
+        `}
+
+        &:hover {
+            background: none;
+            color: ${theme.color.primary};
+            text-decoration: underline;
         }
     `}
 `;

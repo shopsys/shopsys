@@ -44,5 +44,7 @@
     "(1)[or immediately in {{ count }} store];(2-inf)[or immediately in {{ count }} stores];": "(1)[nebo ihned na {{ count }} prodejně];(2-inf)[nebo ihned na {{ count }} prodejnách];",
     "pc": "ks",
     "pc(s)": "ks",
-    "You have the maximum available amount in your cart, you cannot add more (total {{ quantity }} {{ unitName }})": "V košíku máte maximální dostupné množství, nelze přidat další (celkem již {{ quantity }} {{ unitName }})"
+    "You have the maximum available amount in your cart, you cannot add more (total {{ quantity }} {{ unitName }})": "V košíku máte maximální dostupné množství, nelze přidat další (celkem již {{ quantity }} {{ unitName }})",
+    "Back to e-shop": "Zpět do e-shopu",
+    "Submit order": "Odeslat objednávku"
 }
