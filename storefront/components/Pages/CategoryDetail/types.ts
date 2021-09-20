@@ -1,7 +1,7 @@
-import { CategoryItemApiType, CategoryItemType } from '../../Blocks/Categories/CategoryItem/types';
-import { ListedProductEdgesType, ListedProductItemApiType } from '../../Blocks/Product/types';
+import { CategoryItemApiType, CategoryItemType } from 'components/Blocks/Categories/CategoryItem/types';
+import { ListedProductEdgesType, ListedProductItemApiType } from 'components/Blocks/Product/types';
 import { BreadcrumbType } from 'connectors/breadcrumb/Breadcrumb';
-import { SlugType } from '../../../connectors/slug/Slug';
+import { SlugType } from 'connectors/slug/Slug';
 import { v4 as uuid } from 'uuid';
 
 export type ReadyCategorySeoMixLink = {

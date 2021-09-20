@@ -1,5 +1,5 @@
 import { css } from 'styled-components';
-import { styled } from '../../../Theme/main';
+import { styled } from 'components/Theme/main';
 
 export const CategoryDetailSubcategoriesWrapperStyled = styled.ul`
     margin-bottom: 24px;

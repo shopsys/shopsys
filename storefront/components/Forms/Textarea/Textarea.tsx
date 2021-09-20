@@ -1,8 +1,8 @@
 import { FC, TextareaHTMLAttributes, useEffect, useState } from 'react';
 import { ControllerRenderProps } from 'react-hook-form';
 import { ExtractNativePropsFromDefault } from 'typeHelpers/ExtractNativePropsFromDefault';
-import { getStateAfterValidation } from '../Helpers/getStateAfterValidation';
-import LabelWrapper from '../Lib/LabelWrapper';
+import { getStateAfterValidation } from 'components/Forms/Helpers/getStateAfterValidation';
+import LabelWrapper from 'components/Forms/Lib/LabelWrapper';
 import { TextareaStyled } from './Textarea.style';
 
 type NativeProps = ExtractNativePropsFromDefault<

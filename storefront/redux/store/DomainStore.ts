@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { DomainConfigType } from '../../utils/Domain/Domain';
+import { DomainConfigType } from 'utils/Domain/Domain';
 
 const initialState = {
     url: 'http://127.0.0.1:8000/',

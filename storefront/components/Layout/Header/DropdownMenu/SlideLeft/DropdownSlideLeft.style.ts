@@ -1,6 +1,6 @@
 import { css } from 'styled-components';
-import Icon from '../../../../Basic/Icon';
-import { styled } from '../../../../Theme/main';
+import Icon from 'components/Basic/Icon';
+import { styled } from 'components/Theme/main';
 
 export const DropdownSlideLeftStyled = styled.span`
     ${({ theme }) => css`

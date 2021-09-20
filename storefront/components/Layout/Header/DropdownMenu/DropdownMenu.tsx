@@ -3,7 +3,7 @@ import { DropdownItemType, DropdownListLevels } from './types';
 import { DropdownMenuListStyled, DropdownMenuStyled, DropdownMenuWrapperStyled } from './DropdownMenu.style';
 import { CSSTransition } from 'react-transition-group';
 import DropdownSlideLeft from './SlideLeft';
-import { getNavigationItems } from '../../../../connectors/navigation/Navigation';
+import { getNavigationItems } from 'connectors/navigation/Navigation';
 import PrimaryList from './PrimaryList';
 import SecondaryList from './SecondaryList';
 import SubMenu from './SubMenu';

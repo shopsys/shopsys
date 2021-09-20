@@ -12,7 +12,7 @@ import {
     SortingBarStyled,
     SortingBarTitleStyled,
 } from './SortingBar.style';
-import { SortType, userActions } from '../../../redux/store/UserStore';
+import { SortType, userActions } from 'redux/store/UserStore';
 import { useShopsysDispatch, useShopsysSelector } from 'redux/store';
 import { getIsElementVisible } from 'components/Helpers/GetIsItemVisible';
 import { mobileFirstSizes } from 'components/Theme/mediaQueries';

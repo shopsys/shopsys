@@ -1,4 +1,4 @@
-import { styled } from '../../Theme/main';
+import { styled } from 'components/Theme/main';
 
 const localVariables = {
     userTextUlPointSize: '5px',

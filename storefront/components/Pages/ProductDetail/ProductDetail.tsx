@@ -15,7 +15,7 @@ import ProductDetailGallery from './ProductDetailGallery';
 import ProductDetailTabs from './ProductDetailTabs';
 import { ProductDetailType } from './types';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
-import Webline from '../../Layout/Webline';
+import Webline from 'components/Layout/Webline';
 
 type ProductDetailProps = {
     product: ProductDetailType;

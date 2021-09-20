@@ -1,6 +1,6 @@
-import { CategoryDetailApiType, CategoryDetailType } from '../../components/Pages/CategoryDetail/types';
-import { ListedProductEdgesType } from '../../components/Blocks/Product/types';
-import { mapListedProductNode } from '../products/Products';
+import { CategoryDetailApiType, CategoryDetailType } from 'components/Pages/CategoryDetail/types';
+import { ListedProductEdgesType } from 'components/Blocks/Product/types';
+import { mapListedProductNode } from 'connectors/products/Products';
 
 export function mapCategoryDetailData(
     apiCategoryDetailData: CategoryDetailApiType,

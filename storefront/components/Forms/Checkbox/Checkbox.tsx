@@ -2,7 +2,7 @@ import { FC, InputHTMLAttributes, ReactNode } from 'react';
 import { CheckboxStyled } from './Checkbox.style';
 import { ControllerRenderProps } from 'react-hook-form';
 import { ExtractNativePropsFromDefault } from 'typeHelpers/ExtractNativePropsFromDefault';
-import LabelWrapper from '../Lib/LabelWrapper';
+import LabelWrapper from 'components/Forms/Lib/LabelWrapper';
 
 type NativeProps = ExtractNativePropsFromDefault<
     InputHTMLAttributes<HTMLInputElement>,

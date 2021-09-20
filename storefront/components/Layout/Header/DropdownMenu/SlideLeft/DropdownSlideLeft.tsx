@@ -1,5 +1,5 @@
 import { DropdownSlideLeftIconStyled, DropdownSlideLeftStyled } from './DropdownSlideLeft.style';
-import { DropdownListLevels } from '../types';
+import { DropdownListLevels } from 'components/Layout/Header/DropdownMenu/types';
 import { FC } from 'react';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 

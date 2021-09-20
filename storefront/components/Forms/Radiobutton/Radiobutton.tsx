@@ -1,6 +1,6 @@
 import { FC, InputHTMLAttributes, ReactNode } from 'react';
 import { ExtractNativePropsFromDefault } from 'typeHelpers/ExtractNativePropsFromDefault';
-import LabelWrapper from '../Lib/LabelWrapper';
+import LabelWrapper from 'components/Forms/Lib/LabelWrapper';
 import { RadiobuttonStyled } from './Radiobutton.style';
 
 type NativeProps = ExtractNativePropsFromDefault<

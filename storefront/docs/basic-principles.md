@@ -33,7 +33,7 @@ http://127.0.0.1:3000/favicon.ico
 ```
 
 ```plain
-import CONFIG from '../config/global'
+import CONFIG from 'config/global'
 
 <p className="description">
     {t('English subtitle')} v {CONFIG.VERSION}
@@ -70,7 +70,7 @@ Styled-component element (in our example ComponentLinkWithStyle) will be set to 
 If you want to create unified tabs with switching its content just use these element structure:
 
 ```plain
-import { Tabs, TabsContent, TabsList, TabsListItem } from '../../basic/Tabs';
+import { Tabs, TabsContent, TabsList, TabsListItem } from 'components/basic/Tabs';
 
 <Tabs>
     <TabsList>
@@ -126,7 +126,7 @@ For icons, we have a component Icon. The best practice to use is to create a new
 file.styled.ts
 
 ```plain
-import Icon from '../../../../basic/Icon';
+import Icon from 'components/basic/Icon';
 
 export const ComponentIconStyled = styled(Icon)>`
     ${({ theme }) => css`

@@ -1,4 +1,4 @@
-import { getNavigationItems } from '../../../../connectors/navigation/Navigation';
+import { getNavigationItems } from 'connectors/navigation/Navigation';
 import NavigationItem from './NavigationItem';
 import { NavigationStyled } from './Navigation.style';
 import { ReactElement } from 'react';

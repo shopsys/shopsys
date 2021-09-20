@@ -4,7 +4,7 @@ import {
     NavigationSubListStyled,
 } from './NavigationSubList.style';
 import { FC } from 'react';
-import { NavigationSubCategory } from '../../../../../connectors/navigation/Navigation';
+import { NavigationSubCategory } from 'connectors/navigation/Navigation';
 import NextLink from 'next/link';
 
 type NavigationSubListProps = {

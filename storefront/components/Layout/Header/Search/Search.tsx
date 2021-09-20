@@ -1,6 +1,6 @@
 import { SearchFormStyled, SearchInStyled, SearchStyled } from './Search.style';
 import { FC } from 'react';
-import TextInput from '../../../Forms/TextInput';
+import TextInput from 'components/Forms/TextInput';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 
 const Search: FC = () => {

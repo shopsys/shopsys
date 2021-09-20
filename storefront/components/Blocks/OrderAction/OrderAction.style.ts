@@ -1,7 +1,7 @@
 import Button from 'components/Forms/Button';
 import { css } from 'styled-components';
-import Icon from '../../Basic/Icon';
-import { styled } from '../../Theme/main';
+import Icon from 'components/Basic/Icon';
+import { styled } from 'components/Theme/main';
 
 const localVariables = {
     orderActionButtonBackIconColor: '#747474',

@@ -7,7 +7,7 @@ import {
     ProductDetailImageSliderStyled,
 } from './ProductDetailImageSlider.style';
 import { Image } from 'connectors/products/ProductImages';
-import { theme } from '../../Theme/main';
+import { theme } from 'components/Theme/main';
 import { useKeenSlider } from 'keen-slider/react';
 
 type ProductDetailImageSliderProps = {

@@ -5,10 +5,10 @@ import {
     NavigationCategory as NavigationCategoryType,
     NavigationItem as NavigationItemType,
     NavigationSubCategory as NavigationSubCategoryType,
-} from '../../../../../connectors/navigation/Navigation';
-import { DropdownItemType } from '../types';
-import { DropdownMenuContext } from '../DropdownMenu';
-import DropdownSlideRight from '../SlideRight';
+} from 'connectors/navigation/Navigation';
+import { DropdownItemType } from 'components/Layout/Header/DropdownMenu/types';
+import { DropdownMenuContext } from 'components/Layout/Header/DropdownMenu//DropdownMenu';
+import DropdownSlideRight from 'components/Layout/Header/DropdownMenu/SlideRight';
 import Link from 'next/link';
 
 type DropdownItemProps = {

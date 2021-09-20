@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components';
-import { Availability } from '../../types';
+import { Availability } from 'components/Pages/ProductDetail/types';
 
 type ProductDetailAvailabilityLinkStyledProps = Pick<Availability, 'status'>;
 

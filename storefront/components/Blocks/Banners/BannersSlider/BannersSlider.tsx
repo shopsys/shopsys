@@ -7,9 +7,9 @@ import {
     BannersSliderThumbnailControlsStyled,
 } from './BannersSlider.style';
 import { FC, useEffect, useRef, useState } from 'react';
-import BannersSliderItem from '../BannersSliderItem/BannersSliderItem';
+import BannersSliderItem from 'components/Blocks/Banners/BannersSliderItem';
 import { SliderItem } from 'connectors/sliderItems/types';
-import { theme } from '../../../Theme/main';
+import { theme } from 'components/Theme/main';
 import { useKeenSlider } from 'keen-slider/react';
 
 type BannersSliderProps = {

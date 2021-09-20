@@ -10,7 +10,7 @@ import { FC, useRef } from 'react';
 import { mapCart, useChangeCartItemQuantity } from 'connectors/cart/Cart';
 import { useShopsysDispatch, useShopsysSelector } from 'redux/store';
 import { formatPrice } from 'utils/formatting';
-import { ProductDetailType } from '../types';
+import { ProductDetailType } from 'components/Pages/ProductDetail/types';
 import Spinbox from 'components/Forms/Spinbox';
 import { useHandleChangeCartItemQuantity } from 'hooks/cart/UseHandleChangeCartItemQuantity';
 import { userActions } from 'redux/store/UserStore';

@@ -8,7 +8,7 @@ import {
     SliderProductItemTitleStyled,
 } from './SliderProductItem.style';
 import { FC } from 'react';
-import Image from '../../Basic/Image/Image';
+import Image from 'components/Basic/Image/Image';
 import NextLink from 'next/link';
 import ProductAction from './Action/ProductAction';
 import { ProductAvailabilityStyled } from './Availability/ProductAvailability.style';

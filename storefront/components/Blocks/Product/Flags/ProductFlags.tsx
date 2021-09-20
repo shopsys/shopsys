@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { FlagType } from '../types';
+import { FlagType } from 'components/Blocks/Product/types';
 import { ProductFlagsItemStyled } from './ProductFlags.style';
 
 type ProductFlagsProps = { flags: FlagType[] };

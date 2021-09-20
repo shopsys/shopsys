@@ -2,7 +2,7 @@ import { FC, useState } from 'react';
 import { ProductSliderControlsStyled, ProductSliderStyled, ProductSliderWrapperStyled } from './ProductsSlider.style';
 import SliderProductItem from './SliderProductItem';
 import { SliderProductItemType } from './types';
-import { theme } from '../../Theme/main';
+import { theme } from 'components/Theme/main';
 import { useKeenSlider } from 'keen-slider/react';
 
 type ProductsSliderProps = { products: SliderProductItemType[] };

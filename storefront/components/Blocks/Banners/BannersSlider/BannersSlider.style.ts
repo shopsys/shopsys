@@ -1,6 +1,6 @@
 import { css } from 'styled-components';
 import Icon from 'components/Basic/Icon';
-import { styled } from '../../../Theme/main';
+import { styled } from 'components/Theme/main';
 
 const localVariables = {
     bannersSliderThumbnailControlsWidth: '307px',
