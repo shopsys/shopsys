@@ -2,7 +2,8 @@ import CategoryDetailAdvancedSeoCategories from './CategoryDetailAdvancedSeoCate
 import CategoryDetailSubcategories from './CategoryDetailSubcategories';
 import { CategoryDetailType } from './types';
 import { FC } from 'react';
-import Heading from '../../Basic/Heading';
+import Heading from 'components/Basic/Heading';
+import Pagination from 'components/Blocks/Pagination/Pagination';
 import ProductsList from '../../Blocks/Product/List/ProductsList';
 import SortingBar from 'components/Blocks/SortingBar';
 import Webline from '../../Layout/Webline';
@@ -21,6 +22,7 @@ const CategoryDetail: FC<CategoryDetailProps> = (props) => {
             <CategoryDetailAdvancedSeoCategories readyCategorySeoMixLinks={props.category.readyCategorySeoMixLinks} />
             <SortingBar />
             {props.category.products.edges.length !== 0 && <ProductsList products={props.category.products.edges} />}
+            <Pagination />
         </Webline>
     );
 };
