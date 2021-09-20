@@ -48,5 +48,8 @@
     "Submit order": "Submit order",
     "Product {{ name }} ({{ quantity }} {{ unitName }}) added to the cart": "Product {{ name }} ({{ quantity }} {{ unitName }}) added to the cart",
     "Product {{ name }} added to the cart (total amount {{ quantity }} {{ unitName }})": "Product {{ name }} added to the cart (total amount {{ quantity }} {{ unitName }})",
-    "Unable to add product to cart": "Unable to add product to cart"
+    "Unable to add product to cart": "Unable to add product to cart",
+    "I have a discount coupon": "I have a discount coupon",
+    "Coupon": "Coupon",
+    "Apply": "Apply"
 }
