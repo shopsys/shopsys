@@ -51,5 +51,7 @@
     "Unable to add product to cart": "Unable to add product to cart",
     "I have a discount coupon": "I have a discount coupon",
     "Coupon": "Coupon",
-    "Apply": "Apply"
+    "Apply": "Apply",
+    "Your discount with the code has been applied.": "Your discount with the code has been applied.",
+    "The discount was applied to all non-discounted items to which the promotion applies according to the rules.": "The discount was applied to all non-discounted items to which the promotion applies according to the rules."
 }

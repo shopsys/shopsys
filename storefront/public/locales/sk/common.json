@@ -51,5 +51,7 @@
     "Unable to add product to cart": "Produkt sa nepodarilo pridať do košíka",
     "I have a discount coupon": "Mám zľavový kupón",
     "Coupon": "Kupón",
-    "Apply": "Uplatniť"
+    "Apply": "Uplatniť",
+    "Your discount with the code has been applied.": "Vaša zľava s kódom bola uplatnená.",
+    "The discount was applied to all non-discounted items to which the promotion applies according to the rules.": "Zľava bola uplatnená na všetky už nezľavnené položky na ktoré sa akcia vzťahuje podľa pravidiel."
 }

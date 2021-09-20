@@ -9,23 +9,28 @@ const localVariables = {
 } as const;
 
 export const PromoCodeStyled = styled.div`
-    .promoCode-enter {
-        height: 0;
-    }
+    ${({ theme }) => css`
+        @media ${theme.mediaQueries.queryVl} {
+            width: 300px;
+        }
+        .promoCode-enter {
+            height: 0;
+        }
 
-    .promoCode-enter-active {
-        height: 54px;
-        transition: 0.3s all ease;
-    }
+        .promoCode-enter-active {
+            height: 54px;
+            transition: 0.3s all ease;
+        }
 
-    .promoCode-exit {
-        height: 54px;
-    }
+        .promoCode-exit {
+            height: 54px;
+        }
 
-    .promoCode-exit-active {
-        height: 0;
-        transition: 0.3s all ease;
-    }
+        .promoCode-exit-active {
+            height: 0;
+            transition: 0.3s all ease;
+        }
+    `}
 `;
 
 export const PromoCodeButtonStyled = styled.div`
@@ -65,10 +70,6 @@ export const PromoCodeButtonIconStyled = styled(Icon)`
 export const PromoCodeContentWrapperStyled = styled.div`
     ${({ theme }) => css`
         overflow: hidden;
-
-        @media ${theme.mediaQueries.queryVl} {
-            width: 300px;
-        }
     `}
 `;
 
