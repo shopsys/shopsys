@@ -1,5 +1,5 @@
+import { ButtonAsLinkStyled, ButtonPrimaryStyled, ButtonSecondaryStyled, ButtonStyled } from './Button.style';
 import { ButtonHTMLAttributes, FC } from 'react';
-import { ButtonPrimaryStyled, ButtonSecondaryStyled, ButtonStyled } from './Button.style';
 import { ExtractNativePropsFromDefault } from 'typeHelpers/ExtractNativePropsFromDefault';
 
 type NativeProps = ExtractNativePropsFromDefault<
@@ -16,11 +16,15 @@ type ButtonProps = NativeProps & {
     /**
      * A prop to define the variant of the button. If you don't fill this prop, the button will be in default modification.
      */
-    variant?: 'primary' | 'secondary';
+    variant?: 'primary' | 'secondary' | 'asLink';
     /**
      * A prop to define the size of the button.
      */
     size?: 'small';
+    /**
+     * A prop to check if button is disabled.
+     */
+    isDisabled?: boolean;
 };
 
 /**
@@ -36,6 +40,8 @@ const Button: FC<ButtonProps> = (props) => {
         Component = ButtonPrimaryStyled;
     } else if (props.variant === 'secondary') {
         Component = ButtonSecondaryStyled;
+    } else if (props.variant === 'asLink') {
+        Component = ButtonAsLinkStyled;
     }
 
     return <Component {...props}>{props.children}</Component>;
