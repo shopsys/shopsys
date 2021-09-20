@@ -10,10 +10,12 @@ import { GetServerSideProps } from 'next';
 import { navigationQuery } from '../connectors/navigation/Navigation';
 import ProductDetailPage from '../components/Pages/ProductDetail';
 import { ProductDetailType } from 'components/Pages/ProductDetail/types';
+import { useInitDomainConfig } from 'hooks/helpers/UseInitDomainConfig';
 import { useRouter } from 'next/router';
 import Webline from 'components/Layout/Webline';
 
 const FriendlyUrlPage: FC<ServerSidePropsType> = (props) => {
+    useInitDomainConfig(props.domainConfig);
     const router = useRouter();
     const data = getFriendlyUrlResolvedData(router.asPath);
 
@@ -22,7 +24,7 @@ const FriendlyUrlPage: FC<ServerSidePropsType> = (props) => {
     }
 
     return (
-        <CommonLayout {...props}>
+        <CommonLayout>
             <Webline>
                 <Breadcrumbs key="breadcrumb" breadcrumb={data.breadcrumb} />
                 {renderContent(data)}

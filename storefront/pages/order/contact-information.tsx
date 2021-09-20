@@ -6,14 +6,16 @@ import { navigationQuery } from 'connectors/navigation/Navigation';
 import OrderAction from 'components/Blocks/OrderAction';
 import OrderSteps from 'components/Blocks/OrderSteps';
 import StaticUrlGuard from 'components/Helpers/StaticUrlGuard';
-import { useTypedTranslationFunction } from 'hooks/UseTypedTranslationFunction';
+import { useInitDomainConfig } from 'hooks/helpers/UseInitDomainConfig';
+import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 
 const ContactInformation: FC<ServerSidePropsType> = (props) => {
+    useInitDomainConfig(props.domainConfig);
     const t = useTypedTranslationFunction();
 
     return (
         <StaticUrlGuard domainUrl={props.domainConfig.url}>
-            <CommonLayout {...props}>
+            <CommonLayout>
                 <OrderSteps activeStep={3} domainUrl={props.domainConfig.url} />
                 Contact information - step 3
                 <OrderAction activeStep={3} buttonBack={t('Back')} buttonNext={t('Submit order')} />

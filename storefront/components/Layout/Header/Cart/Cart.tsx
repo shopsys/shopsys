@@ -16,15 +16,15 @@ import {
 import { FC } from 'react';
 import { formatPrice } from 'utils/formatting';
 import NextLink from 'next/link';
-import { ServerSidePropsType } from 'helpers/InitServerSideProps';
 import { useGetInternationalizedStaticUrls } from 'hooks/staticUrls/UseGetInternationalizedStaticUrls';
 import { useShopsysSelector } from 'redux/store';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 
-const Cart: FC<ServerSidePropsType> = (props) => {
+const Cart: FC = () => {
     const t = useTypedTranslationFunction();
     const cart = useShopsysSelector((state) => state.user.cart);
-    const [cartUrl] = useGetInternationalizedStaticUrls(['/cart'], props.domainConfig.url);
+    const domainConfig = useShopsysSelector((state) => state.domain);
+    const [cartUrl] = useGetInternationalizedStaticUrls(['/cart'], domainConfig.url);
 
     return (
         <CartStyled>
@@ -36,7 +36,7 @@ const Cart: FC<ServerSidePropsType> = (props) => {
                             {cart !== undefined && Array.isArray(cart.items) ? cart.items.length : 0}
                         </CartCountStyled>
                     </CartPiecesStyled>
-                    <CartValueStyled>{formatPrice(0, props.domainConfig.currencyCode)}</CartValueStyled>
+                    <CartValueStyled>{formatPrice(0, domainConfig.currencyCode)}</CartValueStyled>
                 </CartBlockStyled>
             </NextLink>
             <CartDetailStyled>
