@@ -33,7 +33,7 @@ const ProductDetail: FC<ProductDetailProps> = (props) => {
             <Webline>
                 <ProductDetailStyled>
                     <ProductDetailImageStyled>
-                        <ProductDetailGallery />
+                        <ProductDetailGallery images={props.product.images} productName={props.product.name} />
                     </ProductDetailImageStyled>
                     <ProductDetailInfoStyled>
                         <ProductDetailPrefixStyled>{props.product.namePrefix}</ProductDetailPrefixStyled>

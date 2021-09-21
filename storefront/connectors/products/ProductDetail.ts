@@ -1,5 +1,6 @@
 import { mapProductPriceData, mapSliderProductApiData, sliderProductQuery } from './Products';
-import { ProductDetailApiType, ProductDetailType } from 'components/Pages/ProductDetail/types';
+import { ProductDetailApiType, ProductDetailImageType, ProductDetailType } from 'components/Pages/ProductDetail/types';
+import { ImageApiType } from 'components/Basic/Image/types';
 
 export const productDetailBody = `
     uuid
@@ -14,6 +15,16 @@ export const productDetailBody = `
         priceWithoutVat
         vatAmount
         isPriceFrom
+    }
+    images (sizes: ["default","galleryThumbnail"]) {
+        position
+        type
+        sizes {
+            size
+            url
+            width
+            height
+        }
     }
     availability {
         name 
@@ -54,5 +65,20 @@ export const mapProductDetailApiData = (
         price: mapProductPriceData(productDetailApiData.price, currencyCode),
         accessories: mapSliderProductApiData(productDetailApiData.accessories, currencyCode),
         parameters: productDetailApiData.parameters.filter((parameter) => parameter.visible),
+        images: mapProductDetailImages(productDetailApiData.images),
     };
+};
+
+const mapProductDetailImages = (images: ImageApiType[]) => {
+    const mappedImages = [];
+    for (const image of images) {
+        const mappedImage: ProductDetailImageType = {};
+        for (const imageSize of image.sizes) {
+            mappedImage[imageSize.size] = {
+                ...imageSize,
+            };
+        }
+        mappedImages.push(mappedImage);
+    }
+    return mappedImages;
 };

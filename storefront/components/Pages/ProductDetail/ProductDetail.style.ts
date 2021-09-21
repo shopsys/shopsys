@@ -4,7 +4,7 @@ import { styled } from 'components/Theme/main';
 const localVariables = {
     detailInfoWidthSmall: '346px',
     detailInfoWidth: '512px',
-};
+} as const;
 
 export const ProductDetailStyled = styled.div`
     ${({ theme }) => css`
@@ -40,9 +40,12 @@ export const ProductDetailImageStyled = styled.div`
             width: 100%;
             margin-bottom: 20px;
 
-            border-radius: ${theme.radius.big};
             font-size: 0;
             overflow: hidden;
+
+            @media ${theme.mediaQueries.queryLg} {
+                border-radius: ${theme.radius.big};
+            }
         }
     `}
 `;

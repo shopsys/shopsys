@@ -4,7 +4,7 @@ import { styled } from 'components/Theme/main';
 const localVariables = {
     productDetailGalleryRadius: '6px',
     productDetailGalleryThumbnailItemHoverBg: '#e8e8ea',
-};
+} as const;
 
 export const ProductDetailGalleryThumbnailsStyled = styled.div`
     ${({ theme }) => css`

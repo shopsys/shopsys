@@ -6,8 +6,8 @@ import {
 import { FC, useState } from 'react';
 import AdvancedSeoCategoriesSlider from './CategoryDetailAdvancedSeoCategoriesSlider';
 import { desktopFirstSizes } from 'components/Theme/mediaQueries';
-import { getIsElementVisible } from 'components/Helpers/GetIsItemVisible';
 import Heading from 'components/Basic/Heading';
+import { isElementVisible } from 'components/Helpers/isElementVisible';
 import NextLink from 'next/link';
 import { ReadyCategorySeoMixLink } from 'components/Pages/CategoryDetail/types';
 import { useGetWindowSize } from 'hooks/ui/UseGetWindowSize';
@@ -27,7 +27,7 @@ const CategoryDetailAdvancedSeoCategories: FC<CategoryDetailAdvancedSeoCategorie
         desktopFirstSizes.tablet,
         () => setAdvancedSeoCategoriesSliderVisibility(false),
         () => setAdvancedSeoCategoriesSliderVisibility(true),
-        () => setAdvancedSeoCategoriesSliderVisibility(getIsElementVisible([{ min: 0, max: 768 }], width)),
+        () => setAdvancedSeoCategoriesSliderVisibility(isElementVisible([{ min: 0, max: 768 }], width)),
     );
 
     if (props.readyCategorySeoMixLinks.length === 0) {
