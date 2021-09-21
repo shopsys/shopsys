@@ -84,3 +84,7 @@ services:
 
     Shopsys\FrontendApiBundle\Model\Product\Connection\ProductConnectionFactory:
         alias: App\FrontendApi\Model\Product\Connection\ProductConnectionFactory
+
+    Shopsys\FrontendApiBundle\Model\Resolver\Price\PriceResolver:
+        alias: App\FrontendApi\Model\Resolver\Price\PriceResolver
+        public: true

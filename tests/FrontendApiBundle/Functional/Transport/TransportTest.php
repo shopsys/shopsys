@@ -4,24 +4,21 @@ declare(strict_types=1);
 
 namespace Tests\FrontendApiBundle\Functional\Transport;
 
+use App\DataFixtures\Demo\CartDataFixture;
+use App\DataFixtures\Demo\ProductDataFixture;
+use App\DataFixtures\Demo\TransportDataFixture;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class TransportTest extends GraphQlTestCase
 {
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Transport\TransportFacade
-     * @inject
-     */
-    protected $transportFacade;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Transport\Transport
+     * @var \App\Model\Transport\Transport
      */
     protected $transport;
 
     protected function setUp(): void
     {
-        $this->transport = $this->transportFacade->getById(2);
+        $this->transport = $this->getReference(TransportDataFixture::TRANSPORT_PPL);
 
         parent::setUp();
     }
@@ -40,6 +37,45 @@ class TransportTest extends GraphQlTestCase
             'data' => [
                 'transport' => [
                     'name' => t('PPL', [], 'dataFixtures', $this->getLocaleForFirstDomain()),
+                ],
+            ],
+        ];
+
+        $this->assertQueryWithExpectedArray($query, $arrayExpected);
+    }
+
+    public function testGetFreeTransport(): void
+    {
+        $cartUuid = CartDataFixture::CART_UUID;
+        /** @var \App\Model\Product\Product $product */
+        $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 1);
+        $mutation = 'mutation {
+            AddToCart(input: {
+                cartUuid:"' . $cartUuid . '"
+                productUuid: "' . $product->getUuid() . '"
+                quantity: 100
+            }) {
+                uuid                
+            }
+        }';
+
+        $this->getResponseContentForQuery($mutation);
+        $query = '
+            query {
+                transport(uuid: "' . $this->transport->getUuid() . '") {
+                    price(cartUuid: "' . $cartUuid . '") {
+                        priceWithVat
+                    }
+                }
+            }
+        ';
+
+        $arrayExpected = [
+            'data' => [
+                'transport' => [
+                    'price' => [
+                        'priceWithVat' => '0.000000',
+                    ],
                 ],
             ],
         ];

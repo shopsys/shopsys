@@ -9,6 +9,7 @@ use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
 use Shopsys\FrameworkBundle\Model\Seo\SeoSettingFacade;
 
@@ -25,13 +26,20 @@ class SettingValueDataFixture extends AbstractReferenceFixture implements Depend
     private $domain;
 
     /**
+     * @var \Shopsys\FrameworkBundle\Model\Pricing\PricingSetting
+     */
+    private PricingSetting $pricingSetting;
+
+    /**
      * @param \App\Component\Setting\Setting $setting
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\PricingSetting $pricingSetting
      */
-    public function __construct(Setting $setting, Domain $domain)
+    public function __construct(Setting $setting, Domain $domain, PricingSetting $pricingSetting)
     {
         $this->setting = $setting;
         $this->domain = $domain;
+        $this->pricingSetting = $pricingSetting;
     }
 
     /**
@@ -42,6 +50,9 @@ class SettingValueDataFixture extends AbstractReferenceFixture implements Depend
         foreach ($this->domain->getAll() as $domainConfig) {
             $domainId = $domainConfig->getId();
             $locale = $domainConfig->getLocale();
+            if ($domainId === 1) {
+                $this->pricingSetting->setFreeTransportAndPaymentPriceLimit($domainId, Money::create(300000));
+            }
 
             /** @var \App\Model\Article\Article $termsAndConditions */
             $termsAndConditions = $this->getReferenceForDomain(ArticleDataFixture::ARTICLE_TERMS_AND_CONDITIONS, $domainId);
