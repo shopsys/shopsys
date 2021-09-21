@@ -314,6 +314,7 @@ class ParameterRepository extends BaseParameterRepository
         return $this->em->createQueryBuilder()
             ->select(
                 'p.id as parameter_id,
+                p.orderingPriority as ordering_priority,
                 pv.id as parameter_value_id,
                 p.uuid as parameter_uuid,
                 pt.name as parameter_name,
@@ -333,6 +334,8 @@ class ParameterRepository extends BaseParameterRepository
             ->leftJoin('pu.translations', 'put', Join::WITH, 'put.locale = :locale AND put.name IS NOT NULL')
             ->join('ppv.value', 'pv', Join::WITH, 'pv.locale = :locale')
             ->where('ppv.product IN (:products)')
+            ->orderBy('ordering_priority', 'DESC')
+            ->addOrderBy('parameter_id')
             ->setParameters([
                 'products' => $products,
                 'locale' => $locale,
