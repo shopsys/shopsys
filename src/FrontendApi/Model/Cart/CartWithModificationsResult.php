@@ -60,6 +60,11 @@ class CartWithModificationsResult
     private ?Price $totalPrice = null;
 
     /**
+     * @var \Shopsys\FrameworkBundle\Model\Pricing\Price|null
+     */
+    private ?Price $totalDiscountPrice = null;
+
+    /**
      * @param \App\Model\Cart\Cart $cart
      */
     public function __construct(Cart $cart)
@@ -178,5 +183,24 @@ class CartWithModificationsResult
     public function setTotalPrice(Price $totalPrice): void
     {
         $this->totalPrice = $totalPrice;
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Pricing\Price
+     */
+    public function getTotalDiscountPrice(): Price
+    {
+        if (!$this->totalDiscountPrice) {
+            throw new LogicException('Total discount price must me set before calling the getter.');
+        }
+        return $this->totalDiscountPrice;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $totalDiscountPrice
+     */
+    public function setTotalDiscountPrice(Price $totalDiscountPrice): void
+    {
+        $this->totalDiscountPrice = $totalDiscountPrice;
     }
 }

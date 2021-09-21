@@ -8,6 +8,7 @@ use App\FrontendApi\Model\Payment\PaymentInputData;
 use App\FrontendApi\Model\Transport\TransportInputData;
 use App\Model\Cart\Cart;
 use App\Model\Order\Preview\OrderPreviewFactory;
+use App\Model\Order\PromoCode\PromoCode;
 use App\Model\Payment\Payment;
 use App\Model\Payment\PaymentFacade;
 use App\Model\Transport\Transport;
@@ -104,18 +105,18 @@ class TransportAndPaymentWatcherFacade
      * @param \App\Model\Cart\Cart $cart
      * @param \App\FrontendApi\Model\Transport\TransportInputData|null $transportInputData
      * @param \App\FrontendApi\Model\Payment\PaymentInputData|null $paymentInputData
+     * @param \App\Model\Order\PromoCode\PromoCode|null $promoCode
      * @return \App\FrontendApi\Model\Cart\CartWithModificationsResult
      */
     public function checkTransportAndPayment(
         CartWithModificationsResult $cartWithModificationsResult,
         Cart $cart,
         ?TransportInputData $transportInputData = null,
-        ?PaymentInputData $paymentInputData = null
+        ?PaymentInputData $paymentInputData = null,
+        ?PromoCode $promoCode = null
     ): CartWithModificationsResult {
         $this->cartWithModificationsResult = $cartWithModificationsResult;
-        if ($transportInputData === null && $paymentInputData === null) {
-            return $this->cartWithModificationsResult;
-        }
+
         $domainId = $this->domain->getId();
         $currency = $this->currencyFacade->getDomainDefaultCurrencyByDomainId($domainId);
         /** @var \App\Model\Customer\User\CustomerUser|null $customerUser */
@@ -151,8 +152,15 @@ class TransportAndPaymentWatcherFacade
             $cart->getQuantifiedProducts(),
             $transport,
             $payment,
-            $customerUser
+            $customerUser,
+            null,
+            null,
+            $promoCode
         );
+
+        $this->cartWithModificationsResult->setTotalPrice($orderPreview->getTotalPrice());
+        $this->cartWithModificationsResult->setTotalDiscountPrice($orderPreview->getTotalPriceDiscount());
+
         if ($transport !== null) {
             $this->checkTransportPrice($transport, $transportInputData, $orderPreview->getProductsPrice(), $currency);
             $this->checkTransportWeightLimit($transport, $cart->getTotalWeight());

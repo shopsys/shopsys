@@ -12,3 +12,5 @@ Cart:
                 type: "CartModificationsResult!"
             totalPrice:
                 type: "Price!"
+            totalDiscountPrice:
+                type: "Price!"

@@ -68,4 +68,12 @@ class AddToCartResult
     {
         return $this->cartWithModifications->getTotalPrice();
     }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Pricing\Price
+     */
+    public function getTotalDiscountPrice(): Price
+    {
+        return $this->cartWithModifications->getTotalDiscountPrice();
+    }
 }
