@@ -20,3 +20,16 @@ Mutation:
                         type: RemoveFromCartInput!
                         validation: cascade
                 resolve: "@=mutation('removeFromCart', [args, validator])"
+            RequestPasswordRecovery:
+                type: String!
+                description: "Request password recovery - email with hash will be sent"
+                args:
+                    email:
+                        type: String!
+                        validation:
+                            -   Email:
+                                    message: "Please enter valid email"
+                            -   Length:
+                                    max: 255
+                                    maxMessage: "Email cannot be longer than {{ limit }} characters"
+                resolve: "@=mutation('requestPasswordRecovery', [args, validator])"
