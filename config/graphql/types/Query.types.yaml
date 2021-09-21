@@ -101,3 +101,10 @@ Query:
                     urlSlug:
                         type: "String"
                 description: "Returns a flag by uuid or url slug"
+            transports:
+                type: '[Transport!]!'
+                resolve: "@=resolver('transports', [args['cartUuid']])"
+                args:
+                    cartUuid:
+                        type: "Uuid"
+                description: "Returns available transport methods based on the current cart state"

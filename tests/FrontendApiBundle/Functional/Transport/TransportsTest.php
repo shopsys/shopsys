@@ -4,11 +4,44 @@ declare(strict_types=1);
 
 namespace Tests\FrontendApiBundle\Functional\Transport;
 
+use App\DataFixtures\Demo\CartDataFixture;
 use App\DataFixtures\Demo\VatDataFixture;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class TransportsTest extends GraphQlTestCase
 {
+    public function testByCartUuid(): void
+    {
+        $cartUuid = CartDataFixture::CART_UUID;
+        $query = '
+            query {
+                transports(cartUuid: "' . $cartUuid . '") {
+                    name
+                }
+            }
+        ';
+
+        $locale = $this->getFirstDomainLocale();
+        $expectedJson = '
+        {
+          "data": {
+            "transports": [
+              {
+                "name": "' . t('PPL', [], 'dataFixtures', $locale) . '"
+              },
+              {
+                "name": "' . t('Personal collection', [], 'dataFixtures', $locale) . '"
+              },
+              {
+                "name": "' . t('Nadlimitní', [], 'dataFixtures', $locale) . '"
+              }
+            ]
+          }
+        }';
+
+        $this->assertQueryWithExpectedJson($query, $expectedJson);
+    }
+
     public function testPayments(): void
     {
         $query = '
