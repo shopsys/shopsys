@@ -7,12 +7,14 @@ namespace App\FrontendApi\Model\Cart;
 use App\FrontendApi\Model\Payment\PaymentInputData;
 use App\FrontendApi\Model\Transport\TransportInputData;
 use App\Model\Cart\Cart;
+use App\Model\Order\Preview\OrderPreviewFactory;
 use App\Model\Product\Availability\ProductAvailabilityFacade;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Cart\Watcher\CartWatcher;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
+use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 
 class CartWatcherFacade
 {
@@ -52,12 +54,24 @@ class CartWatcherFacade
     private TransportAndPaymentWatcherFacade $transportAndPaymentWatcherFacade;
 
     /**
+     * @var \App\Model\Order\Preview\OrderPreviewFactory
+     */
+    private OrderPreviewFactory $orderPreviewFactory;
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade
+     */
+    private CurrencyFacade $currencyFacade;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Cart\Watcher\CartWatcher $cartWatcher
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
      * @param \App\Model\Product\Availability\ProductAvailabilityFacade $productAvailabilityFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \App\FrontendApi\Model\Cart\TransportAndPaymentWatcherFacade $transportAndPaymentWatcherFacade
+     * @param \App\Model\Order\Preview\OrderPreviewFactory $orderPreviewFactory
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
      */
     public function __construct(
         CartWatcher $cartWatcher,
@@ -65,7 +79,9 @@ class CartWatcherFacade
         CurrentCustomerUser $currentCustomerUser,
         ProductAvailabilityFacade $productAvailabilityFacade,
         Domain $domain,
-        TransportAndPaymentWatcherFacade $transportAndPaymentWatcherFacade
+        TransportAndPaymentWatcherFacade $transportAndPaymentWatcherFacade,
+        OrderPreviewFactory $orderPreviewFactory,
+        CurrencyFacade $currencyFacade
     ) {
         $this->cartWatcher = $cartWatcher;
         $this->em = $em;
@@ -73,6 +89,8 @@ class CartWatcherFacade
         $this->productAvailabilityFacade = $productAvailabilityFacade;
         $this->domain = $domain;
         $this->transportAndPaymentWatcherFacade = $transportAndPaymentWatcherFacade;
+        $this->orderPreviewFactory = $orderPreviewFactory;
+        $this->currencyFacade = $currencyFacade;
     }
 
     /**
@@ -93,6 +111,8 @@ class CartWatcherFacade
         $this->checkNotListableItems($cart);
 
         $this->em->flush();
+
+        $this->loadTotalPrice($cart);
 
         return $this->transportAndPaymentWatcherFacade->checkTransportAndPayment(
             $this->cartWithModificationsResult,
@@ -157,5 +177,25 @@ class CartWatcherFacade
 
             $this->cartWithModificationsResult->addCartItemWithChangedQuantity($cartItem);
         }
+    }
+
+    /**
+     * @param \App\Model\Cart\Cart $cart
+     */
+    private function loadTotalPrice(Cart $cart)
+    {
+        /** @var \App\Model\Customer\User\CustomerUser|null $currentCustomerUser */
+        $currentCustomerUser = $this->currentCustomerUser->findCurrentCustomerUser();
+
+        $orderPreview = $this->orderPreviewFactory->create(
+            $this->currencyFacade->getDomainDefaultCurrencyByDomainId($this->domain->getId()),
+            $this->domain->getId(),
+            $cart->getQuantifiedProducts(),
+            null,
+            null,
+            $currentCustomerUser
+        );
+
+        $this->cartWithModificationsResult->setTotalPrice($orderPreview->getTotalPrice());
     }
 }

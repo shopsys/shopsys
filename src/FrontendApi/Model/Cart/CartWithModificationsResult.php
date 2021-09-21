@@ -8,6 +8,8 @@ use App\Model\Cart\Cart;
 use App\Model\Cart\Item\CartItem;
 use App\Model\Payment\Payment;
 use App\Model\Transport\Transport;
+use LogicException;
+use Shopsys\FrameworkBundle\Model\Pricing\Price;
 
 class CartWithModificationsResult
 {
@@ -51,6 +53,11 @@ class CartWithModificationsResult
         'paymentPriceChanged' => null,
         'paymentUnavailable' => false,
     ];
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Pricing\Price|null
+     */
+    private ?Price $totalPrice = null;
 
     /**
      * @param \App\Model\Cart\Cart $cart
@@ -151,5 +158,25 @@ class CartWithModificationsResult
     public function setPaymentIsUnavailable(): void
     {
         $this->paymentModifications['paymentUnavailable'] = true;
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Pricing\Price
+     */
+    public function getTotalPrice(): Price
+    {
+        if (!$this->totalPrice) {
+            throw new LogicException('Total price must me set before calling the getter.');
+        }
+
+        return $this->totalPrice;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $totalPrice
+     */
+    public function setTotalPrice(Price $totalPrice): void
+    {
+        $this->totalPrice = $totalPrice;
     }
 }

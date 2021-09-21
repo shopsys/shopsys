@@ -10,3 +10,5 @@ Cart:
                 description: "All items in the cart"
             modifications:
                 type: "CartModificationsResult!"
+            totalPrice:
+                type: "Price!"
