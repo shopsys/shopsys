@@ -33,3 +33,11 @@ Mutation:
                                     max: 255
                                     maxMessage: "Email cannot be longer than {{ limit }} characters"
                 resolve: "@=mutation('requestPasswordRecovery', [args, validator])"
+            RecoverPassword:
+                type: Token!
+                description: "Recover password using hash required from RequestPasswordRecovery"
+                args:
+                    input:
+                        type: RecoverPasswordInput!
+                        validation: cascade
+                resolve: "@=mutation('recoverPassword', [args, validator])"
