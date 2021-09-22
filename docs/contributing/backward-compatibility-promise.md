@@ -47,7 +47,7 @@ During an upgrade to the next major version, you have to make the changes yourse
     The same holds true for the [demoshop repository](https://github.com/shopsys/demoshop) which is a complex example of an ecommerce project using a custom design and modifications.
 
 ### PHP Code
-Basic rules for PHP code are covered by [Symfony Backward Compatibility Promise](https://symfony.com/doc/3.4/contributing/code/bc.html).
+Basic rules for PHP code are covered by [Symfony Backward Compatibility Promise](https://symfony.com/doc/4.4/contributing/code/bc.html).
 
 #### Exceptions
 There are some exceptions that extend or override the BC promise of Symfony, which allows us a bit more flexibility without compromising the user's code:
