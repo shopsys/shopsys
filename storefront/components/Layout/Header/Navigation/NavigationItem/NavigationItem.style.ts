@@ -1,6 +1,6 @@
-import { styled, Theme } from '../../../../Theme/main';
+import { styled, Theme } from 'components/Theme/main';
 import { css } from 'styled-components';
-import Icon from '../../../../Basic/Icon';
+import Icon from 'components/Basic/Icon';
 
 type NavigationProps = {
     isOpen?: boolean;

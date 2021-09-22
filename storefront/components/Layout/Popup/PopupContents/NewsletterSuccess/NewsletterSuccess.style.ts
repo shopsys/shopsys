@@ -1,4 +1,4 @@
-import { styled } from '../../../../Theme/main';
+import { styled } from 'components/Theme/main';
 
 export const StyledNewsletterSuccess = styled.div`
     width: 400px;

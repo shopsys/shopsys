@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { ListedProductItemType } from '../types';
+import { ListedProductItemType } from 'components/Blocks/Product/types';
 import ProductItem from './ListedItem';
 import { ProductsListStyled } from './ProductsList.style';
 

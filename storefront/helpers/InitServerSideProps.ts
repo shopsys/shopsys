@@ -1,9 +1,9 @@
 import { cacheExchange, dedupExchange, fetchExchange, ssrExchange } from 'urql';
-import { DomainConfigType, getDomainConfig } from '../utils/Domain/Domain';
+import { DomainConfigType, getDomainConfig } from 'utils/Domain/Domain';
 import { GetServerSidePropsContext, GetServerSidePropsResult } from 'next';
 import { initUrqlClient, SSRData } from 'next-urql';
 import getConfig from 'next/config';
-import nextI18NextConfig from '../next-i18next.config';
+import nextI18NextConfig from 'next-i18next.config';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { SSRConfig } from 'next-i18next';
 

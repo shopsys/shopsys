@@ -1,6 +1,6 @@
 import { FC } from 'react';
-import { NavigationCategoriesColumn } from '../../../../../connectors/navigation/Navigation';
-import NavigationColumnCategory from '../NavigationColumnCategory';
+import { NavigationCategoriesColumn } from 'connectors/navigation/Navigation';
+import NavigationColumnCategory from 'components/Layout/Header/Navigation/NavigationColumnCategory';
 import { NavigationLeafColumnStyled } from './NavigationLeaf.style';
 
 type NavigationLeafProps = {

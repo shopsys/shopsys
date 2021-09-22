@@ -1,8 +1,8 @@
 import 'react-toastify/dist/ReactToastify.css';
 import { AppProps } from 'next/app';
 import { appWithTranslation } from 'next-i18next';
-import { getDomainConfig } from '../utils/Domain/Domain';
-import nextI18NextConfig from '../next-i18next.config.js';
+import { getDomainConfig } from 'utils/Domain/Domain';
+import nextI18NextConfig from 'next-i18next.config';
 import Popup from 'components/Layout/Popup';
 import { Provider } from 'react-redux';
 import { ReactElement } from 'react';

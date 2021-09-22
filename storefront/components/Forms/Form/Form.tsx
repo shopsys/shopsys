@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { FC, useEffect } from 'react';
 import { FormProvider, Resolver, SubmitHandler, useForm } from 'react-hook-form';
-import { getUserFriendlyErrors } from '../../../connectors/lib/friendlyErrorMessageParser';
+import { getUserFriendlyErrors } from 'connectors/lib/friendlyErrorMessageParser';
 import { OperationResult } from 'urql';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 

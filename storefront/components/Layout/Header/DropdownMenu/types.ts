@@ -1,4 +1,4 @@
-import { NavigationItem as NavigationItemType } from '../../../../connectors/navigation/Navigation';
+import { NavigationItem as NavigationItemType } from 'connectors/navigation/Navigation';
 
 export type DropdownListLevels = 'primary' | 'secondary' | 'tertiary';
 

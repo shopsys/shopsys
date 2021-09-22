@@ -7,7 +7,7 @@ import { FC, useState } from 'react';
 import CategoryDetailSubcategoriesSlider from './CategoryDetailSubcategoriesSlider';
 import CategoryItem from 'components/Blocks/Categories/CategoryItem';
 import { CategoryItemType } from 'components/Blocks/Categories/CategoryItem/types';
-import { desktopFirstSizes } from '../../../Theme/mediaQueries';
+import { desktopFirstSizes } from 'components/Theme/mediaQueries';
 import { getIsElementVisible } from 'components/Helpers/GetIsItemVisible';
 import { useGetWindowSize } from 'hooks/ui/UseGetWindowSize';
 import { useResizeWidthEffect } from 'hooks/ui/UseResizeWidthEffect';

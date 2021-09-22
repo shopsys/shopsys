@@ -7,7 +7,7 @@ import {
 } from './CategoryItem.style';
 import { CategoryItemType } from './types';
 import { FC } from 'react';
-import Image from '../../../Basic/Image';
+import Image from 'components/Basic/Image';
 import NextLink from 'next/link';
 
 type CategoryItemProps = {

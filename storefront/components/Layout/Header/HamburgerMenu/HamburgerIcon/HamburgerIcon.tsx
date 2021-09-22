@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { HamburgerIconOpenStyled } from './HamburgerIcon.style';
-import Icon from '../../../../Basic/Icon';
+import Icon from 'components/Basic/Icon';
 
 type HamburgerIcon = {
     isMenuOpened: boolean;

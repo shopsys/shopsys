@@ -1,9 +1,9 @@
 import 'keen-slider/keen-slider.min.css';
-import { CategoryDetailSubcategoriesItemStyled } from '../CategoryDetailSubcategories.style';
+import { CategoryDetailSubcategoriesItemStyled } from 'components/Pages/CategoryDetail/CategoryDetailSubcategories/CategoryDetailSubcategories.style';
 import CategoryItem from 'components/Blocks/Categories/CategoryItem';
 import { CategoryItemType } from 'components/Blocks/Categories/CategoryItem/types';
 import { FC } from 'react';
-import { theme } from '../../../../Theme/main';
+import { theme } from 'components/Theme/main';
 import { useKeenSlider } from 'keen-slider/react';
 
 type CategoryDetailSubcategoriesSliderProps = {

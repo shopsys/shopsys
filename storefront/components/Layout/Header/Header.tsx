@@ -13,7 +13,7 @@ import FrontendSwitcher from 'components/Blocks/FrontendSwitcher';
 import HamburgerMenu from './HamburgerMenu';
 import Logo from './Logo';
 import MenuIconic from './MenuIconic';
-import Overlay from '../Overlay';
+import Overlay from 'components/Layout/Overlay';
 import Search from './Search';
 
 const Header: FC = () => {

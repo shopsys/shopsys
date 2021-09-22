@@ -1,7 +1,7 @@
 import { DropdownSlideRightIconStyled, DropdownSlideRightStyled } from './DropdownSlideRight.style';
 import { FC, useContext } from 'react';
-import { DropdownItemType } from '../types';
-import { DropdownMenuContext } from '../DropdownMenu';
+import { DropdownItemType } from 'components/Layout/Header/DropdownMenu/types';
+import { DropdownMenuContext } from 'components/Layout/Header/DropdownMenu/DropdownMenu';
 
 const DropdownSlideRight: FC<DropdownItemType> = (props) => {
     const context = useContext(DropdownMenuContext);

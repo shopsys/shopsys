@@ -1,4 +1,4 @@
-import { styled, Theme } from '../../Theme/main';
+import { styled, Theme } from 'components/Theme/main';
 import { css } from 'styled-components';
 
 const localVariables = {

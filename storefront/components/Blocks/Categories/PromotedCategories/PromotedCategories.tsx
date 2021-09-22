@@ -1,7 +1,7 @@
 import { PromotedCategoryListItemStyled, PromotedCategoryListStyled } from './PromotedCategories.style';
-import CategoryItem from '../CategoryItem';
+import CategoryItem from 'components/Blocks/Categories/CategoryItem';
 import { FC } from 'react';
-import { getPromotedCategories } from '../../../../connectors/categories/PromotedCategories';
+import { getPromotedCategories } from 'connectors/categories/PromotedCategories';
 
 const PromotedCategories: FC = () => {
     const promotedCategories = getPromotedCategories();

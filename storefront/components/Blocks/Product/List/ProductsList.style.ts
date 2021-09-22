@@ -1,4 +1,4 @@
-import { styled } from '../../../Theme/main';
+import { styled } from 'components/Theme/main';
 
 export const ProductsListStyled = styled.div`
     display: flex;

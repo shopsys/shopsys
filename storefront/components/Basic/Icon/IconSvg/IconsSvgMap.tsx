@@ -1,4 +1,4 @@
-import * as Icons from '../../../../public/svg';
+import * as Icons from 'public/svg';
 
 export const IconsSvgMap = {
     Arrow: <Icons.Arrow />,

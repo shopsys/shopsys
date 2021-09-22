@@ -8,15 +8,15 @@ import {
     ProductItemTitleStyled,
 } from './ProductItem.style';
 import { FC } from 'react';
-import Image from '../../../../Basic/Image/Image';
-import { ListedProductItemType } from '../../types';
+import Image from 'components/Basic/Image/Image';
+import { ListedProductItemType } from 'components/Blocks/Product/types';
 import NextLink from 'next/link';
-import ProductAction from '../../Action/ProductAction';
-import { ProductAvailabilityStyled } from '../../Availability/ProductAvailability.style';
-import ProductAvailableStoresCount from '../../Availability/ProductAvailableStoresCount';
-import ProductExposedStoresCount from '../../Availability/ProductExposedStoresCount';
-import ProductFlags from '../../Flags/ProductFlags';
-import ProductPrice from '../../Price/ProductPrice';
+import ProductAction from 'components/Blocks/Product/Action/ProductAction';
+import { ProductAvailabilityStyled } from 'components/Blocks/Product/Availability/ProductAvailability.style';
+import ProductAvailableStoresCount from 'components/Blocks/Product/Availability/ProductAvailableStoresCount';
+import ProductExposedStoresCount from 'components/Blocks/Product/Availability/ProductExposedStoresCount';
+import ProductFlags from 'components/Blocks/Product/Flags/ProductFlags';
+import ProductPrice from 'components/Blocks/Product/Price/ProductPrice';
 
 const ProductItem: FC<ListedProductItemType> = (props) => {
     return (

@@ -4,9 +4,9 @@ import { CategoryDetailType } from './types';
 import { FC } from 'react';
 import Heading from 'components/Basic/Heading';
 import Pagination from 'components/Blocks/Pagination/Pagination';
-import ProductsList from '../../Blocks/Product/List/ProductsList';
+import ProductsList from 'components/Blocks/Product/List/ProductsList';
 import SortingBar from 'components/Blocks/SortingBar';
-import Webline from '../../Layout/Webline';
+import Webline from 'components/Layout/Webline';
 
 type CategoryDetailProps = {
     category: CategoryDetailType;

@@ -7,8 +7,8 @@ import {
     NavigationItemSubWrapStyled,
 } from './NavigationItem.style';
 import { debounce } from 'lodash';
-import { NavigationItem as NavigationItemType } from '../../../../../connectors/navigation/Navigation';
-import NavigationLeaf from '../NavigationLeaf';
+import { NavigationItem as NavigationItemType } from 'connectors/navigation/Navigation';
+import NavigationLeaf from 'components/Layout/Header/Navigation/NavigationLeaf';
 import NextLink from 'next/link';
 
 type NavigationItemProps = {

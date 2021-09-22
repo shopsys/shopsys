@@ -5,9 +5,9 @@ import {
     ProductItemApiType,
     ProductPriceType,
     SliderProductItemType,
-} from '../../components/Blocks/Product/types';
+} from 'components/Blocks/Product/types';
 import { useFetchQuery } from 'hooks/graphQl/UseFetchQuery';
-import { useShopsysSelector } from '../../redux/store';
+import { useShopsysSelector } from 'redux/store';
 
 export const sliderProductQuery = `
     __typename

@@ -5,11 +5,11 @@ import {
 } from './CategoryDetailAdvancedSeoCategories.style';
 import { FC, useState } from 'react';
 import AdvancedSeoCategoriesSlider from './CategoryDetailAdvancedSeoCategoriesSlider';
-import { desktopFirstSizes } from '../../../Theme/mediaQueries';
+import { desktopFirstSizes } from 'components/Theme/mediaQueries';
 import { getIsElementVisible } from 'components/Helpers/GetIsItemVisible';
 import Heading from 'components/Basic/Heading';
 import NextLink from 'next/link';
-import { ReadyCategorySeoMixLink } from '../types';
+import { ReadyCategorySeoMixLink } from 'components/Pages/CategoryDetail/types';
 import { useGetWindowSize } from 'hooks/ui/UseGetWindowSize';
 import { useResizeWidthEffect } from 'hooks/ui/UseResizeWidthEffect';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';

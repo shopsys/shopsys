@@ -5,7 +5,7 @@ import {
     SliderProductItemType,
 } from 'components/Blocks/Product/types';
 import { BreadcrumbType } from 'connectors/breadcrumb/Breadcrumb';
-import { SlugType } from '../../../connectors/slug/Slug';
+import { SlugType } from 'connectors/slug/Slug';
 
 export type Availability = {
     name: string;

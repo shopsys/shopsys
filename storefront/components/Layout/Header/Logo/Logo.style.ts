@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { styled } from '../../../Theme/main';
+import { styled } from 'components/Theme/main';
 
 export const LogoStyled = styled(Image)`
     ${({ theme }) => `

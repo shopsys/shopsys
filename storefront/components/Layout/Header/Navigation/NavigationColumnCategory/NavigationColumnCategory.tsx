@@ -4,8 +4,8 @@ import {
     NavigationColumnCategoryStyled,
 } from './NavigationColumnCategory.style';
 import { FC } from 'react';
-import { NavigationCategory } from '../../../../../connectors/navigation/Navigation';
-import NavigationSubList from '../NavigationSubList';
+import { NavigationCategory } from 'connectors/navigation/Navigation';
+import NavigationSubList from 'components/Layout/Header/Navigation/NavigationSubList';
 import NextLink from 'next/link';
 
 type NavigationColumnCategoryProps = {
