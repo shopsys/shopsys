@@ -1,0 +1,10 @@
+CartTransportModificationsResult:
+    type: object
+    config:
+        fields:
+            transportPriceChanged:
+                type: "Transport"
+            transportUnavailable:
+                type: "Boolean!"
+            transportWeightLimitExceeded:
+                type: "Boolean!"

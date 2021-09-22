@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\FrontendApi\Model\Cart;
 
+use App\FrontendApi\Model\Payment\PaymentInputData;
+use App\FrontendApi\Model\Transport\TransportInputData;
 use App\Model\Cart\Cart;
 use App\Model\Product\Availability\ProductAvailabilityFacade;
 use DateTime;
@@ -17,27 +19,27 @@ class CartWatcherFacade
     /**
      * @var \Shopsys\FrameworkBundle\Model\Cart\Watcher\CartWatcher
      */
-    protected CartWatcher $cartWatcher;
+    private CartWatcher $cartWatcher;
 
     /**
      * @var \Doctrine\ORM\EntityManagerInterface
      */
-    protected EntityManagerInterface $em;
+    private EntityManagerInterface $em;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser
      */
-    protected CurrentCustomerUser $currentCustomerUser;
+    private CurrentCustomerUser $currentCustomerUser;
 
     /**
      * @var \App\Model\Product\Availability\ProductAvailabilityFacade
      */
-    protected ProductAvailabilityFacade $productAvailabilityFacade;
+    private ProductAvailabilityFacade $productAvailabilityFacade;
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
      */
-    protected Domain $domain;
+    private Domain $domain;
 
     /**
      * @var \App\FrontendApi\Model\Cart\CartWithModificationsResult
@@ -45,32 +47,45 @@ class CartWatcherFacade
     private CartWithModificationsResult $cartWithModificationsResult;
 
     /**
+     * @var \App\FrontendApi\Model\Cart\TransportAndPaymentWatcherFacade
+     */
+    private TransportAndPaymentWatcherFacade $transportAndPaymentWatcherFacade;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Cart\Watcher\CartWatcher $cartWatcher
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
      * @param \App\Model\Product\Availability\ProductAvailabilityFacade $productAvailabilityFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     * @param \App\FrontendApi\Model\Cart\TransportAndPaymentWatcherFacade $transportAndPaymentWatcherFacade
      */
     public function __construct(
         CartWatcher $cartWatcher,
         EntityManagerInterface $em,
         CurrentCustomerUser $currentCustomerUser,
         ProductAvailabilityFacade $productAvailabilityFacade,
-        Domain $domain
+        Domain $domain,
+        TransportAndPaymentWatcherFacade $transportAndPaymentWatcherFacade
     ) {
         $this->cartWatcher = $cartWatcher;
         $this->em = $em;
         $this->currentCustomerUser = $currentCustomerUser;
         $this->productAvailabilityFacade = $productAvailabilityFacade;
         $this->domain = $domain;
+        $this->transportAndPaymentWatcherFacade = $transportAndPaymentWatcherFacade;
     }
 
     /**
      * @param \App\Model\Cart\Cart $cart
+     * @param \App\FrontendApi\Model\Transport\TransportInputData|null $transportInputData
+     * @param \App\FrontendApi\Model\Payment\PaymentInputData|null $paymentInputData
      * @return \App\FrontendApi\Model\Cart\CartWithModificationsResult
      */
-    public function getCheckedCartWithModifications(Cart $cart): CartWithModificationsResult
-    {
+    public function getCheckedCartWithModifications(
+        Cart $cart,
+        ?TransportInputData $transportInputData = null,
+        ?PaymentInputData $paymentInputData = null
+    ): CartWithModificationsResult {
         $this->cartWithModificationsResult = new CartWithModificationsResult($cart);
 
         $this->checkUnavailableStockQuantityItems($cart);
@@ -79,7 +94,12 @@ class CartWatcherFacade
 
         $this->em->flush();
 
-        return $this->cartWithModificationsResult;
+        return $this->transportAndPaymentWatcherFacade->checkTransportAndPayment(
+            $this->cartWithModificationsResult,
+            $cart,
+            $transportInputData,
+            $paymentInputData
+        );
     }
 
     /**

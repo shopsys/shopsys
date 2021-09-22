@@ -1,4 +1,4 @@
-CartModificationsResult:
+CartItemModificationsResult:
     type: object
     config:
         fields:

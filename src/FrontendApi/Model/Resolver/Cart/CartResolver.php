@@ -7,6 +7,8 @@ namespace App\FrontendApi\Model\Resolver\Cart;
 use App\FrontendApi\Model\Cart\CartFacade;
 use App\FrontendApi\Model\Cart\CartWatcherFacade;
 use App\FrontendApi\Model\Cart\CartWithModificationsResult;
+use App\FrontendApi\Model\Payment\PaymentInputData;
+use App\FrontendApi\Model\Transport\TransportInputData;
 use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
 use Overblog\GraphQLBundle\Definition\Resolver\ResolverInterface;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
@@ -16,17 +18,17 @@ class CartResolver implements ResolverInterface, AliasedInterface
     /**
      * @var \App\FrontendApi\Model\Cart\CartFacade
      */
-    protected CartFacade $cartFacade;
+    private CartFacade $cartFacade;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser
      */
-    protected CurrentCustomerUser $currentCustomerUser;
+    private CurrentCustomerUser $currentCustomerUser;
 
     /**
      * @var \App\FrontendApi\Model\Cart\CartWatcherFacade
      */
-    protected CartWatcherFacade $cartWatcherFacade;
+    private CartWatcherFacade $cartWatcherFacade;
 
     /**
      * @param \App\FrontendApi\Model\Cart\CartFacade $cartFacade
@@ -56,8 +58,10 @@ class CartResolver implements ResolverInterface, AliasedInterface
         if ($cart === null) {
             return null;
         }
+        $transportInputData = $input['transport'] !== null ? new TransportInputData($input['transport']) : null;
+        $paymentInputData = $input['payment'] !== null ? new PaymentInputData($input['payment']) : null;
 
-        return $this->cartWatcherFacade->getCheckedCartWithModifications($cart);
+        return $this->cartWatcherFacade->getCheckedCartWithModifications($cart, $transportInputData, $paymentInputData);
     }
 
     /**
