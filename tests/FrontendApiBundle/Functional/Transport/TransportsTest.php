@@ -42,7 +42,7 @@ class TransportsTest extends GraphQlTestCase
         $this->assertQueryWithExpectedJson($query, $expectedJson);
     }
 
-    public function testPayments(): void
+    public function testTransports(): void
     {
         $query = '
             query {
