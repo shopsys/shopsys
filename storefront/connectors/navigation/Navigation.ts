@@ -1,4 +1,4 @@
-import { useFetchQuery } from '../../hooks/UseFetchQuery';
+import { useFetchQuery } from 'hooks/graphQl/UseFetchQuery';
 
 export const navigationQuery = `
         query navigation {

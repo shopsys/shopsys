@@ -10,7 +10,7 @@ import Heading from 'components/Basic/Heading';
 import Icon from 'components/Basic/Icon';
 import NextLink from 'next/link';
 import { ProductDetailType } from '../../types';
-import { useTypedTranslationFunction } from 'hooks/UseTypedTranslationFunction';
+import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 
 type ProductDetailAvailabilityListProps = {
     product: ProductDetailType;

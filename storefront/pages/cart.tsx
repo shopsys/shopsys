@@ -7,11 +7,13 @@ import { navigationQuery } from 'connectors/navigation/Navigation';
 import OrderAction from 'components/Blocks/OrderAction';
 import OrderSteps from 'components/Blocks/OrderSteps';
 import StaticUrlGuard from 'components/Helpers/StaticUrlGuard';
+import { useInitDomainConfig } from 'hooks/helpers/UseInitDomainConfig';
 import { useShopsysSelector } from 'redux/store';
-import { useTypedTranslationFunction } from 'hooks/UseTypedTranslationFunction';
+import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 
 const Cart: FC<ServerSidePropsType> = (props) => {
     const t = useTypedTranslationFunction();
+    useInitDomainConfig(props.domainConfig);
     const cart = useShopsysSelector((state) => state.user.cart);
 
     return (

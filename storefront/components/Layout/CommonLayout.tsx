@@ -11,8 +11,8 @@ const CommonLayout: FC = (props) => {
     return (
         <>
             <Webline type="colored" style={{ marginBottom: '32px', position: 'relative' }}>
-                <Header></Header>
-                <Navigation></Navigation>
+                <Header />
+                <Navigation />
             </Webline>
             {props.children}
             <Webline type="light">

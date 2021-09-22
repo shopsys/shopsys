@@ -1,5 +1,5 @@
 import { SliderItem } from './types';
-import { useFetchQuery } from '../../hooks/UseFetchQuery';
+import { useFetchQuery } from 'hooks/graphQl/UseFetchQuery';
 
 export const sliderItemsQuery = `
 query sliderItems {

@@ -43,8 +43,10 @@
     "Sort": "Sort",
     "(1)[or immediately in {{ count }} store];(2-inf)[or immediately in {{ count }} stores];": "(1)[or immediately in {{ count }} store];(2-inf)[or immediately in {{ count }} stores];",
     "pc": "pc",
-    "pc(s)": "pc(s)",
     "You have the maximum available amount in your cart, you cannot add more (total {{ quantity }} {{ unitName }})": "You have the maximum available amount in your cart, you cannot add more (total {{ quantity }} {{ unitName }})",
     "Back to e-shop": "Back to e-shop",
-    "Submit order": "Submit order"
+    "Submit order": "Submit order",
+    "Product {{ name }} ({{ quantity }} {{ unitName }}) added to the cart": "Product {{ name }} ({{ quantity }} {{ unitName }}) added to the cart",
+    "Product {{ name }} added to the cart (total amount {{ quantity }} {{ unitName }})": "Product {{ name }} added to the cart (total amount {{ quantity }} {{ unitName }})",
+    "Unable to add product to cart": "Unable to add product to cart"
 }

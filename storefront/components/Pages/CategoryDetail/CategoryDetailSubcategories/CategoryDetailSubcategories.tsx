@@ -9,8 +9,8 @@ import CategoryItem from 'components/Blocks/Categories/CategoryItem';
 import { CategoryItemType } from 'components/Blocks/Categories/CategoryItem/types';
 import { desktopFirstSizes } from '../../../Theme/mediaQueries';
 import { getIsElementVisible } from 'components/Helpers/GetIsItemVisible';
-import { useGetWindowSize } from 'hooks/UseGetWindowSize';
-import { useResizeWidthEffect } from 'hooks/UseResizeWidthEffect';
+import { useGetWindowSize } from 'hooks/ui/UseGetWindowSize';
+import { useResizeWidthEffect } from 'hooks/ui/UseResizeWidthEffect';
 
 type CategoryDetailSubcategoriesProps = {
     categories: CategoryItemType[];

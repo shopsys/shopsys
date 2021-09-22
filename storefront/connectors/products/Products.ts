@@ -6,13 +6,15 @@ import {
     ProductPriceType,
     SliderProductItemType,
 } from '../../components/Blocks/Product/types';
-import { useFetchQuery } from '../../hooks/UseFetchQuery';
+import { useFetchQuery } from 'hooks/graphQl/UseFetchQuery';
 import { useShopsysSelector } from '../../redux/store';
 
 export const sliderProductQuery = `
     __typename
+    uuid
     slug
     name
+    stockQuantity
     flags {
         name
         rgbColor

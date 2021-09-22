@@ -11,10 +11,12 @@ import { useShopsysDispatch } from 'redux/store';
  * This global provider is used primary for styleguidist as wrapper.
  */
 const ShopsysGlobalProvider: FC = ({ children }) => {
-    const initCart = getCart('1007c9a3-f570-484a-b84e-4a4f49bb35c0');
+    const initCart = getCart();
     const dispatch = useShopsysDispatch();
     useEffect(() => {
-        dispatch(userActions.setCart(initCart));
+        if (initCart !== undefined) {
+            dispatch(userActions.setCart(initCart));
+        }
     }, [initCart]);
 
     return (

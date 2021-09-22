@@ -3,7 +3,7 @@ import { categoryDetailBody } from '../categories/CategoryDetail';
 import { CategoryDetailType } from '../../components/Pages/CategoryDetail/types';
 import { mapCategoryDetailData } from 'connectors/categories/Categories';
 import { ProductDetailType } from '../../components/Pages/ProductDetail/types';
-import { useFetchQuery } from '../../hooks/UseFetchQuery';
+import { useFetchQuery } from 'hooks/graphQl/UseFetchQuery';
 import { useShopsysSelector } from 'redux/store';
 
 export function friendlyUrlQuery(slug: string): string {

@@ -33,12 +33,14 @@ products{
     edges {
         node {
             __typename
+            uuid
             slug
             name
             flags {
                 name
                 rgbColor
             }
+            stockQuantity
             images (size: "list") {
                 url
                 width

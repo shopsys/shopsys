@@ -23,7 +23,7 @@ import NextLink from 'next/link';
 import { showErrorMessage } from 'components/Helpers/Toasts';
 import Spinbox from 'components/Forms/Spinbox';
 import { userActions } from 'redux/store/UserStore';
-import { useTypedTranslationFunction } from 'hooks/UseTypedTranslationFunction';
+import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 
 type ItemProps = {
     item: CartItemType;
@@ -54,7 +54,7 @@ const Item: FC<ItemProps> = (props) => {
         }
 
         removeItemFromCart({ cartItemUuid: props.item.uuid, cartUuid }).then(({ data }) => {
-            if (data !== undefined && 'RemoveFromCart' in data) {
+            if (data !== undefined) {
                 dispatch(userActions.setCart(mapCart(data.RemoveFromCart, currencyCode)));
             }
         });
@@ -72,7 +72,7 @@ const Item: FC<ItemProps> = (props) => {
                 quantity: spinboxRef.current!.valueAsNumber,
                 isAbsoluteQuantity: true,
             }).then(({ data }) => {
-                if (data === undefined || !('AddToCart' in data)) {
+                if (data === undefined) {
                     return;
                 }
 
@@ -84,7 +84,7 @@ const Item: FC<ItemProps> = (props) => {
                             'You have the maximum available amount in your cart, you cannot add more (total {{ quantity }} {{ unitName }})',
                             {
                                 quantity: data.AddToCart.addProductResult.addedQuantity,
-                                unitName: t('pc(s)'),
+                                unitName: props.item.product.unit.name,
                             },
                         ),
                     );

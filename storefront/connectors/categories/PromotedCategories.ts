@@ -1,5 +1,5 @@
 import { CategoryItemApiType, CategoryItemType } from '../../components/Blocks/Categories/CategoryItem/types';
-import { useFetchQuery } from '../../hooks/UseFetchQuery';
+import { useFetchQuery } from 'hooks/graphQl/UseFetchQuery';
 
 export const promotedCategoriesQuery = `
         query promotedCategories {

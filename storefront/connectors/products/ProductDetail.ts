@@ -1,4 +1,4 @@
-import { mapSliderProductApiData, sliderProductQuery } from './Products';
+import { mapProductPriceData, mapSliderProductApiData, sliderProductQuery } from './Products';
 import { ProductDetailApiType, ProductDetailType } from 'components/Pages/ProductDetail/types';
 
 export const productDetailBody = `
@@ -8,6 +8,13 @@ export const productDetailBody = `
     nameSuffix
     description
     catalogNumber
+    stockQuantity
+    price {
+        priceWithVat
+        priceWithoutVat
+        vatAmount
+        isPriceFrom
+    }
     availability {
         name 
         status
@@ -35,6 +42,7 @@ export const mapProductDetailApiData = (
 ): ProductDetailType => {
     return {
         ...productDetailApiData,
+        price: mapProductPriceData(productDetailApiData.price, currencyCode),
         accessories: mapSliderProductApiData(productDetailApiData.accessories, currencyCode),
     };
 };

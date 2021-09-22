@@ -9,7 +9,7 @@ import {
 import { CartItemType } from 'connectors/cart/types';
 import { FC } from 'react';
 import NextLink from 'next/link';
-import { useTypedTranslationFunction } from 'hooks/UseTypedTranslationFunction';
+import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 
 type ItemInfoProps = {
     item: CartItemType;

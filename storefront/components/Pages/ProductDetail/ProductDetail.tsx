@@ -14,7 +14,7 @@ import ProductDetailAvailabilityList from './ProductDetailStoresAvailability/Pro
 import ProductDetailGallery from './ProductDetailGallery';
 import ProductDetailTabs from './ProductDetailTabs';
 import { ProductDetailType } from './types';
-import { useTypedTranslationFunction } from 'hooks/UseTypedTranslationFunction';
+import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import Webline from '../../Layout/Webline';
 
 type ProductDetailProps = {
@@ -43,7 +43,7 @@ const ProductDetail: FC<ProductDetailProps> = (props) => {
                         <ProductDetailCodeStyled>
                             {t('Code')}: {props.product.catalogNumber}
                         </ProductDetailCodeStyled>
-                        <ProductDetailAddToCart />
+                        <ProductDetailAddToCart {...props} />
                         <ProductDetailAvailability scrollTarget={scrollTarget} {...props} />
                     </ProductDetailInfoStyled>
                 </ProductDetailStyled>

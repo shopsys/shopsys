@@ -14,21 +14,31 @@ import {
     CartValueStyled,
 } from './Cart.style';
 import { FC } from 'react';
+import { formatPrice } from 'utils/formatting';
 import NextLink from 'next/link';
-import { useTypedTranslationFunction } from 'hooks/UseTypedTranslationFunction';
+import { useGetInternationalizedStaticUrls } from 'hooks/staticUrls/UseGetInternationalizedStaticUrls';
+import { useShopsysSelector } from 'redux/store';
+import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 
 const Cart: FC = () => {
     const t = useTypedTranslationFunction();
+    const cart = useShopsysSelector((state) => state.user.cart);
+    const domainConfig = useShopsysSelector((state) => state.domain);
+    const [cartUrl] = useGetInternationalizedStaticUrls(['/cart'], domainConfig.url);
 
     return (
         <CartStyled>
-            <CartBlockStyled>
-                <CartPiecesStyled>
-                    <CartIconStyled icon="Cart" />
-                    <CartCountStyled>0</CartCountStyled>
-                </CartPiecesStyled>
-                <CartValueStyled>0 Kč</CartValueStyled>
-            </CartBlockStyled>
+            <NextLink href={cartUrl} passHref>
+                <CartBlockStyled>
+                    <CartPiecesStyled>
+                        <CartIconStyled icon="Cart" />
+                        <CartCountStyled>
+                            {cart !== undefined && Array.isArray(cart.items) ? cart.items.length : 0}
+                        </CartCountStyled>
+                    </CartPiecesStyled>
+                    <CartValueStyled>{formatPrice(0, domainConfig.currencyCode)}</CartValueStyled>
+                </CartBlockStyled>
+            </NextLink>
             <CartDetailStyled>
                 <CartDetailFigureStyled>
                     <CartDetailTextStyled>{t('Your cart is currently empty.')}</CartDetailTextStyled>
@@ -36,10 +46,12 @@ const Cart: FC = () => {
                 </CartDetailFigureStyled>
             </CartDetailStyled>
             <CartButtonMobileStyled>
-                <NextLink href="/" passHref>
+                <NextLink href={cartUrl} passHref>
                     <CartButtonMobileLinkStyled>
                         <CartIconMobileStyled icon="Cart" />
-                        <CartCountStyled>0</CartCountStyled>
+                        <CartCountStyled>
+                            {cart !== undefined && Array.isArray(cart.items) ? cart.items.length : 0}
+                        </CartCountStyled>
                     </CartButtonMobileLinkStyled>
                 </NextLink>
             </CartButtonMobileStyled>

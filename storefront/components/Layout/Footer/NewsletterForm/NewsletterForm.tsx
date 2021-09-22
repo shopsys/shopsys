@@ -19,7 +19,7 @@ import TextInput from 'components/Forms/TextInput';
 import { TFunction } from 'next-i18next';
 import { useNewsletterSubscription } from '../../../../connectors/newsletter/Newsletter';
 import { useShopsysDispatch } from 'redux/store';
-import { useTypedTranslationFunction } from 'hooks/UseTypedTranslationFunction';
+import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import { yupResolver } from '@hookform/resolvers/yup';
 
 const getNewsletterFormResolver = (t: TFunction) => {
