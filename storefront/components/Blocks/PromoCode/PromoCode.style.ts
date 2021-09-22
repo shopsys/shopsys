@@ -4,12 +4,16 @@ import Icon from 'components/Basic/Icon';
 import { styled } from 'components/Theme/main';
 import TextInput from 'components/Forms/TextInput';
 
+type PromoCodeProps = {
+    contentElementHeight: number;
+};
+
 const localVariables = {
     promoCodeButtonBackgroundHover: '#ffeaaa',
 } as const;
 
-export const PromoCodeStyled = styled.div`
-    ${({ theme }) => css`
+export const PromoCodeStyled = styled.div<PromoCodeProps>`
+    ${({ theme, contentElementHeight }) => css`
         @media ${theme.mediaQueries.queryVl} {
             width: 300px;
         }
@@ -18,12 +22,12 @@ export const PromoCodeStyled = styled.div`
         }
 
         .promoCode-enter-active {
-            height: 54px;
+            height: ${contentElementHeight}px;
             transition: 0.3s all ease;
         }
 
         .promoCode-exit {
-            height: 54px;
+            height: ${contentElementHeight}px;
         }
 
         .promoCode-exit-active {
@@ -68,9 +72,7 @@ export const PromoCodeButtonIconStyled = styled(Icon)`
 `;
 
 export const PromoCodeContentWrapperStyled = styled.div`
-    ${({ theme }) => css`
-        overflow: hidden;
-    `}
+    overflow: hidden;
 `;
 
 export const PromoCodeContentStyled = styled.div`

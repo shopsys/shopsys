@@ -5,7 +5,7 @@ import {
     PromoCodeInfoStyled,
     PromoCodeInfoTitleStyled,
 } from './PromoCodeInfo.style';
-import { useTypedTranslationFunction } from 'hooks/UseTypedTranslationFunction';
+import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 
 type PromoCodeInfoProps = {
     discount: string;
