@@ -14,6 +14,7 @@ export const OrderActionStyled = styled.div`
         flex-wrap: wrap;
         align-items: center;
         margin-bottom: 48px;
+        margin-top: 30px;
 
         @media ${theme.mediaQueries.queryLg} {
             flex-direction: row;

@@ -10,7 +10,7 @@ type FormProps = {
     defaultValues: { [key: string]: unknown };
     onSubmitHandler: (variables?: any | undefined) => Promise<OperationResult<any, any>>;
     onSuccessHandler: (...params: any) => any;
-    resolver: Resolver;
+    resolver?: Resolver;
 };
 
 /**

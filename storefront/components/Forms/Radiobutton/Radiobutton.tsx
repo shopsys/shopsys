@@ -1,12 +1,15 @@
-import { FC, InputHTMLAttributes, ReactNode } from 'react';
+import { FC, InputHTMLAttributes, MouseEventHandler, ReactNode } from 'react';
+import { LabelImageWrapper, RadiobuttonStyled } from './Radiobutton.style';
+import { ControllerRenderProps } from 'react-hook-form';
 import { ExtractNativePropsFromDefault } from 'typeHelpers/ExtractNativePropsFromDefault';
+import Image from 'components/Basic/Image';
+import { ImageType } from 'components/Basic/Image/types';
 import LabelWrapper from 'components/Forms/Lib/LabelWrapper';
-import { RadiobuttonStyled } from './Radiobutton.style';
 
 type NativeProps = ExtractNativePropsFromDefault<
     InputHTMLAttributes<HTMLInputElement>,
-    never,
-    'disabled' | 'id' | 'name' | 'value'
+    'name' | 'id' | 'value',
+    'disabled' | 'checked'
 >;
 
 type RadiobuttonProps = NativeProps & {
@@ -18,25 +21,52 @@ type RadiobuttonProps = NativeProps & {
      * A prop which, if present, provides a URL for an image
      * which then gets rendered next to the label
      */
-    image?: string;
+    image?: ImageType | null;
+    /**
+     * a ref of the controlled field element used for hooking onto the field events/changes
+     */
+    fieldRef?: ControllerRenderProps;
+    /**
+     * Callback which can be used to uncheck the radiobutton after second click
+     */
+    onSecondClickCallback?: () => void;
 };
 
 /**
  * An HTML Radiobutton element of type radiobutton
  */
 const Radiobutton: FC<RadiobuttonProps> = (props) => {
+    const onSecondClickHandler: MouseEventHandler<HTMLInputElement> = (event) => {
+        if (event.currentTarget.checked && props.onSecondClickCallback !== undefined) {
+            props.onSecondClickCallback();
+        }
+    };
+
     return (
         <LabelWrapper
             htmlFor={props.id}
             label={
                 <div>
-                    {props.image !== undefined && <img alt="" src={props.image} />}
-                    <span>{props.label}</span>
+                    {props.image !== undefined && (
+                        <LabelImageWrapper>
+                            <Image alt="" image={props.image} />
+                        </LabelImageWrapper>
+                    )}
+                    {props.label}
                 </div>
             }
             inputType="radio"
         >
-            <RadiobuttonStyled {...props} type="radio" />
+            <RadiobuttonStyled
+                {...props.fieldRef}
+                name={props.name}
+                id={props.id}
+                value={props.value}
+                disabled={props.disabled}
+                checked={props.checked}
+                type="radio"
+                onClick={onSecondClickHandler}
+            />
         </LabelWrapper>
     );
 };
