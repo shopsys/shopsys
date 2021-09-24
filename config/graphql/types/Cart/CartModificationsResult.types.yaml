@@ -1,0 +1,10 @@
+CartModificationsResult:
+    type: object
+    config:
+        fields:
+            itemModifications:
+                type: "CartItemModificationsResult!"
+            transportModifications:
+                type: "CartTransportModificationsResult!"
+            paymentModifications:
+                type: "CartPaymentModificationsResult!"

@@ -96,7 +96,6 @@ class SideMenuConfigurationSubscriber implements EventSubscriberInterface
     {
         $pricingMenu = $event->getMenu();
         $pricingMenu->removeChild('promo_codes');
-        $pricingMenu->removeChild('free_transport_and_payment');
     }
 
     /**

@@ -1,0 +1,8 @@
+CartPaymentModificationsResult:
+    type: object
+    config:
+        fields:
+            paymentPriceChanged:
+                type: "Payment"
+            paymentUnavailable:
+                type: "Boolean!"

@@ -4,10 +4,14 @@ declare(strict_types=1);
 
 namespace Tests\FrontendApiBundle\Functional\Cart;
 
+use App\DataFixtures\Demo\PaymentDataFixture;
 use App\DataFixtures\Demo\ProductDataFixture;
+use App\DataFixtures\Demo\TransportDataFixture;
+use App\Model\Payment\PaymentFacade;
 use App\Model\Product\Product;
 use App\Model\Product\ProductDataFactory;
 use App\Model\Product\ProductFacade;
+use App\Model\Transport\TransportFacade;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
@@ -30,6 +34,18 @@ class CartModificationsResultTest extends GraphQlTestCase
      * @inject
      */
     private ProductDataFactory $productDataFactory;
+
+    /**
+     * @var \App\Model\Transport\TransportFacade
+     * @inject
+     */
+    private TransportFacade $transportFacade;
+
+    /**
+     * @var \App\Model\Payment\PaymentFacade
+     * @inject
+     */
+    private PaymentFacade $paymentFacade;
 
     protected function setUp(): void
     {
@@ -54,8 +70,10 @@ class CartModificationsResultTest extends GraphQlTestCase
                 quantity: ' . $productQuantity . '
             }) {
                 modifications {
-                    noLongerListableCartItems {
-                        uuid
+                    itemModifications {
+                        noLongerListableCartItems{
+                            uuid
+                        }
                     }
                 }
             }
@@ -63,7 +81,7 @@ class CartModificationsResultTest extends GraphQlTestCase
         $response = $this->getResponseContentForQuery($addToCartMutation);
         $modifications = $response['data']['AddToCart']['modifications'];
 
-        self::assertNotEmpty($modifications['noLongerListableCartItems']);
+        self::assertNotEmpty($modifications['itemModifications']['noLongerListableCartItems']);
     }
 
     public function testModificationTriggeredInRemoveFromCartMutation(): void
@@ -95,9 +113,11 @@ class CartModificationsResultTest extends GraphQlTestCase
                 cartUuid: "' . $newlyCreatedCart['uuid'] . '"
                 cartItemUuid: "' . $cartItemUuid . '"
             }) {
-                modifications {
-                    noLongerListableCartItems {
-                        uuid
+                 modifications {
+                    itemModifications {
+                        noLongerListableCartItems{
+                            uuid
+                        }
                     }
                 }
             }
@@ -105,7 +125,7 @@ class CartModificationsResultTest extends GraphQlTestCase
         $response = $this->getResponseContentForQuery($removeFromCartMutation);
         $modifications = $response['data']['RemoveFromCart']['modifications'];
 
-        self::assertNotEmpty($modifications['noLongerListableCartItems']);
+        self::assertNotEmpty($modifications['itemModifications']['noLongerListableCartItems']);
     }
 
     public function testNoLongerListableCartItemIsReported(): void
@@ -116,22 +136,24 @@ class CartModificationsResultTest extends GraphQlTestCase
         $this->hideTestingProduct();
 
         $getCartQuery = '{
-            cart(uuid: "' . $newlyCreatedCart['uuid'] . '") {
+            cart(cartInput: {cartUuid: "' . $newlyCreatedCart['uuid'] . '"}) {
                 modifications {
-                    noLongerListableCartItems {
-                        uuid
-                        product {
+                    itemModifications {
+                        noLongerListableCartItems {
+                            uuid
+                            product {
+                                uuid
+                            }
+                        }
+                        noLongerAvailableCartItemsDueToQuantity {
                             uuid
                         }
-                    }
-                    noLongerAvailableCartItemsDueToQuantity {
-                        uuid
-                    }
-                    cartItemsWithModifiedPrice {
-                        uuid
-                    }
-                    cartItemsWithChangedQuantity {
-                        uuid
+                        cartItemsWithModifiedPrice {
+                            uuid
+                        }
+                        cartItemsWithChangedQuantity {
+                            uuid
+                        }
                     }
                 }
             }
@@ -139,13 +161,14 @@ class CartModificationsResultTest extends GraphQlTestCase
 
         $response = $this->getResponseContentForQuery($getCartQuery);
         $modifications = $response['data']['cart']['modifications'];
+        $itemModifications = $modifications['itemModifications'];
 
-        self::assertNotEmpty($modifications['noLongerListableCartItems']);
-        self::assertEquals($this->testingProduct->getUuid(), $modifications['noLongerListableCartItems'][0]['product']['uuid']);
+        self::assertNotEmpty($itemModifications['noLongerListableCartItems']);
+        self::assertEquals($this->testingProduct->getUuid(), $itemModifications['noLongerListableCartItems'][0]['product']['uuid']);
 
-        self::assertEmpty($modifications['noLongerAvailableCartItemsDueToQuantity']);
-        self::assertEmpty($modifications['cartItemsWithModifiedPrice']);
-        self::assertEmpty($modifications['cartItemsWithChangedQuantity']);
+        self::assertEmpty($itemModifications['noLongerAvailableCartItemsDueToQuantity']);
+        self::assertEmpty($itemModifications['cartItemsWithModifiedPrice']);
+        self::assertEmpty($itemModifications['cartItemsWithChangedQuantity']);
     }
 
     public function testCartItemWithModifiedPriceIsReported(): void
@@ -156,22 +179,24 @@ class CartModificationsResultTest extends GraphQlTestCase
         $this->modifyPriceOfTestingProduct();
 
         $getCartQuery = '{
-            cart(uuid: "' . $newlyCreatedCart['uuid'] . '") {
+            cart(cartInput: {cartUuid: "' . $newlyCreatedCart['uuid'] . '"}) {
                 modifications {
-                    cartItemsWithModifiedPrice {
-                        uuid
-                        product {
+                    itemModifications {
+                        cartItemsWithModifiedPrice {
+                            uuid
+                            product {
+                                uuid
+                            }
+                        }
+                        noLongerAvailableCartItemsDueToQuantity {
                             uuid
                         }
-                    }
-                    noLongerAvailableCartItemsDueToQuantity {
-                        uuid
-                    }
-                    noLongerListableCartItems {
-                        uuid
-                    }
-                    cartItemsWithChangedQuantity {
-                        uuid
+                        noLongerListableCartItems {
+                            uuid
+                        }
+                        cartItemsWithChangedQuantity {
+                            uuid
+                        }
                     }
                 }
             }
@@ -179,13 +204,14 @@ class CartModificationsResultTest extends GraphQlTestCase
 
         $response = $this->getResponseContentForQuery($getCartQuery);
         $modifications = $response['data']['cart']['modifications'];
+        $itemModifications = $modifications['itemModifications'];
 
-        self::assertNotEmpty($modifications['cartItemsWithModifiedPrice']);
-        self::assertEquals($this->testingProduct->getUuid(), $modifications['cartItemsWithModifiedPrice'][0]['product']['uuid']);
+        self::assertNotEmpty($itemModifications['cartItemsWithModifiedPrice']);
+        self::assertEquals($this->testingProduct->getUuid(), $itemModifications['cartItemsWithModifiedPrice'][0]['product']['uuid']);
 
-        self::assertEmpty($modifications['noLongerListableCartItems']);
-        self::assertEmpty($modifications['noLongerAvailableCartItemsDueToQuantity']);
-        self::assertEmpty($modifications['cartItemsWithChangedQuantity']);
+        self::assertEmpty($itemModifications['noLongerListableCartItems']);
+        self::assertEmpty($itemModifications['noLongerAvailableCartItemsDueToQuantity']);
+        self::assertEmpty($itemModifications['cartItemsWithChangedQuantity']);
     }
 
     public function testCartItemWithChangedQuantityIsReported(): void
@@ -196,22 +222,24 @@ class CartModificationsResultTest extends GraphQlTestCase
         $this->setOneItemLeftOnStockForTestingProduct();
 
         $getCartQuery = '{
-            cart(uuid: "' . $newlyCreatedCart['uuid'] . '") {
+            cart(cartInput: {cartUuid: "' . $newlyCreatedCart['uuid'] . '"}) {
                 modifications {
-                    cartItemsWithChangedQuantity {
-                        uuid
-                        product {
+                    itemModifications {
+                        cartItemsWithChangedQuantity {
+                            uuid
+                            product {
+                                uuid
+                            }
+                        }
+                        noLongerAvailableCartItemsDueToQuantity {
                             uuid
                         }
-                    }
-                    noLongerAvailableCartItemsDueToQuantity {
-                        uuid
-                    }
-                    noLongerListableCartItems {
-                        uuid
-                    }
-                    cartItemsWithModifiedPrice {
-                        uuid
+                        noLongerListableCartItems {
+                            uuid
+                        }
+                        cartItemsWithModifiedPrice {
+                            uuid
+                        }
                     }
                 }
             }
@@ -219,13 +247,14 @@ class CartModificationsResultTest extends GraphQlTestCase
 
         $response = $this->getResponseContentForQuery($getCartQuery);
         $modifications = $response['data']['cart']['modifications'];
+        $itemModifications = $modifications['itemModifications'];
 
-        self::assertNotEmpty($modifications['cartItemsWithChangedQuantity']);
-        self::assertEquals($this->testingProduct->getUuid(), $modifications['cartItemsWithChangedQuantity'][0]['product']['uuid']);
+        self::assertNotEmpty($itemModifications['cartItemsWithChangedQuantity']);
+        self::assertEquals($this->testingProduct->getUuid(), $itemModifications['cartItemsWithChangedQuantity'][0]['product']['uuid']);
 
-        self::assertEmpty($modifications['noLongerListableCartItems']);
-        self::assertEmpty($modifications['noLongerAvailableCartItemsDueToQuantity']);
-        self::assertEmpty($modifications['cartItemsWithModifiedPrice']);
+        self::assertEmpty($itemModifications['noLongerListableCartItems']);
+        self::assertEmpty($itemModifications['noLongerAvailableCartItemsDueToQuantity']);
+        self::assertEmpty($itemModifications['cartItemsWithModifiedPrice']);
     }
 
     public function testNoLongerAvailableCartItemDueToQuantityIsReported(): void
@@ -236,22 +265,24 @@ class CartModificationsResultTest extends GraphQlTestCase
         $this->setNoItemLeftOnStockForTestingProduct();
 
         $getCartQuery = '{
-            cart(uuid: "' . $newlyCreatedCart['uuid'] . '") {
+            cart(cartInput: {cartUuid: "' . $newlyCreatedCart['uuid'] . '"}) {
                 modifications {
-                    noLongerAvailableCartItemsDueToQuantity {
-                        uuid
-                        product {
+                    itemModifications {
+                        noLongerAvailableCartItemsDueToQuantity {
+                            uuid
+                            product {
+                                uuid
+                            }
+                        }
+                        noLongerListableCartItems {
                             uuid
                         }
-                    }
-                    noLongerListableCartItems {
-                        uuid
-                    }
-                    cartItemsWithModifiedPrice {
-                        uuid
-                    }
-                    cartItemsWithChangedQuantity {
-                        uuid
+                        cartItemsWithModifiedPrice {
+                            uuid
+                        }
+                        cartItemsWithChangedQuantity {
+                            uuid
+                        }
                     }
                 }
             }
@@ -259,13 +290,184 @@ class CartModificationsResultTest extends GraphQlTestCase
 
         $response = $this->getResponseContentForQuery($getCartQuery);
         $modifications = $response['data']['cart']['modifications'];
+        $itemModifications = $modifications['itemModifications'];
 
-        self::assertNotEmpty($modifications['noLongerAvailableCartItemsDueToQuantity']);
-        self::assertEquals($this->testingProduct->getUuid(), $modifications['noLongerAvailableCartItemsDueToQuantity'][0]['product']['uuid']);
+        self::assertNotEmpty($itemModifications['noLongerAvailableCartItemsDueToQuantity']);
+        self::assertEquals($this->testingProduct->getUuid(), $itemModifications['noLongerAvailableCartItemsDueToQuantity'][0]['product']['uuid']);
 
-        self::assertEmpty($modifications['noLongerListableCartItems']);
-        self::assertEmpty($modifications['cartItemsWithModifiedPrice']);
-        self::assertEmpty($modifications['cartItemsWithChangedQuantity']);
+        self::assertEmpty($itemModifications['noLongerListableCartItems']);
+        self::assertEmpty($itemModifications['cartItemsWithModifiedPrice']);
+        self::assertEmpty($itemModifications['cartItemsWithChangedQuantity']);
+    }
+
+    public function testTransportWithModifiedPriceIsReported(): void
+    {
+        $newlyCreatedCart = $this->addTestingProductToNewCart(1);
+        /** @var \App\Model\Transport\Transport $transport */
+        $transport = $this->getReference(TransportDataFixture::TRANSPORT_PERSONAL);
+        $inputTransportPrice = $transport->getPrice(1)->getPrice()->add(Money::create(10))->getAmount();
+        $getCartQuery = '{
+            cart(cartInput: {
+                    cartUuid: "' . $newlyCreatedCart['uuid'] . '"
+                    transport: {
+                        uuid: "' . $transport->getUuid() . '"
+                        price: {
+                            priceWithVat: "' . $inputTransportPrice . '"
+                            priceWithoutVat: "' . $inputTransportPrice . '"
+                            vatAmount: "0"
+                        }
+                    }
+                }
+            ) {
+                modifications {
+                    transportModifications {
+                        transportPriceChanged {
+                            uuid
+                        }
+                    }
+                }
+            }
+        }';
+
+        $transportModifications = $this->getTransportModifications($getCartQuery);
+        self::assertNotEmpty($transportModifications['transportPriceChanged']);
+        self::assertEquals($transport->getUuid(), $transportModifications['transportPriceChanged']['uuid']);
+    }
+
+    public function testUnavailableTransportIsReported(): void
+    {
+        $newlyCreatedCart = $this->addTestingProductToNewCart(1);
+        /** @var \App\Model\Transport\Transport $transport */
+        $transport = $this->getReference(TransportDataFixture::TRANSPORT_PERSONAL);
+        $inputTransportPrice = $transport->getPrice(1)->getPrice()->getAmount();
+        $transportUuid = $transport->getUuid();
+        $this->transportFacade->deleteById($transport->getId());
+        $getCartQuery = '{
+            cart(cartInput: {
+                    cartUuid: "' . $newlyCreatedCart['uuid'] . '"
+                    transport: {
+                        uuid: "' . $transportUuid . '"
+                        price: {
+                            priceWithVat: "' . $inputTransportPrice . '"
+                            priceWithoutVat: "' . $inputTransportPrice . '"
+                            vatAmount: "0"
+                        }
+                    }
+                }
+            ) {
+                modifications {
+                    transportModifications {
+                        transportUnavailable
+                    }
+                }
+            }
+        }';
+
+        $transportModifications = $this->getTransportModifications($getCartQuery);
+        self::assertTrue($transportModifications['transportUnavailable']);
+    }
+
+    public function testTransportWithExceededWeightLimitIsReported(): void
+    {
+        $newlyCreatedCart = $this->addTestingProductToNewCart(1);
+        /** @var \App\Model\Transport\Transport $transport */
+        $transport = $this->getReference(TransportDataFixture::TRANSPORT_CZECH_POST);
+        $inputTransportPrice = $transport->getPrice(1)->getPrice()->getAmount();
+        $cartUuid = $newlyCreatedCart['uuid'];
+        $getCartQuery = '{
+            cart(cartInput: {
+                    cartUuid: "' . $cartUuid . '"
+                    transport: {
+                        uuid: "' . $transport->getUuid() . '"
+                        price: {
+                            priceWithVat: "' . $inputTransportPrice . '"
+                            priceWithoutVat: "' . $inputTransportPrice . '"
+                            vatAmount: "0"
+                        }
+                    }
+                }
+            ) {
+                modifications {
+                    transportModifications {
+                        transportWeightLimitExceeded
+                    }
+                }
+            }
+        }';
+
+        $transportModifications = $this->getTransportModifications($getCartQuery);
+        self::assertFalse($transportModifications['transportWeightLimitExceeded']);
+
+        $this->addTestingProductToExistingCart(1, $cartUuid);
+        $transportModifications = $this->getTransportModifications($getCartQuery);
+        self::assertTrue($transportModifications['transportWeightLimitExceeded']);
+    }
+
+    public function testPaymentWithModifiedPriceIsReported(): void
+    {
+        $newlyCreatedCart = $this->addTestingProductToNewCart(1);
+        /** @var \App\Model\Transport\Transport $payment */
+        $payment = $this->getReference(PaymentDataFixture::PAYMENT_CARD);
+        $inputPaymentPrice = $payment->getPrice(1)->getPrice()->add(Money::create(10))->getAmount();
+        $getCartQuery = '{
+            cart(cartInput: {
+                    cartUuid: "' . $newlyCreatedCart['uuid'] . '"
+                    payment: {
+                        uuid: "' . $payment->getUuid() . '"
+                        price: {
+                            priceWithVat: "' . $inputPaymentPrice . '"
+                            priceWithoutVat: "' . $inputPaymentPrice . '"
+                            vatAmount: "0"
+                        }
+                    }
+                }
+            ) {
+                modifications {
+                    paymentModifications {
+                        paymentPriceChanged {
+                            uuid
+                        }
+                    }
+                }
+            }
+        }';
+
+        $paymentModifications = $this->getPaymentModifications($getCartQuery);
+        self::assertNotEmpty($paymentModifications['paymentPriceChanged']);
+        self::assertEquals($payment->getUuid(), $paymentModifications['paymentPriceChanged']['uuid']);
+    }
+
+    public function testUnavailablePaymentIsReported(): void
+    {
+        $newlyCreatedCart = $this->addTestingProductToNewCart(1);
+        /** @var \App\Model\Transport\Transport $payment */
+        $payment = $this->getReference(PaymentDataFixture::PAYMENT_CARD);
+        $inputPaymentPrice = $payment->getPrice(1)->getPrice()->getAmount();
+        $paymentUuid = $payment->getUuid();
+        $this->paymentFacade->deleteById($payment->getId());
+        $getCartQuery = '{
+            cart(cartInput: {
+                    cartUuid: "' . $newlyCreatedCart['uuid'] . '"
+                    payment: {
+                        uuid: "' . $paymentUuid . '"
+                        price: {
+                            priceWithVat: "' . $inputPaymentPrice . '"
+                            priceWithoutVat: "' . $inputPaymentPrice . '"
+                            vatAmount: "0"
+                        }
+                    }
+                }
+            ) {
+                modifications {
+                    paymentModifications {
+                        paymentUnavailable
+                    }
+                }
+            }
+        }';
+
+        $paymentModifications = $this->getPaymentModifications($getCartQuery);
+        self::assertTrue($paymentModifications['paymentUnavailable']);
     }
 
     /**
@@ -334,5 +536,48 @@ class CartModificationsResultTest extends GraphQlTestCase
 
         $this->productFacade->edit($this->testingProduct->getId(), $productData);
         $this->dispatchFakeKernelResponseEventToTriggerImmediateRecalculations();
+    }
+
+    /**
+     * @param int $productQuantity
+     * @param string $cartUuid
+     */
+    private function addTestingProductToExistingCart(int $productQuantity, string $cartUuid): void
+    {
+        $mutation = 'mutation {
+            AddToCart(input: {
+                cartUuid:"' . $cartUuid . '"
+                productUuid: "' . $this->testingProduct->getUuid() . '"
+                quantity: ' . $productQuantity . '
+            }) {
+                uuid
+            }
+        }';
+
+        $this->getResponseContentForQuery($mutation);
+    }
+
+    /**
+     * @param string $getCartQuery
+     * @return array
+     */
+    private function getTransportModifications(string $getCartQuery): array
+    {
+        $response = $this->getResponseContentForQuery($getCartQuery);
+        $modifications = $response['data']['cart']['modifications'];
+
+        return $modifications['transportModifications'];
+    }
+
+    /**
+     * @param string $getCartQuery
+     * @return array
+     */
+    private function getPaymentModifications(string $getCartQuery): array
+    {
+        $response = $this->getResponseContentForQuery($getCartQuery);
+        $modifications = $response['data']['cart']['modifications'];
+
+        return $modifications['paymentModifications'];
     }
 }

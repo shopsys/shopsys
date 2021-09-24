@@ -249,7 +249,7 @@ class RetrieveCartTest extends GraphQlTestCase
         $newlyCreatedCart = $response['data']['AddToCart'];
 
         $getCartQuery = '{
-            cart(uuid: "' . $newlyCreatedCart['uuid'] . '") {
+            cart(cartInput: {cartUuid: "' . $newlyCreatedCart['uuid'] . '"}) {
                 items {
                     product {
                         ' . $this->getAllProductAttributes() . '

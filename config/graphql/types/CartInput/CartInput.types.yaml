@@ -1,0 +1,18 @@
+CartInput:
+    type: input-object
+    config:
+        validation:
+            -   App\FrontendApi\Model\Component\Constraints\AppPaymentTransportRelation: ~
+        fields:
+            cartUuid:
+                type: "Uuid"
+                defaultValue: null
+                description: "Cart identifier, new cart will be created if not provided and customer is not logged in"
+            transport:
+                type: "TransportInput"
+                defaultValue: null
+                description: "Represents a transport in order"
+            payment:
+                type: "PaymentInput"
+                defaultValue: null
+                description: "Represents a payment in order"

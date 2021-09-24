@@ -82,9 +82,11 @@ Query:
             cart:
                 type: 'Cart'
                 args:
-                    uuid:
-                        type: "Uuid"
-                resolve: "@=resolver('getCart', [args['uuid']])"
+                    cartInput:
+                        type: CartInput
+                        validation: cascade
+                        defaultValue: {"cartUuid": null}
+                resolve: "@=resolver('getCart', [args['cartInput']])"
                 description: "Return cart of logged customer or cart by UUID for anonymous user"
             flags:
                 type: '[Flag!]'
@@ -99,3 +101,10 @@ Query:
                     urlSlug:
                         type: "String"
                 description: "Returns a flag by uuid or url slug"
+            transports:
+                type: '[Transport!]!'
+                resolve: "@=resolver('transports', [args['cartUuid']])"
+                args:
+                    cartUuid:
+                        type: "Uuid"
+                description: "Returns available transport methods based on the current cart state"

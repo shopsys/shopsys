@@ -6,6 +6,8 @@ namespace App\FrontendApi\Model\Cart;
 
 use App\Model\Cart\Cart;
 use App\Model\Cart\Item\CartItem;
+use App\Model\Payment\Payment;
+use App\Model\Transport\Transport;
 
 class CartWithModificationsResult
 {
@@ -15,13 +17,39 @@ class CartWithModificationsResult
     protected Cart $cart;
 
     /**
-     * @var array<string, array<int, \App\Model\Cart\Item\CartItem>>
+     * @var array<string, array>
      */
     private array $cartModifications = [
+        'itemModifications' => [],
+        'transportModifications' => [],
+        'paymentModifications' => [],
+    ];
+
+    /**
+     * @var array<string, array<int, \App\Model\Cart\Item\CartItem>>
+     */
+    private array $itemModifications = [
         'noLongerListableCartItems' => [],
         'cartItemsWithModifiedPrice' => [],
         'cartItemsWithChangedQuantity' => [],
         'noLongerAvailableCartItemsDueToQuantity' => [],
+    ];
+
+    /**
+     * @var array
+     */
+    private array $transportModifications = [
+        'transportPriceChanged' => null,
+        'transportUnavailable' => false,
+        'transportWeightLimitExceeded' => false,
+    ];
+
+    /**
+     * @var array
+     */
+    private array $paymentModifications = [
+        'paymentPriceChanged' => null,
+        'paymentUnavailable' => false,
     ];
 
     /**
@@ -49,10 +77,13 @@ class CartWithModificationsResult
     }
 
     /**
-     * @return array<string, array<int, \App\Model\Cart\Item\CartItem>>
+     * @return array<string, array>
      */
     public function getModifications(): array
     {
+        $this->cartModifications['itemModifications'] = $this->itemModifications;
+        $this->cartModifications['transportModifications'] = $this->transportModifications;
+        $this->cartModifications['paymentModifications'] = $this->paymentModifications;
         return $this->cartModifications;
     }
 
@@ -61,7 +92,7 @@ class CartWithModificationsResult
      */
     public function addNoLongerListableCartItem(CartItem $cartItem): void
     {
-        $this->cartModifications['noLongerListableCartItems'][] = $cartItem;
+        $this->itemModifications['noLongerListableCartItems'][] = $cartItem;
     }
 
     /**
@@ -69,7 +100,7 @@ class CartWithModificationsResult
      */
     public function addCartItemWithModifiedPrice(CartItem $cartItem): void
     {
-        $this->cartModifications['cartItemsWithModifiedPrice'][] = $cartItem;
+        $this->itemModifications['cartItemsWithModifiedPrice'][] = $cartItem;
     }
 
     /**
@@ -77,7 +108,7 @@ class CartWithModificationsResult
      */
     public function addCartItemWithChangedQuantity(CartItem $cartItem): void
     {
-        $this->cartModifications['cartItemsWithChangedQuantity'][] = $cartItem;
+        $this->itemModifications['cartItemsWithChangedQuantity'][] = $cartItem;
     }
 
     /**
@@ -85,6 +116,40 @@ class CartWithModificationsResult
      */
     public function addNoLongerAvailableCartItemDueToQuantity(CartItem $cartItem): void
     {
-        $this->cartModifications['noLongerAvailableCartItemsDueToQuantity'][] = $cartItem;
+        $this->itemModifications['noLongerAvailableCartItemsDueToQuantity'][] = $cartItem;
+    }
+
+    /**
+     * @param \App\Model\Transport\Transport $transport
+     */
+    public function setTransportPriceChanged(Transport $transport): void
+    {
+        $this->transportModifications['transportPriceChanged'] = $transport;
+    }
+
+    public function setTransportIsUnavailable(): void
+    {
+        $this->transportModifications['transportUnavailable'] = true;
+    }
+
+    /**
+     * @param bool $transportWeightLimitExceeded
+     */
+    public function setTransportWeightLimitExceeded(bool $transportWeightLimitExceeded): void
+    {
+        $this->transportModifications['transportWeightLimitExceeded'] = $transportWeightLimitExceeded;
+    }
+
+    /**
+     * @param \App\Model\Payment\Payment $payment
+     */
+    public function setPaymentPriceChanged(Payment $payment): void
+    {
+        $this->paymentModifications['paymentPriceChanged'] = $payment;
+    }
+
+    public function setPaymentIsUnavailable(): void
+    {
+        $this->paymentModifications['paymentUnavailable'] = true;
     }
 }
