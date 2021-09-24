@@ -13,7 +13,7 @@ const FrontendSwitcher: FC = () => {
     return (
         <FrontendSwitcherWrapperStyled>
             <a onClick={openTwigStorefrontEvent}>
-                <FrontendSwitcherIconStyled iconTitle="Switch to Twig frontend" icon="Replace" />
+                <FrontendSwitcherIconStyled title="Switch to Twig frontend" icon="Replace" />
             </a>
         </FrontendSwitcherWrapperStyled>
     );

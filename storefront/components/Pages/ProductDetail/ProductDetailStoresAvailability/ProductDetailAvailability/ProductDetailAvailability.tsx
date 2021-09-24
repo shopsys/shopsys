@@ -31,7 +31,7 @@ const ProductDetailAvailability: FC<ProductDetailAvailabilityProps> = (props) =>
         <AvailabilityStyled>
             <AvailabilityLinkStyled status={props.product.availability.status} onClick={scrollOnClickHandler}>
                 {props.product.availability.name}
-                <Icon icon="Arrow" iconHeight={16} />
+                <Icon icon="Arrow" />
             </AvailabilityLinkStyled>
             {props.product.availableStoresCount > 0 && (
                 <AvailabilityInfoStyled>

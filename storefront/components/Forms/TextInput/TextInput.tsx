@@ -85,7 +85,7 @@ const TextInput: FC<TextInputProps> = (props) => {
             )}
             {props.variant === 'searchInHeader' && (
                 <SearchButtonStyled>
-                    <Icon icon="Search" iconHeight={20} />
+                    <Icon icon="Search" />
                 </SearchButtonStyled>
             )}
         </LabelWrapper>

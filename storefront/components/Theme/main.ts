@@ -78,6 +78,7 @@ export const theme = {
 
     /* Transition */
     transition: '0.2s cubic-bezier(.8, .20, .48, 1.0)',
+    transitionEffect: 'cubic-bezier(.8, .20, .48, 1.0)',
 
     mediaQueries: { ...mediaQueries },
 } as const;
