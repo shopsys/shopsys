@@ -77,6 +77,12 @@ module.exports = {
         yoda: 'error',
         '@typescript-eslint/strict-boolean-expressions': ['error', { allowNullableBoolean: true }],
         '@typescript-eslint/no-non-null-assertion': 'off',
+        'no-restricted-imports': [
+            'error',
+            {
+                patterns: ['..*'],
+            },
+        ],
     },
     settings: {
         react: {
