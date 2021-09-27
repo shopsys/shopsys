@@ -9,13 +9,6 @@ import Webline from 'components/Layout/Webline';
 
 const ContactInformation: FC = () => {
     const [isEmailEntered, setIsEmailEntered] = useState(false);
-    const [isCommonCustomerChecked, setIsCommonCustomerChecked] = useState(true);
-    const [isCompanyCustomerChecked, setIsCompanyCustomerChecked] = useState(false);
-
-    const onChangeValue = () => {
-        setIsCompanyCustomerChecked(!isCompanyCustomerChecked);
-        setIsCommonCustomerChecked(!isCommonCustomerChecked);
-    };
 
     return (
         <Webline>
@@ -52,12 +45,7 @@ const ContactInformation: FC = () => {
                         )}
                     />
                 </FormLine>
-                <ContactInformationContent
-                    isEmailEntered={isEmailEntered}
-                    isCommonCustomerChecked={isCommonCustomerChecked}
-                    isCompanyCustomerChecked={isCompanyCustomerChecked}
-                    onChangeValue={onChangeValue}
-                />
+                <ContactInformationContent isEmailEntered={isEmailEntered} />
             </Form>
         </Webline>
     );
