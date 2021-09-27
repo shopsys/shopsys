@@ -1,7 +1,7 @@
 import { css } from 'styled-components';
 import { styled } from 'components/Theme/main';
 
-export const CartBottomStyled = styled.div`
+export const CartSummaryStyled = styled.div`
     ${({ theme }) => css`
         display: flex;
         flex-direction: column;
@@ -13,7 +13,7 @@ export const CartBottomStyled = styled.div`
     `}
 `;
 
-export const CartBottomLeftStyled = styled.div`
+export const CartSummaryLeftStyled = styled.div`
     ${({ theme }) => css`
         padding-right: 30px;
 
@@ -23,7 +23,7 @@ export const CartBottomLeftStyled = styled.div`
     `}
 `;
 
-export const CartBottomRightStyled = styled.div`
+export const CartSummaryRightStyled = styled.div`
     ${({ theme }) => css`
         @media ${theme.mediaQueries.queryVl} {
             width: 300px;

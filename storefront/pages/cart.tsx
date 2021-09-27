@@ -1,5 +1,5 @@
 import { initServerSideProps, ServerSidePropsType } from 'helpers/InitServerSideProps';
-import CartBottom from 'components/Pages/Cart/CartBottom';
+import CartSummary from 'components/Pages/Cart/CartSummary';
 import CommonLayout from 'components/Layout/CommonLayout';
 import { FC } from 'react';
 import { GetServerSideProps } from 'next';
@@ -22,7 +22,7 @@ const Cart: FC<ServerSidePropsType> = (props) => {
             <CommonLayout>
                 <OrderSteps activeStep={1} domainUrl={props.domainConfig.url} />
                 <List items={cart?.items} />
-                <CartBottom />
+                <CartSummary />
                 <OrderAction activeStep={1} buttonBack={t('Back to e-shop')} buttonNext={t('Shipment and payment')} />
             </CommonLayout>
         </StaticUrlGuard>
