@@ -3,7 +3,6 @@ import { AppProps } from 'next/app';
 import { appWithTranslation } from 'next-i18next';
 import { getDomainConfig } from 'utils/Domain/Domain';
 import nextI18NextConfig from 'next-i18next.config';
-import Popup from 'components/Layout/Popup';
 import { Provider } from 'react-redux';
 import { ReactElement } from 'react';
 import ShopsysGlobalProvider from 'context/ShopsysGlobalProvider';
@@ -15,7 +14,6 @@ function MyApp({ Component, pageProps }: AppProps): ReactElement {
     return (
         <Provider store={store}>
             <ShopsysGlobalProvider>
-                <Popup />
                 <ToastContainer autoClose={6000} position="top-center" theme="colored" />
                 <Component {...pageProps} />
             </ShopsysGlobalProvider>

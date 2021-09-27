@@ -1,4 +1,4 @@
-import { FC, MouseEventHandler, ReactElement, useEffect, useRef } from 'react';
+import { FC, MouseEventHandler, useEffect, useRef } from 'react';
 import {
     OverlayStyled,
     PopupButtonCloseIconStyled,
@@ -7,71 +7,55 @@ import {
     PopupHeaderStyled,
     PopupStyled,
 } from './Popup.style';
-import { useShopsysDispatch, useShopsysSelector } from 'redux/store';
-import NewsletterSuccess from './PopupContents/NewsletterSuccess/NewsletterSuccess';
-import { popupActions } from 'redux/store/PopupStore';
+import { AnyStyledComponent } from 'styled-components';
 
-/**
- * When a new content for the Popup component is created, a special type should be specified here.
- * This way we can switch over it in the renderPopupContent method
- */
-export type PopupContentType = 'NewsletterSuccess';
+type PopupProps = {
+    isVisible: boolean;
+    onCloseCallback: () => void;
+    wrapperComponent?: AnyStyledComponent;
+};
 
 /**
  * Popup component used for displaying any type of content above the main page content.
  */
-const Popup: FC = () => {
-    const dispatch = useShopsysDispatch();
-    const { isPopupShown, popupContent } = useShopsysSelector((state) => state.popup);
+const Popup: FC<PopupProps> = (props) => {
     const onEscapeButtonPressHandler = useRef((event: KeyboardEvent): void => {
         if (event.key === 'Escape') {
-            dispatch(popupActions.hidePopup());
+            props.onCloseCallback();
         }
     }).current;
 
     useEffect(() => {
-        if (isPopupShown) {
+        if (props.isVisible) {
             document.addEventListener('keydown', onEscapeButtonPressHandler);
         } else {
             document.removeEventListener('keydown', onEscapeButtonPressHandler);
         }
-    }, [isPopupShown]);
+    }, [props.isVisible]);
 
     const onClickCloseActionHandler: MouseEventHandler<HTMLElement> = () => {
-        dispatch(popupActions.hidePopup());
+        props.onCloseCallback();
     };
 
-    if (isPopupShown) {
+    const PopupWrapper = props.wrapperComponent !== undefined ? props.wrapperComponent : PopupStyled;
+
+    if (props.isVisible) {
         return (
             <>
                 <OverlayStyled onClick={onClickCloseActionHandler}></OverlayStyled>
-                <PopupStyled role="dialog" aria-modal={true}>
+                <PopupWrapper role="dialog" aria-modal={true}>
                     <PopupHeaderStyled>
-                        <PopupButtonCloseStyled onClick={onClickCloseActionHandler}>
+                        <PopupButtonCloseStyled type="button" onClick={onClickCloseActionHandler}>
                             <PopupButtonCloseIconStyled icon="Remove" />
                         </PopupButtonCloseStyled>
                     </PopupHeaderStyled>
-                    <PopupContentStyled>{renderPopupContent(popupContent)}</PopupContentStyled>
-                </PopupStyled>
+                    <PopupContentStyled>{props.children}</PopupContentStyled>
+                </PopupWrapper>
             </>
         );
     }
 
     return null;
-};
-
-/**
- * When new type of the content is added, case in the switch statement below should be added as well
- * @param popupContent
- * @returns rendered Popup component content. This differs based on the popupContent parameter.
- */
-export const renderPopupContent = (popupContent: PopupContentType | undefined): ReactElement | null => {
-    switch (popupContent) {
-        case 'NewsletterSuccess':
-            return <NewsletterSuccess />;
-        default:
-            return null;
-    }
 };
 
 /* @component */
