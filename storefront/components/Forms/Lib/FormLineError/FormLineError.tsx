@@ -1,7 +1,6 @@
 import { ErrorIconStyled, ErrorMessageStyled, FormFieldErrorStyled } from './FormLineError.style';
 import { FC } from 'react';
 import { FieldError } from 'react-hook-form';
-import Icon from 'components/Basic/Icon';
 
 type FormLineErrorProps = {
     /**
@@ -24,9 +23,7 @@ const FormLineError: FC<FormLineErrorProps> = (props) => {
     if (props.error) {
         return (
             <FormFieldErrorStyled>
-                <ErrorIconStyled inputType={props.inputType} textInputSize={props.textInputSize}>
-                    <Icon icon="Cross" iconHeight={16} />
-                </ErrorIconStyled>
+                <ErrorIconStyled inputType={props.inputType} textInputSize={props.textInputSize} icon="Cross" />
                 {props.error !== undefined && <ErrorMessageStyled>{props.error.message}</ErrorMessageStyled>}
             </FormFieldErrorStyled>
         );

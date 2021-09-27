@@ -16,7 +16,7 @@ const ContactInformationEmail: FC<ContactInformationEmailProps> = (props) => {
     const t = useTypedTranslationFunction();
 
     useEffect(() => {
-        if (props.field.value.length > 0 && props.invalid === false) {
+        if (props.field.value.length > 1 && props.invalid === false) {
             props.setIsEmailEntered(true);
         } else {
             props.setIsEmailEntered(false);
