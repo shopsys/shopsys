@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\FrontendApi\Model\Cart;
 
 use App\Model\Cart\AddProductResult;
+use Shopsys\FrameworkBundle\Model\Pricing\Price;
 
 class AddToCartResult
 {
@@ -58,5 +59,21 @@ class AddToCartResult
     public function getModifications(): array
     {
         return $this->cartWithModifications->getModifications();
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Pricing\Price
+     */
+    public function getTotalPrice(): Price
+    {
+        return $this->cartWithModifications->getTotalPrice();
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Pricing\Price
+     */
+    public function getTotalDiscountPrice(): Price
+    {
+        return $this->cartWithModifications->getTotalDiscountPrice();
     }
 }

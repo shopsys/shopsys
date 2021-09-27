@@ -3,6 +3,7 @@ CartInput:
     config:
         validation:
             -   App\FrontendApi\Model\Component\Constraints\AppPaymentTransportRelation: ~
+            -   App\FrontendApi\Model\Component\Constraints\PromoCode: ~
         fields:
             cartUuid:
                 type: "Uuid"
@@ -16,3 +17,6 @@ CartInput:
                 type: "PaymentInput"
                 defaultValue: null
                 description: "Represents a payment in order"
+            promoCode:
+                type: "String"
+                defaultValue: null

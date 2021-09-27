@@ -58,6 +58,11 @@ class RetrieveCartTest extends GraphQlTestCase
                     isNew
                     addedQuantity
                 }
+                totalPrice{
+                    priceWithVat
+                    priceWithoutVat
+                    vatAmount
+                }
             }
         }';
 
@@ -73,6 +78,10 @@ class RetrieveCartTest extends GraphQlTestCase
         ];
 
         self::assertEquals($expectedAddProductResultData, $newlyCreatedCart['addProductResult']);
+
+        /** @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vatHigh */
+        $vatHigh = $this->getReferenceForDomain(VatDataFixture::VAT_HIGH, $this->domain->getId());
+        self::assertEquals($this->getSerializedPriceConvertedToDomainDefaultCurrency('2891.70', $vatHigh, $maximumAvailableQuantity), $newlyCreatedCart['totalPrice']);
     }
 
     public function testAddToCartResultIsValidForMoreQuantityThanOnStockOnSecondAdd(): void
