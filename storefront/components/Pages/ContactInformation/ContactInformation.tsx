@@ -3,6 +3,7 @@ import { FC, useState } from 'react';
 import ContactInformationEmail from 'components/Pages/ContactInformation/ContactInformationEmail';
 import { Controller } from 'react-hook-form';
 import Form from 'components/Forms/Form';
+import FormColumn from 'components/Forms/Lib/FormColumn';
 import FormLine from 'components/Forms/Lib/FormLine';
 import { TFunction } from 'next-i18next';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
@@ -29,20 +30,22 @@ const ContactInformation: FC = () => {
                 resolver={getContactInformationFormResolver(t)}
                 defaultValues={{ email: '' }}
             >
-                <FormLine>
-                    <Controller
-                        name="email"
-                        render={({ fieldState: { isTouched, invalid, error }, field }) => (
-                            <ContactInformationEmail
-                                isTouched={isTouched}
-                                invalid={invalid}
-                                error={error}
-                                field={field}
-                                setIsEmailEntered={setIsEmailEntered}
-                            />
-                        )}
-                    />
-                </FormLine>
+                <FormColumn>
+                    <FormLine Lg="65%">
+                        <Controller
+                            name="email"
+                            render={({ fieldState: { isTouched, invalid, error }, field }) => (
+                                <ContactInformationEmail
+                                    isTouched={isTouched}
+                                    invalid={invalid}
+                                    error={error}
+                                    field={field}
+                                    setIsEmailEntered={setIsEmailEntered}
+                                />
+                            )}
+                        />
+                    </FormLine>
+                </FormColumn>
                 {isEmailEntered && 'Content ktory sa otvori po spravnom zadani emailu'}
             </Form>
         </Webline>
