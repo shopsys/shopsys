@@ -18,8 +18,8 @@ type RadiobuttonProps = NativeProps & {
      */
     label: string | ReactNode | ReactNode[];
     /**
-     * A prop which, if present, provides a URL for an image
-     * which then gets rendered next to the label
+     * A prop which, if present, provides a ImageType object
+     * with render values for a label image/icon
      */
     image?: ImageType | null;
     /**

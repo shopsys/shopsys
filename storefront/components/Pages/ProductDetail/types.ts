@@ -1,6 +1,6 @@
 import {
-    PriceApiType,
     ProductItemApiType,
+    ProductPriceApiType,
     ProductPriceType,
     SliderProductItemType,
 } from 'components/Blocks/Product/types';
@@ -36,7 +36,7 @@ export interface ProductDetailApiType extends SlugType, BreadcrumbType {
     stockQuantity: number;
     description: string;
     catalogNumber: string;
-    price: PriceApiType;
+    price: ProductPriceApiType;
     availability: Availability;
     storeAvailabilities: StoreAvailability[];
     availableStoresCount: number;

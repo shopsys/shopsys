@@ -32,12 +32,16 @@ export const NameWrapperStyled = styled.div`
     `}
 `;
 
-export const DescriptionStyled = styled.span`
+export const InfoStyled = styled.span`
     ${({ theme }) => css`
-        display: none;
-
         color: ${theme.color.greyLight};
         font-size: 14px;
+    `}
+`;
+
+export const DescriptionStyled = styled(InfoStyled)`
+    ${({ theme }) => css`
+        display: none;
 
         @media ${theme.mediaQueries.queryNotLargeDesktop} {
             display: initial;
