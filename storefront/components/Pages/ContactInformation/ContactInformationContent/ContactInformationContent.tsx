@@ -6,6 +6,7 @@ import { FC, useRef, useState } from 'react';
 import ContactInformationAddress from 'components/Pages/ContactInformation/ContactInformationAddress';
 import ContactInformationCompany from 'components/Pages/ContactInformation/ContactInformationCompany';
 import ContactInformationCustomer from 'components/Pages/ContactInformation/ContactInformationCustomer';
+import ContactInformationRegister from 'components/Pages/ContactInformation/ContactInformationRegister';
 import ContactInformationUser from 'components/Pages/ContactInformation/ContactInformationUser';
 import { CSSTransition } from 'react-transition-group';
 
@@ -44,6 +45,7 @@ const ContactInformationContent: FC<ContactInformationContent> = (props) => {
             >
                 <ContactInformationContentWrapperStyled ref={nodeRef}>
                     <div ref={contentElement}>
+                        <ContactInformationRegister />
                         <ContactInformationCustomer
                             isCompanyCustomerChecked={isCompanyCustomerChecked}
                             isCommonCustomerChecked={isCommonCustomerChecked}

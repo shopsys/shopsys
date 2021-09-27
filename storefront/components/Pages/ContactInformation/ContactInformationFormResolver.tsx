@@ -8,6 +8,17 @@ export const getContactInformationFormResolver = () => {
     return yupResolver(
         Yup.object().shape({
             email: Yup.string().required(t('Please enter email')).email(t('This value is not a valid email')),
+            register: Yup.boolean(),
+            passwordFirst: Yup.string().when('register', {
+                is: true,
+                then: Yup.string().required(t('Please enter password')),
+                otherwise: Yup.string(),
+            }),
+            passwordSecond: Yup.string().when('register', {
+                is: true,
+                then: Yup.string().required(t('Please enter password')),
+                otherwise: Yup.string(),
+            }),
             customer: Yup.string().oneOf(['commonCustomer', 'companyCustomer']),
             telephone: Yup.string()
                 .required(t('Please enter telephone number'))

@@ -18,6 +18,9 @@ const ContactInformation: FC = () => {
                 resolver={getContactInformationFormResolver()}
                 defaultValues={{
                     email: '',
+                    register: false,
+                    passwordFirst: '',
+                    passwordSecond: '',
                     customer: 'commonCustomer',
                     telephone: '',
                     firstName: '',

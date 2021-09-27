@@ -1,0 +1,89 @@
+import { FC, useState } from 'react';
+import Checkbox from 'components/Forms/Checkbox';
+import ChoiceFormLine from 'components/Forms/Lib/ChoiceFormLine';
+import { Controller } from 'react-hook-form';
+import FormColumn from 'components/Forms/Lib/FormColumn';
+import FormLine from 'components/Forms/Lib/FormLine';
+import FormLineError from 'components/Forms/Lib/FormLineError';
+import Heading from 'components/Basic/Heading';
+import TextInput from 'components/Forms/TextInput';
+import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+
+const ContactInformationRegister: FC = () => {
+    const t = useTypedTranslationFunction();
+    const [isRegisterChecked, setIsRegisterChecked] = useState(false);
+
+    const onChangeRegisterValue = () => {
+        setIsRegisterChecked(!isRegisterChecked);
+    };
+
+    return (
+        <>
+            <ChoiceFormLine>
+                <Controller
+                    name="register"
+                    render={({ field }) => (
+                        <div onChange={onChangeRegisterValue}>
+                            <Checkbox
+                                id="newsletter_form-register"
+                                name={field.name}
+                                label={t('I want to register with an order')}
+                                fieldRef={field}
+                            />
+                        </div>
+                    )}
+                />
+            </ChoiceFormLine>
+            {isRegisterChecked && (
+                <>
+                    <Heading type="h3">{t('Create a password')}</Heading>
+                    <FormColumn Lg="65%">
+                        <FormLine bottomGap={true} Width="100%" Lg="50%">
+                            <Controller
+                                name="passwordFirst"
+                                render={({ fieldState: { isTouched, invalid, error }, field }) => (
+                                    <>
+                                        <TextInput
+                                            id="contactInformation_form-passwordFirst"
+                                            name="passwordFirst"
+                                            label={t('Password')}
+                                            required={true}
+                                            type="text"
+                                            isTouched={isTouched}
+                                            hasError={invalid}
+                                            fieldRef={field}
+                                        />
+                                        <FormLineError error={error} inputType="text-input" />
+                                    </>
+                                )}
+                            />
+                        </FormLine>
+                        <FormLine bottomGap={true} Width="100%" Lg="50%">
+                            <Controller
+                                name="passwordSecond"
+                                render={({ fieldState: { isTouched, invalid, error }, field }) => (
+                                    <>
+                                        <TextInput
+                                            id="contactInformation_form-passwordSecond"
+                                            name="passwordSecond"
+                                            label={t('Password again')}
+                                            required={true}
+                                            type="text"
+                                            isTouched={isTouched}
+                                            hasError={invalid}
+                                            fieldRef={field}
+                                        />
+                                        <FormLineError error={error} inputType="text-input" />
+                                    </>
+                                )}
+                            />
+                        </FormLine>
+                    </FormColumn>
+                </>
+            )}
+        </>
+    );
+};
+
+/* @component */
+export default ContactInformationRegister;
