@@ -48,5 +48,10 @@
     "You have the maximum available amount in your cart, you cannot add more (total {{ quantity }} {{ unitName }})": "V košíku máte maximálne dostupné množstvo, nemožno pridať ďalšie (celkom už {{ quantity }} {{ unitName }})",
     "Product {{ name }} ({{ quantity }} {{ unitName }}) added to the cart": "Produkt {{ name }} ({{ quantity }} {{ unitName }}) bol pridaný do košíka",
     "Product {{ name }} added to the cart (total amount {{ quantity }} {{ unitName }})": "Produkt {{ name }} bol pridaný do košíka (celkové množstvo {{ quantity }} {{ unitName }})",
-    "Unable to add product to cart": "Produkt sa nepodarilo pridať do košíka"
+    "Unable to add product to cart": "Produkt sa nepodarilo pridať do košíka",
+    "I have a discount coupon": "Mám zľavový kupón",
+    "Coupon": "Kupón",
+    "Apply": "Uplatniť",
+    "Your discount with the code has been applied.": "Vaša zľava s kódom bola uplatnená.",
+    "The discount was applied to all non-discounted items to which the promotion applies according to the rules.": "Zľava bola uplatnená na všetky už nezľavnené položky na ktoré sa akcia vzťahuje podľa pravidiel."
 }

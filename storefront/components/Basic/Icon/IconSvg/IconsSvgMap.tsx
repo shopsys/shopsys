@@ -17,6 +17,7 @@ export const IconsSvgMap = {
     Triangle: <Icons.Triangle />,
     Sort: <Icons.Sort />,
     RemoveBold: <Icons.RemoveBold />,
+    Plus: <Icons.Plus />,
 };
 
 export type IconName = keyof typeof IconsSvgMap;

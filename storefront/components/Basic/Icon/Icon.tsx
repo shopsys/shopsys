@@ -1,10 +1,14 @@
-import { FC } from 'react';
+import { FC, HTMLAttributes } from 'react';
+import { ExtractNativePropsFromDefault } from 'typeHelpers/ExtractNativePropsFromDefault';
 import { IconName } from './IconSvg/IconsSvgMap';
 import { IconSvg } from './IconSvg';
 
 /**
  *  Basic icon component unifies displaying icons
  */
+
+type NativeProps = ExtractNativePropsFromDefault<HTMLAttributes<HTMLDivElement>, never, 'onClick'>;
+
 type IconProps = {
     /**
      * Define which type of icon will be generated
@@ -32,7 +36,7 @@ type IconProps = {
     iconTitle?: string;
 };
 
-const Icon: FC<IconProps> = (props) => {
+const Icon: FC<IconProps & NativeProps> = (props) => {
     if (props.iconType === 'img') {
         return (
             <img
