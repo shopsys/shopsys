@@ -29,16 +29,16 @@ type RadiobuttonProps = NativeProps & {
     /**
      * Callback which can be used to uncheck the radiobutton after second click
      */
-    onSecondClickCallback?: () => void;
+    uncheckCallback?: () => void;
 };
 
 /**
  * An HTML Radiobutton element of type radiobutton
  */
 const Radiobutton: FC<RadiobuttonProps> = (props) => {
-    const onSecondClickHandler: MouseEventHandler<HTMLInputElement> = () => {
-        if (props.checked && props.onSecondClickCallback !== undefined) {
-            props.onSecondClickCallback();
+    const uncheckCallback: MouseEventHandler<HTMLInputElement> = () => {
+        if (props.checked && props.uncheckCallback !== undefined) {
+            props.uncheckCallback();
         }
     };
 
@@ -65,7 +65,7 @@ const Radiobutton: FC<RadiobuttonProps> = (props) => {
                 disabled={props.disabled}
                 checked={props.checked}
                 type="radio"
-                onClick={onSecondClickHandler}
+                onClick={uncheckCallback}
             />
         </LabelWrapper>
     );
