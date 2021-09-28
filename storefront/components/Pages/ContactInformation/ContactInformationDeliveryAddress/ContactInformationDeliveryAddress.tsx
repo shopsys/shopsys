@@ -3,10 +3,10 @@ import {
     ContactInformationDeliveryAddressWrapperStyled,
 } from './ContactInformationDeliveryAddress.style';
 import { FC, useRef, useState } from 'react';
-import Checkbox from 'components/Forms/Checkbox';
 import ChoiceFormLine from 'components/Forms/Lib/ChoiceFormLine';
 import { Controller } from 'react-hook-form';
 import { CSSTransition } from 'react-transition-group';
+import DeliveryCheckbox from './DeliveryCheckbox';
 import FormColumn from 'components/Forms/Lib/FormColumn';
 import FormLine from 'components/Forms/Lib/FormLine';
 import FormLineError from 'components/Forms/Lib/FormLineError';
@@ -26,10 +26,6 @@ const ContactInformationDeliveryAddress: FC = () => {
         }
     };
 
-    const onChangeDeliveryAddressValue = () => {
-        setIsDeliveryAddressChecked(!IsDeliveryAddressChecked);
-    };
-
     return (
         <>
             <FormLine bottomGap={true} Lg="65%">
@@ -37,14 +33,7 @@ const ContactInformationDeliveryAddress: FC = () => {
                     <Controller
                         name="deliveryAddress"
                         render={({ field }) => (
-                            <div onChange={onChangeDeliveryAddressValue}>
-                                <Checkbox
-                                    id="newsletter_form-deliveryAddress"
-                                    name={field.name}
-                                    label={t('Enter the delivery address')}
-                                    fieldRef={field}
-                                />
-                            </div>
+                            <DeliveryCheckbox field={field} setIsDeliveryAddressChecked={setIsDeliveryAddressChecked} />
                         )}
                     />
                 </ChoiceFormLine>
