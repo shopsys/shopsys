@@ -107,5 +107,11 @@
     "I want to register with an order": "Chcem sa registrovať s objednávkou",
     "Please enter password": "Vyplňte prosím heslo",
     "Password": "Heslo",
-    "Password again": "Heslo znova"
+    "Password again": "Heslo znova",
+    "Enter the delivery address": "Zadať dodaciu adresu",
+    "Please enter first name of contact person": "Vyplňte prosím meno kontaktnej osoby",
+    "Please enter last name of contact person": "Vyplňte prosím priezvisko kontaktnej osoby",
+    "Street and house number": "Ulica a č. popisné",
+    "I want to subscribe to the newsletter": "Chcem sa prihlásiť k odberu newsletteru",
+    "ContactInformationInfo": "Kliknutím na tlačítko Odoslať objednávku súhlasíte s <1>obchodnými podmienkami</1> e-shopu a so <3>zpracovaním osobných údajov</3>."
 }

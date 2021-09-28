@@ -107,5 +107,12 @@
     "I want to register with an order": "I want to register with an order",
     "Please enter password": "Please enter password",
     "Password": "Password",
-    "Password again": "Password again"
+    "Password again": "Password again",
+    "Enter the delivery address": "Enter the delivery address",
+    "Please enter first name of contact person": "Please enter first name of contact person",
+    "Please enter last name of contact person": "Please enter last name of contact person",
+    "Street and house number": "Street and house number",
+    "I want to subscribe to the newsletter": "I want to subscribe to the newsletter",
+    "ContactInformationInfo": "By clicking on the Send order button, you agree with <1>terms and conditions</1> of the e-shop and with the <3>processing of privacy policy</3>."
+
 }
