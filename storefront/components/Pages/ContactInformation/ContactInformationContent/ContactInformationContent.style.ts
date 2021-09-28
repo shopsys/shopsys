@@ -27,6 +27,10 @@ export const ContactInformationContentStyled = styled.div<ContactInformationProp
     `}
 `;
 
+export const ContactInformationContentSectionStyled = styled.div`
+    margin-bottom: 40px;
+`;
+
 export const ContactInformationContentWrapperStyled = styled.div`
     overflow: hidden;
 `;

@@ -27,6 +27,6 @@ export const ContactInformationDeliveryAddressStyled = styled.div<ContactInforma
     `}
 `;
 
-export const ContactInformationDeliveryAddressWrapperStyled = styled.div`
-    overflow: hidden;
+export const ContactInformationDeliveryAddressContentStyled = styled.div`
+    padding-bottom: 40px;
 `;

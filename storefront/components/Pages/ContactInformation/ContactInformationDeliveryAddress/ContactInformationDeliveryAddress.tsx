@@ -1,10 +1,10 @@
 import {
+    ContactInformationDeliveryAddressContentStyled,
     ContactInformationDeliveryAddressStyled,
-    ContactInformationDeliveryAddressWrapperStyled,
 } from './ContactInformationDeliveryAddress.style';
+import { Controller, useFormContext, useWatch } from 'react-hook-form';
 import { FC, useRef, useState } from 'react';
 import ChoiceFormLine from 'components/Forms/Lib/ChoiceFormLine';
-import { Controller } from 'react-hook-form';
 import { CSSTransition } from 'react-transition-group';
 import DeliveryCheckbox from './DeliveryCheckbox';
 import FormColumn from 'components/Forms/Lib/FormColumn';
@@ -28,7 +28,7 @@ const ContactInformationDeliveryAddress: FC = () => {
 
     return (
         <>
-            <FormLine bottomGap={true} Lg="65%">
+            <FormLine Lg="65%">
                 <ChoiceFormLine>
                     <Controller
                         name="deliveryAddress"
@@ -49,10 +49,10 @@ const ContactInformationDeliveryAddress: FC = () => {
                     unmountOnExit
                     nodeRef={nodeRef}
                 >
-                    <ContactInformationDeliveryAddressWrapperStyled ref={nodeRef}>
-                        <div ref={contentElement}>
-                            <FormColumn Lg="65%">
-                                <FormLine bottomGap={true} Width="100%" Lg="50%">
+                    <div ref={cssTransitionRef}>
+                        <ContactInformationDeliveryAddressContentStyled ref={contentElement}>
+                            <FormColumn lg="65%">
+                                <FormLine bottomGap={true} width="100%" lg="50%">
                                     <Controller
                                         name="deliveryFirstName"
                                         render={({ fieldState: { isTouched, invalid, error }, field }) => (
@@ -206,8 +206,8 @@ const ContactInformationDeliveryAddress: FC = () => {
                                     )}
                                 />
                             </FormLine>
-                        </div>
-                    </ContactInformationDeliveryAddressWrapperStyled>
+                        </ContactInformationDeliveryAddressContentStyled>
+                    </div>
                 </CSSTransition>
             </ContactInformationDeliveryAddressStyled>
         </>

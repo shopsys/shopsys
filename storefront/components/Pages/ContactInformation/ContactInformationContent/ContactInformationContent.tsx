@@ -1,4 +1,5 @@
 import {
+    ContactInformationContentSectionStyled,
     ContactInformationContentStyled,
     ContactInformationContentWrapperStyled,
 } from './ContactInformationContent.style';
@@ -46,15 +47,32 @@ const ContactInformationContent: FC<ContactInformationContent> = (props) => {
             >
                 <ContactInformationContentWrapperStyled ref={nodeRef}>
                     <div ref={contentElement}>
-                        <ContactInformationRegister />
-                        <ContactInformationCustomer
-                            isCompanyCustomerChecked={isCompanyCustomerChecked}
-                            isCommonCustomerChecked={isCommonCustomerChecked}
-                            onChangeCustomerValue={onChangeCustomerValue}
-                        />
-                        <ContactInformationUser />
-                        {isCompanyCustomerChecked && <ContactInformationCompany />}
-                        <ContactInformationAddress />
+                        <ContactInformationContentSectionStyled>
+                            <ContactInformationRegister />
+                        </ContactInformationContentSectionStyled>
+
+                        <ContactInformationContentSectionStyled>
+                            <ContactInformationCustomer
+                                isCompanyCustomerChecked={isCompanyCustomerChecked}
+                                isCommonCustomerChecked={isCommonCustomerChecked}
+                                onChangeCustomerValue={onChangeCustomerValue}
+                            />
+                        </ContactInformationContentSectionStyled>
+
+                        <ContactInformationContentSectionStyled>
+                            <ContactInformationUser />
+                        </ContactInformationContentSectionStyled>
+
+                        {isCompanyCustomerChecked && (
+                            <ContactInformationContentSectionStyled>
+                                <ContactInformationCompany />
+                            </ContactInformationContentSectionStyled>
+                        )}
+
+                        <ContactInformationContentSectionStyled>
+                            <ContactInformationAddress />
+                        </ContactInformationContentSectionStyled>
+
                         <ContactInformationDeliveryAddress />
                     </div>
                 </ContactInformationContentWrapperStyled>
