@@ -1,5 +1,5 @@
 import { FlagType, PriceApiType, ProductPriceType } from 'components/Blocks/Product/types';
-import { ImageType } from 'components/Basic/Image/types';
+import { ImageApiType, ImageType } from 'components/Basic/Image/types';
 
 export type ProductCartItemType = {
     uuid: string;
@@ -33,7 +33,7 @@ export type ProductCartItemApiType = {
     slug: string;
     fullName: string;
     flags: FlagType[];
-    images: ImageType[];
+    images: ImageApiType[];
     price: PriceApiType;
     availability: {
         name: string;

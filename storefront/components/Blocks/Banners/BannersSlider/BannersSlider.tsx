@@ -132,7 +132,7 @@ const BannersSlider: FC<BannersSliderProps> = (props) => {
 };
 
 export const getBannersSliderItemImageUrl = (sliderItem: SliderItem, isImageLoaded: boolean): string => {
-    return isImageLoaded ? sliderItem.images[0]?.url || 'images/optimized-noimage.png' : '';
+    return isImageLoaded ? sliderItem.images[0]?.sizes[0]?.url || 'images/optimized-noimage.png' : '';
 };
 
 export default BannersSlider;

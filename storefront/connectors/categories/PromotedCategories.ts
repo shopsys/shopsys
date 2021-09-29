@@ -7,10 +7,12 @@ export const promotedCategoriesQuery = `
                 uuid
                 name
                 slug
-                images(size: "default") {
-                    url
-                    width
-                    height
+                images(sizes: "default") {
+                    sizes {
+                        url
+                        width
+                        height
+                    }
                 }
             }
         }
@@ -20,7 +22,7 @@ const mapCategoryApiData = (apiData: CategoryItemApiType[]) => {
     return apiData.map((apiCategory) => {
         return {
             ...apiCategory,
-            image: apiCategory.images.length > 0 ? apiCategory.images[0] : null,
+            image: apiCategory.images.length > 0 ? apiCategory.images[0].sizes[0] : null,
         };
     });
 };

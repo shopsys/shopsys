@@ -1,4 +1,4 @@
-import { ImageType } from 'components/Basic/Image/types';
+import { ImageApiType, ImageType } from 'components/Basic/Image/types';
 
 export type FlagType = {
     name: string;
@@ -54,7 +54,7 @@ export type ProductItemApiType = {
     slug: string;
     name: string;
     flags: FlagType[];
-    images: ImageType[];
+    images: ImageApiType[];
     stockQuantity: number;
     availability: {
         name: string;
@@ -70,7 +70,7 @@ export type ListedProductItemApiType = {
     slug: string;
     name: string;
     flags: FlagType[];
-    images: ImageType[];
+    images: ImageApiType[];
     stockQuantity: number;
     availability: {
         name: string;

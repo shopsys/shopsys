@@ -19,10 +19,12 @@ export const sliderProductQuery = `
         name
         rgbColor
     }
-    images (size: "list") {
-        url
-        width
-        height
+    images (sizes: "list") {
+        sizes {
+            url
+            width
+            height
+        }
     }
     availability {
         name
@@ -53,7 +55,7 @@ export const mapSliderProductApiData = (
         return {
             ...apiProduct,
             detailSlug: apiProduct.slug,
-            image: apiProduct.images.length === 0 ? null : apiProduct.images[0],
+            image: apiProduct.images.length === 0 ? null : apiProduct.images[0].sizes[0],
             price: mapProductPriceData(apiProduct.price, currencyCode),
             isMainVariant: apiProduct.__typename === 'MainVariant',
             availability: apiProduct.availability.name,
@@ -72,7 +74,7 @@ export function mapListedProductNode(data: ListedProductItemApiType, currencyCod
     return {
         ...data,
         detailSlug: data.slug,
-        image: data.images.length === 0 ? null : data.images[0],
+        image: data.images.length === 0 ? null : data.images[0].sizes[0],
         price: mapProductPriceData(data.price, currencyCode),
         isMainVariant: data.__typename === 'MainVariant',
         availability: data.availability.name,

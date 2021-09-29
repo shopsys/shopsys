@@ -9,13 +9,13 @@ query sliderItems {
         link
         extendedText
         extendedTextLink
-        images (type: "web", size: "default") {
-            type
+        images (type: "web", sizes: "default") {
             position
-            size
-            url
-            width
-            height
+            sizes {
+                url
+                width
+                height
+            }
         }
     }
 }
