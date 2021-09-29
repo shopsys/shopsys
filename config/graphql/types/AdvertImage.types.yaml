@@ -2,3 +2,16 @@ AdvertImage:
     type: object
     inherits:
         - 'AdvertImageDecorator'
+    config:
+        fields:
+            image:
+                type: "[Image]!"
+                description: "Advert image"
+                resolve: '@=resolver("advertImageResolver", [value, args["type"], args["sizes"]])'
+                args:
+                    type:
+                        type: "String"
+                        defaultValue: null
+                    sizes:
+                        type: "[String!]"
+                        defaultValue: null

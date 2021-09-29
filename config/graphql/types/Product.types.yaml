@@ -53,3 +53,14 @@ Product:
             relatedProducts:
                 type: "[Product!]!"
                 description: "List of related products"
+            images:
+                type: "[Image]!"
+                description: "Product images"
+                resolve: '@=resolver("productImageResolver", [value, args["type"], args["sizes"]])'
+                args:
+                    type:
+                        type: "String"
+                        defaultValue: null
+                    sizes:
+                        type: "[String!]"
+                        defaultValue: null

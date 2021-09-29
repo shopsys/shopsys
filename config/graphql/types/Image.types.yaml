@@ -1,4 +1,31 @@
 Image:
     type: object
-    inherits:
-        - 'ImageDecorator'
+    config:
+        description: "Represents an image"
+        fields:
+            position:
+                type: "Int"
+                description: "Position of image in list"
+            type:
+                type: "String"
+                description: "Image type"
+            sizes:
+                type: "[ImageSize!]!"
+
+ImageSize:
+    type: object
+    config:
+        description: "Represents a single image size"
+        fields:
+            size:
+                type: "String"
+                description: "Image size defined in images.yaml"
+            url:
+                type: "String"
+                description: "URL address of image"
+            width:
+                type: "Int"
+                description: "Width in pixels defined in images.yaml"
+            height:
+                type: "Int"
+                description: "Height in pixels defined in images.yaml"

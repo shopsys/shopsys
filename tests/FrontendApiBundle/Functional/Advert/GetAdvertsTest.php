@@ -127,6 +127,14 @@ class GetAdvertsTest extends GraphQlTestCase
         $this->assetAdvertsAreAsExpected($query, $expectedAdvertsData);
     }
 
+    public function testGetHeaderAdverts(): void
+    {
+        $query = $this->getAllAdvertsQuery('header');
+        $expectedAdvertsData = array_slice($this->getExpectedAdverts(), 3, 3);
+
+        $this->assetAdvertsAreAsExpected($query, $expectedAdvertsData);
+    }
+
     public function testGetNotExistingAdverts(): void
     {
         $query = $this->getAllAdvertsQuery('non-existing-position-name');
@@ -179,12 +187,14 @@ class GetAdvertsTest extends GraphQlTestCase
                     }
                     ... on AdvertImage {
                         image(type: "web") {
-                            url
-                            type
-                            size
-                            width
-                            height
                             position
+                            type
+                            sizes {
+                                url
+                                size
+                                width
+                                height
+                            }
                         }
                         link
                     }
@@ -232,28 +242,31 @@ class GetAdvertsTest extends GraphQlTestCase
                 'positionName' => 'header',
                 'image' => [
                     [
-                        'url' => sprintf(
-                            '%s/content-test/images/noticer/web/header/%s.png',
-                            $this->firstDomainUrl,
-                            $testImage->getId()
-                        ),
-                        'type' => 'web',
-                        'size' => 'header',
-                        'width' => 1160,
-                        'height' => null,
                         'position' => null,
-                    ],
-                    [
-                        'url' => sprintf(
-                            '%s/content-test/images/noticer/web/original/%s.png',
-                            $this->firstDomainUrl,
-                            $testImage->getId()
-                        ),
                         'type' => 'web',
-                        'size' => 'original',
-                        'width' => null,
-                        'height' => null,
-                        'position' => null,
+                        'sizes' => [
+                            [
+                                'url' => sprintf(
+                                    '%s/content-test/images/noticer/web/header/%s.png',
+                                    $this->firstDomainUrl,
+                                    $testImage->getId()
+                                ),
+                                'size' => 'header',
+                                'width' => 1160,
+                                'height' => null,
+
+                            ],
+                            [
+                                'url' => sprintf(
+                                    '%s/content-test/images/noticer/web/original/%s.png',
+                                    $this->firstDomainUrl,
+                                    $testImage->getId()
+                                ),
+                                'size' => 'original',
+                                'width' => null,
+                                'height' => null,
+                            ],
+                        ],
                     ],
                 ],
                 'link' => 'https://shopsys.com',

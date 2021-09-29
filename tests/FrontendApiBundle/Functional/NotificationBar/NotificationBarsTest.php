@@ -16,7 +16,10 @@ class NotificationBarsTest extends GraphQlTestCase
                    text
                    rgbColor
                    images {
-                       url
+                       position
+                       sizes {
+                           url
+                       }
                    }
                 }
             }

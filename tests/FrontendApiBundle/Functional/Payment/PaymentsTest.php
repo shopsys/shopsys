@@ -25,7 +25,10 @@ class PaymentsTest extends GraphQlTestCase
                         vatAmount
                     },
                     images {
-                        url
+                        position
+                        sizes {
+                            url
+                        }
                     },
                     transports {
                         name
@@ -60,8 +63,13 @@ class PaymentsTest extends GraphQlTestCase
                         'type' => 'basic',
                         'price' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('100', $vatZero),
                         'images' => [
-                            ['url' => $this->getFullUrlPath('/content-test/images/payment/default/53.jpg')],
-                            ['url' => $this->getFullUrlPath('/content-test/images/payment/original/53.jpg')],
+                            [
+                                'position' => null,
+                                'sizes' => [
+                                    ['url' => $this->getFullUrlPath('/content-test/images/payment/default/53.jpg')],
+                                    ['url' => $this->getFullUrlPath('/content-test/images/payment/original/53.jpg')],
+                                ],
+                            ],
                         ],
                         'transports' => [
                             ['name' => t('PPL', [], 'dataFixtures', $this->getLocaleForFirstDomain())],
@@ -77,8 +85,13 @@ class PaymentsTest extends GraphQlTestCase
                         'type' => 'basic',
                         'price' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('50', $vatZero),
                         'images' => [
-                            ['url' => $this->getFullUrlPath('/content-test/images/payment/default/55.jpg')],
-                            ['url' => $this->getFullUrlPath('/content-test/images/payment/original/55.jpg')],
+                            [
+                                'position' => null,
+                                'sizes' => [
+                                    ['url' => $this->getFullUrlPath('/content-test/images/payment/default/55.jpg')],
+                                    ['url' => $this->getFullUrlPath('/content-test/images/payment/original/55.jpg')],
+                                ],
+                            ],
                         ],
                         'transports' => [
                             ['name' => t('Czech post', [], 'dataFixtures', $this->getLocaleForFirstDomain())],
@@ -93,8 +106,13 @@ class PaymentsTest extends GraphQlTestCase
                         'type' => 'basic',
                         'price' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('0', $vatZero),
                         'images' => [
-                            ['url' => $this->getFullUrlPath('/content-test/images/payment/default/54.jpg')],
-                            ['url' => $this->getFullUrlPath('/content-test/images/payment/original/54.jpg')],
+                            [
+                                'position' => null,
+                                'sizes' => [
+                                    ['url' => $this->getFullUrlPath('/content-test/images/payment/default/54.jpg')],
+                                    ['url' => $this->getFullUrlPath('/content-test/images/payment/original/54.jpg')],
+                                ],
+                            ],
                         ],
                         'transports' => [
                             ['name' => t('Personal collection', [], 'dataFixtures', $this->getLocaleForFirstDomain())],

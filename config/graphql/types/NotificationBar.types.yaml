@@ -12,10 +12,11 @@ NotificationBar:
             images:
                 type: "[Image]!"
                 description: "Notification bar images"
-                resolve: '@=service("App\\FrontendApi\\Model\\Resolver\\Image\\ImagesResolver").resolveByNotificationBar(value, args["type"], args["size"])'
+                resolve: '@=resolver("notificationBarImageResolver", [value, args["type"], args["sizes"]])'
                 args:
                     type:
                         type: "String"
                         defaultValue: null
-                    size:
-                        type: "String"
+                    sizes:
+                        type: "[String!]"
+                        defaultValue: null
