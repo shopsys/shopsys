@@ -1,14 +1,18 @@
-import { Controller } from 'react-hook-form';
-import { FC } from 'react';
+import { Controller, useFormContext } from 'react-hook-form';
+import { FC, useContext } from 'react';
+import { ContactInformationContext } from 'pages/order/contact-information';
 import FormColumn from 'components/Forms/Lib/FormColumn';
 import FormLine from 'components/Forms/Lib/FormLine';
 import FormLineError from 'components/Forms/Lib/FormLineError';
 import Heading from 'components/Basic/Heading';
+import Select from 'components/Forms/Select';
 import TextInput from 'components/Forms/TextInput';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 
 const ContactInformationAddress: FC = () => {
     const t = useTypedTranslationFunction();
+    const formProviderMethods = useFormContext();
+    const context = useContext(ContactInformationContext);
 
     return (
         <>
@@ -79,12 +83,15 @@ const ContactInformationAddress: FC = () => {
             <FormLine Lg="65%">
                 <Controller
                     name="country"
-                    render={({ fieldState: { isTouched, invalid, error }, field }) => (
+                    render={({ field }) => (
                         <>
-                            <select name="country" id="contactInformation_form-country">
-                                <option value="Slovensko">Slovensko</option>
-                                <option value="Česká republika">Česká republika</option>
-                            </select>
+                            <Select
+                                defaultValue={context[0]}
+                                options={context}
+                                onChange={(option: { label: string }) =>
+                                    formProviderMethods.setValue(field.name, option.label)
+                                }
+                            />
                         </>
                     )}
                 />

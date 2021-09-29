@@ -3,22 +3,26 @@ import {
     ContactInformationDeliveryAddressStyled,
 } from './ContactInformationDeliveryAddress.style';
 import { Controller, useFormContext, useWatch } from 'react-hook-form';
-import { FC, useRef, useState } from 'react';
+import { FC, useContext, useRef, useState } from 'react';
 import ChoiceFormLine from 'components/Forms/Lib/ChoiceFormLine';
+import { ContactInformationContext } from 'pages/order/contact-information';
 import { CSSTransition } from 'react-transition-group';
 import DeliveryCheckbox from './DeliveryCheckbox';
 import FormColumn from 'components/Forms/Lib/FormColumn';
 import FormLine from 'components/Forms/Lib/FormLine';
 import FormLineError from 'components/Forms/Lib/FormLineError';
+import Select from 'components/Forms/Select';
 import TextInput from 'components/Forms/TextInput';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 
 const ContactInformationDeliveryAddress: FC = () => {
     const t = useTypedTranslationFunction();
     const contentElement = useRef<HTMLDivElement>(null);
-    const nodeRef = useRef(null);
+    const cssTransitionRef = useRef(null);
     const [contentElementHeight, setContentElementHeight] = useState(0);
     const [IsDeliveryAddressChecked, setIsDeliveryAddressChecked] = useState(false);
+    const formProviderMethods = useFormContext();
+    const context = useContext(ContactInformationContext);
 
     const calcHeight = () => {
         if (contentElement.current) {
@@ -47,7 +51,7 @@ const ContactInformationDeliveryAddress: FC = () => {
                     onEnter={calcHeight}
                     onExit={calcHeight}
                     unmountOnExit
-                    nodeRef={nodeRef}
+                    nodeRef={cssTransitionRef}
                 >
                     <div ref={cssTransitionRef}>
                         <ContactInformationDeliveryAddressContentStyled ref={contentElement}>
@@ -196,12 +200,15 @@ const ContactInformationDeliveryAddress: FC = () => {
                             <FormLine Lg="65%">
                                 <Controller
                                     name="deliveryCountry"
-                                    render={({ fieldState: { isTouched, invalid, error }, field }) => (
+                                    render={({ field }) => (
                                         <>
-                                            <select name="deliveryCountry" id="contactInformation_form-deliveryCountry">
-                                                <option value="Slovensko">Slovensko</option>
-                                                <option value="Česká republika">Česká republika</option>
-                                            </select>
+                                            <Select
+                                                defaultValue={context[0]}
+                                                options={context}
+                                                onChange={(option: { label: string }) =>
+                                                    formProviderMethods.setValue(field.name, option.label)
+                                                }
+                                            />
                                         </>
                                     )}
                                 />
