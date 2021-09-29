@@ -1,4 +1,5 @@
 import { FC, useState } from 'react';
+import { initialState, SortType, userActions } from 'redux/store/UserStore';
 import {
     SortingBarItemLinkStyled,
     SortingBarItemLinkWrapStyled,
@@ -12,7 +13,6 @@ import {
     SortingBarStyled,
     SortingBarTitleStyled,
 } from './SortingBar.style';
-import { SortType, userActions } from 'redux/store/UserStore';
 import { useShopsysDispatch, useShopsysSelector } from 'redux/store';
 import { getIsElementVisible } from 'components/Helpers/GetIsItemVisible';
 import { mobileFirstSizes } from 'components/Theme/mediaQueries';
@@ -45,6 +45,23 @@ const SortingBar: FC = () => {
         { stateValue: 'PRICE_DESC', displayValue: t('price descending') },
     ];
 
+    const updateUrlWithCurrentSort = (sort: string) => {
+        const queryParams = new URLSearchParams(window.location.search);
+        if (sort === initialState.sort) {
+            queryParams.delete('sort');
+        } else {
+            queryParams.set('sort', sort);
+        }
+        let newState = document.location.pathname;
+        if (queryParams.toString().length > 0) {
+            newState = '?' + queryParams.toString();
+        }
+        history.replaceState(history.state, document.title, newState);
+    };
+    if (typeof window !== 'undefined') {
+        updateUrlWithCurrentSort(selectedSort);
+    }
+
     return (
         <SortingBarStyled>
             {isMobileSortBarVisible ? (
@@ -57,6 +74,7 @@ const SortingBar: FC = () => {
                                     key={value.stateValue}
                                     onClick={() => {
                                         setToggleSortMenu(!toggleSortMenu);
+                                        updateUrlWithCurrentSort(value.stateValue);
                                         dispatch(userActions.setSort({ sort: value.stateValue }));
                                     }}
                                 >
@@ -80,6 +98,7 @@ const SortingBar: FC = () => {
                                             isActive={selectedSort === value.stateValue}
                                             onClick={() => {
                                                 setToggleSortMenu(!toggleSortMenu);
+                                                updateUrlWithCurrentSort(value.stateValue);
                                                 dispatch(userActions.setSort({ sort: value.stateValue }));
                                             }}
                                         >
@@ -97,6 +116,7 @@ const SortingBar: FC = () => {
                                 <SortingBarItemStyled
                                     key={value.stateValue}
                                     onClick={() => {
+                                        updateUrlWithCurrentSort(value.stateValue);
                                         dispatch(userActions.setSort({ sort: value.stateValue }));
                                     }}
                                 >

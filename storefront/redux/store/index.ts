@@ -19,7 +19,7 @@ const store = configureStore({
 export type AppDispatch = typeof store.dispatch;
 export type RootState = ReturnType<typeof store.getState>;
 
-export const useShopsysDispatch = () => useDispatch<AppDispatch>();
+export const useShopsysDispatch = (): AppDispatch => useDispatch<AppDispatch>();
 export const useShopsysSelector: TypedUseSelectorHook<RootState> = useSelector;
 
 export default store;
