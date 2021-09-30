@@ -463,6 +463,15 @@ class ProductFacade extends BaseProductFacade
     }
 
     /**
+     * @param array $catnums
+     * @return \App\Model\Product\Product[]
+     */
+    public function findAllByCatnums(array $catnums): array
+    {
+        return $this->productRepository->findAllByCatnums($catnums);
+    }
+
+    /**
      * @param \App\Model\Product\Product $product
      * @param \App\Model\Product\Product[] $accessories
      */

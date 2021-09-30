@@ -1,0 +1,28 @@
+{% block products_with_catnum_widget %}
+    <div class="form-line__side">
+        <table class="table-form">
+            <thead>
+            <tr class="table-form__row">
+                <td class="table-form__cell">{{ 'Catalog number'|trans }}</td>
+                <td class="table-form__cell" >{{ 'Name'|trans }}</td>
+            </tr>
+            </thead>
+            <tbody>
+            {% for key, product in products %}
+                <tr class="js-products-picker-item table-form__row">
+                    <td class="table-form__cell">
+                        {{ product.catnum }}
+                    </td>
+                    <td class="table-form__cell">
+                        {% if product is not null %}
+                            <a href="{{ url('admin_product_edit', {id: product.id}) }}" target="_blank" class="btn-link-style btn-link-style--iconic-l">
+                                <span>{{ product.name }}</span>&nbsp;<i class="svg svg-forward-page"></i>
+                            </a>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

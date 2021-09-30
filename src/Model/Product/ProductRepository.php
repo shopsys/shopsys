@@ -163,6 +163,20 @@ class ProductRepository extends BaseProductRepository
     }
 
     /**
+     * @param array $catnums
+     * @return \App\Model\Product\Product[]
+     */
+    public function findAllByCatnums(array $catnums): array
+    {
+        $queryBuilder = $this->getProductRepository()
+            ->createQueryBuilder('p', 'p.catnum')
+            ->andWhere('p.catnum IN (:catnum)')
+            ->setParameter('catnum', $catnums);
+
+        return $queryBuilder->getQuery()->getResult();
+    }
+
+    /**
      * @return \Doctrine\ORM\Internal\Hydration\IterableResult|\App\Model\Product\Product[][]
      */
     public function getProductIteratorForReplaceVat()
