@@ -5,6 +5,7 @@ import { useShopsysDispatch, useShopsysSelector } from 'redux/store';
 import Button from 'components/Forms/Button';
 import { SliderProductItemType } from 'components/Blocks/Product/types';
 import Spinbox from 'components/Forms/Spinbox';
+import { updateUserDataCookie } from 'helpers/Cookies';
 import { useHandleChangeCartItemQuantity } from 'hooks/cart/UseHandleChangeCartItemQuantity';
 import { userActions } from 'redux/store/UserStore';
 import { useRouter } from 'next/dist/client/router';
@@ -32,7 +33,9 @@ const ProductAction: FC<SliderProductItemType> = (props) => {
         });
         if (data !== undefined) {
             useHandleChangeCartItemQuantity(data, error, props.uuid, props.name, t);
-            dispatch(userActions.setCart(mapCart(data.AddToCart, currencyCode)));
+            const newCart = mapCart(data.AddToCart, currencyCode);
+            dispatch(userActions.setCart(newCart));
+            updateUserDataCookie({ cartUuid: newCart.uuid });
         }
         spinboxRef.current!.valueAsNumber = 1;
     };

@@ -22,6 +22,7 @@ import ItemInfo from './ItemInfo';
 import NextLink from 'next/link';
 import { showErrorMessage } from 'components/Helpers/Toasts';
 import Spinbox from 'components/Forms/Spinbox';
+import { updateUserDataCookie } from 'helpers/Cookies';
 import { userActions } from 'redux/store/UserStore';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 
@@ -55,7 +56,9 @@ const Item: FC<ItemProps> = (props) => {
 
         removeItemFromCart({ cartItemUuid: props.item.uuid, cartUuid }).then(({ data }) => {
             if (data !== undefined) {
-                dispatch(userActions.setCart(mapCart(data.RemoveFromCart, currencyCode)));
+                const newCart = mapCart(data.RemoveFromCart, currencyCode);
+                dispatch(userActions.setCart(newCart));
+                updateUserDataCookie({ cartUuid: newCart.uuid });
             }
         });
     };
@@ -76,7 +79,9 @@ const Item: FC<ItemProps> = (props) => {
                     return;
                 }
 
-                dispatch(userActions.setCart(mapCart(data.AddToCart, currencyCode)));
+                const newCart = mapCart(data.AddToCart, currencyCode);
+                dispatch(userActions.setCart(newCart));
+                updateUserDataCookie({ cartUuid: newCart.uuid });
                 if (data.AddToCart.addProductResult.notOnStockQuantity > 0) {
                     spinboxRef.current!.valueAsNumber = data.AddToCart.addProductResult.addedQuantity;
                     showErrorMessage(
