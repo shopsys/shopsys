@@ -53,5 +53,8 @@
     "Coupon": "Kupón",
     "Apply": "Uplatniť",
     "Your discount with the code has been applied.": "Vaša zľava s kódom bola uplatnená.",
-    "The discount was applied to all non-discounted items to which the promotion applies according to the rules.": "Zľava bola uplatnená na všetky už nezľavnené položky na ktoré sa akcia vzťahuje podľa pravidiel."
+    "The discount was applied to all non-discounted items to which the promotion applies according to the rules.": "Zľava bola uplatnená na všetky už nezľavnené položky na ktoré sa akcia vzťahuje podľa pravidiel.",
+    "Your order": "Vaša objednávka",
+    "Total price": "Celková cena",
+    "By credit card": "Kreditnou kartou"
 }
