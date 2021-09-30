@@ -295,4 +295,13 @@ class ProductOnCurrentDomainElasticFacade extends BaseProductOnCurrentDomainElas
         $productsResult = $this->productElasticsearchRepository->getSortedProductsResultByFilterQuery($filterQuery);
         return $productsResult->getHits();
     }
+
+    /**
+     * @param \App\Model\Product\Filter\ProductFilterData $productFilterData
+     * @return int[]
+     */
+    public function getCategoryIdsForFilterData(ProductFilterData $productFilterData)
+    {
+        return $this->productElasticsearchRepository->getCategoryIdsForFilterData($productFilterData);
+    }
 }

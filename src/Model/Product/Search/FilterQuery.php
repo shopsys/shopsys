@@ -343,4 +343,19 @@ class FilterQuery extends BaseFilterQuery
 
         return $query;
     }
+
+    /**
+     * @return array
+     */
+    public function getAggregationQueryForProductCountInCategories(): array
+    {
+        $query = $this->getQuery();
+        $query['body']['aggs'] = [
+            'by_categories' => [
+                'terms' => ['field' => 'categories'],
+            ],
+        ];
+
+        return $query;
+    }
 }
