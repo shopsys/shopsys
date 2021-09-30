@@ -1,59 +1,49 @@
 import { Tabs, TabsContent, TabsList, TabsListItem } from 'components/Basic/Tabs';
 import { FC } from 'react';
+import { ProductParameterType } from './types';
 import Table from 'components/Basic/Table';
 import UserText from 'components/Helpers/UserText';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 
 type ProductDetailTabsProps = {
     description: string;
+    parameters: ProductParameterType[];
 };
 
 const ProductDetailTabs: FC<ProductDetailTabsProps> = (props) => {
     const t = useTypedTranslationFunction();
 
+    const formatParameterValue = (valueText: string, index: number) => {
+        return index > 0 ? ' | ' + valueText : valueText;
+    };
+
     return (
         <Tabs>
             <TabsList>
-                <TabsListItem>{t('Přehled')}</TabsListItem>
-                <TabsListItem>{t('Parametry')}</TabsListItem>
+                <TabsListItem>{t('Overview')}</TabsListItem>
+                {props.parameters.length > 0 && <TabsListItem>{t('Parameters')}</TabsListItem>}
             </TabsList>
-            <TabsContent headingTextMobile={t('Přehled')}>
+            <TabsContent headingTextMobile={t('Overview')}>
                 <UserText htmlContent={props.description} />
             </TabsContent>
-            <TabsContent headingTextMobile={t('Parametry')}>
-                <Table>
-                    <tbody>
-                        <tr>
-                            <th>Úhlopříčka</th>
-                            <td>27&quot;</td>
-                        </tr>
-                        <tr>
-                            <th>Technologie</th>
-                            <td>LED</td>
-                        </tr>
-                        <tr>
-                            <th>Rozlišení</th>
-                            <td>1920x1080 (Full HD)</td>
-                        </tr>
-                        <tr>
-                            <th>USB</th>
-                            <td>Ano</td>
-                        </tr>
-                        <tr>
-                            <th>HDMI</th>
-                            <td>Ano</td>
-                        </tr>
-                        <tr>
-                            <th>Barva</th>
-                            <td>Černá</td>
-                        </tr>
-                        <tr>
-                            <th>Materiál</th>
-                            <td>kov</td>
-                        </tr>
-                    </tbody>
-                </Table>
-            </TabsContent>
+            {props.parameters.length > 0 && (
+                <TabsContent headingTextMobile={t('Parameters')}>
+                    <Table>
+                        <tbody>
+                            {props.parameters.map((parameter) => (
+                                <tr key={parameter.uuid}>
+                                    <th>{parameter.name}</th>
+                                    <td>
+                                        {parameter.values.map((value, index) =>
+                                            formatParameterValue(value.text, index),
+                                        )}
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </Table>
+                </TabsContent>
+            )}
         </Tabs>
     );
 };

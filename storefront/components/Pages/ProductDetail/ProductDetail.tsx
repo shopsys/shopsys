@@ -48,9 +48,7 @@ const ProductDetail: FC<ProductDetailProps> = (props) => {
                     </ProductDetailInfoStyled>
                 </ProductDetailStyled>
             </Webline>
-            <Webline>
-                <ProductDetailTabs description={props.product.description} />
-            </Webline>
+            <ProductDetailTabs description={props.product.description} parameters={props.product.parameters} />
             <Webline>
                 <ProductDetailAvailabilityList ref={scrollTarget} {...props} />
             </Webline>

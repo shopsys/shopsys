@@ -18,6 +18,16 @@ export type StoreAvailability = {
     availabilityInformation: string;
     availabilityStatus: 'in-stock' | 'out-of-stock';
 };
+
+export type ProductParameterType = {
+    uuid: string;
+    name: string;
+    visible: boolean;
+    values: {
+        uuid: string;
+        text: string;
+    }[];
+};
 export interface ProductDetailApiType extends SlugType, BreadcrumbType {
     uuid: string;
     name: string;
@@ -32,6 +42,7 @@ export interface ProductDetailApiType extends SlugType, BreadcrumbType {
     availableStoresCount: number;
     exposedStoresCount: number;
     accessories: ProductItemApiType[];
+    parameters: ProductParameterType[];
 }
 
 export interface ProductDetailType extends SlugType, BreadcrumbType {
@@ -48,4 +59,5 @@ export interface ProductDetailType extends SlugType, BreadcrumbType {
     availableStoresCount: number;
     exposedStoresCount: number;
     accessories: SliderProductItemType[];
+    parameters: ProductParameterType[];
 }

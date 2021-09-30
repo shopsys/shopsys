@@ -34,6 +34,15 @@ export const productDetailBody = `
     accessories {
         ${sliderProductQuery}
     }
+    parameters {
+        uuid
+        name
+        visible
+        values {
+            uuid
+            text
+        }
+    }
 `;
 
 export const mapProductDetailApiData = (
@@ -44,5 +53,6 @@ export const mapProductDetailApiData = (
         ...productDetailApiData,
         price: mapProductPriceData(productDetailApiData.price, currencyCode),
         accessories: mapSliderProductApiData(productDetailApiData.accessories, currencyCode),
+        parameters: productDetailApiData.parameters.filter((parameter) => parameter.visible),
     };
 };
