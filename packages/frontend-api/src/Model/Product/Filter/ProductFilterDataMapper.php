@@ -4,14 +4,18 @@ declare(strict_types=1);
 
 namespace Shopsys\FrontendApiBundle\Model\Product\Filter;
 
+use Shopsys\FrameworkBundle\DependencyInjection\SetterInjectionTrait;
 use Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ParameterFilterData;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData;
+use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterDataFactory;
 use Shopsys\FrameworkBundle\Model\Product\Flag\FlagFacade;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade;
 
 class ProductFilterDataMapper
 {
+    use SetterInjectionTrait;
+
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\Flag\FlagFacade
      */
@@ -38,18 +42,36 @@ class ProductFilterDataMapper
     protected array $parameterValuesByUuid = [];
 
     /**
+     * @var \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterDataFactory|null
+     */
+    protected ?ProductFilterDataFactory $productFilterDataFactory;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Flag\FlagFacade $flagFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade $brandFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade $parameterFacade
+     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterDataFactory|null $productFilterDataFactory
      */
     public function __construct(
         FlagFacade $flagFacade,
         BrandFacade $brandFacade,
-        ParameterFacade $parameterFacade
+        ParameterFacade $parameterFacade,
+        ?ProductFilterDataFactory $productFilterDataFactory = null
     ) {
         $this->flagFacade = $flagFacade;
         $this->brandFacade = $brandFacade;
         $this->parameterFacade = $parameterFacade;
+        $this->productFilterDataFactory = $productFilterDataFactory;
+    }
+
+    /**
+     * @required
+     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterDataFactory $productFilterDataFactory
+     * @internal This function will be replaced by constructor injection in next major
+     */
+    public function setParameterBag(ProductFilterDataFactory $productFilterDataFactory): void
+    {
+        $this->setDependency($productFilterDataFactory, 'productFilterDataFactory');
     }
 
     /**
@@ -58,7 +80,7 @@ class ProductFilterDataMapper
      */
     public function mapFrontendApiFilterToProductFilterData(array $frontendApiFilter): ProductFilterData
     {
-        $productFilterData = new ProductFilterData();
+        $productFilterData = $this->productFilterDataFactory->create();
         $productFilterData->minimalPrice = $frontendApiFilter['minimalPrice'] ?? null;
         $productFilterData->maximalPrice = $frontendApiFilter['maximalPrice'] ?? null;
         $productFilterData->parameters = $this->getParametersAndValuesByUuids($frontendApiFilter['parameters'] ?? []);

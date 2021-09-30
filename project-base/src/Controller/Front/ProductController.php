@@ -7,6 +7,7 @@ namespace App\Controller\Front;
 use App\Form\Front\Product\ProductFilterFormType;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\String\TransformString;
+use Shopsys\FrameworkBundle\DependencyInjection\SetterInjectionTrait;
 use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
 use Shopsys\FrameworkBundle\Model\Module\ModuleFacade;
@@ -14,6 +15,7 @@ use Shopsys\FrameworkBundle\Model\Module\ModuleList;
 use Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfigFactory;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData;
+use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterDataFactory;
 use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingModeForBrandFacade;
 use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingModeForListFacade;
 use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingModeForSearchFacade;
@@ -97,6 +99,11 @@ class ProductController extends FrontBaseController
     protected $productDetailViewFacade;
 
     /**
+     * @var \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterDataFactory
+     */
+    protected ProductFilterDataFactory $productFilterDataFactory;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Twig\RequestExtension $requestExtension
      * @param \Shopsys\FrameworkBundle\Model\Category\CategoryFacade $categoryFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
@@ -110,6 +117,7 @@ class ProductController extends FrontBaseController
      * @param \Shopsys\ReadModelBundle\Product\Listed\ListedProductViewFacadeInterface $listedProductViewFacade
      * @param \Shopsys\ReadModelBundle\Product\Listed\ListedProductVariantsViewFacadeInterface $listedProductVariantsViewFacade
      * @param \Shopsys\ReadModelBundle\Product\Detail\ProductDetailViewFacadeInterface $productDetailViewFacade
+     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterDataFactory $productFilterDataFactory
      */
     public function __construct(
         RequestExtension $requestExtension,
@@ -124,7 +132,8 @@ class ProductController extends FrontBaseController
         BrandFacade $brandFacade,
         ListedProductViewFacadeInterface $listedProductViewFacade,
         ListedProductVariantsViewFacadeInterface $listedProductVariantsViewFacade,
-        ProductDetailViewFacadeInterface $productDetailViewFacade
+        ProductDetailViewFacadeInterface $productDetailViewFacade,
+        ProductFilterDataFactory $productFilterDataFactory
     ) {
         $this->requestExtension = $requestExtension;
         $this->categoryFacade = $categoryFacade;
@@ -139,6 +148,7 @@ class ProductController extends FrontBaseController
         $this->listedProductViewFacade = $listedProductViewFacade;
         $this->listedProductVariantsViewFacade = $listedProductVariantsViewFacade;
         $this->productDetailViewFacade = $productDetailViewFacade;
+        $this->productFilterDataFactory = $productFilterDataFactory;
     }
 
     /**
@@ -176,7 +186,7 @@ class ProductController extends FrontBaseController
             $request
         );
 
-        $productFilterData = new ProductFilterData();
+        $productFilterData = $this->productFilterDataFactory->create();
 
         $productFilterConfig = $this->createProductFilterConfigForCategory($category);
         $filterForm = $this->createForm(ProductFilterFormType::class, $productFilterData, [
@@ -275,7 +285,7 @@ class ProductController extends FrontBaseController
             $request
         );
 
-        $productFilterData = new ProductFilterData();
+        $productFilterData = $this->productFilterDataFactory->create();
 
         $productFilterConfig = $this->createProductFilterConfigForSearch($searchText);
         $filterForm = $this->createForm(ProductFilterFormType::class, $productFilterData, [

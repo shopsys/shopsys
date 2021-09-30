@@ -8,6 +8,7 @@ use Doctrine\ORM\Query;
 use Shopsys\FrameworkBundle\Component\Doctrine\SortableNullsWalker;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Paginator\PaginationResult;
+use Shopsys\FrameworkBundle\DependencyInjection\SetterInjectionTrait;
 use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Category\CategoryRepository;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
@@ -17,10 +18,13 @@ use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountRepository;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData;
+use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterDataFactory;
 use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingConfig;
 
 class ProductOnCurrentDomainFacade implements ProductOnCurrentDomainFacadeInterface
 {
+    use SetterInjectionTrait;
+
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\ProductRepository
      */
@@ -57,6 +61,11 @@ class ProductOnCurrentDomainFacade implements ProductOnCurrentDomainFacadeInterf
     protected $brandRepository;
 
     /**
+     * @var \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterDataFactory|null
+     */
+    protected ?ProductFilterDataFactory $productFilterDataFactory;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductRepository $productRepository
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
@@ -64,6 +73,7 @@ class ProductOnCurrentDomainFacade implements ProductOnCurrentDomainFacadeInterf
      * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountRepository $productFilterCountRepository
      * @param \Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryRepository $productAccessoryRepository
      * @param \Shopsys\FrameworkBundle\Model\Product\Brand\BrandRepository $brandRepository
+     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterDataFactory|null $productFilterDataFactory
      */
     public function __construct(
         ProductRepository $productRepository,
@@ -72,7 +82,8 @@ class ProductOnCurrentDomainFacade implements ProductOnCurrentDomainFacadeInterf
         CategoryRepository $categoryRepository,
         ProductFilterCountRepository $productFilterCountRepository,
         ProductAccessoryRepository $productAccessoryRepository,
-        BrandRepository $brandRepository
+        BrandRepository $brandRepository,
+        ?ProductFilterDataFactory $productFilterDataFactory = null
     ) {
         $this->productRepository = $productRepository;
         $this->domain = $domain;
@@ -81,6 +92,17 @@ class ProductOnCurrentDomainFacade implements ProductOnCurrentDomainFacadeInterf
         $this->productFilterCountRepository = $productFilterCountRepository;
         $this->productAccessoryRepository = $productAccessoryRepository;
         $this->brandRepository = $brandRepository;
+        $this->productFilterDataFactory = $productFilterDataFactory;
+    }
+
+    /**
+     * @required
+     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterDataFactory $productFilterDataFactory
+     * @internal This function will be replaced by constructor injection in next major
+     */
+    public function setParameterBag(ProductFilterDataFactory $productFilterDataFactory): void
+    {
+        $this->setDependency($productFilterDataFactory, 'productFilterDataFactory');
     }
 
     /**
@@ -211,7 +233,7 @@ class ProductOnCurrentDomainFacade implements ProductOnCurrentDomainFacadeInterf
      */
     public function getSearchAutocompleteProducts(?string $searchText, int $limit): PaginationResult
     {
-        $emptyProductFilterData = new ProductFilterData();
+        $emptyProductFilterData = $this->productFilterDataFactory->create();
 
         $page = 1;
 

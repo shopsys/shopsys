@@ -6,14 +6,18 @@ namespace Shopsys\FrontendApiBundle\Model\Product\Filter;
 
 use Overblog\GraphQLBundle\Definition\Argument;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\DependencyInjection\SetterInjectionTrait;
 use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfigFactory;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData;
+use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterDataFactory;
 
 class ProductFilterFacade
 {
+    use SetterInjectionTrait;
+
     /**
      * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
      */
@@ -40,21 +44,39 @@ class ProductFilterFacade
     protected array $productFilterConfigCache = [];
 
     /**
+     * @var \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterDataFactory|null
+     */
+    protected ?ProductFilterDataFactory $productFilterDataFactory;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterDataMapper $productFilterDataMapper
      * @param \Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterNormalizer $productFilterNormalizer
      * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfigFactory $productFilterConfigFactory
+     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterDataFactory|null $productFilterDataFactory
      */
     public function __construct(
         Domain $domain,
         ProductFilterDataMapper $productFilterDataMapper,
         ProductFilterNormalizer $productFilterNormalizer,
-        ProductFilterConfigFactory $productFilterConfigFactory
+        ProductFilterConfigFactory $productFilterConfigFactory,
+        ?ProductFilterDataFactory $productFilterDataFactory = null
     ) {
         $this->productFilterDataMapper = $productFilterDataMapper;
         $this->productFilterNormalizer = $productFilterNormalizer;
         $this->productFilterConfigFactory = $productFilterConfigFactory;
         $this->domain = $domain;
+        $this->productFilterDataFactory = $productFilterDataFactory;
+    }
+
+    /**
+     * @required
+     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterDataFactory $productFilterDataFactory
+     * @internal This function will be replaced by constructor injection in next major
+     */
+    public function setParameterBag(ProductFilterDataFactory $productFilterDataFactory): void
+    {
+        $this->setDependency($productFilterDataFactory, 'productFilterDataFactory');
     }
 
     /**
@@ -135,7 +157,7 @@ class ProductFilterFacade
     public function getValidatedProductFilterDataForAll(Argument $argument): ProductFilterData
     {
         if ($argument['filter'] === null) {
-            return new ProductFilterData();
+            return $this->productFilterDataFactory->create();
         }
 
         $productFilterConfig = $this->getProductFilterConfigForAll();
@@ -151,7 +173,7 @@ class ProductFilterFacade
     public function getValidatedProductFilterDataForCategory(Argument $argument, Category $category): ProductFilterData
     {
         if ($argument['filter'] === null) {
-            return new ProductFilterData();
+            return $this->productFilterDataFactory->create();
         }
 
         $productFilterConfig = $this->getProductFilterConfigForCategory($category);
@@ -167,7 +189,7 @@ class ProductFilterFacade
     public function getValidatedProductFilterDataForBrand(Argument $argument, Brand $brand): ProductFilterData
     {
         if ($argument['filter'] === null) {
-            return new ProductFilterData();
+            return $this->productFilterDataFactory->create();
         }
 
         $productFilterConfig = $this->getProductFilterConfigForBrand($brand);

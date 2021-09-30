@@ -7,12 +7,14 @@ namespace Shopsys\FrameworkBundle\Model\Product;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionLoader;
 use Shopsys\FrameworkBundle\Component\Paginator\PaginationResult;
+use Shopsys\FrameworkBundle\DependencyInjection\SetterInjectionTrait;
 use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryRepository;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData;
+use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterDataFactory;
 use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingConfig;
 use Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery;
 use Shopsys\FrameworkBundle\Model\Product\Search\FilterQueryFactory;
@@ -22,6 +24,8 @@ use Shopsys\FrameworkBundle\Model\Product\Search\ProductFilterDataToQueryTransfo
 
 class ProductOnCurrentDomainElasticFacade implements ProductOnCurrentDomainFacadeInterface
 {
+    use SetterInjectionTrait;
+
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\ProductRepository
      */
@@ -70,6 +74,11 @@ class ProductOnCurrentDomainElasticFacade implements ProductOnCurrentDomainFacad
     protected $indexDefinitionLoader;
 
     /**
+     * @var \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterDataFactory|null
+     */
+    protected ?ProductFilterDataFactory $productFilterDataFactory;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductRepository $productRepository
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
@@ -79,6 +88,7 @@ class ProductOnCurrentDomainElasticFacade implements ProductOnCurrentDomainFacad
      * @param \Shopsys\FrameworkBundle\Model\Product\Search\ProductFilterDataToQueryTransformer $productFilterDataToQueryTransformer
      * @param \Shopsys\FrameworkBundle\Model\Product\Search\FilterQueryFactory $filterQueryFactory
      * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionLoader $indexDefinitionLoader
+     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterDataFactory|null $productFilterDataFactory
      */
     public function __construct(
         ProductRepository $productRepository,
@@ -89,7 +99,8 @@ class ProductOnCurrentDomainElasticFacade implements ProductOnCurrentDomainFacad
         ProductFilterCountDataElasticsearchRepository $productFilterCountDataElasticsearchRepository,
         ProductFilterDataToQueryTransformer $productFilterDataToQueryTransformer,
         FilterQueryFactory $filterQueryFactory,
-        IndexDefinitionLoader $indexDefinitionLoader
+        IndexDefinitionLoader $indexDefinitionLoader,
+        ?ProductFilterDataFactory $productFilterDataFactory = null
     ) {
         $this->productRepository = $productRepository;
         $this->domain = $domain;
@@ -100,6 +111,17 @@ class ProductOnCurrentDomainElasticFacade implements ProductOnCurrentDomainFacad
         $this->productFilterDataToQueryTransformer = $productFilterDataToQueryTransformer;
         $this->filterQueryFactory = $filterQueryFactory;
         $this->indexDefinitionLoader = $indexDefinitionLoader;
+        $this->productFilterDataFactory = $productFilterDataFactory;
+    }
+
+    /**
+     * @required
+     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterDataFactory $productFilterDataFactory
+     * @internal This function will be replaced by constructor injection in next major
+     */
+    public function setParameterBag(ProductFilterDataFactory $productFilterDataFactory): void
+    {
+        $this->setDependency($productFilterDataFactory, 'productFilterDataFactory');
     }
 
     /**
@@ -170,7 +192,7 @@ class ProductOnCurrentDomainElasticFacade implements ProductOnCurrentDomainFacad
         int $limit,
         int $brandId
     ): PaginationResult {
-        $emptyProductFilterData = new ProductFilterData();
+        $emptyProductFilterData = $this->productFilterDataFactory->create();
 
         $filterQuery = $this->filterQueryFactory->createListableProductsByBrandId(
             $emptyProductFilterData,
@@ -215,7 +237,7 @@ class ProductOnCurrentDomainElasticFacade implements ProductOnCurrentDomainFacad
     {
         $searchText = $searchText ?? '';
 
-        $emptyProductFilterData = new ProductFilterData();
+        $emptyProductFilterData = $this->productFilterDataFactory->create();
         $page = 1;
 
         $filterQuery = $this->filterQueryFactory->createListableProductsBySearchText(
@@ -432,7 +454,7 @@ class ProductOnCurrentDomainElasticFacade implements ProductOnCurrentDomainFacad
      */
     public function getProductsOnCurrentDomain(int $limit, int $offset, string $orderingModeId): array
     {
-        $emptyProductFilterData = new ProductFilterData();
+        $emptyProductFilterData = $this->productFilterDataFactory->create();
         $filterQuery = $this->filterQueryFactory->createWithProductFilterData(
             $emptyProductFilterData,
             $orderingModeId,
@@ -454,7 +476,7 @@ class ProductOnCurrentDomainElasticFacade implements ProductOnCurrentDomainFacad
      */
     public function getProductsByCategory(Category $category, int $limit, int $offset, string $orderingModeId): array
     {
-        $emptyProductFilterData = new ProductFilterData();
+        $emptyProductFilterData = $this->productFilterDataFactory->create();
         $filterQuery = $this->filterQueryFactory->createListableProductsByCategoryId(
             $emptyProductFilterData,
             $orderingModeId,

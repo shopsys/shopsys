@@ -5,16 +5,20 @@ declare(strict_types=1);
 namespace Shopsys\FrontendApiBundle\Model\Product;
 
 use Shopsys\FrameworkBundle\Component\Deprecations\DeprecationHelper;
+use Shopsys\FrameworkBundle\DependencyInjection\SetterInjectionTrait;
 use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData;
+use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterDataFactory;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\Search\FilterQueryFactory;
 use Shopsys\FrameworkBundle\Model\Product\Search\ProductElasticsearchRepository;
 
 class ProductFacade
 {
+    use SetterInjectionTrait;
+
     /**
      * @var \Shopsys\FrontendApiBundle\Model\Product\ProductRepository
      */
@@ -31,19 +35,38 @@ class ProductFacade
     protected $productElasticsearchRepository;
 
     /**
+     * @var \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterDataFactory|null
+     */
+    protected ?ProductFilterDataFactory $productFilterDataFactory;
+
+    /**
      * @param \Shopsys\FrontendApiBundle\Model\Product\ProductRepository $productRepository
      * @param \Shopsys\FrameworkBundle\Model\Product\Search\FilterQueryFactory $filterQueryFactory
      * @param \Shopsys\FrameworkBundle\Model\Product\Search\ProductElasticsearchRepository $productElasticsearchRepository
+     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterDataFactory|null $productFilterDataFactory
      */
     public function __construct(
         ProductRepository $productRepository,
         FilterQueryFactory $filterQueryFactory,
-        ProductElasticsearchRepository $productElasticsearchRepository
+        ProductElasticsearchRepository $productElasticsearchRepository,
+        ?ProductFilterDataFactory $productFilterDataFactory = null
     ) {
         $this->productRepository = $productRepository;
         $this->filterQueryFactory = $filterQueryFactory;
         $this->productElasticsearchRepository = $productElasticsearchRepository;
+        $this->productFilterDataFactory = $productFilterDataFactory;
     }
+
+    /**
+     * @required
+     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterDataFactory $productFilterDataFactory
+     * @internal This function will be replaced by constructor injection in next major
+     */
+    public function setParameterBag(ProductFilterDataFactory $productFilterDataFactory): void
+    {
+        $this->setDependency($productFilterDataFactory, 'productFilterDataFactory');
+    }
+
 
     /**
      * @param string $uuid
@@ -96,7 +119,7 @@ class ProductFacade
     {
         DeprecationHelper::triggerMethod(__METHOD__, 'getFilteredProductsOnCurrentDomain');
 
-        $emptyProductFilterData = new ProductFilterData();
+        $emptyProductFilterData = $this->productFilterDataFactory->create();
         $filterQuery = $this->filterQueryFactory->createWithProductFilterData(
             $emptyProductFilterData,
             $orderingModeId,
@@ -151,7 +174,7 @@ class ProductFacade
     {
         DeprecationHelper::triggerMethod(__METHOD__, 'getFilteredProductsByCategory');
 
-        $emptyProductFilterData = new ProductFilterData();
+        $emptyProductFilterData = $this->productFilterDataFactory->create();
         $filterQuery = $this->filterQueryFactory->createListableProductsByCategoryId(
             $emptyProductFilterData,
             $orderingModeId,
@@ -246,7 +269,7 @@ class ProductFacade
     {
         DeprecationHelper::triggerMethod(__METHOD__, 'getFilteredProductsByBrand');
 
-        $emptyProductFilterData = new ProductFilterData();
+        $emptyProductFilterData = $this->productFilterDataFactory->create();
         $filterQuery = $this->filterQueryFactory->createListableProductsByBrandId(
             $emptyProductFilterData,
             $orderingModeId,
