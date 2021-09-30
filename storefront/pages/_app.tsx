@@ -3,21 +3,18 @@ import { AppProps } from 'next/app';
 import { appWithTranslation } from 'next-i18next';
 import { getDomainConfig } from 'utils/Domain/Domain';
 import nextI18NextConfig from 'next-i18next.config';
-import { Provider } from 'react-redux';
 import { ReactElement } from 'react';
 import ShopsysGlobalProvider from 'context/ShopsysGlobalProvider';
-import store from 'redux/store';
 import { ToastContainer } from 'react-toastify';
 import { withUrqlClient } from 'next-urql';
+import { wrapper } from 'redux/store';
 
 function MyApp({ Component, pageProps }: AppProps): ReactElement {
     return (
-        <Provider store={store}>
-            <ShopsysGlobalProvider>
-                <ToastContainer autoClose={6000} position="top-center" theme="colored" />
-                <Component {...pageProps} />
-            </ShopsysGlobalProvider>
-        </Provider>
+        <ShopsysGlobalProvider>
+            <ToastContainer autoClose={6000} position="top-center" theme="colored" />
+            <Component {...pageProps} />
+        </ShopsysGlobalProvider>
     );
 }
 
@@ -33,13 +30,15 @@ const getApiUrl = () => {
     return apiUrl;
 };
 
-export default withUrqlClient(
-    () => ({
-        url: getApiUrl(),
-    }),
-    { ssr: false },
-)(
-    // eslint-disable-next-line
-    // @ts-ignore
-    appWithTranslation(MyApp, nextI18NextConfig),
+export default wrapper.withRedux(
+    withUrqlClient(
+        () => ({
+            url: getApiUrl(),
+        }),
+        { ssr: false },
+    )(
+        // eslint-disable-next-line
+        // @ts-ignore
+        appWithTranslation(MyApp, nextI18NextConfig),
+    ),
 );

@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { CartType } from 'connectors/cart/types';
+import { HYDRATE } from 'next-redux-wrapper';
 
 const sortPriority = 'PRIORITY';
 const sortPriceAsc = 'PRICE_ASC';
@@ -27,9 +28,16 @@ export const userSlice = createSlice({
         setSort(state, action: PayloadAction<PayloadType>) {
             state.sort = action.payload.sort;
         },
-        setCart(state, action: PayloadAction<CartType>) {
+        setCart(state, action: PayloadAction<CartType | undefined>) {
             state.cart = action.payload;
-            localStorage.setItem('cartUuid', action.payload.uuid);
+        },
+    },
+    extraReducers: {
+        [HYDRATE]: (state, action) => {
+            return {
+                ...state,
+                ...action.payload.user,
+            };
         },
     },
 });
