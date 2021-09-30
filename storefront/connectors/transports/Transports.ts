@@ -15,9 +15,11 @@ export const transportsQuery = `
                     vatAmount
                 }
                 images {
-                    url
-                    width
-                    height
+                    sizes {
+                        url
+                        height
+                        width
+                    }
                 }
                 payments {
                     uuid
@@ -30,9 +32,11 @@ export const transportsQuery = `
                         vatAmount
                     }
                     images {
-                        url
-                        width
-                        height
+                        sizes {
+                            url
+                            height
+                            width
+                        }
                     }
                 }
                 daysUntilDelivery
@@ -66,13 +70,13 @@ const mapTransports = (apiData: TransportApiType[], currencyCode: string): Trans
     return apiData.map((transport) => {
         return {
             ...transport,
-            image: transport.images.length === 0 ? null : transport.images[0],
+            image: transport.images.length === 0 ? null : transport.images[0].sizes[0],
             price: mapPriceData(transport.price, currencyCode),
             personalPickup: Array.isArray(transport.stores?.edges) && transport.stores.edges.length > 0,
             payments: transport.payments.map((payment) => {
                 return {
                     ...payment,
-                    image: payment.images.length === 0 ? null : payment.images[0],
+                    image: payment.images.length === 0 ? null : payment.images[0].sizes[0],
                     price: mapPriceData(payment.price, currencyCode),
                 };
             }),

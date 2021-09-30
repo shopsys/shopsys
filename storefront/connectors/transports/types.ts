@@ -1,4 +1,4 @@
-import { ImageType } from 'components/Basic/Image/types';
+import { ImageApiType, ImageType } from 'components/Basic/Image/types';
 
 export type PriceApiType = {
     priceWithVat: string;
@@ -18,7 +18,7 @@ export type PaymentApiType = {
     description: string;
     instruction: string;
     price: PriceApiType;
-    images: ImageType[];
+    images: ImageApiType[];
 };
 
 export type PaymentType = {
@@ -46,7 +46,7 @@ export type TransportApiType = {
     description: string;
     instruction: string;
     price: PriceApiType;
-    images: ImageType[];
+    images: ImageApiType[];
     payments: PaymentApiType[];
     daysUntilDelivery: number;
     stores: {

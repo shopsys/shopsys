@@ -12,7 +12,7 @@ import {
     TotalPriceCellStyled,
     TotalPriceStyled,
 } from './Item.style';
-import { mapCart, useChangeCartItemQuantity, useRemoveItemFromCart } from 'connectors/cart/Cart';
+import { useChangeCartItemQuantity, useRemoveItemFromCart } from 'connectors/cart/Cart';
 import { useShopsysDispatch, useShopsysSelector } from 'redux/store';
 import { CartItemType } from 'connectors/cart/types';
 import { formatPrice } from 'utils/formatting';
@@ -22,8 +22,7 @@ import ItemInfo from './ItemInfo';
 import NextLink from 'next/link';
 import { showErrorMessage } from 'components/Helpers/Toasts';
 import Spinbox from 'components/Forms/Spinbox';
-import { updateUserDataCookie } from 'helpers/Cookies';
-import { userActions } from 'redux/store/UserStore';
+import { useHandleCartUpdate } from 'hooks/cart/UseHandleCartUpdate';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 
 type ItemProps = {
@@ -56,9 +55,7 @@ const Item: FC<ItemProps> = (props) => {
 
         removeItemFromCart({ cartItemUuid: props.item.uuid, cartUuid }).then(({ data }) => {
             if (data !== undefined) {
-                const newCart = mapCart(data.RemoveFromCart, currencyCode);
-                dispatch(userActions.setCart(newCart));
-                updateUserDataCookie({ cartUuid: newCart.uuid });
+                useHandleCartUpdate(data.RemoveFromCart, currencyCode, dispatch);
             }
         });
     };
@@ -79,9 +76,7 @@ const Item: FC<ItemProps> = (props) => {
                     return;
                 }
 
-                const newCart = mapCart(data.AddToCart, currencyCode);
-                dispatch(userActions.setCart(newCart));
-                updateUserDataCookie({ cartUuid: newCart.uuid });
+                useHandleCartUpdate(data.AddToCart, currencyCode, dispatch);
                 if (data.AddToCart.addProductResult.notOnStockQuantity > 0) {
                     spinboxRef.current!.valueAsNumber = data.AddToCart.addProductResult.addedQuantity;
                     showErrorMessage(

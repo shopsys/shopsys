@@ -21,4 +21,4 @@ export type AppState = ReturnType<AppStore['getState']>;
 export const useShopsysSelector: TypedUseSelectorHook<AppState> = useSelector;
 export const useShopsysDispatch = (): AppStore['dispatch'] => useDispatch<AppStore['dispatch']>();
 
-export const wrapper = createWrapper<AppStore>(makeStore);
+export const nextReduxWrapper = createWrapper<AppStore>(makeStore);

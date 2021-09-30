@@ -1,7 +1,7 @@
 import 'react-toastify/dist/ReactToastify.css';
 import { cartQuery, mapCart } from 'connectors/cart/Cart';
+import { nextReduxWrapper, useShopsysDispatch, useShopsysSelector } from 'redux/store';
 import { ReactElement, useEffect } from 'react';
-import { useShopsysDispatch, useShopsysSelector, wrapper } from 'redux/store';
 import { AppProps } from 'next/app';
 import { appWithTranslation } from 'next-i18next';
 import { getDomainConfig } from 'utils/Domain/Domain';
@@ -55,7 +55,7 @@ const getApiUrl = () => {
     return apiUrl;
 };
 
-export default wrapper.withRedux(
+export default nextReduxWrapper.withRedux(
     withUrqlClient(
         () => ({
             url: getApiUrl(),

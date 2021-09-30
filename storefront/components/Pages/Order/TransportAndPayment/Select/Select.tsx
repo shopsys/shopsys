@@ -1,5 +1,6 @@
-import { Controller, useFormContext } from 'react-hook-form';
+import { Controller, useFormContext, useWatch } from 'react-hook-form';
 import { FC, useEffect, useState } from 'react';
+import { initUserDataCookie, updateUserDataCookie } from 'helpers/Cookies';
 import {
     ListItemStyled,
     PaymentListWrapper,
@@ -18,65 +19,101 @@ import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslatio
 
 type SelectProps = {
     transports: TransportType[];
+    transportUuid?: string;
+    personalPickupUuid?: string;
+    paymentUuid?: string;
 };
 
 const Select: FC<SelectProps> = (props) => {
     const t = useTypedTranslationFunction();
-    const [selectedTransport, selectTransport] = useState<undefined | TransportType>(undefined);
-    const [selectedPersonalPickup, selectPersonalPickup] = useState<undefined | StoreType>(undefined);
-    const [selectedPayment, selectPayment] = useState<undefined | PaymentType>(undefined);
-    const [isPersonalPickupPopupVisible, setPersonalPickupPopupVisibility] = useState(false);
     const formProviderMethods = useFormContext();
+    const [transport, setTransport] = useState<undefined | TransportType>(undefined);
+    const [personalPickup, setPersonalPickup] = useState<undefined | StoreType>(undefined);
+    const [payment, setPayment] = useState<undefined | PaymentType>(undefined);
+    const [isSelecting, setIsSelecting] = useState(false);
+
+    const transportValue = useWatch({ name: 'transport' });
+    const personalPickupValue = useWatch({ name: 'personalPickup' });
+    const paymentValue = useWatch({ name: 'payment' });
+
     useEffect(() => {
-        const newTransport = props.transports.find(
-            (transport) => transport.uuid === formProviderMethods.watch('transport'),
-        );
+        const initialTransport = props.transports.find((transport) => transport.uuid === props.transportUuid);
+        if (initialTransport?.personalPickup && props.personalPickupUuid === undefined) {
+            updateUserDataCookie(initUserDataCookie());
+            formProviderMethods.setValue('transport', undefined);
+            formProviderMethods.setValue('personalPickup', undefined);
+            formProviderMethods.setValue('payment', undefined);
+        } else {
+            setTransport(initialTransport);
+            setPersonalPickup(initialTransport?.stores.find((store) => store.uuid === props.personalPickupUuid));
+            setPayment(initialTransport?.payments.find((payment) => payment.uuid === props.paymentUuid));
+            formProviderMethods.setValue('transport', props.transportUuid);
+            formProviderMethods.setValue('personalPickup', props.personalPickupUuid);
+            formProviderMethods.setValue('payment', props.paymentUuid);
+        }
+    }, []);
 
-        selectTransport(newTransport || undefined);
-    }, [formProviderMethods.watch('transport')]);
     useEffect(() => {
-        if (selectedTransport === undefined) {
-            return;
+        const currentTransportUuid = transportValue;
+        if (currentTransportUuid !== transport?.uuid) {
+            handleTransportChange(transportValue);
         }
+    }, [transportValue]);
 
-        const newPayment = selectedTransport.payments.find(
-            (payment) => payment.uuid === formProviderMethods.watch('payment'),
-        );
-
-        selectPayment(newPayment || undefined);
-    }, [formProviderMethods.watch('payment')]);
     useEffect(() => {
-        if (selectedTransport === undefined) {
-            return;
+        const currentPaymentUuid = paymentValue;
+        if (currentPaymentUuid !== payment?.uuid) {
+            handlePaymentChange(paymentValue);
         }
+    }, [paymentValue]);
 
-        const newPersonalPickup = selectedTransport.stores.find(
-            (store) => store.uuid === formProviderMethods.watch('personalPickup'),
-        );
-
-        selectPersonalPickup(newPersonalPickup || undefined);
-    }, [formProviderMethods.watch('personalPickup')]);
     useEffect(() => {
-        if (selectedTransport?.personalPickup) {
-            setPersonalPickupPopupVisibility(true);
+        const currentPersonalPickupUuid = personalPickupValue;
+        if (currentPersonalPickupUuid !== personalPickup?.uuid) {
+            handlePersonalPickupChange(personalPickupValue);
         }
-    }, [selectedTransport?.personalPickup]);
+    }, [personalPickupValue]);
 
-    const resetChoices = (resetFieldNames: ('payment' | 'personalPickup' | 'transport')[]) => {
-        for (const name of resetFieldNames) {
-            formProviderMethods.setValue(name, undefined);
+    const handleTransportChange = (newTransportUuid: string | undefined) => {
+        const newTransport = props.transports.find((transport) => transport.uuid === newTransportUuid);
+
+        setTransport(newTransport);
+        if (newTransport?.personalPickup && !isSelecting) {
+            setIsSelecting(true);
+        } else {
+            updateUserDataCookie({ transportUuid: newTransportUuid });
         }
+    };
+
+    const handlePaymentChange = (newPaymentUuid: string | undefined) => {
+        setPayment(transport?.payments.find((payment) => payment.uuid === newPaymentUuid));
+        updateUserDataCookie({ paymentUuid: newPaymentUuid });
+    };
+
+    const handlePersonalPickupChange = (newPersonalPickupUuid: string | undefined) => {
+        setPersonalPickup(transport?.stores.find((personalPickup) => personalPickup.uuid === newPersonalPickupUuid));
     };
 
     const onClosePersonalPickupPopupHandler = () => {
         formProviderMethods.setValue('transport', undefined);
         formProviderMethods.setValue('personalPickup', undefined);
-        selectPersonalPickup(undefined);
-        setPersonalPickupPopupVisibility(false);
+        setIsSelecting(false);
     };
 
     const onConfirmPersonalPickupHandler = () => {
-        setPersonalPickupPopupVisibility(false);
+        updateUserDataCookie({ transportUuid: transportValue, personalPickupUuid: personalPickupValue });
+        setIsSelecting(false);
+    };
+
+    const resetTransportAndPayment = () => {
+        formProviderMethods.setValue('transport', undefined);
+        formProviderMethods.setValue('payment', undefined);
+        formProviderMethods.setValue('personalPickup', undefined);
+        updateUserDataCookie({ personalPickupUuid: undefined });
+    };
+
+    const resetPayment = () => {
+        formProviderMethods.setValue('payment', undefined);
     };
 
     return (
@@ -88,37 +125,30 @@ const Select: FC<SelectProps> = (props) => {
                         name="transport"
                         render={({ field }) => (
                             <ul>
-                                {props.transports.map((transport) => (
+                                {props.transports.map((transportItem) => (
                                     <ListItemStyled
-                                        key={transport.uuid}
-                                        isActive={selectedTransport?.uuid === transport.uuid}
+                                        key={transportItem.uuid}
+                                        isActive={transport?.uuid === transportItem.uuid}
                                     >
                                         <Radiobutton
                                             name={'transport'}
-                                            id={transport.uuid}
-                                            value={transport.uuid}
+                                            id={transportItem.uuid}
+                                            value={transportItem.uuid}
                                             fieldRef={field}
-                                            image={transport.image}
+                                            image={transportItem.image}
                                             disabled={
-                                                selectedTransport !== undefined &&
-                                                selectedTransport.uuid !== transport.uuid
+                                                transport?.uuid !== undefined && transportItem.uuid !== transport.uuid
                                             }
-                                            checked={selectedTransport?.uuid === transport.uuid}
-                                            onSecondClickCallback={() =>
-                                                resetChoices(['payment', 'transport', 'personalPickup'])
-                                            }
+                                            checked={transport?.uuid === transportItem.uuid}
+                                            onSecondClickCallback={resetTransportAndPayment}
                                             label={
                                                 <SelectItemLabel
-                                                    name={transport.name}
-                                                    daysUntilDelivery={transport.daysUntilDelivery}
-                                                    price={transport.price}
-                                                    description={transport.description}
-                                                    personalPickup={transport.personalPickup}
-                                                    personalPickupStoreDetail={
-                                                        isPersonalPickupPopupVisible
-                                                            ? undefined
-                                                            : selectedPersonalPickup
-                                                    }
+                                                    name={transportItem.name}
+                                                    daysUntilDelivery={transportItem.daysUntilDelivery}
+                                                    price={transportItem.price}
+                                                    description={transportItem.description}
+                                                    personalPickup={transportItem.personalPickup}
+                                                    personalPickupStoreDetail={isSelecting ? undefined : personalPickup}
                                                 />
                                             }
                                         />
@@ -127,45 +157,41 @@ const Select: FC<SelectProps> = (props) => {
                             </ul>
                         )}
                     />
-                    {selectedTransport !== undefined && (
-                        <ResetButtonStyled
-                            type="button"
-                            onClick={() => resetChoices(['payment', 'transport', 'personalPickup'])}
-                        >
+                    {transport !== undefined && (
+                        <ResetButtonStyled type="button" onClick={resetTransportAndPayment}>
                             {t('Change transport type')}
                             <Icon icon="Arrow" />
                         </ResetButtonStyled>
                     )}
                 </div>
-                {selectedTransport !== undefined && (
+                {transport !== undefined && (
                     <PaymentListWrapper>
                         <Heading type="h3">{t('Choose payment type')}</Heading>
                         <Controller
                             name="payment"
                             render={({ field }) => (
                                 <ul>
-                                    {selectedTransport.payments.map((payment) => (
+                                    {transport.payments.map((paymentItem) => (
                                         <ListItemStyled
-                                            key={payment.uuid}
-                                            isActive={selectedPayment?.uuid === payment.uuid}
+                                            key={paymentItem.uuid}
+                                            isActive={payment?.uuid === paymentItem.uuid}
                                         >
                                             <Radiobutton
                                                 name={'payment'}
-                                                id={payment.uuid}
-                                                value={payment.uuid}
+                                                id={paymentItem.uuid}
+                                                value={paymentItem.uuid}
                                                 fieldRef={field}
-                                                image={payment.image}
+                                                image={paymentItem.image}
                                                 disabled={
-                                                    selectedPayment !== undefined &&
-                                                    selectedPayment.uuid !== payment.uuid
+                                                    payment?.uuid !== undefined && payment?.uuid !== paymentItem.uuid
                                                 }
-                                                checked={selectedPayment?.uuid === payment.uuid}
-                                                onSecondClickCallback={() => resetChoices(['payment'])}
+                                                checked={payment?.uuid === paymentItem.uuid}
+                                                onSecondClickCallback={resetPayment}
                                                 label={
                                                     <SelectItemLabel
-                                                        name={payment.name}
-                                                        price={payment.price}
-                                                        description={payment.description}
+                                                        name={paymentItem.name}
+                                                        price={paymentItem.price}
+                                                        description={paymentItem.description}
                                                     />
                                                 }
                                             />
@@ -174,8 +200,8 @@ const Select: FC<SelectProps> = (props) => {
                                 </ul>
                             )}
                         />
-                        {selectedPayment !== undefined && (
-                            <ResetButtonStyled type="button" onClick={() => resetChoices(['payment'])}>
+                        {payment !== undefined && (
+                            <ResetButtonStyled type="button" onClick={resetPayment}>
                                 {t('Change payment type')}
                                 <Icon icon="Arrow" />
                             </ResetButtonStyled>
@@ -184,7 +210,7 @@ const Select: FC<SelectProps> = (props) => {
                 )}
             </div>
             <Popup
-                isVisible={isPersonalPickupPopupVisible && selectedTransport !== undefined}
+                isVisible={transport !== undefined && isSelecting}
                 onCloseCallback={onClosePersonalPickupPopupHandler}
                 wrapperComponent={PersonalPickupPopupWrapperStyled}
             >
@@ -193,16 +219,19 @@ const Select: FC<SelectProps> = (props) => {
                     name="personalPickup"
                     render={({ field }) => (
                         <ul>
-                            {selectedTransport?.stores.map((store) => (
-                                <ListItemStyled key={store.uuid} isActive={selectedPersonalPickup?.uuid === store.uuid}>
+                            {transport?.stores.map((storeItem) => (
+                                <ListItemStyled key={storeItem.uuid} isActive={personalPickup?.uuid === storeItem.uuid}>
                                     <Radiobutton
                                         name={'personalPickup'}
-                                        id={store.uuid}
-                                        value={store.uuid}
+                                        id={storeItem.uuid}
+                                        value={storeItem.uuid}
                                         fieldRef={field}
-                                        checked={selectedPersonalPickup?.uuid === store.uuid}
+                                        checked={personalPickup?.uuid === storeItem.uuid}
                                         label={
-                                            <SelectItemLabel name={store.name} storeOpeningHours={store.openingHours} />
+                                            <SelectItemLabel
+                                                name={storeItem.name}
+                                                storeOpeningHours={storeItem.openingHours}
+                                            />
                                         }
                                     />
                                 </ListItemStyled>
@@ -216,7 +245,7 @@ const Select: FC<SelectProps> = (props) => {
                     </Button>
                     <Button
                         type="button"
-                        isDisabled={selectedPersonalPickup === undefined}
+                        isDisabled={personalPickup === undefined}
                         onClick={onConfirmPersonalPickupHandler}
                     >
                         {t('Confirm')}

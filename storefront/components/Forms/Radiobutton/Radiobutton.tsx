@@ -36,8 +36,8 @@ type RadiobuttonProps = NativeProps & {
  * An HTML Radiobutton element of type radiobutton
  */
 const Radiobutton: FC<RadiobuttonProps> = (props) => {
-    const onSecondClickHandler: MouseEventHandler<HTMLInputElement> = (event) => {
-        if (event.currentTarget.checked && props.onSecondClickCallback !== undefined) {
+    const onSecondClickHandler: MouseEventHandler<HTMLInputElement> = () => {
+        if (props.checked && props.onSecondClickCallback !== undefined) {
             props.onSecondClickCallback();
         }
     };

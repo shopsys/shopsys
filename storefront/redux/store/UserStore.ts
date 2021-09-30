@@ -33,6 +33,9 @@ export const userSlice = createSlice({
         },
     },
     extraReducers: {
+        /**
+         * @see https://github.com/kirill-konshin/next-redux-wrapper#usage
+         */
         [HYDRATE]: (state, action) => {
             return {
                 ...state,
