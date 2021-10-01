@@ -133,7 +133,7 @@ class BlogArticleRepository
             ->andWhere('ba.publishDate <= :todayDate')
             ->andWhere('bad.visible = true')
             ->andWhere('ba.hidden = false')
-            ->setParameter('todayDate', (new DateTime())->format('Y-m-d'))
+            ->setParameter('todayDate', (new DateTime())->format('Y-m-d H:i:s'))
             ->setParameter('domainId', $domainId);
     }
 
