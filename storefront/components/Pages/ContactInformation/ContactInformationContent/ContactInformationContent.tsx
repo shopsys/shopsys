@@ -1,7 +1,6 @@
 import {
     ContactInformationContentSectionStyled,
     ContactInformationContentStyled,
-    ContactInformationContentWrapperStyled,
 } from './ContactInformationContent.style';
 import { FC, useRef, useState } from 'react';
 import ContactInformationAddress from 'components/Pages/ContactInformation/ContactInformationAddress';
@@ -45,7 +44,7 @@ const ContactInformationContent: FC<ContactInformationContent> = (props) => {
                 unmountOnExit
                 nodeRef={nodeRef}
             >
-                <ContactInformationContentWrapperStyled ref={nodeRef}>
+                <div ref={nodeRef}>
                     <div ref={contentElement}>
                         <ContactInformationContentSectionStyled>
                             <ContactInformationRegister />
@@ -75,7 +74,7 @@ const ContactInformationContent: FC<ContactInformationContent> = (props) => {
 
                         <ContactInformationDeliveryAddress />
                     </div>
-                </ContactInformationContentWrapperStyled>
+                </div>
             </CSSTransition>
         </ContactInformationContentStyled>
     );

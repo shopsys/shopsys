@@ -16,6 +16,7 @@ type OrderActionProps = {
     buttonBack: string;
     buttonNext: string;
     activeStep: number;
+    isDisabled: boolean;
 };
 
 const OrderAction: FC<OrderActionProps> = (props) => {
@@ -45,7 +46,7 @@ const OrderAction: FC<OrderActionProps> = (props) => {
                     )}
                 </OrderActionLeftStyled>
                 <OrderActionRightStyled>
-                    <Button type="button" borderRadius="big" variant="primary" isDisabled={false}>
+                    <Button type="button" borderRadius="big" variant="primary" isDisabled={props.isDisabled}>
                         {props.buttonNext}
                         <OrderActionButtonNextIconStyled icon="Arrow" />
                     </Button>

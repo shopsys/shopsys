@@ -23,7 +23,12 @@ const Cart: FC<ServerSidePropsType> = (props) => {
                 <OrderSteps activeStep={1} domainUrl={props.domainConfig.url} />
                 <List items={cart?.items} />
                 <CartSummary />
-                <OrderAction activeStep={1} buttonBack={t('Back to e-shop')} buttonNext={t('Shipment and payment')} />
+                <OrderAction
+                    activeStep={1}
+                    buttonBack={t('Back to e-shop')}
+                    buttonNext={t('Shipment and payment')}
+                    isDisabled={false}
+                />
             </CommonLayout>
         </StaticUrlGuard>
     );
