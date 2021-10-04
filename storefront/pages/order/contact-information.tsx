@@ -9,20 +9,20 @@ import { navigationQuery } from 'connectors/navigation/Navigation';
 import OrderSteps from 'components/Blocks/OrderSteps';
 import OrderSummary from 'components/Blocks/OrderSummary';
 import StaticUrlGuard from 'components/Helpers/StaticUrlGuard';
+import { TFunction } from 'next-i18next';
 import { useInitDomainConfig } from 'hooks/helpers/UseInitDomainConfig';
 import { useShopsysSelector } from 'redux/store';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import Webline from 'components/Layout/Webline';
 
-export const getCountrySelectOptions = (): { value: string; label: string }[] => [
-    { value: 'slovakia', label: 'Slovensko' },
-    { value: 'czech', label: 'Česká republika' },
+export const getCountrySelectOptions = (t: TFunction): { value: string; label: string }[] => [
+    { value: 'slovakia', label: t('Slovakia') },
+    { value: 'czech', label: t('Czech Republic') },
 ];
 
 const ContactInformation: FC<ServerSidePropsType> = (props) => {
     useInitDomainConfig(props.domainConfig);
-    const t = useTypedTranslationFunction();
     const cart = useShopsysSelector((state) => state.user.cart);
+    const t = useTypedTranslationFunction();
 
     return (
         <StaticUrlGuard domainUrl={props.domainConfig.url}>
@@ -43,7 +43,7 @@ const ContactInformation: FC<ServerSidePropsType> = (props) => {
                         street: '',
                         city: '',
                         postcode: '',
-                        country: getCountrySelectOptions()[0].label,
+                        country: getCountrySelectOptions(t)[0].label,
                         companyName: '',
                         companyNumber: '',
                         companyTaxNumber: '',
@@ -55,7 +55,7 @@ const ContactInformation: FC<ServerSidePropsType> = (props) => {
                         deliveryStreet: '',
                         deliveryCity: '',
                         deliveryPostcode: '',
-                        deliveryCountry: getCountrySelectOptions()[0].label,
+                        deliveryCountry: getCountrySelectOptions(t)[0].label,
                         newsletterSubscription: false,
                     }}
                 >

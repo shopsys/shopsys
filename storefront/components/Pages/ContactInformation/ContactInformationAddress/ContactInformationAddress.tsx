@@ -85,8 +85,8 @@ const ContactInformationAddress: FC = () => {
                     render={({ field }) => (
                         <>
                             <Select
-                                defaultValue={getCountrySelectOptions()[0]}
-                                options={getCountrySelectOptions()}
+                                defaultValue={getCountrySelectOptions(t)[0]}
+                                options={getCountrySelectOptions(t)}
                                 onChange={(option: { label: string }) =>
                                     formProviderMethods.setValue(field.name, option.label)
                                 }
