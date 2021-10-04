@@ -3,6 +3,7 @@ import {
     ContactInformationContentStyled,
 } from './ContactInformationContent.style';
 import { FC, useRef, useState } from 'react';
+import { useFormContext, useWatch } from 'react-hook-form';
 import ContactInformationAddress from 'components/Pages/ContactInformation/ContactInformationAddress';
 import ContactInformationCompany from 'components/Pages/ContactInformation/ContactInformationCompany';
 import ContactInformationCustomer from 'components/Pages/ContactInformation/ContactInformationCustomer';
@@ -19,18 +20,13 @@ const ContactInformationContent: FC<ContactInformationContent> = (props) => {
     const contentElement = useRef<HTMLDivElement>(null);
     const cssTransitionRef = useRef<HTMLDivElement>(null);
     const [contentElementHeight, setContentElementHeight] = useState(0);
-    const [isCompanyCustomerChecked, setIsCompanyCustomerChecked] = useState(false);
-    const [isCommonCustomerChecked, setIsCommonCustomerChecked] = useState(true);
+    const { control } = useFormContext();
+    const customer = useWatch({ name: 'customer', control });
 
     const calcHeight = () => {
         if (contentElement.current) {
             setContentElementHeight(contentElement.current.clientHeight);
         }
-    };
-
-    const onChangeCustomerValue = () => {
-        setIsCompanyCustomerChecked(!isCompanyCustomerChecked);
-        setIsCommonCustomerChecked(!isCommonCustomerChecked);
     };
 
     return (
@@ -51,18 +47,14 @@ const ContactInformationContent: FC<ContactInformationContent> = (props) => {
                         </ContactInformationContentSectionStyled>
 
                         <ContactInformationContentSectionStyled>
-                            <ContactInformationCustomer
-                                isCompanyCustomerChecked={isCompanyCustomerChecked}
-                                isCommonCustomerChecked={isCommonCustomerChecked}
-                                onChangeCustomerValue={onChangeCustomerValue}
-                            />
+                            <ContactInformationCustomer currentValue={customer} />
                         </ContactInformationContentSectionStyled>
 
                         <ContactInformationContentSectionStyled>
                             <ContactInformationUser />
                         </ContactInformationContentSectionStyled>
 
-                        {isCompanyCustomerChecked && (
+                        {customer === 'companyCustomer' && (
                             <ContactInformationContentSectionStyled>
                                 <ContactInformationCompany />
                             </ContactInformationContentSectionStyled>

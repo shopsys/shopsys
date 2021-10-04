@@ -6,11 +6,7 @@ import Heading from 'components/Basic/Heading';
 import Radiobutton from 'components/Forms/Radiobutton';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 
-type ContactInformationCustomer = {
-    isCompanyCustomerChecked: boolean;
-    isCommonCustomerChecked: boolean;
-    onChangeCustomerValue: () => void;
-};
+type ContactInformationCustomer = { currentValue: 'commonCustomer' | 'companyCustomer' };
 
 const ContactInformationCustomer: FC<ContactInformationCustomer> = (props) => {
     const t = useTypedTranslationFunction();
@@ -21,7 +17,7 @@ const ContactInformationCustomer: FC<ContactInformationCustomer> = (props) => {
             <Controller
                 name="customer"
                 render={({ field }) => (
-                    <div onChange={props.onChangeCustomerValue}>
+                    <>
                         <FormColumn lg="65%">
                             <FormLine bottomGap={true} width="100%" lg="50%">
                                 <Radiobutton
@@ -30,7 +26,7 @@ const ContactInformationCustomer: FC<ContactInformationCustomer> = (props) => {
                                     value="commonCustomer"
                                     label={t('Private person')}
                                     fieldRef={field}
-                                    checked={props.isCommonCustomerChecked}
+                                    checked={props.currentValue === 'commonCustomer'}
                                 />
                             </FormLine>
                             <FormLine bottomGap={true} width="100%" lg="50%">
@@ -40,11 +36,11 @@ const ContactInformationCustomer: FC<ContactInformationCustomer> = (props) => {
                                     value="companyCustomer"
                                     label={t('Company')}
                                     fieldRef={field}
-                                    checked={props.isCompanyCustomerChecked}
+                                    checked={props.currentValue === 'companyCustomer'}
                                 />
                             </FormLine>
                         </FormColumn>
-                    </div>
+                    </>
                 )}
             />
         </>

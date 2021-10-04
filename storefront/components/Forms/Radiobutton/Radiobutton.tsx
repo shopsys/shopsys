@@ -8,8 +8,8 @@ import LabelWrapper from 'components/Forms/Lib/LabelWrapper';
 
 type NativeProps = ExtractNativePropsFromDefault<
     InputHTMLAttributes<HTMLInputElement>,
-    'name' | 'id' | 'value',
-    'disabled' | 'checked'
+    'name' | 'id' | 'value' | 'checked',
+    'disabled'
 >;
 
 type RadiobuttonProps = NativeProps & {
