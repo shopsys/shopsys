@@ -113,5 +113,6 @@
     "Please enter last name of contact person": "Vyplňte prosím příjmení kontaktní osoby",
     "Street and house number": "Ulice a č. popisné",
     "I want to subscribe to the newsletter": "Chci se přihlásit k odběru newsletteru",
-    "ContactInformationInfo": "Kliknutím na tlačítko Odeslat objednávku souhlasíte s <1>obchodními podmínkami</1> e-shopu a se <3>zpracováním osobních údajů</3>."
+    "ContactInformationInfo": "Kliknutím na tlačítko Odeslat objednávku souhlasíte s <1>obchodními podmínkami</1> e-shopu a se <3>zpracováním osobních údajů</3>.",
+    "Billing address": "Fakturační adresa"
 }
