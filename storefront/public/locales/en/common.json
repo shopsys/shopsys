@@ -49,7 +49,6 @@
     "Product {{ name }} ({{ quantity }} {{ unitName }}) added to the cart": "Product {{ name }} ({{ quantity }} {{ unitName }}) added to the cart",
     "Product {{ name }} added to the cart (total amount {{ quantity }} {{ unitName }})": "Product {{ name }} added to the cart (total amount {{ quantity }} {{ unitName }})",
     "Unable to add product to cart": "Unable to add product to cart",
-<<<<<<< HEAD
     "I have a discount coupon": "I have a discount coupon",
     "Coupon": "Coupon",
     "Apply": "Apply",
@@ -65,8 +64,7 @@
     "Reset password": "Reset password",
     "Forgotten password": "Forgotten password",
     "We sent an email with further steps to your address": "We sent an email with further steps to your address",
-    "Your email": "Your email"
-=======
+    "Your email": "Your email",
     "(0)[You can have immediately];(1)[Personal pickup in 1 day];(2-inf)[Personal pickup in {{count}} days];": "(0)[You can have immediately];(1)[Personal pickup in 1 day];(2-inf)[Personal pickup in {{count}} days];",
     "(1)[Personal pickup in 1 week];(2-inf)[Personal pickup in {{count}} weeks];": "(1)[Personal pickup in 1 week];(2-inf)[Personal pickup in {{count}} weeks];",
     "(0)[You can have today];(1)[Delivery in 1 day];(2-inf)[Delivery in {{count}} days];": "(0)[You can have today];(1)[Delivery in 1 day];(2-inf)[Delivery in {{count}} days];",
@@ -78,6 +76,6 @@
     "Choose payment type": "Choose payment type",
     "Change payment type": "Change payment type",
     "Choose the store where you are going to pick up your order": "Choose the store where you are going to pick up your order",
-    "Open": "Open"
->>>>>>> 08acbdea8... added data from API to the transport&payment page
+    "Open": "Open",
+    "Your e-mail": "Your e-mail"
 }

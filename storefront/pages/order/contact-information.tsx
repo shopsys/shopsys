@@ -1,5 +1,6 @@
 import { initServerSideProps, ServerSidePropsType } from 'helpers/InitServerSideProps';
 import CommonLayout from 'components/Layout/CommonLayout';
+import ContactInformationForm from 'components/Pages/ContactInformation';
 import { FC } from 'react';
 import { GetServerSideProps } from 'next';
 import { navigationQuery } from 'connectors/navigation/Navigation';
@@ -20,7 +21,7 @@ const ContactInformation: FC<ServerSidePropsType> = (props) => {
         <StaticUrlGuard domainUrl={props.domainConfig.url}>
             <CommonLayout>
                 <OrderSteps activeStep={3} domainUrl={props.domainConfig.url} />
-                Contact information - step 3
+                <ContactInformationForm />
                 <OrderAction activeStep={3} buttonBack={t('Back')} buttonNext={t('Submit order')} />
                 {cart === undefined ? null : <OrderSummary cart={cart} />}
             </CommonLayout>

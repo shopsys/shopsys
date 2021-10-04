@@ -49,7 +49,6 @@
     "Product {{ name }} ({{ quantity }} {{ unitName }}) added to the cart": "Produkt {{ name }} ({{ quantity }} {{ unitName }}) bol pridaný do košíka",
     "Product {{ name }} added to the cart (total amount {{ quantity }} {{ unitName }})": "Produkt {{ name }} bol pridaný do košíka (celkové množstvo {{ quantity }} {{ unitName }})",
     "Unable to add product to cart": "Produkt sa nepodarilo pridať do košíka",
-<<<<<<< HEAD
     "I have a discount coupon": "Mám zľavový kupón",
     "Coupon": "Kupón",
     "Apply": "Uplatniť",
@@ -65,8 +64,7 @@
     "Reset password": "Obnoviť heslo ",
     "Forgotten password": "Zabudnuté heslo",
     "We sent an email with further steps to your address": "Na vašu adresu sme odoslali e-mail s ďalšími krokmi",
-    "Your email": "Váš e-mail"
-=======
+    "Your email": "Váš e-mail",
     "(0)[You can have immediately];(1)[Personal pickup in 1 day];(2-inf)[Personal pickup in {{count}} days];": "(0)[Môžete mať ihneď];(1)[Osobný odber do 1 dňa];(2-inf)[Osobný odber do {{count}} dní];",
     "(1)[Personal pickup in 1 week];(2-inf)[Personal pickup in {{count}} weeks];": "(1)[Osobný odber do 1 týždňa];(2-inf)[Osobný odber do {{count}} týždňov];",
     "(0)[You can have today];(1)[Delivery in 1 day];(2-inf)[Delivery in {{count}} days];": "(0)[Môžete mať ešte dnes];(1)[Doručenie do 1 dňa];(2-inf)[Doručenie do {{count}} dní];",
@@ -78,6 +76,6 @@
     "Choose payment type": "Vyberte spôsob platby",
     "Change payment type": "Zmeniť platbu",
     "Choose the store where you are going to pick up your order": "Vyberte predajňu, kde si vyzdvihnete zásielku",
-    "Open": "Otvorené"
->>>>>>> 08acbdea8... added data from API to the transport&payment page
+    "Open": "Otvorené",
+    "Your e-mail": "Váš e-mail"
 }
