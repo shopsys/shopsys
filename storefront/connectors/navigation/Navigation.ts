@@ -1,3 +1,4 @@
+import { ImageApiType } from 'components/Basic/Image/types';
 import { useFetchQuery } from 'hooks/graphQl/UseFetchQuery';
 
 export const navigationQuery = `
@@ -10,8 +11,10 @@ export const navigationQuery = `
                     categories{
                         name
                         slug
-                        images(size: "default") {
-                            url
+                        images(sizes: "default") {
+                            sizes {
+                                url
+                            }
                         }
                         children{
                             name
@@ -53,11 +56,7 @@ export type NavigationItem = {
 type NavigationCategoryApiData = {
     name: string;
     slug: string;
-    images: {
-        url: string;
-        width: number;
-        height: number;
-    }[];
+    images: ImageApiType[];
     children: {
         name: string;
         slug: string;
@@ -80,7 +79,7 @@ function mapCategories(data: NavigationCategoryApiData[]): NavigationCategory[] 
     for (const category of data) {
         mappedCategories.push({
             ...category,
-            image: category.images[0],
+            image: category.images[0].sizes[0],
         });
     }
     return mappedCategories;

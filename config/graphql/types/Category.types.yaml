@@ -21,13 +21,14 @@ Category:
             images:
                 type: "[Image]!"
                 description: "Category images"
-                resolve: '@=service("App\\FrontendApi\\Model\\Resolver\\Image\\ImagesResolver").resolveByCategoryOrReadyCategorySeoMix(value, args["type"], args["size"])'
+                resolve: '@=resolver("categoryOrReadyCategorySeoMixImageResolver", [value, args["type"], args["sizes"]])'
                 args:
                     type:
                         type: "String"
                         defaultValue: null
-                    size:
-                        type: "String"
+                    sizes:
+                        type: "[String!]"
+                        defaultValue: null
             products:
                 type: "ProductConnection"
                 description: "Paginated and ordered products of category"

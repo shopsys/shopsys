@@ -48,12 +48,14 @@ class BrandTest extends GraphQlTestCase
                         }
                     }
                     images {
-                        url,
-                        type,
-                        size,
-                        width,
-                        height,
                         position
+                        type
+                        sizes {
+                            url
+                            size
+                            width
+                            height
+                        }
                     }
                     breadcrumb {
                         name
@@ -114,20 +116,22 @@ class BrandTest extends GraphQlTestCase
             },
             "images": [
                 {
-                    "url": "' . $this->getFullUrlPath('/content-test/images/brand/default/canon_80.jpg') . '",
+                    "position": null,
                     "type": null,
-                    "size": "default",
-                    "width": 300,
-                    "height": 200,
-                    "position": null
-                },
-                {
-                    "url": "' . $this->getFullUrlPath('/content-test/images/brand/original/canon_80.jpg') . '",
-                    "type": null,
-                    "size": "original",
-                    "width": null,
-                    "height": null,
-                    "position": null
+                    "sizes": [
+                        {
+                            "url": "' . $this->getFullUrlPath('/content-test/images/brand/default/canon_80.jpg') . '",
+                            "size": "default",
+                            "width": 300,
+                            "height": 200
+                        },
+                        {
+                            "url": "' . $this->getFullUrlPath('/content-test/images/brand/original/canon_80.jpg') . '",
+                            "size": "original",
+                            "width": null,
+                            "height": null
+                        }
+                    ]
                 }
             ],
             "breadcrumb": [

@@ -3,3 +3,8 @@ export type ImageType = {
     width: number;
     height: number;
 };
+
+export type ImageApiType = {
+    position?: string | null;
+    sizes: ImageType[];
+};

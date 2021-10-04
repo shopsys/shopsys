@@ -19,10 +19,12 @@ const cartBody = `
                 name
                 rgbColor
             }
-            images (size: "list") {
-                url
-                width
-                height
+            images (sizes: "list") {
+                sizes {
+                    url
+                    width
+                    height
+               }
             }
             stockQuantity
             availability {
@@ -44,8 +46,8 @@ const cartBody = `
 
 const cartQuery = `
       query ($cartUuid: Uuid){
-          cart(uuid: $cartUuid) {
-              ${cartBody}      
+          cart(cartInput: {cartUuid: $cartUuid}) {
+              ${cartBody}
           }
       }
       ` as const;
@@ -60,7 +62,7 @@ export function mapCart(data: CartApiType, currencyCode: string): CartType {
                     ...item.product,
                     price: mapProductPriceData(item.product.price, currencyCode),
                     availability: item.product.availability.name,
-                    image: item.product.images.length === 0 ? null : item.product.images[0],
+                    image: item.product.images.length === 0 ? null : item.product.images[0].sizes[0],
                 },
             };
         }),
@@ -88,7 +90,7 @@ const removeItemFromCartMutation = `mutation ($cartUuid: Uuid! $cartItemUuid: Uu
               cartUuid: $cartUuid
               cartItemUuid: $cartItemUuid
           }){
-              ${cartBody}      
+              ${cartBody}
           }
       }` as const;
 

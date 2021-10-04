@@ -55,7 +55,10 @@ class PromotedCategoriesTest extends GraphQlTestCase
                         }
                     }
                     images {
-                        url
+                        position
+                        sizes {
+                            url
+                        }
                     }
                     seoH1
                     seoTitle
@@ -94,7 +97,10 @@ class PromotedCategoriesTest extends GraphQlTestCase
                         }
                     }
                     images {
-                        url
+                        position
+                        sizes {
+                            url
+                        }
                     }
                     seoH1
                     seoTitle

@@ -22,3 +22,14 @@ Transport:
                     cartUuid:
                         type: "Uuid"
                         defaultValue: null
+            images:
+                type: "[Image]!"
+                description: "Transport images"
+                resolve: '@=resolver("transportImageResolver", [value, args["type"], args["sizes"]])'
+                args:
+                    type:
+                        type: "String"
+                        defaultValue: null
+                    sizes:
+                        type: "[String!]"
+                        defaultValue: null

@@ -26,10 +26,11 @@ SliderItem:
             images:
                 type: "[Image!]!"
                 description: "Slider item images"
-                resolve: '@=service("App\\FrontendApi\\Model\\Resolver\\Image\\ImagesResolver").resolveBySliderItem(value, args["type"], args["size"])'
+                resolve: '@=resolver("sliderItemImageResolver", [value, args["type"], args["sizes"]])'
                 args:
                     type:
                         type: "String"
                         defaultValue: null
-                    size:
-                        type: "String"
+                    sizes:
+                        type: "[String!]"
+                        defaultValue: null

@@ -123,10 +123,6 @@ class ImageFacade extends BaseImageFacade
         $seoEntityName = $this->getSeoNameByImageAndLocale($image, $domainConfig->getLocale());
         $friendlyUrlSeoEntityName = $this->getFriendlyUrlSlug($seoEntityName);
 
-        if (!$this->imageLocator->imageExists($image)) {
-            throw new ImageNotFoundException();
-        }
-
         $imageUrl = $domainConfig->getUrl()
             . $this->imageUrlPrefix
             . $this->imageLocator->getRelativeImageFilepathWithSlug($image, $sizeName, $friendlyUrlSeoEntityName);

@@ -7,6 +7,17 @@ Brand:
             - 'Breadcrumb'
             - 'Slug'
         fields:
+            images:
+                type: "[Image]!"
+                description: "Brand images"
+                resolve: '@=resolver("brandImageResolver", [value, args["type"], args["sizes"]])'
+                args:
+                    type:
+                        type: "String"
+                        defaultValue: null
+                    sizes:
+                        type: "[String!]"
+                        defaultValue: null
             slug:
                 type: "String!"
                 description: "Brand URL slug"

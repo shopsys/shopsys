@@ -24,13 +24,13 @@ export function mapCategoryDetailData(
         children: apiCategoryDetailData.children.map((child) => {
             return {
                 ...child,
-                image: child.images.length > 0 ? child.images[0] : null,
+                image: child.images.length > 0 ? child.images[0].sizes[0] : null,
             };
         }),
         linkedCategories: apiCategoryDetailData.linkedCategories.map((child) => {
             return {
                 ...child,
-                image: child.images.length > 0 ? child.images[0] : null,
+                image: child.images.length > 0 ? child.images[0].sizes[0] : null,
             };
         }),
     };

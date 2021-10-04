@@ -7,10 +7,12 @@ export function categoryDetailBody(sortingMode: string): string {
             uuid
             name
             slug
-            images (size: "default") {
-                url
-                height
-                width
+            images (sizes: "default") {
+                sizes {
+                    url
+                    height
+                    width
+                }
             }
             products{
                 totalCount
@@ -20,10 +22,12 @@ export function categoryDetailBody(sortingMode: string): string {
             uuid
             name
             slug
-            images (size: "default") {
-                url
-                height
-                width
+            images (sizes: "default") {
+                sizes {
+                    url
+                    height
+                    width
+                }
             }
             products{
                 totalCount
@@ -42,10 +46,12 @@ export function categoryDetailBody(sortingMode: string): string {
                         rgbColor
                     }
                     stockQuantity
-                    images (size: "list") {
-                        url
-                        width
-                        height
+                    images (sizes: "list") {
+                        sizes {
+                            url
+                            width
+                            height
+                        }
                     }
                     availability {
                         name

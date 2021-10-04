@@ -66,19 +66,37 @@ class GetSliderItemsTest extends GraphQlTestCase
             [
                 'name' => t('40% SLEVA NA ÚLOŽNÉ PROSTORY', [], 'dataFixtures', $firstDomainLocale),
                 'images' => [
-                    ['url' => $this->firstDomainUrl . '/content-test/images/sliderItem/web/original/59.jpg'],
+                    [
+                        'sizes' => [
+                            [
+                                'url' => $this->firstDomainUrl . '/content-test/images/sliderItem/web/original/59.jpg',
+                            ],
+                        ],
+                    ],
                 ],
             ],
             [
                 'name' => t('40% SLEVA NA POSTELE, MATRACE A ROŠTY', [], 'dataFixtures', $firstDomainLocale),
                 'images' => [
-                    ['url' => $this->firstDomainUrl . '/content-test/images/sliderItem/web/original/60.jpg'],
+                    [
+                        'sizes' => [
+                            [
+                                'url' => $this->firstDomainUrl . '/content-test/images/sliderItem/web/original/60.jpg',
+                            ],
+                        ],
+                    ],
                 ],
             ],
             [
                 'name' => t('SLEVA 20% + 21% DPH NAVÍC', [], 'dataFixtures', $firstDomainLocale),
                 'images' => [
-                    ['url' => $this->firstDomainUrl . '/content-test/images/sliderItem/web/original/61.jpg'],
+                    [
+                        'sizes' => [
+                            [
+                                'url' => $this->firstDomainUrl . '/content-test/images/sliderItem/web/original/61.jpg',
+                            ],
+                        ],
+                    ],
                 ],
             ],
         ];
@@ -110,19 +128,37 @@ class GetSliderItemsTest extends GraphQlTestCase
             [
                 'name' => t('40% SLEVA NA ÚLOŽNÉ PROSTORY', [], 'dataFixtures', $firstDomainLocale),
                 'images' => [
-                    ['url' => $this->firstDomainUrl . '/content-test/images/sliderItem/mobile/original/103.jpg'],
+                    [
+                        'sizes' => [
+                            [
+                                'url' => $this->firstDomainUrl . '/content-test/images/sliderItem/mobile/original/103.jpg',
+                            ],
+                        ],
+                    ],
                 ],
             ],
             [
                 'name' => t('40% SLEVA NA POSTELE, MATRACE A ROŠTY', [], 'dataFixtures', $firstDomainLocale),
                 'images' => [
-                    ['url' => $this->firstDomainUrl . '/content-test/images/sliderItem/mobile/original/104.jpg'],
+                    [
+                        'sizes' => [
+                            [
+                                'url' => $this->firstDomainUrl . '/content-test/images/sliderItem/mobile/original/104.jpg',
+                            ],
+                        ],
+                    ],
                 ],
             ],
             [
                 'name' => t('SLEVA 20% + 21% DPH NAVÍC', [], 'dataFixtures', $firstDomainLocale),
                 'images' => [
-                    ['url' => $this->firstDomainUrl . '/content-test/images/sliderItem/mobile/original/105.jpg'],
+                    [
+                        'sizes' => [
+                            [
+                                'url' => $this->firstDomainUrl . '/content-test/images/sliderItem/mobile/original/105.jpg',
+                            ],
+                        ],
+                    ],
                 ],
             ],
         ];
@@ -171,8 +207,10 @@ class GetSliderItemsTest extends GraphQlTestCase
                 sliderItems {
                     uuid
                     name
-                    images (type: "' . $device . '", size: "original") {
-                        url
+                    images (type: "' . $device . '", sizes: ["original"]) {
+                        sizes {
+                            url
+                        }
                     }
                 }
             }
