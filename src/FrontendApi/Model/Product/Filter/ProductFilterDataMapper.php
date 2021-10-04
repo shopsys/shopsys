@@ -5,6 +5,11 @@ declare(strict_types=1);
 namespace App\FrontendApi\Model\Product\Filter;
 
 use App\Model\Product\Filter\ParameterFilterData;
+use App\Model\Product\Filter\ProductFilterDataFactory;
+use Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade;
+use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData;
+use Shopsys\FrameworkBundle\Model\Product\Flag\FlagFacade;
+use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade;
 use Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterDataMapper as BaseProductFilterDataMapper;
 
 /**
@@ -13,11 +18,27 @@ use Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterDataMapper as Ba
  * @property \App\Model\Product\Parameter\ParameterFacade $parameterFacade
  * @property \App\Model\Product\Parameter\Parameter[] $parametersByUuid
  * @property \App\Model\Product\Parameter\ParameterValue[] $parameterValuesByUuid
- * @method __construct(\App\Model\Product\Flag\FlagFacade $flagFacade, \App\Model\Product\Brand\BrandFacade $brandFacade, \App\Model\Product\Parameter\ParameterFacade $parameterFacade)
- * @method \App\Model\Product\Filter\ProductFilterData mapFrontendApiFilterToProductFilterData(array $frontendApiFilter)
  */
 class ProductFilterDataMapper extends BaseProductFilterDataMapper
 {
+    /**
+     * @var \App\Model\Product\Filter\ProductFilterDataFactory
+     */
+    private ProductFilterDataFactory $productFilterDataFactory;
+
+    /**
+     * @param \App\Model\Product\Flag\FlagFacade $flagFacade
+     * @param \App\Model\Product\Brand\BrandFacade $brandFacade
+     * @param \App\Model\Product\Parameter\ParameterFacade $parameterFacade
+     * @param \App\Model\Product\Filter\ProductFilterDataFactory $productFilterDataFactory
+     */
+    public function __construct(FlagFacade $flagFacade, BrandFacade $brandFacade, ParameterFacade $parameterFacade, ProductFilterDataFactory $productFilterDataFactory)
+    {
+        parent::__construct($flagFacade, $brandFacade, $parameterFacade);
+
+        $this->productFilterDataFactory = $productFilterDataFactory;
+    }
+
     /**
      * This method is identical as in Base class, but only change here is using ParameterFilterData from App namespace
      *
@@ -60,5 +81,32 @@ class ProductFilterDataMapper extends BaseProductFilterDataMapper
         }
 
         return $parametersFilterData;
+    }
+
+    /**
+     * Method is extended because of https://github.com/shopsys/shopsys/pull/2380
+     *
+     * @param array $frontendApiFilter
+     * @return \App\Model\Product\Filter\ProductFilterData
+     */
+    public function mapFrontendApiFilterToProductFilterData(array $frontendApiFilter): ProductFilterData
+    {
+        $productFilterData = $this->productFilterDataFactory->create();
+        $productFilterData->minimalPrice = $frontendApiFilter['minimalPrice'] ?? null;
+        $productFilterData->maximalPrice = $frontendApiFilter['maximalPrice'] ?? null;
+        $productFilterData->parameters = $this->getParametersAndValuesByUuids($frontendApiFilter['parameters'] ?? []);
+        $productFilterData->inStock = $frontendApiFilter['onlyInStock'] ?? false;
+        $productFilterData->brands = [];
+        $productFilterData->flags = [];
+
+        if (isset($frontendApiFilter['brands'])) {
+            $productFilterData->brands = $this->brandFacade->getByUuids($frontendApiFilter['brands']);
+        }
+
+        if (isset($frontendApiFilter['flags'])) {
+            $productFilterData->flags = $this->flagFacade->getByUuids($frontendApiFilter['flags']);
+        }
+
+        return $productFilterData;
     }
 }

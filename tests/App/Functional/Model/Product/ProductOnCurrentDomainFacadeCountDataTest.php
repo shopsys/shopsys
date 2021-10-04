@@ -8,10 +8,10 @@ use App\DataFixtures\Demo\CategoryDataFixture;
 use App\DataFixtures\Demo\CurrencyDataFixture;
 use App\DataFixtures\Demo\FlagDataFixture;
 use App\Model\Product\Filter\ParameterFilterData;
+use App\Model\Product\Filter\ProductFilterData;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData;
-use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue;
 use Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainFacadeInterface;
 use Tests\App\Test\ParameterTransactionFunctionalTestCase;
@@ -58,7 +58,7 @@ abstract class ProductOnCurrentDomainFacadeCountDataTest extends ParameterTransa
         foreach ($this->categoryTestCasesProvider() as $testCaseName => $dataProvider) {
             /** @var \App\Model\Category\Category $category */
             $category = $dataProvider[0];
-            /** @var \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $filterData */
+            /** @var \App\Model\Product\Filter\ProductFilterData $filterData */
             $filterData = $dataProvider[1];
             /** @var \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData $expectedCountData */
             $expectedCountData = $dataProvider[2];
@@ -94,7 +94,7 @@ abstract class ProductOnCurrentDomainFacadeCountDataTest extends ParameterTransa
         foreach ($this->searchTestCasesProvider() as $dataProvider) {
             /** @var string $searchText */
             $searchText = $dataProvider[0];
-            /** @var \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $filterData */
+            /** @var \App\Model\Product\Filter\ProductFilterData $filterData */
             $filterData = $dataProvider[1];
             /** @var \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData $expectedCountData */
             $expectedCountData = $dataProvider[2];

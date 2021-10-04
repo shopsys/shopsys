@@ -10,6 +10,8 @@ use App\Model\Product\Filter\ProductFilterDataFactory;
 use App\Model\Product\Flag\Flag;
 use Overblog\GraphQLBundle\Definition\Argument;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Model\Category\Category;
+use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig;
 use Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterFacade as BaseProductFilterFacade;
 use Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterNormalizer;
@@ -20,9 +22,6 @@ use Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterNormalizer;
  * @method \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig getProductFilterConfigForBrand(\App\Model\Product\Brand\Brand $brand)
  * @method \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig getProductFilterConfigForCategory(\App\Model\Category\Category $category)
  * @method \App\Model\Product\Filter\ProductFilterData getValidatedProductFilterData(\Overblog\GraphQLBundle\Definition\Argument $argument, \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig $productFilterConfig)
- * @method \App\Model\Product\Filter\ProductFilterData getValidatedProductFilterDataForAll(\Overblog\GraphQLBundle\Definition\Argument $argument)
- * @method \App\Model\Product\Filter\ProductFilterData getValidatedProductFilterDataForCategory(\Overblog\GraphQLBundle\Definition\Argument $argument, \App\Model\Category\Category $category)
- * @method \App\Model\Product\Filter\ProductFilterData getValidatedProductFilterDataForBrand(\Overblog\GraphQLBundle\Definition\Argument $argument, \App\Model\Product\Brand\Brand $brand)
  */
 class ProductFilterFacade extends BaseProductFilterFacade
 {
@@ -86,5 +85,61 @@ class ProductFilterFacade extends BaseProductFilterFacade
         }
 
         return $this->productFilterConfigCache[$cacheKey];
+    }
+
+    /**
+     * Method is extended because of https://github.com/shopsys/shopsys/pull/2380
+     *
+     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
+     * @return \App\Model\Product\Filter\ProductFilterData
+     */
+    public function getValidatedProductFilterDataForAll(Argument $argument): ProductFilterData
+    {
+        if ($argument['filter'] === null) {
+            return $this->productFilterDataFactory->create();
+        }
+
+        /** @var \App\Model\Product\Filter\ProductFilterData $productFilterData */
+        $productFilterData = parent::getValidatedProductFilterDataForAll($argument);
+
+        return $productFilterData;
+    }
+
+    /**
+     * Method is extended because of https://github.com/shopsys/shopsys/pull/2380
+     *
+     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
+     * @param \App\Model\Category\Category $category
+     * @return \App\Model\Product\Filter\ProductFilterData
+     */
+    public function getValidatedProductFilterDataForCategory(Argument $argument, Category $category): ProductFilterData
+    {
+        if ($argument['filter'] === null) {
+            return $this->productFilterDataFactory->create();
+        }
+
+        /** @var \App\Model\Product\Filter\ProductFilterData $productFilterData */
+        $productFilterData = parent::getValidatedProductFilterDataForCategory($argument, $category);
+
+        return $productFilterData;
+    }
+
+    /**
+     * Method is extended because of https://github.com/shopsys/shopsys/pull/2380
+     *
+     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
+     * @param \App\Model\Product\Brand\Brand $brand
+     * @return \App\Model\Product\Filter\ProductFilterData
+     */
+    public function getValidatedProductFilterDataForBrand(Argument $argument, Brand $brand): ProductFilterData
+    {
+        if ($argument['filter'] === null) {
+            return $this->productFilterDataFactory->create();
+        }
+
+        /** @var \App\Model\Product\Filter\ProductFilterData $productFilterData */
+        $productFilterData = parent::getValidatedProductFilterDataForBrand($argument, $brand);
+
+        return $productFilterData;
     }
 }
