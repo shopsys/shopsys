@@ -32,7 +32,7 @@ const ContactInformationDeliveryAddress: FC = () => {
 
     return (
         <>
-            <FormLine Lg="65%">
+            <FormLine lg="65%">
                 <ChoiceFormLine>
                     <Controller
                         name="deliveryAddress"
@@ -76,7 +76,7 @@ const ContactInformationDeliveryAddress: FC = () => {
                                         )}
                                     />
                                 </FormLine>
-                                <FormLine bottomGap={true} Width="100%" Lg="50%">
+                                <FormLine bottomGap={true} width="100%" lg="50%">
                                     <Controller
                                         name="deliveryLastName"
                                         render={({ fieldState: { isTouched, invalid, error }, field }) => (
@@ -97,7 +97,7 @@ const ContactInformationDeliveryAddress: FC = () => {
                                     />
                                 </FormLine>
                             </FormColumn>
-                            <FormLine bottomGap={true} Lg="65%">
+                            <FormLine bottomGap={true} lg="65%">
                                 <Controller
                                     name="deliveryCompanyName"
                                     render={({ fieldState: { isTouched, invalid, error }, field }) => (
@@ -116,7 +116,7 @@ const ContactInformationDeliveryAddress: FC = () => {
                                     )}
                                 />
                             </FormLine>
-                            <FormLine bottomGap={true} Lg="65%">
+                            <FormLine bottomGap={true} lg="65%">
                                 <Controller
                                     name="deliveryTelephone"
                                     render={({ fieldState: { isTouched, invalid, error }, field }) => (
@@ -135,7 +135,7 @@ const ContactInformationDeliveryAddress: FC = () => {
                                     )}
                                 />
                             </FormLine>
-                            <FormLine bottomGap={true} Lg="65%">
+                            <FormLine bottomGap={true} lg="65%">
                                 <Controller
                                     name="deliveryStreet"
                                     render={({ fieldState: { isTouched, invalid, error }, field }) => (
@@ -155,7 +155,7 @@ const ContactInformationDeliveryAddress: FC = () => {
                                     )}
                                 />
                             </FormLine>
-                            <FormColumn Lg="65%">
+                            <FormColumn lg="65%">
                                 <FormLine bottomGap={true}>
                                     <Controller
                                         name="deliveryCity"
@@ -176,7 +176,7 @@ const ContactInformationDeliveryAddress: FC = () => {
                                         )}
                                     />
                                 </FormLine>
-                                <FormLine bottomGap={true} Width="100%" Lg="142px">
+                                <FormLine bottomGap={true} width="100%" lg="142px">
                                     <Controller
                                         name="deliveryPostcode"
                                         render={({ fieldState: { isTouched, invalid, error }, field }) => (
@@ -197,7 +197,7 @@ const ContactInformationDeliveryAddress: FC = () => {
                                     />
                                 </FormLine>
                             </FormColumn>
-                            <FormLine Lg="65%">
+                            <FormLine lg="65%">
                                 <Controller
                                     name="deliveryCountry"
                                     render={({ field }) => (

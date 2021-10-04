@@ -1,9 +1,9 @@
 export type FormColumnProps = {
-    Width?: string;
-    Xs?: string;
-    Sm?: string;
-    Md?: string;
-    Lg?: string;
-    Vl?: string;
-    Xl?: string;
+    width?: string;
+    xs?: string;
+    sm?: string;
+    md?: string;
+    lg?: string;
+    vl?: string;
+    xl?: string;
 };

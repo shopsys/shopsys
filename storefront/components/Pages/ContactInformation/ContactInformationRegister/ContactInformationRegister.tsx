@@ -26,8 +26,8 @@ const ContactInformationRegister: FC = () => {
             {isRegisterChecked && (
                 <>
                     <Heading type="h3">{t('Create a password')}</Heading>
-                    <FormColumn Lg="65%">
-                        <FormLine bottomGap={true} Width="100%" Lg="50%">
+                    <FormColumn lg="65%">
+                        <FormLine bottomGap={true} width="100%" lg="50%">
                             <Controller
                                 name="passwordFirst"
                                 render={({ fieldState: { isTouched, invalid, error }, field }) => (
@@ -47,7 +47,7 @@ const ContactInformationRegister: FC = () => {
                                 )}
                             />
                         </FormLine>
-                        <FormLine bottomGap={true} Width="100%" Lg="50%">
+                        <FormLine bottomGap={true} width="100%" lg="50%">
                             <Controller
                                 name="passwordSecond"
                                 render={({ fieldState: { isTouched, invalid, error }, field }) => (

@@ -12,7 +12,7 @@ const ContactInformationCompany: FC = () => {
     return (
         <>
             <Heading type="h3">{t('Company data')}</Heading>
-            <FormLine bottomGap={true} Lg="65%">
+            <FormLine bottomGap={true} lg="65%">
                 <Controller
                     name="companyName"
                     render={({ fieldState: { isTouched, invalid, error }, field }) => (
@@ -33,7 +33,7 @@ const ContactInformationCompany: FC = () => {
                 />
             </FormLine>
 
-            <FormLine bottomGap={true} Lg="65%">
+            <FormLine bottomGap={true} lg="65%">
                 <Controller
                     name="companyNumber"
                     render={({ fieldState: { isTouched, invalid, error }, field }) => (
@@ -54,7 +54,7 @@ const ContactInformationCompany: FC = () => {
                 />
             </FormLine>
 
-            <FormLine bottomGap={true} Lg="65%">
+            <FormLine bottomGap={true} lg="65%">
                 <Controller
                     name="companyTaxNumber"
                     render={({ fieldState: { isTouched, invalid, error }, field }) => (

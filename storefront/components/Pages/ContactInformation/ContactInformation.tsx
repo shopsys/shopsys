@@ -17,7 +17,7 @@ const ContactInformation: FC = () => {
 
     return (
         <>
-            <FormLine bottomGap={true} Lg="65%">
+            <FormLine bottomGap={true} lg="65%">
                 <Controller
                     name="email"
                     render={({ fieldState: { isTouched, invalid, error }, field, formState }) => (

@@ -17,7 +17,7 @@ const ContactInformationAddress: FC = () => {
     return (
         <>
             <Heading type="h3">{t('Fakturační adresa')}</Heading>
-            <FormLine bottomGap={true} Lg="65%">
+            <FormLine bottomGap={true} lg="65%">
                 <Controller
                     name="street"
                     render={({ fieldState: { isTouched, invalid, error }, field }) => (
@@ -38,7 +38,7 @@ const ContactInformationAddress: FC = () => {
                 />
             </FormLine>
 
-            <FormColumn Lg="65%">
+            <FormColumn lg="65%">
                 <FormLine bottomGap={true}>
                     <Controller
                         name="city"
@@ -59,7 +59,7 @@ const ContactInformationAddress: FC = () => {
                         )}
                     />
                 </FormLine>
-                <FormLine bottomGap={true} Width="100%" Lg="142px">
+                <FormLine bottomGap={true} width="100%" lg="142px">
                     <Controller
                         name="postcode"
                         render={({ fieldState: { isTouched, invalid, error }, field }) => (
@@ -80,7 +80,7 @@ const ContactInformationAddress: FC = () => {
                     />
                 </FormLine>
             </FormColumn>
-            <FormLine Lg="65%">
+            <FormLine lg="65%">
                 <Controller
                     name="country"
                     render={({ field }) => (

@@ -3,61 +3,61 @@ import { FormLineProps } from './types';
 import { styled } from 'components/Theme/main';
 
 export const FormLineStyled = styled.div<FormLineProps>`
-    ${({ theme, bottomGap, Width, Xs, Sm, Md, Lg, Vl, Xl }) => css`
+    ${({ theme, bottomGap, width, xs, sm, md, lg, vl, xl }) => css`
         ${bottomGap &&
         css`
             padding-bottom: 12px;
         `}
-        ${Width !== undefined
+        ${width !== undefined
             ? css`
-                  width: ${Width};
+                  width: ${width};
               `
             : 'flex: 1;'}
 
-        ${Xs !== undefined &&
+        ${xs !== undefined &&
         css`
             @media ${theme.mediaQueries.queryXs} {
-                width: ${Xs};
+                width: ${xs};
                 flex: none;
             }
         `}
 
-        ${Sm !== undefined &&
+        ${sm !== undefined &&
         css`
             @media ${theme.mediaQueries.querySm} {
-                width: ${Sm};
+                width: ${sm};
                 flex: none;
             }
         `}
 
-        ${Md !== undefined &&
+        ${md !== undefined &&
         css`
             @media ${theme.mediaQueries.queryMd} {
-                width: ${Md};
+                width: ${md};
                 flex: none;
             }
         `}
 
-        ${Lg !== undefined &&
+        ${lg !== undefined &&
         css`
             @media ${theme.mediaQueries.queryLg} {
-                width: ${Lg};
+                width: ${lg};
                 flex: none;
             }
         `}
 
-        ${Vl !== undefined &&
+        ${vl !== undefined &&
         css`
             @media ${theme.mediaQueries.queryVl} {
-                width: ${Vl};
+                width: ${vl};
                 flex: none;
             }
         `}
 
-        ${Xl !== undefined &&
+        ${xl !== undefined &&
         css`
             @media ${theme.mediaQueries.queryXl} {
-                width: ${Xl};
+                width: ${xl};
                 flex: none;
             }
         `}

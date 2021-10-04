@@ -22,8 +22,8 @@ const ContactInformationCustomer: FC<ContactInformationCustomer> = (props) => {
                 name="customer"
                 render={({ field }) => (
                     <div onChange={props.onChangeCustomerValue}>
-                        <FormColumn Lg="65%">
-                            <FormLine bottomGap={true} Width="100%" Lg="50%">
+                        <FormColumn lg="65%">
+                            <FormLine bottomGap={true} width="100%" lg="50%">
                                 <Radiobutton
                                     name={field.name}
                                     id="contactInformation_form-commonCustomer"
@@ -33,7 +33,7 @@ const ContactInformationCustomer: FC<ContactInformationCustomer> = (props) => {
                                     checked={props.isCommonCustomerChecked}
                                 />
                             </FormLine>
-                            <FormLine bottomGap={true} Width="100%" Lg="50%">
+                            <FormLine bottomGap={true} width="100%" lg="50%">
                                 <Radiobutton
                                     name={field.name}
                                     id="contactInformation_form-companyCustomer"
