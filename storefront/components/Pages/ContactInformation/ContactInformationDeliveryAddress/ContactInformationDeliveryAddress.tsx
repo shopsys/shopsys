@@ -3,11 +3,11 @@ import {
     ContactInformationDeliveryAddressStyled,
 } from './ContactInformationDeliveryAddress.style';
 import { Controller, useFormContext, useWatch } from 'react-hook-form';
-import { FC, useContext, useRef, useState } from 'react';
+import { FC, useContext, useEffect, useRef, useState } from 'react';
+import Checkbox from 'components/Forms/Checkbox';
 import ChoiceFormLine from 'components/Forms/Lib/ChoiceFormLine';
 import { ContactInformationContext } from 'pages/order/contact-information';
 import { CSSTransition } from 'react-transition-group';
-import DeliveryCheckbox from './DeliveryCheckbox';
 import FormColumn from 'components/Forms/Lib/FormColumn';
 import FormLine from 'components/Forms/Lib/FormLine';
 import FormLineError from 'components/Forms/Lib/FormLineError';
@@ -20,7 +20,7 @@ const ContactInformationDeliveryAddress: FC = () => {
     const contentElement = useRef<HTMLDivElement>(null);
     const cssTransitionRef = useRef<HTMLDivElement>(null);
     const [contentElementHeight, setContentElementHeight] = useState(0);
-    const [IsDeliveryAddressChecked, setIsDeliveryAddressChecked] = useState(false);
+    const [isDeliveryAddressChecked, setIsDeliveryAddressChecked] = useState(false);
     const formProviderMethods = useFormContext();
     const context = useContext(ContactInformationContext);
 
@@ -30,6 +30,10 @@ const ContactInformationDeliveryAddress: FC = () => {
         }
     };
 
+    useEffect(() => {
+        setIsDeliveryAddressChecked(formProviderMethods.watch('deliveryAddress'));
+    }, [formProviderMethods.watch('deliveryAddress')]);
+
     return (
         <>
             <FormLine lg="65%">
@@ -37,7 +41,11 @@ const ContactInformationDeliveryAddress: FC = () => {
                     <Controller
                         name="deliveryAddress"
                         render={({ field }) => (
-                            <DeliveryCheckbox field={field} setIsDeliveryAddressChecked={setIsDeliveryAddressChecked} />
+                            <Checkbox
+                                fieldRef={field}
+                                id="contactInformation_form-deliveryAddress"
+                                label={t('Enter the delivery address')}
+                            />
                         )}
                     />
                 </ChoiceFormLine>
@@ -45,7 +53,7 @@ const ContactInformationDeliveryAddress: FC = () => {
 
             <ContactInformationDeliveryAddressStyled contentElementHeight={contentElementHeight}>
                 <CSSTransition
-                    in={IsDeliveryAddressChecked}
+                    in={isDeliveryAddressChecked}
                     timeout={500}
                     classNames="contactInformationDeliveryAddress"
                     onEnter={calcHeight}
