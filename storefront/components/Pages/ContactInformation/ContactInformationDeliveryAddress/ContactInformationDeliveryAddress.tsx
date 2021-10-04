@@ -18,7 +18,7 @@ import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslatio
 const ContactInformationDeliveryAddress: FC = () => {
     const t = useTypedTranslationFunction();
     const contentElement = useRef<HTMLDivElement>(null);
-    const cssTransitionRef = useRef(null);
+    const cssTransitionRef = useRef<HTMLDivElement>(null);
     const [contentElementHeight, setContentElementHeight] = useState(0);
     const [IsDeliveryAddressChecked, setIsDeliveryAddressChecked] = useState(false);
     const formProviderMethods = useFormContext();

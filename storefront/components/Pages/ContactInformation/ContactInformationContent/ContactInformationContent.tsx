@@ -17,7 +17,7 @@ type ContactInformationContent = {
 
 const ContactInformationContent: FC<ContactInformationContent> = (props) => {
     const contentElement = useRef<HTMLDivElement>(null);
-    const nodeRef = useRef(null);
+    const cssTransitionRef = useRef<HTMLDivElement>(null);
     const [contentElementHeight, setContentElementHeight] = useState(0);
     const [isCompanyCustomerChecked, setIsCompanyCustomerChecked] = useState(false);
     const [isCommonCustomerChecked, setIsCommonCustomerChecked] = useState(true);
@@ -42,9 +42,9 @@ const ContactInformationContent: FC<ContactInformationContent> = (props) => {
                 onEnter={calcHeight}
                 onExit={calcHeight}
                 unmountOnExit
-                nodeRef={nodeRef}
+                nodeRef={cssTransitionRef}
             >
-                <div ref={nodeRef}>
+                <div ref={cssTransitionRef}>
                     <div ref={contentElement}>
                         <ContactInformationContentSectionStyled>
                             <ContactInformationRegister />

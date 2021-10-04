@@ -16,7 +16,7 @@ const ContactInformationAddress: FC = () => {
 
     return (
         <>
-            <Heading type="h3">{t('Fakturační adresa')}</Heading>
+            <Heading type="h3">{t('Billing address')}</Heading>
             <FormLine bottomGap={true} lg="65%">
                 <Controller
                     name="street"
