@@ -1,7 +1,7 @@
-import { createContext, FC } from 'react';
 import { initServerSideProps, ServerSidePropsType } from 'helpers/InitServerSideProps';
 import CommonLayout from 'components/Layout/CommonLayout';
 import ContactInformationForm from 'components/Pages/ContactInformation';
+import { FC } from 'react';
 import Form from 'components/Forms/Form';
 import { getContactInformationFormResolver } from 'components/Pages/ContactInformation/ContactInformationFormResolver';
 import { GetServerSideProps } from 'next';
@@ -14,11 +14,7 @@ import { useShopsysSelector } from 'redux/store';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import Webline from 'components/Layout/Webline';
 
-export const ContactInformationContext = createContext<{ value: string; label: string }[]>(
-    {} as { value: string; label: string }[],
-);
-
-const countrySelectOptions = [
+export const getCountrySelectOptions = (): { value: string; label: string }[] => [
     { value: 'slovakia', label: 'Slovensko' },
     { value: 'czech', label: 'Česká republika' },
 ];
@@ -33,42 +29,40 @@ const ContactInformation: FC<ServerSidePropsType> = (props) => {
             <CommonLayout>
                 <OrderSteps activeStep={3} domainUrl={props.domainConfig.url} />
                 {cart === undefined ? null : <OrderSummary cart={cart} />}
-                <ContactInformationContext.Provider value={countrySelectOptions}>
-                    <Form
-                        resolver={getContactInformationFormResolver()}
-                        defaultValues={{
-                            email: '',
-                            register: false,
-                            passwordFirst: '',
-                            passwordSecond: '',
-                            customer: 'commonCustomer',
-                            telephone: '',
-                            firstName: '',
-                            lastName: '',
-                            street: '',
-                            city: '',
-                            postcode: '',
-                            country: countrySelectOptions[0].label,
-                            companyName: '',
-                            companyNumber: '',
-                            companyTaxNumber: '',
-                            deliveryAddress: false,
-                            deliveryFirstName: '',
-                            deliveryLastName: '',
-                            deliveryCompanyName: '',
-                            deliveryTelephone: '',
-                            deliveryStreet: '',
-                            deliveryCity: '',
-                            deliveryPostcode: '',
-                            deliveryCountry: countrySelectOptions[0].label,
-                            newsletterSubscription: false,
-                        }}
-                    >
-                        <Webline>
-                            <ContactInformationForm />
-                        </Webline>
-                    </Form>
-                </ContactInformationContext.Provider>
+                <Form
+                    resolver={getContactInformationFormResolver()}
+                    defaultValues={{
+                        email: '',
+                        register: false,
+                        passwordFirst: '',
+                        passwordSecond: '',
+                        customer: 'commonCustomer',
+                        telephone: '',
+                        firstName: '',
+                        lastName: '',
+                        street: '',
+                        city: '',
+                        postcode: '',
+                        country: getCountrySelectOptions()[0].label,
+                        companyName: '',
+                        companyNumber: '',
+                        companyTaxNumber: '',
+                        deliveryAddress: false,
+                        deliveryFirstName: '',
+                        deliveryLastName: '',
+                        deliveryCompanyName: '',
+                        deliveryTelephone: '',
+                        deliveryStreet: '',
+                        deliveryCity: '',
+                        deliveryPostcode: '',
+                        deliveryCountry: getCountrySelectOptions()[0].label,
+                        newsletterSubscription: false,
+                    }}
+                >
+                    <Webline>
+                        <ContactInformationForm />
+                    </Webline>
+                </Form>
             </CommonLayout>
         </StaticUrlGuard>
     );

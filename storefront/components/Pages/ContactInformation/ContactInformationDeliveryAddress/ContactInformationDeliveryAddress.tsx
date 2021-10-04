@@ -3,14 +3,14 @@ import {
     ContactInformationDeliveryAddressStyled,
 } from './ContactInformationDeliveryAddress.style';
 import { Controller, useFormContext, useWatch } from 'react-hook-form';
-import { FC, useContext, useEffect, useRef, useState } from 'react';
+import { FC, useEffect, useRef, useState } from 'react';
 import Checkbox from 'components/Forms/Checkbox';
 import ChoiceFormLine from 'components/Forms/Lib/ChoiceFormLine';
-import { ContactInformationContext } from 'pages/order/contact-information';
 import { CSSTransition } from 'react-transition-group';
 import FormColumn from 'components/Forms/Lib/FormColumn';
 import FormLine from 'components/Forms/Lib/FormLine';
 import FormLineError from 'components/Forms/Lib/FormLineError';
+import { getCountrySelectOptions } from 'pages/order/contact-information';
 import Select from 'components/Forms/Select';
 import TextInput from 'components/Forms/TextInput';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
@@ -22,7 +22,6 @@ const ContactInformationDeliveryAddress: FC = () => {
     const [contentElementHeight, setContentElementHeight] = useState(0);
     const [isDeliveryAddressChecked, setIsDeliveryAddressChecked] = useState(false);
     const formProviderMethods = useFormContext();
-    const context = useContext(ContactInformationContext);
 
     const calcHeight = () => {
         if (contentElement.current) {
@@ -211,8 +210,8 @@ const ContactInformationDeliveryAddress: FC = () => {
                                     render={({ field }) => (
                                         <>
                                             <Select
-                                                defaultValue={context[0]}
-                                                options={context}
+                                                defaultValue={getCountrySelectOptions()[0]}
+                                                options={getCountrySelectOptions()}
                                                 onChange={(option: { label: string }) =>
                                                     formProviderMethods.setValue(field.name, option.label)
                                                 }

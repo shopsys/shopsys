@@ -1,8 +1,9 @@
 import * as Yup from 'yup';
+import { Resolver } from 'react-hook-form';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import { yupResolver } from '@hookform/resolvers/yup';
 
-export const getContactInformationFormResolver = () => {
+export const getContactInformationFormResolver = (): Resolver => {
     const t = useTypedTranslationFunction();
 
     return yupResolver(
