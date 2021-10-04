@@ -3,7 +3,7 @@ import {
     ContactInformationDeliveryAddressStyled,
 } from './ContactInformationDeliveryAddress.style';
 import { Controller, useFormContext, useWatch } from 'react-hook-form';
-import { FC, useEffect, useRef, useState } from 'react';
+import { FC, useRef, useState } from 'react';
 import Checkbox from 'components/Forms/Checkbox';
 import ChoiceFormLine from 'components/Forms/Lib/ChoiceFormLine';
 import { CSSTransition } from 'react-transition-group';
@@ -20,18 +20,14 @@ const ContactInformationDeliveryAddress: FC = () => {
     const contentElement = useRef<HTMLDivElement>(null);
     const cssTransitionRef = useRef<HTMLDivElement>(null);
     const [contentElementHeight, setContentElementHeight] = useState(0);
-    const [isDeliveryAddressChecked, setIsDeliveryAddressChecked] = useState(false);
     const formProviderMethods = useFormContext();
+    const deliveryAddressCheckbox = useWatch({ name: 'deliveryAddress' });
 
     const calcHeight = () => {
         if (contentElement.current) {
             setContentElementHeight(contentElement.current.clientHeight);
         }
     };
-
-    useEffect(() => {
-        setIsDeliveryAddressChecked(formProviderMethods.watch('deliveryAddress'));
-    }, [formProviderMethods.watch('deliveryAddress')]);
 
     return (
         <>
@@ -52,7 +48,7 @@ const ContactInformationDeliveryAddress: FC = () => {
 
             <ContactInformationDeliveryAddressStyled contentElementHeight={contentElementHeight}>
                 <CSSTransition
-                    in={isDeliveryAddressChecked}
+                    in={deliveryAddressCheckbox}
                     timeout={500}
                     classNames="contactInformationDeliveryAddress"
                     onEnter={calcHeight}

@@ -1,19 +1,21 @@
 import { ContactInformationTextStyled, ContactInformationTextWrapperStyled } from './ContactInformation.style';
-import { Controller, useFormContext } from 'react-hook-form';
-import { FC, useState } from 'react';
+import { Controller, useFormContext, useWatch } from 'react-hook-form';
 import Checkbox from 'components/Forms/Checkbox';
 import ChoiceFormLine from 'components/Forms/Lib/ChoiceFormLine';
 import ContactInformationContent from './ContactInformationContent';
-import ContactInformationEmail from 'components/Pages/ContactInformation/ContactInformationEmail';
+import { FC } from 'react';
 import FormLine from 'components/Forms/Lib/FormLine';
+import FormLineError from 'components/Forms/Lib/FormLineError';
 import OrderAction from 'components/Blocks/OrderAction';
+import TextInput from 'components/Forms/TextInput';
 import { Trans } from 'react-i18next';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 
 const ContactInformation: FC = () => {
     const t = useTypedTranslationFunction();
     const formProviderMethods = useFormContext();
-    const [isEmailEntered, setIsEmailEntered] = useState(false);
+    const emailInput = useWatch({ name: 'email' });
+    const isEmailValid = emailInput.length > 0 && formProviderMethods.formState.errors.email === undefined;
 
     return (
         <>
@@ -21,18 +23,24 @@ const ContactInformation: FC = () => {
                 <Controller
                     name="email"
                     render={({ fieldState: { isTouched, invalid, error }, field }) => (
-                        <ContactInformationEmail
-                            isTouched={isTouched}
-                            invalid={invalid}
-                            error={error}
-                            field={field}
-                            setIsEmailEntered={setIsEmailEntered}
-                        />
+                        <>
+                            <TextInput
+                                id="contactInformation_form-email"
+                                name="email"
+                                label={t('Your e-mail')}
+                                required={true}
+                                type="text"
+                                isTouched={isTouched}
+                                hasError={invalid}
+                                fieldRef={field}
+                            />
+                            <FormLineError error={error} inputType="text-input" />
+                        </>
                     )}
                 />
             </FormLine>
-            <ContactInformationContent isEmailEntered={isEmailEntered} />
-            <ContactInformationTextWrapperStyled isEmailEntered={isEmailEntered}>
+            <ContactInformationContent isEmailEntered={isEmailValid} />
+            <ContactInformationTextWrapperStyled isEmailEntered={isEmailValid}>
                 <ContactInformationTextStyled>
                     <Trans i18nKey="ContactInformationInfo">
                         By clicking on the Send order button, you agree with <a href="#">terms and conditions</a> of the

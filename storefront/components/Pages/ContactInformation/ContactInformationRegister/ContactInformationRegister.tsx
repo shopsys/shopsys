@@ -1,7 +1,7 @@
-import { Controller, useFormContext } from 'react-hook-form';
-import { FC, useEffect, useState } from 'react';
+import { Controller, useWatch } from 'react-hook-form';
 import Checkbox from 'components/Forms/Checkbox';
 import ChoiceFormLine from 'components/Forms/Lib/ChoiceFormLine';
+import { FC } from 'react';
 import FormColumn from 'components/Forms/Lib/FormColumn';
 import FormLine from 'components/Forms/Lib/FormLine';
 import FormLineError from 'components/Forms/Lib/FormLineError';
@@ -11,12 +11,7 @@ import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslatio
 
 const ContactInformationRegister: FC = () => {
     const t = useTypedTranslationFunction();
-    const [isRegisterChecked, setIsRegisterChecked] = useState(false);
-    const formProviderMethods = useFormContext();
-
-    useEffect(() => {
-        setIsRegisterChecked(formProviderMethods.watch('register'));
-    }, [formProviderMethods.watch('register')]);
+    const registerCheckbox = useWatch({ name: 'register' });
 
     return (
         <>
@@ -32,7 +27,7 @@ const ContactInformationRegister: FC = () => {
                     )}
                 />
             </ChoiceFormLine>
-            {isRegisterChecked && (
+            {registerCheckbox === true && (
                 <>
                     <Heading type="h3">{t('Create a password')}</Heading>
                     <FormColumn lg="65%">
