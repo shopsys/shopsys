@@ -36,7 +36,16 @@ const TransportAndPayment: FC<ServerSidePropsType> = (props) => {
                             <Select transports={transports} {...userData} />
                         </Webline>
                     )}
-                    <OrderAction activeStep={2} buttonBack={t('Back')} buttonNext={t('Contact information')} />
+                    <Webline>
+                        <OrderAction
+                            activeStep={2}
+                            buttonBack={t('Back')}
+                            buttonNext={t('Contact information')}
+                            isDisabled={false}
+                            withGapTop={true}
+                            withGapBottom={true}
+                        />
+                    </Webline>
                 </Form>
             </CommonLayout>
         </StaticUrlGuard>
