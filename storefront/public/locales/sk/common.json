@@ -8,7 +8,7 @@
     "Code": "K\u00f3d",
     "Could not connect to server. Check your network.": "Nepodarilo sa pripoji\u0165 k serveru. Skontrolujte sie\u0165ov\u00e9 pripojenie.",
     "Customer service": "Z\u00e1kazn\u00edcky servis",
-    "email": "email",
+    "email": "e-mail",
     "From": "Od",
     "Hooops, someting wrong happend.": "Ooops, nie\u010do sa nepodarilo",
     "Choose variant": "Vybra\u0165 variantu",
@@ -22,7 +22,7 @@
     "Sign up for our newsletter and get 35% discount on running apparel": "Zaregistrujte sa k odberu newsletteru a z\u00edskajte z\u013eavu 35% na be\u017eeck\u00e9 vybavenie",
     "Stores": "Predajny",
     "This field is required": "Toto pole je povinn\u00e9",
-    "This value is not a valid email": "T\u00e1to hodnota nie je platn\u00fd email",
+    "This value is not a valid email": "T\u00e1to hodnota nie je platn\u00fd e-mail",
     "Type what you're looking for": "Napi\u0161te, \u010do hlad\u00e1te",
     "Unknown error.": "Nezn\u00e1m\u00e1 chyba.",
     "You have successfully subscribed to our newsletter": "Boli ste \u00faspe\u0161n\u011b prihl\u00e1sen\u00fd k odberu n\u00e1\u0161ho newsletteru.",
@@ -60,5 +60,9 @@
     "The amount of discounts": "Výška zľavy",
     "You pay": "Zaplatíte",
     "Overview": "Prehľad",
-    "Parameters": "Parametry"
+    "Parameters": "Parametry",
+    "Reset password": "Obnoviť heslo ",
+    "Forgotten password": "Zabudnuté heslo",
+    "We sent an email with further steps to your address": "Na vašu adresu sme odoslali e-mail s ďalšími krokmi",
+    "Your email": "Váš e-mail"
 }

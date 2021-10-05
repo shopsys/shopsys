@@ -3,6 +3,7 @@ import { FC, useEffect } from 'react';
 import { FormProvider, Resolver, SubmitHandler, useForm } from 'react-hook-form';
 import { getUserFriendlyErrors } from 'connectors/lib/friendlyErrorMessageParser';
 import { OperationResult } from 'urql';
+import { showErrorMessage } from 'components/Helpers/Toasts';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 
 type FormProps = {
@@ -36,9 +37,12 @@ const Form: FC<FormProps> = (props) => {
         }
         props.onSubmitHandler(data).then((result) => {
             if (result.error !== undefined) {
-                const { userError } = getUserFriendlyErrors(result.error, t);
+                const { userError, applicationError } = getUserFriendlyErrors(result.error, t);
                 for (const error in userError) {
                     formProviderMethods.setError(error, { message: userError[error][0]?.message });
+                }
+                if (applicationError !== undefined) {
+                    showErrorMessage(applicationError);
                 }
             } else {
                 props.onSuccessHandler();

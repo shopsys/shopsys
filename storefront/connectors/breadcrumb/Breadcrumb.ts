@@ -1,4 +1,4 @@
-type BreadcrumbItemType = {
+export type BreadcrumbItemType = {
     __typename: string;
     name: string;
     slug: string;
