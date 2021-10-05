@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\ReadModelBundle\Functional\Product\Listed;
 
-use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData;
+use App\Model\Product\Filter\ProductFilterData;
 use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingConfig;
 use Shopsys\ReadModelBundle\Product\Listed\ListedProductView;
 use Tests\App\Test\FunctionalTestCase;

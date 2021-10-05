@@ -8,9 +8,9 @@ use App\DataFixtures\Demo\CategoryDataFixture;
 use App\DataFixtures\Demo\PricingGroupDataFixture;
 use App\DataFixtures\Demo\ProductDataFixture;
 use App\Model\Category\Category;
+use App\Model\Product\Filter\ProductFilterData;
 use App\Model\Product\Product;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData;
 use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingConfig;
 use Tests\App\Test\FunctionalTestCase;
 

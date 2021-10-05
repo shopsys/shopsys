@@ -9,10 +9,10 @@ use App\DataFixtures\Demo\CurrencyDataFixture;
 use App\DataFixtures\Demo\FlagDataFixture;
 use App\Model\Category\Category;
 use App\Model\Product\Filter\ParameterFilterData;
+use App\Model\Product\Filter\ProductFilterData;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Component\Paginator\PaginationResult;
-use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData;
 use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingConfig;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue;
 use Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainFacadeInterface;
@@ -75,7 +75,7 @@ abstract class ProductOnCurrentDomainFacadeTest extends FunctionalTestCase
     {
         $category = $this->getReference(CategoryDataFixture::CATEGORY_PRINTERS);
 
-        /** @var \Shopsys\FrameworkBundle\Model\Product\Flag\Flag $flagTopProduct */
+        /** @var \App\Model\Product\Flag\Flag $flagTopProduct */
         $flagTopProduct = $this->getReference(FlagDataFixture::FLAG_PRODUCT_ACTION);
         $productFilterData = new ProductFilterData();
         $productFilterData->flags = [$flagTopProduct];
@@ -88,9 +88,9 @@ abstract class ProductOnCurrentDomainFacadeTest extends FunctionalTestCase
     {
         $category = $this->getReference(CategoryDataFixture::CATEGORY_BOOKS);
 
-        /** @var \Shopsys\FrameworkBundle\Model\Product\Flag\Flag $flagTopProduct */
+        /** @var \App\Model\Product\Flag\Flag $flagTopProduct */
         $flagTopProduct = $this->getReference(FlagDataFixture::FLAG_PRODUCT_ACTION);
-        /** @var \Shopsys\FrameworkBundle\Model\Product\Flag\Flag $flagActionProduct */
+        /** @var \App\Model\Product\Flag\Flag $flagActionProduct */
         $flagActionProduct = $this->getReference(FlagDataFixture::FLAG_PRODUCT_NEW);
         $productFilterData = new ProductFilterData();
         $productFilterData->flags = [$flagTopProduct, $flagActionProduct];
@@ -244,7 +244,7 @@ abstract class ProductOnCurrentDomainFacadeTest extends FunctionalTestCase
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
+     * @param \App\Model\Product\Filter\ProductFilterData $productFilterData
      * @param \App\Model\Category\Category $category
      * @return \Shopsys\FrameworkBundle\Component\Paginator\PaginationResult
      */
@@ -254,7 +254,7 @@ abstract class ProductOnCurrentDomainFacadeTest extends FunctionalTestCase
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
+     * @param \App\Model\Product\Filter\ProductFilterData $productFilterData
      * @param string $searchText
      * @return \Shopsys\FrameworkBundle\Component\Paginator\PaginationResult
      */
@@ -281,7 +281,7 @@ abstract class ProductOnCurrentDomainFacadeTest extends FunctionalTestCase
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
+     * @param \App\Model\Product\Filter\ProductFilterData $productFilterData
      * @param \App\Model\Category\Category $category
      * @param int $page
      * @param int $limit

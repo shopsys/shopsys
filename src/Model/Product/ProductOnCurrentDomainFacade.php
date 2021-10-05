@@ -4,12 +4,21 @@ declare(strict_types=1);
 
 namespace App\Model\Product;
 
+use App\Model\Product\Filter\ProductFilterDataFactory;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\Paginator\PaginationResult;
+use Shopsys\FrameworkBundle\Model\Category\CategoryRepository;
+use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
+use Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryRepository;
+use Shopsys\FrameworkBundle\Model\Product\Brand\BrandRepository;
+use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountRepository;
+use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingConfig;
 use Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainFacade as BaseProductOnCurrentDomainFacade;
+use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
 
 /**
  * @property \App\Model\Product\ProductRepository $productRepository
  * @property \App\Model\Category\CategoryRepository $categoryRepository
- * @method __construct(\App\Model\Product\ProductRepository $productRepository, \Shopsys\FrameworkBundle\Component\Domain\Domain $domain, \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser, \App\Model\Category\CategoryRepository $categoryRepository, \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountRepository $productFilterCountRepository, \Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryRepository $productAccessoryRepository, \App\Model\Product\Brand\BrandRepository $brandRepository)
  * @method \App\Model\Product\Product getVisibleProductById(int $productId)
  * @method \App\Model\Product\Product[] getAccessoriesForProduct(\App\Model\Product\Product $product)
  * @method \App\Model\Product\Product[] getVariantsForProduct(\App\Model\Product\Product $product)
@@ -24,6 +33,44 @@ use Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainFacade as BasePr
 class ProductOnCurrentDomainFacade extends BaseProductOnCurrentDomainFacade
 {
     /**
+     * @var \App\Model\Product\Filter\ProductFilterDataFactory
+     */
+    private ProductFilterDataFactory $productFilterDataFactory;
+
+    /**
+     * @param \App\Model\Product\ProductRepository $productRepository
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
+     * @param \App\Model\Category\CategoryRepository $categoryRepository
+     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountRepository $productFilterCountRepository
+     * @param \Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryRepository $productAccessoryRepository
+     * @param \App\Model\Product\Brand\BrandRepository $brandRepository
+     * @param \App\Model\Product\Filter\ProductFilterDataFactory $productFilterDataFactory
+     */
+    public function __construct(
+        ProductRepository $productRepository,
+        Domain $domain,
+        CurrentCustomerUser $currentCustomerUser,
+        CategoryRepository $categoryRepository,
+        ProductFilterCountRepository $productFilterCountRepository,
+        ProductAccessoryRepository $productAccessoryRepository,
+        BrandRepository $brandRepository,
+        ProductFilterDataFactory $productFilterDataFactory
+    ) {
+        parent::__construct(
+            $productRepository,
+            $domain,
+            $currentCustomerUser,
+            $categoryRepository,
+            $productFilterCountRepository,
+            $productAccessoryRepository,
+            $brandRepository
+        );
+
+        $this->productFilterDataFactory = $productFilterDataFactory;
+    }
+
+    /**
      * @param string[] $productCatnums
      * @return \App\Model\Product\Product[]
      */
@@ -33,6 +80,31 @@ class ProductOnCurrentDomainFacade extends BaseProductOnCurrentDomainFacade
             $productCatnums,
             $this->domain->getId(),
             $this->currentCustomerUser->getPricingGroup()
+        );
+    }
+
+    /**
+     * Method is extended because of https://github.com/shopsys/shopsys/pull/2380
+     *
+     * @param string|null $searchText
+     * @param int $limit
+     * @return \Shopsys\FrameworkBundle\Component\Paginator\PaginationResult
+     */
+    public function getSearchAutocompleteProducts(?string $searchText, int $limit): PaginationResult
+    {
+        $emptyProductFilterData = $this->productFilterDataFactory->create();
+
+        $page = 1;
+
+        return $this->productRepository->getPaginationResultForSearchListable(
+            $searchText,
+            $this->domain->getId(),
+            $this->domain->getLocale(),
+            $emptyProductFilterData,
+            ProductListOrderingConfig::ORDER_BY_RELEVANCE,
+            $this->currentCustomerUser->getPricingGroup(),
+            $page,
+            $limit
         );
     }
 }
