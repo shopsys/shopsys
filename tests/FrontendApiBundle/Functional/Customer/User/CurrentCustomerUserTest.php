@@ -55,7 +55,7 @@ class CurrentCustomerUserTest extends GraphQlWithLoginTestCase
             firstName
             lastName
         }
-        ... on CurrentCompanyCustomerUser {
+        ... on CompanyCustomerUser {
             companyName
             companyNumber
             companyTaxNumber
@@ -68,7 +68,7 @@ class CurrentCustomerUserTest extends GraphQlWithLoginTestCase
 {
     "data": {
         "query": {
-            "__typename": "CurrentCompanyCustomerUser",
+            "__typename": "CompanyCustomerUser",
             "firstName": "Jaromír",
             "lastName": "Jágr",
             "email": "no-reply@shopsys.com",

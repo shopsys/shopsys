@@ -1,8 +1,8 @@
-CurrentCompanyCustomerUser:
+CompanyCustomerUser:
     type: object
     config:
         interfaces:
-            - 'CurrentCustomerUser'
+            - 'CustomerUser'
         fields:
             companyName:
                 type: "String"

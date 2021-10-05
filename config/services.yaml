@@ -928,3 +928,8 @@ services:
 
     Shopsys\FrameworkBundle\Component\Redis\RedisFacade:
         alias: App\Component\Redis\RedisFacade
+
+    App\Model\PersonalData\Mail\PersonalDataExportMail: ~
+
+    Shopsys\FrameworkBundle\Model\PersonalData\Mail\PersonalDataExportMail:
+        alias: App\Model\PersonalData\Mail\PersonalDataExportMail

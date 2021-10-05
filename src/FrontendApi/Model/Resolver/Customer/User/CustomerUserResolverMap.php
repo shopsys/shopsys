@@ -36,17 +36,17 @@ class CustomerUserResolverMap extends ResolverMap
         ];
 
         return [
-            'CurrentCustomerUser' => [
+            'CustomerUser' => [
                 self::RESOLVE_TYPE => function (CustomerUser $customerUser) {
                     if ($customerUser->getCustomer()->getBillingAddress()->isCompanyCustomer()) {
-                        return 'CurrentCompanyCustomerUser';
+                        return 'CompanyCustomerUser';
                     }
 
-                    return 'CurrentRegularCustomerUser';
+                    return 'RegularCustomerUser';
                 },
             ],
-            'CurrentRegularCustomerUser' => $commonCustomerResolverFields,
-            'CurrentCompanyCustomerUser' => $commonCustomerResolverFields + [
+            'RegularCustomerUser' => $commonCustomerResolverFields,
+            'CompanyCustomerUser' => $commonCustomerResolverFields + [
                 'companyName' => function (CustomerUser $customerUser) {
                     return $customerUser->getCustomer()->getBillingAddress()->getCompanyName();
                 },

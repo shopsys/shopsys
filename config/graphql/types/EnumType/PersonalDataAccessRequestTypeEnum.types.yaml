@@ -1,0 +1,11 @@
+PersonalDataAccessRequestTypeEnum:
+    type: enum
+    config:
+        description: "One of two possible types for personal data access request"
+        values:
+            display:
+                value: '@=constant("Shopsys\\FrameworkBundle\\Model\\PersonalData\\PersonalDataAccessRequest::TYPE_DISPLAY")'
+                description: "Display data"
+            export:
+                value: '@=constant("Shopsys\\FrameworkBundle\\Model\\PersonalData\\PersonalDataAccessRequest::TYPE_EXPORT")'
+                description: "Export data"
