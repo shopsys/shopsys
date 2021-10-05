@@ -60,5 +60,9 @@
     "The amount of discounts": "The amount of discounts",
     "You pay": "You pay",
     "Overview": "Overview",
-    "Parameters": "Parameters"
+    "Parameters": "Parameters",
+    "Reset password": "Reset password",
+    "Forgotten password": "Forgotten password",
+    "We sent an email with further steps to your address": "We sent an email with further steps to your address",
+    "Your email": "Your email"
 }

@@ -5,7 +5,7 @@
     "Sign in": "Přihlásit se",
     "Home page": "Úvodní strana",
     "This field is required": "Toto pole je povinn\u00e9",
-    "This value is not a valid email": "Tato hodnota nen\u00ed platn\u00fd email",
+    "This value is not a valid email": "Tato hodnota nen\u00ed platn\u00fd e-mail",
     "Type what you're looking for": "Napi\u0161te, co hled\u00e1te",
     "Unknown error.": "Nezn\u00e1m\u00e1 chyba.",
     "You have successfully subscribed to our newsletter": "Byli jste \u00fasp\u011b\u0161n\u011b p\u0159ihl\u00e1\u0161eni k odb\u011bru na\u0161eho newsletteru.",
@@ -19,7 +19,7 @@
     "Code": "K\u00f3d",
     "Could not connect to server. Check your network.": "Nepoda\u0159ilo se p\u0159ipojit k serveru. Zkontrolujte s\u00ed\u0165ov\u00e9 p\u0159ipojen\u00ed.",
     "Customer service": "Z\u00e1kaznick\u00fd servis",
-    "email": "email",
+    "email": "e-mail",
     "From": "Od",
     "Hooops, someting wrong happend.": "Ooops, n\u011bco se nepovedlo",
     "Choose variant": "Vybrat variantu",
@@ -60,5 +60,9 @@
     "The amount of discounts": "Výše slevy",
     "You pay": "Zaplatíte",
     "Overview": "Přehled",
-    "Parameters": "Parametry"
+    "Parameters": "Parametry",
+    "Reset password": "Obnovit heslo",
+    "Forgotten password": "Zapomenuté heslo",
+    "We sent an email with further steps to your address": "Na vaši adresu jsme odeslali e-mail s dalšími kroky",
+    "Your email": "Váš e-mail"
 }
