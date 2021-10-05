@@ -416,6 +416,16 @@
       },
       "related_products": {
         "type": "integer"
+      },
+      "breadcrumb": {
+        "properties": {
+          "name": {
+            "type": "text"
+          },
+          "slug":  {
+            "type": "keyword"
+          }
+        }
       }
     }
   }

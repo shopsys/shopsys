@@ -49,7 +49,6 @@ Product:
             breadcrumb:
                 type: "[Link!]!"
                 description: "Hierarchy of the current element in relation to the structure"
-                resolve: '@=resolver("resolveProductBreadcrumb", [value])'
             relatedProducts:
                 type: "[Product!]!"
                 description: "List of related products"

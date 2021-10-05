@@ -933,3 +933,9 @@ services:
 
     Shopsys\FrameworkBundle\Model\PersonalData\Mail\PersonalDataExportMail:
         alias: App\Model\PersonalData\Mail\PersonalDataExportMail
+
+    App\Component\Breadcrumb\BreadcrumbResolver:
+        arguments: [ !tagged shopsys.breadcrumb_generator ]
+
+    Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbResolver:
+        alias: App\Component\Breadcrumb\BreadcrumbResolver
