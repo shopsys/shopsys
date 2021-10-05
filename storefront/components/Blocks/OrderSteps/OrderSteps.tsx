@@ -12,8 +12,8 @@ type OrderStepsProps = {
 
 const OrderSteps: FC<OrderStepsProps> = (props) => {
     const t = useTypedTranslationFunction();
-    const [cartUrl, shipmentAndPaymentUrl, contactInformationUrl] = useGetInternationalizedStaticUrls(
-        ['/cart', '/order/shipment-and-payment', '/order/contact-information'],
+    const [cartUrl, transportAndPaymentUrl, contactInformationUrl] = useGetInternationalizedStaticUrls(
+        ['/cart', '/order/transport-and-payment', '/order/contact-information'],
         props.domainUrl,
     );
 
@@ -28,9 +28,9 @@ const OrderSteps: FC<OrderStepsProps> = (props) => {
                     </NextLink>
                 </OrderStepsListItemStyled>
                 <OrderStepsListItemStyled>
-                    <NextLink href={shipmentAndPaymentUrl} passHref>
+                    <NextLink href={transportAndPaymentUrl} passHref>
                         <OrderStepsListItemLinkStyled isActive={props.activeStep === 2}>
-                            {'2. ' + t('Shipment and payment')}
+                            {'2. ' + t('Transport and payment')}
                         </OrderStepsListItemLinkStyled>
                     </NextLink>
                 </OrderStepsListItemStyled>

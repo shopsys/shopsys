@@ -8,9 +8,9 @@ import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslatio
 
 type FormProps = {
     defaultValues: { [key: string]: unknown };
-    onSubmitHandler: (variables?: any | undefined) => Promise<OperationResult<any, any>>;
-    onSuccessHandler: (...params: any) => any;
-    resolver: Resolver;
+    onSubmitHandler?: (variables?: any | undefined) => Promise<OperationResult<any, any>>;
+    onSuccessHandler?: (...params: any) => any;
+    resolver?: Resolver;
 };
 
 /**
@@ -35,6 +35,11 @@ const Form: FC<FormProps> = (props) => {
         if (document.activeElement instanceof HTMLElement) {
             document.activeElement.blur();
         }
+
+        if (props.onSubmitHandler === undefined) {
+            return;
+        }
+
         props.onSubmitHandler(data).then((result) => {
             if (result.error !== undefined) {
                 const { userError, applicationError } = getUserFriendlyErrors(result.error, t);
@@ -44,7 +49,7 @@ const Form: FC<FormProps> = (props) => {
                 if (applicationError !== undefined) {
                     showErrorMessage(applicationError);
                 }
-            } else {
+            } else if (props.onSuccessHandler !== undefined) {
                 props.onSuccessHandler();
             }
         });

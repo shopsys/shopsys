@@ -1,25 +1,45 @@
 import 'react-toastify/dist/ReactToastify.css';
+import { cartQuery, mapCart } from 'connectors/cart/Cart';
+import { nextReduxWrapper, useShopsysDispatch, useShopsysSelector } from 'redux/store';
+import { ReactElement, useEffect } from 'react';
 import { AppProps } from 'next/app';
 import { appWithTranslation } from 'next-i18next';
 import { getDomainConfig } from 'utils/Domain/Domain';
+import { getUserDataCookie } from 'helpers/Cookies';
 import nextI18NextConfig from 'next-i18next.config';
-import Popup from 'components/Layout/Popup';
-import { Provider } from 'react-redux';
-import { ReactElement } from 'react';
 import ShopsysGlobalProvider from 'context/ShopsysGlobalProvider';
-import store from 'redux/store';
+import { showErrorMessage } from 'components/Helpers/Toasts';
 import { ToastContainer } from 'react-toastify';
+import { useQuery } from 'urql';
+import { userActions } from 'redux/store/UserStore';
+import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import { withUrqlClient } from 'next-urql';
 
 function MyApp({ Component, pageProps }: AppProps): ReactElement {
+    const t = useTypedTranslationFunction();
+    const dispatch = useShopsysDispatch();
+    const { currencyCode } = useShopsysSelector((state) => state.domain);
+    const userData = getUserDataCookie();
+    const [result] = useQuery({
+        query: cartQuery,
+        variables: {
+            cartUuid: userData.cartUuid,
+        },
+        pause: userData.cartUuid === undefined,
+    });
+    useEffect(() => {
+        if (result.error) {
+            showErrorMessage(t('Hooops, someting wrong happend.'));
+        } else if (result.data !== undefined) {
+            dispatch(userActions.setCart(mapCart(result.data.cart, currencyCode)));
+        }
+    }, [result]);
+
     return (
-        <Provider store={store}>
-            <ShopsysGlobalProvider>
-                <Popup />
-                <ToastContainer autoClose={6000} position="top-center" theme="colored" />
-                <Component {...pageProps} />
-            </ShopsysGlobalProvider>
-        </Provider>
+        <ShopsysGlobalProvider>
+            <ToastContainer autoClose={6000} position="top-center" theme="colored" />
+            <Component {...pageProps} />
+        </ShopsysGlobalProvider>
     );
 }
 
@@ -35,13 +55,15 @@ const getApiUrl = () => {
     return apiUrl;
 };
 
-export default withUrqlClient(
-    () => ({
-        url: getApiUrl(),
-    }),
-    { ssr: false },
-)(
-    // eslint-disable-next-line
-    // @ts-ignore
-    appWithTranslation(MyApp, nextI18NextConfig),
+export default nextReduxWrapper.withRedux(
+    withUrqlClient(
+        () => ({
+            url: getApiUrl(),
+        }),
+        { ssr: false },
+    )(
+        // eslint-disable-next-line
+        // @ts-ignore
+        appWithTranslation(MyApp, nextI18NextConfig),
+    ),
 );

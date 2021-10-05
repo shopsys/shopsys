@@ -6,7 +6,7 @@ type ImageProps = { image: ImageType | null; alt: string };
 
 const Image: FC<ImageProps> = (props) => {
     if (props.image === null) {
-        return <NextImage src={'/images/optimized-noimage.png'} alt={props.alt} layout={'fill'} />;
+        return <img src={'/images/optimized-noimage.png'} alt={props.alt} />;
     }
 
     return (

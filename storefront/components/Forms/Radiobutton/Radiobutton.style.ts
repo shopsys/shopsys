@@ -12,3 +12,12 @@ export const RadiobuttonStyled = styled.input`
     clip: rect(0 0 0 0);
     border: 0;
 `;
+
+export const LabelImageWrapper = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 10px;
+    width: 45px;
+    height: 25px;
+`;

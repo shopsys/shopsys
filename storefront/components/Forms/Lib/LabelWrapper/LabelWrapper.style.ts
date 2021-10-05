@@ -179,31 +179,20 @@ export const LabelWrapperStyled = styled.div<LabelWrapperPropsStyled>`
                 & ~ label {
                     cursor: pointer;
 
-                    div {
+                    > div {
                         align-items: center;
                         position: relative;
                         display: flex;
                         padding-left: ${localVariables.choiceMarginLeft};
                         min-height: ${localVariables.choiceIconSize};
-
-                        span {
-                            font-size: ${theme.fontSize.small};
-                            color: ${theme.color.base};
-                            cursor: pointer;
-                            user-select: none;
-                        }
-
-                        img {
-                            height: ${localVariables.choiceIconSize};
-                            margin-right: 10px;
-                        }
                     }
 
                     &:before {
                         content: '';
                         position: absolute;
                         display: inline-block;
-                        top: 0;
+                        top: 50%;
+                        transform: translateY(-50%);
                         left: 0;
                         width: ${localVariables.choiceIconSize};
                         height: ${localVariables.choiceIconSize};

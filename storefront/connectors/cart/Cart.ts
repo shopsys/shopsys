@@ -1,8 +1,6 @@
 import { AddToCartResultType, CartApiType, CartType } from './types';
 import { useMutation, UseMutationResponse } from 'urql';
 import { mapProductPriceData } from 'connectors/products/Products';
-import { useFetchQuery } from 'hooks/graphQl/UseFetchQuery';
-import { useShopsysSelector } from 'redux/store';
 
 const cartBody = `
     uuid
@@ -44,13 +42,21 @@ const cartBody = `
     }
 ` as const;
 
-const cartQuery = `
-      query ($cartUuid: Uuid){
-          cart(cartInput: {cartUuid: $cartUuid}) {
-              ${cartBody}
-          }
-      }
-      ` as const;
+export const cartQuery = `
+    query (
+            $cartUuid: Uuid
+            $transport: TransportInput
+            $payment: PaymentInput
+        ){
+        cart(cartInput: {
+            cartUuid: $cartUuid
+            transport: $transport
+            payment: $payment
+        }) {              
+            ${cartBody}
+        }
+    }
+    ` as const;
 
 export function mapCart(data: CartApiType, currencyCode: string): CartType {
     return {
@@ -68,22 +74,6 @@ export function mapCart(data: CartApiType, currencyCode: string): CartType {
         }),
     };
 }
-
-export const getCart = (): CartType | undefined => {
-    const cartUuid = typeof localStorage !== 'undefined' ? localStorage.getItem('cartUuid') : undefined;
-    const result = useFetchQuery({
-        query: cartQuery,
-        variables: { cartUuid },
-        pause: cartUuid === undefined || cartUuid === null,
-    });
-    const { currencyCode } = useShopsysSelector((state) => state.domain);
-
-    if (result.data === undefined || result.data.cart === null) {
-        return undefined;
-    }
-
-    return mapCart(result.data.cart, currencyCode);
-};
 
 const removeItemFromCartMutation = `mutation ($cartUuid: Uuid! $cartItemUuid: Uuid!) {
       RemoveFromCart(input:{

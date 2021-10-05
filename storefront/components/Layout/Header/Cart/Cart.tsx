@@ -36,7 +36,9 @@ const Cart: FC = () => {
                             {cart !== undefined && Array.isArray(cart.items) ? cart.items.length : 0}
                         </CartCountStyled>
                     </CartPiecesStyled>
-                    <CartValueStyled>{formatPrice(0, domainConfig.currencyCode)}</CartValueStyled>
+                    <CartValueStyled>
+                        {formatPrice(0, domainConfig.currencyCode, { explicitZero: true })}
+                    </CartValueStyled>
                 </CartBlockStyled>
             </NextLink>
             <CartDetailStyled>

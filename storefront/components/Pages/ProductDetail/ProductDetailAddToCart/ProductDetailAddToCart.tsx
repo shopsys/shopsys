@@ -7,13 +7,13 @@ import {
     AddToCartWrapperStyled,
 } from './ProductDetailAddToCart.style';
 import { FC, useRef } from 'react';
-import { mapCart, useChangeCartItemQuantity } from 'connectors/cart/Cart';
 import { useShopsysDispatch, useShopsysSelector } from 'redux/store';
 import { formatPrice } from 'utils/formatting';
 import { ProductDetailType } from 'components/Pages/ProductDetail/types';
 import Spinbox from 'components/Forms/Spinbox';
+import { useChangeCartItemQuantity } from 'connectors/cart/Cart';
+import { useHandleCartUpdate } from 'hooks/cart/UseHandleCartUpdate';
 import { useHandleChangeCartItemQuantity } from 'hooks/cart/UseHandleChangeCartItemQuantity';
-import { userActions } from 'redux/store/UserStore';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 
 type ProductDetailAddToCartProps = {
@@ -41,7 +41,7 @@ const ProductDetailAddToCart: FC<ProductDetailAddToCartProps> = (props) => {
         });
         if (data !== undefined) {
             useHandleChangeCartItemQuantity(data, error, props.product.uuid, props.product.name, t);
-            dispatch(userActions.setCart(mapCart(data.AddToCart, currencyCode)));
+            useHandleCartUpdate(data.AddToCart, currencyCode, dispatch);
         }
         spinboxRef.current!.valueAsNumber = 1;
     };

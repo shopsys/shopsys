@@ -14,11 +14,10 @@ import Form from 'components/Forms/Form';
 import FormLine from 'components/Forms/Lib/FormLine';
 import FormLineError from 'components/Forms/Lib/FormLineError';
 import Heading from 'components/Basic/Heading';
-import { popupActions } from 'redux/store/PopupStore';
+import { showSuccessMessage } from 'components/Helpers/Toasts';
 import TextInput from 'components/Forms/TextInput';
 import { TFunction } from 'next-i18next';
 import { useNewsletterSubscription } from 'connectors/newsletter/Newsletter';
-import { useShopsysDispatch } from 'redux/store';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import { yupResolver } from '@hookform/resolvers/yup';
 
@@ -38,7 +37,6 @@ const getNewsletterFormResolver = (t: TFunction) => {
 const NewsletterForm: FC = () => {
     const t = useTypedTranslationFunction();
     const [, subscribeToNewsletter] = useNewsletterSubscription();
-    const dispatch = useShopsysDispatch();
 
     return (
         <NewsletterFormWrapperStyled>
@@ -46,7 +44,7 @@ const NewsletterForm: FC = () => {
             <NewsletterFormColumnStyled>
                 <Form
                     onSubmitHandler={subscribeToNewsletter}
-                    onSuccessHandler={() => dispatch(popupActions.showPopup('NewsletterSuccess'))}
+                    onSuccessHandler={() => showSuccessMessage(t('You have successfully subscribed to our newsletter'))}
                     resolver={getNewsletterFormResolver(t)}
                     defaultValues={{ email: '', privacyPolicy: false }}
                 >

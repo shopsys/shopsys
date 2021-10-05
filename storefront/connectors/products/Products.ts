@@ -1,8 +1,8 @@
 import {
     ListedProductItemApiType,
     ListedProductItemType,
-    PriceApiType,
     ProductItemApiType,
+    ProductPriceApiType,
     ProductPriceType,
     SliderProductItemType,
 } from 'components/Blocks/Product/types';
@@ -63,9 +63,12 @@ export const mapSliderProductApiData = (
     });
 };
 
-export const mapProductPriceData = (price: PriceApiType, currencyCode: string): ProductPriceType => {
+export const mapProductPriceData = (price: ProductPriceApiType, currencyCode: string): ProductPriceType => {
     return {
         ...price,
+        priceWithVat: Number.parseFloat(price.priceWithVat),
+        priceWithoutVat: Number.parseFloat(price.priceWithoutVat),
+        vatAmount: Number.parseFloat(price.vatAmount),
         currencyCode,
     };
 };

@@ -5,10 +5,10 @@ export type FlagType = {
     rgbColor: string;
 };
 
-export type PriceApiType = {
-    priceWithVat: number;
-    priceWithoutVat: number;
-    vatAmount: number;
+export type ProductPriceApiType = {
+    priceWithVat: string;
+    priceWithoutVat: string;
+    vatAmount: string;
     isPriceFrom: boolean;
 };
 
@@ -59,7 +59,7 @@ export type ProductItemApiType = {
     availability: {
         name: string;
     };
-    price: PriceApiType;
+    price: ProductPriceApiType;
     availableStoresCount: number;
     exposedStoresCount: number;
 };
@@ -75,7 +75,7 @@ export type ListedProductItemApiType = {
     availability: {
         name: string;
     };
-    price: PriceApiType;
+    price: ProductPriceApiType;
     availableStoresCount: number;
     exposedStoresCount: number;
 };
