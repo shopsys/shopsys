@@ -939,3 +939,6 @@ services:
 
     Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbResolver:
         alias: App\Component\Breadcrumb\BreadcrumbResolver
+
+    Shopsys\FrameworkBundle\Model\Article\ArticleBreadcrumbGenerator:
+        alias: App\Model\Article\ArticleBreadcrumbGenerator

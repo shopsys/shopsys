@@ -14,4 +14,3 @@ Article:
             breadcrumb:
                 type: "[Link!]!"
                 description: "Hierarchy of the current element in relation to the structure"
-                resolve: '@=resolver("resolveBreadcrumb", [value["id"], "front_article_detail"])'

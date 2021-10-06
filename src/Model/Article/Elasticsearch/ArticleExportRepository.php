@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\Article\Elasticsearch;
 
+use App\Component\Breadcrumb\BreadcrumbFacade;
 use App\Model\Article\Article;
 use App\Model\Article\ArticleRepository;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
@@ -21,15 +22,23 @@ class ArticleExportRepository
     private FriendlyUrlFacade $friendlyUrlFacade;
 
     /**
+     * @var \App\Component\Breadcrumb\BreadcrumbFacade
+     */
+    protected BreadcrumbFacade $breadcrumbFacade;
+
+    /**
      * @param \App\Model\Article\ArticleRepository $articleRepository
      * @param \App\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
+     * @param \App\Component\Breadcrumb\BreadcrumbFacade $breadcrumbFacade
      */
     public function __construct(
         ArticleRepository $articleRepository,
-        FriendlyUrlFacade $friendlyUrlFacade
+        FriendlyUrlFacade $friendlyUrlFacade,
+        BreadcrumbFacade $breadcrumbFacade
     ) {
         $this->articleRepository = $articleRepository;
         $this->friendlyUrlFacade = $friendlyUrlFacade;
+        $this->breadcrumbFacade = $breadcrumbFacade;
     }
 
     /**
@@ -102,6 +111,7 @@ class ArticleExportRepository
             'slug' => $this->friendlyUrlFacade->getAllSlugsByRouteNameAndEntityId($domainId, 'front_article_detail', $articleId),
             'mainSlug' => $mainFriendlyUrl->getSlug(),
             'position' => $article->getPosition(),
+            'breadcrumb' => $this->breadcrumbFacade->getBreadcrumbOnDomain($articleId, 'front_article_detail', $domainId),
         ];
     }
 }
