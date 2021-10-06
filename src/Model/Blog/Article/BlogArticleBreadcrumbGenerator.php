@@ -4,28 +4,28 @@ declare(strict_types=1);
 
 namespace App\Model\Blog\Article;
 
+use App\Component\Breadcrumb\DomainBreadcrumbGeneratorInterface;
 use App\Model\Blog\Category\BlogCategory;
 use App\Model\Blog\Category\BlogCategoryFacade;
-use Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbGeneratorInterface;
 use Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbItem;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 
-class BlogArticleBreadcrumbGenerator implements BreadcrumbGeneratorInterface
+class BlogArticleBreadcrumbGenerator implements DomainBreadcrumbGeneratorInterface
 {
     /**
      * @var \App\Model\Blog\Article\BlogArticleRepository
      */
-    private $blogArticleRepository;
+    private BlogArticleRepository $blogArticleRepository;
 
     /**
      * @var \App\Model\Blog\Category\BlogCategoryFacade
      */
-    private $blogCategoryFacade;
+    private BlogCategoryFacade $blogCategoryFacade;
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
      */
-    private $domain;
+    private Domain $domain;
 
     /**
      * @param \App\Model\Blog\Article\BlogArticleRepository $blogArticleRepository
@@ -47,37 +47,52 @@ class BlogArticleBreadcrumbGenerator implements BreadcrumbGeneratorInterface
      */
     public function getBreadcrumbItems($routeName, array $routeParameters = []): array
     {
+        return $this->getBreadcrumbItemsOnDomain(
+            $this->domain->getId(),
+            $routeName,
+            $routeParameters,
+            $this->domain->getLocale()
+        );
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getBreadcrumbItemsOnDomain(int $domainId, string $routeName, array $routeParameters = [], ?string $locale = null): array
+    {
         $blogArticle = $this->blogArticleRepository->getById($routeParameters['id']);
 
         $blogArticleMainCategoryOnDomain = $this->blogCategoryFacade->getBlogArticleMainBlogCategoryOnDomain(
             $blogArticle,
-            $this->domain->getId()
+            $domainId
         );
 
-        $breadcrumbItems = $this->getBlogCategoryBreadcrumbItems($blogArticleMainCategoryOnDomain);
+        $breadcrumbItems = $this->getBlogCategoryBreadcrumbItemsOnDomain($domainId, $locale, $blogArticleMainCategoryOnDomain);
 
         $breadcrumbItems[] = new BreadcrumbItem(
-            $blogArticle->getName()
+            $blogArticle->getName($locale)
         );
 
         return $breadcrumbItems;
     }
 
     /**
+     * @param int $domainId
+     * @param string $locale
      * @param \App\Model\Blog\Category\BlogCategory $blogCategory
      * @return \Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbItem[]
      */
-    private function getBlogCategoryBreadcrumbItems(BlogCategory $blogCategory): array
+    private function getBlogCategoryBreadcrumbItemsOnDomain(int $domainId, string $locale, BlogCategory $blogCategory): array
     {
         $blogCategoriesInPath = $this->blogCategoryFacade->getVisibleBlogCategoriesInPathFromRootOnDomain(
             $blogCategory,
-            $this->domain->getId()
+            $domainId
         );
 
         $breadcrumbItems = [];
         foreach ($blogCategoriesInPath as $blogCategoryInPath) {
             $breadcrumbItems[] = new BreadcrumbItem(
-                $blogCategoryInPath->getName(),
+                $blogCategoryInPath->getName($locale),
                 'front_blogcategory_detail',
                 ['id' => $blogCategoryInPath->getId()]
             );
