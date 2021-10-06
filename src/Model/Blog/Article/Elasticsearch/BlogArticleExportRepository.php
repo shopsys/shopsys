@@ -101,7 +101,7 @@ class BlogArticleExportRepository
             ->andWhere('ba.publishDate <= :todayDate')
             ->andWhere('bad.visible = true')
             ->andWhere('ba.hidden = false')
-            ->setParameter('todayDate', (new DateTime())->format('Y-m-d'))
+            ->setParameter('todayDate', (new DateTime())->format('Y-m-d H:i:s'))
             ->setParameter('domainId', $domainId)
             ->getQuery()->getSingleScalarResult());
     }
@@ -124,7 +124,7 @@ class BlogArticleExportRepository
             'uuid' => $blogArticle->getUuid(),
             'createdAt' => $blogArticle->getCreatedAt()->format('Y-m-d H:i:s'),
             'visibleOnHomepage' => $blogArticle->isVisibleOnHomepage(),
-            'publishDate' => $blogArticle->getPublishDate()->format('Y-m-d'),
+            'publishDate' => $blogArticle->getPublishDate()->format('Y-m-d H:i:s'),
             'perex' => $blogArticle->getPerex($locale),
             'seoTitle' => $blogArticle->getSeoTitle($domainId),
             'seoMetaDescription' => $blogArticle->getSeoMetaDescription($domainId),
