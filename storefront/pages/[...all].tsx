@@ -13,6 +13,8 @@ import { initDomainConfig } from 'helpers/InitDomainConfig';
 import { navigationQuery } from 'connectors/navigation/Navigation';
 import ProductDetailPage from 'components/Pages/ProductDetail';
 import { ProductDetailType } from 'components/Pages/ProductDetail/types';
+import StoreDetailPage from 'components/Pages/StoreDetail';
+import { StoreDetailType } from 'connectors/stores/types';
 import { useRouter } from 'next/router';
 import Webline from 'components/Layout/Webline';
 
@@ -51,11 +53,13 @@ const FriendlyUrlPage: FC<ServerSidePropsType> = () => {
     );
 };
 
-function renderContent(data: ProductDetailType | CategoryDetailType) {
+function renderContent(data: ProductDetailType | CategoryDetailType | StoreDetailType) {
     if (isProductType(data.__typename)) {
         return <ProductDetailPage product={data as ProductDetailType} />;
     } else if (data.__typename === 'Category') {
         return <CategoryDetailPage category={data as CategoryDetailType} />;
+    } else if (data.__typename === 'Store') {
+        return <StoreDetailPage store={data as StoreDetailType} />;
     }
 
     return <DefaultErrorPage statusCode={404} />;

@@ -137,7 +137,7 @@
     "Shopsys magazine": "Shopsys magazine",
     "View all": "View all",
     "FreeTransportAmountLeft": "Add products for <1>{{ amountLeftvalue }}</1> more, and enjoy <3>free delivery!</3>",
-    "Your delivery and payment is now free of charge!": "Your delivery and payment is now free of charge!"
+    "Your delivery and payment is now free of charge!": "Your delivery and payment is now free of charge!",
     "Finish registration to loyalty program.": "Finish registration <br/>to <strong>loyalty <br/>program</strong>.",
     "You will have an overview of your orders and complaints": "You will have an overview of your orders and complaints",
     "Collecting points with every order": "Collecting points with every order",
@@ -145,5 +145,12 @@
     "Exclusive products as a part of the loyalty program": "Exclusive products as a part of the loyalty program",
     "Create account": "Create account",
     "I agree with terms and conditions and privacy policy": "I agree with <1>terms and conditions</1> and privacy policy",
-    "Password must be at least {{ count }} characters long": "Password must be at least {{ count }} characters long"
+    "Password must be at least {{ count }} characters long": "Password must be at least {{ count }} characters long",
+    "Store description": "Store description",
+    "Store address": "Store address",
+    "Opening hours": "Opening hours",
+    "Contact to the department store": "Contact to the department store",
+    "Special announcement": "Special announcement",
+    "Do you have any questions?": "Do you have any questions?",
+    "Customer Centre": "Customer Centre"
 }

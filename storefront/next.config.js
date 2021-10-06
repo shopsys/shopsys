@@ -8,6 +8,7 @@ module.exports = {
         internalGraphqlEndpoint: process.env.INTERNAL_GRAPHQL_ENDPOINT,
     },
     publicRuntimeConfig: {
+        googleMapApiKey: process.env.GOOGLE_MAP_API_KEY,
         domains: [
             {
                 publicGraphqlEndpoint: process.env.PUBLIC_GRAPHQL_ENDPOINT_HOSTNAME_1,
