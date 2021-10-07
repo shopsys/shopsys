@@ -925,6 +925,7 @@ services:
             $persistentClients:
                 - '@snc_redis.global'
                 - '@snc_redis.session'
+                - '@snc_redis.blog_article_export_queue'
 
     Shopsys\FrameworkBundle\Component\Redis\RedisFacade:
         alias: App\Component\Redis\RedisFacade
@@ -942,3 +943,6 @@ services:
 
     Shopsys\FrameworkBundle\Model\Article\ArticleBreadcrumbGenerator:
         alias: App\Model\Article\ArticleBreadcrumbGenerator
+
+    App\Model\Blog\Article\Elasticsearch\BlogArticleExportQueueFacade:
+        arguments: ['@snc_redis.blog_article_export_queue']

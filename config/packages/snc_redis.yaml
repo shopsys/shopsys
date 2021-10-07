@@ -46,6 +46,13 @@ snc_redis:
             dsn: 'redis://%redis_host%'
             options:
                 prefix: '%env(REDIS_PREFIX)%%build-version%:cache:product_filter:'
+        blog_article_export_queue:
+            type: 'phpredis'
+            alias: 'blog_article_export_queue'
+            dsn: 'redis://%redis_host%'
+            options:
+                serialization: 'json'
+                prefix: '%env(REDIS_PREFIX)%:queue:blog_article_export:'
 
     session:
         client: 'session'

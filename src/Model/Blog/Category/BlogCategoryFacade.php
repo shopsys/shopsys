@@ -6,10 +6,13 @@ namespace App\Model\Blog\Category;
 
 use App\Component\Image\ImageFacade;
 use App\Model\Blog\Article\BlogArticle;
+use App\Model\Blog\Article\BlogArticleFacade;
+use App\Model\Blog\Article\Elasticsearch\BlogArticleExportQueueFacade;
 use App\Model\Blog\BlogVisibilityRecalculationScheduler;
 use App\Model\Blog\Category\Exception\BlogCategoryNotFoundException;
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 
 class BlogCategoryFacade
@@ -52,6 +55,21 @@ class BlogCategoryFacade
     private $blogVisibilityRecalculationScheduler;
 
     /**
+     * @var \App\Model\Blog\Article\Elasticsearch\BlogArticleExportQueueFacade
+     */
+    private BlogArticleExportQueueFacade $blogArticleExportQueueFacade;
+
+    /**
+     * @var \App\Model\Blog\Article\BlogArticleFacade
+     */
+    private BlogArticleFacade $blogArticleFacade;
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
+     */
+    private Domain $domain;
+
+    /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \App\Model\Blog\Category\BlogCategoryRepository $blogCategoryRepository
      * @param \App\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
@@ -59,6 +77,9 @@ class BlogCategoryFacade
      * @param \App\Model\Blog\Category\BlogCategoryFactory $blogCategoryFactory
      * @param \App\Model\Blog\Category\BlogCategoryWithPreloadedChildrenFactory $blogCategoryWithPreloadedChildrenFactory
      * @param \App\Model\Blog\BlogVisibilityRecalculationScheduler $blogVisibilityRecalculationScheduler
+     * @param \App\Model\Blog\Article\Elasticsearch\BlogArticleExportQueueFacade $blogArticleExportQueueFacade
+     * @param \App\Model\Blog\Article\BlogArticleFacade $blogArticleFacade
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
         EntityManagerInterface $em,
@@ -67,7 +88,10 @@ class BlogCategoryFacade
         ImageFacade $imageFacade,
         BlogCategoryFactory $blogCategoryFactory,
         BlogCategoryWithPreloadedChildrenFactory $blogCategoryWithPreloadedChildrenFactory,
-        BlogVisibilityRecalculationScheduler $blogVisibilityRecalculationScheduler
+        BlogVisibilityRecalculationScheduler $blogVisibilityRecalculationScheduler,
+        BlogArticleExportQueueFacade $blogArticleExportQueueFacade,
+        BlogArticleFacade $blogArticleFacade,
+        Domain $domain
     ) {
         $this->em = $em;
         $this->blogCategoryRepository = $blogCategoryRepository;
@@ -76,6 +100,9 @@ class BlogCategoryFacade
         $this->blogCategoryFactory = $blogCategoryFactory;
         $this->blogCategoryWithPreloadedChildrenFactory = $blogCategoryWithPreloadedChildrenFactory;
         $this->blogVisibilityRecalculationScheduler = $blogVisibilityRecalculationScheduler;
+        $this->blogArticleExportQueueFacade = $blogArticleExportQueueFacade;
+        $this->blogArticleFacade = $blogArticleFacade;
+        $this->domain = $domain;
     }
 
     /**
@@ -134,6 +161,8 @@ class BlogCategoryFacade
         $this->imageFacade->uploadImage($blogCategory, $blogCategoryData->image->uploadedFiles, null);
         $this->blogVisibilityRecalculationScheduler->scheduleRecalculation();
 
+        $this->scheduleArticlesToExportByCategory($blogCategory);
+
         return $blogCategory;
     }
 
@@ -151,6 +180,7 @@ class BlogCategoryFacade
         $this->em->flush();
         $this->em->remove($blogCategory);
         $this->blogVisibilityRecalculationScheduler->scheduleRecalculation();
+        $this->scheduleArticlesToExportByCategory($blogCategory);
         $this->em->flush();
     }
 
@@ -298,6 +328,25 @@ class BlogCategoryFacade
     }
 
     /**
+     * @param \App\Model\Blog\Category\BlogCategory $blogCategory
+     */
+    private function scheduleArticlesToExportByCategory(BlogCategory $blogCategory): void
+    {
+        foreach ($this->domain->getAll() as $domainConfig) {
+            $articleIds = $this->blogArticleFacade->getBlogArticleIdsByCategory(
+                $blogCategory,
+                $domainConfig->getId(),
+                $domainConfig->getLocale()
+            );
+
+            $this->blogArticleExportQueueFacade->addIdsBatch(
+                $articleIds,
+                $domainConfig->getId()
+            );
+        }
+    }
+
+    /**
      * @param array<int, array{id: string|int, parent_id: string|int|null, depth: int, left: int, right: int}> $blogCategoriesOrderingData
      */
     public function reorderByNestedSetValues(array $blogCategoriesOrderingData): void
@@ -326,7 +375,7 @@ class BlogCategoryFacade
                 $this->blogArticleFacade->getAllByDomainId($domainId)
             );
 
-            $this->blogArticleExportQueueFacade->addBatch($allIds, $domainId);
+            $this->blogArticleExportQueueFacade->addIdsBatch($allIds, $domainId);
         }
     }
 }

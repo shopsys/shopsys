@@ -331,4 +331,19 @@ class BlogArticleFacade
 
         return $this->productFacade->findAllByCatnums($productsCatnum);
     }
+
+    /**
+     * @param \App\Model\Blog\Category\BlogCategory $blogCategory
+     * @param int $domainId
+     * @param string $locale
+     * @return int[]
+     */
+    public function getBlogArticleIdsByCategory(BlogCategory $blogCategory, int $domainId, string $locale): array
+    {
+        return $this->blogArticleRepository->getBlogArticleIdsByCategory(
+            $blogCategory,
+            $domainId,
+            $locale
+        );
+    }
 }

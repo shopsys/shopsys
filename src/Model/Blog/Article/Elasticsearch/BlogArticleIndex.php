@@ -6,8 +6,9 @@ namespace App\Model\Blog\Article\Elasticsearch;
 
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\AbstractIndex;
+use Shopsys\FrameworkBundle\Component\Elasticsearch\IndexSupportChangesOnlyInterface;
 
-class BlogArticleIndex extends AbstractIndex
+class BlogArticleIndex extends AbstractIndex implements IndexSupportChangesOnlyInterface
 {
     /**
      * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
@@ -20,15 +21,23 @@ class BlogArticleIndex extends AbstractIndex
     private BlogArticleExportRepository $blogArticleExportRepository;
 
     /**
+     * @var \App\Model\Blog\Article\Elasticsearch\BlogArticleExportQueueFacade
+     */
+    private BlogArticleExportQueueFacade $blogArticleExportQueueFacade;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \App\Model\Blog\Article\Elasticsearch\BlogArticleExportRepository $blogArticleExportRepository
+     * @param \App\Model\Blog\Article\Elasticsearch\BlogArticleExportQueueFacade $blogArticleExportQueueFacade
      */
     public function __construct(
         Domain $domain,
-        BlogArticleExportRepository $blogArticleExportRepository
+        BlogArticleExportRepository $blogArticleExportRepository,
+        BlogArticleExportQueueFacade $blogArticleExportQueueFacade
     ) {
         $this->domain = $domain;
         $this->blogArticleExportRepository = $blogArticleExportRepository;
+        $this->blogArticleExportQueueFacade = $blogArticleExportQueueFacade;
     }
 
     /**
@@ -76,6 +85,26 @@ class BlogArticleIndex extends AbstractIndex
         }
 
         return $results;
+    }
+
+    /**
+     * @param int $domainId
+     * @return int
+     */
+    public function getChangedCount(int $domainId): int
+    {
+        return $this->blogArticleExportQueueFacade->getCount($domainId);
+    }
+
+    /**
+     * @param int $domainId
+     * @param int $lastProcessedId
+     * @param int $batchSize
+     * @return int[]
+     */
+    public function getChangedIdsForBatch(int $domainId, int $lastProcessedId, int $batchSize): array
+    {
+        return $this->blogArticleExportQueueFacade->getIds($domainId, $batchSize);
     }
 
     /**
