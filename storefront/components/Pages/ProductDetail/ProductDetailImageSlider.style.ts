@@ -50,15 +50,16 @@ export const ProductDetailImageSliderItemStyled = styled.div`
             min-height: 250px;
             max-height: 250px;
         }
+
         ${SliderItemImageStyled} {
             height: 100%;
+            object-fit: contain;
         }
     `}
 `;
 
 export const SliderItemImageStyled = styled.img`
     width: 100%;
-    object-fit: contain;
 `;
 
 const ImageSliderControlStyled = styled.button`
