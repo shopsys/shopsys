@@ -63,10 +63,10 @@ const ProductDetailGallery: FC<ProductDetailGalleryProps> = (props) => {
                                 <ProductDetailGalleryThumbnailsItemStyled key={index}>
                                     <a href={image.default?.url}>
                                         <img
-                                            src={image.galleryThumbnail?.url}
+                                            src={image.galleryThumbnail.url}
                                             alt={props.productName}
-                                            width={image.galleryThumbnail?.width}
-                                            height={image.galleryThumbnail?.height}
+                                            width={image.galleryThumbnail.width}
+                                            height={image.galleryThumbnail.height}
                                         />
                                     </a>
                                 </ProductDetailGalleryThumbnailsItemStyled>
