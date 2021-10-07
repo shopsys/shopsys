@@ -76,6 +76,7 @@
         "league/flysystem": "^1.1.4",
         "league/flysystem-aws-s3-v3": "^1.0",
         "league/iso3166": "^2.1",
+        "nette/utils": "^3.2",
         "phing/phing": "^2.16.1",
         "php-http/guzzle6-adapter": "^2.0",
         "presta/sitemap-bundle": "^1.5.3",
