@@ -6,7 +6,9 @@ namespace App\Model\Category;
 
 use App\Component\Cache\TwigCachedMenuFacade;
 use App\Model\Category\LinkedCategory\LinkedCategoryFacade;
+use App\Model\Product\Filter\ProductFilterData;
 use App\Model\Product\Product;
+use App\Model\Product\ProductOnCurrentDomainElasticFacade;
 use App\Twig\Cache\TwigCacheFacade;
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
@@ -77,6 +79,11 @@ class CategoryFacade extends BaseCategoryFacade
     private LinkedCategoryFacade $linkedCategoryFacade;
 
     /**
+     * @var \App\Model\Product\ProductOnCurrentDomainElasticFacade
+     */
+    private ProductOnCurrentDomainElasticFacade $productOnCurrentDomainElasticFacade;
+
+    /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \App\Model\Category\CategoryRepository $categoryRepository
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
@@ -91,6 +98,7 @@ class CategoryFacade extends BaseCategoryFacade
      * @param \App\Component\Cache\TwigCachedMenuFacade $twigCachedMenuFacade
      * @param \App\Twig\Cache\TwigCacheFacade $twigCacheFacade
      * @param \App\Model\Category\LinkedCategory\LinkedCategoryFacade $linkedCategoryFacade
+     * @param \App\Model\Product\ProductOnCurrentDomainElasticFacade $productOnCurrentDomainElasticFacade
      */
     public function __construct(
         EntityManagerInterface $em,
@@ -106,7 +114,8 @@ class CategoryFacade extends BaseCategoryFacade
         CategoryParameterFacade $categoryParameterFacade,
         TwigCachedMenuFacade $twigCachedMenuFacade,
         TwigCacheFacade $twigCacheFacade,
-        LinkedCategoryFacade $linkedCategoryFacade
+        LinkedCategoryFacade $linkedCategoryFacade,
+        ProductOnCurrentDomainElasticFacade $productOnCurrentDomainElasticFacade
     ) {
         parent::__construct(
             $em,
@@ -125,6 +134,7 @@ class CategoryFacade extends BaseCategoryFacade
         $this->twigCachedMenuFacade = $twigCachedMenuFacade;
         $this->twigCacheFacade = $twigCacheFacade;
         $this->linkedCategoryFacade = $linkedCategoryFacade;
+        $this->productOnCurrentDomainElasticFacade = $productOnCurrentDomainElasticFacade;
     }
 
     /**
@@ -323,5 +333,30 @@ class CategoryFacade extends BaseCategoryFacade
     public function getVisibleLinkedCategories(Category $parentCategory, int $domainId): array
     {
         return $this->categoryRepository->getVisibleCategoriesByLinkedCategories($parentCategory, $domainId, []);
+    }
+
+    /**
+     * @param \App\Model\Product\Filter\ProductFilterData $productFilterData
+     * @return array
+     */
+    public function getCategoriesOfProductByFilterData(ProductFilterData $productFilterData): array
+    {
+        $categoryIds = $this->productOnCurrentDomainElasticFacade->getCategoryIdsForFilterData($productFilterData);
+        $categories = $this->categoryRepository->getCategoriesByIds($categoryIds);
+
+        $categoriesIndexedByIds = [];
+        foreach ($categories as $category) {
+            $categoriesIndexedByIds[$category->getId()] = $category;
+        }
+
+        $sortedCategories = [];
+        foreach ($categoryIds as $categoryId) {
+            if (!array_key_exists($categoryId, $categoriesIndexedByIds)) {
+                continue;
+            }
+            $sortedCategories[] = $categoriesIndexedByIds[$categoryId];
+        }
+
+        return $sortedCategories;
     }
 }

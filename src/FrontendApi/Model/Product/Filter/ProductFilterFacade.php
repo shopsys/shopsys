@@ -76,11 +76,13 @@ class ProductFilterFacade extends BaseProductFilterFacade
      */
     public function getProductFilterConfigForFlag(Flag $flag): ProductFilterConfig
     {
-        $cacheKey = 'flag_' . $flag->getId();
+        $locale = $this->domain->getLocale();
+        $cacheKey = sprintf('flag_%s_%s', $locale, $flag->getId());
 
         if (!array_key_exists($cacheKey, $this->productFilterConfigCache)) {
             $this->productFilterConfigCache[$cacheKey] = $this->productFilterConfigFactory->createForFlag(
-                $flag
+                $flag,
+                $locale
             );
         }
 

@@ -20,13 +20,13 @@ use Shopsys\FrontendApiBundle\Model\Resolver\Products\ProductsResolver as BasePr
 /**
  * @property \App\Model\Product\ProductOnCurrentDomainElasticFacade $productOnCurrentDomainFacade
  * @property \App\FrontendApi\Model\Product\ProductFacade|null $productFacade
- * @method setProductFacade(\App\FrontendApi\Model\Product\ProductFacade $productFacade)
- * @method \Overblog\GraphQLBundle\Relay\Connection\ConnectionInterface|object resolveByCategory(\Overblog\GraphQLBundle\Definition\Argument $argument, \App\Model\Category\Category $category)
- * @method \Overblog\GraphQLBundle\Relay\Connection\ConnectionInterface|object resolveByBrand(\Overblog\GraphQLBundle\Definition\Argument $argument, \App\Model\Product\Brand\Brand $brand)
  * @property \App\FrontendApi\Model\Product\Filter\ProductFilterFacade|null $productFilterFacade
  * @property \App\FrontendApi\Model\Product\Connection\ProductConnectionFactory|null $productConnectionFactory
+ * @method setProductFacade(\App\FrontendApi\Model\Product\ProductFacade $productFacade)
  * @method setProductFilterFacade(\App\FrontendApi\Model\Product\Filter\ProductFilterFacade $productFilterFacade)
  * @method setProductConnectionFactory(\App\FrontendApi\Model\Product\Connection\ProductConnectionFactory $productConnectionFactory)
+ * @method \Overblog\GraphQLBundle\Relay\Connection\ConnectionInterface|object resolveByCategory(\Overblog\GraphQLBundle\Definition\Argument $argument, \App\Model\Category\Category $category)
+ * @method \Overblog\GraphQLBundle\Relay\Connection\ConnectionInterface|object resolveByBrand(\Overblog\GraphQLBundle\Definition\Argument $argument, \App\Model\Product\Brand\Brand $brand)
  */
 class ProductsResolver extends BaseProductsResolver
 {
@@ -121,7 +121,7 @@ class ProductsResolver extends BaseProductsResolver
             $flag
         );
 
-        $productFilterData->flags = [$flag];
+        $productFilterData->flags[] = $flag;
 
         return $this->productConnectionFactory->createConnectionForFlag(
             $flag,
