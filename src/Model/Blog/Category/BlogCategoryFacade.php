@@ -14,6 +14,8 @@ use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 
 class BlogCategoryFacade
 {
+    protected const INCREMENT_DUE_TO_MISSING_ROOT_CATEGORY = 1;
+
     /**
      * @var \Doctrine\ORM\EntityManagerInterface
      */
@@ -149,35 +151,6 @@ class BlogCategoryFacade
         $this->em->flush();
         $this->em->remove($blogCategory);
         $this->blogVisibilityRecalculationScheduler->scheduleRecalculation();
-        $this->em->flush();
-    }
-
-    /**
-     * @param int[]|null[] $parentIdByBlogCategoryId
-     */
-    public function editOrdering(array $parentIdByBlogCategoryId): void
-    {
-        // eager-load all categories into identity map
-        $this->blogCategoryRepository->getAll();
-
-        $rootCategory = $this->getRootBlogCategory();
-
-        foreach ($parentIdByBlogCategoryId as $blogCategoryId => $parentId) {
-            if ($parentId === null) {
-                $parent = $rootCategory;
-            } else {
-                $parent = $this->blogCategoryRepository->getById($parentId);
-            }
-
-            $blogCategory = $this->blogCategoryRepository->getById($blogCategoryId);
-            $blogCategory->setParent($parent);
-
-            $this->em->persist($blogCategory);
-            $this->em->flush();
-
-            $this->blogCategoryRepository->moveDown($blogCategory, BlogCategoryRepository::MOVE_DOWN_TO_BOTTOM);
-        }
-
         $this->em->flush();
     }
 
@@ -322,5 +295,38 @@ class BlogCategoryFacade
     public function getVisibleByUuid(int $domainId, string $uuid): BlogCategory
     {
         return $this->blogCategoryRepository->getVisibleByUuid($domainId, $uuid);
+    }
+
+    /**
+     * @param array<int, array{id: string|int, parent_id: string|int|null, depth: int, left: int, right: int}> $blogCategoriesOrderingData
+     */
+    public function reorderByNestedSetValues(array $blogCategoriesOrderingData): void
+    {
+        $rootCategoryId = $this->getRootBlogCategory()->getId();
+
+        $query = $this->em->createQuery('
+            UPDATE ' . BlogCategory::class . ' bc 
+            SET bc.parent = :parent, bc.level = :level, bc.lft = :lft, bc.rgt = :rgt 
+            WHERE bc.id = :id
+        ');
+
+        foreach ($blogCategoriesOrderingData as $categoryOrderingData) {
+            $query->execute([
+                'id' => (int)$categoryOrderingData['id'],
+                'parent' => $categoryOrderingData['parent_id'] ? (int)$categoryOrderingData['parent_id'] : $rootCategoryId,
+                'level' => $categoryOrderingData['depth'] + static::INCREMENT_DUE_TO_MISSING_ROOT_CATEGORY,
+                'lft' => $categoryOrderingData['left'] + static::INCREMENT_DUE_TO_MISSING_ROOT_CATEGORY,
+                'rgt' => $categoryOrderingData['right'] + static::INCREMENT_DUE_TO_MISSING_ROOT_CATEGORY,
+            ]);
+        }
+
+        foreach ($this->domain->getAllIds() as $domainId) {
+            $allIds = array_map(
+                static fn (BlogArticle $blogArticle) => $blogArticle->getId(),
+                $this->blogArticleFacade->getAllByDomainId($domainId)
+            );
+
+            $this->blogArticleExportQueueFacade->addBatch($allIds, $domainId);
+        }
     }
 }

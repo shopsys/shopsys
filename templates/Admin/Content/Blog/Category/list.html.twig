@@ -4,10 +4,12 @@
 {% block title %}- {{ 'Rubriky blogu'|trans }}{% endblock %}
 {% block h1 %}{{ 'Rubriky blogu'|trans }}{% endblock %}
 {% block btn %}
-    <a href="{{ url('admin_blogcategory_new') }}" class="btn btn--plus wrap-bar__btn">
-        <i class="btn__icon">+</i>
-        {{ 'Vytvořit novou rubriku blogu'|trans }}
-    </a>
+    <div class="wrap-bar">
+        <a href="{{ url('admin_blogcategory_new') }}" class="btn btn--plus wrap-bar__btn">
+            <i class="btn__icon">+</i>
+            {{ 'Vytvořit novou rubriku blogu'|trans }}
+        </a>
+    </div>
 {% endblock %}
 
 {% block main_content %}
@@ -67,7 +69,7 @@
                 <button
                         class="btn btn--disabled"
                         id="js-category-tree-sorting-save-button"
-                        data-category-save-order-url="{{ url('admin_blogcategory_saveorder') }}"
+                        data-category-apply-sorting-url="{{ url('admin_blogcategory_applysorting') }}"
                         type="button"
                 >
                     {{ 'Save changes in order'|trans }}

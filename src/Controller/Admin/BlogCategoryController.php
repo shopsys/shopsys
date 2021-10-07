@@ -8,6 +8,7 @@ use App\Form\Admin\BlogCategoryFormType;
 use App\Model\Blog\Category\BlogCategoryDataFactory;
 use App\Model\Blog\Category\BlogCategoryFacade;
 use App\Model\Blog\Category\Exception\BlogCategoryNotFoundException;
+use Nette\Utils\Json;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Domain\Exception\InvalidDomainIdException;
 use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
@@ -190,26 +191,19 @@ class BlogCategoryController extends AdminBaseController
     }
 
     /**
-     * @Route("/blog/category/save-order/", methods={"post"}, condition="request.isXmlHttpRequest()", name="admin_blogcategory_saveorder")
+     * @Route("/blog/category/apply-sorting/", methods={"post"}, condition="request.isXmlHttpRequest()")
+     * @see node_modules/@shopsys/framework/js/admin/components/CategoryTreeSorting.js
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function saveOrderAction(Request $request): Response
+    public function applySortingAction(Request $request): Response
     {
-        $blogCategoriesOrderingData = $request->get('categoriesOrderingData');
+        $categoriesOrderingDataJson = $request->request->get('categoriesOrderingData');
+        $categoriesOrderingData = Json::decode($categoriesOrderingDataJson, Json::FORCE_ARRAY);
 
-        $parentIdByBlogCategoryId = [];
-        foreach ($blogCategoriesOrderingData as $blogCategoryOrderingData) {
-            $blogCategoryId = (int)$blogCategoryOrderingData['categoryId'];
-            $parentId = $blogCategoryOrderingData['parentId'] === '' ? null : (int)$blogCategoryOrderingData['parentId'];
-            $parentIdByBlogCategoryId[$blogCategoryId] = $parentId;
-        }
+        $this->blogCategoryFacade->reorderByNestedSetValues($categoriesOrderingData);
 
-        $this->blogCategoryFacade->editOrdering($parentIdByBlogCategoryId);
-
-        //every controller action has to return some Response, even if a response is empty. Result of this action is
-        //processed by JS
-        return new Response();
+        return new Response('OK - dummy');
     }
 
     /**
