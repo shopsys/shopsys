@@ -41,7 +41,7 @@ class CartWithModificationsResult
      * @var array
      */
     private array $transportModifications = [
-        'transportPriceChanged' => null,
+        'transportPriceChanged' => false,
         'transportUnavailable' => false,
         'transportWeightLimitExceeded' => false,
     ];
@@ -50,7 +50,7 @@ class CartWithModificationsResult
      * @var array
      */
     private array $paymentModifications = [
-        'paymentPriceChanged' => null,
+        'paymentPriceChanged' => false,
         'paymentUnavailable' => false,
     ];
 
@@ -142,11 +142,11 @@ class CartWithModificationsResult
     }
 
     /**
-     * @param \App\Model\Transport\Transport $transport
+     * @param bool $transportPriceChanged
      */
-    public function setTransportPriceChanged(Transport $transport): void
+    public function setTransportPriceChanged(bool $transportPriceChanged): void
     {
-        $this->transportModifications['transportPriceChanged'] = $transport;
+        $this->transportModifications['transportPriceChanged'] = $transportPriceChanged;
     }
 
     public function setTransportIsUnavailable(): void
@@ -163,11 +163,11 @@ class CartWithModificationsResult
     }
 
     /**
-     * @param \App\Model\Payment\Payment $payment
+     * @param bool $paymentPriceChanged
      */
-    public function setPaymentPriceChanged(Payment $payment): void
+    public function setPaymentPriceChanged(bool $paymentPriceChanged): void
     {
-        $this->paymentModifications['paymentPriceChanged'] = $payment;
+        $this->paymentModifications['paymentPriceChanged'] = $paymentPriceChanged;
     }
 
     public function setPaymentIsUnavailable(): void

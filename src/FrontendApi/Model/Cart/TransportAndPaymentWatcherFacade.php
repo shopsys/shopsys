@@ -196,11 +196,9 @@ class TransportAndPaymentWatcherFacade
             $domainId
         );
 
-        if ($calculatedTransportPrice->getPriceWithVat()->equals($selectedTransportPrice->getPriceWithVat())) {
-            return;
-        }
-
-        $this->cartWithModificationsResult->setTransportPriceChanged($transport);
+        $this->cartWithModificationsResult->setTransportPriceChanged(
+            !$calculatedTransportPrice->getPriceWithVat()->equals($selectedTransportPrice->getPriceWithVat())
+        );
     }
 
     /**
@@ -221,10 +219,9 @@ class TransportAndPaymentWatcherFacade
             $domainId
         );
 
-        if ($calculatedPaymentPrice->getPriceWithVat()->equals($selectedPaymentPrice->getPriceWithVat())) {
-            return;
-        }
-        $this->cartWithModificationsResult->setPaymentPriceChanged($payment);
+        $this->cartWithModificationsResult->setPaymentPriceChanged(
+            !$calculatedPaymentPrice->getPriceWithVat()->equals($selectedPaymentPrice->getPriceWithVat())
+        );
     }
 
     /**

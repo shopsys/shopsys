@@ -321,17 +321,14 @@ class CartModificationsResultTest extends GraphQlTestCase
             ) {
                 modifications {
                     transportModifications {
-                        transportPriceChanged {
-                            uuid
-                        }
+                        transportPriceChanged
                     }
                 }
             }
         }';
 
         $transportModifications = $this->getTransportModifications($getCartQuery);
-        self::assertNotEmpty($transportModifications['transportPriceChanged']);
-        self::assertEquals($transport->getUuid(), $transportModifications['transportPriceChanged']['uuid']);
+        self::assertTrue($transportModifications['transportPriceChanged']);
     }
 
     public function testUnavailableTransportIsReported(): void
@@ -424,17 +421,14 @@ class CartModificationsResultTest extends GraphQlTestCase
             ) {
                 modifications {
                     paymentModifications {
-                        paymentPriceChanged {
-                            uuid
-                        }
+                        paymentPriceChanged
                     }
                 }
             }
         }';
 
         $paymentModifications = $this->getPaymentModifications($getCartQuery);
-        self::assertNotEmpty($paymentModifications['paymentPriceChanged']);
-        self::assertEquals($payment->getUuid(), $paymentModifications['paymentPriceChanged']['uuid']);
+        self::assertTrue($paymentModifications['paymentPriceChanged']);
     }
 
     public function testUnavailablePaymentIsReported(): void

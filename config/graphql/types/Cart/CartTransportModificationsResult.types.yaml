@@ -3,7 +3,7 @@ CartTransportModificationsResult:
     config:
         fields:
             transportPriceChanged:
-                type: "Transport"
+                type: "Boolean!"
             transportUnavailable:
                 type: "Boolean!"
             transportWeightLimitExceeded:
