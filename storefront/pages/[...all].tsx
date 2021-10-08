@@ -39,8 +39,8 @@ const FriendlyUrlPage: FC<ServerSidePropsType> = (props) => {
         <CommonLayout>
             <Webline>
                 <Breadcrumbs key="breadcrumb" breadcrumb={data.breadcrumb} />
-                {renderContent(data)}
             </Webline>
+            {renderContent(data)}
         </CommonLayout>
     );
 };

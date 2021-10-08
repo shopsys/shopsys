@@ -6,11 +6,6 @@ const localVariables = {
     productDetailImagesButtonSize: '32px',
 } as const;
 
-type ProductDetailImageSliderItemProps = {
-    sliderItemImageUrl: string;
-    sliderItemImageHeight: number;
-};
-
 export const ProductDetailImageSliderBoxStyled = styled.div`
     ${({ theme }) => css`
         display: none;
@@ -37,45 +32,60 @@ export const ProductDetailImageSliderStyled = styled.div`
     `}
 `;
 
-export const ProductDetailImageSliderItemStyled = styled.div<ProductDetailImageSliderItemProps>`
-    ${({ theme, sliderItemImageUrl, sliderItemImageHeight }) => css`
-        height: ${`${sliderItemImageHeight}px`};
+export const ProductDetailImageSliderItemStyled = styled.div`
+    ${({ theme }) => css`
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        min-height: 330px;
+        max-height: 330px;
 
-        background: ${`url(${sliderItemImageUrl}) center  no-repeat`};
-        border-radius: ${theme.radius.big};
+        @media ${theme.mediaQueries.queryMobile} {
+            min-height: 300px;
+            max-height: 300px;
+        }
+
+        @media ${theme.mediaQueries.queryMobileXs} {
+            min-height: 250px;
+            max-height: 250px;
+        }
+
+        ${SliderItemImageStyled} {
+            height: 100%;
+            object-fit: contain;
+        }
     `}
 `;
 
-export const ProductDetailImageSliderControlsStyled = styled.div`
+export const SliderItemImageStyled = styled.img`
+    width: 100%;
+`;
+
+const ImageSliderControlStyled = styled.button`
     ${({ theme }) => css`
-        display: none;
+        width: ${localVariables.productDetailImagesButtonSize};
+        height: ${localVariables.productDetailImagesButtonSize};
+        position: absolute;
+        top: calc(50% - (${localVariables.productDetailImagesButtonSize} / 2));
 
-        @media ${theme.mediaQueries.queryTablet} {
-            position: absolute;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 100%;
-            justify-content: space-between;
-            top: calc(50% - (${localVariables.productDetailImagesButtonSize} / 2));
-            right: 0;
-        }
+        color: ${theme.color.creamWhite};
+        outline: none;
+        border: none;
+        background-color: ${theme.color.greyDark};
+        border-radius: ${theme.radius.small};
+        transition: ${theme.transition};
+        cursor: pointer;
 
-        button {
-            width: ${localVariables.productDetailImagesButtonSize};
-            height: ${localVariables.productDetailImagesButtonSize};
-
-            color: ${theme.color.creamWhite};
-            outline: none;
-            border: none;
-            background-color: ${theme.color.greyDark};
-            border-radius: ${theme.radius.small};
-            transition: ${theme.transition};
-            cursor: pointer;
-
-            &:hover {
-                background-color: ${theme.color.greyDarker};
-            }
+        &:hover {
+            background-color: ${theme.color.greyDarker};
         }
     `}
+`;
+
+export const ImageSliderControlPreviousStyled = styled(ImageSliderControlStyled)`
+    left: 0;
+`;
+export const ImageSliderControlNextStyled = styled(ImageSliderControlStyled)`
+    right: 0;
 `;

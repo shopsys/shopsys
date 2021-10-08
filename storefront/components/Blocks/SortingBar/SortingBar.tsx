@@ -14,7 +14,7 @@ import {
     SortingBarTitleStyled,
 } from './SortingBar.style';
 import { useShopsysDispatch, useShopsysSelector } from 'redux/store';
-import { getIsElementVisible } from 'components/Helpers/GetIsItemVisible';
+import { isElementVisible } from 'components/Helpers/isElementVisible';
 import { mobileFirstSizes } from 'components/Theme/mediaQueries';
 import { useGetWindowSize } from 'hooks/ui/UseGetWindowSize';
 import { useResizeWidthEffect } from 'hooks/ui/UseResizeWidthEffect';
@@ -35,7 +35,7 @@ const SortingBar: FC = () => {
         mobileFirstSizes.vl,
         () => setMobileSortBarVisible(false),
         () => setMobileSortBarVisible(true),
-        () => setMobileSortBarVisible(getIsElementVisible([{ min: 0, max: 1024 }], width)),
+        () => setMobileSortBarVisible(isElementVisible([{ min: 0, max: 1024 }], width)),
     );
     const selectedSort = useShopsysSelector((state) => state.user.sort);
     const [toggleSortMenu, setToggleSortMenu] = useState(false);

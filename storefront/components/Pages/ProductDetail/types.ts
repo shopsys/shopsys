@@ -1,3 +1,4 @@
+import { ImageApiType, ImageType } from 'components/Basic/Image/types';
 import {
     ProductItemApiType,
     ProductPriceApiType,
@@ -28,6 +29,10 @@ export type ProductParameterType = {
         text: string;
     }[];
 };
+
+export type ProductDetailImageType = {
+    [sizeName: string]: ImageType;
+};
 export interface ProductDetailApiType extends SlugType, BreadcrumbType {
     uuid: string;
     name: string;
@@ -43,6 +48,7 @@ export interface ProductDetailApiType extends SlugType, BreadcrumbType {
     exposedStoresCount: number;
     accessories: ProductItemApiType[];
     parameters: ProductParameterType[];
+    images: ImageApiType[];
 }
 
 export interface ProductDetailType extends SlugType, BreadcrumbType {
@@ -60,4 +66,5 @@ export interface ProductDetailType extends SlugType, BreadcrumbType {
     exposedStoresCount: number;
     accessories: SliderProductItemType[];
     parameters: ProductParameterType[];
+    images: ProductDetailImageType[];
 }

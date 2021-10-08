@@ -1,17 +1,19 @@
 import 'keen-slider/keen-slider.min.css';
 import { FC, useEffect, useState } from 'react';
 import {
+    ImageSliderControlNextStyled,
+    ImageSliderControlPreviousStyled,
     ProductDetailImageSliderBoxStyled,
-    ProductDetailImageSliderControlsStyled,
     ProductDetailImageSliderItemStyled,
     ProductDetailImageSliderStyled,
+    SliderItemImageStyled,
 } from './ProductDetailImageSlider.style';
-import { Image } from 'connectors/products/ProductImages';
+import { ProductDetailImageType } from './types';
 import { theme } from 'components/Theme/main';
 import { useKeenSlider } from 'keen-slider/react';
 
 type ProductDetailImageSliderProps = {
-    galleryItems: Image[];
+    galleryItems: ProductDetailImageType[];
 };
 
 const ProductDetailImageSlider: FC<ProductDetailImageSliderProps> = (props) => {
@@ -73,19 +75,18 @@ const ProductDetailImageSlider: FC<ProductDetailImageSliderProps> = (props) => {
         <ProductDetailImageSliderBoxStyled>
             <ProductDetailImageSliderStyled ref={sliderRef} className="keen-slider">
                 {props.galleryItems.map((galleryItem, index) => (
-                    <ProductDetailImageSliderItemStyled
-                        sliderItemImageHeight={galleryItem.height}
-                        sliderItemImageUrl={loadedImageUrls[index] ? galleryItem.url : ''}
-                        key={index}
-                        className="keen-slider__slide"
-                    />
+                    <ProductDetailImageSliderItemStyled key={index} className="keen-slider__slide">
+                        <SliderItemImageStyled src={loadedImageUrls[index] ? galleryItem.default?.url : ''} />
+                    </ProductDetailImageSliderItemStyled>
                 ))}
             </ProductDetailImageSliderStyled>
             {slider !== null && areControlsVisible ? (
-                <ProductDetailImageSliderControlsStyled>
-                    <button onClick={onMoveToPreviousSlideHandler}>p</button>
-                    <button onClick={onMoveToNextSlideHandler}>n</button>
-                </ProductDetailImageSliderControlsStyled>
+                <>
+                    <ImageSliderControlPreviousStyled onClick={onMoveToPreviousSlideHandler}>
+                        p
+                    </ImageSliderControlPreviousStyled>
+                    <ImageSliderControlNextStyled onClick={onMoveToNextSlideHandler}>n</ImageSliderControlNextStyled>
+                </>
             ) : null}
         </ProductDetailImageSliderBoxStyled>
     );

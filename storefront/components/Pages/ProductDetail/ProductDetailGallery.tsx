@@ -1,44 +1,45 @@
+import { FC, useState } from 'react';
 import {
     ProductDetailGalleryMainImageStyled,
     ProductDetailGalleryThumbnailsItemStyled,
     ProductDetailGalleryThumbnailsStyled,
 } from './ProductDetailGallery.style';
 import SimpleReactLightbox, { SRLWrapper } from 'simple-react-lightbox';
-import { FC } from 'react';
+import { desktopFirstSizes } from 'components/Theme/mediaQueries';
+import { isElementVisible } from 'components/Helpers/isElementVisible';
 import ProductDetailImageSlider from './ProductDetailImageSlider';
+import { ProductDetailImageType } from './types';
+import { useGetWindowSize } from 'hooks/ui/UseGetWindowSize';
+import { useResizeWidthEffect } from 'hooks/ui/UseResizeWidthEffect';
+
+type ProductDetailGalleryProps = {
+    images: ProductDetailImageType[];
+    productName: string;
+};
 
 /**
  * Product detail gallery with simple lightbox and beside thumbnails
  */
-const ProductDetailGallery: FC = () => {
-    /* TODO PRG: join live data */
-    const productDetailSliderItems = [
-        {
-            type: 'web',
-            position: 1,
-            size: 'default',
-            url: 'http://placeimg.com/640/530/any?t=1',
-            width: 968,
-            height: 318,
-        },
-        {
-            type: 'web',
-            position: 2,
-            size: 'default',
-            url: 'http://placeimg.com/640/530/any?t=2',
-            width: 968,
-            height: 318,
-        },
-    ];
+const ProductDetailGallery: FC<ProductDetailGalleryProps> = (props) => {
+    const [isSliderVisible, setSliderVisibility] = useState(false);
+    const { width } = useGetWindowSize();
+    useResizeWidthEffect(
+        width,
+        desktopFirstSizes.tablet,
+        () => setSliderVisibility(false),
+        () => setSliderVisibility(true),
+        () => setSliderVisibility(isElementVisible([{ min: 0, max: desktopFirstSizes.tablet }], width)),
+    );
 
-    if (
-        productDetailSliderItems === undefined ||
-        (Array.isArray(productDetailSliderItems) && productDetailSliderItems.length === 0)
-    ) {
+    if (props.images.length === 0) {
         return null;
     }
 
-    return (
+    const mainImage = props.images[0].default;
+
+    return isSliderVisible ? (
+        <ProductDetailImageSlider galleryItems={props.images} />
+    ) : (
         <SimpleReactLightbox>
             <SRLWrapper
                 options={{
@@ -56,29 +57,32 @@ const ProductDetailGallery: FC = () => {
                 }}
             >
                 <ProductDetailGalleryThumbnailsStyled>
-                    <ProductDetailGalleryThumbnailsItemStyled>
-                        <a href="http://placeimg.com/640/530/any?t=1">
-                            <img src="http://placeimg.com/64/53/any?t=1" alt="Umbrella" width={64} height={53} />
-                        </a>
-                    </ProductDetailGalleryThumbnailsItemStyled>
-
-                    <ProductDetailGalleryThumbnailsItemStyled>
-                        <a href="http://placeimg.com/640/530/any?t=2">
-                            <img src="http://placeimg.com/64/53/any?t=2" alt="Umbrella" width={64} height={53} />
-                        </a>
-                    </ProductDetailGalleryThumbnailsItemStyled>
+                    {props.images.map(
+                        (image, index) =>
+                            index > 0 && (
+                                <ProductDetailGalleryThumbnailsItemStyled key={index}>
+                                    <a href={image.default?.url}>
+                                        <img
+                                            src={image.galleryThumbnail.url}
+                                            alt={props.productName}
+                                            width={image.galleryThumbnail.width}
+                                            height={image.galleryThumbnail.height}
+                                        />
+                                    </a>
+                                </ProductDetailGalleryThumbnailsItemStyled>
+                            ),
+                    )}
                 </ProductDetailGalleryThumbnailsStyled>
                 <ProductDetailGalleryMainImageStyled>
-                    <a href="http://placeimg.com/640/530/any?t=3">
+                    <a href={mainImage?.url}>
                         <img
-                            src="http://placeimg.com/640/530/any?t=3"
-                            alt="Picture of the author"
-                            width={552}
-                            height={454}
+                            src={mainImage?.url}
+                            alt={props.productName}
+                            width={mainImage?.width}
+                            height={mainImage?.height}
                         />
                     </a>
                 </ProductDetailGalleryMainImageStyled>
-                <ProductDetailImageSlider galleryItems={productDetailSliderItems} />
             </SRLWrapper>
         </SimpleReactLightbox>
     );

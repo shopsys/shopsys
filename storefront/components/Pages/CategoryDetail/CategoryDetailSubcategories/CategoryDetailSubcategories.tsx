@@ -8,7 +8,7 @@ import CategoryDetailSubcategoriesSlider from './CategoryDetailSubcategoriesSlid
 import CategoryItem from 'components/Blocks/Categories/CategoryItem';
 import { CategoryItemType } from 'components/Blocks/Categories/CategoryItem/types';
 import { desktopFirstSizes } from 'components/Theme/mediaQueries';
-import { getIsElementVisible } from 'components/Helpers/GetIsItemVisible';
+import { isElementVisible } from 'components/Helpers/isElementVisible';
 import { useGetWindowSize } from 'hooks/ui/UseGetWindowSize';
 import { useResizeWidthEffect } from 'hooks/ui/UseResizeWidthEffect';
 
@@ -24,7 +24,7 @@ export const CategoryDetailSubcategories: FC<CategoryDetailSubcategoriesProps> =
         desktopFirstSizes.tablet,
         () => setSubcategoriesSliderVisible(false),
         () => setSubcategoriesSliderVisible(true),
-        () => setSubcategoriesSliderVisible(getIsElementVisible([{ min: 0, max: 768 }], width)),
+        () => setSubcategoriesSliderVisible(isElementVisible([{ min: 0, max: 768 }], width)),
     );
 
     return (
