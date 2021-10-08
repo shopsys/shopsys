@@ -139,14 +139,43 @@ class StoreRepository
 
     /**
      * @param string $uuid
+     * @param int $domainId
      * @return \App\Model\Store\Store
      */
-    public function getOneByUuid(string $uuid): Store
+    public function getByUuidEnabledOnDomain(string $uuid, int $domainId): Store
     {
-        $store = $this->getStoreRepository()->findOneBy(['uuid' => $uuid], ['position' => 'ASC', 'id' => 'ASC']);
+        $store = $this->getQueryBuilder()
+            ->join(StoreDomain::class, 'sd', Join::WITH, 's.id = sd.store AND sd.isEnabled = TRUE AND sd.domainId = :domainId')
+            ->setParameter('domainId', $domainId)
+            ->where('s.uuid = :uuid')
+            ->setParameter('uuid', $uuid)
+            ->getQuery()
+            ->getOneOrNullResult();
 
         if ($store === null) {
             throw new StoreByUuidNotFoundException(sprintf('Store with UUID "%s" does not exist.', $uuid));
+        }
+
+        return $store;
+    }
+
+    /**
+     * @param int $id
+     * @param int $domainId
+     * @return \App\Model\Store\Store
+     */
+    public function getByIdEnabledOnDomain(int $id, int $domainId): Store
+    {
+        $store = $this->getQueryBuilder()
+            ->join(StoreDomain::class, 'sd', Join::WITH, 's.id = sd.store AND sd.isEnabled = TRUE AND sd.domainId = :domainId')
+            ->setParameter('domainId', $domainId)
+            ->where('s.id = :id')
+            ->setParameter('id', $id)
+            ->getQuery()
+            ->getOneOrNullResult();
+
+        if ($store === null) {
+            throw new StoreNotFoundException($id);
         }
 
         return $store;
