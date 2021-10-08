@@ -8,6 +8,12 @@ Cart:
             items:
                 type: "[CartItem!]!"
                 description: "All items in the cart"
+            transport:
+                type: "Transport"
+                description: "Selected transport if transport provided"
+            payment:
+                type: "Payment"
+                description: "Selected payment if payment provided"
             modifications:
                 type: "CartModificationsResult!"
             totalPrice:

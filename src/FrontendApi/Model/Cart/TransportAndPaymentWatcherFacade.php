@@ -160,10 +160,15 @@ class TransportAndPaymentWatcherFacade
 
         $this->cartWithModificationsResult->setTotalPrice($orderPreview->getTotalPrice());
         $this->cartWithModificationsResult->setTotalDiscountPrice($orderPreview->getTotalPriceDiscount());
+        $this->cartWithModificationsResult->setTransport($transport);
+        $this->cartWithModificationsResult->setPayment($payment);
 
         if ($transport !== null) {
             $this->checkTransportPrice($transport, $transportInputData, $orderPreview->getProductsPrice(), $currency);
-            $this->checkTransportWeightLimit($transport, $cart->getTotalWeight());
+            $transportWeightLimitExceeded = $this->checkTransportWeightLimit($transport, $cart->getTotalWeight());
+            if ($transportWeightLimitExceeded) {
+                $this->cartWithModificationsResult->setTransport(null);
+            }
         }
 
         if ($payment !== null) {
@@ -225,10 +230,13 @@ class TransportAndPaymentWatcherFacade
     /**
      * @param \App\Model\Transport\Transport $transport
      * @param int $cartTotalWeight
+     * @return bool
      */
-    private function checkTransportWeightLimit(Transport $transport, int $cartTotalWeight): void
+    private function checkTransportWeightLimit(Transport $transport, int $cartTotalWeight): bool
     {
-        $transportWeightLimitExceeded = $transport->getMaxWeight() < $cartTotalWeight;
+        $transportWeightLimitExceeded = $transport->getMaxWeight() !== null && $transport->getMaxWeight() < $cartTotalWeight;
         $this->cartWithModificationsResult->setTransportWeightLimitExceeded($transportWeightLimitExceeded);
+
+        return $transportWeightLimitExceeded;
     }
 }

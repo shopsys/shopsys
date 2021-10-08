@@ -65,6 +65,16 @@ class CartWithModificationsResult
     private ?Price $totalDiscountPrice = null;
 
     /**
+     * @var \App\Model\Transport\Transport|null
+     */
+    private ?Transport $transport;
+
+    /**
+     * @var \App\Model\Payment\Payment|null
+     */
+    private ?Payment $payment;
+
+    /**
      * @param \App\Model\Cart\Cart $cart
      */
     public function __construct(Cart $cart)
@@ -202,5 +212,37 @@ class CartWithModificationsResult
     public function setTotalDiscountPrice(Price $totalDiscountPrice): void
     {
         $this->totalDiscountPrice = $totalDiscountPrice;
+    }
+
+    /**
+     * @return \App\Model\Transport\Transport|null
+     */
+    public function getTransport(): ?Transport
+    {
+        return $this->transport;
+    }
+
+    /**
+     * @return \App\Model\Payment\Payment|null
+     */
+    public function getPayment(): ?Payment
+    {
+        return $this->payment;
+    }
+
+    /**
+     * @param \App\Model\Transport\Transport|null $transport
+     */
+    public function setTransport(?Transport $transport): void
+    {
+        $this->transport = $transport;
+    }
+
+    /**
+     * @param \App\Model\Payment\Payment|null $payment
+     */
+    public function setPayment(?Payment $payment): void
+    {
+        $this->payment = $payment;
     }
 }
