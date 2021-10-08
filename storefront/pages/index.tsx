@@ -1,5 +1,7 @@
 import { initServerSideProps, ServerSidePropsType } from 'helpers/InitServerSideProps';
 import Banners from 'components/Blocks/Banners';
+import BlogPreview from 'components/Blocks/BlogPreview';
+import { blogPreviewQuery } from 'connectors/blogPreview/blogPreview';
 import CommonLayout from 'components/Layout/CommonLayout';
 import { FC } from 'react';
 import Heading from 'components/Basic/Heading';
@@ -31,6 +33,10 @@ const Index: FC<ServerSidePropsType> = (props) => {
                 <Heading type="h2">{t('Promoted products')}</Heading>
                 <PromotedProducts />
             </Webline>
+
+            <Webline type="blog">
+                <BlogPreview />
+            </Webline>
         </CommonLayout>
     );
 };
@@ -41,6 +47,7 @@ export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) =>
         sliderItemsQuery,
         promotedProductsQuery,
         navigationQuery,
+        blogPreviewQuery,
     ]);
 });
 
