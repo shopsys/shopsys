@@ -116,5 +116,10 @@
     "ContactInformationInfo": "By clicking on the Send order button, you agree with <1>terms and conditions</1> of the e-shop and with the <3>processing of privacy policy</3>.",
     "Billing address": "Billing address",
     "Slovakia": "Slovakia",
-    "Czech Republic": "Czech Republic"
+    "Czech Republic": "Czech Republic",
+    "The street must contain a letter": "The street must contain a letter",
+    "The street must contain a number": "The street must contain a number",
+    "Zip code cannot be longer than 5 characters": "Zip code cannot be longer than 5 characters",
+    "Please enter only numbers": "Please enter only numbers",
+    "This value must be exactly 8 characters": "This value must be exactly 8 characters"
 }

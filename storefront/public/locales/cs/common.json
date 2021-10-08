@@ -116,5 +116,10 @@
     "ContactInformationInfo": "Kliknutím na tlačítko Odeslat objednávku souhlasíte s <1>obchodními podmínkami</1> e-shopu a se <3>zpracováním osobních údajů</3>.",
     "Billing address": "Fakturační adresa",
     "Slovakia": "Slovensko",
-    "Czech Republic": "Česká republika"
+    "Czech Republic": "Česká republika",
+    "The street must contain a letter": "Ulice musí obsahovat písmeno",
+    "The street must contain a number": "Ulice musí obsahovat číslo",
+    "Zip code cannot be longer than 5 characters": "PSČ nesmí být delší než 5 znaků",
+    "Please enter only numbers": "Prosím, zadávejte pouze čísla",
+    "This value must be exactly 8 characters": "Táto hodnota musí mít přesně 8 znaků"
 }

@@ -31,9 +31,18 @@ export const getContactInformationFormResolver = (): Resolver => {
                 ),
             firstName: Yup.string().required(t('Please enter first name')),
             lastName: Yup.string().required(t('Please enter last name')),
-            street: Yup.string().required(t('Please enter street')),
+            street: Yup.string()
+                .required(t('Please enter street'))
+                .matches(/\D/, t('The street must contain a letter'))
+                .matches(/\d/, t('The street must contain a number')),
             city: Yup.string().required(t('Please enter city')),
-            postcode: Yup.string().required(t('Please enter zip code')),
+            postcode: Yup.string()
+                .required(t('Please enter zip code'))
+                .test(
+                    'less-or-equals-than-5',
+                    t('Zip code cannot be longer than 5 characters'),
+                    (value) => value !== undefined && value.length <= 5,
+                ),
             country: Yup.string(),
             companyName: Yup.string().when('customer', {
                 is: (customer: string) => customer === 'companyCustomer',
@@ -42,7 +51,14 @@ export const getContactInformationFormResolver = (): Resolver => {
             }),
             companyNumber: Yup.string().when('customer', {
                 is: (customer: string) => customer === 'companyCustomer',
-                then: Yup.string().required(t('Please enter identification number')),
+                then: Yup.string()
+                    .required(t('Please enter identification number'))
+                    .matches(/^[0-9]*$/, t('Please enter only numbers'))
+                    .test(
+                        'equals-8',
+                        t('This value must be exactly 8 characters'),
+                        (value) => value !== undefined && value.length === 8,
+                    ),
                 otherwise: Yup.string(),
             }),
             companyTaxNumber: Yup.string(),
@@ -68,7 +84,10 @@ export const getContactInformationFormResolver = (): Resolver => {
                 ),
             deliveryStreet: Yup.string().when('deliveryAddress', {
                 is: true,
-                then: Yup.string().required(t('Please enter street')),
+                then: Yup.string()
+                    .required(t('Please enter street'))
+                    .matches(/\D/, t('The street must contain a letter'))
+                    .matches(/\d/, t('The street must contain a number')),
                 otherwise: Yup.string(),
             }),
             deliveryCity: Yup.string().when('deliveryAddress', {
@@ -78,7 +97,13 @@ export const getContactInformationFormResolver = (): Resolver => {
             }),
             deliveryPostcode: Yup.string().when('deliveryAddress', {
                 is: true,
-                then: Yup.string().required(t('Please enter zip code')),
+                then: Yup.string()
+                    .required(t('Please enter zip code'))
+                    .test(
+                        'less-or-equals-than-5',
+                        t('Zip code cannot be longer than 5 characters'),
+                        (value) => value !== undefined && value.length <= 5,
+                    ),
                 otherwise: Yup.string(),
             }),
             deliveryCountry: Yup.string(),
