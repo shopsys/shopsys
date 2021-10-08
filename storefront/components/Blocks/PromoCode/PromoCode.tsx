@@ -18,7 +18,7 @@ const PromoCode: FC = () => {
     const [discount, setDiscount] = useState('TestCode');
     const [isContentVisible, setIsContentVisible] = useState(false);
     const contentElement = useRef<HTMLDivElement>(null);
-    const nodeRef = useRef(null);
+    const cssTransitionRef = useRef<HTMLDivElement>(null);
     const [contentElementHeight, setContentElementHeight] = useState(0);
 
     const calcHeight = () => {
@@ -44,9 +44,9 @@ const PromoCode: FC = () => {
                         onEnter={calcHeight}
                         onExit={calcHeight}
                         unmountOnExit
-                        nodeRef={nodeRef}
+                        nodeRef={cssTransitionRef}
                     >
-                        <PromoCodeContentWrapperStyled ref={nodeRef}>
+                        <PromoCodeContentWrapperStyled ref={cssTransitionRef}>
                             <PromoCodeContentStyled ref={contentElement}>
                                 <PromoCodeContentInputStyled
                                     type="text"

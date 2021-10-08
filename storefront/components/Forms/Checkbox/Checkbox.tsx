@@ -14,11 +14,11 @@ type CheckboxProps = NativeProps & {
     /**
      * A prop to decide if the input has errors
      */
-    hasError: boolean;
+    hasError?: boolean;
     /**
      * A prop to decide if the input is touched
      */
-    isTouched: boolean;
+    isTouched?: boolean;
     /**
      * Display Label of the HTML checkbox element
      */

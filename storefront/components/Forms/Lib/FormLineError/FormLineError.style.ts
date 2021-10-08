@@ -1,8 +1,9 @@
 import { css } from 'styled-components';
+import Icon from 'components/Basic/Icon';
 import { styled } from 'components/Theme/main';
 
 const localVariables = {
-    smallTextInputErrorIconTopOffset: '-29px',
+    smallTextInputErrorIconTopOffset: '-30px',
     defaultTextInputErrorIconTopOffset: '-33px',
 } as const;
 
@@ -24,10 +25,14 @@ export const ErrorMessageStyled = styled.span`
     `}
 `;
 
-export const ErrorIconStyled = styled.div<ErrorIconStyledProps>`
-    ${({ inputType, textInputSize }) => css`
+export const ErrorIconStyled = styled(Icon)<ErrorIconStyledProps>`
+    ${({ theme, inputType, textInputSize }) => css`
         display: flex;
         position: absolute;
+        width: 16px;
+        height: 16px;
+
+        color: ${theme.color.red};
 
         ${inputType === 'textarea' &&
         css`

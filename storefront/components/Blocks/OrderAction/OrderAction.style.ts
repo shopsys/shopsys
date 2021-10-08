@@ -7,20 +7,34 @@ const localVariables = {
     orderActionButtonBackIconColor: '#747474',
 } as const;
 
-export const OrderActionStyled = styled.div`
-    ${({ theme }) => css`
+type OrderActionStyledProps = {
+    withGapBottom?: boolean;
+    withGapTop?: boolean;
+};
+
+export const OrderActionStyled = styled.div<OrderActionStyledProps>`
+    ${({ theme, withGapBottom, withGapTop }) => css`
         display: flex;
         flex-direction: column;
         flex-wrap: wrap;
         align-items: center;
-        margin-bottom: 48px;
-        margin-top: 30px;
+        ${withGapBottom &&
+        css`
+            margin-bottom: 48px;
+        `};
+        ${withGapTop &&
+        css`
+            margin-top: 30px;
+        `};
 
         @media ${theme.mediaQueries.queryLg} {
             flex-direction: row;
             justify-content: space-between;
             width: 100%;
-            margin-bottom: 90px;
+            ${withGapBottom &&
+            css`
+                margin-bottom: 90px;
+            `};
         }
     `}
 `;

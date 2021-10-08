@@ -20,9 +20,14 @@ const ShipmentAndPayment: FC<ServerSidePropsType> = (props) => {
         <StaticUrlGuard domainUrl={props.domainConfig.url}>
             <CommonLayout>
                 <OrderSteps activeStep={2} domainUrl={props.domainConfig.url} />
-                Shipment and payment - step 2
-                <OrderAction activeStep={2} buttonBack={t('Back')} buttonNext={t('Contact information')} />
+                <div>Shipment and payment - step 2</div>
                 {cart === undefined ? null : <OrderSummary cart={cart} />}
+                <OrderAction
+                    activeStep={2}
+                    buttonBack={t('Back')}
+                    buttonNext={t('Contact information')}
+                    isDisabled={false}
+                />
             </CommonLayout>
         </StaticUrlGuard>
     );

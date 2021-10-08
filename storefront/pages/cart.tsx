@@ -11,6 +11,7 @@ import StaticUrlGuard from 'components/Helpers/StaticUrlGuard';
 import { useInitDomainConfig } from 'hooks/helpers/UseInitDomainConfig';
 import { useShopsysSelector } from 'redux/store';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import Webline from 'components/Layout/Webline';
 
 const Cart: FC<ServerSidePropsType> = (props) => {
     const t = useTypedTranslationFunction();
@@ -23,7 +24,15 @@ const Cart: FC<ServerSidePropsType> = (props) => {
                 <OrderSteps activeStep={1} domainUrl={props.domainConfig.url} />
                 <List items={cart?.items} />
                 <CartSummary />
-                <OrderAction activeStep={1} buttonBack={t('Back to e-shop')} buttonNext={t('Shipment and payment')} />
+                <Webline>
+                    <OrderAction
+                        activeStep={1}
+                        buttonBack={t('Back to e-shop')}
+                        buttonNext={t('Shipment and payment')}
+                        isDisabled={false}
+                        withGapBottom={true}
+                    />
+                </Webline>
             </CommonLayout>
         </StaticUrlGuard>
     );

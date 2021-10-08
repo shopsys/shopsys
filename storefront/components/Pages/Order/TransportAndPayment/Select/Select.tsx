@@ -140,7 +140,7 @@ const Select: FC<SelectProps> = (props) => {
                                                 transport?.uuid !== undefined && transportItem.uuid !== transport.uuid
                                             }
                                             checked={transport?.uuid === transportItem.uuid}
-                                            onSecondClickCallback={resetTransportAndPayment}
+                                            uncheckCallback={resetTransportAndPayment}
                                             label={
                                                 <SelectItemLabel
                                                     name={transportItem.name}
@@ -186,7 +186,7 @@ const Select: FC<SelectProps> = (props) => {
                                                     payment?.uuid !== undefined && payment?.uuid !== paymentItem.uuid
                                                 }
                                                 checked={payment?.uuid === paymentItem.uuid}
-                                                onSecondClickCallback={resetPayment}
+                                                uncheckCallback={resetPayment}
                                                 label={
                                                     <SelectItemLabel
                                                         name={paymentItem.name}
