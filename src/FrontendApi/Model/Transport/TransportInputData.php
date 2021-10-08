@@ -19,6 +19,11 @@ class TransportInputData
     private Price $price;
 
     /**
+     * @var string|null
+     */
+    private ?string $personalPickupStoreUuid;
+
+    /**
      * @param array $transportInput
      */
     public function __construct(array $transportInput)
@@ -28,6 +33,7 @@ class TransportInputData
             $transportInput['price']['priceWithoutVat'],
             $transportInput['price']['priceWithVat']
         );
+        $this->personalPickupStoreUuid = $transportInput['personalPickupStoreUuid'];
     }
 
     /**
@@ -44,5 +50,13 @@ class TransportInputData
     public function getPrice(): Price
     {
         return $this->price;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getPersonalPickupStoreUuid(): ?string
+    {
+        return $this->personalPickupStoreUuid;
     }
 }

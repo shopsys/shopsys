@@ -5,5 +5,6 @@ TransportInput:
     config:
         fields:
             personalPickupStoreUuid:
-                type: "String"
+                type: "Uuid"
+                defaultValue: null
                 description: "The identifier of selected personal pickup store"

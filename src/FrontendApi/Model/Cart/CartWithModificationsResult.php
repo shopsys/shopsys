@@ -44,6 +44,7 @@ class CartWithModificationsResult
         'transportPriceChanged' => false,
         'transportUnavailable' => false,
         'transportWeightLimitExceeded' => false,
+        'personalPickupStoreUnavailable' => false,
     ];
 
     /**
@@ -160,6 +161,14 @@ class CartWithModificationsResult
     public function setTransportWeightLimitExceeded(bool $transportWeightLimitExceeded): void
     {
         $this->transportModifications['transportWeightLimitExceeded'] = $transportWeightLimitExceeded;
+    }
+
+    /**
+     * @param bool $personalPickupStoreUnavailable
+     */
+    public function setPersonalPickupStoreUnavailable(bool $personalPickupStoreUnavailable): void
+    {
+        $this->transportModifications['personalPickupStoreUnavailable'] = $personalPickupStoreUnavailable;
     }
 
     /**

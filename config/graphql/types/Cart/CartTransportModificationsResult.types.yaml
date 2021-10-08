@@ -8,3 +8,5 @@ CartTransportModificationsResult:
                 type: "Boolean!"
             transportWeightLimitExceeded:
                 type: "Boolean!"
+            personalPickupStoreUnavailable:
+                type: "Boolean!"

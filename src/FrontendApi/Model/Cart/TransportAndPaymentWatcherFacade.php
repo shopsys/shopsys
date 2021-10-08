@@ -11,6 +11,8 @@ use App\Model\Order\Preview\OrderPreviewFactory;
 use App\Model\Order\PromoCode\PromoCode;
 use App\Model\Payment\Payment;
 use App\Model\Payment\PaymentFacade;
+use App\Model\Store\Exception\StoreByUuidNotFoundException;
+use App\Model\Store\StoreFacade;
 use App\Model\Transport\Transport;
 use App\Model\Transport\TransportFacade;
 use Shopsys\Cdn\Component\Domain\Domain;
@@ -71,6 +73,11 @@ class TransportAndPaymentWatcherFacade
     private CurrentCustomerUser $currentCustomerUser;
 
     /**
+     * @var \App\Model\Store\StoreFacade
+     */
+    private StoreFacade $storeFacade;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentPriceCalculation $paymentPriceCalculation
      * @param \Shopsys\FrameworkBundle\Model\Transport\TransportPriceCalculation $transportPriceCalculation
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
@@ -79,6 +86,7 @@ class TransportAndPaymentWatcherFacade
      * @param \App\Model\Order\Preview\OrderPreviewFactory $orderPreviewFactory
      * @param \Shopsys\Cdn\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
+     * @param \App\Model\Store\StoreFacade $storeFacade
      */
     public function __construct(
         PaymentPriceCalculation $paymentPriceCalculation,
@@ -88,7 +96,8 @@ class TransportAndPaymentWatcherFacade
         PaymentFacade $paymentFacade,
         OrderPreviewFactory $orderPreviewFactory,
         Domain $domain,
-        CurrentCustomerUser $currentCustomerUser
+        CurrentCustomerUser $currentCustomerUser,
+        StoreFacade $storeFacade
     ) {
         $this->paymentPriceCalculation = $paymentPriceCalculation;
         $this->transportPriceCalculation = $transportPriceCalculation;
@@ -98,6 +107,7 @@ class TransportAndPaymentWatcherFacade
         $this->orderPreviewFactory = $orderPreviewFactory;
         $this->domain = $domain;
         $this->currentCustomerUser = $currentCustomerUser;
+        $this->storeFacade = $storeFacade;
     }
 
     /**
@@ -124,26 +134,14 @@ class TransportAndPaymentWatcherFacade
         $transport = null;
         $payment = null;
 
-        if ($transportInputData) {
-            try {
-                $transport = $this->transportFacade->getEnabledOnDomainByUuid(
-                    $transportInputData->getUuid(),
-                    $domainId
-                );
-            } catch (TransportNotFoundException $exception) {
-                $this->cartWithModificationsResult->setTransportIsUnavailable();
-            }
+        if ($transportInputData !== null) {
+            $transport = $this->getTransportFromInputData($transportInputData);
+
+            $this->checkPersonalPickupStoreAvailability($transportInputData);
         }
 
         if ($paymentInputData) {
-            try {
-                $payment = $this->paymentFacade->getEnabledOnDomainByUuid(
-                    $paymentInputData->getUuid(),
-                    $domainId
-                );
-            } catch (PaymentNotFoundException $exception) {
-                $this->cartWithModificationsResult->setPaymentIsUnavailable();
-            }
+            $payment = $this->getPaymentFromInputData($paymentInputData);
         }
 
         $orderPreview = $this->orderPreviewFactory->create(
@@ -176,6 +174,42 @@ class TransportAndPaymentWatcherFacade
         }
 
         return $this->cartWithModificationsResult;
+    }
+
+    /**
+     * @param \App\FrontendApi\Model\Transport\TransportInputData $transportInputData
+     * @return \App\Model\Transport\Transport|null
+     */
+    private function getTransportFromInputData(TransportInputData $transportInputData): ?Transport
+    {
+        try {
+            return $this->transportFacade->getEnabledOnDomainByUuid(
+                $transportInputData->getUuid(),
+                $this->domain->getId()
+            );
+        } catch (TransportNotFoundException $exception) {
+            $this->cartWithModificationsResult->setTransportIsUnavailable();
+        }
+
+        return null;
+    }
+
+    /**
+     * @param \App\FrontendApi\Model\Payment\PaymentInputData $paymentInputData
+     * @return \App\Model\Payment\Payment
+     */
+    private function getPaymentFromInputData(PaymentInputData $paymentInputData): ?Payment
+    {
+        try {
+            return $this->paymentFacade->getEnabledOnDomainByUuid(
+                $paymentInputData->getUuid(),
+                $this->domain->getId()
+            );
+        } catch (PaymentNotFoundException $exception) {
+            $this->cartWithModificationsResult->setPaymentIsUnavailable();
+        }
+
+        return null;
     }
 
     /**
@@ -235,5 +269,24 @@ class TransportAndPaymentWatcherFacade
         $this->cartWithModificationsResult->setTransportWeightLimitExceeded($transportWeightLimitExceeded);
 
         return $transportWeightLimitExceeded;
+    }
+
+    /**
+     * @param \App\FrontendApi\Model\Transport\TransportInputData $transportInputData
+     */
+    private function checkPersonalPickupStoreAvailability(TransportInputData $transportInputData): void
+    {
+        if ($transportInputData->getPersonalPickupStoreUuid() === null) {
+            return;
+        }
+
+        try {
+            $this->storeFacade->getByUuidEnabledOnDomain(
+                $transportInputData->getPersonalPickupStoreUuid(),
+                $this->domain->getId()
+            );
+        } catch (StoreByUuidNotFoundException $e) {
+            $this->cartWithModificationsResult->setPersonalPickupStoreUnavailable(true);
+        }
     }
 }
