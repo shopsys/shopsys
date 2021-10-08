@@ -71,9 +71,12 @@ class OrderDataFactory extends BaseOrderDataFactory
             $orderData->isCompanyCustomer = true;
         }
         $input = $argument['input'];
-        if (isset($input['personalPickupStoreUuid'])) {
+        if (isset($input['transport']['personalPickupStoreUuid'])) {
             try {
-                $store = $this->storeFacade->getByUuid($input['personalPickupStoreUuid']);
+                $store = $this->storeFacade->getByUuidEnabledOnDomain(
+                    $input['transport']['personalPickupStoreUuid'],
+                    $this->domain->getId()
+                );
                 $this->setOrderDataByStore($orderData, $store);
             } catch (StoreByUuidNotFoundException $exception) {
                 throw new UserError($exception->getMessage());
