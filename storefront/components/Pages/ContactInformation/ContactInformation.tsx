@@ -79,7 +79,7 @@ const ContactInformation: FC = () => {
                 />
             </ContactInformationInfoStyled>
             <ContactInformationCartStyled>
-                {cart === undefined ? null : <OrderSummary cart={cart} />}
+                <OrderSummary />
             </ContactInformationCartStyled>
         </ContactInformationStyled>
     );

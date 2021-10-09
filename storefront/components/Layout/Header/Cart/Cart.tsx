@@ -33,7 +33,7 @@ const Cart: FC = () => {
                     <CartPiecesStyled>
                         <CartIconStyled icon="Cart" />
                         <CartCountStyled>
-                            {cart !== undefined && Array.isArray(cart.items) ? cart.items.length : 0}
+                            {cart !== null && Array.isArray(cart.items) ? cart.items.length : 0}
                         </CartCountStyled>
                     </CartPiecesStyled>
                     <CartValueStyled>
@@ -59,7 +59,7 @@ const Cart: FC = () => {
                     <CartButtonMobileLinkStyled>
                         <CartIconMobileStyled icon="Cart" />
                         <CartCountStyled>
-                            {cart !== undefined && Array.isArray(cart.items) ? cart.items.length : 0}
+                            {cart !== null && Array.isArray(cart.items) ? cart.items.length : 0}
                         </CartCountStyled>
                     </CartButtonMobileLinkStyled>
                 </NextLink>

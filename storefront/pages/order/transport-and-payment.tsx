@@ -16,7 +16,6 @@ import Webline from 'components/Layout/Webline';
 
 const TransportAndPayment: FC<ServerSidePropsType> = (props) => {
     useInitDomainConfig(props.domainConfig);
-    const { cart } = useShopsysSelector((state) => state.user);
     const { cartUuid, transport, payment } = useShopsysSelector((state) => state.cookie);
     const transports = getTransports(cartUuid);
     const t = useTypedTranslationFunction();
@@ -36,7 +35,7 @@ const TransportAndPayment: FC<ServerSidePropsType> = (props) => {
                     {transports.length > 0 && (
                         <Webline>
                             <Select transports={transports} />
-                            <OrderSummary cart={cart} />
+                            <OrderSummary />
                         </Webline>
                     )}
                     <Webline>

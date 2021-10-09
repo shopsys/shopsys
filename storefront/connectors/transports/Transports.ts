@@ -68,7 +68,14 @@ export const mapPriceData = (price: PriceApiType, currencyCode: string): PriceTy
 };
 
 const mapTransports = (apiData: TransportApiType[], currencyCode: string): TransportType[] => {
-    return apiData.map((transport) => mapTransport(transport, currencyCode));
+    const mappedTransports: TransportType[] = [];
+    for (const transport of apiData) {
+        const mappedTransport = mapTransport(transport, currencyCode);
+        if (mappedTransport !== null) {
+            mappedTransports.push(mappedTransport);
+        }
+    }
+    return mappedTransports;
 };
 
 export const getTransports = (cartUuid?: string | null): TransportType[] => {

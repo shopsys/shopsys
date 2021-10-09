@@ -7,16 +7,17 @@ import { userActions } from 'redux/slices/user';
 
 export const updateCartState = (
     dispatch: AppStore['dispatch'],
-    cart: CartType | null,
-    transport: TransportType | null,
-    personalPickupStore: StoreType | null,
-    payment: PaymentType | null,
-    updatedPromoCode: string | null,
+    resultData: {
+        cart: CartType | null;
+        transport: TransportType | null;
+        personalPickupStore: StoreType | null;
+        payment: PaymentType | null;
+    },
     updatedUserCookieData: CartInput,
 ): void => {
-    dispatch(userActions.setCart(cart));
-    dispatch(userActions.setTransport(transport));
-    dispatch(userActions.setPersonalPickupStore(personalPickupStore));
-    dispatch(userActions.setPayment(payment));
+    dispatch(userActions.setCart(resultData.cart));
+    dispatch(userActions.setTransport(resultData.transport));
+    dispatch(userActions.setPersonalPickupStore(resultData.personalPickupStore));
+    dispatch(userActions.setPayment(resultData.payment));
     dispatch(cookieActions.setUserCookieData(updatedUserCookieData));
 };

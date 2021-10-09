@@ -1,8 +1,8 @@
-import { mapPaymentToPaymentInput, mapTransportToTransportInput } from 'connectors/cart/Cart';
 import { PaymentApiType, PaymentInputType } from 'connectors/payments/types';
 import { TransportApiType, TransportInputType } from 'connectors/transports/types';
 import { useShopsysDispatch, useShopsysSelector } from 'redux/main';
 import { CartApiType } from 'connectors/cart/types';
+import { getUserCookieDataFromCartResult } from 'utils/Cart/GetUserCookieDataFromCartResult';
 import { getValuesFromCartResult } from 'utils/Cart/GetValuesFromCartResult';
 import { updateCartState } from 'utils/Cart/UpdateCartState';
 import { updateUserDataCookie } from 'helpers/Cookies';
@@ -41,24 +41,8 @@ export const useHandleRemoveFromCart = (
             promoCode,
             currencyCode,
         );
-        const updatedUserCookieData = {
-            cartUuid: cartResultValues.cart?.uuid === undefined ? null : cartResultValues.cart.uuid,
-            transport:
-                cartResultValues.transport === null
-                    ? null
-                    : mapTransportToTransportInput(cartResultValues.transport, cartResultValues.personalPickupStore),
-            payment: cartResultValues.payment === null ? null : mapPaymentToPaymentInput(cartResultValues.payment),
-            promoCode: cartResultValues.promoCode,
-        };
-        updateCartState(
-            dispatch,
-            cartResultValues.cart,
-            cartResultValues.transport,
-            cartResultValues.personalPickupStore,
-            cartResultValues.payment,
-            cartResultValues.promoCode,
-            updatedUserCookieData,
-        );
+        const updatedUserCookieData = getUserCookieDataFromCartResult(cartResultValues);
+        updateCartState(dispatch, cartResultValues, updatedUserCookieData);
         updateUserDataCookie(updatedUserCookieData);
     }, [result.data]);
 };
