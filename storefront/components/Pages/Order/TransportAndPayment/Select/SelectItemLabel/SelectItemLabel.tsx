@@ -50,7 +50,7 @@ const SelectItemLabel: FC<SelectItemLabelProps> = (props) => {
                     {getDeliveryMessage(props.daysUntilDelivery, props.personalPickup, t)}
                 </TransportDaysUntilDeliveryStyled>
             )}
-            {props.price !== undefined && <PriceStyled>{formatPrice(props.price.priceWithVat, 'CZK')}</PriceStyled>}
+            {props.price !== undefined && <PriceStyled>{formatPrice(props.price.priceWithVat, 'CZK', t)}</PriceStyled>}
         </SelectItemLabelStyled>
     );
 };

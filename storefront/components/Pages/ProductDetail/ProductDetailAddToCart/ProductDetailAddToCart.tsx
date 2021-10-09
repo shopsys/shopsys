@@ -49,7 +49,7 @@ const ProductDetailAddToCart: FC<ProductDetailAddToCartProps> = (props) => {
     return (
         <AddToCartWrapperStyled>
             <AddToCartPriceStyled>
-                {formatPrice(props.product.price.priceWithVat, props.product.price.currencyCode)}
+                {formatPrice(props.product.price.priceWithVat, props.product.price.currencyCode, t)}
             </AddToCartPriceStyled>
             <AddToCartFormStyled>
                 <AddToCartButtonsWrapperStyled>

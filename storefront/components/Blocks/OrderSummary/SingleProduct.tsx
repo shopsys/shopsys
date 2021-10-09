@@ -9,12 +9,15 @@ import { CartItemType } from 'connectors/cart/types';
 import { FC } from 'react';
 import { formatPrice } from 'utils/formatting';
 import Image from 'components/Basic/Image/Image';
+import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 
 type SingleProductProps = {
     item: CartItemType;
 };
 
 const SingleProduct: FC<SingleProductProps> = (props) => {
+    const t = useTypedTranslationFunction();
+
     return (
         <ListItemStyled>
             <ListItemPictureWrapper>
@@ -28,7 +31,7 @@ const SingleProduct: FC<SingleProductProps> = (props) => {
                     {props.item.product.fullName}
                 </ListItemInfo>
                 <ListItemPrice>
-                    {formatPrice(props.item.product.price.priceWithVat, props.item.product.price.currencyCode)}
+                    {formatPrice(props.item.product.price.priceWithVat, props.item.product.price.currencyCode, t)}
                 </ListItemPrice>
             </ListItemInfoWrapper>
         </ListItemStyled>

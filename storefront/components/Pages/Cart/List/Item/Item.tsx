@@ -117,7 +117,7 @@ const Item: FC<ItemProps> = (props) => {
             </SpinboxCellStyled>
             <ItemPriceCellStyled>
                 <ItemPriceStyled>
-                    {formatPrice(props.item.product.price.priceWithVat, props.item.product.price.currencyCode) +
+                    {formatPrice(props.item.product.price.priceWithVat, props.item.product.price.currencyCode, t) +
                         '\u00A0/\u00A0' +
                         t('pc')}
                 </ItemPriceStyled>
@@ -127,6 +127,7 @@ const Item: FC<ItemProps> = (props) => {
                     {formatPrice(
                         props.item.product.price.priceWithVat * props.item.quantity,
                         props.item.product.price.currencyCode,
+                        t,
                     )}
                 </TotalPriceStyled>
             </TotalPriceCellStyled>
