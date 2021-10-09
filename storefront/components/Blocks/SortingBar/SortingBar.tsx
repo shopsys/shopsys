@@ -1,5 +1,5 @@
 import { FC, useState } from 'react';
-import { initialState, SortType, userActions } from 'redux/store/UserStore';
+import { initialState, SortType, userActions } from 'redux/slices/user';
 import {
     SortingBarItemLinkStyled,
     SortingBarItemLinkWrapStyled,
@@ -13,7 +13,7 @@ import {
     SortingBarStyled,
     SortingBarTitleStyled,
 } from './SortingBar.style';
-import { useShopsysDispatch, useShopsysSelector } from 'redux/store';
+import { useShopsysDispatch, useShopsysSelector } from 'redux/main';
 import { isElementVisible } from 'components/Helpers/isElementVisible';
 import { mobileFirstSizes } from 'components/Theme/mediaQueries';
 import { useGetWindowSize } from 'hooks/ui/UseGetWindowSize';

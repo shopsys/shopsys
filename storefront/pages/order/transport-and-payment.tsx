@@ -1,10 +1,9 @@
 import { initServerSideProps, ServerSidePropsType } from 'helpers/InitServerSideProps';
+import { nextReduxWrapper, useShopsysSelector } from 'redux/main';
 import CommonLayout from 'components/Layout/CommonLayout';
 import { FC } from 'react';
 import Form from 'components/Forms/Form';
-import { GetServerSideProps } from 'next';
 import { getTransports } from 'connectors/transports/Transports';
-import { getUserDataCookie } from 'helpers/Cookies';
 import { navigationQuery } from 'connectors/navigation/Navigation';
 import OrderAction from 'components/Blocks/OrderAction';
 import OrderSteps from 'components/Blocks/OrderSteps';
@@ -52,8 +51,8 @@ const TransportAndPayment: FC<ServerSidePropsType> = (props) => {
     );
 };
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
-    return initServerSideProps(context, [navigationQuery]);
-};
+export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) => async (context) => {
+    return initServerSideProps(context, store, [navigationQuery]);
+});
 
 export default TransportAndPayment;

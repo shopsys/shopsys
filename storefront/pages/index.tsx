@@ -2,9 +2,9 @@ import { initServerSideProps, ServerSidePropsType } from 'helpers/InitServerSide
 import Banners from 'components/Blocks/Banners';
 import CommonLayout from 'components/Layout/CommonLayout';
 import { FC } from 'react';
-import { GetServerSideProps } from 'next';
 import Heading from 'components/Basic/Heading';
 import { navigationQuery } from 'connectors/navigation/Navigation';
+import { nextReduxWrapper } from 'redux/main';
 import PromotedCategories from 'components/Blocks/Categories/PromotedCategories/PromotedCategories';
 import { promotedCategoriesQuery } from 'connectors/categories/PromotedCategories';
 import PromotedProducts from 'components/Blocks/Product/PromotedProducts/PromotedProducts';
@@ -35,13 +35,13 @@ const Index: FC<ServerSidePropsType> = (props) => {
     );
 };
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
-    return initServerSideProps(context, [
+export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) => async (context) => {
+    return initServerSideProps(context, store, [
         promotedCategoriesQuery,
         sliderItemsQuery,
         promotedProductsQuery,
         navigationQuery,
     ]);
-};
+});
 
 export default Index;

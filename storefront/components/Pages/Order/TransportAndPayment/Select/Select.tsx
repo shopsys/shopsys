@@ -15,6 +15,7 @@ import Icon from 'components/Basic/Icon';
 import Popup from 'components/Layout/Popup';
 import Radiobutton from 'components/Forms/Radiobutton';
 import SelectItemLabel from './SelectItemLabel';
+import { useShopsysSelector } from 'redux/main';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 
 type SelectProps = {

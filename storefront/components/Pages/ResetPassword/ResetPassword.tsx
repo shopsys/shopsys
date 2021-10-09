@@ -12,7 +12,7 @@ import TextInput from 'components/Forms/TextInput';
 import { TFunction } from 'react-i18next';
 import { useGetInternationalizedStaticUrls } from 'hooks/staticUrls/UseGetInternationalizedStaticUrls';
 import { usePasswordReset } from 'connectors/password/Password';
-import { useShopsysSelector } from 'redux/store';
+import { useShopsysSelector } from 'redux/main';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import { yupResolver } from '@hookform/resolvers/yup';
 

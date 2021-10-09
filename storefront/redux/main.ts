@@ -1,8 +1,8 @@
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 import { createWrapper } from 'next-redux-wrapper';
-import { domainSlice } from './DomainStore';
-import { userSlice } from './UserStore';
+import { domainSlice } from './slices/domain';
+import { userSlice } from './slices/user';
 
 const makeStore = () =>
     configureStore({
@@ -18,7 +18,11 @@ const makeStore = () =>
  */
 export type AppStore = ReturnType<typeof makeStore>;
 export type AppState = ReturnType<AppStore['getState']>;
+
 export const useShopsysSelector: TypedUseSelectorHook<AppState> = useSelector;
 export const useShopsysDispatch = (): AppStore['dispatch'] => useDispatch<AppStore['dispatch']>();
 
-export const nextReduxWrapper = createWrapper<AppStore>(makeStore);
+export const nextReduxWrapper = createWrapper<AppStore>(makeStore, {
+    serializeState: (state) => JSON.stringify(state),
+    deserializeState: (state) => JSON.parse(state),
+});

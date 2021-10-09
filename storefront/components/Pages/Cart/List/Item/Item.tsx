@@ -13,7 +13,6 @@ import {
     TotalPriceStyled,
 } from './Item.style';
 import { useChangeCartItemQuantity, useRemoveItemFromCart } from 'connectors/cart/Cart';
-import { useShopsysDispatch, useShopsysSelector } from 'redux/store';
 import { CartItemType } from 'connectors/cart/types';
 import { formatPrice } from 'utils/formatting';
 import Icon from 'components/Basic/Icon';
@@ -22,7 +21,7 @@ import ItemInfo from './ItemInfo';
 import NextLink from 'next/link';
 import { showErrorMessage } from 'components/Helpers/Toasts';
 import Spinbox from 'components/Forms/Spinbox';
-import { useHandleCartUpdate } from 'hooks/cart/UseHandleCartUpdate';
+import { useShopsysSelector } from 'redux/main';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 
 type ItemProps = {

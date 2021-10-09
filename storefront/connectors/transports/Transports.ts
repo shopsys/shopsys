@@ -1,6 +1,6 @@
 import { PriceApiType, PriceType, TransportApiType, TransportType } from './types';
 import { useFetchQuery } from 'hooks/graphQl/UseFetchQuery';
-import { useShopsysSelector } from 'redux/store';
+import { useShopsysSelector } from 'redux/main';
 
 export const transportsQuery = `
         query transports {

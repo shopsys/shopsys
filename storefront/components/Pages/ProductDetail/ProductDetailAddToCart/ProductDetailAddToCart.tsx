@@ -12,8 +12,7 @@ import { formatPrice } from 'utils/formatting';
 import { ProductDetailType } from 'components/Pages/ProductDetail/types';
 import Spinbox from 'components/Forms/Spinbox';
 import { useChangeCartItemQuantity } from 'connectors/cart/Cart';
-import { useHandleCartUpdate } from 'hooks/cart/UseHandleCartUpdate';
-import { useHandleChangeCartItemQuantity } from 'hooks/cart/UseHandleChangeCartItemQuantity';
+import { useShopsysSelector } from 'redux/main';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 
 type ProductDetailAddToCartProps = {

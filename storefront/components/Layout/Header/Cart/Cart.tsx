@@ -17,7 +17,7 @@ import { FC } from 'react';
 import { formatPrice } from 'utils/formatting';
 import NextLink from 'next/link';
 import { useGetInternationalizedStaticUrls } from 'hooks/staticUrls/UseGetInternationalizedStaticUrls';
-import { useShopsysSelector } from 'redux/store';
+import { useShopsysSelector } from 'redux/main';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 
 const Cart: FC = () => {

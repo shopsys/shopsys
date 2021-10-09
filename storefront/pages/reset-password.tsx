@@ -1,8 +1,8 @@
 import { initServerSideProps, ServerSidePropsType } from 'helpers/InitServerSideProps';
 import CommonLayout from 'components/Layout/CommonLayout';
 import { FC } from 'react';
-import { GetServerSideProps } from 'next';
 import { navigationQuery } from 'connectors/navigation/Navigation';
+import { nextReduxWrapper } from 'redux/main';
 import ResetPassword from 'components/Pages/ResetPassword';
 import StaticUrlGuard from 'components/Helpers/StaticUrlGuard';
 import { useInitDomainConfig } from 'hooks/helpers/UseInitDomainConfig';
@@ -19,8 +19,8 @@ const Index: FC<ServerSidePropsType> = (props) => {
     );
 };
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
-    return initServerSideProps(context, [navigationQuery]);
-};
+export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) => async (context) => {
+    return initServerSideProps(context, store, [navigationQuery]);
+});
 
 export default Index;

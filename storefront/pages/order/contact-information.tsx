@@ -4,8 +4,8 @@ import ContactInformationForm from 'components/Pages/ContactInformation';
 import { FC } from 'react';
 import Form from 'components/Forms/Form';
 import { getContactInformationFormResolver } from 'components/Pages/ContactInformation/ContactInformationFormResolver';
-import { GetServerSideProps } from 'next';
 import { navigationQuery } from 'connectors/navigation/Navigation';
+import { nextReduxWrapper } from 'redux/main';
 import OrderSteps from 'components/Blocks/OrderSteps';
 import StaticUrlGuard from 'components/Helpers/StaticUrlGuard';
 import { TFunction } from 'next-i18next';
@@ -65,8 +65,8 @@ const ContactInformation: FC<ServerSidePropsType> = (props) => {
     );
 };
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
-    return initServerSideProps(context, [navigationQuery]);
-};
+export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) => async (context) => {
+    return initServerSideProps(context, store, [navigationQuery]);
+});
 
 export default ContactInformation;

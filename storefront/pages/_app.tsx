@@ -7,6 +7,7 @@ import { appWithTranslation } from 'next-i18next';
 import { getDomainConfig } from 'utils/Domain/Domain';
 import { getUserDataCookie } from 'helpers/Cookies';
 import nextI18NextConfig from 'next-i18next.config';
+import { nextReduxWrapper } from 'redux/main';
 import ShopsysGlobalProvider from 'context/ShopsysGlobalProvider';
 import { showErrorMessage } from 'components/Helpers/Toasts';
 import { ToastContainer } from 'react-toastify';

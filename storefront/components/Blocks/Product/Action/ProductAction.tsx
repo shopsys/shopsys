@@ -8,6 +8,7 @@ import { useChangeCartItemQuantity } from 'connectors/cart/Cart';
 import { useHandleCartUpdate } from 'hooks/cart/UseHandleCartUpdate';
 import { useHandleChangeCartItemQuantity } from 'hooks/cart/UseHandleChangeCartItemQuantity';
 import { useRouter } from 'next/dist/client/router';
+import { useShopsysSelector } from 'redux/main';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 
 const ProductAction: FC<SliderProductItemType> = (props) => {

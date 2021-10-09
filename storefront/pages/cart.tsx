@@ -1,22 +1,21 @@
 import { initServerSideProps, ServerSidePropsType } from 'helpers/InitServerSideProps';
+import { nextReduxWrapper, useShopsysSelector } from 'redux/main';
 import CartSummary from 'components/Pages/Cart/CartSummary';
 import CommonLayout from 'components/Layout/CommonLayout';
 import { FC } from 'react';
-import { GetServerSideProps } from 'next';
 import List from 'components/Pages/Cart/List';
 import { navigationQuery } from 'connectors/navigation/Navigation';
 import OrderAction from 'components/Blocks/OrderAction';
 import OrderSteps from 'components/Blocks/OrderSteps';
 import StaticUrlGuard from 'components/Helpers/StaticUrlGuard';
 import { useInitDomainConfig } from 'hooks/helpers/UseInitDomainConfig';
-import { useShopsysSelector } from 'redux/store';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import Webline from 'components/Layout/Webline';
 
 const Cart: FC<ServerSidePropsType> = (props) => {
+    const { cart } = useShopsysSelector((state) => state.user);
     const t = useTypedTranslationFunction();
     useInitDomainConfig(props.domainConfig);
-    const cart = useShopsysSelector((state) => state.user.cart);
 
     return (
         <StaticUrlGuard domainUrl={props.domainConfig.url}>
@@ -38,8 +37,8 @@ const Cart: FC<ServerSidePropsType> = (props) => {
     );
 };
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
-    return initServerSideProps(context, [navigationQuery]);
-};
+export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) => async (context) => {
+    return initServerSideProps(context, store, [navigationQuery]);
+});
 
 export default Cart;
