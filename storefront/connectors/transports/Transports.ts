@@ -1,4 +1,5 @@
 import { PriceApiType, PriceType, TransportApiType, TransportType } from './types';
+import { mapTransport } from './Transport';
 import { useFetchQuery } from 'hooks/graphQl/UseFetchQuery';
 import { useShopsysSelector } from 'redux/main';
 
@@ -67,22 +68,7 @@ export const mapPriceData = (price: PriceApiType, currencyCode: string): PriceTy
 };
 
 const mapTransports = (apiData: TransportApiType[], currencyCode: string): TransportType[] => {
-    return apiData.map((transport) => {
-        return {
-            ...transport,
-            image: transport.images.length === 0 ? null : transport.images[0].sizes[0],
-            price: mapPriceData(transport.price, currencyCode),
-            personalPickup: Array.isArray(transport.stores?.edges) && transport.stores.edges.length > 0,
-            payments: transport.payments.map((payment) => {
-                return {
-                    ...payment,
-                    image: payment.images.length === 0 ? null : payment.images[0].sizes[0],
-                    price: mapPriceData(payment.price, currencyCode),
-                };
-            }),
-            stores: Array.isArray(transport.stores?.edges) ? transport.stores.edges.map((edge) => edge.node) : [],
-        };
-    });
+    return apiData.map((transport) => mapTransport(transport, currencyCode));
 };
 
 export const getTransports = (): TransportType[] => {

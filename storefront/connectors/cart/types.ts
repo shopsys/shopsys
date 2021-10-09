@@ -1,5 +1,14 @@
 import { FlagType, ProductPriceApiType, ProductPriceType } from 'components/Blocks/Product/types';
 import { ImageApiType, ImageType } from 'components/Basic/Image/types';
+import { PaymentApiType, PaymentInputType } from 'connectors/payments/types';
+import { PriceApiType, PriceType, TransportApiType, TransportInputType } from 'connectors/transports/types';
+
+export type CartInput = {
+    cartUuid: string | null;
+    transport: TransportInputType | null;
+    payment: PaymentInputType | null;
+    promoCode: string | null;
+};
 
 export type ProductCartItemType = {
     uuid: string;
@@ -26,6 +35,8 @@ export type CartItemType = {
 export type CartType = {
     uuid: string;
     items: CartItemType[];
+    totalPrice: PriceType;
+    totalDiscountPrice: PriceType;
 };
 
 export type ProductCartItemApiType = {
@@ -52,9 +63,30 @@ export type CartItemApiType = {
     quantity: number;
 };
 
+export type CartModificationsResultApiType = {
+    itemModifications: {
+        noLongerListableCartItems: CartItemApiType[];
+        cartItemsWithModifiedPrice: CartItemApiType[];
+        cartItemsWithChangedQuantity: CartItemApiType[];
+        noLongerAvailableCartItemsDueToQuantity: CartItemApiType[];
+    };
+    transportModifications: {
+        transportPriceChanged: boolean;
+        transportUnavailable: boolean;
+        transportWeightLimitExceeded: boolean;
+    };
+    paymentModifications: {
+        paymentPriceChanged: boolean;
+        paymentUnavailable: boolean;
+    };
+};
+
 export type CartApiType = {
     uuid: string;
     items: CartItemApiType[];
+    totalPrice: PriceApiType;
+    totalDiscountPrice: PriceApiType;
+    modifications: CartModificationsResultApiType;
 };
 
 export type AddProductResultType = {
@@ -65,4 +97,6 @@ export type AddProductResultType = {
     addedQuantity: number;
 };
 
-export type AddToCartResultType = CartApiType & { addProductResult: AddProductResultType };
+export type AddToCartResultType = CartApiType & { transport: TransportApiType; payment: PaymentApiType } & {
+    addProductResult: AddProductResultType;
+};

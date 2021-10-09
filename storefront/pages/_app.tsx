@@ -1,40 +1,17 @@
 import 'react-toastify/dist/ReactToastify.css';
-import { cartQuery, mapCart } from 'connectors/cart/Cart';
-import { nextReduxWrapper, useShopsysDispatch, useShopsysSelector } from 'redux/store';
-import { ReactElement, useEffect } from 'react';
 import { AppProps } from 'next/app';
 import { appWithTranslation } from 'next-i18next';
 import { getDomainConfig } from 'utils/Domain/Domain';
-import { getUserDataCookie } from 'helpers/Cookies';
 import nextI18NextConfig from 'next-i18next.config';
 import { nextReduxWrapper } from 'redux/main';
+import { ReactElement } from 'react';
 import ShopsysGlobalProvider from 'context/ShopsysGlobalProvider';
-import { showErrorMessage } from 'components/Helpers/Toasts';
 import { ToastContainer } from 'react-toastify';
-import { useQuery } from 'urql';
-import { userActions } from 'redux/store/UserStore';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { useCartInit } from 'hooks/cart/UseCartInit';
 import { withUrqlClient } from 'next-urql';
 
 function MyApp({ Component, pageProps }: AppProps): ReactElement {
-    const t = useTypedTranslationFunction();
-    const dispatch = useShopsysDispatch();
-    const { currencyCode } = useShopsysSelector((state) => state.domain);
-    const userData = getUserDataCookie();
-    const [result] = useQuery({
-        query: cartQuery,
-        variables: {
-            cartUuid: userData.cartUuid,
-        },
-        pause: userData.cartUuid === undefined,
-    });
-    useEffect(() => {
-        if (result.error) {
-            showErrorMessage(t('Hooops, someting wrong happend.'));
-        } else if (result.data !== undefined) {
-            dispatch(userActions.setCart(mapCart(result.data.cart, currencyCode)));
-        }
-    }, [result]);
+    useCartInit();
 
     return (
         <ShopsysGlobalProvider>

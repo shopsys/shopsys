@@ -37,6 +37,22 @@ const Select: FC<SelectProps> = (props) => {
     const personalPickupValue = useWatch({ name: 'personalPickup' });
     const paymentValue = useWatch({ name: 'payment' });
 
+    const { payment, transport, personalPickupStore } = useShopsysSelector((state) => state.user);
+    const transportInput = useShopsysSelector((state) => state.cookie.transport);
+    const paymentInput = useShopsysSelector((state) => state.cookie.payment);
+    const { cartUuid, promoCode } = useShopsysSelector((state) => state.cookie);
+
+    const [preSelectedTransport, preSelectTransport] = useState<TransportType | null>(null);
+
+    const [mappedTransportInput, setMappedTransportInput] = useState<TransportInputType | null>(transportInput);
+    const [mappedPaymentInput, setMappedPaymentInput] = useState<PaymentInputType | null>(paymentInput);
+
+    const [updatedTransport, updateTransport] = useState<TransportType | null>(transport);
+    const [updatedPersonalPickupStore, updatePersonalPickupStore] = useState<StoreType | null>(personalPickupStore);
+    const [updatedPayment, updatePayment] = useState<PaymentType | null>(payment);
+
+    loadCart(cartUuid, mappedTransportInput, mappedPaymentInput, promoCode);
+
     useEffect(() => {
         const initialTransport = props.transports.find((transport) => transport.uuid === props.transportUuid);
         if (initialTransport?.personalPickup && props.personalPickupUuid === undefined) {

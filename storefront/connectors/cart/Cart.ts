@@ -1,43 +1,90 @@
-import { AddToCartResultType, CartApiType, CartType } from './types';
-import { useMutation, UseMutationResponse } from 'urql';
+import { AddToCartResultType, CartApiType, CartInput, CartType } from './types';
+import { PaymentApiType, PaymentInputType, PaymentType } from 'connectors/payments/types';
+import { StoreType, TransportApiType, TransportInputType, TransportType } from 'connectors/transports/types';
+import { useMutation, UseMutationResponse, useQuery, UseQueryResponse } from 'urql';
+import { mapPriceData } from 'connectors/transports/Transports';
 import { mapProductPriceData } from 'connectors/products/Products';
+import { paymentBody } from 'connectors/payments/Payment';
+import { showErrorMessage } from 'components/Helpers/Toasts';
+import { transportBody } from 'connectors/transports/Transport';
+import { useEffect } from 'react';
+import { useHandleCartUpdate } from 'hooks/cart/UseHandleCartUpdate';
+
+const cartItemBody = `
+    uuid
+    quantity
+    product {
+        uuid
+        slug
+        fullName
+        catalogNumber
+        stockQuantity
+        flags {
+            name
+            rgbColor
+        }
+        images (sizes: "list") {
+            sizes {
+                url
+                width
+                height
+        }
+        }
+        stockQuantity
+        availability {
+            name
+        }
+        price {
+            priceWithVat
+            priceWithoutVat
+            vatAmount
+            isPriceFrom
+        }
+        availableStoresCount
+        unit {
+            name
+        }
+    }
+    `;
 
 const cartBody = `
     uuid
     items {
-        uuid
-        quantity
-        product {
-            uuid
-            slug
-            fullName
-            catalogNumber
-            stockQuantity
-            flags {
-                name
-                rgbColor
+        ${cartItemBody}
+    }
+    totalPrice {
+        priceWithVat
+        priceWithoutVat
+        vatAmount
+    }
+    totalDiscountPrice {
+        priceWithVat
+        priceWithoutVat
+        vatAmount
+    }
+    modifications{
+        itemModifications {
+            noLongerListableCartItems { 
+                ${cartItemBody} 
             }
-            images (sizes: "list") {
-                sizes {
-                    url
-                    width
-                    height
-               }
+            cartItemsWithModifiedPrice { 
+                ${cartItemBody} 
             }
-            stockQuantity
-            availability {
-                name
+            cartItemsWithChangedQuantity { 
+                ${cartItemBody} 
+            } 
+            noLongerAvailableCartItemsDueToQuantity { 
+                ${cartItemBody} 
             }
-            price {
-                priceWithVat
-                priceWithoutVat
-                vatAmount
-                isPriceFrom
-            }
-            availableStoresCount
-            unit {
-                name
-            }
+        }
+        transportModifications {
+            transportPriceChanged
+            transportUnavailable
+            transportWeightLimitExceeded
+        }
+        paymentModifications {
+            paymentPriceChanged
+            paymentUnavailable
         }
     }
 ` as const;
@@ -47,21 +94,104 @@ export const cartQuery = `
             $cartUuid: Uuid
             $transport: TransportInput
             $payment: PaymentInput
+            $promoCode: String
         ){
         cart(cartInput: {
             cartUuid: $cartUuid
             transport: $transport
             payment: $payment
+            promoCode: $promoCode
         }) {              
             ${cartBody}
+            ${transportBody}
+            ${paymentBody}
         }
     }
     ` as const;
 
-export function mapCart(data: CartApiType, currencyCode: string): CartType {
+export const mapTransportToCartInput = (
+    unmappedTransportType: TransportType | null,
+    unmappedPersonalPickupStoreType: StoreType | null,
+): TransportInputType | null => {
+    if (unmappedTransportType === null || unmappedPersonalPickupStoreType === undefined) {
+        return null;
+    }
+
     return {
-        ...data,
-        items: data.items.map((item) => {
+        uuid: unmappedTransportType.uuid,
+        price: {
+            priceWithVat: unmappedTransportType.price.priceWithVat.toString(),
+            priceWithoutVat: unmappedTransportType.price.priceWithoutVat.toString(),
+            vatAmount: unmappedTransportType.price.vatAmount.toString(),
+        },
+        personalPickupStoreUuid:
+            unmappedPersonalPickupStoreType?.uuid === undefined ? null : unmappedPersonalPickupStoreType.uuid,
+    };
+};
+
+export const mapPaymentToCartInput = (unmappedType: PaymentType | null): PaymentInputType | null => {
+    if (unmappedType === null || unmappedType === undefined) {
+        return null;
+    }
+
+    return {
+        uuid: unmappedType.uuid,
+        price: {
+            priceWithVat: unmappedType.price.priceWithVat.toString(),
+            priceWithoutVat: unmappedType.price.priceWithoutVat.toString(),
+            vatAmount: unmappedType.price.vatAmount.toString(),
+        },
+    };
+};
+
+export const loadCart = (
+    cartUuid: string | null,
+    transport: TransportInputType | null,
+    payment: PaymentInputType | null,
+    promoCode: string | null,
+): UseQueryResponse<{ cart: CartApiType; transport: TransportApiType; payment: PaymentApiType }, CartInput> => {
+    const [result, refresh] = useQuery({
+        query: cartQuery,
+        variables: { cartUuid, transport, payment, promoCode },
+        pause: cartUuid === null,
+    });
+
+    useEffect(() => {
+        if (result.error === undefined) {
+            return;
+        }
+
+        // TODO refactor
+        for (const error of result.error.graphQLErrors) {
+            if (error.extensions?.validation === undefined) {
+                return;
+            }
+
+            for (const invalidFieldName in error.extensions.validation) {
+                for (const validationError of error.extensions.validation[invalidFieldName]) {
+                    showErrorMessage(validationError.message);
+                }
+            }
+        }
+    }, [result.fetching]);
+
+    useHandleCartUpdate(
+        result,
+        transport?.personalPickupStoreUuid === undefined ? null : transport.personalPickupStoreUuid,
+        promoCode,
+    );
+
+    return [result, refresh];
+};
+
+export function mapCart(apiData: CartApiType | null, currencyCode: string): CartType | null {
+    if (apiData === null) {
+        return null;
+    }
+
+    return {
+        ...apiData,
+        items: apiData.items.map((item) => {
             return {
                 ...item,
                 product: {
@@ -72,6 +202,8 @@ export function mapCart(data: CartApiType, currencyCode: string): CartType {
                 },
             };
         }),
+        totalPrice: mapPriceData(apiData.totalPrice, currencyCode),
+        totalDiscountPrice: mapPriceData(apiData.totalDiscountPrice, currencyCode),
     };
 }
 
@@ -80,18 +212,20 @@ const removeItemFromCartMutation = `mutation ($cartUuid: Uuid! $cartItemUuid: Uu
               cartUuid: $cartUuid
               cartItemUuid: $cartItemUuid
           }){
-              ${cartBody}
+            ${cartBody}
+            ${transportBody}
+            ${paymentBody}
           }
       }` as const;
 
 export const useRemoveItemFromCart = (): UseMutationResponse<
-    { RemoveFromCart: CartApiType },
+    { RemoveFromCart: CartApiType & { transport: TransportApiType; payment: PaymentApiType } },
     { cartUuid: string; cartItemUuid: string }
 > => {
     return useMutation(removeItemFromCartMutation);
 };
 
-const changeCartItemQuantityMutation =
+export const changeCartItemQuantityMutation =
     `mutation ($cartUuid: Uuid $productUuid: Uuid! $quantity: Int! $isAbsoluteQuantity: Boolean ) {
         AddToCart(input:{
             cartUuid: $cartUuid
@@ -100,6 +234,8 @@ const changeCartItemQuantityMutation =
             isAbsoluteQuantity: $isAbsoluteQuantity
         }){
             ${cartBody}
+            ${transportBody}
+            ${paymentBody}
             addProductResult {
                 notOnStockQuantity
                 overLimitQuantity
@@ -112,7 +248,7 @@ const changeCartItemQuantityMutation =
 
 export const useChangeCartItemQuantity = (): UseMutationResponse<
     { AddToCart: AddToCartResultType },
-    { cartUuid?: string; productUuid: string; quantity: number; isAbsoluteQuantity: boolean }
+    { cartUuid: string | null; productUuid: string; quantity: number; isAbsoluteQuantity: boolean }
 > => {
     return useMutation(changeCartItemQuantityMutation);
 };
