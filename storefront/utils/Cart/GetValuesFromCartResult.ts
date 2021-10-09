@@ -40,7 +40,8 @@ export const getValuesFromCartResult = (
         );
         transport = resultData.transport === null ? null : mapTransport(resultData.transport, currencyCode);
         personalPickupStore = getSelectedPersonalPickupStore(transport, personalPickupStoreUuid);
-        payment = resultData.payment === null ? null : mapPayment(resultData.payment, currencyCode);
+        payment =
+            resultData.payment === null || transport === null ? null : mapPayment(resultData.payment, currencyCode);
         updatedPromoCode = promoCode;
     }
 

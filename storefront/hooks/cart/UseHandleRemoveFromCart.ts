@@ -1,4 +1,4 @@
-import { mapPaymentToCartInput, mapTransportToTransportInput } from 'connectors/cart/Cart';
+import { mapPaymentToPaymentInput, mapTransportToTransportInput } from 'connectors/cart/Cart';
 import { PaymentApiType, PaymentInputType } from 'connectors/payments/types';
 import { TransportApiType, TransportInputType } from 'connectors/transports/types';
 import { useShopsysDispatch, useShopsysSelector } from 'redux/main';
@@ -43,8 +43,11 @@ export const useHandleRemoveFromCart = (
         );
         const updatedUserCookieData = {
             cartUuid: cartResultValues.cart?.uuid === undefined ? null : cartResultValues.cart.uuid,
-            transport: mapTransportToTransportInput(cartResultValues.transport, cartResultValues.personalPickupStore),
-            payment: mapPaymentToCartInput(cartResultValues.payment),
+            transport:
+                cartResultValues.transport === null
+                    ? null
+                    : mapTransportToTransportInput(cartResultValues.transport, cartResultValues.personalPickupStore),
+            payment: cartResultValues.payment === null ? null : mapPaymentToPaymentInput(cartResultValues.payment),
             promoCode: cartResultValues.promoCode,
         };
         updateCartState(

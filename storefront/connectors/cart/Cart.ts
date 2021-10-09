@@ -107,37 +107,28 @@ export const cartQuery = `
     }
     ` as const;
 
-export const mapTransportToCartInput = (
-    unmappedTransportType: TransportType | null,
-    unmappedPersonalPickupStoreType: StoreType | null,
-): TransportInputType | null => {
-    if (unmappedTransportType === null || unmappedPersonalPickupStoreType === undefined) {
-        return null;
-    }
-
+export const mapTransportToTransportInput = (
+    transport: TransportType,
+    personalPickupStore: StoreType | null,
+): TransportInputType => {
     return {
-        uuid: unmappedTransportType.uuid,
+        uuid: transport.uuid,
         price: {
-            priceWithVat: unmappedTransportType.price.priceWithVat.toString(),
-            priceWithoutVat: unmappedTransportType.price.priceWithoutVat.toString(),
-            vatAmount: unmappedTransportType.price.vatAmount.toString(),
+            priceWithVat: transport.price.priceWithVat.toString(),
+            priceWithoutVat: transport.price.priceWithoutVat.toString(),
+            vatAmount: transport.price.vatAmount.toString(),
         },
-        personalPickupStoreUuid:
-            unmappedPersonalPickupStoreType?.uuid === undefined ? null : unmappedPersonalPickupStoreType.uuid,
+        personalPickupStoreUuid: personalPickupStore === null ? null : personalPickupStore.uuid,
     };
 };
 
-export const mapPaymentToCartInput = (unmappedType: PaymentType | null): PaymentInputType | null => {
-    if (unmappedType === null || unmappedType === undefined) {
-        return null;
-    }
-
+export const mapPaymentToPaymentInput = (payment: PaymentType): PaymentInputType => {
     return {
-        uuid: unmappedType.uuid,
+        uuid: payment.uuid,
         price: {
-            priceWithVat: unmappedType.price.priceWithVat.toString(),
-            priceWithoutVat: unmappedType.price.priceWithoutVat.toString(),
-            vatAmount: unmappedType.price.vatAmount.toString(),
+            priceWithVat: payment.price.priceWithVat.toString(),
+            priceWithoutVat: payment.price.priceWithoutVat.toString(),
+            vatAmount: payment.price.vatAmount.toString(),
         },
     };
 };
@@ -163,11 +154,7 @@ export const loadCart = (
     return [result, refresh];
 };
 
-export function mapCart(apiData: CartApiType | null, currencyCode: string): CartType | null {
-    if (apiData === null) {
-        return null;
-    }
-
+export const mapCart = (apiData: CartApiType, currencyCode: string): CartType => {
     return {
         ...apiData,
         items: apiData.items.map((item) => {
@@ -184,7 +171,7 @@ export function mapCart(apiData: CartApiType | null, currencyCode: string): Cart
         totalPrice: mapPriceData(apiData.totalPrice, currencyCode),
         totalDiscountPrice: mapPriceData(apiData.totalDiscountPrice, currencyCode),
     };
-}
+};
 
 const removeItemFromCartMutation = `mutation (
             $cartUuid: Uuid! 

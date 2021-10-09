@@ -1,4 +1,5 @@
 import { TransportApiType, TransportType } from './types';
+import { mapPayment } from 'connectors/payments/Payment';
 import { mapPriceData } from './Transports';
 
 export const transportBody = `
@@ -54,23 +55,13 @@ export const transportBody = `
         }
     ` as const;
 
-export const mapTransport = (apiData: TransportApiType | null, currencyCode: string): TransportType | null => {
-    if (apiData === null) {
-        return null;
-    }
-
+export const mapTransport = (apiData: TransportApiType, currencyCode: string): TransportType => {
     return {
         ...apiData,
         image: apiData.images.length === 0 ? null : apiData.images[0].sizes[0],
         price: mapPriceData(apiData.price, currencyCode),
-        personalPickup: Array.isArray(apiData.stores?.edges) && apiData.stores.edges.length > 0,
-        payments: apiData.payments.map((payment) => {
-            return {
-                ...payment,
-                image: payment.images.length === 0 ? null : payment.images[0].sizes[0],
-                price: mapPriceData(payment.price, currencyCode),
-            };
-        }),
+        hasPersonalPickup: Array.isArray(apiData.stores?.edges) && apiData.stores.edges.length > 0,
+        payments: apiData.payments.map((payment) => mapPayment(payment, currencyCode)),
         stores: Array.isArray(apiData.stores?.edges) ? apiData.stores.edges.map((edge) => edge.node) : [],
     };
 };

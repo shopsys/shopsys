@@ -1,5 +1,5 @@
 import { CartApiType, CartInput } from 'connectors/cart/types';
-import { mapPaymentToCartInput, mapTransportToTransportInput } from 'connectors/cart/Cart';
+import { mapPaymentToPaymentInput, mapTransportToTransportInput } from 'connectors/cart/Cart';
 import { useShopsysDispatch, useShopsysSelector } from 'redux/main';
 import { getValuesFromCartResult } from 'utils/Cart/GetValuesFromCartResult';
 import { PaymentApiType } from 'connectors/payments/types';
@@ -34,8 +34,11 @@ export const useHandleCartUpdate = (
         );
         const updatedUserCookieData = {
             cartUuid: cartResultValues.cart?.uuid === undefined ? null : cartResultValues.cart.uuid,
-            transport: mapTransportToTransportInput(cartResultValues.transport, cartResultValues.personalPickupStore),
-            payment: mapPaymentToCartInput(cartResultValues.payment),
+            transport:
+                cartResultValues.transport === null
+                    ? null
+                    : mapTransportToTransportInput(cartResultValues.transport, cartResultValues.personalPickupStore),
+            payment: cartResultValues.payment === null ? null : mapPaymentToPaymentInput(cartResultValues.payment),
             promoCode: cartResultValues.promoCode,
         };
         updateCartState(

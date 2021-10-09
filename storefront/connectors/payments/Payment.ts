@@ -22,11 +22,7 @@ export const paymentBody = `
         }
     ` as const;
 
-export const mapPayment = (apiData: PaymentApiType | null, currencyCode: string): PaymentType | null => {
-    if (apiData === null) {
-        return null;
-    }
-
+export const mapPayment = (apiData: PaymentApiType, currencyCode: string): PaymentType => {
     return {
         ...apiData,
         image: apiData.images.length === 0 ? null : apiData.images[0].sizes[0],

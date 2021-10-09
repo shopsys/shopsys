@@ -50,6 +50,6 @@ export type TransportType = {
     image: ImageType | null;
     payments: PaymentType[];
     daysUntilDelivery: number;
-    personalPickup: boolean;
+    hasPersonalPickup: boolean;
     stores: StoreType[];
 };

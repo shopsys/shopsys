@@ -4,8 +4,8 @@ import { useFetchQuery } from 'hooks/graphQl/UseFetchQuery';
 import { useShopsysSelector } from 'redux/main';
 
 export const transportsQuery = `
-        query transports {
-            transports {
+        query transports ($cartUuid: Uuid) {
+            transports (cartUuid: $cartUuid) {
                 uuid
                 name
                 description
@@ -71,9 +71,9 @@ const mapTransports = (apiData: TransportApiType[], currencyCode: string): Trans
     return apiData.map((transport) => mapTransport(transport, currencyCode));
 };
 
-export const getTransports = (): TransportType[] => {
+export const getTransports = (cartUuid?: string | null): TransportType[] => {
     const { currencyCode } = useShopsysSelector((state) => state.domain);
-    const result = useFetchQuery({ query: transportsQuery });
+    const result = useFetchQuery({ query: transportsQuery, variables: { cartUuid } });
     const transportsApiData = result?.data?.transports;
 
     if (transportsApiData !== undefined) {
