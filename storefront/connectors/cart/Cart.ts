@@ -5,9 +5,7 @@ import { useMutation, UseMutationResponse, useQuery, UseQueryResponse } from 'ur
 import { mapPriceData } from 'connectors/transports/Transports';
 import { mapProductPriceData } from 'connectors/products/Products';
 import { paymentBody } from 'connectors/payments/Payment';
-import { showErrorMessage } from 'components/Helpers/Toasts';
 import { transportBody } from 'connectors/transports/Transport';
-import { useEffect } from 'react';
 import { useHandleCartUpdate } from 'hooks/cart/UseHandleCartUpdate';
 
 const cartItemBody = `
@@ -156,25 +154,6 @@ export const loadCart = (
         pause: cartUuid === null,
     });
 
-    useEffect(() => {
-        if (result.error === undefined) {
-            return;
-        }
-
-        // TODO refactor
-        for (const error of result.error.graphQLErrors) {
-            if (error.extensions?.validation === undefined) {
-                return;
-            }
-
-            for (const invalidFieldName in error.extensions.validation) {
-                for (const validationError of error.extensions.validation[invalidFieldName]) {
-                    showErrorMessage(validationError.message);
-                }
-            }
-        }
-    }, [result.fetching]);
-
     useHandleCartUpdate(
         result,
         transport?.personalPickupStoreUuid === undefined ? null : transport.personalPickupStoreUuid,
@@ -207,31 +186,54 @@ export function mapCart(apiData: CartApiType | null, currencyCode: string): Cart
     };
 }
 
-const removeItemFromCartMutation = `mutation ($cartUuid: Uuid! $cartItemUuid: Uuid!) {
-      RemoveFromCart(input:{
-              cartUuid: $cartUuid
-              cartItemUuid: $cartItemUuid
-          }){
+const removeItemFromCartMutation = `mutation (
+            $cartUuid: Uuid! 
+            $cartItemUuid: Uuid!
+            $transport: TransportInput
+            $payment: PaymentInput
+            $promoCode: String) {
+        RemoveFromCart ( input: {
+            cartUuid: $cartUuid
+            cartItemUuid: $cartItemUuid
+            transport: $transport
+            payment: $payment
+            promoCode: $promoCode
+        }){
             ${cartBody}
             ${transportBody}
             ${paymentBody}
-          }
-      }` as const;
+        }
+    }` as const;
 
 export const useRemoveItemFromCart = (): UseMutationResponse<
     { RemoveFromCart: CartApiType & { transport: TransportApiType; payment: PaymentApiType } },
-    { cartUuid: string; cartItemUuid: string }
+    {
+        cartUuid: string;
+        cartItemUuid: string;
+        transport: TransportInputType | null;
+        payment: PaymentInputType | null;
+        promoCode: string | null;
+    }
 > => {
     return useMutation(removeItemFromCartMutation);
 };
 
-export const changeCartItemQuantityMutation =
-    `mutation ($cartUuid: Uuid $productUuid: Uuid! $quantity: Int! $isAbsoluteQuantity: Boolean ) {
+export const changeCartItemQuantityMutation = `mutation (
+            $cartUuid: Uuid 
+            $productUuid: Uuid! 
+            $quantity: Int! 
+            $isAbsoluteQuantity: Boolean 
+            $transport: TransportInput
+            $payment: PaymentInput
+            $promoCode: String) {
         AddToCart(input:{
             cartUuid: $cartUuid
             productUuid: $productUuid
             quantity: $quantity
             isAbsoluteQuantity: $isAbsoluteQuantity
+            transport: $transport
+            payment: $payment
+            promoCode: $promoCode
         }){
             ${cartBody}
             ${transportBody}
@@ -248,7 +250,15 @@ export const changeCartItemQuantityMutation =
 
 export const useChangeCartItemQuantity = (): UseMutationResponse<
     { AddToCart: AddToCartResultType },
-    { cartUuid: string | null; productUuid: string; quantity: number; isAbsoluteQuantity: boolean }
+    {
+        cartUuid: string | null;
+        productUuid: string;
+        quantity: number;
+        isAbsoluteQuantity: boolean;
+        transport: TransportInputType | null;
+        payment: PaymentInputType | null;
+        promoCode: string | null;
+    }
 > => {
     return useMutation(changeCartItemQuantityMutation);
 };

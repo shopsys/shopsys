@@ -1,17 +1,28 @@
-import { CartApiType, CartInput } from 'connectors/cart/types';
 import { mapPaymentToCartInput, mapTransportToTransportInput } from 'connectors/cart/Cart';
 import { useShopsysDispatch, useShopsysSelector } from 'redux/main';
+import { AddToCartResultType } from 'connectors/cart/types';
 import { getValuesFromCartResult } from 'utils/Cart/GetValuesFromCartResult';
-import { PaymentApiType } from 'connectors/payments/types';
-import { TransportApiType } from 'connectors/transports/types';
+import { PaymentInputType } from 'connectors/payments/types';
+import { TransportInputType } from 'connectors/transports/types';
 import { updateCartState } from 'utils/Cart/UpdateCartState';
 import { updateUserDataCookie } from 'helpers/Cookies';
 import { useEffect } from 'react';
 import { useHandleCartErrors } from './UseHandleCartErrors';
-import { UseQueryState } from 'urql';
+import { UseMutationState } from 'urql';
 
-export const useHandleCartUpdate = (
-    result: UseQueryState<{ cart: CartApiType & { transport: TransportApiType; payment: PaymentApiType } }, CartInput>,
+export const useHandleAddToCart = (
+    result: UseMutationState<
+        { AddToCart: AddToCartResultType },
+        {
+            cartUuid: string | null;
+            productUuid: string;
+            quantity: number;
+            isAbsoluteQuantity: boolean;
+            transport: TransportInputType | null;
+            payment: PaymentInputType | null;
+            promoCode: string | null;
+        }
+    >,
     personalPickupStoreUuid: string | null,
     promoCode: string | null,
 ): void => {
@@ -21,13 +32,13 @@ export const useHandleCartUpdate = (
     useHandleCartErrors(result.error);
 
     useEffect(() => {
-        if (result.data === undefined) {
+        if (result.data === undefined || result.data.AddToCart === null) {
             return;
         }
 
         // TODO handle modifications
         const cartResultValues = getValuesFromCartResult(
-            result.data.cart,
+            result.data.AddToCart,
             personalPickupStoreUuid,
             promoCode,
             currencyCode,

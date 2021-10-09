@@ -22,7 +22,7 @@ import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslatio
 
 const Cart: FC = () => {
     const t = useTypedTranslationFunction();
-    const cart = useShopsysSelector((state) => state.user.cart);
+    const { cart } = useShopsysSelector((state) => state.user);
     const domainConfig = useShopsysSelector((state) => state.domain);
     const [cartUrl] = useGetInternationalizedStaticUrls(['/cart'], domainConfig.url);
 
@@ -37,7 +37,14 @@ const Cart: FC = () => {
                         </CartCountStyled>
                     </CartPiecesStyled>
                     <CartValueStyled>
-                        {formatPrice(0, domainConfig.currencyCode, { explicitZero: true })}
+                        {formatPrice(
+                            cart?.totalPrice.priceWithVat === undefined ? 0 : cart.totalPrice.priceWithVat,
+                            domainConfig.currencyCode,
+                            t,
+                            {
+                                explicitZero: true,
+                            },
+                        )}
                     </CartValueStyled>
                 </CartBlockStyled>
             </NextLink>
