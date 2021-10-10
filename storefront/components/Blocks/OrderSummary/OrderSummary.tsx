@@ -6,8 +6,8 @@ import {
 } from './OrderSummary.style';
 import { FC } from 'react';
 import ProductsPreview from './ProductsPreview';
-import ShipmentAndPayment from './ShipmentAndPayment';
 import TotalPrice from './TotalPrice';
+import TransportAndPayment from './TransportAndPayment';
 import { useShopsysSelector } from 'redux/main';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 
@@ -25,7 +25,7 @@ const OrderSummary: FC = () => {
             <OrderSummaryContentWrapperStyled>
                 <OrderSummaryContentStyled>
                     <ProductsPreview cartItems={cart.items} />
-                    <ShipmentAndPayment />
+                    <TransportAndPayment />
                     <TotalPrice />
                 </OrderSummaryContentStyled>
             </OrderSummaryContentWrapperStyled>

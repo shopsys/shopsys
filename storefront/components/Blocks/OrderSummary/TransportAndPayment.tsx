@@ -1,48 +1,47 @@
 import {
     ImgStyled,
     OrderSummaryContent,
-    ShipmentAndPaymentImageWrapper,
-    ShipmentAndPaymentPrice,
-    ShipmentAndPaymentTextAndImage,
-    ShipmentAndPaymentWrapper,
     SummaryRow,
+    TransportAndPaymentImageWrapper,
+    TransportAndPaymentPrice,
+    TransportAndPaymentTextAndImage,
+    TransportAndPaymentWrapper,
 } from './OrderSummary.style';
 import { FC } from 'react';
 import { formatPrice } from 'utils/formatting';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 
-const ShipmentAndPayment: FC = () => {
+const TransportAndPayment: FC = () => {
     const t = useTypedTranslationFunction();
 
     return (
-        <ShipmentAndPaymentWrapper>
-            {/* TODO PRG: shipment and payment is hard coded */}
+        <TransportAndPaymentWrapper>
             <OrderSummaryContent>
                 <SummaryRow>
-                    <ShipmentAndPaymentTextAndImage>
+                    <TransportAndPaymentTextAndImage>
                         PPL
-                        <ShipmentAndPaymentImageWrapper>
+                        <TransportAndPaymentImageWrapper>
                             <ImgStyled src="https://master.ssfwcc.ci.shopsys.cloud/content/images/transport/default/57.jpg" />
-                        </ShipmentAndPaymentImageWrapper>
-                    </ShipmentAndPaymentTextAndImage>
-                    <ShipmentAndPaymentPrice>
+                        </TransportAndPaymentImageWrapper>
+                    </TransportAndPaymentTextAndImage>
+                    <TransportAndPaymentPrice>
                         <strong>{formatPrice(242, 'CZK', t)}</strong>
-                    </ShipmentAndPaymentPrice>
+                    </TransportAndPaymentPrice>
                 </SummaryRow>
                 <SummaryRow>
-                    <ShipmentAndPaymentTextAndImage>
+                    <TransportAndPaymentTextAndImage>
                         {t('By credit card')}
-                        <ShipmentAndPaymentImageWrapper>
+                        <TransportAndPaymentImageWrapper>
                             <ImgStyled src="https://master.ssfwcc.ci.shopsys.cloud/content/images/payment/default/53.jpg" />
-                        </ShipmentAndPaymentImageWrapper>
-                    </ShipmentAndPaymentTextAndImage>
-                    <ShipmentAndPaymentPrice>
+                        </TransportAndPaymentImageWrapper>
+                    </TransportAndPaymentTextAndImage>
+                    <TransportAndPaymentPrice>
                         <strong>{formatPrice(100, 'CZK', t)}</strong>
-                    </ShipmentAndPaymentPrice>
+                    </TransportAndPaymentPrice>
                 </SummaryRow>
             </OrderSummaryContent>
-        </ShipmentAndPaymentWrapper>
+        </TransportAndPaymentWrapper>
     );
 };
 
-export default ShipmentAndPayment;
+export default TransportAndPayment;
