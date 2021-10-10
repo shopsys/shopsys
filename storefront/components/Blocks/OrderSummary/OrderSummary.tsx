@@ -13,7 +13,7 @@ import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslatio
 
 const OrderSummary: FC = () => {
     const t = useTypedTranslationFunction();
-    const { cart } = useShopsysSelector((state) => state.user);
+    const { cart, transport, payment } = useShopsysSelector((state) => state.user);
 
     if (cart === null) {
         return null;
@@ -25,8 +25,8 @@ const OrderSummary: FC = () => {
             <OrderSummaryContentWrapperStyled>
                 <OrderSummaryContentStyled>
                     <ProductsPreview cartItems={cart.items} />
-                    <TransportAndPayment />
-                    <TotalPrice />
+                    <TransportAndPayment transport={transport} payment={payment} />
+                    <TotalPrice totalPrice={cart.totalPrice} />
                 </OrderSummaryContentStyled>
             </OrderSummaryContentWrapperStyled>
         </OrderSummaryWrapperStyled>
