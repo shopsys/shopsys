@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Tests\FrontendApiBundle\Functional\Store;
 
+use App\DataFixtures\Demo\StoreDataFixture;
+use Nette\Utils\Json;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
@@ -58,6 +60,31 @@ class GetStoreTest extends GraphQlTestCase
                 $expectedStoreData
             );
         }
+    }
+
+    public function testStoreOnSecondDomainIsNotAvailable(): void
+    {
+        /** @var \App\Model\Store\Store $storeOnSecondDomain */
+        $storeOnSecondDomain = $this->getReference(StoreDataFixture::STORE_PREFIX . 3);
+
+        $response = $this->getResponseContentForQuery($this->getStoreQueryByUuid($storeOnSecondDomain->getUuid()));
+        $this->assertResponseContainsArrayOfErrors($response);
+        $errors = $response['errors'][0];
+        self::assertArrayHasKey('message', $errors, Json::encode($errors));
+        self::assertEquals(
+            sprintf('Store with UUID "%s" does not exist.', $storeOnSecondDomain->getUuid()),
+            $errors['message']
+        );
+
+        $urlSlug = 'zilina';
+        $response = $this->getResponseContentForQuery($this->getStoreQueryByUrlSlug($urlSlug));
+        $this->assertResponseContainsArrayOfErrors($response);
+        $errors = $response['errors'][0];
+        self::assertArrayHasKey('message', $errors, Json::encode($errors));
+        self::assertEquals(
+            sprintf('Store with URL slug "%s" does not exist.', $urlSlug),
+            $errors['message']
+        );
     }
 
     public function testGetStoreByUrlSlug(): void

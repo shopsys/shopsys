@@ -2,3 +2,9 @@ TransportInput:
     type: input-object
     inherits:
         - 'TransportInputDecorator'
+    config:
+        fields:
+            personalPickupStoreUuid:
+                type: "Uuid"
+                defaultValue: null
+                description: "The identifier of selected personal pickup store"

@@ -6,12 +6,14 @@ namespace Tests\FrontendApiBundle\Functional\Cart;
 
 use App\DataFixtures\Demo\PaymentDataFixture;
 use App\DataFixtures\Demo\ProductDataFixture;
+use App\DataFixtures\Demo\StoreDataFixture;
 use App\DataFixtures\Demo\TransportDataFixture;
 use App\Model\Payment\PaymentFacade;
 use App\Model\Product\Product;
 use App\Model\Product\ProductDataFactory;
 use App\Model\Product\ProductFacade;
 use App\Model\Transport\TransportFacade;
+use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
@@ -321,17 +323,81 @@ class CartModificationsResultTest extends GraphQlTestCase
             ) {
                 modifications {
                     transportModifications {
-                        transportPriceChanged {
-                            uuid
-                        }
+                        transportPriceChanged
                     }
                 }
             }
         }';
 
         $transportModifications = $this->getTransportModifications($getCartQuery);
-        self::assertNotEmpty($transportModifications['transportPriceChanged']);
-        self::assertEquals($transport->getUuid(), $transportModifications['transportPriceChanged']['uuid']);
+        self::assertTrue($transportModifications['transportPriceChanged']);
+    }
+
+    public function testTransportWithNotExistingPersonalPickupStoreIsReported(): void
+    {
+        $newlyCreatedCart = $this->addTestingProductToNewCart(1);
+        /** @var \App\Model\Transport\Transport $transport */
+        $transport = $this->getReference(TransportDataFixture::TRANSPORT_PERSONAL);
+
+        $getCartQuery = '{
+            cart(cartInput: {
+                    cartUuid: "' . $newlyCreatedCart['uuid'] . '"
+                    transport: {
+                        uuid: "' . $transport->getUuid() . '"
+                        price: {
+                            priceWithVat: "0"
+                            priceWithoutVat: "0"
+                            vatAmount: "0"
+                        }
+                        personalPickupStoreUuid: "' . Uuid::uuid4()->toString() . '"
+                    }
+                }
+            ) {
+                modifications {
+                    transportModifications {
+                        personalPickupStoreUnavailable
+                    }
+                }
+            }
+        }';
+
+        $transportModifications = $this->getTransportModifications($getCartQuery);
+        self::assertTrue($transportModifications['personalPickupStoreUnavailable']);
+    }
+
+    public function testValidPersonalPickupStoreIsNotReported(): void
+    {
+        $newlyCreatedCart = $this->addTestingProductToNewCart(1);
+        /** @var \App\Model\Transport\Transport $transport */
+        $transport = $this->getReference(TransportDataFixture::TRANSPORT_PERSONAL);
+
+        /** @var \App\Model\Store\Store $store */
+        $store = $this->getReference(StoreDataFixture::STORE_PREFIX . 1);
+
+        $getCartQuery = '{
+            cart(cartInput: {
+                    cartUuid: "' . $newlyCreatedCart['uuid'] . '"
+                    transport: {
+                        uuid: "' . $transport->getUuid() . '"
+                        price: {
+                            priceWithVat: "0"
+                            priceWithoutVat: "0"
+                            vatAmount: "0"
+                        }
+                        personalPickupStoreUuid: "' . $store->getUuid() . '"
+                    }
+                }
+            ) {
+                modifications {
+                    transportModifications {
+                        personalPickupStoreUnavailable
+                    }
+                }
+            }
+        }';
+
+        $transportModifications = $this->getTransportModifications($getCartQuery);
+        self::assertFalse($transportModifications['personalPickupStoreUnavailable']);
     }
 
     public function testUnavailableTransportIsReported(): void
@@ -424,17 +490,14 @@ class CartModificationsResultTest extends GraphQlTestCase
             ) {
                 modifications {
                     paymentModifications {
-                        paymentPriceChanged {
-                            uuid
-                        }
+                        paymentPriceChanged
                     }
                 }
             }
         }';
 
         $paymentModifications = $this->getPaymentModifications($getCartQuery);
-        self::assertNotEmpty($paymentModifications['paymentPriceChanged']);
-        self::assertEquals($payment->getUuid(), $paymentModifications['paymentPriceChanged']['uuid']);
+        self::assertTrue($paymentModifications['paymentPriceChanged']);
     }
 
     public function testUnavailablePaymentIsReported(): void

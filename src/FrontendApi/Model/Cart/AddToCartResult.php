@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\FrontendApi\Model\Cart;
 
 use App\Model\Cart\AddProductResult;
+use App\Model\Payment\Payment;
+use App\Model\Transport\Transport;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
 
 class AddToCartResult
@@ -75,5 +77,21 @@ class AddToCartResult
     public function getTotalDiscountPrice(): Price
     {
         return $this->cartWithModifications->getTotalDiscountPrice();
+    }
+
+    /**
+     * @return \App\Model\Transport\Transport|null
+     */
+    public function getTransport(): ?Transport
+    {
+        return $this->cartWithModifications->getTransport();
+    }
+
+    /**
+     * @return \App\Model\Payment\Payment|null
+     */
+    public function getPayment(): ?Payment
+    {
+        return $this->cartWithModifications->getPayment();
     }
 }

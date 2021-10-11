@@ -218,10 +218,21 @@ class StoreFacade
 
     /**
      * @param string $uuid
+     * @param int $domainId
      * @return \App\Model\Store\Store
      */
-    public function getByUuid(string $uuid): Store
+    public function getByUuidEnabledOnDomain(string $uuid, int $domainId): Store
     {
-        return $this->storeRepository->getOneByUuid($uuid);
+        return $this->storeRepository->getByUuidEnabledOnDomain($uuid, $domainId);
+    }
+
+    /**
+     * @param int $id
+     * @param int $domainId
+     * @return \App\Model\Store\Store
+     */
+    public function getByIdEnabledOnDomain(int $id, int $domainId): Store
+    {
+        return $this->storeRepository->getByIdEnabledOnDomain($id, $domainId);
     }
 }

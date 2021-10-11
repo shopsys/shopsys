@@ -3,6 +3,6 @@ CartPaymentModificationsResult:
     config:
         fields:
             paymentPriceChanged:
-                type: "Payment"
+                type: "Boolean!"
             paymentUnavailable:
                 type: "Boolean!"

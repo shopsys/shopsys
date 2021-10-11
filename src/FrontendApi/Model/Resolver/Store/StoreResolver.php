@@ -56,7 +56,7 @@ class StoreResolver implements ResolverInterface, AliasedInterface
     {
         if ($uuid !== null) {
             try {
-                return $this->storeFacade->getByUuid($uuid);
+                return $this->storeFacade->getByUuidEnabledOnDomain($uuid, $this->domain->getId());
             } catch (StoreByUuidNotFoundException $storeNotFoundException) {
                 throw new UserError($storeNotFoundException->getMessage());
             }
@@ -94,7 +94,7 @@ class StoreResolver implements ResolverInterface, AliasedInterface
                 $urlSlug
             );
 
-            return $this->storeFacade->getById($friendlyUrl->getEntityId());
+            return $this->storeFacade->getByIdEnabledOnDomain($friendlyUrl->getEntityId(), $this->domain->getId());
         } catch (FriendlyUrlNotFoundException | StoreNotFoundException $exception) {
             throw new UserError(sprintf('Store with URL slug "%s" does not exist.', $urlSlug));
         }

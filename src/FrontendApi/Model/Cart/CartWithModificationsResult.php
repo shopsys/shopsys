@@ -41,16 +41,17 @@ class CartWithModificationsResult
      * @var array
      */
     private array $transportModifications = [
-        'transportPriceChanged' => null,
+        'transportPriceChanged' => false,
         'transportUnavailable' => false,
         'transportWeightLimitExceeded' => false,
+        'personalPickupStoreUnavailable' => false,
     ];
 
     /**
      * @var array
      */
     private array $paymentModifications = [
-        'paymentPriceChanged' => null,
+        'paymentPriceChanged' => false,
         'paymentUnavailable' => false,
     ];
 
@@ -63,6 +64,16 @@ class CartWithModificationsResult
      * @var \Shopsys\FrameworkBundle\Model\Pricing\Price|null
      */
     private ?Price $totalDiscountPrice = null;
+
+    /**
+     * @var \App\Model\Transport\Transport|null
+     */
+    private ?Transport $transport;
+
+    /**
+     * @var \App\Model\Payment\Payment|null
+     */
+    private ?Payment $payment;
 
     /**
      * @param \App\Model\Cart\Cart $cart
@@ -132,11 +143,11 @@ class CartWithModificationsResult
     }
 
     /**
-     * @param \App\Model\Transport\Transport $transport
+     * @param bool $transportPriceChanged
      */
-    public function setTransportPriceChanged(Transport $transport): void
+    public function setTransportPriceChanged(bool $transportPriceChanged): void
     {
-        $this->transportModifications['transportPriceChanged'] = $transport;
+        $this->transportModifications['transportPriceChanged'] = $transportPriceChanged;
     }
 
     public function setTransportIsUnavailable(): void
@@ -153,11 +164,19 @@ class CartWithModificationsResult
     }
 
     /**
-     * @param \App\Model\Payment\Payment $payment
+     * @param bool $personalPickupStoreUnavailable
      */
-    public function setPaymentPriceChanged(Payment $payment): void
+    public function setPersonalPickupStoreUnavailable(bool $personalPickupStoreUnavailable): void
     {
-        $this->paymentModifications['paymentPriceChanged'] = $payment;
+        $this->transportModifications['personalPickupStoreUnavailable'] = $personalPickupStoreUnavailable;
+    }
+
+    /**
+     * @param bool $paymentPriceChanged
+     */
+    public function setPaymentPriceChanged(bool $paymentPriceChanged): void
+    {
+        $this->paymentModifications['paymentPriceChanged'] = $paymentPriceChanged;
     }
 
     public function setPaymentIsUnavailable(): void
@@ -202,5 +221,37 @@ class CartWithModificationsResult
     public function setTotalDiscountPrice(Price $totalDiscountPrice): void
     {
         $this->totalDiscountPrice = $totalDiscountPrice;
+    }
+
+    /**
+     * @return \App\Model\Transport\Transport|null
+     */
+    public function getTransport(): ?Transport
+    {
+        return $this->transport;
+    }
+
+    /**
+     * @return \App\Model\Payment\Payment|null
+     */
+    public function getPayment(): ?Payment
+    {
+        return $this->payment;
+    }
+
+    /**
+     * @param \App\Model\Transport\Transport|null $transport
+     */
+    public function setTransport(?Transport $transport): void
+    {
+        $this->transport = $transport;
+    }
+
+    /**
+     * @param \App\Model\Payment\Payment|null $payment
+     */
+    public function setPayment(?Payment $payment): void
+    {
+        $this->payment = $payment;
     }
 }

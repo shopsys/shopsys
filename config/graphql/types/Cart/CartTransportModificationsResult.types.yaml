@@ -3,8 +3,10 @@ CartTransportModificationsResult:
     config:
         fields:
             transportPriceChanged:
-                type: "Transport"
+                type: "Boolean!"
             transportUnavailable:
                 type: "Boolean!"
             transportWeightLimitExceeded:
+                type: "Boolean!"
+            personalPickupStoreUnavailable:
                 type: "Boolean!"
