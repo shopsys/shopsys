@@ -151,12 +151,8 @@ export const TransportAndPaymentPrice = styled.div`
 export const TransportAndPaymentImageWrapper = styled.span`
     display: inline-block;
     height: 18px;
-    margin-left: 5px;
+    margin-right: 8px;
     vertical-align: bottom;
-`;
-
-export const ImgStyled = styled.img`
-    max-height: 100%;
 `;
 
 export const OrderSummaryTotalPriceWrapper = styled.div`

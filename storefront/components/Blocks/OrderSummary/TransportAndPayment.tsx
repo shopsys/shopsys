@@ -1,5 +1,4 @@
 import {
-    ImgStyled,
     OrderSummaryContent,
     SummaryRow,
     TransportAndPaymentImageWrapper,
@@ -9,6 +8,7 @@ import {
 } from './OrderSummary.style';
 import { FC } from 'react';
 import { formatPrice } from 'utils/formatting';
+import Image from 'components/Basic/Image';
 import { PaymentType } from 'connectors/payments/types';
 import { TransportType } from 'connectors/transports/types';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
@@ -27,10 +27,10 @@ const TransportAndPayment: FC<TransportAndPaymentProps> = (props) => {
                 {props.transport !== null && (
                     <SummaryRow>
                         <TransportAndPaymentTextAndImage>
-                            {props.transport.name}
                             <TransportAndPaymentImageWrapper>
-                                <ImgStyled src="https://master.ssfwcc.ci.shopsys.cloud/content/images/transport/default/57.jpg" />
+                                <Image image={props.transport.image} alt={props.transport.name} />
                             </TransportAndPaymentImageWrapper>
+                            {props.transport.name}
                         </TransportAndPaymentTextAndImage>
                         <TransportAndPaymentPrice>
                             <strong>
@@ -42,10 +42,10 @@ const TransportAndPayment: FC<TransportAndPaymentProps> = (props) => {
                 {props.payment !== null && (
                     <SummaryRow>
                         <TransportAndPaymentTextAndImage>
-                            {props.payment.name}
                             <TransportAndPaymentImageWrapper>
-                                <ImgStyled src="https://master.ssfwcc.ci.shopsys.cloud/content/images/payment/default/53.jpg" />
+                                <Image image={props.payment.image} alt={props.payment.name} />
                             </TransportAndPaymentImageWrapper>
+                            {props.payment.name}
                         </TransportAndPaymentTextAndImage>
                         <TransportAndPaymentPrice>
                             <strong>
