@@ -1,3 +1,4 @@
+import { BlogCategoryType, mapBlogCategoryData } from 'connectors/blogCategory/BlogCategory';
 import { mapCategoryDetailData, mapParametersFilter } from 'connectors/categories/Categories';
 import { mapMainVariantDetailApiData, mapProductDetailApiData } from 'connectors/products/ProductDetail';
 import { ArticleDetailType } from 'connectors/article/types';
@@ -26,6 +27,7 @@ export function getFriendlyUrlResolvedData(
     | StoreDetailType
     | ArticleDetailType
     | BlogArticleDetailType
+    | BlogCategoryType
     | BrandDetailType
     | FlagDetailType
     | undefined
@@ -65,6 +67,8 @@ export function getFriendlyUrlResolvedData(
         return mapBrandDetailApiData(data.slug, currentDomainConfig.currencyCode);
     } else if (data.slug.__typename === 'Flag') {
         return mapFlagDetailApiData(data.slug, currentDomainConfig.currencyCode);
+    } else if (data.slug.__typename === 'BlogCategory') {
+        return mapBlogCategoryData(data.slug);
     }
 
     return undefined;
