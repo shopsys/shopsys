@@ -27,7 +27,7 @@ const ContactInformation: FC<ServerSidePropsType> = (props) => {
             <CommonLayout>
                 <OrderSteps activeStep={3} domainUrl={props.domainConfig.url} />
                 <Form
-                    resolver={getContactInformationFormResolver()}
+                resolver={getContactInformationFormResolver(t)}
                     defaultValues={{
                         email: '',
                         register: false,
