@@ -8,8 +8,8 @@ import {
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 
 type PromoCodeInfoProps = {
-    discount: string;
-    setIsPromoCodeInfo: MouseEventHandler<HTMLDivElement>;
+    promoCode: string;
+    onRemovePromoCodeCallback: MouseEventHandler<HTMLDivElement>;
 };
 
 const PromoCodeInfo: FC<PromoCodeInfoProps> = (props) => {
@@ -19,8 +19,8 @@ const PromoCodeInfo: FC<PromoCodeInfoProps> = (props) => {
         <PromoCodeInfoStyled>
             <PromoCodeInfoTitleStyled>{t('Your discount with the code has been applied.')}</PromoCodeInfoTitleStyled>
             <PromoCodeInfoCouponStyled>
-                {props.discount}
-                <PromoCodeInfoCouponIconStyled icon="Cross" onClick={props.setIsPromoCodeInfo} />
+                {props.promoCode}
+                <PromoCodeInfoCouponIconStyled icon="Cross" onClick={props.onRemovePromoCodeCallback} />
             </PromoCodeInfoCouponStyled>
             <p>
                 {t(
