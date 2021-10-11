@@ -151,7 +151,7 @@ export const TransportAndPaymentPrice = styled.div`
 export const TransportAndPaymentImageWrapper = styled.span`
     display: inline-block;
     height: 18px;
-    margin-right: 8px;
+    margin-left: 8px;
     vertical-align: bottom;
 `;
 

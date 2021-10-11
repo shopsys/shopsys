@@ -2,6 +2,7 @@ import { initServerSideProps, ServerSidePropsType } from 'helpers/InitServerSide
 import { nextReduxWrapper, useShopsysSelector } from 'redux/main';
 import { FC } from 'react';
 import Form from 'components/Forms/Form';
+import { getTransportAndPaymentFormResolver } from 'components/Pages/Order/TransportAndPayment/TransportAndPaymentFormResolver';
 import { getTransports } from 'connectors/transports/Transports';
 import { navigationQuery } from 'connectors/navigation/Navigation';
 import OrderLayout from 'components/Layout/OrderLayout';
@@ -14,6 +15,7 @@ const TransportAndPayment: FC<ServerSidePropsType> = (props) => {
     useInitDomainConfig(props.domainConfig);
     const { cartUuid, transport, payment } = useShopsysSelector((state) => state.cookie);
     const transports = getTransports(cartUuid);
+    const transportObject = useShopsysSelector((state) => state.user.transport);
     const t = useTypedTranslationFunction();
 
     return (
@@ -25,6 +27,9 @@ const TransportAndPayment: FC<ServerSidePropsType> = (props) => {
                         transport?.personalPickupStoreUuid === undefined ? null : transport.personalPickupStoreUuid,
                     payment: payment === null ? null : payment.uuid,
                 }}
+                resolver={getTransportAndPaymentFormResolver(
+                    transportObject === null ? false : transportObject.hasPersonalPickup,
+                )}
             >
                 <OrderLayout activeStep={2} buttonNextText={t('Contact information')}>
                     {transports.length > 0 && <Select transports={transports} />}

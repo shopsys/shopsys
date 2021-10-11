@@ -27,10 +27,10 @@ const TransportAndPayment: FC<TransportAndPaymentProps> = (props) => {
                 {props.transport !== null && (
                     <SummaryRow>
                         <TransportAndPaymentTextAndImage>
+                            {props.transport.name}
                             <TransportAndPaymentImageWrapper>
                                 <Image image={props.transport.image} alt={props.transport.name} />
                             </TransportAndPaymentImageWrapper>
-                            {props.transport.name}
                         </TransportAndPaymentTextAndImage>
                         <TransportAndPaymentPrice>
                             <strong>
@@ -42,10 +42,10 @@ const TransportAndPayment: FC<TransportAndPaymentProps> = (props) => {
                 {props.payment !== null && (
                     <SummaryRow>
                         <TransportAndPaymentTextAndImage>
+                            {props.payment.name}
                             <TransportAndPaymentImageWrapper>
                                 <Image image={props.payment.image} alt={props.payment.name} />
                             </TransportAndPaymentImageWrapper>
-                            {props.payment.name}
                         </TransportAndPaymentTextAndImage>
                         <TransportAndPaymentPrice>
                             <strong>
