@@ -29,19 +29,15 @@ const formProviderMethods = useForm({
 
 <FormProvider {...formProviderMethods}>
     <form style={{ width: '250px' }}>
-        <CheckboxColor
+        <ShopsysCheckboxColor
             id="my-form_checkbox-default"
             name="checkboxDefault"
             label="default"
-            color="red"
-            isLightColor="false"
         />
-        <CheckboxColor
+        <ShopsysCheckboxColor
             id="my-form_checkbox-required"
             name="checkboxRequired"
             label="required"
-            color="yellow"
-            isLightColor="true"
             required={true}
         />
     </form>
