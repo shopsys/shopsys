@@ -88,6 +88,9 @@ class BlogArticleFormType extends AbstractType
                 'data_class' => BlogArticleData::class,
                 'attr' => ['novalidate' => 'novalidate'],
             ]);
+        $resolver->setDefaults([
+            'products' => [],
+        ]);
     }
 
     /**
@@ -237,6 +240,12 @@ class BlogArticleFormType extends AbstractType
                 'label' => t('Description'),
                 'required' => false,
                 'display_format' => FormRenderingConfigurationExtension::DISPLAY_FORMAT_MULTIDOMAIN_ROWS_NO_PADDING,
+            ]);
+
+        $builderDescriptionGroup
+            ->add('products', ProductsWithCatnumType::class, [
+                'label' => t('Referenced products'),
+                'required' => false,
             ]);
 
         return $builderDescriptionGroup;

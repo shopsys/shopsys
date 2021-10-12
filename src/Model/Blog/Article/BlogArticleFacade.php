@@ -8,6 +8,7 @@ use App\Component\Image\ImageFacade;
 use App\Model\Blog\Article\Elasticsearch\BlogArticleExportScheduler;
 use App\Model\Blog\BlogVisibilityRecalculationScheduler;
 use App\Model\Blog\Category\BlogCategory;
+use App\Model\Product\ProductFacade;
 use App\Twig\Cache\TwigCacheFacade;
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
@@ -59,6 +60,11 @@ class BlogArticleFacade
     private $twigCacheFacade;
 
     /**
+     * @var \App\Model\Product\ProductFacade
+     */
+    private ProductFacade $productFacade;
+
+    /**
      * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
      */
     private $domain;
@@ -77,6 +83,7 @@ class BlogArticleFacade
      * @param \App\Component\Image\ImageFacade $imageFacade
      * @param \App\Model\Blog\BlogVisibilityRecalculationScheduler $blogVisibilityRecalculationScheduler
      * @param \App\Twig\Cache\TwigCacheFacade $twigCacheFacade
+     * @param \App\Model\Product\ProductFacade $productFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \App\Model\Blog\Article\Elasticsearch\BlogArticleExportScheduler $blogArticleExportScheduler
      */
@@ -89,6 +96,7 @@ class BlogArticleFacade
         ImageFacade $imageFacade,
         BlogVisibilityRecalculationScheduler $blogVisibilityRecalculationScheduler,
         TwigCacheFacade $twigCacheFacade,
+        ProductFacade $productFacade,
         Domain $domain,
         BlogArticleExportScheduler $blogArticleExportScheduler
     ) {
@@ -100,6 +108,7 @@ class BlogArticleFacade
         $this->imageFacade = $imageFacade;
         $this->blogVisibilityRecalculationScheduler = $blogVisibilityRecalculationScheduler;
         $this->twigCacheFacade = $twigCacheFacade;
+        $this->productFacade = $productFacade;
         $this->domain = $domain;
         $this->blogArticleExportScheduler = $blogArticleExportScheduler;
     }
@@ -148,6 +157,7 @@ class BlogArticleFacade
      */
     public function create(BlogArticleData $blogArticleData): BlogArticle
     {
+        $blogArticleData->products = $this->getProductFromDescription($blogArticleData->descriptions);
         $blogArticle = $this->blogArticleFactory->create($blogArticleData);
 
         $this->em->persist($blogArticle);
@@ -181,6 +191,7 @@ class BlogArticleFacade
     public function edit(int $blogArticleId, BlogArticleData $blogArticleData): BlogArticle
     {
         $blogArticle = $this->blogArticleRepository->getById($blogArticleId);
+        $blogArticleData->products = $this->getProductFromDescription($blogArticleData->descriptions);
         $blogArticle->edit($blogArticleData, $this->blogArticleBlogCategoryDomainFactory);
 
         $this->em->flush();
@@ -299,5 +310,25 @@ class BlogArticleFacade
     public function getAllBlogArticlesNamesIndexedByIdByDomainId(int $domainId, string $locale): array
     {
         return $this->blogArticleRepository->getAllBlogArticlesNamesIndexedByIdByDomainId($domainId, $locale);
+    }
+
+    /**
+     * @param array $descriptions
+     * @return \App\Model\Product\Product[]
+     */
+    private function getProductFromDescription(array $descriptions): array
+    {
+        $productsCatnum = [];
+
+        foreach ($descriptions as $description) {
+            $matches = [];
+            preg_match_all(BlogArticle::PLACEHOLDER_PRODUCTS_PATTERN, $description, $matches);
+            foreach ($matches['catnums'] as $catnumsString) {
+                $matchesCatnums = explode(',', $catnumsString);
+                $productsCatnum = array_merge($productsCatnum, $matchesCatnums);
+            }
+        }
+
+        return $this->productFacade->findAllByCatnums($productsCatnum);
     }
 }
