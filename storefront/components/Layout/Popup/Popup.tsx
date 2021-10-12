@@ -1,6 +1,5 @@
 import { FC, MouseEventHandler, useEffect, useRef } from 'react';
 import {
-    OverlayStyled,
     PopupButtonCloseIconStyled,
     PopupButtonCloseStyled,
     PopupContentStyled,
@@ -8,6 +7,7 @@ import {
     PopupStyled,
 } from './Popup.style';
 import { AnyStyledComponent } from 'styled-components';
+import Overlay from 'components/Basic/Overlay';
 
 type PopupProps = {
     isVisible: boolean;
@@ -42,7 +42,7 @@ const Popup: FC<PopupProps> = (props) => {
     if (props.isVisible) {
         return (
             <>
-                <OverlayStyled onClick={onClickCloseActionHandler}></OverlayStyled>
+                <Overlay onClick={onClickCloseActionHandler}></Overlay>
                 <PopupWrapper role="dialog" aria-modal={true}>
                     <PopupHeaderStyled>
                         <PopupButtonCloseStyled type="button" onClick={onClickCloseActionHandler}>

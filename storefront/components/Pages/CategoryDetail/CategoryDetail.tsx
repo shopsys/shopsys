@@ -1,11 +1,21 @@
+import {
+    CategoryDetailContentStyled,
+    CategoryDetailPanelIconStyled,
+    CategoryDetailPanelOpenerStyled,
+    CategoryDetailPanelStyled,
+    CategoryDetailStyled,
+} from './CategoryDetail.style';
+import { FC, useRef, useState } from 'react';
 import CategoryDetailAdvancedSeoCategories from './CategoryDetailAdvancedSeoCategories';
 import CategoryDetailSubcategories from './CategoryDetailSubcategories';
 import { CategoryDetailType } from './types';
-import { FC } from 'react';
 import Heading from 'components/Basic/Heading';
+import Overlay from 'components/Basic/Overlay';
 import Pagination from 'components/Blocks/Pagination/Pagination';
+import ProductFilter from 'components/Blocks/Product/Filter';
 import ProductsList from 'components/Blocks/Product/List/ProductsList';
 import SortingBar from 'components/Blocks/SortingBar';
+import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import Webline from 'components/Layout/Webline';
 
 type CategoryDetailProps = {
@@ -13,16 +23,58 @@ type CategoryDetailProps = {
 };
 
 const CategoryDetail: FC<CategoryDetailProps> = (props) => {
+    const t = useTypedTranslationFunction();
+    const [isPanelOpen, setIsPanelOpen] = useState(false);
+    const panelWrapRef = useRef<null | HTMLDivElement>(null);
+    const buttonRef = useRef<null | HTMLDivElement>(null);
+
+    const handlePanelOpenerClick = () => {
+        setIsPanelOpen(!isPanelOpen);
+
+        let newPosition = 0;
+        const newPositionOffset = 20;
+
+        if (buttonRef.current !== null) {
+            newPosition = buttonRef.current.offsetTop + buttonRef.current.clientHeight + newPositionOffset;
+        }
+
+        if (panelWrapRef.current !== null) {
+            panelWrapRef.current.style.cssText = 'top: ' + newPosition + 'px';
+        }
+    };
+
     return (
         <Webline>
-            <Heading type={'h1'}>{props.category.seoH1 !== null ? props.category.seoH1 : props.category.name}</Heading>
-            <CategoryDetailSubcategories
-                categories={[...props.category.children, ...props.category.linkedCategories]}
-            />
-            <CategoryDetailAdvancedSeoCategories readyCategorySeoMixLinks={props.category.readyCategorySeoMixLinks} />
-            <SortingBar />
-            {props.category.products.edges.length !== 0 && <ProductsList products={props.category.products.edges} />}
-            <Pagination />
+            <CategoryDetailStyled>
+                <CategoryDetailPanelStyled isOpen={isPanelOpen} ref={panelWrapRef}>
+                    <ProductFilter />
+                    <Overlay isHiddenOnDesktop={true} onClick={handlePanelOpenerClick} />
+                </CategoryDetailPanelStyled>
+                <CategoryDetailContentStyled>
+                    <Heading type="h1">
+                        {props.category.seoH1 !== null ? props.category.seoH1 : props.category.name}
+                    </Heading>
+                    <CategoryDetailSubcategories
+                        categories={[...props.category.children, ...props.category.linkedCategories]}
+                    />
+                    <CategoryDetailAdvancedSeoCategories
+                        readyCategorySeoMixLinks={props.category.readyCategorySeoMixLinks}
+                    />
+                    <CategoryDetailPanelOpenerStyled
+                        id="js-category-detail-panel"
+                        ref={buttonRef}
+                        onClick={handlePanelOpenerClick}
+                    >
+                        <CategoryDetailPanelIconStyled icon="Filter" />
+                        {t('Filtrovat')}
+                    </CategoryDetailPanelOpenerStyled>
+                    <SortingBar />
+                    {props.category.products.edges.length !== 0 && (
+                        <ProductsList products={props.category.products.edges} />
+                    )}
+                    <Pagination />
+                </CategoryDetailContentStyled>
+            </CategoryDetailStyled>
         </Webline>
     );
 };
