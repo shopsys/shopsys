@@ -222,16 +222,6 @@ class ImageDataFixture extends AbstractReferenceFixture implements DependentFixt
             108 => 71,
         ];
 
-        $maxImageId = 109;
-        for ($productId = 53; $productId <= 153; $productId++) {
-            if (in_array($productId, [70, 71], true)) {
-                continue;
-            }
-
-            $specificProductsIdsIndexedByImagesIds[$maxImageId] = $productId;
-            $maxImageId++;
-        }
-
         foreach ($productsIdsWithImageIdSameAsProductId as $productId) {
             $this->saveImageIntoDb($productId, 'product', $productId, null, 'image_main');
         }
