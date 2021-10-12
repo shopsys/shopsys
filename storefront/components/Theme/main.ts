@@ -65,6 +65,7 @@ export const theme = {
         above: 1,
         overlay: 500,
         menu: 501,
+        aboveMenu: 750,
         aboveOverlay: 10001,
     },
 

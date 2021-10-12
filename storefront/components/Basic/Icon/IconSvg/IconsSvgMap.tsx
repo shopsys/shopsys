@@ -18,6 +18,7 @@ export const IconsSvgMap = {
     Sort: <Icons.Sort />,
     RemoveBold: <Icons.RemoveBold />,
     Plus: <Icons.Plus />,
+    Filter: <Icons.Filter />,
 };
 
 export type IconName = keyof typeof IconsSvgMap;

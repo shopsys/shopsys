@@ -15,7 +15,7 @@ export const useTimeout = (callback: () => void, delay: number | null): void => 
             return;
         }
         const id = setTimeout(() => savedCallback.current(), delay);
-        /**  TODO */
+
         // eslint-disable-next-line consistent-return
         return () => clearTimeout(id);
     }, [delay]);
