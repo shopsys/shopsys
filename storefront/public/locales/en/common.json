@@ -121,5 +121,6 @@
     "The street must contain a number": "The street must contain a number",
     "Zip code cannot be longer than 5 characters": "Zip code cannot be longer than 5 characters",
     "Please enter only numbers": "Please enter only numbers",
-    "This value must be exactly 8 characters": "This value must be exactly 8 characters"
+    "This value must be exactly 8 characters": "This value must be exactly 8 characters",
+    "(0)[Products];(1)[Product];(2-inf)[Products];": "(0)[Products];(1)[Product];(2-inf)[Products];"
 }
