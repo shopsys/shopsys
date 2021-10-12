@@ -2,33 +2,13 @@ import { css } from 'styled-components';
 import Icon from 'components/Basic/Icon';
 import { styled } from 'components/Theme/main';
 
-export const OverlayStyled = styled.div`
-    ${({ theme }) => css`
-        bottom: 0;
-        left: 0;
-        position: fixed;
-        right: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        z-index: ${theme.zIndex.overlay};
-        display: flex;
-        justify-content: center;
-        align-items: center;
-
-        background-color: rgba(0, 0, 0, 0.6);
-        transition: all 0.2s cubic-bezier(0.8, 0.2, 0.48, 1);
-        cursor: pointer;
-    `}
-`;
-
 export const PopupStyled = styled.div`
     ${({ theme }) => css`
         display: flex;
         flex-direction: column;
         max-height: calc(100% - 20px);
         padding: 5px;
-        z-index: ${theme.zIndex.popup};
+        z-index: ${theme.zIndex.aboveOverlay};
         position: fixed;
         top: 50%;
         left: 50%;
