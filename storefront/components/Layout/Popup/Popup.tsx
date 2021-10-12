@@ -1,5 +1,6 @@
 import { FC, MouseEventHandler, useEffect, useRef } from 'react';
 import {
+    OverlayStyled,
     PopupButtonCloseIconStyled,
     PopupButtonCloseStyled,
     PopupContentStyled,
@@ -7,10 +8,6 @@ import {
     PopupStyled,
 } from './Popup.style';
 import { AnyStyledComponent } from 'styled-components';
-import { useShopsysDispatch, useShopsysSelector } from 'redux/store';
-import NewsletterSuccess from './PopupContents/NewsletterSuccess/NewsletterSuccess';
-import { popupActions } from 'redux/store/PopupStore';
-import ShopsysOverlay from '../../basic/ShopsysOverlay';
 
 type PopupProps = {
     isVisible: boolean;
