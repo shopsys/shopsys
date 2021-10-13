@@ -120,6 +120,10 @@ class ImageFacade extends BaseImageFacade
             return $imageUrl;
         }
 
+        if (!$this->imageLocator->imageExists($image)) {
+            throw new ImageNotFoundException();
+        }
+
         $seoEntityName = $this->getSeoNameByImageAndLocale($image, $domainConfig->getLocale());
         $friendlyUrlSeoEntityName = $this->getFriendlyUrlSlug($seoEntityName);
 
