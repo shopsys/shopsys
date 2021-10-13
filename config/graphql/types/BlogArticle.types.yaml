@@ -52,3 +52,14 @@ BlogArticle:
                 type: "[Link!]!"
                 description: "Hierarchy of the current element in relation to the structure"
                 resolve: '@=resolver("resolveBreadcrumb", [value["id"], "front_blogarticle_detail"])'
+            image:
+                type: "Image"
+                description: "Blog article image"
+                resolve: '@=resolver("blogArticleImageResolver", [value, args["type"], args["sizes"]])'
+                args:
+                    type:
+                        type: "String"
+                        defaultValue: null
+                    sizes:
+                        type: "[String!]"
+                        defaultValue: null
