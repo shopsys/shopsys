@@ -25,10 +25,11 @@ export interface SortValues {
     displayValue: string;
 }
 
-const SortingBar: FC = () => {
+const SortingBar: FC<{ totalCount: number }> = (props) => {
     const t = useTypedTranslationFunction();
     const dispatch = useShopsysDispatch();
     const { width } = useGetWindowSize();
+    const { totalCount } = props;
     const [isMobileSortBarVisible, setMobileSortBarVisible] = useState(true);
     useResizeWidthEffect(
         width,
@@ -130,9 +131,11 @@ const SortingBar: FC = () => {
                         })}
                     </SortingBarOptionsStyled>
                     <SortingBarItemStyled>
-                        {/* TODO PRG: connect to actual products */}
-                        <strong>4 </strong>
-                        {t('Products')}
+                        <strong>{totalCount} </strong>
+                        {t('(0)[Products];(1)[Product];(2-inf)[Products];', {
+                            postProcess: 'interval',
+                            count: totalCount,
+                        })}
                     </SortingBarItemStyled>
                 </SortingBarOptionsWrapStyled>
             )}

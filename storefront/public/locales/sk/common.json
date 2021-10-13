@@ -121,5 +121,6 @@
     "The street must contain a number": "Ulica musí obsahovať číslo",
     "Zip code cannot be longer than 5 characters": "PSČ nesmie byť dlhšie ako 5 znakov",
     "Please enter only numbers": "Prosím, zadávajte iba čísla",
-    "This value must be exactly 8 characters": "Táto hodnota musí mať presne 8 znakov"
+    "This value must be exactly 8 characters": "Táto hodnota musí mať presne 8 znakov",
+    "(0)[Products];(1)[Product];(2-inf)[Products];": "(0)[Produktov];(1)[Produkt];(2-4)[Produkty];(5-inf)[Produktov];"
 }
