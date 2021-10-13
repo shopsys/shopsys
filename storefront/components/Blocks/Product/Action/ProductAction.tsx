@@ -1,39 +1,46 @@
-import { FC, useRef } from 'react';
+import { FC, useEffect, useRef } from 'react';
 import { ProductActionStyled, ProductActionWrapperStyled } from './ProductAction.style';
-import { useShopsysDispatch, useShopsysSelector } from 'redux/store';
 import Button from 'components/Forms/Button';
+import { showChangeCartItemQuantityMessages } from 'utils/Cart/ShowChangeCartItemQuantityMessages';
 import { SliderProductItemType } from 'components/Blocks/Product/types';
 import Spinbox from 'components/Forms/Spinbox';
 import { useChangeCartItemQuantity } from 'connectors/cart/Cart';
-import { useHandleCartUpdate } from 'hooks/cart/UseHandleCartUpdate';
-import { useHandleChangeCartItemQuantity } from 'hooks/cart/UseHandleChangeCartItemQuantity';
+import { useHandleAddToCart } from 'hooks/cart/UseHandleAddToCart';
 import { useRouter } from 'next/dist/client/router';
+import { useShopsysSelector } from 'redux/main';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 
 const ProductAction: FC<SliderProductItemType> = (props) => {
     const router = useRouter();
     const spinboxRef = useRef<HTMLInputElement | null>(null);
     const t = useTypedTranslationFunction();
-    const cartUuid = useShopsysSelector((state) => state.user.cart?.uuid);
-    const { currencyCode } = useShopsysSelector((state) => state.domain);
-    const dispatch = useShopsysDispatch();
-    const [, changeCartItemQuantity] = useChangeCartItemQuantity();
+    const { cartUuid, transport, payment, promoCode } = useShopsysSelector((state) => state.cookie);
+    const [changeCartItemQuantityResult, changeCartItemQuantity] = useChangeCartItemQuantity();
+
+    useHandleAddToCart(
+        changeCartItemQuantityResult,
+        transport?.personalPickupStoreUuid === undefined ? null : transport.personalPickupStoreUuid,
+        promoCode,
+    );
+
+    useEffect(() => {
+        showChangeCartItemQuantityMessages(changeCartItemQuantityResult, props.uuid, props.name, t);
+    }, [changeCartItemQuantityResult.fetching]);
 
     const onAddToCartHandler = async () => {
         if (spinboxRef.current === null) {
             return;
         }
 
-        const { data, error } = await changeCartItemQuantity({
+        changeCartItemQuantity({
             cartUuid,
             isAbsoluteQuantity: false,
             productUuid: props.uuid,
             quantity: spinboxRef.current.valueAsNumber,
+            transport,
+            payment,
+            promoCode,
         });
-        if (data !== undefined) {
-            useHandleChangeCartItemQuantity(data, error, props.uuid, props.name, t);
-            useHandleCartUpdate(data.AddToCart, currencyCode, dispatch);
-        }
         spinboxRef.current!.valueAsNumber = 1;
     };
 

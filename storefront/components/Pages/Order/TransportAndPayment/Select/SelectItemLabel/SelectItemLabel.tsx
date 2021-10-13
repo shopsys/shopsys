@@ -16,7 +16,7 @@ type SelectItemLabelProps = {
     name: string;
     price?: { priceWithVat: number; priceWithoutVat: number; vatAmount: number };
     daysUntilDelivery?: number;
-    personalPickup?: boolean;
+    hasPersonalPickup?: boolean;
     description?: string;
     storeOpeningHours?: string;
     personalPickupStoreDetail?: StoreType;
@@ -30,7 +30,7 @@ const SelectItemLabel: FC<SelectItemLabelProps> = (props) => {
             <NameWrapperStyled>
                 <span>{props.name}</span>
                 <DescriptionStyled>{props.description}</DescriptionStyled>
-                {props.personalPickupStoreDetail !== undefined && props.personalPickup && (
+                {props.personalPickupStoreDetail !== undefined && props.hasPersonalPickup && (
                     <>
                         <InfoStyled>{props.personalPickupStoreDetail.name}</InfoStyled>
                         <InfoStyled>
@@ -45,12 +45,12 @@ const SelectItemLabel: FC<SelectItemLabelProps> = (props) => {
                 )}
                 {props.storeOpeningHours !== undefined && <InfoStyled>{props.storeOpeningHours}</InfoStyled>}
             </NameWrapperStyled>
-            {props.daysUntilDelivery !== undefined && props.personalPickup !== undefined && (
+            {props.daysUntilDelivery !== undefined && props.hasPersonalPickup !== undefined && (
                 <TransportDaysUntilDeliveryStyled>
-                    {getDeliveryMessage(props.daysUntilDelivery, props.personalPickup, t)}
+                    {getDeliveryMessage(props.daysUntilDelivery, props.hasPersonalPickup, t)}
                 </TransportDaysUntilDeliveryStyled>
             )}
-            {props.price !== undefined && <PriceStyled>{formatPrice(props.price.priceWithVat, 'CZK')}</PriceStyled>}
+            {props.price !== undefined && <PriceStyled>{formatPrice(props.price.priceWithVat, 'CZK', t)}</PriceStyled>}
         </SelectItemLabelStyled>
     );
 };

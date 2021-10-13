@@ -11,7 +11,7 @@ const ProductPrice: FC<ProductPriceType> = (props) => {
         <ProductPriceStyled>
             <ProductPriceMainStyled>
                 {props.isPriceFrom && t('From') + '\u00A0'}
-                {formatPrice(props.priceWithVat, props.currencyCode)}
+                {formatPrice(props.priceWithVat, props.currencyCode, t)}
             </ProductPriceMainStyled>
         </ProductPriceStyled>
     );

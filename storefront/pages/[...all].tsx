@@ -1,14 +1,13 @@
-import { enabledSortTypes, initialState, SortType, userActions } from 'redux/store/UserStore';
+import { enabledSortTypes, initialState, SortType, userActions } from 'redux/slices/user';
 import { FC, useEffect } from 'react';
 import { friendlyUrlQuery, getFriendlyUrlResolvedData, isProductType } from 'connectors/friendlyUrls/FriendlyUrls';
 import { initServerSideProps, ServerSidePropsType } from 'helpers/InitServerSideProps';
-import { useShopsysDispatch, useShopsysSelector } from 'redux/store';
+import { nextReduxWrapper, useShopsysDispatch, useShopsysSelector } from 'redux/main';
 import Breadcrumbs from 'components/Layout/Breadcrumbs';
 import CategoryDetailPage from 'components/Pages/CategoryDetail';
 import { CategoryDetailType } from 'components/Pages/CategoryDetail/types';
 import CommonLayout from 'components/Layout/CommonLayout';
 import DefaultErrorPage from 'next/error';
-import { GetServerSideProps } from 'next';
 import { navigationQuery } from 'connectors/navigation/Navigation';
 import ProductDetailPage from 'components/Pages/ProductDetail';
 import { ProductDetailType } from 'components/Pages/ProductDetail/types';
@@ -55,13 +54,13 @@ function renderContent(data: ProductDetailType | CategoryDetailType) {
     return <DefaultErrorPage statusCode={404} />;
 }
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
+export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) => async (context) => {
     const categoryDetailSort = getCategoryDetailSort(context.query.sort as string);
-    return initServerSideProps(context, [
+    return initServerSideProps(context, store, [
         navigationQuery,
         friendlyUrlQuery(getUrlWithoutGetParameters(context.resolvedUrl), categoryDetailSort),
     ]);
-};
+});
 
 const getUrlWithoutGetParameters = (originalUrl: string) => {
     return originalUrl.split('?')[0];

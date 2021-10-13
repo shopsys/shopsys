@@ -1,10 +1,11 @@
 import { PriceApiType, PriceType, TransportApiType, TransportType } from './types';
+import { mapTransport } from './Transport';
 import { useFetchQuery } from 'hooks/graphQl/UseFetchQuery';
-import { useShopsysSelector } from 'redux/store';
+import { useShopsysSelector } from 'redux/main';
 
 export const transportsQuery = `
-        query transports {
-            transports {
+        query transports ($cartUuid: Uuid) {
+            transports (cartUuid: $cartUuid) {
                 uuid
                 name
                 description
@@ -67,27 +68,19 @@ export const mapPriceData = (price: PriceApiType, currencyCode: string): PriceTy
 };
 
 const mapTransports = (apiData: TransportApiType[], currencyCode: string): TransportType[] => {
-    return apiData.map((transport) => {
-        return {
-            ...transport,
-            image: transport.images.length === 0 ? null : transport.images[0].sizes[0],
-            price: mapPriceData(transport.price, currencyCode),
-            personalPickup: Array.isArray(transport.stores?.edges) && transport.stores.edges.length > 0,
-            payments: transport.payments.map((payment) => {
-                return {
-                    ...payment,
-                    image: payment.images.length === 0 ? null : payment.images[0].sizes[0],
-                    price: mapPriceData(payment.price, currencyCode),
-                };
-            }),
-            stores: Array.isArray(transport.stores?.edges) ? transport.stores.edges.map((edge) => edge.node) : [],
-        };
-    });
+    const mappedTransports: TransportType[] = [];
+    for (const transport of apiData) {
+        const mappedTransport = mapTransport(transport, currencyCode);
+        if (mappedTransport !== null) {
+            mappedTransports.push(mappedTransport);
+        }
+    }
+    return mappedTransports;
 };
 
-export const getTransports = (): TransportType[] => {
+export const getTransports = (cartUuid?: string | null): TransportType[] => {
     const { currencyCode } = useShopsysSelector((state) => state.domain);
-    const result = useFetchQuery({ query: transportsQuery });
+    const result = useFetchQuery({ query: transportsQuery, variables: { cartUuid } });
     const transportsApiData = result?.data?.transports;
 
     if (transportsApiData !== undefined) {

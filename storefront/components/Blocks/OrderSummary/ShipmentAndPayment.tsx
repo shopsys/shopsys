@@ -26,7 +26,7 @@ const ShipmentAndPayment: FC = () => {
                         </ShipmentAndPaymentImageWrapper>
                     </ShipmentAndPaymentTextAndImage>
                     <ShipmentAndPaymentPrice>
-                        <strong>{formatPrice(242, 'CZK')}</strong>
+                        <strong>{formatPrice(242, 'CZK', t)}</strong>
                     </ShipmentAndPaymentPrice>
                 </SummaryRow>
                 <SummaryRow>
@@ -37,7 +37,7 @@ const ShipmentAndPayment: FC = () => {
                         </ShipmentAndPaymentImageWrapper>
                     </ShipmentAndPaymentTextAndImage>
                     <ShipmentAndPaymentPrice>
-                        <strong>{formatPrice(100, 'CZK')}</strong>
+                        <strong>{formatPrice(100, 'CZK', t)}</strong>
                     </ShipmentAndPaymentPrice>
                 </SummaryRow>
             </OrderSummaryContent>

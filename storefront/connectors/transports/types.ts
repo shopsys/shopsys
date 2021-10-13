@@ -1,4 +1,5 @@
 import { ImageApiType, ImageType } from 'components/Basic/Image/types';
+import { PaymentApiType, PaymentType } from 'connectors/payments/types';
 
 export type PriceApiType = {
     priceWithVat: string;
@@ -12,23 +13,7 @@ export type PriceType = {
     currencyCode: string;
 };
 
-export type PaymentApiType = {
-    uuid: string;
-    name: string;
-    description: string;
-    instruction: string;
-    price: PriceApiType;
-    images: ImageApiType[];
-};
-
-export type PaymentType = {
-    uuid: string;
-    name: string;
-    description: string;
-    instruction: string;
-    price: PriceType;
-    image: ImageType | null;
-};
+export type TransportInputType = { uuid: string; price: PriceApiType; personalPickupStoreUuid: string | null };
 
 export type StoreType = {
     uuid: string;
@@ -65,6 +50,6 @@ export type TransportType = {
     image: ImageType | null;
     payments: PaymentType[];
     daysUntilDelivery: number;
-    personalPickup: boolean;
+    hasPersonalPickup: boolean;
     stores: StoreType[];
 };

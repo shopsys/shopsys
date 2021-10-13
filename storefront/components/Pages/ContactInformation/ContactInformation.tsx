@@ -16,7 +16,7 @@ import OrderAction from 'components/Blocks/OrderAction';
 import OrderSummary from 'components/Blocks/OrderSummary';
 import TextInput from 'components/Forms/TextInput';
 import { Trans } from 'react-i18next';
-import { useShopsysSelector } from 'redux/store';
+import { useShopsysSelector } from 'redux/main';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 
 const ContactInformation: FC = () => {
@@ -79,7 +79,7 @@ const ContactInformation: FC = () => {
                 />
             </ContactInformationInfoStyled>
             <ContactInformationCartStyled>
-                {cart === undefined ? null : <OrderSummary cart={cart} />}
+                <OrderSummary />
             </ContactInformationCartStyled>
         </ContactInformationStyled>
     );

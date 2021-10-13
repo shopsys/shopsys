@@ -17,12 +17,12 @@ import { FC } from 'react';
 import { formatPrice } from 'utils/formatting';
 import NextLink from 'next/link';
 import { useGetInternationalizedStaticUrls } from 'hooks/staticUrls/UseGetInternationalizedStaticUrls';
-import { useShopsysSelector } from 'redux/store';
+import { useShopsysSelector } from 'redux/main';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 
 const Cart: FC = () => {
     const t = useTypedTranslationFunction();
-    const cart = useShopsysSelector((state) => state.user.cart);
+    const { cart } = useShopsysSelector((state) => state.user);
     const domainConfig = useShopsysSelector((state) => state.domain);
     const [cartUrl] = useGetInternationalizedStaticUrls(['/cart'], domainConfig.url);
 
@@ -33,11 +33,18 @@ const Cart: FC = () => {
                     <CartPiecesStyled>
                         <CartIconStyled icon="Cart" />
                         <CartCountStyled>
-                            {cart !== undefined && Array.isArray(cart.items) ? cart.items.length : 0}
+                            {cart !== null && Array.isArray(cart.items) ? cart.items.length : 0}
                         </CartCountStyled>
                     </CartPiecesStyled>
                     <CartValueStyled>
-                        {formatPrice(0, domainConfig.currencyCode, { explicitZero: true })}
+                        {formatPrice(
+                            cart?.totalPrice.priceWithVat === undefined ? 0 : cart.totalPrice.priceWithVat,
+                            domainConfig.currencyCode,
+                            t,
+                            {
+                                explicitZero: true,
+                            },
+                        )}
                     </CartValueStyled>
                 </CartBlockStyled>
             </NextLink>
@@ -52,7 +59,7 @@ const Cart: FC = () => {
                     <CartButtonMobileLinkStyled>
                         <CartIconMobileStyled icon="Cart" />
                         <CartCountStyled>
-                            {cart !== undefined && Array.isArray(cart.items) ? cart.items.length : 0}
+                            {cart !== null && Array.isArray(cart.items) ? cart.items.length : 0}
                         </CartCountStyled>
                     </CartButtonMobileLinkStyled>
                 </NextLink>

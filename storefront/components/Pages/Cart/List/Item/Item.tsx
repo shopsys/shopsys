@@ -13,16 +13,16 @@ import {
     TotalPriceStyled,
 } from './Item.style';
 import { useChangeCartItemQuantity, useRemoveItemFromCart } from 'connectors/cart/Cart';
-import { useShopsysDispatch, useShopsysSelector } from 'redux/store';
 import { CartItemType } from 'connectors/cart/types';
 import { formatPrice } from 'utils/formatting';
 import Icon from 'components/Basic/Icon';
 import Image from 'components/Basic/Image';
 import ItemInfo from './ItemInfo';
 import NextLink from 'next/link';
-import { showErrorMessage } from 'components/Helpers/Toasts';
 import Spinbox from 'components/Forms/Spinbox';
-import { useHandleCartUpdate } from 'hooks/cart/UseHandleCartUpdate';
+import { useHandleAddToCart } from 'hooks/cart/UseHandleAddToCart';
+import { useHandleRemoveFromCart } from 'hooks/cart/UseHandleRemoveFromCart';
+import { useShopsysSelector } from 'redux/main';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 
 type ItemProps = {
@@ -33,11 +33,19 @@ const Item: FC<ItemProps> = (props) => {
     const timeoutRef = useRef<NodeJS.Timeout | null>(null);
     const spinboxRef = useRef<HTMLInputElement | null>(null);
     const t = useTypedTranslationFunction();
-    const cartUuid = useShopsysSelector((state) => state.user.cart?.uuid);
-    const { currencyCode } = useShopsysSelector((state) => state.domain);
-    const dispatch = useShopsysDispatch();
-    const [, removeItemFromCart] = useRemoveItemFromCart();
-    const [, changeCartItemQuantity] = useChangeCartItemQuantity();
+    const { cartUuid, transport, payment, promoCode } = useShopsysSelector((state) => state.cookie);
+    const [removeItemFromCartResult, removeItemFromCart] = useRemoveItemFromCart();
+    const [changeCartItemQuantityResult, changeCartItemQuantity] = useChangeCartItemQuantity();
+    useHandleAddToCart(
+        changeCartItemQuantityResult,
+        transport?.personalPickupStoreUuid === undefined ? null : transport.personalPickupStoreUuid,
+        promoCode,
+    );
+    useHandleRemoveFromCart(
+        removeItemFromCartResult,
+        transport?.personalPickupStoreUuid === undefined ? null : transport.personalPickupStoreUuid,
+        promoCode,
+    );
 
     const onChangeValueHandler = () => {
         if (timeoutRef.current === null) {
@@ -49,15 +57,11 @@ const Item: FC<ItemProps> = (props) => {
     };
 
     const onRemoveItemFromCartHanlder = () => {
-        if (cartUuid === undefined) {
+        if (cartUuid === null) {
             return;
         }
 
-        removeItemFromCart({ cartItemUuid: props.item.uuid, cartUuid }).then(({ data }) => {
-            if (data !== undefined) {
-                useHandleCartUpdate(data.RemoveFromCart, currencyCode, dispatch);
-            }
-        });
+        removeItemFromCart({ cartItemUuid: props.item.uuid, cartUuid, transport, payment, promoCode });
     };
 
     const setUpdateTimeout = () => {
@@ -71,24 +75,9 @@ const Item: FC<ItemProps> = (props) => {
                 cartUuid: cartUuid!,
                 quantity: spinboxRef.current!.valueAsNumber,
                 isAbsoluteQuantity: true,
-            }).then(({ data }) => {
-                if (data === undefined) {
-                    return;
-                }
-
-                useHandleCartUpdate(data.AddToCart, currencyCode, dispatch);
-                if (data.AddToCart.addProductResult.notOnStockQuantity > 0) {
-                    spinboxRef.current!.valueAsNumber = data.AddToCart.addProductResult.addedQuantity;
-                    showErrorMessage(
-                        t(
-                            'You have the maximum available amount in your cart, you cannot add more (total {{ quantity }} {{ unitName }})',
-                            {
-                                quantity: data.AddToCart.addProductResult.addedQuantity,
-                                unitName: props.item.product.unit.name,
-                            },
-                        ),
-                    );
-                }
+                transport,
+                payment,
+                promoCode,
             });
         }, 500);
     };
@@ -117,7 +106,7 @@ const Item: FC<ItemProps> = (props) => {
             </SpinboxCellStyled>
             <ItemPriceCellStyled>
                 <ItemPriceStyled>
-                    {formatPrice(props.item.product.price.priceWithVat, props.item.product.price.currencyCode) +
+                    {formatPrice(props.item.product.price.priceWithVat, props.item.product.price.currencyCode, t) +
                         '\u00A0/\u00A0' +
                         t('pc')}
                 </ItemPriceStyled>
@@ -127,6 +116,7 @@ const Item: FC<ItemProps> = (props) => {
                     {formatPrice(
                         props.item.product.price.priceWithVat * props.item.quantity,
                         props.item.product.price.currencyCode,
+                        t,
                     )}
                 </TotalPriceStyled>
             </TotalPriceCellStyled>

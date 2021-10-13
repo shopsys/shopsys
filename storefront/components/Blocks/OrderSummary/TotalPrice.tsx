@@ -18,7 +18,7 @@ const TotalPrice: FC = () => {
                 <PriceWrapper>
                     <OrderSummaryTotalPriceText>{t('Total price')}</OrderSummaryTotalPriceText>
                     {/* TODO PRG: total price is hard coded */}
-                    <OrderSummaryTotalPriceAmount>{formatPrice(4040, 'CZK')}</OrderSummaryTotalPriceAmount>
+                    <OrderSummaryTotalPriceAmount>{formatPrice(4040, 'CZK', t)}</OrderSummaryTotalPriceAmount>
                 </PriceWrapper>
             </OrderSummaryContent>
         </OrderSummaryTotalPriceWrapper>
