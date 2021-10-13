@@ -181,7 +181,17 @@ class BlogArticleTest extends GraphQlTestCase
                     ],
                     'link' => $this->friendlyUrlFacade->getAbsoluteUrlByFriendlyUrl($friendlyUrl),
                     'slug' => '/' . $friendlyUrl->getSlug(),
-                    'products' => [],
+                    'products' => [
+                        0 => [
+                            'name' => t('22" Sencor SLE 22F46DM4 HELLO KITTY', [], 'dataFixtures', $locale),
+                        ],
+                        1 => [
+                            'name' => t('32" Philips 32PFL4308', [], 'dataFixtures', $locale),
+                        ],
+                        2 => [
+                            'name' => t('21,5” Hyundai 22MT44', [], 'dataFixtures', $locale),
+                        ],
+                    ],
                     'breadcrumb' => [
                         [
                             'name' => $firstBlogCategory->getName($locale),

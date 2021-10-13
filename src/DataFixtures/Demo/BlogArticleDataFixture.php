@@ -14,11 +14,12 @@ use App\Model\Blog\Category\BlogCategoryDataFactory;
 use App\Model\Blog\Category\BlogCategoryFacade;
 use App\Model\Domain\DomainHelper;
 use DateTime;
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 
-class BlogArticleDataFixture extends AbstractReferenceFixture
+class BlogArticleDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
 {
     public const PAGES_IN_CATEGORY = 15;
 
@@ -224,5 +225,15 @@ class BlogArticleDataFixture extends AbstractReferenceFixture
         $this->blogArticleFacade->create($blogArticleData);
 
         $this->articleCounter++;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getDependencies(): array
+    {
+        return [
+            ProductDataFixture::class,
+        ];
     }
 }
