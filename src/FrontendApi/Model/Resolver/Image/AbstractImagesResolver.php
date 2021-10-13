@@ -93,7 +93,7 @@ abstract class AbstractImagesResolver implements ResolverInterface
             }
 
             if ($imageSizes === []) {
-                return [];
+                continue;
             }
 
             $resolvedImages[] = [
