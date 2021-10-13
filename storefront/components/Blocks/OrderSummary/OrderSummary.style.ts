@@ -102,7 +102,7 @@ export const ListItemPrice = styled.strong`
     `}
 `;
 
-export const ShipmentAndPaymentWrapper = styled.div`
+export const TransportAndPaymentWrapper = styled.div`
     ${({ theme }) => css`
         padding-bottom: 10px;
         margin-bottom: ${localVariables.marginBottom};
@@ -126,7 +126,7 @@ export const PriceWrapper = styled.div`
     justify-content: flex-end;
 `;
 
-export const ShipmentAndPaymentTextAndImage = styled.div`
+export const TransportAndPaymentTextAndImage = styled.div`
     ${({ theme }) => css`
         display: table-row;
         padding: 6px 0;
@@ -137,7 +137,7 @@ export const ShipmentAndPaymentTextAndImage = styled.div`
     `}
 `;
 
-export const ShipmentAndPaymentPrice = styled.div`
+export const TransportAndPaymentPrice = styled.div`
     ${({ theme }) => css`
         padding: 6px 0;
         vertical-align: baseline;
@@ -148,15 +148,11 @@ export const ShipmentAndPaymentPrice = styled.div`
     `}
 `;
 
-export const ShipmentAndPaymentImageWrapper = styled.span`
+export const TransportAndPaymentImageWrapper = styled.span`
     display: inline-block;
     height: 18px;
-    margin-left: 5px;
+    margin-left: 8px;
     vertical-align: bottom;
-`;
-
-export const ImgStyled = styled.img`
-    max-height: 100%;
 `;
 
 export const OrderSummaryTotalPriceWrapper = styled.div`

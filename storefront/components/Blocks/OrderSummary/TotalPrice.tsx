@@ -7,9 +7,14 @@ import {
 } from './OrderSummary.style';
 import { FC } from 'react';
 import { formatPrice } from 'utils/formatting';
+import { PriceType } from 'connectors/transports/types';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 
-const TotalPrice: FC = () => {
+type TotalPriceProps = {
+    totalPrice: PriceType;
+};
+
+const TotalPrice: FC<TotalPriceProps> = (props) => {
     const t = useTypedTranslationFunction();
 
     return (
@@ -17,8 +22,9 @@ const TotalPrice: FC = () => {
             <OrderSummaryContent>
                 <PriceWrapper>
                     <OrderSummaryTotalPriceText>{t('Total price')}</OrderSummaryTotalPriceText>
-                    {/* TODO PRG: total price is hard coded */}
-                    <OrderSummaryTotalPriceAmount>{formatPrice(4040, 'CZK', t)}</OrderSummaryTotalPriceAmount>
+                    <OrderSummaryTotalPriceAmount>
+                        {formatPrice(props.totalPrice.priceWithVat, props.totalPrice.currencyCode, t)}
+                    </OrderSummaryTotalPriceAmount>
                 </PriceWrapper>
             </OrderSummaryContent>
         </OrderSummaryTotalPriceWrapper>

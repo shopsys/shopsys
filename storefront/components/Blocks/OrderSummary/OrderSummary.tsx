@@ -6,14 +6,14 @@ import {
 } from './OrderSummary.style';
 import { FC } from 'react';
 import ProductsPreview from './ProductsPreview';
-import ShipmentAndPayment from './ShipmentAndPayment';
 import TotalPrice from './TotalPrice';
+import TransportAndPayment from './TransportAndPayment';
 import { useShopsysSelector } from 'redux/main';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 
 const OrderSummary: FC = () => {
     const t = useTypedTranslationFunction();
-    const { cart } = useShopsysSelector((state) => state.user);
+    const { cart, transport, payment } = useShopsysSelector((state) => state.user);
 
     if (cart === null) {
         return null;
@@ -25,8 +25,8 @@ const OrderSummary: FC = () => {
             <OrderSummaryContentWrapperStyled>
                 <OrderSummaryContentStyled>
                     <ProductsPreview cartItems={cart.items} />
-                    <ShipmentAndPayment />
-                    <TotalPrice />
+                    <TransportAndPayment transport={transport} payment={payment} />
+                    <TotalPrice totalPrice={cart.totalPrice} />
                 </OrderSummaryContentStyled>
             </OrderSummaryContentWrapperStyled>
         </OrderSummaryWrapperStyled>
