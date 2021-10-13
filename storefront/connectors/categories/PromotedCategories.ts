@@ -57,22 +57,3 @@ const mapCategoryImageApiData = (apiData: ImagesDefaultFragmentApi['images']): I
 
     return mapImageSizeApiData(categoryImageData.sizes[0]);
 };
-
-const mapImageSizeApiData = (apiData: ArrayElement<ImageSizesFragmentApi['sizes']>): ImageType|null => {
-    const size = apiData;
-    if (size.url === undefined
-        || size.url === null
-        || size.width === undefined
-        || size.width === null
-        || size.height === undefined
-        || size.height === null
-    ) {
-        return null;
-    }
-
-    return {
-        url: size.url,
-        width: size.width,
-        height: size.height,
-    };
-}

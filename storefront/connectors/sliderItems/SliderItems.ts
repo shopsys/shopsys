@@ -1,27 +1,75 @@
+import { ImagesWebDefaultFragmentApi, SliderItemsQueryApi, useSliderItemsQueryApi } from 'graphql/generated';
+import { getUserFriendlyErrors } from 'connectors/lib/friendlyErrorMessageParser';
+import { ImageApiType } from 'components/Basic/Image/types';
+import { mapImageSizeApiData } from 'connectors/image/size/ImageSize';
+import { showErrorMessage } from 'components/Helpers/Toasts';
 import { SliderItem } from './types';
-import { useFetchQuery } from 'hooks/graphQl/UseFetchQuery';
-
-export const sliderItemsQuery = `
-query sliderItems {
-    sliderItems {
-        uuid
-        name
-        link
-        extendedText
-        extendedTextLink
-        images (type: "web", sizes: "default") {
-            position
-            sizes {
-                url
-                width
-                height
-            }
-        }
-    }
-}
-    ` as const;
+import { useEffect } from 'react';
+import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 
 export const getSliderItems = (): SliderItem[] | undefined => {
-    const result = useFetchQuery({ query: sliderItemsQuery });
-    return result?.data?.sliderItems;
+    const t = useTypedTranslationFunction();
+    const [{ data, fetching, error }] = useSliderItemsQueryApi();
+
+    useEffect(() => {
+        if (error === undefined) {
+            return;
+        }
+
+        const parsedErrors = getUserFriendlyErrors(error, t);
+        if (parsedErrors.applicationError === undefined) {
+            return;
+        }
+
+        showErrorMessage(parsedErrors.applicationError);
+    }, [fetching]);
+
+    if (data === undefined) {
+        return undefined;
+    }
+
+    return mapSliderItemsApiData(data.sliderItems);
+};
+
+const mapSliderItemsApiData = (apiData: SliderItemsQueryApi['sliderItems']): SliderItem[] => {
+    return apiData.map((sliderItem) => {
+        return {
+            uuid: sliderItem.uuid,
+            name: sliderItem.name,
+            link: sliderItem.link,
+            extendedText:
+                sliderItem.extendedText === undefined || sliderItem.extendedText === null
+                    ? ''
+                    : sliderItem.extendedText,
+            extendedTextLink:
+                sliderItem.extendedTextLink === undefined || sliderItem.extendedTextLink === null
+                    ? ''
+                    : sliderItem.extendedTextLink,
+            images: mapSliderItemImagesApiData(sliderItem.images),
+        };
+    });
+};
+
+const mapSliderItemImagesApiData = (apiData: ImagesWebDefaultFragmentApi['images']): ImageApiType[] => {
+    const sliderItemImageData = apiData[0];
+    if (
+        sliderItemImageData === undefined ||
+        sliderItemImageData === null ||
+        sliderItemImageData.sizes[0] === undefined ||
+        sliderItemImageData.sizes[0] === null
+    ) {
+        return [];
+    }
+
+    const mappedImageSizes = mapImageSizeApiData(sliderItemImageData.sizes[0]);
+    if (mappedImageSizes === null) {
+        return [];
+    }
+
+    return [
+        {
+            ...sliderItemImageData,
+            sizes: [mappedImageSizes],
+        },
+    ];
 };
