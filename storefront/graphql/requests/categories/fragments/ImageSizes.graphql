@@ -1,0 +1,7 @@
+fragment ImageSizes on Image {
+    sizes{
+        url
+        width
+        height
+    }
+}

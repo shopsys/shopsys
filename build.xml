@@ -5,6 +5,7 @@
 
     <property name="check-and-fix-annotations" value="true"/>
     <property name="path.root" value="${project.basedir}"/>
+    <property name="path.storefront" value="${project.basedir}/storefront"/>
     <property name="path.vendor" value="${path.root}/vendor"/>
     <property name="path.framework" value="${path.vendor}/shopsys/framework"/>
     <property name="path.framework.assets" value="${path.root}/node_modules/@shopsys/framework"/>
@@ -200,7 +201,7 @@
             <arg value="${path.bin-console}"/>
             <arg value="graphql:dump-schema"/>
             <arg value="--file"/>
-            <arg value="${path.root}/schema.graphql"/>
+            <arg value="${path.root}/storefront/schema.graphql"/>
             <arg value="--format"/>
             <arg value="graphql"/>
             <arg value="--modern"/>

@@ -106,7 +106,7 @@ review:
     <<: *only-default
     artifacts:
         paths:
-            - schema.graphql
+            - storefront/schema.graphql
     script:
         - cp -f ./gitlab/docker-compose-ci-review.yml ./docker-compose.yml
         - docker-compose down --rmi all -v --remove-orphans

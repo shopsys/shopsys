@@ -1,0 +1,20 @@
+overwrite: true
+schema: schema.graphql
+documents: './graphql/requests/**/*.graphql'
+generates:
+    graphql/generated/index.tsx:
+        plugins:
+            - 'typescript'
+            - 'typescript-operations'
+            - 'fragment-matcher'
+            - 'typescript-urql'
+        config:
+            typesSuffix: Api
+            withHooks: true
+            withHOC: false
+            withComponent: false
+            scalars:
+                Long: number
+                Instant: string
+                LocalDate: string
+                LocalDateTime: string

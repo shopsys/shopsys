@@ -3,6 +3,7 @@ import { GetServerSidePropsContext, GetServerSidePropsResult } from 'next';
 import { initUrqlClient, SSRData } from 'next-urql';
 import { AppStore } from 'redux/main';
 import { cartInputActions } from 'redux/slices/cartInput';
+import { DocumentNode } from 'graphql';
 import { getCartInputCookie } from './Cookies';
 import getConfig from 'next/config';
 import nextI18NextConfig from 'next-i18next.config';
@@ -16,7 +17,7 @@ export type ServerSidePropsType = {
 export async function initServerSideProps(
     context: GetServerSidePropsContext,
     store: AppStore,
-    prefetchedQueries: string[] = [],
+    prefetchedQueries: (string | DocumentNode)[] = [],
 ): Promise<GetServerSidePropsResult<ServerSidePropsType>> {
     store.dispatch(cartInputActions.setCartInputData(getCartInputCookie(context)));
     const domainConfig = store.getState().domain;

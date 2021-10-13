@@ -30,6 +30,9 @@ COPY --chown=www-data:www-data / /var/www/html
 
 RUN composer install --optimize-autoloader --no-interaction --no-progress --no-dev
 
-RUN php phing build-deploy-part-1-db-independent clean
+RUN php phing build-deploy-part-1-db-independent
+
+RUN mkdir storefront
+RUN php phing frontend-api-generate-graphql-schema clean
 
 RUN chmod +x ./deploy/deploy-project.sh && ./deploy/deploy-project.sh merge

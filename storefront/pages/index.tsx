@@ -9,7 +9,7 @@ import { initDomainConfig } from 'helpers/InitDomainConfig';
 import { navigationQuery } from 'connectors/navigation/Navigation';
 import { nextReduxWrapper } from 'redux/main';
 import PromotedCategories from 'components/Blocks/Categories/PromotedCategories/PromotedCategories';
-import { promotedCategoriesQuery } from 'connectors/categories/PromotedCategories';
+import { PromotedCategoriesDocumentApi } from 'graphql/generated';
 import PromotedProducts from 'components/Blocks/Product/PromotedProducts/PromotedProducts';
 import { promotedProductsQuery } from 'connectors/products/Products';
 import { sliderItemsQuery } from 'connectors/sliderItems/SliderItems';
@@ -43,7 +43,7 @@ const Index: FC<ServerSidePropsType> = () => {
 export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) => async (context) => {
     initDomainConfig(context, store);
     return initServerSideProps(context, store, [
-        promotedCategoriesQuery,
+        PromotedCategoriesDocumentApi,
         sliderItemsQuery,
         promotedProductsQuery,
         navigationQuery,
