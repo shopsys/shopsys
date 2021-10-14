@@ -33,7 +33,7 @@ const Index: FC<ServerSidePropsType> = () => {
 
 export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) => async (context) => {
     initDomainConfig(context, store);
-    return initServerSideProps(context, store, [navigationQuery]);
+    return initServerSideProps(context, store, [NavigationDocumentApi]);
 });
 
 export default Index;

@@ -5,7 +5,7 @@ import CommonLayout from 'components/Layout/CommonLayout';
 import { FC } from 'react';
 import { initDomainConfig } from 'helpers/InitDomainConfig';
 import List from 'components/Pages/Cart/List';
-import { navigationQuery } from 'connectors/navigation/Navigation';
+import { NavigationDocumentApi } from 'graphql/generated';
 import OrderAction from 'components/Blocks/OrderAction';
 import OrderSteps from 'components/Blocks/OrderSteps';
 import StaticUrlGuard from 'components/Helpers/StaticUrlGuard';
@@ -44,7 +44,7 @@ const Cart: FC<ServerSidePropsType> = () => {
 
 export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) => async (context) => {
     initDomainConfig(context, store);
-    return initServerSideProps(context, store, [navigationQuery]);
+    return initServerSideProps(context, store, [NavigationDocumentApi]);
 });
 
 export default Cart;
