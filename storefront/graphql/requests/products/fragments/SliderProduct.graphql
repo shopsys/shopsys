@@ -1,0 +1,17 @@
+fragment SliderProduct on Product {
+    __typename
+    uuid
+    slug
+    name
+    stockQuantity
+    flags {
+        ...FlagLabel
+    }
+    ...ImageList
+    availability {
+        ...AvailabilityName
+    }
+    ...ProductPrice
+    availableStoresCount
+    exposedStoresCount
+}

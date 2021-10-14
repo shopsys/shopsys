@@ -1,5 +1,5 @@
 import { initServerSideProps, ServerSidePropsType } from 'helpers/InitServerSideProps';
-import { PromotedCategoriesDocumentApi, SliderItemsDocumentApi } from 'graphql/generated';
+import { PromotedCategoriesDocumentApi, PromotedProductsDocumentApi, SliderItemsDocumentApi } from 'graphql/generated';
 import Banners from 'components/Blocks/Banners';
 import BlogPreview from 'components/Blocks/BlogPreview';
 import { blogPreviewQuery } from 'connectors/blogPreview/blogPreview';
@@ -11,9 +11,6 @@ import { navigationQuery } from 'connectors/navigation/Navigation';
 import { nextReduxWrapper } from 'redux/main';
 import PromotedCategories from 'components/Blocks/Categories/PromotedCategories/PromotedCategories';
 import PromotedProducts from 'components/Blocks/Product/PromotedProducts/PromotedProducts';
-import { promotedProductsQuery } from 'connectors/products/Products';
-import { sliderItemsQuery } from 'connectors/sliderItems/SliderItems';
-import { useInitDomainConfig } from 'hooks/helpers/UseInitDomainConfig';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import Webline from 'components/Layout/Webline';
 
@@ -46,7 +43,7 @@ export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) =>
     return initServerSideProps(context, store, [
         PromotedCategoriesDocumentApi,
         SliderItemsDocumentApi,
-        promotedProductsQuery,
+        PromotedProductsDocumentApi,
         navigationQuery,
         blogPreviewQuery,
     ]);

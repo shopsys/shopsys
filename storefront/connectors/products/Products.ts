@@ -1,67 +1,25 @@
 import {
+    FlagLabelFragmentApi,
+    ImageListFragmentApi,
+    ProductPriceFragmentApi,
+    PromotedProductsQueryApi,
+    usePromotedProductsQueryApi,
+} from 'graphql/generated';
+import {
+    FlagType,
     ListedProductItemApiType,
     ListedProductItemType,
-    ProductItemApiType,
     ProductPriceApiType,
     ProductPriceType,
     SliderProductItemType,
 } from 'components/Blocks/Product/types';
-import { useFetchQuery } from 'hooks/graphQl/UseFetchQuery';
+import { getUserFriendlyErrors } from 'connectors/lib/friendlyErrorMessageParser';
+import { ImageType } from 'components/Basic/Image/types';
+import { mapImageSizeApiData } from 'connectors/image/size/ImageSize';
+import { showErrorMessage } from 'components/Helpers/Toasts';
+import { useEffect } from 'react';
 import { useShopsysSelector } from 'redux/main';
-
-export const sliderProductQuery = `
-    __typename
-    uuid
-    slug
-    name
-    stockQuantity
-    flags {
-        name
-        rgbColor
-    }
-    images (sizes: "list") {
-        sizes {
-            url
-            width
-            height
-        }
-    }
-    availability {
-        name
-    }
-    price {
-        priceWithVat
-        priceWithoutVat
-        vatAmount
-        isPriceFrom
-    }
-    availableStoresCount
-    exposedStoresCount
-`;
-
-export const promotedProductsQuery = `
-        query promotedProducts {
-            promotedProducts {
-                ${sliderProductQuery}
-            }
-        }
-    ` as const;
-
-export const mapSliderProductApiData = (
-    apiData: ProductItemApiType[],
-    currencyCode: string,
-): SliderProductItemType[] => {
-    return apiData.map((apiProduct) => {
-        return {
-            ...apiProduct,
-            detailSlug: apiProduct.slug,
-            image: apiProduct.images.length === 0 ? null : apiProduct.images[0].sizes[0],
-            price: mapProductPriceData(apiProduct.price, currencyCode),
-            isMainVariant: apiProduct.__typename === 'MainVariant',
-            availability: apiProduct.availability.name,
-        };
-    });
-};
+import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 
 export const mapProductPriceData = (price: ProductPriceApiType, currencyCode: string): ProductPriceType => {
     return {
@@ -85,12 +43,98 @@ export function mapListedProductNode(data: ListedProductItemApiType, currencyCod
 }
 
 export const getPromotedProducts = (): SliderProductItemType[] | undefined => {
-    const result = useFetchQuery({ query: promotedProductsQuery });
+    const t = useTypedTranslationFunction();
     const { currencyCode } = useShopsysSelector((state) => state.domain);
-    const apiData = result?.data?.promotedProducts;
+    const [{ data, fetching, error }] = usePromotedProductsQueryApi();
+
+    useEffect(() => {
+        if (error === undefined) {
+            return;
+        }
+
+        const parsedErrors = getUserFriendlyErrors(error, t);
+        if (parsedErrors.applicationError === undefined) {
+            return;
+        }
+
+        showErrorMessage(parsedErrors.applicationError);
+    }, [fetching]);
+
+    const apiData = data?.promotedProducts;
     if (apiData === undefined) {
         return undefined;
     }
 
     return mapSliderProductApiData(apiData, currencyCode);
+};
+
+export const mapSliderProductApiData = (
+    apiData: PromotedProductsQueryApi['promotedProducts'],
+    currencyCode: string,
+): SliderProductItemType[] => {
+    return apiData.map((apiProduct) => {
+        return {
+            ...apiProduct,
+            detailSlug: apiProduct.slug,
+            name: apiProduct.name !== undefined && apiProduct.name !== null ? apiProduct.name : '',
+            image:
+                apiProduct?.images !== undefined && apiProduct.images.length > 0
+                    ? mapProductImageApiData(apiProduct.images)
+                    : null,
+            price: mapProductPriceApiData(apiProduct.price, currencyCode),
+            isMainVariant: apiProduct.__typename === 'MainVariant',
+            availability:
+                apiProduct.availability !== undefined &&
+                apiProduct.availability !== null &&
+                apiProduct.availability.name !== undefined &&
+                apiProduct.availability.name !== null
+                    ? apiProduct.availability.name
+                    : '',
+            flags: mapFlagsApiData(apiProduct.flags),
+            stockQuantity:
+                apiProduct.stockQuantity !== undefined && apiProduct.stockQuantity !== null
+                    ? apiProduct.stockQuantity
+                    : 0,
+        };
+    });
+};
+
+const mapProductImageApiData = (apiData: ImageListFragmentApi['images']): ImageType | null => {
+    const productImageData = apiData[0];
+    if (
+        productImageData === undefined ||
+        productImageData === null ||
+        productImageData.sizes[0] === undefined ||
+        productImageData.sizes[0] === null
+    ) {
+        return null;
+    }
+
+    return mapImageSizeApiData(productImageData.sizes[0]);
+};
+
+export const mapProductPriceApiData = (
+    price: ProductPriceFragmentApi['price'],
+    currencyCode: string,
+): ProductPriceType => {
+    return {
+        priceWithVat: Number.parseFloat(
+            price.priceWithVat !== undefined && price.priceWithVat !== null ? price.priceWithVat : 0,
+        ),
+        priceWithoutVat: Number.parseFloat(
+            price.priceWithoutVat !== undefined && price.priceWithoutVat !== null ? price.priceWithoutVat : 0,
+        ),
+        vatAmount: Number.parseFloat(price.vatAmount !== undefined && price.vatAmount !== null ? price.vatAmount : 0),
+        isPriceFrom: price.isPriceFrom,
+        currencyCode,
+    };
+};
+
+const mapFlagsApiData = (flags: FlagLabelFragmentApi[]): FlagType[] => {
+    return flags.map((flagApi) => {
+        return {
+            name: flagApi.name !== undefined && flagApi.name !== null ? flagApi.name : '',
+            rgbColor: flagApi.rgbColor !== undefined && flagApi.rgbColor !== null ? flagApi.rgbColor : '',
+        };
+    });
 };
