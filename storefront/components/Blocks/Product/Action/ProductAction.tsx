@@ -14,7 +14,7 @@ const ProductAction: FC<SliderProductItemType> = (props) => {
     const router = useRouter();
     const spinboxRef = useRef<HTMLInputElement | null>(null);
     const t = useTypedTranslationFunction();
-    const { cartUuid, transport, payment, promoCode } = useShopsysSelector((state) => state.cookie);
+    const { cartUuid, transport, payment, promoCode } = useShopsysSelector((state) => state.cartInput);
     const [changeCartItemQuantityResult, changeCartItemQuantity] = useChangeCartItemQuantity();
 
     useHandleAddToCart(

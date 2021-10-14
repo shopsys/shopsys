@@ -1,49 +1,31 @@
 import { CartInput } from 'connectors/cart/types';
 import { GetServerSidePropsContext } from 'next';
 import nookies from 'nookies';
-import { PriceApiType } from 'connectors/transports/types';
 
-export type UserDataCookieType = {
-    cartUuid: string | null;
-    transport: {
-        uuid: string;
-        price: PriceApiType;
-        personalPickupStoreUuid: string | null;
-    } | null;
-    payment: {
-        uuid: string;
-        price: PriceApiType;
-    } | null;
-    promoCode: string | null;
-};
-
-export const updateUserDataCookie = (
-    updatedData: UserDataCookieType,
-    ssrContext?: GetServerSidePropsContext,
-): UserDataCookieType => {
+export const updateCartInputCookie = (updatedData: CartInput, ssrContext?: GetServerSidePropsContext): CartInput => {
     const cookies = nookies.get(ssrContext);
-    const userDataCookie = !('user' in cookies) ? initUserDataCookie() : JSON.parse(cookies.user);
-    const updatedUserDataCookie = {
-        ...userDataCookie,
+    const cartInputCookie = !('cartInput' in cookies) ? initCartInputCookie() : JSON.parse(cookies.cartInput);
+    const updatedCartInputCookie = {
+        ...cartInputCookie,
         ...updatedData,
     };
 
-    setUserDataCookie(updatedUserDataCookie, ssrContext);
-    return updatedUserDataCookie;
+    setCartInputCookie(updatedCartInputCookie, ssrContext);
+    return updatedCartInputCookie;
 };
 
-export const getUserDataCookie = (ssrContext?: GetServerSidePropsContext): UserDataCookieType => {
+export const getCartInputCookie = (ssrContext?: GetServerSidePropsContext): CartInput => {
     const cookies = nookies.get(ssrContext);
-    if (!('user' in cookies)) {
-        const newUserDataCookie = initUserDataCookie();
-        setUserDataCookie(newUserDataCookie, ssrContext);
-        return newUserDataCookie;
+    if (!('cartInput' in cookies)) {
+        const newCartInputCookie = initCartInputCookie();
+        setCartInputCookie(newCartInputCookie, ssrContext);
+        return newCartInputCookie;
     }
 
-    return JSON.parse(cookies.user);
+    return JSON.parse(cookies.cartInput);
 };
 
-export const initUserDataCookie = (): UserDataCookieType => {
+export const initCartInputCookie = (): CartInput => {
     return {
         cartUuid: null,
         transport: null,
@@ -52,16 +34,6 @@ export const initUserDataCookie = (): UserDataCookieType => {
     };
 };
 
-const setUserDataCookie = (cookieContent: UserDataCookieType, ssrContext?: GetServerSidePropsContext) => {
-    nookies.set(ssrContext, 'user', JSON.stringify(cookieContent), { path: '/' });
-};
-
-export const getCartInputDataFromCookie = (ssrContext?: GetServerSidePropsContext): CartInput => {
-    const userData = getUserDataCookie(ssrContext);
-    return {
-        cartUuid: userData.cartUuid,
-        transport: userData.transport,
-        payment: userData.payment,
-        promoCode: userData.promoCode,
-    };
+const setCartInputCookie = (cookieContent: CartInput, ssrContext?: GetServerSidePropsContext) => {
+    nookies.set(ssrContext, 'cartInput', JSON.stringify(cookieContent), { path: '/' });
 };

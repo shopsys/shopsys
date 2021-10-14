@@ -1,34 +1,23 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { CartInput } from 'connectors/cart/types';
 import { HYDRATE } from 'next-redux-wrapper';
-import { PaymentInputType } from 'connectors/payments/types';
-import { TransportInputType } from 'connectors/transports/types';
-import { UserDataCookieType } from 'helpers/Cookies';
-
-type InitialState = CartInput;
 
 export const initialState = {
     cartUuid: null,
     transport: null,
     payment: null,
     promoCode: null,
-} as InitialState;
+} as CartInput;
 
-export const cookieSlice = createSlice({
-    name: 'cookie',
+export const cartInputSlice = createSlice({
+    name: 'cartInput',
     initialState,
     reducers: {
-        setUserCookieData(state, action: PayloadAction<UserDataCookieType>) {
+        setCartInputData(state, action: PayloadAction<CartInput>) {
             state.cartUuid = action.payload.cartUuid;
             state.transport = action.payload.transport;
             state.payment = action.payload.payment;
             state.promoCode = action.payload.promoCode;
-        },
-        setTransport(state, action: PayloadAction<TransportInputType | null>) {
-            state.transport = action.payload;
-        },
-        setPayment(state, action: PayloadAction<PaymentInputType | null>) {
-            state.payment = action.payload;
         },
     },
     extraReducers: {
@@ -38,10 +27,10 @@ export const cookieSlice = createSlice({
         [HYDRATE]: (state, action) => {
             return {
                 ...state,
-                ...action.payload.cookie,
+                ...action.payload.cartInput,
             };
         },
     },
 });
 
-export const cookieActions = cookieSlice.actions;
+export const cartInputActions = cartInputSlice.actions;

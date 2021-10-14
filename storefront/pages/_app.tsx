@@ -7,11 +7,11 @@ import { nextReduxWrapper } from 'redux/main';
 import { ReactElement } from 'react';
 import ShopsysGlobalProvider from 'context/ShopsysGlobalProvider';
 import { ToastContainer } from 'react-toastify';
-import { useCartInit } from 'hooks/cart/UseCartInit';
+import { useLoadCart } from 'hooks/cart/UseLoadCart';
 import { withUrqlClient } from 'next-urql';
 
 function MyApp({ Component, pageProps }: AppProps): ReactElement {
-    useCartInit();
+    useLoadCart();
 
     return (
         <ShopsysGlobalProvider>

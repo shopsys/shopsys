@@ -13,7 +13,7 @@ import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslatio
 
 const TransportAndPayment: FC<ServerSidePropsType> = (props) => {
     useInitDomainConfig(props.domainConfig);
-    const { cartUuid, transport, payment } = useShopsysSelector((state) => state.cookie);
+    const { cartUuid, transport, payment } = useShopsysSelector((state) => state.cartInput);
     const transports = getTransports(cartUuid);
     const transportObject = useShopsysSelector((state) => state.user.transport);
     const t = useTypedTranslationFunction();

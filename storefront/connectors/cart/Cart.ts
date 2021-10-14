@@ -1,6 +1,6 @@
 import { AddToCartResultType, CartApiType, CartInput, CartType } from './types';
-import { PaymentApiType, PaymentInputType, PaymentType } from 'connectors/payments/types';
-import { StoreType, TransportApiType, TransportInputType, TransportType } from 'connectors/transports/types';
+import { PaymentInputType, PaymentType } from 'connectors/payments/types';
+import { StoreType, TransportInputType, TransportType } from 'connectors/transports/types';
 import { useMutation, UseMutationResponse, useQuery, UseQueryResponse } from 'urql';
 import { mapPriceData } from 'connectors/transports/Transports';
 import { mapProductPriceData } from 'connectors/products/Products';
@@ -134,11 +134,11 @@ export const mapPaymentToPaymentInput = (payment: PaymentType): PaymentInputType
 };
 
 export const loadCart = (
-    cartUuid: string | null,
-    transport: TransportInputType | null,
-    payment: PaymentInputType | null,
-    promoCode: string | null,
-): UseQueryResponse<{ cart: CartApiType; transport: TransportApiType; payment: PaymentApiType }, CartInput> => {
+    cartUuid: CartInput['cartUuid'],
+    transport: CartInput['transport'],
+    payment: CartInput['payment'],
+    promoCode: CartInput['promoCode'],
+): UseQueryResponse<{ cart: CartApiType }, CartInput> => {
     const [result, refresh] = useQuery({
         query: cartQuery,
         variables: { cartUuid, transport, payment, promoCode },
@@ -154,7 +154,16 @@ export const loadCart = (
     return [result, refresh];
 };
 
-export const mapCart = (apiData: CartApiType, currencyCode: string): CartType => {
+export const mapCart = (
+    apiData: {
+        uuid: CartApiType['uuid'];
+        items: CartApiType['items'];
+        modifications: CartApiType['modifications'];
+        totalPrice: CartApiType['totalPrice'];
+        totalDiscountPrice: CartApiType['totalDiscountPrice'];
+    },
+    currencyCode: string,
+): CartType => {
     return {
         ...apiData,
         items: apiData.items.map((item) => {
@@ -193,14 +202,10 @@ const removeItemFromCartMutation = `mutation (
     }` as const;
 
 export const useRemoveItemFromCart = (): UseMutationResponse<
-    { RemoveFromCart: CartApiType & { transport: TransportApiType; payment: PaymentApiType } },
+    { RemoveFromCart: CartApiType },
     {
-        cartUuid: string;
         cartItemUuid: string;
-        transport: TransportInputType | null;
-        payment: PaymentInputType | null;
-        promoCode: string | null;
-    }
+    } & CartInput
 > => {
     return useMutation(removeItemFromCartMutation);
 };
@@ -238,14 +243,10 @@ export const changeCartItemQuantityMutation = `mutation (
 export const useChangeCartItemQuantity = (): UseMutationResponse<
     { AddToCart: AddToCartResultType },
     {
-        cartUuid: string | null;
         productUuid: string;
         quantity: number;
         isAbsoluteQuantity: boolean;
-        transport: TransportInputType | null;
-        payment: PaymentInputType | null;
-        promoCode: string | null;
-    }
+    } & CartInput
 > => {
     return useMutation(changeCartItemQuantityMutation);
 };

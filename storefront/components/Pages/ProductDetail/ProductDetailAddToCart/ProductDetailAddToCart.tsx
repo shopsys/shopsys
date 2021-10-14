@@ -23,8 +23,8 @@ type ProductDetailAddToCartProps = {
 const ProductDetailAddToCart: FC<ProductDetailAddToCartProps> = (props) => {
     const spinboxRef = useRef<HTMLInputElement | null>(null);
     const t = useTypedTranslationFunction();
-    const { cartUuid } = useShopsysSelector((state) => state.cookie);
-    const { transport, payment, promoCode } = useShopsysSelector((state) => state.cookie);
+    const { cartUuid } = useShopsysSelector((state) => state.cartInput);
+    const { transport, payment, promoCode } = useShopsysSelector((state) => state.cartInput);
     const [changeCartItemQuantityResult, changeCartItemQuantity] = useChangeCartItemQuantity();
     useHandleAddToCart(
         changeCartItemQuantityResult,

@@ -1,16 +1,13 @@
 import { CartApiType, CartType } from 'connectors/cart/types';
-import { PaymentApiType, PaymentType } from 'connectors/payments/types';
-import { StoreType, TransportApiType, TransportType } from 'connectors/transports/types';
+import { StoreType, TransportType } from 'connectors/transports/types';
 import { getSelectedPersonalPickupStore } from 'connectors/transports/PersonalPickupStore';
 import { mapCart } from 'connectors/cart/Cart';
 import { mapPayment } from 'connectors/payments/Payment';
 import { mapTransport } from 'connectors/transports/Transport';
+import { PaymentType } from 'connectors/payments/types';
 
 export const getValuesFromCartResult = (
-    resultData: CartApiType & {
-        transport: TransportApiType | null;
-        payment: PaymentApiType | null;
-    },
+    resultData: CartApiType,
     personalPickupStoreUuid: string | null,
     promoCode: string | null,
     currencyCode: string,
