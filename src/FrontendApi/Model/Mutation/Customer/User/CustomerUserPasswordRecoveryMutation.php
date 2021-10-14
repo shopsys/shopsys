@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\FrontendApi\Model\Mutation\Customer\User;
 
+use App\FrontendApi\Exception\ValidationError;
 use App\Model\Customer\User\CustomerUserPasswordFacade;
 use Overblog\GraphQLBundle\Definition\Argument;
 use Overblog\GraphQLBundle\Definition\ArgumentFactory;
@@ -69,7 +70,11 @@ class CustomerUserPasswordRecoveryMutation implements MutationInterface, Aliased
 
             return 'success';
         } catch (CustomerUserNotFoundByEmailAndDomainException $ex) {
-            throw new UserError('User with provided email address does not exists.');
+            throw new ValidationError(
+                t('User with provided email address does not exists.', [], 'validators'),
+                'd1bf5f27-fe92-424c-bb58-df90cc7637b1',
+                'email'
+            );
         }
     }
 

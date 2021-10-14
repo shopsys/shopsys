@@ -27,6 +27,8 @@ Mutation:
                     email:
                         type: String!
                         validation:
+                            -   NotBlank:
+                                    message: "Please enter valid email"
                             -   Email:
                                     message: "Please enter valid email"
                             -   Length:
