@@ -84,6 +84,8 @@ export type CartModificationsResultApiType = {
 export type CartApiType = {
     uuid: string;
     items: CartItemApiType[];
+    transport: TransportApiType;
+    payment: PaymentApiType;
     totalPrice: PriceApiType;
     totalDiscountPrice: PriceApiType;
     modifications: CartModificationsResultApiType;
@@ -97,6 +99,6 @@ export type AddProductResultType = {
     addedQuantity: number;
 };
 
-export type AddToCartResultType = CartApiType & { transport: TransportApiType; payment: PaymentApiType } & {
+export type AddToCartResultType = CartApiType & {
     addProductResult: AddProductResultType;
 };

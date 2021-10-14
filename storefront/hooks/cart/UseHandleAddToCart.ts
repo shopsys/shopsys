@@ -1,11 +1,9 @@
+import { AddToCartResultType, CartInput } from 'connectors/cart/types';
 import { useShopsysDispatch, useShopsysSelector } from 'redux/main';
-import { AddToCartResultType } from 'connectors/cart/types';
-import { getUserCookieDataFromCartResult } from 'utils/Cart/GetUserCookieDataFromCartResult';
+import { getCartInputFromCartResult } from 'utils/Cart/GetCartInputFromCartResult';
 import { getValuesFromCartResult } from 'utils/Cart/GetValuesFromCartResult';
-import { PaymentInputType } from 'connectors/payments/types';
-import { TransportInputType } from 'connectors/transports/types';
+import { updateCartInputCookie } from 'helpers/Cookies';
 import { updateCartState } from 'utils/Cart/UpdateCartState';
-import { updateUserDataCookie } from 'helpers/Cookies';
 import { useEffect } from 'react';
 import { useHandleCartErrors } from './UseHandleCartErrors';
 import { UseMutationState } from 'urql';
@@ -14,14 +12,10 @@ export const useHandleAddToCart = (
     result: UseMutationState<
         { AddToCart: AddToCartResultType },
         {
-            cartUuid: string | null;
             productUuid: string;
             quantity: number;
             isAbsoluteQuantity: boolean;
-            transport: TransportInputType | null;
-            payment: PaymentInputType | null;
-            promoCode: string | null;
-        }
+        } & CartInput
     >,
     personalPickupStoreUuid: string | null,
     promoCode: string | null,
@@ -43,8 +37,8 @@ export const useHandleAddToCart = (
             promoCode,
             currencyCode,
         );
-        const updatedUserCookieData = getUserCookieDataFromCartResult(cartResultValues);
-        updateCartState(dispatch, cartResultValues, updatedUserCookieData);
-        updateUserDataCookie(updatedUserCookieData);
+        const updatedCartInputData = getCartInputFromCartResult(cartResultValues);
+        updateCartState(dispatch, cartResultValues, updatedCartInputData);
+        updateCartInputCookie(updatedCartInputData);
     }, [result.data]);
 };

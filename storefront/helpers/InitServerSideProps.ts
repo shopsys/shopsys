@@ -3,9 +3,9 @@ import { DomainConfigType, getDomainConfig } from 'utils/Domain/Domain';
 import { GetServerSidePropsContext, GetServerSidePropsResult } from 'next';
 import { initUrqlClient, SSRData } from 'next-urql';
 import { AppStore } from 'redux/main';
-import { cookieActions } from 'redux/slices/cookie';
+import { cartInputActions } from 'redux/slices/cartInput';
+import { getCartInputCookie } from './Cookies';
 import getConfig from 'next/config';
-import { getUserDataCookie } from './Cookies';
 import nextI18NextConfig from 'next-i18next.config';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { SSRConfig } from 'next-i18next';
@@ -20,7 +20,7 @@ export async function initServerSideProps(
     store: AppStore,
     prefetchedQueries: string[] = [],
 ): Promise<GetServerSidePropsResult<ServerSidePropsType>> {
-    store.dispatch(cookieActions.setUserCookieData(getUserDataCookie(context)));
+    store.dispatch(cartInputActions.setCartInputData(getCartInputCookie(context)));
     const domain = context.req.headers.host;
     const domainConfig = getDomainConfig(domain);
     const { serverRuntimeConfig } = getConfig();

@@ -24,9 +24,9 @@ const Select: FC<SelectProps> = (props) => {
     const paymentValue = useWatch({ name: 'payment' });
 
     const { payment, transport, personalPickupStore } = useShopsysSelector((state) => state.user);
-    const transportInput = useShopsysSelector((state) => state.cookie.transport);
-    const paymentInput = useShopsysSelector((state) => state.cookie.payment);
-    const { cartUuid, promoCode } = useShopsysSelector((state) => state.cookie);
+    const transportInput = useShopsysSelector((state) => state.cartInput.transport);
+    const paymentInput = useShopsysSelector((state) => state.cartInput.payment);
+    const { cartUuid, promoCode } = useShopsysSelector((state) => state.cartInput);
 
     const [preSelectedTransport, preSelectTransport] = useState<TransportType | null>(null);
 
