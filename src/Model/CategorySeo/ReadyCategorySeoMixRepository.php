@@ -254,4 +254,19 @@ class ReadyCategorySeoMixRepository
             ->getQuery()
             ->execute();
     }
+
+    /**
+     * @return array<int>
+     */
+    public function getAllCategoryIdsInSeoMixes(): array
+    {
+        $result = $this->em->createQueryBuilder()
+            ->select('identity(rcsm.category) as categoryId')
+            ->from(ReadyCategorySeoMix::class, 'rcsm')
+            ->distinct()
+            ->getQuery()
+            ->getArrayResult();
+
+        return array_column($result, 'categoryId');
+    }
 }

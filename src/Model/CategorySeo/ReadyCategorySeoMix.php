@@ -44,7 +44,7 @@ class ReadyCategorySeoMix
     /**
      * @var \App\Model\Category\Category
      * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Category\Category")
-     * @ORM\JoinColumn(nullable=false, name="category_id", referencedColumnName="id")
+     * @ORM\JoinColumn(nullable=false, name="category_id", referencedColumnName="id", onDelete="CASCADE")
      */
     private $category;
 

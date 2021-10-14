@@ -838,6 +838,9 @@ msgstr ""
 msgid "Delete"
 msgstr ""
 
+msgid "Delete category with SEO mix"
+msgstr ""
+
 msgid "Delivery address"
 msgstr "Dodacia adresa"
 
@@ -902,6 +905,9 @@ msgid "Do košíku"
 msgstr "\nDo košíka"
 
 msgid "Do popisu lze vložit proměnnou, která bude nahrazena za produkty. Název proměnné je {products=XXXXXX,XXXXXX} kde XXXXXX je katalogové číslo produktu. Zobrazeny jsou produkty, které nejsou skryté a současně nejsou vyřazené z prodeje."
+msgstr ""
+
+msgid "Do you really want to delete this category even with their SEO mixes?"
 msgstr ""
 
 msgid "Do you really want to remove the order?"
