@@ -550,6 +550,9 @@ msgstr "Budete u nás nakupovať ako:"
 msgid "Bulk promo code generation"
 msgstr ""
 
+msgid "But at other addresses we have a lot for you..."
+msgstr "Ale na iných adresách toho pre Vás máme hŕbu..."
+
 msgid "Byla upravena položka navigace <strong><a href=\"{{ url }}\">{{ name }}</a></strong>"
 msgstr ""
 
@@ -3864,6 +3867,9 @@ msgstr "Všetky články"
 
 msgid "Warehouse"
 msgstr ""
+
+msgid "We have nothing to show you at this url."
+msgstr "Na tejto url adrese nemáme nič, čo by sme Vám ukázali."
 
 msgid "We will remember your login on this computer for 30 days."
 msgstr "Zapamätáme si prihlásenie na tomto počítači po dobu 30 dní"

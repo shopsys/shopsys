@@ -2,11 +2,11 @@
 
 {% block error_content %}
     <div class="box-error-page__text">
-        <h1 class="box-error-page__text__heading">{{ 'Na téhle url adrese žádný nábytek ani doplňky nemáme.'|trans }}</h1>
+        <h1 class="box-error-page__text__heading">{{ 'We have nothing to show you at this url.'|trans }}</h1>
         <p class="box-error-page__text__main">
-            {{ 'Ale na jiných adresách toho pro Vás máme spousty...'|trans }}
+            {{ 'But at other addresses we have a lot for you...'|trans }}
         </p>
-        <a class="btn box-error-page__text__btn" href="{{ url('front_homepage') }}">{{ 'Zpět do e-shopu'|trans }}</a>
+        <a class="btn box-error-page__text__btn" href="{{ url('front_homepage') }}">{{ 'Back to shop'|trans }}</a>
     </div>
     <picture class="box-error-page__picture">
         <source media="(max-width: 599px)" srcset="{{ asset('public/frontend/images/404_m.png') }}">
