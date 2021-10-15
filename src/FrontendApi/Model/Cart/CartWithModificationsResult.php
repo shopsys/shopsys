@@ -9,6 +9,7 @@ use App\Model\Cart\Item\CartItem;
 use App\Model\Payment\Payment;
 use App\Model\Transport\Transport;
 use LogicException;
+use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
 
 class CartWithModificationsResult
@@ -74,6 +75,11 @@ class CartWithModificationsResult
      * @var \App\Model\Payment\Payment|null
      */
     private ?Payment $payment;
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Component\Money\Money|null
+     */
+    private ?Money $remainingAmountWithVatForFreeTransport = null;
 
     /**
      * @param \App\Model\Cart\Cart $cart
@@ -221,6 +227,22 @@ class CartWithModificationsResult
     public function setTotalDiscountPrice(Price $totalDiscountPrice): void
     {
         $this->totalDiscountPrice = $totalDiscountPrice;
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Component\Money\Money|null
+     */
+    public function getRemainingAmountWithVatForFreeTransport(): ?Money
+    {
+        return $this->remainingAmountWithVatForFreeTransport;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Component\Money\Money $remainingAmountWithVatForFreeTransport
+     */
+    public function setRemainingAmountWithVatForFreeTransport(Money $remainingAmountWithVatForFreeTransport): void
+    {
+        $this->remainingAmountWithVatForFreeTransport = $remainingAmountWithVatForFreeTransport;
     }
 
     /**

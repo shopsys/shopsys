@@ -20,3 +20,6 @@ Cart:
                 type: "Price!"
             totalDiscountPrice:
                 type: "Price!"
+            remainingAmountWithVatForFreeTransport:
+                type: "Money"
+                description: "Remaining amount for free transport and payment; null = transport cannot be free"
