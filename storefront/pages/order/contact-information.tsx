@@ -8,6 +8,9 @@ import { nextReduxWrapper } from 'redux/main';
 import OrderLayout from 'components/Layout/OrderLayout';
 import StaticUrlGuard from 'components/Helpers/StaticUrlGuard';
 import { TFunction } from 'next-i18next';
+import { useCreateOrder } from 'connectors/order/Order';
+import { useHandleFormSuccessfulSubmit } from 'hooks/forms/UseHandleFormSuccessfulSubmit';
+import { useHandleFormValidationErrors } from 'hooks/forms/UseHandleFormValidationErrors';
 import { useInitDomainConfig } from 'hooks/helpers/UseInitDomainConfig';
 import { useShopsysForm } from 'hooks/forms/UseShopsysForm';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
@@ -48,19 +51,50 @@ const getContactInformationFormDefaultValues = (t: TFunction) => {
 };
 
 const ContactInformation: FC<ServerSidePropsType> = (props) => {
+    const cartInput = useShopsysSelector((state) => state.cartInput);
     useInitDomainConfig(props.domainConfig);
     const t = useTypedTranslationFunction();
+    const [createOrderResult, createOrder] = useCreateOrder();
     const formProviderMethods = useShopsysForm(
         getContactInformationFormResolver(t),
         getContactInformationFormDefaultValues(t),
     );
+    useHandleFormSuccessfulSubmit(
+        createOrderResult,
+        formProviderMethods,
+        getContactInformationFormDefaultValues(t),
+        undefined,
+    );
+    useHandleFormValidationErrors(createOrderResult.error, formProviderMethods);
+
+    const onCreateOrderHandler: SubmitHandler<ReturnType<typeof getContactInformationFormDefaultValues>> = (
+        formValues,
+        event,
+    ) => {
+        event?.preventDefault();
+        if (cartInput.transport === null) {
+            showErrorMessage('Transport is null');
+            return;
+        }
+        if (cartInput.payment === null) {
+            showErrorMessage('Payment is null');
+            return;
+        }
+
+        createOrder({
+            ...formValues,
+            ...{ ...cartInput, transport: cartInput.transport, payment: cartInput.payment },
+            onCompanyBehalf: formValues.customer === 'companyCustomer',
+        });
+    };
 
     return (
         <StaticUrlGuard domainUrl={props.domainConfig.url}>
             <FormProvider {...formProviderMethods}>
-                <OrderLayout activeStep={3} buttonNextText={t('Submit order')}>
+                <form onSubmit={formProviderMethods.handleSubmit(onCreateOrderHandler)}>
                     <ContactInformationForm />
                 </OrderLayout>
+                </form>
             </FormProvider>
         </StaticUrlGuard>
     );
