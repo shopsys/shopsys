@@ -16,8 +16,8 @@ import { useShopsysForm } from 'hooks/forms/UseShopsysForm';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 
 export const getCountrySelectOptions = (t: TFunction): { value: string; label: string }[] => [
-    { value: 'slovakia', label: t('Slovakia') },
-    { value: 'czech', label: t('Czech Republic') },
+    { value: 'SK', label: t('Slovakia') },
+    { value: 'CZ', label: t('Czech Republic') },
 ];
 
 const getContactInformationFormDefaultValues = (t: TFunction) => {
@@ -33,11 +33,11 @@ const getContactInformationFormDefaultValues = (t: TFunction) => {
         street: '',
         city: '',
         postcode: '',
-        country: getCountrySelectOptions(t)[0].label,
+        country: getCountrySelectOptions(t)[0].value,
         companyName: '',
         companyNumber: '',
         companyTaxNumber: '',
-        deliveryAddress: false,
+        differentDeliveryAddress: false,
         deliveryFirstName: '',
         deliveryLastName: '',
         deliveryCompanyName: '',
@@ -45,7 +45,7 @@ const getContactInformationFormDefaultValues = (t: TFunction) => {
         deliveryStreet: '',
         deliveryCity: '',
         deliveryPostcode: '',
-        deliveryCountry: getCountrySelectOptions(t)[0].label,
+        deliveryCountry: getCountrySelectOptions(t)[0].value,
         newsletterSubscription: false,
     };
 };

@@ -21,7 +21,7 @@ const ContactInformationDeliveryAddress: FC = () => {
     const cssTransitionRef = useRef<HTMLDivElement>(null);
     const [contentElementHeight, setContentElementHeight] = useState(0);
     const formProviderMethods = useFormContext();
-    const deliveryAddressCheckbox = useWatch({ name: 'deliveryAddress' });
+    const deliveryAddressCheckbox = useWatch({ name: 'differentDeliveryAddress' });
 
     const calcHeight = () => {
         if (contentElement.current) {
@@ -34,7 +34,7 @@ const ContactInformationDeliveryAddress: FC = () => {
             <FormLine lg="65%">
                 <ChoiceFormLine>
                     <Controller
-                        name="deliveryAddress"
+                        name="differentDeliveryAddress"
                         render={({ field }) => (
                             <Checkbox
                                 fieldRef={field}
@@ -208,8 +208,8 @@ const ContactInformationDeliveryAddress: FC = () => {
                                             <Select
                                                 defaultValue={getCountrySelectOptions(t)[0]}
                                                 options={getCountrySelectOptions(t)}
-                                                onChange={(option: { label: string }) =>
-                                                    formProviderMethods.setValue(field.name, option.label)
+                                                onChange={(option: { value: string }) =>
+                                                    formProviderMethods.setValue(field.name, option.value)
                                                 }
                                             />
                                         </>
