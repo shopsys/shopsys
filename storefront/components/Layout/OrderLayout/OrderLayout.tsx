@@ -1,12 +1,9 @@
 import { OrderLayoutContentStyled, OrderLayoutStyled, OrderLayoutSummaryStyled } from './OrderLayout.style';
 import { FC } from 'react';
 import Header from 'components/Layout/Header';
-import OrderAction from 'components/Blocks/OrderAction';
 import OrderSteps from 'components/Blocks/OrderSteps';
 import OrderSummary from 'components/Blocks/OrderSummary';
-import { useFormContext } from 'react-hook-form';
 import { useShopsysSelector } from 'redux/main';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import Webline from 'components/Layout/Webline';
 
 type OrderLayoutProps = {
@@ -18,9 +15,7 @@ type OrderLayoutProps = {
  * Page layout for order pages
  */
 const OrderLayout: FC<OrderLayoutProps> = (props) => {
-    const t = useTypedTranslationFunction();
     const { url } = useShopsysSelector((state) => state.domain);
-    const formProviderMethods = useFormContext();
 
     return (
         <>
@@ -37,16 +32,6 @@ const OrderLayout: FC<OrderLayoutProps> = (props) => {
                         <OrderSummary />
                     </OrderLayoutSummaryStyled>
                 </OrderLayoutStyled>
-            </Webline>
-            <Webline>
-                <OrderAction
-                    activeStep={props.activeStep}
-                    buttonBack={t('Back')}
-                    buttonNext={props.buttonNextText}
-                    isDisabled={!formProviderMethods.formState.isValid}
-                    withGapTop={true}
-                    withGapBottom={true}
-                />
             </Webline>
         </>
     );

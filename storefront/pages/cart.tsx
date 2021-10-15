@@ -8,12 +8,15 @@ import { navigationQuery } from 'connectors/navigation/Navigation';
 import OrderAction from 'components/Blocks/OrderAction';
 import OrderSteps from 'components/Blocks/OrderSteps';
 import StaticUrlGuard from 'components/Helpers/StaticUrlGuard';
+import { useGetInternationalizedStaticUrls } from 'hooks/staticUrls/UseGetInternationalizedStaticUrls';
 import { useInitDomainConfig } from 'hooks/helpers/UseInitDomainConfig';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import Webline from 'components/Layout/Webline';
 
 const Cart: FC<ServerSidePropsType> = (props) => {
     const { cart } = useShopsysSelector((state) => state.user);
+    const { url } = useShopsysSelector((state) => state.domain);
+    const [transportAndPaymentUrl] = useGetInternationalizedStaticUrls(['/order/transport-and-payment'], url);
     const t = useTypedTranslationFunction();
     useInitDomainConfig(props.domainConfig);
 
@@ -26,10 +29,13 @@ const Cart: FC<ServerSidePropsType> = (props) => {
                 <Webline>
                     <OrderAction
                         activeStep={1}
-                        buttonBack={t('Back to e-shop')}
-                        buttonNext={t('Shipment and payment')}
+                        buttonBack={t('Back')}
+                        buttonNext={t('Transport and payment')}
                         isDisabled={false}
+                        withGapTop={false}
                         withGapBottom={true}
+                        buttonBackLink="/"
+                        buttonNextLink={transportAndPaymentUrl}
                     />
                 </Webline>
             </CommonLayout>

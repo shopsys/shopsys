@@ -12,6 +12,7 @@ import { FC } from 'react';
 import { getContactInformationFormResolver } from 'components/Pages/ContactInformation/ContactInformationFormResolver';
 >>>>>>> 489a543d2... added success handler to create order action
 import { navigationQuery } from 'connectors/navigation/Navigation';
+import OrderAction from 'components/Blocks/OrderAction';
 import { OrderApiType } from 'connectors/order/types';
 import OrderLayout from 'components/Layout/OrderLayout';
 import { showErrorMessage } from 'components/Helpers/Toasts';
@@ -122,6 +123,15 @@ const ContactInformation: FC<ServerSidePropsType> = (props) => {
                 <form onSubmit={formProviderMethods.handleSubmit(onCreateOrderHandler)}>
                     <OrderLayout activeStep={3} buttonNextText={t('Submit order')}>
                         <ContactInformationForm />
+                        <OrderAction
+                            activeStep={3}
+                            buttonBack={t('Back')}
+                            buttonNext={t('Submit order')}
+                            isDisabled={!formProviderMethods.formState.isValid}
+                            withGapTop={false}
+                            withGapBottom={true}
+                            buttonBackLink={transportAndPaymentUrl}
+                        />
                     </OrderLayout>
                 </form>
             </FormProvider>
