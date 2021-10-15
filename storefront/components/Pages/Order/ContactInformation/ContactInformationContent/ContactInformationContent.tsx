@@ -4,12 +4,12 @@ import {
 } from './ContactInformationContent.style';
 import { FC, useRef, useState } from 'react';
 import { useFormContext, useWatch } from 'react-hook-form';
-import ContactInformationAddress from 'components/Pages/ContactInformation/ContactInformationAddress';
-import ContactInformationCompany from 'components/Pages/ContactInformation/ContactInformationCompany';
-import ContactInformationCustomer from 'components/Pages/ContactInformation/ContactInformationCustomer';
-import ContactInformationDeliveryAddress from 'components/Pages/ContactInformation/ContactInformationDeliveryAddress';
-import ContactInformationRegister from 'components/Pages/ContactInformation/ContactInformationRegister';
-import ContactInformationUser from 'components/Pages/ContactInformation/ContactInformationUser';
+import ContactInformationAddress from 'components/Pages/Order/ContactInformation/ContactInformationAddress';
+import ContactInformationCompany from 'components/Pages/Order/ContactInformation/ContactInformationCompany';
+import ContactInformationCustomer from 'components/Pages/Order/ContactInformation/ContactInformationCustomer';
+import ContactInformationDeliveryAddress from 'components/Pages/Order/ContactInformation/ContactInformationDeliveryAddress';
+import ContactInformationRegister from 'components/Pages/Order/ContactInformation/ContactInformationRegister';
+import ContactInformationUser from 'components/Pages/Order/ContactInformation/ContactInformationUser';
 import { CSSTransition } from 'react-transition-group';
 
 type ContactInformationContent = {
