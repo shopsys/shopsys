@@ -2,12 +2,19 @@ import { FormProvider, SubmitHandler } from 'react-hook-form';
 import { initCartInputCookie, updateCartInputCookie } from 'helpers/Cookies';
 import { initServerSideProps, ServerSidePropsType } from 'helpers/InitServerSideProps';
 import { nextReduxWrapper, useShopsysDispatch, useShopsysSelector } from 'redux/main';
+<<<<<<< HEAD
 import ContactInformationForm from 'components/Pages/Order/ContactInformation';
 import { FC } from 'react';
 import { getContactInformationFormResolver } from 'components/Pages/Order/ContactInformation/ContactInformationFormResolver';
+=======
+import ContactInformationForm from 'components/Pages/ContactInformation';
+import { FC } from 'react';
+import { getContactInformationFormResolver } from 'components/Pages/ContactInformation/ContactInformationFormResolver';
+>>>>>>> 489a543d2... added success handler to create order action
 import { navigationQuery } from 'connectors/navigation/Navigation';
 import { OrderApiType } from 'connectors/order/types';
 import OrderLayout from 'components/Layout/OrderLayout';
+import { showErrorMessage } from 'components/Helpers/Toasts';
 import StaticUrlGuard from 'components/Helpers/StaticUrlGuard';
 import { TFunction } from 'next-i18next';
 import { updateCartState } from 'utils/Cart/UpdateCartState';
