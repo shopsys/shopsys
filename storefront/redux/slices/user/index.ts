@@ -11,6 +11,7 @@ export const enabledSortTypes = [sortPriority, sortPriceAsc, sortPriceDesc];
 export type SortType = typeof sortPriority | typeof sortPriceAsc | typeof sortPriceDesc;
 
 type InitialState = {
+    email: string | null;
     sort: SortType;
     cart: CartType | null;
     transport: TransportType | null;
@@ -19,6 +20,7 @@ type InitialState = {
 };
 
 export const initialState = {
+    email: null,
     sort: sortPriority,
     cart: null,
     transport: null,
@@ -32,6 +34,9 @@ export const userSlice = createSlice({
     name: 'user',
     initialState,
     reducers: {
+        setEmail(state, action: PayloadAction<string | null>) {
+            state.email = action.payload;
+        },
         setSort(state, action: PayloadAction<PayloadType>) {
             state.sort = action.payload.sort;
         },
