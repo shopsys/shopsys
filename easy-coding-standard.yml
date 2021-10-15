@@ -106,6 +106,7 @@ parameters:
             - '*/src/Form/Admin/ProductFormTypeExtension.php'
             - '*/src/Model/Product/Availability/ProductAvailabilityFacade.php'
             - '*/tests/App/Test/Codeception/Module/StrictWebDriver.php'
+            - '*/tests/App/Test/Codeception/ActorInterface.php'
             - '*/tests/App/Smoke/Http/RouteConfigCustomization.php'
             - '*/tests/FrontendApiBundle/Functional/*'
 
@@ -115,9 +116,13 @@ parameters:
             - '*/src/Controller/Front/OrderController.php'
             - '*/src/Model/Order/OrderFacade.php'
 
+        PHP_CodeSniffer\Standards\Generic\Sniffs\NamingConventions\CamelCapsFunctionNameSniff:
+            - '*/tests/App/Test/Codeception/ActorInterface.php'
+
         Shopsys\CodingStandards\Sniffs\ValidVariableNameSniff:
             - '*/tests/App/Functional/EntityExtension/EntityExtensionTest.php'
             - '*/tests/App/Test/Codeception/_generated/AcceptanceTesterActions.php'
+            - '*/tests/App/Test/Codeception/ActorInterface.php'
 
         Shopsys\CodingStandards\Sniffs\ObjectIsCreatedByFactorySniff:
             - '*/tests/*'

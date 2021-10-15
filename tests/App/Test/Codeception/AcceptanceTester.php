@@ -7,7 +7,6 @@ namespace Tests\App\Test\Codeception;
 use Codeception\Actor;
 use Facebook\WebDriver\Remote\RemoteWebDriver;
 use Tests\App\Test\Codeception\_generated\AcceptanceTesterActions;
-use Tests\FrameworkBundle\Test\Codeception\ActorInterface;
 
 /**
  * Inherited Methods
