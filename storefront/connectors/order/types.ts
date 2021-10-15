@@ -1,5 +1,5 @@
-import { PaymentApiType, PaymentInputType } from 'connectors/payments/types';
-import { PriceApiType, TransportApiType, TransportInputType } from 'connectors/transports/types';
+import { PaymentInputType } from 'connectors/payments/types';
+import { TransportInputType } from 'connectors/transports/types';
 
 export type OrderInputType = {
     firstName: string;
@@ -31,44 +31,5 @@ export type OrderInputType = {
 };
 
 export type OrderApiType = {
-    uuid: string;
-    number: string;
-    creationDate: Date;
-    items: {
-        name: string;
-        unitPrice: PriceApiType;
-        totalPrice: PriceApiType;
-        vatRate: string;
-        quantity: number;
-        unit: string | null;
-    }[];
-    transport: TransportApiType;
-    payment: PaymentApiType;
-    status: string;
-    totalPrice: PriceApiType;
-    firstName: string | null;
-    lastName: string | null;
     email: string;
-    telephone: string;
-    companyName: string | null;
-    companyNumber: string | null;
-    companyTaxNumber: string | null;
-    street: string;
-    city: string;
-    postcode: string;
-    country: string;
-    differentDeliveryAddress: boolean;
-    deliveryFirstName: string | null;
-    deliveryLastName: string | null;
-    deliveryCompanyName: string | null;
-    deliveryTelephone: string | null;
-    deliveryStreet: string | null;
-    deliveryCity: string | null;
-    deliveryPostcode: string | null;
-    deliveryCountry: string | null;
-    note: string | null;
-    urlHash: string;
-    promoCode: string | null;
-    trackingNumber: string | null;
-    trackingUrl: string | null;
 };

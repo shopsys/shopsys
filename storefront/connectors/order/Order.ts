@@ -1,7 +1,5 @@
 import { OrderApiType, OrderInputType } from './types';
 import { useMutation, UseMutationResponse } from 'urql';
-import { paymentBody } from 'connectors/payments/Payment';
-import { transportBody } from 'connectors/transports/Transport';
 
 export const createOrderMutation = `mutation (
         $firstName: String! 
@@ -11,7 +9,7 @@ export const createOrderMutation = `mutation (
         $onCompanyBehalf: Boolean! 
         $companyName: String 
         $companyNumber: String 
-        $companyTaxNumber: String 
+        $companyTaxNumber: String
         $street: String! 
         $city: String! 
         $postcode: String! 
@@ -59,58 +57,7 @@ export const createOrderMutation = `mutation (
             cartUuid: $cartUuid
             promoCode: $promoCode
         }) {
-            uuid
-            number
-            creationDate
-            items {
-                name
-                unitPrice {
-                  priceWithVat
-                  priceWithoutVat
-                  vatAmount
-                }
-                totalPrice {
-                  priceWithVat
-                  priceWithoutVat
-                  vatAmount
-                }
-                vatRate
-                quantity
-                unit
-            }
-            ${transportBody}
-            ${paymentBody}
-            status
-            totalPrice {
-                priceWithVat
-                priceWithoutVat
-                vatAmount
-            }
-            firstName
-            lastName
             email
-            telephone
-            companyName
-            companyNumber
-            companyTaxNumber
-            street
-            city
-            postcode
-            country
-            differentDeliveryAddress
-            deliveryFirstName
-            deliveryLastName
-            deliveryCompanyName
-            deliveryTelephone
-            deliveryStreet
-            deliveryCity
-            deliveryPostcode
-            deliveryCountry
-            note
-            urlHash
-            promoCode
-            trackingNumber
-            trackingUrl
         }
     }` as const;
 

@@ -1,17 +1,23 @@
+import { FormProvider, SubmitHandler } from 'react-hook-form';
+import { initCartInputCookie, updateCartInputCookie } from 'helpers/Cookies';
 import { initServerSideProps, ServerSidePropsType } from 'helpers/InitServerSideProps';
+import { nextReduxWrapper, useShopsysDispatch, useShopsysSelector } from 'redux/main';
 import ContactInformationForm from 'components/Pages/ContactInformation';
 import { FC } from 'react';
-import { FormProvider } from 'react-hook-form';
 import { getContactInformationFormResolver } from 'components/Pages/ContactInformation/ContactInformationFormResolver';
 import { navigationQuery } from 'connectors/navigation/Navigation';
-import { nextReduxWrapper } from 'redux/main';
+import { OrderApiType } from 'connectors/order/types';
 import OrderLayout from 'components/Layout/OrderLayout';
 import StaticUrlGuard from 'components/Helpers/StaticUrlGuard';
 import { TFunction } from 'next-i18next';
+import { updateCartState } from 'utils/Cart/UpdateCartState';
 import { useCreateOrder } from 'connectors/order/Order';
+import { useGetInternationalizedStaticUrls } from 'hooks/staticUrls/UseGetInternationalizedStaticUrls';
 import { useHandleFormSuccessfulSubmit } from 'hooks/forms/UseHandleFormSuccessfulSubmit';
 import { useHandleFormValidationErrors } from 'hooks/forms/UseHandleFormValidationErrors';
 import { useInitDomainConfig } from 'hooks/helpers/UseInitDomainConfig';
+import { userActions } from 'redux/slices/user';
+import { useRouter } from 'next/router';
 import { useShopsysForm } from 'hooks/forms/UseShopsysForm';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 
@@ -51,6 +57,13 @@ const getContactInformationFormDefaultValues = (t: TFunction) => {
 };
 
 const ContactInformation: FC<ServerSidePropsType> = (props) => {
+    const router = useRouter();
+    const dispatch = useShopsysDispatch();
+    const { url } = useShopsysSelector((state) => state.domain);
+    const [transportAndPaymentUrl, orderConfirmationUrl] = useGetInternationalizedStaticUrls(
+        ['/order/transport-and-payment', '/order-confirmation'],
+        url,
+    );
     const cartInput = useShopsysSelector((state) => state.cartInput);
     useInitDomainConfig(props.domainConfig);
     const t = useTypedTranslationFunction();
@@ -63,21 +76,29 @@ const ContactInformation: FC<ServerSidePropsType> = (props) => {
         createOrderResult,
         formProviderMethods,
         getContactInformationFormDefaultValues(t),
-        undefined,
+        (resultData) => onSuccessfullyCreatedOrderHandler(resultData),
     );
     useHandleFormValidationErrors(createOrderResult.error, formProviderMethods);
+
+    const onSuccessfullyCreatedOrderHandler = (resultData: { CreateOrder: OrderApiType }) => {
+        const resetCartInput = initCartInputCookie();
+        updateCartState(
+            dispatch,
+            { cart: null, transport: null, personalPickupStore: null, payment: null },
+            resetCartInput,
+        );
+        updateCartInputCookie(resetCartInput);
+        dispatch(userActions.setEmail(resultData.CreateOrder.email));
+        router.push(orderConfirmationUrl);
+    };
 
     const onCreateOrderHandler: SubmitHandler<ReturnType<typeof getContactInformationFormDefaultValues>> = (
         formValues,
         event,
     ) => {
         event?.preventDefault();
-        if (cartInput.transport === null) {
-            showErrorMessage('Transport is null');
-            return;
-        }
-        if (cartInput.payment === null) {
-            showErrorMessage('Payment is null');
+        if (cartInput.transport === null || cartInput.payment === null) {
+            router.replace(transportAndPaymentUrl);
             return;
         }
 
@@ -92,8 +113,9 @@ const ContactInformation: FC<ServerSidePropsType> = (props) => {
         <StaticUrlGuard domainUrl={props.domainConfig.url}>
             <FormProvider {...formProviderMethods}>
                 <form onSubmit={formProviderMethods.handleSubmit(onCreateOrderHandler)}>
-                    <ContactInformationForm />
-                </OrderLayout>
+                    <OrderLayout activeStep={3} buttonNextText={t('Submit order')}>
+                        <ContactInformationForm />
+                    </OrderLayout>
                 </form>
             </FormProvider>
         </StaticUrlGuard>
