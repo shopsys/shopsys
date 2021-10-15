@@ -1,4 +1,5 @@
-import { FC, useRef, useState } from 'react';
+import { Controller, useForm, useWatch } from 'react-hook-form';
+import { FC, useEffect, useRef, useState } from 'react';
 import {
     PromoCodeButtonIconStyled,
     PromoCodeButtonStyled,
@@ -9,17 +10,32 @@ import {
     PromoCodeStyled,
 } from './PromoCode.style';
 import { CSSTransition } from 'react-transition-group';
+import { loadCart } from 'connectors/cart/Cart';
 import PromoCodeInfo from './PromoCodeInfo';
+import { showSuccessMessage } from 'components/Helpers/Toasts';
+import { useShopsysSelector } from 'redux/main';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 
 const PromoCode: FC = () => {
+    const { cartUuid, payment, transport, promoCode } = useShopsysSelector((state) => state.cartInput);
+    const [updatedPromoCode, updatePromoCode] = useState(promoCode);
+    const [result] = loadCart(cartUuid, transport, payment, updatedPromoCode);
     const t = useTypedTranslationFunction();
-    const [isPromoCodeInfo, setIsPromoCodeInfo] = useState(false);
-    const [discount, setDiscount] = useState('TestCode');
     const [isContentVisible, setIsContentVisible] = useState(false);
+    const [contentElementHeight, setContentElementHeight] = useState(0);
     const contentElement = useRef<HTMLDivElement>(null);
     const cssTransitionRef = useRef<HTMLDivElement>(null);
-    const [contentElementHeight, setContentElementHeight] = useState(0);
+    const formProviderMethods = useForm({ defaultValues: { promoCode: promoCode === null ? '' : promoCode } });
+    const promoCodeValue = useWatch({ name: 'promoCode', control: formProviderMethods.control });
+
+    useEffect(() => {
+        if (result.data === undefined || updatedPromoCode === promoCode || updatedPromoCode === null) {
+            return;
+        }
+        if (result.data.cart !== null && result.error === undefined) {
+            showSuccessMessage(t('Promo code was added to the order.'));
+        }
+    }, [result.data]);
 
     const calcHeight = () => {
         if (contentElement.current) {
@@ -27,10 +43,19 @@ const PromoCode: FC = () => {
         }
     };
 
+    const onApplyPromoCodeHandler = (promoCode: string) => {
+        updatePromoCode(promoCode);
+    };
+
+    const onRemovePromoCodeHandler = () => {
+        formProviderMethods.setValue('promoCode', '');
+        updatePromoCode(null);
+    };
+
     return (
         <PromoCodeStyled contentElementHeight={contentElementHeight}>
-            {isPromoCodeInfo ? (
-                <PromoCodeInfo discount={discount} setIsPromoCodeInfo={() => setIsPromoCodeInfo(!isPromoCodeInfo)} />
+            {promoCode !== null ? (
+                <PromoCodeInfo promoCode={promoCode} onRemovePromoCodeCallback={onRemovePromoCodeHandler} />
             ) : (
                 <>
                     <PromoCodeButtonStyled onClick={() => setIsContentVisible(!isContentVisible)}>
@@ -48,19 +73,32 @@ const PromoCode: FC = () => {
                     >
                         <PromoCodeContentWrapperStyled ref={cssTransitionRef}>
                             <PromoCodeContentStyled ref={contentElement}>
-                                <PromoCodeContentInputStyled
-                                    type="text"
-                                    id="promoCode"
+                                <Controller
                                     name="promoCode"
-                                    label={t('Coupon')}
-                                    style={{ width: '100%', marginBottom: '0' }}
+                                    control={formProviderMethods.control}
+                                    render={({ field }) => (
+                                        <>
+                                            <PromoCodeContentInputStyled
+                                                type="text"
+                                                id={field.name}
+                                                label={t('Coupon')}
+                                                fieldRef={field}
+                                                style={{ width: '100%', marginBottom: '0' }}
+                                            />
+                                            <PromoCodeContentButtonStyled
+                                                type="submit"
+                                                isDisabled={
+                                                    (typeof field.value === 'string' && field.value.length === 0) ||
+                                                    result.fetching ||
+                                                    promoCodeValue === updatedPromoCode
+                                                }
+                                                onClick={() => onApplyPromoCodeHandler(field.value as string)}
+                                            >
+                                                {t('Apply')}
+                                            </PromoCodeContentButtonStyled>
+                                        </>
+                                    )}
                                 />
-                                <PromoCodeContentButtonStyled
-                                    type="submit"
-                                    onClick={() => setIsPromoCodeInfo(!isPromoCodeInfo)}
-                                >
-                                    {t('Apply')}
-                                </PromoCodeContentButtonStyled>
                             </PromoCodeContentStyled>
                         </PromoCodeContentWrapperStyled>
                     </CSSTransition>

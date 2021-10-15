@@ -19,6 +19,9 @@ export const cartInputSlice = createSlice({
             state.payment = action.payload.payment;
             state.promoCode = action.payload.promoCode;
         },
+        setPromoCode(state, action: PayloadAction<string | null>) {
+            state.promoCode = action.payload;
+        },
     },
     extraReducers: {
         /**
