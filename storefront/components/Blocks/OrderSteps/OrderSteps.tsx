@@ -12,7 +12,7 @@ type OrderStepsProps = {
 
 const OrderSteps: FC<OrderStepsProps> = (props) => {
     const t = useTypedTranslationFunction();
-    const [cartUrl, transportAndPaymentUrl, contactInformationUrl] = useGetInternationalizedStaticUrls(
+    const [cartUrl, transportAndPaymentUrl] = useGetInternationalizedStaticUrls(
         ['/cart', '/order/transport-and-payment', '/order/contact-information'],
         props.domainUrl,
     );
@@ -21,25 +21,35 @@ const OrderSteps: FC<OrderStepsProps> = (props) => {
         <Webline>
             <OrderStepsListStyled>
                 <OrderStepsListItemStyled>
-                    <NextLink href={cartUrl} passHref>
+                    {props.activeStep > 1 ? (
+                        <NextLink href={cartUrl} passHref>
+                            <OrderStepsListItemLinkStyled isActive={props.activeStep === 1} cursor="pointer">
+                                {'1. ' + t('Cart')}
+                            </OrderStepsListItemLinkStyled>
+                        </NextLink>
+                    ) : (
                         <OrderStepsListItemLinkStyled isActive={props.activeStep === 1}>
                             {'1. ' + t('Cart')}
                         </OrderStepsListItemLinkStyled>
-                    </NextLink>
+                    )}
                 </OrderStepsListItemStyled>
                 <OrderStepsListItemStyled>
-                    <NextLink href={transportAndPaymentUrl} passHref>
+                    {props.activeStep > 2 ? (
+                        <NextLink href={transportAndPaymentUrl} passHref>
+                            <OrderStepsListItemLinkStyled isActive={props.activeStep === 2} cursor="pointer">
+                                {'2. ' + t('Transport and payment')}
+                            </OrderStepsListItemLinkStyled>
+                        </NextLink>
+                    ) : (
                         <OrderStepsListItemLinkStyled isActive={props.activeStep === 2}>
                             {'2. ' + t('Transport and payment')}
                         </OrderStepsListItemLinkStyled>
-                    </NextLink>
+                    )}
                 </OrderStepsListItemStyled>
                 <OrderStepsListItemStyled>
-                    <NextLink href={contactInformationUrl} passHref>
-                        <OrderStepsListItemLinkStyled isActive={props.activeStep === 3}>
-                            {'3. ' + t('Contact information')}
-                        </OrderStepsListItemLinkStyled>
-                    </NextLink>
+                    <OrderStepsListItemLinkStyled isActive={props.activeStep === 3}>
+                        {'3. ' + t('Contact information')}
+                    </OrderStepsListItemLinkStyled>
                 </OrderStepsListItemStyled>
             </OrderStepsListStyled>
         </Webline>

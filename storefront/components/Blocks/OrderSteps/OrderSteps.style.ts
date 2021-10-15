@@ -3,6 +3,7 @@ import { styled } from 'components/Theme/main';
 
 type OrderStepsListItemLinkStyledProps = {
     isActive: boolean;
+    cursor?: 'pointer';
 };
 
 export const OrderStepsListStyled = styled.ul`
@@ -35,20 +36,26 @@ export const OrderStepsListItemStyled = styled.li`
     `}
 `;
 
-export const OrderStepsListItemLinkStyled = styled.a<OrderStepsListItemLinkStyledProps>`
-    ${({ theme, isActive }) => css`
+export const OrderStepsListItemLinkStyled = styled.span<OrderStepsListItemLinkStyledProps>`
+    ${({ theme, isActive, cursor }) => css`
         display: block;
 
         line-height: 14px;
         text-decoration: none;
         text-transform: uppercase;
         font-size: ${theme.fontSize.extraSmall};
+        cursor: default;
 
-        &:hover {
-            outline-width: 0;
-            color: ${theme.color.primary};
-            text-decoration: none;
-        }
+        ${cursor === 'pointer' &&
+        css`
+            cursor: pointer;
+
+            &:hover {
+                outline-width: 0;
+                color: ${theme.color.primary};
+                text-decoration: none;
+            }
+        `}
 
         ${isActive &&
         css`
