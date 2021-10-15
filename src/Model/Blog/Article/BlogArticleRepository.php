@@ -321,4 +321,26 @@ class BlogArticleRepository
 
         return $blogArticlesNameById;
     }
+
+    /**
+     * @param \App\Model\Blog\Category\BlogCategory $blogCategory
+     * @param int $domainId
+     * @param string $locale
+     * @return int[]
+     */
+    public function getBlogArticleIdsByCategory(BlogCategory $blogCategory, int $domainId, string $locale): array
+    {
+        $result = $this->getBlogArticlesByDomainIdAndLocaleQueryBuilder($domainId, $locale)
+            ->resetDQLPart('select')
+            ->select('ba.id')
+            ->join('ba.blogArticleBlogCategoryDomains', 'babcd')
+            ->where('babcd.blogCategory = :blogCategory')
+            ->andWhere('babcd.domainId = :domainId')
+            ->setParameter('blogCategory', $blogCategory)
+            ->setParameter('domainId', $domainId)
+            ->getQuery()
+            ->execute();
+
+        return array_column($result, 'id');
+    }
 }

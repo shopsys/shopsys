@@ -54,6 +54,7 @@ class ProductExportRepositoryTest extends FunctionalTestCase
             'prices',
             'parameters',
             'ordering_priority',
+            'breadcrumb',
             'calculated_selling_denied',
             'selling_denied',
             'availability',

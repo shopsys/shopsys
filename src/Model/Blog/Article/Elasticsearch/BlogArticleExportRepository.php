@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\Blog\Article\Elasticsearch;
 
+use App\Component\Breadcrumb\BreadcrumbFacade;
 use App\Model\Blog\Article\BlogArticle;
 use App\Model\Blog\Article\BlogArticleRepository;
 use App\Model\Blog\Category\BlogCategory;
@@ -31,18 +32,26 @@ class BlogArticleExportRepository
     private FriendlyUrlFacade $friendlyUrlFacade;
 
     /**
+     * @var \App\Component\Breadcrumb\BreadcrumbFacade
+     */
+    private BreadcrumbFacade $breadcrumbFacade;
+
+    /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \App\Model\Blog\Article\BlogArticleRepository $blogArticleRepository
      * @param \App\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
+     * @param \App\Component\Breadcrumb\BreadcrumbFacade $breadcrumbFacade
      */
     public function __construct(
         EntityManagerInterface $em,
         BlogArticleRepository $blogArticleRepository,
-        FriendlyUrlFacade $friendlyUrlFacade
+        FriendlyUrlFacade $friendlyUrlFacade,
+        BreadcrumbFacade $breadcrumbFacade
     ) {
         $this->blogArticleRepository = $blogArticleRepository;
         $this->friendlyUrlFacade = $friendlyUrlFacade;
         $this->em = $em;
+        $this->breadcrumbFacade = $breadcrumbFacade;
     }
 
     /**
@@ -133,6 +142,7 @@ class BlogArticleExportRepository
             'categories' => array_map(fn (BlogCategory $blogCategory) => $blogCategory->getId(), $blogArticleCategories),
             'mainSlug' => $mainFriendlyUrl->getSlug(),
             'products' => array_map(fn (Product $product) => $product->getId(), $blogArticle->getProducts()),
+            'breadcrumb' => $this->breadcrumbFacade->getBreadcrumbOnDomain($blogArticle->getId(), 'front_blogarticle_detail', $domainId, $locale),
         ];
     }
 }

@@ -8,6 +8,7 @@ use App\Component\Cache\TwigCachedMenuFacade;
 use App\Model\Category\LinkedCategory\LinkedCategoryFacade;
 use App\Model\Product\Filter\ProductFilterData;
 use App\Model\Product\Product;
+use App\Model\Product\ProductFacade;
 use App\Model\Product\ProductOnCurrentDomainElasticFacade;
 use App\Twig\Cache\TwigCacheFacade;
 use Doctrine\ORM\EntityManagerInterface;
@@ -83,6 +84,11 @@ class CategoryFacade extends BaseCategoryFacade
     private ProductOnCurrentDomainElasticFacade $productOnCurrentDomainElasticFacade;
 
     /**
+     * @var \App\Model\Product\ProductFacade
+     */
+    private ProductFacade $productFacade;
+
+    /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \App\Model\Category\CategoryRepository $categoryRepository
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
@@ -98,6 +104,7 @@ class CategoryFacade extends BaseCategoryFacade
      * @param \App\Twig\Cache\TwigCacheFacade $twigCacheFacade
      * @param \App\Model\Category\LinkedCategory\LinkedCategoryFacade $linkedCategoryFacade
      * @param \App\Model\Product\ProductOnCurrentDomainElasticFacade $productOnCurrentDomainElasticFacade
+     * @param \App\Model\Product\ProductFacade $productFacade
      */
     public function __construct(
         EntityManagerInterface $em,
@@ -114,7 +121,8 @@ class CategoryFacade extends BaseCategoryFacade
         TwigCachedMenuFacade $twigCachedMenuFacade,
         TwigCacheFacade $twigCacheFacade,
         LinkedCategoryFacade $linkedCategoryFacade,
-        ProductOnCurrentDomainElasticFacade $productOnCurrentDomainElasticFacade
+        ProductOnCurrentDomainElasticFacade $productOnCurrentDomainElasticFacade,
+        ProductFacade $productFacade
     ) {
         parent::__construct(
             $em,
@@ -134,6 +142,7 @@ class CategoryFacade extends BaseCategoryFacade
         $this->twigCacheFacade = $twigCacheFacade;
         $this->linkedCategoryFacade = $linkedCategoryFacade;
         $this->productOnCurrentDomainElasticFacade = $productOnCurrentDomainElasticFacade;
+        $this->productFacade = $productFacade;
     }
 
     /**
@@ -168,6 +177,8 @@ class CategoryFacade extends BaseCategoryFacade
             $this->twigCacheFacade->invalidateByKey($this->twigCacheFacade::SLIGHTLY_CHANGING_PARTS_ON_HOMEPAGE, $domainId);
         }
 
+        $this->scheduleProductsToExportByCategory($category);
+
         return $category;
     }
 
@@ -179,6 +190,22 @@ class CategoryFacade extends BaseCategoryFacade
         parent::reorderByNestedSetValues($categoriesOrderingData);
 
         $this->twigCachedMenuFacade->invalidateCachedMenuByCategory($this->getRootCategory());
+
+        $this->productFacade->markAllProductsForExport();
+    }
+
+    /**
+     * @param \App\Model\Category\Category $category
+     */
+    private function scheduleProductsToExportByCategory(Category $category): void
+    {
+        $products = $this->productFacade->getProductsByCategory($category);
+
+        foreach ($products as $product) {
+            $product->markForExport();
+        }
+
+        $this->em->flush();
     }
 
     /**
@@ -281,6 +308,8 @@ class CategoryFacade extends BaseCategoryFacade
                 $this->twigCacheFacade->invalidateByKey('category_children_' . $parentId, $domainId);
             }
         }
+
+        $this->scheduleProductsToExportByCategory($category);
 
         parent::deleteById($categoryId);
     }

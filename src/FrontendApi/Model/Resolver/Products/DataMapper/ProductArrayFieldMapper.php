@@ -177,4 +177,13 @@ class ProductArrayFieldMapper extends BaseProductArrayFieldMapper
     {
         return $this->productElasticsearchProvider->getSellableProductArrayByIds($data['related_products']);
     }
+
+    /**
+     * @param array $data
+     * @return array
+     */
+    public function getBreadcrumb(array $data): array
+    {
+        return $data['breadcrumb'];
+    }
 }

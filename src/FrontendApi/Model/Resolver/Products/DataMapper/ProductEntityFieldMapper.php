@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\FrontendApi\Model\Resolver\Products\DataMapper;
 
+use App\Component\Breadcrumb\BreadcrumbFacade;
 use App\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use App\FrontendApi\Exception\DeprecatedMethodException;
 use App\FrontendApi\Model\Parameter\ParameterWithValuesFactory;
@@ -66,6 +67,11 @@ class ProductEntityFieldMapper extends BaseProductEntityFieldMapper
     protected ParameterRepository $parameterRepository;
 
     /**
+     * @var \App\Component\Breadcrumb\BreadcrumbFacade
+     */
+    private BreadcrumbFacade $breadcrumbFacade;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Product\Collection\ProductCollectionFacade $productCollectionFacade
      * @param \Shopsys\FrontendApiBundle\Model\Product\ProductAccessoryFacade $productAccessoryFacade
@@ -77,6 +83,7 @@ class ProductEntityFieldMapper extends BaseProductEntityFieldMapper
      * @param \App\Model\Product\ProductRepository $productRepository
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade $pricingGroupSettingFacade
      * @param \App\Model\Product\Parameter\ParameterRepository $parameterRepository
+     * @param \App\Component\Breadcrumb\BreadcrumbFacade $breadcrumbFacade
      */
     public function __construct(
         Domain $domain,
@@ -89,7 +96,8 @@ class ProductEntityFieldMapper extends BaseProductEntityFieldMapper
         FriendlyUrlFacade $friendlyUrlFacade,
         ProductRepository $productRepository,
         PricingGroupSettingFacade $pricingGroupSettingFacade,
-        ParameterRepository $parameterRepository
+        ParameterRepository $parameterRepository,
+        BreadcrumbFacade $breadcrumbFacade
     ) {
         parent::__construct(
             $domain,
@@ -105,6 +113,7 @@ class ProductEntityFieldMapper extends BaseProductEntityFieldMapper
         $this->productRepository = $productRepository;
         $this->pricingGroupSettingFacade = $pricingGroupSettingFacade;
         $this->parameterRepository = $parameterRepository;
+        $this->breadcrumbFacade = $breadcrumbFacade;
     }
 
     /**
@@ -343,5 +352,19 @@ class ProductEntityFieldMapper extends BaseProductEntityFieldMapper
     public function getUsps(Product $product): array
     {
         return $product->getAllNonEmptyShortDescriptionUsp($this->domain->getId());
+    }
+
+    /**
+     * @param \App\Model\Product\Product $product
+     * @return array
+     */
+    public function getBreadcrumb(Product $product): array
+    {
+        return $this->breadcrumbFacade->getBreadcrumbOnDomain(
+            $product->getId(),
+            'front_product_detail',
+            $this->domain->getId(),
+            $this->domain->getLocale()
+        );
     }
 }

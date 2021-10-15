@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\Product\Elasticsearch;
 
+use App\Component\Breadcrumb\BreadcrumbFacade;
 use App\Model\Category\CategoryFacade;
 use App\Model\Product\Availability\ProductAvailabilityFacade;
 use App\Model\Product\Product;
@@ -66,6 +67,11 @@ class ProductExportRepository extends BaseProductExportRepository
     private ProductPriceCalculation $productPriceCalculation;
 
     /**
+     * @var \App\Component\Breadcrumb\BreadcrumbFacade
+     */
+    private BreadcrumbFacade $breadcrumbFacade;
+
+    /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \App\Model\Product\Parameter\ParameterRepository $parameterRepository
      * @param \App\Model\Product\ProductFacade $productFacade
@@ -80,6 +86,7 @@ class ProductExportRepository extends BaseProductExportRepository
      * @param \Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryFacade $productAccessoryFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Brand\BrandCachedFacade $brandCachedFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculation $productPriceCalculation
+     * @param \App\Component\Breadcrumb\BreadcrumbFacade $breadcrumbFacade
      */
     public function __construct(
         EntityManagerInterface $em,
@@ -95,7 +102,8 @@ class ProductExportRepository extends BaseProductExportRepository
         CategoryFacade $categoryFacade,
         ProductAccessoryFacade $productAccessoryFacade,
         BrandCachedFacade $brandCachedFacade,
-        ProductPriceCalculation $productPriceCalculation
+        ProductPriceCalculation $productPriceCalculation,
+        BreadcrumbFacade $breadcrumbFacade
     ) {
         parent::__construct(
             $em,
@@ -114,6 +122,7 @@ class ProductExportRepository extends BaseProductExportRepository
         $this->productRepository = $productRepository;
         $this->pricingGroupSettingFacade = $pricingGroupSettingFacade;
         $this->productPriceCalculation = $productPriceCalculation;
+        $this->breadcrumbFacade = $breadcrumbFacade;
     }
 
     /**
@@ -201,6 +210,7 @@ class ProductExportRepository extends BaseProductExportRepository
             'available_stores_count' => $this->productAvailabilityFacade->getAvailableStoresCount($product, $domainId),
             'exposed_stores_count' => $this->productAvailabilityFacade->getExposedStoresCount($product, $domainId),
             'related_products' => $relatedProductsId,
+            'breadcrumb' => $this->extractBreadcrumb($product, $domainId, $locale),
         ];
     }
 
@@ -493,5 +503,16 @@ class ProductExportRepository extends BaseProductExportRepository
         }
 
         return $relatedProductsId;
+    }
+
+    /**
+     * @param \App\Model\Product\Product $product
+     * @param int $domainId
+     * @param string $locale
+     * @return array<int, array{name: string, slug: string}>
+     */
+    private function extractBreadcrumb(Product $product, int $domainId, string $locale): array
+    {
+        return $this->breadcrumbFacade->getBreadcrumbOnDomain($product->getId(), 'front_product_detail', $domainId, $locale);
     }
 }

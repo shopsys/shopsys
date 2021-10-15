@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\Product;
 
+use App\Model\Category\Category as AppCategory;
 use App\Model\Stock\ProductStock;
 use Doctrine\ORM\Internal\Hydration\IterableResult;
 use Doctrine\ORM\Query\Expr\Join;
@@ -265,5 +266,19 @@ class ProductRepository extends BaseProductRepository
         );
 
         return $queryBuilder;
+    }
+
+    /**
+     * @param \App\Model\Category\Category $category
+     * @return \App\Model\Product\Product[]
+     */
+    public function getProductsByCategory(AppCategory $category): array
+    {
+        return $this->getAllProductsQueryBuilder()
+            ->join('p.productCategoryDomains', 'pcd')
+            ->where('pcd.category = :category')
+            ->setParameter('category', $category)
+            ->getQuery()
+            ->execute();
     }
 }

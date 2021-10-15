@@ -184,6 +184,16 @@
       },
       "position": {
         "type": "keyword"
+      },
+      "breadcrumb": {
+        "properties": {
+          "name": {
+            "type": "text"
+          },
+          "slug":  {
+            "type": "keyword"
+          }
+        }
       }
     }
   }
