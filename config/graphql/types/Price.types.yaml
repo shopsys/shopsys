@@ -3,6 +3,7 @@ Price:
     inherits:
         - 'PriceDecorator'
     config:
+        description: "Represents the price"
         fields:
             priceWithVat:
                 type: "Money!"

@@ -6,7 +6,7 @@ import { ReactElement } from 'react';
 const Navigation = (): ReactElement | null => {
     const navigationItems = getNavigationItems();
 
-    if (navigationItems === undefined || (Array.isArray(navigationItems) && navigationItems.length === 0)) {
+    if (navigationItems.length === 0) {
         return null;
     }
 

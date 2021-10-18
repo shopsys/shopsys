@@ -21,6 +21,15 @@ class ProductArrayFieldMapper extends BaseProductArrayFieldMapper
 {
     /**
      * @param array $data
+     * @return int
+     */
+    public function getStockQuantity(array $data): int
+    {
+        return $data['stock_quantity'] ?? 0;
+    }
+
+    /**
+     * @param array $data
      * @return bool
      */
     public function isUsingStock(array $data): bool

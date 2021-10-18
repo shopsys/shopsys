@@ -18,10 +18,10 @@ ImageSize:
         description: "Represents a single image size"
         fields:
             size:
-                type: "String"
+                type: "String!"
                 description: "Image size defined in images.yaml"
             url:
-                type: "String"
+                type: "String!"
                 description: "URL address of image"
             width:
                 type: "Int"

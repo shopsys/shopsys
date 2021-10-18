@@ -14,7 +14,4 @@ generates:
             withHOC: false
             withComponent: false
             scalars:
-                Long: number
-                Instant: string
-                LocalDate: string
-                LocalDateTime: string
+                Money: string

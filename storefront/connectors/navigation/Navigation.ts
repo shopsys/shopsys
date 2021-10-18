@@ -2,8 +2,7 @@ import {
     CategoriesByColumnFragmentApi,
     ColumnCategoriesFragmentApi,
     ImagesDefaultFragmentApi,
-    NavigationQueryApi,
-    NavigationSubCategoriesLinkFragmentApi,
+    NavigationQueryApi, NavigationSubCategoriesLinkFragmentApi,
     useNavigationQueryApi,
 } from 'graphql/generated';
 import { getUserFriendlyErrors } from 'connectors/lib/friendlyErrorMessageParser';
@@ -90,27 +89,14 @@ function mapNavigationCategoriesByColumns(
 }
 
 const mapCategoryImageApiData = (apiData: ImagesDefaultFragmentApi['images']): ImageType | null => {
-    if (apiData === undefined || apiData === null) {
-        return null;
-    }
-    const categoryImageData = apiData[0];
-    if (
-        categoryImageData === undefined ||
-        categoryImageData === null ||
-        categoryImageData.sizes[0] === undefined ||
-        categoryImageData.sizes[0] === null
-    ) {
+    if (!(0 in apiData) || !(0 in apiData[0].sizes)) {
         return null;
     }
 
-    return mapImageSizeApiData(categoryImageData.sizes[0]);
+    return mapImageSizeApiData(apiData[0].sizes[0]);
 };
 
 const mapSubCategories = (apiData: NavigationSubCategoriesLinkFragmentApi['children']): NavigationSubCategory[] => {
-    if (apiData === undefined || apiData === null) {
-        return [];
-    }
-
     return apiData.map((subCategory) => {
         return {
             name: subCategory.name !== undefined && subCategory.name !== null ? subCategory.name : '',
@@ -122,7 +108,7 @@ const mapSubCategories = (apiData: NavigationSubCategoriesLinkFragmentApi['child
 const mapCategories = (data: ColumnCategoriesFragmentApi['categories']): NavigationCategory[] => {
     const mappedCategories = [];
     for (const category of data) {
-        if (category.images.length === 0 || category.images[0] === undefined || category.images[0] === null) {
+        if (!(0 in category.images)) {
             continue;
         }
         const mappedImages = mapCategoryImageApiData(category.images);

@@ -51,24 +51,18 @@ const mapSliderItemsApiData = (apiData: SliderItemsQueryApi['sliderItems']): Sli
 };
 
 const mapSliderItemImagesApiData = (apiData: ImagesWebDefaultFragmentApi['images']): ImageApiType[] => {
-    const sliderItemImageData = apiData[0];
-    if (
-        sliderItemImageData === undefined ||
-        sliderItemImageData === null ||
-        sliderItemImageData.sizes[0] === undefined ||
-        sliderItemImageData.sizes[0] === null
-    ) {
+    if (!(0 in apiData) || !(0 in apiData[0].sizes)) {
         return [];
     }
 
-    const mappedImageSizes = mapImageSizeApiData(sliderItemImageData.sizes[0]);
+    const mappedImageSizes = mapImageSizeApiData(apiData[0].sizes[0]);
     if (mappedImageSizes === null) {
         return [];
     }
 
     return [
         {
-            ...sliderItemImageData,
+            ...apiData[0],
             sizes: [mappedImageSizes],
         },
     ];

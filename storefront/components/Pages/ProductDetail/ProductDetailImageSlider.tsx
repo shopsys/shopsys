@@ -76,7 +76,7 @@ const ProductDetailImageSlider: FC<ProductDetailImageSliderProps> = (props) => {
             <ProductDetailImageSliderStyled ref={sliderRef} className="keen-slider">
                 {props.galleryItems.map((galleryItem, index) => (
                     <ProductDetailImageSliderItemStyled key={index} className="keen-slider__slide">
-                        <SliderItemImageStyled src={loadedImageUrls[index] ? galleryItem.default?.url : ''} />
+                        <SliderItemImageStyled src={loadedImageUrls[index] ? galleryItem.default.url : ''} />
                     </ProductDetailImageSliderItemStyled>
                 ))}
             </ProductDetailImageSliderStyled>

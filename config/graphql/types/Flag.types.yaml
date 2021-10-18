@@ -29,3 +29,6 @@ Flag:
                 args:
                     productFilter:
                         type: "ProductFilter"
+            rgbColor:
+                type: "String!"
+                description: "Flag color in rgb format"

@@ -61,7 +61,7 @@ const ProductDetailGallery: FC<ProductDetailGalleryProps> = (props) => {
                         (image, index) =>
                             index > 0 && (
                                 <ProductDetailGalleryThumbnailsItemStyled key={index}>
-                                    <a href={image.default?.url}>
+                                    <a href={image.default.url}>
                                         <img
                                             src={image.galleryThumbnail.url}
                                             alt={props.productName}
@@ -74,12 +74,12 @@ const ProductDetailGallery: FC<ProductDetailGalleryProps> = (props) => {
                     )}
                 </ProductDetailGalleryThumbnailsStyled>
                 <ProductDetailGalleryMainImageStyled>
-                    <a href={mainImage?.url}>
+                    <a href={mainImage.url}>
                         <img
-                            src={mainImage?.url}
+                            src={mainImage.url}
                             alt={props.productName}
-                            width={mainImage?.width}
-                            height={mainImage?.height}
+                            width={mainImage.width}
+                            height={mainImage.height}
                         />
                     </a>
                 </ProductDetailGalleryMainImageStyled>

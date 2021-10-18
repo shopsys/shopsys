@@ -36,24 +36,14 @@ const mapCategoryApiData = (apiData: PromotedCategoriesQueryApi['promotedCategor
         return {
             ...apiCategory,
             name: apiCategory.name === undefined || apiCategory.name === null ? '' : apiCategory.name,
-            image:
-                apiCategory?.images !== undefined && apiCategory.images.length > 0
-                    ? mapCategoryImageApiData(apiCategory.images)
-                    : null,
+            image: mapCategoryImageApiData(apiCategory.images),
         };
     });
 };
 
 const mapCategoryImageApiData = (apiData: ImagesDefaultFragmentApi['images']): ImageType | null => {
-    const categoryImageData = apiData[0];
-    if (
-        categoryImageData === undefined ||
-        categoryImageData === null ||
-        categoryImageData.sizes[0] === undefined ||
-        categoryImageData.sizes[0] === null
-    ) {
+    if (!(0 in apiData)) {
         return null;
     }
-
-    return mapImageSizeApiData(categoryImageData.sizes[0]);
+    return mapImageSizeApiData(apiData[0].sizes[0]);
 };
