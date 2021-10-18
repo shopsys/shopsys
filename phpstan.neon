@@ -53,6 +53,10 @@ parameters:
         -
             message: '#^Unreachable statement - code above always terminates\.#'
             path: %currentWorkingDirectory%/tests/App/Functional/Model/Order/OrderFacade*Test.php
+        -
+            message: "#^PHPDoc tag @param for parameter \\$function with type callable is not subtype of native type Closure\\.$#"
+            path: tests/App/Test/Codeception/AcceptanceTester.php
+
 includes:
     - vendor/phpstan/phpstan-doctrine/extension.neon
     - vendor/phpstan/phpstan-phpunit/extension.neon
