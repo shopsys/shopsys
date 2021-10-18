@@ -87,7 +87,7 @@ data:
                 set $frontend_upstream_uri $uri;
             }
 
-            location ~ /(admin|public|content|build|bundles|graphql|_profiler|_wdt|file|redirect|elfinder|efconnect) {
+            location ~ /(admin|public|content|ckeditor|build|bundles|graphql|_profiler|_wdt|file|redirect|elfinder|efconnect|personal-overview-export) {
 
                 location ~ /\. {
                     # hide dotfiles (send to @app)
