@@ -4,6 +4,7 @@ import { nextReduxWrapper, useShopsysSelector } from 'redux/main';
 import { TransportInputType, TransportType } from 'connectors/transports/types';
 import { FormProvider } from 'react-hook-form';
 import { getTransports } from 'connectors/transports/Transports';
+import { handleOrderPagesRedirect } from 'helpers/HandleOrderPagesRedirect';
 import { navigationQuery } from 'connectors/navigation/Navigation';
 import OrderAction from 'components/Blocks/OrderAction';
 import OrderLayout from 'components/Layout/OrderLayout';
@@ -62,7 +63,7 @@ const TransportAndPayment: FC<ServerSidePropsType> = (props) => {
 };
 
 export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) => async (context) => {
-    return initServerSideProps(context, store, [navigationQuery]);
+    return handleOrderPagesRedirect(context) || initServerSideProps(context, store, [navigationQuery]);
 });
 
 const getTransportAndPaymentValidity = (
