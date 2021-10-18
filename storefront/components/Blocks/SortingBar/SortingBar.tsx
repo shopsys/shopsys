@@ -1,4 +1,4 @@
-import { FC, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { initialState, SortType, userActions } from 'redux/slices/user';
 import {
     SortingBarItemLinkStyled,
@@ -45,6 +45,11 @@ const SortingBar: FC<{ totalCount: number }> = (props) => {
         { stateValue: 'PRICE_ASC', displayValue: t('price ascending') },
         { stateValue: 'PRICE_DESC', displayValue: t('price descending') },
     ];
+    useEffect(() => {
+        if (typeof window !== 'undefined') {
+            updateUrlWithCurrentSort(selectedSort);
+        }
+    }, []);
 
     const updateUrlWithCurrentSort = (sort: string) => {
         const queryParams = new URLSearchParams(window.location.search);
@@ -59,9 +64,6 @@ const SortingBar: FC<{ totalCount: number }> = (props) => {
         }
         history.replaceState(history.state, document.title, newState);
     };
-    if (typeof window !== 'undefined') {
-        updateUrlWithCurrentSort(selectedSort);
-    }
 
     return (
         <SortingBarStyled>
