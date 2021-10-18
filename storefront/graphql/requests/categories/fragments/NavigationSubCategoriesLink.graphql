@@ -1,6 +1,0 @@
-fragment NavigationSubCategoriesLink on Category {
-    children{
-        name
-        slug
-    }
-}

@@ -6,9 +6,9 @@ import { FormProvider } from 'react-hook-form';
 import { getTransports } from 'connectors/transports/Transports';
 import { handleOrderPagesRedirect } from 'helpers/HandleOrderPagesRedirect';
 import { initDomainConfig } from 'helpers/InitDomainConfig';
+import { NavigationQueryDocumentApi } from 'graphql/generated';
 import OrderAction from 'components/Blocks/OrderAction';
 import OrderLayout from 'components/Layout/OrderLayout';
-import { NavigationDocumentApi } from 'graphql/generated';
 import { PaymentInputType } from 'connectors/payments/types';
 import Select from 'components/Pages/Order/TransportAndPayment/Select';
 import StaticUrlGuard from 'components/Helpers/StaticUrlGuard';
@@ -64,7 +64,7 @@ const TransportAndPayment: FC<ServerSidePropsType> = () => {
 export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) => async (context) => {
     initDomainConfig(context, store);
     const redirect = handleOrderPagesRedirect(context);
-    return redirect === false ? initServerSideProps(context, store, [NavigationDocumentApi]) : redirect;
+    return redirect === false ? initServerSideProps(context, store, [NavigationQueryDocumentApi]) : redirect;
 });
 
 const getTransportAndPaymentValidity = (

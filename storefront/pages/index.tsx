@@ -1,9 +1,9 @@
 import { initServerSideProps, ServerSidePropsType } from 'helpers/InitServerSideProps';
 import {
-    NavigationDocumentApi,
-    PromotedCategoriesDocumentApi,
-    PromotedProductsDocumentApi,
-    SliderItemsDocumentApi,
+    NavigationQueryDocumentApi,
+    PromotedCategoriesQueryDocumentApi,
+    PromotedProductsQueryDocumentApi,
+    SliderItemsQueryDocumentApi,
 } from 'graphql/generated';
 import Banners from 'components/Blocks/Banners';
 import BlogPreview from 'components/Blocks/BlogPreview';
@@ -45,10 +45,10 @@ const Index: FC<ServerSidePropsType> = () => {
 export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) => async (context) => {
     initDomainConfig(context, store);
     return initServerSideProps(context, store, [
-        PromotedCategoriesDocumentApi,
-        SliderItemsDocumentApi,
-        PromotedProductsDocumentApi,
-        NavigationDocumentApi,
+        PromotedCategoriesQueryDocumentApi,
+        SliderItemsQueryDocumentApi,
+        PromotedProductsQueryDocumentApi,
+        NavigationQueryDocumentApi,
         blogPreviewQuery,
     ]);
 });

@@ -1,4 +1,4 @@
-fragment ProductPrice on Product {
+fragment ProductPriceFragment on Product {
     price {
         priceWithVat
         priceWithoutVat

@@ -9,6 +9,7 @@ generates:
             - 'fragment-matcher'
             - 'typescript-urql'
         config:
+            omitOperationSuffix: true
             typesSuffix: Api
             withHooks: true
             withHOC: false

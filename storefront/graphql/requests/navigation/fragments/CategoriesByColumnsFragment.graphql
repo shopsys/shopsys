@@ -1,0 +1,6 @@
+fragment CategoriesByColumnFragment on NavigationItem {
+    categoriesByColumns{
+        columnNumber
+        ...ColumnCategoriesFragment
+    }
+}

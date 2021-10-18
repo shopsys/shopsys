@@ -1,5 +1,0 @@
-fragment ImageList on Product {
-    images (sizes: "list") {
-        ...ImageSizes
-    }
-}

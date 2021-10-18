@@ -1,8 +1,8 @@
-query PromotedCategories {
+query PromotedCategoriesQuery {
     promotedCategories {
         uuid
         name
         slug
-        ...ImagesDefault
+        ...ImagesDefaultFragment
     }
 }

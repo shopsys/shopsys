@@ -1,4 +1,4 @@
-fragment ImageSizes on Image {
+fragment ImageSizesFragment on Image {
     sizes{
         size
         url

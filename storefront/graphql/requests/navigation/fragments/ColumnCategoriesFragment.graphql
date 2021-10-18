@@ -1,0 +1,8 @@
+fragment ColumnCategoriesFragment on NavigationItemCategoriesByColumns {
+    categories{
+        name
+        slug
+        ...ImagesDefaultFragment
+        ...NavigationSubCategoriesLinkFragment
+    }
+}

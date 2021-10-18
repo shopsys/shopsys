@@ -1,4 +1,0 @@
-fragment FlagLabel on Flag {
-    name
-    rgbColor
-}

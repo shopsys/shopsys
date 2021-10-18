@@ -81,8 +81,7 @@ export const mapSliderProductApiData = (
             price: mapProductPriceApiData(apiProduct.price, currencyCode),
             isMainVariant: apiProduct.__typename === 'MainVariant',
             availability:
-                apiProduct.availability.name !== undefined &&
-                apiProduct.availability.name !== null
+                apiProduct.availability.name !== undefined && apiProduct.availability.name !== null
                     ? apiProduct.availability.name
                     : '',
             flags: mapFlagsApiData(apiProduct.flags),

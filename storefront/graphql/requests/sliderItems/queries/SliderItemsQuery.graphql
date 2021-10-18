@@ -1,10 +1,10 @@
-query SliderItems {
+query SliderItemsQuery {
     sliderItems {
         uuid
         name
         link
         extendedText
         extendedTextLink
-        ...ImagesWebDefault
+        ...ImagesWebDefaultFragment
     }
 }

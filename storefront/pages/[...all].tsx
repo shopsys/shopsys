@@ -10,7 +10,7 @@ import CommonLayout from 'components/Layout/CommonLayout';
 import DefaultErrorPage from 'next/error';
 import GetNewPagination from 'utils/GetNewPagination';
 import { initDomainConfig } from 'helpers/InitDomainConfig';
-import { NavigationDocumentApi } from 'graphql/generated';
+import { NavigationQueryDocumentApi } from 'graphql/generated';
 import ProductDetailPage from 'components/Pages/ProductDetail';
 import { ProductDetailType } from 'components/Pages/ProductDetail/types';
 import StoreDetailPage from 'components/Pages/StoreDetail';
@@ -70,7 +70,7 @@ export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) =>
     const updatedPagination = GetNewPagination(Number(context.query.page));
     initDomainConfig(context, store);
     return initServerSideProps(context, store, [
-        NavigationDocumentApi,
+        NavigationQueryDocumentApi,
         friendlyUrlQuery(
             getUrlWithoutGetParameters(context.resolvedUrl),
             categoryDetailSort,

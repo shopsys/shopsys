@@ -1,4 +1,4 @@
-mutation NewsletterSubscribe($email: String!) {
+mutation NewsletterSubscribeMutation($email: String!) {
     NewsletterSubscribe(input:{
         email:$email
     })

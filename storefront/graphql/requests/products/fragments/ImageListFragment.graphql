@@ -1,0 +1,5 @@
+fragment ImageListFragment on Product {
+    images (sizes: "list") {
+        ...ImageSizesFragment
+    }
+}

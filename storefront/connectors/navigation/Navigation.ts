@@ -2,7 +2,8 @@ import {
     CategoriesByColumnFragmentApi,
     ColumnCategoriesFragmentApi,
     ImagesDefaultFragmentApi,
-    NavigationQueryApi, NavigationSubCategoriesLinkFragmentApi,
+    NavigationQueryApi,
+    NavigationSubCategoriesLinkFragmentApi,
     useNavigationQueryApi,
 } from 'graphql/generated';
 import { getUserFriendlyErrors } from 'connectors/lib/friendlyErrorMessageParser';
