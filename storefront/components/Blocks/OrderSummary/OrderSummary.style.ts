@@ -153,6 +153,10 @@ export const TransportAndPaymentImageWrapper = styled.span`
     height: 18px;
     margin-left: 8px;
     vertical-align: bottom;
+
+    > img {
+        width: 35px;
+    }
 `;
 
 export const OrderSummaryTotalPriceWrapper = styled.div`
