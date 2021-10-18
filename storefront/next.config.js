@@ -10,13 +10,13 @@ module.exports = {
     publicRuntimeConfig: {
         domains: [
             {
-                publicGraphqlEndpoint: process.env.DOMAIN_HOSTNAME_1 + 'graphql/',
+                publicGraphqlEndpoint: process.env.PUBLIC_GRAPHQL_ENDPOINT_HOSTNAME_1,
                 url: process.env.DOMAIN_HOSTNAME_1,
                 defaultLocale: 'cs',
                 currencyCode: 'CZK',
             },
             {
-                publicGraphqlEndpoint: process.env.DOMAIN_HOSTNAME_2 + 'graphql/',
+                publicGraphqlEndpoint: process.env.PUBLIC_GRAPHQL_ENDPOINT_HOSTNAME_2,
                 url: process.env.DOMAIN_HOSTNAME_2,
                 defaultLocale: 'sk',
                 currencyCode: 'EUR',

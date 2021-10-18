@@ -5,6 +5,7 @@ import { TransportInputType, TransportType } from 'connectors/transports/types';
 import { FormProvider } from 'react-hook-form';
 import { getTransports } from 'connectors/transports/Transports';
 import { handleOrderPagesRedirect } from 'helpers/HandleOrderPagesRedirect';
+import { initDomainConfig } from 'helpers/InitDomainConfig';
 import { navigationQuery } from 'connectors/navigation/Navigation';
 import OrderAction from 'components/Blocks/OrderAction';
 import OrderLayout from 'components/Layout/OrderLayout';
@@ -12,17 +13,15 @@ import { PaymentInputType } from 'connectors/payments/types';
 import Select from 'components/Pages/Order/TransportAndPayment/Select';
 import StaticUrlGuard from 'components/Helpers/StaticUrlGuard';
 import { useGetInternationalizedStaticUrls } from 'hooks/staticUrls/UseGetInternationalizedStaticUrls';
-import { useInitDomainConfig } from 'hooks/helpers/UseInitDomainConfig';
 import { useShopsysForm } from 'hooks/forms/UseShopsysForm';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 
-const TransportAndPayment: FC<ServerSidePropsType> = (props) => {
-    useInitDomainConfig(props.domainConfig);
+const TransportAndPayment: FC<ServerSidePropsType> = () => {
     const { cartUuid, transport, payment } = useShopsysSelector((state) => state.cartInput);
-    const { url } = useShopsysSelector((state) => state.domain);
+    const domainUrl = useShopsysSelector((state) => state.domain.url);
     const [cartUrl, contactInformationUrl] = useGetInternationalizedStaticUrls(
         ['/cart', '/order/contact-information'],
-        url,
+        domainUrl,
     );
     const transports = getTransports(cartUuid);
     const transportObject = useShopsysSelector((state) => state.user.transport);
@@ -42,7 +41,7 @@ const TransportAndPayment: FC<ServerSidePropsType> = (props) => {
     }, [transport, transportObject, payment]);
 
     return (
-        <StaticUrlGuard domainUrl={props.domainConfig.url}>
+        <StaticUrlGuard domainUrl={domainUrl}>
             <FormProvider {...formProviderMethods}>
                 <OrderLayout activeStep={2} buttonNextText={t('Contact information')}>
                     {transports.length > 0 && <Select transports={transports} />}
@@ -63,7 +62,9 @@ const TransportAndPayment: FC<ServerSidePropsType> = (props) => {
 };
 
 export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) => async (context) => {
-    return handleOrderPagesRedirect(context) || initServerSideProps(context, store, [navigationQuery]);
+    initDomainConfig(context, store);
+    const redirect = handleOrderPagesRedirect(context);
+    return redirect === false ? initServerSideProps(context, store, [navigationQuery]) : redirect;
 });
 
 const getTransportAndPaymentValidity = (

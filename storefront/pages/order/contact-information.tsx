@@ -6,6 +6,7 @@ import ContactInformationForm from 'components/Pages/Order/ContactInformation';
 import { FC } from 'react';
 import { getContactInformationFormResolver } from 'components/Pages/Order/ContactInformation/ContactInformationFormResolver';
 import { handleOrderPagesRedirect } from 'helpers/HandleOrderPagesRedirect';
+import { initDomainConfig } from 'helpers/InitDomainConfig';
 import { navigationQuery } from 'connectors/navigation/Navigation';
 import OrderAction from 'components/Blocks/OrderAction';
 import { OrderApiType } from 'connectors/order/types';
@@ -17,7 +18,6 @@ import { useCreateOrder } from 'connectors/order/Order';
 import { useGetInternationalizedStaticUrls } from 'hooks/staticUrls/UseGetInternationalizedStaticUrls';
 import { useHandleFormSuccessfulSubmit } from 'hooks/forms/UseHandleFormSuccessfulSubmit';
 import { useHandleFormValidationErrors } from 'hooks/forms/UseHandleFormValidationErrors';
-import { useInitDomainConfig } from 'hooks/helpers/UseInitDomainConfig';
 import { userActions } from 'redux/slices/user';
 import { useRouter } from 'next/router';
 import { useShopsysForm } from 'hooks/forms/UseShopsysForm';
@@ -58,16 +58,15 @@ const getContactInformationFormDefaultValues = (t: TFunction) => {
     };
 };
 
-const ContactInformation: FC<ServerSidePropsType> = (props) => {
+const ContactInformation: FC<ServerSidePropsType> = () => {
     const router = useRouter();
     const dispatch = useShopsysDispatch();
-    const { url } = useShopsysSelector((state) => state.domain);
+    const domainUrl = useShopsysSelector((state) => state.domain.url);
     const [transportAndPaymentUrl, orderConfirmationUrl] = useGetInternationalizedStaticUrls(
         ['/order/transport-and-payment', '/order-confirmation'],
-        url,
+        domainUrl,
     );
     const cartInput = useShopsysSelector((state) => state.cartInput);
-    useInitDomainConfig(props.domainConfig);
     const t = useTypedTranslationFunction();
     const [createOrderResult, createOrder] = useCreateOrder();
     const formProviderMethods = useShopsysForm(
@@ -112,7 +111,7 @@ const ContactInformation: FC<ServerSidePropsType> = (props) => {
     };
 
     return (
-        <StaticUrlGuard domainUrl={props.domainConfig.url}>
+        <StaticUrlGuard domainUrl={domainUrl}>
             <FormProvider {...formProviderMethods}>
                 <form onSubmit={formProviderMethods.handleSubmit(onCreateOrderHandler)}>
                     <OrderLayout activeStep={3} buttonNextText={t('Submit order')}>
@@ -134,7 +133,9 @@ const ContactInformation: FC<ServerSidePropsType> = (props) => {
 };
 
 export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) => async (context) => {
-    return handleOrderPagesRedirect(context) || initServerSideProps(context, store, [navigationQuery]);
+    initDomainConfig(context, store);
+    const redirect = handleOrderPagesRedirect(context);
+    return redirect === false ? initServerSideProps(context, store, [navigationQuery]) : redirect;
 });
 
 export default ContactInformation;

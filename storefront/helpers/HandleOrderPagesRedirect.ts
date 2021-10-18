@@ -1,41 +1,35 @@
+import { GetServerSidePropsContext, Redirect } from 'next';
 import { getCartInputCookie } from './Cookies';
 import { getDomainConfig } from 'utils/Domain/Domain';
-import { GetServerSidePropsContext } from 'next';
 import { useGetInternationalizedStaticUrls } from 'hooks/staticUrls/UseGetInternationalizedStaticUrls';
 
-export const handleOrderPagesRedirect = (
-    context: GetServerSidePropsContext,
-):
-    | {
-          redirect: {
-              destination: string;
-              permanent: false;
-          };
-      }
-    | false => {
-    const domainUrl = getDomainConfig(context.req.headers.host)?.url;
+export const handleOrderPagesRedirect = (context: GetServerSidePropsContext): { redirect: Redirect } | false => {
+    const domainConfig = getDomainConfig(context.req.headers.host);
     const cartInputCookie = getCartInputCookie(context);
 
-    if (
-        context.resolvedUrl !== '/order/transport-and-payment' &&
-        (cartInputCookie.transport === null || cartInputCookie.payment === null)
-    ) {
-        const [transportAndPaymentUrl] = useGetInternationalizedStaticUrls(['/order/transport-and-payment'], domainUrl);
+    if (cartInputCookie.cartUuid === null && context.resolvedUrl !== '/cart') {
+        const [cartUrl] = useGetInternationalizedStaticUrls(['/cart'], domainConfig.url);
 
         return {
             redirect: {
-                destination: transportAndPaymentUrl,
+                destination: cartUrl,
                 permanent: false,
             },
         };
     }
 
-    if (cartInputCookie.cartUuid === null && context.resolvedUrl !== '/cart') {
-        const [cartUrl] = useGetInternationalizedStaticUrls(['/cart'], domainUrl);
+    if (
+        context.resolvedUrl !== '/order/transport-and-payment' &&
+        (cartInputCookie.transport === null || cartInputCookie.payment === null)
+    ) {
+        const [transportAndPaymentUrl] = useGetInternationalizedStaticUrls(
+            ['/order/transport-and-payment'],
+            domainConfig.url,
+        );
 
         return {
             redirect: {
-                destination: cartUrl,
+                destination: transportAndPaymentUrl,
                 permanent: false,
             },
         };

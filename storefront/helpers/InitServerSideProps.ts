@@ -1,5 +1,4 @@
 import { cacheExchange, dedupExchange, fetchExchange, ssrExchange } from 'urql';
-import { DomainConfigType, getDomainConfig } from 'utils/Domain/Domain';
 import { GetServerSidePropsContext, GetServerSidePropsResult } from 'next';
 import { initUrqlClient, SSRData } from 'next-urql';
 import { AppStore } from 'redux/main';
@@ -12,7 +11,6 @@ import { SSRConfig } from 'next-i18next';
 
 export type ServerSidePropsType = {
     urqlState: SSRData;
-    domainConfig: DomainConfigType;
 } & SSRConfig;
 
 export async function initServerSideProps(
@@ -21,8 +19,7 @@ export async function initServerSideProps(
     prefetchedQueries: string[] = [],
 ): Promise<GetServerSidePropsResult<ServerSidePropsType>> {
     store.dispatch(cartInputActions.setCartInputData(getCartInputCookie(context)));
-    const domain = context.req.headers.host;
-    const domainConfig = getDomainConfig(domain);
+    const domainConfig = store.getState().domain;
     const { serverRuntimeConfig } = getConfig();
     const ssrCache = ssrExchange({ isClient: false });
 
@@ -56,7 +53,6 @@ export async function initServerSideProps(
             props: {
                 ...serversideTranslationConfig,
                 urqlState: ssrCache.extractData(),
-                domainConfig: domainConfig,
             },
         };
     }

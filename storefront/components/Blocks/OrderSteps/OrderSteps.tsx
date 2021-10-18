@@ -13,7 +13,7 @@ type OrderStepsProps = {
 const OrderSteps: FC<OrderStepsProps> = (props) => {
     const t = useTypedTranslationFunction();
     const [cartUrl, transportAndPaymentUrl] = useGetInternationalizedStaticUrls(
-        ['/cart', '/order/transport-and-payment', '/order/contact-information'],
+        ['/cart', '/order/transport-and-payment'],
         props.domainUrl,
     );
 
@@ -23,7 +23,7 @@ const OrderSteps: FC<OrderStepsProps> = (props) => {
                 <OrderStepsListItemStyled>
                     {props.activeStep > 1 ? (
                         <NextLink href={cartUrl} passHref>
-                            <OrderStepsListItemLinkStyled isActive={props.activeStep === 1} cursor="pointer">
+                            <OrderStepsListItemLinkStyled isActive={false} cursor="pointer">
                                 {'1. ' + t('Cart')}
                             </OrderStepsListItemLinkStyled>
                         </NextLink>
@@ -36,7 +36,7 @@ const OrderSteps: FC<OrderStepsProps> = (props) => {
                 <OrderStepsListItemStyled>
                     {props.activeStep > 2 ? (
                         <NextLink href={transportAndPaymentUrl} passHref>
-                            <OrderStepsListItemLinkStyled isActive={props.activeStep === 2} cursor="pointer">
+                            <OrderStepsListItemLinkStyled isActive={false} cursor="pointer">
                                 {'2. ' + t('Transport and payment')}
                             </OrderStepsListItemLinkStyled>
                         </NextLink>

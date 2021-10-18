@@ -1,12 +1,13 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { DomainConfigType } from 'utils/Domain/Domain';
+import { HYDRATE } from 'next-redux-wrapper';
 
 const initialState = {
-    url: 'http://127.0.0.1:8000/',
-    publicGraphqlEndpoint: 'http://127.0.0.1:8000/graphql/',
+    url: process.env.DOMAIN_HOSTNAME_1,
+    publicGraphqlEndpoint: process.env.PUBLIC_GRAPHQL_ENDPOINT_HOSTNAME_1,
     defaultLocale: 'cs',
     currencyCode: 'CZK',
-};
+} as DomainConfigType;
 
 export const domainSlice = createSlice({
     name: 'domain',
@@ -17,6 +18,17 @@ export const domainSlice = createSlice({
             state.url = action.payload.url;
             state.defaultLocale = action.payload.defaultLocale;
             state.publicGraphqlEndpoint = action.payload.publicGraphqlEndpoint;
+        },
+    },
+    extraReducers: {
+        /**
+         * @see https://github.com/kirill-konshin/next-redux-wrapper#usage
+         */
+        [HYDRATE]: (state, action) => {
+            return {
+                ...state,
+                ...action.payload.domain,
+            };
         },
     },
 });
