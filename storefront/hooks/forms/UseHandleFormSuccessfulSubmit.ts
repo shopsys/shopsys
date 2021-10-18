@@ -6,7 +6,7 @@ export const useHandleFormSuccessfulSubmit = (
     result: UseMutationState,
     formProviderMethods: UseFormReturn,
     defaultValues: FieldValues,
-    onSuccessAction?: () => void,
+    onSuccessAction?: (resultData: UseMutationState['data']) => void,
     options?: { blur?: boolean; reset?: boolean },
 ): void => {
     useEffect(() => {
@@ -19,7 +19,7 @@ export const useHandleFormSuccessfulSubmit = (
         }
 
         if (onSuccessAction !== undefined) {
-            onSuccessAction();
+            onSuccessAction(result.data);
         }
     }, [result.data, result.error]);
 

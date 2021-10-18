@@ -34,7 +34,7 @@ const OrderAction: FC<OrderActionProps> = (props) => {
                 ) : (
                     <>
                         <OrderActionButtonBackStyled
-                            type="submit"
+                            type="button"
                             borderRadius="big"
                             variant="asLink"
                             isDisabled={false}
@@ -46,7 +46,7 @@ const OrderAction: FC<OrderActionProps> = (props) => {
                 )}
             </OrderActionLeftStyled>
             <OrderActionRightStyled>
-                <Button type="button" borderRadius="big" variant="primary" isDisabled={props.isDisabled}>
+                <Button type="submit" borderRadius="big" variant="primary" isDisabled={props.isDisabled}>
                     {props.buttonNext}
                     <OrderActionButtonNextIconStyled icon="Arrow" />
                 </Button>

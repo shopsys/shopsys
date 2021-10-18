@@ -123,5 +123,7 @@
     "Please enter only numbers": "Prosím, zadávejte pouze čísla",
     "This value must be exactly 8 characters": "Táto hodnota musí mít přesně 8 znaků",
     "(0)[Products];(1)[Product];(2-inf)[Products];": "(0)[Produktů];(1)[Produkt];(2-4)[Produkty];(5-inf)[Produktů];",
-    "Promo code was added to the order.": "Slevový kupón byl přidán do objednávky."
+    "Promo code was added to the order.": "Slevový kupón byl přidán do objednávky.",
+    "Thank you for your order": "Děkujeme za objednávku",
+    "We have also sent a summary to your email": "Rekapitulaci jsme vám zaslali také na váš e-mail"
 }

@@ -28,12 +28,14 @@ module.exports = {
                 '/order/transport-and-payment': '/objednavka/doprava-a-platba',
                 '/order/contact-information': '/objednavka/kontaktni-udaje',
                 '/reset-password': '/zapomenute-heslo',
+                '/order-confirmation': '/potvrzeni-objednavky',
             },
             [process.env.DOMAIN_HOSTNAME_2]: {
                 '/cart': '/kosik',
                 '/order/transport-and-payment': '/objednavka/doprava-a-platba',
                 '/order/contact-information': '/objednavka/kontaktne-udaje',
                 '/reset-password': '/zapomenute-heslo',
+                '/order-confirmation': '/potvrdenie-objednavky',
             },
         },
     },
@@ -56,6 +58,10 @@ module.exports = {
                 source: '/zapomenute-heslo',
                 destination: '/reset-password',
             },
+            {
+                source: '/potvrzeni-objednavky',
+                destination: '/order-confirmation',
+            },
             // Slovak URLs
             {
                 source: '/kosik',
@@ -72,6 +78,10 @@ module.exports = {
             {
                 source: '/zapomenute-heslo',
                 destination: '/reset-password',
+            },
+            {
+                source: '/potvrdenie-objednavky',
+                destination: '/order-confirmation',
             },
         ];
     },

@@ -123,5 +123,7 @@
     "Please enter only numbers": "Please enter only numbers",
     "This value must be exactly 8 characters": "This value must be exactly 8 characters",
     "(0)[Products];(1)[Product];(2-inf)[Products];": "(0)[Products];(1)[Product];(2-inf)[Products];",
-    "Promo code was added to the order.": "Promo code was added to the order."
+    "Promo code was added to the order.": "Promo code was added to the order.",
+    "Thank you for your order": "Thank you for your order",
+    "We have also sent a summary to your email": "We've also sent a summary to your email"
 }
