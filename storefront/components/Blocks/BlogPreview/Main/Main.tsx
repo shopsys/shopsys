@@ -1,0 +1,67 @@
+import { FC, Fragment, useState } from 'react';
+import {
+    MainContentStyled,
+    MainDescriptionStyled,
+    MainImageLinkStyled,
+    MainImageStyled,
+    MainItemStyled,
+    MainNameStyled,
+} from './Main.style';
+import { BlogPreviewType } from 'connectors/blogPreview/blogPreview';
+import { desktopFirstSizes } from 'components/Theme/mediaQueries';
+import Flag from 'components/Basic/Flag';
+import Image from 'components/Basic/Image';
+import { isElementVisible } from 'components/Helpers/isElementVisible';
+import { useGetWindowSize } from 'hooks/ui/UseGetWindowSize';
+import { useResizeWidthEffect } from 'hooks/ui/UseResizeWidthEffect';
+
+type MainProps = {
+    blogMainItems: BlogPreviewType[];
+};
+
+const Main: FC<MainProps> = (props) => {
+    const { width } = useGetWindowSize();
+    const [isOneMainArticle, setOnlyOneMainArticle] = useState(false);
+    const visibleArticles = isOneMainArticle ? 1 : 2;
+
+    useResizeWidthEffect(
+        width,
+        desktopFirstSizes.tablet,
+        () => setOnlyOneMainArticle(false),
+        () => setOnlyOneMainArticle(true),
+        () => setOnlyOneMainArticle(isElementVisible([{ min: 0, max: desktopFirstSizes.tablet }], width)),
+    );
+
+    return (
+        <>
+            {props.blogMainItems.map(
+                (blogMainItem, index) =>
+                    index < visibleArticles && (
+                        <MainItemStyled key={index}>
+                            <MainImageStyled>
+                                <MainImageLinkStyled href={blogMainItem.link}>
+                                    <Image image={blogMainItem.image} alt="alt" />
+                                </MainImageLinkStyled>
+                            </MainImageStyled>
+                            <MainContentStyled>
+                                {blogMainItem.blogCategories.map((blogPreviewCategorie, index) => (
+                                    <Fragment key={index}>
+                                        {blogPreviewCategorie.parent !== null && (
+                                            <Flag color="#cdb3ff" href={blogPreviewCategorie.link}>
+                                                {blogPreviewCategorie.name}
+                                            </Flag>
+                                        )}
+                                    </Fragment>
+                                ))}
+
+                                <MainNameStyled href={blogMainItem.link}>{blogMainItem.name}</MainNameStyled>
+                                <MainDescriptionStyled>{blogMainItem.perex}</MainDescriptionStyled>
+                            </MainContentStyled>
+                        </MainItemStyled>
+                    ),
+            )}
+        </>
+    );
+};
+
+export default Main;
