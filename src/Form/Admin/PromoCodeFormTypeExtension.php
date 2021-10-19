@@ -252,19 +252,8 @@ class PromoCodeFormTypeExtension extends AbstractTypeExtension
         $flagsGroup = $builder->create('flagsGroup', GroupType::class, [
             'label' => t('Apply according to product flags'),
         ]);
+
         $builder->add($flagsGroup);
-        $flagsGroup->add('onSale', YesNoType::class, [
-            'required' => false,
-            'label' => t('Product On Sale'),
-        ])
-            ->add('inAction', YesNoType::class, [
-                'required' => false,
-                'label' => t('Product In Action'),
-            ])
-            ->add('priceHit', YesNoType::class, [
-                'required' => false,
-                'label' => t('Product Price Hit'),
-            ]);
     }
 
     /**

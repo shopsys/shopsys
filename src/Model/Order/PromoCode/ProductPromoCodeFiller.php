@@ -4,16 +4,11 @@ declare(strict_types=1);
 
 namespace App\Model\Order\PromoCode;
 
-use App\Model\Product\Flag\Flag;
 use App\Model\Product\Product;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 
 class ProductPromoCodeFiller
 {
-    private const BIT_ON_SALE = 1;
-    private const BIT_IN_ACTION = 2;
-    private const BIT_PRICE_HIT = 16;
-
     /**
      * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
      */
@@ -128,21 +123,7 @@ class ProductPromoCodeFiller
      */
     public function filterProductByPromoCodeFlags(Product $product, PromoCode $validEnteredPromoCode): ?Product
     {
-        $filterMask = 0;
-        $filterMask += $validEnteredPromoCode->isOnSale() ? self::BIT_ON_SALE : 0;
-        $filterMask += $validEnteredPromoCode->isInAction() ? self::BIT_IN_ACTION : 0;
-        $filterMask += $validEnteredPromoCode->isPriceHit() ? self::BIT_PRICE_HIT : 0;
-
-        $productSetup = 0;
-        $productSetup += $product->hasFlagByAkeneoCodeForDomain(Flag::AKENEO_CODE_SALE, $this->domain->getId()) ? self::BIT_ON_SALE : 0;
-        $productSetup += $product->hasFlagByAkeneoCodeForDomain(Flag::AKENEO_CODE_ACTION, $this->domain->getId()) ? self::BIT_IN_ACTION : 0;
-        $productSetup += $product->hasFlagByAkeneoCodeForDomain(Flag::AKENEO_CODE_HIT, $this->domain->getId()) ? self::BIT_PRICE_HIT : 0;
-
-        if (($filterMask & $productSetup ^ $filterMask) === 0) {
-            return $product;
-        }
-
-        return null;
+        return $product;
     }
 
     /**

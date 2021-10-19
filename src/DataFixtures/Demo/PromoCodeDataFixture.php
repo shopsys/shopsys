@@ -89,9 +89,6 @@ class PromoCodeDataFixture extends AbstractReferenceFixture implements Dependent
         $promoCodeData->code = 'test';
         $promoCodeData->domainId = Domain::FIRST_DOMAIN_ID;
         $promoCodeData->identifier = 'GG';
-        $promoCodeData->onSale = false;
-        $promoCodeData->inAction = false;
-        $promoCodeData->priceHit = false;
         $promoCode = $this->promoCodeFacade->create($promoCodeData);
 
         /** @var \App\Model\Product\Product $product */

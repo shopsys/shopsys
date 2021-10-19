@@ -87,28 +87,10 @@ class PromoCode extends BasePromoCode
     protected $applyOnSecondProduct;
 
     /**
-     * @var bool
-     * @ORM\Column(type="boolean")
-     */
-    private $onSale;
-
-    /**
-     * @var bool
-     * @ORM\Column(type="boolean")
-     */
-    private $inAction;
-
-    /**
      * @var int
      * @ORM\Column(type="integer")
      */
     private $discountType;
-
-    /**
-     * @var bool
-     * @ORM\Column(type="boolean")
-     */
-    private $priceHit;
 
     /**
      * @var bool
@@ -132,9 +114,6 @@ class PromoCode extends BasePromoCode
         $this->prefix = $promoCodeData->prefix;
         $this->massGenerateBatchId = $promoCodeData->massGenerateBatchId;
         $this->applyOnSecondProduct = $promoCodeData->applyOnSecondProduct;
-        $this->onSale = $promoCodeData->onSale;
-        $this->inAction = $promoCodeData->inAction;
-        $this->priceHit = $promoCodeData->priceHit;
         $this->discountType = $promoCodeData->discountType;
         $this->registeredCustomerUserOnly = $promoCodeData->registeredCustomerUserOnly;
     }
@@ -208,30 +187,6 @@ class PromoCode extends BasePromoCode
     public function isApplyOnSecondProduct(): bool
     {
         return $this->applyOnSecondProduct;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isOnSale(): bool
-    {
-        return $this->onSale;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isInAction(): bool
-    {
-        return $this->inAction;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isPriceHit(): bool
-    {
-        return $this->priceHit;
     }
 
     /**

@@ -116,9 +116,6 @@ class PromoCodeDataFactory extends BasePromoCodeDataFactory
         $promoCodeData->massGenerate = $promoCode->isMassGenerate();
         $promoCodeData->prefix = $promoCode->getPrefix();
         $promoCodeData->applyOnSecondProduct = $promoCode->isApplyOnSecondProduct();
-        $promoCodeData->onSale = $promoCode->isOnSale();
-        $promoCodeData->inAction = $promoCode->isInAction();
-        $promoCodeData->priceHit = $promoCode->isPriceHit();
         $promoCodeData->discountType = $promoCode->getDiscountType();
         $promoCodeData->registeredCustomerUserOnly = $promoCode->isRegisteredCustomerUserOnly();
         $promoCodeData->limitedPricingGroups = $this->promoCodePricingGroupRepository->getPricingGroupsByPromoCodeId($promoCode->getId());

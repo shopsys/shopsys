@@ -94,21 +94,6 @@ class PromoCodeData extends BasePromoCodeData
     public $applyOnSecondProduct = false;
 
     /**
-     * @var bool
-     */
-    public $onSale = true;
-
-    /**
-     * @var bool
-     */
-    public $inAction = true;
-
-    /**
-     * @var bool
-     */
-    public $priceHit = true;
-
-    /**
      * @var \App\Model\Order\PromoCode\PromoCodeLimit[]
      */
     public $limits = [];
