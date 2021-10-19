@@ -76,6 +76,22 @@ class PromoCodeFlag
     }
 
     /**
+     * @return bool
+     */
+    public function isInclusive(): bool
+    {
+        return $this->type === self::TYPE_INCLUSIVE;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isExclusive(): bool
+    {
+        return $this->type === self::TYPE_EXCLUSIVE;
+    }
+
+    /**
      * @param \App\Model\Order\PromoCode\PromoCode $promoCode
      */
     public function setPromoCode(PromoCode $promoCode): void

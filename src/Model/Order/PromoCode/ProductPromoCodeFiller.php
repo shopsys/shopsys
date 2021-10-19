@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\Order\PromoCode;
 
+use App\Model\Order\PromoCode\PromoCodeFlag\PromoCodeFlagRepository;
 use App\Model\Product\Product;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 
@@ -30,21 +31,29 @@ class ProductPromoCodeFiller
     private PromoCodeBrandRepository $promoCodeBrandRepository;
 
     /**
+     * @var \App\Model\Order\PromoCode\PromoCodeFlag\PromoCodeFlagRepository
+     */
+    private PromoCodeFlagRepository $promoCodeFlagRepository;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \App\Model\Order\PromoCode\PromoCodeProductRepository $promoCodeProductRepository
      * @param \App\Model\Order\PromoCode\PromoCodeCategoryRepository $promoCodeCategoryRepository
      * @param \App\Model\Order\PromoCode\PromoCodeBrandRepository $promoCodeBrandRepository
+     * @param \App\Model\Order\PromoCode\PromoCodeFlag\PromoCodeFlagRepository $promoCodeFlagRepository
      */
     public function __construct(
         Domain $domain,
         PromoCodeProductRepository $promoCodeProductRepository,
         PromoCodeCategoryRepository $promoCodeCategoryRepository,
-        PromoCodeBrandRepository $promoCodeBrandRepository
+        PromoCodeBrandRepository $promoCodeBrandRepository,
+        PromoCodeFlagRepository $promoCodeFlagRepository
     ) {
         $this->domain = $domain;
         $this->promoCodeProductRepository = $promoCodeProductRepository;
         $this->promoCodeCategoryRepository = $promoCodeCategoryRepository;
         $this->promoCodeBrandRepository = $promoCodeBrandRepository;
+        $this->promoCodeFlagRepository = $promoCodeFlagRepository;
     }
 
     /**
@@ -123,7 +132,24 @@ class ProductPromoCodeFiller
      */
     public function filterProductByPromoCodeFlags(Product $product, PromoCode $validEnteredPromoCode): ?Product
     {
-        return $product;
+        $promoCodeFlags = $this->promoCodeFlagRepository->getFlagsByPromoCodeId($validEnteredPromoCode->getId());
+
+        $productFlagIds = $product->getFlagsIdsForDomain($this->domain->getId());
+        $productSatisfies = true;
+
+        foreach ($promoCodeFlags as $promoCodeFlag) {
+            $productHasPromoCodeFlag = in_array($promoCodeFlag->getFlag()->getId(), $productFlagIds, true);
+
+            if ($promoCodeFlag->isInclusive() && !$productHasPromoCodeFlag) {
+                $productSatisfies = false;
+            }
+
+            if ($promoCodeFlag->isExclusive() && $productHasPromoCodeFlag) {
+                $productSatisfies = false;
+            }
+        }
+
+        return $productSatisfies ? $product : null;
     }
 
     /**
