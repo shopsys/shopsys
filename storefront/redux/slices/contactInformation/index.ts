@@ -62,6 +62,9 @@ export const contactInformationSlice = createSlice({
     name: 'contactInformation',
     initialState,
     reducers: {
+        resetContactInformation() {
+            return initialState;
+        },
         setEmail(state, action: PayloadAction<string>) {
             state.email = action.payload;
         },

@@ -56,9 +56,11 @@ export const createOrderMutation = `mutation (
             transport: $transport
             cartUuid: $cartUuid
             promoCode: $promoCode
-        })
+        }){
+            number
+        }
     }` as const;
 
-export const useCreateOrder = (): UseMutationResponse<void, OrderInputType> => {
+export const useCreateOrder = (): UseMutationResponse<{ CreateOrder: { number: number } }, OrderInputType> => {
     return useMutation(createOrderMutation);
 };
