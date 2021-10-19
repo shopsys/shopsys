@@ -142,5 +142,6 @@
     "Possibility of purchases for better prices": "Možnosť nákupu za výhodné ceny",
     "Exclusive products as a part of the loyalty program": "Exkluzívne produkty vo vernostnom programe",
     "Create account": "Vytvoriť účet",
-    "I agree with terms and conditions and privacy policy": "Súhlasím s <1>obchodnými podmienkami</1> a spracovaním osobných údajov"
+    "I agree with terms and conditions and privacy policy": "Súhlasím s <1>obchodnými podmienkami</1> a spracovaním osobných údajov",
+    "Password must be at least {{ count }} characters long": "Heslo musí mať aspoň {{ count }} znakov"
 }

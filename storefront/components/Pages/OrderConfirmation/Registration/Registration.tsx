@@ -14,6 +14,7 @@ import ChoiceFormLine from 'components/Forms/Lib/ChoiceFormLine';
 import { FC } from 'react';
 import FormLine from 'components/Forms/Lib/FormLine';
 import FormLineError from 'components/Forms/Lib/FormLineError';
+import { getRegistrationAfterOrderFormResolver } from './RegistrationAfterOrderFormResolver';
 import TextInput from 'components/Forms/TextInput';
 import { Trans } from 'react-i18next';
 import { useShopsysForm } from 'hooks/forms/UseShopsysForm';
@@ -22,7 +23,10 @@ import Webline from 'components/Layout/Webline';
 
 const Registration: FC = () => {
     const t = useTypedTranslationFunction();
-    const formProviderMethods = useShopsysForm(undefined, { password: '', privacyPolicy: false });
+    const formProviderMethods = useShopsysForm(getRegistrationAfterOrderFormResolver(t), {
+        password: '',
+        privacyPolicy: false,
+    });
 
     return (
         <Webline>
@@ -96,7 +100,13 @@ const Registration: FC = () => {
                                     </RegistrationFormItemStyled>
                                 )}
                             />
-                            <Button type="submit" variant="primary" borderRadius="big" style={{ width: '100%' }}>
+                            <Button
+                                type="submit"
+                                variant="primary"
+                                borderRadius="big"
+                                style={{ width: '100%' }}
+                                isDisabled={!formProviderMethods.formState.isValid}
+                            >
                                 {t('Create account')}
                             </Button>
                         </FormProvider>

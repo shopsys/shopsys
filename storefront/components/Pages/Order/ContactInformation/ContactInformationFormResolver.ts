@@ -10,12 +10,28 @@ export const getContactInformationFormResolver = (t: TFunction): Resolver => {
             register: Yup.boolean(),
             passwordFirst: Yup.string().when('register', {
                 is: true,
-                then: Yup.string().required(t('Please enter password')),
+                then: Yup.string()
+                    .required(t('Please enter password'))
+                    .min(
+                        6,
+                        t('Password must be at least {{ count }} characters long', {
+                            postProcess: 'interval',
+                            count: 6,
+                        }),
+                    ),
                 otherwise: Yup.string(),
             }),
             passwordSecond: Yup.string().when('register', {
                 is: true,
-                then: Yup.string().required(t('Please enter password')),
+                then: Yup.string()
+                    .required(t('Please enter password'))
+                    .min(
+                        6,
+                        t('Password must be at least {{ count }} characters long', {
+                            postProcess: 'interval',
+                            count: 6,
+                        }),
+                    ),
                 otherwise: Yup.string(),
             }),
             customer: Yup.string().oneOf(['commonCustomer', 'companyCustomer']),

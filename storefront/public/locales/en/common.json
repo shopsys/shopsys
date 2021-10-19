@@ -142,5 +142,6 @@
     "Possibility of purchases for better prices": "Possibility of purchases for better prices",
     "Exclusive products as a part of the loyalty program": "Exclusive products as a part of the loyalty program",
     "Create account": "Create account",
-    "I agree with terms and conditions and privacy policy": "I agree with <1>terms and conditions</1> and privacy policy"
+    "I agree with terms and conditions and privacy policy": "I agree with <1>terms and conditions</1> and privacy policy",
+    "Password must be at least {{ count }} characters long": "Password must be at least {{ count }} characters long"
 }
