@@ -3,13 +3,13 @@ import { initCartInputCookie, updateCartInputCookie } from 'helpers/Cookies';
 import { initServerSideProps, ServerSidePropsType } from 'helpers/InitServerSideProps';
 import { nextReduxWrapper, useShopsysDispatch, useShopsysSelector } from 'redux/main';
 import ContactInformationForm from 'components/Pages/Order/ContactInformation';
+import { ContactInformationFormType } from 'redux/slices/contactInformation';
 import { FC } from 'react';
 import { getContactInformationFormResolver } from 'components/Pages/Order/ContactInformation/ContactInformationFormResolver';
 import { handleOrderPagesRedirect } from 'helpers/HandleOrderPagesRedirect';
 import { initDomainConfig } from 'helpers/InitDomainConfig';
 import { navigationQuery } from 'connectors/navigation/Navigation';
 import OrderAction from 'components/Blocks/OrderAction';
-import { OrderApiType } from 'connectors/order/types';
 import OrderLayout from 'components/Layout/OrderLayout';
 import StaticUrlGuard from 'components/Helpers/StaticUrlGuard';
 import { TFunction } from 'next-i18next';
@@ -18,7 +18,6 @@ import { useCreateOrder } from 'connectors/order/Order';
 import { useGetInternationalizedStaticUrls } from 'hooks/staticUrls/UseGetInternationalizedStaticUrls';
 import { useHandleFormSuccessfulSubmit } from 'hooks/forms/UseHandleFormSuccessfulSubmit';
 import { useHandleFormValidationErrors } from 'hooks/forms/UseHandleFormValidationErrors';
-import { userActions } from 'redux/slices/user';
 import { useRouter } from 'next/router';
 import { useShopsysForm } from 'hooks/forms/UseShopsysForm';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
@@ -28,39 +27,10 @@ export const getCountrySelectOptions = (t: TFunction): { value: string; label: s
     { value: 'CZ', label: t('Czech Republic') },
 ];
 
-const getContactInformationFormDefaultValues = (t: TFunction) => {
-    return {
-        email: '',
-        register: false,
-        passwordFirst: '',
-        passwordSecond: '',
-        customer: 'commonCustomer',
-        telephone: '',
-        firstName: '',
-        lastName: '',
-        street: '',
-        city: '',
-        postcode: '',
-        country: getCountrySelectOptions(t)[0].value,
-        companyName: '',
-        companyNumber: '',
-        companyTaxNumber: '',
-        differentDeliveryAddress: false,
-        deliveryFirstName: '',
-        deliveryLastName: '',
-        deliveryCompanyName: '',
-        deliveryTelephone: '',
-        deliveryStreet: '',
-        deliveryCity: '',
-        deliveryPostcode: '',
-        deliveryCountry: getCountrySelectOptions(t)[0].value,
-        newsletterSubscription: false,
-    };
-};
-
 const ContactInformation: FC<ServerSidePropsType> = () => {
     const router = useRouter();
     const dispatch = useShopsysDispatch();
+    const contactInformationValues = useShopsysSelector((state) => state.contactInformation);
     const domainUrl = useShopsysSelector((state) => state.domain.url);
     const [transportAndPaymentUrl, orderConfirmationUrl] = useGetInternationalizedStaticUrls(
         ['/order/transport-and-payment', '/order-confirmation'],
@@ -69,19 +39,13 @@ const ContactInformation: FC<ServerSidePropsType> = () => {
     const cartInput = useShopsysSelector((state) => state.cartInput);
     const t = useTypedTranslationFunction();
     const [createOrderResult, createOrder] = useCreateOrder();
-    const formProviderMethods = useShopsysForm(
-        getContactInformationFormResolver(t),
-        getContactInformationFormDefaultValues(t),
-    );
-    useHandleFormSuccessfulSubmit(
-        createOrderResult,
-        formProviderMethods,
-        getContactInformationFormDefaultValues(t),
-        (resultData) => onSuccessfullyCreatedOrderHandler(resultData),
+    const formProviderMethods = useShopsysForm(getContactInformationFormResolver(t), contactInformationValues);
+    useHandleFormSuccessfulSubmit(createOrderResult, formProviderMethods, contactInformationValues, () =>
+        onSuccessfullyCreatedOrderHandler(),
     );
     useHandleFormValidationErrors(createOrderResult.error, formProviderMethods);
 
-    const onSuccessfullyCreatedOrderHandler = (resultData: { CreateOrder: OrderApiType }) => {
+    const onSuccessfullyCreatedOrderHandler = () => {
         const resetCartInput = initCartInputCookie();
         updateCartState(
             dispatch,
@@ -89,14 +53,10 @@ const ContactInformation: FC<ServerSidePropsType> = () => {
             resetCartInput,
         );
         updateCartInputCookie(resetCartInput);
-        dispatch(userActions.setEmail(resultData.CreateOrder.email));
         router.push(orderConfirmationUrl);
     };
 
-    const onCreateOrderHandler: SubmitHandler<ReturnType<typeof getContactInformationFormDefaultValues>> = (
-        formValues,
-        event,
-    ) => {
+    const onCreateOrderHandler: SubmitHandler<ContactInformationFormType> = (formValues, event) => {
         event?.preventDefault();
         if (cartInput.transport === null || cartInput.payment === null) {
             router.replace(transportAndPaymentUrl);

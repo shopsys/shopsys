@@ -13,6 +13,7 @@ import FormLineError from 'components/Forms/Lib/FormLineError';
 import { getCountrySelectOptions } from 'pages/order/contact-information';
 import Select from 'components/Forms/Select';
 import TextInput from 'components/Forms/TextInput';
+import { useShopsysSelector } from 'redux/main';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 
 const ContactInformationDeliveryAddress: FC = () => {
@@ -22,6 +23,7 @@ const ContactInformationDeliveryAddress: FC = () => {
     const [contentElementHeight, setContentElementHeight] = useState(0);
     const formProviderMethods = useFormContext();
     const deliveryAddressCheckbox = useWatch({ name: 'differentDeliveryAddress' });
+    const { deliveryCountry } = useShopsysSelector((state) => state.contactInformation);
 
     const calcHeight = () => {
         if (contentElement.current) {
@@ -206,7 +208,11 @@ const ContactInformationDeliveryAddress: FC = () => {
                                     render={({ field }) => (
                                         <>
                                             <Select
-                                                defaultValue={getCountrySelectOptions(t)[0]}
+                                                defaultValue={
+                                                    getCountrySelectOptions(t).find(
+                                                        (option) => option.value === deliveryCountry,
+                                                    )!
+                                                }
                                                 options={getCountrySelectOptions(t)}
                                                 onChange={(option: { value: string }) =>
                                                     formProviderMethods.setValue(field.name, option.value)

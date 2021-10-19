@@ -1,5 +1,5 @@
-import { OrderApiType, OrderInputType } from './types';
 import { useMutation, UseMutationResponse } from 'urql';
+import { OrderInputType } from './types';
 
 export const createOrderMutation = `mutation (
         $firstName: String! 
@@ -56,11 +56,9 @@ export const createOrderMutation = `mutation (
             transport: $transport
             cartUuid: $cartUuid
             promoCode: $promoCode
-        }) {
-            email
-        }
+        })
     }` as const;
 
-export const useCreateOrder = (): UseMutationResponse<{ CreateOrder: OrderApiType }, OrderInputType> => {
+export const useCreateOrder = (): UseMutationResponse<void, OrderInputType> => {
     return useMutation(createOrderMutation);
 };
