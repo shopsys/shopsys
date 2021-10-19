@@ -72,7 +72,7 @@ const Registration: FC = () => {
                                                 isTouched={isTouched}
                                                 hasError={invalid}
                                             />
-                                            <FormLineError inputType="text-input" error={error} />
+                                            <FormLineError inputType="text-input-password" error={error} />
                                         </FormLine>
                                     </RegistrationFormItemStyled>
                                 )}
