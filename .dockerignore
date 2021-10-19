@@ -28,3 +28,4 @@ docker/php-fpm/Dockerfile
 
 # ignore storefront folder as storefront has own container
 storefront
+!storefront/schema.graphql

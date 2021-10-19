@@ -56,6 +56,15 @@ test:standards:
         - docker run -i ${TAG} /bin/bash -c "mv PRODUCTION DEVELOPMENT; php phing composer-dev standards"
     interruptible: true
 
+test:graphql-schema-check:
+    stage: test
+    <<: *only-default
+    variables:
+        GIT_STRATEGY: none
+    script:
+        - docker run ${TAG} ./check-schema.sh
+    interruptible: true
+
 test:standards-storefront:
     stage: test
     <<: *only-default
@@ -63,6 +72,15 @@ test:standards-storefront:
         GIT_STRATEGY: none
     script:
         - docker run -i ${STOREFRONT_TAG} /bin/sh -c "npm run lint"
+    interruptible: true
+
+test:storefront-codegen-check:
+    stage: test
+    <<: *only-default
+    variables:
+        GIT_STRATEGY: none
+    script:
+        - docker run ${STOREFRONT_TAG} ./check-code-gen.sh
     interruptible: true
 
 test:functional:
