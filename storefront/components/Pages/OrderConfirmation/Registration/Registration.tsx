@@ -21,12 +21,19 @@ import { useShopsysForm } from 'hooks/forms/UseShopsysForm';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import Webline from 'components/Layout/Webline';
 
-const Registration: FC = () => {
-    const t = useTypedTranslationFunction();
-    const formProviderMethods = useShopsysForm(getRegistrationAfterOrderFormResolver(t), {
+const getRegistrationFormDefaultValues = () => {
+    return {
         password: '',
         privacyPolicy: false,
-    });
+    };
+};
+
+const Registration: FC = () => {
+    const t = useTypedTranslationFunction();
+    const formProviderMethods = useShopsysForm<ReturnType<typeof getRegistrationFormDefaultValues>>(
+        getRegistrationAfterOrderFormResolver(t),
+        getRegistrationFormDefaultValues(),
+    );
 
     return (
         <Webline>

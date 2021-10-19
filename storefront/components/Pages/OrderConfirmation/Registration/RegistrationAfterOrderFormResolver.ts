@@ -3,7 +3,7 @@ import { Resolver } from 'react-hook-form';
 import { TFunction } from 'react-i18next';
 import { yupResolver } from '@hookform/resolvers/yup';
 
-export const getRegistrationAfterOrderFormResolver = (t: TFunction): Resolver => {
+export const getRegistrationAfterOrderFormResolver = <T>(t: TFunction): Resolver<T> => {
     return yupResolver(
         Yup.object().shape({
             password: Yup.string()

@@ -3,7 +3,7 @@ import { Resolver } from 'react-hook-form';
 import { TFunction } from 'next-i18next';
 import { yupResolver } from '@hookform/resolvers/yup';
 
-export const getContactInformationFormResolver = (t: TFunction): Resolver => {
+export const getContactInformationFormResolver = <T>(t: TFunction): Resolver<T> => {
     return yupResolver(
         Yup.object().shape({
             email: Yup.string().required(t('Please enter email')).email(t('This value is not a valid email')),

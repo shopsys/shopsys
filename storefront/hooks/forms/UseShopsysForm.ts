@@ -1,10 +1,10 @@
-import { FieldValues, Resolver, useForm, UseFormReturn } from 'react-hook-form';
+import { DeepPartial, Resolver, UnpackNestedValue, useForm, UseFormReturn } from 'react-hook-form';
 
-export const useShopsysForm = (
-    resolver: Resolver | undefined,
-    defaultValues: FieldValues,
-): UseFormReturn<FieldValues> =>
-    useForm({
+export const useShopsysForm = <T>(
+    resolver: Resolver<T> | undefined,
+    defaultValues: UnpackNestedValue<DeepPartial<T>>,
+): UseFormReturn<T> =>
+    useForm<T>({
         mode: 'all',
         reValidateMode: 'onChange',
         criteriaMode: 'firstError',
