@@ -4,17 +4,77 @@ declare(strict_types=1);
 
 namespace App\Component\FileUpload;
 
+use App\Component\Image\Image;
+use App\Component\Image\ImageRepository;
+use App\Component\UploadedFile\UploadedFileRepository;
 use League\Flysystem\FileNotFoundException;
+use League\Flysystem\FilesystemInterface;
+use League\Flysystem\MountManager;
+use Shopsys\FrameworkBundle\Component\Doctrine\Exception\UnexpectedTypeException;
 use Shopsys\FrameworkBundle\Component\FileUpload\EntityFileUploadInterface;
 use Shopsys\FrameworkBundle\Component\FileUpload\Exception\MoveToEntityFailedException;
 use Shopsys\FrameworkBundle\Component\FileUpload\Exception\UploadFailedException;
+use Shopsys\FrameworkBundle\Component\FileUpload\FileNamingConvention;
 use Shopsys\FrameworkBundle\Component\FileUpload\FileUpload as BaseFileUpload;
 use Shopsys\FrameworkBundle\Component\String\TransformString;
+use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile as ShopsysUploadedFile;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Filesystem\Exception\IOException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class FileUpload extends BaseFileUpload
 {
+    /**
+     * @var \App\Component\Image\ImageRepository
+     */
+    private ImageRepository $imageRepository;
+
+    /**
+     * @var \App\Component\UploadedFile\UploadedFileRepository
+     */
+    private UploadedFileRepository $uploadedFileRepository;
+
+    /**
+     * @var array
+     */
+    private array $positionByEntityAndType = [];
+
+    /**
+     * @param string $temporaryDir
+     * @param string $uploadedFileDir
+     * @param string $imageDir
+     * @param \Shopsys\FrameworkBundle\Component\FileUpload\FileNamingConvention $fileNamingConvention
+     * @param \League\Flysystem\MountManager $mountManager
+     * @param \League\Flysystem\FilesystemInterface $filesystem
+     * @param \Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface|null $parameterBag
+     * @param \App\Component\Image\ImageRepository $imageRepository
+     * @param \App\Component\UploadedFile\UploadedFileRepository $uploadedFileRepository
+     */
+    public function __construct(
+        $temporaryDir,
+        $uploadedFileDir,
+        $imageDir,
+        FileNamingConvention $fileNamingConvention,
+        MountManager $mountManager,
+        FilesystemInterface $filesystem,
+        ?ParameterBagInterface $parameterBag = null,
+        ImageRepository $imageRepository,
+        UploadedFileRepository $uploadedFileRepository
+    ) {
+        parent::__construct(
+            $temporaryDir,
+            $uploadedFileDir,
+            $imageDir,
+            $fileNamingConvention,
+            $mountManager,
+            $filesystem,
+            $parameterBag
+        );
+
+        $this->imageRepository = $imageRepository;
+        $this->uploadedFileRepository = $uploadedFileRepository;
+    }
+
     /**
      * @param \Symfony\Component\HttpFoundation\File\UploadedFile $file
      * @return string
@@ -99,5 +159,74 @@ class FileUpload extends BaseFileUpload
         }
 
         return $deletedCounter;
+    }
+
+    /**
+     * @param \App\Component\Image\Image|\Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile $entity
+     */
+    public function preFlushEntity(EntityFileUploadInterface $entity)
+    {
+        parent::preFlushEntity($entity);
+
+        if ($entity->getPosition() === null) {
+            $entity->setPosition($this->getPositionForNewEntity($entity));
+        }
+    }
+
+    /**
+     * @param \App\Component\Image\Image|\Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile $entity
+     * @return int
+     */
+    private function getPositionForNewEntity(EntityFileUploadInterface $entity): int
+    {
+        $entityName = $entity->getEntityName();
+        $entityId = $entity->getEntityId();
+        $type = $entity->getType();
+        $uploadEntityType = $this->getUploadEntityType($entity);
+
+        if (isset($this->positionByEntityAndType[$entityName][$entityId][$uploadEntityType][$type])) {
+            $this->positionByEntityAndType[$entityName][$entityId][$uploadEntityType][$type]++;
+
+            return $this->positionByEntityAndType[$entityName][$entityId][$uploadEntityType][$type];
+        }
+
+        if ($uploadEntityType === 'image') {
+            $position = $this->imageRepository->getImagesCountByEntityIndexedById(
+                $entityName,
+                $entityId,
+                $type
+            );
+        } else {
+            $position = $this->uploadedFileRepository->getUploadedFilesCountByEntityIndexedById(
+                $entityName,
+                $entityId,
+                $type
+            );
+        }
+
+        $this->positionByEntityAndType[$entityName][$entityId][$uploadEntityType][$type] = $position;
+
+        return $position;
+    }
+
+    /**
+     * @param \App\Component\Image\Image|\Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile $entity
+     * @return string
+     */
+    private function getUploadEntityType(EntityFileUploadInterface $entity): string
+    {
+        $entityClass = get_class($entity);
+
+        if ($entityClass === Image::class) {
+            $uploadEntityType = 'image';
+        } elseif ($entityClass === ShopsysUploadedFile::class) {
+            $uploadEntityType = 'file';
+        } else {
+            throw new UnexpectedTypeException(
+                sprintf('Provided entity with class %s was not expected.', $entityClass)
+            );
+        }
+
+        return $uploadEntityType;
     }
 }
