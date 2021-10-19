@@ -99,6 +99,11 @@ class PromoCodeData extends BasePromoCodeData
     public $limits = [];
 
     /**
+     * @var \App\Model\Order\PromoCode\PromoCodeFlag\PromoCodeFlag[]
+     */
+    public array $flags = [];
+
+    /**
      * @var int
      */
     public $discountType = PromoCode::DISCOUNT_TYPE_PERCENT;
