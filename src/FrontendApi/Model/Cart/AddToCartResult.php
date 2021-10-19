@@ -7,6 +7,7 @@ namespace App\FrontendApi\Model\Cart;
 use App\Model\Cart\AddProductResult;
 use App\Model\Payment\Payment;
 use App\Model\Transport\Transport;
+use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
 
 class AddToCartResult
@@ -69,6 +70,14 @@ class AddToCartResult
     public function getTotalPrice(): Price
     {
         return $this->cartWithModifications->getTotalPrice();
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Component\Money\Money
+     */
+    public function getRemainingAmountWithVatForFreeTransport(): Money
+    {
+        return $this->cartWithModifications->getRemainingAmountWithVatForFreeTransport();
     }
 
     /**

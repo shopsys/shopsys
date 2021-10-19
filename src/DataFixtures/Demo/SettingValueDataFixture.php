@@ -15,6 +15,8 @@ use Shopsys\FrameworkBundle\Model\Seo\SeoSettingFacade;
 
 class SettingValueDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
 {
+    public const FREE_TRANSPORT_AND_PAYMENT_LIMIT = 300000;
+
     /**
      * @var \App\Component\Setting\Setting
      */
@@ -51,7 +53,10 @@ class SettingValueDataFixture extends AbstractReferenceFixture implements Depend
             $domainId = $domainConfig->getId();
             $locale = $domainConfig->getLocale();
             if ($domainId === 1) {
-                $this->pricingSetting->setFreeTransportAndPaymentPriceLimit($domainId, Money::create(300000));
+                $this->pricingSetting->setFreeTransportAndPaymentPriceLimit(
+                    $domainId,
+                    Money::create(self::FREE_TRANSPORT_AND_PAYMENT_LIMIT)
+                );
             }
 
             /** @var \App\Model\Article\Article $termsAndConditions */

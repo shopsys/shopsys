@@ -24,6 +24,7 @@ use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
 use Shopsys\FrameworkBundle\Model\Transport\Exception\TransportNotFoundException;
 use Shopsys\FrameworkBundle\Model\Transport\TransportPriceCalculation;
+use Shopsys\FrameworkBundle\Model\TransportAndPayment\FreeTransportAndPaymentFacade;
 
 class TransportAndPaymentWatcherFacade
 {
@@ -78,6 +79,11 @@ class TransportAndPaymentWatcherFacade
     private StoreFacade $storeFacade;
 
     /**
+     * @var \Shopsys\FrameworkBundle\Model\TransportAndPayment\FreeTransportAndPaymentFacade
+     */
+    private FreeTransportAndPaymentFacade $freeTransportAndPaymentFacade;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentPriceCalculation $paymentPriceCalculation
      * @param \Shopsys\FrameworkBundle\Model\Transport\TransportPriceCalculation $transportPriceCalculation
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
@@ -87,6 +93,7 @@ class TransportAndPaymentWatcherFacade
      * @param \Shopsys\Cdn\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
      * @param \App\Model\Store\StoreFacade $storeFacade
+     * @param \Shopsys\FrameworkBundle\Model\TransportAndPayment\FreeTransportAndPaymentFacade $freeTransportAndPaymentFacade
      */
     public function __construct(
         PaymentPriceCalculation $paymentPriceCalculation,
@@ -97,7 +104,8 @@ class TransportAndPaymentWatcherFacade
         OrderPreviewFactory $orderPreviewFactory,
         Domain $domain,
         CurrentCustomerUser $currentCustomerUser,
-        StoreFacade $storeFacade
+        StoreFacade $storeFacade,
+        FreeTransportAndPaymentFacade $freeTransportAndPaymentFacade
     ) {
         $this->paymentPriceCalculation = $paymentPriceCalculation;
         $this->transportPriceCalculation = $transportPriceCalculation;
@@ -108,6 +116,7 @@ class TransportAndPaymentWatcherFacade
         $this->domain = $domain;
         $this->currentCustomerUser = $currentCustomerUser;
         $this->storeFacade = $storeFacade;
+        $this->freeTransportAndPaymentFacade = $freeTransportAndPaymentFacade;
     }
 
     /**
@@ -155,6 +164,15 @@ class TransportAndPaymentWatcherFacade
             null,
             $promoCode
         );
+
+        if ($this->freeTransportAndPaymentFacade->isActive($domainId)) {
+            $amountWithVatForFreeTransport = $this->freeTransportAndPaymentFacade->getRemainingPriceWithVat(
+                $orderPreview->getTotalPrice()->getPriceWithVat(),
+                $domainId
+            );
+
+            $this->cartWithModificationsResult->setRemainingAmountWithVatForFreeTransport($amountWithVatForFreeTransport);
+        }
 
         $this->cartWithModificationsResult->setTotalPrice($orderPreview->getTotalPrice());
         $this->cartWithModificationsResult->setTotalDiscountPrice($orderPreview->getTotalPriceDiscount());
