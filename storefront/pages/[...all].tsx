@@ -8,15 +8,14 @@ import CategoryDetailPage from 'components/Pages/CategoryDetail';
 import { CategoryDetailType } from 'components/Pages/CategoryDetail/types';
 import CommonLayout from 'components/Layout/CommonLayout';
 import DefaultErrorPage from 'next/error';
+import { initDomainConfig } from 'helpers/InitDomainConfig';
 import { navigationQuery } from 'connectors/navigation/Navigation';
 import ProductDetailPage from 'components/Pages/ProductDetail';
 import { ProductDetailType } from 'components/Pages/ProductDetail/types';
-import { useInitDomainConfig } from 'hooks/helpers/UseInitDomainConfig';
 import { useRouter } from 'next/router';
 import Webline from 'components/Layout/Webline';
 
-const FriendlyUrlPage: FC<ServerSidePropsType> = (props) => {
-    useInitDomainConfig(props.domainConfig);
+const FriendlyUrlPage: FC<ServerSidePropsType> = () => {
     const router = useRouter();
     const dispatch = useShopsysDispatch();
     const categoryDetailSortQuery = router.query.sort as string;
@@ -56,6 +55,7 @@ function renderContent(data: ProductDetailType | CategoryDetailType) {
 
 export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) => async (context) => {
     const categoryDetailSort = getCategoryDetailSort(context.query.sort as string);
+    initDomainConfig(context, store);
     return initServerSideProps(context, store, [
         navigationQuery,
         friendlyUrlQuery(getUrlWithoutGetParameters(context.resolvedUrl), categoryDetailSort),

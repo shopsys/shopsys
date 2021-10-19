@@ -1,4 +1,3 @@
-import Button from 'components/Forms/Button';
 import { css } from 'styled-components';
 import Icon from 'components/Basic/Icon';
 import { styled } from 'components/Theme/main';
@@ -69,11 +68,6 @@ export const OrderActionLinkBackStyled = styled.a`
         color: ${theme.color.base};
         text-decoration: none;
     `}
-`;
-
-export const OrderActionButtonBackStyled = styled(Button)`
-    font-weight: 700;
-    text-transform: uppercase;
 `;
 
 export const OrderActionButtonBackIconStyled = styled(Icon)`

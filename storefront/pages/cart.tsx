@@ -3,33 +3,38 @@ import { nextReduxWrapper, useShopsysSelector } from 'redux/main';
 import CartSummary from 'components/Pages/Cart/CartSummary';
 import CommonLayout from 'components/Layout/CommonLayout';
 import { FC } from 'react';
+import { initDomainConfig } from 'helpers/InitDomainConfig';
 import List from 'components/Pages/Cart/List';
 import { navigationQuery } from 'connectors/navigation/Navigation';
 import OrderAction from 'components/Blocks/OrderAction';
 import OrderSteps from 'components/Blocks/OrderSteps';
 import StaticUrlGuard from 'components/Helpers/StaticUrlGuard';
-import { useInitDomainConfig } from 'hooks/helpers/UseInitDomainConfig';
+import { useGetInternationalizedStaticUrls } from 'hooks/staticUrls/UseGetInternationalizedStaticUrls';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import Webline from 'components/Layout/Webline';
 
-const Cart: FC<ServerSidePropsType> = (props) => {
+const Cart: FC<ServerSidePropsType> = () => {
     const { cart } = useShopsysSelector((state) => state.user);
+    const domainUrl = useShopsysSelector((state) => state.domain.url);
+    const [transportAndPaymentUrl] = useGetInternationalizedStaticUrls(['/order/transport-and-payment'], domainUrl);
     const t = useTypedTranslationFunction();
-    useInitDomainConfig(props.domainConfig);
 
     return (
-        <StaticUrlGuard domainUrl={props.domainConfig.url}>
+        <StaticUrlGuard domainUrl={domainUrl}>
             <CommonLayout>
-                <OrderSteps activeStep={1} domainUrl={props.domainConfig.url} />
+                <OrderSteps activeStep={1} domainUrl={domainUrl} />
                 <List items={cart?.items} />
                 <CartSummary />
                 <Webline>
                     <OrderAction
                         activeStep={1}
-                        buttonBack={t('Back to e-shop')}
-                        buttonNext={t('Shipment and payment')}
+                        buttonBack={t('Back')}
+                        buttonNext={t('Transport and payment')}
                         isDisabled={false}
+                        withGapTop={false}
                         withGapBottom={true}
+                        buttonBackLink="/"
+                        buttonNextLink={transportAndPaymentUrl}
                     />
                 </Webline>
             </CommonLayout>
@@ -38,6 +43,7 @@ const Cart: FC<ServerSidePropsType> = (props) => {
 };
 
 export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) => async (context) => {
+    initDomainConfig(context, store);
     return initServerSideProps(context, store, [navigationQuery]);
 });
 
