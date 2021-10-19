@@ -7,7 +7,7 @@ import Webline from 'components/Layout/Webline';
 
 const OrderConfirmation: FC = () => {
     const t = useTypedTranslationFunction();
-    const { email } = useShopsysSelector((state) => state.user);
+    const { email } = useShopsysSelector((state) => state.contactInformation);
 
     return (
         <Webline>

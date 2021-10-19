@@ -17,9 +17,11 @@ import { contactInformationActions } from 'redux/slices/contactInformation';
 import FormLine from 'components/Forms/Lib/FormLine';
 import FormLineError from 'components/Forms/Lib/FormLineError';
 import { getRegistrationAfterOrderFormResolver } from './RegistrationAfterOrderFormResolver';
+import { getUserFriendlyErrors } from 'connectors/lib/friendlyErrorMessageParser';
 import { showErrorMessage } from 'components/Helpers/Toasts';
 import TextInput from 'components/Forms/TextInput';
 import { Trans } from 'react-i18next';
+import { userActions } from 'redux/slices/user';
 import { useRegister } from 'connectors/registration/Registration';
 import { useRouter } from 'next/router';
 import { useShopsysForm } from 'hooks/forms/UseShopsysForm';
@@ -46,6 +48,7 @@ const Registration: FC = () => {
 
     useEffect(() => {
         return () => {
+            dispatch(userActions.setOrderConfirmationAccess(false));
             dispatch(contactInformationActions.resetContactInformation());
         };
     }, []);
@@ -56,9 +59,14 @@ const Registration: FC = () => {
             return;
         }
         if (registerResult.error !== undefined) {
-            showErrorMessage(t('Hooops, someting wrong happend.'));
+            const userErrors = getUserFriendlyErrors(registerResult.error, t).userError;
+            for (const key in userErrors) {
+                for (const error of userErrors[key]) {
+                    showErrorMessage(error.message);
+                }
+            }
         }
-    }, [registerResult]);
+    }, [registerResult.data, registerResult.error]);
 
     const onRegistrationSubmitHandler: SubmitHandler<{
         password: '';

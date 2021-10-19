@@ -19,6 +19,7 @@ import { useGetInternationalizedStaticUrls } from 'hooks/staticUrls/UseGetIntern
 import { useHandleContactInformationChanges } from 'hooks/forms/UseHandleContactInformationChanges';
 import { useHandleFormSuccessfulSubmit } from 'hooks/forms/UseHandleFormSuccessfulSubmit';
 import { useHandleFormValidationErrors } from 'hooks/forms/UseHandleFormValidationErrors';
+import { userActions } from 'redux/slices/user';
 import { useRouter } from 'next/router';
 import { useShopsysForm } from 'hooks/forms/UseShopsysForm';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
@@ -55,6 +56,7 @@ const ContactInformation: FC<ServerSidePropsType> = () => {
             resetCartInput,
         );
         updateCartInputCookie(resetCartInput);
+        dispatch(userActions.setOrderConfirmationAccess(true));
         router.push(orderConfirmationUrl);
     };
 
