@@ -5,11 +5,13 @@ import { initDomainConfig } from 'helpers/InitDomainConfig';
 import { navigationQuery } from 'connectors/navigation/Navigation';
 import { nextReduxWrapper } from 'redux/main';
 import OrderConfirmation from 'components/Pages/OrderConfirmation';
+import Registration from 'components/Pages/OrderConfirmation/Registration';
 
 const Index: FC<ServerSidePropsType> = () => {
     return (
         <CommonLayout>
             <OrderConfirmation />
+            <Registration />
         </CommonLayout>
     );
 };
