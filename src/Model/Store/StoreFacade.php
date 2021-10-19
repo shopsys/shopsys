@@ -110,6 +110,7 @@ class StoreFacade
     {
         $store = $this->getById($id);
         $store->edit($storeData);
+        $this->friendlyUrlFacade->saveUrlListFormData(StoreFriendlyUrlProvider::ROUTE_NAME, $store->getId(), $storeData->urls);
         $this->em->flush();
 
         $this->imageFacade->manageImages($store, $storeData->image);
@@ -127,14 +128,12 @@ class StoreFacade
     {
         foreach ($store->getEnabledDomains() as $storeDomain) {
             $this->friendlyUrlFacade->createFriendlyUrlForDomain(
-                'front_stores_detail',
+                StoreFriendlyUrlProvider::ROUTE_NAME,
                 $store->getId(),
                 $store->getName(),
                 $storeDomain->getDomainId()
             );
         }
-
-        $this->em->flush();
     }
 
     /**

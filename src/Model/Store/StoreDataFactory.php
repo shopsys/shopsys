@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\Store;
 
+use App\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 
 class StoreDataFactory
@@ -11,11 +12,18 @@ class StoreDataFactory
     private Domain $domain;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     * @var \App\Component\Router\FriendlyUrl\FriendlyUrlFacade
      */
-    public function __construct(Domain $domain)
+    private FriendlyUrlFacade $friendlyUrlFacade;
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     * @param \App\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
+     */
+    public function __construct(Domain $domain, FriendlyUrlFacade $friendlyUrlFacade)
     {
         $this->domain = $domain;
+        $this->friendlyUrlFacade = $friendlyUrlFacade;
     }
 
     /**
@@ -50,6 +58,13 @@ class StoreDataFactory
 
         foreach ($this->domain->getAllIds() as $domainId) {
             $storeData->isEnabledOnDomains[$domainId] = $store->isEnabled($domainId);
+
+            $mainFriendlyUrl = $this->friendlyUrlFacade->findMainFriendlyUrl(
+                $domainId,
+                StoreFriendlyUrlProvider::ROUTE_NAME,
+                $store->getId()
+            );
+            $storeData->urls->mainFriendlyUrlsByDomainId[$domainId] = $mainFriendlyUrl;
         }
 
         return $storeData;

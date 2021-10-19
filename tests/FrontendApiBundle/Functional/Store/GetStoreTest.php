@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\FrontendApiBundle\Functional\Store;
 
 use App\DataFixtures\Demo\StoreDataFixture;
+use App\Model\Store\StoreFriendlyUrlProvider;
 use Nette\Utils\Json;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -159,7 +160,7 @@ class GetStoreTest extends GraphQlTestCase
         foreach ($urlSlugs as $urlSlug) {
             $friendlyUrl = $this->friendlyUrlFacade->getFriendlyUrlByRouteNameAndSlug(
                 Domain::FIRST_DOMAIN_ID,
-                'front_stores_detail',
+                StoreFriendlyUrlProvider::ROUTE_NAME,
                 $urlSlug
             );
 
