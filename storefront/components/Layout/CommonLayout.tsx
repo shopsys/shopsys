@@ -1,4 +1,5 @@
 import { FC } from 'react';
+import Footer from './Footer';
 import Header from './Header';
 import Navigation from './Header/Navigation';
 import NewsletterForm from './Footer/NewsletterForm';
@@ -17,6 +18,9 @@ const CommonLayout: FC = (props) => {
             {props.children}
             <Webline type="light">
                 <NewsletterForm />
+            </Webline>
+            <Webline type="dark">
+                <Footer />
             </Webline>
         </>
     );

@@ -9,12 +9,12 @@ import Icon from '../Icon';
     </Link>
     <br />
     <Link href="/404">
-        <Icon icon="NotImplementedYet" iconHeight={16} />
+        <Icon icon="NotImplementedYet" />
         Internal link with icon (does not work because of a breaking router error)
     </Link>
     <br />
     <Link href="https://www.google.com" linkType="external">
-        <Icon icon="NotImplementedYet" iconHeight={16} />
+        <Icon icon="NotImplementedYet" />
         External link with icon to google
     </Link>
 </div>;

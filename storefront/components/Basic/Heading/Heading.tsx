@@ -2,7 +2,7 @@ import { FC, HTMLAttributes } from 'react';
 import { Heading1Styled, Heading2Styled, Heading3Styled, Heading4Styled } from './Heading.style';
 import { ExtractNativePropsFromDefault } from 'typeHelpers/ExtractNativePropsFromDefault';
 
-type NativeProps = ExtractNativePropsFromDefault<HTMLAttributes<HTMLHeadingElement>, never, 'style'>;
+type NativeProps = ExtractNativePropsFromDefault<HTMLAttributes<HTMLHeadingElement>, never, 'style' | 'onClick'>;
 
 type HeadingProps = NativeProps & {
     /**

@@ -125,5 +125,13 @@
     "(0)[Products];(1)[Product];(2-inf)[Products];": "(0)[Produktov];(1)[Produkt];(2-4)[Produkty];(5-inf)[Produktov];",
     "Promo code was added to the order.": "Zľavový kupón bol pridaný do objednávky.",
     "Thank you for your order": "Ďakujeme za objednávku",
-    "We have also sent a summary to your email": "Rekapituláciu sme zaslali aj na váš e-mail"
+    "We have also sent a summary to your email": "Rekapituláciu sme zaslali aj na váš e-mail",
+    "+420 111 222 333": "+420 111 222 333",
+    "Need advice?": "Potrebujete poradiť?",
+    "Write Us": "Napíšte nám",
+    "Follow Us": "Sledujte nás",
+    "Facebook": "Facebook",
+    "Czechia": "Česko",
+    "Copyright © 2021, Shopsys s.r.o. All rights reserved.": "Copyright © 2021, Shopsys s.r.o. Všetky práva vyhradené.",
+    "Customized E-shop by": "E-shop na mieru od"
 }
