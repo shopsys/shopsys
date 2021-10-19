@@ -6,8 +6,8 @@ import LabelWrapper from 'components/Forms/Lib/LabelWrapper';
 
 type NativeProps = ExtractNativePropsFromDefault<
     InputHTMLAttributes<HTMLInputElement>,
-    never,
-    'id' | 'name' | 'disabled' | 'required'
+    'id',
+    'name' | 'disabled' | 'required'
 >;
 
 type CheckboxProps = NativeProps & {
