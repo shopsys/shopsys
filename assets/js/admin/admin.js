@@ -12,6 +12,7 @@ import './../common/validation/customizeFpValidator';
 
 import './promocode/promocode';
 import './promocode/promoCodeGroup';
+import './promocode/promoCodeFlags';
 
 import './category/categoryDeleteConfirm';
 
