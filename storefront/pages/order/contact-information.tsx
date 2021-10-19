@@ -16,6 +16,7 @@ import { TFunction } from 'next-i18next';
 import { updateCartState } from 'utils/Cart/UpdateCartState';
 import { useCreateOrder } from 'connectors/order/Order';
 import { useGetInternationalizedStaticUrls } from 'hooks/staticUrls/UseGetInternationalizedStaticUrls';
+import { useHandleContactInformationChanges } from 'hooks/forms/UseHandleContactInformationChanges';
 import { useHandleFormSuccessfulSubmit } from 'hooks/forms/UseHandleFormSuccessfulSubmit';
 import { useHandleFormValidationErrors } from 'hooks/forms/UseHandleFormValidationErrors';
 import { useRouter } from 'next/router';
@@ -44,6 +45,7 @@ const ContactInformation: FC<ServerSidePropsType> = () => {
         onSuccessfullyCreatedOrderHandler(),
     );
     useHandleFormValidationErrors(createOrderResult.error, formProviderMethods);
+    useHandleContactInformationChanges(formProviderMethods.control, contactInformationValues);
 
     const onSuccessfullyCreatedOrderHandler = () => {
         const resetCartInput = initCartInputCookie();
