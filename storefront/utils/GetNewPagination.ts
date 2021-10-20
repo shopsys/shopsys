@@ -1,5 +1,5 @@
 import { encode } from 'js-base64';
-import { PaginationType } from 'redux/store/UserStore';
+import { PaginationType } from 'redux/slices/user/index';
 
 const GetNewPagination = (page: number, pageSize = 10): PaginationType => {
     if (page > 1) {

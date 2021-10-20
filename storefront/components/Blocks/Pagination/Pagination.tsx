@@ -1,9 +1,9 @@
 import { FC, Fragment, useState } from 'react';
-import { initialState, userActions } from 'redux/store/UserStore';
+import { initialState, userActions } from 'redux/slices/user';
 import { PaginationButtonStyled, PaginationWrapperStyled } from './Pagination.style';
-import { useShopsysDispatch, useShopsysSelector } from 'redux/store';
-import { getIsElementVisible } from 'components/Helpers/GetIsItemVisible';
+import { useShopsysDispatch, useShopsysSelector } from 'redux/main';
 import GetNewPagination from 'utils/GetNewPagination';
+import { isElementVisible } from 'components/Helpers/isElementVisible';
 import { mobileFirstSizes } from 'components/Theme/mediaQueries';
 import { useGetWindowSize } from 'hooks/ui/UseGetWindowSize';
 import { usePagination } from 'hooks/ui/usePagination';
@@ -27,7 +27,7 @@ const Pagination: FC<PaginationType> = (props): JSX.Element | null => {
         mobileFirstSizes.sm,
         () => setMobilePaginationVisible(false),
         () => setMobilePaginationVisible(true),
-        () => setMobilePaginationVisible(getIsElementVisible([{ min: 0, max: 480 }], width)),
+        () => setMobilePaginationVisible(isElementVisible([{ min: 0, max: 480 }], width)),
     );
     const paginationState = useShopsysSelector((state) => state.user.pagination);
     const paginationButtons = usePagination(props.totalCount, paginationState.currentPage, isMobilePaginationVisible);
