@@ -41,12 +41,12 @@ const ContactInformationRegister: FC = () => {
                                             name="passwordFirst"
                                             label={t('Password')}
                                             required={true}
-                                            type="text"
+                                            type="password"
                                             isTouched={isTouched}
                                             hasError={invalid}
                                             fieldRef={field}
                                         />
-                                        <FormLineError error={error} inputType="text-input" />
+                                        <FormLineError error={error} inputType="text-input-password" />
                                     </>
                                 )}
                             />
@@ -61,12 +61,12 @@ const ContactInformationRegister: FC = () => {
                                             name="passwordSecond"
                                             label={t('Password again')}
                                             required={true}
-                                            type="text"
+                                            type="password"
                                             isTouched={isTouched}
                                             hasError={invalid}
                                             fieldRef={field}
                                         />
-                                        <FormLineError error={error} inputType="text-input" />
+                                        <FormLineError error={error} inputType="text-input-password" />
                                     </>
                                 )}
                             />
