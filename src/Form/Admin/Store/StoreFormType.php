@@ -9,10 +9,12 @@ use App\Model\Stock\StockFacade;
 use App\Model\Store\Store;
 use App\Model\Store\StoreData;
 use App\Model\Store\StoreFacade;
+use App\Model\Store\StoreFriendlyUrlProvider;
 use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Shopsys\FrameworkBundle\Form\DisplayOnlyType;
 use Shopsys\FrameworkBundle\Form\DomainsType;
 use Shopsys\FrameworkBundle\Form\ImageUploadType;
+use Shopsys\FrameworkBundle\Form\UrlListType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
@@ -79,6 +81,11 @@ class StoreFormType extends AbstractType
                     'required' => false,
                     'data' => $options['store']->isDefault() ? t('Yes') : t('No'),
                     'label' => t('Default store'),
+                ])
+                ->add('urls', UrlListType::class, [
+                    'route_name' => StoreFriendlyUrlProvider::ROUTE_NAME,
+                    'entity_id' => $options['store']->getId(),
+                    'label' => t('URL settings'),
                 ]);
         }
 

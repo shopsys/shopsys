@@ -6,6 +6,7 @@ namespace App\Model\Store;
 
 use App\Model\Stock\Stock;
 use Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadData;
+use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\UrlListData;
 use Shopsys\FrameworkBundle\Model\Country\Country;
 
 class StoreData
@@ -44,8 +45,14 @@ class StoreData
 
     public ?string $uuid = null;
 
+    /**
+     * @var \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\UrlListData
+     */
+    public UrlListData $urls;
+
     public function __construct()
     {
         $this->image = new ImageUploadData();
+        $this->urls = new UrlListData();
     }
 }
