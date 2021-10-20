@@ -8,7 +8,7 @@ const localVariables = {
 } as const;
 
 type ErrorIconStyledProps = {
-    inputType: 'textarea' | 'text-input' | 'checkbox';
+    inputType: 'textarea' | 'text-input' | 'checkbox' | 'text-input-password';
     textInputSize?: 'small';
 };
 
@@ -47,6 +47,15 @@ export const ErrorIconStyled = styled(Icon)<ErrorIconStyledProps>`
                 ? localVariables.smallTextInputErrorIconTopOffset
                 : localVariables.defaultTextInputErrorIconTopOffset};
             right: 19px;
+        `}
+        
+        ${inputType === 'text-input-password' &&
+        css`
+            transform: translateY(-50%);
+            top: ${textInputSize === 'small'
+                ? localVariables.smallTextInputErrorIconTopOffset
+                : localVariables.defaultTextInputErrorIconTopOffset};
+            right: 45px;
         `}
 
         ${inputType === 'checkbox' &&
