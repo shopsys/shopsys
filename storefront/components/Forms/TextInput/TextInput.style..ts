@@ -122,9 +122,7 @@ export const PasswordVisibilityToggleStyled = styled.img<PasswordVisibilityToggl
 
         ${!isVisible &&
         css`
-            &.not-visible {
-                opacity: 50%;
-            }
+            opacity: 50%;
         `}
     `}
 `;
