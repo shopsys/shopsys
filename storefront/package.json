@@ -23,6 +23,7 @@
         "graphql": "^15.5.1",
         "i18next-intervalplural-postprocessor": "^3.0.0",
         "i18next-parser": "^4.3.0",
+        "js-base64": "^3.7.2",
         "keen-slider": "^5.5.1",
         "next": "11.0.0",
         "next-i18next": "^8.5.5",

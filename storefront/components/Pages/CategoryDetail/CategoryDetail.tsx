@@ -51,7 +51,7 @@ const CategoryDetail: FC<CategoryDetailProps> = (props) => {
                     <Overlay isHiddenOnDesktop={true} onClick={handlePanelOpenerClick} />
                 </CategoryDetailPanelStyled>
                 <CategoryDetailContentStyled>
-                    <Heading type="h1">
+                    <Heading type={'h1'}>
                         {props.category.seoH1 !== null ? props.category.seoH1 : props.category.name}
                     </Heading>
                     <CategoryDetailSubcategories
@@ -72,7 +72,7 @@ const CategoryDetail: FC<CategoryDetailProps> = (props) => {
                     {props.category.products.edges.length !== 0 && (
                         <ProductsList products={props.category.products.edges} />
                     )}
-                    <Pagination />
+                    <Pagination totalCount={props.category.products.totalCount} />
                 </CategoryDetailContentStyled>
             </CategoryDetailStyled>
         </Webline>

@@ -3,16 +3,17 @@ import { PaginationButtonActiveType } from './Pagination';
 import { styled } from 'components/Theme/main';
 
 const localVariables = {
-    paginationWidth: '300px',
+    paginationWidth: '335px',
     buttonHeightAndWidth: '45px',
 };
 
 export const PaginationWrapperStyled = styled.div`
     ${({ theme }) => css`
         display: flex;
-        justify-content: space-around;
+        justify-content: center;
         margin: 10px auto;
         width: 100%;
+        gap: 5px;
 
         @media ${theme.mediaQueries.querySm} {
             width: ${localVariables.paginationWidth};
@@ -28,7 +29,7 @@ export const PaginationWrapperStyled = styled.div`
 `;
 
 export const PaginationButtonStyled = styled.button<PaginationButtonActiveType>`
-    ${({ theme, active }) => css`
+    ${({ theme, active, dotButton }) => css`
         width: ${localVariables.buttonHeightAndWidth};
         height: ${localVariables.buttonHeightAndWidth};
 
@@ -46,6 +47,13 @@ export const PaginationButtonStyled = styled.button<PaginationButtonActiveType>`
             background-color: ${theme.color.orange};
             border: none;
 
+            &:hover {
+                cursor: default;
+            }
+        `};
+
+        ${dotButton &&
+        css`
             &:hover {
                 cursor: default;
             }

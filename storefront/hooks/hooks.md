@@ -15,3 +15,8 @@
     -   callbackWhenWider (type optional function) = callback which is triggered if the breakpoint is crossed in the upwards direction, meaning that the previous width was smaller than the breakpoint, and the current width is bigger
     -   callbackWhenNarrower (type optional function) = callback which is triggered if the breakpoint is crossed in the downwards direction, meaning that the previous width was bigger than the breakpoint, and the current width is smaller
     -   callbackWhenInitialized (type optional function) = callback which is triggered when the element's width is initialized in the client
+
+### usePagination
+
+UsePagination hook builds upon useResizeWidthEffect by storing a boolean value to either hide or show mobile/desktop pagination. Another three arguments of usePagination are totalCount that you can get from your query, currentPage that you get from user state and pageSize that is set by default on 10.
+Hook returns array of PaginationButtons that you map using your custom pagination button.

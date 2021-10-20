@@ -10,6 +10,11 @@ export const enabledSortTypes = [sortPriority, sortPriceAsc, sortPriceDesc];
 
 export type SortType = typeof sortPriority | typeof sortPriceAsc | typeof sortPriceDesc;
 
+export type PaginationType = {
+    currentPage: number;
+    paginationCursor: string;
+};
+
 type InitialState = {
     email: string | null;
     sort: SortType;
@@ -17,6 +22,7 @@ type InitialState = {
     transport: TransportType | null;
     payment: PaymentType | null;
     personalPickupStore: StoreType | null;
+    pagination: PaginationType;
 };
 
 export const initialState = {
@@ -26,6 +32,10 @@ export const initialState = {
     transport: null,
     payment: null,
     personalPickupStore: null,
+    pagination: {
+        currentPage: 1,
+        paginationCursor: '',
+    },
 } as InitialState;
 
 export type PayloadType = { sort: SortType };
@@ -51,6 +61,9 @@ export const userSlice = createSlice({
         },
         setPayment(state, action: PayloadAction<PaymentType | null>) {
             state.payment = action.payload;
+        },
+        setPagination(state, action: PayloadAction<PaginationType>) {
+            state.pagination = action.payload;
         },
     },
 });
