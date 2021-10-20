@@ -103,6 +103,7 @@ const SortingBar: FC<{ totalCount: number }> = (props) => {
                                                 setToggleSortMenu(!toggleSortMenu);
                                                 updateUrlWithCurrentSort(value.stateValue);
                                                 dispatch(userActions.setSort({ sort: value.stateValue }));
+                                                dispatch(userActions.setPagination({ ...initialState.pagination }));
                                             }}
                                         >
                                             {t(value.displayValue.toString())}
@@ -121,6 +122,7 @@ const SortingBar: FC<{ totalCount: number }> = (props) => {
                                     onClick={() => {
                                         updateUrlWithCurrentSort(value.stateValue);
                                         dispatch(userActions.setSort({ sort: value.stateValue }));
+                                        dispatch(userActions.setPagination({ ...initialState.pagination }));
                                     }}
                                 >
                                     <SortingBarItemLinkStyled isActive={selectedSort === value.stateValue}>

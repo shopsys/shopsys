@@ -1,4 +1,4 @@
-export function categoryDetailBody(sortingMode: string): string {
+export function categoryDetailBody(sortingMode: string, endCursorForPagination: string): string {
     return `
         uuid
         name
@@ -33,8 +33,14 @@ export function categoryDetailBody(sortingMode: string): string {
                 totalCount
             }
         }
-        products(orderingMode:${sortingMode}){
+        products(orderingMode:${sortingMode} after:"${endCursorForPagination}"){
             totalCount
+            pageInfo {
+                hasNextPage
+                hasPreviousPage
+                startCursor
+                endCursor
+            }
             edges {
                 node {
                     __typename
@@ -69,7 +75,7 @@ export function categoryDetailBody(sortingMode: string): string {
         }
         readyCategorySeoMixLinks {
             name
-            slug
-        }
-    `;
+        slug
+    }
+`;
 }

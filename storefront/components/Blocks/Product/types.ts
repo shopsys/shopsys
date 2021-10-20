@@ -20,6 +20,13 @@ export type ProductPriceType = {
     currencyCode: string;
 };
 
+export type PageInfoType = {
+    startCursor: string;
+    endCursor: string;
+    hasNextPage: boolean;
+    hasPreviousPage: boolean;
+};
+
 export type SliderProductItemType = {
     uuid: string;
     detailSlug: string;
@@ -85,4 +92,5 @@ export type ListedProductEdgesType = {
         node: ListedProductItemType;
     }[];
     totalCount: number;
+    pageInfo: PageInfoType;
 };
