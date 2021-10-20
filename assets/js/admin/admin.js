@@ -13,4 +13,6 @@ import './../common/validation/customizeFpValidator';
 import './promocode/promocode';
 import './promocode/promoCodeGroup';
 
+import './category/categoryDeleteConfirm';
+
 registerAdmin();

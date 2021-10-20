@@ -298,4 +298,12 @@ class ReadyCategorySeoMixFacade
     {
         return $this->readyCategorySeoMixRepository->getAllForShowInCategory($category, $domainId);
     }
+
+    /**
+     * @return array<int>
+     */
+    public function getAllCategoryIdsInSeoMixes(): array
+    {
+        return $this->readyCategorySeoMixRepository->getAllCategoryIdsInSeoMixes();
+    }
 }

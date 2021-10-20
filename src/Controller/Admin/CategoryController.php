@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Controller\Admin;
 
 use App\Component\Form\FormBuilderHelper;
+use App\Model\CategorySeo\ReadyCategorySeoMixFacade;
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Domain\Exception\InvalidDomainIdException;
@@ -34,6 +35,11 @@ class CategoryController extends BaseCategoryController
     protected $adminDomainTabsFacade;
 
     /**
+     * @var \App\Model\CategorySeo\ReadyCategorySeoMixFacade
+     */
+    private ReadyCategorySeoMixFacade $categorySeoMixFacade;
+
+    /**
      * @param \App\Model\Category\CategoryFacade $categoryFacade
      * @param \App\Model\Category\CategoryDataFactory $categoryDataFactory
      * @param \Symfony\Component\HttpFoundation\Session\SessionInterface $session
@@ -41,6 +47,7 @@ class CategoryController extends BaseCategoryController
      * @param \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider $breadcrumbOverrider
      * @param \App\Component\Form\FormBuilderHelper $formBuilderHelper
      * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade $adminDomainTabsFacade
+     * @param \App\Model\CategorySeo\ReadyCategorySeoMixFacade $categorySeoMixFacade
      */
     public function __construct(
         CategoryFacade $categoryFacade,
@@ -49,7 +56,8 @@ class CategoryController extends BaseCategoryController
         Domain $domain,
         BreadcrumbOverrider $breadcrumbOverrider,
         FormBuilderHelper $formBuilderHelper,
-        AdminDomainTabsFacade $adminDomainTabsFacade
+        AdminDomainTabsFacade $adminDomainTabsFacade,
+        ReadyCategorySeoMixFacade $categorySeoMixFacade
     ) {
         parent::__construct(
             $categoryFacade,
@@ -61,6 +69,7 @@ class CategoryController extends BaseCategoryController
 
         $this->formBuilderHelper = $formBuilderHelper;
         $this->adminDomainTabsFacade = $adminDomainTabsFacade;
+        $this->categorySeoMixFacade = $categorySeoMixFacade;
     }
 
     /**
@@ -99,6 +108,7 @@ class CategoryController extends BaseCategoryController
             'categoriesWithPreloadedChildren' => $categoriesWithPreloadedChildren,
             'isForAllDomains' => ($domainId === static::ALL_DOMAINS),
             'disabledFormFields' => $this->formBuilderHelper->hasFormDisabledFields(),
+            'getAllCategoryIdsInSeoMixes' => $this->categorySeoMixFacade->getAllCategoryIdsInSeoMixes(),
         ]);
     }
 }

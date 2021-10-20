@@ -4,10 +4,11 @@
 {% block main_content %}
     {{ render(controller('ShopsysFrameworkBundle:Admin/Category:listDomainTabs')) }}
 
-    {% macro categoryTreeItem(categoriesWithPreloadedChildren, isFirstLevel, disabledFormFields) %}
+    {% macro categoryTreeItem(categoriesWithPreloadedChildren, isFirstLevel, disabledFormFields, getAllCategoryIdsInSeoMixes) %}
         {% import _self as self %}
         <ul class="{{ disabledFormFields ? '' : 'js-category-tree-items' }} {{ isFirstLevel ? 'form-tree__content' : '' }}">
             {% for categoryWithPreloadedChildren in categoriesWithPreloadedChildren %}
+                {% set categoryHasSeoMix = categoryWithPreloadedChildren.category.id in getAllCategoryIdsInSeoMixes ? true : false %}
                 <li class="js-category-tree-item form-tree__item" id="js-category-tree-{{ categoryWithPreloadedChildren.category.id }}">
                     <div class="{{ disabledFormFields ? '' : 'js-category-tree-item-line' }} form-tree__item__drag">
                         <img src="{{ asset('public/admin/images/icons/level.png') }}" class="form-tree__item__icon form-tree__item__icon--level" />
@@ -22,14 +23,14 @@
                                 (constant('Shopsys\\FrameworkBundle\\Component\\Router\\Security\\RouteCsrfProtector::CSRF_TOKEN_REQUEST_PARAMETER')): csrf_token(csrfTokenId)
                             }) %}
                             <a
-                                class="form-tree__item__control js-category-delete-confirm"
+                                class="form-tree__item__control {{ categoryHasSeoMix ? 'js-category-with-seomix-delete-confirm' : 'js-category-delete-confirm' }}"
                                 data-delete-url="{{categoryDeleteUrl}}"
                             >
                                 <i class="svg svg-trash"></i>
                             </a>
                         </span>
                     </div>
-                    {{ self.categoryTreeItem(categoryWithPreloadedChildren.children, false, disabledFormFields) }}
+                    {{ self.categoryTreeItem(categoryWithPreloadedChildren.children, false, disabledFormFields, getAllCategoryIdsInSeoMixes) }}
                 </li>
             {% endfor %}
         </ul>
@@ -39,7 +40,7 @@
         <div class="wrap-divider">
             <div class="form-line">
                 <div id="js-category-tree-sorting" class="form-tree form-tree--open form-tree--dragable">
-                    {{ self.categoryTreeItem(categoriesWithPreloadedChildren, true, disabledFormFields) }}
+                    {{ self.categoryTreeItem(categoriesWithPreloadedChildren, true, disabledFormFields, getAllCategoryIdsInSeoMixes) }}
                 </div>
             </div>
         </div>
@@ -66,7 +67,7 @@
         <div class="wrap-divider">
             <div class="form-line">
                 <div class="form-tree form-tree--open form-tree--dragable">
-                    {{ self.categoryTreeItem(categoriesWithPreloadedChildren, true, disabledFormFields) }}
+                    {{ self.categoryTreeItem(categoriesWithPreloadedChildren, true, disabledFormFields, getAllCategoryIdsInSeoMixes) }}
                 </div>
             </div>
         </div>
