@@ -122,9 +122,9 @@ class BlogCategoryTest extends GraphQlTestCase
                 'blogCategory' => [
                     'blogArticles' => [
                         'edges' => [
-                            ['node' => ['name' => t('Blog article for search testing', [], 'dataFixtures', $locale)]],
-                            ['node' => ['name' => t('Ukázkový článek blogu %counter% %locale%', ['%counter%' => 16, '%locale%' => $locale], 'dataFixtures', $locale)]],
-                            ['node' => ['name' => t('Ukázkový článek blogu %counter% %locale%', ['%counter%' => 17, '%locale%' => $locale], 'dataFixtures', $locale)]],
+                            ['node' => ['name' => t('Ukázkový článek blogu %counter% %locale%', ['%counter%' => 30, '%locale%' => $locale], 'dataFixtures', $locale)]],
+                            ['node' => ['name' => t('Ukázkový článek blogu %counter% %locale%', ['%counter%' => 29, '%locale%' => $locale], 'dataFixtures', $locale)]],
+                            ['node' => ['name' => t('Ukázkový článek blogu %counter% %locale%', ['%counter%' => 28, '%locale%' => $locale], 'dataFixtures', $locale)]],
                         ],
                     ],
                 ],
