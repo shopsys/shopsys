@@ -24,6 +24,10 @@ type CheckboxProps = NativeProps & {
      */
     label: string | ReactNode | ReactNode[];
     /**
+     * Display count of items. This is an optional prop primary from the parameters filter.
+     */
+    count?: number;
+    /**
      * a ref of the controlled field element used for hooking onto the field events/changes
      */
     fieldRef?: ControllerRenderProps;
@@ -38,6 +42,7 @@ const Checkbox: FC<CheckboxProps> = (props) => {
             {...props}
             htmlFor={props.id === undefined ? props.name + 'checkbox-id' : props.id}
             inputType="checkbox"
+            checked={props.fieldRef?.value}
         >
             <CheckboxStyled
                 {...props}

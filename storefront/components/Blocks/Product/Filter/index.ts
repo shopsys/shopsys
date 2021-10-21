@@ -1,2 +1,2 @@
-import ProductFilter from './ProductFilter';
-export default ProductFilter;
+import Filter from './Filter';
+export default Filter;

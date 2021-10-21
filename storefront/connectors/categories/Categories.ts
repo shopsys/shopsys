@@ -16,6 +16,12 @@ export const mapCategoryDetailData = (
             apiCategoryDetailData.products?.totalCount !== undefined ? apiCategoryDetailData.products.totalCount : 0,
         pageInfo: mapPageInfoApiData(apiCategoryDetailData.products?.pageInfo),
         edges: [],
+        productFilterOptions: {
+            ...apiCategoryDetailData.products.productFilterOptions,
+            minimalPrice: parseFloat(apiCategoryDetailData.products.productFilterOptions.minimalPrice),
+            maximalPrice: parseFloat(apiCategoryDetailData.products.productFilterOptions.maximalPrice),
+            currencyCode,
+        },
     };
 
     if (apiCategoryDetailData?.products?.edges !== undefined && apiCategoryDetailData.products.edges !== null) {

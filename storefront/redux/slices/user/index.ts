@@ -42,6 +42,7 @@ export const initialState = {
     },
     canAccessOrderConfirmation: false,
     isUserLoggedIn: false,
+    parametersFilter: null,
 } as InitialState;
 
 export const userSlice = createSlice({
@@ -71,6 +72,9 @@ export const userSlice = createSlice({
         },
         setIsUserLoggedIn(state, action: PayloadAction<boolean>) {
             state.isUserLoggedIn = action.payload;
+        },
+        setParametersFilter(state, action) {
+            state.parametersFilter = action.payload;
         },
     },
     extraReducers: {

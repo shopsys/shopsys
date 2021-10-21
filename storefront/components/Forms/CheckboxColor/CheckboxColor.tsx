@@ -3,6 +3,7 @@ import { CheckboxColorStyled } from './CheckboxColor.style';
 import ColorLabelWrapper from 'components/Forms/Lib/ColorLabelWrapper';
 import { ControllerRenderProps } from 'react-hook-form';
 import { ExtractNativePropsFromDefault } from 'typeHelpers/ExtractNativePropsFromDefault';
+import tinycolor from 'tinycolor2';
 
 type NativeProps = ExtractNativePropsFromDefault<
     InputHTMLAttributes<HTMLInputElement>,
@@ -15,10 +16,6 @@ type CheckboxColorProps = NativeProps & {
      * Display Label of the HTML checkbox element
      */
     label?: string;
-    /**
-     * When bg color is light - we have to show dark tick
-     */
-    isLightColor: boolean;
     /**
      * Background color of color chooser
      */
@@ -38,7 +35,7 @@ const CheckboxColor: FC<CheckboxColorProps> = (props) => {
             htmlFor={props.id === undefined ? props.name + 'checkbox_color-id' : props.id}
             label={props.label}
             bgColor={props.bgColor}
-            isLightColor={props.isLightColor}
+            isLightColor={tinycolor(props.bgColor).isLight()}
         >
             <CheckboxColorStyled
                 {...props}

@@ -147,6 +147,21 @@ const GlobalStyle = createGlobalStyle`
         strong {
             font-weight: 800;
         }
+        input[type='range']::-webkit-slider-runnable-track {
+            pointer-events: none;
+        }
+        input[type='range']::-moz-range-track {
+            pointer-events: none;
+        }
+        input[type='range']::-ms-track {
+            pointer-events: none;
+        }
+        input[type='range']::-ms-fill-lower {
+            pointer-events: none;
+        }
+        input[type='range']::-ms-fill-upper {
+            pointer-events: none;
+        }
     `}
 `;
 

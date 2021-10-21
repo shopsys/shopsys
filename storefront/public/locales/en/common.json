@@ -197,6 +197,8 @@
     "Back to shop": "Back to shop",
     "Great choice! We have added your item to the cart": "Great choice! We have added your item to the cart",
     "Name": "Name",
+    "Price with VAT": "Price with VAT",
+    "Price": "Price",
     "Availability": "Availability",
-    "Price with VAT": "Price with VAT"
+    "Flags": "Flags"
 }

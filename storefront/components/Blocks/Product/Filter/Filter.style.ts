@@ -1,7 +1,7 @@
 import { css } from 'styled-components';
 import { styled } from 'components/Theme/main';
 
-export const ProductFilterStyled = styled.div`
+export const FilterStyled = styled.div`
     ${({ theme }) => css`
         position: relative;
         overflow: hidden;

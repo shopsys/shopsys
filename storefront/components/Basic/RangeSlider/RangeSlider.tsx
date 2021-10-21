@@ -1,5 +1,5 @@
 import { ChangeEvent, FC, useCallback, useEffect, useRef, useState } from 'react';
-import { Controller, useFormContext } from 'react-hook-form';
+import { Controller, SubmitHandler, useFormContext } from 'react-hook-form';
 import {
     RangeSliderContainerStyled,
     RangeSliderLeftThumbStyled,
@@ -10,6 +10,7 @@ import {
     RangeSliderStyled,
     RangeSliderTrackStyled,
 } from './RangeSlider.style';
+import { FilterFormType } from 'components/Blocks/Product/Filter/types';
 import TextInput from 'components/Forms/TextInput';
 import useDebounce from 'hooks/helpers/UseDebounce';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
@@ -22,9 +23,10 @@ interface RangeSliderProps {
     min: number;
     max: number;
     delay: number;
+    onSubmit: (data: FilterFormType) => SubmitHandler<FilterFormType>;
 }
 
-const RangeSlider: FC<RangeSliderProps> = ({ min, max, delay }) => {
+const RangeSlider: FC<RangeSliderProps> = ({ min, max, delay, onSubmit }) => {
     const t = useTypedTranslationFunction();
     const formProviderMethods = useFormContext();
 
@@ -37,26 +39,21 @@ const RangeSlider: FC<RangeSliderProps> = ({ min, max, delay }) => {
     const maxValueRef = useRef(max);
 
     const range = useRef<HTMLDivElement>(null);
-
     // set values to input
     useEffect(() => {
-        formProviderMethods.setValue('minPrice', minValue);
+        formProviderMethods.setValue('minimalPrice', minValue);
     }, [minValue]);
 
     useEffect(() => {
-        formProviderMethods.setValue('maxPrice', maxValue);
+        formProviderMethods.setValue('maximalPrice', maxValue);
     }, [maxValue]);
 
     useEffect(() => {
-        // TODO PRG
-        // eslint-disable-next-line no-console
-        console.log('change products');
+        formProviderMethods.handleSubmit(onSubmit(formProviderMethods.getValues()));
     }, [debouncedMinValue]);
 
     useEffect(() => {
-        // TODO PRG
-        // eslint-disable-next-line no-console
-        console.log('change products');
+        formProviderMethods.handleSubmit(onSubmit(formProviderMethods.getValues()));
     }, [debouncedMaxValue]);
 
     // Convert to percentage
@@ -116,7 +113,7 @@ const RangeSlider: FC<RangeSliderProps> = ({ min, max, delay }) => {
                 <RangeSliderRangeStyled ref={range} />
                 <RangeSliderLeftValueStyled>
                     <Controller
-                        name="minPrice"
+                        name="minimalPrice"
                         render={({ field }) => (
                             <TextInput
                                 name={field.name}
@@ -130,7 +127,7 @@ const RangeSlider: FC<RangeSliderProps> = ({ min, max, delay }) => {
                 </RangeSliderLeftValueStyled>
                 <RangeSliderRightValueStyled>
                     <Controller
-                        name="maxPrice"
+                        name="maximalPrice"
                         render={({ field }) => (
                             <TextInput
                                 name={field.name}

@@ -198,5 +198,7 @@
     "Great choice! We have added your item to the cart": "Skvělá volba! Vaše zboží jsme přidali do košíku",
     "Name": "Název",
     "Availability": "Dostupnost",
-    "Price with VAT": "Cena s DPH"
+    "Price with VAT": "Cena s DPH",
+    "Price": "Cena",
+    "Flags": "Příznaky"
 }
