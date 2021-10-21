@@ -8,8 +8,8 @@ import LabelWrapper from 'components/Forms/Lib/LabelWrapper';
 
 type NativeProps = ExtractNativePropsFromDefault<
     InputHTMLAttributes<HTMLInputElement>,
-    'name' | 'id' | 'value' | 'checked',
-    'disabled'
+    'name' | 'value' | 'checked',
+    'disabled' | 'id'
 >;
 
 type RadiobuttonProps = NativeProps & {
@@ -44,7 +44,7 @@ const Radiobutton: FC<RadiobuttonProps> = (props) => {
 
     return (
         <LabelWrapper
-            htmlFor={props.id}
+            htmlFor={props.id === undefined ? props.name + 'radiobutton-id' : props.id}
             label={
                 <div>
                     {props.image !== undefined && (
@@ -59,11 +59,8 @@ const Radiobutton: FC<RadiobuttonProps> = (props) => {
         >
             <RadiobuttonStyled
                 {...props.fieldRef}
-                name={props.name}
-                id={props.id}
-                value={props.value}
-                disabled={props.disabled}
-                checked={props.checked}
+                {...props}
+                id={props.id === undefined ? props.name + 'radiobutton-id' : props.id}
                 type="radio"
                 onClick={uncheckCallback}
             />

@@ -111,8 +111,6 @@ const renderItems = (type: 'checkbox' | 'color' | 'price') => {
                                 id="groupcolor1"
                                 name={field.name}
                                 label="this is a link"
-                                disabled={false}
-                                required={false}
                             />
                         )}
                     />
@@ -125,8 +123,6 @@ const renderItems = (type: 'checkbox' | 'color' | 'price') => {
                                 id="groupcolor2"
                                 name={field.name}
                                 label="this is a link"
-                                disabled={false}
-                                required={false}
                             />
                         )}
                     />
@@ -139,8 +135,6 @@ const renderItems = (type: 'checkbox' | 'color' | 'price') => {
                                 name={field.name}
                                 label="this is a link"
                                 isLightColor={false}
-                                disabled={false}
-                                required={false}
                             />
                         )}
                     />

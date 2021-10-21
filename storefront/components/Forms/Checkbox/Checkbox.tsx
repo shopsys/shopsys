@@ -6,8 +6,8 @@ import LabelWrapper from 'components/Forms/Lib/LabelWrapper';
 
 type NativeProps = ExtractNativePropsFromDefault<
     InputHTMLAttributes<HTMLInputElement>,
-    'id',
-    'name' | 'disabled' | 'required'
+    'name',
+    'id' | 'disabled' | 'required'
 >;
 
 type CheckboxProps = NativeProps & {
@@ -34,8 +34,18 @@ type CheckboxProps = NativeProps & {
  */
 const Checkbox: FC<CheckboxProps> = (props) => {
     return (
-        <LabelWrapper {...props} htmlFor={props.id} inputType="checkbox">
-            <CheckboxStyled {...props} {...props.fieldRef} checked={props.fieldRef?.value} type="checkbox" />
+        <LabelWrapper
+            {...props}
+            htmlFor={props.id === undefined ? props.name + 'checkbox-id' : props.id}
+            inputType="checkbox"
+        >
+            <CheckboxStyled
+                {...props}
+                {...props.fieldRef}
+                id={props.id === undefined ? props.name + 'checkbox-id' : props.id}
+                checked={props.fieldRef?.value}
+                type="checkbox"
+            />
         </LabelWrapper>
     );
 };

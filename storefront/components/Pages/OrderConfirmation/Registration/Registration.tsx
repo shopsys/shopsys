@@ -135,7 +135,6 @@ const Registration: FC = () => {
                                         <RegistrationFormItemStyled>
                                             <ChoiceFormLine>
                                                 <Checkbox
-                                                    id={field.name}
                                                     name={field.name}
                                                     label={
                                                         <Trans i18nKey="I agree with terms and conditions and privacy policy">

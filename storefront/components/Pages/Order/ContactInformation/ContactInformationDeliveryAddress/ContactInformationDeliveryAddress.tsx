@@ -39,6 +39,7 @@ const ContactInformationDeliveryAddress: FC = () => {
                         name="differentDeliveryAddress"
                         render={({ field }) => (
                             <Checkbox
+                                name={field.name}
                                 fieldRef={field}
                                 id="contactInformation_form-deliveryAddress"
                                 label={t('Enter the delivery address')}
