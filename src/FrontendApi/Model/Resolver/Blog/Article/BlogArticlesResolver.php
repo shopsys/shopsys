@@ -34,9 +34,11 @@ class BlogArticlesResolver implements ResolverInterface, AliasedInterface
      */
     public function resolveAll(Argument $argument)
     {
+        $onlyVisibleOnHomepage = $argument['onlyHomepageArticles'];
+
         $this->setDefaultFirstOffsetIfNecessary($argument);
-        $paginator = new Paginator(function ($offset, $limit) {
-            return $this->blogArticleElasticsearchFacade->getAllBlogArticles($offset, $limit);
+        $paginator = new Paginator(function ($offset, $limit) use ($onlyVisibleOnHomepage) {
+            return $this->blogArticleElasticsearchFacade->getAllBlogArticles($offset, $limit, $onlyVisibleOnHomepage);
         });
 
         return $paginator->auto($argument, $this->blogArticleElasticsearchFacade->getAllBlogArticlesTotalCount());
@@ -49,9 +51,11 @@ class BlogArticlesResolver implements ResolverInterface, AliasedInterface
      */
     public function resolveByCategory(Argument $argument, BlogCategory $blogCategory)
     {
+        $onlyVisibleOnHomepage = $argument['onlyHomepageArticles'];
+
         $this->setDefaultFirstOffsetIfNecessary($argument);
-        $paginator = new Paginator(function ($offset, $limit) use ($blogCategory) {
-            return $this->blogArticleElasticsearchFacade->getByBlogCategory($blogCategory, $offset, $limit);
+        $paginator = new Paginator(function ($offset, $limit) use ($blogCategory, $onlyVisibleOnHomepage) {
+            return $this->blogArticleElasticsearchFacade->getByBlogCategory($blogCategory, $offset, $limit, $onlyVisibleOnHomepage);
         });
 
         return $paginator->auto($argument, $this->blogArticleElasticsearchFacade->getByBlogCategoryTotalCount($blogCategory));

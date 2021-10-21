@@ -69,4 +69,25 @@ class FilterQuery extends AbstractFilterQuery
 
         return $clone;
     }
+
+    /**
+     * @param bool $onlyVisibleOnHomepage
+     * @return \App\Model\Blog\Article\Elasticsearch\FilterQuery
+     */
+    public function onlyVisibleOnHomepage(bool $onlyVisibleOnHomepage = true): self
+    {
+        $clone = clone $this;
+
+        if (!$onlyVisibleOnHomepage) {
+            return $clone;
+        }
+
+        $clone->filters[] = [
+            'term' => [
+                'visibleOnHomepage' => true,
+            ],
+        ];
+
+        return $clone;
+    }
 }
