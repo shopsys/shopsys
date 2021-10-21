@@ -3,7 +3,7 @@ import { useFetchQuery } from 'hooks/graphQl/UseFetchQuery';
 
 export const blogPreviewQuery = `
 query blogArticles {
-    blogArticles(first: 6) {
+    blogArticles(first: 6, onlyHomepageArticles: true) {
         edges {
             node {
                 name
