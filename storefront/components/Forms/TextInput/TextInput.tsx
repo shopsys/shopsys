@@ -60,7 +60,15 @@ const TextInput: FC<TextInputProps> = (props) => {
     const [inputType, setInputType] = useState<'text' | 'password' | 'email' | 'tel' | 'search'>(props.type);
 
     const togglePasswordVisibilityHandler = () => {
-        setInputType(inputType === 'text' ? 'text' : 'password');
+        setInputType((currentInputType) => {
+            if (currentInputType === 'password') {
+                return 'text';
+            }
+            if (currentInputType === 'text') {
+                return 'password';
+            }
+            return currentInputType;
+        });
     };
 
     useEffect(() => {
