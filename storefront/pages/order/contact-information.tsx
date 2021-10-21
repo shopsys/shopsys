@@ -12,7 +12,6 @@ import { navigationQuery } from 'connectors/navigation/Navigation';
 import OrderAction from 'components/Blocks/OrderAction';
 import OrderLayout from 'components/Layout/OrderLayout';
 import StaticUrlGuard from 'components/Helpers/StaticUrlGuard';
-import { TFunction } from 'next-i18next';
 import { updateCartState } from 'utils/Cart/UpdateCartState';
 import { useCreateOrder } from 'connectors/order/Order';
 import { useGetInternationalizedStaticUrls } from 'hooks/staticUrls/UseGetInternationalizedStaticUrls';
@@ -23,11 +22,6 @@ import { userActions } from 'redux/slices/user';
 import { useRouter } from 'next/router';
 import { useShopsysForm } from 'hooks/forms/UseShopsysForm';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
-
-export const getCountrySelectOptions = (t: TFunction): { value: string; label: string }[] => [
-    { value: 'SK', label: t('Slovakia') },
-    { value: 'CZ', label: t('Czech Republic') },
-];
 
 const ContactInformation: FC<ServerSidePropsType> = () => {
     const router = useRouter();
@@ -71,6 +65,8 @@ const ContactInformation: FC<ServerSidePropsType> = () => {
             ...formValues,
             ...{ ...cartInput, transport: cartInput.transport, payment: cartInput.payment },
             onCompanyBehalf: formValues.customer === 'companyCustomer',
+            country: formValues.country.value,
+            deliveryCountry: formValues.deliveryCountry.value,
         });
     };
 

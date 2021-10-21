@@ -1,19 +1,27 @@
 import { Controller, useFormContext } from 'react-hook-form';
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 import FormColumn from 'components/Forms/Lib/FormColumn';
 import FormLine from 'components/Forms/Lib/FormLine';
 import FormLineError from 'components/Forms/Lib/FormLineError';
-import { getCountrySelectOptions } from 'pages/order/contact-information';
+import { getCountriesAsSelectOptions } from 'connectors/country/Country';
 import Heading from 'components/Basic/Heading';
 import Select from 'components/Forms/Select';
 import TextInput from 'components/Forms/TextInput';
-import { useShopsysSelector } from 'redux/main';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 
 const ContactInformationAddress: FC = () => {
     const t = useTypedTranslationFunction();
     const formProviderMethods = useFormContext();
-    const { country } = useShopsysSelector((state) => state.contactInformation);
+    const countrySelectOptions = getCountriesAsSelectOptions();
+    useEffect(() => {
+        if (countrySelectOptions.length > 0) {
+            formProviderMethods.setValue('country', countrySelectOptions[0]);
+        }
+    }, [JSON.stringify(countrySelectOptions)]);
+
+    if (countrySelectOptions.length === 0) {
+        return null;
+    }
 
     return (
         <>
@@ -86,11 +94,9 @@ const ContactInformationAddress: FC = () => {
                     name="country"
                     render={({ field }) => (
                         <Select
-                            defaultValue={getCountrySelectOptions(t).find((option) => option.value === country)!}
-                            options={getCountrySelectOptions(t)}
-                            onChange={(option: { value: string }) =>
-                                formProviderMethods.setValue(field.name, option.value)
-                            }
+                            options={countrySelectOptions}
+                            onChange={field.onChange}
+                            value={countrySelectOptions.find((option) => option.value === field.value.value)}
                         />
                     )}
                 />

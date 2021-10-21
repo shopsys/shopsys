@@ -1,16 +1,13 @@
+import { ExtractNativePropsFromDefault } from 'typeHelpers/ExtractNativePropsFromDefault';
 import { FC } from 'react';
+import { Props } from 'react-select';
 import { SelectStyled } from './Select.style';
 
-type SelectProps = {
-    options: {
-        value: string;
-        label: string;
-    }[];
-    defaultValue: {
-        value: string;
-        label: string;
-    };
-    onChange: any;
+type SelectProps = ExtractNativePropsFromDefault<Props, 'options' | 'onChange', 'defaultValue' | 'value'>;
+
+export type SelectOptionType = {
+    value: string;
+    label: string;
 };
 
 const customStyles = {

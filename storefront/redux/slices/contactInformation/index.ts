@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { SelectOptionType } from 'components/Forms/Select/Select';
 
 export type CustomerType = 'commonCustomer' | 'companyCustomer';
 
@@ -14,7 +15,7 @@ export type ContactInformationFormType = {
     street: string;
     city: string;
     postcode: string;
-    country: string;
+    country: SelectOptionType;
     companyName: string;
     companyNumber: string;
     companyTaxNumber: string;
@@ -26,7 +27,7 @@ export type ContactInformationFormType = {
     deliveryStreet: string;
     deliveryCity: string;
     deliveryPostcode: string;
-    deliveryCountry: string;
+    deliveryCountry: SelectOptionType;
     newsletterSubscription: boolean;
 };
 
@@ -42,7 +43,7 @@ export const initialState = {
     street: '',
     city: '',
     postcode: '',
-    country: 'CZ',
+    country: { value: '', label: '' },
     companyName: '',
     companyNumber: '',
     companyTaxNumber: '',
@@ -54,7 +55,7 @@ export const initialState = {
     deliveryStreet: '',
     deliveryCity: '',
     deliveryPostcode: '',
-    deliveryCountry: 'CZ',
+    deliveryCountry: { value: '', label: '' },
     newsletterSubscription: false,
 } as ContactInformationFormType;
 
@@ -98,7 +99,7 @@ export const contactInformationSlice = createSlice({
         setPostcode(state, action: PayloadAction<string>) {
             state.postcode = action.payload;
         },
-        setCountry(state, action: PayloadAction<string>) {
+        setCountry(state, action: PayloadAction<SelectOptionType>) {
             state.country = action.payload;
         },
         setCompanyName(state, action: PayloadAction<string>) {
@@ -134,7 +135,7 @@ export const contactInformationSlice = createSlice({
         setDeliveryPostcode(state, action: PayloadAction<string>) {
             state.deliveryPostcode = action.payload;
         },
-        setDeliveryCountry(state, action: PayloadAction<string>) {
+        setDeliveryCountry(state, action: PayloadAction<SelectOptionType>) {
             state.deliveryCountry = action.payload;
         },
         setNewsletterSubscription(state, action: PayloadAction<boolean>) {
