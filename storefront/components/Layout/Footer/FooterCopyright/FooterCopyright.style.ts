@@ -8,7 +8,7 @@ export const FooterCopyrightStyled = styled.div`
     text-align: center;
 `;
 
-export const FooterCopyrightTextStyled = styled.p`
+export const FooterCopyrightTextStyled = styled.div`
     ${({ theme }) => css`
         display: flex;
         align-items: center;
