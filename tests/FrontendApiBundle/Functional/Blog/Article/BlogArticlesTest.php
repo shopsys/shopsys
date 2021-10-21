@@ -42,6 +42,9 @@ class BlogArticlesTest extends GraphQlTestCase
             ], [
                 $this->getLastBlogArticleQuery(),
                 [['name' => t('Blog article for search testing', [], 'dataFixtures', $firstDomainLocale)]],
+            ], [
+                $this->getHomepageBlogArticlesQuery(3),
+                array_slice($expectedBlogArticlesData, 1, 3),
             ],
         ];
     }
@@ -116,6 +119,26 @@ class BlogArticlesTest extends GraphQlTestCase
         return '
             {
                 blogArticles(last:1) {
+                    edges {
+                        node {
+                            name
+                        }
+                    }
+                    totalCount
+                }
+            }
+        ';
+    }
+
+    /**
+     * @param int $limit
+     * @return string
+     */
+    private function getHomepageBlogArticlesQuery(int $limit): string
+    {
+        return '
+            {
+                blogArticles(first:' . $limit . ', onlyHomepageArticles: true) {
                     edges {
                         node {
                             name

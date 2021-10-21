@@ -120,6 +120,9 @@ class BlogArticleDataFixture extends AbstractReferenceFixture implements Depende
         //in first subcategory
         for ($i = 0; $i < self::PAGES_IN_CATEGORY; $i++) {
             $blogArticleData = $this->createArticle([$mainPageBlogCategory, $firstSubcategory]);
+            if ($i === self::PAGES_IN_CATEGORY - 1) {
+                $blogArticleData->visibleOnHomepage = false;
+            }
             $this->blogArticleFacade->create($blogArticleData);
         }
 
@@ -129,6 +132,9 @@ class BlogArticleDataFixture extends AbstractReferenceFixture implements Depende
         //in second subcategory
         for ($i = 0; $i < self::PAGES_IN_CATEGORY; $i++) {
             $blogArticleData = $this->createArticle([$mainPageBlogCategory, $secondSubcategory]);
+            if ($i === self::PAGES_IN_CATEGORY - 1) {
+                $blogArticleData->visibleOnHomepage = false;
+            }
             $this->blogArticleFacade->create($blogArticleData);
         }
 
