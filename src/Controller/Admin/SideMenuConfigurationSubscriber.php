@@ -4,27 +4,12 @@ declare(strict_types=1);
 
 namespace App\Controller\Admin;
 
-use App\Model\Security\Roles;
 use Knp\Menu\ItemInterface;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\ConfigureMenuEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 class SideMenuConfigurationSubscriber implements EventSubscriberInterface
 {
-    /**
-     * @var \Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface
-     */
-    private AuthorizationCheckerInterface $authorizationChecker;
-
-    /**
-     * @param \Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface $authorizationChecker
-     */
-    public function __construct(AuthorizationCheckerInterface $authorizationChecker)
-    {
-        $this->authorizationChecker = $authorizationChecker;
-    }
-
     /**
      * @return array
      */
@@ -47,16 +32,6 @@ class SideMenuConfigurationSubscriber implements EventSubscriberInterface
     {
         $rootMenu = $event->getMenu();
         $rootMenu->addChild($this->createIntegrationsMenu($event));
-
-        if (!$this->authorizationChecker->isGranted(Roles::ROLE_CUSTOMER_CARE)) {
-            return;
-        }
-
-        $rootMenu->removeChild('products');
-        $rootMenu->removeChild('pricing');
-        $rootMenu->removeChild('marketing');
-        $rootMenu->removeChild('administrators');
-        $rootMenu->removeChild('settings');
     }
 
     /**

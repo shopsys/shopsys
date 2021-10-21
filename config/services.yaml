@@ -209,9 +209,6 @@ services:
     Shopsys\FrameworkBundle\Model\Administrator\AdministratorDataFactoryInterface:
         alias: App\Model\Administrator\AdministratorDataFactory
 
-    Shopsys\FrameworkBundle\Model\Administrator\Security\AdministratorFrontSecurityFacade:
-        alias: App\Model\Administrator\Security\AdministratorFrontSecurityFacade
-
     Shopsys\FrameworkBundle\Model\Category\CategoryDataFactoryInterface:
         alias: App\Model\Category\CategoryDataFactory
 
@@ -381,9 +378,6 @@ services:
 
     Shopsys\FrameworkBundle\Controller\Admin\FlagController:
         class: 'App\Controller\Admin\FlagController'
-
-    Shopsys\FrameworkBundle\Controller\Admin\OrderController:
-        class: 'App\Controller\Admin\OrderController'
 
     Shopsys\FrameworkBundle\Controller\Admin\PromoCodeController:
         class: 'App\Controller\Admin\PromoCodeController'
@@ -850,12 +844,6 @@ services:
 
     Shopsys\FrameworkBundle\Model\Feed\FeedExportFactory:
         alias: App\Model\Feed\FeedExportFactory
-
-    Shopsys\FrameworkBundle\Model\Administrator\Role\AdministratorRoleFacade:
-        alias: App\Model\Administrator\Role\AdministratorRoleFacade
-
-    Shopsys\FrameworkBundle\Model\Administrator\AdministratorRepository:
-        alias: App\Model\Administrator\AdministratorRepository
 
     Shopsys\FrameworkBundle\Model\Security\CustomerLoginHandler:
         alias: App\Model\Security\CustomerLoginHandler

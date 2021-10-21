@@ -1,28 +1,26 @@
 {% extends '@!ShopsysFramework/Admin/Content/Default/index.html.twig' %}
 
 {% block main_content %}
-    {% if is_granted(constant('App\\Model\\Security\\Roles::ROLE_CUSTOMER_CARE')) == false %}
-        <div class="transfers">
-            <h2 class="margin-top-15">{{ 'Přenosy'|trans }}</h2>
+    <div class="transfers">
+        <h2 class="margin-top-15">{{ 'Přenosy'|trans }}</h2>
 
-            <a href="{{ url('admin_transfer_list') }}" class="btn">{{ 'Přehled chyb v přenosech'|trans }} ({{ transferIssuesCount }})</a>
-        </div>
+        <a href="{{ url('admin_transfer_list') }}" class="btn">{{ 'Přehled chyb v přenosech'|trans }} ({{ transferIssuesCount }})</a>
+    </div>
 
-        <div class="clearfix">
-            <div class="float-left">
-                <h2>{{ 'Quick product search'|trans }}</h2>
-            </div>
-            <div class="text-right padding-top-10">
-                <a href="{{ url('admin_product_list', { as: true }) }}">
-                    {{ 'Advanced search'|trans }}
-                </a>
-            </div>
+    <div class="clearfix">
+        <div class="float-left">
+            <h2>{{ 'Quick product search'|trans }}</h2>
         </div>
+        <div class="text-right padding-top-10">
+            <a href="{{ url('admin_product_list', { as: true }) }}">
+                {{ 'Advanced search'|trans }}
+            </a>
+        </div>
+    </div>
 
-        <div class="margin-bottom-20">
-            {% include '@ShopsysFramework/Admin/Content/Product/quickSearchFormContent.html.twig' with {quickSearchForm: quickProductSearchForm} %}
-        </div>
-    {% endif %}
+    <div class="margin-bottom-20">
+        {% include '@ShopsysFramework/Admin/Content/Product/quickSearchFormContent.html.twig' with {quickSearchForm: quickProductSearchForm} %}
+    </div>
 
 
     <div class="box-overview">
