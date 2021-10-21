@@ -6,6 +6,8 @@ namespace App\DataFixtures\Demo;
 
 use App\Model\Order\PromoCode\PromoCode;
 use App\Model\Order\PromoCode\PromoCodeCategoryFactory;
+use App\Model\Order\PromoCode\PromoCodeFlag\PromoCodeFlag;
+use App\Model\Order\PromoCode\PromoCodeFlag\PromoCodeFlagFactory;
 use App\Model\Order\PromoCode\PromoCodeLimitFactory;
 use App\Model\Order\PromoCode\PromoCodeProductFactory;
 use DateTime;
@@ -25,6 +27,7 @@ class PromoCodeDataFixture extends AbstractReferenceFixture implements Dependent
     public const NO_LONGER_VALID_PROMO_CODE = 'no_longer_valid_promo_code';
     public const PROMO_CODE_FOR_REGISTERED_ONLY = 'promo_code_for_registered_only';
     public const PROMO_CODE_FOR_VIP_PRICING_GROUP = 'promo_code_for_vip_pricing_group';
+    public const PROMO_CODE_FOR_NEW_PRODUCT = 'promo_code_for_new_product';
 
     /**
      * @var \App\Model\Order\PromoCode\PromoCodeFacade
@@ -57,11 +60,17 @@ class PromoCodeDataFixture extends AbstractReferenceFixture implements Dependent
     private EntityManagerInterface $em;
 
     /**
+     * @var \App\Model\Order\PromoCode\PromoCodeFlag\PromoCodeFlagFactory
+     */
+    private PromoCodeFlagFactory $promoCodeFlagFactory;
+
+    /**
      * @param \App\Model\Order\PromoCode\PromoCodeFacade $promoCodeFacade
      * @param \App\Model\Order\PromoCode\PromoCodeDataFactory $promoCodeDataFactory
      * @param \App\Model\Order\PromoCode\PromoCodeProductFactory $promoCodeProductFactory
      * @param \App\Model\Order\PromoCode\PromoCodeCategoryFactory $promoCodeCategoryFactory
      * @param \App\Model\Order\PromoCode\PromoCodeLimitFactory $promoCodeLimitFactory
+     * @param \App\Model\Order\PromoCode\PromoCodeFlag\PromoCodeFlagFactory $promoCodeFlagFactory
      * @param \Doctrine\ORM\EntityManagerInterface $em
      */
     public function __construct(
@@ -70,6 +79,7 @@ class PromoCodeDataFixture extends AbstractReferenceFixture implements Dependent
         PromoCodeProductFactory $promoCodeProductFactory,
         PromoCodeCategoryFactory $promoCodeCategoryFactory,
         PromoCodeLimitFactory $promoCodeLimitFactory,
+        PromoCodeFlagFactory $promoCodeFlagFactory,
         EntityManagerInterface $em
     ) {
         $this->promoCodeFacade = $promoCodeFacade;
@@ -77,6 +87,7 @@ class PromoCodeDataFixture extends AbstractReferenceFixture implements Dependent
         $this->promoCodeProductFactory = $promoCodeProductFactory;
         $this->promoCodeCategoryFactory = $promoCodeCategoryFactory;
         $this->promoCodeLimitFactory = $promoCodeLimitFactory;
+        $this->promoCodeFlagFactory = $promoCodeFlagFactory;
         $this->em = $em;
     }
 
@@ -154,6 +165,17 @@ class PromoCodeDataFixture extends AbstractReferenceFixture implements Dependent
         $promoCode = $this->promoCodeFacade->create($promoCodeData);
         $this->setDefaultLimit($promoCode);
         $this->addReferenceForDomain(self::PROMO_CODE_FOR_VIP_PRICING_GROUP, $promoCode, Domain::FIRST_DOMAIN_ID);
+
+        $promoCodeData = $this->promoCodeDataFactory->create();
+        $promoCodeData->code = 'test-for-new-product';
+        $promoCodeData->domainId = Domain::FIRST_DOMAIN_ID;
+        $promoCodeData->identifier = 'GG';
+        /** @var \App\Model\Product\Flag\Flag $flag */
+        $flag = $this->getReference(FlagDataFixture::FLAG_PRODUCT_NEW);
+        $promoCodeData->flags = [$this->promoCodeFlagFactory->create($flag, PromoCodeFlag::TYPE_INCLUSIVE)];
+        $promoCode = $this->promoCodeFacade->create($promoCodeData);
+        $this->setDefaultLimit($promoCode);
+        $this->addReferenceForDomain(self::PROMO_CODE_FOR_NEW_PRODUCT, $promoCode, Domain::FIRST_DOMAIN_ID);
     }
 
     /**
