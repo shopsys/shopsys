@@ -57,8 +57,8 @@ class PromoCodeFlagType extends AbstractType
         $builder->add('type', ChoiceType::class, [
             'required' => true,
             'choices' => [
-                'Products with this flag' => PromoCodeFlag::TYPE_INCLUSIVE,
-                'Products without this flag' => PromoCodeFlag::TYPE_EXCLUSIVE,
+                t('Products with this flag') => PromoCodeFlag::TYPE_INCLUSIVE,
+                t('Products without this flag') => PromoCodeFlag::TYPE_EXCLUSIVE,
             ],
             'expanded' => true,
             'multiple' => false,
