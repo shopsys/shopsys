@@ -73,8 +73,14 @@ msgstr "Příslušenství"
 msgid "Account"
 msgstr ""
 
+msgid "Add another flag"
+msgstr "Přidat další příznak"
+
 msgid "Add another parameter"
 msgstr ""
+
+msgid "Add some flag"
+msgstr "Přidejte nějaký příznak"
 
 msgid "Add some parameters"
 msgstr ""
@@ -1884,6 +1890,12 @@ msgstr "Přehled zboží v košíku"
 
 msgid "Products in stock only"
 msgstr "Jen zboží skladem"
+
+msgid "Products with this flag"
+msgstr "Produkty s tímto příznakem"
+
+msgid "Products without this flag"
+msgstr "Produkty bez tohoto příznaku"
 
 msgid "Produkt s tímto katalogovým číslem již existuje"
 msgstr ""

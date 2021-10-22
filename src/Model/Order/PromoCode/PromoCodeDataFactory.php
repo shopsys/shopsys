@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Model\Order\PromoCode;
 
 use App\Component\DateTimeHelper\DateTimeHelper;
+use App\Model\Order\PromoCode\PromoCodeFlag\PromoCodeFlagRepository;
 use DateTime;
 use DateTimeZone;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode as BasePromoCode;
@@ -46,12 +47,18 @@ class PromoCodeDataFactory extends BasePromoCodeDataFactory
     private PromoCodePricingGroupRepository $promoCodePricingGroupRepository;
 
     /**
+     * @var \App\Model\Order\PromoCode\PromoCodeFlag\PromoCodeFlagRepository
+     */
+    private PromoCodeFlagRepository $promoCodeFlagRepository;
+
+    /**
      * @param \App\Model\Order\PromoCode\PromoCodeCategoryRepository $promoCodeCategoryRepository
      * @param \App\Model\Order\PromoCode\PromoCodeProductRepository $promoCodeProductRepository
      * @param \App\Model\Order\PromoCode\PromoCodeLimitRepository $promoCodeLimitRepository
      * @param \App\Component\DateTimeHelper\DateTimeHelper $dateTimeHelper
      * @param \App\Model\Order\PromoCode\PromoCodeBrandRepository $promoCodeBrandRepository
      * @param \App\Model\Order\PromoCode\PromoCodePricingGroupRepository $promoCodePricingGroupRepository
+     * @param \App\Model\Order\PromoCode\PromoCodeFlag\PromoCodeFlagRepository $promoCodeFlagRepository
      */
     public function __construct(
         PromoCodeCategoryRepository $promoCodeCategoryRepository,
@@ -59,7 +66,8 @@ class PromoCodeDataFactory extends BasePromoCodeDataFactory
         PromoCodeLimitRepository $promoCodeLimitRepository,
         DateTimeHelper $dateTimeHelper,
         PromoCodeBrandRepository $promoCodeBrandRepository,
-        PromoCodePricingGroupRepository $promoCodePricingGroupRepository
+        PromoCodePricingGroupRepository $promoCodePricingGroupRepository,
+        PromoCodeFlagRepository $promoCodeFlagRepository
     ) {
         $this->dateTimeHelper = $dateTimeHelper;
         $this->promoCodeCategoryRepository = $promoCodeCategoryRepository;
@@ -67,6 +75,7 @@ class PromoCodeDataFactory extends BasePromoCodeDataFactory
         $this->promoCodeLimitRepository = $promoCodeLimitRepository;
         $this->promoCodeBrandRepository = $promoCodeBrandRepository;
         $this->promoCodePricingGroupRepository = $promoCodePricingGroupRepository;
+        $this->promoCodeFlagRepository = $promoCodeFlagRepository;
     }
 
     /**
@@ -107,6 +116,7 @@ class PromoCodeDataFactory extends BasePromoCodeDataFactory
         $promoCodeData->dateValidFrom = $this->switchDateFromDatabaseTimeZoneToViewTimezone($promoCode->getDatetimeValidFrom());
         $promoCodeData->dateValidTo = $this->switchDateFromDatabaseTimeZoneToViewTimezone($promoCode->getDatetimeValidTo());
 
+        $promoCodeData->flags = $this->promoCodeFlagRepository->getFlagsByPromoCodeId($promoCode->getId());
         $promoCodeData->categoriesWithSale = $this->promoCodeCategoryRepository->getCategoriesByPromoCodeId($promoCode->getId());
         $promoCodeData->brandsWithSale = $this->promoCodeBrandRepository->getBrandsByPromoCodeId($promoCode->getId());
         $promoCodeData->productsWithSale = $this->promoCodeProductRepository->getProductsByPromoCodeId($promoCode->getId());
@@ -116,9 +126,6 @@ class PromoCodeDataFactory extends BasePromoCodeDataFactory
         $promoCodeData->massGenerate = $promoCode->isMassGenerate();
         $promoCodeData->prefix = $promoCode->getPrefix();
         $promoCodeData->applyOnSecondProduct = $promoCode->isApplyOnSecondProduct();
-        $promoCodeData->onSale = $promoCode->isOnSale();
-        $promoCodeData->inAction = $promoCode->isInAction();
-        $promoCodeData->priceHit = $promoCode->isPriceHit();
         $promoCodeData->discountType = $promoCode->getDiscountType();
         $promoCodeData->registeredCustomerUserOnly = $promoCode->isRegisteredCustomerUserOnly();
         $promoCodeData->limitedPricingGroups = $this->promoCodePricingGroupRepository->getPricingGroupsByPromoCodeId($promoCode->getId());

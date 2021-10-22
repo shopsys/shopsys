@@ -319,7 +319,13 @@ msgstr "Príslušenstvo"
 msgid "Account"
 msgstr ""
 
+msgid "Add another flag"
+msgstr ""
+
 msgid "Add another parameter"
+msgstr ""
+
+msgid "Add some flag"
 msgstr ""
 
 msgid "Add some parameters"
@@ -2582,6 +2588,12 @@ msgid "Products excluded from sale can't be displayed on lists and can't be sear
 msgstr ""
 
 msgid "Products in stock only"
+msgstr ""
+
+msgid "Products with this flag"
+msgstr ""
+
+msgid "Products without this flag"
 msgstr ""
 
 msgid "Produkt s tímto katalogovým číslem již existuje"

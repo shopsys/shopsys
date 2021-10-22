@@ -6,6 +6,7 @@ namespace App\Model\Order\PromoCode;
 
 use App\Component\DateTimeHelper\DateTimeHelper;
 use App\Component\String\HashGenerator;
+use App\Model\Order\PromoCode\PromoCodeFlag\PromoCodeFlagRepository;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
@@ -92,6 +93,11 @@ class PromoCodeFacade extends BasePromoCodeFacade
     private PromoCodePricingGroupFactory $promoCodePricingGroupFactory;
 
     /**
+     * @var \App\Model\Order\PromoCode\PromoCodeFlag\PromoCodeFlagRepository
+     */
+    private PromoCodeFlagRepository $promoCodeFlagRepository;
+
+    /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \App\Model\Order\PromoCode\PromoCodeRepository $promoCodeRepository
      * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFactoryInterface $promoCodeFactory
@@ -108,6 +114,7 @@ class PromoCodeFacade extends BasePromoCodeFacade
      * @param \App\Model\Order\PromoCode\PromoCodeBrandFactory $promoCodeBrandFactory
      * @param \App\Model\Order\PromoCode\PromoCodePricingGroupRepository $promoCodePricingGroupRepository
      * @param \App\Model\Order\PromoCode\PromoCodePricingGroupFactory $promoCodePricingGroupFactory
+     * @param \App\Model\Order\PromoCode\PromoCodeFlag\PromoCodeFlagRepository $promoCodeFlagRepository
      */
     public function __construct(
         EntityManagerInterface $em,
@@ -125,7 +132,8 @@ class PromoCodeFacade extends BasePromoCodeFacade
         PromoCodeBrandRepository $promoCodeBrandRepository,
         PromoCodeBrandFactory $promoCodeBrandFactory,
         PromoCodePricingGroupRepository $promoCodePricingGroupRepository,
-        PromoCodePricingGroupFactory $promoCodePricingGroupFactory
+        PromoCodePricingGroupFactory $promoCodePricingGroupFactory,
+        PromoCodeFlagRepository $promoCodeFlagRepository
     ) {
         parent::__construct($em, $promoCodeRepository, $promoCodeFactory);
 
@@ -142,6 +150,7 @@ class PromoCodeFacade extends BasePromoCodeFacade
         $this->promoCodeBrandFactory = $promoCodeBrandFactory;
         $this->promoCodePricingGroupRepository = $promoCodePricingGroupRepository;
         $this->promoCodePricingGroupFactory = $promoCodePricingGroupFactory;
+        $this->promoCodeFlagRepository = $promoCodeFlagRepository;
     }
 
     /**
@@ -405,6 +414,22 @@ class PromoCodeFacade extends BasePromoCodeFacade
     }
 
     /**
+     * @param \App\Model\Order\PromoCode\PromoCode $promoCode
+     * @param \App\Model\Order\PromoCode\PromoCodeFlag\PromoCodeFlag[] $flags
+     */
+    private function refreshPromoCodeFlags(PromoCode $promoCode, array $flags): void
+    {
+        $this->promoCodeFlagRepository->deleteByPromoCodeId($promoCode->getId());
+
+        foreach ($flags as $flag) {
+            $flag->setPromoCode($promoCode);
+            $this->em->persist($flag);
+        }
+
+        $this->em->flush();
+    }
+
+    /**
      * @param \App\Model\Order\PromoCode\PromoCodeData $promoCodeData
      */
     private function prepareDatetimeValid(PromoCodeData $promoCodeData): void
@@ -458,5 +483,6 @@ class PromoCodeFacade extends BasePromoCodeFacade
         $this->refreshPromoCodeCategories($promoCode, $promoCodeData->categoriesWithSale);
         $this->refreshPromoCodePricingGroups($promoCode, $promoCodeData->limitedPricingGroups);
         $this->refreshPromoCodeBrands($promoCode, $promoCodeData->brandsWithSale);
+        $this->refreshPromoCodeFlags($promoCode, $promoCodeData->flags);
     }
 }

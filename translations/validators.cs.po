@@ -37,6 +37,9 @@ msgstr "Jméno nesmí být delší než {{ limit }} znaků"
 msgid "First name of contact person cannot be longer than {{ limit }} characters"
 msgstr "Jméno kontaktní osoby nesmí být delší než {{ limit }} znaků"
 
+msgid "Flag \"{{ flagName }}\" is selected multiple times."
+msgstr "Příznak \"{{ flagName }}\" je zvolen několikrát."
+
 msgid "Flag color in must be in valid hexadecimal code e.g. #3333ff"
 msgstr ""
 
@@ -97,6 +100,9 @@ msgstr ""
 msgid "Please choose country"
 msgstr "Prosím vyberte stát"
 
+msgid "Please choose flag"
+msgstr "Prosím vyberte příznak"
+
 msgid "Please choose image"
 msgstr ""
 
@@ -105,6 +111,9 @@ msgstr "Vyberte prosím platbu"
 
 msgid "Please choose shipping type"
 msgstr "Vyberte prosím dopravu"
+
+msgid "Please choose type of limitation"
+msgstr "Prosím vyberte typ omezení"
 
 msgid "Please enter VAT rate"
 msgstr ""

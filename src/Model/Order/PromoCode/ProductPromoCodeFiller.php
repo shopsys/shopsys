@@ -4,16 +4,12 @@ declare(strict_types=1);
 
 namespace App\Model\Order\PromoCode;
 
-use App\Model\Product\Flag\Flag;
+use App\Model\Order\PromoCode\PromoCodeFlag\PromoCodeFlagRepository;
 use App\Model\Product\Product;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 
 class ProductPromoCodeFiller
 {
-    private const BIT_ON_SALE = 1;
-    private const BIT_IN_ACTION = 2;
-    private const BIT_PRICE_HIT = 16;
-
     /**
      * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
      */
@@ -35,21 +31,29 @@ class ProductPromoCodeFiller
     private PromoCodeBrandRepository $promoCodeBrandRepository;
 
     /**
+     * @var \App\Model\Order\PromoCode\PromoCodeFlag\PromoCodeFlagRepository
+     */
+    private PromoCodeFlagRepository $promoCodeFlagRepository;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \App\Model\Order\PromoCode\PromoCodeProductRepository $promoCodeProductRepository
      * @param \App\Model\Order\PromoCode\PromoCodeCategoryRepository $promoCodeCategoryRepository
      * @param \App\Model\Order\PromoCode\PromoCodeBrandRepository $promoCodeBrandRepository
+     * @param \App\Model\Order\PromoCode\PromoCodeFlag\PromoCodeFlagRepository $promoCodeFlagRepository
      */
     public function __construct(
         Domain $domain,
         PromoCodeProductRepository $promoCodeProductRepository,
         PromoCodeCategoryRepository $promoCodeCategoryRepository,
-        PromoCodeBrandRepository $promoCodeBrandRepository
+        PromoCodeBrandRepository $promoCodeBrandRepository,
+        PromoCodeFlagRepository $promoCodeFlagRepository
     ) {
         $this->domain = $domain;
         $this->promoCodeProductRepository = $promoCodeProductRepository;
         $this->promoCodeCategoryRepository = $promoCodeCategoryRepository;
         $this->promoCodeBrandRepository = $promoCodeBrandRepository;
+        $this->promoCodeFlagRepository = $promoCodeFlagRepository;
     }
 
     /**
@@ -128,21 +132,24 @@ class ProductPromoCodeFiller
      */
     public function filterProductByPromoCodeFlags(Product $product, PromoCode $validEnteredPromoCode): ?Product
     {
-        $filterMask = 0;
-        $filterMask += $validEnteredPromoCode->isOnSale() ? self::BIT_ON_SALE : 0;
-        $filterMask += $validEnteredPromoCode->isInAction() ? self::BIT_IN_ACTION : 0;
-        $filterMask += $validEnteredPromoCode->isPriceHit() ? self::BIT_PRICE_HIT : 0;
+        $promoCodeFlags = $this->promoCodeFlagRepository->getFlagsByPromoCodeId($validEnteredPromoCode->getId());
 
-        $productSetup = 0;
-        $productSetup += $product->hasFlagByAkeneoCodeForDomain(Flag::AKENEO_CODE_SALE, $this->domain->getId()) ? self::BIT_ON_SALE : 0;
-        $productSetup += $product->hasFlagByAkeneoCodeForDomain(Flag::AKENEO_CODE_ACTION, $this->domain->getId()) ? self::BIT_IN_ACTION : 0;
-        $productSetup += $product->hasFlagByAkeneoCodeForDomain(Flag::AKENEO_CODE_HIT, $this->domain->getId()) ? self::BIT_PRICE_HIT : 0;
+        $productFlagIds = $product->getFlagsIdsForDomain($this->domain->getId());
+        $productSatisfies = true;
 
-        if (($filterMask & $productSetup ^ $filterMask) === 0) {
-            return $product;
+        foreach ($promoCodeFlags as $promoCodeFlag) {
+            $productHasPromoCodeFlag = in_array($promoCodeFlag->getFlag()->getId(), $productFlagIds, true);
+
+            if ($promoCodeFlag->isInclusive() && !$productHasPromoCodeFlag) {
+                $productSatisfies = false;
+            }
+
+            if ($promoCodeFlag->isExclusive() && $productHasPromoCodeFlag) {
+                $productSatisfies = false;
+            }
         }
 
-        return null;
+        return $productSatisfies ? $product : null;
     }
 
     /**

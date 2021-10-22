@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Form\Admin;
 
 use App\Component\DateTimeHelper\DateTimeHelper;
+use App\Form\Constraints\UniqueFlags;
 use App\Model\Order\PromoCode\PromoCode;
 use App\Model\Order\PromoCode\PromoCodeData;
 use App\Model\Order\PromoCode\PromoCodeFacade;
@@ -252,19 +253,21 @@ class PromoCodeFormTypeExtension extends AbstractTypeExtension
         $flagsGroup = $builder->create('flagsGroup', GroupType::class, [
             'label' => t('Apply according to product flags'),
         ]);
-        $builder->add($flagsGroup);
-        $flagsGroup->add('onSale', YesNoType::class, [
+
+        $flagsGroup->add('flags', PromoCodeFlagCollectionType::class, [
+            'label' => t('Flags'),
+            'entry_type' => PromoCodeFlagType::class,
+            'entry_options' => ['label' => false],
             'required' => false,
-            'label' => t('Product On Sale'),
-        ])
-            ->add('inAction', YesNoType::class, [
-                'required' => false,
-                'label' => t('Product In Action'),
-            ])
-            ->add('priceHit', YesNoType::class, [
-                'required' => false,
-                'label' => t('Product Price Hit'),
-            ]);
+            'allow_add' => true,
+            'error_bubbling' => false,
+            'allow_delete' => true,
+            'constraints' => [
+                new UniqueFlags(),
+            ],
+        ]);
+
+        $builder->add($flagsGroup);
     }
 
     /**
