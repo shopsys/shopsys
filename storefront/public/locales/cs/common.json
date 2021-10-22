@@ -136,6 +136,8 @@
     "Customized E-shop by": "E-shop na míru od",
     "Shopsys magazine": "Shopsys magazín",
     "View all": "Zobrazit všechny",
+    "FreeTransportAmountLeft": "Nakupte ještě za <1>{{ amountLeftvalue }}</1> a máte <3>dopravu zdarma!</3>",
+    "Your delivery and payment is now free of charge!": "Dopravu a platbu máte zdarma!"
     "Finish registration to loyalty program.": "Dokončete registraci <br/>do <strong>věrnostního <br/>programu</strong>.",
     "You will have an overview of your orders and complaints": "Budete mít přehled ve svých objednávkách nebo reklamacích",
     "Collecting points with every order": "Sbírání bodů s každou objednávkou",

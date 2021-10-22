@@ -18,6 +18,8 @@ export const theme = {
         redLight: '#f2a2a2',
         green: '#00ecb1',
         greenLight: '#81f7da',
+        greenVeryLight: '#e7fce6',
+        greenDark: '#22b92a',
         grey: '#555764',
         greyLight: '#a4a7c1',
         greyVeryLight: '#f5f5f6',
