@@ -43,6 +43,14 @@ export const getUserFriendlyErrors = (originalError: CombinedError, t: TFunction
                 continue;
             }
 
+            if (
+                /Cart "\b[0-9a-f]{8}\b-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-\b[0-9a-f]{12}\b" is unavailable./.test(
+                    error.message,
+                )
+            ) {
+                errors.applicationError = { type: ApplicationErrors.CART_NOT_FOUND, message: t('Cart not found') };
+            }
+
             errors.applicationError = { type: ApplicationErrors.DEFAULT, message: t('Unknown error.') };
         }
     } else {
