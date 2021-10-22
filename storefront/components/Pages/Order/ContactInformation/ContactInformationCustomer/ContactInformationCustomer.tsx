@@ -1,4 +1,5 @@
 import { Controller } from 'react-hook-form';
+import { CustomerType } from 'redux/slices/contactInformation';
 import { FC } from 'react';
 import FormColumn from 'components/Forms/Lib/FormColumn';
 import FormLine from 'components/Forms/Lib/FormLine';
@@ -6,9 +7,9 @@ import Heading from 'components/Basic/Heading';
 import Radiobutton from 'components/Forms/Radiobutton';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 
-type ContactInformationCustomer = { currentValue: 'commonCustomer' | 'companyCustomer' };
+type ContactInformationCustomerProps = { currentValue: CustomerType };
 
-const ContactInformationCustomer: FC<ContactInformationCustomer> = (props) => {
+const ContactInformationCustomer: FC<ContactInformationCustomerProps> = (props) => {
     const t = useTypedTranslationFunction();
 
     return (

@@ -1,11 +1,11 @@
-import { FieldValues, UseFormReturn } from 'react-hook-form';
+import { DeepPartial, UnpackNestedValue, UseFormReturn } from 'react-hook-form';
 import { useEffect } from 'react';
 import { UseMutationState } from 'urql';
 
-export const useHandleFormSuccessfulSubmit = (
+export const useHandleFormSuccessfulSubmit = <T>(
     result: UseMutationState,
-    formProviderMethods: UseFormReturn,
-    defaultValues: FieldValues,
+    formProviderMethods: UseFormReturn<T>,
+    defaultValues: UnpackNestedValue<DeepPartial<T>>,
     onSuccessAction?: (resultData: UseMutationState['data']) => void,
     options?: { blur?: boolean; reset?: boolean },
 ): void => {

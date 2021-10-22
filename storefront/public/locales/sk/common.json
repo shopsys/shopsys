@@ -135,5 +135,13 @@
     "Copyright © 2021, Shopsys s.r.o. All rights reserved.": "Copyright © 2021, Shopsys s.r.o. Všetky práva vyhradené.",
     "Customized E-shop by": "E-shop na mieru od",
     "Shopsys magazine": "Shopsys magazín",
-    "View all": "Zobraziť všetky"
+    "View all": "Zobraziť všetky",
+    "Finish registration to loyalty program.": "Dokončite registráciu <br/>do <strong>vernostného <br/>programu</strong>.",
+    "You will have an overview of your orders and complaints": "Budete mať prehľad vo svojich objednávkach alebo reklamáciách ",
+    "Collecting points with every order": "Zbieranie bodov s každou objednávkou",
+    "Possibility of purchases for better prices": "Možnosť nákupu za výhodné ceny",
+    "Exclusive products as a part of the loyalty program": "Exkluzívne produkty vo vernostnom programe",
+    "Create account": "Vytvoriť účet",
+    "I agree with terms and conditions and privacy policy": "Súhlasím s <1>obchodnými podmienkami</1> a spracovaním osobných údajov",
+    "Password must be at least {{ count }} characters long": "Heslo musí mať aspoň {{ count }} znakov"
 }

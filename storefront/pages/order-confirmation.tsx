@@ -1,17 +1,34 @@
+import { FC, useEffect } from 'react';
 import { initServerSideProps, ServerSidePropsType } from 'helpers/InitServerSideProps';
+import { nextReduxWrapper, useShopsysSelector } from 'redux/main';
 import CommonLayout from 'components/Layout/CommonLayout';
-import { FC } from 'react';
 import { initDomainConfig } from 'helpers/InitDomainConfig';
 import { navigationQuery } from 'connectors/navigation/Navigation';
-import { nextReduxWrapper } from 'redux/main';
 import OrderConfirmation from 'components/Pages/OrderConfirmation';
+import Registration from 'components/Pages/OrderConfirmation/Registration';
+import router from 'next/router';
+import { useGetInternationalizedStaticUrls } from 'hooks/staticUrls/UseGetInternationalizedStaticUrls';
 
 const Index: FC<ServerSidePropsType> = () => {
-    return (
-        <CommonLayout>
-            <OrderConfirmation />
-        </CommonLayout>
-    );
+    const { canAccessOrderConfirmation } = useShopsysSelector((state) => state.user);
+    const domainUrl = useShopsysSelector((state) => state.domain.url);
+    const [cartUrl] = useGetInternationalizedStaticUrls(['/cart'], domainUrl);
+    useEffect(() => {
+        if (!canAccessOrderConfirmation) {
+            router.replace(cartUrl);
+        }
+    }, []);
+
+    if (canAccessOrderConfirmation) {
+        return (
+            <CommonLayout>
+                <OrderConfirmation />
+                <Registration />
+            </CommonLayout>
+        );
+    }
+
+    return null;
 };
 
 export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) => async (context) => {

@@ -58,6 +58,15 @@ export const ErrorIconStyled = styled(Icon)<ErrorIconStyledProps>`
             right: 45px;
         `}
 
+        ${inputType === 'text-input-password' &&
+        css`
+            transform: translateY(-50%);
+            top: ${textInputSize === 'small'
+                ? localVariables.smallTextInputErrorIconTopOffset
+                : localVariables.defaultTextInputErrorIconTopOffset};
+            right: 45px;
+        `}
+
         ${inputType === 'checkbox' &&
         css`
             top: 2px;

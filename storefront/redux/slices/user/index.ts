@@ -16,17 +16,16 @@ export type PaginationType = {
 };
 
 type InitialState = {
-    email: string | null;
     sort: SortType;
     cart: CartType | null;
     transport: TransportType | null;
     payment: PaymentType | null;
     personalPickupStore: StoreType | null;
     pagination: PaginationType;
+    canAccessOrderConfirmation: boolean;
 };
 
 export const initialState = {
-    email: null,
     sort: sortPriority,
     cart: null,
     transport: null,
@@ -36,6 +35,7 @@ export const initialState = {
         currentPage: 1,
         paginationCursor: '',
     },
+    canAccessOrderConfirmation: false,
 } as InitialState;
 
 export type PayloadType = { sort: SortType };
@@ -44,9 +44,6 @@ export const userSlice = createSlice({
     name: 'user',
     initialState,
     reducers: {
-        setEmail(state, action: PayloadAction<string | null>) {
-            state.email = action.payload;
-        },
         setSort(state, action: PayloadAction<PayloadType>) {
             state.sort = action.payload.sort;
         },
@@ -64,6 +61,9 @@ export const userSlice = createSlice({
         },
         setPagination(state, action: PayloadAction<PaginationType>) {
             state.pagination = action.payload;
+        },
+        setOrderConfirmationAccess(state, action: PayloadAction<boolean>) {
+            state.canAccessOrderConfirmation = action.payload;
         },
     },
 });

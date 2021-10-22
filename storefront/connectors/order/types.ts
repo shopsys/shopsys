@@ -29,7 +29,3 @@ export type OrderInputType = {
     cartUuid?: string | null;
     promoCode?: string | null;
 };
-
-export type OrderApiType = {
-    email: string;
-};

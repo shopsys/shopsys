@@ -20,6 +20,7 @@ const ContactInformationRegister: FC = () => {
                     name="register"
                     render={({ field }) => (
                         <Checkbox
+                            name={field.name}
                             fieldRef={field}
                             id="contactInformation_form-register"
                             label={t('I want to register with an order')}

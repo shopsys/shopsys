@@ -7,11 +7,13 @@ import { getCountrySelectOptions } from 'pages/order/contact-information';
 import Heading from 'components/Basic/Heading';
 import Select from 'components/Forms/Select';
 import TextInput from 'components/Forms/TextInput';
+import { useShopsysSelector } from 'redux/main';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 
 const ContactInformationAddress: FC = () => {
     const t = useTypedTranslationFunction();
     const formProviderMethods = useFormContext();
+    const { country } = useShopsysSelector((state) => state.contactInformation);
 
     return (
         <>
@@ -83,15 +85,13 @@ const ContactInformationAddress: FC = () => {
                 <Controller
                     name="country"
                     render={({ field }) => (
-                        <>
-                            <Select
-                                defaultValue={getCountrySelectOptions(t)[0]}
-                                options={getCountrySelectOptions(t)}
-                                onChange={(option: { value: string }) =>
-                                    formProviderMethods.setValue(field.name, option.value)
-                                }
-                            />
-                        </>
+                        <Select
+                            defaultValue={getCountrySelectOptions(t).find((option) => option.value === country)!}
+                            options={getCountrySelectOptions(t)}
+                            onChange={(option: { value: string }) =>
+                                formProviderMethods.setValue(field.name, option.value)
+                            }
+                        />
                     )}
                 />
             </FormLine>

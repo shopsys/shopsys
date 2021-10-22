@@ -6,7 +6,8 @@ import { ExtractNativePropsFromDefault } from 'typeHelpers/ExtractNativePropsFro
 
 type NativeProps = ExtractNativePropsFromDefault<
     InputHTMLAttributes<HTMLInputElement>,
-    'id' | 'name' | 'disabled' | 'required'
+    'name',
+    'id' | 'disabled' | 'required'
 >;
 
 type CheckboxColorProps = NativeProps & {
@@ -34,12 +35,17 @@ type CheckboxColorProps = NativeProps & {
 const CheckboxColor: FC<CheckboxColorProps> = (props) => {
     return (
         <ColorLabelWrapper
-            htmlFor={props.id}
+            htmlFor={props.id === undefined ? props.name + 'checkbox_color-id' : props.id}
             label={props.label}
             bgColor={props.bgColor}
             isLightColor={props.isLightColor}
         >
-            <CheckboxColorStyled {...props} {...props.fieldRef} type="checkbox" />
+            <CheckboxColorStyled
+                {...props}
+                {...props.fieldRef}
+                id={props.id === undefined ? props.name + 'checkbox_color-id' : props.id}
+                type="checkbox"
+            />
         </ColorLabelWrapper>
     );
 };

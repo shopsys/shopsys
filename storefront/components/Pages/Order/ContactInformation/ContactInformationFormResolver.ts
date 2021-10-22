@@ -3,19 +3,35 @@ import { Resolver } from 'react-hook-form';
 import { TFunction } from 'next-i18next';
 import { yupResolver } from '@hookform/resolvers/yup';
 
-export const getContactInformationFormResolver = (t: TFunction): Resolver => {
+export const getContactInformationFormResolver = <T>(t: TFunction): Resolver<T> => {
     return yupResolver(
         Yup.object().shape({
             email: Yup.string().required(t('Please enter email')).email(t('This value is not a valid email')),
             register: Yup.boolean(),
             passwordFirst: Yup.string().when('register', {
                 is: true,
-                then: Yup.string().required(t('Please enter password')),
+                then: Yup.string()
+                    .required(t('Please enter password'))
+                    .min(
+                        6,
+                        t('Password must be at least {{ count }} characters long', {
+                            postProcess: 'interval',
+                            count: 6,
+                        }),
+                    ),
                 otherwise: Yup.string(),
             }),
             passwordSecond: Yup.string().when('register', {
                 is: true,
-                then: Yup.string().required(t('Please enter password')),
+                then: Yup.string()
+                    .required(t('Please enter password'))
+                    .min(
+                        6,
+                        t('Password must be at least {{ count }} characters long', {
+                            postProcess: 'interval',
+                            count: 6,
+                        }),
+                    ),
                 otherwise: Yup.string(),
             }),
             customer: Yup.string().oneOf(['commonCustomer', 'companyCustomer']),
