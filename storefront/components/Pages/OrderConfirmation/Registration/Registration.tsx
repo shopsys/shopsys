@@ -59,11 +59,9 @@ const Registration: FC = () => {
             return;
         }
         if (registerResult.error !== undefined) {
-            const userErrors = getUserFriendlyErrors(registerResult.error, t).userError;
-            for (const key in userErrors) {
-                for (const error of userErrors[key]) {
-                    showErrorMessage(error.message);
-                }
+            const validationErrors = getUserFriendlyErrors(registerResult.error, t).userError?.validation;
+            for (const fieldName in validationErrors) {
+                showErrorMessage(validationErrors[fieldName].message);
             }
         }
     }, [registerResult.data, registerResult.error]);

@@ -16,8 +16,8 @@ import Heading from 'components/Basic/Heading';
 import { showSuccessMessage } from 'components/Helpers/Toasts';
 import TextInput from 'components/Forms/TextInput';
 import { TFunction } from 'next-i18next';
+import { useHandleFormErrors } from 'hooks/forms/UseHandleFormErrors';
 import { useHandleFormSuccessfulSubmit } from 'hooks/forms/UseHandleFormSuccessfulSubmit';
-import { useHandleFormValidationErrors } from 'hooks/forms/UseHandleFormValidationErrors';
 import { useNewsletterSubscription } from 'connectors/newsletter/Newsletter';
 import { useShopsysForm } from 'hooks/forms/UseShopsysForm';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
@@ -40,7 +40,7 @@ const NewsletterForm: FC = () => {
     const t = useTypedTranslationFunction();
     const [subscribeToNewsletterResult, subscribeToNewsletter] = useNewsletterSubscription();
     const formProviderMethods = useShopsysForm(getNewsletterFormResolver(t), { email: '', privacyPolicy: false });
-    useHandleFormValidationErrors(subscribeToNewsletterResult.error, formProviderMethods);
+    useHandleFormErrors(subscribeToNewsletterResult.error, formProviderMethods, t('Could not subscribe to newsletter'));
     useHandleFormSuccessfulSubmit(
         subscribeToNewsletterResult,
         formProviderMethods,

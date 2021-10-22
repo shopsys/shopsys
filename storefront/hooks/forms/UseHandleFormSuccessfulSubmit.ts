@@ -24,8 +24,8 @@ export const useHandleFormSuccessfulSubmit = <T>(
     }, [result.data, result.error]);
 
     useEffect(() => {
-        if (options?.reset && formProviderMethods.formState.isSubmitSuccessful) {
-            formProviderMethods.reset(defaultValues);
+        if (options?.reset && formProviderMethods.formState.isSubmitSuccessful && !result.fetching) {
+            formProviderMethods.reset(defaultValues, { keepValues: result.error !== undefined, keepErrors: true });
         }
-    }, [formProviderMethods.formState, formProviderMethods.reset]);
+    }, [formProviderMethods.formState, formProviderMethods.reset, result.fetching, result.error]);
 };

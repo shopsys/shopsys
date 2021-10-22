@@ -17,8 +17,8 @@ import { updateCartState } from 'utils/Cart/UpdateCartState';
 import { useCreateOrder } from 'connectors/order/Order';
 import { useGetInternationalizedStaticUrls } from 'hooks/staticUrls/UseGetInternationalizedStaticUrls';
 import { useHandleContactInformationChanges } from 'hooks/forms/UseHandleContactInformationChanges';
+import { useHandleFormErrors } from 'hooks/forms/UseHandleFormErrors';
 import { useHandleFormSuccessfulSubmit } from 'hooks/forms/UseHandleFormSuccessfulSubmit';
-import { useHandleFormValidationErrors } from 'hooks/forms/UseHandleFormValidationErrors';
 import { userActions } from 'redux/slices/user';
 import { useRouter } from 'next/router';
 import { useShopsysForm } from 'hooks/forms/UseShopsysForm';
@@ -45,7 +45,7 @@ const ContactInformation: FC<ServerSidePropsType> = () => {
     useHandleFormSuccessfulSubmit(createOrderResult, formProviderMethods, contactInformationValues, () =>
         onSuccessfullyCreatedOrderHandler(),
     );
-    useHandleFormValidationErrors(createOrderResult.error, formProviderMethods);
+    useHandleFormErrors(createOrderResult.error, formProviderMethods, t('Could not create order'));
     useHandleContactInformationChanges(formProviderMethods.control, contactInformationValues);
 
     const onSuccessfullyCreatedOrderHandler = () => {

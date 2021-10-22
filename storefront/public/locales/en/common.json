@@ -152,5 +152,8 @@
     "Contact to the department store": "Contact to the department store",
     "Special announcement": "Special announcement",
     "Do you have any questions?": "Do you have any questions?",
-    "Customer Centre": "Customer Centre"
+    "Customer Centre": "Customer Centre",
+    "Could not subscribe to newsletter": "Could not subscribe to newsletter",
+    "Could not reset password": "Could not reset password",
+    "Could not create order": "Could not create order"
 }
