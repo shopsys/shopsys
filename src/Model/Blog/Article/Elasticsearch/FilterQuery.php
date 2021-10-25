@@ -17,7 +17,7 @@ class FilterQuery extends AbstractFilterQuery
         parent::__construct($indexName);
 
         $this->sorting = [
-            'publishDate' => 'asc',
+            'publishDate' => 'desc',
             'name.keyword' => 'asc',
         ];
     }
@@ -64,6 +64,27 @@ class FilterQuery extends AbstractFilterQuery
         $clone->filters[] = [
             'term' => [
                 'categories' => $blogCategory->getId(),
+            ],
+        ];
+
+        return $clone;
+    }
+
+    /**
+     * @param bool $onlyVisibleOnHomepage
+     * @return \App\Model\Blog\Article\Elasticsearch\FilterQuery
+     */
+    public function onlyVisibleOnHomepage(bool $onlyVisibleOnHomepage = true): self
+    {
+        $clone = clone $this;
+
+        if (!$onlyVisibleOnHomepage) {
+            return $clone;
+        }
+
+        $clone->filters[] = [
+            'term' => [
+                'visibleOnHomepage' => true,
             ],
         ];
 

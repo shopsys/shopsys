@@ -48,11 +48,14 @@ class BlogArticleElasticsearchRepository
     }
 
     /**
+     * @param bool $onlyVisibleOnHomepage
      * @return int
      */
-    public function getAllBlogArticlesTotalCount(): int
+    public function getAllBlogArticlesTotalCount(bool $onlyVisibleOnHomepage = false): int
     {
-        $filterQuery = $this->filterQueryFactory->create();
+        $filterQuery = $this->filterQueryFactory
+            ->create()
+            ->onlyVisibleOnHomepage($onlyVisibleOnHomepage);
 
         return $this->blogArticleElasticsearchDataFetcher->getTotalCount($filterQuery);
     }
@@ -60,11 +63,14 @@ class BlogArticleElasticsearchRepository
     /**
      * @param int $offset
      * @param int $limit
+     * @param bool $onlyVisibleOnHomepage
      * @return array
      */
-    public function getAllBlogArticles(int $offset, int $limit): array
+    public function getAllBlogArticles(int $offset, int $limit, bool $onlyVisibleOnHomepage = false): array
     {
-        $filterQuery = $this->filterQueryFactory->create($offset, $limit);
+        $filterQuery = $this->filterQueryFactory
+            ->create($offset, $limit)
+            ->onlyVisibleOnHomepage($onlyVisibleOnHomepage);
 
         return $this->blogArticleElasticsearchDataFetcher->getAllResults($filterQuery);
     }
@@ -106,22 +112,28 @@ class BlogArticleElasticsearchRepository
      * @param \App\Model\Blog\Category\BlogCategory $blogCategory
      * @param int $offset
      * @param int $limit
+     * @param bool $onlyVisibleOnHomepage
      * @return array
      */
-    public function getByBlogCategory(BlogCategory $blogCategory, int $offset, int $limit): array
+    public function getByBlogCategory(BlogCategory $blogCategory, int $offset, int $limit, bool $onlyVisibleOnHomepage = false): array
     {
-        $filterQuery = $this->filterQueryFactory->createFilteredByBlogCategory($blogCategory, $offset, $limit);
+        $filterQuery = $this->filterQueryFactory
+            ->createFilteredByBlogCategory($blogCategory, $offset, $limit)
+            ->onlyVisibleOnHomepage($onlyVisibleOnHomepage);
 
         return $this->blogArticleElasticsearchDataFetcher->getAllResults($filterQuery);
     }
 
     /**
      * @param \App\Model\Blog\Category\BlogCategory $blogCategory
+     * @param bool $onlyVisibleOnHomepage
      * @return int
      */
-    public function getByBlogCategoryTotalCount(BlogCategory $blogCategory): int
+    public function getByBlogCategoryTotalCount(BlogCategory $blogCategory, bool $onlyVisibleOnHomepage = false): int
     {
-        $filterQuery = $this->filterQueryFactory->createFilteredByBlogCategory($blogCategory);
+        $filterQuery = $this->filterQueryFactory
+            ->createFilteredByBlogCategory($blogCategory)
+            ->onlyVisibleOnHomepage($onlyVisibleOnHomepage);
 
         return $this->blogArticleElasticsearchDataFetcher->getTotalCount($filterQuery);
     }

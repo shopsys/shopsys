@@ -32,7 +32,7 @@ BlogCategory:
             blogArticles:
                 type: "BlogArticleConnection"
                 description: "Paginated blog articles of the given blog category"
-                argsBuilder: "Relay::Connection"
+                argsBuilder: "BlogArticlePaginatorArgumentsBuilder"
                 resolve: '@=service("App\\FrontendApi\\Model\\Resolver\\Blog\\Article\\BlogArticlesResolver").resolveByCategory(args, value)'
             link:
                 type: "String!"

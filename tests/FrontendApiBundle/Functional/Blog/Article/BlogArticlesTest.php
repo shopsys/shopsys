@@ -41,7 +41,10 @@ class BlogArticlesTest extends GraphQlTestCase
                 array_slice($expectedBlogArticlesData, 0, 5),
             ], [
                 $this->getLastBlogArticleQuery(),
-                [['name' => t('Ukázkový článek blogu %counter% %locale%', ['%counter%' => 45, '%locale%' => $firstDomainLocale], 'dataFixtures', $firstDomainLocale)]],
+                [['name' => t('Blog article for search testing', [], 'dataFixtures', $firstDomainLocale)]],
+            ], [
+                $this->getHomepageBlogArticlesQuery(3),
+                array_slice($expectedBlogArticlesData, 1, 3),
             ],
         ];
     }
@@ -128,22 +131,42 @@ class BlogArticlesTest extends GraphQlTestCase
     }
 
     /**
+     * @param int $limit
+     * @return string
+     */
+    private function getHomepageBlogArticlesQuery(int $limit): string
+    {
+        return '
+            {
+                blogArticles(first:' . $limit . ', onlyHomepageArticles: true) {
+                    edges {
+                        node {
+                            name
+                        }
+                    }
+                    totalCount
+                }
+            }
+        ';
+    }
+
+    /**
      * @param string $firstDomainLocale
      * @return array[]
      */
     private function getExpectedBlogArticlesData(string $firstDomainLocale): array
     {
         return [
-            ['name' => t('Blog article for search testing', [], 'dataFixtures', $firstDomainLocale)],
-            ['name' => t('Ukázkový článek blogu %counter% %locale%', ['%counter%' => 1, '%locale%' => $firstDomainLocale], 'dataFixtures', $firstDomainLocale)],
-            ['name' => t('Ukázkový článek blogu %counter% %locale%', ['%counter%' => 2, '%locale%' => $firstDomainLocale], 'dataFixtures', $firstDomainLocale)],
-            ['name' => t('Ukázkový článek blogu %counter% %locale%', ['%counter%' => 3, '%locale%' => $firstDomainLocale], 'dataFixtures', $firstDomainLocale)],
-            ['name' => t('Ukázkový článek blogu %counter% %locale%', ['%counter%' => 4, '%locale%' => $firstDomainLocale], 'dataFixtures', $firstDomainLocale)],
-            ['name' => t('Ukázkový článek blogu %counter% %locale%', ['%counter%' => 5, '%locale%' => $firstDomainLocale], 'dataFixtures', $firstDomainLocale)],
-            ['name' => t('Ukázkový článek blogu %counter% %locale%', ['%counter%' => 6, '%locale%' => $firstDomainLocale], 'dataFixtures', $firstDomainLocale)],
-            ['name' => t('Ukázkový článek blogu %counter% %locale%', ['%counter%' => 7, '%locale%' => $firstDomainLocale], 'dataFixtures', $firstDomainLocale)],
-            ['name' => t('Ukázkový článek blogu %counter% %locale%', ['%counter%' => 8, '%locale%' => $firstDomainLocale], 'dataFixtures', $firstDomainLocale)],
-            ['name' => t('Ukázkový článek blogu %counter% %locale%', ['%counter%' => 9, '%locale%' => $firstDomainLocale], 'dataFixtures', $firstDomainLocale)],
+            ['name' => t('Ukázkový článek blogu %counter% %locale%', ['%counter%' => 45, '%locale%' => $firstDomainLocale], 'dataFixtures', $firstDomainLocale)],
+            ['name' => t('Ukázkový článek blogu %counter% %locale%', ['%counter%' => 44, '%locale%' => $firstDomainLocale], 'dataFixtures', $firstDomainLocale)],
+            ['name' => t('Ukázkový článek blogu %counter% %locale%', ['%counter%' => 43, '%locale%' => $firstDomainLocale], 'dataFixtures', $firstDomainLocale)],
+            ['name' => t('Ukázkový článek blogu %counter% %locale%', ['%counter%' => 42, '%locale%' => $firstDomainLocale], 'dataFixtures', $firstDomainLocale)],
+            ['name' => t('Ukázkový článek blogu %counter% %locale%', ['%counter%' => 41, '%locale%' => $firstDomainLocale], 'dataFixtures', $firstDomainLocale)],
+            ['name' => t('Ukázkový článek blogu %counter% %locale%', ['%counter%' => 40, '%locale%' => $firstDomainLocale], 'dataFixtures', $firstDomainLocale)],
+            ['name' => t('Ukázkový článek blogu %counter% %locale%', ['%counter%' => 39, '%locale%' => $firstDomainLocale], 'dataFixtures', $firstDomainLocale)],
+            ['name' => t('Ukázkový článek blogu %counter% %locale%', ['%counter%' => 38, '%locale%' => $firstDomainLocale], 'dataFixtures', $firstDomainLocale)],
+            ['name' => t('Ukázkový článek blogu %counter% %locale%', ['%counter%' => 37, '%locale%' => $firstDomainLocale], 'dataFixtures', $firstDomainLocale)],
+            ['name' => t('Ukázkový článek blogu %counter% %locale%', ['%counter%' => 36, '%locale%' => $firstDomainLocale], 'dataFixtures', $firstDomainLocale)],
         ];
     }
 }

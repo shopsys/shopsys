@@ -42,38 +42,42 @@ class BlogArticleElasticsearchFacade
     /**
      * @param int $offset
      * @param int $limit
+     * @param bool $onlyVisibleOnHomepage
      * @return array
      */
-    public function getAllBlogArticles(int $offset, int $limit): array
+    public function getAllBlogArticles(int $offset, int $limit, bool $onlyVisibleOnHomepage = false): array
     {
-        return $this->blogArticleElasticsearchRepository->getAllBlogArticles($offset, $limit);
+        return $this->blogArticleElasticsearchRepository->getAllBlogArticles($offset, $limit, $onlyVisibleOnHomepage);
     }
 
     /**
+     * @param bool $onlyVisibleOnHomepage
      * @return int
      */
-    public function getAllBlogArticlesTotalCount(): int
+    public function getAllBlogArticlesTotalCount(bool $onlyVisibleOnHomepage = false): int
     {
-        return $this->blogArticleElasticsearchRepository->getAllBlogArticlesTotalCount();
+        return $this->blogArticleElasticsearchRepository->getAllBlogArticlesTotalCount($onlyVisibleOnHomepage);
     }
 
     /**
      * @param \App\Model\Blog\Category\BlogCategory $blogCategory
      * @param int $offset
      * @param int $limit
+     * @param bool $onlyVisibleOnHomepage
      * @return array
      */
-    public function getByBlogCategory(BlogCategory $blogCategory, int $offset, int $limit): array
+    public function getByBlogCategory(BlogCategory $blogCategory, int $offset, int $limit, bool $onlyVisibleOnHomepage = false): array
     {
-        return $this->blogArticleElasticsearchRepository->getByBlogCategory($blogCategory, $offset, $limit);
+        return $this->blogArticleElasticsearchRepository->getByBlogCategory($blogCategory, $offset, $limit, $onlyVisibleOnHomepage);
     }
 
     /**
      * @param \App\Model\Blog\Category\BlogCategory $blogCategory
+     * @param bool $onlyVisibleOnHomepage
      * @return int
      */
-    public function getByBlogCategoryTotalCount(BlogCategory $blogCategory): int
+    public function getByBlogCategoryTotalCount(BlogCategory $blogCategory, bool $onlyVisibleOnHomepage = false): int
     {
-        return $this->blogArticleElasticsearchRepository->getByBlogCategoryTotalCount($blogCategory);
+        return $this->blogArticleElasticsearchRepository->getByBlogCategoryTotalCount($blogCategory, $onlyVisibleOnHomepage);
     }
 }
