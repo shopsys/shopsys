@@ -8,7 +8,7 @@ import {
     ListItemTitleStyled,
     ListStyled,
 } from './List.style';
-import { BlogArticlesType } from 'connectors/blogCategory/BlogCategory';
+import { BlogArticlesType } from 'connectors/blogCategory/types';
 import Flag from 'components/Basic/Flag';
 import Heading from 'components/Basic/Heading';
 import Image from 'components/Basic/Image';
@@ -42,8 +42,8 @@ const List: FC<ListProps> = (props) => {
                                 </Fragment>
                             ))}
                         </div>
-                        <ListItemTitleStyled href={blogArticle.node.link}>
-                            <Heading type="h2">{blogArticle.node.name}</Heading>
+                        <ListItemTitleStyled href={blogArticle.link}>
+                            <Heading type="h2">{blogArticle.name}</Heading>
                         </ListItemTitleStyled>
                         {blogArticle.perex !== undefined && (
                             <ListItemContentTextStyled>{blogArticle.perex}</ListItemContentTextStyled>

@@ -1,18 +1,34 @@
-import { BreadcrumbType } from 'connectors/breadcrumb/Breadcrumb';
-import { SlugType } from 'connectors/slug/Slug';
-import { v4 as uuid } from 'uuid';
+import { BlogArticleItemApiData, BlogArticleType, BlogCategoryApiData, BlogCategoryType } from './types';
 
-export const blogCategoryBody = `
+export function blogCategoryBody(blogPaginationEndCursor: string): string {
+    return `
     uuid
     blogCategoryName: name
-    blogArticles {
+    blogArticles(after:"${blogPaginationEndCursor}") {
+        totalCount
+        pageInfo {
+            startCursor
+            endCursor
+            hasNextPage
+            hasPreviousPage
+        }
         edges {
             node {
+                uuid
                 name
                 createdAt
                 perex
                 link
+                image(sizes: "list") {
+                    sizes {
+                        size
+                        url
+                        width
+                        height
+                    }
+                }
                 blogCategories {
+                    uuid
                     name
                     link
                     parent {
@@ -25,66 +41,30 @@ export const blogCategoryBody = `
     breadcrumb {
         name
         slug
-    }` as const;
-
-export type BlogArticlesType = {
-    edges: {
-        node: {
-            name: string;
-            createdAt: string;
-            perex: string;
-            link: string;
-            blogCategories: {
-                name: string;
-                link: string;
-                parent: {
-                    name: string;
-                };
-            }[];
-        };
-    }[];
-};
-
-type BlogArticleItemType = {
-    node: {
-        name: string;
-        createdAt: string;
-        perex: string;
-        link: string;
-        blogCategories: {
-            name: string;
-            link: string;
-            parent: {
-                name: string;
-            };
-        }[];
-    };
-};
-
-export interface BlogCategoryType extends SlugType, BreadcrumbType {
-    uuid: typeof uuid;
-    blogCategoryName: string;
-    blogArticles: BlogArticlesType;
+    }
+    `;
 }
 
-function mapBlogCategoryArticles(blogArticles: BlogArticleItemType[]) {
+function mapBlogCategoryArticles(blogArticles: BlogArticleItemApiData[]): BlogArticleType[] {
     const mappedBlogCategoryArticles = [];
     for (const blogArticle of blogArticles) {
         mappedBlogCategoryArticles.push({
-            node: {
-                ...blogArticle.node,
-                createdAt: blogArticle.node.createdAt.replace(/T.*$/g, ''),
-            },
+            ...blogArticle.node,
+            image: blogArticle.node.image !== null ? blogArticle.node.image.sizes[0] : null,
         });
     }
 
     return mappedBlogCategoryArticles;
 }
 
-export function mapBlogCategoryData(apiBlogCategoryData: BlogCategoryType): BlogCategoryType {
+export function mapBlogCategoryData(apiBlogCategoryData: BlogCategoryApiData): BlogCategoryType {
     return {
         ...apiBlogCategoryData,
         blogArticles: {
+            totalCount: apiBlogCategoryData.blogArticles.totalCount,
+            pageInfo: {
+                ...apiBlogCategoryData.blogArticles.pageInfo,
+            },
             edges: mapBlogCategoryArticles(apiBlogCategoryData.blogArticles.edges),
         },
     };

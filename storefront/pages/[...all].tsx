@@ -76,6 +76,7 @@ function renderContent(
         | StoreDetailType
         | ArticleDetailType
         | BlogArticleDetailType
+        | BlogCategoryType
         | BrandDetailType
         | FlagDetailType,
 ) {
