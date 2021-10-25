@@ -344,4 +344,17 @@ class BlogArticleRepository
 
         return array_column($result, 'id');
     }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
+     * @return \App\Model\Blog\Article\BlogArticle[]
+     */
+    public function getAllVisibleOnDomain(DomainConfig $domainConfig): array
+    {
+        $blogArticleQueryBuilder = $this->getVisibleBlogArticlesByDomainIdAndLocaleQueryBuilder($domainConfig->getId(), $domainConfig->getLocale());
+
+        return $blogArticleQueryBuilder
+            ->getQuery()
+            ->getResult();
+    }
 }

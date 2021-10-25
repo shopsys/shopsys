@@ -547,4 +547,12 @@ class ImageFacade extends BaseImageFacade
 
         return str_replace($domainConfig->getUrl(), $this->cdnDomain, $imageUrl);
     }
+
+    /**
+     * @return bool
+     */
+    public function clearImageCache(): bool
+    {
+        return $this->imageCacheFacade->invalidateAll();
+    }
 }

@@ -368,4 +368,13 @@ class BlogArticleFacade
             $locale
         );
     }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
+     * @return \App\Model\Blog\Article\BlogArticle[]
+     */
+    public function getAllVisibleOnDomain(DomainConfig $domainConfig): array
+    {
+        return $this->blogArticleRepository->getAllVisibleOnDomain($domainConfig);
+    }
 }
