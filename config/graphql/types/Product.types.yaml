@@ -63,3 +63,7 @@ Product:
                     sizes:
                         type: "[String!]"
                         defaultValue: null
+            price:
+                type: "ProductPrice!"
+                description: "Product price"
+                resolve: '@=resolver("productPriceResolver", [value])'
