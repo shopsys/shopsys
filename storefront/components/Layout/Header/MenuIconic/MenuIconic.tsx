@@ -8,10 +8,14 @@ import {
 } from './MenuIconic.style';
 import { FC } from 'react';
 import NextLink from 'next/link';
+import { useGetInternationalizedStaticUrls } from 'hooks/staticUrls/UseGetInternationalizedStaticUrls';
+import { useShopsysSelector } from 'redux/main';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 
 const MenuIconic: FC = () => {
     const t = useTypedTranslationFunction();
+    const domainConfig = useShopsysSelector((state) => state.domain);
+    const [storesUrl] = useGetInternationalizedStaticUrls(['/stores'], domainConfig.url);
 
     return (
         <>
@@ -25,7 +29,7 @@ const MenuIconic: FC = () => {
                     </NextLink>
                 </MenuIconicItemStyled>
                 <MenuIconicItemStyled>
-                    <NextLink href="/" passHref>
+                    <NextLink href={storesUrl} passHref>
                         <MenuIconicItemLinkStyled>
                             <MenuIconicItemIconStyled icon="Marker" />
                             {t('Stores')}
