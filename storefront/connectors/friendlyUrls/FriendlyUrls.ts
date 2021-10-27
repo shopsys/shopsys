@@ -15,6 +15,7 @@ export function friendlyUrlQuery(slug: string, categoryDetailSort: string, endCu
         query slug {
             slug(slug: "${slug}") {
                 __typename
+                slug
                 ... on Product {
                     ${productDetailBody}
                 }
