@@ -10,8 +10,8 @@ import SimpleLayout from 'components/Layout/SimpleLayout';
 import TextInput from 'components/Forms/TextInput';
 import { TFunction } from 'react-i18next';
 import { useGetInternationalizedStaticUrls } from 'hooks/staticUrls/UseGetInternationalizedStaticUrls';
+import { useHandleFormErrors } from 'hooks/forms/UseHandleFormErrors';
 import { useHandleFormSuccessfulSubmit } from 'hooks/forms/UseHandleFormSuccessfulSubmit';
-import { useHandleFormValidationErrors } from 'hooks/forms/UseHandleFormValidationErrors';
 import { usePasswordReset } from 'connectors/password/Password';
 import { useShopsysForm } from 'hooks/forms/UseShopsysForm';
 import { useShopsysSelector } from 'redux/main';
@@ -32,7 +32,7 @@ const ResetPassword: FC = () => {
     const { url } = useShopsysSelector((state) => state.domain);
     const [resetPasswordUrl] = useGetInternationalizedStaticUrls(['/reset-password'], url);
     const formProviderMethods = useShopsysForm(getResetPasswordFormResolver(t), { email: '' });
-    useHandleFormValidationErrors(resetPasswordResult.error, formProviderMethods);
+    useHandleFormErrors(resetPasswordResult.error, formProviderMethods, t('Could not reset password'));
     useHandleFormSuccessfulSubmit(
         resetPasswordResult,
         formProviderMethods,

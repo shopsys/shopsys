@@ -152,5 +152,11 @@
     "Contact to the department store": "Kontakt na obchodný dom",
     "Special announcement": "Špeciálne oznámenie",
     "Do you have any questions?": "Máte nejaké ďalšie otázky?",
-    "Customer Centre": "Zákaznícke centrum"
+    "Customer Centre": "Zákaznícke centrum",
+    "Could not subscribe to newsletter": "Nepodarilo sa prihlásiť k odberu newsletteru",
+    "Could not reset password": "Nepodarilo sa obnoviť heslo",
+    "Could not create order": "Nepodarilo sa vytvoriť objednávku",
+    "Could not load your cart": "Nepodarilo sa načítať váš košík",
+    "Could not add the product to cart": "Nepodarilo sa pridať produkt do košíka",
+    "Could not remove the product from cart": "Nepodarilo sa odobrať produkt z košíka"
 }

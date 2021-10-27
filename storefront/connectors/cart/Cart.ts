@@ -143,6 +143,7 @@ export const loadCart = (
         query: cartQuery,
         variables: { cartUuid, transport, payment, promoCode },
         pause: cartUuid === null,
+        requestPolicy: 'cache-and-network',
     });
 
     useHandleCartUpdate(

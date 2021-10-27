@@ -12,10 +12,7 @@ export const useFetchQuery = (query: UseQueryArgs): ShopsysUseQueryState => {
     const t = useTypedTranslationFunction();
     const result: ShopsysUseQueryState = {
         ...useQuery(query)[0],
-        parsedErrors: {
-            applicationError: undefined,
-            userError: undefined,
-        },
+        parsedErrors: {},
     };
 
     useEffect(() => {
@@ -25,11 +22,9 @@ export const useFetchQuery = (query: UseQueryArgs): ShopsysUseQueryState => {
 
         result.parsedErrors = getUserFriendlyErrors(result.error, t);
 
-        if (result.parsedErrors.applicationError === undefined) {
-            return;
+        if (result.parsedErrors.applicationError !== undefined) {
+            showErrorMessage(result.parsedErrors.applicationError.message);
         }
-
-        showErrorMessage(result.parsedErrors.applicationError);
     }, [result.fetching]);
 
     return result;

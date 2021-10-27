@@ -7,6 +7,7 @@ import { updateCartState } from 'utils/Cart/UpdateCartState';
 import { useEffect } from 'react';
 import { useHandleCartErrors } from './UseHandleCartErrors';
 import { UseMutationState } from 'urql';
+import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 
 export const useHandleAddToCart = (
     result: UseMutationState<
@@ -22,8 +23,9 @@ export const useHandleAddToCart = (
 ): void => {
     const { currencyCode } = useShopsysSelector((state) => state.domain);
     const dispatch = useShopsysDispatch();
+    const t = useTypedTranslationFunction();
 
-    useHandleCartErrors(result.error);
+    useHandleCartErrors(result.error, t('Could not add the product to cart'));
 
     useEffect(() => {
         if (result.data === undefined || result.data.AddToCart === null) {
