@@ -31,6 +31,7 @@
     * [CategoryConnection](#categoryconnection)
     * [CategoryEdge](#categoryedge)
     * [CompanyCustomerUser](#companycustomeruser)
+    * [Country](#country)
     * [DeliveryAddress](#deliveryaddress)
     * [File](#file)
     * [Flag](#flag)
@@ -648,6 +649,11 @@ Returns a list of the blog articles that can be paginated using `first`, `last`,
 <td></td>
 </tr>
 <tr>
+<td colspan="2" align="right" valign="top">onlyHomepageArticles</td>
+<td valign="top"><a href="#boolean">Boolean</a></td>
+<td></td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong>blogCategory</strong></td>
 <td valign="top"><a href="#blogcategory">BlogCategory</a></td>
 <td>
@@ -789,6 +795,29 @@ Access personal data using hash received in email from personal data access requ
 Hash to securely recognize access
 
 </td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>countries</strong></td>
+<td valign="top">[<a href="#country">Country</a>!]!</td>
+<td>
+
+Returns available countries
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>brandSearch</strong></td>
+<td valign="top">[<a href="#brand">Brand</a>!]!</td>
+<td>
+
+Returns list of searched brands
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">search</td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td></td>
 </tr>
 </tbody>
 </table>
@@ -1855,6 +1884,11 @@ Paginated blog articles of the given blog category
 <td></td>
 </tr>
 <tr>
+<td colspan="2" align="right" valign="top">onlyHomepageArticles</td>
+<td valign="top"><a href="#boolean">Boolean</a></td>
+<td></td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong>link</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
@@ -2764,6 +2798,41 @@ The customer’s company tax number (only when customer is a company)
 </tbody>
 </table>
 
+### Country
+
+Represents country
+
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="right">Argument</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong>name</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Localized country name
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>code</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Country code in ISO 3166-1 alpha-2
+
+</td>
+</tr>
+</tbody>
+</table>
+
 ### DeliveryAddress
 
 <table>
@@ -3343,7 +3412,7 @@ List of flags
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>price</strong></td>
-<td valign="top"><a href="#productprice">ProductPrice</a></td>
+<td valign="top"><a href="#productprice">ProductPrice</a>!</td>
 <td>
 
 Product price
@@ -4554,7 +4623,7 @@ Payment position
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>price</strong></td>
-<td valign="top"><a href="#price">Price</a></td>
+<td valign="top"><a href="#price">Price</a>!</td>
 <td>
 
 Payment price
@@ -5184,7 +5253,7 @@ List of flags
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>price</strong></td>
-<td valign="top"><a href="#productprice">ProductPrice</a></td>
+<td valign="top"><a href="#productprice">ProductPrice</a>!</td>
 <td>
 
 Product price
@@ -5880,7 +5949,7 @@ Transport position
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>price</strong></td>
-<td valign="top"><a href="#price">Price</a></td>
+<td valign="top"><a href="#price">Price</a>!</td>
 <td>
 
 Transport price
@@ -6110,7 +6179,7 @@ List of flags
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>price</strong></td>
-<td valign="top"><a href="#productprice">ProductPrice</a></td>
+<td valign="top"><a href="#productprice">ProductPrice</a>!</td>
 <td>
 
 Product price
@@ -7954,7 +8023,7 @@ List of flags
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>price</strong></td>
-<td valign="top"><a href="#productprice">ProductPrice</a></td>
+<td valign="top"><a href="#productprice">ProductPrice</a>!</td>
 <td>
 
 Product price

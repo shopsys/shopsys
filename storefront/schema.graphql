@@ -282,7 +282,7 @@ type BlogCategory implements Breadcrumb & Slug {
   seoH1: String
 
   """Paginated blog articles of the given blog category"""
-  blogArticles(after: String, first: Int, before: String, last: Int): BlogArticleConnection
+  blogArticles(after: String, first: Int, before: String, last: Int, onlyHomepageArticles: Boolean = false): BlogArticleConnection
 
   """The blog category absolute URL"""
   link: String!
@@ -582,6 +582,15 @@ type CompanyCustomerUser implements CustomerUser {
   companyTaxNumber: String
 }
 
+"""Represents country"""
+type Country {
+  """Localized country name"""
+  name: String!
+
+  """Country code in ISO 3166-1 alpha-2"""
+  code: String!
+}
+
 """Represents an currently logged customer user"""
 interface CustomerUser {
   """UUID"""
@@ -790,7 +799,7 @@ type MainVariant implements Product & Breadcrumb & Slug {
   flags: [Flag!]!
 
   """Product price"""
-  price: ProductPrice
+  price: ProductPrice!
 
   """Product images"""
   images(type: String = null, size: String, sizes: [String!] = null): [Image!]!
@@ -1333,7 +1342,7 @@ type Payment {
   position: Int!
 
   """Payment price"""
-  price(cartUuid: Uuid = null): Price
+  price(cartUuid: Uuid = null): Price!
 
   """Payment images"""
   images(type: String = null, size: String, sizes: [String!] = null): [Image]!
@@ -1456,7 +1465,7 @@ interface Product {
   flags: [Flag!]!
 
   """Product price"""
-  price: ProductPrice
+  price: ProductPrice!
 
   """Product images"""
   images(type: String = null, size: String, sizes: [String!] = null): [Image!]!
@@ -1732,7 +1741,7 @@ type Query {
   """
   Returns a list of the blog articles that can be paginated using `first`, `last`, `before` and `after` keywords
   """
-  blogArticles(after: String, first: Int, before: String, last: Int): BlogArticleConnection
+  blogArticles(after: String, first: Int, before: String, last: Int, onlyHomepageArticles: Boolean = false): BlogArticleConnection
 
   """Returns blog category filtered using UUID or URL slug"""
   blogCategory(uuid: Uuid, urlSlug: String): BlogCategory
@@ -1771,6 +1780,12 @@ type Query {
     """Hash to securely recognize access"""
     hash: String!
   ): PersonalData!
+
+  """Returns available countries"""
+  countries: [Country!]!
+
+  """Returns list of searched brands"""
+  brandSearch(search: String!): [Brand!]!
 }
 
 input RecoverPasswordInput {
@@ -1906,7 +1921,7 @@ type RegularProduct implements Product & Breadcrumb & Slug {
   flags: [Flag!]!
 
   """Product price"""
-  price: ProductPrice
+  price: ProductPrice!
 
   """Product images"""
   images(type: String = null, size: String, sizes: [String!] = null): [Image!]!
@@ -2132,7 +2147,7 @@ type Transport {
   position: Int!
 
   """Transport price"""
-  price(cartUuid: Uuid = null): Price
+  price(cartUuid: Uuid = null): Price!
 
   """Transport images"""
   images(type: String = null, size: String, sizes: [String!] = null): [Image]!
@@ -2207,7 +2222,7 @@ type Variant implements Product & Breadcrumb & Slug {
   flags: [Flag!]!
 
   """Product price"""
-  price: ProductPrice
+  price: ProductPrice!
 
   """Product images"""
   images(type: String = null, size: String, sizes: [String!] = null): [Image!]!
