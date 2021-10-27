@@ -155,8 +155,8 @@ const renderItems = (
                                     render={({ field }) => (
                                         <FilterCheckbox
                                             colorPicker={true}
-                                            isDisabled={false}
-                                            isActive={true}
+                                            isDisabled={dataItem.count === 0}
+                                            isActive={field.value}
                                             id={dataItem.item.name + filterGroupTitle + type}
                                             bgColor={dataItem.rgbHex}
                                             label={dataItem.item.name}

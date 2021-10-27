@@ -8,6 +8,8 @@ const localVariables = {
 type ColorLabelWrapperProps = {
     isLightColor: boolean;
     bgColor: string;
+    isDisabled: boolean;
+    isActive: boolean;
 };
 
 export const ColorLabelWrapperStyled = styled.div<ColorLabelWrapperProps>`
@@ -18,7 +20,7 @@ export const ColorLabelWrapperStyled = styled.div<ColorLabelWrapperProps>`
 
     input {
         & ~ label {
-            ${({ bgColor }) => css`
+            ${({ bgColor, isDisabled, isActive }) => css`
                 position: relative;
                 display: block;
                 height: ${localVariables.labelColorSize};
@@ -29,6 +31,12 @@ export const ColorLabelWrapperStyled = styled.div<ColorLabelWrapperProps>`
                 border-radius: 100%;
                 cursor: pointer;
                 background-color: ${bgColor};
+                ${isDisabled &&
+                !isActive &&
+                css`
+                    opacity: 0.3;
+                    pointer-events: none;
+                `}
 
                 &:after {
                     opacity: 0;
@@ -60,5 +68,32 @@ export const ColorLabelWrapperStyled = styled.div<ColorLabelWrapperProps>`
                       `};
             `}
         }
+
+        ${({ theme, isDisabled, isActive, isLightColor }) =>
+            isDisabled &&
+            !isActive &&
+            css`
+                & ~ label:after {
+                    content: '✕';
+                    position: absolute;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+
+                    opacity: 1;
+                    font-size: 17px;
+
+                    ${isLightColor
+                        ? css`
+                              color: ${theme.color.black};
+                          `
+                        : css`
+                              color: ${theme.color.white};
+                          `};
+                }
+            `}
     }
 `;

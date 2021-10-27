@@ -1,4 +1,5 @@
 import {
+    CategoryDetailContentMessageStyled,
     CategoryDetailContentStyled,
     CategoryDetailPanelIconStyled,
     CategoryDetailPanelOpenerStyled,
@@ -15,6 +16,7 @@ import Pagination from 'components/Blocks/Pagination/Pagination';
 import ProductFilter from 'components/Blocks/Product/Filter';
 import ProductsList from 'components/Blocks/Product/List/ProductsList';
 import SortingBar from 'components/Blocks/SortingBar';
+import { Trans } from 'react-i18next';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import Webline from 'components/Layout/Webline';
 
@@ -69,8 +71,21 @@ const CategoryDetail: FC<CategoryDetailProps> = (props) => {
                         {t('Filtrovat')}
                     </CategoryDetailPanelOpenerStyled>
                     <SortingBar totalCount={props.category.products.totalCount} />
-                    {props.category.products.edges.length !== 0 && (
+                    {props.category.products.edges.length !== 0 ? (
                         <ProductsList products={props.category.products.edges.map((edge) => edge.node)} />
+                    ) : (
+                        <CategoryDetailContentMessageStyled>
+                            <div>
+                                <strong>{t('No results match the filter')}</strong>
+                            </div>
+                            <div>
+                                <Trans i18nKey="ProductsNoResults">
+                                    We currently have no results for your exact search.
+                                    <br />
+                                    Try to be more specific, or see if you have filtered out non-existent data.
+                                </Trans>
+                            </div>
+                        </CategoryDetailContentMessageStyled>
                     )}
                     <Pagination totalCount={props.category.products.totalCount} />
                 </CategoryDetailContentStyled>

@@ -103,3 +103,16 @@ export const CategoryDetailPanelIconStyled = styled(Icon)`
 export const SubcategoriesSimpleNavigationStyled = styled(SimpleNavigation)`
     margin-bottom: 24px;
 `;
+
+export const CategoryDetailContentMessageStyled = styled.div`
+    ${({ theme }) => css`
+        padding: 50px;
+        text-align: center;
+
+        font-size: ${theme.fontSize.default};
+
+        div:first-of-type {
+            margin-bottom: 20px;
+        }
+    `}
+`;

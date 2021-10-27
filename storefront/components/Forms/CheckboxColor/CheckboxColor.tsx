@@ -24,6 +24,14 @@ type CheckboxColorProps = NativeProps & {
      * a ref of the controlled field element used for hooking onto the field events/changes
      */
     fieldRef?: ControllerRenderProps;
+    /**
+     * Prop to check if checkbox is disabled
+     */
+    isDisabled: boolean;
+    /**
+     * Prop to check if checkbox is active
+     */
+    isActive: boolean;
 };
 
 /**
@@ -36,11 +44,14 @@ const CheckboxColor: FC<CheckboxColorProps> = (props) => {
             label={props.label}
             bgColor={props.bgColor}
             isLightColor={tinycolor(props.bgColor).isLight()}
+            isDisabled={props.isDisabled}
+            isActive={props.isActive}
         >
             <CheckboxColorStyled
                 {...props}
                 {...props.fieldRef}
                 id={props.id === undefined ? props.name + 'checkbox_color-id' : props.id}
+                checked={props.fieldRef?.value}
                 type="checkbox"
             />
         </ColorLabelWrapper>

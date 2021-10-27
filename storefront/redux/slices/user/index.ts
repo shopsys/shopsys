@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { CartType } from 'connectors/cart/types';
 import { HYDRATE } from 'next-redux-wrapper';
+import { ParametersFilterStateType } from 'components/Blocks/Product/Filter/types';
 import { PaymentType } from 'connectors/payments/types';
 import { PickupPlaceType } from 'connectors/transports/pickupPlace/types';
 import { ProductOrderingModeEnumApi } from 'graphql/generated';
@@ -27,6 +28,7 @@ type InitialState = {
     pagination: PaginationType;
     canAccessOrderConfirmation: boolean;
     isUserLoggedIn: boolean;
+    parametersFilter: ParametersFilterStateType | null;
 };
 
 export const initialState = {

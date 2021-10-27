@@ -3,6 +3,7 @@ import { FC } from 'react';
 import FilterGroup from './FilterGroup';
 import { FilterStyled } from './Filter.style';
 import { FormProvider } from 'react-hook-form';
+import SelectedParameters from './SelectedParameters';
 import { userActions } from 'redux/slices/user';
 import { useShopsysDispatch } from 'redux/main';
 import { useShopsysForm } from 'hooks/forms/UseShopsysForm';
@@ -73,65 +74,66 @@ const Filter: FC<FilterProps> = (props) => {
             onlyInStock: data.onlyInStock,
             parameters: checkedParametersUuid,
         };
-
         dispatch(userActions.setParametersFilter({ ...filterParameters }));
     };
 
     return (
-        <FilterStyled>
+        <>
             <FormProvider {...formProviderMethods}>
-                <form>
-                    <FilterGroup
-                        title={t('Price')}
-                        type="price"
-                        minimalPrice={props.productFilterOptions.minimalPrice}
-                        maximalPrice={props.productFilterOptions.maximalPrice}
-                        isOpen={true}
-                        onSubmit={onSubmit}
-                    />
-
-                    <FilterGroup
-                        title={t('Availability')}
-                        type="checkboxInStock"
-                        inStockCount={props.productFilterOptions.inStock}
-                        isOpen={true}
-                        onSubmit={onSubmit}
-                    />
-
-                    <FilterGroup
-                        title={t('Flags')}
-                        filterField="flags"
-                        type="checkbox"
-                        data={props.productFilterOptions.flags}
-                        isOpen={true}
-                        onSubmit={onSubmit}
-                    />
-
-                    <FilterGroup
-                        title={t('Brands')}
-                        filterField="brands"
-                        type="checkbox"
-                        data={props.productFilterOptions.brands}
-                        isOpen={true}
-                        onSubmit={onSubmit}
-                    />
-
-                    {props.productFilterOptions.parameters.map((parametersItem, index) => (
+                <SelectedParameters productFilterOptions={props.productFilterOptions} onSubmit={onSubmit} />
+                <FilterStyled>
+                    <form>
                         <FilterGroup
-                            key={index}
-                            filterField="parameters"
-                            parentIndex={index}
-                            uuid={parametersItem.uuid}
-                            title={parametersItem.name}
-                            type={parametersItem.type}
-                            data={parametersItem.items}
+                            title={t('Price')}
+                            type="price"
+                            minimalPrice={props.productFilterOptions.minimalPrice}
+                            maximalPrice={props.productFilterOptions.maximalPrice}
                             isOpen={true}
                             onSubmit={onSubmit}
                         />
-                    ))}
-                </form>
+
+                        <FilterGroup
+                            title={t('Availability')}
+                            type="checkboxInStock"
+                            inStockCount={props.productFilterOptions.inStock}
+                            isOpen={true}
+                            onSubmit={onSubmit}
+                        />
+
+                        <FilterGroup
+                            title={t('Flags')}
+                            filterField="flags"
+                            type="checkbox"
+                            data={props.productFilterOptions.flags}
+                            isOpen={true}
+                            onSubmit={onSubmit}
+                        />
+
+                        <FilterGroup
+                            title={t('Brands')}
+                            filterField="brands"
+                            type="checkbox"
+                            data={props.productFilterOptions.brands}
+                            isOpen={true}
+                            onSubmit={onSubmit}
+                        />
+
+                        {props.productFilterOptions.parameters.map((parametersItem, index) => (
+                            <FilterGroup
+                                key={index}
+                                filterField="parameters"
+                                parameterParentUuid={parametersItem.uuid}
+                                title={parametersItem.name}
+                                type={parametersItem.type}
+                                data={parametersItem.items}
+                                isOpen={true}
+                                onSubmit={onSubmit}
+                            />
+                        ))}
+                    </form>
+                </FilterStyled>
             </FormProvider>
-        </FilterStyled>
+        </>
     );
 };
 

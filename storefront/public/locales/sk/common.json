@@ -200,5 +200,13 @@
     "Price": "Cena",
     "Availability": "Dostupnosť",
     "Flags": "Príznaky",
-    "Brands": "Značky"
+    "Brands": "Značky",
+    "Selected filters": "Vybrané filtre",
+    "Clear all": "Zrušiť všetko",
+    "Only goods in stock": "Iba tovar na sklade",
+    "from": "od",
+    "to": "do",
+    "No results match the filter": "Filtru neodpovedajú žiadne výsledky",
+    "In stock": "Skladom",
+    "ProductsNoResults": "Pre vaše presné vyhľadávanie momentálne nemáme žiadne výsledky. <1/> Skúste byť viac špecifický, alebo sa pozrite, či ste nevyfiltrovali neexistujúce údaje."
 }

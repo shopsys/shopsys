@@ -39,6 +39,7 @@ export type FilterOptionsType = {
         uuid: string;
         items: ParameterItemsType[];
     }[];
+    currencyCode: string;
 };
 
 export type FilterFormParametersType = {
@@ -62,4 +63,18 @@ export type ParametersFilterStateType = {
     maximalPrice: number | null;
     onlyInStock: boolean;
     parameters: FilterFormParametersType[];
+};
+
+export type ParametersFilterParameterStateType = {
+    values: string[];
+    parameter: string;
+};
+
+export type ParametersFilterStateType = {
+    brands: string[];
+    flags: string[];
+    minimalPrice: number;
+    maximalPrice: number;
+    onlyInStock: boolean;
+    parameters: ParametersFilterParameterStateType[];
 };

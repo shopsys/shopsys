@@ -21,7 +21,7 @@ type TextInputProps = NativeProps & {
      * A enumerator-like list of all available types of the custom TextInput element
      * @see https://www.w3schools.com/html/html_form_input_types.asp
      */
-    type: 'text' | 'password' | 'email' | 'tel' | 'search';
+    type: 'text' | 'password' | 'email' | 'tel' | 'search' | 'number';
     /**
      * A prop to decide if the input has errors
      */
@@ -61,7 +61,7 @@ type TextInputProps = NativeProps & {
  */
 const TextInput: FC<TextInputProps> = (props) => {
     const [inputState, setInputState] = useState<'success' | 'error' | undefined>(undefined);
-    const [inputType, setInputType] = useState<'text' | 'password' | 'email' | 'tel' | 'search'>(props.type);
+    const [inputType, setInputType] = useState<'text' | 'password' | 'email' | 'tel' | 'search' | 'number'>(props.type);
 
     const togglePasswordVisibilityHandler = () => {
         setInputType((currentInputType) => {

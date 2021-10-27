@@ -35,6 +35,7 @@ const getThumbStyle = () => {
             height: ${localVariables.RangeSliderThumbSize};
             width: ${localVariables.RangeSliderThumbSize};
             z-index: 3;
+            margin: -6px 0;
 
             border: ${localVariables.RangeSliderThumbBorder};
             border-radius: ${localVariables.RangeSliderThumbBorderRadius};
@@ -49,6 +50,7 @@ const getThumbStyle = () => {
             height: ${localVariables.RangeSliderThumbSize};
             width: ${localVariables.RangeSliderThumbSize};
             z-index: 3;
+            margin: -6px 0;
 
             border: ${localVariables.RangeSliderThumbBorder};
             border-radius: ${localVariables.RangeSliderThumbBorderRadius};
@@ -62,6 +64,7 @@ const getThumbStyle = () => {
             height: ${localVariables.RangeSliderThumbSize};
             width: ${localVariables.RangeSliderThumbSize};
             z-index: 3;
+            margin: -6px 0;
 
             border-radius: ${localVariables.RangeSliderThumbBorderRadius};
             background: ${localVariables.RangeSliderThumbColor};

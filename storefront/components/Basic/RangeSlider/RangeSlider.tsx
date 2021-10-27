@@ -1,5 +1,5 @@
 import { ChangeEvent, FC, useCallback, useEffect, useRef, useState } from 'react';
-import { Controller, SubmitHandler, useFormContext } from 'react-hook-form';
+import { Controller, useFormContext, useWatch } from 'react-hook-form';
 import {
     RangeSliderContainerStyled,
     RangeSliderLeftThumbStyled,
@@ -19,62 +19,89 @@ import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslatio
  * Shopsys slider component inspired by
  * @see: https://dev.to/sandra_lewis/building-a-multi-range-slider-in-react-from-scratch-4dl1
  */
-interface RangeSliderProps {
+type RangeSliderProps = {
     min: number;
     max: number;
     delay: number;
-    onSubmit: (data: FilterFormType) => SubmitHandler<FilterFormType>;
-}
+    onSubmit: (data: FilterFormType) => void;
+};
 
-const RangeSlider: FC<RangeSliderProps> = ({ min, max, delay, onSubmit }) => {
+const RangeSlider: FC<RangeSliderProps> = (props) => {
     const t = useTypedTranslationFunction();
-    const formProviderMethods = useFormContext();
+    const formProviderMethods = useFormContext<FilterFormType>();
+    const [minimalPriceValue, maximalPriceValue] = useWatch({
+        name: ['minimalPrice', 'maximalPrice'],
+        control: formProviderMethods.control,
+    });
 
-    const [minValue, setMinValue] = useState(min);
-    const debouncedMinValue = useDebounce(minValue, delay);
-    const minValueRef = useRef(min);
+    const [minValue, setMinValue] = useState(props.min);
+    const debouncedMinValue = useDebounce(minValue, props.delay);
 
-    const [maxValue, setMaxValue] = useState(max);
-    const debouncedMaxValue = useDebounce(maxValue, delay);
-    const maxValueRef = useRef(max);
+    const [maxValue, setMaxValue] = useState(props.max);
+    const debouncedMaxValue = useDebounce(maxValue, props.delay);
 
     const range = useRef<HTMLDivElement>(null);
-    // set values to input
-    useEffect(() => {
-        formProviderMethods.setValue('minimalPrice', minValue);
-    }, [minValue]);
 
     useEffect(() => {
-        formProviderMethods.setValue('maximalPrice', maxValue);
-    }, [maxValue]);
-
-    useEffect(() => {
-        formProviderMethods.handleSubmit(onSubmit(formProviderMethods.getValues()));
+        if (minValue !== minimalPriceValue) {
+            formProviderMethods.setValue('minimalPrice', minValue);
+            props.onSubmit(formProviderMethods.getValues());
+        }
     }, [debouncedMinValue]);
 
     useEffect(() => {
-        formProviderMethods.handleSubmit(onSubmit(formProviderMethods.getValues()));
+        if (maxValue !== maximalPriceValue) {
+            formProviderMethods.setValue('maximalPrice', maxValue);
+            props.onSubmit(formProviderMethods.getValues());
+        }
     }, [debouncedMaxValue]);
 
+    useEffect(() => {
+        if (minimalPriceValue < props.min) {
+            setMinValue(props.min);
+            formProviderMethods.setValue('minimalPrice', props.min);
+        } else if (minimalPriceValue > maximalPriceValue) {
+            setMinValue(maximalPriceValue - 1);
+            formProviderMethods.setValue('minimalPrice', maximalPriceValue - 1);
+        } else {
+            setMinValue(minimalPriceValue);
+            formProviderMethods.setValue('minimalPrice', minimalPriceValue);
+        }
+    }, [minimalPriceValue]);
+
+    useEffect(() => {
+        if (maximalPriceValue > props.max) {
+            setMaxValue(props.max);
+            formProviderMethods.setValue('maximalPrice', props.max);
+        } else if (maximalPriceValue < minimalPriceValue) {
+            setMaxValue(minimalPriceValue + 1);
+            formProviderMethods.setValue('maximalPrice', minimalPriceValue + 1);
+        } else {
+            setMaxValue(maximalPriceValue);
+            formProviderMethods.setValue('maximalPrice', maximalPriceValue);
+        }
+    }, [maximalPriceValue]);
+
     // Convert to percentage
-    const getPercent = useCallback((value: number) => Math.round(((value - min) / (max - min)) * 100), [min, max]);
+    const getPercent = useCallback(
+        (value: number) => Math.round(((value - props.min) / (props.max - props.min)) * 100),
+        [props.min, props.max],
+    );
 
     const onChangeMinHanlder = (event: ChangeEvent<HTMLInputElement>) => {
         const value = Math.min(Number(event.target.value), maxValue - 1);
         setMinValue(value);
-        minValueRef.current = value;
     };
 
     const onChangeMaxHanlder = (event: ChangeEvent<HTMLInputElement>) => {
         const value = Math.max(Number(event.target.value), minValue + 1);
         setMaxValue(value);
-        maxValueRef.current = value;
     };
 
     // Set width of the range to decrease from the left side
     useEffect(() => {
         const minPercent = getPercent(minValue);
-        const maxPercent = getPercent(maxValueRef.current);
+        const maxPercent = getPercent(maxValue);
 
         if (range.current) {
             range.current.style.left = `${minPercent}%`;
@@ -84,7 +111,7 @@ const RangeSlider: FC<RangeSliderProps> = ({ min, max, delay, onSubmit }) => {
 
     // Set width of the range to decrease from the right side
     useEffect(() => {
-        const minPercent = getPercent(minValueRef.current);
+        const minPercent = getPercent(minValue);
         const maxPercent = getPercent(maxValue);
 
         if (range.current) {
@@ -96,15 +123,15 @@ const RangeSlider: FC<RangeSliderProps> = ({ min, max, delay, onSubmit }) => {
         <RangeSliderContainerStyled>
             <RangeSliderLeftThumbStyled
                 type="range"
-                min={min}
-                max={max}
+                min={props.min}
+                max={props.max}
                 value={minValue}
                 onChange={onChangeMinHanlder}
             />
             <RangeSliderRightThumbStyled
                 type="range"
-                min={min}
-                max={max}
+                min={props.min}
+                max={props.max}
                 value={maxValue}
                 onChange={onChangeMaxHanlder}
             />
@@ -117,8 +144,8 @@ const RangeSlider: FC<RangeSliderProps> = ({ min, max, delay, onSubmit }) => {
                         render={({ field }) => (
                             <TextInput
                                 name={field.name}
-                                label={t('From')}
-                                type="text"
+                                label={t('from')}
+                                type="number"
                                 inputSize={'small'}
                                 fieldRef={field}
                             />
@@ -131,8 +158,8 @@ const RangeSlider: FC<RangeSliderProps> = ({ min, max, delay, onSubmit }) => {
                         render={({ field }) => (
                             <TextInput
                                 name={field.name}
-                                label={t('To')}
-                                type="text"
+                                label={t('to')}
+                                type="number"
                                 inputSize={'small'}
                                 fieldRef={field}
                             />
