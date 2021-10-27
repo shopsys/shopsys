@@ -73,6 +73,7 @@ const Registration: FC = () => {
         register({
             ...data,
             ...contactInformation,
+            country: contactInformation.country.value,
             companyCustomer: contactInformation.customer === 'companyCustomer',
         });
     };

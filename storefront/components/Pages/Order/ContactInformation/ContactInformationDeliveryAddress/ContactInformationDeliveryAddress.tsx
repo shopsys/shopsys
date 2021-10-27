@@ -3,17 +3,16 @@ import {
     ContactInformationDeliveryAddressStyled,
 } from './ContactInformationDeliveryAddress.style';
 import { Controller, useFormContext, useWatch } from 'react-hook-form';
-import { FC, useRef, useState } from 'react';
+import { FC, useEffect, useRef, useState } from 'react';
 import Checkbox from 'components/Forms/Checkbox';
 import ChoiceFormLine from 'components/Forms/Lib/ChoiceFormLine';
 import { CSSTransition } from 'react-transition-group';
 import FormColumn from 'components/Forms/Lib/FormColumn';
 import FormLine from 'components/Forms/Lib/FormLine';
 import FormLineError from 'components/Forms/Lib/FormLineError';
-import { getCountrySelectOptions } from 'pages/order/contact-information';
+import { getCountriesAsSelectOptions } from 'connectors/country/Country';
 import Select from 'components/Forms/Select';
 import TextInput from 'components/Forms/TextInput';
-import { useShopsysSelector } from 'redux/main';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 
 const ContactInformationDeliveryAddress: FC = () => {
@@ -23,13 +22,22 @@ const ContactInformationDeliveryAddress: FC = () => {
     const [contentElementHeight, setContentElementHeight] = useState(0);
     const formProviderMethods = useFormContext();
     const deliveryAddressCheckbox = useWatch({ name: 'differentDeliveryAddress' });
-    const { deliveryCountry } = useShopsysSelector((state) => state.contactInformation);
+    const countrySelectOptions = getCountriesAsSelectOptions();
+    useEffect(() => {
+        if (countrySelectOptions.length > 0) {
+            formProviderMethods.setValue('deliveryCountry', countrySelectOptions[0]);
+        }
+    }, [JSON.stringify(countrySelectOptions)]);
 
     const calcHeight = () => {
         if (contentElement.current) {
             setContentElementHeight(contentElement.current.clientHeight);
         }
     };
+
+    if (countrySelectOptions.length === 0) {
+        return null;
+    }
 
     return (
         <>
@@ -207,19 +215,13 @@ const ContactInformationDeliveryAddress: FC = () => {
                                 <Controller
                                     name="deliveryCountry"
                                     render={({ field }) => (
-                                        <>
-                                            <Select
-                                                defaultValue={
-                                                    getCountrySelectOptions(t).find(
-                                                        (option) => option.value === deliveryCountry,
-                                                    )!
-                                                }
-                                                options={getCountrySelectOptions(t)}
-                                                onChange={(option: { value: string }) =>
-                                                    formProviderMethods.setValue(field.name, option.value)
-                                                }
-                                            />
-                                        </>
+                                        <Select
+                                            options={countrySelectOptions}
+                                            onChange={field.onChange}
+                                            value={countrySelectOptions.find(
+                                                (option) => option.value === field.value.value,
+                                            )}
+                                        />
                                     )}
                                 />
                             </FormLine>

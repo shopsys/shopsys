@@ -57,7 +57,6 @@ export const getContactInformationFormResolver = <T>(t: TFunction): Resolver<T> 
                     t('Zip code cannot be longer than 5 characters'),
                     (value) => value !== undefined && value.length <= 5,
                 ),
-            country: Yup.string(),
             companyName: Yup.string().when('customer', {
                 is: (customer: string) => customer === 'companyCustomer',
                 then: Yup.string().required(t('Please enter company name')),
@@ -120,7 +119,6 @@ export const getContactInformationFormResolver = <T>(t: TFunction): Resolver<T> 
                     ),
                 otherwise: Yup.string(),
             }),
-            deliveryCountry: Yup.string(),
             newsletterSubscription: Yup.boolean(),
         }),
     );

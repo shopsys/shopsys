@@ -128,3 +128,7 @@ Query:
                                     min: 20
                                     max: 20
                 resolve: "@=resolver('accessPersonalData', [args['hash'], validator])"
+            countries:
+                type: '[Country!]!'
+                resolve: "@=resolver('countries')"
+                description: "Returns available countries"
