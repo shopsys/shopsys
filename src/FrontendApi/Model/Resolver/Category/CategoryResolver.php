@@ -29,14 +29,14 @@ class CategoryResolver extends BaseCategoryResolver
 
     /**
      * @param \App\Model\Category\CategoryFacade $categoryFacade
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain|null $domain
-     * @param \Shopsys\FrontendApiBundle\Model\FriendlyUrl\FriendlyUrlFacade|null $friendlyUrlFacade
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     * @param \Shopsys\FrontendApiBundle\Model\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
      * @param \App\FrontendApi\Model\Product\Filter\ProductFilterFacade $productFilterFacade
      */
     public function __construct(
         CategoryFacade $categoryFacade,
-        ?Domain $domain = null,
-        ?FriendlyUrlFacade $friendlyUrlFacade = null,
+        Domain $domain,
+        FriendlyUrlFacade $friendlyUrlFacade,
         ProductFilterFacade $productFilterFacade
     ) {
         parent::__construct($categoryFacade, $domain, $friendlyUrlFacade);
@@ -52,19 +52,13 @@ class CategoryResolver extends BaseCategoryResolver
     public function resolveByUuidOrUrlSlug(?string $uuid = null, ?string $urlSlug = null): Category
     {
         if ($uuid !== null) {
-            /** @var \App\Model\Category\Category $category */
-            $category = $this->getByUuid($uuid);
-
-            return $category;
+            return $this->getByUuid($uuid);
         }
 
         if ($urlSlug !== null) {
             $urlSlug = ltrim($urlSlug, '/');
 
-            /** @var \App\Model\Category\Category $category */
-            $category = $this->getVisibleOnDomainAndSlug($urlSlug);
-
-            return $category;
+            return $this->getVisibleOnDomainAndSlug($urlSlug);
         }
 
         throw new UserError('You need to provide argument \'uuid\' or \'urlSlug\'.');

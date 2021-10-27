@@ -132,3 +132,10 @@ Query:
                 type: '[Country!]!'
                 resolve: "@=resolver('countries')"
                 description: "Returns available countries"
+            brandSearch:
+                type: "[Brand!]!"
+                resolve: "@=resolver('brandSearch', [args])"
+                args:
+                    search:
+                        type: "String!"
+                description: "Returns list of searched brands"
