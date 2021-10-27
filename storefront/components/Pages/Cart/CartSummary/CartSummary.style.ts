@@ -23,11 +23,21 @@ export const CartSummaryLeftStyled = styled.div`
     `}
 `;
 
+export const CartSummaryMiddleStyled = styled.div`
+    ${({ theme }) => css`
+        text-align: center;
+        margin-left: auto;
+
+        @media ${theme.mediaQueries.queryVl} {
+            padding-right: 30px;
+        }
+    `}
+`;
+
 export const CartSummaryRightStyled = styled.div`
     ${({ theme }) => css`
         @media ${theme.mediaQueries.queryVl} {
             width: 300px;
-            margin-left: auto;
         }
     `}
 `;
