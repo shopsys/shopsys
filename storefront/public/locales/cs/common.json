@@ -137,7 +137,7 @@
     "Shopsys magazine": "Shopsys magazín",
     "View all": "Zobrazit všechny",
     "FreeTransportAmountLeft": "Nakupte ještě za <1>{{ amountLeftvalue }}</1> a máte <3>dopravu zdarma!</3>",
-    "Your delivery and payment is now free of charge!": "Dopravu a platbu máte zdarma!"
+    "Your delivery and payment is now free of charge!": "Dopravu a platbu máte zdarma!",
     "Finish registration to loyalty program.": "Dokončete registraci <br/>do <strong>věrnostního <br/>programu</strong>.",
     "You will have an overview of your orders and complaints": "Budete mít přehled ve svých objednávkách nebo reklamacích",
     "Collecting points with every order": "Sbírání bodů s každou objednávkou",
@@ -145,5 +145,12 @@
     "Exclusive products as a part of the loyalty program": "Exkluzivní produkty ve věrnostním programu",
     "Create account": "Vytvořit účet",
     "I agree with terms and conditions and privacy policy": "Souhlasím s <1>obchodními podmínkami</1> a zpracovaním osobních údajů",
-    "Password must be at least {{ count }} characters long": "Heslo musí mít minimálně {{ count }} znaků"
+    "Password must be at least {{ count }} characters long": "Heslo musí mít minimálně {{ count }} znaků",
+    "Store description": "Popis prodejny",
+    "Store address": "Adresa obchodu",
+    "Opening hours": "Otevírací doba",
+    "Contact to the department store": "Kontakt na obchodní dům",
+    "Special announcement": "Mimořádné oznámení",
+    "Do you have any questions?": "Máte další otázky?",
+    "Customer Centre": "Zákaznické centrum"
 }
