@@ -1,28 +1,12 @@
 import { ImagesDefaultFragmentApi, PromotedCategoriesQueryApi, usePromotedCategoriesQueryApi } from 'graphql/generated';
 import { CategoryItemType } from 'components/Blocks/Categories/CategoryItem/types';
-import { getUserFriendlyErrors } from 'connectors/lib/friendlyErrorMessageParser';
 import { ImageType } from 'components/Basic/Image/types';
 import { mapImageSizeApiData } from 'connectors/image/size/ImageSize';
-import { showErrorMessage } from 'components/Helpers/Toasts';
-import { useEffect } from 'react';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { useQueryError } from 'hooks/graphQl/UseQueryError';
 
 export function getPromotedCategories(): CategoryItemType[] | undefined {
-    const t = useTypedTranslationFunction();
-    const [{ data, fetching, error }] = usePromotedCategoriesQueryApi();
-
-    useEffect(() => {
-        if (error === undefined) {
-            return;
-        }
-
-        const parsedErrors = getUserFriendlyErrors(error, t);
-        if (parsedErrors.applicationError === undefined) {
-            return;
-        }
-
-        showErrorMessage(parsedErrors.applicationError);
-    }, [fetching]);
+    const [{ data, error }] = usePromotedCategoriesQueryApi();
+    useQueryError(error);
 
     if (data?.promotedCategories === undefined) {
         return undefined;

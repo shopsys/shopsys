@@ -13,13 +13,10 @@ import {
     ProductPriceType,
     SliderProductItemType,
 } from 'components/Blocks/Product/types';
-import { getUserFriendlyErrors } from 'connectors/lib/friendlyErrorMessageParser';
 import { ImageType } from 'components/Basic/Image/types';
 import { mapImageSizeApiData } from 'connectors/image/size/ImageSize';
-import { showErrorMessage } from 'components/Helpers/Toasts';
-import { useEffect } from 'react';
+import { useQueryError } from 'hooks/graphQl/UseQueryError';
 import { useShopsysSelector } from 'redux/main';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 
 export const mapProductPriceData = (price: ProductPriceApiType, currencyCode: string): ProductPriceType => {
     return {
@@ -43,22 +40,9 @@ export function mapListedProductNode(data: ListedProductItemApiType, currencyCod
 }
 
 export const getPromotedProducts = (): SliderProductItemType[] | undefined => {
-    const t = useTypedTranslationFunction();
     const { currencyCode } = useShopsysSelector((state) => state.domain);
-    const [{ data, fetching, error }] = usePromotedProductsQueryApi();
-
-    useEffect(() => {
-        if (error === undefined) {
-            return;
-        }
-
-        const parsedErrors = getUserFriendlyErrors(error, t);
-        if (parsedErrors.applicationError === undefined) {
-            return;
-        }
-
-        showErrorMessage(parsedErrors.applicationError);
-    }, [fetching]);
+    const [{ data, error }] = usePromotedProductsQueryApi();
+    useQueryError(error);
 
     const apiData = data?.promotedProducts;
     if (apiData === undefined) {

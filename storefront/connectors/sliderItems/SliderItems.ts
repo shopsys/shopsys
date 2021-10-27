@@ -1,28 +1,12 @@
 import { ImagesWebDefaultFragmentApi, SliderItemsQueryApi, useSliderItemsQueryApi } from 'graphql/generated';
-import { getUserFriendlyErrors } from 'connectors/lib/friendlyErrorMessageParser';
 import { ImageApiType } from 'components/Basic/Image/types';
 import { mapImageSizeApiData } from 'connectors/image/size/ImageSize';
-import { showErrorMessage } from 'components/Helpers/Toasts';
 import { SliderItem } from './types';
-import { useEffect } from 'react';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { useQueryError } from 'hooks/graphQl/UseQueryError';
 
 export const getSliderItems = (): SliderItem[] | undefined => {
-    const t = useTypedTranslationFunction();
-    const [{ data, fetching, error }] = useSliderItemsQueryApi();
-
-    useEffect(() => {
-        if (error === undefined) {
-            return;
-        }
-
-        const parsedErrors = getUserFriendlyErrors(error, t);
-        if (parsedErrors.applicationError === undefined) {
-            return;
-        }
-
-        showErrorMessage(parsedErrors.applicationError);
-    }, [fetching]);
+    const [{ data, error }] = useSliderItemsQueryApi();
+    useQueryError(error);
 
     if (data === undefined) {
         return undefined;

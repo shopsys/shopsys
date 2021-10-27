@@ -6,12 +6,9 @@ import {
     NavigationSubCategoriesLinkFragmentApi,
     useNavigationQueryApi,
 } from 'graphql/generated';
-import { getUserFriendlyErrors } from 'connectors/lib/friendlyErrorMessageParser';
 import { ImageType } from 'components/Basic/Image/types';
 import { mapImageSizeApiData } from 'connectors/image/size/ImageSize';
-import { showErrorMessage } from 'components/Helpers/Toasts';
-import { useEffect } from 'react';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { useQueryError } from 'hooks/graphQl/UseQueryError';
 
 export type NavigationSubCategory = {
     name: string;
@@ -41,21 +38,8 @@ export type NavigationItem = {
 };
 
 export function getNavigationItems(): NavigationItem[] {
-    const t = useTypedTranslationFunction();
-    const [{ data, fetching, error }] = useNavigationQueryApi();
-
-    useEffect(() => {
-        if (error === undefined) {
-            return;
-        }
-
-        const parsedErrors = getUserFriendlyErrors(error, t);
-        if (parsedErrors.applicationError === undefined) {
-            return;
-        }
-
-        showErrorMessage(parsedErrors.applicationError);
-    }, [fetching]);
+    const [{ data, error }] = useNavigationQueryApi();
+    useQueryError(error);
 
     if (data?.navigation !== undefined) {
         return mapNavigation(data.navigation);
