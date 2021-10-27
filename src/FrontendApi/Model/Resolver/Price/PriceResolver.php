@@ -144,4 +144,15 @@ class PriceResolver extends BasePriceResolver
             $domainId
         );
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public static function getAliases(): array
+    {
+        // parent not called intentionally, see https://github.com/shopsys/shopsys/issues/2384
+        return [
+            'resolveByProduct' => 'productPriceResolver',
+        ];
+    }
 }
