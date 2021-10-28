@@ -82,6 +82,9 @@ class Roles extends BaseRoles
     public const ROLE_PRIVACY_POLICY_FULL = 'ROLE_PRIVACY_POLICY_FULL';
     public const ROLE_PRIVACY_POLICY_VIEW = 'ROLE_PRIVACY_POLICY_VIEW';
 
+    public const ROLE_PERSONAL_DATA_FULL = 'ROLE_PERSONAL_DATA_FULL';
+    public const ROLE_PERSONAL_DATA_VIEW = 'ROLE_PERSONAL_DATA_VIEW';
+
     /**
      * @return array<string, string>
      */
@@ -137,6 +140,8 @@ class Roles extends BaseRoles
             self::ROLE_LEGAL_CONDITIONS_VIEW => t('Legal conditions article setting - view'),
             self::ROLE_PRIVACY_POLICY_FULL => t('Privacy policy article setting - full'),
             self::ROLE_PRIVACY_POLICY_VIEW => t('Privacy policy article setting - view'),
+            self::ROLE_PERSONAL_DATA_FULL => t('Personal data access pages setting - full'),
+            self::ROLE_PERSONAL_DATA_VIEW => t('Personal data access pages setting - view'),
         ];
     }
 }
