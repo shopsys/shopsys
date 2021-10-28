@@ -54,6 +54,7 @@ security:
             - ROLE_STOCK_FULL
             - ROLE_FEED_VIEW
             - ROLE_HEUREKA_FULL
+            - ROLE_SCRIPT_FULL
         ROLE_ORDER_FULL: [ROLE_ORDER_VIEW]
         ROLE_CUSTOMER_FULL: [ROLE_CUSTOMER_VIEW]
         ROLE_NEWSLETTER_FULL: [ROLE_NEWSLETTER_VIEW]
@@ -99,6 +100,7 @@ security:
         ROLE_CONTACT_FORM_FULL: [ROLE_CONTACT_FORM_VIEW]
         ROLE_STOCK_FULL: [ROLE_STOCK_VIEW]
         ROLE_HEUREKA_FULL: [ROLE_HEUREKA_VIEW]
+        ROLE_SCRIPT_FULL: [ROLE_SCRIPT_VIEW]
 
     providers:
         administrators:
@@ -338,6 +340,10 @@ security:
         - { path: ^/%admin_url%/feed/list/, roles: ROLE_FEED_VIEW }
         # Heureka
         - { path: ^/%admin_url%/heureka/setting/, roles: ROLE_HEUREKA_VIEW }
+        # scripts
+        - { path: ^/%admin_url%/script/new, roles: ROLE_SCRIPT_FULL }
+        - { path: ^/%admin_url%/script/delete, roles: ROLE_SCRIPT_FULL }
+        - { path: ^/%admin_url%/script/, roles: ROLE_SCRIPT_VIEW }
         # dashboard and the rest of pages
         - { path: ^/%admin_url%/dashboard, roles: ROLE_ADMIN }
         - { path: ^/%admin_url%/, roles: ROLE_ALL }
