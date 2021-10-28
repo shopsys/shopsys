@@ -25,6 +25,7 @@ security:
             - ROLE_ADVERT_FULL
             - ROLE_SLIDER_ITEM_FULL
             - ROLE_NAVIGATION_FULL
+            - ROLE_BLOG_CATEGORY_FULL
         ROLE_ORDER_FULL: [ROLE_ORDER_VIEW]
         ROLE_CUSTOMER_FULL: [ROLE_CUSTOMER_VIEW]
         ROLE_NEWSLETTER_FULL: [ROLE_NEWSLETTER_VIEW]
@@ -43,6 +44,7 @@ security:
         ROLE_ADVERT_FULL: [ROLE_ADVERT_VIEW]
         ROLE_SLIDER_ITEM_FULL: [ROLE_SLIDER_ITEM_VIEW]
         ROLE_NAVIGATION_FULL: [ROLE_NAVIGATION_VIEW]
+        ROLE_BLOG_CATEGORY_FULL: [ROLE_BLOG_CATEGORY_VIEW]
 
     providers:
         administrators:
@@ -189,6 +191,11 @@ security:
         - { path: ^/%admin_url%/navigation/new, roles: ROLE_NAVIGATION_FULL }
         - { path: ^/%admin_url%/navigation/delete, roles: ROLE_NAVIGATION_FULL }
         - { path: ^/%admin_url%/navigation/, roles: ROLE_NAVIGATION_VIEW }
+        # blog categories
+        - { path: ^/%admin_url%/blog/category/new, roles: ROLE_BLOG_CATEGORY_FULL }
+        - { path: ^/%admin_url%/blog/category/delete, roles: ROLE_BLOG_CATEGORY_FULL }
+        - { path: ^/%admin_url%/blog/category/apply-sorting/, roles: ROLE_BLOG_CATEGORY_FULL }
+        - { path: ^/%admin_url%/blog/category/, roles: ROLE_BLOG_CATEGORY_VIEW }
         # dashboard and the rest of pages
         - { path: ^/%admin_url%/dashboard, roles: ROLE_ADMIN }
         - { path: ^/%admin_url%/, roles: ROLE_ALL }
