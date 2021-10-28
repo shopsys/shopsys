@@ -20,6 +20,7 @@ security:
             - ROLE_CATEGORY_FULL
             - ROLE_TOP_CATEGORY_FULL
             - ROLE_PRICING_GROUP_FULL
+            - ROLE_VAT_FULL
         ROLE_ORDER_FULL: [ROLE_ORDER_VIEW]
         ROLE_CUSTOMER_FULL: [ROLE_CUSTOMER_VIEW]
         ROLE_NEWSLETTER_FULL: [ROLE_NEWSLETTER_VIEW]
@@ -33,6 +34,7 @@ security:
         ROLE_CATEGORY_FULL: [ROLE_CATEGORY_VIEW]
         ROLE_TOP_CATEGORY_FULL: [ROLE_TOP_CATEGORY_VIEW]
         ROLE_PRICING_GROUP_FULL: [ROLE_PRICING_GROUP_VIEW]
+        ROLE_VAT_FULL: [ROLE_VAT_VIEW]
 
     providers:
         administrators:
@@ -159,6 +161,9 @@ security:
         # pricing groups
         - { path: ^/%admin_url%/pricing/group/delete, roles: ROLE_PRICING_GROUP_FULL }
         - { path: ^/%admin_url%/pricing/group/, roles: ROLE_PRICING_GROUP_VIEW }
+        # vats
+        - { path: ^/%admin_url%/vat/delete, roles: ROLE_VAT_FULL }
+        - { path: ^/%admin_url%/vat/, roles: ROLE_VAT_VIEW }
         # dashboard and the rest of pages
         - { path: ^/%admin_url%/dashboard, roles: ROLE_ADMIN }
         - { path: ^/%admin_url%/, roles: ROLE_ALL }

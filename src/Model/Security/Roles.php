@@ -49,6 +49,9 @@ class Roles extends BaseRoles
     public const ROLE_PRICING_GROUP_FULL = 'ROLE_PRICING_GROUP_FULL';
     public const ROLE_PRICING_GROUP_VIEW = 'ROLE_PRICING_GROUP_VIEW';
 
+    public const ROLE_VAT_FULL = 'ROLE_VAT_FULL';
+    public const ROLE_VAT_VIEW = 'ROLE_VAT_VIEW';
+
     /**
      * @return array<string, string>
      */
@@ -82,6 +85,8 @@ class Roles extends BaseRoles
             self::ROLE_TOP_CATEGORY_VIEW => t('Top categories - view'),
             self::ROLE_PRICING_GROUP_FULL => t('Pricing groups - full'),
             self::ROLE_PRICING_GROUP_VIEW => t('Pricing groups - view'),
+            self::ROLE_VAT_FULL => t('Vats - full'),
+            self::ROLE_VAT_VIEW => t('Vats - view'),
         ];
     }
 }
