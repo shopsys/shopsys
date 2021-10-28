@@ -13,6 +13,9 @@ class Roles extends BaseRoles
     public const ROLE_ORDER_FULL = 'ROLE_ORDER_FULL';
     public const ROLE_ORDER_VIEW = 'ROLE_ORDER_VIEW';
 
+    public const ROLE_CUSTOMER_FULL = 'ROLE_CUSTOMER_FULL';
+    public const ROLE_CUSTOMER_VIEW = 'ROLE_CUSTOMER_VIEW';
+
     /**
      * @return array<string, string>
      */
@@ -22,6 +25,8 @@ class Roles extends BaseRoles
             self::ROLE_ALL => t('All'),
             self::ROLE_ORDER_FULL => t('Orders - full'),
             self::ROLE_ORDER_VIEW => t('Orders - view'),
+            self::ROLE_CUSTOMER_FULL => t('Customers - full'),
+            self::ROLE_CUSTOMER_VIEW => t('Customers - view'),
         ];
     }
 }

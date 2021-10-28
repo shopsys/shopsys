@@ -8,7 +8,9 @@ security:
         ROLE_SUPER_ADMIN: [ROLE_ADMIN, ROLE_ALL]
         ROLE_ALL:
             - ROLE_ORDER_FULL
+            - ROLE_CUSTOMER_FULL
         ROLE_ORDER_FULL: [ROLE_ORDER_VIEW]
+        ROLE_CUSTOMER_FULL: [ROLE_CUSTOMER_VIEW]
 
     providers:
         administrators:
@@ -99,6 +101,10 @@ security:
         - { path: ^/%admin_url%/order/delete, roles: ROLE_ORDER_FULL }
         - { path: ^/%admin_url%/order/add-product/, roles: ROLE_ORDER_FULL }
         - { path: ^/%admin_url%/order/, roles: ROLE_ORDER_VIEW }
+        # customers
+        - { path: ^/%admin_url%/customer/new, roles: ROLE_CUSTOMER_FULL }
+        - { path: ^/%admin_url%/customer/delete, roles: ROLE_CUSTOMER_FULL }
+        - { path: ^/%admin_url%/customer/, roles: ROLE_CUSTOMER_VIEW }
         # dashboard and the rest of pages
         - { path: ^/%admin_url%/dashboard, roles: ROLE_ADMIN }
         - { path: ^/%admin_url%/, roles: ROLE_ALL }
