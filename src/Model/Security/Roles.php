@@ -61,6 +61,9 @@ class Roles extends BaseRoles
     public const ROLE_SLIDER_ITEM_FULL = 'ROLE_SLIDER_ITEM_FULL';
     public const ROLE_SLIDER_ITEM_VIEW = 'ROLE_SLIDER_ITEM_VIEW';
 
+    public const ROLE_NAVIGATION_FULL = 'ROLE_NAVIGATION_FULL';
+    public const ROLE_NAVIGATION_VIEW = 'ROLE_NAVIGATION_VIEW';
+
     /**
      * @return array<string, string>
      */
@@ -102,6 +105,8 @@ class Roles extends BaseRoles
             self::ROLE_ADVERT_VIEW => t('Adverts - view'),
             self::ROLE_SLIDER_ITEM_FULL => t('Slider items - full'),
             self::ROLE_SLIDER_ITEM_VIEW => t('Slider items - view'),
+            self::ROLE_NAVIGATION_FULL => t('Navigation - full'),
+            self::ROLE_NAVIGATION_VIEW => t('Navigation - view'),
         ];
     }
 }
