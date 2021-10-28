@@ -43,6 +43,7 @@ security:
             - ROLE_ORDER_STATUS_FULL
             - ROLE_BRAND_FULL
             - ROLE_COUNTRY_FULL
+            - ROLE_STORE_FULL
         ROLE_ORDER_FULL: [ROLE_ORDER_VIEW]
         ROLE_CUSTOMER_FULL: [ROLE_CUSTOMER_VIEW]
         ROLE_NEWSLETTER_FULL: [ROLE_NEWSLETTER_VIEW]
@@ -79,6 +80,7 @@ security:
         ROLE_ORDER_STATUS_FULL: [ROLE_ORDER_STATUS_VIEW]
         ROLE_BRAND_FULL: [ROLE_BRAND_VIEW]
         ROLE_COUNTRY_FULL: [ROLE_COUNTRY_VIEW]
+        ROLE_STORE_FULL: [ROLE_STORE_VIEW]
 
     providers:
         administrators:
@@ -286,6 +288,11 @@ security:
         # countries
         - { path: ^/%admin_url%/country/new, roles: ROLE_COUNTRY_FULL }
         - { path: ^/%admin_url%/country/, roles: ROLE_COUNTRY_VIEW }
+        # stores
+        - { path: ^/%admin_url%/store/new, roles: ROLE_STORE_FULL }
+        - { path: ^/%admin_url%/store/delete, roles: ROLE_STORE_FULL }
+        - { path: ^/%admin_url%/store/setdefault/, roles: ROLE_STORE_FULL }
+        - { path: ^/%admin_url%/store/, roles: ROLE_STORE_VIEW }
         # dashboard and the rest of pages
         - { path: ^/%admin_url%/dashboard, roles: ROLE_ADMIN }
         - { path: ^/%admin_url%/, roles: ROLE_ALL }
