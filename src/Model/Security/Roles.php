@@ -88,6 +88,9 @@ class Roles extends BaseRoles
     public const ROLE_COOKIES_FULL = 'ROLE_COOKIES_FULL';
     public const ROLE_COOKIES_VIEW = 'ROLE_COOKIES_VIEW';
 
+    public const ROLE_ADMINISTRATOR_FULL = 'ROLE_ADMINISTRATOR_FULL';
+    public const ROLE_ADMINISTRATOR_VIEW = 'ROLE_ADMINISTRATOR_VIEW';
+
     /**
      * @return array<string, string>
      */
@@ -147,6 +150,8 @@ class Roles extends BaseRoles
             self::ROLE_PERSONAL_DATA_VIEW => t('Personal data access pages setting - view'),
             self::ROLE_COOKIES_FULL => t('Cookies article setting - full'),
             self::ROLE_COOKIES_VIEW => t('Cookies article setting - view'),
+            self::ROLE_ADMINISTRATOR_FULL => t('Administrators - full'),
+            self::ROLE_ADMINISTRATOR_VIEW => t('Administrators - view'),
         ];
     }
 }

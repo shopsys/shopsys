@@ -33,6 +33,7 @@ security:
             - ROLE_PRIVACY_POLICY_FULL
             - ROLE_PERSONAL_DATA_FULL
             - ROLE_COOKIES_FULL
+            - ROLE_ADMINISTRATOR_FULL
         ROLE_ORDER_FULL: [ROLE_ORDER_VIEW]
         ROLE_CUSTOMER_FULL: [ROLE_CUSTOMER_VIEW]
         ROLE_NEWSLETTER_FULL: [ROLE_NEWSLETTER_VIEW]
@@ -59,6 +60,7 @@ security:
         ROLE_PRIVACY_POLICY_FULL: [ROLE_PRIVACY_POLICY_VIEW]
         ROLE_PERSONAL_DATA_FULL: [ROLE_PERSONAL_DATA_VIEW]
         ROLE_COOKIES_FULL: [ROLE_COOKIES_VIEW]
+        ROLE_ADMINISTRATOR_FULL: [ROLE_ADMINISTRATOR_VIEW]
 
     providers:
         administrators:
@@ -228,6 +230,14 @@ security:
         - { path: ^/%admin_url%/personal-data/setting, roles: ROLE_PERSONAL_DATA_VIEW }
         # cookies article setting
         - { path: ^/%admin_url%/cookies/setting, roles: ROLE_COOKIES_VIEW }
+        # administrators
+        - { path: ^/%admin_url%/administrator/new, roles: ROLE_ADMINISTRATOR_FULL }
+        - { path: ^/%admin_url%/administrator/delete, roles: ROLE_ADMINISTRATOR_FULL }
+        - { path: ^/%admin_url%/administrator/edit/, roles: ROLE_ADMIN }
+        - { path: ^/%admin_url%/administrator/my-account/, roles: ROLE_ADMIN }
+        - { path: ^/%admin_url%/administrator/enable-two-factor-authentication/, roles: ROLE_ADMIN }
+        - { path: ^/%admin_url%/administrator/disable-two-factor-authentication/, roles: ROLE_ADMIN }
+        - { path: ^/%admin_url%/administrator/, roles: ROLE_ADMINISTRATOR_VIEW }
         # dashboard and the rest of pages
         - { path: ^/%admin_url%/dashboard, roles: ROLE_ADMIN }
         - { path: ^/%admin_url%/, roles: ROLE_ALL }
