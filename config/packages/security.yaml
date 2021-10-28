@@ -51,6 +51,7 @@ security:
             - ROLE_CATEGORY_SEO_FULL
             - ROLE_FRIENDLY_URL_FULL
             - ROLE_CONTACT_FORM_FULL
+            - ROLE_STOCK_FULL
         ROLE_ORDER_FULL: [ROLE_ORDER_VIEW]
         ROLE_CUSTOMER_FULL: [ROLE_CUSTOMER_VIEW]
         ROLE_NEWSLETTER_FULL: [ROLE_NEWSLETTER_VIEW]
@@ -94,6 +95,7 @@ security:
         ROLE_CATEGORY_SEO_FULL: [ROLE_CATEGORY_SEO_VIEW]
         ROLE_FRIENDLY_URL_FULL: [ROLE_FRIENDLY_URL_VIEW]
         ROLE_CONTACT_FORM_FULL: [ROLE_CONTACT_FORM_VIEW]
+        ROLE_STOCK_FULL: [ROLE_STOCK_VIEW]
 
     providers:
         administrators:
@@ -323,6 +325,12 @@ security:
         - { path: ^/%admin_url%/unused-friendly-url/, roles: ROLE_FRIENDLY_URL_VIEW }
         # contact form
         - { path: ^/%admin_url%/contact-form/, roles: ROLE_CONTACT_FORM_VIEW }
+        # stocks
+        - { path: ^/%admin_url%/stock/new, roles: ROLE_STOCK_FULL }
+        - { path: ^/%admin_url%/stock/delete, roles: ROLE_STOCK_FULL }
+        - { path: ^/%admin_url%/stock/savesettings/, roles: ROLE_STOCK_FULL }
+        - { path: ^/%admin_url%/stock/setdefault/, roles: ROLE_STOCK_FULL }
+        - { path: ^/%admin_url%/stock/, roles: ROLE_STOCK_VIEW }
         # dashboard and the rest of pages
         - { path: ^/%admin_url%/dashboard, roles: ROLE_ADMIN }
         - { path: ^/%admin_url%/, roles: ROLE_ALL }

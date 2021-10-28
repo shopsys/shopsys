@@ -141,6 +141,9 @@ class Roles extends BaseRoles
     public const ROLE_CONTACT_FORM_FULL = 'ROLE_CONTACT_FORM_FULL';
     public const ROLE_CONTACT_FORM_VIEW = 'ROLE_CONTACT_FORM_VIEW';
 
+    public const ROLE_STOCK_FULL = 'ROLE_STOCK_FULL';
+    public const ROLE_STOCK_VIEW = 'ROLE_STOCK_VIEW';
+
     /**
      * @return array<string, string>
      */
@@ -235,6 +238,8 @@ class Roles extends BaseRoles
             self::ROLE_FRIENDLY_URL_VIEW => t('Unused friendly URLs - view'),
             self::ROLE_CONTACT_FORM_FULL => t('Contact form - full'),
             self::ROLE_CONTACT_FORM_VIEW => t('Contact form - view'),
+            self::ROLE_STOCK_FULL => t('Stocks - full'),
+            self::ROLE_STOCK_VIEW => t('Stocks - view'),
         ];
     }
 }
