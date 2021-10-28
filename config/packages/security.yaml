@@ -42,6 +42,7 @@ security:
             - ROLE_TRANSPORT_AND_PAYMENT_FULL
             - ROLE_ORDER_STATUS_FULL
             - ROLE_BRAND_FULL
+            - ROLE_COUNTRY_FULL
         ROLE_ORDER_FULL: [ROLE_ORDER_VIEW]
         ROLE_CUSTOMER_FULL: [ROLE_CUSTOMER_VIEW]
         ROLE_NEWSLETTER_FULL: [ROLE_NEWSLETTER_VIEW]
@@ -77,6 +78,7 @@ security:
         ROLE_TRANSPORT_AND_PAYMENT_FULL: [ROLE_TRANSPORT_AND_PAYMENT_VIEW]
         ROLE_ORDER_STATUS_FULL: [ROLE_ORDER_STATUS_VIEW]
         ROLE_BRAND_FULL: [ROLE_BRAND_VIEW]
+        ROLE_COUNTRY_FULL: [ROLE_COUNTRY_VIEW]
 
     providers:
         administrators:
@@ -281,6 +283,9 @@ security:
         - { path: ^/%admin_url%/brand/new, roles: ROLE_BRAND_FULL }
         - { path: ^/%admin_url%/brand/delete, roles: ROLE_BRAND_FULL }
         - { path: ^/%admin_url%/brand/, roles: ROLE_BRAND_VIEW }
+        # countries
+        - { path: ^/%admin_url%/country/new, roles: ROLE_COUNTRY_FULL }
+        - { path: ^/%admin_url%/country/, roles: ROLE_COUNTRY_VIEW }
         # dashboard and the rest of pages
         - { path: ^/%admin_url%/dashboard, roles: ROLE_ADMIN }
         - { path: ^/%admin_url%/, roles: ROLE_ALL }

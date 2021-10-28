@@ -115,6 +115,9 @@ class Roles extends BaseRoles
     public const ROLE_BRAND_FULL = 'ROLE_BRAND_FULL';
     public const ROLE_BRAND_VIEW = 'ROLE_BRAND_VIEW';
 
+    public const ROLE_COUNTRY_FULL = 'ROLE_COUNTRY_FULL';
+    public const ROLE_COUNTRY_VIEW = 'ROLE_COUNTRY_VIEW';
+
     /**
      * @return array<string, string>
      */
@@ -192,6 +195,8 @@ class Roles extends BaseRoles
             self::ROLE_ORDER_STATUS_VIEW => t('Order statuses - view'),
             self::ROLE_BRAND_FULL => t('Brands - full'),
             self::ROLE_BRAND_VIEW => t('Brands - view'),
+            self::ROLE_COUNTRY_FULL => t('Countries - full'),
+            self::ROLE_COUNTRY_VIEW => t('Countries - view'),
         ];
     }
 }
