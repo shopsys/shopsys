@@ -6,6 +6,9 @@ security:
 
     role_hierarchy:
         ROLE_SUPER_ADMIN: [ROLE_ADMIN, ROLE_ALL]
+        ROLE_ALL:
+            - ROLE_ORDER_FULL
+        ROLE_ORDER_FULL: [ROLE_ORDER_VIEW]
 
     providers:
         administrators:
@@ -92,6 +95,10 @@ security:
         - { path: ^/%admin_url%/translation/list/$, roles: ROLE_SUPER_ADMIN }
         - { path: ^/%admin_url%/$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/%admin_url%/authorization/$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        # orders
+        - { path: ^/%admin_url%/order/delete, roles: ROLE_ORDER_FULL }
+        - { path: ^/%admin_url%/order/add-product/, roles: ROLE_ORDER_FULL }
+        - { path: ^/%admin_url%/order/, roles: ROLE_ORDER_VIEW }
         # dashboard and the rest of pages
         - { path: ^/%admin_url%/dashboard, roles: ROLE_ADMIN }
         - { path: ^/%admin_url%/, roles: ROLE_ALL }
