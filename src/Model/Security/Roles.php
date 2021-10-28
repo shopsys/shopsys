@@ -129,6 +129,12 @@ class Roles extends BaseRoles
 
     public const ROLE_IMAGE_SIZE_VIEW = 'ROLE_IMAGE_SIZE_VIEW';
 
+    public const ROLE_SEO_FULL = 'ROLE_SEO_FULL';
+    public const ROLE_SEO_VIEW = 'ROLE_SEO_VIEW';
+
+    public const ROLE_CATEGORY_SEO_FULL = 'ROLE_CATEGORY_SEO_FULL';
+    public const ROLE_CATEGORY_SEO_VIEW = 'ROLE_CATEGORY_SEO_VIEW';
+
     /**
      * @return array<string, string>
      */
@@ -215,6 +221,10 @@ class Roles extends BaseRoles
             self::ROLE_TRANSPORT_TYPE_FULL => t('Transport types - full'),
             self::ROLE_TRANSPORT_TYPE_VIEW => t('Transport types - view'),
             self::ROLE_IMAGE_SIZE_VIEW => t('Image sizes - view'),
+            self::ROLE_SEO_FULL => t('SEO - full'),
+            self::ROLE_SEO_VIEW => t('SEO - view'),
+            self::ROLE_CATEGORY_SEO_FULL => t('Categories extended SEO - full'),
+            self::ROLE_CATEGORY_SEO_VIEW => t('Categories extended SEO - view'),
         ];
     }
 }

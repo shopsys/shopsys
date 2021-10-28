@@ -47,6 +47,8 @@ security:
             - ROLE_PARAMETER_VALUE_FULL
             - ROLE_TRANSPORT_TYPE_FULL
             - ROLE_IMAGE_SIZE_VIEW
+            - ROLE_SEO_FULL
+            - ROLE_CATEGORY_SEO_FULL
         ROLE_ORDER_FULL: [ROLE_ORDER_VIEW]
         ROLE_CUSTOMER_FULL: [ROLE_CUSTOMER_VIEW]
         ROLE_NEWSLETTER_FULL: [ROLE_NEWSLETTER_VIEW]
@@ -86,6 +88,8 @@ security:
         ROLE_STORE_FULL: [ROLE_STORE_VIEW]
         ROLE_PARAMETER_VALUE_FULL: [ROLE_PARAMETER_VALUE_VIEW]
         ROLE_TRANSPORT_TYPE_FULL: [ROLE_TRANSPORT_TYPE_VIEW]
+        ROLE_SEO_FULL: [ROLE_SEO_VIEW]
+        ROLE_CATEGORY_SEO_FULL: [ROLE_CATEGORY_SEO_VIEW]
 
     providers:
         administrators:
@@ -304,6 +308,12 @@ security:
         - { path: ^/%admin_url%/transport-type/, roles: ROLE_TRANSPORT_TYPE_VIEW }
         # image sizes
         - { path: ^/%admin_url%/image/overview, roles: ROLE_IMAGE_SIZE_VIEW }
+        # SEO
+        - { path: ^/%admin_url%/seo/category/new/ready-combination/category/, roles: ROLE_CATEGORY_SEO_VIEW } # this is actually "edit" path
+        - { path: ^/%admin_url%/seo/category/new, roles: ROLE_CATEGORY_SEO_FULL }
+        - { path: ^/%admin_url%/seo/category/ready-combination/delete, roles: ROLE_CATEGORY_SEO_FULL }
+        - { path: ^/%admin_url%/seo/category, roles: ROLE_CATEGORY_SEO_VIEW }
+        - { path: ^/%admin_url%/seo/, roles: ROLE_SEO_VIEW }
         # dashboard and the rest of pages
         - { path: ^/%admin_url%/dashboard, roles: ROLE_ADMIN }
         - { path: ^/%admin_url%/, roles: ROLE_ALL }
