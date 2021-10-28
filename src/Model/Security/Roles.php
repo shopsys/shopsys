@@ -138,6 +138,9 @@ class Roles extends BaseRoles
     public const ROLE_FRIENDLY_URL_FULL = 'ROLE_FRIENDLY_URL_FULL';
     public const ROLE_FRIENDLY_URL_VIEW = 'ROLE_FRIENDLY_URL_VIEW';
 
+    public const ROLE_CONTACT_FORM_FULL = 'ROLE_CONTACT_FORM_FULL';
+    public const ROLE_CONTACT_FORM_VIEW = 'ROLE_CONTACT_FORM_VIEW';
+
     /**
      * @return array<string, string>
      */
@@ -230,6 +233,8 @@ class Roles extends BaseRoles
             self::ROLE_CATEGORY_SEO_VIEW => t('Categories extended SEO - view'),
             self::ROLE_FRIENDLY_URL_FULL => t('Unused friendly URLs - full'),
             self::ROLE_FRIENDLY_URL_VIEW => t('Unused friendly URLs - view'),
+            self::ROLE_CONTACT_FORM_FULL => t('Contact form - full'),
+            self::ROLE_CONTACT_FORM_VIEW => t('Contact form - view'),
         ];
     }
 }
