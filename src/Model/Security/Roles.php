@@ -19,6 +19,9 @@ class Roles extends BaseRoles
     public const ROLE_NEWSLETTER_FULL = 'ROLE_NEWSLETTER_FULL';
     public const ROLE_NEWSLETTER_VIEW = 'ROLE_NEWSLETTER_VIEW';
 
+    public const ROLE_PROMO_CODE_FULL = 'ROLE_PROMO_CODE_FULL';
+    public const ROLE_PROMO_CODE_VIEW = 'ROLE_PROMO_CODE_VIEW';
+
     /**
      * @return array<string, string>
      */
@@ -32,6 +35,8 @@ class Roles extends BaseRoles
             self::ROLE_CUSTOMER_VIEW => t('Customers - view'),
             self::ROLE_NEWSLETTER_FULL => t('Newsletter - full'),
             self::ROLE_NEWSLETTER_VIEW => t('Newsletter - view'),
+            self::ROLE_PROMO_CODE_FULL => t('Promo codes - full'),
+            self::ROLE_PROMO_CODE_VIEW => t('Promo codes - view'),
         ];
     }
 }

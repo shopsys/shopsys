@@ -10,9 +10,11 @@ security:
             - ROLE_ORDER_FULL
             - ROLE_CUSTOMER_FULL
             - ROLE_NEWSLETTER_FULL
+            - ROLE_PROMO_CODE_FULL
         ROLE_ORDER_FULL: [ROLE_ORDER_VIEW]
         ROLE_CUSTOMER_FULL: [ROLE_CUSTOMER_VIEW]
         ROLE_NEWSLETTER_FULL: [ROLE_NEWSLETTER_VIEW]
+        ROLE_PROMO_CODE_FULL: [ROLE_PROMO_CODE_VIEW]
 
     providers:
         administrators:
@@ -111,6 +113,11 @@ security:
         - { path: ^/%admin_url%/newsletter/delete, roles: ROLE_NEWSLETTER_FULL }
         - { path: ^/%admin_url%/newsletter/export-csv, roles: ROLE_NEWSLETTER_FULL }
         - { path: ^/%admin_url%/newsletter/, roles: ROLE_NEWSLETTER_VIEW }
+        # promo codes
+        - { path: ^/%admin_url%/promo-code/new, roles: ROLE_PROMO_CODE_FULL }
+        - { path: ^/%admin_url%/promo-code/new-mass-generate, roles: ROLE_PROMO_CODE_FULL }
+        - { path: ^/%admin_url%/promo-code/delete, roles: ROLE_PROMO_CODE_FULL }
+        - { path: ^/%admin_url%/promo-code/, roles: ROLE_PROMO_CODE_VIEW }
         # dashboard and the rest of pages
         - { path: ^/%admin_url%/dashboard, roles: ROLE_ADMIN }
         - { path: ^/%admin_url%/, roles: ROLE_ALL }
