@@ -23,6 +23,7 @@ security:
             - ROLE_VAT_FULL
             - ROLE_ARTICLE_FULL
             - ROLE_ADVERT_FULL
+            - ROLE_SLIDER_ITEM_FULL
         ROLE_ORDER_FULL: [ROLE_ORDER_VIEW]
         ROLE_CUSTOMER_FULL: [ROLE_CUSTOMER_VIEW]
         ROLE_NEWSLETTER_FULL: [ROLE_NEWSLETTER_VIEW]
@@ -39,6 +40,7 @@ security:
         ROLE_VAT_FULL: [ROLE_VAT_VIEW]
         ROLE_ARTICLE_FULL: [ROLE_ARTICLE_VIEW]
         ROLE_ADVERT_FULL: [ROLE_ADVERT_VIEW]
+        ROLE_SLIDER_ITEM_FULL: [ROLE_SLIDER_ITEM_VIEW]
 
     providers:
         administrators:
@@ -177,6 +179,10 @@ security:
         - { path: ^/%admin_url%/advert/new, roles: ROLE_ADVERT_FULL }
         - { path: ^/%admin_url%/advert/delete, roles: ROLE_ADVERT_FULL }
         - { path: ^/%admin_url%/advert/, roles: ROLE_ADVERT_VIEW }
+        # slider items
+        - { path: ^/%admin_url%/slider/item/new, roles: ROLE_SLIDER_ITEM_FULL }
+        - { path: ^/%admin_url%/slider/item/delete, roles: ROLE_SLIDER_ITEM_FULL }
+        - { path: ^/%admin_url%/slider/, roles: ROLE_SLIDER_ITEM_VIEW }
         # dashboard and the rest of pages
         - { path: ^/%admin_url%/dashboard, roles: ROLE_ADMIN }
         - { path: ^/%admin_url%/, roles: ROLE_ALL }
