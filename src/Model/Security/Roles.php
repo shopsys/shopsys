@@ -146,6 +146,9 @@ class Roles extends BaseRoles
 
     public const ROLE_FEED_VIEW = 'ROLE_FEED_VIEW';
 
+    public const ROLE_HEUREKA_FULL = 'ROLE_HEUREKA_FULL';
+    public const ROLE_HEUREKA_VIEW = 'ROLE_HEUREKA_VIEW';
+
     /**
      * @return array<string, string>
      */
@@ -243,6 +246,8 @@ class Roles extends BaseRoles
             self::ROLE_STOCK_FULL => t('Stocks - full'),
             self::ROLE_STOCK_VIEW => t('Stocks - view'),
             self::ROLE_FEED_VIEW => t('Feeds - view'),
+            self::ROLE_HEUREKA_FULL => t('Heureka setting - full'),
+            self::ROLE_HEUREKA_VIEW => t('Heureka setting - view'),
         ];
     }
 }
