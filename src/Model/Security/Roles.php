@@ -103,6 +103,12 @@ class Roles extends BaseRoles
     public const ROLE_MAIL_TEMPLATE_FULL = 'ROLE_MAIL_TEMPLATE_FULL';
     public const ROLE_MAIL_TEMPLATE_VIEW = 'ROLE_MAIL_TEMPLATE_VIEW';
 
+    public const ROLE_FREE_TRANSPORT_AND_PAYMENT_FULL = 'ROLE_FREE_TRANSPORT_AND_PAYMENT_FULL';
+    public const ROLE_FREE_TRANSPORT_AND_PAYMENT_VIEW = 'ROLE_FREE_TRANSPORT_AND_PAYMENT_VIEW';
+
+    public const ROLE_TRANSPORT_AND_PAYMENT_FULL = 'ROLE_TRANSPORT_AND_PAYMENT_FULL';
+    public const ROLE_TRANSPORT_AND_PAYMENT_VIEW = 'ROLE_TRANSPORT_AND_PAYMENT_VIEW';
+
     /**
      * @return array<string, string>
      */
@@ -172,6 +178,10 @@ class Roles extends BaseRoles
             self::ROLE_MAIL_SETTING_VIEW => t('Mail setting - view'),
             self::ROLE_MAIL_TEMPLATE_FULL => t('Mail templates - full'),
             self::ROLE_MAIL_TEMPLATE_VIEW => t('Mail templates - view'),
+            self::ROLE_FREE_TRANSPORT_AND_PAYMENT_FULL => t('Free transport and payment - full'),
+            self::ROLE_FREE_TRANSPORT_AND_PAYMENT_VIEW => t('Free transport and payment - view'),
+            self::ROLE_TRANSPORT_AND_PAYMENT_FULL => t('Transports and payments - full'),
+            self::ROLE_TRANSPORT_AND_PAYMENT_VIEW => t('Transports and payments - view'),
         ];
     }
 }

@@ -38,6 +38,8 @@ security:
             - ROLE_SHOP_INFO_FULL
             - ROLE_MAIL_SETTING_FULL
             - ROLE_MAIL_TEMPLATE_FULL
+            - ROLE_FREE_TRANSPORT_AND_PAYMENT_FULL
+            - ROLE_TRANSPORT_AND_PAYMENT_FULL
         ROLE_ORDER_FULL: [ROLE_ORDER_VIEW]
         ROLE_CUSTOMER_FULL: [ROLE_CUSTOMER_VIEW]
         ROLE_NEWSLETTER_FULL: [ROLE_NEWSLETTER_VIEW]
@@ -69,6 +71,8 @@ security:
         ROLE_SHOP_INFO_FULL: [ROLE_SHOP_INFO_VIEW]
         ROLE_MAIL_SETTING_FULL: [ROLE_MAIL_SETTING_VIEW]
         ROLE_MAIL_TEMPLATE_FULL: [ROLE_MAIL_TEMPLATE_VIEW]
+        ROLE_FREE_TRANSPORT_AND_PAYMENT_FULL: [ROLE_FREE_TRANSPORT_AND_PAYMENT_VIEW]
+        ROLE_TRANSPORT_AND_PAYMENT_FULL: [ROLE_TRANSPORT_AND_PAYMENT_VIEW]
 
     providers:
         administrators:
@@ -257,6 +261,15 @@ security:
         - { path: ^/%admin_url%/mail/delete, roles: ROLE_MAIL_TEMPLATE_FULL }
         - { path: ^/%admin_url%/mail/edit/, roles: ROLE_MAIL_TEMPLATE_VIEW }
         - { path: ^/%admin_url%/mail/template/, roles: ROLE_MAIL_TEMPLATE_VIEW }
+        # transports and payments
+        - { path: ^/%admin_url%/transport-and-payment/free-transport-and-payment-limit/, roles: ROLE_FREE_TRANSPORT_AND_PAYMENT_VIEW }
+        - { path: ^/%admin_url%/transport-and-payment/list, roles: ROLE_TRANSPORT_AND_PAYMENT_VIEW }
+        - { path: ^/%admin_url%/transport/new, roles: ROLE_TRANSPORT_AND_PAYMENT_FULL }
+        - { path: ^/%admin_url%/transport/delete, roles: ROLE_TRANSPORT_AND_PAYMENT_FULL }
+        - { path: ^/%admin_url%/transport/, roles: ROLE_TRANSPORT_AND_PAYMENT_VIEW }
+        - { path: ^/%admin_url%/payment/new, roles: ROLE_TRANSPORT_AND_PAYMENT_FULL }
+        - { path: ^/%admin_url%/payment/delete, roles: ROLE_TRANSPORT_AND_PAYMENT_FULL }
+        - { path: ^/%admin_url%/payment/, roles: ROLE_TRANSPORT_AND_PAYMENT_VIEW }
         # dashboard and the rest of pages
         - { path: ^/%admin_url%/dashboard, roles: ROLE_ADMIN }
         - { path: ^/%admin_url%/, roles: ROLE_ALL }
