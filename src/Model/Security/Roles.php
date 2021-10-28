@@ -52,6 +52,9 @@ class Roles extends BaseRoles
     public const ROLE_VAT_FULL = 'ROLE_VAT_FULL';
     public const ROLE_VAT_VIEW = 'ROLE_VAT_VIEW';
 
+    public const ROLE_ARTICLE_FULL = 'ROLE_ARTICLE_FULL';
+    public const ROLE_ARTICLE_VIEW = 'ROLE_ARTICLE_VIEW';
+
     /**
      * @return array<string, string>
      */
@@ -87,6 +90,8 @@ class Roles extends BaseRoles
             self::ROLE_PRICING_GROUP_VIEW => t('Pricing groups - view'),
             self::ROLE_VAT_FULL => t('Vats - full'),
             self::ROLE_VAT_VIEW => t('Vats - view'),
+            self::ROLE_ARTICLE_FULL => t('Articles - full'),
+            self::ROLE_ARTICLE_VIEW => t('Articles - view'),
         ];
     }
 }
