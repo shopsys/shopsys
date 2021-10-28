@@ -5,7 +5,7 @@ security:
             cost: 12
 
     role_hierarchy:
-        ROLE_SUPER_ADMIN: [ROLE_ADMIN]
+        ROLE_SUPER_ADMIN: [ROLE_ADMIN, ROLE_ALL]
 
     providers:
         administrators:
@@ -92,7 +92,9 @@ security:
         - { path: ^/%admin_url%/translation/list/$, roles: ROLE_SUPER_ADMIN }
         - { path: ^/%admin_url%/$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/%admin_url%/authorization/$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/%admin_url%/, roles: ROLE_ADMIN }
+        # dashboard and the rest of pages
+        - { path: ^/%admin_url%/dashboard, roles: ROLE_ADMIN }
+        - { path: ^/%admin_url%/, roles: ROLE_ALL }
         - { path: ^/efconnect, roles: ROLE_ADMIN }
         - { path: ^/elfinder, roles: ROLE_ADMIN }
         - { path: ^/, roles: IS_AUTHENTICATED_ANONYMOUSLY }

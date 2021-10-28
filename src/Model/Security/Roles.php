@@ -8,7 +8,15 @@ use Shopsys\FrameworkBundle\Model\Security\Roles as BaseRoles;
 
 class Roles extends BaseRoles
 {
-    public const AVAILABLE_ADMINISTRATOR_ROLES = [
-        self::ROLE_ADMIN => self::ROLE_ADMIN,
-    ];
+    public const ROLE_ALL = 'ROLE_ALL';
+
+    /**
+     * @return array<string, string>
+     */
+    public static function getAvailableAdministratorRoles(): array
+    {
+        return [
+            self::ROLE_ALL => t('All'),
+        ];
+    }
 }
