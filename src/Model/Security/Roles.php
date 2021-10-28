@@ -91,6 +91,9 @@ class Roles extends BaseRoles
     public const ROLE_ADMINISTRATOR_FULL = 'ROLE_ADMINISTRATOR_FULL';
     public const ROLE_ADMINISTRATOR_VIEW = 'ROLE_ADMINISTRATOR_VIEW';
 
+    public const ROLE_DOMAIN_FULL = 'ROLE_DOMAIN_FULL';
+    public const ROLE_DOMAIN_VIEW = 'ROLE_DOMAIN_VIEW';
+
     /**
      * @return array<string, string>
      */
@@ -152,6 +155,8 @@ class Roles extends BaseRoles
             self::ROLE_COOKIES_VIEW => t('Cookies article setting - view'),
             self::ROLE_ADMINISTRATOR_FULL => t('Administrators - full'),
             self::ROLE_ADMINISTRATOR_VIEW => t('Administrators - view'),
+            self::ROLE_DOMAIN_FULL => t('E-shop identification - full'),
+            self::ROLE_DOMAIN_VIEW => t('E-shop identification - view'),
         ];
     }
 }
