@@ -49,6 +49,7 @@ security:
             - ROLE_IMAGE_SIZE_VIEW
             - ROLE_SEO_FULL
             - ROLE_CATEGORY_SEO_FULL
+            - ROLE_FRIENDLY_URL_FULL
         ROLE_ORDER_FULL: [ROLE_ORDER_VIEW]
         ROLE_CUSTOMER_FULL: [ROLE_CUSTOMER_VIEW]
         ROLE_NEWSLETTER_FULL: [ROLE_NEWSLETTER_VIEW]
@@ -90,6 +91,7 @@ security:
         ROLE_TRANSPORT_TYPE_FULL: [ROLE_TRANSPORT_TYPE_VIEW]
         ROLE_SEO_FULL: [ROLE_SEO_VIEW]
         ROLE_CATEGORY_SEO_FULL: [ROLE_CATEGORY_SEO_VIEW]
+        ROLE_FRIENDLY_URL_FULL: [ ROLE_FRIENDLY_URL_VIEW ]
 
     providers:
         administrators:
@@ -314,6 +316,9 @@ security:
         - { path: ^/%admin_url%/seo/category/ready-combination/delete, roles: ROLE_CATEGORY_SEO_FULL }
         - { path: ^/%admin_url%/seo/category, roles: ROLE_CATEGORY_SEO_VIEW }
         - { path: ^/%admin_url%/seo/, roles: ROLE_SEO_VIEW }
+        # friendly URLs
+        - { path: ^/%admin_url%/unused-friendly-url/delete, roles: ROLE_FRIENDLY_URL_FULL }
+        - { path: ^/%admin_url%/unused-friendly-url/, roles: ROLE_FRIENDLY_URL_VIEW }
         # dashboard and the rest of pages
         - { path: ^/%admin_url%/dashboard, roles: ROLE_ADMIN }
         - { path: ^/%admin_url%/, roles: ROLE_ALL }
