@@ -55,6 +55,9 @@ class Roles extends BaseRoles
     public const ROLE_ARTICLE_FULL = 'ROLE_ARTICLE_FULL';
     public const ROLE_ARTICLE_VIEW = 'ROLE_ARTICLE_VIEW';
 
+    public const ROLE_ADVERT_FULL = 'ROLE_ADVERT_FULL';
+    public const ROLE_ADVERT_VIEW = 'ROLE_ADVERT_VIEW';
+
     /**
      * @return array<string, string>
      */
@@ -92,6 +95,8 @@ class Roles extends BaseRoles
             self::ROLE_VAT_VIEW => t('Vats - view'),
             self::ROLE_ARTICLE_FULL => t('Articles - full'),
             self::ROLE_ARTICLE_VIEW => t('Articles - view'),
+            self::ROLE_ADVERT_FULL => t('Adverts - full'),
+            self::ROLE_ADVERT_VIEW => t('Adverts - view'),
         ];
     }
 }
