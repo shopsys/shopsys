@@ -97,6 +97,9 @@ class Roles extends BaseRoles
     public const ROLE_SHOP_INFO_FULL = 'ROLE_SHOP_INFO_FULL';
     public const ROLE_SHOP_INFO_VIEW = 'ROLE_SHOP_INFO_VIEW';
 
+    public const ROLE_MAIL_SETTING_FULL = 'ROLE_MAIL_SETTING_FULL';
+    public const ROLE_MAIL_SETTING_VIEW = 'ROLE_MAIL_SETTING_VIEW';
+
     /**
      * @return array<string, string>
      */
@@ -162,6 +165,8 @@ class Roles extends BaseRoles
             self::ROLE_DOMAIN_VIEW => t('E-shop identification - view'),
             self::ROLE_SHOP_INFO_FULL => t('Operator information - full'),
             self::ROLE_SHOP_INFO_VIEW => t('Operator information - view'),
+            self::ROLE_MAIL_SETTING_FULL => t('Mail setting - full'),
+            self::ROLE_MAIL_SETTING_VIEW => t('Mail setting - view'),
         ];
     }
 }
