@@ -22,6 +22,24 @@ class Roles extends BaseRoles
     public const ROLE_PROMO_CODE_FULL = 'ROLE_PROMO_CODE_FULL';
     public const ROLE_PROMO_CODE_VIEW = 'ROLE_PROMO_CODE_VIEW';
 
+    public const ROLE_PRODUCT_FULL = 'ROLE_PRODUCT_FULL';
+    public const ROLE_PRODUCT_VIEW = 'ROLE_PRODUCT_VIEW';
+
+    public const ROLE_TOP_PRODUCT_FULL = 'ROLE_TOP_PRODUCT_FULL';
+    public const ROLE_TOP_PRODUCT_VIEW = 'ROLE_TOP_PRODUCT_VIEW';
+
+    public const ROLE_BESTSELLING_PRODUCT_FULL = 'ROLE_BESTSELLING_PRODUCT_FULL';
+    public const ROLE_BESTSELLING_PRODUCT_VIEW = 'ROLE_BESTSELLING_PRODUCT_VIEW';
+
+    public const ROLE_FLAG_FULL = 'ROLE_FLAG_FULL';
+    public const ROLE_FLAG_VIEW = 'ROLE_FLAG_VIEW';
+
+    public const ROLE_PARAMETER_FULL = 'ROLE_PARAMETER_FULL';
+    public const ROLE_PARAMETER_VIEW = 'ROLE_PARAMETER_VIEW';
+
+    public const ROLE_UNIT_FULL = 'ROLE_UNIT_FULL';
+    public const ROLE_UNIT_VIEW = 'ROLE_UNIT_VIEW';
+
     /**
      * @return array<string, string>
      */
@@ -37,6 +55,18 @@ class Roles extends BaseRoles
             self::ROLE_NEWSLETTER_VIEW => t('Newsletter - view'),
             self::ROLE_PROMO_CODE_FULL => t('Promo codes - full'),
             self::ROLE_PROMO_CODE_VIEW => t('Promo codes - view'),
+            self::ROLE_PRODUCT_FULL => t('Products - full'),
+            self::ROLE_PRODUCT_VIEW => t('Products - view'),
+            self::ROLE_TOP_PRODUCT_FULL => t('Top products - full'),
+            self::ROLE_TOP_PRODUCT_VIEW => t('Top products - view'),
+            self::ROLE_BESTSELLING_PRODUCT_FULL => t('Bestselling products - full'),
+            self::ROLE_BESTSELLING_PRODUCT_VIEW => t('Bestselling products - view'),
+            self::ROLE_FLAG_FULL => t('Flags - full'),
+            self::ROLE_FLAG_VIEW => t('Flags - view'),
+            self::ROLE_PARAMETER_FULL => t('Parameters - full'),
+            self::ROLE_PARAMETER_VIEW => t('Parameters - view'),
+            self::ROLE_UNIT_FULL => t('Units - full'),
+            self::ROLE_UNIT_VIEW => t('Units - view'),
         ];
     }
 }
