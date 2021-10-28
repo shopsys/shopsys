@@ -144,6 +144,8 @@ class Roles extends BaseRoles
     public const ROLE_STOCK_FULL = 'ROLE_STOCK_FULL';
     public const ROLE_STOCK_VIEW = 'ROLE_STOCK_VIEW';
 
+    public const ROLE_FEED_VIEW = 'ROLE_FEED_VIEW';
+
     /**
      * @return array<string, string>
      */
@@ -240,6 +242,7 @@ class Roles extends BaseRoles
             self::ROLE_CONTACT_FORM_VIEW => t('Contact form - view'),
             self::ROLE_STOCK_FULL => t('Stocks - full'),
             self::ROLE_STOCK_VIEW => t('Stocks - view'),
+            self::ROLE_FEED_VIEW => t('Feeds - view'),
         ];
     }
 }

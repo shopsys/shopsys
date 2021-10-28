@@ -52,6 +52,7 @@ security:
             - ROLE_FRIENDLY_URL_FULL
             - ROLE_CONTACT_FORM_FULL
             - ROLE_STOCK_FULL
+            - ROLE_FEED_VIEW
         ROLE_ORDER_FULL: [ROLE_ORDER_VIEW]
         ROLE_CUSTOMER_FULL: [ROLE_CUSTOMER_VIEW]
         ROLE_NEWSLETTER_FULL: [ROLE_NEWSLETTER_VIEW]
@@ -331,6 +332,8 @@ security:
         - { path: ^/%admin_url%/stock/savesettings/, roles: ROLE_STOCK_FULL }
         - { path: ^/%admin_url%/stock/setdefault/, roles: ROLE_STOCK_FULL }
         - { path: ^/%admin_url%/stock/, roles: ROLE_STOCK_VIEW }
+        # feeds
+        - { path: ^/%admin_url%/feed/list/, roles: ROLE_FEED_VIEW }
         # dashboard and the rest of pages
         - { path: ^/%admin_url%/dashboard, roles: ROLE_ADMIN }
         - { path: ^/%admin_url%/, roles: ROLE_ALL }
