@@ -17,6 +17,8 @@ security:
             - ROLE_FLAG_FULL
             - ROLE_PARAMETER_FULL
             - ROLE_UNIT_FULL
+            - ROLE_CATEGORY_FULL
+            - ROLE_TOP_CATEGORY_FULL
         ROLE_ORDER_FULL: [ROLE_ORDER_VIEW]
         ROLE_CUSTOMER_FULL: [ROLE_CUSTOMER_VIEW]
         ROLE_NEWSLETTER_FULL: [ROLE_NEWSLETTER_VIEW]
@@ -27,6 +29,8 @@ security:
         ROLE_FLAG_FULL: [ROLE_FLAG_VIEW]
         ROLE_PARAMETER_FULL: [ROLE_PARAMETER_VIEW]
         ROLE_UNIT_FULL: [ROLE_UNIT_VIEW]
+        ROLE_CATEGORY_FULL: [ROLE_CATEGORY_VIEW]
+        ROLE_TOP_CATEGORY_FULL: [ROLE_TOP_CATEGORY_VIEW]
 
     providers:
         administrators:
@@ -143,6 +147,13 @@ security:
         - { path: ^/%admin_url%/product/unit/delete, roles: ROLE_UNIT_FULL }
         - { path: ^/%admin_url%/product/unit/, roles: ROLE_UNIT_VIEW }
         - { path: ^/%admin_url%/product/, roles: ROLE_PRODUCT_VIEW }
+        # categories and top categories
+        - { path: ^/%admin_url%/category/new, roles: ROLE_CATEGORY_FULL }
+        - { path: ^/%admin_url%/category/delete, roles: ROLE_CATEGORY_FULL }
+        - { path: ^/%admin_url%/category/save-order/, roles: ROLE_CATEGORY_FULL }
+        - { path: ^/%admin_url%/category/apply-sorting/, roles: ROLE_CATEGORY_FULL }
+        - { path: ^/%admin_url%/category/top-category, roles: ROLE_TOP_CATEGORY_VIEW }
+        - { path: ^/%admin_url%/category/, roles: ROLE_CATEGORY_VIEW }
         # dashboard and the rest of pages
         - { path: ^/%admin_url%/dashboard, roles: ROLE_ADMIN }
         - { path: ^/%admin_url%/, roles: ROLE_ALL }

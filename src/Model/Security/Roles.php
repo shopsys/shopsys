@@ -40,6 +40,12 @@ class Roles extends BaseRoles
     public const ROLE_UNIT_FULL = 'ROLE_UNIT_FULL';
     public const ROLE_UNIT_VIEW = 'ROLE_UNIT_VIEW';
 
+    public const ROLE_CATEGORY_FULL = 'ROLE_CATEGORY_FULL';
+    public const ROLE_CATEGORY_VIEW = 'ROLE_CATEGORY_VIEW';
+
+    public const ROLE_TOP_CATEGORY_FULL = 'ROLE_TOP_CATEGORY_FULL';
+    public const ROLE_TOP_CATEGORY_VIEW = 'ROLE_TOP_CATEGORY_VIEW';
+
     /**
      * @return array<string, string>
      */
@@ -67,6 +73,10 @@ class Roles extends BaseRoles
             self::ROLE_PARAMETER_VIEW => t('Parameters - view'),
             self::ROLE_UNIT_FULL => t('Units - full'),
             self::ROLE_UNIT_VIEW => t('Units - view'),
+            self::ROLE_CATEGORY_FULL => t('Categories - full'),
+            self::ROLE_CATEGORY_VIEW => t('Categories - view'),
+            self::ROLE_TOP_CATEGORY_FULL => t('Top categories - full'),
+            self::ROLE_TOP_CATEGORY_VIEW => t('Top categories - view'),
         ];
     }
 }
