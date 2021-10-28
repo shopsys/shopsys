@@ -9,8 +9,10 @@ security:
         ROLE_ALL:
             - ROLE_ORDER_FULL
             - ROLE_CUSTOMER_FULL
+            - ROLE_NEWSLETTER_FULL
         ROLE_ORDER_FULL: [ROLE_ORDER_VIEW]
         ROLE_CUSTOMER_FULL: [ROLE_CUSTOMER_VIEW]
+        ROLE_NEWSLETTER_FULL: [ROLE_NEWSLETTER_VIEW]
 
     providers:
         administrators:
@@ -105,6 +107,10 @@ security:
         - { path: ^/%admin_url%/customer/new, roles: ROLE_CUSTOMER_FULL }
         - { path: ^/%admin_url%/customer/delete, roles: ROLE_CUSTOMER_FULL }
         - { path: ^/%admin_url%/customer/, roles: ROLE_CUSTOMER_VIEW }
+        # newsletter
+        - { path: ^/%admin_url%/newsletter/delete, roles: ROLE_NEWSLETTER_FULL }
+        - { path: ^/%admin_url%/newsletter/export-csv, roles: ROLE_NEWSLETTER_FULL }
+        - { path: ^/%admin_url%/newsletter/, roles: ROLE_NEWSLETTER_VIEW }
         # dashboard and the rest of pages
         - { path: ^/%admin_url%/dashboard, roles: ROLE_ADMIN }
         - { path: ^/%admin_url%/, roles: ROLE_ALL }
