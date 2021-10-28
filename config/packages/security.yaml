@@ -27,6 +27,7 @@ security:
             - ROLE_NAVIGATION_FULL
             - ROLE_BLOG_CATEGORY_FULL
             - ROLE_BLOG_ARTICLE_FULL
+            - ROLE_NOTIFICATION_BAR_FULL
         ROLE_ORDER_FULL: [ROLE_ORDER_VIEW]
         ROLE_CUSTOMER_FULL: [ROLE_CUSTOMER_VIEW]
         ROLE_NEWSLETTER_FULL: [ROLE_NEWSLETTER_VIEW]
@@ -47,6 +48,7 @@ security:
         ROLE_NAVIGATION_FULL: [ROLE_NAVIGATION_VIEW]
         ROLE_BLOG_CATEGORY_FULL: [ROLE_BLOG_CATEGORY_VIEW]
         ROLE_BLOG_ARTICLE_FULL: [ROLE_BLOG_ARTICLE_VIEW]
+        ROLE_NOTIFICATION_BAR_FULL: [ROLE_NOTIFICATION_BAR_VIEW]
 
     providers:
         administrators:
@@ -202,6 +204,10 @@ security:
         - { path: ^/%admin_url%/blog/article/new, roles: ROLE_BLOG_ARTICLE_FULL }
         - { path: ^/%admin_url%/blog/article/delete, roles: ROLE_BLOG_ARTICLE_FULL }
         - { path: ^/%admin_url%/blog/article/, roles: ROLE_BLOG_ARTICLE_VIEW }
+        # notification bar
+        - { path: ^/%admin_url%/notification-bar/new, roles: ROLE_NOTIFICATION_BAR_FULL }
+        - { path: ^/%admin_url%/notification-bar/delete, roles: ROLE_NOTIFICATION_BAR_FULL }
+        - { path: ^/%admin_url%/notification-bar/, roles: ROLE_NOTIFICATION_BAR_VIEW }
         # dashboard and the rest of pages
         - { path: ^/%admin_url%/dashboard, roles: ROLE_ADMIN }
         - { path: ^/%admin_url%/, roles: ROLE_ALL }
