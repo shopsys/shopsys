@@ -109,6 +109,9 @@ class Roles extends BaseRoles
     public const ROLE_TRANSPORT_AND_PAYMENT_FULL = 'ROLE_TRANSPORT_AND_PAYMENT_FULL';
     public const ROLE_TRANSPORT_AND_PAYMENT_VIEW = 'ROLE_TRANSPORT_AND_PAYMENT_VIEW';
 
+    public const ROLE_ORDER_STATUS_FULL = 'ROLE_ORDER_STATUS_FULL';
+    public const ROLE_ORDER_STATUS_VIEW = 'ROLE_ORDER_STATUS_VIEW';
+
     /**
      * @return array<string, string>
      */
@@ -182,6 +185,8 @@ class Roles extends BaseRoles
             self::ROLE_FREE_TRANSPORT_AND_PAYMENT_VIEW => t('Free transport and payment - view'),
             self::ROLE_TRANSPORT_AND_PAYMENT_FULL => t('Transports and payments - full'),
             self::ROLE_TRANSPORT_AND_PAYMENT_VIEW => t('Transports and payments - view'),
+            self::ROLE_ORDER_STATUS_FULL => t('Order statuses - full'),
+            self::ROLE_ORDER_STATUS_VIEW => t('Order statuses - view'),
         ];
     }
 }
