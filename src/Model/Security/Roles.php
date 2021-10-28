@@ -73,6 +73,9 @@ class Roles extends BaseRoles
     public const ROLE_NOTIFICATION_BAR_FULL = 'ROLE_NOTIFICATION_BAR_FULL';
     public const ROLE_NOTIFICATION_BAR_VIEW = 'ROLE_NOTIFICATION_BAR_VIEW';
 
+    public const ROLE_ORDER_SUBMITTED_FULL = 'ROLE_ORDER_SUBMITTED_FULL';
+    public const ROLE_ORDER_SUBMITTED_VIEW = 'ROLE_ORDER_SUBMITTED_VIEW';
+
     /**
      * @return array<string, string>
      */
@@ -122,6 +125,8 @@ class Roles extends BaseRoles
             self::ROLE_BLOG_ARTICLE_VIEW => t('Blog article - view'),
             self::ROLE_NOTIFICATION_BAR_FULL => t('Notification bar - full'),
             self::ROLE_NOTIFICATION_BAR_VIEW => t('Notification bar - view'),
+            self::ROLE_ORDER_SUBMITTED_FULL => t('Order submitted page setting - full'),
+            self::ROLE_ORDER_SUBMITTED_VIEW => t('Order submitted page setting - view'),
         ];
     }
 }
