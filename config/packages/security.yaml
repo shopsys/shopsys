@@ -44,6 +44,7 @@ security:
             - ROLE_BRAND_FULL
             - ROLE_COUNTRY_FULL
             - ROLE_STORE_FULL
+            - ROLE_PARAMETER_VALUE_FULL
         ROLE_ORDER_FULL: [ROLE_ORDER_VIEW]
         ROLE_CUSTOMER_FULL: [ROLE_CUSTOMER_VIEW]
         ROLE_NEWSLETTER_FULL: [ROLE_NEWSLETTER_VIEW]
@@ -81,6 +82,7 @@ security:
         ROLE_BRAND_FULL: [ROLE_BRAND_VIEW]
         ROLE_COUNTRY_FULL: [ROLE_COUNTRY_VIEW]
         ROLE_STORE_FULL: [ROLE_STORE_VIEW]
+        ROLE_PARAMETER_VALUE_FULL: [ROLE_PARAMETER_VALUE_VIEW]
 
     providers:
         administrators:
@@ -293,6 +295,8 @@ security:
         - { path: ^/%admin_url%/store/delete, roles: ROLE_STORE_FULL }
         - { path: ^/%admin_url%/store/setdefault/, roles: ROLE_STORE_FULL }
         - { path: ^/%admin_url%/store/, roles: ROLE_STORE_VIEW }
+        # parameter values
+        - { path: ^/%admin_url%/parameter-value/, roles: ROLE_PARAMETER_VALUE_VIEW }
         # dashboard and the rest of pages
         - { path: ^/%admin_url%/dashboard, roles: ROLE_ADMIN }
         - { path: ^/%admin_url%/, roles: ROLE_ALL }

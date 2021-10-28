@@ -121,6 +121,9 @@ class Roles extends BaseRoles
     public const ROLE_STORE_FULL = 'ROLE_STORE_FULL';
     public const ROLE_STORE_VIEW = 'ROLE_STORE_VIEW';
 
+    public const ROLE_PARAMETER_VALUE_FULL = 'ROLE_PARAMETER_VALUE_FULL';
+    public const ROLE_PARAMETER_VALUE_VIEW = 'ROLE_PARAMETER_VALUE_VIEW';
+
     /**
      * @return array<string, string>
      */
@@ -202,6 +205,8 @@ class Roles extends BaseRoles
             self::ROLE_COUNTRY_VIEW => t('Countries - view'),
             self::ROLE_STORE_FULL => t('Stores - full'),
             self::ROLE_STORE_VIEW => t('Stores - view'),
+            self::ROLE_PARAMETER_VALUE_FULL => t('Color parameter values - full'),
+            self::ROLE_PARAMETER_VALUE_VIEW => t('Color parameter values - view'),
         ];
     }
 }
