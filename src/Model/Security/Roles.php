@@ -79,6 +79,9 @@ class Roles extends BaseRoles
     public const ROLE_LEGAL_CONDITIONS_FULL = 'ROLE_LEGAL_CONDITIONS_FULL';
     public const ROLE_LEGAL_CONDITIONS_VIEW = 'ROLE_LEGAL_CONDITIONS_VIEW';
 
+    public const ROLE_PRIVACY_POLICY_FULL = 'ROLE_PRIVACY_POLICY_FULL';
+    public const ROLE_PRIVACY_POLICY_VIEW = 'ROLE_PRIVACY_POLICY_VIEW';
+
     /**
      * @return array<string, string>
      */
@@ -132,6 +135,8 @@ class Roles extends BaseRoles
             self::ROLE_ORDER_SUBMITTED_VIEW => t('Order submitted page setting - view'),
             self::ROLE_LEGAL_CONDITIONS_FULL => t('Legal conditions article setting - full'),
             self::ROLE_LEGAL_CONDITIONS_VIEW => t('Legal conditions article setting - view'),
+            self::ROLE_PRIVACY_POLICY_FULL => t('Privacy policy article setting - full'),
+            self::ROLE_PRIVACY_POLICY_VIEW => t('Privacy policy article setting - view'),
         ];
     }
 }

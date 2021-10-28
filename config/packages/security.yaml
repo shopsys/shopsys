@@ -30,6 +30,7 @@ security:
             - ROLE_NOTIFICATION_BAR_FULL
             - ROLE_ORDER_SUBMITTED_FULL
             - ROLE_LEGAL_CONDITIONS_FULL
+            - ROLE_PRIVACY_POLICY_FULL
         ROLE_ORDER_FULL: [ROLE_ORDER_VIEW]
         ROLE_CUSTOMER_FULL: [ROLE_CUSTOMER_VIEW]
         ROLE_NEWSLETTER_FULL: [ROLE_NEWSLETTER_VIEW]
@@ -53,6 +54,7 @@ security:
         ROLE_NOTIFICATION_BAR_FULL: [ROLE_NOTIFICATION_BAR_VIEW]
         ROLE_ORDER_SUBMITTED_FULL: [ROLE_ORDER_SUBMITTED_VIEW]
         ROLE_LEGAL_CONDITIONS_FULL: [ROLE_LEGAL_CONDITIONS_VIEW]
+        ROLE_PRIVACY_POLICY_FULL: [ROLE_PRIVACY_POLICY_VIEW]
 
     providers:
         administrators:
@@ -216,6 +218,8 @@ security:
         - { path: ^/%admin_url%/customer-communication/order-submitted, roles: ROLE_ORDER_SUBMITTED_VIEW }
         # legal conditions setting
         - { path: ^/%admin_url%/legal-conditions/setting, roles: ROLE_LEGAL_CONDITIONS_VIEW }
+        # privacy policy setting
+        - { path: ^/%admin_url%/legal-conditions/privacy-policy, roles: ROLE_PRIVACY_POLICY_VIEW }
         # dashboard and the rest of pages
         - { path: ^/%admin_url%/dashboard, roles: ROLE_ADMIN }
         - { path: ^/%admin_url%/, roles: ROLE_ALL }
