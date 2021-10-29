@@ -37,6 +37,7 @@ class SideMenuConfigurationSubscriber implements EventSubscriberInterface
             ConfigureMenuEvent::SIDE_MENU_DASHBOARD => 'configureDashboardMenu',
             ConfigureMenuEvent::SIDE_MENU_SETTINGS => 'configureSettingsMenu',
             ConfigureMenuEvent::SIDE_MENU_ROOT => 'configureRootMenu',
+            ConfigureMenuEvent::SIDE_MENU_PRODUCTS => 'configureProductsMenu',
         ];
     }
 
@@ -48,6 +49,7 @@ class SideMenuConfigurationSubscriber implements EventSubscriberInterface
         $rootMenu = $event->getMenu();
         $this->removeOrdersFromMenuIfNotGranted($rootMenu);
         $this->removeCustomersFromMenuIfNotGranted($rootMenu);
+        $this->removeProductsFromMenuIfNotGranted($rootMenu);
         $rootMenu->addChild($this->createIntegrationsMenu($event));
     }
 
@@ -223,6 +225,20 @@ class SideMenuConfigurationSubscriber implements EventSubscriberInterface
     }
 
     /**
+     * @param \Shopsys\FrameworkBundle\Model\AdminNavigation\ConfigureMenuEvent $event
+     */
+    public function configureProductsMenu(ConfigureMenuEvent $event): void
+    {
+        $productsMenu = $event->getMenu();
+        if (!$this->authorizationChecker->isGranted(Roles::ROLE_PRODUCT_VIEW)) {
+            $productsMenu->removeChild('products');
+        }
+        if (!$this->authorizationChecker->isGranted(Roles::ROLE_CATEGORY_VIEW)) {
+            $productsMenu->removeChild('categories');
+        }
+    }
+
+    /**
      * @param \Knp\Menu\ItemInterface $rootMenu
      */
     private function removeOrdersFromMenuIfNotGranted(ItemInterface $rootMenu): void
@@ -243,6 +259,19 @@ class SideMenuConfigurationSubscriber implements EventSubscriberInterface
             Roles::ROLE_PROMO_CODE_VIEW,
         ])) {
             $rootMenu->removeChild('customers');
+        }
+    }
+
+    /**
+     * @param \Knp\Menu\ItemInterface $rootMenu
+     */
+    private function removeProductsFromMenuIfNotGranted(ItemInterface $rootMenu): void
+    {
+        if (!$this->authorizationChecker->isGranted([
+            Roles::ROLE_PRODUCT_VIEW,
+            Roles::ROLE_CATEGORY_VIEW,
+        ])) {
+            $rootMenu->removeChild('products');
         }
     }
 }
