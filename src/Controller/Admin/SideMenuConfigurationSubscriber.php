@@ -4,12 +4,27 @@ declare(strict_types=1);
 
 namespace App\Controller\Admin;
 
+use App\Model\Security\Roles;
 use Knp\Menu\ItemInterface;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\ConfigureMenuEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 class SideMenuConfigurationSubscriber implements EventSubscriberInterface
 {
+    /**
+     * @var \Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface
+     */
+    private AuthorizationCheckerInterface $authorizationChecker;
+
+    /**
+     * @param \Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface $authorizationChecker
+     */
+    public function __construct(AuthorizationCheckerInterface $authorizationChecker)
+    {
+        $this->authorizationChecker = $authorizationChecker;
+    }
+
     /**
      * @return array
      */
@@ -31,6 +46,7 @@ class SideMenuConfigurationSubscriber implements EventSubscriberInterface
     public function configureRootMenu(ConfigureMenuEvent $event)
     {
         $rootMenu = $event->getMenu();
+        $this->removeOrdersFromMenuIfNotGranted($rootMenu);
         $rootMenu->addChild($this->createIntegrationsMenu($event));
     }
 
@@ -195,5 +211,15 @@ class SideMenuConfigurationSubscriber implements EventSubscriberInterface
         $externalScriptsMenu->addChild('google_analytics', ['route' => 'admin_script_googleanalytics', 'label' => t('Google analytics')]);
 
         return $integrationsMenu;
+    }
+
+    /**
+     * @param \Knp\Menu\ItemInterface $rootMenu
+     */
+    private function removeOrdersFromMenuIfNotGranted(ItemInterface $rootMenu): void
+    {
+        if (!$this->authorizationChecker->isGranted(Roles::ROLE_ORDER_VIEW)) {
+            $rootMenu->removeChild('orders');
+        }
     }
 }
