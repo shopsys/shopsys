@@ -54,7 +54,13 @@ class SideMenuConfigurationSubscriber implements EventSubscriberInterface
         $this->removeMarketingFromMenuIfNotGranted($rootMenu);
         $this->removeAdministratorsFromMenuIfNotGranted($rootMenu);
         $this->removeSettingsFromMenuIfNotGranted($rootMenu);
-        $rootMenu->addChild($this->createIntegrationsMenu($event));
+        if ($this->authorizationChecker->isGranted([
+            Roles::ROLE_FEED_VIEW,
+            Roles::ROLE_HEUREKA_VIEW,
+            Roles::ROLE_SCRIPT_VIEW,
+        ])) {
+            $rootMenu->addChild($this->createIntegrationsMenu($event));
+        }
     }
 
     /**
@@ -369,16 +375,22 @@ class SideMenuConfigurationSubscriber implements EventSubscriberInterface
         $integrationsMenu = $event->getMenuFactory()->createItem('integrations', ['label' => t('Integrations')]);
         $integrationsMenu->setExtra('icon', 'gear');
 
-        $integrationsMenu->addChild('feeds', ['route' => 'admin_feed_list', 'label' => t('XML Feeds')]);
+        if ($this->authorizationChecker->isGranted(Roles::ROLE_FEED_VIEW)) {
+            $integrationsMenu->addChild('feeds', ['route' => 'admin_feed_list', 'label' => t('XML Feeds')]);
+        }
 
-        $heurekaMenu = $integrationsMenu->addChild('heureka', ['label' => t('Heureka')]);
-        $heurekaMenu->addChild('settings', ['route' => 'admin_heureka_setting', 'label' => t('Heureka')]);
+        if ($this->authorizationChecker->isGranted(Roles::ROLE_HEUREKA_VIEW)) {
+            $heurekaMenu = $integrationsMenu->addChild('heureka', ['label' => t('Heureka')]);
+            $heurekaMenu->addChild('settings', ['route' => 'admin_heureka_setting', 'label' => t('Heureka')]);
+        }
 
-        $externalScriptsMenu = $integrationsMenu->addChild('external_scripts', ['label' => t('External scripts')]);
-        $scriptsMenu = $externalScriptsMenu->addChild('scripts', ['route' => 'admin_script_list', 'label' => t('Scripts overview')]);
-        $scriptsMenu->addChild('new', ['route' => 'admin_script_new', 'label' => t('New script'), 'display' => false]);
-        $scriptsMenu->addChild('edit', ['route' => 'admin_script_edit', 'label' => t('Editing script'), 'display' => false]);
-        $externalScriptsMenu->addChild('google_analytics', ['route' => 'admin_script_googleanalytics', 'label' => t('Google analytics')]);
+        if ($this->authorizationChecker->isGranted(Roles::ROLE_SCRIPT_VIEW)) {
+            $externalScriptsMenu = $integrationsMenu->addChild('external_scripts', ['label' => t('External scripts')]);
+            $scriptsMenu = $externalScriptsMenu->addChild('scripts', ['route' => 'admin_script_list', 'label' => t('Scripts overview')]);
+            $scriptsMenu->addChild('new', ['route' => 'admin_script_new', 'label' => t('New script'), 'display' => false]);
+            $scriptsMenu->addChild('edit', ['route' => 'admin_script_edit', 'label' => t('Editing script'), 'display' => false]);
+            $externalScriptsMenu->addChild('google_analytics', ['route' => 'admin_script_googleanalytics', 'label' => t('Google analytics')]);
+        }
 
         return $integrationsMenu;
     }
