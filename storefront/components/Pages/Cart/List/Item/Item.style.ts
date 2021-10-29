@@ -3,7 +3,6 @@ import { styled } from 'components/Theme/main';
 
 const localVariables = {
     imageCellWidth: '93px',
-    removeButtonHoverColor: '#e3e3ff',
 } as const;
 
 export const ItemStyled = styled.div`
@@ -136,27 +135,6 @@ export const RemoveButtonCellStyled = styled.div`
         @media ${theme.mediaQueries.queryTablet} {
             right: 11px;
             top: 11px;
-        }
-    `}
-`;
-
-export const RemoveButtonStyled = styled.button`
-    ${({ theme }) => css`
-        align-items: center;
-        display: flex;
-        height: 20px;
-        justify-content: center;
-        transition: all ${theme.transition};
-        width: 20px;
-
-        background-color: ${theme.color.whitesmoke};
-        border-radius: 50%;
-        cursor: pointer;
-        outline: none;
-        border: none;
-
-        &:hover {
-            background-color: ${localVariables.removeButtonHoverColor};
         }
     `}
 `;

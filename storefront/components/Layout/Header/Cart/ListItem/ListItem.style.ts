@@ -60,20 +60,3 @@ export const ListItemPriceStyled = styled.span`
         font-weight: 700;
     `}
 `;
-
-export const ListItemRemoveButtonStyled = styled.button`
-    ${({ theme }) => css`
-        align-items: center;
-        display: flex;
-        height: 20px;
-        justify-content: center;
-        transition: all ${theme.transition};
-        width: 20px;
-
-        background-color: ${theme.color.whitesmoke};
-        border-radius: 50%;
-        cursor: pointer;
-        outline: none;
-        border: none;
-    `}
-`;

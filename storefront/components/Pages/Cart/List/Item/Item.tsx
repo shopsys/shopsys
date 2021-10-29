@@ -7,21 +7,19 @@ import {
     ItemPriceStyled,
     ItemStyled,
     RemoveButtonCellStyled,
-    RemoveButtonStyled,
     SpinboxCellStyled,
     TotalPriceCellStyled,
     TotalPriceStyled,
 } from './Item.style';
-import { useChangeCartItemQuantity, useRemoveItemFromCart } from 'connectors/cart/Cart';
 import { CartItemType } from 'connectors/cart/types';
 import { formatPrice } from 'utils/formatting';
-import Icon from 'components/Basic/Icon';
 import Image from 'components/Basic/Image';
 import ItemInfo from './ItemInfo';
 import NextLink from 'next/link';
+import RemoveCartItemButton from 'components/Pages/Cart/RemoveCartItemButton';
 import Spinbox from 'components/Forms/Spinbox';
+import { useChangeCartItemQuantity } from 'connectors/cart/Cart';
 import { useHandleAddToCart } from 'hooks/cart/UseHandleAddToCart';
-import { useHandleRemoveFromCart } from 'hooks/cart/UseHandleRemoveFromCart';
 import { useShopsysSelector } from 'redux/main';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 
@@ -34,15 +32,9 @@ const Item: FC<ItemProps> = (props) => {
     const spinboxRef = useRef<HTMLInputElement | null>(null);
     const t = useTypedTranslationFunction();
     const { cartUuid, transport, payment, promoCode } = useShopsysSelector((state) => state.cartInput);
-    const [removeItemFromCartResult, removeItemFromCart] = useRemoveItemFromCart();
     const [changeCartItemQuantityResult, changeCartItemQuantity] = useChangeCartItemQuantity();
     useHandleAddToCart(
         changeCartItemQuantityResult,
-        transport?.personalPickupStoreUuid === undefined ? null : transport.personalPickupStoreUuid,
-        promoCode,
-    );
-    useHandleRemoveFromCart(
-        removeItemFromCartResult,
         transport?.personalPickupStoreUuid === undefined ? null : transport.personalPickupStoreUuid,
         promoCode,
     );
@@ -54,14 +46,6 @@ const Item: FC<ItemProps> = (props) => {
             clearTimeout(timeoutRef.current);
             timeoutRef.current = setUpdateTimeout();
         }
-    };
-
-    const onRemoveItemFromCartHanlder = () => {
-        if (cartUuid === null) {
-            return;
-        }
-
-        removeItemFromCart({ cartItemUuid: props.item.uuid, cartUuid, transport, payment, promoCode });
     };
 
     const setUpdateTimeout = () => {
@@ -121,9 +105,7 @@ const Item: FC<ItemProps> = (props) => {
                 </TotalPriceStyled>
             </TotalPriceCellStyled>
             <RemoveButtonCellStyled>
-                <RemoveButtonStyled onClick={onRemoveItemFromCartHanlder}>
-                    <Icon icon="RemoveBold" />
-                </RemoveButtonStyled>
+                <RemoveCartItemButton cartItemUuid={props.item.uuid} />
             </RemoveButtonCellStyled>
         </ItemStyled>
     );
