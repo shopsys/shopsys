@@ -7,6 +7,9 @@ Category:
             - 'Breadcrumb'
             - 'Slug'
         fields:
+            children:
+                type: "[Category!]!"
+                description: "Descendant categories"
             bestsellers:
                 type: "[Product!]!"
                 description: "Best selling products"
@@ -19,7 +22,7 @@ Category:
                 description: "Hierarchy of the current element in relation to the structure"
                 resolve: '@=resolver("resolveCategoryBreadcrumb", [value])'
             images:
-                type: "[Image]!"
+                type: "[Image!]!"
                 description: "Category images"
                 resolve: '@=resolver("categoryOrReadyCategorySeoMixImageResolver", [value, args["type"], args["sizes"]])'
                 args:

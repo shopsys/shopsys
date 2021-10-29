@@ -1,38 +1,33 @@
-import { CategoryItemApiType, CategoryItemType } from 'components/Blocks/Categories/CategoryItem/types';
-import { useFetchQuery } from 'hooks/graphQl/UseFetchQuery';
+import { ImagesDefaultFragmentApi, PromotedCategoriesQueryApi, usePromotedCategoriesQueryApi } from 'graphql/generated';
+import { CategoryItemType } from 'components/Blocks/Categories/CategoryItem/types';
+import { ImageType } from 'components/Basic/Image/types';
+import { mapImageSizeApiData } from 'connectors/image/size/ImageSize';
+import { useQueryError } from 'hooks/graphQl/UseQueryError';
 
-export const promotedCategoriesQuery = `
-        query promotedCategories {
-            promotedCategories {
-                uuid
-                name
-                slug
-                images(sizes: "default") {
-                    sizes {
-                        url
-                        width
-                        height
-                    }
-                }
-            }
-        }
-    ` as const;
+export function getPromotedCategories(): CategoryItemType[] | undefined {
+    const [{ data, error }] = usePromotedCategoriesQueryApi();
+    useQueryError(error);
 
-const mapCategoryApiData = (apiData: CategoryItemApiType[]) => {
+    if (data?.promotedCategories === undefined) {
+        return undefined;
+    }
+
+    return mapCategoryApiData(data.promotedCategories);
+}
+
+const mapCategoryApiData = (apiData: PromotedCategoriesQueryApi['promotedCategories']): CategoryItemType[] => {
     return apiData.map((apiCategory) => {
         return {
             ...apiCategory,
-            image: apiCategory.images.length > 0 ? apiCategory.images[0].sizes[0] : null,
+            name: apiCategory.name === undefined || apiCategory.name === null ? '' : apiCategory.name,
+            image: mapCategoryImageApiData(apiCategory.images),
         };
     });
 };
 
-export function getPromotedCategories(): CategoryItemType[] | undefined {
-    const result = useFetchQuery({ query: promotedCategoriesQuery });
-    const apiData = result?.data?.promotedCategories;
-    if (apiData === undefined) {
-        return undefined;
+const mapCategoryImageApiData = (apiData: ImagesDefaultFragmentApi['images']): ImageType | null => {
+    if (!(0 in apiData)) {
+        return null;
     }
-
-    return mapCategoryApiData(apiData);
-}
+    return mapImageSizeApiData(apiData[0].sizes[0]);
+};

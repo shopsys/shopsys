@@ -1,67 +1,22 @@
 import {
+    FlagLabelFragmentApi,
+    ImageListFragmentApi,
+    ProductPriceFragmentApi,
+    PromotedProductsQueryApi,
+    usePromotedProductsQueryApi,
+} from 'graphql/generated';
+import {
+    FlagType,
     ListedProductItemApiType,
     ListedProductItemType,
-    ProductItemApiType,
     ProductPriceApiType,
     ProductPriceType,
     SliderProductItemType,
 } from 'components/Blocks/Product/types';
-import { useFetchQuery } from 'hooks/graphQl/UseFetchQuery';
+import { ImageType } from 'components/Basic/Image/types';
+import { mapImageSizeApiData } from 'connectors/image/size/ImageSize';
+import { useQueryError } from 'hooks/graphQl/UseQueryError';
 import { useShopsysSelector } from 'redux/main';
-
-export const sliderProductQuery = `
-    __typename
-    uuid
-    slug
-    name
-    stockQuantity
-    flags {
-        name
-        rgbColor
-    }
-    images (sizes: "list") {
-        sizes {
-            url
-            width
-            height
-        }
-    }
-    availability {
-        name
-    }
-    price {
-        priceWithVat
-        priceWithoutVat
-        vatAmount
-        isPriceFrom
-    }
-    availableStoresCount
-    exposedStoresCount
-`;
-
-export const promotedProductsQuery = `
-        query promotedProducts {
-            promotedProducts {
-                ${sliderProductQuery}
-            }
-        }
-    ` as const;
-
-export const mapSliderProductApiData = (
-    apiData: ProductItemApiType[],
-    currencyCode: string,
-): SliderProductItemType[] => {
-    return apiData.map((apiProduct) => {
-        return {
-            ...apiProduct,
-            detailSlug: apiProduct.slug,
-            image: apiProduct.images.length === 0 ? null : apiProduct.images[0].sizes[0],
-            price: mapProductPriceData(apiProduct.price, currencyCode),
-            isMainVariant: apiProduct.__typename === 'MainVariant',
-            availability: apiProduct.availability.name,
-        };
-    });
-};
 
 export const mapProductPriceData = (price: ProductPriceApiType, currencyCode: string): ProductPriceType => {
     return {
@@ -85,12 +40,66 @@ export function mapListedProductNode(data: ListedProductItemApiType, currencyCod
 }
 
 export const getPromotedProducts = (): SliderProductItemType[] | undefined => {
-    const result = useFetchQuery({ query: promotedProductsQuery });
     const { currencyCode } = useShopsysSelector((state) => state.domain);
-    const apiData = result?.data?.promotedProducts;
+    const [{ data, error }] = usePromotedProductsQueryApi();
+    useQueryError(error);
+
+    const apiData = data?.promotedProducts;
     if (apiData === undefined) {
         return undefined;
     }
 
     return mapSliderProductApiData(apiData, currencyCode);
+};
+
+export const mapSliderProductApiData = (
+    apiData: PromotedProductsQueryApi['promotedProducts'],
+    currencyCode: string,
+): SliderProductItemType[] => {
+    return apiData.map((apiProduct) => {
+        return {
+            ...apiProduct,
+            detailSlug: apiProduct.slug,
+            name: apiProduct.name !== undefined && apiProduct.name !== null ? apiProduct.name : '',
+            image: mapProductImageApiData(apiProduct.images),
+            price: mapProductPriceApiData(apiProduct.price, currencyCode),
+            isMainVariant: apiProduct.__typename === 'MainVariant',
+            availability:
+                apiProduct.availability.name !== undefined && apiProduct.availability.name !== null
+                    ? apiProduct.availability.name
+                    : '',
+            flags: mapFlagsApiData(apiProduct.flags),
+            stockQuantity: apiProduct.stockQuantity,
+        };
+    });
+};
+
+const mapProductImageApiData = (apiData: ImageListFragmentApi['images']): ImageType | null => {
+    if (!(0 in apiData) || !(0 in apiData[0].sizes)) {
+        return null;
+    }
+
+    return mapImageSizeApiData(apiData[0].sizes[0]);
+};
+
+export const mapProductPriceApiData = (
+    price: ProductPriceFragmentApi['price'],
+    currencyCode: string,
+): ProductPriceType => {
+    return {
+        priceWithVat: Number.parseFloat(price.priceWithVat),
+        priceWithoutVat: Number.parseFloat(price.priceWithoutVat),
+        vatAmount: Number.parseFloat(price.vatAmount),
+        isPriceFrom: price.isPriceFrom,
+        currencyCode,
+    };
+};
+
+const mapFlagsApiData = (flags: FlagLabelFragmentApi[]): FlagType[] => {
+    return flags.map((flagApi) => {
+        return {
+            name: flagApi.name !== undefined && flagApi.name !== null ? flagApi.name : '',
+            rgbColor: flagApi.rgbColor,
+        };
+    });
 };

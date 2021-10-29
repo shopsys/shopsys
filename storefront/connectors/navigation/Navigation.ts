@@ -1,30 +1,14 @@
-import { ImageApiType } from 'components/Basic/Image/types';
-import { useFetchQuery } from 'hooks/graphQl/UseFetchQuery';
-
-export const navigationQuery = `
-        query navigation {
-            navigation {
-                name
-                link
-                categoriesByColumns{
-                    columnNumber
-                    categories{
-                        name
-                        slug
-                        images(sizes: "default") {
-                            sizes {
-                                url
-                            }
-                        }
-                        children{
-                            name
-                            slug
-                        }
-                    }
-                }
-            }
-        }
-    ` as const;
+import {
+    CategoriesByColumnFragmentApi,
+    ColumnCategoriesFragmentApi,
+    ImagesDefaultFragmentApi,
+    NavigationQueryApi,
+    NavigationSubCategoriesLinkFragmentApi,
+    useNavigationQueryApi,
+} from 'graphql/generated';
+import { ImageType } from 'components/Basic/Image/types';
+import { mapImageSizeApiData } from 'connectors/image/size/ImageSize';
+import { useQueryError } from 'hooks/graphQl/UseQueryError';
 
 export type NavigationSubCategory = {
     name: string;
@@ -53,40 +37,30 @@ export type NavigationItem = {
     categoriesByColumns: NavigationCategoriesColumn[];
 };
 
-type NavigationCategoryApiData = {
-    name: string;
-    slug: string;
-    images: ImageApiType[];
-    children: {
-        name: string;
-        slug: string;
-    }[];
-};
+export function getNavigationItems(): NavigationItem[] {
+    const [{ data, error }] = useNavigationQueryApi();
+    useQueryError(error);
 
-type NavigationCategoriesColumnApiData = {
-    columnNumber: number;
-    categories: NavigationCategoryApiData[];
-};
+    if (data?.navigation !== undefined) {
+        return mapNavigation(data.navigation);
+    }
+    return [];
+}
 
-type NavigationItemApiData = {
-    name: string;
-    link: string;
-    categoriesByColumns: NavigationCategoriesColumnApiData[];
-};
+function mapNavigation(data: NavigationQueryApi['navigation']): NavigationItem[] {
+    const mappedNavigation = [];
 
-function mapCategories(data: NavigationCategoryApiData[]): NavigationCategory[] {
-    const mappedCategories = [];
-    for (const category of data) {
-        mappedCategories.push({
-            ...category,
-            image: category.images[0].sizes[0],
+    for (const navigationItem of data) {
+        mappedNavigation.push({
+            ...navigationItem,
+            categoriesByColumns: mapNavigationCategoriesByColumns(navigationItem.categoriesByColumns),
         });
     }
-    return mappedCategories;
+    return mappedNavigation;
 }
 
 function mapNavigationCategoriesByColumns(
-    categoriesByColumns: NavigationCategoriesColumnApiData[],
+    categoriesByColumns: CategoriesByColumnFragmentApi['categoriesByColumns'],
 ): NavigationCategoriesColumn[] {
     const mappedCategoriesByColumns = [];
     for (const categoriesByColumn of categoriesByColumns) {
@@ -99,24 +73,40 @@ function mapNavigationCategoriesByColumns(
     return mappedCategoriesByColumns;
 }
 
-function mapNavigation(data: NavigationItemApiData[]): NavigationItem[] {
-    const mappedNavigation = [];
+const mapCategoryImageApiData = (apiData: ImagesDefaultFragmentApi['images']): ImageType | null => {
+    if (!(0 in apiData) || !(0 in apiData[0].sizes)) {
+        return null;
+    }
 
-    for (const navigationItem of data) {
-        mappedNavigation.push({
-            ...navigationItem,
-            categoriesByColumns: mapNavigationCategoriesByColumns(navigationItem.categoriesByColumns),
+    return mapImageSizeApiData(apiData[0].sizes[0]);
+};
+
+const mapSubCategories = (apiData: NavigationSubCategoriesLinkFragmentApi['children']): NavigationSubCategory[] => {
+    return apiData.map((subCategory) => {
+        return {
+            name: subCategory.name !== undefined && subCategory.name !== null ? subCategory.name : '',
+            slug: subCategory.slug,
+        };
+    });
+};
+
+const mapCategories = (data: ColumnCategoriesFragmentApi['categories']): NavigationCategory[] => {
+    const mappedCategories = [];
+    for (const category of data) {
+        if (!(0 in category.images)) {
+            continue;
+        }
+        const mappedImages = mapCategoryImageApiData(category.images);
+        if (mappedImages === null) {
+            continue;
+        }
+
+        mappedCategories.push({
+            name: category.name !== undefined && category.name !== null ? category.name : '',
+            slug: category.slug,
+            children: mapSubCategories(category.children),
+            image: mappedImages,
         });
     }
-    return mappedNavigation;
-}
-
-export function getNavigationItems(): NavigationItem[] {
-    const result = useFetchQuery({ query: navigationQuery });
-    const navigationApiData = result?.data?.navigation;
-
-    if (navigationApiData !== undefined) {
-        return mapNavigation(navigationApiData);
-    }
-    return [];
-}
+    return mappedCategories;
+};

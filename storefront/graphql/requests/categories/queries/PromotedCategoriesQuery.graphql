@@ -1,0 +1,8 @@
+query PromotedCategoriesQuery {
+    promotedCategories {
+        uuid
+        name
+        slug
+        ...ImagesDefaultFragment
+    }
+}

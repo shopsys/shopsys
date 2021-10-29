@@ -6,6 +6,6 @@ export type ImageType = {
 };
 
 export type ImageApiType = {
-    position?: string | null;
+    position?: number | null;
     sizes: ImageType[];
 };

@@ -1,6 +1,38 @@
-import { mapProductPriceData, mapSliderProductApiData, sliderProductQuery } from './Products';
 import { ProductDetailApiType, ProductDetailImageType, ProductDetailType } from 'components/Pages/ProductDetail/types';
+import { ProductItemApiType, SliderProductItemType } from 'components/Blocks/Product/types';
 import { ImageApiType } from 'components/Basic/Image/types';
+import { mapProductPriceData } from './Products';
+
+// @todo - the `sliderProductQuery` is the same as fragment SliderProduct
+export const sliderProductQuery = `
+    __typename
+    uuid
+    slug
+    name
+    stockQuantity
+    flags {
+        name
+        rgbColor
+    }
+    images (sizes: "list") {
+        sizes {
+            url
+            width
+            height
+        }
+    }
+    availability {
+        name
+    }
+    price {
+        priceWithVat
+        priceWithoutVat
+        vatAmount
+        isPriceFrom
+    }
+    availableStoresCount
+    exposedStoresCount
+`;
 
 export const productDetailBody = `
     uuid
@@ -27,7 +59,7 @@ export const productDetailBody = `
         }
     }
     availability {
-        name 
+        name
         status
     }
     storeAvailabilities {
@@ -81,4 +113,17 @@ const mapProductDetailImages = (images: ImageApiType[]) => {
         mappedImages.push(mappedImage);
     }
     return mappedImages;
+};
+
+const mapSliderProductApiData = (apiData: ProductItemApiType[], currencyCode: string): SliderProductItemType[] => {
+    return apiData.map((apiProduct) => {
+        return {
+            ...apiProduct,
+            detailSlug: apiProduct.slug,
+            image: apiProduct.images.length === 0 ? null : apiProduct.images[0].sizes[0],
+            price: mapProductPriceData(apiProduct.price, currencyCode),
+            isMainVariant: apiProduct.__typename === 'MainVariant',
+            availability: apiProduct.availability.name,
+        };
+    });
 };

@@ -1,4 +1,10 @@
 import { initServerSideProps, ServerSidePropsType } from 'helpers/InitServerSideProps';
+import {
+    NavigationQueryDocumentApi,
+    PromotedCategoriesQueryDocumentApi,
+    PromotedProductsQueryDocumentApi,
+    SliderItemsQueryDocumentApi,
+} from 'graphql/generated';
 import Banners from 'components/Blocks/Banners';
 import BlogPreview from 'components/Blocks/BlogPreview';
 import { blogPreviewQuery } from 'connectors/blogPreview/blogPreview';
@@ -6,13 +12,9 @@ import CommonLayout from 'components/Layout/CommonLayout';
 import { FC } from 'react';
 import Heading from 'components/Basic/Heading';
 import { initDomainConfig } from 'helpers/InitDomainConfig';
-import { navigationQuery } from 'connectors/navigation/Navigation';
 import { nextReduxWrapper } from 'redux/main';
 import PromotedCategories from 'components/Blocks/Categories/PromotedCategories/PromotedCategories';
-import { promotedCategoriesQuery } from 'connectors/categories/PromotedCategories';
 import PromotedProducts from 'components/Blocks/Product/PromotedProducts/PromotedProducts';
-import { promotedProductsQuery } from 'connectors/products/Products';
-import { sliderItemsQuery } from 'connectors/sliderItems/SliderItems';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import Webline from 'components/Layout/Webline';
 
@@ -43,10 +45,10 @@ const Index: FC<ServerSidePropsType> = () => {
 export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) => async (context) => {
     initDomainConfig(context, store);
     return initServerSideProps(context, store, [
-        promotedCategoriesQuery,
-        sliderItemsQuery,
-        promotedProductsQuery,
-        navigationQuery,
+        PromotedCategoriesQueryDocumentApi,
+        SliderItemsQueryDocumentApi,
+        PromotedProductsQueryDocumentApi,
+        NavigationQueryDocumentApi,
         blogPreviewQuery,
     ]);
 });

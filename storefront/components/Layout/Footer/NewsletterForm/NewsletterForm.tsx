@@ -18,7 +18,7 @@ import TextInput from 'components/Forms/TextInput';
 import { TFunction } from 'next-i18next';
 import { useHandleFormErrors } from 'hooks/forms/UseHandleFormErrors';
 import { useHandleFormSuccessfulSubmit } from 'hooks/forms/UseHandleFormSuccessfulSubmit';
-import { useNewsletterSubscription } from 'connectors/newsletter/Newsletter';
+import { useNewsletterSubscribeMutationApi } from 'graphql/generated';
 import { useShopsysForm } from 'hooks/forms/UseShopsysForm';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -38,7 +38,7 @@ const getNewsletterFormResolver = (t: TFunction) => {
  */
 const NewsletterForm: FC = () => {
     const t = useTypedTranslationFunction();
-    const [subscribeToNewsletterResult, subscribeToNewsletter] = useNewsletterSubscription();
+    const [subscribeToNewsletterResult, subscribeToNewsletter] = useNewsletterSubscribeMutationApi();
     const formProviderMethods = useShopsysForm(getNewsletterFormResolver(t), { email: '', privacyPolicy: false });
     useHandleFormErrors(subscribeToNewsletterResult.error, formProviderMethods, t('Could not subscribe to newsletter'));
     useHandleFormSuccessfulSubmit(

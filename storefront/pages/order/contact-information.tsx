@@ -8,7 +8,7 @@ import { FC } from 'react';
 import { getContactInformationFormResolver } from 'components/Pages/Order/ContactInformation/ContactInformationFormResolver';
 import { handleOrderPagesRedirect } from 'helpers/HandleOrderPagesRedirect';
 import { initDomainConfig } from 'helpers/InitDomainConfig';
-import { navigationQuery } from 'connectors/navigation/Navigation';
+import { NavigationQueryDocumentApi } from 'graphql/generated';
 import OrderAction from 'components/Blocks/OrderAction';
 import OrderLayout from 'components/Layout/OrderLayout';
 import StaticUrlGuard from 'components/Helpers/StaticUrlGuard';
@@ -95,7 +95,7 @@ const ContactInformation: FC<ServerSidePropsType> = () => {
 export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) => async (context) => {
     initDomainConfig(context, store);
     const redirect = handleOrderPagesRedirect(context);
-    return redirect === false ? initServerSideProps(context, store, [navigationQuery]) : redirect;
+    return redirect === false ? initServerSideProps(context, store, [NavigationQueryDocumentApi]) : redirect;
 });
 
 export default ContactInformation;

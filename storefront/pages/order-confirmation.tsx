@@ -3,7 +3,7 @@ import { initServerSideProps, ServerSidePropsType } from 'helpers/InitServerSide
 import { nextReduxWrapper, useShopsysSelector } from 'redux/main';
 import CommonLayout from 'components/Layout/CommonLayout';
 import { initDomainConfig } from 'helpers/InitDomainConfig';
-import { navigationQuery } from 'connectors/navigation/Navigation';
+import { NavigationQueryDocumentApi } from 'graphql/generated';
 import OrderConfirmation from 'components/Pages/OrderConfirmation';
 import Registration from 'components/Pages/OrderConfirmation/Registration';
 import router from 'next/router';
@@ -33,7 +33,7 @@ const Index: FC<ServerSidePropsType> = () => {
 
 export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) => async (context) => {
     initDomainConfig(context, store);
-    return initServerSideProps(context, store, [navigationQuery]);
+    return initServerSideProps(context, store, [NavigationQueryDocumentApi]);
 });
 
 export default Index;

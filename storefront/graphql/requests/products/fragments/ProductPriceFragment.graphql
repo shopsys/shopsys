@@ -1,0 +1,8 @@
+fragment ProductPriceFragment on Product {
+    price {
+        priceWithVat
+        priceWithoutVat
+        vatAmount
+        isPriceFrom
+    }
+}

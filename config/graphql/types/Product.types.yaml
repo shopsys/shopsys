@@ -52,8 +52,13 @@ Product:
             relatedProducts:
                 type: "[Product!]!"
                 description: "List of related products"
+            availability:
+                type: "Availability!"
+            stockQuantity:
+                type: "Int!"
+                description: "Count of quantity on stock"
             images:
-                type: "[Image]!"
+                type: "[Image!]!"
                 description: "Product images"
                 resolve: '@=resolver("productImageResolver", [value, args["type"], args["sizes"]])'
                 args:

@@ -1,0 +1,7 @@
+query NavigationQuery {
+    navigation {
+        name
+        link
+        ...CategoriesByColumnFragment
+    }
+}

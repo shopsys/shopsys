@@ -1,27 +1,53 @@
+import { ImagesWebDefaultFragmentApi, SliderItemsQueryApi, useSliderItemsQueryApi } from 'graphql/generated';
+import { ImageApiType } from 'components/Basic/Image/types';
+import { mapImageSizeApiData } from 'connectors/image/size/ImageSize';
 import { SliderItem } from './types';
-import { useFetchQuery } from 'hooks/graphQl/UseFetchQuery';
-
-export const sliderItemsQuery = `
-query sliderItems {
-    sliderItems {
-        uuid
-        name
-        link
-        extendedText
-        extendedTextLink
-        images (type: "web", sizes: "default") {
-            position
-            sizes {
-                url
-                width
-                height
-            }
-        }
-    }
-}
-    ` as const;
+import { useQueryError } from 'hooks/graphQl/UseQueryError';
 
 export const getSliderItems = (): SliderItem[] | undefined => {
-    const result = useFetchQuery({ query: sliderItemsQuery });
-    return result?.data?.sliderItems;
+    const [{ data, error }] = useSliderItemsQueryApi();
+    useQueryError(error);
+
+    if (data === undefined) {
+        return undefined;
+    }
+
+    return mapSliderItemsApiData(data.sliderItems);
+};
+
+const mapSliderItemsApiData = (apiData: SliderItemsQueryApi['sliderItems']): SliderItem[] => {
+    return apiData.map((sliderItem) => {
+        return {
+            uuid: sliderItem.uuid,
+            name: sliderItem.name,
+            link: sliderItem.link,
+            extendedText:
+                sliderItem.extendedText === undefined || sliderItem.extendedText === null
+                    ? ''
+                    : sliderItem.extendedText,
+            extendedTextLink:
+                sliderItem.extendedTextLink === undefined || sliderItem.extendedTextLink === null
+                    ? ''
+                    : sliderItem.extendedTextLink,
+            images: mapSliderItemImagesApiData(sliderItem.images),
+        };
+    });
+};
+
+const mapSliderItemImagesApiData = (apiData: ImagesWebDefaultFragmentApi['images']): ImageApiType[] => {
+    if (!(0 in apiData) || !(0 in apiData[0].sizes)) {
+        return [];
+    }
+
+    const mappedImageSizes = mapImageSizeApiData(apiData[0].sizes[0]);
+    if (mappedImageSizes === null) {
+        return [];
+    }
+
+    return [
+        {
+            ...apiData[0],
+            sizes: [mappedImageSizes],
+        },
+    ];
 };

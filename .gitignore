@@ -21,7 +21,6 @@
 /.env.local
 /.env.local.php
 /.env.*.local
-/schema.graphql
 
 /web/build/
 npm-debug.log
