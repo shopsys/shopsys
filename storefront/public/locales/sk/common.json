@@ -158,5 +158,6 @@
     "Could not create order": "Nepodarilo sa vytvoriť objednávku",
     "Could not load your cart": "Nepodarilo sa načítať váš košík",
     "Could not add the product to cart": "Nepodarilo sa pridať produkt do košíka",
-    "Could not remove the product from cart": "Nepodarilo sa odobrať produkt z košíka"
+    "Could not remove the product from cart": "Nepodarilo sa odobrať produkt z košíka",
+    "Go to cart": "Prejsť do košíka"
 }

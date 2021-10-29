@@ -2,6 +2,10 @@ import { css } from 'styled-components';
 import Icon from 'components/Basic/Icon';
 import { styled } from 'components/Theme/main';
 
+type CartDetailStyledProps = {
+    containsProducts: boolean;
+};
+
 const localVariables = {
     cartItemCountSize: '15px',
     cartButtonMobileSize: '40px',
@@ -102,8 +106,8 @@ export const CartCountStyled = styled.span`
     `}
 `;
 
-export const CartDetailStyled = styled.div`
-    ${({ theme }) => css`
+export const CartDetailStyled = styled.div<CartDetailStyledProps>`
+    ${({ theme, containsProducts }) => css`
         display: none;
 
         @media ${theme.mediaQueries.queryLg} {
@@ -112,9 +116,9 @@ export const CartDetailStyled = styled.div`
             top: 100%;
             right: 0;
             z-index: 6000;
-            padding: 15px 0 15px 15px;
-            min-width: 400px;
-            max-width: 400px;
+            padding: ${containsProducts ? '5px 20px 25px' : '15px 0 15px 15px'};
+            min-width: ${containsProducts ? '510px' : '400px'};
+            max-width: ${containsProducts ? '510px' : '400px'};
 
             transition: all 0.2s ease-in-out;
             will-change: transform;
@@ -127,6 +131,17 @@ export const CartDetailStyled = styled.div`
             background-color: ${theme.color.white};
         }
     `}
+`;
+export const CartDetailList = styled.ul`
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    max-height: 355px;
+    overflow-y: auto;
+    padding: 0;
+    width: 100%;
+
+    list-style: none;
 `;
 
 export const CartDetailFigureStyled = styled.div`
@@ -205,4 +220,11 @@ export const CartIconMobileStyled = styled(CartIconStyled)`
     ${({ theme }) => css`
         color: ${theme.color.white};
     `}
+`;
+
+export const CartDetailButtonWrapperStyled = styled.div`
+    width: 100%;
+    display: flex;
+    justify-content: end;
+    padding-top: 20px;
 `;
