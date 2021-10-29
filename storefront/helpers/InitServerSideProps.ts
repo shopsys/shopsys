@@ -47,7 +47,19 @@ export async function initServerSideProps(
             nextI18NextConfig,
         );
 
-        await Promise.all(prefetchedQueries.map((query) => client.query(query).toPromise()));
+        const resolvedQueries = await Promise.all(prefetchedQueries.map((query) => client.query(query).toPromise()));
+        const slugResult = resolvedQueries.find((query) => query.data?.slug?.slug !== undefined);
+        const parsedSlug = slugResult?.data.slug.slug;
+        const trimmedUrl = context.resolvedUrl.split('?')[0];
+
+        if (parsedSlug !== undefined && parsedSlug !== trimmedUrl) {
+            return {
+                redirect: {
+                    statusCode: 301,
+                    destination: parsedSlug,
+                },
+            };
+        }
 
         return {
             props: {
