@@ -73,10 +73,12 @@ class OrderDataFactory extends BaseOrderDataFactory
         $input = $argument['input'];
 
         if (isset($input['transport']['pickupPlaceIdentifier'])) {
+            $pickupPlaceIdentifier = $input['transport']['pickupPlaceIdentifier'];
+
             if ($orderData->transport->isPersonalPickup()) {
                 try {
                     $store = $this->storeFacade->getByUuidEnabledOnDomain(
-                        $input['transport']['pickupPlaceIdentifier'],
+                        $pickupPlaceIdentifier,
                         $this->domain->getId()
                     );
                     $this->setOrderDataByStore($orderData, $store);
@@ -84,6 +86,15 @@ class OrderDataFactory extends BaseOrderDataFactory
                     throw new UserError($exception->getMessage());
                 }
             }
+
+            if (
+                $orderData->transport->isPacketery() &&
+                $this->isPickupPlaceIdentifierIntegerInString($pickupPlaceIdentifier)
+            ) {
+                throw new UserError('Wrong packetery address ID');
+            }
+
+            $orderData->pickupPlaceIdentifier = $pickupPlaceIdentifier;
         }
 
         return $orderData;
@@ -107,5 +118,14 @@ class OrderDataFactory extends BaseOrderDataFactory
         $orderData->deliveryCity = $store->getCity();
         $orderData->deliveryPostcode = $store->getPostcode();
         $orderData->deliveryCountry = $store->getCountry();
+    }
+
+    /**
+     * @param string $pickupPlaceIdentifier
+     * @return bool
+     */
+    private function isPickupPlaceIdentifierIntegerInString(string $pickupPlaceIdentifier): bool
+    {
+        return (string)(int)$pickupPlaceIdentifier !== $pickupPlaceIdentifier;
     }
 }

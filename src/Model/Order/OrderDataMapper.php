@@ -37,6 +37,7 @@ class OrderDataMapper extends BaseOrderDataMapper
         if ($frontOrderData->personalPickupStore !== null) {
             $orderData->deliveryAddressSameAsBillingAddress = false;
             $orderData->personalPickupStore = $frontOrderData->personalPickupStore;
+            $orderData->pickupPlaceIdentifier = $frontOrderData->personalPickupStore->getUuid();
             $this->setOrderDeliveryAddressDataByStore($orderData, $frontOrderData, $orderData->personalPickupStore);
         }
 
