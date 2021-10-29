@@ -152,6 +152,8 @@ class Roles extends BaseRoles
     public const ROLE_SCRIPT_FULL = 'ROLE_SCRIPT_FULL';
     public const ROLE_SCRIPT_VIEW = 'ROLE_SCRIPT_VIEW';
 
+    public const ROLE_TRANSFER_VIEW = 'ROLE_TRANSFER_VIEW';
+
     /**
      * @return array<string, string>
      */
@@ -253,6 +255,7 @@ class Roles extends BaseRoles
             self::ROLE_HEUREKA_VIEW => t('Heureka setting - view'),
             self::ROLE_SCRIPT_FULL => t('Scripts - full'),
             self::ROLE_SCRIPT_VIEW => t('Scripts - view'),
+            self::ROLE_TRANSFER_VIEW => t('Transfers - view'),
         ];
     }
 }

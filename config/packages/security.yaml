@@ -55,6 +55,7 @@ security:
             - ROLE_FEED_VIEW
             - ROLE_HEUREKA_FULL
             - ROLE_SCRIPT_FULL
+            - ROLE_TRANSFER_VIEW
         ROLE_ORDER_FULL: [ROLE_ORDER_VIEW]
         ROLE_CUSTOMER_FULL: [ROLE_CUSTOMER_VIEW]
         ROLE_NEWSLETTER_FULL: [ROLE_NEWSLETTER_VIEW]
@@ -344,6 +345,8 @@ security:
         - { path: ^/%admin_url%/script/new, roles: ROLE_SCRIPT_FULL }
         - { path: ^/%admin_url%/script/delete, roles: ROLE_SCRIPT_FULL }
         - { path: ^/%admin_url%/script/, roles: ROLE_SCRIPT_VIEW }
+        # transfers
+        - { path: ^/%admin_url%/transfer/list/, roles: ROLE_TRANSFER_VIEW }
         # dashboard and the rest of pages
         - { path: ^/%admin_url%/dashboard, roles: ROLE_ADMIN }
         - { path: ^/%admin_url%/, roles: ROLE_ALL }
