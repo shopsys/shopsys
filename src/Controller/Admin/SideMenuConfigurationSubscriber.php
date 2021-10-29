@@ -51,6 +51,7 @@ class SideMenuConfigurationSubscriber implements EventSubscriberInterface
         $this->removeCustomersFromMenuIfNotGranted($rootMenu);
         $this->removeProductsFromMenuIfNotGranted($rootMenu);
         $this->removePricingFromMenuIfNotGranted($rootMenu);
+        $this->removeMarketingFromMenuIfNotGranted($rootMenu);
         $rootMenu->addChild($this->createIntegrationsMenu($event));
     }
 
@@ -123,40 +124,92 @@ class SideMenuConfigurationSubscriber implements EventSubscriberInterface
         $marketingMenu->removeChild('top_categories');
         $marketingMenu->removeChild('feeds');
         $marketingMenu->removeChild('newsletter');
+        if (!$this->authorizationChecker->isGranted(Roles::ROLE_ARTICLE_VIEW)) {
+            $marketingMenu->removeChild('articles');
+        }
+        if (!$this->authorizationChecker->isGranted(Roles::ROLE_ADVERT_VIEW)) {
+            $marketingMenu->removeChild('adverts');
+        }
+        if (!$this->authorizationChecker->isGranted(Roles::ROLE_BESTSELLING_PRODUCT_VIEW)) {
+            $marketingMenu->removeChild('bestselling_products');
+        }
 
-        $homepageMenu = $marketingMenu->addChild('homepage', ['label' => t('Home page')]);
-        $bannersMenu = $homepageMenu->addChild('banners', ['route' => 'admin_slider_list', 'label' => t('Banners')]);
-        $bannersMenu->addChild('new_page', ['route' => 'admin_slider_new', 'label' => t('New page'), 'display' => false]);
-        $bannersMenu->addChild('edit_page', ['route' => 'admin_slider_edit', 'label' => t('Editing page'), 'display' => false]);
+        if ($this->authorizationChecker->isGranted([
+            Roles::ROLE_SLIDER_ITEM_VIEW,
+            Roles::ROLE_TOP_PRODUCT_VIEW,
+            Roles::ROLE_TOP_CATEGORY_VIEW,
+        ])) {
+            $homepageMenu = $marketingMenu->addChild('homepage', ['label' => t('Home page')]);
+            if ($this->authorizationChecker->isGranted(Roles::ROLE_SLIDER_ITEM_VIEW)) {
+                $bannersMenu = $homepageMenu->addChild('banners', ['route' => 'admin_slider_list', 'label' => t('Banners')]);
+                $bannersMenu->addChild('new_page', ['route' => 'admin_slider_new', 'label' => t('New page'), 'display' => false]);
+                $bannersMenu->addChild('edit_page', ['route' => 'admin_slider_edit', 'label' => t('Editing page'), 'display' => false]);
+            }
+            if ($this->authorizationChecker->isGranted(Roles::ROLE_TOP_PRODUCT_VIEW)) {
+                $homepageMenu->addChild('promoted_products', ['route' => 'admin_topproduct_list', 'label' => t('Promoted products')]);
+            }
+            if ($this->authorizationChecker->isGranted(Roles::ROLE_TOP_CATEGORY_VIEW)) {
+                $homepageMenu->addChild('promoted_categories', ['route' => 'admin_topcategory_list', 'label' => t('Promoted categories')]);
+            }
+        }
 
-        $homepageMenu->addChild('promoted_products', ['route' => 'admin_topproduct_list', 'label' => t('Promoted products')]);
-        $homepageMenu->addChild('promoted_categories', ['route' => 'admin_topcategory_list', 'label' => t('Promoted categories')]);
+        if ($this->authorizationChecker->isGranted(Roles::ROLE_NAVIGATION_VIEW)) {
+            $navigationMenu = $marketingMenu->addChild('navigation', ['route' => 'admin_navigation_list', 'label' => t('Navigation')]);
+            $navigationMenu->addChild('navigation_edit', ['route' => 'admin_navigation_edit', 'display' => false, 'label' => t('Editace položky')]);
+            $navigationMenu->addChild('navigation_new', ['route' => 'admin_navigation_new', 'display' => false, 'label' => t('Nová položka')]);
+        }
 
-        $navigationMenu = $marketingMenu->addChild('navigation', ['route' => 'admin_navigation_list', 'label' => t('Navigation')]);
-        $navigationMenu->addChild('navigation_edit', ['route' => 'admin_navigation_edit', 'display' => false, 'label' => t('Editace položky')]);
-        $navigationMenu->addChild('navigation_new', ['route' => 'admin_navigation_new', 'display' => false, 'label' => t('Nová položka')]);
+        if ($this->authorizationChecker->isGranted([
+            Roles::ROLE_BLOG_ARTICLE_VIEW,
+            Roles::ROLE_BLOG_CATEGORY_VIEW,
+        ])) {
+            $blogMenu = $marketingMenu->addChild('blog', ['label' => t('Blog')]);
 
-        $blogMenu = $marketingMenu->addChild('blog', ['label' => t('Blog')]);
+            if ($this->authorizationChecker->isGranted(Roles::ROLE_BLOG_CATEGORY_VIEW)) {
+                $blogCategories = $blogMenu->addChild('blogCategories', ['route' => 'admin_blogcategory_list', 'label' => t('Rubriky blogu')]);
+                $blogCategories->addChild('newBlogCategories', ['route' => 'admin_blogcategory_new', 'display' => false, 'label' => t('Nová rubrika blogu')]);
+                $blogCategories->addChild('editBlogCategories', ['route' => 'admin_blogcategory_edit', 'display' => false]);
+            }
 
-        $blogCategories = $blogMenu->addChild('blogCategories', ['route' => 'admin_blogcategory_list', 'label' => t('Rubriky blogu')]);
-        $blogCategories->addChild('newBlogCategories', ['route' => 'admin_blogcategory_new', 'display' => false, 'label' => t('Nová rubrika blogu')]);
-        $blogCategories->addChild('editBlogCategories', ['route' => 'admin_blogcategory_edit', 'display' => false]);
+            if ($this->authorizationChecker->isGranted(Roles::ROLE_BLOG_ARTICLE_VIEW)) {
+                $blogArticles = $blogMenu->addChild('blogArticles', ['route' => 'admin_blogarticle_list', 'label' => t('Články blogu')]);
+                $blogArticles->addChild('newBlogArticles', ['route' => 'admin_blogarticle_new', 'display' => false, 'label' => t('Nový článek blogu')]);
+                $blogArticles->addChild('editBlogArticles', ['route' => 'admin_blogarticle_edit', 'display' => false]);
+            }
+        }
 
-        $blogArticles = $blogMenu->addChild('blogArticles', ['route' => 'admin_blogarticle_list', 'label' => t('Články blogu')]);
-        $blogArticles->addChild('newBlogArticles', ['route' => 'admin_blogarticle_new', 'display' => false, 'label' => t('Nový článek blogu')]);
-        $blogArticles->addChild('editBlogArticles', ['route' => 'admin_blogarticle_edit', 'display' => false]);
+        if ($this->authorizationChecker->isGranted(Roles::ROLE_NOTIFICATION_BAR_VIEW)) {
+            $notificationBar = $marketingMenu->addChild('notification_bar', ['route' => 'admin_notificationbar_list', 'label' => t('Notifikační lišta')]);
+            $notificationBar->addChild('notification_bar_new', ['route' => 'admin_notificationbar_new', 'label' => t('Nová notifikační lišta'), 'display' => false]);
+            $notificationBar->addChild('notification_bar_edit', ['route' => 'admin_notificationbar_edit', 'label' => t('Editace notifikační lišty'), 'display' => false]);
+        }
 
-        $notificationBar = $marketingMenu->addChild('notification_bar', ['route' => 'admin_notificationbar_list', 'label' => t('Notifikační lišta')]);
-        $notificationBar->addChild('notification_bar_new', ['route' => 'admin_notificationbar_new', 'label' => t('Nová notifikační lišta'), 'display' => false]);
-        $notificationBar->addChild('notification_bar_edit', ['route' => 'admin_notificationbar_edit', 'label' => t('Editace notifikační lišty'), 'display' => false]);
+        if ($this->authorizationChecker->isGranted(Roles::ROLE_ORDER_SUBMITTED_VIEW)) {
+            $marketingMenu->addChild('order_confirmation', ['route' => 'admin_customercommunication_ordersubmitted', 'label' => t('Order confirmation page')]);
+        }
 
-        $marketingMenu->addChild('order_confirmation', ['route' => 'admin_customercommunication_ordersubmitted', 'label' => t('Order confirmation page')]);
+        if (!$this->authorizationChecker->isGranted([
+            Roles::ROLE_LEGAL_CONDITIONS_VIEW,
+            Roles::ROLE_PRIVACY_POLICY_VIEW,
+            Roles::ROLE_PERSONAL_DATA_VIEW,
+            Roles::ROLE_COOKIES_VIEW,
+        ])) {
+            return;
+        }
 
         $legalMenu = $marketingMenu->addChild('legal', ['label' => t('Legal conditions')]);
-        $legalMenu->addChild('terms_and_conditions', ['route' => 'admin_legalconditions_termsandconditions', 'label' => t('Terms and Conditions')]);
-        $legalMenu->addChild('privace_policy', ['route' => 'admin_legalconditions_privacypolicy', 'label' => t('Privacy Policy')]);
-        $legalMenu->addChild('personal_data', ['route' => 'admin_personaldata_setting', 'label' => t('Personal data access')]);
-        $legalMenu->addChild('cookies', ['route' => 'admin_cookies_setting', 'label' => t('Cookies information')]);
+        if ($this->authorizationChecker->isGranted(Roles::ROLE_LEGAL_CONDITIONS_VIEW)) {
+            $legalMenu->addChild('terms_and_conditions', ['route' => 'admin_legalconditions_termsandconditions', 'label' => t('Terms and Conditions')]);
+        }
+        if ($this->authorizationChecker->isGranted(Roles::ROLE_PRIVACY_POLICY_VIEW)) {
+            $legalMenu->addChild('privace_policy', ['route' => 'admin_legalconditions_privacypolicy', 'label' => t('Privacy Policy')]);
+        }
+        if ($this->authorizationChecker->isGranted(Roles::ROLE_PERSONAL_DATA_VIEW)) {
+            $legalMenu->addChild('personal_data', ['route' => 'admin_personaldata_setting', 'label' => t('Personal data access')]);
+        }
+        if ($this->authorizationChecker->isGranted(Roles::ROLE_COOKIES_VIEW)) {
+            $legalMenu->addChild('cookies', ['route' => 'admin_cookies_setting', 'label' => t('Cookies information')]);
+        }
     }
 
     /**
@@ -296,6 +349,32 @@ class SideMenuConfigurationSubscriber implements EventSubscriberInterface
             Roles::ROLE_FREE_TRANSPORT_AND_PAYMENT_VIEW,
         ])) {
             $rootMenu->removeChild('pricing');
+        }
+    }
+
+    /**
+     * @param \Knp\Menu\ItemInterface $rootMenu
+     */
+    private function removeMarketingFromMenuIfNotGranted(ItemInterface $rootMenu): void
+    {
+        if (!$this->authorizationChecker->isGranted([
+            Roles::ROLE_ARTICLE_VIEW,
+            Roles::ROLE_ADVERT_VIEW,
+            Roles::ROLE_BESTSELLING_PRODUCT_VIEW,
+            Roles::ROLE_SLIDER_ITEM_VIEW,
+            Roles::ROLE_TOP_PRODUCT_VIEW,
+            Roles::ROLE_TOP_CATEGORY_VIEW,
+            Roles::ROLE_NAVIGATION_VIEW,
+            Roles::ROLE_BLOG_CATEGORY_VIEW,
+            Roles::ROLE_BLOG_ARTICLE_VIEW,
+            Roles::ROLE_NOTIFICATION_BAR_VIEW,
+            Roles::ROLE_ORDER_SUBMITTED_VIEW,
+            Roles::ROLE_LEGAL_CONDITIONS_VIEW,
+            Roles::ROLE_PRIVACY_POLICY_VIEW,
+            Roles::ROLE_PERSONAL_DATA_VIEW,
+            Roles::ROLE_COOKIES_VIEW,
+        ])) {
+            $rootMenu->removeChild('marketing');
         }
     }
 }
