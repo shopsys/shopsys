@@ -47,6 +47,7 @@ class SideMenuConfigurationSubscriber implements EventSubscriberInterface
     {
         $rootMenu = $event->getMenu();
         $this->removeOrdersFromMenuIfNotGranted($rootMenu);
+        $this->removeCustomersFromMenuIfNotGranted($rootMenu);
         $rootMenu->addChild($this->createIntegrationsMenu($event));
     }
 
@@ -70,8 +71,16 @@ class SideMenuConfigurationSubscriber implements EventSubscriberInterface
         unset($customersExtras['routes']);
         $customersMenu->setExtras($customersExtras);
 
-        $customersMenu->addChild('customers_overview', ['route' => 'admin_customer_list', 'label' => t('Customers overview')]);
-        $customersMenu->addChild('newsletter', ['route' => 'admin_newsletter_list', 'label' => t('Email newsletter')]);
+        if ($this->authorizationChecker->isGranted(Roles::ROLE_CUSTOMER_VIEW)) {
+            $customersMenu->addChild('customers_overview', ['route' => 'admin_customer_list', 'label' => t('Customers overview')]);
+        }
+        if ($this->authorizationChecker->isGranted(Roles::ROLE_NEWSLETTER_VIEW)) {
+            $customersMenu->addChild('newsletter', ['route' => 'admin_newsletter_list', 'label' => t('Email newsletter')]);
+        }
+
+        if (!$this->authorizationChecker->isGranted(Roles::ROLE_PROMO_CODE_VIEW)) {
+            return;
+        }
 
         $promoCodeMenu = $customersMenu->addChild('promo_codes', ['route' => 'admin_promocode_list', 'label' => t('Slevové kupóny')]);
         $promoCodeMenu->addChild('admin_promocode_listmassgeneratebatch', ['route' => 'admin_promocode_listmassgeneratebatch', 'display' => true, 'label' => t('Vygenerované dávky')]);
@@ -220,6 +229,20 @@ class SideMenuConfigurationSubscriber implements EventSubscriberInterface
     {
         if (!$this->authorizationChecker->isGranted(Roles::ROLE_ORDER_VIEW)) {
             $rootMenu->removeChild('orders');
+        }
+    }
+
+    /**
+     * @param \Knp\Menu\ItemInterface $rootMenu
+     */
+    private function removeCustomersFromMenuIfNotGranted(ItemInterface $rootMenu): void
+    {
+        if (!$this->authorizationChecker->isGranted([
+            Roles::ROLE_CUSTOMER_VIEW,
+            Roles::ROLE_NEWSLETTER_VIEW,
+            Roles::ROLE_PROMO_CODE_VIEW,
+        ])) {
+            $rootMenu->removeChild('customers');
         }
     }
 }
