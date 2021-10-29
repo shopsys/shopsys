@@ -8,6 +8,8 @@ export const useLoadCart = (): void => {
     const { cartUuid, transport, payment, promoCode } = useShopsysSelector((state) => state.cartInput);
     const [, refreshCart] = loadCart(cartUuid, transport, payment, promoCode);
     useEffect(() => {
-        refreshCart();
+        if (cartUuid !== null) {
+            refreshCart();
+        }
     }, [router.asPath]);
 };
