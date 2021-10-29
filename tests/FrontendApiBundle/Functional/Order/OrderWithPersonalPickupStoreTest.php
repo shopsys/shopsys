@@ -90,7 +90,7 @@ class OrderWithPersonalPickupStoreTest extends GraphQlTestCase
                             transport: {
                                 uuid: "' . $transportPersonalPickup->getUuid() . '"
                                 price: ' . $transportPrice . '
-                                personalPickupStoreUuid: "' . $storeUuid . '"
+                                pickupPlaceIdentifier: "' . $storeUuid . '"
                             }
                             differentDeliveryAddress: false
                         }

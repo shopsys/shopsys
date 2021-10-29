@@ -294,13 +294,13 @@ class TransportAndPaymentWatcherFacade
      */
     private function checkPersonalPickupStoreAvailability(TransportInputData $transportInputData): void
     {
-        if ($transportInputData->getPersonalPickupStoreUuid() === null) {
+        if ($transportInputData->getPickupPlaceIdentifier() === null) {
             return;
         }
 
         try {
             $this->storeFacade->getByUuidEnabledOnDomain(
-                $transportInputData->getPersonalPickupStoreUuid(),
+                $transportInputData->getPickupPlaceIdentifier(),
                 $this->domain->getId()
             );
         } catch (StoreByUuidNotFoundException $e) {

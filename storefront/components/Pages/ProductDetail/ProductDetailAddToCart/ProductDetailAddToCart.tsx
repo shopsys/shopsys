@@ -28,7 +28,7 @@ const ProductDetailAddToCart: FC<ProductDetailAddToCartProps> = (props) => {
     const [changeCartItemQuantityResult, changeCartItemQuantity] = useChangeCartItemQuantity();
     useHandleAddToCart(
         changeCartItemQuantityResult,
-        transport?.personalPickupStoreUuid === undefined ? null : transport.personalPickupStoreUuid,
+        transport?.pickupPlaceIdentifier === undefined ? null : transport.pickupPlaceIdentifier,
         promoCode,
     );
     useEffect(() => {

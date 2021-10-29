@@ -8,7 +8,7 @@ import { PaymentType } from 'connectors/payments/types';
 
 export const getValuesFromCartResult = (
     resultData: CartApiType,
-    personalPickupStoreUuid: string | null,
+    pickupPlaceIdentifier: string | null,
     promoCode: string | null,
     currencyCode: string,
 ): {
@@ -36,7 +36,7 @@ export const getValuesFromCartResult = (
             currencyCode,
         );
         transport = resultData.transport === null ? null : mapTransport(resultData.transport, currencyCode);
-        personalPickupStore = getSelectedPersonalPickupStore(transport, personalPickupStoreUuid);
+        personalPickupStore = getSelectedPersonalPickupStore(transport, pickupPlaceIdentifier);
         payment =
             resultData.payment === null || transport === null ? null : mapPayment(resultData.payment, currencyCode);
         updatedPromoCode = promoCode;

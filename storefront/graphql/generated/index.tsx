@@ -2034,8 +2034,8 @@ export type TransportPriceArgsApi = {
 
 /** Represents a transport in order */
 export type TransportInputApi = {
-  /** The identifier of selected personal pickup store */
-  personalPickupStoreUuid?: Maybe<Scalars['Uuid']>;
+  /** The identifier of selected personal pickup place */
+  pickupPlaceIdentifier?: Maybe<Scalars['String']>;
   /** Price for transport */
   price: PriceInputApi;
   /** UUID */

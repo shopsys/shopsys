@@ -31,8 +31,7 @@ const TransportAndPayment: FC<ServerSidePropsType> = () => {
     const t = useTypedTranslationFunction();
     const formProviderMethods = useShopsysForm(undefined, {
         transport: transport === null ? null : transport.uuid,
-        personalPickupStore:
-            transport?.personalPickupStoreUuid === undefined ? null : transport.personalPickupStoreUuid,
+        personalPickupStore: transport?.pickupPlaceIdentifier === undefined ? null : transport.pickupPlaceIdentifier,
         payment: payment === null ? null : payment.uuid,
     });
 
@@ -73,7 +72,7 @@ const getTransportAndPaymentValidity = (
     paymentInput: PaymentInputType | null,
 ) => {
     if (transport?.hasPersonalPickup) {
-        return transportInput !== null && transportInput?.personalPickupStoreUuid !== null && paymentInput !== null;
+        return transportInput !== null && transportInput?.pickupPlaceIdentifier !== null && paymentInput !== null;
     }
     return transportInput !== null && paymentInput !== null;
 };

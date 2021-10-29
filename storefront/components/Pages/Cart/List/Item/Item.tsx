@@ -35,7 +35,7 @@ const Item: FC<ItemProps> = (props) => {
     const [changeCartItemQuantityResult, changeCartItemQuantity] = useChangeCartItemQuantity();
     useHandleAddToCart(
         changeCartItemQuantityResult,
-        transport?.personalPickupStoreUuid === undefined ? null : transport.personalPickupStoreUuid,
+        transport?.pickupPlaceIdentifier === undefined ? null : transport.pickupPlaceIdentifier,
         promoCode,
     );
 

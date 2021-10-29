@@ -349,7 +349,7 @@ class CartModificationsResultTest extends GraphQlTestCase
                             priceWithoutVat: "0"
                             vatAmount: "0"
                         }
-                        personalPickupStoreUuid: "' . Uuid::uuid4()->toString() . '"
+                        pickupPlaceIdentifier: "' . Uuid::uuid4()->toString() . '"
                     }
                 }
             ) {
@@ -384,7 +384,7 @@ class CartModificationsResultTest extends GraphQlTestCase
                             priceWithoutVat: "0"
                             vatAmount: "0"
                         }
-                        personalPickupStoreUuid: "' . $store->getUuid() . '"
+                        pickupPlaceIdentifier: "' . $store->getUuid() . '"
                     }
                 }
             ) {

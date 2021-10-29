@@ -14,7 +14,7 @@ const RemoveCartItemButton: FC<RemoveCartItemButtonProps> = (props) => {
     const [removeItemFromCartResult, removeItemFromCart] = useRemoveItemFromCart();
     useHandleRemoveFromCart(
         removeItemFromCartResult,
-        transport?.personalPickupStoreUuid === undefined ? null : transport.personalPickupStoreUuid,
+        transport?.pickupPlaceIdentifier === undefined ? null : transport.pickupPlaceIdentifier,
         promoCode,
     );
 

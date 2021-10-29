@@ -18,7 +18,7 @@ export const useHandleAddToCart = (
             isAbsoluteQuantity: boolean;
         } & CartInput
     >,
-    personalPickupStoreUuid: string | null,
+    pickupPlaceIdentifier: string | null,
     promoCode: string | null,
 ): void => {
     const { currencyCode } = useShopsysSelector((state) => state.domain);
@@ -35,7 +35,7 @@ export const useHandleAddToCart = (
         // TODO handle modifications
         const cartResultValues = getValuesFromCartResult(
             result.data.AddToCart,
-            personalPickupStoreUuid,
+            pickupPlaceIdentifier,
             promoCode,
             currencyCode,
         );

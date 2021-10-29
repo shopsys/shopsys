@@ -62,17 +62,17 @@ const cartBody = `
     }
     modifications{
         itemModifications {
-            noLongerListableCartItems { 
-                ${cartItemBody} 
+            noLongerListableCartItems {
+                ${cartItemBody}
             }
-            cartItemsWithModifiedPrice { 
-                ${cartItemBody} 
+            cartItemsWithModifiedPrice {
+                ${cartItemBody}
             }
-            cartItemsWithChangedQuantity { 
-                ${cartItemBody} 
-            } 
-            noLongerAvailableCartItemsDueToQuantity { 
-                ${cartItemBody} 
+            cartItemsWithChangedQuantity {
+                ${cartItemBody}
+            }
+            noLongerAvailableCartItemsDueToQuantity {
+                ${cartItemBody}
             }
         }
         transportModifications {
@@ -99,7 +99,7 @@ export const cartQuery = `
             transport: $transport
             payment: $payment
             promoCode: $promoCode
-        }) {              
+        }) {
             ${cartBody}
             ${transportBody}
             ${paymentBody}
@@ -118,7 +118,7 @@ export const mapTransportToTransportInput = (
             priceWithoutVat: transport.price.priceWithoutVat.toString(),
             vatAmount: transport.price.vatAmount.toString(),
         },
-        personalPickupStoreUuid: personalPickupStore === null ? null : personalPickupStore.uuid,
+        pickupPlaceIdentifier: personalPickupStore === null ? null : personalPickupStore.uuid,
     };
 };
 
@@ -148,7 +148,7 @@ export const loadCart = (
 
     useHandleCartUpdate(
         result,
-        transport?.personalPickupStoreUuid === undefined ? null : transport.personalPickupStoreUuid,
+        transport?.pickupPlaceIdentifier === undefined ? null : transport.pickupPlaceIdentifier,
         promoCode,
     );
 
@@ -184,7 +184,7 @@ export const mapCart = (
 };
 
 const removeItemFromCartMutation = `mutation (
-            $cartUuid: Uuid! 
+            $cartUuid: Uuid!
             $cartItemUuid: Uuid!
             $transport: TransportInput
             $payment: PaymentInput
@@ -212,10 +212,10 @@ export const useRemoveItemFromCart = (): UseMutationResponse<
 };
 
 export const changeCartItemQuantityMutation = `mutation (
-            $cartUuid: Uuid 
-            $productUuid: Uuid! 
-            $quantity: Int! 
-            $isAbsoluteQuantity: Boolean 
+            $cartUuid: Uuid
+            $productUuid: Uuid!
+            $quantity: Int!
+            $isAbsoluteQuantity: Boolean
             $transport: TransportInput
             $payment: PaymentInput
             $promoCode: String) {
