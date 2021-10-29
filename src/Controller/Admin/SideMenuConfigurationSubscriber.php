@@ -52,6 +52,7 @@ class SideMenuConfigurationSubscriber implements EventSubscriberInterface
         $this->removeProductsFromMenuIfNotGranted($rootMenu);
         $this->removePricingFromMenuIfNotGranted($rootMenu);
         $this->removeMarketingFromMenuIfNotGranted($rootMenu);
+        $this->removeAdministratorsFromMenuIfNotGranted($rootMenu);
         $rootMenu->addChild($this->createIntegrationsMenu($event));
     }
 
@@ -375,6 +376,16 @@ class SideMenuConfigurationSubscriber implements EventSubscriberInterface
             Roles::ROLE_COOKIES_VIEW,
         ])) {
             $rootMenu->removeChild('marketing');
+        }
+    }
+
+    /**
+     * @param \Knp\Menu\ItemInterface $rootMenu
+     */
+    private function removeAdministratorsFromMenuIfNotGranted(ItemInterface $rootMenu): void
+    {
+        if (!$this->authorizationChecker->isGranted(Roles::ROLE_ADMINISTRATOR_VIEW)) {
+            $rootMenu->removeChild('administrators');
         }
     }
 }
