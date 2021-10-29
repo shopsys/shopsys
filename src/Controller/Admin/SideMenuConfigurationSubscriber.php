@@ -50,6 +50,7 @@ class SideMenuConfigurationSubscriber implements EventSubscriberInterface
         $this->removeOrdersFromMenuIfNotGranted($rootMenu);
         $this->removeCustomersFromMenuIfNotGranted($rootMenu);
         $this->removeProductsFromMenuIfNotGranted($rootMenu);
+        $this->removePricingFromMenuIfNotGranted($rootMenu);
         $rootMenu->addChild($this->createIntegrationsMenu($event));
     }
 
@@ -98,6 +99,15 @@ class SideMenuConfigurationSubscriber implements EventSubscriberInterface
     {
         $pricingMenu = $event->getMenu();
         $pricingMenu->removeChild('promo_codes');
+        if (!$this->authorizationChecker->isGranted(Roles::ROLE_PRICING_GROUP_VIEW)) {
+            $pricingMenu->removeChild('pricing_groups');
+        }
+        if (!$this->authorizationChecker->isGranted(Roles::ROLE_VAT_VIEW)) {
+            $pricingMenu->removeChild('vat');
+        }
+        if (!$this->authorizationChecker->isGranted(Roles::ROLE_FREE_TRANSPORT_AND_PAYMENT_VIEW)) {
+            $pricingMenu->removeChild('free_transport_and_payment');
+        }
     }
 
     /**
@@ -272,6 +282,20 @@ class SideMenuConfigurationSubscriber implements EventSubscriberInterface
             Roles::ROLE_CATEGORY_VIEW,
         ])) {
             $rootMenu->removeChild('products');
+        }
+    }
+
+    /**
+     * @param \Knp\Menu\ItemInterface $rootMenu
+     */
+    private function removePricingFromMenuIfNotGranted(ItemInterface $rootMenu): void
+    {
+        if (!$this->authorizationChecker->isGranted([
+            Roles::ROLE_PRICING_GROUP_VIEW,
+            Roles::ROLE_VAT_VIEW,
+            Roles::ROLE_FREE_TRANSPORT_AND_PAYMENT_VIEW,
+        ])) {
+            $rootMenu->removeChild('pricing');
         }
     }
 }
