@@ -7,6 +7,7 @@ namespace App\FrontendApi\Model\Cart;
 use App\FrontendApi\Model\Payment\PaymentInputData;
 use App\FrontendApi\Model\Transport\TransportInputData;
 use App\Model\Cart\Cart;
+use App\Model\Order\Preview\OrderPreview;
 use App\Model\Order\Preview\OrderPreviewFactory;
 use App\Model\Order\PromoCode\PromoCode;
 use App\Model\Payment\Payment;
@@ -146,7 +147,9 @@ class TransportAndPaymentWatcherFacade
         if ($transportInputData !== null) {
             $transport = $this->getTransportFromInputData($transportInputData);
 
-            $this->checkPersonalPickupStoreAvailability($transportInputData);
+            if ($transport !== null && !$transport->isPacketery()) {
+                $this->checkPersonalPickupStoreAvailability($transportInputData);
+            }
         }
 
         if ($paymentInputData) {
@@ -179,13 +182,7 @@ class TransportAndPaymentWatcherFacade
         $this->cartWithModificationsResult->setTransport($transport);
         $this->cartWithModificationsResult->setPayment($payment);
 
-        if ($transport !== null) {
-            $this->checkTransportPrice($transport, $transportInputData, $orderPreview->getProductsPrice(), $currency);
-            $transportWeightLimitExceeded = $this->checkTransportWeightLimit($transport, $cart->getTotalWeight());
-            if ($transportWeightLimitExceeded) {
-                $this->cartWithModificationsResult->setTransport(null);
-            }
-        }
+        $this->checkTransport($transport, $transportInputData, $orderPreview, $currency, $cart);
 
         if ($payment !== null) {
             $this->checkPaymentPrice($payment, $paymentInputData, $orderPreview->getProductsPrice(), $currency);
@@ -305,6 +302,29 @@ class TransportAndPaymentWatcherFacade
             );
         } catch (StoreByUuidNotFoundException $e) {
             $this->cartWithModificationsResult->setPersonalPickupStoreUnavailable(true);
+        }
+    }
+
+    /**
+     * @param \App\Model\Transport\Transport|null $transport
+     * @param \App\FrontendApi\Model\Transport\TransportInputData|null $transportInputData
+     * @param \App\Model\Order\Preview\OrderPreview $orderPreview
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
+     * @param \App\Model\Cart\Cart $cart
+     */
+    private function checkTransport(
+        ?Transport $transport,
+        ?TransportInputData $transportInputData,
+        OrderPreview $orderPreview,
+        Currency $currency,
+        Cart $cart
+    ): void {
+        if ($transport !== null) {
+            $this->checkTransportPrice($transport, $transportInputData, $orderPreview->getProductsPrice(), $currency);
+            $transportWeightLimitExceeded = $this->checkTransportWeightLimit($transport, $cart->getTotalWeight());
+            if ($transportWeightLimitExceeded) {
+                $this->cartWithModificationsResult->setTransport(null);
+            }
         }
     }
 }

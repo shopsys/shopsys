@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Model\Transport;
 
 use App\Model\Transport\Type\TransportType;
+use App\Model\Transport\Type\TransportTypeEnum;
 use Doctrine\ORM\Mapping as ORM;
 use Shopsys\FrameworkBundle\Model\Transport\Transport as BaseTransport;
 use Shopsys\FrameworkBundle\Model\Transport\TransportData as BaseTransportData;
@@ -200,5 +201,13 @@ class Transport extends BaseTransport
     public function getMaxWeight(): ?int
     {
         return $this->maxWeight;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isPacketery(): bool
+    {
+        return $this->transportType->getCode() === TransportTypeEnum::TYPE_PACKETERY;
     }
 }
