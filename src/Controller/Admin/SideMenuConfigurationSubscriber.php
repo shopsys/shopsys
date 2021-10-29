@@ -53,6 +53,7 @@ class SideMenuConfigurationSubscriber implements EventSubscriberInterface
         $this->removePricingFromMenuIfNotGranted($rootMenu);
         $this->removeMarketingFromMenuIfNotGranted($rootMenu);
         $this->removeAdministratorsFromMenuIfNotGranted($rootMenu);
+        $this->removeSettingsFromMenuIfNotGranted($rootMenu);
         $rootMenu->addChild($this->createIntegrationsMenu($event));
     }
 
@@ -225,12 +226,30 @@ class SideMenuConfigurationSubscriber implements EventSubscriberInterface
         $settingsMenu->getChild('communication')->removeChild('order_confirmation');
 
         $seoMenu = $settingsMenu->getChild('seo');
-        $categorySeoMenu = $seoMenu->addChild('categorySeo', ['route' => 'admin_categoryseo_list', 'label' => t('Rozšířené SEO kategorií')]);
-        $categorySeoMenu->addChild('new_category', ['route' => 'admin_categoryseo_newcategory', 'label' => t('Rozšířené SEO kategorií - volba kategorie'), 'display' => false]);
-        $categorySeoMenu->addChild('new_filters', ['route' => 'admin_categoryseo_newfilters', 'label' => t('Rozšířené SEO kategorie - filtry'), 'display' => false]);
-        $categorySeoMenu->addChild('new_combinations', ['route' => 'admin_categoryseo_newcombinations', 'label' => t('Rozšířené SEO kategorie - kombinace'), 'display' => false]);
-        $categorySeoMenu->addChild('new_combination', ['route' => 'admin_categoryseo_readycombination', 'label' => t('Rozšířené SEO kategorie - nastavení kombinace se SEO hodnotami'), 'display' => false]);
-        $seoMenu->addChild('unusedFriendlyUrlList', ['route' => 'admin_unused_friendly_url_list', 'label' => t('Unused friendly URL list')]);
+        if ($this->authorizationChecker->isGranted(Roles::ROLE_CATEGORY_SEO_VIEW)) {
+            $categorySeoMenu = $seoMenu->addChild('categorySeo', ['route' => 'admin_categoryseo_list', 'label' => t('Rozšířené SEO kategorií')]);
+            $categorySeoMenu->addChild('new_category', ['route' => 'admin_categoryseo_newcategory', 'label' => t('Rozšířené SEO kategorií - volba kategorie'), 'display' => false]);
+            $categorySeoMenu->addChild('new_filters', ['route' => 'admin_categoryseo_newfilters', 'label' => t('Rozšířené SEO kategorie - filtry'), 'display' => false]);
+            $categorySeoMenu->addChild('new_combinations', ['route' => 'admin_categoryseo_newcombinations', 'label' => t('Rozšířené SEO kategorie - kombinace'), 'display' => false]);
+            $categorySeoMenu->addChild('new_combination', ['route' => 'admin_categoryseo_readycombination', 'label' => t('Rozšířené SEO kategorie - nastavení kombinace se SEO hodnotami'), 'display' => false]);
+        }
+        if ($this->authorizationChecker->isGranted(Roles::ROLE_FRIENDLY_URL_VIEW)) {
+            $seoMenu->addChild('unusedFriendlyUrlList', ['route' => 'admin_unused_friendly_url_list', 'label' => t('Unused friendly URL list')]);
+        }
+        if (!$this->authorizationChecker->isGranted(Roles::ROLE_SEO_VIEW)) {
+            $seoMenu->removeChild('seo');
+        }
+        if (!$this->authorizationChecker->isGranted([
+            Roles::ROLE_SEO_VIEW,
+            Roles::ROLE_CATEGORY_SEO_VIEW,
+            Roles::ROLE_FRIENDLY_URL_VIEW,
+        ])) {
+            $settingsMenu->removeChild('seo');
+        }
+
+        if (!$this->authorizationChecker->isGranted(Roles::ROLE_CONTACT_FORM_VIEW)) {
+            $settingsMenu->removeChild('contact_form_settings');
+        }
 
         $listMenu = $settingsMenu->getChild('lists');
         $listMenu->removeChild('availabilities');
@@ -239,21 +258,29 @@ class SideMenuConfigurationSubscriber implements EventSubscriberInterface
         $flagsMenu = $listMenu->getChild('flags');
         $flagsMenu->addChild('flagEdit', ['route' => 'admin_flag_edit', 'label' => t('Editing flag'), 'display' => false]);
 
-        $storeMenu = $listMenu->addChild('stores', ['route' => 'admin_store_list', 'label' => t('Stores')]);
-        $storeMenu->addChild('new_store', ['route' => 'admin_store_new', 'display' => false, 'label' => t('New store')]);
-        $storeMenu->addChild('edit_store', ['route' => 'admin_store_edit', 'display' => false, 'label' => t('Edit store')]);
+        if ($this->authorizationChecker->isGranted(Roles::ROLE_STORE_VIEW)) {
+            $storeMenu = $listMenu->addChild('stores', ['route' => 'admin_store_list', 'label' => t('Stores')]);
+            $storeMenu->addChild('new_store', ['route' => 'admin_store_new', 'display' => false, 'label' => t('New store')]);
+            $storeMenu->addChild('edit_store', ['route' => 'admin_store_edit', 'display' => false, 'label' => t('Edit store')]);
+        }
 
-        $parameterValueMenu = $listMenu->addChild('parameter_values', ['route' => 'admin_parametervalue_list', 'label' => t('Hodnota parametru typu barva')]);
-        $parameterValueMenu->addChild('parameter_values_edit', ['route' => 'admin_parametervalue_edit', 'display' => false, 'label' => t('Editace hodnoty parametru typu barva')]);
+        if ($this->authorizationChecker->isGranted(Roles::ROLE_PARAMETER_VALUE_VIEW)) {
+            $parameterValueMenu = $listMenu->addChild('parameter_values', ['route' => 'admin_parametervalue_list', 'label' => t('Hodnota parametru typu barva')]);
+            $parameterValueMenu->addChild('parameter_values_edit', ['route' => 'admin_parametervalue_edit', 'display' => false, 'label' => t('Editace hodnoty parametru typu barva')]);
+        }
 
-        $transportTypeMenu = $listMenu->addChild('transport_type', ['route' => 'admin_transporttype_list', 'label' => t('Transport types')]);
-        $transportTypeMenu->addChild('transport_type_edit', ['route' => 'admin_transporttype_edit', 'display' => false, 'label' => t('Edit transport type')]);
+        if ($this->authorizationChecker->isGranted(Roles::ROLE_TRANSPORT_TYPE_VIEW)) {
+            $transportTypeMenu = $listMenu->addChild('transport_type', ['route' => 'admin_transporttype_list', 'label' => t('Transport types')]);
+            $transportTypeMenu->addChild('transport_type_edit', ['route' => 'admin_transporttype_edit', 'display' => false, 'label' => t('Edit transport type')]);
+        }
 
-        $stockMenu = $settingsMenu->addChild('stocks', ['label' => t('Skladovost')]);
-        $stockMenu->addChild('stock', ['route' => 'admin_stock_list', 'label' => t('Sklady')]);
-        $stockMenu->addChild('new_stock', ['route' => 'admin_stock_new', 'display' => false, 'label' => t('Nový sklad')]);
-        $stockMenu->addChild('edit_stock', ['route' => 'admin_stock_edit', 'display' => false, 'label' => t('Detail skladu')]);
-        $stockMenu->addChild('stock_settings', ['route' => 'admin_stock_settings', 'label' => t('Nastavení skladů')]);
+        if ($this->authorizationChecker->isGranted(Roles::ROLE_STOCK_VIEW)) {
+            $stockMenu = $settingsMenu->addChild('stocks', ['label' => t('Skladovost')]);
+            $stockMenu->addChild('stock', ['route' => 'admin_stock_list', 'label' => t('Sklady')]);
+            $stockMenu->addChild('new_stock', ['route' => 'admin_stock_new', 'display' => false, 'label' => t('Nový sklad')]);
+            $stockMenu->addChild('edit_stock', ['route' => 'admin_stock_edit', 'display' => false, 'label' => t('Detail skladu')]);
+            $stockMenu->addChild('stock_settings', ['route' => 'admin_stock_settings', 'label' => t('Nastavení skladů')]);
+        }
 
         $communicationMenu = $settingsMenu->getChild('communication');
         $mailTemplates = $communicationMenu->getChild('mail_templates');
@@ -262,6 +289,74 @@ class SideMenuConfigurationSubscriber implements EventSubscriberInterface
         $superadminSettingMenu = $settingsMenu->getChild('superadmin');
         if ($superadminSettingMenu !== null) {
             $superadminSettingMenu->addChild('cspHeader', ['route' => 'admin_cspheader_setting', 'label' => t('Content-Security-Policy header')]);
+        }
+
+        $identificationMenu = $settingsMenu->getChild('identification');
+        if (!$this->authorizationChecker->isGranted(Roles::ROLE_DOMAIN_VIEW)) {
+            $identificationMenu->removeChild('domains');
+        }
+        if (!$this->authorizationChecker->isGranted(Roles::ROLE_SHOP_INFO_VIEW)) {
+            $identificationMenu->removeChild('shop_info');
+        }
+        if (!$this->authorizationChecker->isGranted([
+            Roles::ROLE_DOMAIN_VIEW,
+            Roles::ROLE_SHOP_INFO_VIEW,
+        ])) {
+            $settingsMenu->removeChild('identification');
+        }
+
+        if (!$this->authorizationChecker->isGranted(Roles::ROLE_MAIL_SETTING_VIEW)) {
+            $communicationMenu->removeChild('mail_settings');
+        }
+        if (!$this->authorizationChecker->isGranted(Roles::ROLE_MAIL_TEMPLATE_VIEW)) {
+            $communicationMenu->removeChild('mail_templates');
+        }
+        if (!$this->authorizationChecker->isGranted([
+            Roles::ROLE_MAIL_SETTING_VIEW,
+            Roles::ROLE_MAIL_TEMPLATE_VIEW,
+        ])) {
+            $settingsMenu->removeChild('communication');
+        }
+
+        if (!$this->authorizationChecker->isGranted(Roles::ROLE_IMAGE_SIZE_VIEW)) {
+            $settingsMenu->removeChild('images');
+        }
+
+        $listsMenu = $settingsMenu->getChild('lists');
+        if (!$this->authorizationChecker->isGranted(Roles::ROLE_TRANSPORT_AND_PAYMENT_VIEW)) {
+            $listsMenu->removeChild('transports_and_payments');
+        }
+        if (!$this->authorizationChecker->isGranted(Roles::ROLE_FLAG_VIEW)) {
+            $listsMenu->removeChild('flags');
+        }
+        if (!$this->authorizationChecker->isGranted(Roles::ROLE_PARAMETER_VIEW)) {
+            $listsMenu->removeChild('parameters');
+        }
+        if (!$this->authorizationChecker->isGranted(Roles::ROLE_ORDER_STATUS_VIEW)) {
+            $listsMenu->removeChild('order_statuses');
+        }
+        if (!$this->authorizationChecker->isGranted(Roles::ROLE_BRAND_VIEW)) {
+            $listsMenu->removeChild('brands');
+        }
+        if (!$this->authorizationChecker->isGranted(Roles::ROLE_UNIT_VIEW)) {
+            $listsMenu->removeChild('units');
+        }
+        if (!$this->authorizationChecker->isGranted(Roles::ROLE_COUNTRY_VIEW)) {
+            $listsMenu->removeChild('countries');
+        }
+        if (!$this->authorizationChecker->isGranted([
+            Roles::ROLE_TRANSPORT_AND_PAYMENT_VIEW,
+            Roles::ROLE_FLAG_VIEW,
+            Roles::ROLE_PARAMETER_VIEW,
+            Roles::ROLE_ORDER_STATUS_VIEW,
+            Roles::ROLE_BRAND_VIEW,
+            Roles::ROLE_UNIT_VIEW,
+            Roles::ROLE_COUNTRY_VIEW,
+            Roles::ROLE_STORE_VIEW,
+            Roles::ROLE_PARAMETER_VALUE_VIEW,
+            Roles::ROLE_TRANSPORT_TYPE_VIEW,
+        ])) {
+            $settingsMenu->removeChild('lists');
         }
     }
 
@@ -386,6 +481,37 @@ class SideMenuConfigurationSubscriber implements EventSubscriberInterface
     {
         if (!$this->authorizationChecker->isGranted(Roles::ROLE_ADMINISTRATOR_VIEW)) {
             $rootMenu->removeChild('administrators');
+        }
+    }
+
+    /**
+     * @param \Knp\Menu\ItemInterface $rootMenu
+     */
+    private function removeSettingsFromMenuIfNotGranted(ItemInterface $rootMenu): void
+    {
+        if (!$this->authorizationChecker->isGranted([
+            Roles::ROLE_DOMAIN_VIEW,
+            Roles::ROLE_SHOP_INFO_VIEW,
+            Roles::ROLE_MAIL_SETTING_VIEW,
+            Roles::ROLE_MAIL_TEMPLATE_VIEW,
+            Roles::ROLE_TRANSPORT_AND_PAYMENT_VIEW,
+            Roles::ROLE_FLAG_VIEW,
+            Roles::ROLE_PARAMETER_VIEW,
+            Roles::ROLE_ORDER_STATUS_VIEW,
+            Roles::ROLE_BRAND_VIEW,
+            Roles::ROLE_UNIT_VIEW,
+            Roles::ROLE_COUNTRY_VIEW,
+            Roles::ROLE_STORE_VIEW,
+            Roles::ROLE_PARAMETER_VALUE_VIEW,
+            Roles::ROLE_TRANSPORT_TYPE_VIEW,
+            Roles::ROLE_IMAGE_SIZE_VIEW,
+            Roles::ROLE_SEO_VIEW,
+            Roles::ROLE_CATEGORY_SEO_VIEW,
+            Roles::ROLE_FRIENDLY_URL_VIEW,
+            Roles::ROLE_CONTACT_FORM_VIEW,
+            Roles::ROLE_STOCK_VIEW,
+        ])) {
+            $rootMenu->removeChild('settings');
         }
     }
 }
