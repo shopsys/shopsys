@@ -72,10 +72,13 @@ class ProductFilterOptionsFactory extends BaseProductFilterOptionsFactory
             $productFilterData
         );
 
-        return $this->createProductFilterOptions(
+        $productFilterOptions = $this->createProductFilterOptions(
             $productFilterConfig,
             $productFilterCountData,
             $productFilterData
         );
+        $this->fillBrands($productFilterOptions, $productFilterConfig, $productFilterCountData, $productFilterData);
+
+        return $productFilterOptions;
     }
 }
