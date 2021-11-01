@@ -54,7 +54,7 @@ const ContactInformation: FC<ServerSidePropsType> = () => {
         router.push(orderConfirmationUrl);
     };
 
-    const onCreateOrderHandler: SubmitHandler<ContactInformationFormType> = (formValues, event) => {
+    const onCreateOrderHandler: SubmitHandler<ContactInformationFormType> = async (formValues, event) => {
         event?.preventDefault();
         if (cartInput.transport === null || cartInput.payment === null) {
             router.replace(transportAndPaymentUrl);
@@ -63,7 +63,7 @@ const ContactInformation: FC<ServerSidePropsType> = () => {
 
         dispatch(contactInformationActions.setContactInformation(formValues));
 
-        createOrder({
+        await createOrder({
             ...formValues,
             ...{ ...cartInput, transport: cartInput.transport, payment: cartInput.payment },
             onCompanyBehalf: formValues.customer === 'companyCustomer',
