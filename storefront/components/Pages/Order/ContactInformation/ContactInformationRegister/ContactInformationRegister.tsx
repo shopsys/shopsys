@@ -1,17 +1,22 @@
 import { Controller, useWatch } from 'react-hook-form';
 import Checkbox from 'components/Forms/Checkbox';
 import ChoiceFormLine from 'components/Forms/Lib/ChoiceFormLine';
+import { contactInformationActions } from 'redux/slices/contactInformation';
 import { FC } from 'react';
 import FormColumn from 'components/Forms/Lib/FormColumn';
 import FormLine from 'components/Forms/Lib/FormLine';
 import FormLineError from 'components/Forms/Lib/FormLineError';
 import Heading from 'components/Basic/Heading';
 import TextInput from 'components/Forms/TextInput';
+import { useShopsysDispatch } from 'redux/main';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 
 const ContactInformationRegister: FC = () => {
+    const dispatch = useShopsysDispatch();
     const t = useTypedTranslationFunction();
-    const registerCheckbox = useWatch({ name: 'register' });
+    const registerValue = useWatch({ name: 'register' });
+    const passwordFirstValue = useWatch({ name: 'passwordFirst' });
+    const passwordSecondValue = useWatch({ name: 'passwordSecond' });
 
     return (
         <>
@@ -28,7 +33,7 @@ const ContactInformationRegister: FC = () => {
                     )}
                 />
             </ChoiceFormLine>
-            {registerCheckbox === true && (
+            {registerValue === true && (
                 <>
                     <Heading type="h3">{t('Create a password')}</Heading>
                     <FormColumn lg="65%">
@@ -46,6 +51,9 @@ const ContactInformationRegister: FC = () => {
                                             isTouched={isTouched}
                                             hasError={invalid}
                                             fieldRef={field}
+                                            onBlurCapture={() =>
+                                                dispatch(contactInformationActions.setPasswordFirst(passwordFirstValue))
+                                            }
                                         />
                                         <FormLineError error={error} inputType="text-input-password" />
                                     </>
@@ -66,6 +74,11 @@ const ContactInformationRegister: FC = () => {
                                             isTouched={isTouched}
                                             hasError={invalid}
                                             fieldRef={field}
+                                            onBlurCapture={() =>
+                                                dispatch(
+                                                    contactInformationActions.setPasswordSecond(passwordSecondValue),
+                                                )
+                                            }
                                         />
                                         <FormLineError error={error} inputType="text-input-password" />
                                     </>

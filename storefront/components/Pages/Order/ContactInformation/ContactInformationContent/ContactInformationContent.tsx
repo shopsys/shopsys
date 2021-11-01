@@ -21,7 +21,7 @@ const ContactInformationContent: FC<ContactInformationContent> = (props) => {
     const cssTransitionRef = useRef<HTMLDivElement>(null);
     const [contentElementHeight, setContentElementHeight] = useState(0);
     const { control } = useFormContext();
-    const customer = useWatch({ name: 'customer', control });
+    const customerValue = useWatch({ name: 'customer', control });
 
     const calcHeight = () => {
         if (contentElement.current) {
@@ -47,14 +47,14 @@ const ContactInformationContent: FC<ContactInformationContent> = (props) => {
                         </ContactInformationContentSectionStyled>
 
                         <ContactInformationContentSectionStyled>
-                            <ContactInformationCustomer currentValue={customer} />
+                            <ContactInformationCustomer currentValue={customerValue} />
                         </ContactInformationContentSectionStyled>
 
                         <ContactInformationContentSectionStyled>
                             <ContactInformationUser />
                         </ContactInformationContentSectionStyled>
 
-                        {customer === 'companyCustomer' && (
+                        {customerValue === 'companyCustomer' && (
                             <ContactInformationContentSectionStyled>
                                 <ContactInformationCompany />
                             </ContactInformationContentSectionStyled>

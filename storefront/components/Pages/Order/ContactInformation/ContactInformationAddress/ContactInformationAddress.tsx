@@ -1,5 +1,6 @@
-import { Controller, useFormContext } from 'react-hook-form';
+import { Controller, useFormContext, useWatch } from 'react-hook-form';
 import { FC, useEffect } from 'react';
+import { contactInformationActions } from 'redux/slices/contactInformation';
 import FormColumn from 'components/Forms/Lib/FormColumn';
 import FormLine from 'components/Forms/Lib/FormLine';
 import FormLineError from 'components/Forms/Lib/FormLineError';
@@ -7,12 +8,17 @@ import { getCountriesAsSelectOptions } from 'connectors/country/Country';
 import Heading from 'components/Basic/Heading';
 import Select from 'components/Forms/Select';
 import TextInput from 'components/Forms/TextInput';
+import { useShopsysDispatch } from 'redux/main';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 
 const ContactInformationAddress: FC = () => {
+    const dispatch = useShopsysDispatch();
     const t = useTypedTranslationFunction();
     const formProviderMethods = useFormContext();
     const countrySelectOptions = getCountriesAsSelectOptions();
+    const streetValue = useWatch({ name: 'street' });
+    const cityValue = useWatch({ name: 'city' });
+    const postcodeValue = useWatch({ name: 'postcode' });
     useEffect(() => {
         if (countrySelectOptions.length > 0) {
             formProviderMethods.setValue('country', countrySelectOptions[0]);
@@ -40,6 +46,7 @@ const ContactInformationAddress: FC = () => {
                                 isTouched={isTouched}
                                 hasError={invalid}
                                 fieldRef={field}
+                                onBlurCapture={() => dispatch(contactInformationActions.setStreet(streetValue))}
                             />
                             <FormLineError error={error} inputType="text-input" />
                         </>
@@ -62,6 +69,7 @@ const ContactInformationAddress: FC = () => {
                                     isTouched={isTouched}
                                     hasError={invalid}
                                     fieldRef={field}
+                                    onBlurCapture={() => dispatch(contactInformationActions.setCity(cityValue))}
                                 />
                                 <FormLineError error={error} inputType="text-input" />
                             </>
@@ -82,6 +90,7 @@ const ContactInformationAddress: FC = () => {
                                     isTouched={isTouched}
                                     hasError={invalid}
                                     fieldRef={field}
+                                    onBlurCapture={() => dispatch(contactInformationActions.setPostcode(postcodeValue))}
                                 />
                                 <FormLineError error={error} inputType="text-input" />
                             </>

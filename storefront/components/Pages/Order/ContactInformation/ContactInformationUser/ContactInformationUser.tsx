@@ -1,14 +1,20 @@
-import { Controller } from 'react-hook-form';
+import { Controller, useWatch } from 'react-hook-form';
+import { contactInformationActions } from 'redux/slices/contactInformation';
 import { FC } from 'react';
 import FormColumn from 'components/Forms/Lib/FormColumn';
 import FormLine from 'components/Forms/Lib/FormLine';
 import FormLineError from 'components/Forms/Lib/FormLineError';
 import Heading from 'components/Basic/Heading';
 import TextInput from 'components/Forms/TextInput';
+import { useShopsysDispatch } from 'redux/main';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 
 const ContactInformationUser: FC = () => {
+    const dispatch = useShopsysDispatch();
     const t = useTypedTranslationFunction();
+    const telephoneValue = useWatch({ name: 'telephone' });
+    const firstNameValue = useWatch({ name: 'firstName' });
+    const lastNameValue = useWatch({ name: 'lastName' });
 
     return (
         <>
@@ -27,6 +33,7 @@ const ContactInformationUser: FC = () => {
                                 isTouched={isTouched}
                                 hasError={invalid}
                                 fieldRef={field}
+                                onBlurCapture={() => dispatch(contactInformationActions.setTelephone(telephoneValue))}
                             />
                             <FormLineError error={error} inputType="text-input" />
                         </>
@@ -49,6 +56,9 @@ const ContactInformationUser: FC = () => {
                                     isTouched={isTouched}
                                     hasError={invalid}
                                     fieldRef={field}
+                                    onBlurCapture={() =>
+                                        dispatch(contactInformationActions.setFirstName(firstNameValue))
+                                    }
                                 />
                                 <FormLineError error={error} inputType="text-input" />
                             </>
@@ -69,6 +79,7 @@ const ContactInformationUser: FC = () => {
                                     isTouched={isTouched}
                                     hasError={invalid}
                                     fieldRef={field}
+                                    onBlurCapture={() => dispatch(contactInformationActions.setLastName(lastNameValue))}
                                 />
                                 <FormLineError error={error} inputType="text-input" />
                             </>

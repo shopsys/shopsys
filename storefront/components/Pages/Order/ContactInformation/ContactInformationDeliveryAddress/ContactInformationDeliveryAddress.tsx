@@ -6,6 +6,7 @@ import { Controller, useFormContext, useWatch } from 'react-hook-form';
 import { FC, useEffect, useRef, useState } from 'react';
 import Checkbox from 'components/Forms/Checkbox';
 import ChoiceFormLine from 'components/Forms/Lib/ChoiceFormLine';
+import { contactInformationActions } from 'redux/slices/contactInformation';
 import { CSSTransition } from 'react-transition-group';
 import FormColumn from 'components/Forms/Lib/FormColumn';
 import FormLine from 'components/Forms/Lib/FormLine';
@@ -13,15 +14,24 @@ import FormLineError from 'components/Forms/Lib/FormLineError';
 import { getCountriesAsSelectOptions } from 'connectors/country/Country';
 import Select from 'components/Forms/Select';
 import TextInput from 'components/Forms/TextInput';
+import { useShopsysDispatch } from 'redux/main';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 
 const ContactInformationDeliveryAddress: FC = () => {
+    const dispatch = useShopsysDispatch();
     const t = useTypedTranslationFunction();
     const contentElement = useRef<HTMLDivElement>(null);
     const cssTransitionRef = useRef<HTMLDivElement>(null);
     const [contentElementHeight, setContentElementHeight] = useState(0);
     const formProviderMethods = useFormContext();
-    const deliveryAddressCheckbox = useWatch({ name: 'differentDeliveryAddress' });
+    const differentDeliveryAddressValue = useWatch({ name: 'differentDeliveryAddress' });
+    const deliveryFirstNameValue = useWatch({ name: 'deliveryFirstName' });
+    const deliveryLastNameValue = useWatch({ name: 'deliveryLastName' });
+    const deliveryCompanyNameValue = useWatch({ name: 'deliveryCompanyName' });
+    const deliveryTelephoneValue = useWatch({ name: 'deliveryTelephone' });
+    const deliveryStreetValue = useWatch({ name: 'deliveryStreet' });
+    const deliveryCityValue = useWatch({ name: 'deliveryCity' });
+    const deliveryPostcodeValue = useWatch({ name: 'deliveryPostcode' });
     const countrySelectOptions = getCountriesAsSelectOptions();
     useEffect(() => {
         if (countrySelectOptions.length > 0) {
@@ -59,7 +69,7 @@ const ContactInformationDeliveryAddress: FC = () => {
 
             <ContactInformationDeliveryAddressStyled contentElementHeight={contentElementHeight}>
                 <CSSTransition
-                    in={deliveryAddressCheckbox}
+                    in={differentDeliveryAddressValue}
                     timeout={500}
                     classNames="contactInformationDeliveryAddress"
                     onEnter={calcHeight}
@@ -84,6 +94,13 @@ const ContactInformationDeliveryAddress: FC = () => {
                                                     isTouched={isTouched}
                                                     hasError={invalid}
                                                     fieldRef={field}
+                                                    onBlurCapture={() =>
+                                                        dispatch(
+                                                            contactInformationActions.setDeliveryFirstName(
+                                                                deliveryFirstNameValue,
+                                                            ),
+                                                        )
+                                                    }
                                                 />
                                                 <FormLineError error={error} inputType="text-input" />
                                             </>
@@ -104,6 +121,13 @@ const ContactInformationDeliveryAddress: FC = () => {
                                                     isTouched={isTouched}
                                                     hasError={invalid}
                                                     fieldRef={field}
+                                                    onBlurCapture={() =>
+                                                        dispatch(
+                                                            contactInformationActions.setDeliveryLastName(
+                                                                deliveryLastNameValue,
+                                                            ),
+                                                        )
+                                                    }
                                                 />
                                                 <FormLineError error={error} inputType="text-input" />
                                             </>
@@ -124,6 +148,13 @@ const ContactInformationDeliveryAddress: FC = () => {
                                                 isTouched={isTouched}
                                                 hasError={invalid}
                                                 fieldRef={field}
+                                                onBlurCapture={() =>
+                                                    dispatch(
+                                                        contactInformationActions.setDeliveryCompanyName(
+                                                            deliveryCompanyNameValue,
+                                                        ),
+                                                    )
+                                                }
                                             />
                                             <FormLineError error={error} inputType="text-input" />
                                         </>
@@ -143,6 +174,13 @@ const ContactInformationDeliveryAddress: FC = () => {
                                                 isTouched={isTouched}
                                                 hasError={invalid}
                                                 fieldRef={field}
+                                                onBlurCapture={() =>
+                                                    dispatch(
+                                                        contactInformationActions.setDeliveryTelephone(
+                                                            deliveryTelephoneValue,
+                                                        ),
+                                                    )
+                                                }
                                             />
                                             <FormLineError error={error} inputType="text-input" />
                                         </>
@@ -163,6 +201,13 @@ const ContactInformationDeliveryAddress: FC = () => {
                                                 isTouched={isTouched}
                                                 hasError={invalid}
                                                 fieldRef={field}
+                                                onBlurCapture={() =>
+                                                    dispatch(
+                                                        contactInformationActions.setDeliveryStreet(
+                                                            deliveryStreetValue,
+                                                        ),
+                                                    )
+                                                }
                                             />
                                             <FormLineError error={error} inputType="text-input" />
                                         </>
@@ -184,6 +229,13 @@ const ContactInformationDeliveryAddress: FC = () => {
                                                     isTouched={isTouched}
                                                     hasError={invalid}
                                                     fieldRef={field}
+                                                    onBlurCapture={() =>
+                                                        dispatch(
+                                                            contactInformationActions.setDeliveryCity(
+                                                                deliveryCityValue,
+                                                            ),
+                                                        )
+                                                    }
                                                 />
                                                 <FormLineError error={error} inputType="text-input" />
                                             </>
@@ -204,6 +256,13 @@ const ContactInformationDeliveryAddress: FC = () => {
                                                     isTouched={isTouched}
                                                     hasError={invalid}
                                                     fieldRef={field}
+                                                    onBlurCapture={() =>
+                                                        dispatch(
+                                                            contactInformationActions.setDeliveryPostcode(
+                                                                deliveryPostcodeValue,
+                                                            ),
+                                                        )
+                                                    }
                                                 />
                                                 <FormLineError error={error} inputType="text-input" />
                                             </>
