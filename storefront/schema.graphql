@@ -778,7 +778,7 @@ type MainVariant implements Product & Breadcrumb & Slug {
   uuid: Uuid!
 
   """Localized product name (domain dependent)"""
-  name: String
+  name: String!
 
   """Localized product short description (domain dependent)"""
   shortDescription: String
@@ -1444,7 +1444,7 @@ interface Product {
   uuid: Uuid!
 
   """Localized product name (domain dependent)"""
-  name: String
+  name: String!
 
   """Localized product short description (domain dependent)"""
   shortDescription: String
@@ -1900,7 +1900,7 @@ type RegularProduct implements Product & Breadcrumb & Slug {
   uuid: Uuid!
 
   """Localized product name (domain dependent)"""
-  name: String
+  name: String!
 
   """Localized product short description (domain dependent)"""
   shortDescription: String
@@ -2201,7 +2201,7 @@ type Variant implements Product & Breadcrumb & Slug {
   uuid: Uuid!
 
   """Localized product name (domain dependent)"""
-  name: String
+  name: String!
 
   """Localized product short description (domain dependent)"""
   shortDescription: String

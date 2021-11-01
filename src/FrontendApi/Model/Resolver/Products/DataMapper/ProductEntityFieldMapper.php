@@ -136,6 +136,15 @@ class ProductEntityFieldMapper extends BaseProductEntityFieldMapper
 
     /**
      * @param \App\Model\Product\Product $product
+     * @return string
+     */
+    public function getName(Product $product): string
+    {
+        return $product->getName($this->domain->getLocale()) ?? '';
+    }
+
+    /**
+     * @param \App\Model\Product\Product $product
      * @return string|null
      */
     public function getNameSuffix(Product $product): ?string
