@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Model\Product\Flag;
 
 use Doctrine\ORM\Query\Expr\Join;
+use Shopsys\FrameworkBundle\Model\Product\Flag\Exception\FlagNotFoundException;
 use Shopsys\FrameworkBundle\Model\Product\Flag\FlagRepository as BaseFlagRepository;
 
 /**
@@ -112,6 +113,12 @@ class FlagRepository extends BaseFlagRepository
             ->andWhere('f.uuid = :uuid')
             ->setParameter('uuid', $uuid);
 
-        return $flagsQueryBuilder->getQuery()->getSingleResult();
+        $flag = $flagsQueryBuilder->getQuery()->getOneOrNullResult();
+
+        if ($flag === null) {
+            throw new FlagNotFoundException(sprintf('Flag with UUID "%s" does not exist.', $uuid));
+        }
+
+        return $flag;
     }
 }

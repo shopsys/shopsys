@@ -51,7 +51,11 @@ class FlagResolver implements ResolverInterface, AliasedInterface
     public function resolveByUuidOrUrlSlug(?string $uuid = null, ?string $urlSlug = null): Flag
     {
         if ($uuid !== null) {
-            return $this->flagFacade->getVisibleByUuid($uuid, $this->domain->getLocale());
+            try {
+                return $this->flagFacade->getVisibleByUuid($uuid, $this->domain->getLocale());
+            } catch (FlagNotFoundException $flagNotFoundException) {
+                throw new UserError($flagNotFoundException->getMessage());
+            }
         }
 
         if ($urlSlug !== null) {
