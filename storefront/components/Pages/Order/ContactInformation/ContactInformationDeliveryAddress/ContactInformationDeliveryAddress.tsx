@@ -34,10 +34,10 @@ const ContactInformationDeliveryAddress: FC = () => {
     const deliveryPostcodeValue = useWatch({ name: 'deliveryPostcode' });
     const countrySelectOptions = getCountriesAsSelectOptions();
     useEffect(() => {
-        if (countrySelectOptions.length > 0) {
+        if (countrySelectOptions.length > 0 && differentDeliveryAddressValue === true) {
             formProviderMethods.setValue('deliveryCountry', countrySelectOptions[0]);
         }
-    }, [JSON.stringify(countrySelectOptions)]);
+    }, [JSON.stringify(countrySelectOptions), differentDeliveryAddressValue]);
 
     const calcHeight = () => {
         if (contentElement.current) {
