@@ -1,9 +1,9 @@
+import { contactInformationActions, ContactInformationFormType } from 'redux/slices/contactInformation';
 import { FormProvider, SubmitHandler } from 'react-hook-form';
 import { initCartInputCookie, updateCartInputCookie } from 'helpers/Cookies';
 import { initServerSideProps, ServerSidePropsType } from 'helpers/InitServerSideProps';
 import { nextReduxWrapper, useShopsysDispatch, useShopsysSelector } from 'redux/main';
 import ContactInformationForm from 'components/Pages/Order/ContactInformation';
-import { ContactInformationFormType } from 'redux/slices/contactInformation';
 import { FC } from 'react';
 import { getContactInformationFormResolver } from 'components/Pages/Order/ContactInformation/ContactInformationFormResolver';
 import { handleOrderPagesRedirect } from 'helpers/HandleOrderPagesRedirect';
@@ -60,6 +60,8 @@ const ContactInformation: FC<ServerSidePropsType> = () => {
             router.replace(transportAndPaymentUrl);
             return;
         }
+
+        dispatch(contactInformationActions.setContactInformation(formValues));
 
         createOrder({
             ...formValues,

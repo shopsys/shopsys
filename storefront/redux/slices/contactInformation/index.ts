@@ -66,6 +66,33 @@ export const contactInformationSlice = createSlice({
         resetContactInformation() {
             return initialState;
         },
+        setContactInformation(state, action: PayloadAction<ContactInformationFormType>) {
+            state.email = action.payload.email;
+            state.register = action.payload.register;
+            state.passwordFirst = action.payload.passwordFirst;
+            state.passwordSecond = action.payload.passwordSecond;
+            state.customer = action.payload.customer;
+            state.telephone = action.payload.telephone;
+            state.firstName = action.payload.firstName;
+            state.lastName = action.payload.lastName;
+            state.street = action.payload.street;
+            state.city = action.payload.city;
+            state.postcode = action.payload.postcode;
+            state.country = action.payload.country;
+            state.companyName = action.payload.companyName;
+            state.companyNumber = action.payload.companyNumber;
+            state.companyTaxNumber = action.payload.companyTaxNumber;
+            state.differentDeliveryAddress = action.payload.differentDeliveryAddress;
+            state.deliveryFirstName = action.payload.deliveryFirstName;
+            state.deliveryLastName = action.payload.deliveryLastName;
+            state.deliveryCompanyName = action.payload.deliveryCompanyName;
+            state.deliveryTelephone = action.payload.deliveryTelephone;
+            state.deliveryStreet = action.payload.deliveryStreet;
+            state.deliveryCity = action.payload.deliveryCity;
+            state.deliveryPostcode = action.payload.deliveryPostcode;
+            state.deliveryCountry = action.payload.deliveryCountry;
+            state.newsletterSubscription = action.payload.newsletterSubscription;
+        },
         setEmail(state, action: PayloadAction<string>) {
             state.email = action.payload;
         },
