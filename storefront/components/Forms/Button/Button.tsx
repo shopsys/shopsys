@@ -1,6 +1,7 @@
 import { ButtonAsLinkStyled, ButtonPrimaryStyled, ButtonSecondaryStyled, ButtonStyled } from './Button.style';
 import { ButtonHTMLAttributes, FC } from 'react';
 import { ExtractNativePropsFromDefault } from 'typeHelpers/ExtractNativePropsFromDefault';
+import { useFormContext } from 'react-hook-form';
 
 type NativeProps = ExtractNativePropsFromDefault<
     ButtonHTMLAttributes<HTMLButtonElement>,
@@ -34,6 +35,7 @@ type ButtonProps = NativeProps & {
  * We can also combine variants and sizes.
  */
 const Button: FC<ButtonProps> = (props) => {
+    const formProviderMethods = useFormContext();
     let Component = ButtonStyled;
 
     if (props.variant === 'primary') {
@@ -44,7 +46,14 @@ const Button: FC<ButtonProps> = (props) => {
         Component = ButtonAsLinkStyled;
     }
 
-    return <Component {...props}>{props.children}</Component>;
+    return (
+        <Component
+            {...props}
+            isDisabled={props.isDisabled || (props.type === 'submit' && formProviderMethods?.formState.isSubmitting)}
+        >
+            {props.children}
+        </Component>
+    );
 };
 
 /* @component */
