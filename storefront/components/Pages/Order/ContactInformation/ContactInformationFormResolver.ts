@@ -75,13 +75,13 @@ export const getContactInformationFormResolver = <T>(t: TFunction): Resolver<T> 
                 otherwise: Yup.string(),
             }),
             companyTaxNumber: Yup.string(),
-            deliveryAddress: Yup.boolean(),
-            deliveryFirstName: Yup.string().when('deliveryAddress', {
+            differentDeliveryAddress: Yup.boolean(),
+            deliveryFirstName: Yup.string().when('differentDeliveryAddress', {
                 is: true,
                 then: Yup.string().required(t('Please enter first name of contact person')),
                 otherwise: Yup.string(),
             }),
-            deliveryLastName: Yup.string().when('deliveryAddress', {
+            deliveryLastName: Yup.string().when('differentDeliveryAddress', {
                 is: true,
                 then: Yup.string().required(t('Please enter last name of contact person')),
                 otherwise: Yup.string(),
@@ -95,7 +95,7 @@ export const getContactInformationFormResolver = <T>(t: TFunction): Resolver<T> 
                     (value) =>
                         (value !== undefined && value.length >= 9) || (value !== undefined && value.length === 0),
                 ),
-            deliveryStreet: Yup.string().when('deliveryAddress', {
+            deliveryStreet: Yup.string().when('differentDeliveryAddress', {
                 is: true,
                 then: Yup.string()
                     .required(t('Please enter street'))
@@ -103,12 +103,12 @@ export const getContactInformationFormResolver = <T>(t: TFunction): Resolver<T> 
                     .matches(/\d/, t('The street must contain a number')),
                 otherwise: Yup.string(),
             }),
-            deliveryCity: Yup.string().when('deliveryAddress', {
+            deliveryCity: Yup.string().when('differentDeliveryAddress', {
                 is: true,
                 then: Yup.string().required(t('Please enter city')),
                 otherwise: Yup.string(),
             }),
-            deliveryPostcode: Yup.string().when('deliveryAddress', {
+            deliveryPostcode: Yup.string().when('differentDeliveryAddress', {
                 is: true,
                 then: Yup.string()
                     .required(t('Please enter zip code'))
