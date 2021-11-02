@@ -347,8 +347,9 @@ security:
         - { path: ^/%admin_url%/script/, roles: ROLE_SCRIPT_VIEW }
         # transfers
         - { path: ^/%admin_url%/transfer/list/, roles: ROLE_TRANSFER_VIEW }
-        # special paths for file manager in wysiwyg, product picker, etc.
+        # special paths for file manager in wysiwyg, product picker, grid etc.
         - { path: ^/%admin_url%/product-picker/, roles: ROLE_ADMIN }
+        - { path: ^/%admin_url%/_grid/, roles: ROLE_ADMIN }
         - { path: ^/efconnect, roles: ROLE_ADMIN }
         - { path: ^/elfinder, roles: ROLE_ADMIN }
         # dashboard and the rest of pages
