@@ -6,12 +6,15 @@ namespace App\FrontendApi\Model\Resolver\Price;
 
 use App\FrontendApi\Model\Cart\CartFacade;
 use App\Model\Order\Preview\OrderPreviewFactory;
+use App\Model\Product\Product;
+use Overblog\GraphQLBundle\Error\UserError;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Payment\Payment;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
+use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice;
 use Shopsys\FrameworkBundle\Model\Product\ProductCachedAttributesFacade;
 use Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainFacadeInterface;
 use Shopsys\FrameworkBundle\Model\Transport\Transport;
@@ -21,7 +24,6 @@ use Shopsys\FrontendApiBundle\Model\Resolver\Price\PriceResolver as BasePriceRes
 
 /**
  * @property \App\Model\Product\ProductOnCurrentDomainElasticFacade $productOnCurrentDomainFacade
- * @method \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice resolveByProduct(\App\Model\Product\Product|array $data)
  */
 class PriceResolver extends BasePriceResolver
 {
@@ -143,6 +145,24 @@ class PriceResolver extends BasePriceResolver
             $orderPreview->getProductsPrice(),
             $domainId
         );
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function resolveByProduct($data): ProductPrice
+    {
+        if ($data instanceof Product) {
+            $productPrice = $this->productCachedAttributesFacade->getProductSellingPrice($data);
+        } else {
+            $productPrice = $this->priceFacade->createProductPriceFromArrayForCurrentCustomer($data['prices']);
+        }
+
+        if ($productPrice === null) {
+            throw new UserError('The product price is not set.');
+        }
+
+        return $productPrice;
     }
 
     /**
