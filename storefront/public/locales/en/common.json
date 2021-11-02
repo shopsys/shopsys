@@ -158,5 +158,6 @@
     "Could not create order": "Could not create order",
     "Could not load your cart": "Could not load your cart",
     "Could not add the product to cart": "Could not add the product to cart",
-    "Could not remove the product from cart": "Could not remove the product from cart"
+    "Could not remove the product from cart": "Could not remove the product from cart",
+    "Go to cart": "Go to cart"
 }
