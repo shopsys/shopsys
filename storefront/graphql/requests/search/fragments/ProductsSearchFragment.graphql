@@ -1,8 +1,8 @@
 fragment ProductsSearchFragment on ProductConnection {
+    totalCount
     edges {
         node {
-            name
-            slug
+            ...SimpleProductFragment
         }
     }
 }

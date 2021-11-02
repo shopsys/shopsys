@@ -1,0 +1,4 @@
+fragment SimpleCategoryFragment on Category {
+    name
+    slug
+}

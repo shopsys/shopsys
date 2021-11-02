@@ -2145,11 +2145,21 @@ export type VariantImagesArgsApi = {
   type?: Maybe<Scalars['String']>;
 };
 
+type SimpleArticleFragment_Article_Api = { __typename?: 'Article', name: string, slug: string };
+
+type SimpleArticleFragment_BlogArticle_Api = { __typename?: 'BlogArticle', name: string, slug: string };
+
+export type SimpleArticleFragmentApi = SimpleArticleFragment_Article_Api | SimpleArticleFragment_BlogArticle_Api;
+
 export type AvailabilityNameFragmentApi = { __typename?: 'Availability', name: string };
+
+export type SimpleBrandFragmentApi = { __typename?: 'Brand', name: string, slug: string };
 
 export type ImagesDefaultFragmentApi = { __typename?: 'Category', images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }> };
 
 export type NavigationSubCategoriesLinkFragmentApi = { __typename?: 'Category', children: Array<{ __typename?: 'Category', name: string, slug: string }> };
+
+export type SimpleCategoryFragmentApi = { __typename?: 'Category', name: string, slug: string };
 
 export type PromotedCategoriesQueryVariablesApi = Exact<{ [key: string]: never; }>;
 
@@ -2199,6 +2209,14 @@ type ProductPriceFragment_Variant_Api = { __typename?: 'Variant', price: { __typ
 
 export type ProductPriceFragmentApi = ProductPriceFragment_MainVariant_Api | ProductPriceFragment_RegularProduct_Api | ProductPriceFragment_Variant_Api;
 
+type SimpleProductFragment_MainVariant_Api = { __typename?: 'MainVariant', name: string, slug: string, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }> };
+
+type SimpleProductFragment_RegularProduct_Api = { __typename?: 'RegularProduct', name: string, slug: string, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }> };
+
+type SimpleProductFragment_Variant_Api = { __typename?: 'Variant', name: string, slug: string, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }> };
+
+export type SimpleProductFragmentApi = SimpleProductFragment_MainVariant_Api | SimpleProductFragment_RegularProduct_Api | SimpleProductFragment_Variant_Api;
+
 type SliderProductFragment_MainVariant_Api = { __typename: 'MainVariant', uuid: any, slug: string, name: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } };
 
 type SliderProductFragment_RegularProduct_Api = { __typename: 'RegularProduct', uuid: any, slug: string, name: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } };
@@ -2212,24 +2230,16 @@ export type PromotedProductsQueryVariablesApi = Exact<{ [key: string]: never; }>
 
 export type PromotedProductsQueryApi = { __typename?: 'Query', promotedProducts: Array<{ __typename: 'MainVariant', uuid: any, slug: string, name: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename: 'RegularProduct', uuid: any, slug: string, name: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename: 'Variant', uuid: any, slug: string, name: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } }> };
 
-type ArticlesSearchFragment_Article_Api = { __typename?: 'Article', name: string, slug: string };
+export type CategoriesSearchFragmentApi = { __typename?: 'CategoryConnection', totalCount: number, edges?: Array<{ __typename?: 'CategoryEdge', node?: { __typename?: 'Category', name: string, slug: string } | null | undefined } | null | undefined> | null | undefined };
 
-type ArticlesSearchFragment_BlogArticle_Api = { __typename?: 'BlogArticle', name: string, slug: string };
-
-export type ArticlesSearchFragmentApi = ArticlesSearchFragment_Article_Api | ArticlesSearchFragment_BlogArticle_Api;
-
-export type BrandSearchFragmentApi = { __typename?: 'Brand', name: string, slug: string };
-
-export type CategoriesSearchFragmentApi = { __typename?: 'CategoryConnection', edges?: Array<{ __typename?: 'CategoryEdge', node?: { __typename?: 'Category', name?: string | null | undefined, slug: string } | null | undefined } | null | undefined> | null | undefined };
-
-export type ProductsSearchFragmentApi = { __typename?: 'ProductConnection', edges?: Array<{ __typename?: 'ProductEdge', node?: { __typename?: 'MainVariant', name?: string | null | undefined, slug: string } | { __typename?: 'RegularProduct', name?: string | null | undefined, slug: string } | { __typename?: 'Variant', name?: string | null | undefined, slug: string } | null | undefined } | null | undefined> | null | undefined };
+export type ProductsSearchFragmentApi = { __typename?: 'ProductConnection', totalCount: number, edges?: Array<{ __typename?: 'ProductEdge', node?: { __typename?: 'MainVariant', name: string, slug: string, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }> } | { __typename?: 'RegularProduct', name: string, slug: string, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }> } | { __typename?: 'Variant', name: string, slug: string, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }> } | null | undefined } | null | undefined> | null | undefined };
 
 export type SearchQueryVariablesApi = Exact<{
   search: Scalars['String'];
 }>;
 
 
-export type SearchQueryApi = { __typename?: 'Query', articlesSearch?: Array<{ __typename?: 'Article', name: string, slug: string } | { __typename?: 'BlogArticle', name: string, slug: string } | null | undefined> | null | undefined, brandSearch: Array<{ __typename?: 'Brand', name: string, slug: string }>, categoriesSearch?: { __typename?: 'CategoryConnection', edges?: Array<{ __typename?: 'CategoryEdge', node?: { __typename?: 'Category', name?: string | null | undefined, slug: string } | null | undefined } | null | undefined> | null | undefined } | null | undefined, productsSearch?: { __typename?: 'ProductConnection', edges?: Array<{ __typename?: 'ProductEdge', node?: { __typename?: 'MainVariant', name?: string | null | undefined, slug: string } | { __typename?: 'RegularProduct', name?: string | null | undefined, slug: string } | { __typename?: 'Variant', name?: string | null | undefined, slug: string } | null | undefined } | null | undefined> | null | undefined } | null | undefined };
+export type SearchQueryApi = { __typename?: 'Query', articlesSearch?: Array<{ __typename?: 'Article', name: string, slug: string } | { __typename?: 'BlogArticle', name: string, slug: string } | null | undefined> | null | undefined, brandSearch: Array<{ __typename?: 'Brand', name: string, slug: string }>, categoriesSearch?: { __typename?: 'CategoryConnection', totalCount: number, edges?: Array<{ __typename?: 'CategoryEdge', node?: { __typename?: 'Category', name: string, slug: string } | null | undefined } | null | undefined> | null | undefined } | null | undefined, productsSearch?: { __typename?: 'ProductConnection', totalCount: number, edges?: Array<{ __typename?: 'ProductEdge', node?: { __typename?: 'MainVariant', name: string, slug: string, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }> } | { __typename?: 'RegularProduct', name: string, slug: string, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }> } | { __typename?: 'Variant', name: string, slug: string, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }> } | null | undefined } | null | undefined> | null | undefined } | null | undefined };
 
 export type ImagesWebDefaultFragmentApi = { __typename?: 'SliderItem', images: Array<{ __typename?: 'Image', position?: number | null | undefined, sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }> };
 
@@ -2291,6 +2301,18 @@ export type SliderItemsQueryApi = { __typename?: 'Query', sliderItems: Array<{ _
 };
       export default result;
     
+export const SimpleArticleFragmentApi = gql`
+    fragment SimpleArticleFragment on ArticleInterface {
+  name
+  slug
+}
+    `;
+export const SimpleBrandFragmentApi = gql`
+    fragment SimpleBrandFragment on Brand {
+  name
+  slug
+}
+    `;
 export const ImageSizesFragmentApi = gql`
     fragment ImageSizesFragment on Image {
   sizes {
@@ -2385,38 +2407,41 @@ export const SliderProductFragmentApi = gql`
 ${ImageListFragmentApi}
 ${AvailabilityNameFragmentApi}
 ${ProductPriceFragmentApi}`;
-export const ArticlesSearchFragmentApi = gql`
-    fragment ArticlesSearchFragment on ArticleInterface {
-  name
-  slug
-}
-    `;
-export const BrandSearchFragmentApi = gql`
-    fragment BrandSearchFragment on Brand {
+export const SimpleCategoryFragmentApi = gql`
+    fragment SimpleCategoryFragment on Category {
   name
   slug
 }
     `;
 export const CategoriesSearchFragmentApi = gql`
     fragment CategoriesSearchFragment on CategoryConnection {
+  totalCount
   edges {
     node {
-      name
-      slug
+      ...SimpleCategoryFragment
     }
   }
 }
-    `;
+    ${SimpleCategoryFragmentApi}`;
+export const SimpleProductFragmentApi = gql`
+    fragment SimpleProductFragment on Product {
+  name
+  slug
+  ...ProductPriceFragment
+  ...ImageListFragment
+}
+    ${ProductPriceFragmentApi}
+${ImageListFragmentApi}`;
 export const ProductsSearchFragmentApi = gql`
     fragment ProductsSearchFragment on ProductConnection {
+  totalCount
   edges {
     node {
-      name
-      slug
+      ...SimpleProductFragment
     }
   }
 }
-    `;
+    ${SimpleProductFragmentApi}`;
 export const ImagesWebDefaultFragmentApi = gql`
     fragment ImagesWebDefaultFragment on SliderItem {
   images(type: "web", sizes: "default") {
@@ -2484,10 +2509,10 @@ export function usePromotedProductsQueryApi(options: Omit<Urql.UseQueryArgs<Prom
 export const SearchQueryDocumentApi = gql`
     query SearchQuery($search: String!) {
   articlesSearch(search: $search) {
-    ...ArticlesSearchFragment
+    ...SimpleArticleFragment
   }
   brandSearch(search: $search) {
-    ...BrandSearchFragment
+    ...SimpleBrandFragment
   }
   categoriesSearch(search: $search) {
     ...CategoriesSearchFragment
@@ -2496,8 +2521,8 @@ export const SearchQueryDocumentApi = gql`
     ...ProductsSearchFragment
   }
 }
-    ${ArticlesSearchFragmentApi}
-${BrandSearchFragmentApi}
+    ${SimpleArticleFragmentApi}
+${SimpleBrandFragmentApi}
 ${CategoriesSearchFragmentApi}
 ${ProductsSearchFragmentApi}`;
 

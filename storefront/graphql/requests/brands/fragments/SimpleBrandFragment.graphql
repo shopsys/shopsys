@@ -1,0 +1,4 @@
+fragment SimpleBrandFragment on Brand {
+    name
+    slug
+}

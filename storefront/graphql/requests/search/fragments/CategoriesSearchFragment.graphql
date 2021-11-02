@@ -1,8 +1,8 @@
 fragment CategoriesSearchFragment on CategoryConnection {
+    totalCount
     edges {
         node {
-            name
-            slug
+            ...SimpleCategoryFragment
         }
     }
 }

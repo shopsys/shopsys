@@ -1,9 +1,9 @@
 query SearchQuery($search: String!) {
     articlesSearch(search: $search) {
-        ...ArticlesSearchFragment
+        ...SimpleArticleFragment
     }
     brandSearch(search: $search) {
-        ...BrandSearchFragment
+        ...SimpleBrandFragment
     }
     categoriesSearch(search: $search) {
         ...CategoriesSearchFragment

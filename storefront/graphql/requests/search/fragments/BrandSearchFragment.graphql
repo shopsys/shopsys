@@ -1,4 +1,0 @@
-fragment BrandSearchFragment on Brand {
-    name
-    slug
-}
