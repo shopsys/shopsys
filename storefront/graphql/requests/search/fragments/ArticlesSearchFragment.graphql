@@ -1,0 +1,4 @@
+fragment ArticlesSearchFragment on ArticleInterface {
+    name
+    slug
+}

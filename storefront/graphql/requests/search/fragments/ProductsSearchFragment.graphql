@@ -1,0 +1,8 @@
+fragment ProductsSearchFragment on ProductConnection {
+    edges {
+        node {
+            name
+            slug
+        }
+    }
+}

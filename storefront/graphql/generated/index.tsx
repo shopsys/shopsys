@@ -2212,6 +2212,25 @@ export type PromotedProductsQueryVariablesApi = Exact<{ [key: string]: never; }>
 
 export type PromotedProductsQueryApi = { __typename?: 'Query', promotedProducts: Array<{ __typename: 'MainVariant', uuid: any, slug: string, name: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename: 'RegularProduct', uuid: any, slug: string, name: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename: 'Variant', uuid: any, slug: string, name: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } }> };
 
+type ArticlesSearchFragment_Article_Api = { __typename?: 'Article', name: string, slug: string };
+
+type ArticlesSearchFragment_BlogArticle_Api = { __typename?: 'BlogArticle', name: string, slug: string };
+
+export type ArticlesSearchFragmentApi = ArticlesSearchFragment_Article_Api | ArticlesSearchFragment_BlogArticle_Api;
+
+export type BrandSearchFragmentApi = { __typename?: 'Brand', name: string, slug: string };
+
+export type CategoriesSearchFragmentApi = { __typename?: 'CategoryConnection', edges?: Array<{ __typename?: 'CategoryEdge', node?: { __typename?: 'Category', name?: string | null | undefined, slug: string } | null | undefined } | null | undefined> | null | undefined };
+
+export type ProductsSearchFragmentApi = { __typename?: 'ProductConnection', edges?: Array<{ __typename?: 'ProductEdge', node?: { __typename?: 'MainVariant', name?: string | null | undefined, slug: string } | { __typename?: 'RegularProduct', name?: string | null | undefined, slug: string } | { __typename?: 'Variant', name?: string | null | undefined, slug: string } | null | undefined } | null | undefined> | null | undefined };
+
+export type SearchQueryVariablesApi = Exact<{
+  search: Scalars['String'];
+}>;
+
+
+export type SearchQueryApi = { __typename?: 'Query', articlesSearch?: Array<{ __typename?: 'Article', name: string, slug: string } | { __typename?: 'BlogArticle', name: string, slug: string } | null | undefined> | null | undefined, brandSearch: Array<{ __typename?: 'Brand', name: string, slug: string }>, categoriesSearch?: { __typename?: 'CategoryConnection', edges?: Array<{ __typename?: 'CategoryEdge', node?: { __typename?: 'Category', name?: string | null | undefined, slug: string } | null | undefined } | null | undefined> | null | undefined } | null | undefined, productsSearch?: { __typename?: 'ProductConnection', edges?: Array<{ __typename?: 'ProductEdge', node?: { __typename?: 'MainVariant', name?: string | null | undefined, slug: string } | { __typename?: 'RegularProduct', name?: string | null | undefined, slug: string } | { __typename?: 'Variant', name?: string | null | undefined, slug: string } | null | undefined } | null | undefined> | null | undefined } | null | undefined };
+
 export type ImagesWebDefaultFragmentApi = { __typename?: 'SliderItem', images: Array<{ __typename?: 'Image', position?: number | null | undefined, sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }> };
 
 export type SliderItemsQueryVariablesApi = Exact<{ [key: string]: never; }>;
@@ -2366,6 +2385,38 @@ export const SliderProductFragmentApi = gql`
 ${ImageListFragmentApi}
 ${AvailabilityNameFragmentApi}
 ${ProductPriceFragmentApi}`;
+export const ArticlesSearchFragmentApi = gql`
+    fragment ArticlesSearchFragment on ArticleInterface {
+  name
+  slug
+}
+    `;
+export const BrandSearchFragmentApi = gql`
+    fragment BrandSearchFragment on Brand {
+  name
+  slug
+}
+    `;
+export const CategoriesSearchFragmentApi = gql`
+    fragment CategoriesSearchFragment on CategoryConnection {
+  edges {
+    node {
+      name
+      slug
+    }
+  }
+}
+    `;
+export const ProductsSearchFragmentApi = gql`
+    fragment ProductsSearchFragment on ProductConnection {
+  edges {
+    node {
+      name
+      slug
+    }
+  }
+}
+    `;
 export const ImagesWebDefaultFragmentApi = gql`
     fragment ImagesWebDefaultFragment on SliderItem {
   images(type: "web", sizes: "default") {
@@ -2429,6 +2480,29 @@ export const PromotedProductsQueryDocumentApi = gql`
 
 export function usePromotedProductsQueryApi(options: Omit<Urql.UseQueryArgs<PromotedProductsQueryVariablesApi>, 'query'> = {}) {
   return Urql.useQuery<PromotedProductsQueryApi>({ query: PromotedProductsQueryDocumentApi, ...options });
+};
+export const SearchQueryDocumentApi = gql`
+    query SearchQuery($search: String!) {
+  articlesSearch(search: $search) {
+    ...ArticlesSearchFragment
+  }
+  brandSearch(search: $search) {
+    ...BrandSearchFragment
+  }
+  categoriesSearch(search: $search) {
+    ...CategoriesSearchFragment
+  }
+  productsSearch: products(search: $search) {
+    ...ProductsSearchFragment
+  }
+}
+    ${ArticlesSearchFragmentApi}
+${BrandSearchFragmentApi}
+${CategoriesSearchFragmentApi}
+${ProductsSearchFragmentApi}`;
+
+export function useSearchQueryApi(options: Omit<Urql.UseQueryArgs<SearchQueryVariablesApi>, 'query'> = {}) {
+  return Urql.useQuery<SearchQueryApi>({ query: SearchQueryDocumentApi, ...options });
 };
 export const SliderItemsQueryDocumentApi = gql`
     query SliderItemsQuery {
