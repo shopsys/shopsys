@@ -86,7 +86,11 @@ const NewsletterForm: FC = () => {
                                 />
                             </FormLine>
                             <NewsletterFormButtonWrapperStyled>
-                                <Button type="submit" borderRadius="big">
+                                <Button
+                                    type="submit"
+                                    borderRadius="big"
+                                    hasDisabledLook={!formProviderMethods.formState.isValid}
+                                >
                                     {t('Send')}
                                 </Button>
                             </NewsletterFormButtonWrapperStyled>

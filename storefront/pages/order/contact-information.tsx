@@ -82,7 +82,7 @@ const ContactInformation: FC<ServerSidePropsType> = () => {
                             activeStep={3}
                             buttonBack={t('Back')}
                             buttonNext={t('Submit order')}
-                            isDisabled={!formProviderMethods.formState.isValid}
+                            hasDisabledLook={!formProviderMethods.formState.isValid}
                             withGapTop={false}
                             withGapBottom={true}
                             buttonBackLink={transportAndPaymentUrl}

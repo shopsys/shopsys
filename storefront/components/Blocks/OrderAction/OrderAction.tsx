@@ -17,7 +17,7 @@ type OrderActionProps = {
     buttonBackLink: string;
     buttonNextLink?: string;
     activeStep: number;
-    isDisabled: boolean;
+    hasDisabledLook: boolean;
     withGapBottom?: boolean;
     withGapTop?: boolean;
 };
@@ -46,7 +46,7 @@ const OrderAction: FC<OrderActionProps> = (props) => {
                     type="submit"
                     borderRadius="big"
                     variant="primary"
-                    isDisabled={props.isDisabled}
+                    hasDisabledLook={props.hasDisabledLook}
                     onClick={onNextStepHandler}
                 >
                     {props.buttonNext}

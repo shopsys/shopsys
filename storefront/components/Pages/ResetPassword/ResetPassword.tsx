@@ -71,7 +71,7 @@ const ResetPassword: FC = () => {
                                     <FormLineError textInputSize="small" error={error} inputType="text-input" />
                                 </FormLine>
                                 <ButtonWrapperStyled>
-                                    <Button type="submit" isDisabled={invalid || field.value.length === 0}>
+                                    <Button type="submit" hasDisabledLook={invalid || field.value.length === 0}>
                                         {t('Reset password')}
                                     </Button>
                                 </ButtonWrapperStyled>

@@ -48,7 +48,7 @@ const TransportAndPayment: FC<ServerSidePropsType> = () => {
                         activeStep={2}
                         buttonBack={t('Back')}
                         buttonNext={t('Contact information')}
-                        isDisabled={!isTransportAndPaymentValid}
+                        hasDisabledLook={!isTransportAndPaymentValid}
                         withGapTop={true}
                         withGapBottom={true}
                         buttonBackLink={cartUrl}

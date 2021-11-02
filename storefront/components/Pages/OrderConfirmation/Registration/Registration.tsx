@@ -155,7 +155,7 @@ const Registration: FC = () => {
                                     variant="primary"
                                     borderRadius="big"
                                     style={{ width: '100%' }}
-                                    isDisabled={!formProviderMethods.formState.isValid}
+                                    hasDisabledLook={!formProviderMethods.formState.isValid}
                                 >
                                     {t('Create account')}
                                 </Button>
