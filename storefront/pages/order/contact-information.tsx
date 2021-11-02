@@ -1,9 +1,9 @@
+import { contactInformationActions, ContactInformationFormType } from 'redux/slices/contactInformation';
 import { FormProvider, SubmitHandler } from 'react-hook-form';
 import { initCartInputCookie, updateCartInputCookie } from 'helpers/Cookies';
 import { initServerSideProps, ServerSidePropsType } from 'helpers/InitServerSideProps';
 import { nextReduxWrapper, useShopsysDispatch, useShopsysSelector } from 'redux/main';
 import ContactInformationForm from 'components/Pages/Order/ContactInformation';
-import { ContactInformationFormType } from 'redux/slices/contactInformation';
 import { FC } from 'react';
 import { getContactInformationFormResolver } from 'components/Pages/Order/ContactInformation/ContactInformationFormResolver';
 import { handleOrderPagesRedirect } from 'helpers/HandleOrderPagesRedirect';
@@ -15,7 +15,7 @@ import StaticUrlGuard from 'components/Helpers/StaticUrlGuard';
 import { updateCartState } from 'utils/Cart/UpdateCartState';
 import { useCreateOrder } from 'connectors/order/Order';
 import { useGetInternationalizedStaticUrls } from 'hooks/staticUrls/UseGetInternationalizedStaticUrls';
-import { useHandleContactInformationChanges } from 'hooks/forms/UseHandleContactInformationChanges';
+import { useHandleContactInformationNonTextChanges } from 'hooks/forms/useHandleContactInformationNonTextChanges';
 import { useHandleFormErrors } from 'hooks/forms/UseHandleFormErrors';
 import { useHandleFormSuccessfulSubmit } from 'hooks/forms/UseHandleFormSuccessfulSubmit';
 import { userActions } from 'redux/slices/user';
@@ -40,7 +40,7 @@ const ContactInformation: FC<ServerSidePropsType> = () => {
         onSuccessfullyCreatedOrderHandler(),
     );
     useHandleFormErrors(createOrderResult.error, formProviderMethods, t('Could not create order'));
-    useHandleContactInformationChanges(formProviderMethods.control, contactInformationValues);
+    useHandleContactInformationNonTextChanges(formProviderMethods.control, contactInformationValues);
 
     const onSuccessfullyCreatedOrderHandler = () => {
         const resetCartInput = initCartInputCookie();
@@ -60,6 +60,8 @@ const ContactInformation: FC<ServerSidePropsType> = () => {
             router.replace(transportAndPaymentUrl);
             return;
         }
+
+        dispatch(contactInformationActions.setContactInformation(formValues));
 
         createOrder({
             ...formValues,

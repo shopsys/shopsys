@@ -9,7 +9,7 @@ import LabelWrapper from 'components/Forms/Lib/LabelWrapper';
 type NativeProps = ExtractNativePropsFromDefault<
     InputHTMLAttributes<HTMLInputElement>,
     never,
-    'name' | 'id' | 'disabled' | 'style' | 'required'
+    'name' | 'id' | 'disabled' | 'style' | 'required' | 'onBlurCapture'
 >;
 
 type TextInputProps = NativeProps & {

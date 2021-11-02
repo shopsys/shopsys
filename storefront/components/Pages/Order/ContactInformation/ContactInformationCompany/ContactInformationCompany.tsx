@@ -1,13 +1,19 @@
-import { Controller } from 'react-hook-form';
+import { Controller, useWatch } from 'react-hook-form';
+import { contactInformationActions } from 'redux/slices/contactInformation';
 import { FC } from 'react';
 import FormLine from 'components/Forms/Lib/FormLine';
 import FormLineError from 'components/Forms/Lib/FormLineError';
 import Heading from 'components/Basic/Heading';
 import TextInput from 'components/Forms/TextInput';
+import { useShopsysDispatch } from 'redux/main';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 
 const ContactInformationCompany: FC = () => {
+    const dispatch = useShopsysDispatch();
     const t = useTypedTranslationFunction();
+    const companyNameValue = useWatch({ name: 'companyName' });
+    const companyNumberValue = useWatch({ name: 'companyNumber' });
+    const companyTaxNumberValue = useWatch({ name: 'companyTaxNumber' });
 
     return (
         <>
@@ -26,6 +32,9 @@ const ContactInformationCompany: FC = () => {
                                 isTouched={isTouched}
                                 hasError={invalid}
                                 fieldRef={field}
+                                onBlurCapture={() =>
+                                    dispatch(contactInformationActions.setCompanyName(companyNameValue))
+                                }
                             />
                             <FormLineError error={error} inputType="text-input" />
                         </>
@@ -47,6 +56,9 @@ const ContactInformationCompany: FC = () => {
                                 isTouched={isTouched}
                                 hasError={invalid}
                                 fieldRef={field}
+                                onBlurCapture={() =>
+                                    dispatch(contactInformationActions.setCompanyNumber(companyNumberValue))
+                                }
                             />
                             <FormLineError error={error} inputType="text-input" />
                         </>
@@ -67,6 +79,9 @@ const ContactInformationCompany: FC = () => {
                                 isTouched={isTouched}
                                 hasError={invalid}
                                 fieldRef={field}
+                                onBlurCapture={() =>
+                                    dispatch(contactInformationActions.setCompanyTaxNumber(companyTaxNumberValue))
+                                }
                             />
                             <FormLineError error={error} inputType="text-input" />
                         </>
