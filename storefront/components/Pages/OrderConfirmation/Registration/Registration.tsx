@@ -69,8 +69,8 @@ const Registration: FC = () => {
     const onRegistrationSubmitHandler: SubmitHandler<{
         password: '';
         privacyPolicy: false;
-    }> = (data) => {
-        register({
+    }> = async (data) => {
+        await register({
             ...data,
             ...contactInformation,
             country: contactInformation.country.value,

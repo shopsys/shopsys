@@ -49,9 +49,12 @@ const NewsletterForm: FC = () => {
         { blur: true, reset: true },
     );
 
-    const onSubscribeToNewsletterHandler: SubmitHandler<{ email: string; privacyPolicy: boolean }> = (data, event) => {
+    const onSubscribeToNewsletterHandler: SubmitHandler<{ email: string; privacyPolicy: boolean }> = async (
+        data,
+        event,
+    ) => {
         event?.preventDefault();
-        subscribeToNewsletter(data);
+        await subscribeToNewsletter(data);
     };
 
     return (

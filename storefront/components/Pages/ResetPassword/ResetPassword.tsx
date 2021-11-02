@@ -41,9 +41,9 @@ const ResetPassword: FC = () => {
         { blur: true, reset: true },
     );
 
-    const onResetPasswordHandler: SubmitHandler<{ email: string }> = (data, event) => {
+    const onResetPasswordHandler: SubmitHandler<{ email: string }> = async (data, event) => {
         event?.preventDefault();
-        resetPassword(data);
+        await resetPassword(data);
     };
 
     return (
