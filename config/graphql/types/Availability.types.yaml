@@ -4,6 +4,9 @@ Availability:
         - 'AvailabilityDecorator'
     config:
         fields:
+            name:
+                type: "String!"
+                description: "Localized availability name (domain dependent)"
             status:
                 type: "String!"
                 description: "Availability status in a format suitable for usage in the code"
