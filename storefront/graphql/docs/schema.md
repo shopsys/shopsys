@@ -2989,7 +2989,7 @@ UUID
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>name</strong></td>
-<td valign="top"><a href="#string">String</a></td>
+<td valign="top"><a href="#string">String</a>!</td>
 <td>
 
 Localized flag name (domain dependent)

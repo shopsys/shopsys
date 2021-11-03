@@ -677,7 +677,7 @@ type Flag implements Breadcrumb & Slug {
   uuid: Uuid!
 
   """Localized flag name (domain dependent)"""
-  name: String
+  name: String!
 
   """Flag color in rgb format"""
   rgbColor: String!

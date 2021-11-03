@@ -95,7 +95,7 @@ export const mapProductPriceApiData = (
 const mapFlagsApiData = (flags: FlagLabelFragmentApi[]): FlagType[] => {
     return flags.map((flagApi) => {
         return {
-            name: flagApi.name !== undefined && flagApi.name !== null ? flagApi.name : '',
+            name: flagApi.name,
             rgbColor: flagApi.rgbColor,
         };
     });
