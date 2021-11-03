@@ -169,7 +169,7 @@ export type ArticleEdgeApi = {
 /** Represents entity that is considered to be an article on the eshop */
 export type ArticleInterfaceApi = {
   breadcrumb: Array<LinkApi>;
-  name?: Maybe<Scalars['String']>;
+  name: Scalars['String'];
   seoH1?: Maybe<Scalars['String']>;
   seoMetaDescription?: Maybe<Scalars['String']>;
   seoTitle?: Maybe<Scalars['String']>;
