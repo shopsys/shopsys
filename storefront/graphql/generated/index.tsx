@@ -2055,7 +2055,7 @@ export type TransportTypeApi = {
 export type UnitApi = {
   __typename?: 'Unit';
   /** Localized unit name (domain dependent) */
-  name?: Maybe<Scalars['String']>;
+  name: Scalars['String'];
 };
 
 /** Represents a product */

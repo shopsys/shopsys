@@ -167,7 +167,7 @@ type ArticleEdge {
 """Represents entity that is considered to be an article on the eshop"""
 interface ArticleInterface {
   uuid: Uuid!
-  name: String
+  name: String!
   slug: String!
   text: String
   seoTitle: String
@@ -2189,7 +2189,7 @@ type TransportType {
 """Represents a unit"""
 type Unit {
   """Localized unit name (domain dependent)"""
-  name: String
+  name: String!
 }
 
 """Represents and encapsulates an ISO-8601 encoded UTC date-time value"""
