@@ -7,6 +7,9 @@ Category:
             - 'Breadcrumb'
             - 'Slug'
         fields:
+            name:
+                type: "String!"
+                description: "Localized category name (domain dependent)"
             children:
                 type: "[Category!]!"
                 description: "Descendant categories"

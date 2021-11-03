@@ -435,7 +435,7 @@ export type CategoryApi = BreadcrumbApi & SlugApi & {
   /** A list of categories linked to the given category */
   linkedCategories: Array<CategoryApi>;
   /** Localized category name (domain dependent) */
-  name?: Maybe<Scalars['String']>;
+  name: Scalars['String'];
   /** Ancestor category */
   parent?: Maybe<CategoryApi>;
   /** Paginated and ordered products of category */
@@ -2142,25 +2142,25 @@ export type AvailabilityNameFragmentApi = { __typename?: 'Availability', name?: 
 
 export type ImagesDefaultFragmentApi = { __typename?: 'Category', images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }> };
 
-export type NavigationSubCategoriesLinkFragmentApi = { __typename?: 'Category', children: Array<{ __typename?: 'Category', name?: string | null | undefined, slug: string }> };
+export type NavigationSubCategoriesLinkFragmentApi = { __typename?: 'Category', children: Array<{ __typename?: 'Category', name: string, slug: string }> };
 
 export type PromotedCategoriesQueryVariablesApi = Exact<{ [key: string]: never; }>;
 
 
-export type PromotedCategoriesQueryApi = { __typename?: 'Query', promotedCategories: Array<{ __typename?: 'Category', uuid: any, name?: string | null | undefined, slug: string, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }> }> };
+export type PromotedCategoriesQueryApi = { __typename?: 'Query', promotedCategories: Array<{ __typename?: 'Category', uuid: any, name: string, slug: string, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }> }> };
 
 export type FlagLabelFragmentApi = { __typename?: 'Flag', name?: string | null | undefined, rgbColor: string };
 
 export type ImageSizesFragmentApi = { __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> };
 
-export type CategoriesByColumnFragmentApi = { __typename?: 'NavigationItem', categoriesByColumns: Array<{ __typename?: 'NavigationItemCategoriesByColumns', columnNumber: number, categories: Array<{ __typename?: 'Category', name?: string | null | undefined, slug: string, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, children: Array<{ __typename?: 'Category', name?: string | null | undefined, slug: string }> }> }> };
+export type CategoriesByColumnFragmentApi = { __typename?: 'NavigationItem', categoriesByColumns: Array<{ __typename?: 'NavigationItemCategoriesByColumns', columnNumber: number, categories: Array<{ __typename?: 'Category', name: string, slug: string, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, children: Array<{ __typename?: 'Category', name: string, slug: string }> }> }> };
 
-export type ColumnCategoriesFragmentApi = { __typename?: 'NavigationItemCategoriesByColumns', categories: Array<{ __typename?: 'Category', name?: string | null | undefined, slug: string, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, children: Array<{ __typename?: 'Category', name?: string | null | undefined, slug: string }> }> };
+export type ColumnCategoriesFragmentApi = { __typename?: 'NavigationItemCategoriesByColumns', categories: Array<{ __typename?: 'Category', name: string, slug: string, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, children: Array<{ __typename?: 'Category', name: string, slug: string }> }> };
 
 export type NavigationQueryVariablesApi = Exact<{ [key: string]: never; }>;
 
 
-export type NavigationQueryApi = { __typename?: 'Query', navigation: Array<{ __typename?: 'NavigationItem', name: string, link: string, categoriesByColumns: Array<{ __typename?: 'NavigationItemCategoriesByColumns', columnNumber: number, categories: Array<{ __typename?: 'Category', name?: string | null | undefined, slug: string, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, children: Array<{ __typename?: 'Category', name?: string | null | undefined, slug: string }> }> }> }> };
+export type NavigationQueryApi = { __typename?: 'Query', navigation: Array<{ __typename?: 'NavigationItem', name: string, link: string, categoriesByColumns: Array<{ __typename?: 'NavigationItemCategoriesByColumns', columnNumber: number, categories: Array<{ __typename?: 'Category', name: string, slug: string, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, children: Array<{ __typename?: 'Category', name: string, slug: string }> }> }> }> };
 
 export type NewsletterSubscribeMutationVariablesApi = Exact<{
   email: Scalars['String'];

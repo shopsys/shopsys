@@ -433,7 +433,7 @@ type Category implements Breadcrumb & Slug {
   uuid: Uuid!
 
   """Localized category name (domain dependent)"""
-  name: String
+  name: String!
 
   """Descendant categories"""
   children: [Category!]!
