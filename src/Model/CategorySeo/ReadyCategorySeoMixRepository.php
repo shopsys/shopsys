@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\CategorySeo;
 
+use App\Component\Doctrine\OrderByCollationHelper;
 use App\Model\Category\Category;
 use App\Model\CategorySeo\Exception\UnableToFindReadyCategorySeoMixException;
 use Doctrine\Common\Persistence\ObjectRepository;
@@ -11,7 +12,6 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query\Expr\Join;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\Model\Localization\Localization;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter;
 use function GuzzleHttp\json_encode;
 
@@ -28,11 +28,6 @@ class ReadyCategorySeoMixRepository
     private $domain;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Localization\Localization
-     */
-    private Localization $localization;
-
-    /**
      * @var string[][][]
      */
     private array $readySeoCategorySetup;
@@ -40,16 +35,13 @@ class ReadyCategorySeoMixRepository
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Localization\Localization $localization
      */
     public function __construct(
         EntityManagerInterface $em,
-        Domain $domain,
-        Localization $localization
+        Domain $domain
     ) {
         $this->em = $em;
         $this->domain = $domain;
-        $this->localization = $localization;
         $this->readySeoCategorySetup = [];
     }
 
@@ -238,7 +230,6 @@ class ReadyCategorySeoMixRepository
     public function getAllForShowInCategory(Category $category, int $domainId): array
     {
         $locale = $this->domain->getDomainConfigById($domainId)->getLocale();
-        $collation = $this->localization->getCollationByLocale($locale);
 
         return $this->em->createQueryBuilder()
             ->select('rcsm')
@@ -246,7 +237,7 @@ class ReadyCategorySeoMixRepository
             ->andWhere('rcsm.category = :category')
             ->andWhere('rcsm.domainId = :domainId')
             ->andWhere('rcsm.showInCategory = true')
-            ->orderBy("COLLATE(rcsm.h1, '" . $collation . "')", 'asc')
+            ->orderBy(OrderByCollationHelper::createOrderByForLocale('rcsm.h1', $locale), 'asc')
             ->setParameters([
                 'category' => $category,
                 'domainId' => $domainId,
