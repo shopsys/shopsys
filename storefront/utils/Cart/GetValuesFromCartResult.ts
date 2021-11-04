@@ -32,6 +32,7 @@ export const getValuesFromCartResult = (
                 modifications: resultData.modifications,
                 totalPrice: resultData.totalPrice,
                 totalDiscountPrice: resultData.totalDiscountPrice,
+                remainingAmountWithVatForFreeTransport: resultData.remainingAmountWithVatForFreeTransport,
             },
             currencyCode,
         );

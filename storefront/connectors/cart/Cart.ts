@@ -85,6 +85,7 @@ const cartBody = `
             paymentUnavailable
         }
     }
+    remainingAmountWithVatForFreeTransport
 ` as const;
 
 export const cartQuery = `
@@ -162,9 +163,11 @@ export const mapCart = (
         modifications: CartApiType['modifications'];
         totalPrice: CartApiType['totalPrice'];
         totalDiscountPrice: CartApiType['totalDiscountPrice'];
+        remainingAmountWithVatForFreeTransport: CartApiType['remainingAmountWithVatForFreeTransport'];
     },
     currencyCode: string,
 ): CartType => {
+    const remainingFreeTransport = apiData.remainingAmountWithVatForFreeTransport;
     return {
         ...apiData,
         items: apiData.items.map((item) => {
@@ -180,6 +183,8 @@ export const mapCart = (
         }),
         totalPrice: mapPriceData(apiData.totalPrice, currencyCode),
         totalDiscountPrice: mapPriceData(apiData.totalDiscountPrice, currencyCode),
+        remainingAmountWithVatForFreeTransport:
+            remainingFreeTransport !== null ? Number.parseFloat(remainingFreeTransport) : null,
     };
 };
 

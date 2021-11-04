@@ -18,7 +18,7 @@ const CartSummary: FC = () => {
                     <PromoCode />
                 </CartSummaryLeftStyled>
                 <CartSummaryMiddleStyled>
-                    <FreeTransport amountLeft={325} />
+                    <FreeTransport />
                 </CartSummaryMiddleStyled>
                 <CartSummaryRightStyled>
                     <CartPreview />

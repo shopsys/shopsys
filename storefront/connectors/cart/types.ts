@@ -37,6 +37,7 @@ export type CartType = {
     items: CartItemType[];
     totalPrice: PriceType;
     totalDiscountPrice: PriceType;
+    remainingAmountWithVatForFreeTransport: number | null;
 };
 
 export type ProductCartItemApiType = {
@@ -89,6 +90,7 @@ export type CartApiType = {
     totalPrice: PriceApiType;
     totalDiscountPrice: PriceApiType;
     modifications: CartModificationsResultApiType;
+    remainingAmountWithVatForFreeTransport: string | null;
 };
 
 export type AddProductResultType = {

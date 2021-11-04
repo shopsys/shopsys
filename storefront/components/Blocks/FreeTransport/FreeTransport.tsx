@@ -5,23 +5,24 @@ import { Trans } from 'react-i18next';
 import { useShopsysSelector } from 'redux/main';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 
-type FreeTransportProps = {
-    /**
-     * A prop to define the price remaining to reach free transport.
-     */
-    amountLeft: number;
-};
-
-const FreeTransport: FC<FreeTransportProps> = (props) => {
+const FreeTransport: FC = () => {
+    const { cart } = useShopsysSelector((state) => state.user);
     const t = useTypedTranslationFunction();
     const domainConfig = useShopsysSelector((state) => state.domain);
-    const amountLeftvalue = formatPrice(props.amountLeft, domainConfig.currencyCode, t);
-    if (props.amountLeft > 0) {
+    const amount = cart?.remainingAmountWithVatForFreeTransport;
+
+    if (amount === null || amount === undefined) {
+        return null;
+    }
+
+    const amountFormatted = formatPrice(amount, domainConfig.currencyCode, t);
+
+    if (amount > 0) {
         return (
             <FreeTransportStyled>
                 <Trans i18nKey="FreeTransportAmountLeft">
                     Add products for
-                    <strong>{{ amountLeftvalue }}</strong>
+                    <strong>{{ amountFormatted }}</strong>
                     more, and enjoy <strong>free delivery!</strong>
                 </Trans>
             </FreeTransportStyled>
