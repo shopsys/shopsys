@@ -4,7 +4,10 @@ declare(strict_types=1);
 
 namespace App\Model\Product\Brand;
 
+use App\Component\Doctrine\OrderByCollationHelper;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Paginator\PaginationResult;
 use Shopsys\FrameworkBundle\Component\Paginator\QueryPaginator;
 use Shopsys\FrameworkBundle\Component\String\DatabaseSearching;
@@ -19,6 +22,24 @@ use Shopsys\FrameworkBundle\Model\Product\Brand\BrandRepository as BaseBrandRepo
 class BrandRepository extends BaseBrandRepository
 {
     /**
+     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
+     */
+    private Domain $domain;
+
+    /**
+     * @param \Doctrine\ORM\EntityManagerInterface $entityManager
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     */
+    public function __construct(
+        EntityManagerInterface $entityManager,
+        Domain $domain
+    ) {
+        parent::__construct($entityManager);
+
+        $this->domain = $domain;
+    }
+
+    /**
      * @param string|null $searchText
      * @param int $page
      * @param int $limit
@@ -30,7 +51,7 @@ class BrandRepository extends BaseBrandRepository
         $limit
     ): PaginationResult {
         $queryBuilder = $this->getBySearchTextQueryBuilder($searchText);
-        $queryBuilder->orderBy('b.name');
+        $queryBuilder->orderBy(OrderByCollationHelper::createOrderByForLocale('b.name', $this->domain->getLocale()));
 
         $queryPaginator = new QueryPaginator($queryBuilder);
 
@@ -44,7 +65,7 @@ class BrandRepository extends BaseBrandRepository
     public function getResultsForSearch(string $searchText): array
     {
         $queryBuilder = $this->getBySearchTextQueryBuilder($searchText);
-        $queryBuilder->orderBy('b.name');
+        $queryBuilder->orderBy(OrderByCollationHelper::createOrderByForLocale('b.name', $this->domain->getLocale()));
 
         return $queryBuilder->getQuery()->getResult();
     }
@@ -75,7 +96,7 @@ class BrandRepository extends BaseBrandRepository
             ->select('b')
             ->where('b.id IN (:brandIds)')
             ->setParameter('brandIds', $brandsIds)
-            ->orderBy('b.name', 'asc');
+            ->orderBy(OrderByCollationHelper::createOrderByForLocale('b.name', $this->domain->getLocale()), 'asc');
 
         return $brandsQueryBuilder->getQuery()->getResult();
     }
