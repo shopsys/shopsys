@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\Product\Parameter;
 
+use App\Component\Doctrine\OrderByCollationHelper;
 use App\Model\Product\Parameter\Exception\ParameterGroupNotFoundException;
 use App\Model\Product\Parameter\Exception\ParameterValueNotFoundException;
 use App\Model\Product\Product;
@@ -266,7 +267,7 @@ class ParameterRepository extends BaseParameterRepository
             ->setParameter(':locale', $locale)
             ->setParameter(':type', $type)
             ->groupBy('pv')
-            ->orderBy('pv.text');
+            ->orderBy(OrderByCollationHelper::createOrderByForLocale('pv.text', $locale));
     }
 
     /**
@@ -379,7 +380,7 @@ class ParameterRepository extends BaseParameterRepository
             ->where('p.id IN (:parameterIds)')
             ->setParameter('parameterIds', $parameterIds)
             ->setParameter('locale', $locale)
-            ->orderBy('pt.name', 'asc');
+            ->orderBy(OrderByCollationHelper::createOrderByForLocale('pt.name', $locale), 'asc');
 
         return $parametersQueryBuilder->getQuery()->getResult();
     }
