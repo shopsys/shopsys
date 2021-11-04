@@ -126,7 +126,7 @@ class SlugResolver implements ResolverInterface, AliasedInterface
 
     /**
      * @param string $slug
-     * @return \App\Model\Article\Article|\App\Model\Blog\Category\BlogCategory|\App\Model\Category\Category|\App\Model\Product\Brand\Brand|\App\Model\Product\Product|\App\Model\Store\Store|\App\Model\CategorySeo\ReadyCategorySeoMix|\App\Model\Product\Flag\Flag|array
+     * @return \App\Model\Blog\Category\BlogCategory|\App\Model\Category\Category|\App\Model\Product\Brand\Brand|\App\Model\Store\Store|\App\Model\CategorySeo\ReadyCategorySeoMix|\App\Model\Product\Flag\Flag|array
      */
     public function resolve(string $slug)
     {
@@ -142,8 +142,8 @@ class SlugResolver implements ResolverInterface, AliasedInterface
 
         switch ($entity) {
             case Article::class:
-                /** @var \App\Model\Article\Article $article */
                 $article = $this->articleResolver->resolver(null, $slugWithoutSlash);
+                $article[SlugResolverMap::SLUG_TYPE] = SlugResolverMap::SLUG_TYPE_ARTICLE;
 
                 return $article;
             case Brand::class:
@@ -152,7 +152,10 @@ class SlugResolver implements ResolverInterface, AliasedInterface
 
                 return $brand;
             case BlogArticle::class:
-                return $this->blogArticleResolver->resolveByUuidOrUrlSlug(null, $slugWithoutSlash);
+                $blogArticle = $this->blogArticleResolver->resolveByUuidOrUrlSlug(null, $slugWithoutSlash);
+                $blogArticle[SlugResolverMap::SLUG_TYPE] = SlugResolverMap::SLUG_TYPE_BLOG_ARTICLE;
+
+                return $blogArticle;
             case BlogCategory::class:
                 return $this->blogCategoryResolver->resolveByUuidOrUrlSlug(null, $slugWithoutSlash);
             case Category::class:
@@ -163,8 +166,8 @@ class SlugResolver implements ResolverInterface, AliasedInterface
             case Flag::class:
                 return $this->flagResolver->resolveByUuidOrUrlSlug(null, $slugWithoutSlash);
             case Product::class:
-                /** @var \App\Model\Product\Product $product */
                 $product = $this->productDetailResolver->resolver(null, $slugWithoutSlash);
+                $product[SlugResolverMap::SLUG_TYPE] = SlugResolverMap::SLUG_TYPE_PRODUCT;
 
                 return $product;
             case Store::class:

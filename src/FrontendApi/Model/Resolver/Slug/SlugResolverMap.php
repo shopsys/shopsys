@@ -11,10 +11,16 @@ use App\Model\CategorySeo\ReadyCategorySeoMix;
 use App\Model\Product\Brand\Brand;
 use App\Model\Product\Flag\Flag;
 use App\Model\Store\Store;
+use Overblog\GraphQLBundle\Error\UserError;
 use Overblog\GraphQLBundle\Resolver\ResolverMap;
 
 class SlugResolverMap extends ResolverMap
 {
+    public const SLUG_TYPE = 'slug_type';
+    public const SLUG_TYPE_ARTICLE = 'article';
+    public const SLUG_TYPE_BLOG_ARTICLE = 'blog_article';
+    public const SLUG_TYPE_PRODUCT = 'product';
+
     /**
      * @return array
      */
@@ -48,22 +54,46 @@ class SlugResolverMap extends ResolverMap
                     }
 
                     if (is_array($data)) {
-                        if (array_key_exists('perex', $data) && array_key_exists('categories', $data)) {
-                            return 'BlogArticle';
-                        }
+                        $typename = $this->resolveTypenameForEntitiesHydratedFromElasticsearch($data);
 
-                        if ($data['is_main_variant']) {
-                            return 'MainVariant';
+                        if ($typename !== null) {
+                            return $typename;
                         }
-
-                        if ($data['main_variant_id'] !== null) {
-                            return 'Variant';
-                        }
-
-                        return 'RegularProduct';
                     }
+
+                    throw new UserError('Requested content does not exist.');
                 },
             ],
         ];
+    }
+
+    /**
+     * @param array $data
+     * @return string|null
+     */
+    private function resolveTypenameForEntitiesHydratedFromElasticsearch(array $data): ?string
+    {
+        if (array_key_exists(self::SLUG_TYPE, $data)) {
+            switch ($data[self::SLUG_TYPE]) {
+                case self::SLUG_TYPE_ARTICLE:
+                    return 'Article';
+                case self::SLUG_TYPE_BLOG_ARTICLE:
+                    return 'BlogArticle';
+            }
+
+            if ($data[self::SLUG_TYPE] === self::SLUG_TYPE_PRODUCT) {
+                if ($data['is_main_variant']) {
+                    return 'MainVariant';
+                }
+
+                if ($data['main_variant_id'] !== null) {
+                    return 'Variant';
+                }
+
+                return 'RegularProduct';
+            }
+        }
+
+        return null;
     }
 }
