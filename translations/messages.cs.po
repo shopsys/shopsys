@@ -97,11 +97,23 @@ msgstr ""
 msgid "Administrator"
 msgstr ""
 
+msgid "Administrators - full"
+msgstr "Administrátoři - vše"
+
+msgid "Administrators - view"
+msgstr "Administrátoři - zobrazení"
+
 msgid "Adresa obchodu"
 msgstr ""
 
 msgid "Advanced search"
 msgstr ""
+
+msgid "Adverts - full"
+msgstr "Reklamní systém - vše"
+
+msgid "Adverts - view"
+msgstr "Reklamní systém - zobrazení"
 
 msgid "Akce"
 msgstr ""
@@ -117,6 +129,9 @@ msgstr ""
 
 msgid "Akční cena"
 msgstr ""
+
+msgid "All"
+msgstr "Vše"
 
 msgid "All domains"
 msgstr ""
@@ -174,6 +189,12 @@ msgstr "Článek"
 
 msgid "Articles"
 msgstr "Články"
+
+msgid "Articles - full"
+msgstr "Články - vše"
+
+msgid "Articles - view"
+msgstr "Články - zobrazení"
 
 msgid "Articles in footer"
 msgstr ""
@@ -247,6 +268,12 @@ msgstr ""
 msgid "Bestsellers"
 msgstr "Nejprodávanější zboží"
 
+msgid "Bestselling products - full"
+msgstr "Nejprodávanější zboží - vše"
+
+msgid "Bestselling products - view"
+msgstr "Nejprodávanější zboží - zobrazení"
+
 msgid "Billing address"
 msgstr "Fakturační adresa"
 
@@ -262,8 +289,20 @@ msgstr ""
 msgid "Blog article"
 msgstr "Článek blogu"
 
+msgid "Blog article - full"
+msgstr "Články blogu - vše"
+
+msgid "Blog article - view"
+msgstr "Články blogu - zobrazní"
+
 msgid "Blog category"
 msgstr "Kategorie blogu"
+
+msgid "Blog category - full"
+msgstr "Kategorie blogu - vše"
+
+msgid "Blog category - view"
+msgstr "Kategorie blogu - zobrazení"
 
 msgid "Bohužel zadaný e-mail <strong>%email%</strong> neexistuje."
 msgstr ""
@@ -276,6 +315,12 @@ msgstr "Přehled značek"
 
 msgid "Brands"
 msgstr "Značky"
+
+msgid "Brands - full"
+msgstr "Značky - vše"
+
+msgid "Brands - view"
+msgstr "Značky - zobrazení"
 
 msgid "Budete mít přehled ve svých objednávkách nebo reklamací"
 msgstr ""
@@ -321,6 +366,18 @@ msgstr "Katalogové číslo"
 
 msgid "Categories"
 msgstr "Kategorie"
+
+msgid "Categories - full"
+msgstr "Kategorie - vše"
+
+msgid "Categories - view"
+msgstr "Kategorie - zobrazení"
+
+msgid "Categories extended SEO - full"
+msgstr "Rozšířené SEO kategorií - vše"
+
+msgid "Categories extended SEO - view"
+msgstr "Rozšířené SEO kategorií - zobrazení"
 
 msgid "Category"
 msgstr ""
@@ -394,6 +451,12 @@ msgstr ""
 msgid "Color"
 msgstr ""
 
+msgid "Color parameter values - full"
+msgstr "Hodnota parametru typu barva - vše"
+
+msgid "Color parameter values - view"
+msgstr "Hodnota parametru typu barva - zobrazení"
+
 msgid "Common price"
 msgstr "Běžná cena"
 
@@ -417,6 +480,12 @@ msgstr "Připojení k bráně GoPay selhalo."
 
 msgid "Contact"
 msgstr "Kontakt"
+
+msgid "Contact form - full"
+msgstr "Kontaktní formulář - vše"
+
+msgid "Contact form - view"
+msgstr "Kontaktní formulář - zobrazení"
 
 msgid "Contact informations"
 msgstr "Kontaktní informace"
@@ -442,8 +511,20 @@ msgstr "Pokračovat v objednávce"
 msgid "Cookies"
 msgstr ""
 
+msgid "Cookies article setting - full"
+msgstr "Informace o cookies - vše"
+
+msgid "Cookies article setting - view"
+msgstr "Informace o cookies - zobrazení"
+
 msgid "Copyright"
 msgstr ""
+
+msgid "Countries - full"
+msgstr "Státy - vše"
+
+msgid "Countries - view"
+msgstr "Státy - zobrazení"
 
 msgid "Country"
 msgstr "Stát"
@@ -483,6 +564,12 @@ msgstr ""
 
 msgid "Customer with email address <strong>{{ email }}</strong> doesn't exist. <a href=\"{{ registrationLink }}\"> Register</a>"
 msgstr "Zákazník s e-mailovou adresou <strong>{{ email }}</strong> neexistuje. <a href=\"{{ registrationLink }}\">Zaregistrovat</a>"
+
+msgid "Customers - full"
+msgstr "Zákazníci - vše"
+
+msgid "Customers - view"
+msgstr "Zákazníci - zobrazení"
 
 msgid "Customers overview"
 msgstr "Přehled zákazníků"
@@ -694,6 +781,12 @@ msgstr ""
 msgid "E-shop URL address"
 msgstr ""
 
+msgid "E-shop identification - full"
+msgstr "Identifikace e-shopu - vše"
+
+msgid "E-shop identification - view"
+msgstr "Identifikace e-shopu - zobrazení"
+
 msgid "E-shop na míru od"
 msgstr ""
 
@@ -835,6 +928,9 @@ msgstr ""
 msgid "Fakturační údaje"
 msgstr ""
 
+msgid "Feeds - view"
+msgstr "XML Feedy - zobrazení"
+
 msgid "Filtrovat"
 msgstr ""
 
@@ -859,6 +955,12 @@ msgstr "Příznak <strong><a href=\"{{ url }}\">{{ name }}</a></strong> byl upra
 msgid "Flags"
 msgstr "Příznaky"
 
+msgid "Flags - full"
+msgstr "Příznaky - vše"
+
+msgid "Flags - view"
+msgstr "Příznaky - zobrazení"
+
 msgid "For registered customers only"
 msgstr "Pouze pro registrované zákazníky"
 
@@ -870,6 +972,12 @@ msgstr "Zapomenuté heslo"
 
 msgid "Frontend"
 msgstr ""
+
+msgid "Free transport and payment - full"
+msgstr "Doprava a platba zdarma - vše"
+
+msgid "Free transport and payment - view"
+msgstr "Doprava a platba zdarma - zobrazení"
 
 msgid "Full name"
 msgstr "Celé jméno"
@@ -912,6 +1020,12 @@ msgstr ""
 
 msgid "Heureka"
 msgstr ""
+
+msgid "Heureka setting - full"
+msgstr "Heureka - vše"
+
+msgid "Heureka setting - view"
+msgstr "Heureka - zobrazení"
 
 msgid "Hidden"
 msgstr ""
@@ -996,6 +1110,9 @@ msgstr "Pokud je vyplněn čas DO, vyplňte i datum DO."
 
 msgid "Image"
 msgstr "Obrázek"
+
+msgid "Image sizes - view"
+msgstr "Velikost obrázku - zobrazení"
 
 msgid "Image will be deleted after saving."
 msgstr ""
@@ -1105,6 +1222,12 @@ msgstr ""
 msgid "Legal conditions"
 msgstr "Právní podmínky"
 
+msgid "Legal conditions article setting - full"
+msgstr "Obchodní podmínky - vše"
+
+msgid "Legal conditions article setting - view"
+msgstr "Obchodní podmínky - zobrazení"
+
 msgid "Legal conditions settings modified."
 msgstr "Nastavení právních podmínek upraveno."
 
@@ -1137,6 +1260,18 @@ msgstr "Přihlášení"
 
 msgid "Magazín"
 msgstr ""
+
+msgid "Mail setting - full"
+msgstr "Nastavení e-mailů - vše"
+
+msgid "Mail setting - view"
+msgstr "Nastavení e-mailů - zobrazení"
+
+msgid "Mail templates - full"
+msgstr "Šablony e-mailů - vše"
+
+msgid "Mail templates - view"
+msgstr "Šablony e-mailů - zobrazení"
 
 msgid "Main image"
 msgstr ""
@@ -1267,6 +1402,12 @@ msgstr ""
 msgid "Navigation"
 msgstr "Navigace"
 
+msgid "Navigation - full"
+msgstr "Navigace - vše"
+
+msgid "Navigation - view"
+msgstr "Navigace - zobrazení"
+
 msgid "Načíst další"
 msgstr ""
 
@@ -1327,6 +1468,12 @@ msgstr "Nový script"
 msgid "New store"
 msgstr "Nová prodejna"
 
+msgid "Newsletter - full"
+msgstr "E-maily zpravodaje - vše"
+
+msgid "Newsletter - view"
+msgstr "E-maily zpravodaje - zobrazení"
+
 msgid "No"
 msgstr "Ne"
 
@@ -1374,6 +1521,12 @@ msgstr "Není z čeho vybírat"
 
 msgid "Nothing to choose from."
 msgstr "Není z čeho vybírat."
+
+msgid "Notification bar - full"
+msgstr "Notifikační lišta - vše"
+
+msgid "Notification bar - view"
+msgstr "Notifikační lišta - zobrazení"
 
 msgid "Notifikační lišta"
 msgstr ""
@@ -1513,6 +1666,12 @@ msgstr ""
 msgid "Operation failed"
 msgstr "Operace se nezdařila"
 
+msgid "Operator information - full"
+msgstr "Informace o provozovateli - vše"
+
+msgid "Operator information - view"
+msgstr "Informace o provozovateli - zobrazení"
+
 msgid "Opravdu chcete odstranit tento parametr? Smazáním parametru dojde k odstranění tohoto parametru u zboží a případné landing stránky rozšířeného SEO kategorií, kde je parametr přiřazen. Tento krok je nevratný!"
 msgstr ""
 
@@ -1573,8 +1732,26 @@ msgstr "Číslo objednávky"
 msgid "Order sent"
 msgstr "Objednávka byla odeslána"
 
+msgid "Order statuses - full"
+msgstr "Stavy objednávek - vše"
+
+msgid "Order statuses - view"
+msgstr "Stavy objednávek - zobrazení"
+
+msgid "Order submitted page setting - full"
+msgstr "Stránka s potvrzením objednávky - vše"
+
+msgid "Order submitted page setting - view"
+msgstr "Stránka s potvrzením objednávky - zobrazení"
+
 msgid "Orders"
 msgstr "Objednávky"
+
+msgid "Orders - full"
+msgstr "Objednávky - vše"
+
+msgid "Orders - view"
+msgstr "Objednávky - zobrazení"
 
 msgid "Orders value"
 msgstr ""
@@ -1630,6 +1807,12 @@ msgstr "Stránka, kterou hledáte buďto již neexistuje, nebo jste zadali špat
 msgid "Parameter"
 msgstr ""
 
+msgid "Parameters - full"
+msgstr "Parametry - vše"
+
+msgid "Parameters - view"
+msgstr "Parametry - zobrazení"
+
 msgid "Parametry"
 msgstr ""
 
@@ -1674,6 +1857,12 @@ msgstr ""
 
 msgid "Personal data"
 msgstr "Osobní údaje"
+
+msgid "Personal data access pages setting - full"
+msgstr "Nastavení zobrazení osobních údajů - vše"
+
+msgid "Personal data access pages setting - view"
+msgstr "Nastavení zobrazení osobních údajů - zobrazení"
 
 msgid "Personal data of registered customer"
 msgstr "Osobní údaje registrovaného zákazníka"
@@ -1810,6 +1999,12 @@ msgstr "Cenová skupina"
 msgid "Pricing groups"
 msgstr "Cenové skupiny"
 
+msgid "Pricing groups - full"
+msgstr "Cenové skupiny - vše"
+
+msgid "Pricing groups - view"
+msgstr "Cenové skupiny - zobrazení"
+
 msgid "Print"
 msgstr "Vytisknout"
 
@@ -1818,6 +2013,12 @@ msgstr "Zásady ochrany osobních údajů"
 
 msgid "Privacy Policy settings"
 msgstr "Nastavení zásad ochrany osobních údajů"
+
+msgid "Privacy policy article setting - full"
+msgstr "Nastavení zásad ochrany osobních údajů - vše"
+
+msgid "Privacy policy article setting - view"
+msgstr "Nastavení zásad ochrany osobních údajů - zobrazení"
 
 msgid "Pro tento výraz jsme bohužel nenašli žádné výsledky."
 msgstr ""
@@ -1882,6 +2083,12 @@ msgstr "Z košíku bylo odstraněno zboží {{ name }}"
 msgid "Products"
 msgstr ""
 
+msgid "Products - full"
+msgstr "Produkty - vše"
+
+msgid "Products - view"
+msgstr "Produkty - zobrazení"
+
 msgid "Products excluded from sale can't be displayed on lists and can't be searched. Product detail is available by direct access from the URL, but it is not possible to add product to cart."
 msgstr ""
 
@@ -1929,6 +2136,12 @@ msgstr "Slevový kupón není dostupný pro Vaši cenovou skupinu. Možná jste 
 
 msgid "Promo code removed from order"
 msgstr "Slevový kupón byl odebrán z objednávky."
+
+msgid "Promo codes - full"
+msgstr "Slevové kupóny - vše"
+
+msgid "Promo codes - view"
+msgstr "Slevové kupóny - zobrazení"
 
 msgid "Promo kód ještě není platný. Zkontrolujte ho, prosím."
 msgstr ""
@@ -2146,6 +2359,12 @@ msgstr ""
 msgid "Rubriky blogu"
 msgstr ""
 
+msgid "SEO - full"
+msgstr "SEO - vše"
+
+msgid "SEO - view"
+msgstr "SEO - zobrazení"
+
 msgid "SEO kombinace kategorie s ID {{ ReadyCategorySeoMixId }} byla smazána"
 msgstr ""
 
@@ -2166,6 +2385,12 @@ msgstr ""
 
 msgid "Sbírání bodů s každou objednávkou"
 msgstr ""
+
+msgid "Scripts - full"
+msgstr "Měřící skripty - vše"
+
+msgid "Scripts - view"
+msgstr "Měřící skripty - zobrazení"
 
 msgid "Scripts overview"
 msgstr "Přehled skriptů"
@@ -2296,6 +2521,12 @@ msgstr ""
 msgid "Slevový kupón není platný nebo byl už použit. Prosím, zkontrolujte ho."
 msgstr ""
 
+msgid "Slider items - full"
+msgstr "Bannery - vše"
+
+msgid "Slider items - view"
+msgstr "Bannery - zobrazení"
+
 msgid "Slovensko"
 msgstr ""
 
@@ -2353,6 +2584,12 @@ msgstr "Sklad <strong>{{ name }}</strong> byl nastaven jako výchozí."
 msgid "Stocks"
 msgstr ""
 
+msgid "Stocks - full"
+msgstr "Sklady - vše"
+
+msgid "Stocks - view"
+msgstr "Sklady - zobrazení"
+
 msgid "Store"
 msgstr "Prodejna"
 
@@ -2379,6 +2616,12 @@ msgstr "Seznam prodejen"
 
 msgid "Stores"
 msgstr "Prodejny"
+
+msgid "Stores - full"
+msgstr "Prodejny - vše"
+
+msgid "Stores - view"
+msgstr "Prodejny - zobrazení"
 
 msgid "Street"
 msgstr "Ulice"
@@ -2515,6 +2758,18 @@ msgstr ""
 msgid "To prevent the possibility of account theft, the change of the email address must be dealt with individually. If your email address has changed, please contact us."
 msgstr "Abychom předešli možnosti zcizení účtu, je třeba změnu e-mailu řešit individuálně. Pokud se Vám e-mailová adresa změnila, tak nás prosím kontaktujte."
 
+msgid "Top categories - full"
+msgstr "Promované kategorie - vše"
+
+msgid "Top categories - view"
+msgstr "Promované kategorie - zobrazení"
+
+msgid "Top products - full"
+msgstr "Promované produkty - vše"
+
+msgid "Top products - view"
+msgstr "Promované produkty - zobrazení"
+
 msgid "Top produkty"
 msgstr ""
 
@@ -2563,6 +2818,9 @@ msgstr "Proměnné pro instrukce pro sledování zásilky"
 msgid "Tracking number"
 msgstr "Číslo zásilky"
 
+msgid "Transfers - view"
+msgstr "Přehlad chyb v přenosech - zobrazení"
+
 msgid "Transport type"
 msgstr "Typ dopravy"
 
@@ -2571,6 +2829,18 @@ msgstr "Byl upraven typ dopravy <strong><a href=\"{{ url }}\">{{ code }}</a></st
 
 msgid "Transport types"
 msgstr "Typy doprav"
+
+msgid "Transport types - full"
+msgstr "Typy doprav - vše"
+
+msgid "Transport types - view"
+msgstr "Typy doprav - zobrazení"
+
+msgid "Transports and payments - full"
+msgstr "Dopravy a platby - vše"
+
+msgid "Transports and payments - view"
+msgstr "Dopravy a platby - zobrazení"
 
 msgid "Try using web search"
 msgstr "Zkuste použít vyhledávání na webu"
@@ -2659,11 +2929,23 @@ msgstr "Jednotková cena bez DPH"
 msgid "Unit price including VAT"
 msgstr "Jednotková cena s DPH"
 
+msgid "Units - full"
+msgstr "Měrné jednotky - vše"
+
+msgid "Units - view"
+msgstr "Měrné jednotky - zobrazení"
+
 msgid "Unsupported two factor authentication method"
 msgstr ""
 
 msgid "Unused friendly URL list"
 msgstr "Seznam nepoužívaných hezkých URL"
+
+msgid "Unused friendly URLs - full"
+msgstr "Seznam nepoužívaných hezkých URL - vše"
+
+msgid "Unused friendly URLs - view"
+msgstr "Seznam nepoužívaných hezkých URL - zobrazení"
 
 msgid "Upload attachment"
 msgstr ""
@@ -2712,6 +2994,12 @@ msgstr "Čas platnosti DO"
 
 msgid "Value"
 msgstr ""
+
+msgid "Vats - full"
+msgstr "DPH - vše"
+
+msgid "Vats - view"
+msgstr "DPH - zobrazení"
 
 msgid "Vaše heslo"
 msgstr ""
