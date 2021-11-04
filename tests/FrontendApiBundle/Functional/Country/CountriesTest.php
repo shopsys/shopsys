@@ -23,12 +23,12 @@ class CountriesTest extends GraphQlTestCase
             "data": {
                 "countries": [
                     {
-                        "name": "' . t('Slovakia', [], 'dataFixtures', $this->getFirstDomainLocale()) . '",
-                        "code": "SK"
-                    },
-                    {
                         "name": "' . t('Czech republic', [], 'dataFixtures', $this->getFirstDomainLocale()) . '",
                         "code": "CZ"
+                    },
+                    {
+                        "name": "' . t('Slovakia', [], 'dataFixtures', $this->getFirstDomainLocale()) . '",
+                        "code": "SK"
                     }
                 ]
             }

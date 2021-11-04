@@ -949,3 +949,6 @@ services:
 
     Shopsys\FrameworkBundle\Component\Domain\Multidomain\MultidomainEntityClassProviderInterface:
         alias: App\Model\MultidomainEntityClassProvider
+
+    Shopsys\FrameworkBundle\Model\Country\CountryRepository:
+        alias: App\Model\Country\CountryRepository
