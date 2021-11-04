@@ -45,7 +45,7 @@ class AdministratorFormTypeExtension extends AbstractTypeExtension
 
         $builderSettingsGroup->add('roles', ChoiceType::class, [
             'required' => false,
-            'choices' => array_flip(Roles::getAvailableAdministratorRoles()),
+            'choices' => Roles::getAvailableAdministratorRolesChoices(),
             'placeholder' => t('-- Vyber roli --'),
             'multiple' => true,
             'label' => t('Role'),
