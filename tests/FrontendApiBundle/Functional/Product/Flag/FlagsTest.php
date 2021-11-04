@@ -31,16 +31,16 @@ class FlagsTest extends GraphQlTestCase
                 "name": "' . t('Novinka', [], 'dataFixtures', $this->getFirstDomainLocale()) . '"
             },
             {
-                "name": "' . t('Vyrobeno v DE', [], 'dataFixtures', $this->getFirstDomainLocale()) . '"
-            },
-            {
-                "name": "' . t('Vyrobeno v SK', [], 'dataFixtures', $this->getFirstDomainLocale()) . '"
+                "name": "' . t('Výprodej', [], 'dataFixtures', $this->getFirstDomainLocale()) . '"
             },
             {
                 "name": "' . t('Vyrobeno v ČR', [], 'dataFixtures', $this->getFirstDomainLocale()) . '"
             },
             {
-                "name": "' . t('Výprodej', [], 'dataFixtures', $this->getFirstDomainLocale()) . '"
+                "name": "' . t('Vyrobeno v DE', [], 'dataFixtures', $this->getFirstDomainLocale()) . '"
+            },
+            {
+                "name": "' . t('Vyrobeno v SK', [], 'dataFixtures', $this->getFirstDomainLocale()) . '"
             }
         ]
     }

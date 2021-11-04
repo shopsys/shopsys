@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\Product\Filter;
 
+use App\Component\Doctrine\OrderByCollationHelper;
 use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Model\Category\Category;
@@ -112,7 +113,7 @@ class FlagFilterChoiceRepository extends BaseFlagFilterChoiceRepository
             ->from(Flag::class, 'f')
             ->join('f.translations', 'ft', Join::WITH, 'ft.locale = :locale')
             ->andWhere($flagsQueryBuilder->expr()->exists($clonedProductsQueryBuilder))
-            ->orderBy('ft.name', 'asc')
+            ->orderBy(OrderByCollationHelper::createOrderByForLocale('ft.name', $locale), 'asc')
             ->setParameter('locale', $locale);
 
         foreach ($clonedProductsQueryBuilder->getParameters() as $parameter) {
