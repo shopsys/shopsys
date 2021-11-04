@@ -7533,11 +7533,11 @@ Price for transport
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>personalPickupStoreUuid</strong></td>
-<td valign="top"><a href="#uuid">Uuid</a></td>
+<td colspan="2" valign="top"><strong>pickupPlaceIdentifier</strong></td>
+<td valign="top"><a href="#string">String</a></td>
 <td>
 
-The identifier of selected personal pickup store
+The identifier of selected personal pickup place
 
 </td>
 </tr>

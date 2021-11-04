@@ -4,9 +4,12 @@ declare(strict_types=1);
 
 namespace App\FrontendApi\Model\Order;
 
+use App\Model\Customer\DeliveryAddress;
+use App\Model\Customer\DeliveryAddressDataFactory;
 use App\Model\Order\PromoCode\PromoCode;
 use App\Model\Order\PromoCode\PromoCodeLimitResolver;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressFactory;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
@@ -32,6 +35,16 @@ class PlaceOrderFacade extends BasePlaceOrderFacade
     private PromoCodeLimitResolver $promoCodeLimitResolver;
 
     /**
+     * @var \App\Model\Customer\DeliveryAddressDataFactory
+     */
+    private DeliveryAddressDataFactory $deliveryAddressDataFactory;
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressFactory
+     */
+    private DeliveryAddressFactory $deliveryAddressFactory;
+
+    /**
      * @param \App\Model\Order\OrderFacade $orderFacade
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderProductFacade $orderProductFacade
      * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusRepository $orderStatusRepository
@@ -41,6 +54,8 @@ class PlaceOrderFacade extends BasePlaceOrderFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade $customerUserFacade
      * @param \App\Model\Order\PromoCode\PromoCodeLimitResolver $promoCodeLimitResolver
+     * @param \App\Model\Customer\DeliveryAddressDataFactory $deliveryAddressDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressFactory $deliveryAddressFactory
      */
     public function __construct(
         OrderFacade $orderFacade,
@@ -51,11 +66,15 @@ class PlaceOrderFacade extends BasePlaceOrderFacade
         Domain $domain,
         CurrentCustomerUser $currentCustomerUser,
         CustomerUserFacade $customerUserFacade,
-        PromoCodeLimitResolver $promoCodeLimitResolver
+        PromoCodeLimitResolver $promoCodeLimitResolver,
+        DeliveryAddressDataFactory $deliveryAddressDataFactory,
+        DeliveryAddressFactory $deliveryAddressFactory
     ) {
         parent::__construct($orderFacade, $orderProductFacade, $orderStatusRepository, $orderPreviewFactory, $currencyFacade, $domain, $currentCustomerUser, $customerUserFacade);
 
         $this->promoCodeLimitResolver = $promoCodeLimitResolver;
+        $this->deliveryAddressDataFactory = $deliveryAddressDataFactory;
+        $this->deliveryAddressFactory = $deliveryAddressFactory;
     }
 
     /**
@@ -88,7 +107,8 @@ class PlaceOrderFacade extends BasePlaceOrderFacade
         $this->orderProductFacade->subtractOrderProductsFromStock($order->getProductItems());
 
         if ($customerUser instanceof CustomerUser) {
-            $this->customerUserFacade->amendCustomerUserDataFromOrder($customerUser, $order, null);
+            $deliveryAddress = $this->createDeliveryAddressForAmendingCustomerUserData($order);
+            $this->customerUserFacade->amendCustomerUserDataFromOrder($customerUser, $order, $deliveryAddress);
         }
 
         return $order;
@@ -110,5 +130,36 @@ class PlaceOrderFacade extends BasePlaceOrderFacade
         );
 
         return $limit !== null ? $limit->getDiscount() : null;
+    }
+
+    /**
+     * @param \App\Model\Order\Order $order
+     * @return \App\Model\Customer\DeliveryAddress|null
+     */
+    private function createDeliveryAddressForAmendingCustomerUserData(Order $order): ?DeliveryAddress
+    {
+        if (
+            $order->transport->isPersonalPickup() ||
+            $order->transport->isPacketery() ||
+            $order->isDeliveryAddressSameAsBillingAddress()
+        ) {
+            return null;
+        }
+
+        $deliveryAddressData = $this->deliveryAddressDataFactory->create();
+        $deliveryAddressData->firstName = $order->getDeliveryFirstName();
+        $deliveryAddressData->lastName = $order->getDeliveryLastName();
+        $deliveryAddressData->companyName = $order->getDeliveryCompanyName();
+        $deliveryAddressData->street = $order->getDeliveryStreet();
+        $deliveryAddressData->city = $order->getDeliveryCity();
+        $deliveryAddressData->postcode = $order->getDeliveryPostcode();
+        $deliveryAddressData->country = $order->getDeliveryCountry();
+        $deliveryAddressData->postcode = $order->getDeliveryPostcode();
+        $deliveryAddressData->customer = $order->getCustomerUser()->getCustomer();
+
+        /** @var \App\Model\Customer\DeliveryAddress $deliveryAddress */
+        $deliveryAddress = $this->deliveryAddressFactory->create($deliveryAddressData);
+
+        return $deliveryAddress;
     }
 }

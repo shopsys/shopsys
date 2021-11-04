@@ -21,7 +21,7 @@ class TransportInputData
     /**
      * @var string|null
      */
-    private ?string $personalPickupStoreUuid;
+    private ?string $pickupPlaceIdentifier;
 
     /**
      * @param array $transportInput
@@ -33,7 +33,7 @@ class TransportInputData
             $transportInput['price']['priceWithoutVat'],
             $transportInput['price']['priceWithVat']
         );
-        $this->personalPickupStoreUuid = $transportInput['personalPickupStoreUuid'];
+        $this->pickupPlaceIdentifier = $transportInput['pickupPlaceIdentifier'];
     }
 
     /**
@@ -55,8 +55,8 @@ class TransportInputData
     /**
      * @return string|null
      */
-    public function getPersonalPickupStoreUuid(): ?string
+    public function getPickupPlaceIdentifier(): ?string
     {
-        return $this->personalPickupStoreUuid;
+        return $this->pickupPlaceIdentifier;
     }
 }

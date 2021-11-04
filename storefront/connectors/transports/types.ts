@@ -13,7 +13,7 @@ export type PriceType = {
     currencyCode: string;
 };
 
-export type TransportInputType = { uuid: string; price: PriceApiType; personalPickupStoreUuid: string | null };
+export type TransportInputType = { uuid: string; price: PriceApiType; pickupPlaceIdentifier: string | null };
 
 export type StoreType = {
     uuid: string;

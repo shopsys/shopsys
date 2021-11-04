@@ -53,11 +53,17 @@ class OrderData extends BaseOrderData
      */
     public ?string $trackingNumber;
 
+    /**
+     * @var string|null
+     */
+    public ?string $pickupPlaceIdentifier;
+
     public function __construct()
     {
         parent::__construct();
 
         $this->isCompanyCustomer = false;
         $this->trackingNumber = null;
+        $this->pickupPlaceIdentifier = null;
     }
 }

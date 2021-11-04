@@ -11,7 +11,7 @@ import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslatio
 
 export const useHandleCartUpdate = (
     result: UseQueryState<{ cart: CartApiType }, CartInput>,
-    personalPickupStoreUuid: string | null,
+    pickupPlaceIdentifier: string | null,
     promoCode: string | null,
 ): void => {
     const { currencyCode } = useShopsysSelector((state) => state.domain);
@@ -28,7 +28,7 @@ export const useHandleCartUpdate = (
         // TODO handle modifications
         const cartResultValues = getValuesFromCartResult(
             result.data.cart,
-            personalPickupStoreUuid,
+            pickupPlaceIdentifier,
             promoCode,
             currencyCode,
         );

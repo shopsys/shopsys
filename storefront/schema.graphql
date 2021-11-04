@@ -2173,8 +2173,8 @@ input TransportInput {
   """Price for transport"""
   price: PriceInput!
 
-  """The identifier of selected personal pickup store"""
-  personalPickupStoreUuid: Uuid = null
+  """The identifier of selected personal pickup place"""
+  pickupPlaceIdentifier: String = null
 }
 
 """Represents a transport type"""

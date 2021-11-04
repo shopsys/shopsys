@@ -19,7 +19,7 @@ const ProductAction: FC<SliderProductItemType> = (props) => {
 
     useHandleAddToCart(
         changeCartItemQuantityResult,
-        transport?.personalPickupStoreUuid === undefined ? null : transport.personalPickupStoreUuid,
+        transport?.pickupPlaceIdentifier === undefined ? null : transport.pickupPlaceIdentifier,
         promoCode,
     );
 

@@ -4,7 +4,7 @@ TransportInput:
         - 'TransportInputDecorator'
     config:
         fields:
-            personalPickupStoreUuid:
-                type: "Uuid"
+            pickupPlaceIdentifier:
+                type: "String"
                 defaultValue: null
-                description: "The identifier of selected personal pickup store"
+                description: "The identifier of selected personal pickup place"

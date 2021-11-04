@@ -48,10 +48,7 @@ class PacketAttributes
         $this->surname = $order->getLastName();
         $this->email = $order->getEmail();
         $this->value = (float)$order->getTotalPriceWithVat()->getAmount();
-        /**
-         * TODO: Load packetery addressId from order, after implement Pick-up point selection.
-         */
-        $this->addressId = 79;
+        $this->addressId = (int)$order->getPickupPlaceIdentifier();
     }
 
     /**

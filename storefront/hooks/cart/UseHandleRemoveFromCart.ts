@@ -18,7 +18,7 @@ export const useHandleRemoveFromCart = (
             cartItemUuid: string;
         } & CartInput
     >,
-    personalPickupStoreUuid: string | null,
+    pickupPlaceIdentifier: string | null,
     promoCode: string | null,
 ): void => {
     const { currencyCode } = useShopsysSelector((state) => state.domain);
@@ -35,7 +35,7 @@ export const useHandleRemoveFromCart = (
         // TODO handle modifications
         const cartResultValues = getValuesFromCartResult(
             result.data.RemoveFromCart,
-            personalPickupStoreUuid,
+            pickupPlaceIdentifier,
             promoCode,
             currencyCode,
         );
