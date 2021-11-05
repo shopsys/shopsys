@@ -131,7 +131,10 @@ export const SearchButtonStyled = styled.div`
     position: absolute;
     top: 14px;
     right: 15px;
-    width: ${localVariables.inputSearchIconSize};
-    height: ${localVariables.inputSearchIconSize};
     cursor: pointer;
+
+    & i {
+        width: ${localVariables.inputSearchIconSize};
+        height: ${localVariables.inputSearchIconSize};
+    }
 `;
