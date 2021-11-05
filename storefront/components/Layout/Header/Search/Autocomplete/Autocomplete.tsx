@@ -12,13 +12,17 @@ import {
     SearchResultGroupStyled,
     SearchResultGroupTitleStyled,
     SearchResultLinkStyled,
+    ShowAllResultsButtonWrapper,
 } from './Autocomplete.style';
+import Button from 'components/Forms/Button';
 import { FC } from 'react';
 import { formatPrice } from 'utils/formatting';
 import Icon from 'components/Basic/Icon';
 import Image from 'components/Basic/Image';
 import NextLink from 'next/link';
 import { SearchType } from 'connectors/search/types';
+import { useGetInternationalizedStaticUrls } from 'hooks/staticUrls/UseGetInternationalizedStaticUrls';
+import { useRouter } from 'next/router';
 import { useShopsysSelector } from 'redux/main';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 
@@ -30,11 +34,14 @@ const AUTOCOMPLETE_ARTICLE_LIMIT = 3 as const;
 type AutocompleteProps = {
     searchResults: SearchType | undefined;
     isAutocompleteActive: boolean;
+    searchQueryValue: string;
 };
 
 const Autocomplete: FC<AutocompleteProps> = (props) => {
+    const router = useRouter();
     const t = useTypedTranslationFunction();
     const domainConfig = useShopsysSelector((state) => state.domain);
+    const [searchUrl] = useGetInternationalizedStaticUrls(['/search'], domainConfig.url);
 
     return (
         <AutocompleteStyled isActive={props.isAutocompleteActive}>
@@ -153,6 +160,17 @@ const Autocomplete: FC<AutocompleteProps> = (props) => {
                                     </SearchResultGroupStyled>
                                 </>
                             )}
+                            <ShowAllResultsButtonWrapper>
+                                <Button
+                                    type="button"
+                                    size="small"
+                                    onClick={() =>
+                                        router.push({ pathname: searchUrl, query: { q: props.searchQueryValue } })
+                                    }
+                                >
+                                    {t('View all results')}
+                                </Button>
+                            </ShowAllResultsButtonWrapper>
                         </>
                     );
                 })()}

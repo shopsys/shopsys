@@ -89,6 +89,7 @@ const Search: FC = () => {
                         isAutocompleteActive={
                             hasSearchFocus && searchQueryValue.length > 2 && searchResults !== undefined
                         }
+                        searchQueryValue={searchQueryValue}
                     />
                 </SearchInStyled>
             </SearchStyled>

@@ -175,3 +175,8 @@ export const NoResultsMessageStyled = styled.span`
 
     font-size: 14px;
 `;
+
+export const ShowAllResultsButtonWrapper = styled.div`
+    display: flex;
+    justify-content: center;
+`;
