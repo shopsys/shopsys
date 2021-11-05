@@ -92,6 +92,7 @@ parameters:
             - '*/src/Model/Product/ProductSellingDeniedRecalculator.php'
             - '*/tests/FrontendApiBundle/Functional/*'
             - '*/src/Model/Security/Roles.php'
+            - '*/src/Model/Security/MenuItemsGrantedRolesSetting.php'
 
         ObjectCalisthenics\Sniffs\Files\ClassTraitAndInterfaceLengthSniff:
             - '*/tests/App/Functional/Model/Product/ProductVisibilityRepositoryTest.php'
