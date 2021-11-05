@@ -7,6 +7,7 @@ import {
     SearchStyled,
     SearchTextInputStyled,
 } from './Search.style';
+import Autocomplete from './Autocomplete';
 import { getSearch } from 'connectors/search/Search';
 import Icon from 'components/Basic/Icon';
 import { SearchType } from 'connectors/search/types';
@@ -83,6 +84,12 @@ const Search: FC = () => {
                             </RemoveSearchButtonStyled>
                         )}
                     </SearchFormStyled>
+                    <Autocomplete
+                        searchResults={searchResults}
+                        isAutocompleteActive={
+                            hasSearchFocus && searchQueryValue.length > 2 && searchResults !== undefined
+                        }
+                    />
                 </SearchInStyled>
             </SearchStyled>
         </>

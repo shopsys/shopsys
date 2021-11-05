@@ -159,5 +159,9 @@
     "Could not load your cart": "Could not load your cart",
     "Could not add the product to cart": "Could not add the product to cart",
     "Could not remove the product from cart": "Could not remove the product from cart",
-    "Go to cart": "Go to cart"
+    "Go to cart": "Go to cart",
+    "Could not find any results for the given query.": "Pro tento výraz jsme bohužel nenašli žádné výsledky.",
+    "Brands": "Brands",
+    "Categories": "Categories",
+    "Articles": "Articles"
 }

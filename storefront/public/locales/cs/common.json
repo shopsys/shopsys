@@ -159,5 +159,9 @@
     "Could not load your cart": "Nepodařilo se načíst váš košík",
     "Could not add the product to cart": "Nepodařilo se přidat produkt do košíku",
     "Could not remove the product from cart": "Nepodařilo se odebrat produkt z košíku",
-    "Go to cart": "Přejít do košíku"
+    "Go to cart": "Přejít do košíku",
+    "Could not find any results for the given query.": "Pro tento výraz jsme bohužel nenašli žádné výsledky.",
+    "Brands": "Značky",
+    "Categories": "Kategorie",
+    "Articles": "Články"
 }
