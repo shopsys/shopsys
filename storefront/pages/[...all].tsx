@@ -73,12 +73,14 @@ export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) =>
     initDomainConfig(context, store);
 
     return initServerSideProps(context, store, [
-        NavigationQueryDocumentApi,
-        friendlyUrlQuery(
-            getUrlWithoutGetParameters(context.resolvedUrl),
-            categoryDetailSort,
-            updatedPagination.paginationCursor,
-        ),
+        { query: NavigationQueryDocumentApi },
+        {
+            query: friendlyUrlQuery(
+                getUrlWithoutGetParameters(context.resolvedUrl),
+                categoryDetailSort,
+                updatedPagination.paginationCursor,
+            ),
+        },
     ]);
 });
 

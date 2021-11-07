@@ -17,7 +17,7 @@ export type ServerSidePropsType = {
 export async function initServerSideProps(
     context: GetServerSidePropsContext,
     store: AppStore,
-    prefetchedQueries: (string | DocumentNode)[] = [],
+    prefetchedQueries: { query: string | DocumentNode; variables?: { [key: string]: string } }[] = [],
 ): Promise<GetServerSidePropsResult<ServerSidePropsType>> {
     store.dispatch(cartInputActions.setCartInputData(getCartInputCookie(context)));
     const domainConfig = store.getState().domain;
@@ -48,7 +48,9 @@ export async function initServerSideProps(
             nextI18NextConfig,
         );
 
-        const resolvedQueries = await Promise.all(prefetchedQueries.map((query) => client.query(query).toPromise()));
+        const resolvedQueries = await Promise.all(
+            prefetchedQueries.map((queryObject) => client.query(queryObject.query, queryObject.variables).toPromise()),
+        );
         const slugResult = resolvedQueries.find((query) => query.data?.slug?.slug !== undefined);
         const parsedSlug = slugResult?.data.slug.slug;
         const trimmedUrl = context.resolvedUrl.split('?')[0];
