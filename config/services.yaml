@@ -946,3 +946,6 @@ services:
 
     App\Model\Blog\Article\Elasticsearch\BlogArticleExportQueueFacade:
         arguments: ['@snc_redis.blog_article_export_queue']
+
+    Shopsys\FrameworkBundle\Component\Domain\Multidomain\MultidomainEntityClassProviderInterface:
+        alias: App\Model\MultidomainEntityClassProvider
