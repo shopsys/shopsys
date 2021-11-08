@@ -9,6 +9,7 @@ use App\Model\Stock\StockDataFactory;
 use App\Model\Stock\StockFacade;
 use Doctrine\Persistence\ObjectManager;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 
 class StocksDataFixture extends AbstractReferenceFixture
 {
@@ -32,13 +33,23 @@ class StocksDataFixture extends AbstractReferenceFixture
     private StockDataFactory $stockDataFactory;
 
     /**
+     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
+     */
+    private Domain $domain;
+
+    /**
      * @param \App\Model\Stock\StockFacade $stockFacade
      * @param \App\Model\Stock\StockDataFactory $stockDataFactory
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
-    public function __construct(StockFacade $stockFacade, StockDataFactory $stockDataFactory)
-    {
+    public function __construct(
+        StockFacade $stockFacade,
+        StockDataFactory $stockDataFactory,
+        Domain $domain
+    ) {
         $this->stockFacade = $stockFacade;
         $this->stockDataFactory = $stockDataFactory;
+        $this->domain = $domain;
     }
 
     /**
@@ -63,7 +74,10 @@ class StocksDataFixture extends AbstractReferenceFixture
         $stockData->name = $demoRow[self::ATTR_NAME];
         $stockData->externalId = $demoRow[self::ATTR_EXTERNAL];
         $stockData->isDefault = $demoRow[self::ATTR_IS_DEFAULT];
-        $stockData->isEnabledByDomain = $demoRow[self::ATTR_ENABLED_BY_DOMAIN];
+        foreach ($this->domain->getAllIncludingDomainConfigsWithoutDataCreated() as $domainConfig) {
+            $domainId = $domainConfig->getId();
+            $stockData->isEnabledByDomain[$domainId] = $demoRow[self::ATTR_ENABLED_BY_DOMAIN][$domainId] ?? false;
+        }
         $stockData->note = $demoRow[self::ATTR_NOTE];
 
         return $stockData;
