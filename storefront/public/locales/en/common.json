@@ -136,7 +136,7 @@
     "Customized E-shop by": "Customized E-shop by",
     "Shopsys magazine": "Shopsys magazine",
     "View all": "View all",
-    "FreeTransportAmountLeft": "Add products for <1>{{ amountLeftvalue }}</1> more, and enjoy <3>free delivery!</3>",
+    "FreeTransportAmountLeft": "Add products for <1>{{ amountFormatted }}</1> more, and enjoy <3>free delivery!</3>",
     "Your delivery and payment is now free of charge!": "Your delivery and payment is now free of charge!",
     "Finish registration to loyalty program.": "Finish registration <br/>to <strong>loyalty <br/>program</strong>.",
     "You will have an overview of your orders and complaints": "You will have an overview of your orders and complaints",
