@@ -1,5 +1,5 @@
 import { contactInformationActions, ContactInformationFormType } from 'redux/slices/contactInformation';
-import { FormProvider, SubmitHandler } from 'react-hook-form';
+import { FormProvider, SubmitHandler, useWatch } from 'react-hook-form';
 import { initCartInputCookie, updateCartInputCookie } from 'helpers/Cookies';
 import { initServerSideProps, ServerSidePropsType } from 'helpers/InitServerSideProps';
 import { nextReduxWrapper, useShopsysDispatch, useShopsysSelector } from 'redux/main';
@@ -44,6 +44,14 @@ const ContactInformation: FC<ServerSidePropsType> = () => {
     );
     useHandleFormErrors(createOrderResult.error, formProviderMethods, t('Could not create order'));
     useHandleContactInformationNonTextChanges(formProviderMethods.control, contactInformationValues);
+    const emailValue = useWatch({ control: formProviderMethods.control, name: 'email' });
+    const isEmailValid = emailValue.length >= 5 && formProviderMethods.formState.errors.email === undefined;
+    const differentDeliveryAddressValue = useWatch({
+        control: formProviderMethods.control,
+        name: 'differentDeliveryAddress',
+    });
+    const customerValue = useWatch({ control: formProviderMethods.control, name: 'customer' });
+    const registerValue = useWatch({ control: formProviderMethods.control, name: 'register' });
 
     const onSuccessfullyCreatedOrderHandler = () => {
         const resetCartInput = initCartInputCookie();
@@ -96,55 +104,148 @@ const ContactInformation: FC<ServerSidePropsType> = () => {
             <ErrorPopup
                 isVisible={isErrorPopupVisible}
                 onCloseCallback={() => setErrorPopupVisibility(false)}
-                errors={[
-                    { label: t('Your e-mail'), message: formProviderMethods.formState.errors.email?.message },
-                    {
-                        label: t('I want to register with an order'),
-                        message: formProviderMethods.formState.errors.register?.message,
-                    },
-                    { label: t('Password'), message: formProviderMethods.formState.errors.passwordFirst?.message },
-                    {
-                        label: t('Password again'),
-                        message: formProviderMethods.formState.errors.passwordSecond?.message,
-                    },
-                    {
-                        label: t('You will shop with us like'),
-                        message: formProviderMethods.formState.errors.customer?.message,
-                    },
-                    { label: t('Telephone'), message: formProviderMethods.formState.errors.telephone?.message },
-                    { label: t('First name'), message: formProviderMethods.formState.errors.firstName?.message },
-                    { label: t('Last name'), message: formProviderMethods.formState.errors.lastName?.message },
-                    { label: t('Company name'), message: formProviderMethods.formState.errors.companyName?.message },
-                    {
-                        label: t('Company number'),
-                        message: formProviderMethods.formState.errors.companyNumber?.message,
-                    },
-                    { label: t('Tax number'), message: formProviderMethods.formState.errors.companyTaxNumber?.message },
-                    { label: t('Street'), message: formProviderMethods.formState.errors.street?.message },
-                    { label: t('City'), message: formProviderMethods.formState.errors.city?.message },
-                    { label: t('Postcode'), message: formProviderMethods.formState.errors.postcode?.message },
-                    {
-                        label: t('Enter the delivery address'),
-                        message: formProviderMethods.formState.errors.differentDeliveryAddress?.message,
-                    },
-                    {
-                        label: t('First name'),
-                        message: formProviderMethods.formState.errors.deliveryFirstName?.message,
-                    },
-                    { label: t('Last name'), message: formProviderMethods.formState.errors.deliveryLastName?.message },
-                    { label: t('Company'), message: formProviderMethods.formState.errors.deliveryCompanyName?.message },
-                    { label: t('Telephone'), message: formProviderMethods.formState.errors.deliveryTelephone?.message },
-                    {
-                        label: t('Street and house number'),
-                        message: formProviderMethods.formState.errors.deliveryStreet?.message,
-                    },
-                    { label: t('City'), message: formProviderMethods.formState.errors.deliveryCity?.message },
-                    { label: t('Postcode'), message: formProviderMethods.formState.errors.deliveryPostcode?.message },
-                    {
-                        label: t('I want to subscribe to the newsletter'),
-                        message: formProviderMethods.formState.errors.newsletterSubscription?.message,
-                    },
-                ]}
+                errors={(() => {
+                    const errors = formProviderMethods.formState.errors;
+                    const visibilitySettings = {
+                        isFormVisible: isEmailValid,
+                        isRegistrationVisible: registerValue,
+                        isDeliveryAddressVisible: differentDeliveryAddressValue,
+                        isCompanyVisible: customerValue === 'companyCustomer',
+                    };
+
+                    return [
+                        {
+                            label: t('Your e-mail'),
+                            message: getErrorMessageByVisibility(errors.email?.message, visibilitySettings, {
+                                isEmail: true,
+                            }),
+                        },
+                        {
+                            label: t('I want to register with an order'),
+                            message: getErrorMessageByVisibility(errors.register?.message, visibilitySettings),
+                        },
+                        {
+                            label: t('Password'),
+                            message: getErrorMessageByVisibility(errors.passwordFirst?.message, visibilitySettings, {
+                                isRegistration: true,
+                            }),
+                        },
+                        {
+                            label: t('Password again'),
+                            message: getErrorMessageByVisibility(errors.passwordSecond?.message, visibilitySettings, {
+                                isRegistration: true,
+                            }),
+                        },
+                        {
+                            label: t('You will shop with us like'),
+                            message: getErrorMessageByVisibility(errors.customer?.message, visibilitySettings),
+                        },
+                        {
+                            label: t('Telephone'),
+                            message: getErrorMessageByVisibility(errors.telephone?.message, visibilitySettings),
+                        },
+                        {
+                            label: t('First name'),
+                            message: getErrorMessageByVisibility(errors.firstName?.message, visibilitySettings),
+                        },
+                        {
+                            label: t('Last name'),
+                            message: getErrorMessageByVisibility(errors.lastName?.message, visibilitySettings),
+                        },
+                        {
+                            label: t('Company name'),
+                            message: getErrorMessageByVisibility(errors.companyName?.message, visibilitySettings, {
+                                isCompany: true,
+                            }),
+                        },
+                        {
+                            label: t('Company number'),
+                            message: getErrorMessageByVisibility(errors.companyNumber?.message, visibilitySettings, {
+                                isCompany: true,
+                            }),
+                        },
+                        {
+                            label: t('Tax number'),
+                            message: getErrorMessageByVisibility(errors.companyTaxNumber?.message, visibilitySettings, {
+                                isCompany: true,
+                            }),
+                        },
+                        {
+                            label: t('Street'),
+                            message: getErrorMessageByVisibility(errors.street?.message, visibilitySettings),
+                        },
+                        {
+                            label: t('City'),
+                            message: getErrorMessageByVisibility(errors.city?.message, visibilitySettings),
+                        },
+                        {
+                            label: t('Postcode'),
+                            message: getErrorMessageByVisibility(errors.postcode?.message, visibilitySettings),
+                        },
+                        {
+                            label: t('Enter the delivery address'),
+                            message: getErrorMessageByVisibility(
+                                errors.differentDeliveryAddress?.message,
+                                visibilitySettings,
+                            ),
+                        },
+                        {
+                            label: t('First name'),
+                            message: getErrorMessageByVisibility(
+                                errors.deliveryFirstName?.message,
+                                visibilitySettings,
+                                { isDeliveryAddress: true },
+                            ),
+                        },
+                        {
+                            label: t('Last name'),
+                            message: getErrorMessageByVisibility(errors.deliveryLastName?.message, visibilitySettings, {
+                                isDeliveryAddress: true,
+                            }),
+                        },
+                        {
+                            label: t('Company'),
+                            message: getErrorMessageByVisibility(
+                                errors.deliveryCompanyName?.message,
+                                visibilitySettings,
+                                { isDeliveryAddress: true },
+                            ),
+                        },
+                        {
+                            label: t('Telephone'),
+                            message: getErrorMessageByVisibility(
+                                errors.deliveryTelephone?.message,
+                                visibilitySettings,
+                                { isDeliveryAddress: true },
+                            ),
+                        },
+                        {
+                            label: t('Street and house number'),
+                            message: getErrorMessageByVisibility(errors.deliveryStreet?.message, visibilitySettings, {
+                                isDeliveryAddress: true,
+                            }),
+                        },
+                        {
+                            label: t('City'),
+                            message: getErrorMessageByVisibility(errors.deliveryCity?.message, visibilitySettings, {
+                                isDeliveryAddress: true,
+                            }),
+                        },
+                        {
+                            label: t('Postcode'),
+                            message: getErrorMessageByVisibility(errors.deliveryPostcode?.message, visibilitySettings, {
+                                isDeliveryAddress: true,
+                            }),
+                        },
+                        {
+                            label: t('I want to subscribe to the newsletter'),
+                            message: getErrorMessageByVisibility(
+                                errors.newsletterSubscription?.message,
+                                visibilitySettings,
+                            ),
+                        },
+                    ];
+                })()}
             />
         </StaticUrlGuard>
     );
@@ -155,5 +256,42 @@ export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) =>
     const redirect = handleOrderPagesRedirect(context);
     return redirect === false ? initServerSideProps(context, store, [NavigationQueryDocumentApi]) : redirect;
 });
+
+const getErrorMessageByVisibility = (
+    message: string | undefined,
+    visibility: {
+        isFormVisible: boolean;
+        isRegistrationVisible: boolean;
+        isDeliveryAddressVisible: boolean;
+        isCompanyVisible: boolean;
+    },
+    fieldInfo?: { isEmail?: boolean; isRegistration?: boolean; isDeliveryAddress?: boolean; isCompany?: boolean },
+) => {
+    if (fieldInfo?.isEmail === true) {
+        return message;
+    }
+    if (fieldInfo?.isRegistration === true) {
+        if (visibility.isRegistrationVisible) {
+            return message;
+        }
+        return undefined;
+    }
+    if (fieldInfo?.isDeliveryAddress === true) {
+        if (visibility.isDeliveryAddressVisible) {
+            return message;
+        }
+        return undefined;
+    }
+    if (fieldInfo?.isCompany === true) {
+        if (visibility.isCompanyVisible) {
+            return message;
+        }
+        return undefined;
+    }
+    if (visibility.isFormVisible) {
+        return message;
+    }
+    return undefined;
+};
 
 export default ContactInformation;
