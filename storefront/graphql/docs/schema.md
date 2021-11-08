@@ -1010,6 +1010,20 @@ Request access to personal data
 <td valign="top"><a href="#personaldataaccessrequestinput">PersonalDataAccessRequestInput</a>!</td>
 <td></td>
 </tr>
+<tr>
+<td colspan="2" valign="top"><strong>DeleteDeliveryAddress</strong></td>
+<td valign="top">[<a href="#deliveryaddress">DeliveryAddress</a>!]!</td>
+<td>
+
+Delete delivery address by Uuid
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">deliveryAddressUuid</td>
+<td valign="top"><a href="#uuid">Uuid</a>!</td>
+<td></td>
+</tr>
 </tbody>
 </table>
 

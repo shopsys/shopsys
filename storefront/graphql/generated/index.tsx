@@ -820,6 +820,8 @@ export type MutationApi = {
   ChangePersonalData: CustomerUserApi;
   /** Creates complete order with products and addresses */
   CreateOrder: OrderApi;
+  /** Delete delivery address by Uuid */
+  DeleteDeliveryAddress: Array<DeliveryAddressApi>;
   /** Login user and return access and refresh tokens */
   Login: TokenApi;
   /** Logout user */
@@ -858,6 +860,11 @@ export type MutationChangePersonalDataArgsApi = {
 
 export type MutationCreateOrderArgsApi = {
   input: OrderInputApi;
+};
+
+
+export type MutationDeleteDeliveryAddressArgsApi = {
+  deliveryAddressUuid: Scalars['Uuid'];
 };
 
 
