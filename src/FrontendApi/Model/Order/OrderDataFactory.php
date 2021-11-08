@@ -66,10 +66,8 @@ class OrderDataFactory extends BaseOrderDataFactory
     {
         /** @var \App\Model\Order\OrderData $orderData */
         $orderData = parent::createOrderDataFromArgument($argument);
+        $orderData->isCompanyCustomer = $argument['input']['onCompanyBehalf'];
 
-        if ($orderData->companyName !== null && $orderData->companyNumber !== null) {
-            $orderData->isCompanyCustomer = true;
-        }
         $input = $argument['input'];
 
         if (isset($input['transport']['pickupPlaceIdentifier'])) {
