@@ -12,7 +12,7 @@ import { TFunction } from 'react-i18next';
 import { useGetInternationalizedStaticUrls } from 'hooks/staticUrls/UseGetInternationalizedStaticUrls';
 import { useHandleFormErrors } from 'hooks/forms/UseHandleFormErrors';
 import { useHandleFormSuccessfulSubmit } from 'hooks/forms/UseHandleFormSuccessfulSubmit';
-import { usePasswordReset } from 'connectors/password/Password';
+import { usePasswordRecoveryMutationApi } from 'graphql/generated';
 import { useShopsysForm } from 'hooks/forms/UseShopsysForm';
 import { useShopsysSelector } from 'redux/main';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
@@ -28,7 +28,7 @@ const getResetPasswordFormResolver = (t: TFunction) => {
 
 const ResetPassword: FC = () => {
     const t = useTypedTranslationFunction();
-    const [resetPasswordResult, resetPassword] = usePasswordReset();
+    const [resetPasswordResult, resetPassword] = usePasswordRecoveryMutationApi();
     const { url } = useShopsysSelector((state) => state.domain);
     const [resetPasswordUrl] = useGetInternationalizedStaticUrls(['/reset-password'], url);
     const formProviderMethods = useShopsysForm(getResetPasswordFormResolver(t), { email: '' });
