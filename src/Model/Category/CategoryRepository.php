@@ -4,9 +4,12 @@ declare(strict_types=1);
 
 namespace App\Model\Category;
 
+use App\Component\Doctrine\OrderByCollationHelper;
 use App\Model\Category\LinkedCategory\LinkedCategory;
 use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
+use Shopsys\FrameworkBundle\Component\Paginator\PaginationResult;
+use Shopsys\FrameworkBundle\Component\Paginator\QueryPaginator;
 use Shopsys\FrameworkBundle\Model\Category\CategoryRepository as BaseCategoryRepository;
 use Shopsys\FrameworkBundle\Model\Category\Exception\CategoryNotFoundException;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
@@ -227,5 +230,28 @@ class CategoryRepository extends BaseCategoryRepository
             ->setParameter('parentCategory', $parentCategory);
 
         return $queryBuilder->getQuery()->execute();
+    }
+
+    /**
+     * @param string|null $searchText
+     * @param int $domainId
+     * @param string $locale
+     * @param int $page
+     * @param int $limit
+     * @return \Shopsys\FrameworkBundle\Component\Paginator\PaginationResult
+     */
+    public function getPaginationResultForSearchVisible(
+        $searchText,
+        $domainId,
+        $locale,
+        $page,
+        $limit
+    ): PaginationResult {
+        $queryBuilder = $this->getVisibleByDomainIdAndSearchTextQueryBuilder($domainId, $locale, $searchText);
+        $queryBuilder->orderBy(OrderByCollationHelper::createOrderByForLocale('ct.name', $locale));
+
+        $queryPaginator = new QueryPaginator($queryBuilder);
+
+        return $queryPaginator->getResult($page, $limit);
     }
 }
