@@ -54,7 +54,7 @@ const Autocomplete: FC<AutocompleteProps> = (props) => {
                     if (areAllResultsEmpty(props.searchResults)) {
                         return (
                             <NoResultsMessageWrapperStyled>
-                                <Icon iconImage="warning" alt="warning" />
+                                <Icon iconType="image" icon="warning" alt="warning" />
                                 <NoResultsMessageStyled>
                                     {t('Could not find any results for the given query.')}
                                 </NoResultsMessageStyled>

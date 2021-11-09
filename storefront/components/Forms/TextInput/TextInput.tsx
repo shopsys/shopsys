@@ -97,7 +97,7 @@ const TextInput: FC<TextInputProps> = (props) => {
             )}
             {props.variant === 'searchInHeader' && (
                 <SearchButtonStyled type="submit" disabled={props.isSearchButtonDisabled}>
-                    <Icon icon="Search" />
+                    <Icon iconType="icon" icon="Search" />
                 </SearchButtonStyled>
             )}
         </LabelWrapper>

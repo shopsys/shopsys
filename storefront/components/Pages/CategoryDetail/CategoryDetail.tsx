@@ -65,7 +65,7 @@ const CategoryDetail: FC<CategoryDetailProps> = (props) => {
                         ref={buttonRef}
                         onClick={handlePanelOpenerClick}
                     >
-                        <CategoryDetailPanelIconStyled icon="Filter" />
+                        <CategoryDetailPanelIconStyled iconType="icon" icon="Filter" />
                         {t('Filtrovat')}
                     </CategoryDetailPanelOpenerStyled>
                     <SortingBar totalCount={props.category.products.totalCount} />

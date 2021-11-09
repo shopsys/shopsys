@@ -8,7 +8,7 @@ const DropdownSlideRight: FC<DropdownItemType> = (props) => {
 
     return (
         <DropdownSlideRightStyled onClick={() => context.slideRight(props)}>
-            <DropdownSlideRightIconStyled icon="Arrow" />
+            <DropdownSlideRightIconStyled iconType="icon" icon="Arrow" />
         </DropdownSlideRightStyled>
     );
 };

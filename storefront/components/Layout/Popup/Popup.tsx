@@ -46,7 +46,7 @@ const Popup: FC<PopupProps> = (props) => {
                 <PopupWrapper role="dialog" aria-modal={true}>
                     <PopupHeaderStyled>
                         <PopupButtonCloseStyled type="button" onClick={onClickCloseActionHandler}>
-                            <PopupButtonCloseIconStyled icon="Remove" />
+                            <PopupButtonCloseIconStyled iconType="icon" icon="Remove" />
                         </PopupButtonCloseStyled>
                     </PopupHeaderStyled>
                     <PopupContentStyled>{props.children}</PopupContentStyled>

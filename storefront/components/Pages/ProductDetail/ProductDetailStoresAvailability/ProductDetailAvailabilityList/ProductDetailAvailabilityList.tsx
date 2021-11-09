@@ -34,7 +34,7 @@ const ProductDetailAvailabilityList = forwardRef<HTMLUListElement, ProductDetail
                         <NextLink href="/">
                             <AvailabilityListItemStoreLinkStyled>
                                 {t('Store detail')}
-                                <Icon icon="ArrowRight" />
+                                <Icon iconType="icon" icon="ArrowRight" />
                             </AvailabilityListItemStoreLinkStyled>
                         </NextLink>
                     </AvailabilityListItemStyled>

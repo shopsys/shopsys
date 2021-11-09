@@ -65,7 +65,7 @@ const TabsContentExtended: TabFunctionComponentContentType = (props) => {
         <TabsContentStyled forceRender={true} selectedClassName="active" {...props}>
             <TabsContentMobileHeadingStyled onClick={mobileTab}>
                 {props.headingTextMobile}
-                <TabsIconStyled icon="Arrow" isActive={isActiveOnMobile} />
+                <TabsIconStyled iconType="icon" icon="Arrow" isActive={isActiveOnMobile} />
             </TabsContentMobileHeadingStyled>
             <TabsContentInStyled {...props} isActiveOnMobile={isActiveOnMobile}>
                 {props.children}

@@ -44,7 +44,7 @@ const BlogPreview: FC = () => {
                 <BlogPreviewHeadingTitleStyled>{t('Shopsys magazine')}</BlogPreviewHeadingTitleStyled>
                 <BlogPreviewHeadingLinkStyled href="#">
                     <span>{t('View all')}</span>
-                    <BlogPreviewHeadingLinkIconStyled icon="ArrowRight" />
+                    <BlogPreviewHeadingLinkIconStyled iconType="icon" icon="ArrowRight" />
                 </BlogPreviewHeadingLinkStyled>
             </BlogPreviewHeadingStyled>
 

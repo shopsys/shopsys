@@ -9,26 +9,26 @@ import { IconSvg } from './IconSvg';
 
 type NativeProps = ExtractNativePropsFromDefault<HTMLAttributes<HTMLDivElement>, never, 'onClick'>;
 
-type IconProps =
+type IconProps = { iconType: 'icon' | 'image'; title?: string } & (
     | {
-          iconImage?: never;
+          iconType: 'icon';
           icon: IconName;
-          title?: string;
       }
     | {
-          icon?: never;
-          iconImage: string;
+          iconType: 'image';
+          icon: string;
           width?: number;
           height?: number;
-          title?: string;
           alt: string;
-      };
+      }
+) &
+    NativeProps;
 
-const Icon: FC<IconProps & NativeProps> = (props) => {
-    if (props.iconImage !== undefined) {
+const Icon: FC<IconProps> = (props) => {
+    if (props.iconType === 'image') {
         return (
             <img
-                src={`/icons/${props.iconImage}.png`}
+                src={`/icons/${props.icon}.png`}
                 height={props.height !== undefined ? props.height : '24'}
                 width={props.width !== undefined ? props.width : '24'}
                 title={props.title}

@@ -113,7 +113,7 @@ const BannersSlider: FC<BannersSliderProps> = (props) => {
                         disabled={index === currentSlide % props.sliderItems.length}
                         key={sliderItem.uuid.toString()}
                     >
-                        <BannersSliderThumbnailControlsIconStyled icon="Triangle" />
+                        <BannersSliderThumbnailControlsIconStyled iconType="icon" icon="Triangle" />
                         {sliderItem.name}
                     </button>
                 ))}

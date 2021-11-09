@@ -18,7 +18,7 @@ const InfoBox: FC<InfoBoxProps> = (props) => {
 
     return (
         <InfoBoxStyled>
-            <ButtonCloseStyled onClick={props.isClosed} icon="Remove" />
+            <ButtonCloseStyled onClick={props.isClosed} iconType="icon" icon="Remove" />
             <HeadingStyled type="h2">{props.name}</HeadingStyled>
             <div dangerouslySetInnerHTML={{ __html: props.address }}></div>
             {props.openingHours !== null && props.openingHours !== undefined && (

@@ -34,7 +34,7 @@ const FooterBoxInfo: FC<FooterBoxInfoProps> = (props) => {
             <FooterBoxInfoContentStyled orderStep={props.orderStep}>
                 <FooterBoxInfoTitleStyled>{t('Need advice?')}</FooterBoxInfoTitleStyled>
                 <FooterBoxInfoContactStyled orderStep={props.orderStep}>
-                    <FooterBoxInfoContactIconStyled icon="Phone" />
+                    <FooterBoxInfoContactIconStyled iconType="icon" icon="Phone" />
                     <FooterBoxInfoContactPhoneStyled orderStep={props.orderStep} href={'tel:' + dummyData.phone}>
                         {dummyData.phone}
                     </FooterBoxInfoContactPhoneStyled>

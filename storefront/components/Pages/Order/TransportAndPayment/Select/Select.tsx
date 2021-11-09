@@ -139,7 +139,7 @@ const Select: FC<SelectProps> = (props) => {
                     {transport !== null && (
                         <ResetButtonStyled type="button" onClick={resetTransportAndPayment}>
                             {t('Change transport type')}
-                            <Icon icon="Arrow" />
+                            <Icon iconType="icon" icon="Arrow" />
                         </ResetButtonStyled>
                     )}
                     <PersonalPickupStorePopup
@@ -185,7 +185,7 @@ const Select: FC<SelectProps> = (props) => {
                         {payment !== null && (
                             <ResetButtonStyled type="button" onClick={resetPayment}>
                                 {t('Change payment type')}
-                                <Icon icon="Arrow" />
+                                <Icon iconType="icon" icon="Arrow" />
                             </ResetButtonStyled>
                         )}
                     </PaymentListWrapper>

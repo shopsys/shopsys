@@ -8,10 +8,10 @@ type HamburgerIcon = {
 
 const HamburgerIcon: FC<HamburgerIcon> = (props) => {
     if (props.isMenuOpened) {
-        return <Icon icon="Close" />;
+        return <Icon iconType="icon" icon="Close" />;
     }
 
-    return <HamburgerIconOpenStyled icon="Menu" />;
+    return <HamburgerIconOpenStyled iconType="icon" icon="Menu" />;
 };
 
 /* @component */

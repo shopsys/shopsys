@@ -81,7 +81,7 @@ const SortingBar: FC<{ totalCount: number }> = (props) => {
                                         dispatch(userActions.setSort({ sort: value.stateValue }));
                                     }}
                                 >
-                                    <SortingBarSortIconStyled icon="Sort" />
+                                    <SortingBarSortIconStyled iconType="icon" icon="Sort" />
                                     <SortingBarSeletedSortWrapStyled>
                                         <SortingBarTitleStyled>{t('Sort')}</SortingBarTitleStyled>
                                         <SortingBarSelectedValue>

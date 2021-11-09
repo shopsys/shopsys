@@ -35,7 +35,7 @@ const NavigationItem: FC<NavigationItemProps> = (props) => {
             <NextLink href={props.navigationItem.link} passHref>
                 <NavigationItemLinkStyled isOpen={isHovered}>
                     {props.navigationItem.name}
-                    {hasChildren && <NavigationItemLinkIconStyled isOpen={isHovered} icon="Arrow" />}
+                    {hasChildren && <NavigationItemLinkIconStyled isOpen={isHovered} iconType="icon" icon="Arrow" />}
                 </NavigationItemLinkStyled>
             </NextLink>
             {hasChildren && (
