@@ -49,7 +49,10 @@ const CategoryDetail: FC<CategoryDetailProps> = (props) => {
         <Webline>
             <CategoryDetailStyled>
                 <CategoryDetailPanelStyled isOpen={isPanelOpen} ref={panelWrapRef}>
-                    <ProductFilter productFilterOptions={props.category.products.productFilterOptions} />
+                    <ProductFilter
+                        productFilterOptions={props.category.products.productFilterOptions}
+                        slug={props.category.slug}
+                    />
                     <Overlay isHiddenOnDesktop={true} onClick={handlePanelOpenerClick} />
                 </CategoryDetailPanelStyled>
                 <CategoryDetailContentStyled>

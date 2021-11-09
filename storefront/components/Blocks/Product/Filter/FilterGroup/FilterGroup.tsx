@@ -1,14 +1,17 @@
-import { Controller, SubmitHandler } from 'react-hook-form';
+import { Controller, SubmitHandler, useFieldArray, useFormContext } from 'react-hook-form';
 import { FC, Fragment, useState } from 'react';
 import { FilterFormType, ParameterItemsType } from 'components/Blocks/Product/Filter/types';
 import {
     FilterGroupArrowStyled,
     FilterGroupColorStyled,
+    FilterGroupContentItemStyled,
     FilterGroupContentStyled,
     FilterGroupStyled,
     FilterGroupTitleStyled,
 } from './FilterGroup.style';
-import FilterCheckbox from 'components/Blocks/Product/Filter/FilterCheckbox';
+import Checkbox from 'components/Forms/Checkbox';
+import CheckboxColor from 'components/Forms/CheckboxColor';
+import { clearArrayFromEmptyValue } from 'utils/Filter/ClearArrayFromEmptyValue';
 import RangeSlider from 'components/Basic/RangeSlider';
 
 type FilterGroupProps = {
@@ -60,31 +63,105 @@ type FilterGroupProps = {
 
 const FilterGroup: FC<FilterGroupProps> = (props) => {
     const [isGroupOpen, setIsGroupOpen] = useState(props.isOpen);
-    const parentIndex = props.parentIndex !== undefined ? props.parentIndex : 0;
+    const formProviderMethods = useFormContext();
+    const control = formProviderMethods.control;
+    const { append, remove } = useFieldArray({ control, name: 'parameters' });
+
+    const checkIfParameterIsActive = (itemUuid, parentUuid) => {
+        const parametersValues = formProviderMethods.getValues().parameters;
+        const findedExistingParent = parametersValues.find((item) => item.parameter === parentUuid);
+        const findedExistingValue = parametersValues.find((item) =>
+            item.values.find((itemChild) => itemChild === itemUuid),
+        );
+
+        return findedExistingValue !== undefined && findedExistingParent !== undefined && true;
+    };
+
+    const onChangeInStockCheckbox = (field) => {
+        formProviderMethods.setValue(field?.name, !field?.value);
+        formProviderMethods.handleSubmit(props.onSubmit(formProviderMethods.getValues()));
+    };
+
+    const onChangeCheckbox = (value, filterField) => {
+        const formValues = formProviderMethods.getValues()[filterField];
+        const values = [...formValues];
+        const valueIndex = values.indexOf(value);
+
+        if (values.includes(value)) {
+            values.splice(valueIndex, 1);
+            formProviderMethods.setValue(filterField, [...values]);
+        } else {
+            formProviderMethods.setValue(filterField, [...values, ...value.split()]);
+        }
+
+        formProviderMethods.handleSubmit(props.onSubmit(formProviderMethods.getValues()));
+    };
+
+    const onChangeParametersCheckbox = (value, parameterParentUuid) => {
+        const parametersValues = formProviderMethods.getValues().parameters;
+        const findedExistingValue = parametersValues.find((item) => item.parameter === parameterParentUuid);
+
+        if (findedExistingValue !== undefined) {
+            const indexOfParameter = parametersValues.findIndex((item) => item.parameter === parameterParentUuid);
+
+            if (findedExistingValue.values.includes(value)) {
+                const arrayOfValues = [...findedExistingValue.values];
+                const indexOfRemovedValue = arrayOfValues.indexOf(value);
+                arrayOfValues.splice(indexOfRemovedValue, 1);
+                remove(indexOfParameter);
+                append({ parameter: parameterParentUuid, values: [...arrayOfValues] });
+                clearArrayFromEmptyValue(formProviderMethods);
+            } else {
+                const arrayOfValues = [...findedExistingValue.values, ...value.split()];
+                formProviderMethods.setValue(`parameters[${indexOfParameter}].values`, [...arrayOfValues]);
+            }
+        } else {
+            append({ parameter: parameterParentUuid, values: [...value.split()] });
+            clearArrayFromEmptyValue(formProviderMethods);
+        }
+
+        const updatedFormParametersValues = formProviderMethods.getValues().parameters;
+        const parameterWithoutValue = updatedFormParametersValues.find((item) => item.values === undefined);
+        if (parameterWithoutValue !== undefined) {
+            const indexOfParameterWithoutValue = updatedFormParametersValues.findIndex(
+                (item) => item.parameter === parameterWithoutValue.parameter,
+            );
+            remove(indexOfParameterWithoutValue);
+        }
+
+        formProviderMethods.handleSubmit(props.onSubmit(formProviderMethods.getValues()));
+    };
 
     const handleGroupClick = () => {
         setIsGroupOpen(!isGroupOpen);
     };
 
     return (
-        <FilterGroupStyled>
-            <FilterGroupTitleStyled onClick={handleGroupClick}>
-                {props.title}
-                <FilterGroupArrowStyled icon="Arrow" isOpen={isGroupOpen} />
-            </FilterGroupTitleStyled>
-            <FilterGroupContentStyled isOpen={isGroupOpen}>
-                {renderItems(
-                    props.type,
-                    parentIndex,
-                    props.title,
-                    props.onSubmit,
-                    props.data,
-                    props.filterField,
-                    props.minimalPrice,
-                    props.maximalPrice,
-                )}
-            </FilterGroupContentStyled>
-        </FilterGroupStyled>
+        <>
+            <FilterGroupStyled>
+                <FilterGroupTitleStyled onClick={handleGroupClick}>
+                    {props.title}
+                    <FilterGroupArrowStyled icon="Arrow" isOpen={isGroupOpen} />
+                </FilterGroupTitleStyled>
+                <FilterGroupContentStyled isOpen={isGroupOpen}>
+                    {renderItems(
+                        props.type,
+                        props.onSubmit,
+                        props.uuid,
+                        props.data,
+                        props.filterField,
+                        props.minimalPrice,
+                        props.maximalPrice,
+                        props.inStockCount,
+                        onChangeCheckbox,
+                        formProviderMethods,
+                        onChangeInStockCheckbox,
+                        checkIfParameterIsActive,
+                        onChangeParametersCheckbox,
+                    )}
+                </FilterGroupContentStyled>
+            </FilterGroupStyled>
+        </>
     );
 };
 
@@ -93,38 +170,66 @@ const FilterGroup: FC<FilterGroupProps> = (props) => {
  */
 const renderItems = (
     type: 'checkbox' | 'colorPicker' | 'price' | 'checkboxInStock' | string,
-    parentIndex: number,
-    filterGroupTitle: string,
     onSubmit: (data: FilterFormType) => SubmitHandler<FilterFormType>,
+    parameterParentUuid,
     data?: ParameterItemsType[],
     filterField?: 'flags' | 'parameters' | 'brands',
     minimalPrice?: number,
     maximalPrice?: number,
     inStockCount?: number,
+    onChangeCheckbox,
+    formProviderMethods,
+    onChangeInStockCheckbox,
+    checkIfParameterIsActive,
+    onChangeParametersCheckbox,
 ) => {
     switch (type) {
         case 'checkbox':
             return (
                 <>
-                    {data !== undefined &&
-                        data.map((dataItem: ParameterItemsType, index: number) => (
-                            <Fragment key={index}>
-                                <Controller
-                                    name={`${filterField}[${parentIndex}].values.${dataItem.item.uuid}`}
-                                    render={({ field }) => (
-                                        <FilterCheckbox
-                                            isDisabled={dataItem.count === 0}
-                                            isActive={field.value}
-                                            id={dataItem.item.name + filterGroupTitle}
-                                            label={dataItem.item.name}
-                                            field={field}
-                                            count={dataItem.count}
-                                            onSubmit={onSubmit}
-                                        />
-                                    )}
-                                />
-                            </Fragment>
-                        ))}
+                    {filterField === 'parameters'
+                        ? data !== undefined &&
+                          data.map((dataItem: ParameterItemsType) => (
+                              <FilterGroupContentItemStyled
+                                  key={dataItem.item.uuid}
+                                  isDisabled={dataItem.count === 0}
+                                  isActive={checkIfParameterIsActive(dataItem.item.uuid, parameterParentUuid)}
+                              >
+                                  <Checkbox
+                                      name={dataItem.item.uuid}
+                                      id={dataItem.item.uuid + parameterParentUuid}
+                                      label={dataItem.item.name}
+                                      uuid={dataItem.item.uuid}
+                                      count={dataItem.count}
+                                      onSubmit={onSubmit}
+                                      checked={checkIfParameterIsActive(dataItem.item.uuid, parameterParentUuid)}
+                                      onChange={() =>
+                                          onChangeParametersCheckbox(dataItem.item.uuid, parameterParentUuid)
+                                      }
+                                  />
+                              </FilterGroupContentItemStyled>
+                          ))
+                        : data !== undefined &&
+                          data.map((dataItem: ParameterItemsType) => (
+                              <FilterGroupContentItemStyled
+                                  key={dataItem.item.uuid}
+                                  isDisabled={dataItem.count === 0}
+                                  isActive={formProviderMethods.getValues()[filterField].includes(dataItem.item.uuid)}
+                              >
+                                  <Checkbox
+                                      name={dataItem.item.uuid}
+                                      id={dataItem.item.uuid}
+                                      label={dataItem.item.name}
+                                      uuid={dataItem.item.uuid}
+                                      onSubmit={onSubmit}
+                                      count={dataItem.count}
+                                      checked={formProviderMethods
+                                          .getValues()
+                                          [filterField].includes(dataItem.item.uuid)}
+                                      onChange={() => onChangeCheckbox(dataItem.item.uuid, filterField)}
+                                  />
+                              </FilterGroupContentItemStyled>
+                          ))}
                 </>
             );
         case 'checkboxInStock':
@@ -132,14 +237,13 @@ const renderItems = (
                 <Controller
                     name="onlyInStock"
                     render={({ field }) => (
-                        <FilterCheckbox
-                            isDisabled={inStockCount === 0}
-                            isActive={field.value}
+                        <Checkbox
+                            name="onlyInStock"
                             id="onlyInStock"
                             label="Skladem"
-                            field={field}
+                            fieldRef={field}
                             count={inStockCount}
-                            onSubmit={onSubmit}
+                            onClick={() => onChangeInStockCheckbox(field)}
                         />
                     )}
                 />
@@ -148,22 +252,20 @@ const renderItems = (
             return (
                 <FilterGroupColorStyled>
                     {data !== undefined &&
-                        data.map((dataItem: ParameterItemsType, index: number) => (
-                            <Fragment key={index}>
-                                <Controller
-                                    name={`${filterField}[${parentIndex}].values.${dataItem.item.uuid}`}
-                                    render={({ field }) => (
-                                        <FilterCheckbox
-                                            colorPicker={true}
-                                            isDisabled={dataItem.count === 0}
-                                            isActive={field.value}
-                                            id={dataItem.item.name + filterGroupTitle + type}
-                                            bgColor={dataItem.rgbHex}
-                                            label={dataItem.item.name}
-                                            field={field}
-                                            onSubmit={onSubmit}
-                                        />
-                                    )}
+                        data.map((dataItem: ParameterItemsType) => (
+                            <Fragment key={dataItem.item.uuid}>
+                                <CheckboxColor
+                                    name={dataItem.item.uuid}
+                                    id={dataItem.item.uuid + parameterParentUuid}
+                                    label={dataItem.item.name}
+                                    uuid={dataItem.item.uuid}
+                                    count={dataItem.count}
+                                    isDisabled={dataItem.count === 0}
+                                    isActive={checkIfParameterIsActive(dataItem.item.uuid, parameterParentUuid)}
+                                    bgColor={dataItem.rgbHex}
+                                    onSubmit={onSubmit}
+                                    checked={checkIfParameterIsActive(dataItem.item.uuid, parameterParentUuid)}
+                                    onChange={() => onChangeParametersCheckbox(dataItem.item.uuid, parameterParentUuid)}
                                 />
                             </Fragment>
                         ))}

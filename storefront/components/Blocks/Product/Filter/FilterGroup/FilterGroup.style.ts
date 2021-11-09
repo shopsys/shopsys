@@ -48,6 +48,18 @@ export const FilterGroupContentStyled = styled.div<FilterGroupProps>`
     `}
 `;
 
+export const FilterGroupContentItemStyled = styled.div`
+    ${({ isDisabled, isActive }) => css`
+        margin-bottom: 10px;
+        ${isDisabled &&
+        !isActive &&
+        css`
+            opacity: 0.3;
+            pointer-events: none;
+        `}
+    `}
+`;
+
 export const FilterItemCheckboxStyled = styled.div`
     position: relative;
     display: inline-block;

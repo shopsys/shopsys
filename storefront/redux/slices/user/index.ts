@@ -44,7 +44,14 @@ export const initialState = {
     },
     canAccessOrderConfirmation: false,
     isUserLoggedIn: false,
-    parametersFilter: null,
+    parametersFilter: {
+        brands: [],
+        flags: [],
+        parameters: [],
+        onlyInStock: false,
+        minimalPrice: null,
+        maximalPrice: null,
+    },
 } as InitialState;
 
 export const userSlice = createSlice({

@@ -1,11 +1,11 @@
-import { FilterFormType, FilterFormValuesType, FilterOptionsType, ItemsType } from './types';
-import { FC } from 'react';
+import { FC, useEffect, useState } from 'react';
+import { FilterFormType, FilterOptionsType } from './types';
+import { FormProvider, useFieldArray } from 'react-hook-form';
+import { useShopsysDispatch, useShopsysSelector } from 'redux/main';
 import FilterGroup from './FilterGroup';
 import { FilterStyled } from './Filter.style';
-import { FormProvider } from 'react-hook-form';
 import SelectedParameters from './SelectedParameters';
 import { userActions } from 'redux/slices/user';
-import { useShopsysDispatch } from 'redux/main';
 import { useShopsysForm } from 'hooks/forms/UseShopsysForm';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 
@@ -16,66 +16,89 @@ type FilterProps = {
 const Filter: FC<FilterProps> = (props) => {
     const t = useTypedTranslationFunction();
     const dispatch = useShopsysDispatch();
-
-    const mapFilterItems = (values: ItemsType[]) => {
-        const filterItems: FilterFormValuesType = {};
-
-        values.map((filterItem) => (filterItems[filterItem.item.uuid] = false));
-
-        return [{ values: filterItems }];
-    };
-
-    const mapFilterParameters = props.productFilterOptions.parameters.map((parameterItem) => {
-        const parameterValues: FilterFormValuesType = {};
-        const parameterUuid = parameterItem.uuid;
-
-        parameterItem.items.map((parameterItemsValue) => (parameterValues[parameterItemsValue.item.uuid] = false));
-
-        return { parameter: parameterUuid, values: parameterValues };
-    });
-
+    const parametersFilterState = useShopsysSelector((state) => state.user.parametersFilter);
     const formProviderMethods = useShopsysForm(undefined, {
+        brands: [],
+        flags: [],
+        parameters: [],
+        onlyInStock: false,
         minimalPrice: props.productFilterOptions.minimalPrice,
         maximalPrice: props.productFilterOptions.maximalPrice,
-        onlyInStock: false,
-        brands: mapFilterItems(props.productFilterOptions.brands),
-        flags: mapFilterItems(props.productFilterOptions.flags),
-        parameters: mapFilterParameters,
     });
+    const control = formProviderMethods.control;
+    const { append } = useFieldArray({ control, name: 'parameters' });
+    const [isNotFirstRender, setIsNotFirstRender] = useState(false);
+
+    const updateUrlWithCurrentFilter = (object) => {
+        const queryParams = new URLSearchParams(window.location.search);
+
+        if (
+            object.brands.length === 0 &&
+            object.flags.length === 0 &&
+            object.parameters.length === 0 &&
+            object.onlyInStock === false &&
+            object.minimalPrice === props.productFilterOptions.minimalPrice &&
+            object.maximalPrice === props.productFilterOptions.maximalPrice
+        ) {
+            queryParams.delete('filter');
+        } else {
+            queryParams.set('filter', JSON.stringify(object));
+        }
+
+        let newState = document.location.pathname;
+        if (queryParams.toString().length > 0) {
+            newState = '?' + queryParams.toString();
+        }
+
+        history.replaceState(history.state, document.title, newState);
+    };
 
     const onSubmit = (data: FilterFormType) => {
-        const getCheckedUuid = (itemValues: FilterFormValuesType) => {
-            const objectToArray = Object.entries(itemValues);
-            const onlyTrueArrays = objectToArray.filter((item) => item[1] === true);
-            const arraysOfUuid = onlyTrueArrays.map((item) => item[0]);
-            return arraysOfUuid;
-        };
-
-        const checkedParametersUuid = data.parameters
-            .map((item) => {
-                const parameterItem = { values: {}, parameter: item.parameter };
-                const checkedUuid = getCheckedUuid(item.values);
-
-                if (checkedUuid.length > 0) {
-                    parameterItem.values = checkedUuid;
-
-                    return parameterItem;
-                }
-
-                return undefined;
-            })
-            .filter((item) => item !== undefined);
-
         const filterParameters = {
-            brands: getCheckedUuid(data.brands[0].values),
-            flags: getCheckedUuid(data.flags[0].values),
+            brands: data.brands,
+            flags: data.flags,
+            parameters: data.parameters,
+            onlyInStock: data.onlyInStock,
             minimalPrice: data.minimalPrice,
             maximalPrice: data.maximalPrice,
-            onlyInStock: data.onlyInStock,
-            parameters: checkedParametersUuid,
         };
+
+        updateUrlWithCurrentFilter(data);
         dispatch(userActions.setParametersFilter({ ...filterParameters }));
     };
+
+    useEffect(() => {
+        const parametersToAppend = [];
+
+        if (parametersFilterState.brands.length > 0) {
+            formProviderMethods.setValue('brands', [...parametersFilterState.brands]);
+        }
+        if (parametersFilterState.flags.length > 0) {
+            formProviderMethods.setValue('flags', [...parametersFilterState.flags]);
+        }
+        if (parametersFilterState.parameters.length > 0) {
+            parametersFilterState.parameters.map((item) => {
+                parametersToAppend.push({ parameter: item.parameter, values: [...item.values] });
+            });
+            append(parametersToAppend);
+        }
+        formProviderMethods.setValue('onlyInStock', parametersFilterState.onlyInStock);
+        parametersFilterState.minimalPrice !== null &&
+            formProviderMethods.setValue('minimalPrice', parametersFilterState.minimalPrice);
+        parametersFilterState.maximalPrice !== null &&
+            formProviderMethods.setValue('maximalPrice', parametersFilterState.maximalPrice);
+    }, []);
+
+    useEffect(() => {
+        if (isNotFirstRender) {
+            formProviderMethods.reset();
+            formProviderMethods.setValue('minimalPrice', props.productFilterOptions.minimalPrice);
+            formProviderMethods.setValue('maximalPrice', props.productFilterOptions.maximalPrice);
+            formProviderMethods.handleSubmit(onSubmit(formProviderMethods.getValues()));
+        } else {
+            setIsNotFirstRender(true);
+        }
+    }, [props.slug]);
 
     return (
         <>
@@ -100,23 +123,27 @@ const Filter: FC<FilterProps> = (props) => {
                             onSubmit={onSubmit}
                         />
 
-                        <FilterGroup
-                            title={t('Flags')}
-                            filterField="flags"
-                            type="checkbox"
-                            data={props.productFilterOptions.flags}
-                            isOpen={true}
-                            onSubmit={onSubmit}
-                        />
+                        {props.productFilterOptions.flags !== null && (
+                            <FilterGroup
+                                title={t('Flags')}
+                                filterField="flags"
+                                type="checkbox"
+                                data={props.productFilterOptions.flags}
+                                isOpen={true}
+                                onSubmit={onSubmit}
+                            />
+                        )}
 
-                        <FilterGroup
-                            title={t('Brands')}
-                            filterField="brands"
-                            type="checkbox"
-                            data={props.productFilterOptions.brands}
-                            isOpen={true}
-                            onSubmit={onSubmit}
-                        />
+                        {props.productFilterOptions.brands !== null && (
+                            <FilterGroup
+                                title={t('Brands')}
+                                filterField="brands"
+                                type="checkbox"
+                                data={props.productFilterOptions.brands}
+                                isOpen={true}
+                                onSubmit={onSubmit}
+                            />
+                        )}
 
                         {props.productFilterOptions.parameters.map((parametersItem, index) => (
                             <FilterGroup
