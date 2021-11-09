@@ -30,7 +30,7 @@ export const SearchInStyled = styled.div`
     `}
 `;
 
-export const SearchFormStyled = styled.div<WithIsActiveStyledProps>`
+export const SearchFormStyled = styled.form<WithIsActiveStyledProps>`
     ${({ theme, isActive }) => css`
         position: relative;
         display: flex;

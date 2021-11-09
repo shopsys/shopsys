@@ -1,4 +1,4 @@
-import { Controller, useWatch } from 'react-hook-form';
+import { Controller, FormProvider, SubmitHandler, useWatch } from 'react-hook-form';
 import { FC, useEffect, useRef, useState } from 'react';
 import {
     RemoveSearchButtonStyled,
@@ -12,10 +12,14 @@ import { getSearch } from 'connectors/search/Search';
 import Icon from 'components/Basic/Icon';
 import { SearchType } from 'connectors/search/types';
 import useDebounce from 'hooks/helpers/UseDebounce';
+import { useGetInternationalizedStaticUrls } from 'hooks/staticUrls/UseGetInternationalizedStaticUrls';
+import { useRouter } from 'next/router';
 import { useShopsysForm } from 'hooks/forms/UseShopsysForm';
+import { useShopsysSelector } from 'redux/main';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 
 const Search: FC = () => {
+    const router = useRouter();
     const t = useTypedTranslationFunction();
     const formProviderMethods = useShopsysForm(undefined, { searchQuery: '' });
     const searchQueryValue = useWatch({ name: 'searchQuery', control: formProviderMethods.control });
@@ -24,6 +28,8 @@ const Search: FC = () => {
     const searchApiResults = getSearch(debouncedSearchQuery);
     const [searchResults, setSearchResults] = useState<SearchType | undefined>(undefined);
     const searchInRef = useRef<HTMLDivElement>(null);
+    const domainUrl = useShopsysSelector((state) => state.domain.url);
+    const [searchUrl] = useGetInternationalizedStaticUrls(['/search'], domainUrl);
 
     useEffect(() => {
         if (searchQueryValue.length < 3) {
@@ -57,32 +63,45 @@ const Search: FC = () => {
         }
     };
 
+    const onSearchSubmitHandler: SubmitHandler<{ searchQuery: string }> = (data, event) => {
+        event?.preventDefault();
+        router.push({ pathname: searchUrl, query: { q: searchQueryValue } });
+    };
+
     return (
         <>
             <SearchStyled>
                 <SearchInStyled ref={searchInRef}>
-                    <SearchFormStyled isActive={hasSearchFocus}>
-                        <Controller
-                            control={formProviderMethods.control}
-                            name="searchQuery"
-                            render={({ field }) => (
-                                <SearchTextInputStyled
-                                    type="search"
-                                    placeholderType="static"
-                                    inputSize="small"
-                                    id="search"
-                                    variant="searchInHeader"
-                                    name="search"
-                                    label={t("Type what you're looking for")}
-                                    fieldRef={field}
-                                />
+                    <SearchFormStyled
+                        isActive={hasSearchFocus}
+                        onSubmit={formProviderMethods.handleSubmit(onSearchSubmitHandler)}
+                    >
+                        <FormProvider {...formProviderMethods}>
+                            <Controller
+                                control={formProviderMethods.control}
+                                name="searchQuery"
+                                render={({ field }) => (
+                                    <SearchTextInputStyled
+                                        type="search"
+                                        placeholderType="static"
+                                        inputSize="small"
+                                        id="search"
+                                        variant="searchInHeader"
+                                        name="search"
+                                        label={t("Type what you're looking for")}
+                                        fieldRef={field}
+                                        isSearchButtonDisabled={searchResults === undefined}
+                                    />
+                                )}
+                            />
+                            {hasSearchFocus && searchQueryValue.length > 0 && (
+                                <RemoveSearchButtonStyled
+                                    onClick={() => formProviderMethods.setValue('searchQuery', '')}
+                                >
+                                    <Icon icon="Remove" />
+                                </RemoveSearchButtonStyled>
                             )}
-                        />
-                        {hasSearchFocus && searchQueryValue.length > 0 && (
-                            <RemoveSearchButtonStyled onClick={() => formProviderMethods.setValue('searchQuery', '')}>
-                                <Icon icon="Remove" />
-                            </RemoveSearchButtonStyled>
-                        )}
+                        </FormProvider>
                     </SearchFormStyled>
                     <Autocomplete
                         searchResults={searchResults}
