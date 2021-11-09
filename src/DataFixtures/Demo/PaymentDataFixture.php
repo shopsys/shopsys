@@ -106,22 +106,14 @@ class PaymentDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $paymentData = $this->paymentDataFactory->create();
         $paymentData->type = Payment::TYPE_GOPAY;
-        $paymentData->name = [
-            'cs' => 'GoPay - Platba kartou',
-            'sk' => 'GoPay - Platba kartou',
-        ];
+        foreach ($this->domain->getAllLocales() as $locale) {
+            $paymentData->name[$locale] = t('GoPay - Platba kartou', [], 'dataFixtures', $locale);
+            $paymentData->description[$locale] = '';
+            $paymentData->instructions[$locale] = t('<b>Zvolili jste platbu GoPay, bude Vám zobrazena platební brána.</b>', [], 'dataFixtures', $locale);
+        }
         $paymentData->czkRounding = false;
 
         $paymentData->goPayPaymentMethod = $this->getReference(GoPayDataFixture::PAYMENT_CARD_METHOD);
-
-        $paymentData->description = [
-            'cs' => '',
-            'sk' => '',
-        ];
-        $paymentData->instructions = [
-            'cs' => '<b>Zvolili jste platbu GoPay, bude Vám zobrazena platební brána.</b>',
-            'sk' => '',
-        ];
 
         $paymentData->hidden = false;
         $this->createPayment(self::PAYMENT_GOPAY, $paymentData, [
