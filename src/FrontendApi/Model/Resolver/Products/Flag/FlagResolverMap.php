@@ -38,6 +38,9 @@ class FlagResolverMap extends ResolverMap
     {
         return [
             'Flag' => [
+                'name' => function (Flag $flag) {
+                    return $flag->getName($this->domain->getLocale()) ?? '';
+                },
                 'slug' => function (Flag $flag) {
                     return $this->getSlug($flag);
                 },

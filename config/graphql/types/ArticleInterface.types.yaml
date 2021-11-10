@@ -6,7 +6,7 @@ ArticleInterface:
             uuid:
                 type: "Uuid!"
             name:
-                type: "String"
+                type: "String!"
             slug:
                 type: "String!"
             text:

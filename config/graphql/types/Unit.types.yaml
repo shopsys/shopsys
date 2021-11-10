@@ -2,3 +2,8 @@ Unit:
     type: object
     inherits:
         - 'UnitDecorator'
+    config:
+        fields:
+            name:
+                type: "String!"
+                description: "Localized unit name (domain dependent)"

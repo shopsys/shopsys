@@ -84,7 +84,7 @@ const mapCategoryImageApiData = (apiData: ImagesDefaultFragmentApi['images']): I
 const mapSubCategories = (apiData: NavigationSubCategoriesLinkFragmentApi['children']): NavigationSubCategory[] => {
     return apiData.map((subCategory) => {
         return {
-            name: subCategory.name !== undefined && subCategory.name !== null ? subCategory.name : '',
+            name: subCategory.name,
             slug: subCategory.slug,
         };
     });
@@ -102,7 +102,7 @@ const mapCategories = (data: ColumnCategoriesFragmentApi['categories']): Navigat
         }
 
         mappedCategories.push({
-            name: category.name !== undefined && category.name !== null ? category.name : '',
+            name: category.name,
             slug: category.slug,
             children: mapSubCategories(category.children),
             image: mappedImages,

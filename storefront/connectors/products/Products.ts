@@ -60,14 +60,11 @@ export const mapSliderProductApiData = (
         return {
             ...apiProduct,
             detailSlug: apiProduct.slug,
-            name: apiProduct.name !== undefined && apiProduct.name !== null ? apiProduct.name : '',
+            name: apiProduct.name,
             image: mapProductImageApiData(apiProduct.images),
             price: mapProductPriceApiData(apiProduct.price, currencyCode),
             isMainVariant: apiProduct.__typename === 'MainVariant',
-            availability:
-                apiProduct.availability.name !== undefined && apiProduct.availability.name !== null
-                    ? apiProduct.availability.name
-                    : '',
+            availability: apiProduct.availability.name,
             flags: mapFlagsApiData(apiProduct.flags),
             stockQuantity: apiProduct.stockQuantity,
         };
@@ -98,7 +95,7 @@ export const mapProductPriceApiData = (
 const mapFlagsApiData = (flags: FlagLabelFragmentApi[]): FlagType[] => {
     return flags.map((flagApi) => {
         return {
-            name: flagApi.name !== undefined && flagApi.name !== null ? flagApi.name : '',
+            name: flagApi.name,
             rgbColor: flagApi.rgbColor,
         };
     });

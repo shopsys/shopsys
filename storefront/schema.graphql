@@ -167,7 +167,7 @@ type ArticleEdge {
 """Represents entity that is considered to be an article on the eshop"""
 interface ArticleInterface {
   uuid: Uuid!
-  name: String
+  name: String!
   slug: String!
   text: String
   seoTitle: String
@@ -179,7 +179,7 @@ interface ArticleInterface {
 """Represents an availability"""
 type Availability {
   """Localized availability name (domain dependent)"""
-  name: String
+  name: String!
 
   """Availability status in a format suitable for usage in the code"""
   status: String!
@@ -433,7 +433,7 @@ type Category implements Breadcrumb & Slug {
   uuid: Uuid!
 
   """Localized category name (domain dependent)"""
-  name: String
+  name: String!
 
   """Descendant categories"""
   children: [Category!]!
@@ -677,7 +677,7 @@ type Flag implements Breadcrumb & Slug {
   uuid: Uuid!
 
   """Localized flag name (domain dependent)"""
-  name: String
+  name: String!
 
   """Flag color in rgb format"""
   rgbColor: String!
@@ -778,7 +778,7 @@ type MainVariant implements Product & Breadcrumb & Slug {
   uuid: Uuid!
 
   """Localized product name (domain dependent)"""
-  name: String
+  name: String!
 
   """Localized product short description (domain dependent)"""
   shortDescription: String
@@ -1444,7 +1444,7 @@ interface Product {
   uuid: Uuid!
 
   """Localized product name (domain dependent)"""
-  name: String
+  name: String!
 
   """Localized product short description (domain dependent)"""
   shortDescription: String
@@ -1900,7 +1900,7 @@ type RegularProduct implements Product & Breadcrumb & Slug {
   uuid: Uuid!
 
   """Localized product name (domain dependent)"""
-  name: String
+  name: String!
 
   """Localized product short description (domain dependent)"""
   shortDescription: String
@@ -2189,7 +2189,7 @@ type TransportType {
 """Represents a unit"""
 type Unit {
   """Localized unit name (domain dependent)"""
-  name: String
+  name: String!
 }
 
 """Represents and encapsulates an ISO-8601 encoded UTC date-time value"""
@@ -2201,7 +2201,7 @@ type Variant implements Product & Breadcrumb & Slug {
   uuid: Uuid!
 
   """Localized product name (domain dependent)"""
-  name: String
+  name: String!
 
   """Localized product short description (domain dependent)"""
   shortDescription: String

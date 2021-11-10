@@ -125,7 +125,7 @@ class CategoryResolverMap extends BaseCategoryResolverMap
             case 'uuid':
                 return $category->getUuid();
             case 'name':
-                return $category->getName($this->domain->getLocale());
+                return $category->getName($this->domain->getLocale()) ?? '';
             case 'children':
                 return $this->categoryFacade->getAllVisibleChildrenByCategoryAndDomainId($category, $this->domain->getId());
             case 'parent':
@@ -161,7 +161,7 @@ class CategoryResolverMap extends BaseCategoryResolverMap
             case 'uuid':
                 return $category->getUuid();
             case 'name':
-                return $category->getName($this->domain->getLocale());
+                return $category->getName($this->domain->getLocale()) ?? '';
             case 'children':
                 return $this->categoryFacade->getAllVisibleChildrenByCategoryAndDomainId($category, $this->domain->getId());
             case 'parent':

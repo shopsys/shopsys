@@ -19,7 +19,6 @@ const mapCategoryApiData = (apiData: PromotedCategoriesQueryApi['promotedCategor
     return apiData.map((apiCategory) => {
         return {
             ...apiCategory,
-            name: apiCategory.name === undefined || apiCategory.name === null ? '' : apiCategory.name,
             image: mapCategoryImageApiData(apiCategory.images),
         };
     });
