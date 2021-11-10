@@ -10,6 +10,7 @@ use App\Model\Store\StoreFacade;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadData;
 
 class StoreDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
@@ -31,6 +32,9 @@ class StoreDataFixture extends AbstractReferenceFixture implements DependentFixt
     private const ATTR_LOCATION_LONGITUDE = 'locationLongitude';
     private const ATTR_IMAGE = 'image';
 
+    private const ENABLED_FIRST_DOMAIN = [1 => true, 2 => false];
+    private const ENABLED_SECOND_DOMAIN = [1 => false, 2 => true];
+
     public const STORE_PREFIX = 'store_';
 
     /**
@@ -44,15 +48,23 @@ class StoreDataFixture extends AbstractReferenceFixture implements DependentFixt
     private StoreDataFactory $storeDataFactory;
 
     /**
+     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
+     */
+    private Domain $domain;
+
+    /**
      * @param \App\Model\Store\StoreFacade $storeFacade
      * @param \App\Model\Store\StoreDataFactory $storeDataFactory
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
         StoreFacade $storeFacade,
-        StoreDataFactory $storeDataFactory
+        StoreDataFactory $storeDataFactory,
+        Domain $domain
     ) {
         $this->storeFacade = $storeFacade;
         $this->storeDataFactory = $storeDataFactory;
+        $this->domain = $domain;
     }
 
     /**
@@ -75,7 +87,7 @@ class StoreDataFixture extends AbstractReferenceFixture implements DependentFixt
             [
                 self::ATTR_NAME => 'Ostrava',
                 self::ATTR_IS_DEFAULT => true,
-                self::ATTR_IS_ENABLED_BY_DOMAIN => [1 => true, 2 => false],
+                self::ATTR_IS_ENABLED_BY_DOMAIN => self::ENABLED_FIRST_DOMAIN,
                 self::ATTR_STOCK => $this->getReference(StocksDataFixture::STOCK_PREFIX . 4),
                 self::ATTR_DESCRIPTION => null,
                 self::ATTR_EXTERNAL_ID => null,
@@ -92,7 +104,7 @@ class StoreDataFixture extends AbstractReferenceFixture implements DependentFixt
             ], [
                 self::ATTR_NAME => 'Pardubice',
                 self::ATTR_IS_DEFAULT => false,
-                self::ATTR_IS_ENABLED_BY_DOMAIN => [1 => true, 2 => false],
+                self::ATTR_IS_ENABLED_BY_DOMAIN => self::ENABLED_FIRST_DOMAIN,
                 self::ATTR_STOCK => null,
                 self::ATTR_DESCRIPTION => null,
                 self::ATTR_EXTERNAL_ID => null,
@@ -109,7 +121,7 @@ class StoreDataFixture extends AbstractReferenceFixture implements DependentFixt
             ], [
                 self::ATTR_NAME => 'Žilina',
                 self::ATTR_IS_DEFAULT => false,
-                self::ATTR_IS_ENABLED_BY_DOMAIN => [1 => false, 2 => true],
+                self::ATTR_IS_ENABLED_BY_DOMAIN => self::ENABLED_SECOND_DOMAIN,
                 self::ATTR_STOCK => $this->getReference(StocksDataFixture::STOCK_PREFIX . 14),
                 self::ATTR_DESCRIPTION => null,
                 self::ATTR_EXTERNAL_ID => null,
@@ -137,7 +149,12 @@ class StoreDataFixture extends AbstractReferenceFixture implements DependentFixt
 
         $storeData->name = $demoRow[self::ATTR_NAME];
         $storeData->isDefault = $demoRow[self::ATTR_IS_DEFAULT];
-        $storeData->isEnabledOnDomains = $demoRow[self::ATTR_IS_ENABLED_BY_DOMAIN];
+
+        foreach ($this->domain->getAllIncludingDomainConfigsWithoutDataCreated() as $domainConfig) {
+            $domainId = $domainConfig->getId();
+            $storeData->isEnabledOnDomains[$domainId] = $demoRow[self::ATTR_IS_ENABLED_BY_DOMAIN][$domainId] ?? false;
+        }
+
         $storeData->stock = $demoRow[self::ATTR_STOCK];
         $storeData->description = $demoRow[self::ATTR_DESCRIPTION];
         $storeData->externalId = $demoRow[self::ATTR_EXTERNAL_ID];
