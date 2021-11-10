@@ -1,129 +1,73 @@
-import { ProductDetailApiType, ProductDetailImageType, ProductDetailType } from 'components/Pages/ProductDetail/types';
-import { ProductItemApiType, SliderProductItemType } from 'components/Blocks/Product/types';
-import { ImageApiType } from 'components/Basic/Image/types';
-import { mapProductPriceData } from './Products';
-
-// @todo - the `sliderProductQuery` is the same as fragment SliderProduct
-export const sliderProductQuery = `
-    __typename
-    uuid
-    slug
-    name
-    stockQuantity
-    flags {
-        name
-        rgbColor
-    }
-    images (sizes: "list") {
-        sizes {
-            url
-            width
-            height
-        }
-    }
-    availability {
-        name
-    }
-    price {
-        priceWithVat
-        priceWithoutVat
-        vatAmount
-        isPriceFrom
-    }
-    availableStoresCount
-    exposedStoresCount
-`;
-
-export const productDetailBody = `
-    uuid
-    name
-    namePrefix
-    nameSuffix
-    description
-    catalogNumber
-    stockQuantity
-    price {
-        priceWithVat
-        priceWithoutVat
-        vatAmount
-        isPriceFrom
-    }
-    images (sizes: ["default","galleryThumbnail"]) {
-        position
-        type
-        sizes {
-            size
-            url
-            width
-            height
-        }
-    }
-    availability {
-        name
-        status
-    }
-    storeAvailabilities {
-        storeName
-        exposed
-        availabilityInformation
-        availabilityStatus
-    }
-    breadcrumb {
-        name
-        slug
-    }
-    availableStoresCount
-    exposedStoresCount
-    accessories {
-        ${sliderProductQuery}
-    }
-    parameters {
-        uuid
-        name
-        visible
-        values {
-            uuid
-            text
-        }
-    }
-`;
+import { mapProductPriceData, mapSliderProductApiData } from './Products';
+import { ParameterFragmentApi, ProductDetailFragmentApi, ProductDetailImagesFragmentApi } from 'graphql/generated';
+import { ProductDetailImageType, ProductDetailType, ProductParameterType } from 'components/Pages/ProductDetail/types';
 
 export const mapProductDetailApiData = (
-    productDetailApiData: ProductDetailApiType,
+    productDetailApiData: ProductDetailFragmentApi,
     currencyCode: string,
 ): ProductDetailType => {
     return {
         ...productDetailApiData,
+        __typename:
+            productDetailApiData?.__typename !== undefined && productDetailApiData.__typename !== null
+                ? productDetailApiData.__typename
+                : 'RegularProduct',
+        availability: {
+            name: productDetailApiData.availability.name,
+            status: productDetailApiData.availability.status === 'in-stock' ? 'in-stock' : 'out-of-stock',
+        },
+        storeAvailabilities: productDetailApiData.storeAvailabilities.map((storeAvailabilityApiData) => {
+            return {
+                ...storeAvailabilityApiData,
+                availabilityStatus:
+                    storeAvailabilityApiData.availabilityStatus === 'in-stock' ? 'in-stock' : 'out-of-stock',
+            };
+        }),
+        namePrefix:
+            productDetailApiData.namePrefix !== undefined && productDetailApiData.namePrefix !== null
+                ? productDetailApiData.namePrefix
+                : '',
+        nameSuffix:
+            productDetailApiData.nameSuffix !== undefined && productDetailApiData.nameSuffix !== null
+                ? productDetailApiData.nameSuffix
+                : '',
+        description:
+            productDetailApiData.description !== undefined && productDetailApiData.description !== null
+                ? productDetailApiData.description
+                : '',
         price: mapProductPriceData(productDetailApiData.price, currencyCode),
-        accessories: mapSliderProductApiData(productDetailApiData.accessories, currencyCode),
-        parameters: productDetailApiData.parameters.filter((parameter) => parameter.visible),
+        accessories:
+            productDetailApiData.accessories !== undefined && productDetailApiData.accessories !== null
+                ? mapSliderProductApiData(productDetailApiData.accessories, currencyCode)
+                : [],
+        parameters: mapParametersApiData(productDetailApiData.parameters),
         images: mapProductDetailImages(productDetailApiData.images),
     };
 };
 
-const mapProductDetailImages = (images: ImageApiType[]) => {
+const mapParametersApiData = (apiData: ParameterFragmentApi[]): ProductParameterType[] => {
+    const mappedParameters = [];
+    for (const parameterApiData of apiData) {
+        mappedParameters.push({
+            ...parameterApiData,
+        });
+    }
+
+    return mappedParameters;
+};
+
+const mapProductDetailImages = (images: ProductDetailImagesFragmentApi['images']) => {
     const mappedImages = [];
     for (const image of images) {
         const mappedImage: ProductDetailImageType = {};
         for (const imageSize of image.sizes) {
             mappedImage[imageSize.size] = {
                 ...imageSize,
+                width: imageSize.width !== undefined && imageSize.width !== null ? imageSize.width : 0,
+                height: imageSize.height !== undefined && imageSize.height !== null ? imageSize.height : 0,
             };
         }
         mappedImages.push(mappedImage);
     }
     return mappedImages;
-};
-
-const mapSliderProductApiData = (apiData: ProductItemApiType[], currencyCode: string): SliderProductItemType[] => {
-    return apiData.map((apiProduct) => {
-        return {
-            ...apiProduct,
-            detailSlug: apiProduct.slug,
-            image: apiProduct.images.length === 0 ? null : apiProduct.images[0].sizes[0],
-            price: mapProductPriceData(apiProduct.price, currencyCode),
-            isMainVariant: apiProduct.__typename === 'MainVariant',
-            availability: apiProduct.availability.name,
-        };
-    });
 };

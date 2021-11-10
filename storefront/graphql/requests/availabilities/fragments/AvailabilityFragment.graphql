@@ -1,0 +1,4 @@
+fragment AvailabilityFragment on Availability{
+    name
+    status
+}

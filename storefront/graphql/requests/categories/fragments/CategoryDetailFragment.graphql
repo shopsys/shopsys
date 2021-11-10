@@ -1,0 +1,28 @@
+fragment CategoryDetailFragment on Category {
+    uuid
+    slug
+    name
+    seoH1
+    ...BreadcrumbFragment
+    children {
+        ...CategoryPreviewFragment
+    }
+    linkedCategories {
+        ...CategoryPreviewFragment
+    }
+    products(orderingMode: $sortingMode, after: $endCursorForPagination){
+        totalCount
+        pageInfo {
+            ...PageInfoFragment
+        }
+        edges {
+            node {
+                ...ProductListFragment
+            }
+        }
+    }
+    readyCategorySeoMixLinks {
+        name
+        slug
+    }
+}

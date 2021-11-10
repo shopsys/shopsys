@@ -16,3 +16,4 @@ generates:
             withComponent: false
             scalars:
                 Money: string
+                Uuid: string

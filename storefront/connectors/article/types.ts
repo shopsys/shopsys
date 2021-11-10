@@ -1,7 +1,7 @@
 import { BreadcrumbItemType } from 'connectors/breadcrumb/Breadcrumb';
 
 export type ArticleDetailType = {
-    __typename: string;
+    __typename: 'Article';
     slug: string;
     uuid: string;
     placement: string;

@@ -71,22 +71,6 @@ export type ProductItemApiType = {
     exposedStoresCount: number;
 };
 
-export type ListedProductItemApiType = {
-    __typename: string;
-    uuid: string;
-    slug: string;
-    name: string;
-    flags: FlagType[];
-    images: ImageApiType[];
-    stockQuantity: number;
-    availability: {
-        name: string;
-    };
-    price: ProductPriceApiType;
-    availableStoresCount: number;
-    exposedStoresCount: number;
-};
-
 export type ListedProductEdgesType = {
     edges: {
         node: ListedProductItemType;

@@ -809,8 +809,8 @@ type MainVariant implements Product & Breadcrumb & Slug {
   isSellingDenied: Boolean!
   orderingPriority: Int!
   description: String
-  accessories: [Product]
-  parameters: [Parameter]!
+  accessories: [Product!]!
+  parameters: [Parameter!]!
 
   """Seo first level heading of product"""
   seoH1: String
@@ -1478,8 +1478,8 @@ interface Product {
   isSellingDenied: Boolean!
   orderingPriority: Int!
   description: String
-  accessories: [Product]
-  parameters: [Parameter]!
+  accessories: [Product!]!
+  parameters: [Parameter!]!
 
   """Seo first level heading of product"""
   seoH1: String
@@ -1934,8 +1934,8 @@ type RegularProduct implements Product & Breadcrumb & Slug {
   isSellingDenied: Boolean!
   orderingPriority: Int!
   description: String
-  accessories: [Product]
-  parameters: [Parameter]!
+  accessories: [Product!]!
+  parameters: [Parameter!]!
 
   """Seo first level heading of product"""
   seoH1: String
@@ -2235,8 +2235,8 @@ type Variant implements Product & Breadcrumb & Slug {
   isSellingDenied: Boolean!
   orderingPriority: Int!
   description: String
-  accessories: [Product]
-  parameters: [Parameter]!
+  accessories: [Product!]!
+  parameters: [Parameter!]!
 
   """Seo first level heading of product"""
   seoH1: String

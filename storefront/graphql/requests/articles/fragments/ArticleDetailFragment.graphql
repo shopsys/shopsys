@@ -1,0 +1,8 @@
+fragment ArticleDetailFragment on Article {
+    uuid
+    slug
+    placement
+    articleName: name
+    text
+    ...BreadcrumbFragment
+}

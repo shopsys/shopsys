@@ -1,65 +1,43 @@
-import { mapProductDetailApiData, productDetailBody } from 'connectors/products/ProductDetail';
-import { mapStoreDetailApiData, storeDetailBody } from 'connectors/stores/StoreDetail';
-import { articleDetailBody } from 'connectors/article/ArticleDetail';
 import { ArticleDetailType } from 'connectors/article/types';
-import { categoryDetailBody } from 'connectors/categories/CategoryDetail';
 import { CategoryDetailType } from 'components/Pages/CategoryDetail/types';
+import { mapArticleDetailApiData } from 'connectors/article/ArticleDetail';
 import { mapCategoryDetailData } from 'connectors/categories/Categories';
+import { mapProductDetailApiData } from 'connectors/products/ProductDetail';
+import { mapStoreDetailApiData } from 'connectors/stores/StoreDetail';
 import { ProductDetailType } from 'components/Pages/ProductDetail/types';
 import { StoreDetailType } from 'connectors/stores/types';
-import { useFetchQuery } from 'hooks/graphQl/UseFetchQuery';
+import { useQueryError } from 'hooks/graphQl/UseQueryError';
 import { useShopsysSelector } from 'redux/main';
-
-export function friendlyUrlQuery(slug: string, categoryDetailSort: string, endCursorForPagination: string): string {
-    const categoryDetailBodyWithSortAndPagination = categoryDetailBody(categoryDetailSort, endCursorForPagination);
-
-    return `
-        query slug {
-            slug(slug: "${slug}") {
-                __typename
-                slug
-                ... on Product {
-                    ${productDetailBody}
-                }
-                ... on Category {
-                    ${categoryDetailBodyWithSortAndPagination}
-                }
-                ... on Store {
-                    ${storeDetailBody}
-                }
-                ... on Article {
-                    ${articleDetailBody}
-                }
-            }
-        }
-    `;
-}
-
-export const isProductType = (typename: string): boolean => {
-    return ['RegularProduct', 'MainVariant', 'Variant'].includes(typename);
-};
+import { useSlugQueryApi } from 'graphql/generated';
 
 export function getFriendlyUrlResolvedData(
     slug: string,
 ): ProductDetailType | CategoryDetailType | StoreDetailType | ArticleDetailType | undefined | null {
     const categoryDetailSort = useShopsysSelector((state) => state.user.sort);
     const endCursorForPagination = useShopsysSelector((state) => state.user.pagination.paginationCursor);
-    const result = useFetchQuery({
-        query: friendlyUrlQuery(slug, categoryDetailSort, endCursorForPagination),
+    const [{ data, error }] = useSlugQueryApi({
+        variables: { slug, sortingMode: categoryDetailSort, endCursorForPagination },
     });
+    useQueryError(error);
     const currentDomainConfig = useShopsysSelector((state) => state.domain);
 
-    if (result?.data?.slug === null || result?.data?.slug === undefined) {
+    if (data?.slug === null || data?.slug === undefined) {
         return undefined;
     }
 
-    if (isProductType(result.data.slug.__typename)) {
-        return mapProductDetailApiData(result.data.slug, currentDomainConfig.currencyCode);
-    } else if (result.data.slug.__typename === 'Category') {
-        return mapCategoryDetailData(result.data.slug, currentDomainConfig.currencyCode);
-    } else if (result.data.slug.__typename === 'Store') {
-        return mapStoreDetailApiData(result.data.slug);
+    if (
+        data.slug.__typename === 'RegularProduct' ||
+        data.slug.__typename === 'MainVariant' ||
+        data.slug.__typename === 'Variant'
+    ) {
+        return mapProductDetailApiData(data.slug, currentDomainConfig.currencyCode);
+    } else if (data.slug.__typename === 'Category') {
+        return mapCategoryDetailData(data.slug, currentDomainConfig.currencyCode);
+    } else if (data.slug.__typename === 'Store') {
+        return mapStoreDetailApiData(data.slug);
+    } else if (data.slug.__typename === 'Article') {
+        return mapArticleDetailApiData(data.slug);
     }
 
-    return result.data.slug;
+    return undefined;
 }

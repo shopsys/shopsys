@@ -1,0 +1,30 @@
+fragment ProductDetailFragment on Product {
+    uuid
+    slug
+    name
+    namePrefix
+    nameSuffix
+    description
+    catalogNumber
+    stockQuantity
+    ...ProductPriceFragment
+    ...ProductDetailImagesFragment
+    availability {
+        ...AvailabilityFragment
+    }
+    storeAvailabilities {
+        storeName
+        exposed
+        availabilityInformation
+        availabilityStatus
+    }
+    ...BreadcrumbFragment
+    availableStoresCount
+    exposedStoresCount
+    accessories {
+        ...SliderProductFragment
+    }
+    parameters {
+        ...ParameterFragment
+    }
+}
