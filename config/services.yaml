@@ -540,6 +540,9 @@ services:
     Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainFacade:
         alias: App\Model\Product\ProductOnCurrentDomainFacade
 
+    Shopsys\FrameworkBundle\Model\Product\Filter\BrandFilterChoiceRepository:
+        alias: App\Model\Product\Filter\BrandFilterChoiceRepository
+
     Shopsys\FrameworkBundle\Model\Product\Filter\FlagFilterChoiceRepository:
         alias: App\Model\Product\Filter\FlagFilterChoiceRepository
 
@@ -949,3 +952,9 @@ services:
 
     Shopsys\FrameworkBundle\Component\Domain\Multidomain\MultidomainEntityClassProviderInterface:
         alias: App\Model\MultidomainEntityClassProvider
+
+    Shopsys\FrameworkBundle\Model\Country\CountryRepository:
+        alias: App\Model\Country\CountryRepository
+
+    Shopsys\FrontendApiBundle\Model\Category\CategoryRepository:
+        alias: App\FrontendApi\Model\Category\CategoryRepository

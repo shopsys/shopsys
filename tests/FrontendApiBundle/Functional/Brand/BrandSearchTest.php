@@ -21,8 +21,8 @@ class BrandSearchTest extends GraphQlTestCase
         $expected = [
             'data' => [
                 'brandSearch' => [
-                    ['name' => t('DeLonghi', [], 'dataFixtures', $this->getFirstDomainLocale())],
                     ['name' => t('Defender', [], 'dataFixtures', $this->getFirstDomainLocale())],
+                    ['name' => t('DeLonghi', [], 'dataFixtures', $this->getFirstDomainLocale())],
                 ],
             ],
         ];

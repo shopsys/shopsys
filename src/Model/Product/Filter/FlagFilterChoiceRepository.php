@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\Product\Filter;
 
+use App\Component\Doctrine\OrderByCollationHelper;
 use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Model\Category\Category;
@@ -15,9 +16,6 @@ use Shopsys\FrameworkBundle\Model\Product\Flag\Flag;
 /**
  * @property \App\Model\Product\ProductRepository $productRepository
  * @method __construct(\App\Model\Product\ProductRepository $productRepository)
- * @method \App\Model\Product\Flag\Flag[] getVisibleFlagsByProductsQueryBuilder(\Doctrine\ORM\QueryBuilder $productsQueryBuilder, string $locale)
- * @method \App\Model\Product\Flag\Flag[] getFlagFilterChoicesForBrand(int $domainId, \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup, string $locale, \App\Model\Product\Brand\Brand $brand)
- * @method \App\Model\Product\Flag\Flag[] getFlagFilterChoicesForAll(int $domainId, \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup, string $locale)
  */
 class FlagFilterChoiceRepository extends BaseFlagFilterChoiceRepository
 {
@@ -114,7 +112,39 @@ class FlagFilterChoiceRepository extends BaseFlagFilterChoiceRepository
             ->from(Flag::class, 'f')
             ->join('f.translations', 'ft', Join::WITH, 'ft.locale = :locale')
             ->andWhere($flagsQueryBuilder->expr()->exists($clonedProductsQueryBuilder))
-            ->orderBy('ft.name', 'asc')
+            ->orderBy(OrderByCollationHelper::createOrderByForLocale('ft.name', $locale), 'asc')
+            ->setParameter('locale', $locale);
+
+        foreach ($clonedProductsQueryBuilder->getParameters() as $parameter) {
+            $flagsQueryBuilder->setParameter($parameter->getName(), $parameter->getValue());
+        }
+
+        return $flagsQueryBuilder->getQuery()->execute();
+    }
+
+    /**
+     * @param \Doctrine\ORM\QueryBuilder $productsQueryBuilder
+     * @param string $locale
+     * @return \App\Model\Product\Flag\Flag[]
+     */
+    protected function getVisibleFlagsByProductsQueryBuilder(QueryBuilder $productsQueryBuilder, $locale): array
+    {
+        $clonedProductsQueryBuilder = clone $productsQueryBuilder;
+
+        $clonedProductsQueryBuilder
+            ->select('1')
+            ->join('p.flags', 'pf')
+            ->andWhere('pf.id = f.id')
+            ->andWhere('f.visible = true')
+            ->resetDQLPart('orderBy');
+
+        $flagsQueryBuilder = $productsQueryBuilder->getEntityManager()->createQueryBuilder();
+        $flagsQueryBuilder
+            ->select('f, ft')
+            ->from(Flag::class, 'f')
+            ->join('f.translations', 'ft', Join::WITH, 'ft.locale = :locale')
+            ->andWhere($flagsQueryBuilder->expr()->exists($clonedProductsQueryBuilder))
+            ->orderBy(OrderByCollationHelper::createOrderByForLocale('ft.name', $locale), 'asc')
             ->setParameter('locale', $locale);
 
         foreach ($clonedProductsQueryBuilder->getParameters() as $parameter) {

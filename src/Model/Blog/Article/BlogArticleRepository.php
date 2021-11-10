@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\Blog\Article;
 
+use App\Component\Doctrine\OrderByCollationHelper;
 use App\Model\Blog\Article\Exception\BlogArticleNotFoundException;
 use App\Model\Blog\Category\BlogCategory;
 use App\Model\Product\Product;
@@ -298,7 +299,7 @@ class BlogArticleRepository
             ->innerJoin('ba.products', 'p')
             ->andWhere('p = :product')
             ->setParameter('product', $product)
-            ->orderBy('bat.name', 'ASC')
+            ->orderBy(OrderByCollationHelper::createOrderByForLocale('bat.name', $locale), 'ASC')
             ->getQuery()
             ->getResult();
     }

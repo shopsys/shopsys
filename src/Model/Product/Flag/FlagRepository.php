@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\Product\Flag;
 
+use App\Component\Doctrine\OrderByCollationHelper;
 use Doctrine\ORM\Query\Expr\Join;
 use Shopsys\FrameworkBundle\Model\Product\Flag\Exception\FlagNotFoundException;
 use Shopsys\FrameworkBundle\Model\Product\Flag\FlagRepository as BaseFlagRepository;
@@ -56,7 +57,7 @@ class FlagRepository extends BaseFlagRepository
             ->join('f.translations', 'ft', Join::WITH, 'ft.locale = :locale')
             ->where('f.id IN (:flagsIds)')
             ->andWhere('f.visible = true')
-            ->orderBy('ft.name', 'asc')
+            ->orderBy(OrderByCollationHelper::createOrderByForLocale('ft.name', $locale), 'asc')
             ->setParameter('flagsIds', $flagsIds)
             ->setParameter('locale', $locale);
 
@@ -75,7 +76,7 @@ class FlagRepository extends BaseFlagRepository
             ->join('f.translations', 'ft', Join::WITH, 'ft.locale = :locale')
             ->where('f.id = :flagId')
             ->andWhere('f.visible = true')
-            ->orderBy('ft.name', 'asc')
+            ->orderBy(OrderByCollationHelper::createOrderByForLocale('ft.name', $locale), 'asc')
             ->setParameter('flagId', $flagId)
             ->setParameter('locale', $locale);
 
@@ -92,7 +93,7 @@ class FlagRepository extends BaseFlagRepository
             ->select('f, ft')
             ->join('f.translations', 'ft', Join::WITH, 'ft.locale = :locale')
             ->where('f.visible = true')
-            ->orderBy('ft.name', 'asc')
+            ->orderBy(OrderByCollationHelper::createOrderByForLocale('ft.name', $locale), 'asc')
             ->setParameter('locale', $locale);
 
         return $flagsQueryBuilder->getQuery()->getResult();
