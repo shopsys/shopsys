@@ -53,7 +53,7 @@ class CustomerController extends FrontBaseController
     private $customerUserUpdateDataFactory;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressFacade
+     * @var \App\Model\Customer\DeliveryAddressFacade
      */
     private DeliveryAddressFacade $deliveryAddressFacade;
 
@@ -64,7 +64,7 @@ class CustomerController extends FrontBaseController
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemPriceCalculation $orderItemPriceCalculation
      * @param \Shopsys\FrameworkBundle\Model\Security\LoginAsUserFacade $loginAsUserFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactoryInterface $customerUserUpdateDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressFacade $deliveryAddressFacade
+     * @param \App\Model\Customer\DeliveryAddressFacade $deliveryAddressFacade
      */
     public function __construct(
         CustomerUserFacade $customerUserFacade,

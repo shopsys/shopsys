@@ -922,6 +922,12 @@ services:
     Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressDataFactory:
         alias: App\Model\Customer\DeliveryAddressDataFactory
 
+    Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressFacade:
+        alias: App\Model\Customer\DeliveryAddressFacade
+
+    Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressRepository:
+        alias: App\Model\Customer\DeliveryAddressRepository
+
     App\Component\Redis\RedisFacade:
         arguments:
             $allClients: !tagged snc_redis.client

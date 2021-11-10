@@ -915,6 +915,9 @@ type Mutation {
 
   """Request access to personal data"""
   RequestPersonalDataAccess(input: PersonalDataAccessRequestInput!): PersonalDataPage!
+
+  """Delete delivery address by Uuid"""
+  DeleteDeliveryAddress(deliveryAddressUuid: Uuid!): [DeliveryAddress!]!
 }
 
 """Represents a navigation structure item"""
