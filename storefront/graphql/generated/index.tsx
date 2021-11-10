@@ -2176,6 +2176,13 @@ export type NewsletterSubscribeMutationVariablesApi = Exact<{
 
 export type NewsletterSubscribeMutationApi = { __typename?: 'Mutation', NewsletterSubscribe: boolean };
 
+export type PasswordRecoveryMutationVariablesApi = Exact<{
+  email: Scalars['String'];
+}>;
+
+
+export type PasswordRecoveryMutationApi = { __typename?: 'Mutation', RequestPasswordRecovery: string };
+
 type ImageListFragment_MainVariant_Api = { __typename?: 'MainVariant', images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }> };
 
 type ImageListFragment_RegularProduct_Api = { __typename?: 'RegularProduct', images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }> };
@@ -2402,6 +2409,15 @@ export const NewsletterSubscribeMutationDocumentApi = gql`
 
 export function useNewsletterSubscribeMutationApi() {
   return Urql.useMutation<NewsletterSubscribeMutationApi, NewsletterSubscribeMutationVariablesApi>(NewsletterSubscribeMutationDocumentApi);
+};
+export const PasswordRecoveryMutationDocumentApi = gql`
+    mutation PasswordRecoveryMutation($email: String!) {
+  RequestPasswordRecovery(email: $email)
+}
+    `;
+
+export function usePasswordRecoveryMutationApi() {
+  return Urql.useMutation<PasswordRecoveryMutationApi, PasswordRecoveryMutationVariablesApi>(PasswordRecoveryMutationDocumentApi);
 };
 export const PromotedProductsQueryDocumentApi = gql`
     query PromotedProductsQuery {
