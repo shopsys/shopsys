@@ -43,7 +43,7 @@ const Stores: FC = () => {
         <SimpleLayout
             standardWidth={true}
             heading={t('Stores')}
-            breadcrumb={[{ __typename: 'StoreEdge', name: t('Department stores'), slug: '' }]}
+            breadcrumb={[{ name: t('Department stores'), slug: '' }]}
         >
             <StoresStyled>
                 <MapStyled>

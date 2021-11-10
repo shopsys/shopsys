@@ -49,7 +49,7 @@ const ResetPassword: FC = () => {
     return (
         <SimpleLayout
             heading={t('Forgotten password')}
-            breadcrumb={[{ __typename: 'Link', name: t('Forgotten password'), slug: resetPasswordUrl }]}
+            breadcrumb={[{ name: t('Forgotten password'), slug: resetPasswordUrl }]}
         >
             <FormProvider {...formProviderMethods}>
                 <form onSubmit={formProviderMethods.handleSubmit(onResetPasswordHandler)}>
