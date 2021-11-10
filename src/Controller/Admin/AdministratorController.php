@@ -6,6 +6,7 @@ namespace App\Controller\Admin;
 
 use App\Model\Administrator\Administrator;
 use App\Model\Administrator\AdministratorTwoFactorAuthenticationFacade;
+use App\Model\Security\Roles;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Controller\Admin\AdministratorController as BaseAdministratorController;
 use Shopsys\FrameworkBundle\Model\Administrator\Activity\AdministratorActivityFacade;
@@ -64,6 +65,16 @@ class AdministratorController extends BaseAdministratorController
         );
 
         $this->administratorTwoFactorFacade = $administratorTwoFactorAuthenticationFacade;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function editAction(Request $request, int $id)
+    {
+        $this->denyAccessUnlessHimselfOrGranted($id);
+
+        return parent::editAction($request, $id);
     }
 
     /**
@@ -282,5 +293,17 @@ class AdministratorController extends BaseAdministratorController
         $formSendEmail = $formFactory->createNamed('formSendEmail');
         $formSendEmail->add('send', SubmitType::class, ['label' => t('Send me authentication code')]);
         return $formSendEmail;
+    }
+
+    /**
+     * @param int $administratorId
+     */
+    private function denyAccessUnlessHimselfOrGranted(int $administratorId): void
+    {
+        /** @var \App\Model\Administrator\Administrator $currentAdministrator */
+        $currentAdministrator = $this->getUser();
+        if ($currentAdministrator->getId() !== $administratorId) {
+            $this->denyAccessUnlessGranted(Roles::ROLE_ADMINISTRATOR_VIEW);
+        }
     }
 }

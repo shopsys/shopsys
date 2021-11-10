@@ -59,7 +59,6 @@ use Shopsys\FrameworkBundle\Twig\NumberFormatterExtension;
  * @property \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusRepository $orderStatusRepository
  * @property \App\Model\Order\Mail\OrderMailFacade $orderMailFacade
  * @property \App\Component\Setting\Setting $setting
- * @property \App\Model\Administrator\Security\AdministratorFrontSecurityFacade $administratorFrontSecurityFacade
  * @property \App\Model\Order\PromoCode\CurrentPromoCodeFacade $currentPromoCodeFacade
  * @property \App\Model\Cart\CartFacade $cartFacade
  * @property \App\Model\Order\Preview\OrderPreviewFactory $orderPreviewFactory
@@ -130,7 +129,7 @@ class OrderFacade extends BaseOrderFacade
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderHashGeneratorRepository $orderHashGeneratorRepository
      * @param \App\Component\Setting\Setting $setting
      * @param \Shopsys\FrameworkBundle\Model\Localization\Localization $localization
-     * @param \App\Model\Administrator\Security\AdministratorFrontSecurityFacade $administratorFrontSecurityFacade
+     * @param \Shopsys\FrameworkBundle\Model\Administrator\Security\AdministratorFrontSecurityFacade $administratorFrontSecurityFacade
      * @param \App\Model\Order\PromoCode\CurrentPromoCodeFacade $currentPromoCodeFacade
      * @param \App\Model\Cart\CartFacade $cartFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade $customerUserFacade

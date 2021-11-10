@@ -4,25 +4,25 @@ declare(strict_types=1);
 
 namespace App\Controller\Admin;
 
-use App\Model\Security\Roles;
+use App\Model\Security\MenuItemsGrantedRolesSetting;
 use Knp\Menu\ItemInterface;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\ConfigureMenuEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
+use Symfony\Component\Security\Core\Security;
 
 class SideMenuConfigurationSubscriber implements EventSubscriberInterface
 {
     /**
-     * @var \Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface
+     * @var \Symfony\Component\Security\Core\Security
      */
-    private AuthorizationCheckerInterface $authorizationChecker;
+    private Security $security;
 
     /**
-     * @param \Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface $authorizationChecker
+     * @param \Symfony\Component\Security\Core\Security $security
      */
-    public function __construct(AuthorizationCheckerInterface $authorizationChecker)
+    public function __construct(Security $security)
     {
-        $this->authorizationChecker = $authorizationChecker;
+        $this->security = $security;
     }
 
     /**
@@ -47,16 +47,7 @@ class SideMenuConfigurationSubscriber implements EventSubscriberInterface
     {
         $rootMenu = $event->getMenu();
         $rootMenu->addChild($this->createIntegrationsMenu($event));
-
-        if (!$this->authorizationChecker->isGranted(Roles::ROLE_CUSTOMER_CARE)) {
-            return;
-        }
-
-        $rootMenu->removeChild('products');
-        $rootMenu->removeChild('pricing');
-        $rootMenu->removeChild('marketing');
-        $rootMenu->removeChild('administrators');
-        $rootMenu->removeChild('settings');
+        $this->removeNotGrantedItemsFromMenu($rootMenu);
     }
 
     /**
@@ -220,5 +211,37 @@ class SideMenuConfigurationSubscriber implements EventSubscriberInterface
         $externalScriptsMenu->addChild('google_analytics', ['route' => 'admin_script_googleanalytics', 'label' => t('Google analytics')]);
 
         return $integrationsMenu;
+    }
+
+    /**
+     * @param \Knp\Menu\ItemInterface $rootMenu
+     */
+    public function removeNotGrantedItemsFromMenu(ItemInterface $rootMenu): void
+    {
+        foreach (MenuItemsGrantedRolesSetting::getGrantedRolesByMenuItems() as $menuItemPath => $grantedRoles) {
+            if (!$this->security->isGranted($grantedRoles)) {
+                $this->removeItemFromMenu($menuItemPath, $rootMenu);
+            }
+        }
+    }
+
+    /**
+     * @param string $itemToRemovePath
+     * @param \Knp\Menu\ItemInterface $rootMenu
+     */
+    private function removeItemFromMenu(string $itemToRemovePath, ItemInterface $rootMenu): void
+    {
+        $itemToRemovePathExploded = explode(MenuItemsGrantedRolesSetting::MENU_ITEM_PATH_SEPARATOR, $itemToRemovePath);
+        $itemToRemoveName = end($itemToRemovePathExploded);
+        foreach ($itemToRemovePathExploded as $itemName) {
+            if ($rootMenu === null) {
+                break;
+            }
+            if ($itemName === $itemToRemoveName) {
+                $rootMenu->removeChild($itemName);
+                break;
+            }
+            $rootMenu = $rootMenu->getChild($itemName);
+        }
     }
 }

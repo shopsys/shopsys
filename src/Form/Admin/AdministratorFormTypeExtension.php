@@ -4,17 +4,33 @@ declare(strict_types=1);
 
 namespace App\Form\Admin;
 
+use App\Model\Administrator\Administrator;
 use App\Model\Security\Roles;
 use Shopsys\FrameworkBundle\Form\Admin\Administrator\AdministratorFormType;
+use Shopsys\FrameworkBundle\Form\DisplayOnlyType;
 use Symfony\Component\Form\AbstractTypeExtension;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Validator\Constraints;
 
 class AdministratorFormTypeExtension extends AbstractTypeExtension
 {
+    /**
+     * @var \Symfony\Component\Security\Core\Security
+     */
+    private Security $security;
+
+    /**
+     * @param \Symfony\Component\Security\Core\Security $security
+     */
+    public function __construct(Security $security)
+    {
+        $this->security = $security;
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -43,13 +59,32 @@ class AdministratorFormTypeExtension extends AbstractTypeExtension
             'label' => t('Password'),
         ]);
 
-        $builderSettingsGroup->add('roles', ChoiceType::class, [
-            'required' => false,
-            'choices' => Roles::AVAILABLE_ADMINISTRATOR_ROLES,
-            'placeholder' => t('-- Vyber roli --'),
-            'multiple' => true,
-            'label' => t('Role'),
-        ]);
+        if ($this->security->isGranted(Roles::ROLE_ADMINISTRATOR_FULL)) {
+            $builderSettingsGroup->add('roles', ChoiceType::class, [
+                'required' => false,
+                'choices' => Roles::getAvailableAdministratorRolesChoices(),
+                'placeholder' => t('-- Vyber roli --'),
+                'multiple' => true,
+                'label' => t('Role'),
+            ]);
+        } elseif ($options['administrator'] !== null) {
+            $builder->add('roles', DisplayOnlyType::class, [
+                'label' => t('Role'),
+                'data' => $this->getAdministratorRolesList($options['administrator']),
+            ]);
+        }
+    }
+
+    /**
+     * @param \App\Model\Administrator\Administrator $administrator
+     * @return string
+     */
+    private function getAdministratorRolesList(Administrator $administrator): string
+    {
+        $allAvailableRoleChoices = Roles::getAvailableAdministratorRolesChoices();
+        $intersection = array_intersect($allAvailableRoleChoices, $administrator->getRoles());
+
+        return implode(', ', array_keys($intersection));
     }
 
     /**

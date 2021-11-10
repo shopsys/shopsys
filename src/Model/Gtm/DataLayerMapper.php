@@ -69,7 +69,7 @@ class DataLayerMapper
     private $productCachedAttributesFacade;
 
     /**
-     * @var \App\Model\Administrator\Security\AdministratorFrontSecurityFacade
+     * @var \Shopsys\FrameworkBundle\Model\Administrator\Security\AdministratorFrontSecurityFacade
      */
     private $administratorFrontSecurityFacade;
 
@@ -88,7 +88,7 @@ class DataLayerMapper
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface $authorizationChecker
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductCachedAttributesFacade $productCachedAttributesFacade
-     * @param \App\Model\Administrator\Security\AdministratorFrontSecurityFacade $administratorFrontSecurityFacade
+     * @param \Shopsys\FrameworkBundle\Model\Administrator\Security\AdministratorFrontSecurityFacade $administratorFrontSecurityFacade
      * @param \App\Model\Product\Availability\ProductAvailabilityFacade $productAvailabilityFacade
      * @param \Shopsys\ReadModelBundle\Flag\FlagsProvider $flagsProvider
      */

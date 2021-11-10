@@ -19,3 +19,7 @@
 
 - [Products](Transfers/Akeneo/products.md)
 
+## Security
+
+- [Admin rights](Security/admin-rights.md)
+

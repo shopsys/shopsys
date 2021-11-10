@@ -97,10 +97,6 @@ class Administrator extends BaseAdministrator implements EmailTwoFactorInterface
         $this->transferIssuesLastSeenDateTime = $transferIssuesLastSeenDateTime;
     }
 
-    protected function checkRolesContainAdminRole(): void
-    {
-    }
-
     /**
      * @return bool
      */
