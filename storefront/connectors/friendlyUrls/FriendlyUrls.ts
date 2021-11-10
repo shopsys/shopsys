@@ -1,5 +1,7 @@
 import { mapProductDetailApiData, productDetailBody } from 'connectors/products/ProductDetail';
 import { mapStoreDetailApiData, storeDetailBody } from 'connectors/stores/StoreDetail';
+import { articleDetailBody } from 'connectors/article/ArticleDetail';
+import { ArticleDetailType } from 'connectors/article/types';
 import { categoryDetailBody } from 'connectors/categories/CategoryDetail';
 import { CategoryDetailType } from 'components/Pages/CategoryDetail/types';
 import { mapCategoryDetailData } from 'connectors/categories/Categories';
@@ -25,6 +27,9 @@ export function friendlyUrlQuery(slug: string, categoryDetailSort: string, endCu
                 ... on Store {
                     ${storeDetailBody}
                 }
+                ... on Article {
+                    ${articleDetailBody}
+                }
             }
         }
     `;
@@ -36,10 +41,12 @@ export const isProductType = (typename: string): boolean => {
 
 export function getFriendlyUrlResolvedData(
     slug: string,
-): ProductDetailType | CategoryDetailType | StoreDetailType | undefined | null {
+): ProductDetailType | CategoryDetailType | StoreDetailType | ArticleDetailType | undefined | null {
     const categoryDetailSort = useShopsysSelector((state) => state.user.sort);
     const endCursorForPagination = useShopsysSelector((state) => state.user.pagination.paginationCursor);
-    const result = useFetchQuery({ query: friendlyUrlQuery(slug, categoryDetailSort, endCursorForPagination) });
+    const result = useFetchQuery({
+        query: friendlyUrlQuery(slug, categoryDetailSort, endCursorForPagination),
+    });
     const currentDomainConfig = useShopsysSelector((state) => state.domain);
 
     if (result?.data?.slug === null || result?.data?.slug === undefined) {

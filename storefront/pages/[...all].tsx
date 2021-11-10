@@ -3,6 +3,8 @@ import { FC, useEffect } from 'react';
 import { friendlyUrlQuery, getFriendlyUrlResolvedData, isProductType } from 'connectors/friendlyUrls/FriendlyUrls';
 import { initServerSideProps, ServerSidePropsType } from 'helpers/InitServerSideProps';
 import { nextReduxWrapper, useShopsysDispatch, useShopsysSelector } from 'redux/main';
+import ArticleDetailPage from 'components/Pages/Article';
+import { ArticleDetailType } from 'connectors/article/types';
 import Breadcrumbs from 'components/Layout/Breadcrumbs';
 import CategoryDetailPage from 'components/Pages/CategoryDetail';
 import { CategoryDetailType } from 'components/Pages/CategoryDetail/types';
@@ -22,21 +24,19 @@ const FriendlyUrlPage: FC<ServerSidePropsType> = () => {
     const router = useRouter();
     const dispatch = useShopsysDispatch();
     const categoryDetailSortQuery = router.query.sort as string;
-    const categoryDetailPageQuery = router.query.page as string;
+    const paginationPageQuery = router.query.page as string;
     const categoryDetailSortState = useShopsysSelector((state) => state.user.sort);
     const categoryDetailSort = getCategoryDetailSort(
         typeof categoryDetailSortQuery !== 'undefined' ? categoryDetailSortQuery : categoryDetailSortState,
     );
     const updatedPagination = GetNewPagination(
-        typeof categoryDetailPageQuery !== 'undefined'
-            ? Number(categoryDetailPageQuery)
-            : initialState.pagination.currentPage,
+        typeof paginationPageQuery !== 'undefined' ? Number(paginationPageQuery) : initialState.pagination.currentPage,
     );
 
     useEffect(() => {
         dispatch(userActions.setSort({ sort: categoryDetailSort as SortType }));
         dispatch(userActions.setPagination({ ...updatedPagination }));
-    }, [categoryDetailSortQuery, categoryDetailPageQuery]);
+    }, [categoryDetailSortQuery, paginationPageQuery]);
 
     const data = getFriendlyUrlResolvedData(getUrlWithoutGetParameters(router.asPath));
     if (data === null || data === undefined) {
@@ -53,13 +53,15 @@ const FriendlyUrlPage: FC<ServerSidePropsType> = () => {
     );
 };
 
-function renderContent(data: ProductDetailType | CategoryDetailType | StoreDetailType) {
+function renderContent(data: ProductDetailType | CategoryDetailType | StoreDetailType | ArticleDetailType) {
     if (isProductType(data.__typename)) {
         return <ProductDetailPage product={data as ProductDetailType} />;
     } else if (data.__typename === 'Category') {
         return <CategoryDetailPage category={data as CategoryDetailType} />;
     } else if (data.__typename === 'Store') {
         return <StoreDetailPage store={data as StoreDetailType} />;
+    } else if (data.__typename === 'Article') {
+        return <ArticleDetailPage article={data as ArticleDetailType} />;
     }
 
     return <DefaultErrorPage statusCode={404} />;
@@ -69,6 +71,7 @@ export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) =>
     const categoryDetailSort = getCategoryDetailSort(context.query.sort as string);
     const updatedPagination = GetNewPagination(Number(context.query.page));
     initDomainConfig(context, store);
+
     return initServerSideProps(context, store, [
         NavigationQueryDocumentApi,
         friendlyUrlQuery(
