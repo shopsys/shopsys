@@ -15,6 +15,7 @@ import Checkbox from 'components/Forms/Checkbox';
 import ChoiceFormLine from 'components/Forms/Lib/ChoiceFormLine';
 import { contactInformationActions } from 'redux/slices/contactInformation';
 import ErrorPopup from 'components/Forms/Lib/ErrorPopup';
+import Form from 'components/Forms/Form';
 import FormLine from 'components/Forms/Lib/FormLine';
 import FormLineError from 'components/Forms/Lib/FormLineError';
 import { getRegistrationAfterOrderFormResolver } from './RegistrationAfterOrderFormResolver';
@@ -111,7 +112,7 @@ const Registration: FC = () => {
                     </RegistrationMessageColumnStyled>
                     <RegistrationFormColumnStyled>
                         <RegistrationFormStyled>
-                            <form onSubmit={formProviderMethods.handleSubmit(onRegistrationSubmitHandler)} noValidate>
+                            <Form onSubmit={formProviderMethods.handleSubmit(onRegistrationSubmitHandler)} noValidate>
                                 <FormProvider {...formProviderMethods}>
                                     <Controller
                                         name="password"
@@ -164,7 +165,7 @@ const Registration: FC = () => {
                                         {t('Create account')}
                                     </Button>
                                 </FormProvider>
-                            </form>
+                            </Form>
                         </RegistrationFormStyled>
                     </RegistrationFormColumnStyled>
                 </RegistrationStyled>

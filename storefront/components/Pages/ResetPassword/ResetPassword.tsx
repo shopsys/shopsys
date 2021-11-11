@@ -4,6 +4,7 @@ import Button from 'components/Forms/Button';
 import { ButtonWrapperStyled } from './ResetPassword.style';
 import ErrorPopup from 'components/Forms/Lib/ErrorPopup';
 import { FC } from 'react';
+import Form from 'components/Forms/Form';
 import FormLine from 'components/Forms/Lib/FormLine';
 import FormLineError from 'components/Forms/Lib/FormLineError';
 import { showSuccessMessage } from 'components/Helpers/Toasts';
@@ -56,7 +57,7 @@ const ResetPassword: FC = () => {
                 breadcrumb={[{ name: t('Forgotten password'), slug: resetPasswordUrl }]}
             >
                 <FormProvider {...formProviderMethods}>
-                    <form onSubmit={formProviderMethods.handleSubmit(onResetPasswordHandler)} noValidate>
+                    <Form onSubmit={formProviderMethods.handleSubmit(onResetPasswordHandler)} noValidate>
                         <Controller
                             name="email"
                             render={({ fieldState: { isTouched, invalid, error }, field }) => (
@@ -82,7 +83,7 @@ const ResetPassword: FC = () => {
                                 </>
                             )}
                         />
-                    </form>
+                    </Form>
                 </FormProvider>
             </SimpleLayout>
             <ErrorPopup
