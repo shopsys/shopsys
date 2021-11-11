@@ -15,12 +15,22 @@ module.exports = {
                 url: process.env.DOMAIN_HOSTNAME_1,
                 defaultLocale: 'cs',
                 currencyCode: 'CZK',
+                mapSetting: {
+                    latitude: 49.8175,
+                    longitude: 15.473,
+                    zoom: 7,
+                },
             },
             {
                 publicGraphqlEndpoint: process.env.PUBLIC_GRAPHQL_ENDPOINT_HOSTNAME_2,
                 url: process.env.DOMAIN_HOSTNAME_2,
                 defaultLocale: 'sk',
                 currencyCode: 'EUR',
+                mapSetting: {
+                    latitude: 48.669,
+                    longitude: 19.699,
+                    zoom: 7,
+                },
             },
         ],
         availableStaticUrls: {
@@ -31,6 +41,7 @@ module.exports = {
                 '/order/contact-information': '/objednavka/kontaktni-udaje',
                 '/reset-password': '/zapomenute-heslo',
                 '/order-confirmation': '/potvrzeni-objednavky',
+                '/stores': '/obchodni-domy',
             },
             [process.env.DOMAIN_HOSTNAME_2]: {
                 '/search': '/hladanie',
@@ -39,6 +50,7 @@ module.exports = {
                 '/order/contact-information': '/objednavka/kontaktne-udaje',
                 '/reset-password': '/zapomenute-heslo',
                 '/order-confirmation': '/potvrdenie-objednavky',
+                '/stores': '/obchodne-domy',
             },
         },
     },
@@ -69,6 +81,10 @@ module.exports = {
                 source: '/potvrzeni-objednavky',
                 destination: '/order-confirmation',
             },
+            {
+                source: '/obchodni-domy',
+                destination: '/stores',
+            },
             // Slovak URLs
             {
                 source: '/hladanie',
@@ -93,6 +109,10 @@ module.exports = {
             {
                 source: '/potvrdenie-objednavky',
                 destination: '/order-confirmation',
+            },
+            {
+                source: '/obchodne-domy',
+                destination: '/stores',
             },
         ];
     },

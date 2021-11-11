@@ -35,3 +35,12 @@ export type StoreDetailApiType = {
     locationLongitude: string | null;
     breadcrumb: BreadcrumbItemType[];
 };
+
+export type StoreListType = {
+    slug: string;
+    name: string;
+    locationLatitude: number | null;
+    locationLongitude: number | null;
+    address: string;
+    openingHours?: string | null;
+};

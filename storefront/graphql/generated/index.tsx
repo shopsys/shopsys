@@ -2248,6 +2248,11 @@ export type SliderItemsQueryVariablesApi = Exact<{ [key: string]: never; }>;
 
 export type SliderItemsQueryApi = { __typename?: 'Query', sliderItems: Array<{ __typename?: 'SliderItem', uuid: any, name: string, link: string, extendedText?: string | null | undefined, extendedTextLink?: string | null | undefined, images: Array<{ __typename?: 'Image', position?: number | null | undefined, sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }> }> };
 
+export type StoresQueryVariablesApi = Exact<{ [key: string]: never; }>;
+
+
+export type StoresQueryApi = { __typename?: 'Query', stores?: { __typename?: 'StoreConnection', edges?: Array<{ __typename?: 'StoreEdge', node?: { __typename?: 'Store', slug: string, uuid: any, name: string, locationLatitude?: string | null | undefined, locationLongitude?: string | null | undefined, city: string, street: string, postcode: string, openingHours?: string | null | undefined } | null | undefined } | null | undefined> | null | undefined } | null | undefined };
+
 
       export interface PossibleTypesResultData {
         possibleTypes: {
@@ -2544,4 +2549,27 @@ export const SliderItemsQueryDocumentApi = gql`
 
 export function useSliderItemsQueryApi(options: Omit<Urql.UseQueryArgs<SliderItemsQueryVariablesApi>, 'query'> = {}) {
   return Urql.useQuery<SliderItemsQueryApi>({ query: SliderItemsQueryDocumentApi, ...options });
+};
+export const StoresQueryDocumentApi = gql`
+    query StoresQuery {
+  stores {
+    edges {
+      node {
+        slug
+        uuid
+        name
+        locationLatitude
+        locationLongitude
+        city
+        street
+        postcode
+        openingHours
+      }
+    }
+  }
+}
+    `;
+
+export function useStoresQueryApi(options: Omit<Urql.UseQueryArgs<StoresQueryVariablesApi>, 'query'> = {}) {
+  return Urql.useQuery<StoresQueryApi>({ query: StoresQueryDocumentApi, ...options });
 };

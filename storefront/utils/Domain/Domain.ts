@@ -7,6 +7,11 @@ export type DomainConfigType = {
     publicGraphqlEndpoint: string;
     defaultLocale: string;
     currencyCode: string;
+    mapSetting: {
+        latitude: number;
+        longitude: number;
+        zoom: number;
+    };
 };
 
 function getCurrentDomainFromWindow(): string {

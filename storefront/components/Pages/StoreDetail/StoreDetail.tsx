@@ -7,11 +7,12 @@ import {
     InfoItemStyled,
     InfoItemSubtitleStyled,
     InfoStyled,
+    MapStyled,
     StoreDetailContentStyled,
     StoreDetailStyled,
 } from './StoreDetail.style';
 import { FC } from 'react';
-import GoogleMap from './GoogleMap';
+import GoogleMap from 'components/Basic/GoogleMap';
 import Heading from 'components/Basic/Heading';
 import { StoreDetailType } from 'connectors/stores/types';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
@@ -23,6 +24,9 @@ type StoreDetailProps = {
 
 const StoreDetail: FC<StoreDetailProps> = (props) => {
     const t = useTypedTranslationFunction();
+    const storeCoordinates = [
+        { locationLatitude: props.store.locationLatitude, locationLongitude: props.store.locationLongitude },
+    ];
 
     return (
         <Webline>
@@ -67,9 +71,15 @@ const StoreDetail: FC<StoreDetailProps> = (props) => {
                             </InfoItemStyled>
                         )}
                     </InfoStyled>
-                    {props.store.locationLatitude !== null && props.store.locationLongitude !== null && (
-                        <GoogleMap lat={props.store.locationLatitude} lng={props.store.locationLongitude} zoom={15} />
-                    )}
+                    <MapStyled>
+                        <GoogleMap
+                            lat={props.store.locationLatitude}
+                            lng={props.store.locationLongitude}
+                            zoom={15}
+                            markers={storeCoordinates}
+                            isDetail={true}
+                        />
+                    </MapStyled>
                     <ButtonBottomStyled>
                         <ButtonBottomItemStyled>
                             <ButtonBottomIconStyled icon="Chat" />

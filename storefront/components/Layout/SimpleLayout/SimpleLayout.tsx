@@ -8,6 +8,7 @@ import Webline from 'components/Layout/Webline';
 type SimpleLayoutProps = {
     heading: string;
     breadcrumb: BreadcrumbItemType[];
+    standardWidth?: true;
 };
 
 const SimpleLayout: FC<SimpleLayoutProps> = (props) => {
@@ -20,9 +21,12 @@ const SimpleLayout: FC<SimpleLayoutProps> = (props) => {
                 <Breadcrumbs key="breadcrumb" breadcrumb={props.breadcrumb} />
             </Webline>
             <Webline>
-                <SimpleLayoutStyled>
-                    <SimpleLayoutContentStyled>{props.children}</SimpleLayoutContentStyled>
-                </SimpleLayoutStyled>
+                {props.standardWidth !== true && (
+                    <SimpleLayoutStyled>
+                        <SimpleLayoutContentStyled>{props.children}</SimpleLayoutContentStyled>
+                    </SimpleLayoutStyled>
+                )}
+                {props.standardWidth === true && <>{props.children}</>}
             </Webline>
         </>
     );

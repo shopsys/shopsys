@@ -1,6 +1,6 @@
 import { AnchorHTMLAttributes, FC, ImgHTMLAttributes } from 'react';
+import { ButtonStyled, LinkStyled } from './Link.style';
 import { ExtractNativePropsFromDefault } from 'typeHelpers/ExtractNativePropsFromDefault';
-import { LinkStyled } from './Link.style';
 import NextLink from 'next/link';
 
 type NativePropsAnchor = ExtractNativePropsFromDefault<
@@ -17,6 +17,9 @@ type LinkProps = NativePropsAnchor &
          * A prop which defines if the link is internal or external-
          */
         linkType?: 'external';
+        variant?: 'default' | 'primary' | 'secondary';
+        size?: 'small';
+        borderRadius?: 'big';
     };
 
 /**
@@ -26,6 +29,14 @@ type LinkProps = NativePropsAnchor &
 const Link: FC<LinkProps> = (props) => {
     if (props.linkType === 'external') {
         return <LinkStyled {...props}>{props.children}</LinkStyled>;
+    }
+
+    if (props.variant !== undefined) {
+        return (
+            <NextLink {...props}>
+                <ButtonStyled {...props}>{props.children}</ButtonStyled>
+            </NextLink>
+        );
     }
 
     return (

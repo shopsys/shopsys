@@ -1,0 +1,17 @@
+query StoresQuery {
+	stores {
+    edges {
+      node {
+        slug
+        uuid
+        name
+        locationLatitude
+        locationLongitude
+        city
+        street
+        postcode
+        openingHours
+      }
+    }
+  }
+}
