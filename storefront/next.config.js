@@ -25,6 +25,7 @@ module.exports = {
         ],
         availableStaticUrls: {
             [process.env.DOMAIN_HOSTNAME_1]: {
+                '/search': '/hledani',
                 '/cart': '/kosik',
                 '/order/transport-and-payment': '/objednavka/doprava-a-platba',
                 '/order/contact-information': '/objednavka/kontaktni-udaje',
@@ -32,6 +33,7 @@ module.exports = {
                 '/order-confirmation': '/potvrzeni-objednavky',
             },
             [process.env.DOMAIN_HOSTNAME_2]: {
+                '/search': '/hladanie',
                 '/cart': '/kosik',
                 '/order/transport-and-payment': '/objednavka/doprava-a-platba',
                 '/order/contact-information': '/objednavka/kontaktne-udaje',
@@ -43,6 +45,10 @@ module.exports = {
     async rewrites() {
         return [
             // Czech URLs
+            {
+                source: '/hledani',
+                destination: '/search',
+            },
             {
                 source: '/kosik',
                 destination: '/cart',
@@ -64,6 +70,10 @@ module.exports = {
                 destination: '/order-confirmation',
             },
             // Slovak URLs
+            {
+                source: '/hladanie',
+                destination: '/search',
+            },
             {
                 source: '/kosik',
                 destination: '/cart',

@@ -127,11 +127,17 @@ export const PasswordVisibilityToggleStyled = styled.img<PasswordVisibilityToggl
     `}
 `;
 
-export const SearchButtonStyled = styled.div`
+export const SearchButtonStyled = styled.button`
     position: absolute;
-    top: 14px;
+    top: 12px;
     right: 15px;
-    width: ${localVariables.inputSearchIconSize};
-    height: ${localVariables.inputSearchIconSize};
+
     cursor: pointer;
+    background: transparent;
+    border: none;
+
+    & i {
+        width: ${localVariables.inputSearchIconSize};
+        height: ${localVariables.inputSearchIconSize};
+    }
 `;

@@ -159,5 +159,10 @@
     "Could not load your cart": "Nepodarilo sa načítať váš košík",
     "Could not add the product to cart": "Nepodarilo sa pridať produkt do košíka",
     "Could not remove the product from cart": "Nepodarilo sa odobrať produkt z košíka",
-    "Go to cart": "Prejsť do košíka"
+    "Go to cart": "Prejsť do košíka",
+    "Could not find any results for the given query.": "Pre tento výraz sme, bohužiaľ, nenašli žiadne výsledky.",
+    "Brands": "Značky",
+    "Categories": "Kategórie",
+    "Articles": "Články",
+    "View all results": "Zobrazit všetky výsledky"
 }

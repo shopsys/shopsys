@@ -1,0 +1,14 @@
+query SearchQuery($search: String!) {
+    articlesSearch(search: $search) {
+        ...SimpleArticleFragment
+    }
+    brandSearch(search: $search) {
+        ...SimpleBrandFragment
+    }
+    categoriesSearch(search: $search) {
+        ...CategoriesSearchFragment
+    }
+    productsSearch: products(search: $search) {
+        ...ProductsSearchFragment
+    }
+}

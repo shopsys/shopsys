@@ -50,6 +50,10 @@ type TextInputProps = NativeProps & {
      * a ref of the controlled field element used for hooking onto the field events/changes
      */
     fieldRef?: ControllerRenderProps;
+    /**
+     * a prop to define if the search button should be disabled
+     */
+    isSearchButtonDisabled?: boolean;
 };
 
 /**
@@ -92,7 +96,7 @@ const TextInput: FC<TextInputProps> = (props) => {
                 />
             )}
             {props.variant === 'searchInHeader' && (
-                <SearchButtonStyled>
+                <SearchButtonStyled type="submit" disabled={props.isSearchButtonDisabled}>
                     <Icon icon="Search" />
                 </SearchButtonStyled>
             )}

@@ -1,0 +1,8 @@
+fragment ProductsSearchFragment on ProductConnection {
+    totalCount
+    edges {
+        node {
+            ...SimpleProductFragment
+        }
+    }
+}
