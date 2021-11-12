@@ -11,7 +11,7 @@ const Form: FC<FormProps> = (props) => {
             props.onSubmit(event);
         }
     };
-    return <form {...props} onSubmit={controlledOnSubmitHandler}></form>;
+    return <form {...props} onSubmit={controlledOnSubmitHandler} noValidate></form>;
 };
 
 export default Form;
