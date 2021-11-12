@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { StoreType, TransportType } from 'connectors/transports/types';
 import { CartType } from 'connectors/cart/types';
+import { HYDRATE } from 'next-redux-wrapper';
 import { PaymentType } from 'connectors/payments/types';
 
 const sortPriority = 'PRIORITY';
@@ -64,6 +65,17 @@ export const userSlice = createSlice({
         },
         setOrderConfirmationAccess(state, action: PayloadAction<boolean>) {
             state.canAccessOrderConfirmation = action.payload;
+        },
+    },
+    extraReducers: {
+        /**
+         * @see https://github.com/kirill-konshin/next-redux-wrapper#usage
+         */
+        [HYDRATE]: (state, action) => {
+            return {
+                ...state,
+                ...action.payload.user,
+            };
         },
     },
 });

@@ -10,9 +10,10 @@ import CategoryDetailPage from 'components/Pages/CategoryDetail';
 import { CategoryDetailType } from 'components/Pages/CategoryDetail/types';
 import CommonLayout from 'components/Layout/CommonLayout';
 import DefaultErrorPage from 'next/error';
-import GetNewPagination from 'utils/GetNewPagination';
+import { getNewPagination } from 'utils/Pagination/getNewPagination';
 import { initDomainConfig } from 'helpers/InitDomainConfig';
 import { NavigationQueryDocumentApi } from 'graphql/generated';
+import { parsePageNumberFromQuery } from 'utils/Pagination/parsePageNumberFromQuery';
 import ProductDetailPage from 'components/Pages/ProductDetail';
 import { ProductDetailType } from 'components/Pages/ProductDetail/types';
 import StoreDetailPage from 'components/Pages/StoreDetail';
@@ -24,19 +25,18 @@ const FriendlyUrlPage: FC<ServerSidePropsType> = () => {
     const router = useRouter();
     const dispatch = useShopsysDispatch();
     const categoryDetailSortQuery = router.query.sort as string;
-    const paginationPageQuery = router.query.page as string;
     const categoryDetailSortState = useShopsysSelector((state) => state.user.sort);
     const categoryDetailSort = getCategoryDetailSort(
         typeof categoryDetailSortQuery !== 'undefined' ? categoryDetailSortQuery : categoryDetailSortState,
     );
-    const updatedPagination = GetNewPagination(
-        typeof paginationPageQuery !== 'undefined' ? Number(paginationPageQuery) : initialState.pagination.currentPage,
-    );
 
     useEffect(() => {
         dispatch(userActions.setSort({ sort: categoryDetailSort as SortType }));
-        dispatch(userActions.setPagination({ ...updatedPagination }));
-    }, [categoryDetailSortQuery, paginationPageQuery]);
+    }, [categoryDetailSortQuery]);
+
+    useEffect(() => {
+        dispatch(userActions.setPagination(getNewPagination(parsePageNumberFromQuery(router.query.page))));
+    }, [router.query.page]);
 
     const data = getFriendlyUrlResolvedData(getUrlWithoutGetParameters(router.asPath));
     if (data === null || data === undefined) {
@@ -69,8 +69,8 @@ function renderContent(data: ProductDetailType | CategoryDetailType | StoreDetai
 
 export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) => async (context) => {
     const categoryDetailSort = getCategoryDetailSort(context.query.sort as string);
-    const updatedPagination = GetNewPagination(Number(context.query.page));
     initDomainConfig(context, store);
+    store.dispatch(userActions.setPagination(getNewPagination(parsePageNumberFromQuery(context.query.page))));
 
     return initServerSideProps(context, store, [
         { query: NavigationQueryDocumentApi },
@@ -78,7 +78,7 @@ export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) =>
             query: friendlyUrlQuery(
                 getUrlWithoutGetParameters(context.resolvedUrl),
                 categoryDetailSort,
-                updatedPagination.paginationCursor,
+                store.getState().user.pagination.paginationCursor,
             ),
         },
     ]);
