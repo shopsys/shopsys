@@ -42,4 +42,14 @@ class CustomerUserRefreshTokenChainRepository extends BaseCustomerUserRefreshTok
         $this->em->remove($refreshTokenChain);
         $this->em->flush();
     }
+
+    public function removeOldCustomerRefreshTokenChains(): void
+    {
+        $this->em->createQueryBuilder()
+            ->delete(CustomerUserRefreshTokenChain::class, 'curtc')
+            ->where('curtc.expiredAt < :now')
+            ->setParameter('now', new DateTime())
+            ->getQuery()
+            ->execute();
+    }
 }
