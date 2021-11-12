@@ -6,7 +6,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 export const getContactInformationFormResolver = <T>(t: TFunction): Resolver<T> => {
     return yupResolver(
         Yup.object().shape({
-            email: Yup.string().required(t('Please enter email')).email(t('This value is not a valid email')),
+            email: Yup.string().required(t('Please enter email')).email(t('This value is not a valid email')).min(5),
             register: Yup.boolean(),
             passwordFirst: Yup.string().when('register', {
                 is: true,

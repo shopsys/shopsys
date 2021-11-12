@@ -17,7 +17,7 @@ const ContactInformation: FC = () => {
     const t = useTypedTranslationFunction();
     const formProviderMethods = useFormContext();
     const emailValue = useWatch({ name: 'email' });
-    const isEmailValid = emailValue.length >= 5 && formProviderMethods.formState.errors.email === undefined;
+    const isEmailValid = formProviderMethods.formState.errors.email === undefined;
 
     return (
         <>

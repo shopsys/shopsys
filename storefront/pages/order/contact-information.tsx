@@ -44,8 +44,7 @@ const ContactInformation: FC<ServerSidePropsType> = () => {
     );
     useHandleFormErrors(createOrderResult.error, formProviderMethods, t('Could not create order'));
     useHandleContactInformationNonTextChanges(formProviderMethods.control, contactInformationValues);
-    const emailValue = useWatch({ control: formProviderMethods.control, name: 'email' });
-    const isEmailValid = emailValue.length >= 5 && formProviderMethods.formState.errors.email === undefined;
+    const isEmailValid = formProviderMethods.formState.errors.email === undefined;
     const differentDeliveryAddressValue = useWatch({
         control: formProviderMethods.control,
         name: 'differentDeliveryAddress',
