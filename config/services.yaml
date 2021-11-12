@@ -952,3 +952,15 @@ services:
 
     Shopsys\FrontendApiBundle\Model\Category\CategoryRepository:
         alias: App\FrontendApi\Model\Category\CategoryRepository
+
+    Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRefreshTokenChainRepository:
+        alias: App\Model\Customer\User\CustomerUserRefreshTokenChainRepository
+
+    Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRefreshTokenChainFacade:
+        alias: App\Model\Customer\User\CustomerUserRefreshTokenChainFacade
+
+    Shopsys\FrontendApiBundle\Model\Mutation\Login\RefreshTokensMutation:
+        alias: App\FrontendApi\Model\Mutation\Login\RefreshTokensMutation
+
+    Shopsys\FrontendApiBundle\Model\Token\TokenFacade:
+        alias: App\FrontendApi\Model\Token\TokenFacade

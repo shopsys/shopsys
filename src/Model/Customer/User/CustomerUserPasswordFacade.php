@@ -9,7 +9,9 @@ use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserPasswordFacade as Ba
 
 /**
  * @property \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRepository $customerUserRepository
- * @method __construct(\Doctrine\ORM\EntityManagerInterface $em, \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRepository $customerUserRepository, \Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface $encoderFactory, \Shopsys\FrameworkBundle\Model\Customer\Mail\ResetPasswordMailFacade $resetPasswordMailFacade, \Shopsys\FrameworkBundle\Component\String\HashGenerator $hashGenerator, \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRefreshTokenChainFacade $customerUserRefreshTokenChainFacade)
+ * @property \App\Model\Customer\User\CustomerUserRefreshTokenChainFacade $customerUserRefreshTokenChainFacade
+ * @method __construct(\Doctrine\ORM\EntityManagerInterface $em, \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRepository $customerUserRepository, \Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface $encoderFactory, \Shopsys\FrameworkBundle\Model\Customer\Mail\ResetPasswordMailFacade $resetPasswordMailFacade, \Shopsys\FrameworkBundle\Component\String\HashGenerator $hashGenerator, \App\Model\Customer\User\CustomerUserRefreshTokenChainFacade $customerUserRefreshTokenChainFacade = null)
+ * @method setCustomerUserRefreshTokenChainFacade(\App\Model\Customer\User\CustomerUserRefreshTokenChainFacade $customerUserRefreshTokenChainFacade)
  */
 class CustomerUserPasswordFacade extends BaseCustomerUserPasswordFacade
 {

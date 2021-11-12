@@ -1,0 +1,72 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\FrontendApi\Model\Mutation\Login;
+
+use GraphQL\Error\UserError;
+use Overblog\GraphQLBundle\Definition\Argument;
+use Shopsys\FrameworkBundle\Model\Customer\Exception\CustomerUserNotFoundException;
+use Shopsys\FrontendApiBundle\Model\Mutation\Login\RefreshTokensMutation as BaseRefreshTokensMutation;
+use Shopsys\FrontendApiBundle\Model\Token\Exception\InvalidTokenUserMessageException;
+use Shopsys\FrontendApiBundle\Model\User\FrontendApiUser;
+
+/**
+ * @property \App\Model\Customer\User\CustomerUserRefreshTokenChainFacade $customerUserRefreshTokenChainFacade
+ * @property \App\FrontendApi\Model\Token\TokenFacade $tokenFacade
+ * @method __construct(\App\FrontendApi\Model\Token\TokenFacade $tokenFacade, \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade $customerUserFacade, \App\Model\Customer\User\CustomerUserRefreshTokenChainFacade $customerUserRefreshTokenChainFacade)
+ */
+class RefreshTokensMutation extends BaseRefreshTokensMutation
+{
+    /**
+     * @inheritDoc
+     */
+    public function refreshTokens(Argument $argument): array
+    {
+        $refreshToken = $argument['input']['refreshToken'];
+        $token = $this->tokenFacade->getTokenByString($refreshToken);
+
+        $userUuid = $token->claims()->get(FrontendApiUser::CLAIM_UUID);
+
+        try {
+            /** @var \App\Model\Customer\User\CustomerUser $customerUser */
+            $customerUser = $this->customerUserFacade->getByUuid($userUuid);
+        } catch (CustomerUserNotFoundException $customerUserNotFoundException) {
+            throw new InvalidTokenUserMessageException('Token is not valid.');
+        }
+
+        $tokenSecretChain = $token->claims()->get(FrontendApiUser::CLAIM_SECRET_CHAIN);
+        $deviceId = $token->claims()->get(FrontendApiUser::CLAIM_DEVICE_ID);
+
+        if ($tokenSecretChain === null || $deviceId === null) {
+            throw new InvalidTokenUserMessageException('Token is not valid.');
+        }
+
+        $customerUserValidRefreshTokenChain = $this->customerUserRefreshTokenChainFacade->findCustomersTokenChainByCustomerUserAndSecretChainAndDeviceId(
+            $customerUser,
+            $tokenSecretChain,
+            $deviceId
+        );
+
+        if ($customerUserValidRefreshTokenChain === null) {
+            throw new UserError('Token is not valid.');
+        }
+
+        $tokens = [
+            'accessToken' => $this->tokenFacade->createAccessTokenAsString(
+                $customerUser,
+                $customerUserValidRefreshTokenChain->getDeviceId()
+            ),
+            'refreshToken' => $this->tokenFacade->createRefreshTokenAsString(
+                $customerUser,
+                $customerUserValidRefreshTokenChain->getDeviceId()
+            ),
+        ];
+
+        $this->customerUserRefreshTokenChainFacade->removeCustomerRefreshTokenChain(
+            $customerUserValidRefreshTokenChain
+        );
+
+        return $tokens;
+    }
+}
