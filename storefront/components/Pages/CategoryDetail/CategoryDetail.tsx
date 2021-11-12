@@ -7,13 +7,13 @@ import {
 } from './CategoryDetail.style';
 import { FC, useRef, useState } from 'react';
 import CategoryDetailAdvancedSeoCategories from './CategoryDetailAdvancedSeoCategories';
-import CategoryDetailSubcategories from './CategoryDetailSubcategories';
 import { CategoryDetailType } from './types';
 import Heading from 'components/Basic/Heading';
 import Overlay from 'components/Basic/Overlay';
 import Pagination from 'components/Blocks/Pagination/Pagination';
 import ProductFilter from 'components/Blocks/Product/Filter';
 import ProductsList from 'components/Blocks/Product/List/ProductsList';
+import SimpleNavigation from 'components/Blocks/SimpleNavigation';
 import SortingBar from 'components/Blocks/SortingBar';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import Webline from 'components/Layout/Webline';
@@ -54,9 +54,7 @@ const CategoryDetail: FC<CategoryDetailProps> = (props) => {
                     <Heading type={'h1'}>
                         {props.category.seoH1 !== null ? props.category.seoH1 : props.category.name}
                     </Heading>
-                    <CategoryDetailSubcategories
-                        categories={[...props.category.children, ...props.category.linkedCategories]}
-                    />
+                    <SimpleNavigation listedItems={[...props.category.children, ...props.category.linkedCategories]} />
                     <CategoryDetailAdvancedSeoCategories
                         readyCategorySeoMixLinks={props.category.readyCategorySeoMixLinks}
                     />

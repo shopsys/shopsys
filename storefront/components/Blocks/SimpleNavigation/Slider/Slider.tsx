@@ -1,16 +1,16 @@
 import 'keen-slider/keen-slider.min.css';
-import { CategoryDetailSubcategoriesItemStyled } from 'components/Pages/CategoryDetail/CategoryDetailSubcategories/CategoryDetailSubcategories.style';
-import CategoryItem from 'components/Blocks/Categories/CategoryItem';
 import { CategoryItemType } from 'components/Blocks/Categories/CategoryItem/types';
 import { FC } from 'react';
+import ListItem from 'components/Blocks/SimpleNavigation/ListItem';
+import { ListItemStyled } from 'components/Blocks/SimpleNavigation/SimpleNavigation.style';
 import { theme } from 'components/Theme/main';
 import { useKeenSlider } from 'keen-slider/react';
 
-type CategoryDetailSubcategoriesSliderProps = {
-    categories: CategoryItemType[];
+type SliderProps = {
+    listedItems: CategoryItemType[];
 };
 
-const CategoryDetailSubcategoriesSlider: FC<CategoryDetailSubcategoriesSliderProps> = (props) => {
+const Slider: FC<SliderProps> = (props) => {
     const [sliderRef] = useKeenSlider<HTMLDivElement>({
         breakpoints: {
             [theme.mediaQueries.queryTablet]: {
@@ -30,13 +30,13 @@ const CategoryDetailSubcategoriesSlider: FC<CategoryDetailSubcategoriesSliderPro
 
     return (
         <div ref={sliderRef} className="keen-slider">
-            {props.categories.map((category, key) => (
-                <CategoryDetailSubcategoriesItemStyled key={key} className="keen-slider__slide">
-                    <CategoryItem category={category}>{category.name}</CategoryItem>
-                </CategoryDetailSubcategoriesItemStyled>
+            {props.listedItems.map((listedItem, key) => (
+                <ListItemStyled key={key} className="keen-slider__slide">
+                    <ListItem listedItem={listedItem}>{listedItem.name}</ListItem>
+                </ListItemStyled>
             ))}
         </div>
     );
 };
 
-export default CategoryDetailSubcategoriesSlider;
+export default Slider;

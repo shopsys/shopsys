@@ -1,11 +1,11 @@
 import { css } from 'styled-components';
 import { styled } from 'components/Theme/main';
 
-export const CategoryDetailSubcategoriesWrapperStyled = styled.ul`
+export const SimpleNavigationWrapperStyled = styled.ul`
     margin-bottom: 24px;
 `;
 
-export const CategoryDetailSubcategoriesListStyled = styled.ul`
+export const SimpleNavigationStyled = styled.ul`
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -13,7 +13,7 @@ export const CategoryDetailSubcategoriesListStyled = styled.ul`
     padding: 0;
 `;
 
-export const CategoryDetailSubcategoriesItemStyled = styled.li`
+export const ListItemStyled = styled.li`
     ${({ theme }) => css`
         margin-bottom: 12px;
         margin-left: 0;
