@@ -9,6 +9,7 @@ import {
 import Button from 'components/Forms/Button';
 import Checkbox from 'components/Forms/Checkbox';
 import ChoiceFormLine from 'components/Forms/Lib/ChoiceFormLine';
+import ErrorPopup from 'components/Forms/Lib/ErrorPopup';
 import { FC } from 'react';
 import FormLine from 'components/Forms/Lib/FormLine';
 import FormLineError from 'components/Forms/Lib/FormLineError';
@@ -16,6 +17,7 @@ import Heading from 'components/Basic/Heading';
 import { showSuccessMessage } from 'components/Helpers/Toasts';
 import TextInput from 'components/Forms/TextInput';
 import { TFunction } from 'next-i18next';
+import { useHandleErrorPopupVisibility } from 'hooks/forms/UseHandleErrorPopupVisibility';
 import { useHandleFormErrors } from 'hooks/forms/UseHandleFormErrors';
 import { useHandleFormSuccessfulSubmit } from 'hooks/forms/UseHandleFormSuccessfulSubmit';
 import { useNewsletterSubscribeMutationApi } from 'graphql/generated';
@@ -40,6 +42,7 @@ const NewsletterForm: FC = () => {
     const t = useTypedTranslationFunction();
     const [subscribeToNewsletterResult, subscribeToNewsletter] = useNewsletterSubscribeMutationApi();
     const formProviderMethods = useShopsysForm(getNewsletterFormResolver(t), { email: '', privacyPolicy: false });
+    const [isErrorPopupVisible, setErrorPopupVisibility] = useHandleErrorPopupVisibility(formProviderMethods);
     useHandleFormErrors(subscribeToNewsletterResult.error, formProviderMethods, t('Could not subscribe to newsletter'));
     useHandleFormSuccessfulSubmit(
         subscribeToNewsletterResult,
@@ -58,62 +61,83 @@ const NewsletterForm: FC = () => {
     };
 
     return (
-        <NewsletterFormWrapperStyled>
-            <Heading type="h2">{t('Sign up for our newsletter and get 35% discount on running apparel')}</Heading>
-            <NewsletterFormColumnStyled>
-                <FormProvider {...formProviderMethods}>
-                    <form onSubmit={formProviderMethods.handleSubmit(onSubscribeToNewsletterHandler)}>
-                        <NewsletterFormInputWrapperStyled>
-                            <FormLine>
+        <>
+            <NewsletterFormWrapperStyled>
+                <Heading type="h2">{t('Sign up for our newsletter and get 35% discount on running apparel')}</Heading>
+                <NewsletterFormColumnStyled>
+                    <FormProvider {...formProviderMethods}>
+                        <form onSubmit={formProviderMethods.handleSubmit(onSubscribeToNewsletterHandler)} noValidate>
+                            <NewsletterFormInputWrapperStyled>
+                                <FormLine>
+                                    <Controller
+                                        name="email"
+                                        render={({ fieldState: { isTouched, invalid, error }, field }) => (
+                                            <>
+                                                <TextInput
+                                                    id="newsletter_form-email"
+                                                    name="email"
+                                                    label={t('email')}
+                                                    required={true}
+                                                    type="text"
+                                                    inputSize="small"
+                                                    isTouched={isTouched}
+                                                    hasError={invalid}
+                                                    fieldRef={field}
+                                                />
+                                                <FormLineError
+                                                    textInputSize="small"
+                                                    error={error}
+                                                    inputType="text-input"
+                                                />
+                                            </>
+                                        )}
+                                    />
+                                </FormLine>
+                                <NewsletterFormButtonWrapperStyled>
+                                    <Button
+                                        type="submit"
+                                        borderRadius="big"
+                                        hasDisabledLook={!formProviderMethods.formState.isValid}
+                                    >
+                                        {t('Send')}
+                                    </Button>
+                                </NewsletterFormButtonWrapperStyled>
+                            </NewsletterFormInputWrapperStyled>
+                            <ChoiceFormLine>
                                 <Controller
-                                    name="email"
+                                    name="privacyPolicy"
                                     render={({ fieldState: { isTouched, invalid, error }, field }) => (
                                         <>
-                                            <TextInput
-                                                id="newsletter_form-email"
-                                                name="email"
-                                                label={t('email')}
+                                            <Checkbox
+                                                id="newsletter_form-privacyPolicy"
+                                                name={field.name}
+                                                label={t('I take note of the processing of personal data')}
                                                 required={true}
-                                                type="text"
-                                                inputSize="small"
                                                 isTouched={isTouched}
                                                 hasError={invalid}
                                                 fieldRef={field}
                                             />
-                                            <FormLineError textInputSize="small" error={error} inputType="text-input" />
+                                            <FormLineError error={error} inputType="checkbox" />
                                         </>
                                     )}
                                 />
-                            </FormLine>
-                            <NewsletterFormButtonWrapperStyled>
-                                <Button type="submit" borderRadius="big">
-                                    {t('Send')}
-                                </Button>
-                            </NewsletterFormButtonWrapperStyled>
-                        </NewsletterFormInputWrapperStyled>
-                        <ChoiceFormLine>
-                            <Controller
-                                name="privacyPolicy"
-                                render={({ fieldState: { isTouched, invalid, error }, field }) => (
-                                    <>
-                                        <Checkbox
-                                            id="newsletter_form-privacyPolicy"
-                                            name={field.name}
-                                            label={t('I take note of the processing of personal data')}
-                                            required={true}
-                                            isTouched={isTouched}
-                                            hasError={invalid}
-                                            fieldRef={field}
-                                        />
-                                        <FormLineError error={error} inputType="checkbox" />
-                                    </>
-                                )}
-                            />
-                        </ChoiceFormLine>
-                    </form>
-                </FormProvider>
-            </NewsletterFormColumnStyled>
-        </NewsletterFormWrapperStyled>
+                            </ChoiceFormLine>
+                        </form>
+                    </FormProvider>
+                </NewsletterFormColumnStyled>
+            </NewsletterFormWrapperStyled>
+            <ErrorPopup
+                isVisible={isErrorPopupVisible}
+                onCloseCallback={() => setErrorPopupVisibility(false)}
+                errors={[
+                    { label: t('Your email'), message: formProviderMethods.formState.errors.email?.message },
+                    {
+                        label: t('I take note of the processing of personal data'),
+                        message: formProviderMethods.formState.errors.privacyPolicy?.message,
+                    },
+                ]}
+            />
+        </>
     );
 };
 

@@ -14,6 +14,7 @@ import Button from 'components/Forms/Button';
 import Checkbox from 'components/Forms/Checkbox';
 import ChoiceFormLine from 'components/Forms/Lib/ChoiceFormLine';
 import { contactInformationActions } from 'redux/slices/contactInformation';
+import ErrorPopup from 'components/Forms/Lib/ErrorPopup';
 import FormLine from 'components/Forms/Lib/FormLine';
 import FormLineError from 'components/Forms/Lib/FormLineError';
 import { getRegistrationAfterOrderFormResolver } from './RegistrationAfterOrderFormResolver';
@@ -21,6 +22,7 @@ import { getUserFriendlyErrors } from 'connectors/lib/friendlyErrorMessageParser
 import { showErrorMessage } from 'components/Helpers/Toasts';
 import TextInput from 'components/Forms/TextInput';
 import { Trans } from 'react-i18next';
+import { useHandleErrorPopupVisibility } from 'hooks/forms/UseHandleErrorPopupVisibility';
 import { userActions } from 'redux/slices/user';
 import { useRegister } from 'connectors/registration/Registration';
 import { useRouter } from 'next/router';
@@ -45,6 +47,7 @@ const Registration: FC = () => {
         getRegistrationAfterOrderFormResolver(t),
         getRegistrationFormDefaultValues(),
     );
+    const [isErrorPopupVisible, setErrorPopupVisibility] = useHandleErrorPopupVisibility(formProviderMethods);
 
     useEffect(() => {
         return () => {
@@ -79,92 +82,111 @@ const Registration: FC = () => {
     };
 
     return (
-        <Webline>
-            <RegistrationStyled>
-                <RegistrationMessageColumnStyled>
-                    <RegistrationHeadingStyled type="h2">
-                        <Trans i18nKey="Finish registration to loyalty program.">
-                            Finish registration <br /> to
-                            <strong>
-                                loyalty <br /> program
-                            </strong>
-                        </Trans>
-                    </RegistrationHeadingStyled>
-                    <ul>
-                        <RegistrationBenefitsListItem>
-                            {t('You will have an overview of your orders and complaints')}
-                        </RegistrationBenefitsListItem>
-                        <RegistrationBenefitsListItem>
-                            {t('Collecting points with every order')}
-                        </RegistrationBenefitsListItem>
-                        <RegistrationBenefitsListItem>
-                            {t('Possibility of purchases for better prices')}
-                        </RegistrationBenefitsListItem>
-                        <RegistrationBenefitsListItem>
-                            {t('Exclusive products as a part of the loyalty program')}
-                        </RegistrationBenefitsListItem>
-                    </ul>
-                </RegistrationMessageColumnStyled>
-                <RegistrationFormColumnStyled>
-                    <RegistrationFormStyled>
-                        <form onSubmit={formProviderMethods.handleSubmit(onRegistrationSubmitHandler)}>
-                            <FormProvider {...formProviderMethods}>
-                                <Controller
-                                    name="password"
-                                    render={({ field, fieldState: { error, invalid, isTouched } }) => (
-                                        <RegistrationFormItemStyled>
-                                            <FormLine>
-                                                <TextInput
-                                                    name={field.name}
-                                                    label={t('Password')}
-                                                    type="password"
-                                                    fieldRef={field}
-                                                    required={true}
-                                                    isTouched={isTouched}
-                                                    hasError={invalid}
-                                                />
-                                                <FormLineError inputType="text-input-password" error={error} />
-                                            </FormLine>
-                                        </RegistrationFormItemStyled>
-                                    )}
-                                />
-                                <Controller
-                                    name="privacyPolicy"
-                                    render={({ field, fieldState: { error } }) => (
-                                        <RegistrationFormItemStyled>
-                                            <ChoiceFormLine>
-                                                <Checkbox
-                                                    name={field.name}
-                                                    label={
-                                                        <Trans i18nKey="I agree with terms and conditions and privacy policy">
-                                                            I agree with
-                                                            <a href="/">terms and conditions</a>
-                                                            and privacy policy
-                                                        </Trans>
-                                                    }
-                                                    fieldRef={field}
-                                                    required={true}
-                                                />
-                                                <FormLineError inputType="checkbox" error={error} />
-                                            </ChoiceFormLine>
-                                        </RegistrationFormItemStyled>
-                                    )}
-                                />
-                                <Button
-                                    type="submit"
-                                    variant="primary"
-                                    borderRadius="big"
-                                    style={{ width: '100%' }}
-                                    isDisabled={!formProviderMethods.formState.isValid}
-                                >
-                                    {t('Create account')}
-                                </Button>
-                            </FormProvider>
-                        </form>
-                    </RegistrationFormStyled>
-                </RegistrationFormColumnStyled>
-            </RegistrationStyled>
-        </Webline>
+        <>
+            <Webline>
+                <RegistrationStyled>
+                    <RegistrationMessageColumnStyled>
+                        <RegistrationHeadingStyled type="h2">
+                            <Trans i18nKey="Finish registration to loyalty program.">
+                                Finish registration <br /> to
+                                <strong>
+                                    loyalty <br /> program
+                                </strong>
+                            </Trans>
+                        </RegistrationHeadingStyled>
+                        <ul>
+                            <RegistrationBenefitsListItem>
+                                {t('You will have an overview of your orders and complaints')}
+                            </RegistrationBenefitsListItem>
+                            <RegistrationBenefitsListItem>
+                                {t('Collecting points with every order')}
+                            </RegistrationBenefitsListItem>
+                            <RegistrationBenefitsListItem>
+                                {t('Possibility of purchases for better prices')}
+                            </RegistrationBenefitsListItem>
+                            <RegistrationBenefitsListItem>
+                                {t('Exclusive products as a part of the loyalty program')}
+                            </RegistrationBenefitsListItem>
+                        </ul>
+                    </RegistrationMessageColumnStyled>
+                    <RegistrationFormColumnStyled>
+                        <RegistrationFormStyled>
+                            <form onSubmit={formProviderMethods.handleSubmit(onRegistrationSubmitHandler)} noValidate>
+                                <FormProvider {...formProviderMethods}>
+                                    <Controller
+                                        name="password"
+                                        render={({ field, fieldState: { error, invalid, isTouched } }) => (
+                                            <RegistrationFormItemStyled>
+                                                <FormLine>
+                                                    <TextInput
+                                                        name={field.name}
+                                                        label={t('Password')}
+                                                        type="password"
+                                                        fieldRef={field}
+                                                        required={true}
+                                                        isTouched={isTouched}
+                                                        hasError={invalid}
+                                                    />
+                                                    <FormLineError inputType="text-input-password" error={error} />
+                                                </FormLine>
+                                            </RegistrationFormItemStyled>
+                                        )}
+                                    />
+                                    <Controller
+                                        name="privacyPolicy"
+                                        render={({ field, fieldState: { error } }) => (
+                                            <RegistrationFormItemStyled>
+                                                <ChoiceFormLine>
+                                                    <Checkbox
+                                                        name={field.name}
+                                                        label={
+                                                            <Trans i18nKey="I agree with terms and conditions and privacy policy">
+                                                                I agree with
+                                                                <a href="/">terms and conditions</a>
+                                                                and privacy policy
+                                                            </Trans>
+                                                        }
+                                                        fieldRef={field}
+                                                        required={true}
+                                                    />
+                                                    <FormLineError inputType="checkbox" error={error} />
+                                                </ChoiceFormLine>
+                                            </RegistrationFormItemStyled>
+                                        )}
+                                    />
+                                    <Button
+                                        type="submit"
+                                        variant="primary"
+                                        borderRadius="big"
+                                        style={{ width: '100%' }}
+                                        hasDisabledLook={!formProviderMethods.formState.isValid}
+                                    >
+                                        {t('Create account')}
+                                    </Button>
+                                </FormProvider>
+                            </form>
+                        </RegistrationFormStyled>
+                    </RegistrationFormColumnStyled>
+                </RegistrationStyled>
+            </Webline>
+            <ErrorPopup
+                isVisible={isErrorPopupVisible}
+                onCloseCallback={() => setErrorPopupVisibility(false)}
+                errors={[
+                    { label: t('Password'), message: formProviderMethods.formState.errors.password?.message },
+                    {
+                        label: (
+                            <Trans i18nKey="I agree with terms and conditions and privacy policy">
+                                I agree with
+                                <a href="/">terms and conditions</a>
+                                and privacy policy
+                            </Trans>
+                        ),
+                        message: formProviderMethods.formState.errors.privacyPolicy?.message,
+                    },
+                ]}
+            />
+        </>
     );
 };
 

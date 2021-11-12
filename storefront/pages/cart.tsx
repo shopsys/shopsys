@@ -30,7 +30,7 @@ const Cart: FC<ServerSidePropsType> = () => {
                         activeStep={1}
                         buttonBack={t('Back')}
                         buttonNext={t('Transport and payment')}
-                        isDisabled={false}
+                        hasDisabledLook={false}
                         withGapTop={false}
                         withGapBottom={true}
                         buttonBackLink="/"

@@ -26,6 +26,10 @@ type ButtonProps = NativeProps & {
      * A prop to check if button is disabled.
      */
     isDisabled?: boolean;
+    /**
+     * A prop to check if button should look as disabled.
+     */
+    hasDisabledLook?: boolean;
 };
 
 /**
@@ -49,6 +53,7 @@ const Button: FC<ButtonProps> = (props) => {
     return (
         <Component
             {...props}
+            hasDisabledLook={props.hasDisabledLook}
             isDisabled={props.isDisabled || (props.type === 'submit' && formProviderMethods?.formState.isSubmitting)}
         >
             {props.children}

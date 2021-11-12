@@ -7,10 +7,12 @@ type ButtonPropsStyled = {
     size?: ButtonSize;
     borderRadius?: 'big';
     isDisabled?: boolean;
+    hasDisabledLook?: boolean;
 };
 
 type ButtonAsLinkProps = {
     isDisabled?: boolean;
+    hasDisabledLook?: boolean;
 };
 
 const localVariables = {
@@ -45,7 +47,7 @@ const getSize = (theme: Theme, size?: ButtonSize) => {
 };
 
 export const ButtonStyled = styled.button<ButtonPropsStyled>`
-    ${({ theme, size, borderRadius, isDisabled }) => css`
+    ${({ theme, size, borderRadius, isDisabled, hasDisabledLook }) => css`
         ${getSize(theme, size)};
         width: auto;
         vertical-align: middle;
@@ -63,12 +65,17 @@ export const ButtonStyled = styled.button<ButtonPropsStyled>`
         outline: 0;
         text-transform: uppercase;
 
-        ${isDisabled &&
+        ${(isDisabled || hasDisabledLook) &&
         css`
             opacity: 0.5;
             cursor: no-drop;
+        `}
+
+        ${isDisabled &&
+        css`
             pointer-events: none;
         `}
+
 
         &:hover {
             color: ${theme.color.white};
@@ -103,7 +110,7 @@ export const ButtonSecondaryStyled = styled(ButtonStyled)`
 `;
 
 export const ButtonAsLinkStyled = styled.button<ButtonAsLinkProps>`
-    ${({ theme, isDisabled }) => css`
+    ${({ theme, isDisabled, hasDisabledLook }) => css`
         padding: 0;
         min-height: 0;
 
@@ -113,7 +120,7 @@ export const ButtonAsLinkStyled = styled.button<ButtonAsLinkProps>`
         color: ${theme.color.black};
         cursor: pointer;
 
-        ${isDisabled &&
+        ${(isDisabled || hasDisabledLook) &&
         css`
             opacity: 0.5;
             cursor: no-drop;
