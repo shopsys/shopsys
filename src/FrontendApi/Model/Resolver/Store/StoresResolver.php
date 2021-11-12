@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\FrontendApi\Model\Resolver\Store;
 
+use App\FrontendApi\Component\Validation\PageSizeValidator;
 use App\Model\Store\StoreFacade;
 use App\Model\Transport\Transport;
 use Overblog\GraphQLBundle\Definition\Argument;
@@ -44,6 +45,7 @@ class StoresResolver implements ResolverInterface, AliasedInterface
      */
     public function resolver(Argument $argument)
     {
+        PageSizeValidator::checkMaxPageSize($argument);
         $this->setDefaultFirstOffsetIfNecessary($argument);
         $domainId = $this->domain->getId();
 
