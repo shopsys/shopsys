@@ -3,13 +3,13 @@ import { StoreType, TransportType } from 'connectors/transports/types';
 import { CartType } from 'connectors/cart/types';
 import { HYDRATE } from 'next-redux-wrapper';
 import { PaymentType } from 'connectors/payments/types';
+import { ProductOrderingModeEnumApi } from 'graphql/generated';
 
-const sortPriority = 'PRIORITY';
-const sortPriceAsc = 'PRICE_ASC';
-const sortPriceDesc = 'PRICE_DESC';
-export const enabledSortTypes = [sortPriority, sortPriceAsc, sortPriceDesc];
-
-export type SortType = typeof sortPriority | typeof sortPriceAsc | typeof sortPriceDesc;
+export const enabledSortTypes = [
+    ProductOrderingModeEnumApi.PriorityApi,
+    ProductOrderingModeEnumApi.PriceAscApi,
+    ProductOrderingModeEnumApi.PriceDescApi,
+];
 
 export type PaginationType = {
     currentPage: number;
@@ -17,7 +17,7 @@ export type PaginationType = {
 };
 
 type InitialState = {
-    sort: SortType;
+    sort: ProductOrderingModeEnumApi;
     cart: CartType | null;
     transport: TransportType | null;
     payment: PaymentType | null;
@@ -27,7 +27,7 @@ type InitialState = {
 };
 
 export const initialState = {
-    sort: sortPriority,
+    sort: ProductOrderingModeEnumApi.PriorityApi,
     cart: null,
     transport: null,
     payment: null,
@@ -39,14 +39,12 @@ export const initialState = {
     canAccessOrderConfirmation: false,
 } as InitialState;
 
-export type PayloadType = { sort: SortType };
-
 export const userSlice = createSlice({
     name: 'user',
     initialState,
     reducers: {
-        setSort(state, action: PayloadAction<PayloadType>) {
-            state.sort = action.payload.sort;
+        setSort(state, action: PayloadAction<ProductOrderingModeEnumApi>) {
+            state.sort = action.payload;
         },
         setCart(state, action: PayloadAction<CartType | null>) {
             state.cart = action.payload;

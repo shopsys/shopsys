@@ -1,8 +1,7 @@
-import { enabledSortTypes, initialState, SortType, userActions } from 'redux/slices/user';
 import { FC, useEffect } from 'react';
 import { friendlyUrlQuery, getFriendlyUrlResolvedData, isProductType } from 'connectors/friendlyUrls/FriendlyUrls';
 import { initServerSideProps, ServerSidePropsType } from 'helpers/InitServerSideProps';
-import { nextReduxWrapper, useShopsysDispatch, useShopsysSelector } from 'redux/main';
+import { nextReduxWrapper, useShopsysDispatch } from 'redux/main';
 import ArticleDetailPage from 'components/Pages/Article';
 import { ArticleDetailType } from 'connectors/article/types';
 import Breadcrumbs from 'components/Layout/Breadcrumbs';
@@ -11,28 +10,26 @@ import { CategoryDetailType } from 'components/Pages/CategoryDetail/types';
 import CommonLayout from 'components/Layout/CommonLayout';
 import DefaultErrorPage from 'next/error';
 import { getNewPagination } from 'utils/Pagination/getNewPagination';
+import { getProductListSort } from 'helpers/sorting/GetProductListSort';
 import { initDomainConfig } from 'helpers/InitDomainConfig';
 import { NavigationQueryDocumentApi } from 'graphql/generated';
 import { parsePageNumberFromQuery } from 'utils/Pagination/parsePageNumberFromQuery';
+import { parseProductListSortFromQuery } from 'helpers/sorting/ParseProductListSortFromQuery';
 import ProductDetailPage from 'components/Pages/ProductDetail';
 import { ProductDetailType } from 'components/Pages/ProductDetail/types';
 import StoreDetailPage from 'components/Pages/StoreDetail';
 import { StoreDetailType } from 'connectors/stores/types';
+import { userActions } from 'redux/slices/user';
 import { useRouter } from 'next/router';
 import Webline from 'components/Layout/Webline';
 
 const FriendlyUrlPage: FC<ServerSidePropsType> = () => {
     const router = useRouter();
     const dispatch = useShopsysDispatch();
-    const categoryDetailSortQuery = router.query.sort as string;
-    const categoryDetailSortState = useShopsysSelector((state) => state.user.sort);
-    const categoryDetailSort = getCategoryDetailSort(
-        typeof categoryDetailSortQuery !== 'undefined' ? categoryDetailSortQuery : categoryDetailSortState,
-    );
 
     useEffect(() => {
-        dispatch(userActions.setSort({ sort: categoryDetailSort as SortType }));
-    }, [categoryDetailSortQuery]);
+        dispatch(userActions.setSort(getProductListSort(parseProductListSortFromQuery(router.query.sort))));
+    }, [router.query.sort]);
 
     useEffect(() => {
         dispatch(userActions.setPagination(getNewPagination(parsePageNumberFromQuery(router.query.page))));
@@ -68,8 +65,8 @@ function renderContent(data: ProductDetailType | CategoryDetailType | StoreDetai
 }
 
 export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) => async (context) => {
-    const categoryDetailSort = getCategoryDetailSort(context.query.sort as string);
     initDomainConfig(context, store);
+    store.dispatch(userActions.setSort(getProductListSort(parseProductListSortFromQuery(context.query.sort))));
     store.dispatch(userActions.setPagination(getNewPagination(parsePageNumberFromQuery(context.query.page))));
 
     return initServerSideProps(context, store, [
@@ -77,7 +74,7 @@ export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) =>
         {
             query: friendlyUrlQuery(
                 getUrlWithoutGetParameters(context.resolvedUrl),
-                categoryDetailSort,
+                store.getState().user.sort,
                 store.getState().user.pagination.paginationCursor,
             ),
         },
@@ -86,10 +83,6 @@ export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) =>
 
 const getUrlWithoutGetParameters = (originalUrl: string) => {
     return originalUrl.split('?')[0];
-};
-
-const getCategoryDetailSort = (categoryDetailSortQuery: string): string => {
-    return enabledSortTypes.includes(categoryDetailSortQuery) ? categoryDetailSortQuery : initialState.sort;
 };
 
 export default FriendlyUrlPage;
