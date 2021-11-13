@@ -1,6 +1,5 @@
 import {
     FlagLabelFragmentApi,
-    ImageListFragmentApi,
     ListedProductFragmentApi,
     ProductPriceFragmentApi,
     SliderProductFragmentApi,
@@ -12,9 +11,8 @@ import {
     ProductPriceType,
     SliderProductItemType,
 } from 'components/Blocks/Product/types';
-import { ImageType } from 'components/Basic/Image/types';
 import { ListedProductType } from './types';
-import { mapImageSizeApiData } from 'connectors/image/size/ImageSize';
+import { mapImageApiData } from 'connectors/image/Image';
 import { useQueryError } from 'hooks/graphQl/UseQueryError';
 import { useShopsysSelector } from 'redux/main';
 
@@ -37,7 +35,7 @@ export const mapListedProductType = (apiData: ListedProductFragmentApi, currency
         availability: apiData.availability.name,
         name: apiData.name,
         price: mapProductPriceApiData(apiData.price, currencyCode),
-        image: mapProductImageApiData(apiData.images),
+        image: mapImageApiData(apiData.images),
     };
 };
 
@@ -63,7 +61,7 @@ export const mapSliderProductApiData = (
             ...apiProduct,
             detailSlug: apiProduct.slug,
             name: apiProduct.name,
-            image: mapProductImageApiData(apiProduct.images),
+            image: mapImageApiData(apiProduct.images),
             price: mapProductPriceApiData(apiProduct.price, currencyCode),
             isMainVariant: apiProduct.__typename === 'MainVariant',
             availability: apiProduct.availability.name,
@@ -71,14 +69,6 @@ export const mapSliderProductApiData = (
             stockQuantity: apiProduct.stockQuantity,
         };
     });
-};
-
-export const mapProductImageApiData = (apiData: ImageListFragmentApi['images']): ImageType | null => {
-    if (!(0 in apiData) || !(0 in apiData[0].sizes)) {
-        return null;
-    }
-
-    return mapImageSizeApiData(apiData[0].sizes[0]);
 };
 
 export const mapProductPriceApiData = (

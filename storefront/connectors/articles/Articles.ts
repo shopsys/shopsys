@@ -1,7 +1,6 @@
-import { BlogArticleImageListFragmentApi, ListedArticleFragmentApi } from 'graphql/generated';
 import { ListedArticleType, ListedBlogArticleType } from './types';
-import { ImageType } from 'components/Basic/Image/types';
-import { mapImageSizeApiData } from 'connectors/image/size/ImageSize';
+import { ListedArticleFragmentApi } from 'graphql/generated';
+import { mapImageApiData } from 'connectors/image/Image';
 
 export const mapListedArticleApiData = (
     apiData: ListedArticleFragmentApi,
@@ -16,17 +15,9 @@ export const mapListedArticleApiData = (
     if (apiData.__typename === 'BlogArticle') {
         return {
             ...apiData,
-            image: mapArticlesImageApiData(apiData.image),
+            image: mapImageApiData([apiData.image]),
         };
     }
 
     return undefined;
-};
-
-const mapArticlesImageApiData = (apiData: BlogArticleImageListFragmentApi['image']): ImageType | null => {
-    if (apiData === null || apiData === undefined || !(0 in apiData)) {
-        return null;
-    }
-
-    return mapImageSizeApiData(apiData.sizes[0]);
 };
