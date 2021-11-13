@@ -6,8 +6,7 @@ import {
     NavigationSubCategoriesLinkFragmentApi,
     useNavigationQueryApi,
 } from 'graphql/generated';
-import { ImageType } from 'components/Basic/Image/types';
-import { mapImageSizeApiData } from 'connectors/image/size/ImageSize';
+import { mapImageApiData } from 'connectors/image/Image';
 import { useQueryError } from 'hooks/graphQl/UseQueryError';
 
 export type NavigationSubCategory = {
@@ -73,14 +72,6 @@ function mapNavigationCategoriesByColumns(
     return mappedCategoriesByColumns;
 }
 
-const mapCategoryImageApiData = (apiData: CategoryImagesDefaultFragmentApi['images']): ImageType | null => {
-    if (!(0 in apiData) || !(0 in apiData[0].sizes)) {
-        return null;
-    }
-
-    return mapImageSizeApiData(apiData[0].sizes[0]);
-};
-
 const mapSubCategories = (apiData: NavigationSubCategoriesLinkFragmentApi['children']): NavigationSubCategory[] => {
     return apiData.map((subCategory) => {
         return {
@@ -96,7 +87,7 @@ const mapCategories = (data: ColumnCategoriesFragmentApi['categories']): Navigat
         if (!(0 in category.images)) {
             continue;
         }
-        const mappedImages = mapCategoryImageApiData(category.images);
+        const mappedImages = mapImageApiData(category.images);
         if (mappedImages === null) {
             continue;
         }

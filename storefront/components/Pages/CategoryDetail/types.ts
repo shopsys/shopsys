@@ -1,5 +1,5 @@
 import { BreadcrumbType } from 'connectors/breadcrumb/Breadcrumb';
-import { CategoryItemType } from 'components/Blocks/Categories/CategoryItem/types';
+import { ListedCategoryType } from 'connectors/categories/types';
 import { ListedProductEdgesType } from 'components/Blocks/Product/types';
 import { SlugType } from 'connectors/slug/Slug';
 
@@ -13,8 +13,8 @@ export interface CategoryDetailType extends SlugType, BreadcrumbType {
     uuid: string;
     name: string;
     seoH1: string | null;
-    children: CategoryItemType[];
+    children: ListedCategoryType[];
     products: ListedProductEdgesType;
     readyCategorySeoMixLinks: ReadyCategorySeoMixLink[];
-    linkedCategories: CategoryItemType[];
+    linkedCategories: ListedCategoryType[];
 }

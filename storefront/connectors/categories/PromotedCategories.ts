@@ -1,14 +1,9 @@
-import {
-    CategoryImagesDefaultFragmentApi,
-    PromotedCategoriesQueryApi,
-    usePromotedCategoriesQueryApi,
-} from 'graphql/generated';
-import { CategoryItemType } from 'components/Blocks/Categories/CategoryItem/types';
-import { ImageType } from 'components/Basic/Image/types';
-import { mapImageSizeApiData } from 'connectors/image/size/ImageSize';
+import { PromotedCategoriesQueryApi, usePromotedCategoriesQueryApi } from 'graphql/generated';
+import { ListedCategoryType } from './types';
+import { mapListedCategoryApiData } from './Categories';
 import { useQueryError } from 'hooks/graphQl/UseQueryError';
 
-export function getPromotedCategories(): CategoryItemType[] | undefined {
+export function getPromotedCategories(): ListedCategoryType[] | undefined {
     const [{ data, error }] = usePromotedCategoriesQueryApi();
     useQueryError(error);
 
@@ -19,18 +14,6 @@ export function getPromotedCategories(): CategoryItemType[] | undefined {
     return mapCategoryApiData(data.promotedCategories);
 }
 
-const mapCategoryApiData = (apiData: PromotedCategoriesQueryApi['promotedCategories']): CategoryItemType[] => {
-    return apiData.map((apiCategory) => {
-        return {
-            ...apiCategory,
-            image: mapCategoryImageApiData(apiCategory.images),
-        };
-    });
-};
-
-const mapCategoryImageApiData = (apiData: CategoryImagesDefaultFragmentApi['images']): ImageType | null => {
-    if (!(0 in apiData)) {
-        return null;
-    }
-    return mapImageSizeApiData(apiData[0].sizes[0]);
+const mapCategoryApiData = (apiData: PromotedCategoriesQueryApi['promotedCategories']): ListedCategoryType[] => {
+    return apiData.map((apiCategory) => mapListedCategoryApiData(apiCategory));
 };

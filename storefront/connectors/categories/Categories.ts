@@ -1,8 +1,9 @@
-import { CategoryDetailFragmentApi, CategoryPreviewFragmentApi, PageInfoApi } from 'graphql/generated';
+import { CategoryDetailFragmentApi, ListedCategoryFragmentApi, PageInfoApi } from 'graphql/generated';
 import { CategoryDetailType } from 'components/Pages/CategoryDetail/types';
+import { ListedCategoryType } from './types';
 import { ListedProductEdgesType } from 'components/Blocks/Product/types';
-import { mapImageSizeApiData } from 'connectors/image/size/ImageSize';
-import { mapListedProductNode } from 'connectors/products/Products';
+import { mapImageApiData } from 'connectors/image/Image';
+import { mapListedProductType } from 'connectors/products/Products';
 
 const mapPageInfoApiData = (pageInfoApiData: PageInfoApi | undefined) => {
     return {
@@ -25,23 +26,6 @@ const mapPageInfoApiData = (pageInfoApiData: PageInfoApi | undefined) => {
     };
 };
 
-const mapCategoryPreviewApiData = (categoryApiData: CategoryPreviewFragmentApi) => {
-    return {
-        ...categoryApiData,
-        products:
-            categoryApiData?.products !== undefined && categoryApiData.products !== null
-                ? categoryApiData.products
-                : undefined,
-        image:
-            categoryApiData.images.length > 0 &&
-            0 in categoryApiData.images &&
-            categoryApiData.images[0].sizes !== undefined &&
-            0 in categoryApiData.images[0].sizes
-                ? mapImageSizeApiData(categoryApiData.images[0].sizes[0])
-                : null,
-    };
-};
-
 export const mapCategoryDetailData = (
     apiCategoryDetailData: CategoryDetailFragmentApi,
     currencyCode: string,
@@ -61,7 +45,7 @@ export const mapCategoryDetailData = (
             }
             products.edges.push({
                 ...edge,
-                node: mapListedProductNode(edge.node, currencyCode),
+                node: mapListedProductType(edge.node, currencyCode),
             });
         }
     }
@@ -74,7 +58,14 @@ export const mapCategoryDetailData = (
                 ? apiCategoryDetailData.seoH1
                 : null,
         products: products,
-        children: apiCategoryDetailData.children.map((child) => mapCategoryPreviewApiData(child)),
-        linkedCategories: apiCategoryDetailData.linkedCategories.map((child) => mapCategoryPreviewApiData(child)),
+        children: apiCategoryDetailData.children.map((child) => mapListedCategoryApiData(child)),
+        linkedCategories: apiCategoryDetailData.linkedCategories.map((child) => mapListedCategoryApiData(child)),
+    };
+};
+
+export const mapListedCategoryApiData = (listedCategoryApiData: ListedCategoryFragmentApi): ListedCategoryType => {
+    return {
+        ...listedCategoryApiData,
+        image: mapImageApiData(listedCategoryApiData.images),
     };
 };

@@ -2219,7 +2219,7 @@ export type SimpleCategoryFragmentApi = { __typename?: 'Category', name: string,
 export type PromotedCategoriesQueryVariablesApi = Exact<{ [key: string]: never; }>;
 
 
-export type PromotedCategoriesQueryApi = { __typename?: 'Query', promotedCategories: Array<{ __typename?: 'Category', uuid: string, name: string, slug: string, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }> }> };
+export type PromotedCategoriesQueryApi = { __typename?: 'Query', promotedCategories: Array<{ __typename?: 'Category', uuid: string, name: string, slug: string, products?: { __typename?: 'ProductConnection', totalCount: number } | null | undefined, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }> }> };
 
 export type FlagLabelFragmentApi = { __typename?: 'Flag', name: string, rgbColor: string };
 
@@ -2830,13 +2830,10 @@ export function useLogoutApi() {
 export const PromotedCategoriesQueryDocumentApi = gql`
     query PromotedCategoriesQuery {
   promotedCategories {
-    uuid
-    name
-    slug
-    ...CategoryImagesDefaultFragment
+    ...ListedCategoryFragment
   }
 }
-    ${CategoryImagesDefaultFragmentApi}`;
+    ${ListedCategoryFragmentApi}`;
 
 export function usePromotedCategoriesQueryApi(options: Omit<Urql.UseQueryArgs<PromotedCategoriesQueryVariablesApi>, 'query'> = {}) {
   return Urql.useQuery<PromotedCategoriesQueryApi>({ query: PromotedCategoriesQueryDocumentApi, ...options });

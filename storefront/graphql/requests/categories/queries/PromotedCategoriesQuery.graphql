@@ -1,8 +1,5 @@
 query PromotedCategoriesQuery {
     promotedCategories {
-        uuid
-        name
-        slug
-        ...CategoryImagesDefaultFragment
+        ...ListedCategoryFragment
     }
 }
