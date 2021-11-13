@@ -5,6 +5,14 @@ query EnrichedSearchQuery($search: String!, $orderingMode: ProductOrderingModeEn
     brandSearch(search: $search) {
         ...ListedBrandFragment
     }
+    categoriesSearch(search: $search) {
+        totalCount
+        edges {
+            node {
+                ...ListedCategoryFragment
+            }
+        }
+    }
     productsSearch: products(search: $search, orderingMode: $orderingMode, after: $after) {
         totalCount
         edges {

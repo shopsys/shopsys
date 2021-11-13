@@ -3,6 +3,7 @@ import { ListedArticleType, ListedBlogArticleType } from 'connectors/articles/ty
 import { useEffect, useState } from 'react';
 import { EnrichedSearchType } from './types';
 import { ListedBrandType } from 'connectors/brands/types';
+import { ListedCategoryType } from 'connectors/categories/types';
 import { ListedProductType } from 'connectors/products/types';
 import { mapListedArticleApiData } from 'connectors/articles/Articles';
 import { mapListedBrandApiData } from 'connectors/brands/Brands';
@@ -48,6 +49,10 @@ const mapEnrichedSearchResult = (
     return {
         articlesSearch: mapEnrichedArticlesSearchResults(apiData.articlesSearch),
         brandSearch: mapEnrichedBrandSearchResults(apiData.brandSearch),
+        categoriesSearch: {
+            totalCount: apiData.categoriesSearch?.totalCount === undefined ? 0 : apiData.categoriesSearch.totalCount,
+            categories: mapEnrichedCategoriesSearchResults(apiData.categoriesSearch),
+        },
         productsSearch: {
             totalCount: apiData.productsSearch?.totalCount === undefined ? 0 : apiData.productsSearch.totalCount,
             products: mapEnrichedProductsSearchResults(apiData.productsSearch, currencyCode),
@@ -70,6 +75,22 @@ const mapEnrichedProductsSearchResults = (
     }
 
     return mappedProducts;
+};
+
+const mapEnrichedCategoriesSearchResults = (
+    apiData: EnrichedSearchQueryApi['categoriesSearch'],
+): ListedCategoryType[] => {
+    const mappedCategories = [];
+
+    if (apiData?.edges !== undefined && apiData.edges !== null) {
+        for (const categoryEdge of apiData.edges) {
+            if (categoryEdge?.node !== undefined && categoryEdge?.node !== null) {
+                mappedCategories.push(mapListedCategoryApiData(categoryEdge.node));
+            }
+        }
+    }
+
+    return mappedCategories;
 };
 
 export const mapEnrichedBrandSearchResults = (apiData: EnrichedSearchQueryApi['brandSearch']): ListedBrandType[] => {

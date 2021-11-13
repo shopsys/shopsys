@@ -47,6 +47,7 @@ const Search: FC<SearchProps> = (props) => {
     const { currentPage } = useShopsysSelector((state) => state.user.pagination);
     const [areArticlesResultsVisible, setArticlesResultsVisibility] = useState(false);
     const [areBrandsResultsVisible, setBrandsResultsVisibility] = useState(false);
+    const [areCategoriesResultsVisible, setCategoriesResultsVisibility] = useState(false);
     const [numberOfVisible, setNumberOfVisible] = useState(0);
     useResizeWidthEffect(
         width,
@@ -135,6 +136,27 @@ const Search: FC<SearchProps> = (props) => {
                                         }}
                                     >
                                         {areBrandsResultsVisible ? t('Hide results') : t('Show all results')}
+                                    </Button>
+                                </ShowResultsButtonWrapperStyled>
+                            )}
+                        </Webline>
+                    )}
+                    {props.searchResults.categoriesSearch.totalCount > 0 && (
+                        <Webline>
+                            <Heading type={'h3'}>{t('Found categories')}</Heading>
+                            <SearchResultsBlockStyled areAllResultsVisible={areCategoriesResultsVisible}>
+                                <SimpleNavigation listedItems={props.searchResults.categoriesSearch.categories} />
+                            </SearchResultsBlockStyled>
+                            {numberOfVisible < props.searchResults.categoriesSearch.categories.length && (
+                                <ShowResultsButtonWrapperStyled>
+                                    <Button
+                                        type="button"
+                                        size="small"
+                                        onClick={() => {
+                                            setCategoriesResultsVisibility((currentState) => !currentState);
+                                        }}
+                                    >
+                                        {areCategoriesResultsVisible ? t('Hide results') : t('Show all results')}
                                     </Button>
                                 </ShowResultsButtonWrapperStyled>
                             )}
