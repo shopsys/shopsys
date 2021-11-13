@@ -1,4 +1,8 @@
-import { ImagesDefaultFragmentApi, PromotedCategoriesQueryApi, usePromotedCategoriesQueryApi } from 'graphql/generated';
+import {
+    CategoryImagesDefaultFragmentApi,
+    PromotedCategoriesQueryApi,
+    usePromotedCategoriesQueryApi,
+} from 'graphql/generated';
 import { CategoryItemType } from 'components/Blocks/Categories/CategoryItem/types';
 import { ImageType } from 'components/Basic/Image/types';
 import { mapImageSizeApiData } from 'connectors/image/size/ImageSize';
@@ -24,7 +28,7 @@ const mapCategoryApiData = (apiData: PromotedCategoriesQueryApi['promotedCategor
     });
 };
 
-const mapCategoryImageApiData = (apiData: ImagesDefaultFragmentApi['images']): ImageType | null => {
+const mapCategoryImageApiData = (apiData: CategoryImagesDefaultFragmentApi['images']): ImageType | null => {
     if (!(0 in apiData)) {
         return null;
     }

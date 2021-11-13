@@ -3,6 +3,6 @@ query PromotedCategoriesQuery {
         uuid
         name
         slug
-        ...ImagesDefaultFragment
+        ...CategoryImagesDefaultFragment
     }
 }

@@ -2210,8 +2210,6 @@ export type CategoryImagesDefaultFragmentApi = { __typename?: 'Category', images
 
 export type CategoryPreviewFragmentApi = { __typename?: 'Category', uuid: string, name: string, slug: string, products?: { __typename?: 'ProductConnection', totalCount: number } | null | undefined, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }> };
 
-export type ImagesDefaultFragmentApi = { __typename?: 'Category', images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }> };
-
 export type ListedCategoryFragmentApi = { __typename?: 'Category', uuid: string, name: string, slug: string, products?: { __typename?: 'ProductConnection', totalCount: number } | null | undefined, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }> };
 
 export type NavigationSubCategoriesLinkFragmentApi = { __typename?: 'Category', children: Array<{ __typename?: 'Category', name: string, slug: string }> };
@@ -2489,8 +2487,8 @@ export const SimpleBrandFragmentApi = gql`
   slug
 }
     `;
-export const ImagesDefaultFragmentApi = gql`
-    fragment ImagesDefaultFragment on Category {
+export const CategoryImagesDefaultFragmentApi = gql`
+    fragment CategoryImagesDefaultFragment on Category {
   images(size: "default") {
     ...ImageSizesFragment
   }
@@ -2501,12 +2499,12 @@ export const CategoryPreviewFragmentApi = gql`
   uuid
   name
   slug
-  ...ImagesDefaultFragment
+  ...CategoryImagesDefaultFragment
   products {
     totalCount
   }
 }
-    ${ImagesDefaultFragmentApi}`;
+    ${CategoryImagesDefaultFragmentApi}`;
 export const PageInfoFragmentApi = gql`
     fragment PageInfoFragment on PageInfo {
   hasNextPage
@@ -2612,11 +2610,11 @@ export const ColumnCategoriesFragmentApi = gql`
   categories {
     name
     slug
-    ...ImagesDefaultFragment
+    ...CategoryImagesDefaultFragment
     ...NavigationSubCategoriesLinkFragment
   }
 }
-    ${ImagesDefaultFragmentApi}
+    ${CategoryImagesDefaultFragmentApi}
 ${NavigationSubCategoriesLinkFragmentApi}`;
 export const CategoriesByColumnFragmentApi = gql`
     fragment CategoriesByColumnFragment on NavigationItem {
@@ -2742,13 +2740,6 @@ export const CategoriesSearchFragmentApi = gql`
   }
 }
     ${SimpleCategoryFragmentApi}`;
-export const CategoryImagesDefaultFragmentApi = gql`
-    fragment CategoryImagesDefaultFragment on Category {
-  images(size: "default") {
-    ...ImageSizesFragment
-  }
-}
-    ${ImageSizesFragmentApi}`;
 export const ListedCategoryFragmentApi = gql`
     fragment ListedCategoryFragment on Category {
   uuid
@@ -2842,10 +2833,10 @@ export const PromotedCategoriesQueryDocumentApi = gql`
     uuid
     name
     slug
-    ...ImagesDefaultFragment
+    ...CategoryImagesDefaultFragment
   }
 }
-    ${ImagesDefaultFragmentApi}`;
+    ${CategoryImagesDefaultFragmentApi}`;
 
 export function usePromotedCategoriesQueryApi(options: Omit<Urql.UseQueryArgs<PromotedCategoriesQueryVariablesApi>, 'query'> = {}) {
   return Urql.useQuery<PromotedCategoriesQueryApi>({ query: PromotedCategoriesQueryDocumentApi, ...options });

@@ -2,7 +2,7 @@ fragment CategoryPreviewFragment on Category {
     uuid
     name
     slug
-    ...ImagesDefaultFragment
+    ...CategoryImagesDefaultFragment
     products{
         totalCount
     }

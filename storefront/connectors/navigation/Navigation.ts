@@ -1,7 +1,7 @@
 import {
     CategoriesByColumnFragmentApi,
+    CategoryImagesDefaultFragmentApi,
     ColumnCategoriesFragmentApi,
-    ImagesDefaultFragmentApi,
     NavigationQueryApi,
     NavigationSubCategoriesLinkFragmentApi,
     useNavigationQueryApi,
@@ -73,7 +73,7 @@ function mapNavigationCategoriesByColumns(
     return mappedCategoriesByColumns;
 }
 
-const mapCategoryImageApiData = (apiData: ImagesDefaultFragmentApi['images']): ImageType | null => {
+const mapCategoryImageApiData = (apiData: CategoryImagesDefaultFragmentApi['images']): ImageType | null => {
     if (!(0 in apiData) || !(0 in apiData[0].sizes)) {
         return null;
     }

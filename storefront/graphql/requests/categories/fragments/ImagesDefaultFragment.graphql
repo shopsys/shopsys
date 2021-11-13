@@ -1,5 +1,0 @@
-fragment ImagesDefaultFragment on Category {
-    images(size: "default") {
-        ...ImageSizesFragment
-    }
-}
