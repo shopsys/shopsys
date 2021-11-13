@@ -2,6 +2,7 @@ import { EnrichedSearchQueryApi, ProductOrderingModeEnumApi, useEnrichedSearchQu
 import { ListedArticleType, ListedBlogArticleType } from 'connectors/articles/types';
 import { useEffect, useState } from 'react';
 import { EnrichedSearchType } from './types';
+import { ListedBrandType } from 'connectors/brands/types';
 import { ListedProductType } from 'connectors/products/types';
 import { mapListedArticleApiData } from 'connectors/articles/Articles';
 import { mapListedBrandApiData } from 'connectors/brands/Brands';
@@ -46,6 +47,7 @@ const mapEnrichedSearchResult = (
 
     return {
         articlesSearch: mapEnrichedArticlesSearchResults(apiData.articlesSearch),
+        brandSearch: mapEnrichedBrandSearchResults(apiData.brandSearch),
         productsSearch: {
             totalCount: apiData.productsSearch?.totalCount === undefined ? 0 : apiData.productsSearch.totalCount,
             products: mapEnrichedProductsSearchResults(apiData.productsSearch, currencyCode),
@@ -68,6 +70,10 @@ const mapEnrichedProductsSearchResults = (
     }
 
     return mappedProducts;
+};
+
+export const mapEnrichedBrandSearchResults = (apiData: EnrichedSearchQueryApi['brandSearch']): ListedBrandType[] => {
+    return apiData.map((brand) => mapListedBrandApiData(brand));
 };
 
 export const mapEnrichedArticlesSearchResults = (

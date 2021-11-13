@@ -46,6 +46,7 @@ const Search: FC<SearchProps> = (props) => {
     const { width } = useGetWindowSize();
     const { currentPage } = useShopsysSelector((state) => state.user.pagination);
     const [areArticlesResultsVisible, setArticlesResultsVisibility] = useState(false);
+    const [areBrandsResultsVisible, setBrandsResultsVisibility] = useState(false);
     const [numberOfVisible, setNumberOfVisible] = useState(0);
     useResizeWidthEffect(
         width,
@@ -113,6 +114,27 @@ const Search: FC<SearchProps> = (props) => {
                                         }}
                                     >
                                         {areArticlesResultsVisible ? t('Hide results') : t('Show all results')}
+                                    </Button>
+                                </ShowResultsButtonWrapperStyled>
+                            )}
+                        </Webline>
+                    )}
+                    {props.searchResults.brandSearch.length > 0 && (
+                        <Webline>
+                            <Heading type={'h3'}>{t('Found brands')}</Heading>
+                            <SearchResultsBlockStyled areAllResultsVisible={areBrandsResultsVisible}>
+                                <SimpleNavigation listedItems={props.searchResults.brandSearch} />
+                            </SearchResultsBlockStyled>
+                            {numberOfVisible < props.searchResults.brandSearch.length && (
+                                <ShowResultsButtonWrapperStyled>
+                                    <Button
+                                        type="button"
+                                        size="small"
+                                        onClick={() => {
+                                            setBrandsResultsVisibility((currentState) => !currentState);
+                                        }}
+                                    >
+                                        {areBrandsResultsVisible ? t('Hide results') : t('Show all results')}
                                     </Button>
                                 </ShowResultsButtonWrapperStyled>
                             )}

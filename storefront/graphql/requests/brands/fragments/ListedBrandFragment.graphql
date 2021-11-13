@@ -1,0 +1,5 @@
+fragment ListedBrandFragment on Brand {
+    name
+    slug
+    ...BrandImagesListFragment
+}

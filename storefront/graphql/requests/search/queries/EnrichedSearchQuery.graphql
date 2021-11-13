@@ -2,6 +2,9 @@ query EnrichedSearchQuery($search: String!, $orderingMode: ProductOrderingModeEn
     articlesSearch(search: $search) {
         ...ListedArticleFragment
     }
+    brandSearch(search: $search) {
+        ...ListedBrandFragment
+    }
     productsSearch: products(search: $search, orderingMode: $orderingMode, after: $after) {
         totalCount
         edges {
