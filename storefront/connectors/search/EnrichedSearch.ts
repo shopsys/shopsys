@@ -61,16 +61,7 @@ const mapEnrichedProductsSearchResults = (
     if (apiData?.edges !== undefined && apiData.edges !== null) {
         for (const productEdge of apiData.edges) {
             if (productEdge?.node !== undefined && productEdge?.node !== null) {
-                mappedProducts.push({
-                    ...productEdge.node,
-                    flags: mapFlagsApiData(productEdge.node.flags),
-                    isMainVariant: productEdge.node.__typename === 'MainVariant',
-                    detailSlug: productEdge.node.slug,
-                    availability: productEdge.node.availability.name,
-                    name: productEdge.node.name,
-                    price: mapProductPriceApiData(productEdge.node.price, currencyCode),
-                    image: mapImageApiData(productEdge.node.images),
-                });
+                mappedProducts.push(mapListedProductType(productEdge.node, currencyCode));
             }
         }
     }

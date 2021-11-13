@@ -68,7 +68,7 @@ const CategoryDetail: FC<CategoryDetailProps> = (props) => {
                     </CategoryDetailPanelOpenerStyled>
                     <SortingBar totalCount={props.category.products.totalCount} />
                     {props.category.products.edges.length !== 0 && (
-                        <ProductsList products={props.category.products.edges} />
+                        <ProductsList products={props.category.products.edges.map((edge) => edge.node)} />
                     )}
                     <Pagination totalCount={props.category.products.totalCount} />
                 </CategoryDetailContentStyled>
