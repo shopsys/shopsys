@@ -1,0 +1,16 @@
+fragment ListedProductFragment on Product {
+    uuid
+    slug
+    name
+    stockQuantity
+    flags {
+        ...FlagLabelFragment
+    }
+    ...ImageListFragment
+    ...ProductPriceFragment
+    availability {
+        ...AvailabilityFragment
+    }
+    availableStoresCount
+    exposedStoresCount
+}
