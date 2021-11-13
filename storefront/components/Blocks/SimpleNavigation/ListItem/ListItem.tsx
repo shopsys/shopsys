@@ -7,16 +7,11 @@ import {
 } from './ListItem.style';
 import { FC } from 'react';
 import Image from 'components/Basic/Image';
-import { ImageType } from 'components/Basic/Image/types';
+import { ListedItemPropType } from 'components/Blocks/SimpleNavigation/types';
 import NextLink from 'next/link';
 
 type ListItemProps = {
-    listedItem: {
-        slug: string;
-        image: ImageType | null;
-        name: string;
-        products?: { totalCount: number };
-    };
+    listedItem: ListedItemPropType;
 };
 
 const ListItem: FC<ListItemProps> = (props) => {
@@ -28,8 +23,8 @@ const ListItem: FC<ListItemProps> = (props) => {
                 </ListItemImageStyled>
                 <ListItemNameWrapperStyled>
                     <ListItemNameStyled>{props.listedItem.name}</ListItemNameStyled>
-                    {props.listedItem.products?.totalCount !== undefined && (
-                        <ListItemCountStyled>({props.listedItem.products.totalCount})</ListItemCountStyled>
+                    {'totalCount' in props.listedItem && props.listedItem.totalCount !== undefined && (
+                        <ListItemCountStyled>({props.listedItem.totalCount})</ListItemCountStyled>
                     )}
                 </ListItemNameWrapperStyled>
             </ListItemBlockStyled>

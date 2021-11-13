@@ -1,3 +1,9 @@
+import {
+    ListedArticleType,
+    ListedBlogArticleType,
+    SimpleArticleType,
+    SimpleBlogArticleType,
+} from 'connectors/articles/types';
 import { ListedProductType, SimpleProductType } from 'connectors/products/types';
 
 export type SearchType = {
@@ -8,5 +14,6 @@ export type SearchType = {
 };
 
 export type EnrichedSearchType = {
+    articlesSearch: (ListedArticleType | ListedBlogArticleType)[];
     productsSearch: { totalCount: number; products: ListedProductType[] };
 };

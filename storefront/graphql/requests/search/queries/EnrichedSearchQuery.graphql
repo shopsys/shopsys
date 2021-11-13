@@ -1,4 +1,7 @@
 query EnrichedSearchQuery($search: String!, $orderingMode: ProductOrderingModeEnum, $after: String) {
+    articlesSearch(search: $search) {
+        ...ListedArticleFragment
+    }
     productsSearch: products(search: $search, orderingMode: $orderingMode, after: $after) {
         totalCount
         edges {

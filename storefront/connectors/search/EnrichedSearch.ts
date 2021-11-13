@@ -45,6 +45,7 @@ const mapEnrichedSearchResult = (
     }
 
     return {
+        articlesSearch: mapEnrichedArticlesSearchResults(apiData.articlesSearch),
         productsSearch: {
             totalCount: apiData.productsSearch?.totalCount === undefined ? 0 : apiData.productsSearch.totalCount,
             products: mapEnrichedProductsSearchResults(apiData.productsSearch, currencyCode),
@@ -67,4 +68,24 @@ const mapEnrichedProductsSearchResults = (
     }
 
     return mappedProducts;
+};
+
+export const mapEnrichedArticlesSearchResults = (
+    apiData: EnrichedSearchQueryApi['articlesSearch'],
+): (ListedArticleType | ListedBlogArticleType)[] => {
+    const mappedArticles = [];
+
+    if (apiData !== undefined && apiData !== null) {
+        for (const article of apiData) {
+            if (article === undefined || article === null) {
+                continue;
+            }
+            const mappedArticle = mapListedArticleApiData(article);
+            if (mappedArticle !== undefined) {
+                mappedArticles.push(mappedArticle);
+            }
+        }
+    }
+
+    return mappedArticles;
 };
