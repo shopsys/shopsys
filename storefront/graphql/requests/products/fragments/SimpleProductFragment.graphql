@@ -2,5 +2,5 @@ fragment SimpleProductFragment on Product {
     name
     slug
     ...ProductPriceFragment
-    ...ImageListFragment
+    ...ProductImagesListFragment
 }
