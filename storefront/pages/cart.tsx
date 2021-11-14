@@ -44,7 +44,7 @@ const Cart: FC<ServerSidePropsType> = () => {
 
 export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) => async (context) => {
     initDomainConfig(context, store);
-    return initServerSideProps(context, store, [NavigationQueryDocumentApi]);
+    return initServerSideProps(context, store, [{ query: NavigationQueryDocumentApi }]);
 });
 
 export default Cart;

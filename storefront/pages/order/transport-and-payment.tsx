@@ -86,7 +86,7 @@ const TransportAndPayment: FC<ServerSidePropsType> = () => {
 export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) => async (context) => {
     initDomainConfig(context, store);
     const redirect = handleOrderPagesRedirect(context);
-    return redirect === false ? initServerSideProps(context, store, [NavigationQueryDocumentApi]) : redirect;
+    return redirect === false ? initServerSideProps(context, store, [{ query: NavigationQueryDocumentApi }]) : redirect;
 });
 
 const getTransportAndPaymentValidity = (
