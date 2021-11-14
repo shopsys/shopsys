@@ -9,7 +9,7 @@ type StaticUrlGuardProps = {
 
 const StaticUrlGuard: FC<StaticUrlGuardProps> = (props) => {
     const router = useRouter();
-    const isStaticUrlAllowed = useStaticUrlGuard(router.asPath, props.domainUrl);
+    const isStaticUrlAllowed = useStaticUrlGuard(router.asPath.split('?')[0], props.domainUrl);
 
     if (!isStaticUrlAllowed) {
         return <DefaultErrorPage statusCode={404} />;
