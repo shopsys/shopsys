@@ -11,6 +11,7 @@ import Checkbox from 'components/Forms/Checkbox';
 import ChoiceFormLine from 'components/Forms/Lib/ChoiceFormLine';
 import ErrorPopup from 'components/Forms/Lib/ErrorPopup';
 import { FC } from 'react';
+import Form from 'components/Forms/Form';
 import FormLine from 'components/Forms/Lib/FormLine';
 import FormLineError from 'components/Forms/Lib/FormLineError';
 import Heading from 'components/Basic/Heading';
@@ -66,7 +67,7 @@ const NewsletterForm: FC = () => {
                 <Heading type="h2">{t('Sign up for our newsletter and get 35% discount on running apparel')}</Heading>
                 <NewsletterFormColumnStyled>
                     <FormProvider {...formProviderMethods}>
-                        <form onSubmit={formProviderMethods.handleSubmit(onSubscribeToNewsletterHandler)} noValidate>
+                        <Form onSubmit={formProviderMethods.handleSubmit(onSubscribeToNewsletterHandler)} noValidate>
                             <NewsletterFormInputWrapperStyled>
                                 <FormLine>
                                     <Controller
@@ -122,7 +123,7 @@ const NewsletterForm: FC = () => {
                                     )}
                                 />
                             </ChoiceFormLine>
-                        </form>
+                        </Form>
                     </FormProvider>
                 </NewsletterFormColumnStyled>
             </NewsletterFormWrapperStyled>

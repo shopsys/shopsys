@@ -6,6 +6,7 @@ import { nextReduxWrapper, useShopsysDispatch, useShopsysSelector } from 'redux/
 import ContactInformationForm from 'components/Pages/Order/ContactInformation';
 import ErrorPopup from 'components/Forms/Lib/ErrorPopup';
 import { FC } from 'react';
+import Form from 'components/Forms/Form';
 import { getContactInformationFormResolver } from 'components/Pages/Order/ContactInformation/ContactInformationFormResolver';
 import { handleOrderPagesRedirect } from 'helpers/HandleOrderPagesRedirect';
 import { initDomainConfig } from 'helpers/InitDomainConfig';
@@ -85,7 +86,7 @@ const ContactInformation: FC<ServerSidePropsType> = () => {
     return (
         <StaticUrlGuard domainUrl={domainUrl}>
             <FormProvider {...formProviderMethods}>
-                <form onSubmit={formProviderMethods.handleSubmit(onCreateOrderHandler)} noValidate>
+                <Form onSubmit={formProviderMethods.handleSubmit(onCreateOrderHandler)}>
                     <OrderLayout activeStep={3} buttonNextText={t('Submit order')}>
                         <ContactInformationForm />
                         <OrderAction
@@ -98,7 +99,7 @@ const ContactInformation: FC<ServerSidePropsType> = () => {
                             buttonBackLink={transportAndPaymentUrl}
                         />
                     </OrderLayout>
-                </form>
+                </Form>
             </FormProvider>
             <ErrorPopup
                 isVisible={isErrorPopupVisible}
