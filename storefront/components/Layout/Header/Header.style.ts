@@ -14,7 +14,7 @@ export const HeaderStyled = styled.div`
         padding: 8px 0 11px;
 
         @media ${theme.mediaQueries.queryLg} {
-            padding: 15px 0 0;
+            padding: 15px 0 11px;
         }
 
         @media ${theme.mediaQueries.queryVl} {
