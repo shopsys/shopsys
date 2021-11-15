@@ -15,10 +15,8 @@ const localVariables = {
 };
 
 export const GoogleMapWrapStyled = styled.div`
-    ${({ theme }) => css`
-        width: 100%;
-        height: 100%;
-    `}
+    width: 100%;
+    height: 100%;
 `;
 
 export const GoogleMapMarkerStyled = styled(Icon)<GoogleMapMarkerStyledProps>`

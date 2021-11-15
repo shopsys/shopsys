@@ -1,13 +1,11 @@
 import { styled, Theme } from 'components/Theme/main';
+import { ButtonDefaultProps } from 'components/Forms/Button/types';
 import { css } from 'styled-components';
 
-type ButtonSize = 'small';
-
-type ButtonPropsStyled = {
-    size?: ButtonSize;
-    borderRadius?: 'big';
+type ButtonProps = ButtonDefaultProps & {
     isDisabled?: boolean;
     hasDisabledLook?: boolean;
+    isLink?: boolean;
 };
 
 type ButtonAsLinkProps = {
@@ -15,40 +13,36 @@ type ButtonAsLinkProps = {
     hasDisabledLook?: boolean;
 };
 
-const localVariables = {
-    btnPaddingVertical: '10px',
-    btnPaddingHorizontal: '32px',
-    btnBackgroundColorHover: '#dea700', // darken version of theme.color.orange
-    btnSmallPaddingVertical: '3px',
-    btnPrimaryBackgroundColorHover: '#3b4cfc', // darken version of theme.color.primary
+export const buttonSettings = (
+    theme: Theme,
+    size?: ButtonDefaultProps['size'],
+    variant?: ButtonDefaultProps['variant'],
+    borderRadius?: ButtonDefaultProps['borderRadius'],
+): any => {
+    const buttonSize = size === undefined ? 'default' : size;
+    const buttonVariant = variant === undefined ? 'default' : variant;
+    const buttonBorderRadius = borderRadius === undefined ? 'default' : borderRadius;
+
+    return css`
+        padding: ${theme.button.size[buttonSize].paddingVertical} ${theme.button.size[buttonSize].paddingHorizontal};
+        min-height: ${theme.button.size[buttonSize].height};
+        line-height: ${theme.button.size[buttonSize].lineHeight};
+
+        color: ${theme.button.variant[buttonVariant].color};
+        background-color: ${theme.button.variant[buttonVariant].background};
+        font-size: ${theme.button.size[buttonSize].fontSize};
+        border-radius: ${theme.button.borderRadius[buttonBorderRadius]};
+
+        &:hover {
+            color: ${theme.button.variant[buttonVariant].colorHover};
+            background-color: ${theme.button.variant[buttonVariant].backgroundHover};
+        }
+    `;
 };
 
-const getSize = (theme: Theme, size?: ButtonSize) => {
-    switch (size) {
-        case 'small':
-            return css`
-                padding: ${localVariables.btnSmallPaddingVertical} 17px ${localVariables.btnSmallPaddingVertical};
-                min-height: 30px;
-                line-height: 23px;
-
-                font-size: ${theme.fontSize.small};
-            `;
-        default:
-            return css`
-                padding: ${localVariables.btnPaddingVertical} ${localVariables.btnPaddingHorizontal};
-                min-height: ${theme.btnHeight};
-                line-height: 27px;
-
-                font-size: ${theme.fontSize.default};
-            `;
-    }
-
-    throw new Error('Wrong size provided for Button.');
-};
-
-export const ButtonStyled = styled.button<ButtonPropsStyled>`
-    ${({ theme, size, borderRadius, isDisabled, hasDisabledLook }) => css`
-        ${getSize(theme, size)};
+export const ButtonStyled = styled.button<ButtonProps>`
+    ${({ theme, size, variant, borderRadius, isDisabled, hasDisabledLook }) => css`
+        ${buttonSettings(theme, size, variant, borderRadius)}
         width: auto;
         vertical-align: middle;
         display: inline-block;
@@ -56,9 +50,6 @@ export const ButtonStyled = styled.button<ButtonPropsStyled>`
         text-align: center;
 
         border: 0;
-        border-radius: ${borderRadius === 'big' ? theme.radius.big : theme.radius.medium};
-        color: ${theme.color.white};
-        background-color: ${theme.color.orange};
         cursor: pointer;
         text-decoration: none;
         font-weight: 700;
@@ -75,37 +66,6 @@ export const ButtonStyled = styled.button<ButtonPropsStyled>`
         css`
             pointer-events: none;
         `}
-
-
-        &:hover {
-            color: ${theme.color.white};
-            background-color: ${localVariables.btnBackgroundColorHover};
-            text-decoration: none;
-        }
-    `}
-`;
-
-export const ButtonPrimaryStyled = styled(ButtonStyled)`
-    ${({ theme }) => css`
-        color: ${theme.color.white};
-        background-color: ${theme.color.primary};
-
-        &:hover {
-            color: ${theme.color.white};
-            background-color: ${localVariables.btnPrimaryBackgroundColorHover};
-        }
-    `}
-`;
-
-export const ButtonSecondaryStyled = styled(ButtonStyled)`
-    ${({ theme }) => css`
-        color: ${theme.color.black};
-        background-color: ${theme.color.orangeLight};
-
-        &:hover {
-            color: ${theme.color.black};
-            background-color: ${theme.color.white};
-        }
     `}
 `;
 

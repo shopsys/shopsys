@@ -8,11 +8,13 @@ export const theme = {
         base: '#0d0d0d',
         primary: '#4c5bfd',
         primaryLight: '#a3abff',
+        primaryDarker: '#3b4cfc',
         white: '#fff',
         whitesmoke: '#e8e8ea',
         black: '#000',
         orange: '#ecb200',
         orangeLight: '#fff0c4',
+        orangeDarker: '#dea700',
         border: '#c4c9ff',
         red: '#ec5353',
         redLight: '#f2a2a2',
@@ -76,7 +78,48 @@ export const theme = {
     },
 
     /* Buttons */
-    btnHeight: '48px',
+    button: {
+        size: {
+            default: {
+                height: '48px',
+                lineHeight: '27px',
+                paddingVertical: '10px',
+                paddingHorizontal: '32px',
+                fontSize: () => theme.fontSize.default,
+            },
+            small: {
+                height: '30px',
+                lineHeight: '23px',
+                paddingVertical: '3px',
+                paddingHorizontal: '17px',
+                fontSize: () => theme.fontSize.small,
+            },
+        },
+        variant: {
+            default: {
+                color: () => theme.color.white,
+                background: () => theme.color.orange,
+                colorHover: () => theme.color.white,
+                backgroundHover: () => theme.color.orangeDarker,
+            },
+            primary: {
+                color: () => theme.color.white,
+                background: () => theme.color.primary,
+                colorHover: () => theme.color.white,
+                backgroundHover: () => theme.color.primaryDarker,
+            },
+            secondary: {
+                color: () => theme.color.black,
+                background: () => theme.color.orangeLight,
+                colorHover: () => theme.color.black,
+                backgroundHover: () => theme.color.white,
+            },
+        },
+        borderRadius: {
+            default: () => theme.radius.medium,
+            big: () => theme.radius.big,
+        },
+    },
 
     /* Transition */
     transition: '0.2s cubic-bezier(.8, .20, .48, 1.0)',

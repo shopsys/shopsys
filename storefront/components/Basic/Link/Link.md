@@ -17,5 +17,10 @@ import Icon from '../Icon';
         <Icon icon="NotImplementedYet" />
         External link with icon to google
     </Link>
+    <br />
+    <Link href="#" variant="primary">
+        <Icon icon="NotImplementedYet" />
+        Button link with icon
+    </Link>
 </div>;
 ```

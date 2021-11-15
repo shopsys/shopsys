@@ -28,7 +28,7 @@ const InfoBox: FC<InfoBoxProps> = (props) => {
                 </>
             )}
             <br />
-            <LinkStyled href={props.slug} variant={'default'}>
+            <LinkStyled href={props.slug} isButton={true}>
                 {t<string>('Store detail')}
             </LinkStyled>
         </InfoBoxStyled>
