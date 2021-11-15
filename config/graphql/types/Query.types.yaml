@@ -20,6 +20,7 @@ Query:
                 type: "StoreConnection"
                 argsBuilder: "Relay::Connection"
                 resolve: "@=resolver('stores', [args])"
+                complexity: "@=dynamicPaginationComplexity(args)"
                 description: "Returns list of stores that can be paginated using `first`, `last`, `before` and `after` keywords"
             store:
                 type: 'Store'
@@ -43,6 +44,7 @@ Query:
                 type: "BlogArticleConnection"
                 argsBuilder: "BlogArticlePaginatorArgumentsBuilder"
                 resolve: "@=resolver('blogArticles', [args])"
+                complexity: "@=dynamicPaginationComplexity(args)"
                 description: "Returns a list of the blog articles that can be paginated using `first`, `last`, `before` and `after` keywords"
             blogCategory:
                 type: 'BlogCategory'
@@ -139,3 +141,36 @@ Query:
                     search:
                         type: "String!"
                 description: "Returns list of searched brands"
+            categoriesSearch:
+                type: "CategoryConnection"
+                argsBuilder: "Relay::Connection"
+                resolve: "@=resolver('categoriesSearch', [args])"
+                complexity: "@=dynamicPaginationComplexity(args)"
+                args:
+                    search:
+                        type: "String!"
+                description: "Returns list of searched categories that can be paginated using `first`, `last`, `before` and `after` keywords"
+            products:
+                type: "ProductConnection"
+                argsBuilder:
+                    builder: "PaginatorArgumentsBuilder"
+                    config:
+                        orderingModeType: 'ProductOrderingModeEnum'
+                resolve: "@=resolver('products', [args])"
+                complexity: "@=dynamicPaginationComplexity(args)"
+                description: "Returns list of ordered products that can be paginated using `first`, `last`, `before` and `after` keywords"
+            articles:
+                type: "ArticleConnection"
+                argsBuilder: "Relay::Connection"
+                resolve: "@=resolver('articles', [args, args['placement']])"
+                complexity: "@=dynamicPaginationComplexity(args)"
+                args:
+                    placement:
+                        type: "String"
+                description: "Returns list of articles that can be paginated using `first`, `last`, `before` and `after` keywords and filtered by `placement`"
+            orders:
+                type: "OrderConnection"
+                argsBuilder: "Relay::Connection"
+                resolve: "@=resolver('orders', [args])"
+                complexity: "@=dynamicPaginationComplexity(args)"
+                description: "Returns list of orders that can be paginated using `first`, `last`, `before` and `after` keywords"
