@@ -59,7 +59,7 @@ const PromoCode: FC = () => {
             ) : (
                 <>
                     <PromoCodeButtonStyled onClick={() => setIsContentVisible(!isContentVisible)}>
-                        <PromoCodeButtonIconStyled icon="Plus" />
+                        <PromoCodeButtonIconStyled iconType="icon" icon="Plus" />
                         {t('I have a discount coupon')}
                     </PromoCodeButtonStyled>
                     <CSSTransition

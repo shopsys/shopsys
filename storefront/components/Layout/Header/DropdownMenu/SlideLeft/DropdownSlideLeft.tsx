@@ -13,7 +13,7 @@ const DropdownSlideLeft: FC<DropdownSlideLeftProps> = (props) => {
 
     return (
         <DropdownSlideLeftStyled onClick={() => props.onClickEvent(props)}>
-            <DropdownSlideLeftIconStyled icon="Arrow" />
+            <DropdownSlideLeftIconStyled iconType="icon" icon="Arrow" />
             {t('Back')}
         </DropdownSlideLeftStyled>
     );

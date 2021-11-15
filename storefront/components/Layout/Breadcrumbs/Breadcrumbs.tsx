@@ -24,7 +24,7 @@ const Breadcrumbs: FC<BreadcrumbType> = (props) => {
     return (
         <Webline>
             <BreadcrumbsStyled>
-                <LeftArrowIconStyled icon="Arrow" />
+                <LeftArrowIconStyled iconType="icon" icon="Arrow" />
                 <NextLink href="/">
                     <BreadcrumbsLinkStyled>{t('Home page')}</BreadcrumbsLinkStyled>
                 </NextLink>

@@ -20,7 +20,7 @@ const PromoCodeInfo: FC<PromoCodeInfoProps> = (props) => {
             <PromoCodeInfoTitleStyled>{t('Your discount with the code has been applied.')}</PromoCodeInfoTitleStyled>
             <PromoCodeInfoCouponStyled>
                 {props.promoCode}
-                <PromoCodeInfoCouponIconStyled icon="Cross" onClick={props.onRemovePromoCodeCallback} />
+                <PromoCodeInfoCouponIconStyled iconType="icon" icon="Cross" onClick={props.onRemovePromoCodeCallback} />
             </PromoCodeInfoCouponStyled>
             <p>
                 {t(

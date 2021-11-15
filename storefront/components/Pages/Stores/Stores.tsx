@@ -78,12 +78,12 @@ const Stores: FC = () => {
                     stores.map((store, index) => (
                         <ButtonBottomStyled key={index} href={store.slug}>
                             <ButtonBottomItemStyled>
-                                <ButtonBottomIconStyled icon="Marker" />
+                                <ButtonBottomIconStyled iconType="icon" icon="Marker" />
                                 <ButtonBottomNameStyled>{store.name}</ButtonBottomNameStyled>
                             </ButtonBottomItemStyled>
                             <ButtonBottomItemStyled>
                                 <ButtonBottomNameStyled type="right">{t('Store detail')}</ButtonBottomNameStyled>
-                                <ButtonBottomIconStyled icon="Arrow" type="right" />
+                                <ButtonBottomIconStyled iconType="icon" icon="Arrow" type="right" />
                             </ButtonBottomItemStyled>
                         </ButtonBottomStyled>
                     ))}

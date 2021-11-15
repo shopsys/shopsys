@@ -49,7 +49,7 @@ const FooterMenuItem: FC<FooterMenuItemProps> = (props) => {
                 isContentVisible={isContentVisible}
             >
                 {props.title}
-                <FooterMenuHeadingIconStyled icon="Arrow" />
+                <FooterMenuHeadingIconStyled iconType="icon" icon="Arrow" />
             </FooterMenuHeadingStyled>
             <CSSTransition
                 in={isContentVisible}

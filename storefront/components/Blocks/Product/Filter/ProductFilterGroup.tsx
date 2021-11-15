@@ -38,7 +38,7 @@ const ProductFilterGroup: FC<ProductFilterGroupProps> = (props) => {
         <ProductFilterGroupStyled>
             <ProductFilterGroupTitleStyled onClick={handleGroupClick}>
                 {props.title}
-                <ProductFilterGroupArrowStyled icon="Arrow" isOpen={isGroupOpen} />
+                <ProductFilterGroupArrowStyled iconType="icon" icon="Arrow" isOpen={isGroupOpen} />
             </ProductFilterGroupTitleStyled>
             <ProductFilterGroupContentStyled isOpen={isGroupOpen}>
                 {renderItems(props.type)}

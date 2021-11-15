@@ -62,6 +62,7 @@ const GoogleMap: FC<GoogleMapProps> = (props) => {
                     props.markers.length !== 0 &&
                     props.markers.map((marker, index) => (
                         <GoogleMapMarkerStyled
+                            iconType="icon"
                             icon="MapMarker"
                             key={index}
                             lat={marker.locationLatitude}

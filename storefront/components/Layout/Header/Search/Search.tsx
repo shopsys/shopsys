@@ -98,7 +98,7 @@ const Search: FC = () => {
                                 <RemoveSearchButtonStyled
                                     onClick={() => formProviderMethods.setValue('searchQuery', '')}
                                 >
-                                    <Icon icon="Remove" />
+                                    <Icon iconType="icon" icon="Remove" />
                                 </RemoveSearchButtonStyled>
                             )}
                         </FormProvider>

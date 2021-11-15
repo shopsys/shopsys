@@ -27,7 +27,7 @@ const RemoveCartItemButton: FC<RemoveCartItemButtonProps> = (props) => {
     };
     return (
         <RemoveCartItemButtonStyled onClick={onRemoveItemFromCartHanlder}>
-            <Icon icon="RemoveBold" />
+            <Icon iconType="icon" icon="RemoveBold" />
         </RemoveCartItemButtonStyled>
     );
 };

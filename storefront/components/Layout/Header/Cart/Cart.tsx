@@ -37,7 +37,7 @@ const Cart: FC = () => {
             <NextLink href={cartUrl} passHref>
                 <CartBlockStyled>
                     <CartPiecesStyled>
-                        <CartIconStyled icon="Cart" />
+                        <CartIconStyled iconType="icon" icon="Cart" />
                         <CartCountStyled>
                             {cart !== null && Array.isArray(cart.items) ? cart.items.length : 0}
                         </CartCountStyled>
@@ -78,7 +78,7 @@ const Cart: FC = () => {
             <CartButtonMobileStyled>
                 <NextLink href={cartUrl} passHref>
                     <CartButtonMobileLinkStyled>
-                        <CartIconMobileStyled icon="Cart" />
+                        <CartIconMobileStyled iconType="icon" icon="Cart" />
                         <CartCountStyled>
                             {cart !== null && Array.isArray(cart.items) ? cart.items.length : 0}
                         </CartCountStyled>

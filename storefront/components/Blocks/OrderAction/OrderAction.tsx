@@ -36,7 +36,7 @@ const OrderAction: FC<OrderActionProps> = (props) => {
             <OrderActionLeftStyled>
                 <NextLink href={props.buttonBackLink} passHref>
                     <OrderActionLinkBackStyled>
-                        <OrderActionButtonBackIconStyled icon="Arrow" />
+                        <OrderActionButtonBackIconStyled iconType="icon" icon="Arrow" />
                         {props.buttonBack}
                     </OrderActionLinkBackStyled>
                 </NextLink>
@@ -50,7 +50,7 @@ const OrderAction: FC<OrderActionProps> = (props) => {
                     onClick={onNextStepHandler}
                 >
                     {props.buttonNext}
-                    <OrderActionButtonNextIconStyled icon="Arrow" />
+                    <OrderActionButtonNextIconStyled iconType="icon" icon="Arrow" />
                 </Button>
             </OrderActionRightStyled>
         </OrderActionStyled>

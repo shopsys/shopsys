@@ -82,12 +82,12 @@ const StoreDetail: FC<StoreDetailProps> = (props) => {
                     </MapStyled>
                     <ButtonBottomStyled>
                         <ButtonBottomItemStyled>
-                            <ButtonBottomIconStyled icon="Chat" />
+                            <ButtonBottomIconStyled iconType="icon" icon="Chat" />
                             <ButtonBottomNameStyled>{t('Do you have any questions?')}</ButtonBottomNameStyled>
                         </ButtonBottomItemStyled>
                         <ButtonBottomItemStyled>
                             <ButtonBottomNameStyled type="right">{t('Customer Centre')}</ButtonBottomNameStyled>
-                            <ButtonBottomIconStyled icon="Arrow" type="right" />
+                            <ButtonBottomIconStyled iconType="icon" icon="Arrow" type="right" />
                         </ButtonBottomItemStyled>
                     </ButtonBottomStyled>
                 </StoreDetailContentStyled>

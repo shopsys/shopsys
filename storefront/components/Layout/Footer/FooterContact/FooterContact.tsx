@@ -35,24 +35,24 @@ const FooterContact: FC = () => {
                     <FooterContactHeadingStyled type="h4">{t('Follow Us')}</FooterContactHeadingStyled>
                     <FooterContactSocialsStyled>
                         <FooterContactSocialsItemStyled href="#">
-                            <FooterContactInstagramIconStyled icon="Instagram" />
+                            <FooterContactInstagramIconStyled iconType="icon" icon="Instagram" />
                         </FooterContactSocialsItemStyled>
                         <FooterContactSocialsItemStyled href="#">
-                            <Icon iconImage="facebook" width={32} height={32} alt={t('Facebook')} />
+                            <Icon iconType="image" icon="facebook" width={32} height={32} alt={t('Facebook')} />
                         </FooterContactSocialsItemStyled>
                         <FooterContactSocialsItemStyled href="#">
-                            <FooterContactYoutubeIconStyled icon="Youtube" />
+                            <FooterContactYoutubeIconStyled iconType="icon" icon="Youtube" />
                         </FooterContactSocialsItemStyled>
                     </FooterContactSocialsStyled>
                 </>
             )}
             <FooterContactLangsStyled>
                 <FooterContactLangsItemStyled href="#">
-                    <Icon iconImage="cz" width={24} height={16} alt={t('Czechia')} />
+                    <Icon iconType="image" icon="cz" width={24} height={16} alt={t('Czechia')} />
                     <FooterContactLangsItemTextStyled>{t('Czechia')}</FooterContactLangsItemTextStyled>
                 </FooterContactLangsItemStyled>
                 <FooterContactLangsItemStyled href="#">
-                    <Icon iconImage="sk" width={24} height={16} alt={t('Slovakia')} />
+                    <Icon iconType="image" icon="sk" width={24} height={16} alt={t('Slovakia')} />
                     <FooterContactLangsItemTextStyled>{t('Slovakia')}</FooterContactLangsItemTextStyled>
                 </FooterContactLangsItemStyled>
             </FooterContactLangsStyled>
