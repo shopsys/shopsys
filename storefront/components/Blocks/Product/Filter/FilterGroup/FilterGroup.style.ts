@@ -10,6 +10,11 @@ type FilterGroupProps = {
     isOpen?: boolean;
 };
 
+type FilterGroupContentItemStyledProps = {
+    isDisabled: boolean;
+    isActive: boolean;
+};
+
 export const FilterGroupStyled = styled.div`
     ${({ theme }) => css`
         margin-bottom: -${localVariables.filterGroupBorderWidth};
@@ -48,7 +53,7 @@ export const FilterGroupContentStyled = styled.div<FilterGroupProps>`
     `}
 `;
 
-export const FilterGroupContentItemStyled = styled.div`
+export const FilterGroupContentItemStyled = styled.div<FilterGroupContentItemStyledProps>`
     ${({ isDisabled, isActive }) => css`
         margin-bottom: 10px;
         ${isDisabled &&
