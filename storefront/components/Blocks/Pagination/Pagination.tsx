@@ -2,7 +2,7 @@ import { FC, Fragment, useState } from 'react';
 import { initialState, userActions } from 'redux/slices/user';
 import { PaginationButtonStyled, PaginationWrapperStyled } from './Pagination.style';
 import { useShopsysDispatch, useShopsysSelector } from 'redux/main';
-import GetNewPagination from 'utils/GetNewPagination';
+import { getNewPagination } from 'utils/Pagination/getNewPagination';
 import { isElementVisible } from 'components/Helpers/isElementVisible';
 import { mobileFirstSizes } from 'components/Theme/mediaQueries';
 import { useGetWindowSize } from 'hooks/ui/UseGetWindowSize';
@@ -14,11 +14,11 @@ export type PaginationButtonActiveType = {
     dotButton?: boolean;
 };
 
-export type PaginationType = {
+export type PaginationProps = {
     totalCount: number;
 };
 
-const Pagination: FC<PaginationType> = (props): JSX.Element | null => {
+const Pagination: FC<PaginationProps> = (props): JSX.Element | null => {
     const dispatch = useShopsysDispatch();
     const { width } = useGetWindowSize();
     const [isMobilePaginationVisible, setMobilePaginationVisible] = useState(false);
@@ -85,7 +85,7 @@ const Pagination: FC<PaginationType> = (props): JSX.Element | null => {
                             active={paginationState.currentPage === pageButton}
                             dotButton={false}
                             onClick={() => {
-                                dispatch(userActions.setPagination({ ...GetNewPagination(Number(pageButton)) }));
+                                dispatch(userActions.setPagination({ ...getNewPagination(pageButton) }));
                             }}
                         >
                             {pageButton}
