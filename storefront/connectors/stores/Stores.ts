@@ -1,7 +1,6 @@
+import { StoresQueryApi, useStoresQueryApi } from 'graphql/generated';
 import { StoreListType } from 'connectors/stores/types';
-import { StoresQueryApi } from 'graphql/generated';
 import { useQueryError } from 'hooks/graphQl/UseQueryError';
-import { useStoresQueryApi } from 'graphql/generated';
 
 export function getStores(): StoreListType[] {
     const [{ data, error }] = useStoresQueryApi();
