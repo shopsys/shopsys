@@ -26,6 +26,7 @@
         "@hookform/resolvers": "^2.6.1",
         "@reduxjs/toolkit": "^1.6.1",
         "@types/styled-components": "^5.1.11",
+        "@urql/exchange-auth": "^0.1.6",
         "babel-loader": "^8.2.2",
         "google-map-react": "^2.1.10",
         "graphql": "^15.5.1",

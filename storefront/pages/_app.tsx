@@ -2,6 +2,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { AppProps } from 'next/app';
 import { appWithTranslation } from 'next-i18next';
 import { getDomainConfig } from 'utils/Domain/Domain';
+import { getUrqlExchanges } from 'urql/exchanges';
 import nextI18NextConfig from 'next-i18next.config';
 import { nextReduxWrapper } from 'redux/main';
 import { ReactElement } from 'react';
@@ -35,8 +36,9 @@ const getApiUrl = () => {
 
 export default nextReduxWrapper.withRedux(
     withUrqlClient(
-        () => ({
+        (ssrExchange) => ({
             url: getApiUrl(),
+            exchanges: getUrqlExchanges(ssrExchange),
         }),
         { ssr: false },
     )(
