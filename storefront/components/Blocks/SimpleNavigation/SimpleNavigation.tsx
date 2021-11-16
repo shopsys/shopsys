@@ -1,0 +1,43 @@
+import { FC, useState } from 'react';
+import { ListItemStyled, SimpleNavigationStyled, SimpleNavigationWrapperStyled } from './SimpleNavigation.style';
+import { CategoryItemType } from 'components/Blocks/Categories/CategoryItem/types';
+import { desktopFirstSizes } from 'components/Theme/mediaQueries';
+import { isElementVisible } from 'components/Helpers/isElementVisible';
+import ListItem from './ListItem';
+import Slider from './Slider';
+import { useGetWindowSize } from 'hooks/ui/UseGetWindowSize';
+import { useResizeWidthEffect } from 'hooks/ui/UseResizeWidthEffect';
+
+type SimpleNavigationProps = {
+    listedItems: CategoryItemType[];
+};
+
+const SimpleNavigation: FC<SimpleNavigationProps> = (props) => {
+    const { width } = useGetWindowSize();
+    const [isSliderVisible, setSliderVisible] = useState(true);
+    useResizeWidthEffect(
+        width,
+        desktopFirstSizes.tablet,
+        () => setSliderVisible(false),
+        () => setSliderVisible(true),
+        () => setSliderVisible(isElementVisible([{ min: 0, max: 768 }], width)),
+    );
+
+    return (
+        <SimpleNavigationWrapperStyled>
+            {isSliderVisible ? (
+                <Slider listedItems={props.listedItems} />
+            ) : (
+                <SimpleNavigationStyled>
+                    {props.listedItems.map((listedItem, key) => (
+                        <ListItemStyled key={key}>
+                            <ListItem listedItem={listedItem}>{listedItem.name}</ListItem>
+                        </ListItemStyled>
+                    ))}
+                </SimpleNavigationStyled>
+            )}
+        </SimpleNavigationWrapperStyled>
+    );
+};
+
+export default SimpleNavigation;

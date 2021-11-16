@@ -1,7 +1,7 @@
 import { css } from 'styled-components';
 import { styled } from 'components/Theme/main';
 
-export const CategoryItemBlockStyled = styled.a`
+export const ListItemBlockStyled = styled.a`
     ${({ theme }) => css`
         display: flex;
         align-items: center;
@@ -28,7 +28,7 @@ export const CategoryItemBlockStyled = styled.a`
     `}
 `;
 
-export const CategoryItemImageStyled = styled.div`
+export const ListItemImageStyled = styled.div`
     ${({ theme }) => css`
         position: relative;
         width: 64px;
@@ -46,14 +46,14 @@ export const CategoryItemImageStyled = styled.div`
     `}
 `;
 
-export const CategoryItemNameWrapperStyled = styled.div`
+export const ListItemNameWrapperStyled = styled.div`
     flex: 1;
     margin: 0;
     line-height: 18px;
     max-width: 100%;
 `;
 
-export const CategoryItemNameStyled = styled.span`
+export const ListItemNameStyled = styled.span`
     ${({ theme }) => css`
         max-width: 100%;
 
@@ -69,7 +69,7 @@ export const CategoryItemNameStyled = styled.span`
     `}
 `;
 
-export const CategoryItemCountStyled = styled.span`
+export const ListItemCountStyled = styled.span`
     ${({ theme }) => css`
         margin-left: 8px;
 

@@ -1,2 +1,0 @@
-import CategoryDetailSubcategoriesSlider from './CategoryDetailSubcategoriesSlider';
-export default CategoryDetailSubcategoriesSlider;

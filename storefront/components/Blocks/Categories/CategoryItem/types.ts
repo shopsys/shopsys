@@ -1,9 +1,8 @@
 import { ImageApiType, ImageType } from 'components/Basic/Image/types';
-import { v4 as uuid } from 'uuid';
 
 export type CategoryItemApiType = {
     name: string;
-    uuid: typeof uuid;
+    uuid: string;
     slug: string;
     images: ImageApiType[];
     products?: {
@@ -13,7 +12,7 @@ export type CategoryItemApiType = {
 
 export type CategoryItemType = {
     name: string;
-    uuid: typeof uuid;
+    uuid: string;
     slug: string;
     image: ImageType | null;
     products?: {
