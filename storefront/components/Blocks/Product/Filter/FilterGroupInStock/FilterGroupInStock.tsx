@@ -1,4 +1,3 @@
-import { Controller, useFormContext } from 'react-hook-form';
 import { FC, useState } from 'react';
 import {
     FilterGroupArrowStyled,
@@ -8,7 +7,7 @@ import {
     FilterGroupTitleStyled,
 } from 'components/Blocks/Product/Filter/FilterGroup/FilterGroup.style';
 import Checkbox from 'components/Forms/Checkbox';
-import { FilterFormType } from 'components/Blocks/Product/Filter/types';
+import { Controller } from 'react-hook-form';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 
 type FilterGroupInStockProps = {
@@ -24,24 +23,14 @@ type FilterGroupInStockProps = {
      * Count of inStock parameter
      */
     inStockCount: number;
-    /**
-     * Function for submit form
-     */
-    onSubmit: (data: FilterFormType) => void;
 };
 
 const FilterGroupInStock: FC<FilterGroupInStockProps> = (props) => {
     const t = useTypedTranslationFunction();
     const [isGroupOpen, setIsGroupOpen] = useState(props.isOpen);
-    const formProviderMethods = useFormContext<FilterFormType>();
 
     const handleGroupClick = () => {
         setIsGroupOpen(!isGroupOpen);
-    };
-
-    const onChangeInStockCheckbox = (name: keyof FilterFormType, value: boolean) => {
-        formProviderMethods.setValue(name, !value);
-        props.onSubmit(formProviderMethods.getValues());
     };
 
     return (

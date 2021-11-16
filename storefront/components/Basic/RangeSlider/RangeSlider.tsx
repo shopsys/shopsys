@@ -23,7 +23,6 @@ type RangeSliderProps = {
     min: number;
     max: number;
     delay: number;
-    onSubmit: (data: FilterFormType) => void;
 };
 
 const RangeSlider: FC<RangeSliderProps> = (props) => {
@@ -45,14 +44,12 @@ const RangeSlider: FC<RangeSliderProps> = (props) => {
     useEffect(() => {
         if (minValue !== minimalPriceValue) {
             formProviderMethods.setValue('minimalPrice', minValue);
-            props.onSubmit(formProviderMethods.getValues());
         }
     }, [debouncedMinValue]);
 
     useEffect(() => {
         if (maxValue !== maximalPriceValue) {
             formProviderMethods.setValue('maximalPrice', maxValue);
-            props.onSubmit(formProviderMethods.getValues());
         }
     }, [debouncedMaxValue]);
 

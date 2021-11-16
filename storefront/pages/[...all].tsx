@@ -16,6 +16,7 @@ import CommonLayout from 'components/Layout/CommonLayout';
 import DefaultErrorPage from 'next/error';
 import FlagDetailPage from 'components/Pages/FlagDetail';
 import { FlagDetailType } from 'connectors/flags/types';
+import { getCategoryDetailFilter } from 'helpers/GetCategoryDetailFilter';
 import { getFriendlyUrlResolvedData } from 'connectors/friendlyUrls/FriendlyUrls';
 import { getNewPagination } from 'utils/Pagination/getNewPagination';
 import { getProductListSort } from 'helpers/sorting/GetProductListSort';
@@ -102,6 +103,8 @@ export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) =>
             getNewPagination(parsePageNumberFromQuery(context.query.page), initialState.pagination.pageSize),
         ),
     );
+    store.dispatch(userActions.setOptionsFilter(getCategoryDetailFilter(context.query.filter)));
+
     return initServerSideProps(context, store, [
         { query: NavigationQueryDocumentApi },
         {
@@ -111,7 +114,7 @@ export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) =>
                 sortingMode: store.getState().user.sort,
                 endCursorForPagination: store.getState().user.pagination.paginationCursor,
                 pageSize: initialState.pagination.pageSize,
-                filter: categoryDetailFilter,
+                filter: store.getState().user.parametersFilter,
             },
         },
     ]);

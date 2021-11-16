@@ -82,8 +82,26 @@ export const userSlice = createSlice({
         setIsUserLoggedIn(state, action: PayloadAction<boolean>) {
             state.isUserLoggedIn = action.payload;
         },
-        setParametersFilter(state, action) {
+        setOptionsFilter(state, action) {
             state.parametersFilter = action.payload;
+        },
+        setBrandsFilter(state, action) {
+            state.parametersFilter.brands = action.payload;
+        },
+        setFlagsFilter(state, action) {
+            state.parametersFilter.flags = action.payload;
+        },
+        setParametersFilter(state, action) {
+            state.parametersFilter.parameters = action.payload;
+        },
+        setOnlyInStockFilter(state, action) {
+            state.parametersFilter.onlyInStock = action.payload;
+        },
+        setMinimalPriceFilter(state, action) {
+            state.parametersFilter.minimalPrice = action.payload;
+        },
+        setMaximalPriceFilter(state, action) {
+            state.parametersFilter.maximalPrice = action.payload;
         },
     },
     extraReducers: {

@@ -5,7 +5,6 @@ import {
     FilterGroupStyled,
     FilterGroupTitleStyled,
 } from 'components/Blocks/Product/Filter/FilterGroup/FilterGroup.style';
-import { FilterFormType } from 'components/Blocks/Product/Filter/types';
 import RangeSlider from 'components/Basic/RangeSlider';
 
 type FilterGroupPriceProps = {
@@ -25,10 +24,6 @@ type FilterGroupPriceProps = {
      * Minimal price of price slider
      */
     minimalPrice: number;
-    /**
-     * Function for submit form
-     */
-    onSubmit: (data: FilterFormType) => void;
 };
 
 const FilterGroupPrice: FC<FilterGroupPriceProps> = (props) => {
