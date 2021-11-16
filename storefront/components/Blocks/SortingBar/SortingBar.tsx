@@ -1,5 +1,5 @@
 import { FC, useEffect, useState } from 'react';
-import { initialState, SortType, userActions } from 'redux/slices/user';
+import { initialState, userActions } from 'redux/slices/user';
 import {
     SortingBarItemLinkStyled,
     SortingBarItemLinkWrapStyled,
@@ -16,12 +16,13 @@ import {
 import { useShopsysDispatch, useShopsysSelector } from 'redux/main';
 import { isElementVisible } from 'components/Helpers/isElementVisible';
 import { mobileFirstSizes } from 'components/Theme/mediaQueries';
+import { ProductOrderingModeEnumApi } from 'graphql/generated';
 import { useGetWindowSize } from 'hooks/ui/UseGetWindowSize';
 import { useResizeWidthEffect } from 'hooks/ui/UseResizeWidthEffect';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 
 export interface SortValues {
-    stateValue: SortType;
+    stateValue: ProductOrderingModeEnumApi;
     displayValue: string;
 }
 
@@ -41,9 +42,9 @@ const SortingBar: FC<{ totalCount: number }> = (props) => {
     const selectedSort = useShopsysSelector((state) => state.user.sort);
     const [toggleSortMenu, setToggleSortMenu] = useState(false);
     const sortValues: SortValues[] = [
-        { stateValue: 'PRIORITY', displayValue: t('priority') },
-        { stateValue: 'PRICE_ASC', displayValue: t('price ascending') },
-        { stateValue: 'PRICE_DESC', displayValue: t('price descending') },
+        { stateValue: ProductOrderingModeEnumApi.PriorityApi, displayValue: t('priority') },
+        { stateValue: ProductOrderingModeEnumApi.PriceAscApi, displayValue: t('price ascending') },
+        { stateValue: ProductOrderingModeEnumApi.PriceDescApi, displayValue: t('price descending') },
     ];
     useEffect(() => {
         if (typeof window !== 'undefined') {
@@ -78,7 +79,7 @@ const SortingBar: FC<{ totalCount: number }> = (props) => {
                                     onClick={() => {
                                         setToggleSortMenu(!toggleSortMenu);
                                         updateUrlWithCurrentSort(value.stateValue);
-                                        dispatch(userActions.setSort({ sort: value.stateValue }));
+                                        dispatch(userActions.setSort(value.stateValue));
                                     }}
                                 >
                                     <SortingBarSortIconStyled iconType="icon" icon="Sort" />
@@ -102,7 +103,7 @@ const SortingBar: FC<{ totalCount: number }> = (props) => {
                                             onClick={() => {
                                                 setToggleSortMenu(!toggleSortMenu);
                                                 updateUrlWithCurrentSort(value.stateValue);
-                                                dispatch(userActions.setSort({ sort: value.stateValue }));
+                                                dispatch(userActions.setSort(value.stateValue));
                                                 dispatch(userActions.setPagination({ ...initialState.pagination }));
                                             }}
                                         >
@@ -121,7 +122,7 @@ const SortingBar: FC<{ totalCount: number }> = (props) => {
                                     key={value.stateValue}
                                     onClick={() => {
                                         updateUrlWithCurrentSort(value.stateValue);
-                                        dispatch(userActions.setSort({ sort: value.stateValue }));
+                                        dispatch(userActions.setSort(value.stateValue));
                                         dispatch(userActions.setPagination({ ...initialState.pagination }));
                                     }}
                                 >
