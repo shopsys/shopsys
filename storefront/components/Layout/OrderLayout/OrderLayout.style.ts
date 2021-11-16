@@ -11,7 +11,7 @@ export const OrderLayoutStyled = styled.div`
 
         @media ${theme.mediaQueries.queryVl} {
             flex-direction: row;
-            margin-top: 28px 0 60px;
+            margin: 28px 0 60px;
         }
     `}
 `;
@@ -25,6 +25,7 @@ export const OrderLayoutContentStyled = styled.div`
             flex: 1;
             margin-bottom: 0;
             padding-right: 40px;
+            min-height: 61vh;
         }
     `}
 `;

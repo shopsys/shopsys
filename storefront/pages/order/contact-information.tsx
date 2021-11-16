@@ -6,6 +6,7 @@ import { nextReduxWrapper, useShopsysDispatch, useShopsysSelector } from 'redux/
 import ContactInformationForm from 'components/Pages/Order/ContactInformation';
 import ErrorPopup from 'components/Forms/Lib/ErrorPopup';
 import { FC } from 'react';
+import Footer from 'components/Layout/Footer';
 import Form from 'components/Forms/Form';
 import { getContactInformationFormResolver } from 'components/Pages/Order/ContactInformation/ContactInformationFormResolver';
 import { handleOrderPagesRedirect } from 'helpers/HandleOrderPagesRedirect';
@@ -25,6 +26,7 @@ import { userActions } from 'redux/slices/user';
 import { useRouter } from 'next/router';
 import { useShopsysForm } from 'hooks/forms/UseShopsysForm';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import Webline from 'components/Layout/Webline';
 
 const ContactInformation: FC<ServerSidePropsType> = () => {
     const router = useRouter();
@@ -101,6 +103,9 @@ const ContactInformation: FC<ServerSidePropsType> = () => {
                     </OrderLayout>
                 </Form>
             </FormProvider>
+            <Webline type={'dark'}>
+                <Footer />
+            </Webline>
             <ErrorPopup
                 isVisible={isErrorPopupVisible}
                 onCloseCallback={() => setErrorPopupVisibility(false)}

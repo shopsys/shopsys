@@ -33,7 +33,7 @@ const HeaderContact: FC = () => {
         <HeaderContactStyled>
             <ContactWrapperStyled>
                 <ContactContentStyled>
-                    <HeaderContactIconStyled icon="Phone" />
+                    <HeaderContactIconStyled iconType="icon" icon="Phone" />
                     <PhoneNumberStyled href={'tel:' + dummyData.phone}>{dummyData.phone}</PhoneNumberStyled>
                     {areContactHoursVisible ? <ContactHours> {dummyData.opening}</ContactHours> : null}
                 </ContactContentStyled>

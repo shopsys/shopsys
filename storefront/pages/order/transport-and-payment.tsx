@@ -4,6 +4,7 @@ import { initServerSideProps, ServerSidePropsType } from 'helpers/InitServerSide
 import { nextReduxWrapper, useShopsysSelector } from 'redux/main';
 import { TransportInputType, TransportType } from 'connectors/transports/types';
 import ErrorPopup from 'components/Forms/Lib/ErrorPopup';
+import Footer from 'components/Layout/Footer';
 import { getTransports } from 'connectors/transports/Transports';
 import { handleOrderPagesRedirect } from 'helpers/HandleOrderPagesRedirect';
 import { initDomainConfig } from 'helpers/InitDomainConfig';
@@ -18,6 +19,7 @@ import { useHandleErrorPopupVisibility } from 'hooks/forms/UseHandleErrorPopupVi
 import { useRouter } from 'next/router';
 import { useShopsysForm } from 'hooks/forms/UseShopsysForm';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import Webline from 'components/Layout/Webline';
 
 const TransportAndPayment: FC<ServerSidePropsType> = () => {
     const router = useRouter();
@@ -79,6 +81,9 @@ const TransportAndPayment: FC<ServerSidePropsType> = () => {
                     },
                 ]}
             />
+            <Webline type="dark">
+                <Footer />
+            </Webline>
         </StaticUrlGuard>
     );
 };
