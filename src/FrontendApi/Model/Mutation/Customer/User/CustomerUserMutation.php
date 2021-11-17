@@ -25,6 +25,8 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
  * @property \App\FrontendApi\Model\Customer\User\CustomerUserUpdateDataFactory $customerUserUpdateDataFactory
  * @method \App\Model\Customer\User\CustomerUser changePassword(\Overblog\GraphQLBundle\Definition\Argument $argument, \Overblog\GraphQLBundle\Validator\InputValidator $validator)
  * @method \App\Model\Customer\User\CustomerUser changePersonalData(\Overblog\GraphQLBundle\Definition\Argument $argument, \Overblog\GraphQLBundle\Validator\InputValidator $validator)
+ * @property \App\Model\Customer\User\CustomerUserRefreshTokenChainFacade $customerUserRefreshTokenChainFacade
+ * @property \App\FrontendApi\Model\Token\TokenFacade $tokenFacade
  */
 class CustomerUserMutation extends BaseCustomerUserMutation
 {
@@ -44,12 +46,12 @@ class CustomerUserMutation extends BaseCustomerUserMutation
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\FrontendCustomerUserProvider $frontendCustomerUserProvider
      * @param \Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface $userPasswordEncoder
      * @param \App\Model\Customer\User\CustomerUserPasswordFacade $customerUserPasswordFacade
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRefreshTokenChainFacade $customerUserRefreshTokenChainFacade
+     * @param \App\Model\Customer\User\CustomerUserRefreshTokenChainFacade $customerUserRefreshTokenChainFacade
      * @param \Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface $tokenStorage
      * @param \App\FrontendApi\Model\Customer\User\CustomerUserUpdateDataFactory $customerUserUpdateDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade $customerUserFacade
      * @param \Shopsys\FrontendApiBundle\Model\Customer\User\CustomerUserDataFactory $customerUserDataFactory
-     * @param \Shopsys\FrontendApiBundle\Model\Token\TokenFacade $tokenFacade
+     * @param \App\FrontendApi\Model\Token\TokenFacade $tokenFacade
      * @param \App\Model\Customer\User\RegistrationFacadeInterface $registrationFacade
      * @param \App\Model\Customer\User\RegistrationDataFactoryInterface $registrationDataFactory
      */
