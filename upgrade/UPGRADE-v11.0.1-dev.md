@@ -162,3 +162,5 @@ There you can find links to upgrade notes for other versions too.
     - see #project-base-diff to update your project
 - improve config folder structure ([#2607](https://github.com/shopsys/shopsys/pull/2607))
     - see #project-base-diff to update your project
+- FE-API: fix return value for authentication failure ([#2387](https://github.com/shopsys/shopsys/pull/2387))
+    - see #project-base-diff to update your project
