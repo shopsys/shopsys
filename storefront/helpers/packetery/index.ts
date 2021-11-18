@@ -1,0 +1,64 @@
+import { PacketeryExtendedPoint, PacketeryPickFunction } from './types';
+import nookies from 'nookies';
+import { StoreType } from 'connectors/transports/types';
+
+/**
+ * @see https://docs.packetery.com/01-pickup-point-selection/02-widget-v6.html
+ */
+
+export const packeteryClose = (): void => {
+    if (typeof window !== 'undefined') {
+        window.Packeta.Widget.close();
+    }
+};
+
+export const packeteryPick: PacketeryPickFunction = (apiKey, callback, opts, inElement) => {
+    if (typeof window === 'undefined' || typeof document === 'undefined') {
+        return;
+    }
+
+    let defaultInElement: HTMLElement | undefined | null = inElement;
+
+    if (defaultInElement === undefined) {
+        defaultInElement = document.getElementById('packetery-container');
+    }
+
+    if (defaultInElement === null) {
+        return;
+    }
+
+    window.Packeta.Widget.pick(apiKey, callback, opts, inElement);
+};
+
+export const mapPacketeryExtendedPoint = (packeteryExtendedPoint: PacketeryExtendedPoint): PickupPlaceType => ({
+    identifier: packeteryExtendedPoint.id.toString(),
+    description: packeteryExtendedPoint.directions,
+    name: packeteryExtendedPoint.name,
+    city: packeteryExtendedPoint.city,
+    street: packeteryExtendedPoint.street,
+    country: packeteryExtendedPoint.country.toUpperCase(),
+    postcode: packeteryExtendedPoint.zip.replaceAll(' ', ''),
+    openingHours: packeteryExtendedPoint.openingHours.compactShort,
+});
+
+export const getPacketeryCookie = (): StoreType | null => {
+    const cookies = nookies.get();
+    if ('packeteryPickupPoint' in cookies) {
+        return JSON.parse(cookies.packeteryPickupPoint);
+    }
+
+    return null;
+};
+
+export const setPacketeryCookie = (mappedPacketeryPoint: StoreType): void => {
+    nookies.set(undefined, 'packeteryPickupPoint', JSON.stringify(mappedPacketeryPoint), {
+        path: '/',
+        maxAge: 60 * 60 * 24 * 30,
+    });
+};
+
+export const removePacketeryCookie = (): void => {
+    nookies.destroy(undefined, 'packeteryPickupPoint', {
+        path: '/',
+    });
+};
