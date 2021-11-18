@@ -28,15 +28,12 @@ export const useAuth = (): [
     const t = useTypedTranslationFunction();
 
     useEffect(() => {
-        if (
-            loginUseMutationResponse[0].data?.Login.accessToken !== undefined &&
-            loginUseMutationResponse[0].data?.Login.refreshToken !== undefined
-        ) {
+        const accessToken = loginUseMutationResponse[0].data?.Login.accessToken;
+        const refreshToken = loginUseMutationResponse[0].data?.Login.refreshToken;
+
+        if (accessToken !== undefined && refreshToken !== undefined) {
             dispatch(userActions.setIsUserLoggedIn(true));
-            setTokensToCookie(
-                loginUseMutationResponse[0].data.Login.accessToken,
-                loginUseMutationResponse[0].data?.Login.refreshToken,
-            );
+            setTokensToCookie(accessToken, refreshToken);
             showSuccessMessage(t('Successfully logged in'));
         }
     }, [loginUseMutationResponse[0].data?.Login]);
