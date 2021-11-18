@@ -2185,6 +2185,13 @@ export type LogoutVariablesApi = Exact<{ [key: string]: never; }>;
 
 export type LogoutApi = { __typename?: 'Mutation', Logout: boolean };
 
+export type RefreshTokensVariablesApi = Exact<{
+  refreshToken: Scalars['String'];
+}>;
+
+
+export type RefreshTokensApi = { __typename?: 'Mutation', RefreshTokens: { __typename?: 'Token', accessToken: string, refreshToken: string } };
+
 export type AvailabilityFragmentApi = { __typename?: 'Availability', name: string, status: string };
 
 export type BlogArticleDetailFragmentApi = { __typename?: 'BlogArticle', uuid: string, name: string, text?: string | null | undefined, publishDate: any, link: string, slug: string, image?: { __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> } | null | undefined, blogArticleProducts: Array<{ __typename: 'MainVariant', uuid: string, slug: string, name: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, catalogNumber: string, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename: 'RegularProduct', uuid: string, slug: string, name: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, catalogNumber: string, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename: 'Variant', uuid: string, slug: string, name: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, catalogNumber: string, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } }>, breadcrumb: Array<{ __typename?: 'Link', name: string, slug: string }> };
@@ -3149,6 +3156,18 @@ export const LogoutDocumentApi = gql`
 
 export function useLogoutApi() {
   return Urql.useMutation<LogoutApi, LogoutVariablesApi>(LogoutDocumentApi);
+};
+export const RefreshTokensDocumentApi = gql`
+    mutation RefreshTokens($refreshToken: String!) {
+  RefreshTokens(input: {refreshToken: $refreshToken}) {
+    accessToken
+    refreshToken
+  }
+}
+    `;
+
+export function useRefreshTokensApi() {
+  return Urql.useMutation<RefreshTokensApi, RefreshTokensVariablesApi>(RefreshTokensDocumentApi);
 };
 export const BrandsQueryDocumentApi = gql`
     query BrandsQuery {

@@ -10,6 +10,7 @@ import { removeTokensFromCookies, setTokensToCookie } from 'utils/Auth/TokensFro
 import { DocumentNode } from 'graphql';
 import { GetServerSidePropsContext } from 'next';
 import { parseCookies } from 'nookies';
+import { RefreshTokensDocumentApi } from 'graphql/generated';
 
 type TokenType = {
     accessToken: string;
@@ -89,29 +90,22 @@ const getAuthExchangeOptions = (context?: GetServerSidePropsContext): GetAuthExc
          * we should refresh the token if possible and return a new auth state
          * If refresh fails, we should log out
          */
-        const refreshMutation = `mutation RefreshTokens($refreshToken: String!) {
-        RefreshTokens(input: {refreshToken: $refreshToken}) {
-            accessToken
-            refreshToken
-        }` as const;
         try {
             const result = await params.mutate<{ RefreshTokens: TokenType }, { refreshToken: string }>(
-                refreshMutation,
+                RefreshTokensDocumentApi,
                 {
                     refreshToken: params.authState?.refreshToken,
                 },
             );
 
-            if (result.data?.RefreshTokens !== undefined) {
-                setTokensToCookie(
-                    result.data.RefreshTokens.accessToken,
-                    result.data.RefreshTokens.refreshToken,
-                    context,
-                );
+            const { data } = result;
+
+            if (data?.RefreshTokens !== undefined) {
+                setTokensToCookie(data.RefreshTokens.accessToken, data.RefreshTokens.refreshToken, context);
 
                 return {
-                    accessToken: result.data.RefreshTokens.accessToken,
-                    refreshToken: result.data.RefreshTokens.refreshToken,
+                    accessToken: data.RefreshTokens.accessToken,
+                    refreshToken: data.RefreshTokens.refreshToken,
                 };
             }
         } catch (e) {
