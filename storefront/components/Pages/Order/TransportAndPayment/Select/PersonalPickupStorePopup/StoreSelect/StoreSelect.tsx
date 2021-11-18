@@ -31,9 +31,7 @@ const StoreSelect: FC<StoreSelectProps> = (props) => {
                                 value={storeItem.uuid}
                                 fieldRef={field}
                                 checked={props.personalPickupStoreValue === storeItem.uuid}
-                                label={
-                                    <SelectItemLabel name={storeItem.name} storeOpeningHours={storeItem.openingHours} />
-                                }
+                                label={<SelectItemLabel name={storeItem.name} personalPickupStoreDetail={storeItem} />}
                             />
                         </ListItemStyled>
                     ))}

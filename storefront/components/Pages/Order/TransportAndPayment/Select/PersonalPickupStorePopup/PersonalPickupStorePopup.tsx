@@ -12,6 +12,7 @@ type PersonalPickupStorePopupProps = {
     isVisible: boolean;
     transport: TransportType;
     onChangePersonalPickupStoreCallback: (selectedPersonalPickupStore: StoreType | null) => void;
+    onClosePersonalPickupStorePopupCallback: () => void;
 };
 
 const PersonalPickupStorePopup: FC<PersonalPickupStorePopupProps> = (props) => {
@@ -31,7 +32,7 @@ const PersonalPickupStorePopup: FC<PersonalPickupStorePopupProps> = (props) => {
     };
 
     const onClosePersonalPickupStorePopupHandler = () => {
-        props.onChangePersonalPickupStoreCallback(null);
+        props.onClosePersonalPickupStorePopupCallback();
         formProviderMethods.setValue('personalPickupStore', null);
     };
 

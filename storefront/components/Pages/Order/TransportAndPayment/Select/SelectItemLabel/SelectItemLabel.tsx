@@ -16,10 +16,8 @@ type SelectItemLabelProps = {
     name: string;
     price?: { priceWithVat: number; priceWithoutVat: number; vatAmount: number };
     daysUntilDelivery?: number;
-    hasPersonalPickup?: boolean;
     description?: string;
-    storeOpeningHours?: string;
-    personalPickupStoreDetail?: StoreType;
+    personalPickupStoreDetail?: StoreType | null;
 };
 
 const SelectItemLabel: FC<SelectItemLabelProps> = (props) => {
@@ -30,7 +28,7 @@ const SelectItemLabel: FC<SelectItemLabelProps> = (props) => {
             <NameWrapperStyled>
                 <span>{props.name}</span>
                 <DescriptionStyled>{props.description}</DescriptionStyled>
-                {props.personalPickupStoreDetail !== undefined && props.hasPersonalPickup && (
+                {props.personalPickupStoreDetail !== null && props.personalPickupStoreDetail !== undefined && (
                     <>
                         <InfoStyled>{props.personalPickupStoreDetail.name}</InfoStyled>
                         <InfoStyled>
@@ -40,14 +38,15 @@ const SelectItemLabel: FC<SelectItemLabelProps> = (props) => {
                                 ', ' +
                                 props.personalPickupStoreDetail.city}
                         </InfoStyled>
-                        <InfoStyled>{t('Open') + ': ' + props.personalPickupStoreDetail.openingHours}</InfoStyled>
+                        <InfoStyled>
+                            {t('Open') + ': ' + clearOpeningHoursOfTags(props.personalPickupStoreDetail.openingHours)}
+                        </InfoStyled>
                     </>
                 )}
-                {props.storeOpeningHours !== undefined && <InfoStyled>{props.storeOpeningHours}</InfoStyled>}
             </NameWrapperStyled>
-            {props.daysUntilDelivery !== undefined && props.hasPersonalPickup !== undefined && (
+            {props.daysUntilDelivery !== undefined && (
                 <TransportDaysUntilDeliveryStyled>
-                    {getDeliveryMessage(props.daysUntilDelivery, props.hasPersonalPickup, t)}
+                    {getDeliveryMessage(props.daysUntilDelivery, props.personalPickupStoreDetail !== undefined, t)}
                 </TransportDaysUntilDeliveryStyled>
             )}
             {props.price !== undefined && <PriceStyled>{formatPrice(props.price.priceWithVat, 'CZK', t)}</PriceStyled>}
@@ -79,6 +78,10 @@ const getDeliveryMessage = (daysUntilDelivery: number, isPersonalPickup: boolean
         postProcess: 'interval',
         count: Math.ceil(daysUntilDelivery / 7),
     });
+};
+
+const clearOpeningHoursOfTags = (openingHours: string) => {
+    return openingHours.replaceAll(/<([/]?[a-zA-Z]*)>/g, '');
 };
 
 export default SelectItemLabel;
