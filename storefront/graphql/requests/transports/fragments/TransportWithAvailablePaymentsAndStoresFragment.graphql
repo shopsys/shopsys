@@ -20,4 +20,7 @@ fragment TransportWithAvailablePaymentsAndStoresFragment on Transport {
             }
         }
     }
+    transportType {
+        code
+    }
 }

@@ -36,4 +36,7 @@ export type TransportType = {
     daysUntilDelivery: number;
     hasPersonalPickup: boolean;
     stores: StoreType[];
+    transportType: {
+        code: string;
+    };
 };
