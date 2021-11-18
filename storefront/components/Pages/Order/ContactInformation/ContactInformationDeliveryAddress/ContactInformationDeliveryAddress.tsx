@@ -4,6 +4,7 @@ import {
 } from './ContactInformationDeliveryAddress.style';
 import { Controller, useFormContext, useWatch } from 'react-hook-form';
 import { FC, useEffect, useRef, useState } from 'react';
+import { useShopsysDispatch, useShopsysSelector } from 'redux/main';
 import Checkbox from 'components/Forms/Checkbox';
 import ChoiceFormLine from 'components/Forms/Lib/ChoiceFormLine';
 import { contactInformationActions } from 'redux/slices/contactInformation';
@@ -12,14 +13,19 @@ import FormColumn from 'components/Forms/Lib/FormColumn';
 import FormLine from 'components/Forms/Lib/FormLine';
 import FormLineError from 'components/Forms/Lib/FormLineError';
 import { getCountriesAsSelectOptions } from 'connectors/country/Country';
+import { getSelectedPersonalPickupStore } from 'connectors/transports/PersonalPickupStore';
 import Select from 'components/Forms/Select';
 import TextInput from 'components/Forms/TextInput';
-import { useShopsysDispatch } from 'redux/main';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 
 const ContactInformationDeliveryAddress: FC = () => {
     const dispatch = useShopsysDispatch();
     const t = useTypedTranslationFunction();
+    const pickupPlaceIdentifier = useShopsysSelector((state) => state.cartInput.transport?.pickupPlaceIdentifier);
+    const { transport } = useShopsysSelector((state) => state.user);
+    const [selectedPickupPoint] = useState(
+        getSelectedPersonalPickupStore(transport, pickupPlaceIdentifier === undefined ? null : pickupPlaceIdentifier),
+    );
     const contentElement = useRef<HTMLDivElement>(null);
     const cssTransitionRef = useRef<HTMLDivElement>(null);
     const [contentElementHeight, setContentElementHeight] = useState(0);
@@ -33,6 +39,11 @@ const ContactInformationDeliveryAddress: FC = () => {
     const deliveryCityValue = useWatch({ name: 'deliveryCity' });
     const deliveryPostcodeValue = useWatch({ name: 'deliveryPostcode' });
     const countrySelectOptions = getCountriesAsSelectOptions();
+    useEffect(() => {
+        formProviderMethods.setValue('deliveryStreet', selectedPickupPoint?.street);
+        formProviderMethods.setValue('deliveryCity', selectedPickupPoint?.city);
+        formProviderMethods.setValue('deliveryPostcode', selectedPickupPoint?.postcode);
+    }, [selectedPickupPoint]);
     useEffect(() => {
         if (countrySelectOptions.length > 0 && differentDeliveryAddressValue === true) {
             formProviderMethods.setValue('deliveryCountry', countrySelectOptions[0]);
@@ -190,6 +201,7 @@ const ContactInformationDeliveryAddress: FC = () => {
                             <FormLine bottomGap={true} lg="65%">
                                 <Controller
                                     name="deliveryStreet"
+                                    defaultValue={selectedPickupPoint?.street}
                                     render={({ fieldState: { isTouched, invalid, error }, field }) => (
                                         <>
                                             <TextInput
@@ -201,6 +213,7 @@ const ContactInformationDeliveryAddress: FC = () => {
                                                 isTouched={isTouched}
                                                 hasError={invalid}
                                                 fieldRef={field}
+                                                disabled={selectedPickupPoint !== null}
                                                 onBlurCapture={() =>
                                                     dispatch(
                                                         contactInformationActions.setDeliveryStreet(
@@ -218,6 +231,7 @@ const ContactInformationDeliveryAddress: FC = () => {
                                 <FormLine bottomGap={true}>
                                     <Controller
                                         name="deliveryCity"
+                                        defaultValue={selectedPickupPoint?.city}
                                         render={({ fieldState: { isTouched, invalid, error }, field }) => (
                                             <>
                                                 <TextInput
@@ -229,6 +243,7 @@ const ContactInformationDeliveryAddress: FC = () => {
                                                     isTouched={isTouched}
                                                     hasError={invalid}
                                                     fieldRef={field}
+                                                    disabled={selectedPickupPoint !== null}
                                                     onBlurCapture={() =>
                                                         dispatch(
                                                             contactInformationActions.setDeliveryCity(
@@ -245,6 +260,7 @@ const ContactInformationDeliveryAddress: FC = () => {
                                 <FormLine bottomGap={true} width="100%" lg="142px">
                                     <Controller
                                         name="deliveryPostcode"
+                                        defaultValue={selectedPickupPoint?.postcode}
                                         render={({ fieldState: { isTouched, invalid, error }, field }) => (
                                             <>
                                                 <TextInput
@@ -256,6 +272,7 @@ const ContactInformationDeliveryAddress: FC = () => {
                                                     isTouched={isTouched}
                                                     hasError={invalid}
                                                     fieldRef={field}
+                                                    disabled={selectedPickupPoint !== null}
                                                     onBlurCapture={() =>
                                                         dispatch(
                                                             contactInformationActions.setDeliveryPostcode(
@@ -270,20 +287,22 @@ const ContactInformationDeliveryAddress: FC = () => {
                                     />
                                 </FormLine>
                             </FormColumn>
-                            <FormLine lg="65%">
-                                <Controller
-                                    name="deliveryCountry"
-                                    render={({ field }) => (
-                                        <Select
-                                            options={countrySelectOptions}
-                                            onChange={field.onChange}
-                                            value={countrySelectOptions.find(
-                                                (option) => option.value === field.value.value,
-                                            )}
-                                        />
-                                    )}
-                                />
-                            </FormLine>
+                            {selectedPickupPoint === null && (
+                                <FormLine lg="65%">
+                                    <Controller
+                                        name="deliveryCountry"
+                                        render={({ field }) => (
+                                            <Select
+                                                options={countrySelectOptions}
+                                                onChange={field.onChange}
+                                                value={countrySelectOptions.find(
+                                                    (option) => option.value === field.value.value,
+                                                )}
+                                            />
+                                        )}
+                                    />
+                                </FormLine>
+                            )}
                         </ContactInformationDeliveryAddressContentStyled>
                     </div>
                 </CSSTransition>
