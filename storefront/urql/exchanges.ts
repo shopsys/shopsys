@@ -82,7 +82,7 @@ export const getUrqlExchanges = (
     ssrExchange,
     errorExchange({
         onError: (error: CombinedError) => {
-            const isAuthError = error.response.status === 401;
+            const isAuthError = error?.response?.status === 401;
 
             if (isAuthError) {
                 removeTokensFromCookies();

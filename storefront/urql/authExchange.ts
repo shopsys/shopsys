@@ -67,7 +67,7 @@ const getAuthExchangeOptions = (context?: GetServerSidePropsContext): GetAuthExc
         return !params.authState;
     },
     didAuthError: (params: { error: CombinedError }): boolean => {
-        return params.error.response.status === 401;
+        return params.error?.response?.status === 401;
     },
     getAuth: async (params: {
         authState: TokenType | null;
