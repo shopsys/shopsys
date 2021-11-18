@@ -111,7 +111,7 @@ const BannersSlider: FC<BannersSliderProps> = (props) => {
                     <button
                         onClick={() => onMoveToSlideHandler(index)}
                         disabled={index === currentSlide % props.sliderItems.length}
-                        key={sliderItem.uuid.toString()}
+                        key={sliderItem.uuid}
                     >
                         <BannersSliderThumbnailControlsIconStyled iconType="icon" icon="Triangle" />
                         {sliderItem.name}
@@ -123,7 +123,7 @@ const BannersSlider: FC<BannersSliderProps> = (props) => {
                     <button
                         onClick={() => onMoveToSlideHandler(index)}
                         disabled={index === currentSlide % props.sliderItems.length}
-                        key={sliderItem.uuid.toString()}
+                        key={sliderItem.uuid}
                     />
                 ))}
             </BannersSliderDotControlsStyled>

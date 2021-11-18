@@ -3483,12 +3483,12 @@ Brand of product
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>accessories</strong></td>
-<td valign="top">[<a href="#product">Product</a>]</td>
+<td valign="top">[<a href="#product">Product</a>!]!</td>
 <td></td>
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>parameters</strong></td>
-<td valign="top">[<a href="#parameter">Parameter</a>]!</td>
+<td valign="top">[<a href="#parameter">Parameter</a>!]!</td>
 <td></td>
 </tr>
 <tr>
@@ -5324,12 +5324,12 @@ Brand of product
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>accessories</strong></td>
-<td valign="top">[<a href="#product">Product</a>]</td>
+<td valign="top">[<a href="#product">Product</a>!]!</td>
 <td></td>
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>parameters</strong></td>
-<td valign="top">[<a href="#parameter">Parameter</a>]!</td>
+<td valign="top">[<a href="#parameter">Parameter</a>!]!</td>
 <td></td>
 </tr>
 <tr>
@@ -6250,12 +6250,12 @@ Brand of product
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>accessories</strong></td>
-<td valign="top">[<a href="#product">Product</a>]</td>
+<td valign="top">[<a href="#product">Product</a>!]!</td>
 <td></td>
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>parameters</strong></td>
-<td valign="top">[<a href="#parameter">Parameter</a>]!</td>
+<td valign="top">[<a href="#parameter">Parameter</a>!]!</td>
 <td></td>
 </tr>
 <tr>
@@ -8094,12 +8094,12 @@ Brand of product
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>accessories</strong></td>
-<td valign="top">[<a href="#product">Product</a>]</td>
+<td valign="top">[<a href="#product">Product</a>!]!</td>
 <td></td>
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>parameters</strong></td>
-<td valign="top">[<a href="#parameter">Parameter</a>]!</td>
+<td valign="top">[<a href="#parameter">Parameter</a>!]!</td>
 <td></td>
 </tr>
 <tr>

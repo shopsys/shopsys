@@ -1,0 +1,6 @@
+fragment BreadcrumbFragment on Breadcrumb {
+    breadcrumb {
+        name
+        slug
+    }
+}

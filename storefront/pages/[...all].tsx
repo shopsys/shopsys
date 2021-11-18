@@ -1,6 +1,6 @@
 import { FC, useEffect } from 'react';
-import { friendlyUrlQuery, getFriendlyUrlResolvedData, isProductType } from 'connectors/friendlyUrls/FriendlyUrls';
 import { initServerSideProps, ServerSidePropsType } from 'helpers/InitServerSideProps';
+import { NavigationQueryDocumentApi, SlugQueryDocumentApi } from 'graphql/generated';
 import { nextReduxWrapper, useShopsysDispatch } from 'redux/main';
 import ArticleDetailPage from 'components/Pages/Article';
 import { ArticleDetailType } from 'connectors/article/types';
@@ -9,10 +9,10 @@ import CategoryDetailPage from 'components/Pages/CategoryDetail';
 import { CategoryDetailType } from 'components/Pages/CategoryDetail/types';
 import CommonLayout from 'components/Layout/CommonLayout';
 import DefaultErrorPage from 'next/error';
+import { getFriendlyUrlResolvedData } from 'connectors/friendlyUrls/FriendlyUrls';
 import { getNewPagination } from 'utils/Pagination/getNewPagination';
 import { getProductListSort } from 'helpers/sorting/GetProductListSort';
 import { initDomainConfig } from 'helpers/InitDomainConfig';
-import { NavigationQueryDocumentApi } from 'graphql/generated';
 import { parsePageNumberFromQuery } from 'utils/Pagination/parsePageNumberFromQuery';
 import { parseProductListSortFromQuery } from 'helpers/sorting/ParseProductListSortFromQuery';
 import ProductDetailPage from 'components/Pages/ProductDetail';
@@ -51,7 +51,7 @@ const FriendlyUrlPage: FC<ServerSidePropsType> = () => {
 };
 
 function renderContent(data: ProductDetailType | CategoryDetailType | StoreDetailType | ArticleDetailType) {
-    if (isProductType(data.__typename)) {
+    if (data.__typename === 'RegularProduct' || data.__typename === 'MainVariant' || data.__typename === 'Variant') {
         return <ProductDetailPage product={data as ProductDetailType} />;
     } else if (data.__typename === 'Category') {
         return <CategoryDetailPage category={data as CategoryDetailType} />;
@@ -72,11 +72,12 @@ export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) =>
     return initServerSideProps(context, store, [
         { query: NavigationQueryDocumentApi },
         {
-            query: friendlyUrlQuery(
-                getUrlWithoutGetParameters(context.resolvedUrl),
-                store.getState().user.sort,
-                store.getState().user.pagination.paginationCursor,
-            ),
+            query: SlugQueryDocumentApi,
+            variables: {
+                slug: getUrlWithoutGetParameters(context.resolvedUrl),
+                sortingMode: store.getState().user.sort,
+                endCursorForPagination: store.getState().user.pagination.paginationCursor,
+            },
         },
     ]);
 });

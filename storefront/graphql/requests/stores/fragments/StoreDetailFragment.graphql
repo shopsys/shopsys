@@ -1,0 +1,16 @@
+fragment StoreDetailFragment on Store {
+    uuid
+    slug
+    storeName: name
+    description
+    street
+    city
+    postcode
+    country
+    openingHours
+    contactInfo
+    specialMessage
+    locationLatitude
+    locationLongitude
+    ...BreadcrumbFragment
+}

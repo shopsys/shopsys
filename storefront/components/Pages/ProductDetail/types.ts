@@ -1,11 +1,6 @@
-import { ImageApiType, ImageType } from 'components/Basic/Image/types';
-import {
-    ProductItemApiType,
-    ProductPriceApiType,
-    ProductPriceType,
-    SliderProductItemType,
-} from 'components/Blocks/Product/types';
+import { ProductPriceType, SliderProductItemType } from 'components/Blocks/Product/types';
 import { BreadcrumbType } from 'connectors/breadcrumb/Breadcrumb';
+import { ImageType } from 'components/Basic/Image/types';
 import { SlugType } from 'connectors/slug/Slug';
 
 export type Availability = {
@@ -33,25 +28,9 @@ export type ProductParameterType = {
 export type ProductDetailImageType = {
     [sizeName: string]: ImageType;
 };
-export interface ProductDetailApiType extends SlugType, BreadcrumbType {
-    uuid: string;
-    name: string;
-    namePrefix: string;
-    nameSuffix: string;
-    stockQuantity: number;
-    description: string;
-    catalogNumber: string;
-    price: ProductPriceApiType;
-    availability: Availability;
-    storeAvailabilities: StoreAvailability[];
-    availableStoresCount: number;
-    exposedStoresCount: number;
-    accessories: ProductItemApiType[];
-    parameters: ProductParameterType[];
-    images: ImageApiType[];
-}
 
 export interface ProductDetailType extends SlugType, BreadcrumbType {
+    __typename: 'MainVariant' | 'RegularProduct' | 'Variant';
     uuid: string;
     name: string;
     namePrefix: string;

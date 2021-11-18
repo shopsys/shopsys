@@ -1,13 +1,13 @@
 import {
     FlagLabelFragmentApi,
     ImageListFragmentApi,
+    ProductListFragmentApi,
     ProductPriceFragmentApi,
-    PromotedProductsQueryApi,
+    SliderProductFragmentApi,
     usePromotedProductsQueryApi,
 } from 'graphql/generated';
 import {
     FlagType,
-    ListedProductItemApiType,
     ListedProductItemType,
     ProductPriceApiType,
     ProductPriceType,
@@ -28,16 +28,16 @@ export const mapProductPriceData = (price: ProductPriceApiType, currencyCode: st
     };
 };
 
-export function mapListedProductNode(data: ListedProductItemApiType, currencyCode: string): ListedProductItemType {
+export const mapListedProductNode = (data: ProductListFragmentApi, currencyCode: string): ListedProductItemType => {
     return {
         ...data,
         detailSlug: data.slug,
-        image: data.images.length === 0 ? null : data.images[0].sizes[0],
+        image: data.images.length === 0 ? null : mapImageSizeApiData(data.images[0].sizes[0]),
         price: mapProductPriceData(data.price, currencyCode),
         isMainVariant: data.__typename === 'MainVariant',
         availability: data.availability.name,
     };
-}
+};
 
 export const getPromotedProducts = (): SliderProductItemType[] | undefined => {
     const { currencyCode } = useShopsysSelector((state) => state.domain);
@@ -53,7 +53,7 @@ export const getPromotedProducts = (): SliderProductItemType[] | undefined => {
 };
 
 export const mapSliderProductApiData = (
-    apiData: PromotedProductsQueryApi['promotedProducts'],
+    apiData: SliderProductFragmentApi[],
     currencyCode: string,
 ): SliderProductItemType[] => {
     return apiData.map((apiProduct) => {
@@ -71,7 +71,7 @@ export const mapSliderProductApiData = (
     });
 };
 
-const mapProductImageApiData = (apiData: ImageListFragmentApi['images']): ImageType | null => {
+export const mapProductImageApiData = (apiData: ImageListFragmentApi['images']): ImageType | null => {
     if (!(0 in apiData) || !(0 in apiData[0].sizes)) {
         return null;
     }
@@ -92,7 +92,7 @@ export const mapProductPriceApiData = (
     };
 };
 
-const mapFlagsApiData = (flags: FlagLabelFragmentApi[]): FlagType[] => {
+export const mapFlagsApiData = (flags: FlagLabelFragmentApi[]): FlagType[] => {
     return flags.map((flagApi) => {
         return {
             name: flagApi.name,

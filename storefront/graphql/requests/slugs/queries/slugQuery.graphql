@@ -1,0 +1,17 @@
+query SlugQuery ($slug: String!, $sortingMode: ProductOrderingModeEnum, $endCursorForPagination: String)  {
+    slug(slug: $slug) {
+        __typename
+        ... on Product {
+            ...ProductDetailFragment
+        }
+        ... on Category {
+            ...CategoryDetailFragment
+        }
+        ... on Store {
+            ...StoreDetailFragment
+        }
+        ... on Article {
+            ...ArticleDetailFragment
+        }
+    }
+}

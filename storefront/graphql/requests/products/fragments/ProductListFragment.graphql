@@ -1,12 +1,12 @@
-fragment SliderProductFragment on Product {
+fragment ProductListFragment on Product {
     __typename
     uuid
     slug
     name
-    stockQuantity
     flags {
         ...FlagLabelFragment
     }
+    stockQuantity
     ...ImageListFragment
     availability {
         ...AvailabilityFragment

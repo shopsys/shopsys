@@ -1,0 +1,9 @@
+fragment CategoryPreviewFragment on Category {
+    uuid
+    name
+    slug
+    ...ImagesDefaultFragment
+    products{
+        totalCount
+    }
+}

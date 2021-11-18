@@ -1,28 +1,21 @@
-import { StoreDetailApiType, StoreDetailType } from 'connectors/stores/types';
+import { StoreDetailFragmentApi } from 'graphql/generated';
+import { StoreDetailType } from 'connectors/stores/types';
 
-export const storeDetailBody = `
-    uuid
-    storeName: name
-    description
-    street
-    city
-    postcode
-    country
-    openingHours
-    contactInfo
-    specialMessage
-    locationLatitude
-    locationLongitude
-    breadcrumb {
-        name
-        slug
-    }
-` as const;
-
-export function mapStoreDetailApiData(data: StoreDetailApiType): StoreDetailType {
+export const mapStoreDetailApiData = (data: StoreDetailFragmentApi): StoreDetailType => {
     return {
         ...data,
-        locationLatitude: data.locationLatitude !== null ? Number.parseFloat(data.locationLatitude) : null,
-        locationLongitude: data.locationLongitude !== null ? Number.parseFloat(data.locationLongitude) : null,
+        __typename: 'Store',
+        description: data.description !== undefined ? data.description : null,
+        openingHours: data.openingHours !== undefined ? data.openingHours : null,
+        contactInfo: data.contactInfo !== undefined ? data.contactInfo : null,
+        specialMessage: data.specialMessage !== undefined ? data.specialMessage : null,
+        locationLatitude:
+            data.locationLatitude !== undefined && data.locationLatitude !== null
+                ? Number.parseFloat(data.locationLatitude)
+                : null,
+        locationLongitude:
+            data.locationLongitude !== undefined && data.locationLongitude !== null
+                ? Number.parseFloat(data.locationLongitude)
+                : null,
     };
-}
+};
