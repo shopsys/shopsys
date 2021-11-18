@@ -11,10 +11,7 @@ export const setTokensToCookie = (
     refreshToken: string,
     context?: GetServerSidePropsContext,
 ): void => {
-    setCookie(context, 'accessToken', accessToken, {
-        // maxAge should be decreased to 300 (5min) after FWCC-581 is resolved
-        maxAge: 3600 * 24 * 14,
-    });
+    setCookie(context, 'accessToken', accessToken);
     setCookie(context, 'refreshToken', refreshToken, {
         maxAge: 3600 * 24 * 14,
     });
