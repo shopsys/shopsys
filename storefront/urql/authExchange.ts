@@ -33,7 +33,17 @@ type GetAuthExchangeOptionsReturnType = {
 
 const getAuthExchangeOptions = (context?: GetServerSidePropsContext): GetAuthExchangeOptionsReturnType => ({
     addAuthToOperation: (params: { authState: TokenType | null; operation: Operation }): Operation => {
-        if (!params.authState) {
+        function isRefreshTokenMutation(operation: Operation) {
+            return (
+                operation.kind === 'mutation' &&
+                // @todo any?
+                operation.query.definitions.some((def: any) => {
+                    return def?.name?.value === 'RefreshTokens';
+                })
+            );
+        }
+
+        if (!params.authState || isRefreshTokenMutation(params.operation)) {
             return params.operation;
         }
 
