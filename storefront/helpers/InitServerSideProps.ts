@@ -1,4 +1,3 @@
-import { cacheExchange, dedupExchange, fetchExchange, ssrExchange } from 'urql';
 import { GetServerSidePropsContext, GetServerSidePropsResult } from 'next';
 import { initUrqlClient, SSRData } from 'next-urql';
 import { AppStore } from 'redux/main';
@@ -6,9 +5,11 @@ import { cartInputActions } from 'redux/slices/cartInput';
 import { DocumentNode } from 'graphql';
 import { getCartInputCookie } from './Cookies';
 import getConfig from 'next/config';
+import { getUrqlExchanges } from 'urql/exchanges';
 import nextI18NextConfig from 'next-i18next.config';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { SSRConfig } from 'next-i18next';
+import { ssrExchange } from '@urql/core';
 
 export type ServerSidePropsType = {
     urqlState: SSRData;
@@ -28,7 +29,7 @@ export async function initServerSideProps(
     const client = initUrqlClient(
         {
             url: serverRuntimeConfig.internalGraphqlEndpoint,
-            exchanges: [dedupExchange, cacheExchange, ssrCache, fetchExchange],
+            exchanges: getUrqlExchanges(ssrCache, context),
             fetchOptions: {
                 headers: {
                     OriginalHost: publicGraphqlEndpoint.host,

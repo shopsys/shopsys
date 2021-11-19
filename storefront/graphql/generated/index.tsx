@@ -2153,6 +2153,19 @@ type SimpleArticleFragment_BlogArticle_Api = { __typename?: 'BlogArticle', name:
 
 export type SimpleArticleFragmentApi = SimpleArticleFragment_Article_Api | SimpleArticleFragment_BlogArticle_Api;
 
+export type LoginVariablesApi = Exact<{
+  email: Scalars['String'];
+  password: Scalars['Password'];
+}>;
+
+
+export type LoginApi = { __typename?: 'Mutation', Login: { __typename?: 'Token', accessToken: string, refreshToken: string } };
+
+export type LogoutVariablesApi = Exact<{ [key: string]: never; }>;
+
+
+export type LogoutApi = { __typename?: 'Mutation', Logout: boolean };
+
 export type AvailabilityFragmentApi = { __typename?: 'Availability', name: string, status: string };
 
 export type SimpleBrandFragmentApi = { __typename?: 'Brand', name: string, slug: string };
@@ -2690,6 +2703,27 @@ export const StoreDetailFragmentApi = gql`
   ...BreadcrumbFragment
 }
     ${BreadcrumbFragmentApi}`;
+export const LoginDocumentApi = gql`
+    mutation Login($email: String!, $password: Password!) {
+  Login(input: {email: $email, password: $password}) {
+    accessToken
+    refreshToken
+  }
+}
+    `;
+
+export function useLoginApi() {
+  return Urql.useMutation<LoginApi, LoginVariablesApi>(LoginDocumentApi);
+};
+export const LogoutDocumentApi = gql`
+    mutation Logout {
+  Logout
+}
+    `;
+
+export function useLogoutApi() {
+  return Urql.useMutation<LogoutApi, LogoutVariablesApi>(LogoutDocumentApi);
+};
 export const PromotedCategoriesQueryDocumentApi = gql`
     query PromotedCategoriesQuery {
   promotedCategories {

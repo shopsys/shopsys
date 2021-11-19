@@ -16,6 +16,9 @@ use Shopsys\FrontendApiBundle\Model\User\FrontendApiUser;
  */
 class TokenFacade extends BaseTokenFacade
 {
+    // temporarily increased expiration until FWCC-581 is resolved
+    protected const ACCESS_TOKEN_EXPIRATION = 3600 * 24 * 14;
+
     /**
      * @param \App\Model\Customer\User\CustomerUser $customerUser
      * @param string $deviceId
