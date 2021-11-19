@@ -1,0 +1,12 @@
+{
+    "experimentalStudio": true,
+    "viewportWidth": 1024,
+    "viewportHeight": 1250,
+    "baseUrl": "http://webserver:8080/",
+    "defaultCommandTimeout": 20000,
+    "integrationFolder": "integration",
+    "pluginsFile": "plugins/index.js",
+    "screenshotsFolder": "screenshots",
+    "videosFolder": "videos",
+    "supportFile": "support/index.js"
+}

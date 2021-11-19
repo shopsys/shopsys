@@ -59,6 +59,17 @@ services:
         ports:
             - "6060:6060"
 
+    cypress:
+        build:
+            context: ./storefront
+            dockerfile: ./docker/cypress/Dockerfile
+            target: development
+        container_name: shopsys-framework-cypress
+        volumes:
+            - storefront:/app
+        profiles:
+            - storefront-acceptance-tests
+
     php-fpm:
         build:
             context: .
