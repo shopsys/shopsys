@@ -4,6 +4,7 @@ import { showErrorMessage, showSuccessMessage } from 'components/Helpers/Toasts'
 import { useEffect } from 'react';
 import { UseMutationResponse } from 'urql';
 import { userActions } from 'redux/slices/user';
+import { useRouter } from 'next/router';
 import { useShopsysDispatch } from 'redux/main';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 
@@ -27,6 +28,8 @@ export const useAuth = (): [
     const dispatch = useShopsysDispatch();
     const t = useTypedTranslationFunction();
 
+    const router = useRouter();
+
     useEffect(() => {
         const accessToken = loginUseMutationResponse[0].data?.Login.accessToken;
         const refreshToken = loginUseMutationResponse[0].data?.Login.refreshToken;
@@ -35,6 +38,7 @@ export const useAuth = (): [
             dispatch(userActions.setIsUserLoggedIn(true));
             setTokensToCookie(accessToken, refreshToken);
             showSuccessMessage(t('Successfully logged in'));
+            window.location.href = router.asPath;
         }
     }, [loginUseMutationResponse[0].data?.Login]);
 
@@ -49,6 +53,7 @@ export const useAuth = (): [
             dispatch(userActions.setIsUserLoggedIn(false));
             removeTokensFromCookies();
             showSuccessMessage(t('Successfully logged out'));
+            window.location.href = router.asPath;
         }
     }, [logoutUseMutationResponse[0].data]);
 
