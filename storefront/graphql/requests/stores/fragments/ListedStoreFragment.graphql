@@ -1,0 +1,12 @@
+fragment ListedStoreFragment on Store {
+    slug
+    uuid
+    name
+    description
+    openingHours
+    locationLatitude
+    locationLongitude
+    street
+    postcode
+    city
+}

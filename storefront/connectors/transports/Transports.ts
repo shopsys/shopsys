@@ -1,63 +1,11 @@
-import { PriceType, TransportApiType, TransportType } from './types';
+import {
+    PriceFragmentApi,
+    TransportWithAvailablePaymentsAndStoresFragmentApi,
+    useTransportsQueryApi,
+} from 'graphql/generated';
+import { PriceType, TransportType } from './types';
 import { mapTransport } from './Transport';
-import { PriceFragmentApi } from 'graphql/generated';
-import { useFetchQuery } from 'hooks/graphQl/UseFetchQuery';
 import { useShopsysSelector } from 'redux/main';
-
-export const transportsQuery = `
-        query transports ($cartUuid: Uuid) {
-            transports (cartUuid: $cartUuid) {
-                uuid
-                name
-                description
-                instruction
-                price {
-                    priceWithVat
-                    priceWithoutVat
-                    vatAmount
-                }
-                images {
-                    sizes {
-                        url
-                        height
-                        width
-                    }
-                }
-                payments {
-                    uuid
-                    name
-                    description
-                    instruction
-                    price {
-                        priceWithVat
-                        priceWithoutVat
-                        vatAmount
-                    }
-                    images {
-                        sizes {
-                            url
-                            height
-                            width
-                        }
-                    }
-                }
-                daysUntilDelivery
-                stores {
-                    edges {
-                        node {
-                            uuid
-                            name
-                            description
-                            openingHours
-                            street
-                            postcode
-                            city
-                        }
-                    }
-                }
-            }
-        }
-    ` as const;
 
 export const mapPriceData = (price: PriceFragmentApi, currencyCode: string): PriceType => {
     return {
@@ -68,7 +16,10 @@ export const mapPriceData = (price: PriceFragmentApi, currencyCode: string): Pri
     };
 };
 
-const mapTransports = (apiData: TransportApiType[], currencyCode: string): TransportType[] => {
+const mapTransports = (
+    apiData: TransportWithAvailablePaymentsAndStoresFragmentApi[],
+    currencyCode: string,
+): TransportType[] => {
     const mappedTransports: TransportType[] = [];
     for (const transport of apiData) {
         const mappedTransport = mapTransport(transport, currencyCode);
@@ -81,7 +32,7 @@ const mapTransports = (apiData: TransportApiType[], currencyCode: string): Trans
 
 export const getTransports = (cartUuid?: string | null): TransportType[] => {
     const { currencyCode } = useShopsysSelector((state) => state.domain);
-    const result = useFetchQuery({ query: transportsQuery, variables: { cartUuid } });
+    const [result] = useTransportsQueryApi({ variables: { cartUuid } });
     const transportsApiData = result?.data?.transports;
 
     if (transportsApiData !== undefined) {

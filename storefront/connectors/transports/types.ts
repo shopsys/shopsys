@@ -1,5 +1,5 @@
-import { ImageApiType, ImageType } from 'components/Basic/Image/types';
-import { PaymentApiType, PaymentType } from 'connectors/payments/types';
+import { ImageType } from 'components/Basic/Image/types';
+import { PaymentType } from 'connectors/payments/types';
 
 export type PriceApiType = {
     priceWithVat: string;
@@ -23,22 +23,6 @@ export type StoreType = {
     street: string;
     postcode: string;
     city: string;
-};
-
-export type TransportApiType = {
-    uuid: string;
-    name: string;
-    description: string;
-    instruction: string;
-    price: PriceApiType;
-    images: ImageApiType[];
-    payments: PaymentApiType[];
-    daysUntilDelivery: number;
-    stores: {
-        edges: {
-            node: StoreType;
-        }[];
-    };
 };
 
 export type TransportType = {

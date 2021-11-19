@@ -30,7 +30,7 @@ const mapStoresApiData = (data: StoresQueryApi['stores']): StoreListType[] => {
             continue;
         }
 
-        const mapedStore: StoreListType = {
+        const mappedStore: StoreListType = {
             slug: edge.node.slug,
             name: edge.node.name,
             locationLatitude:
@@ -45,13 +45,13 @@ const mapStoresApiData = (data: StoresQueryApi['stores']): StoreListType[] => {
             openingHours: edge.node.openingHours,
         };
 
-        mappedStores.push(mapedStore);
+        mappedStores.push(mappedStore);
     }
 
     return mappedStores;
 };
 
-export const mapStoresPreviewApiData = (
+export const mapStoresListApiData = (
     storesConnectionApi: TransportWithAvailablePaymentsAndStoresFragmentApi['stores'],
 ): StoreType[] => {
     if (storesConnectionApi?.edges === undefined || storesConnectionApi.edges === null) {

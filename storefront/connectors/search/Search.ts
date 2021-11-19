@@ -1,7 +1,7 @@
 import { ProductImagesListFragmentApi, SearchQueryApi, useSearchQueryApi } from 'graphql/generated';
 import { useEffect, useState } from 'react';
 import { mapImageSizeApiData } from 'connectors/image/size/ImageSize';
-import { mapPriceData } from 'connectors/transports/Transports';
+import { mapProductPriceApiData } from 'connectors/products/Products';
 import { SearchType } from './types';
 import { useQueryError } from 'hooks/graphQl/UseQueryError';
 import { useShopsysSelector } from 'redux/main';
@@ -80,7 +80,7 @@ const mapProductsSearchResults = (
                 mappedProducts.push({
                     ...productEdge.node,
                     name: productEdge.node.name,
-                    price: mapPriceData(productEdge.node.price, currencyCode),
+                    price: mapProductPriceApiData(productEdge.node.price, currencyCode),
                     image: mapProductsSearchResultImage(productEdge.node.images),
                 });
             }
