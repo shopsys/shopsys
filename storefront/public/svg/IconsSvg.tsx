@@ -171,8 +171,8 @@ export const RemoveBold = () => (
 
 export const Plus = () => (
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-        <path 
-            d="M2.5 287.632h221.868V509.5h63.264V287.632H509.5v-63.264H287.632V2.5h-63.264v221.868H2.5z" 
+        <path
+            d="M2.5 287.632h221.868V509.5h63.264V287.632H509.5v-63.264H287.632V2.5h-63.264v221.868H2.5z"
             fill="currentColor"
         />
     </svg>
@@ -182,9 +182,9 @@ export const Filter = () => (
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
         <g transform="matrix(23.04546 0 0 23.04545 -9169.492 -192542.19)">
             <g stroke="none">
-                <path d="M401.5 8357.5h1v7h-1zm0 10h1v7h-1zm7-2h1v9h-1zm0-8h1v5h-1z" fill="currentColor"/>
-                <path d="M412.5 8361.5v1h-7v-1zm7 8v1h-7v-1zm-14-2v1h-7v-1zm10-10h1v9h-1z" fill="currentColor"/>
-                <path d="M415.5 8369.5h1v5h-1z" fill="currentColor"/>
+                <path d="M401.5 8357.5h1v7h-1zm0 10h1v7h-1zm7-2h1v9h-1zm0-8h1v5h-1z" fill="currentColor" />
+                <path d="M412.5 8361.5v1h-7v-1zm7 8v1h-7v-1zm-14-2v1h-7v-1zm10-10h1v9h-1z" fill="currentColor" />
+                <path d="M415.5 8369.5h1v5h-1z" fill="currentColor" />
             </g>
         </g>
     </svg>
@@ -223,10 +223,14 @@ export const Instagram = () => (
 
 export const MapMarker = () => (
     <svg viewBox="0 0 30 38" xmlns="http://www.w3.org/2000/svg">
-        <path
-            d="M30,15A15,15,0,1,0,10.089,29.161L15,38l4.911-8.839A14.994,14.994,0,0,0,30,15Z"
-            fill="currentColor"
-        />
+        <path d="M30,15A15,15,0,1,0,10.089,29.161L15,38l4.911-8.839A14.994,14.994,0,0,0,30,15Z" fill="currentColor" />
+    </svg>
+);
+
+export const Checkmark = () => (
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+        <circle className="circle" cx="26" cy="26" r="25" fill="none" />
+        <path className="check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8" />
     </svg>
 );
 

@@ -24,6 +24,7 @@ export const IconsSvgMap = {
     Youtube: <Icons.Youtube />,
     MapMarker: <Icons.MapMarker />,
     Warning: <Icons.Warning />,
+    Checkmark: <Icons.Checkmark />,
 };
 
 export type IconName = keyof typeof IconsSvgMap;

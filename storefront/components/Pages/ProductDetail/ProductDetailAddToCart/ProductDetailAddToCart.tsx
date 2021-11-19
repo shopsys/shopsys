@@ -6,13 +6,15 @@ import {
     AddToCartPriceStyled,
     AddToCartWrapperStyled,
 } from './ProductDetailAddToCart.style';
-import { FC, useEffect, useRef } from 'react';
+import { FC, useRef } from 'react';
+import AddToCartPopup from 'components/Blocks/Product/AddToCartPopup';
 import { formatPrice } from 'utils/formatting';
+import Portal from 'components/Basic/Portal';
 import { ProductDetailType } from 'components/Pages/ProductDetail/types';
-import { showChangeCartItemQuantityMessages } from 'utils/Cart/ShowChangeCartItemQuantityMessages';
 import Spinbox from 'components/Forms/Spinbox';
 import { useAddToCartMutationApi } from 'graphql/generated';
 import { useHandleAddToCart } from 'hooks/cart/UseHandleAddToCart';
+import { useHandleAddToCartMessage } from 'hooks/cart/useHandleAddToCartMessage';
 import { useShopsysSelector } from 'redux/main';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 
@@ -26,14 +28,14 @@ const ProductDetailAddToCart: FC<ProductDetailAddToCartProps> = (props) => {
     const { cartUuid } = useShopsysSelector((state) => state.cartInput);
     const { transport, payment, promoCode } = useShopsysSelector((state) => state.cartInput);
     const [changeCartItemQuantityResult, changeCartItemQuantity] = useAddToCartMutationApi();
+
     useHandleAddToCart(
         changeCartItemQuantityResult,
         transport?.pickupPlaceIdentifier === undefined ? null : transport.pickupPlaceIdentifier,
         promoCode,
     );
-    useEffect(() => {
-        showChangeCartItemQuantityMessages(changeCartItemQuantityResult, props.product.uuid, props.product.name, t);
-    }, [changeCartItemQuantityResult]);
+
+    const [popupData, setPopupData] = useHandleAddToCartMessage(changeCartItemQuantityResult, props.product.uuid);
 
     const onAddToCartHandler = async () => {
         if (spinboxRef.current === null) {
@@ -53,21 +55,32 @@ const ProductDetailAddToCart: FC<ProductDetailAddToCartProps> = (props) => {
     };
 
     return (
-        <AddToCartWrapperStyled>
-            <AddToCartPriceStyled>
-                {formatPrice(props.product.price.priceWithVat, props.product.price.currencyCode, t)}
-            </AddToCartPriceStyled>
-            <AddToCartFormStyled>
-                <AddToCartButtonsWrapperStyled>
-                    <Spinbox min={1} step={1} defaultValue={1} max={props.product.stockQuantity} ref={spinboxRef} />
-                    <AddToCartButtonWrapperStyled>
-                        <AddToCartButtonStyled onClick={onAddToCartHandler} variant="primary">
-                            {t('Add to cart')}
-                        </AddToCartButtonStyled>
-                    </AddToCartButtonWrapperStyled>
-                </AddToCartButtonsWrapperStyled>
-            </AddToCartFormStyled>
-        </AddToCartWrapperStyled>
+        <>
+            <AddToCartWrapperStyled>
+                <AddToCartPriceStyled>
+                    {formatPrice(props.product.price.priceWithVat, props.product.price.currencyCode, t)}
+                </AddToCartPriceStyled>
+                <AddToCartFormStyled>
+                    <AddToCartButtonsWrapperStyled>
+                        <Spinbox min={1} step={1} defaultValue={1} max={props.product.stockQuantity} ref={spinboxRef} />
+                        <AddToCartButtonWrapperStyled>
+                            <AddToCartButtonStyled onClick={onAddToCartHandler} variant="primary">
+                                {t('Add to cart')}
+                            </AddToCartButtonStyled>
+                        </AddToCartButtonWrapperStyled>
+                    </AddToCartButtonsWrapperStyled>
+                </AddToCartFormStyled>
+            </AddToCartWrapperStyled>
+            {popupData !== null && (
+                <Portal>
+                    <AddToCartPopup
+                        isVisible={popupData !== null}
+                        onCloseCallback={() => setPopupData(null)}
+                        product={popupData}
+                    />
+                </Portal>
+            )}
+        </>
     );
 };
 

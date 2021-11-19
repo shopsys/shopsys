@@ -29,7 +29,7 @@ const InfoBox: FC<InfoBoxProps> = (props) => {
             )}
             <br />
             <LinkStyled href={props.slug} isButton={true}>
-                {t<string>('Store detail')}
+                {t('Store detail')}
             </LinkStyled>
         </InfoBoxStyled>
     );
