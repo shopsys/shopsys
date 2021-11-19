@@ -2,6 +2,7 @@ import { contactInformationActions, ContactInformationFormType } from 'redux/sli
 import { FormProvider, SubmitHandler, useWatch } from 'react-hook-form';
 import { initCartInputCookie, updateCartInputCookie } from 'helpers/Cookies';
 import { initServerSideProps, ServerSidePropsType } from 'helpers/InitServerSideProps';
+import { NavigationQueryDocumentApi, useCreateOrderMutationApi } from 'graphql/generated';
 import { nextReduxWrapper, useShopsysDispatch, useShopsysSelector } from 'redux/main';
 import ContactInformationForm from 'components/Pages/Order/ContactInformation';
 import ErrorPopup from 'components/Forms/Lib/ErrorPopup';
@@ -11,12 +12,10 @@ import Form from 'components/Forms/Form';
 import { getContactInformationFormResolver } from 'components/Pages/Order/ContactInformation/ContactInformationFormResolver';
 import { handleOrderPagesRedirect } from 'helpers/HandleOrderPagesRedirect';
 import { initDomainConfig } from 'helpers/InitDomainConfig';
-import { NavigationQueryDocumentApi } from 'graphql/generated';
 import OrderAction from 'components/Blocks/OrderAction';
 import OrderLayout from 'components/Layout/OrderLayout';
 import StaticUrlGuard from 'components/Helpers/StaticUrlGuard';
 import { updateCartState } from 'utils/Cart/UpdateCartState';
-import { useCreateOrder } from 'connectors/order/Order';
 import { useGetInternationalizedStaticUrls } from 'hooks/staticUrls/UseGetInternationalizedStaticUrls';
 import { useHandleContactInformationNonTextChanges } from 'hooks/forms/useHandleContactInformationNonTextChanges';
 import { useHandleErrorPopupVisibility } from 'hooks/forms/UseHandleErrorPopupVisibility';
@@ -39,7 +38,7 @@ const ContactInformation: FC<ServerSidePropsType> = () => {
     );
     const cartInput = useShopsysSelector((state) => state.cartInput);
     const t = useTypedTranslationFunction();
-    const [createOrderResult, createOrder] = useCreateOrder();
+    const [createOrderResult, createOrder] = useCreateOrderMutationApi();
     const formProviderMethods = useShopsysForm(getContactInformationFormResolver(t), contactInformationValues);
     const [isErrorPopupVisible, setErrorPopupVisibility] = useHandleErrorPopupVisibility(formProviderMethods);
     useHandleFormSuccessfulSubmit(createOrderResult, formProviderMethods, contactInformationValues, () =>

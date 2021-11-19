@@ -2300,6 +2300,38 @@ export type NewsletterSubscribeMutationVariablesApi = Exact<{
 
 export type NewsletterSubscribeMutationApi = { __typename?: 'Mutation', NewsletterSubscribe: boolean };
 
+export type CreateOrderMutationVariablesApi = Exact<{
+  firstName: Scalars['String'];
+  lastName: Scalars['String'];
+  email: Scalars['String'];
+  telephone: Scalars['String'];
+  onCompanyBehalf: Scalars['Boolean'];
+  companyName?: Maybe<Scalars['String']>;
+  companyNumber?: Maybe<Scalars['String']>;
+  companyTaxNumber?: Maybe<Scalars['String']>;
+  street: Scalars['String'];
+  city: Scalars['String'];
+  postcode: Scalars['String'];
+  country: Scalars['String'];
+  differentDeliveryAddress: Scalars['Boolean'];
+  deliveryFirstName?: Maybe<Scalars['String']>;
+  deliveryLastName?: Maybe<Scalars['String']>;
+  deliveryCompanyName?: Maybe<Scalars['String']>;
+  deliveryTelephone?: Maybe<Scalars['String']>;
+  deliveryStreet?: Maybe<Scalars['String']>;
+  deliveryCity?: Maybe<Scalars['String']>;
+  deliveryPostcode?: Maybe<Scalars['String']>;
+  deliveryCountry?: Maybe<Scalars['String']>;
+  note?: Maybe<Scalars['String']>;
+  payment: PaymentInputApi;
+  transport: TransportInputApi;
+  cartUuid?: Maybe<Scalars['Uuid']>;
+  promoCode?: Maybe<Scalars['String']>;
+}>;
+
+
+export type CreateOrderMutationApi = { __typename?: 'Mutation', CreateOrder: { __typename?: 'Order', number: string } };
+
 export type PageInfoFragmentApi = { __typename?: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null | undefined, endCursor?: string | null | undefined };
 
 export type ParameterFragmentApi = { __typename?: 'Parameter', uuid: string, name: string, visible: boolean, values: Array<{ __typename?: 'ParameterValue', uuid: string, text: string }> };
@@ -3131,6 +3163,19 @@ export const NewsletterSubscribeMutationDocumentApi = gql`
 
 export function useNewsletterSubscribeMutationApi() {
   return Urql.useMutation<NewsletterSubscribeMutationApi, NewsletterSubscribeMutationVariablesApi>(NewsletterSubscribeMutationDocumentApi);
+};
+export const CreateOrderMutationDocumentApi = gql`
+    mutation CreateOrderMutation($firstName: String!, $lastName: String!, $email: String!, $telephone: String!, $onCompanyBehalf: Boolean!, $companyName: String, $companyNumber: String, $companyTaxNumber: String, $street: String!, $city: String!, $postcode: String!, $country: String!, $differentDeliveryAddress: Boolean!, $deliveryFirstName: String, $deliveryLastName: String, $deliveryCompanyName: String, $deliveryTelephone: String, $deliveryStreet: String, $deliveryCity: String, $deliveryPostcode: String, $deliveryCountry: String, $note: String, $payment: PaymentInput!, $transport: TransportInput!, $cartUuid: Uuid, $promoCode: String) {
+  CreateOrder(
+    input: {firstName: $firstName, lastName: $lastName, email: $email, telephone: $telephone, onCompanyBehalf: $onCompanyBehalf, companyName: $companyName, companyNumber: $companyNumber, companyTaxNumber: $companyTaxNumber, street: $street, city: $city, postcode: $postcode, country: $country, differentDeliveryAddress: $differentDeliveryAddress, deliveryFirstName: $deliveryFirstName, deliveryLastName: $deliveryLastName, deliveryCompanyName: $deliveryCompanyName, deliveryTelephone: $deliveryTelephone, deliveryStreet: $deliveryStreet, deliveryCity: $deliveryCity, deliveryPostcode: $deliveryPostcode, deliveryCountry: $deliveryCountry, note: $note, payment: $payment, transport: $transport, cartUuid: $cartUuid, promoCode: $promoCode}
+  ) {
+    number
+  }
+}
+    `;
+
+export function useCreateOrderMutationApi() {
+  return Urql.useMutation<CreateOrderMutationApi, CreateOrderMutationVariablesApi>(CreateOrderMutationDocumentApi);
 };
 export const PasswordRecoveryMutationDocumentApi = gql`
     mutation PasswordRecoveryMutation($email: String!) {
