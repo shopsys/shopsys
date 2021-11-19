@@ -1,6 +1,5 @@
 import {
     CategoriesByColumnFragmentApi,
-    CategoryImagesDefaultFragmentApi,
     ColumnCategoriesFragmentApi,
     NavigationQueryApi,
     NavigationSubCategoriesLinkFragmentApi,
