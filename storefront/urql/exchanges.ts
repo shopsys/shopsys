@@ -85,7 +85,7 @@ export const getUrqlExchanges = (
             const isAuthError = error?.response?.status === 401;
 
             if (isAuthError) {
-                removeTokensFromCookies();
+                removeTokensFromCookies(context);
             }
         },
     }),

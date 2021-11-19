@@ -1,5 +1,6 @@
 import { destroyCookie, parseCookies, setCookie } from 'nookies';
 import { GetServerSidePropsContext } from 'next';
+import { OptionalTokenType } from 'urql/types';
 
 export const removeTokensFromCookies = (context?: GetServerSidePropsContext): void => {
     destroyCookie(context, 'accessToken');
@@ -21,4 +22,12 @@ export const hasTokenInCookie = (context?: GetServerSidePropsContext): boolean =
     const cookies = parseCookies(context);
 
     return cookies?.refreshToken !== undefined;
+};
+
+export const getTokensFromCookies = (context?: GetServerSidePropsContext): OptionalTokenType => {
+    const cookies = parseCookies(context);
+    const accessToken = cookies.accessToken ?? undefined;
+    const refreshToken = cookies.refreshToken ?? undefined;
+
+    return { accessToken, refreshToken };
 };
