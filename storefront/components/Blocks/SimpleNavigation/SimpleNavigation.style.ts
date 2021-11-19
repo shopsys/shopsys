@@ -1,10 +1,6 @@
 import { css } from 'styled-components';
 import { styled } from 'components/Theme/main';
 
-export const SimpleNavigationWrapperStyled = styled.ul`
-    margin-bottom: 24px;
-`;
-
 export const SimpleNavigationStyled = styled.ul`
     display: flex;
     flex-direction: row;

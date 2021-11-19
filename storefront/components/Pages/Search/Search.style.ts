@@ -72,7 +72,7 @@ export const SearchResultsBlockStyled = styled.div<SearchResultsBlockStyledProps
 `;
 
 export const SearchResultsWeblineStyled = styled(Webline)`
-    margin-top: 20px;
+    margin-top: 24px;
 `;
 
 export const ShowResultsButtonWrapperStyled = styled.div`

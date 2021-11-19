@@ -1,5 +1,5 @@
 import { FC, useState } from 'react';
-import { ListItemStyled, SimpleNavigationStyled, SimpleNavigationWrapperStyled } from './SimpleNavigation.style';
+import { ListItemStyled, SimpleNavigationStyled } from './SimpleNavigation.style';
 import { desktopFirstSizes } from 'components/Theme/mediaQueries';
 import { isElementVisible } from 'components/Helpers/isElementVisible';
 import { ListedItemPropType } from './types';
@@ -24,7 +24,7 @@ const SimpleNavigation: FC<SimpleNavigationProps> = (props) => {
     );
 
     return (
-        <SimpleNavigationWrapperStyled>
+        <ul>
             {isSliderVisible ? (
                 <Slider listedItems={props.listedItems} />
             ) : (
@@ -36,7 +36,7 @@ const SimpleNavigation: FC<SimpleNavigationProps> = (props) => {
                     ))}
                 </SimpleNavigationStyled>
             )}
-        </SimpleNavigationWrapperStyled>
+        </ul>
     );
 };
 
