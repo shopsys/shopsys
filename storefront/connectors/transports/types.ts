@@ -23,6 +23,7 @@ export type StoreType = {
     street: string;
     postcode: string;
     city: string;
+    country: string;
 };
 
 export type TransportType = {

@@ -130,7 +130,7 @@ const Select: FC<SelectProps> = (props) => {
         removePacketeryCookie();
     };
 
-    const onSelectPacketeryStoreCallback = (
+    const onSelectPacketeryPickupPlaceCallback = (
         packeteryPoint: PacketeryExtendedPoint | null,
         packeteryTransport: TransportType,
     ) => {
