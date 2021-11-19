@@ -3,8 +3,9 @@ import { FC, useRef, useState } from 'react';
 import {
     SearchResultsBlockStyled,
     SearchResultsContentStyled,
+    SearchResultsPanelStyled,
     SearchResultsStyled,
-    SeatchResultsPanelStyled,
+    SearchResultsWeblineStyled,
     ShowResultsButtonWrapperStyled,
 } from './Search.style';
 import Breadcrumbs from 'components/Layout/Breadcrumbs';
@@ -100,7 +101,7 @@ const Search: FC<SearchProps> = (props) => {
             {currentPage === 1 && (
                 <>
                     {props.searchResults.articlesSearch.length > 0 && (
-                        <Webline>
+                        <SearchResultsWeblineStyled>
                             <Heading type={'h3'}>{t('Found articles')}</Heading>
                             <SearchResultsBlockStyled areAllResultsVisible={areArticlesResultsVisible}>
                                 <SimpleNavigation listedItems={props.searchResults.articlesSearch} />
@@ -118,10 +119,10 @@ const Search: FC<SearchProps> = (props) => {
                                     </Button>
                                 </ShowResultsButtonWrapperStyled>
                             )}
-                        </Webline>
+                        </SearchResultsWeblineStyled>
                     )}
                     {props.searchResults.brandSearch.length > 0 && (
-                        <Webline>
+                        <SearchResultsWeblineStyled>
                             <Heading type={'h3'}>{t('Found brands')}</Heading>
                             <SearchResultsBlockStyled areAllResultsVisible={areBrandsResultsVisible}>
                                 <SimpleNavigation listedItems={props.searchResults.brandSearch} />
@@ -139,10 +140,10 @@ const Search: FC<SearchProps> = (props) => {
                                     </Button>
                                 </ShowResultsButtonWrapperStyled>
                             )}
-                        </Webline>
+                        </SearchResultsWeblineStyled>
                     )}
                     {props.searchResults.categoriesSearch.totalCount > 0 && (
-                        <Webline>
+                        <SearchResultsWeblineStyled>
                             <Heading type={'h3'}>{t('Found categories')}</Heading>
                             <SearchResultsBlockStyled areAllResultsVisible={areCategoriesResultsVisible}>
                                 <SimpleNavigation listedItems={props.searchResults.categoriesSearch.categories} />
@@ -160,25 +161,25 @@ const Search: FC<SearchProps> = (props) => {
                                     </Button>
                                 </ShowResultsButtonWrapperStyled>
                             )}
-                        </Webline>
+                        </SearchResultsWeblineStyled>
                     )}
                 </>
             )}
             {props.searchResults.productsSearch.totalCount > 0 && (
-                <Webline>
+                <SearchResultsWeblineStyled>
                     <Heading type={'h3'}>{t('Found products')}</Heading>
                     <SearchResultsStyled>
-                        <SeatchResultsPanelStyled>
+                        <SearchResultsPanelStyled>
                             <ProductFilter />
                             <Overlay isHiddenOnDesktop={true} onClick={handlePanelOpenerClick} />
-                        </SeatchResultsPanelStyled>
+                        </SearchResultsPanelStyled>
                         <SearchResultsContentStyled>
                             <SortingBar totalCount={props.searchResults.productsSearch.totalCount} />
                             <ProductsList products={props.searchResults.productsSearch.products} />
                             <Pagination totalCount={props.searchResults.productsSearch.totalCount} />
                         </SearchResultsContentStyled>
                     </SearchResultsStyled>
-                </Webline>
+                </SearchResultsWeblineStyled>
             )}
         </>
     );

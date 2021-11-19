@@ -1,5 +1,6 @@
 import { css } from 'styled-components';
 import { styled } from 'components/Theme/main';
+import Webline from 'components/Layout/Webline';
 
 const localVariables = {
     searchResultsPanelWidth: '304px',
@@ -29,7 +30,7 @@ export const SearchResultsStyled = styled.div`
         `}
 `;
 
-export const SeatchResultsPanelStyled = styled.div<PanelProps>`
+export const SearchResultsPanelStyled = styled.div<PanelProps>`
     ${({ theme, isOpen }) => css`
         display: none;
         position: absolute;
@@ -68,6 +69,10 @@ export const SearchResultsBlockStyled = styled.div<SearchResultsBlockStyledProps
             overflow: hidden;
         }
     `}
+`;
+
+export const SearchResultsWeblineStyled = styled(Webline)`
+    margin-top: 20px;
 `;
 
 export const ShowResultsButtonWrapperStyled = styled.div`
