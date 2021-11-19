@@ -15,3 +15,4 @@ overblog_graphql:
                     class: App\FrontendApi\Model\BlogArticle\BlogArticlePaginatorArgumentsBuilder
     security:
         handle_cors: true
+        query_max_complexity: 1000

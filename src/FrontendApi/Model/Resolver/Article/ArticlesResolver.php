@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\FrontendApi\Model\Resolver\Article;
 
+use App\FrontendApi\Component\Validation\PageSizeValidator;
 use App\Model\Article\Elasticsearch\ArticleElasticsearchFacade;
 use Overblog\GraphQLBundle\Definition\Argument;
 use Overblog\GraphQLBundle\Definition\Resolver\AliasedInterface;
@@ -37,6 +38,7 @@ class ArticlesResolver implements ResolverInterface, AliasedInterface
      */
     public function resolve(Argument $argument, ?string $placement)
     {
+        PageSizeValidator::checkMaxPageSize($argument);
         $this->setDefaultFirstOffsetIfNecessary($argument);
 
         $paginator = new Paginator(function ($offset, $limit) use ($placement) {

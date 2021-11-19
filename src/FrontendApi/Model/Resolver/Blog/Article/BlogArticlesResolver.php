@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\FrontendApi\Model\Resolver\Blog\Article;
 
+use App\FrontendApi\Component\Validation\PageSizeValidator;
 use App\Model\Blog\Article\Elasticsearch\BlogArticleElasticsearchFacade;
 use App\Model\Blog\Category\BlogCategory;
 use Overblog\GraphQLBundle\Definition\Argument;
@@ -34,6 +35,7 @@ class BlogArticlesResolver implements ResolverInterface, AliasedInterface
      */
     public function resolveAll(Argument $argument)
     {
+        PageSizeValidator::checkMaxPageSize($argument);
         $onlyVisibleOnHomepage = $argument['onlyHomepageArticles'];
 
         $this->setDefaultFirstOffsetIfNecessary($argument);
@@ -51,6 +53,7 @@ class BlogArticlesResolver implements ResolverInterface, AliasedInterface
      */
     public function resolveByCategory(Argument $argument, BlogCategory $blogCategory)
     {
+        PageSizeValidator::checkMaxPageSize($argument);
         $onlyVisibleOnHomepage = $argument['onlyHomepageArticles'];
 
         $this->setDefaultFirstOffsetIfNecessary($argument);

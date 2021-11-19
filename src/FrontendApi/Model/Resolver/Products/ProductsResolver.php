@@ -4,12 +4,15 @@ declare(strict_types=1);
 
 namespace App\FrontendApi\Model\Resolver\Products;
 
+use App\FrontendApi\Component\Validation\PageSizeValidator;
 use App\Model\Category\Category;
 use App\Model\CategorySeo\ReadyCategorySeoMix;
 use App\Model\Product\Filter\ProductFilterDataFactory;
 use App\Model\Product\Flag\Flag;
 use InvalidArgumentException;
 use Overblog\GraphQLBundle\Definition\Argument;
+use Shopsys\FrameworkBundle\Model\Category\Category as BaseCategory;
+use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
 use Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainFacadeInterface;
 use Shopsys\FrontendApiBundle\Model\Product\Connection\ProductConnection;
 use Shopsys\FrontendApiBundle\Model\Product\Connection\ProductConnectionFactory;
@@ -25,8 +28,6 @@ use Shopsys\FrontendApiBundle\Model\Resolver\Products\ProductsResolver as BasePr
  * @method setProductFacade(\App\FrontendApi\Model\Product\ProductFacade $productFacade)
  * @method setProductFilterFacade(\App\FrontendApi\Model\Product\Filter\ProductFilterFacade $productFilterFacade)
  * @method setProductConnectionFactory(\App\FrontendApi\Model\Product\Connection\ProductConnectionFactory $productConnectionFactory)
- * @method \Overblog\GraphQLBundle\Relay\Connection\ConnectionInterface|object resolveByCategory(\Overblog\GraphQLBundle\Definition\Argument $argument, \App\Model\Category\Category $category)
- * @method \Overblog\GraphQLBundle\Relay\Connection\ConnectionInterface|object resolveByBrand(\Overblog\GraphQLBundle\Definition\Argument $argument, \App\Model\Product\Brand\Brand $brand)
  */
 class ProductsResolver extends BaseProductsResolver
 {
@@ -61,6 +62,7 @@ class ProductsResolver extends BaseProductsResolver
      */
     public function resolveByCategoryOrReadyCategorySeoMix(Argument $argument, $categoryOrReadyCategorySeoMix): ProductConnection
     {
+        PageSizeValidator::checkMaxPageSize($argument);
         $seoMixOrderingMode = null;
         if ($categoryOrReadyCategorySeoMix instanceof Category) {
             $category = $categoryOrReadyCategorySeoMix;
@@ -112,6 +114,7 @@ class ProductsResolver extends BaseProductsResolver
      */
     public function resolveByFlag(Argument $argument, Flag $flag)
     {
+        PageSizeValidator::checkMaxPageSize($argument);
         $search = $argument['search'] ?? '';
 
         $this->setDefaultFirstOffsetIfNecessary($argument);
@@ -138,6 +141,36 @@ class ProductsResolver extends BaseProductsResolver
             $argument,
             $productFilterData
         );
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function resolve(Argument $argument)
+    {
+        PageSizeValidator::checkMaxPageSize($argument);
+
+        return parent::resolve($argument);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function resolveByCategory(Argument $argument, BaseCategory $category)
+    {
+        PageSizeValidator::checkMaxPageSize($argument);
+
+        return parent::resolveByCategory($argument, $category);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function resolveByBrand(Argument $argument, Brand $brand)
+    {
+        PageSizeValidator::checkMaxPageSize($argument);
+
+        return parent::resolveByBrand($argument, $brand);
     }
 
     /**
