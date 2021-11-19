@@ -8,7 +8,7 @@ import {
 } from './SelectItemLabel.style';
 import { FC } from 'react';
 import { formatPrice } from 'utils/formatting';
-import { StoreType } from 'connectors/transports/types';
+import { PickupPlaceType } from 'connectors/transports/types';
 import { TFunction } from 'react-i18next';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 
@@ -17,7 +17,7 @@ type SelectItemLabelProps = {
     price?: { priceWithVat: number; priceWithoutVat: number; vatAmount: number };
     daysUntilDelivery?: number;
     description?: string;
-    personalPickupStoreDetail?: StoreType | null;
+    pickupPlaceDetail?: PickupPlaceType | null;
 };
 
 const SelectItemLabel: FC<SelectItemLabelProps> = (props) => {
@@ -28,25 +28,25 @@ const SelectItemLabel: FC<SelectItemLabelProps> = (props) => {
             <NameWrapperStyled>
                 <span>{props.name}</span>
                 <DescriptionStyled>{props.description}</DescriptionStyled>
-                {props.personalPickupStoreDetail !== null && props.personalPickupStoreDetail !== undefined && (
+                {props.pickupPlaceDetail !== null && props.pickupPlaceDetail !== undefined && (
                     <>
-                        <InfoStyled>{props.personalPickupStoreDetail.name}</InfoStyled>
+                        <InfoStyled>{props.pickupPlaceDetail.name}</InfoStyled>
                         <InfoStyled>
-                            {props.personalPickupStoreDetail.street +
+                            {props.pickupPlaceDetail.street +
                                 ', ' +
-                                props.personalPickupStoreDetail.postcode +
+                                props.pickupPlaceDetail.postcode +
                                 ', ' +
-                                props.personalPickupStoreDetail.city}
+                                props.pickupPlaceDetail.city}
                         </InfoStyled>
                         <InfoStyled>
-                            {t('Open') + ': ' + clearOpeningHoursOfTags(props.personalPickupStoreDetail.openingHours)}
+                            {t('Open') + ': ' + clearOpeningHoursOfTags(props.pickupPlaceDetail.openingHours)}
                         </InfoStyled>
                     </>
                 )}
             </NameWrapperStyled>
             {props.daysUntilDelivery !== undefined && (
                 <TransportDaysUntilDeliveryStyled>
-                    {getDeliveryMessage(props.daysUntilDelivery, props.personalPickupStoreDetail !== undefined, t)}
+                    {getDeliveryMessage(props.daysUntilDelivery, props.pickupPlaceDetail !== undefined, t)}
                 </TransportDaysUntilDeliveryStyled>
             )}
             {props.price !== undefined && <PriceStyled>{formatPrice(props.price.priceWithVat, 'CZK', t)}</PriceStyled>}

@@ -56,11 +56,7 @@ const ContactInformation: FC<ServerSidePropsType> = () => {
 
     const onSuccessfullyCreatedOrderHandler = () => {
         const resetCartInput = initCartInputCookie();
-        updateCartState(
-            dispatch,
-            { cart: null, transport: null, personalPickupStore: null, payment: null },
-            resetCartInput,
-        );
+        updateCartState(dispatch, { cart: null, transport: null, pickupPlace: null, payment: null }, resetCartInput);
         updateCartInputCookie(resetCartInput);
         dispatch(userActions.setOrderConfirmationAccess(true));
         router.push(orderConfirmationUrl);

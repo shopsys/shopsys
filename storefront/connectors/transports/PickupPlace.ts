@@ -1,10 +1,10 @@
-import { StoreType, TransportType } from './types';
+import { PickupPlaceType, TransportType } from './types';
 import { getPacketeryCookie } from 'helpers/packetery';
 
-export const getSelectedPersonalPickupStore = (
+export const getSelectedPickupPlace = (
     transport: TransportType | null,
     pickupPlaceIdentifier: string | null,
-): StoreType | null => {
+): PickupPlaceType | null => {
     if (transport === null || pickupPlaceIdentifier === null) {
         return null;
     }
@@ -13,6 +13,6 @@ export const getSelectedPersonalPickupStore = (
         return getPacketeryCookie();
     }
 
-    const personalPickupStore = transport.stores.find((store) => store.uuid === pickupPlaceIdentifier);
-    return personalPickupStore === undefined ? null : personalPickupStore;
+    const pickupPlace = transport.stores.find((place) => place.identifier === pickupPlaceIdentifier);
+    return pickupPlace === undefined ? null : pickupPlace;
 };

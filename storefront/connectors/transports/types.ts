@@ -15,8 +15,8 @@ export type PriceType = {
 
 export type TransportInputType = { uuid: string; price: PriceApiType; pickupPlaceIdentifier: string | null };
 
-export type StoreType = {
-    uuid: string;
+export type PickupPlaceType = {
+    identifier: string;
     name: string;
     description: string;
     openingHours: string;
@@ -35,8 +35,8 @@ export type TransportType = {
     image: ImageType | null;
     payments: PaymentType[];
     daysUntilDelivery: number;
-    hasPersonalPickup: boolean;
-    stores: StoreType[];
+    isPersonalPickup: boolean;
+    stores: PickupPlaceType[];
     transportType: {
         code: string;
     };

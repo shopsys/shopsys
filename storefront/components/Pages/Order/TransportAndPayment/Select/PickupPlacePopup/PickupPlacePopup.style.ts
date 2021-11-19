@@ -2,7 +2,7 @@ import { css } from 'styled-components';
 import { PopupStyled } from 'components/Layout/Popup/Popup.style';
 import { styled } from 'components/Theme/main';
 
-export const PersonalPickupPopupWrapperStyled = styled(PopupStyled)`
+export const PickupPlacePopupWrapperStyled = styled(PopupStyled)`
     ${({ theme }) => css`
         width: 96%;
 

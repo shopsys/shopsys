@@ -3,14 +3,14 @@ import { FC, useEffect, useState } from 'react';
 import { ListItemStyled, PaymentListWrapper, ResetButtonStyled } from './Select.style';
 import { loadCart, mapPaymentToPaymentInput, mapTransportToTransportInput } from 'connectors/cart/Cart';
 import { mapPacketeryExtendedPoint, packeteryPick, removePacketeryCookie, setPacketeryCookie } from 'helpers/packetery';
-import { StoreType, TransportInputType, TransportType } from 'connectors/transports/types';
-import { getSelectedPersonalPickupStore } from 'connectors/transports/PersonalPickupStore';
+import { PickupPlaceType, TransportInputType, TransportType } from 'connectors/transports/types';
+import { getSelectedPickupPlace } from 'connectors/transports/PickupPlace';
 import Heading from 'components/Basic/Heading';
 import Icon from 'components/Basic/Icon';
 import PacketeryContainer from 'components/Pages/Order/TransportAndPayment/PacketeryContainer';
 import { PacketeryExtendedPoint } from 'helpers/packetery/types';
 import { PaymentInputType } from 'connectors/payments/types';
-import PersonalPickupStorePopup from './PersonalPickupStorePopup/PersonalPickupStorePopup';
+import PickupPlacePopup from './PickupPlacePopup/PickupPlacePopup';
 import Radiobutton from 'components/Forms/Radiobutton';
 import SelectItemLabel from './SelectItemLabel';
 import { useComponentUpdate } from 'hooks/helpers/UseComponentUpdate';
@@ -28,7 +28,7 @@ const Select: FC<SelectProps> = (props) => {
     const transportValue = useWatch({ name: 'transport' });
     const paymentValue = useWatch({ name: 'payment' });
 
-    const { payment, transport, personalPickupStore } = useShopsysSelector((state) => state.user);
+    const { payment, transport, pickupPlace } = useShopsysSelector((state) => state.user);
     const transportInput = useShopsysSelector((state) => state.cartInput.transport);
     const paymentInput = useShopsysSelector((state) => state.cartInput.payment);
     const { cartUuid, promoCode } = useShopsysSelector((state) => state.cartInput);
@@ -39,7 +39,7 @@ const Select: FC<SelectProps> = (props) => {
     const [mappedPaymentInput, setMappedPaymentInput] = useState<PaymentInputType | null>(paymentInput);
 
     const [updatedTransport, updateTransport] = useState<TransportType | null>(transport);
-    const [updatedPersonalPickupStore, updatePersonalPickupStore] = useState<StoreType | null>(personalPickupStore);
+    const [updatedPickupPlace, updatePickupPlace] = useState<PickupPlaceType | null>(pickupPlace);
 
     loadCart(cartUuid, mappedTransportInput, mappedPaymentInput, promoCode);
 
@@ -47,8 +47,8 @@ const Select: FC<SelectProps> = (props) => {
         formProviderMethods.setValue('transport', transport?.uuid === undefined ? null : transport.uuid);
         formProviderMethods.setValue('payment', payment?.uuid === undefined ? null : payment.uuid);
         updateTransport(transport);
-        updatePersonalPickupStore(personalPickupStore);
-    }, [transport, personalPickupStore, payment]);
+        updatePickupPlace(pickupPlace);
+    }, [transport, pickupPlace, payment]);
 
     useComponentUpdate(() => {
         const newTransport = props.transports.find((transport) => transport.uuid === transportValue);
@@ -63,7 +63,7 @@ const Select: FC<SelectProps> = (props) => {
             setMappedTransportInput(null);
         } else {
             updateTransport(newTransport);
-            setMappedTransportInput(mapTransportToTransportInput(newTransport, updatedPersonalPickupStore));
+            setMappedTransportInput(mapTransportToTransportInput(newTransport, updatedPickupPlace));
         }
     }, [transportValue]);
 
@@ -104,28 +104,28 @@ const Select: FC<SelectProps> = (props) => {
     const resetTransportAndPayment = () => {
         formProviderMethods.setValue('transport', null);
         formProviderMethods.setValue('payment', null);
-        resetPersonalPickupStore();
+        resetPickupPlace();
     };
 
-    const onChangePersonalPickupStoreHandler = (selectedPersonalPickup: StoreType | null) => {
+    const onChangePickupPlaceHandler = (selectedPickupPlace: PickupPlaceType | null) => {
         setIsPreSelectingTransport(false);
-        if (selectedPersonalPickup !== null && updatedTransport !== null) {
-            updatePersonalPickupStore(selectedPersonalPickup);
-            setMappedTransportInput(mapTransportToTransportInput(updatedTransport, selectedPersonalPickup));
+        if (selectedPickupPlace !== null && updatedTransport !== null) {
+            updatePickupPlace(selectedPickupPlace);
+            setMappedTransportInput(mapTransportToTransportInput(updatedTransport, selectedPickupPlace));
         } else {
-            resetPersonalPickupStore();
+            resetPickupPlace();
             removePacketeryCookie();
         }
     };
 
-    const onClosePersonalPickupStorePopupHandler = () => {
+    const onClosePickupPlacePopupHandler = () => {
         setIsPreSelectingTransport(false);
-        resetPersonalPickupStore();
+        resetPickupPlace();
     };
 
-    const resetPersonalPickupStore = () => {
+    const resetPickupPlace = () => {
         updateTransport(null);
-        updatePersonalPickupStore(null);
+        updatePickupPlace(null);
         setMappedTransportInput(null);
         removePacketeryCookie();
     };
@@ -138,7 +138,7 @@ const Select: FC<SelectProps> = (props) => {
             const mappedPacketeryPoint = mapPacketeryExtendedPoint(packeteryPoint);
             setPacketeryCookie(mappedPacketeryPoint);
             updateTransport(packeteryTransport);
-            updatePersonalPickupStore(mappedPacketeryPoint);
+            updatePickupPlace(mappedPacketeryPoint);
             setMappedTransportInput(mapTransportToTransportInput(packeteryTransport, mappedPacketeryPoint));
         } else {
             formProviderMethods.setValue('transport', null);
@@ -175,11 +175,11 @@ const Select: FC<SelectProps> = (props) => {
                                                     daysUntilDelivery={transportItem.daysUntilDelivery}
                                                     price={transportItem.price}
                                                     description={transportItem.description}
-                                                    personalPickupStoreDetail={getSelectedPersonalPickupStore(
+                                                    pickupPlaceDetail={getSelectedPickupPlace(
                                                         transportItem,
-                                                        updatedPersonalPickupStore?.uuid === undefined
+                                                        updatedPickupPlace?.identifier === undefined
                                                             ? null
-                                                            : updatedPersonalPickupStore.uuid,
+                                                            : updatedPickupPlace.identifier,
                                                     )}
                                                 />
                                             }
@@ -196,11 +196,11 @@ const Select: FC<SelectProps> = (props) => {
                         </ResetButtonStyled>
                     )}
                     {updatedTransport !== null && (
-                        <PersonalPickupStorePopup
+                        <PickupPlacePopup
                             isVisible={isPreSelectingTransport}
                             transport={updatedTransport}
-                            onChangePersonalPickupStoreCallback={onChangePersonalPickupStoreHandler}
-                            onClosePersonalPickupStorePopupCallback={onClosePersonalPickupStorePopupHandler}
+                            onChangePickupPlaceCallback={onChangePickupPlaceHandler}
+                            onClosePickupPlacePopupCallback={onClosePickupPlacePopupHandler}
                         />
                     )}
                 </div>

@@ -1,6 +1,6 @@
 import { PacketeryExtendedPoint, PacketeryPickFunction } from './types';
 import nookies from 'nookies';
-import { StoreType } from 'connectors/transports/types';
+import { PickupPlaceType } from 'connectors/transports/types';
 
 /**
  * @see https://docs.packetery.com/01-pickup-point-selection/02-widget-v6.html
@@ -41,7 +41,7 @@ export const mapPacketeryExtendedPoint = (packeteryExtendedPoint: PacketeryExten
     openingHours: packeteryExtendedPoint.openingHours.compactShort,
 });
 
-export const getPacketeryCookie = (): StoreType | null => {
+export const getPacketeryCookie = (): PickupPlaceType | null => {
     const cookies = nookies.get();
     if ('packeteryPickupPoint' in cookies) {
         return JSON.parse(cookies.packeteryPickupPoint);
@@ -50,7 +50,7 @@ export const getPacketeryCookie = (): StoreType | null => {
     return null;
 };
 
-export const setPacketeryCookie = (mappedPacketeryPoint: StoreType): void => {
+export const setPacketeryCookie = (mappedPacketeryPoint: PickupPlaceType): void => {
     nookies.set(undefined, 'packeteryPickupPoint', JSON.stringify(mappedPacketeryPoint), {
         path: '/',
         maxAge: 60 * 60 * 24 * 30,

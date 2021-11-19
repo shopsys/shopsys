@@ -20,7 +20,7 @@ import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslatio
 const ContactInformationDeliveryAddress: FC = () => {
     const dispatch = useShopsysDispatch();
     const t = useTypedTranslationFunction();
-    const { personalPickupStore } = useShopsysSelector((state) => state.user);
+    const { pickupPlace } = useShopsysSelector((state) => state.user);
     const contentElement = useRef<HTMLDivElement>(null);
     const cssTransitionRef = useRef<HTMLDivElement>(null);
     const [contentElementHeight, setContentElementHeight] = useState(0);
@@ -35,18 +35,18 @@ const ContactInformationDeliveryAddress: FC = () => {
     const deliveryPostcodeValue = useWatch({ name: 'deliveryPostcode' });
     const countrySelectOptions = getCountriesAsSelectOptions();
     useEffect(() => {
-        formProviderMethods.setValue('deliveryStreet', personalPickupStore?.street);
-        formProviderMethods.setValue('deliveryCity', personalPickupStore?.city);
-        formProviderMethods.setValue('deliveryPostcode', personalPickupStore?.postcode);
+        formProviderMethods.setValue('deliveryStreet', pickupPlace?.street);
+        formProviderMethods.setValue('deliveryCity', pickupPlace?.city);
+        formProviderMethods.setValue('deliveryPostcode', pickupPlace?.postcode);
         const selectedCountryOption = countrySelectOptions.find(
-            (option) => option.value.toLowerCase() === personalPickupStore?.country,
+            (option) => option.value.toLowerCase() === pickupPlace?.country,
         );
         if (selectedCountryOption !== undefined) {
-            formProviderMethods.setValue('deliveryCountry', personalPickupStore?.country);
+            formProviderMethods.setValue('deliveryCountry', pickupPlace?.country);
         }
-    }, [personalPickupStore]);
+    }, [pickupPlace]);
     useEffect(() => {
-        if (countrySelectOptions.length > 0 && differentDeliveryAddressValue === true && personalPickupStore === null) {
+        if (countrySelectOptions.length > 0 && differentDeliveryAddressValue === true && pickupPlace === null) {
             formProviderMethods.setValue('deliveryCountry', countrySelectOptions[0]);
         }
     }, [JSON.stringify(countrySelectOptions), differentDeliveryAddressValue]);
@@ -202,7 +202,7 @@ const ContactInformationDeliveryAddress: FC = () => {
                             <FormLine bottomGap={true} lg="65%">
                                 <Controller
                                     name="deliveryStreet"
-                                    defaultValue={personalPickupStore?.street}
+                                    defaultValue={pickupPlace?.street}
                                     render={({ fieldState: { isTouched, invalid, error }, field }) => (
                                         <>
                                             <TextInput
@@ -214,7 +214,7 @@ const ContactInformationDeliveryAddress: FC = () => {
                                                 isTouched={isTouched}
                                                 hasError={invalid}
                                                 fieldRef={field}
-                                                disabled={personalPickupStore !== null}
+                                                disabled={pickupPlace !== null}
                                                 onBlurCapture={() =>
                                                     dispatch(
                                                         contactInformationActions.setDeliveryStreet(
@@ -232,7 +232,7 @@ const ContactInformationDeliveryAddress: FC = () => {
                                 <FormLine bottomGap={true}>
                                     <Controller
                                         name="deliveryCity"
-                                        defaultValue={personalPickupStore?.city}
+                                        defaultValue={pickupPlace?.city}
                                         render={({ fieldState: { isTouched, invalid, error }, field }) => (
                                             <>
                                                 <TextInput
@@ -244,7 +244,7 @@ const ContactInformationDeliveryAddress: FC = () => {
                                                     isTouched={isTouched}
                                                     hasError={invalid}
                                                     fieldRef={field}
-                                                    disabled={personalPickupStore !== null}
+                                                    disabled={pickupPlace !== null}
                                                     onBlurCapture={() =>
                                                         dispatch(
                                                             contactInformationActions.setDeliveryCity(
@@ -261,7 +261,7 @@ const ContactInformationDeliveryAddress: FC = () => {
                                 <FormLine bottomGap={true} width="100%" lg="142px">
                                     <Controller
                                         name="deliveryPostcode"
-                                        defaultValue={personalPickupStore?.postcode}
+                                        defaultValue={pickupPlace?.postcode}
                                         render={({ fieldState: { isTouched, invalid, error }, field }) => (
                                             <>
                                                 <TextInput
@@ -273,7 +273,7 @@ const ContactInformationDeliveryAddress: FC = () => {
                                                     isTouched={isTouched}
                                                     hasError={invalid}
                                                     fieldRef={field}
-                                                    disabled={personalPickupStore !== null}
+                                                    disabled={pickupPlace !== null}
                                                     onBlurCapture={() =>
                                                         dispatch(
                                                             contactInformationActions.setDeliveryPostcode(
@@ -295,7 +295,7 @@ const ContactInformationDeliveryAddress: FC = () => {
                                         <Select
                                             options={countrySelectOptions}
                                             onChange={field.onChange}
-                                            isDisabled={personalPickupStore !== null}
+                                            isDisabled={pickupPlace !== null}
                                             value={countrySelectOptions.find(
                                                 (option) => option.value.toLowerCase() === field.value,
                                             )}

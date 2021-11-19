@@ -1,7 +1,7 @@
 import { CartFragmentApi, CartQueryApi, CartQueryVariablesApi, useCartQueryApi } from 'graphql/generated';
 import { CartInput, CartType } from './types';
 import { PaymentInputType, PaymentType } from 'connectors/payments/types';
-import { StoreType, TransportInputType, TransportType } from 'connectors/transports/types';
+import { PickupPlaceType, TransportInputType, TransportType } from 'connectors/transports/types';
 import { mapImageSizeApiData } from 'connectors/image/size/ImageSize';
 import { mapPriceData } from 'connectors/transports/Transports';
 import { mapProductPriceData } from 'connectors/products/Products';
@@ -10,7 +10,7 @@ import { UseQueryResponse } from 'urql';
 
 export const mapTransportToTransportInput = (
     transport: TransportType,
-    personalPickupStore: StoreType | null,
+    pickupPlace: PickupPlaceType | null,
 ): TransportInputType => {
     return {
         uuid: transport.uuid,
@@ -19,7 +19,7 @@ export const mapTransportToTransportInput = (
             priceWithoutVat: transport.price.priceWithoutVat.toString(),
             vatAmount: transport.price.vatAmount.toString(),
         },
-        pickupPlaceIdentifier: personalPickupStore === null ? null : personalPickupStore.uuid,
+        pickupPlaceIdentifier: pickupPlace === null ? null : pickupPlace.identifier,
     };
 };
 
