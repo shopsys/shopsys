@@ -1,5 +1,6 @@
-import { CartApiType, CartType } from 'connectors/cart/types';
 import { StoreType, TransportType } from 'connectors/transports/types';
+import { CartFragmentApi } from 'graphql/generated';
+import { CartType } from 'connectors/cart/types';
 import { getSelectedPersonalPickupStore } from 'connectors/transports/PersonalPickupStore';
 import { mapCart } from 'connectors/cart/Cart';
 import { mapPayment } from 'connectors/payments/Payment';
@@ -7,7 +8,7 @@ import { mapTransport } from 'connectors/transports/Transport';
 import { PaymentType } from 'connectors/payments/types';
 
 export const getValuesFromCartResult = (
-    resultData: CartApiType,
+    resultData: CartFragmentApi,
     pickupPlaceIdentifier: string | null,
     promoCode: string | null,
     currencyCode: string,
@@ -36,10 +37,15 @@ export const getValuesFromCartResult = (
             },
             currencyCode,
         );
-        transport = resultData.transport === null ? null : mapTransport(resultData.transport, currencyCode);
+        transport =
+            resultData.transport === null || resultData.transport === undefined
+                ? null
+                : mapTransport(resultData.transport, currencyCode);
         personalPickupStore = getSelectedPersonalPickupStore(transport, pickupPlaceIdentifier);
         payment =
-            resultData.payment === null || transport === null ? null : mapPayment(resultData.payment, currencyCode);
+            resultData.payment === null || resultData.payment === undefined || transport === null
+                ? null
+                : mapPayment(resultData.payment, currencyCode);
         updatedPromoCode = promoCode;
     }
 

@@ -4,7 +4,7 @@ import Button from 'components/Forms/Button';
 import { showChangeCartItemQuantityMessages } from 'utils/Cart/ShowChangeCartItemQuantityMessages';
 import { SliderProductItemType } from 'components/Blocks/Product/types';
 import Spinbox from 'components/Forms/Spinbox';
-import { useChangeCartItemQuantity } from 'connectors/cart/Cart';
+import { useAddToCartMutationApi } from 'graphql/generated';
 import { useHandleAddToCart } from 'hooks/cart/UseHandleAddToCart';
 import { useRouter } from 'next/dist/client/router';
 import { useShopsysSelector } from 'redux/main';
@@ -15,7 +15,7 @@ const ProductAction: FC<SliderProductItemType> = (props) => {
     const spinboxRef = useRef<HTMLInputElement | null>(null);
     const t = useTypedTranslationFunction();
     const { cartUuid, transport, payment, promoCode } = useShopsysSelector((state) => state.cartInput);
-    const [changeCartItemQuantityResult, changeCartItemQuantity] = useChangeCartItemQuantity();
+    const [changeCartItemQuantityResult, changeCartItemQuantity] = useAddToCartMutationApi();
 
     useHandleAddToCart(
         changeCartItemQuantityResult,

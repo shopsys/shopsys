@@ -1,67 +1,35 @@
-import { TransportApiType, TransportType } from './types';
+import { mapImageSizeApiData } from 'connectors/image/size/ImageSize';
 import { mapPayment } from 'connectors/payments/Payment';
 import { mapPriceData } from './Transports';
+import { mapStoresPreviewApiData } from 'connectors/stores/Stores';
+import { TransportType } from './types';
+import { TransportWithAvailablePaymentsAndStoresFragmentApi } from 'graphql/generated';
 
-export const transportBody = `
-        transport {
-            uuid
-            name
-            description
-            instruction
-            price {
-                priceWithVat
-                priceWithoutVat
-                vatAmount
-            }
-            images {
-                sizes {
-                    url
-                    height
-                    width
-                }
-            }
-            payments {
-                uuid
-                name
-                description
-                instruction
-                price {
-                    priceWithVat
-                    priceWithoutVat
-                    vatAmount
-                }
-                images {
-                    sizes {
-                        url
-                        height
-                        width
-                    }
-                }
-            }
-            daysUntilDelivery
-            stores {
-                edges {
-                    node {
-                        uuid
-                        name
-                        description
-                        openingHours
-                        street
-                        postcode
-                        city
-                    }
-                }
-            }
-        }
-    ` as const;
-
-export const mapTransport = (apiData: TransportApiType, currencyCode: string): TransportType => {
+export const mapTransport = (
+    apiData: TransportWithAvailablePaymentsAndStoresFragmentApi,
+    currencyCode: string,
+): TransportType => {
     return {
         ...apiData,
-        image: apiData.images.length === 0 ? null : apiData.images[0].sizes[0],
+        description: apiData.description !== undefined && apiData.description !== null ? apiData.description : '',
+        instruction: apiData.instruction !== undefined && apiData.instruction !== null ? apiData.instruction : '',
+        image:
+            apiData.images.length > 0 &&
+            0 in apiData.images &&
+            apiData.images[0]?.sizes !== undefined &&
+            0 in apiData.images[0].sizes
+                ? mapImageSizeApiData(apiData.images[0].sizes[0])
+                : null,
         price: mapPriceData(apiData.price, currencyCode),
-        hasPersonalPickup: Array.isArray(apiData.stores?.edges) && apiData.stores.edges.length > 0,
+        hasPersonalPickup:
+            apiData.stores !== undefined &&
+            apiData.stores !== null &&
+            Array.isArray(apiData.stores?.edges) &&
+            apiData.stores.edges.length > 0,
         payments: apiData.payments.map((payment) => mapPayment(payment, currencyCode)),
-        stores: Array.isArray(apiData.stores?.edges) ? apiData.stores.edges.map((edge) => edge.node) : [],
+        stores:
+            apiData.stores !== undefined && apiData.stores !== null && Array.isArray(apiData.stores?.edges)
+                ? mapStoresPreviewApiData(apiData.stores)
+                : [],
     };
 };

@@ -1,0 +1,24 @@
+fragment CartItemFragment on CartItem {
+    uuid
+    quantity
+    product {
+        uuid
+        slug
+        fullName
+        catalogNumber
+        stockQuantity
+        flags {
+            ...FlagLabelFragment
+        }
+        ...ProductImagesListFragment
+        stockQuantity
+        availability {
+            ...AvailabilityFragment
+        }
+        ...ProductPriceFragment
+        availableStoresCount
+        unit {
+            name
+        }
+    }
+}

@@ -1,0 +1,28 @@
+mutation AddToCartMutation (
+    $cartUuid: Uuid
+    $transport: TransportInput
+    $payment: PaymentInput
+    $promoCode: String
+    $isAbsoluteQuantity: Boolean
+    $productUuid: Uuid!
+    $quantity: Int!
+) {
+    AddToCart(input: {
+        cartUuid: $cartUuid,
+        transport: $transport,
+        payment: $payment,
+        promoCode: $promoCode,
+        isAbsoluteQuantity: $isAbsoluteQuantity,
+        productUuid: $productUuid,
+        quantity: $quantity
+    }) {
+        ...CartFragment
+        addProductResult {
+            addedQuantity
+            isNew
+            isQuantityOverLimit
+            notOnStockQuantity
+            overLimitQuantity
+        }
+    }
+}

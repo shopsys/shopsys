@@ -1,15 +1,8 @@
-import { ImageApiType, ImageType } from 'components/Basic/Image/types';
+import { ImageType } from 'components/Basic/Image/types';
 
 export type FlagType = {
     name: string;
     rgbColor: string;
-};
-
-export type ProductPriceApiType = {
-    priceWithVat: string;
-    priceWithoutVat: string;
-    vatAmount: string;
-    isPriceFrom: boolean;
 };
 
 export type ProductPriceType = {
@@ -51,22 +44,6 @@ export type ListedProductItemType = {
     price: ProductPriceType;
     isMainVariant: boolean;
     availability: string;
-    availableStoresCount: number;
-    exposedStoresCount: number;
-};
-
-export type ProductItemApiType = {
-    __typename: string;
-    uuid: string;
-    slug: string;
-    name: string;
-    flags: FlagType[];
-    images: ImageApiType[];
-    stockQuantity: number;
-    availability: {
-        name: string;
-    };
-    price: ProductPriceApiType;
     availableStoresCount: number;
     exposedStoresCount: number;
 };

@@ -1,4 +1,4 @@
-import { CartApiType, CartInput } from 'connectors/cart/types';
+import { CartQueryApi, CartQueryVariablesApi } from 'graphql/generated';
 import { useShopsysDispatch, useShopsysSelector } from 'redux/main';
 import { getCartInputFromCartResult } from 'utils/Cart/GetCartInputFromCartResult';
 import { getValuesFromCartResult } from 'utils/Cart/GetValuesFromCartResult';
@@ -10,7 +10,7 @@ import { UseQueryState } from 'urql';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 
 export const useHandleCartUpdate = (
-    result: UseQueryState<{ cart: CartApiType }, CartInput>,
+    result: UseQueryState<CartQueryApi, CartQueryVariablesApi>,
     pickupPlaceIdentifier: string | null,
     promoCode: string | null,
 ): void => {
@@ -21,7 +21,7 @@ export const useHandleCartUpdate = (
     useHandleCartErrors(result.error, t('Could not load your cart'));
 
     useEffect(() => {
-        if (result.data === undefined || result.data.cart === null) {
+        if (result.data?.cart === undefined || result.data.cart === null) {
             return;
         }
 

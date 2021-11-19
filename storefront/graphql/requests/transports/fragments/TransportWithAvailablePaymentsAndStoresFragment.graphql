@@ -1,0 +1,23 @@
+fragment TransportWithAvailablePaymentsAndStoresFragment on Transport {
+    uuid
+    name
+    description
+    instruction
+    price {
+        ...PriceFragment
+    }
+    images {
+        ...ImageSizesFragment
+    }
+    payments {
+        ...SimplePaymentFragment
+    }
+    daysUntilDelivery
+    stores {
+        edges {
+            node {
+                ...StorePreviewFragment
+            }
+        }
+    }
+}

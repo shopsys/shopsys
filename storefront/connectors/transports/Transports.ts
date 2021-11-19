@@ -1,5 +1,6 @@
-import { PriceApiType, PriceType, TransportApiType, TransportType } from './types';
+import { PriceType, TransportApiType, TransportType } from './types';
 import { mapTransport } from './Transport';
+import { PriceFragmentApi } from 'graphql/generated';
 import { useFetchQuery } from 'hooks/graphQl/UseFetchQuery';
 import { useShopsysSelector } from 'redux/main';
 
@@ -58,7 +59,7 @@ export const transportsQuery = `
         }
     ` as const;
 
-export const mapPriceData = (price: PriceApiType, currencyCode: string): PriceType => {
+export const mapPriceData = (price: PriceFragmentApi, currencyCode: string): PriceType => {
     return {
         priceWithVat: Number.parseFloat(price.priceWithVat),
         priceWithoutVat: Number.parseFloat(price.priceWithoutVat),

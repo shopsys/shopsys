@@ -1,0 +1,17 @@
+mutation RemoveFromCartMutation (
+    $cartUuid: Uuid,
+    $cartItemUuid: Uuid!
+    $transport: TransportInput
+    $payment: PaymentInput
+    $promoCode: String
+) {
+    RemoveFromCart(input: {
+        cartUuid: $cartUuid,
+        cartItemUuid: $cartItemUuid,
+        transport: $transport,
+        payment: $payment,
+        promoCode: $promoCode
+    }) {
+        ...CartFragment
+    }
+}

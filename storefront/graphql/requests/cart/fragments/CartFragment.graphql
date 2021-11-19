@@ -1,0 +1,20 @@
+fragment CartFragment on CartInterface {
+    uuid
+    items {
+        ...CartItemFragment
+    }
+    totalPrice {
+        ...PriceFragment
+    }
+    totalDiscountPrice {
+        ...PriceFragment
+    }
+    ...CartModificationsFragment
+    remainingAmountWithVatForFreeTransport
+    transport {
+        ...TransportWithAvailablePaymentsAndStoresFragment
+    }
+    payment {
+        ...SimplePaymentFragment
+    }
+}

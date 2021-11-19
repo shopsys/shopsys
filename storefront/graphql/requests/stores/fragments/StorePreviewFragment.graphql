@@ -1,0 +1,9 @@
+fragment StorePreviewFragment on Store {
+    uuid
+    name
+    description
+    openingHours
+    street
+    postcode
+    city
+}
