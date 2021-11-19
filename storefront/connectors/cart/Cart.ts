@@ -59,7 +59,7 @@ export const mapCart = (apiData: CartFragmentApi, currencyCode: string): CartTyp
     const remainingFreeTransport = apiData.remainingAmountWithVatForFreeTransport;
     return {
         ...apiData,
-        uuid: apiData.uuid !== undefined && apiData.uuid !== '' ? apiData.uuid : null,
+        uuid: apiData.uuid !== undefined ? apiData.uuid : null,
         items: apiData.items.map((item) => {
             return {
                 ...item,
