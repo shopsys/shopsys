@@ -19,8 +19,6 @@ use Shopsys\FrameworkBundle\Model\Localization\AbstractTranslatableEntity;
  */
 class BlogArticle extends AbstractTranslatableEntity
 {
-    public const PLACEHOLDER_PRODUCTS_PATTERN = '/(\{products=(?<catnums>[a-zA-Z0-9]+(,[a-zA-Z0-9]+)*)\})/sU';
-
     /**
      * @var int
      * @ORM\Column(type="integer")

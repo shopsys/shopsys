@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Model\Blog\Article;
 
 use App\Component\Image\ImageFacade;
+use App\Component\Placeholder\Placeholder\ProductsSkuPlaceholder;
 use App\Model\Blog\Article\Elasticsearch\BlogArticleExportScheduler;
 use App\Model\Blog\BlogVisibilityRecalculationScheduler;
 use App\Model\Blog\Category\BlogCategory;
@@ -318,22 +319,39 @@ class BlogArticleFacade
      */
     private function getProductFromDescription(array $descriptions): array
     {
-        $productsCatnum = [];
+        $productsCatnums = [];
 
         foreach ($descriptions as $description) {
-            if ($description === null) {
-                continue;
-            }
-
-            $matches = [];
-            preg_match_all(BlogArticle::PLACEHOLDER_PRODUCTS_PATTERN, $description, $matches);
-            foreach ($matches['catnums'] as $catnumsString) {
-                $matchesCatnums = explode(',', $catnumsString);
-                $productsCatnum = array_merge($productsCatnum, $matchesCatnums);
-            }
+            $productsCatnums = array_merge(
+                $productsCatnums,
+                $this->getProductCatnumsFromDescription($description)
+            );
         }
 
-        return $this->productFacade->findAllByCatnums($productsCatnum);
+        return $this->productFacade->findAllByCatnums($productsCatnums);
+    }
+
+    /**
+     * @param string|null $description
+     * @return string[]
+     */
+    public function getProductCatnumsFromDescription(?string $description): array
+    {
+        if ($description === null) {
+            return [];
+        }
+
+        $productsCatnums = [];
+
+        $matches = [];
+        preg_match_all(ProductsSkuPlaceholder::PATTERN, $description, $matches);
+
+        foreach ($matches['catnums'] as $catnumsString) {
+            $matchesCatnums = explode(',', $catnumsString);
+            $productsCatnums = array_merge($productsCatnums, $matchesCatnums);
+        }
+
+        return $productsCatnums;
     }
 
     /**
