@@ -263,6 +263,7 @@ class BlogArticleFormType extends AbstractType
 
         $builderDescriptionGroup
             ->add('perexes', LocalizedType::class, [
+                'required' => false,
                 'entry_options' => [
                     'required' => false,
                 ],
