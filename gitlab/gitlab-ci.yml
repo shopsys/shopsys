@@ -111,6 +111,30 @@ test:acceptance:
         - docker cp shopsys-framework-php-fpm:/var/www/html/var/log/codeception/ ./
     interruptible: true
 
+test:storefront-acceptance:
+    image: tmaier/docker-compose:latest
+    stage: test
+    <<: *only-default
+    artifacts:
+        paths:
+            - storefront/cypress/videos/
+            - storefront/cypress/screenshots/
+            - php-fpm-log.txt
+            - webserver-log.txt
+            - storefront-log.txt
+        expire_in: 1 day
+    script:
+        - cp -f ./gitlab/docker-compose-ci-storefront-acceptance.yml ./docker-compose.yml
+        - docker-compose up -d
+        - docker-compose exec -T php-fpm sed -i "s/http:\/\/127.0.0.1:8000/http:\/\/webserver:8080/g" config/domains_urls.yaml
+        - docker-compose exec -T php-fpm php phing -D production.confirm.action=y composer-prod db-create build-demo-dev-quick frontend-api-generate-new-keys error-pages-generate
+        - docker-compose up --force-recreate cypress
+    after_script:
+        - docker-compose logs php-fpm > php-fpm-log.txt
+        - docker-compose logs webserver > webserver-log.txt
+        - docker-compose logs storefront > storefront-log.txt
+    interruptible: true
+
 review:
     stage: review
     environment:

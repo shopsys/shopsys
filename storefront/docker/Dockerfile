@@ -3,13 +3,7 @@ FROM node:16-alpine as base
 WORKDIR /app
 
 #=====================================================================
-FROM base as development
 
-RUN apk --no-cache add curl
-
-CMD npm ci --legacy-peer-deps && npm run dev
-
-#=====================================================================
 FROM base as production
 
 COPY . /app
@@ -19,3 +13,13 @@ RUN npm ci --no-dev
 
 RUN npm run build
 CMD npm run start
+
+#=====================================================================
+FROM base as development
+
+RUN apk --no-cache add curl
+
+CMD npm ci --legacy-peer-deps && npm run dev
+
+#=====================================================================
+

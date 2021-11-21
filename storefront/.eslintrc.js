@@ -5,6 +5,7 @@ module.exports = {
     },
     ignorePatterns: [
         'node_modules/*',
+        'cypress/*',
         '.next/*',
         'public/*',
         '!.prettierrc.js',

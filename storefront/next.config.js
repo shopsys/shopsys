@@ -32,9 +32,29 @@ module.exports = {
                     zoom: 7,
                 },
             },
+            {
+                publicGraphqlEndpoint: process.env.INTERNAL_GRAPHQL_ENDPOINT,
+                url: 'http://' + process.env.ACCEPTANCE_DOMAIN_HOST + '/',
+                defaultLocale: 'cs',
+                currencyCode: 'CZK',
+                mapSetting: {
+                    latitude: 49.8175,
+                    longitude: 15.473,
+                    zoom: 7,
+                },
+            },
         ],
         availableStaticUrls: {
             [process.env.DOMAIN_HOSTNAME_1]: {
+                '/search': '/hledani',
+                '/cart': '/kosik',
+                '/order/transport-and-payment': '/objednavka/doprava-a-platba',
+                '/order/contact-information': '/objednavka/kontaktni-udaje',
+                '/reset-password': '/zapomenute-heslo',
+                '/order-confirmation': '/potvrzeni-objednavky',
+                '/stores': '/obchodni-domy',
+            },
+            ['http://' + process.env.ACCEPTANCE_DOMAIN_HOST + '/']: {
                 '/search': '/hledani',
                 '/cart': '/kosik',
                 '/order/transport-and-payment': '/objednavka/doprava-a-platba',
