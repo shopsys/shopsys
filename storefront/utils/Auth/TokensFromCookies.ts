@@ -1,4 +1,4 @@
-import { destroyCookie, setCookie } from 'nookies';
+import { destroyCookie, parseCookies, setCookie } from 'nookies';
 import { GetServerSidePropsContext } from 'next';
 
 export const removeTokensFromCookies = (context?: GetServerSidePropsContext): void => {
@@ -18,4 +18,10 @@ export const setTokensToCookie = (
     setCookie(context, 'refreshToken', refreshToken, {
         maxAge: 3600 * 24 * 14,
     });
+};
+
+export const hasTokenInCookie = (context?: GetServerSidePropsContext): boolean => {
+    const cookies = parseCookies(context);
+
+    return cookies?.refreshToken !== undefined;
 };

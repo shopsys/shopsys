@@ -6,10 +6,12 @@ import { DocumentNode } from 'graphql';
 import { getCartInputCookie } from './Cookies';
 import getConfig from 'next/config';
 import { getUrqlExchanges } from 'urql/exchanges';
+import { hasTokenInCookie } from 'utils/Auth/TokensFromCookies';
 import nextI18NextConfig from 'next-i18next.config';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { SSRConfig } from 'next-i18next';
 import { ssrExchange } from '@urql/core';
+import { userActions } from 'redux/slices/user';
 
 export type ServerSidePropsType = {
     urqlState: SSRData;
@@ -21,6 +23,8 @@ export async function initServerSideProps(
     prefetchedQueries: { query: string | DocumentNode; variables?: { [key: string]: unknown } }[] = [],
 ): Promise<GetServerSidePropsResult<ServerSidePropsType>> {
     store.dispatch(cartInputActions.setCartInputData(getCartInputCookie(context)));
+    store.dispatch(userActions.setIsUserLoggedIn(hasTokenInCookie(context)));
+
     const domainConfig = store.getState().domain;
     const { serverRuntimeConfig } = getConfig();
     const ssrCache = ssrExchange({ isClient: false });
