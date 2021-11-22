@@ -35,8 +35,8 @@ export const mapPickupPlacesApiData = (
                 description:
                     edge.node.description !== undefined && edge.node.description !== null ? edge.node.description : '',
                 openingHours:
-                    edge.node.openingHours !== undefined && edge.node.openingHours !== null
-                        ? edge.node.openingHours
+                    edge.node.openingHoursHtml !== undefined && edge.node.openingHoursHtml !== null
+                        ? edge.node.openingHoursHtml
                         : '',
             });
         }

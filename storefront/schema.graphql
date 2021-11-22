@@ -2089,6 +2089,9 @@ type Store implements Breadcrumb & Slug {
 
   """Store opening hours"""
   openingHours: String
+
+  """Store opening hours, newlines are rendered as HTML breakline"""
+  openingHoursHtml: String
   contactInfo: String
   specialMessage: String
 

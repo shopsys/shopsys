@@ -38,8 +38,16 @@ export const mapPacketeryExtendedPoint = (packeteryExtendedPoint: PacketeryExten
     street: packeteryExtendedPoint.street,
     country: packeteryExtendedPoint.country.toUpperCase(),
     postcode: packeteryExtendedPoint.zip.replaceAll(' ', ''),
-    openingHours: packeteryExtendedPoint.openingHours.compactShort,
+    openingHours: parsePacketeryOpeningHours(packeteryExtendedPoint.openingHours.compactShort),
 });
+
+/**
+ * only specific HTML tags are filtered
+ * @see https://docs.packetery.com/01-pickup-point-selection/02-widget-v6.html#:~:text=PointHours
+ */
+const parsePacketeryOpeningHours = (openingHours: string) => {
+    return openingHours.replaceAll(/<(\/?strong\s?(style='color: red;')?)>/g, '');
+};
 
 export const getPacketeryCookie = (): PickupPlaceType | null => {
     const cookies = nookies.get();

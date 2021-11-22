@@ -38,9 +38,8 @@ const SelectItemLabel: FC<SelectItemLabelProps> = (props) => {
                                 ', ' +
                                 props.pickupPlaceDetail.city}
                         </InfoStyled>
-                        <InfoStyled>
-                            {t('Open') + ': ' + clearOpeningHoursOfTags(props.pickupPlaceDetail.openingHours)}
-                        </InfoStyled>
+                        <InfoStyled>{t('Open') + ': '}</InfoStyled>
+                        <InfoStyled dangerouslySetInnerHTML={{ __html: props.pickupPlaceDetail.openingHours }} />
                     </>
                 )}
             </NameWrapperStyled>
@@ -78,10 +77,6 @@ const getDeliveryMessage = (daysUntilDelivery: number, isPersonalPickup: boolean
         postProcess: 'interval',
         count: Math.ceil(daysUntilDelivery / 7),
     });
-};
-
-const clearOpeningHoursOfTags = (openingHours: string) => {
-    return openingHours.replaceAll(/<([/]?[a-zA-Z]*)>/g, '');
 };
 
 export default SelectItemLabel;
