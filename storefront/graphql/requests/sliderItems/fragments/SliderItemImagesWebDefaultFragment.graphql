@@ -1,4 +1,4 @@
-fragment ImagesWebDefaultFragment on SliderItem {
+fragment SliderItemImagesWebDefaultFragment on SliderItem {
     images (type: "web", sizes: "default") {
         position
         ...ImageSizesFragment

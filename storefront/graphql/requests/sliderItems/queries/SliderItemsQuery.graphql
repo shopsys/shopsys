@@ -5,6 +5,6 @@ query SliderItemsQuery {
         link
         extendedText
         extendedTextLink
-        ...ImagesWebDefaultFragment
+        ...SliderItemImagesWebDefaultFragment
     }
 }
