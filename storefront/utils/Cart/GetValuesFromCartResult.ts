@@ -1,4 +1,3 @@
-import { PickupPlaceType, TransportType } from 'connectors/transports/types';
 import { CartFragmentApi } from 'graphql/generated';
 import { CartType } from 'connectors/cart/types';
 import { getSelectedPickupPlace } from 'connectors/transports/pickupPlace/PickupPlace';
@@ -6,6 +5,8 @@ import { mapCart } from 'connectors/cart/Cart';
 import { mapPayment } from 'connectors/payments/Payment';
 import { mapTransport } from 'connectors/transports/Transport';
 import { PaymentType } from 'connectors/payments/types';
+import { PickupPlaceType } from 'connectors/transports/pickupPlace/types';
+import { TransportType } from 'connectors/transports/types';
 
 export const getValuesFromCartResult = (
     resultData: CartFragmentApi,

@@ -1,10 +1,11 @@
 import { CartFragmentApi, CartQueryApi, CartQueryVariablesApi, useCartQueryApi } from 'graphql/generated';
 import { CartInput, CartType } from './types';
 import { PaymentInputType, PaymentType } from 'connectors/payments/types';
-import { PickupPlaceType, TransportInputType, TransportType } from 'connectors/transports/types';
+import { TransportInputType, TransportType } from 'connectors/transports/types';
 import { mapImageSizeApiData } from 'connectors/image/size/ImageSize';
 import { mapPriceData } from 'connectors/transports/Transports';
 import { mapProductPriceData } from 'connectors/products/Products';
+import { PickupPlaceType } from 'connectors/transports/pickupPlace/types';
 import { useHandleCartUpdate } from 'hooks/cart/UseHandleCartUpdate';
 import { UseQueryResponse } from 'urql';
 

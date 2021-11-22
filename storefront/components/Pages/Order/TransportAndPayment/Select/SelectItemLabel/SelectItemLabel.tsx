@@ -8,7 +8,7 @@ import {
 } from './SelectItemLabel.style';
 import { FC } from 'react';
 import { formatPrice } from 'utils/formatting';
-import { PickupPlaceType } from 'connectors/transports/types';
+import { PickupPlaceType } from 'connectors/transports/pickupPlace/types';
 import { TFunction } from 'react-i18next';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 

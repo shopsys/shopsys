@@ -3,7 +3,7 @@ import { FC, useEffect, useState } from 'react';
 import { ListItemStyled, PaymentListWrapper, ResetButtonStyled } from './Select.style';
 import { loadCart, mapPaymentToPaymentInput, mapTransportToTransportInput } from 'connectors/cart/Cart';
 import { mapPacketeryExtendedPoint, packeteryPick, removePacketeryCookie, setPacketeryCookie } from 'helpers/packetery';
-import { PickupPlaceType, TransportInputType, TransportType } from 'connectors/transports/types';
+import { TransportInputType, TransportType } from 'connectors/transports/types';
 import { getSelectedPickupPlace } from 'connectors/transports/pickupPlace/PickupPlace';
 import Heading from 'components/Basic/Heading';
 import Icon from 'components/Basic/Icon';
@@ -11,6 +11,7 @@ import PacketeryContainer from 'components/Pages/Order/TransportAndPayment/Packe
 import { PacketeryExtendedPoint } from 'helpers/packetery/types';
 import { PaymentInputType } from 'connectors/payments/types';
 import PickupPlacePopup from './PickupPlacePopup/PickupPlacePopup';
+import { PickupPlaceType } from 'connectors/transports/pickupPlace/types';
 import Radiobutton from 'components/Forms/Radiobutton';
 import SelectItemLabel from './SelectItemLabel';
 import { useComponentUpdate } from 'hooks/helpers/UseComponentUpdate';

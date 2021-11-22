@@ -36,7 +36,9 @@ const ContactInformationDeliveryAddress: FC = () => {
     const deliveryCountryValue = useWatch({ name: 'deliveryCountry' });
     const countrySelectOptions = getCountriesAsSelectOptions();
     useEffect(() => {
-        const selectedCountryOption = countrySelectOptions.find((option) => option.value === pickupPlace?.country);
+        const selectedCountryOption = countrySelectOptions.find((option) => {
+            return option.value === pickupPlace?.country;
+        });
         if (selectedCountryOption !== undefined && pickupPlace !== null) {
             formProviderMethods.setValue('deliveryStreet', pickupPlace.street);
             formProviderMethods.setValue('deliveryCity', pickupPlace.city);
@@ -49,7 +51,8 @@ const ContactInformationDeliveryAddress: FC = () => {
                 }),
             );
         }
-    }, [pickupPlace]);
+    }, [pickupPlace, differentDeliveryAddressValue]);
+
     useEffect(() => {
         if (countrySelectOptions.length > 0 && differentDeliveryAddressValue === true && pickupPlace === null) {
             formProviderMethods.setValue('deliveryCountry', countrySelectOptions[0].value);

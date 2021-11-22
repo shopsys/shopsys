@@ -1,12 +1,13 @@
-fragment ListedStoreFragment on Store {
+fragment ListedPickupPlaceFragment on Store {
     slug
     uuid
     name
     description
-    openingHours
+    openingHoursHtml
     locationLatitude
     locationLongitude
     street
     postcode
     city
+    country
 }
