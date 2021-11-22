@@ -1,0 +1,12 @@
+fragment SimplePaymentFragment on Payment {
+    uuid
+    name
+    description
+    instruction
+    price {
+        ...PriceFragment
+    }
+    images {
+        ...ImageSizesFragment
+    }
+}

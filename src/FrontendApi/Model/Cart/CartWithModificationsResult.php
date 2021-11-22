@@ -90,11 +90,11 @@ class CartWithModificationsResult
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getUuid(): string
+    public function getUuid(): ?string
     {
-        return $this->cart->getCartIdentifier();
+        return $this->cart->getCartIdentifier() !== '' ? $this->cart->getCartIdentifier() : null;
     }
 
     /**

@@ -1,4 +1,4 @@
-import { AddToCartResultType, CartInput } from 'connectors/cart/types';
+import { AddToCartMutationApi, AddToCartMutationVariablesApi } from 'graphql/generated';
 import { useShopsysDispatch, useShopsysSelector } from 'redux/main';
 import { getCartInputFromCartResult } from 'utils/Cart/GetCartInputFromCartResult';
 import { getValuesFromCartResult } from 'utils/Cart/GetValuesFromCartResult';
@@ -10,14 +10,7 @@ import { UseMutationState } from 'urql';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 
 export const useHandleAddToCart = (
-    result: UseMutationState<
-        { AddToCart: AddToCartResultType },
-        {
-            productUuid: string;
-            quantity: number;
-            isAbsoluteQuantity: boolean;
-        } & CartInput
-    >,
+    result: UseMutationState<AddToCartMutationApi, AddToCartMutationVariablesApi>,
     pickupPlaceIdentifier: string | null,
     promoCode: string | null,
 ): void => {

@@ -1,9 +1,7 @@
-import { CartApiType, CartInput } from 'connectors/cart/types';
+import { RemoveFromCartMutationApi, RemoveFromCartMutationVariablesApi } from 'graphql/generated';
 import { useShopsysDispatch, useShopsysSelector } from 'redux/main';
 import { getCartInputFromCartResult } from 'utils/Cart/GetCartInputFromCartResult';
 import { getValuesFromCartResult } from 'utils/Cart/GetValuesFromCartResult';
-import { PaymentApiType } from 'connectors/payments/types';
-import { TransportApiType } from 'connectors/transports/types';
 import { updateCartInputCookie } from 'helpers/Cookies';
 import { updateCartState } from 'utils/Cart/UpdateCartState';
 import { useEffect } from 'react';
@@ -12,12 +10,7 @@ import { UseMutationState } from 'urql';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 
 export const useHandleRemoveFromCart = (
-    result: UseMutationState<
-        { RemoveFromCart: CartApiType & { transport: TransportApiType; payment: PaymentApiType } },
-        {
-            cartItemUuid: string;
-        } & CartInput
-    >,
+    result: UseMutationState<RemoveFromCartMutationApi, RemoveFromCartMutationVariablesApi>,
     pickupPlaceIdentifier: string | null,
     promoCode: string | null,
 ): void => {

@@ -1,20 +1,10 @@
+import { AddToCartMutationApi, AddToCartMutationVariablesApi } from 'graphql/generated';
 import { showErrorMessage, showSuccessMessage } from 'components/Helpers/Toasts';
-import { AddToCartResultType } from 'connectors/cart/types';
 import { TFunction } from 'react-i18next';
 import { UseMutationState } from 'urql';
 
 export const showChangeCartItemQuantityMessages = (
-    result: UseMutationState<
-        {
-            AddToCart: AddToCartResultType;
-        },
-        {
-            cartUuid: string | null;
-            productUuid: string;
-            quantity: number;
-            isAbsoluteQuantity: boolean;
-        }
-    >,
+    result: UseMutationState<AddToCartMutationApi, AddToCartMutationVariablesApi>,
     productUuid: string,
     productName: string,
     t: TFunction<string>,

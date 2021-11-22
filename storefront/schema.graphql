@@ -32,7 +32,7 @@ input AddToCartInput {
   isAbsoluteQuantity: Boolean = false
 }
 
-type AddToCartResult {
+type AddToCartResult implements CartInterface {
   """UUID of the cart, null for authenticated user"""
   uuid: Uuid
 
@@ -354,7 +354,7 @@ interface Breadcrumb {
   breadcrumb: [Link!]!
 }
 
-type Cart {
+type Cart implements CartInterface {
   """UUID of the cart, null for authenticated user"""
   uuid: Uuid
 
@@ -388,6 +388,17 @@ input CartInput {
   """Represents a payment in order"""
   payment: PaymentInput = null
   promoCode: String = null
+}
+
+interface CartInterface {
+  uuid: Uuid
+  items: [CartItem!]!
+  transport: Transport
+  payment: Payment
+  modifications: CartModificationsResult!
+  totalPrice: Price!
+  totalDiscountPrice: Price!
+  remainingAmountWithVatForFreeTransport: Money
 }
 
 """Represent one item in the cart"""

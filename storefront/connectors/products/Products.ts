@@ -5,18 +5,16 @@ import {
     SliderProductFragmentApi,
     usePromotedProductsQueryApi,
 } from 'graphql/generated';
-import {
-    FlagType,
-    ProductPriceApiType,
-    ProductPriceType,
-    SliderProductItemType,
-} from 'components/Blocks/Product/types';
+import { FlagType, ProductPriceType, SliderProductItemType } from 'components/Blocks/Product/types';
 import { ListedProductType } from './types';
 import { mapImageApiData } from 'connectors/image/Image';
 import { useQueryError } from 'hooks/graphQl/UseQueryError';
 import { useShopsysSelector } from 'redux/main';
 
-export const mapProductPriceData = (price: ProductPriceApiType, currencyCode: string): ProductPriceType => {
+export const mapProductPriceData = (
+    price: ProductPriceFragmentApi['price'],
+    currencyCode: string,
+): ProductPriceType => {
     return {
         ...price,
         priceWithVat: Number.parseFloat(price.priceWithVat),

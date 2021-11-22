@@ -1,0 +1,27 @@
+fragment CartModificationsFragment on CartInterface {
+    modifications{
+        itemModifications {
+            noLongerListableCartItems {
+                ...CartItemFragment
+            }
+            cartItemsWithModifiedPrice {
+                ...CartItemFragment
+            }
+            cartItemsWithChangedQuantity {
+                ...CartItemFragment
+            }
+            noLongerAvailableCartItemsDueToQuantity {
+                ...CartItemFragment
+            }
+        }
+        transportModifications {
+            transportPriceChanged
+            transportUnavailable
+            transportWeightLimitExceeded
+        }
+        paymentModifications {
+            paymentPriceChanged
+            paymentUnavailable
+        }
+    }
+}

@@ -1,31 +1,20 @@
-import { PaymentApiType, PaymentType } from './types';
+import { mapImageSizeApiData } from 'connectors/image/size/ImageSize';
 import { mapPriceData } from 'connectors/transports/Transports';
+import { PaymentType } from './types';
+import { SimplePaymentFragmentApi } from 'graphql/generated';
 
-export const paymentBody = `
-        payment {
-            uuid
-            name
-            description
-            instruction
-            price {
-                priceWithVat
-                priceWithoutVat
-                vatAmount
-            }
-            images {
-                sizes {
-                    url
-                    height
-                    width
-                }
-            }
-        }
-    ` as const;
-
-export const mapPayment = (apiData: PaymentApiType, currencyCode: string): PaymentType => {
+export const mapPayment = (apiData: SimplePaymentFragmentApi, currencyCode: string): PaymentType => {
     return {
         ...apiData,
-        image: apiData.images.length === 0 ? null : apiData.images[0].sizes[0],
+        description: apiData.description !== undefined && apiData.description !== null ? apiData.description : '',
+        instruction: apiData.instruction !== undefined && apiData.instruction !== null ? apiData.instruction : '',
+        image:
+            apiData.images.length > 0 &&
+            0 in apiData.images &&
+            apiData.images[0]?.sizes !== undefined &&
+            0 in apiData.images[0].sizes
+                ? mapImageSizeApiData(apiData.images[0].sizes[0])
+                : null,
         price: mapPriceData(apiData.price, currencyCode),
     };
 };

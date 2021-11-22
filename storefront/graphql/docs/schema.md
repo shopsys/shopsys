@@ -108,6 +108,7 @@
     * [Advert](#advert)
     * [ArticleInterface](#articleinterface)
     * [Breadcrumb](#breadcrumb)
+    * [CartInterface](#cartinterface)
     * [CustomerUser](#customeruser)
     * [Product](#product)
     * [Slug](#slug)
@@ -7814,6 +7815,61 @@ Represents entity able to return breadcrumb
 Hierarchy of the current element in relation to the structure
 
 </td>
+</tr>
+</tbody>
+</table>
+
+### CartInterface
+
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="right">Argument</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong>uuid</strong></td>
+<td valign="top"><a href="#uuid">Uuid</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>items</strong></td>
+<td valign="top">[<a href="#cartitem">CartItem</a>!]!</td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>transport</strong></td>
+<td valign="top"><a href="#transport">Transport</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>payment</strong></td>
+<td valign="top"><a href="#payment">Payment</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>modifications</strong></td>
+<td valign="top"><a href="#cartmodificationsresult">CartModificationsResult</a>!</td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>totalPrice</strong></td>
+<td valign="top"><a href="#price">Price</a>!</td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>totalDiscountPrice</strong></td>
+<td valign="top"><a href="#price">Price</a>!</td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>remainingAmountWithVatForFreeTransport</strong></td>
+<td valign="top"><a href="#money">Money</a></td>
+<td></td>
 </tr>
 </tbody>
 </table>
