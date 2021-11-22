@@ -168,6 +168,15 @@ export const contactInformationSlice = createSlice({
         setNewsletterSubscription(state, action: PayloadAction<boolean>) {
             state.newsletterSubscription = action.payload;
         },
+        setDeliveryAddressFromPickupPlace(
+            state,
+            action: PayloadAction<{ street: string; city: string; postcode: string; country: SelectOptionType }>,
+        ) {
+            state.deliveryStreet = action.payload.street;
+            state.deliveryCity = action.payload.city;
+            state.deliveryPostcode = action.payload.postcode;
+            state.deliveryCountry = action.payload.country;
+        },
     },
 });
 
