@@ -176,5 +176,17 @@
     "Hide results": "Hide results",
     "Show all results": "Show all results",
     "Found brands": "Found brands",
-    "Found categories": "Found categories"
+    "Found categories": "Found categories",
+    "Login": "Login",
+    "Log in": "Log in",
+    "Log-in": "Login",
+    "Lost your password?": "Lost your password?",
+    "Renew it": "Renew it",
+    "Register": "Register",
+    "Your addresses prefilled and you can check your order history.": "Your adresses prefilled and you can check your order history",
+    "Don't have account? Register": "Don't have account? Register",
+    "You have entered an incorrect email or password.": "You have entered an incorrect email or password.",
+    "Successfully logged in": "Successfully logged in",
+    "Successfully logged out": "Successfully logged out",
+    "My account": "My account"
 }

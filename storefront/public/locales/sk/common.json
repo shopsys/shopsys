@@ -176,5 +176,17 @@
     "Hide results": "Skryť výsledky",
     "Show all results": "Zobraziť všetky výsledky",
     "Found brands": "Nájdené značky",
-    "Found categories": "Nájdené kategórie"
+    "Found categories": "Nájdené kategórie",
+    "Login": "Prihlásenie",
+    "Log in": "Prihlásiť sa",
+    "Log-in": "Prihlásiť",
+    "Lost your password?": "Zabudli ste heslo?",
+    "Renew it": "Obnovte si ho",
+    "Register": "Registrujte sa",
+    "Your addresses prefilled and you can check your order history.": "Nebudete musieť dookola vyplňovať adresy a uvidíte prehľad všetkých objednávok.",
+    "Don't have account? Register": "Nemáte ešte účet? Registrujte sa",
+    "You have entered an incorrect email or password.": "Vložili ste zlý email alebo heslo",
+    "Successfully logged in": "Boli ste úspešne prihlásený",
+    "Successfully logged out": "Boli ste úspešne odhlásení",
+    "My account": "Môj účet"
 }

@@ -1,3 +1,4 @@
+import { FC, useEffect, useState } from 'react';
 import {
     MenuIconicButtonMobileLinkStyled,
     MenuIconicButtonMobileStyled,
@@ -6,16 +7,40 @@ import {
     MenuIconicItemStyled,
     MenuIconicListStyled,
 } from './MenuIconic.style';
-import { FC } from 'react';
+import Heading from 'components/Basic/Heading';
+import Login from 'components/Blocks/Popup/Login';
 import NextLink from 'next/link';
+import Popup from 'components/Layout/Popup';
+import { useAuth } from 'hooks/auth/UseAuth';
 import { useGetInternationalizedStaticUrls } from 'hooks/staticUrls/UseGetInternationalizedStaticUrls';
 import { useShopsysSelector } from 'redux/main';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 
 const MenuIconic: FC = () => {
     const t = useTypedTranslationFunction();
+    const [, [, logout]] = useAuth();
+    const isUserLoggedIn = useShopsysSelector((state) => state.user.isUserLoggedIn);
     const domainConfig = useShopsysSelector((state) => state.domain);
     const [storesUrl] = useGetInternationalizedStaticUrls(['/stores'], domainConfig.url);
+    const [isLoginPopupOpened, setIsLoginPopupOpened] = useState(false);
+
+    const loginHandler = () => {
+        setIsLoginPopupOpened(true);
+    };
+
+    const logoutHandler = () => {
+        logout();
+    };
+
+    useEffect(() => {
+        if (isUserLoggedIn) {
+            setIsLoginPopupOpened(false);
+        }
+    }, [isUserLoggedIn]);
+
+    const onCloseLoginPopupHandler = (): void => {
+        setIsLoginPopupOpened(false);
+    };
 
     return (
         <>
@@ -37,21 +62,35 @@ const MenuIconic: FC = () => {
                     </NextLink>
                 </MenuIconicItemStyled>
                 <MenuIconicItemStyled>
-                    <NextLink href="/" passHref>
+                    {isUserLoggedIn ? (
                         <MenuIconicItemLinkStyled>
                             <MenuIconicItemIconStyled iconType="icon" icon="User" />
-                            {t('Sign in')}
+                            {t('My account')}
+                            <MenuIconicItemIconStyled iconType="icon" icon="RemoveBold" onClick={logoutHandler} />
                         </MenuIconicItemLinkStyled>
-                    </NextLink>
+                    ) : (
+                        <MenuIconicItemLinkStyled onClick={loginHandler}>
+                            <MenuIconicItemIconStyled iconType="icon" icon="User" />
+                            {t('Login')}
+                        </MenuIconicItemLinkStyled>
+                    )}
                 </MenuIconicItemStyled>
             </MenuIconicListStyled>
             <MenuIconicButtonMobileStyled>
-                <NextLink href="/" passHref>
+                {isUserLoggedIn ? (
                     <MenuIconicButtonMobileLinkStyled>
+                        <MenuIconicItemIconStyled iconType="icon" icon="RemoveBold" onClick={logoutHandler} />
+                    </MenuIconicButtonMobileLinkStyled>
+                ) : (
+                    <MenuIconicButtonMobileLinkStyled onClick={loginHandler}>
                         <MenuIconicItemIconStyled iconType="icon" icon="User" />
                     </MenuIconicButtonMobileLinkStyled>
-                </NextLink>
+                )}
             </MenuIconicButtonMobileStyled>
+            <Popup isVisible={isLoginPopupOpened} onCloseCallback={onCloseLoginPopupHandler}>
+                <Heading type="h2">{t('Login')}</Heading>
+                <Login />
+            </Popup>
         </>
     );
 };

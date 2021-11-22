@@ -26,6 +26,7 @@ type InitialState = {
     pickupPlace: PickupPlaceType | null;
     pagination: PaginationType;
     canAccessOrderConfirmation: boolean;
+    isUserLoggedIn: boolean;
 };
 
 export const initialState = {
@@ -40,6 +41,7 @@ export const initialState = {
         pageSize: 9,
     },
     canAccessOrderConfirmation: false,
+    isUserLoggedIn: false,
 } as InitialState;
 
 export const userSlice = createSlice({
@@ -66,6 +68,9 @@ export const userSlice = createSlice({
         },
         setOrderConfirmationAccess(state, action: PayloadAction<boolean>) {
             state.canAccessOrderConfirmation = action.payload;
+        },
+        setIsUserLoggedIn(state, action: PayloadAction<boolean>) {
+            state.isUserLoggedIn = action.payload;
         },
     },
     extraReducers: {

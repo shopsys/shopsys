@@ -54,6 +54,7 @@ module.exports = {
                 '/order-confirmation': '/potvrzeni-objednavky',
                 '/stores': '/obchodni-domy',
                 '/brands-overview': '/prehled-znacek',
+                '/login': '/prihlaseni',
             },
             ['http://' + process.env.ACCEPTANCE_DOMAIN_HOST + '/']: {
                 '/search': '/hledani',
@@ -63,6 +64,7 @@ module.exports = {
                 '/reset-password': '/zapomenute-heslo',
                 '/order-confirmation': '/potvrzeni-objednavky',
                 '/stores': '/obchodni-domy',
+                '/login': '/prihlaseni',
             },
             [process.env.DOMAIN_HOSTNAME_2]: {
                 '/search': '/hladanie',
@@ -73,6 +75,7 @@ module.exports = {
                 '/order-confirmation': '/potvrdenie-objednavky',
                 '/stores': '/obchodne-domy',
                 '/brands-overview': '/prehled-znacek',
+                '/login': '/prihlasenie',
             },
         },
     },
@@ -102,6 +105,10 @@ module.exports = {
             {
                 source: '/potvrzeni-objednavky',
                 destination: '/order-confirmation',
+            },
+            {
+                source: '/prihlaseni',
+                destination: '/login',
             },
             {
                 source: '/obchodni-domy',
@@ -135,6 +142,10 @@ module.exports = {
             {
                 source: '/potvrdenie-objednavky',
                 destination: '/order-confirmation',
+            },
+            {
+                source: '/prihlasenie',
+                destination: '/login',
             },
             {
                 source: '/obchodne-domy',

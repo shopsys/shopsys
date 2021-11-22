@@ -38,9 +38,14 @@ export const AutocompleteBodyStyled = styled.div<WithIsActiveStyledProps>`
         left: 10px;
         right: 10px;
         z-index: ${theme.zIndex.aboveOverlay + 1};
-        padding: 120px 30px 25px;
+        padding: 0 30px 25px;
         background: ${theme.color.creamWhite};
         box-shadow: 0 5px 10px 0 rgba(164, 167, 193, 0.34);
+
+        ${isActive &&
+        css`
+            padding: 120px;
+        `}
 
         @media ${theme.mediaQueries.queryLg} {
             top: 12px;

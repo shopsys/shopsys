@@ -17,6 +17,7 @@ import {
 import { Controller, FormProvider, SubmitHandler } from 'react-hook-form';
 import Button from 'components/Forms/Button';
 import { FC } from 'react';
+import Form from 'components/Forms/Form';
 import FormLine from 'components/Forms/Lib/FormLine';
 import FormLineError from 'components/Forms/Lib/FormLineError';
 import Image from 'next/image';
@@ -42,10 +43,10 @@ const getLoginFormResolver = (t: TFunction) => {
 
 const Login: FC = () => {
     const t = useTypedTranslationFunction();
-    const [[loginResult, login]] = useAuth();
     const { url } = useShopsysSelector((state) => state.domain);
     const [resetPasswordUrl] = useGetInternationalizedStaticUrls(['/reset-password'], url);
     const formProviderMethods = useShopsysForm(getLoginFormResolver(t), { email: '', password: '' });
+    const [[loginResult, login]] = useAuth();
 
     useHandleFormSuccessfulSubmit(loginResult, formProviderMethods, { email: '', password: '' }, undefined, {
         blur: true,
@@ -60,7 +61,7 @@ const Login: FC = () => {
         <LoginStyled>
             <LoginColumnStyled>
                 <FormProvider {...formProviderMethods}>
-                    <form onSubmit={formProviderMethods.handleSubmit(onLoginHandler)}>
+                    <Form onSubmit={formProviderMethods.handleSubmit(onLoginHandler)}>
                         <Controller
                             name="email"
                             render={({ fieldState: { isTouched, invalid, error }, field }) => (
@@ -96,27 +97,33 @@ const Login: FC = () => {
                                             hasError={invalid}
                                             fieldRef={field}
                                         />
-                                        <FormLineError textInputSize="small" error={error} inputType="text-input" />
+                                        <FormLineError
+                                            textInputSize="small"
+                                            error={error}
+                                            inputType="text-input-password"
+                                        />
                                     </FormLine>
                                 </>
                             )}
                         />
                         <ButtonsStyled>
                             <ButtonWrapperStyled>
-                                <Button type="submit">{t('Log in')}</Button>
+                                <Button type="submit">{t('Log-in')}</Button>
                             </ButtonWrapperStyled>
+                            <LoginLostPassStyled>
+                                <LoginLostPassIconStyled iconType="icon" icon="Warning" />
+                                <LoginLostPassTextStyled>{t('Lost your password?')}</LoginLostPassTextStyled>
+                                <NextLink href={resetPasswordUrl} passHref>
+                                    <LoginLostPassLinkStyled>{t('Renew it')}</LoginLostPassLinkStyled>
+                                </NextLink>
+                                <NextLink href={resetPasswordUrl} passHref>
+                                    <LoginLostPassLinkMobileStyled>
+                                        {t('Lost your password?')}
+                                    </LoginLostPassLinkMobileStyled>
+                                </NextLink>
+                            </LoginLostPassStyled>
                         </ButtonsStyled>
-                    </form>
-                    <LoginLostPassStyled>
-                        <LoginLostPassIconStyled iconType="icon" icon="Warning" />
-                        <LoginLostPassTextStyled>{t('Lost your password?')}</LoginLostPassTextStyled>
-                        <NextLink href={resetPasswordUrl} passHref>
-                            <LoginLostPassLinkStyled>{t('Renew it')}</LoginLostPassLinkStyled>
-                        </NextLink>
-                        <NextLink href={resetPasswordUrl} passHref>
-                            <LoginLostPassLinkMobileStyled>{t('Lost your password?')}</LoginLostPassLinkMobileStyled>
-                        </NextLink>
-                    </LoginLostPassStyled>
+                    </Form>
                 </FormProvider>
             </LoginColumnStyled>
             <LoginColumnStyled>

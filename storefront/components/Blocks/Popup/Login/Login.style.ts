@@ -23,11 +23,19 @@ export const ButtonsStyled = styled.div`
 `;
 
 export const ButtonWrapperStyled = styled.div`
-    width: 100%;
-    display: flex;
-    justify-content: flex-end;
-    margin-top: 20px;
-    order: 1;
+    ${({ theme }) => css`
+        width: 100%;
+        display: flex;
+        justify-content: flex-end;
+        margin-top: 20px;
+        order: 1;
+
+        button {
+            @media ${theme.mediaQueries.queryTablet} {
+                padding: 0 10px;
+            }
+        }
+    `}
 `;
 
 export const LoginStyled = styled.div`
@@ -163,7 +171,7 @@ export const LoginLostPassStyled = styled.div`
         margin-top: 20px;
 
         border: 2px solid ${theme.color.primary};
-        border-radius: ${theme.radius.medium};
+        border-radius: ${theme.radius.big};
         font-size: 14px;
         color: ${theme.color.primary};
         white-space: nowrap;
