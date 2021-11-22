@@ -1,17 +1,16 @@
-fragment ProductListFragment on Product {
-    __typename
+fragment ListedProductFragment on Product {
     uuid
     slug
     name
+    stockQuantity
     flags {
         ...FlagLabelFragment
     }
-    stockQuantity
     ...ProductImagesListFragment
+    ...ProductPriceFragment
     availability {
         ...AvailabilityFragment
     }
-    ...ProductPriceFragment
     availableStoresCount
     exposedStoresCount
 }

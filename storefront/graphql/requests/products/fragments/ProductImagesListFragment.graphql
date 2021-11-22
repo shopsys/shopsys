@@ -1,4 +1,4 @@
-fragment ImageListFragment on Product {
+fragment ProductImagesListFragment on Product {
     images (sizes: "list") {
         ...ImageSizesFragment
     }

@@ -1,0 +1,5 @@
+fragment ListedArticleFragment on ArticleInterface {
+    name
+    slug
+    ...BlogArticleImageListFragment
+}

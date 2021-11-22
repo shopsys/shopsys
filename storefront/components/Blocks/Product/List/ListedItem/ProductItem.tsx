@@ -9,7 +9,7 @@ import {
 } from './ProductItem.style';
 import { FC } from 'react';
 import Image from 'components/Basic/Image/Image';
-import { ListedProductItemType } from 'components/Blocks/Product/types';
+import { ListedProductType } from 'connectors/products/types';
 import NextLink from 'next/link';
 import ProductAction from 'components/Blocks/Product/Action/ProductAction';
 import { ProductAvailabilityStyled } from 'components/Blocks/Product/Availability/ProductAvailability.style';
@@ -18,7 +18,7 @@ import ProductExposedStoresCount from 'components/Blocks/Product/Availability/Pr
 import ProductFlags from 'components/Blocks/Product/Flags/ProductFlags';
 import ProductPrice from 'components/Blocks/Product/Price/ProductPrice';
 
-const ProductItem: FC<ListedProductItemType> = (props) => {
+const ProductItem: FC<ListedProductType> = (props) => {
     return (
         <ProductItemStyled>
             <ProductItemInStyled>

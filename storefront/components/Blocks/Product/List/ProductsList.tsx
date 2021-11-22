@@ -1,15 +1,15 @@
 import { FC } from 'react';
-import { ListedProductItemType } from 'components/Blocks/Product/types';
+import { ListedProductType } from 'connectors/products/types';
 import ProductItem from './ListedItem';
 import { ProductsListStyled } from './ProductsList.style';
 
-type ListedProductsProps = { node: ListedProductItemType }[];
+type ListedProductsProps = { products: ListedProductType[] };
 
-const ProductsList: FC<{ products: ListedProductsProps }> = (props) => {
+const ProductsList: FC<ListedProductsProps> = (props) => {
     return (
         <ProductsListStyled>
             {props.products.map((listedProductItem, index) => (
-                <ProductItem key={index} {...listedProductItem.node} />
+                <ProductItem key={index} {...listedProductItem} />
             ))}
         </ProductsListStyled>
     );

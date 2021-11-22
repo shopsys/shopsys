@@ -1,9 +1,9 @@
-fragment CategoryPreviewFragment on Category {
+fragment ListedCategoryFragment on Category {
     uuid
     name
     slug
     ...CategoryImagesDefaultFragment
-    products{
+    products {
         totalCount
     }
 }

@@ -1,4 +1,4 @@
-import { ImageListFragmentApi, SearchQueryApi, useSearchQueryApi } from 'graphql/generated';
+import { ProductImagesListFragmentApi, SearchQueryApi, useSearchQueryApi } from 'graphql/generated';
 import { useEffect, useState } from 'react';
 import { mapImageSizeApiData } from 'connectors/image/size/ImageSize';
 import { mapPriceData } from 'connectors/transports/Transports';
@@ -90,7 +90,7 @@ const mapProductsSearchResults = (
     return { totalCount: apiData?.totalCount === undefined ? 0 : apiData.totalCount, products: mappedProducts };
 };
 
-const mapProductsSearchResultImage = (apiData: ImageListFragmentApi['images']) => {
+const mapProductsSearchResultImage = (apiData: ProductImagesListFragmentApi['images']) => {
     if (!(0 in apiData)) {
         return null;
     }

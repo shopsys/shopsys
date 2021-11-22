@@ -1,5 +1,6 @@
 import { css } from 'styled-components';
 import Icon from 'components/Basic/Icon';
+import SimpleNavigation from 'components/Blocks/SimpleNavigation';
 import { styled } from 'components/Theme/main';
 
 const localVariables = {
@@ -97,4 +98,8 @@ export const CategoryDetailPanelIconStyled = styled(Icon)`
         color: ${theme.color.white};
         font-weight: 700;
     `}
+`;
+
+export const SubcategoriesSimpleNavigationStyled = styled(SimpleNavigation)`
+    margin-bottom: 24px;
 `;

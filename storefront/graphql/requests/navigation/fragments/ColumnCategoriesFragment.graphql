@@ -2,7 +2,7 @@ fragment ColumnCategoriesFragment on NavigationItemCategoriesByColumns {
     categories{
         name
         slug
-        ...ImagesDefaultFragment
+        ...CategoryImagesDefaultFragment
         ...NavigationSubCategoriesLinkFragment
     }
 }

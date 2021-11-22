@@ -1,20 +1,18 @@
 import {
     FlagLabelFragmentApi,
-    ImageListFragmentApi,
-    ProductListFragmentApi,
+    ListedProductFragmentApi,
     ProductPriceFragmentApi,
     SliderProductFragmentApi,
     usePromotedProductsQueryApi,
 } from 'graphql/generated';
 import {
     FlagType,
-    ListedProductItemType,
     ProductPriceApiType,
     ProductPriceType,
     SliderProductItemType,
 } from 'components/Blocks/Product/types';
-import { ImageType } from 'components/Basic/Image/types';
-import { mapImageSizeApiData } from 'connectors/image/size/ImageSize';
+import { ListedProductType } from './types';
+import { mapImageApiData } from 'connectors/image/Image';
 import { useQueryError } from 'hooks/graphQl/UseQueryError';
 import { useShopsysSelector } from 'redux/main';
 
@@ -28,14 +26,16 @@ export const mapProductPriceData = (price: ProductPriceApiType, currencyCode: st
     };
 };
 
-export const mapListedProductNode = (data: ProductListFragmentApi, currencyCode: string): ListedProductItemType => {
+export const mapListedProductType = (apiData: ListedProductFragmentApi, currencyCode: string): ListedProductType => {
     return {
-        ...data,
-        detailSlug: data.slug,
-        image: data.images.length === 0 ? null : mapImageSizeApiData(data.images[0].sizes[0]),
-        price: mapProductPriceData(data.price, currencyCode),
-        isMainVariant: data.__typename === 'MainVariant',
-        availability: data.availability.name,
+        ...apiData,
+        flags: mapFlagsApiData(apiData.flags),
+        isMainVariant: apiData.__typename === 'MainVariant',
+        detailSlug: apiData.slug,
+        availability: apiData.availability.name,
+        name: apiData.name,
+        price: mapProductPriceApiData(apiData.price, currencyCode),
+        image: mapImageApiData(apiData.images),
     };
 };
 
@@ -61,7 +61,7 @@ export const mapSliderProductApiData = (
             ...apiProduct,
             detailSlug: apiProduct.slug,
             name: apiProduct.name,
-            image: mapProductImageApiData(apiProduct.images),
+            image: mapImageApiData(apiProduct.images),
             price: mapProductPriceApiData(apiProduct.price, currencyCode),
             isMainVariant: apiProduct.__typename === 'MainVariant',
             availability: apiProduct.availability.name,
@@ -69,14 +69,6 @@ export const mapSliderProductApiData = (
             stockQuantity: apiProduct.stockQuantity,
         };
     });
-};
-
-export const mapProductImageApiData = (apiData: ImageListFragmentApi['images']): ImageType | null => {
-    if (!(0 in apiData) || !(0 in apiData[0].sizes)) {
-        return null;
-    }
-
-    return mapImageSizeApiData(apiData[0].sizes[0]);
 };
 
 export const mapProductPriceApiData = (
