@@ -1,5 +1,6 @@
 import { ImageType } from 'components/Basic/Image/types';
 import { PaymentType } from 'connectors/payments/types';
+import { PickupPlaceType } from './pickupPlace/types';
 
 export type PriceApiType = {
     priceWithVat: string;
@@ -14,17 +15,6 @@ export type PriceType = {
 };
 
 export type TransportInputType = { uuid: string; price: PriceApiType; pickupPlaceIdentifier: string | null };
-
-export type PickupPlaceType = {
-    identifier: string;
-    name: string;
-    description: string;
-    openingHours: string;
-    street: string;
-    postcode: string;
-    city: string;
-    country: string;
-};
 
 export type TransportType = {
     uuid: string;

@@ -3,10 +3,11 @@ fragment ListedStoreFragment on Store {
     uuid
     name
     description
-    openingHours
+    openingHoursHtml
     locationLatitude
     locationLongitude
     street
     postcode
     city
+    country
 }

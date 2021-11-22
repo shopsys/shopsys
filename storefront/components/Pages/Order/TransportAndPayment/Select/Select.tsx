@@ -4,7 +4,7 @@ import { ListItemStyled, PaymentListWrapper, ResetButtonStyled } from './Select.
 import { loadCart, mapPaymentToPaymentInput, mapTransportToTransportInput } from 'connectors/cart/Cart';
 import { mapPacketeryExtendedPoint, packeteryPick, removePacketeryCookie, setPacketeryCookie } from 'helpers/packetery';
 import { PickupPlaceType, TransportInputType, TransportType } from 'connectors/transports/types';
-import { getSelectedPickupPlace } from 'connectors/transports/PickupPlace';
+import { getSelectedPickupPlace } from 'connectors/transports/pickupPlace/PickupPlace';
 import Heading from 'components/Basic/Heading';
 import Icon from 'components/Basic/Icon';
 import PacketeryContainer from 'components/Pages/Order/TransportAndPayment/PacketeryContainer';

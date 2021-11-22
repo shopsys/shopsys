@@ -1,7 +1,7 @@
 import { PickupPlaceType, TransportType } from 'connectors/transports/types';
 import { CartFragmentApi } from 'graphql/generated';
 import { CartType } from 'connectors/cart/types';
-import { getSelectedPickupPlace } from 'connectors/transports/PickupPlace';
+import { getSelectedPickupPlace } from 'connectors/transports/pickupPlace/PickupPlace';
 import { mapCart } from 'connectors/cart/Cart';
 import { mapPayment } from 'connectors/payments/Payment';
 import { mapTransport } from 'connectors/transports/Transport';

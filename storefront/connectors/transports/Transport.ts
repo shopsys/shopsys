@@ -1,7 +1,7 @@
 import { mapImageSizeApiData } from 'connectors/image/size/ImageSize';
 import { mapPayment } from 'connectors/payments/Payment';
+import { mapPickupPlacesApiData } from './pickupPlace/PickupPlace';
 import { mapPriceData } from './Transports';
-import { mapStoresListApiData } from 'connectors/stores/Stores';
 import { TransportType } from './types';
 import { TransportWithAvailablePaymentsAndStoresFragmentApi } from 'graphql/generated';
 
@@ -27,7 +27,7 @@ export const mapTransport = (
         payments: apiData.payments.map((payment) => mapPayment(payment, currencyCode)),
         stores:
             apiData.stores !== undefined && apiData.stores !== null && Array.isArray(apiData.stores?.edges)
-                ? mapStoresListApiData(apiData.stores)
+                ? mapPickupPlacesApiData(apiData.stores)
                 : [],
     };
 };
