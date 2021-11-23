@@ -318,7 +318,7 @@ type Brand implements Breadcrumb & Slug {
   seoH1: String
 
   """Brand images"""
-  images(type: String = null, size: String, sizes: [String!] = null): [Image]!
+  images(type: String = null, size: String, sizes: [String!] = null): [Image!]!
 
   """Paginated and ordered products of brand"""
   products(after: String, first: Int, before: String, last: Int, orderingMode: ProductOrderingModeEnum, filter: ProductFilter, search: String): ProductConnection

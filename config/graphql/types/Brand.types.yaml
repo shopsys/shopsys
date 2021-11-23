@@ -8,7 +8,7 @@ Brand:
             - 'Slug'
         fields:
             images:
-                type: "[Image]!"
+                type: "[Image!]!"
                 description: "Brand images"
                 resolve: '@=resolver("brandImageResolver", [value, args["type"], args["sizes"]])'
                 args:
