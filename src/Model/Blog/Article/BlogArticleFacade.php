@@ -321,6 +321,10 @@ class BlogArticleFacade
         $productsCatnum = [];
 
         foreach ($descriptions as $description) {
+            if ($description === null) {
+                continue;
+            }
+
             $matches = [];
             preg_match_all(BlogArticle::PLACEHOLDER_PRODUCTS_PATTERN, $description, $matches);
             foreach ($matches['catnums'] as $catnumsString) {

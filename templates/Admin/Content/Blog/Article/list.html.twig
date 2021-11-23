@@ -4,9 +4,11 @@
 {% block h1 %}{{ 'Články blogu'|trans }}{% endblock %}
 
 {% block btn %}
-    <a href="{{ url('admin_blogarticle_new') }}" class="btn btn--plus wrap-bar__btn">
-        <i class="btn__icon">+</i>{{ 'Vytvořit nový článek blogu'|trans }}
-    </a>
+    <div class="wrap-bar">
+        <a href="{{ url('admin_blogarticle_new') }}" class="btn btn--plus wrap-bar__btn">
+            <i class="btn__icon">+</i>{{ 'Vytvořit nový článek blogu'|trans }}
+        </a>
+    </div>
 {% endblock %}
 
 {% block main_content %}
