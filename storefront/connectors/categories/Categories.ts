@@ -1,4 +1,4 @@
-import { CategoryDetailFragmentApi, ListedCategoryFragmentApi, PageInfoApi } from 'graphql/generated';
+import { CategoryDetailFragmentApi, ListedCategoryFragmentApi } from 'graphql/generated';
 import { CategoryDetailType } from 'components/Pages/CategoryDetail/types';
 import { ListedCategoryType } from './types';
 import { ListedProductEdgesType } from 'components/Blocks/Product/types';

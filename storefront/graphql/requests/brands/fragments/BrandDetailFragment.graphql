@@ -1,0 +1,22 @@
+fragment BrandDetailFragment on Brand {
+    uuid
+    slug
+    ...BreadcrumbFragment
+    name
+    seoH1
+    description
+    brandImages: images (sizes: ["default"]) {
+        ...ImageSizesFragment
+    }
+    products(orderingMode: $sortingMode, after: $endCursorForPagination) {
+        totalCount
+        pageInfo {
+            ...PageInfoFragment
+        }
+        edges {
+            node {
+                ...ProductListFragment
+            }
+        }
+    }
+}

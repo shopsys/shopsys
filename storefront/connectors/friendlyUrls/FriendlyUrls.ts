@@ -1,8 +1,10 @@
 import { ArticleDetailType } from 'connectors/article/types';
 import { BlogArticleDetailType } from 'components/Pages/BlogArticle/types';
+import { BrandDetailType } from 'connectors/brands/types';
 import { CategoryDetailType } from 'components/Pages/CategoryDetail/types';
 import { mapArticleDetailApiData } from 'connectors/article/ArticleDetail';
 import { mapBlogArticleDetailApiData } from 'connectors/blogArticle/BlogArticle';
+import { mapBrandDetailApiData } from 'connectors/brands/Brands';
 import { mapCategoryDetailData } from 'connectors/categories/Categories';
 import { mapProductDetailApiData } from 'connectors/products/ProductDetail';
 import { mapStoreDetailApiData } from 'connectors/stores/StoreDetail';
@@ -20,6 +22,7 @@ export function getFriendlyUrlResolvedData(
     | StoreDetailType
     | ArticleDetailType
     | BlogArticleDetailType
+    | BrandDetailType
     | undefined
     | null {
     const categoryDetailSort = useShopsysSelector((state) => state.user.sort);
@@ -53,6 +56,8 @@ export function getFriendlyUrlResolvedData(
         return mapArticleDetailApiData(data.slug);
     } else if (data.slug.__typename === 'BlogArticle') {
         return mapBlogArticleDetailApiData(data.slug, currentDomainConfig);
+    } else if (data.slug.__typename === 'Brand') {
+        return mapBrandDetailApiData(data.slug, currentDomainConfig.currencyCode);
     }
 
     return undefined;

@@ -1,6 +1,7 @@
 import { PageInfoApi } from 'graphql/generated';
+import { PageInfoType } from 'components/Blocks/Product/types';
 
-export const mapPageInfoApiData = (pageInfoApiData: PageInfoApi | undefined) => {
+export const mapPageInfoApiData = (pageInfoApiData: PageInfoApi | undefined): PageInfoType => {
     return {
         startCursor:
             pageInfoApiData?.startCursor !== undefined && pageInfoApiData.startCursor !== null
