@@ -1,9 +1,7 @@
-FROM cypress/base:16.5.0 as base
+FROM cypress/base:16.5.0
 
 WORKDIR /app
 
 COPY . /app
 
-RUN npm install cypress
-
-CMD npx cypress run
+CMD npm ci && npx cypress run
