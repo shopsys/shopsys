@@ -7,6 +7,7 @@ const initialState = {
     publicGraphqlEndpoint: process.env.PUBLIC_GRAPHQL_ENDPOINT_HOSTNAME_1,
     defaultLocale: 'cs',
     currencyCode: 'CZK',
+    domainId: 1,
     mapSetting: {
         latitude: 49.8175,
         longitude: 15.473,
@@ -23,6 +24,7 @@ export const domainSlice = createSlice({
             state.url = action.payload.url;
             state.defaultLocale = action.payload.defaultLocale;
             state.publicGraphqlEndpoint = action.payload.publicGraphqlEndpoint;
+            state.domainId = action.payload.domainId;
             state.mapSetting = action.payload.mapSetting;
         },
     },

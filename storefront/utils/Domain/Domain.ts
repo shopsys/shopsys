@@ -7,6 +7,7 @@ export type DomainConfigType = {
     publicGraphqlEndpoint: string;
     defaultLocale: string;
     currencyCode: string;
+    domainId: number;
     mapSetting: {
         latitude: number;
         longitude: number;
