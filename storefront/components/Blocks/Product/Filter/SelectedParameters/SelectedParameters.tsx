@@ -1,4 +1,4 @@
-import { FC, Fragment } from 'react';
+import { FC, Fragment, useEffect, useState } from 'react';
 import { FilterFormType, FilterOptionsType } from 'components/Blocks/Product/Filter/types';
 import {
     SelectedParametersListItemRemoveStyled,
@@ -17,6 +17,7 @@ import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslatio
 
 type SelectedParametersProps = {
     productFilterOptions: FilterOptionsType;
+    slug: string;
 };
 
 const SelectedParameters: FC<SelectedParametersProps> = (props) => {
@@ -28,8 +29,22 @@ const SelectedParameters: FC<SelectedParametersProps> = (props) => {
         name: ['brands', 'flags', 'parameters'],
         control: formProviderMethods.control,
     });
-    const [showMinimalPrice, setShowMinimalPrice] = useState(false);
-    const [showMaximalPrice, setShowMaximalPrice] = useState(false);
+    const [isMinimalPriceVisible, setMinimalPriceVisibility] = useState(false);
+    const [isMaximalPriceVisible, setMaximalPriceVisibility] = useState(false);
+
+    useEffect(() => {
+        setMinimalPriceVisibility(
+            parametersFilterState.minimalPrice !== props.productFilterOptions.minimalPrice &&
+                parametersFilterState.minimalPrice !== null,
+        );
+    }, [parametersFilterState.minimalPrice]);
+
+    useEffect(() => {
+        setMaximalPriceVisibility(
+            parametersFilterState.maximalPrice !== props.productFilterOptions.maximalPrice &&
+                parametersFilterState.maximalPrice !== null,
+        );
+    }, [parametersFilterState.maximalPrice]);
 
     const onUncheckParameter = (parameterUuid: string, parameterValueUuid: string) => {
         const indexOfParameter = parametersValue.findIndex((item) => item.parameterUuid === parameterUuid);
@@ -75,14 +90,14 @@ const SelectedParameters: FC<SelectedParametersProps> = (props) => {
                 (parametersFilterState.flags.length > 0 ||
                     parametersFilterState.brands.length > 0 ||
                     parametersFilterState.parameters.length > 0 ||
-                    showMaximalPrice ||
-                    showMinimalPrice ||
+                    isMaximalPriceVisible ||
+                    isMinimalPriceVisible ||
                     isOnlyInStock) && (
                     <SelectedParametersStyled>
                         <SelectedParametersTitleStyled type="h4">{t('Selected filters')}</SelectedParametersTitleStyled>
                         <SelectedParametersListStyled>
-                            {parametersFilterState.brands.map((brandUuid, brandIndex) => (
-                                <SelectedParametersListItemStyled key={brandIndex}>
+                            {parametersFilterState.brands.map((brandUuid) => (
+                                <SelectedParametersListItemStyled key={brandUuid}>
                                     {brandsValue.find((value) => value.uuid === brandUuid)?.name}
                                     <SelectedParametersListItemRemoveStyled
                                         iconType="icon"
@@ -92,8 +107,8 @@ const SelectedParameters: FC<SelectedParametersProps> = (props) => {
                                 </SelectedParametersListItemStyled>
                             ))}
 
-                            {parametersFilterState.flags.map((flagUuid, flagIndex) => (
-                                <SelectedParametersListItemStyled key={flagIndex}>
+                            {parametersFilterState.flags.map((flagUuid) => (
+                                <SelectedParametersListItemStyled key={flagUuid}>
                                     {flagsValue.find((value) => value.uuid === flagUuid)?.name}
                                     <SelectedParametersListItemRemoveStyled
                                         iconType="icon"
@@ -142,9 +157,9 @@ const SelectedParameters: FC<SelectedParametersProps> = (props) => {
                                 </SelectedParametersListItemStyled>
                             )}
 
-                            {(showMinimalPrice || showMaximalPrice) && (
+                            {(isMinimalPriceVisible || isMaximalPriceVisible) && (
                                 <SelectedParametersListItemStyled>
-                                    {showMinimalPrice && (
+                                    {isMinimalPriceVisible && (
                                         <>
                                             <span>{t('from')}&nbsp;</span>
                                             {parametersFilterState.minimalPrice !== null &&
@@ -156,7 +171,7 @@ const SelectedParameters: FC<SelectedParametersProps> = (props) => {
                                             &nbsp;
                                         </>
                                     )}
-                                    {showMaximalPrice && (
+                                    {isMaximalPriceVisible && (
                                         <>
                                             <span>{t('to')}&nbsp;</span>
                                             {parametersFilterState.maximalPrice !== null &&

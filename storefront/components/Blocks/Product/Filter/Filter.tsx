@@ -31,18 +31,16 @@ const Filter: FC<FilterProps> = (props) => {
     const getBrandsValues =
         props.productFilterOptions.brands !== null && props.productFilterOptions.brands !== undefined
             ? props.productFilterOptions.brands.map((value) => ({
+                  ...value.brand,
                   checked: false,
-                  uuid: value.item.uuid,
-                  name: value.item.name,
               }))
             : [];
 
     const getFlagsValues =
         props.productFilterOptions.flags !== null && props.productFilterOptions.flags !== undefined
             ? props.productFilterOptions.flags.map((value) => ({
+                  ...value.flag,
                   checked: false,
-                  uuid: value.item.uuid,
-                  name: value.item.name,
               }))
             : [];
 
@@ -218,7 +216,7 @@ const Filter: FC<FilterProps> = (props) => {
                         isOpen={true}
                     />
 
-                    {props.productFilterOptions.flags !== null && props.productFilterOptions.flags !== undefined && (
+                    {props.productFilterOptions.flags.length > 0 && (
                         <FilterGroup
                             title={t('Flags')}
                             filterField="flags"
@@ -227,7 +225,7 @@ const Filter: FC<FilterProps> = (props) => {
                         />
                     )}
 
-                    {props.productFilterOptions.brands !== null && props.productFilterOptions.brands !== undefined && (
+                    {props.productFilterOptions.brands.length > 0 && (
                         <FilterGroup
                             title={t('Brands')}
                             filterField="brands"

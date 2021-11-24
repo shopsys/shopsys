@@ -7,9 +7,10 @@ import {
     CategoryDetailStyled,
     SubcategoriesSimpleNavigationStyled,
 } from './CategoryDetail.style';
-import { FC, useRef, useState } from 'react';
+import { FC, useEffect, useRef, useState } from 'react';
 import CategoryDetailAdvancedSeoCategories from './CategoryDetailAdvancedSeoCategories';
 import { CategoryDetailType } from './types';
+import { FilterOptionsType } from 'components/Blocks/Product/Filter/types';
 import Heading from 'components/Basic/Heading';
 import Overlay from 'components/Basic/Overlay';
 import Pagination from 'components/Blocks/Pagination/Pagination';
@@ -29,6 +30,10 @@ const CategoryDetail: FC<CategoryDetailProps> = (props) => {
     const [isPanelOpen, setIsPanelOpen] = useState(false);
     const panelWrapRef = useRef<null | HTMLDivElement>(null);
     const buttonRef = useRef<null | HTMLDivElement>(null);
+    const [productFilterOptionsData, setProductFilterOptionsData] = useState<FilterOptionsType>(
+        props.category.products.productFilterOptions as FilterOptionsType,
+    );
+    const [categorySlug, setCategorySlug] = useState(props.category.slug);
 
     const handlePanelOpenerClick = () => {
         setIsPanelOpen(!isPanelOpen);
@@ -45,14 +50,18 @@ const CategoryDetail: FC<CategoryDetailProps> = (props) => {
         }
     };
 
+    useEffect(() => {
+        if (props.category.products.productFilterOptions !== null) {
+            setProductFilterOptionsData(props.category.products.productFilterOptions);
+            setCategorySlug(props.category.slug);
+        }
+    }, [props.category.products.productFilterOptions]);
+
     return (
         <Webline>
             <CategoryDetailStyled>
                 <CategoryDetailPanelStyled isOpen={isPanelOpen} ref={panelWrapRef}>
-                    <ProductFilter
-                        productFilterOptions={props.category.products.productFilterOptions}
-                        slug={props.category.slug}
-                    />
+                    <ProductFilter productFilterOptions={productFilterOptionsData} slug={categorySlug} />
                     <Overlay isHiddenOnDesktop={true} onClick={handlePanelOpenerClick} />
                 </CategoryDetailPanelStyled>
                 <CategoryDetailContentStyled>

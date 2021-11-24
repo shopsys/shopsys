@@ -14,7 +14,6 @@ import { EnrichedSearchType } from 'connectors/search/types';
 import Heading from 'components/Basic/Heading';
 import Overlay from 'components/Basic/Overlay';
 import Pagination from 'components/Blocks/Pagination';
-import ProductFilter from 'components/Blocks/Product/Filter';
 import ProductsList from 'components/Blocks/Product/List/ProductsList';
 import SimpleNavigation from 'components/Blocks/SimpleNavigation';
 import SortingBar from 'components/Blocks/SortingBar';
@@ -170,7 +169,6 @@ const Search: FC<SearchProps> = (props) => {
                     <Heading type={'h3'}>{t('Found products')}</Heading>
                     <SearchResultsStyled>
                         <SearchResultsPanelStyled>
-                            <ProductFilter />
                             <Overlay isHiddenOnDesktop={true} onClick={handlePanelOpenerClick} />
                         </SearchResultsPanelStyled>
                         <SearchResultsContentStyled>

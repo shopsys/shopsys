@@ -3,6 +3,7 @@ query SlugQuery(
     $sortingMode: ProductOrderingModeEnum
     $endCursorForPagination: String
     $pageSize: Int
+    $filter: ProductFilter
 ) {
     slug(slug: $slug) {
         __typename

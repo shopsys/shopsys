@@ -1,80 +1,93 @@
-export type ParameterItemsType = {
+export enum FilterOptionsParameterTypeEnum {
+    Checkbox = 'checkbox',
+    ColorPicker = 'colorPicker',
+}
+
+export type ParametersValuesType = {
     uuid: string;
     text: string;
     count: number;
-    rgbHex: string;
+    rgbHex?: string | null;
 };
 
-export type ItemsType = {
+export type ParametersType = {
+    name: string;
+    type: FilterOptionsParameterTypeEnum;
+    uuid: string;
+    values: ParametersValuesType[];
+};
+
+export type FlagsType = {
     count: number;
-    item: {
+    flag: {
         uuid: string;
         name: string;
     };
 };
 
-export type FilterOptionsApiData = {
-    minimalPrice: string;
-    maximalPrice: string;
-    brands: ItemsType[];
-    inStock: number;
-    flags: ItemsType[];
-    parameters: {
-        name: string;
-        type: string;
+export type BrandsType = {
+    count: number;
+    brand: {
         uuid: string;
-        items: ParameterItemsType[];
-    }[];
+        name: string;
+    };
 };
 
 export type FilterOptionsType = {
     minimalPrice: number;
     maximalPrice: number;
-    brands: ItemsType[];
     inStock: number;
-    flags: ItemsType[];
-    parameters: {
-        name: string;
-        type: string;
-        uuid: string;
-        items: ParameterItemsType[];
-    }[];
+    brands: BrandsType[];
+    flags: FlagsType[];
+    parameters?: ParametersType[];
     currencyCode: string;
 };
 
-export type FilterFormParametersType = {
+export type FilterFormParameterValuesType = {
+    checked: boolean;
+    uuid: string;
+    text: string;
+    rgbHex?: string;
+};
+
+export type FilterFormParameterType = {
+    parameterName: string;
+    parameterUuid: string;
+    type: FilterOptionsParameterTypeEnum;
+    values: FilterFormParameterValuesType[];
+};
+
+export type FilterFormBrandType = {
+    checked: boolean;
+    uuid: string;
+    name: string;
+};
+
+export type FilterFormFlagType = {
+    checked: boolean;
+    uuid: string;
+    name: string;
+};
+
+export type FilterFormType = {
+    brands: FilterFormBrandType[];
+    flags: FilterFormFlagType[];
+    maximalPrice: number;
+    minimalPrice: number;
+    onlyInStock: boolean;
+    parameters: FilterFormParameterType[];
+};
+
+export type FilterOptionsParameterStateType = {
     parameter: string;
     values: string[];
 };
 
-export type FilterFormType = {
-    brands: string[];
-    flags: string[];
-    maximalPrice: number;
-    minimalPrice: number;
-    onlyInStock: boolean;
-    parameters: FilterFormParametersType[];
-};
-
-export type ParametersFilterStateType = {
+export type FilterOptionsStateType = {
     brands: string[];
     flags: string[];
     minimalPrice: number | null;
     maximalPrice: number | null;
     onlyInStock: boolean;
-    parameters: FilterFormParametersType[];
-};
-
-export type ParametersFilterParameterStateType = {
-    values: string[];
-    parameter: string;
-};
-
-export type ParametersFilterStateType = {
-    brands: string[];
-    flags: string[];
-    minimalPrice: number;
-    maximalPrice: number;
-    onlyInStock: boolean;
-    parameters: ParametersFilterParameterStateType[];
+    parameters: FilterOptionsParameterStateType[];
 };

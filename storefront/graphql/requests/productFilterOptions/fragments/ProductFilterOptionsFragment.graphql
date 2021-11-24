@@ -1,0 +1,14 @@
+fragment ProductFilterOptionsFragment on ProductFilterOptions {
+    minimalPrice
+    maximalPrice
+    brands {
+        ...ProductFilterOptionsBrandsFragment
+    }
+    inStock
+    flags {
+        ...ProductFilterOptionsFlagsFragment
+    }
+    parameters {
+        ...ProductFilterOptionsParametersFragment
+    }
+}

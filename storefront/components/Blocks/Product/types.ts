@@ -55,7 +55,7 @@ export type ListedProductEdgesType = {
     edges: {
         node: ListedProductItemType;
     }[];
-    productFilterOptions: FilterOptionsType;
+    productFilterOptions: FilterOptionsType | null;
     totalCount: number;
     pageInfo: PageInfoType;
 };

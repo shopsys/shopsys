@@ -1,6 +1,6 @@
 import { Controller, useFieldArray, useFormContext } from 'react-hook-form';
 import { FC, useState } from 'react';
-import { FilterFormType, ParametersType } from 'components/Blocks/Product/Filter/types';
+import { FilterFormType, FilterOptionsParameterTypeEnum, ParametersType } from 'components/Blocks/Product/Filter/types';
 import {
     FilterGroupArrowStyled,
     FilterGroupColorStyled,
@@ -32,7 +32,7 @@ type FilterGroupParametersProps = {
     /**
      * Changes filter items to its elements
      */
-    type: string;
+    type: FilterOptionsParameterTypeEnum;
     /**
      * Parameters data of product filter
      */
@@ -57,7 +57,7 @@ const FilterGroupParameters: FC<FilterGroupParametersProps> = (props) => {
                 <FilterGroupArrowStyled iconType="icon" icon="Arrow" isOpen={isGroupOpen} />
             </FilterGroupTitleStyled>
             <FilterGroupContentStyled isOpen={isGroupOpen}>
-                {props.type === 'checkbox'
+                {props.type === FilterOptionsParameterTypeEnum.Checkbox
                     ? fields.map((dataItem, index) => (
                           <Controller
                               key={dataItem.id}
@@ -79,7 +79,7 @@ const FilterGroupParameters: FC<FilterGroupParametersProps> = (props) => {
                               )}
                           />
                       ))
-                    : props.type === 'colorPicker' && (
+                    : props.type === FilterOptionsParameterTypeEnum.ColorPicker && (
                           <FilterGroupColorStyled>
                               {fields.map((dataItem, index) => (
                                   <Fragment key={dataItem.id}>
