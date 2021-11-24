@@ -10,17 +10,14 @@ use App\Model\Product\Product;
 use App\Model\Product\ProductFacade;
 use Shopsys\FormTypesBundle\MultidomainType;
 use Shopsys\FormTypesBundle\YesNoType;
-use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Form\Admin\Product\ProductFormType;
 use Shopsys\FrameworkBundle\Form\FormRenderingConfigurationExtension;
 use Shopsys\FrameworkBundle\Form\GroupType;
 use Shopsys\FrameworkBundle\Form\LocalizedFullWidthType;
 use Shopsys\FrameworkBundle\Form\ProductsType;
-use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade;
 use Symfony\Component\Form\AbstractTypeExtension;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
-use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\UrlType;
@@ -36,16 +33,6 @@ class ProductFormTypeExtension extends AbstractTypeExtension
      * @var \App\Component\Form\FormBuilderHelper
      */
     private $formBuilderHelper;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\Domain\Domain
-     */
-    private $domain;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade
-     */
-    private $vatFacade;
 
     /**
      * @var \App\Model\Product\Flag\FlagFacade
@@ -64,21 +51,15 @@ class ProductFormTypeExtension extends AbstractTypeExtension
 
     /**
      * @param \App\Component\Form\FormBuilderHelper $formBuilderHelper
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade $vatFacade
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \App\Model\Product\Flag\FlagFacade $flagFacade
      * @param \App\Model\Product\ProductFacade $productFacade
      */
     public function __construct(
         FormBuilderHelper $formBuilderHelper,
-        VatFacade $vatFacade,
-        Domain $domain,
         FlagFacade $flagFacade,
         ProductFacade $productFacade
     ) {
         $this->formBuilderHelper = $formBuilderHelper;
-        $this->domain = $domain;
-        $this->vatFacade = $vatFacade;
         $this->flagFacade = $flagFacade;
         $this->productFacade = $productFacade;
     }
@@ -296,29 +277,6 @@ class ProductFormTypeExtension extends AbstractTypeExtension
         if ($this->isProductMainVariant($product)) {
             $builderPricesGroup->remove('disabledPricesOnMainVariant');
         }
-
-        $vatsIndexedByDomainId = $builder->create('vatsIndexedByDomainId', FormType::class, [
-            'compound' => true,
-            'render_form_row' => false,
-            'disabled' => $this->isProductMainVariant($product),
-        ]);
-
-        foreach ($this->domain->getAll() as $domainConfig) {
-            $vatsIndexedByDomainId
-                ->add((string)$domainConfig->getId(), ChoiceType::class, [
-                    'required' => true,
-                    'disabled' => true,
-                    'choices' => $this->vatFacade->getAllForDomainIncludingMarkedForDeletion($domainConfig->getId()),
-                    'choice_label' => 'name',
-                    'choice_value' => 'id',
-                    'constraints' => [
-                        new Constraints\NotBlank(['message' => 'Please enter VAT rate']),
-                    ],
-                    'label' => t('DPH {{domainName}}', ['domainName' => $domainConfig->getName()]),
-                ]);
-        }
-
-        $builderPricesGroup->add($vatsIndexedByDomainId);
     }
 
     /**
