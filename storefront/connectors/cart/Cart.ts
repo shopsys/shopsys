@@ -44,7 +44,7 @@ export const loadCart = (
     const [result, refresh] = useCartQueryApi({
         variables: { cartUuid, transport, payment, promoCode },
         pause: cartUuid === null,
-        requestPolicy: 'cache-and-network',
+        requestPolicy: 'network-only',
     });
 
     useHandleCartUpdate(
