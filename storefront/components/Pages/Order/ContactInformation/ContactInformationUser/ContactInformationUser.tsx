@@ -1,4 +1,8 @@
-import { Controller, useWatch } from 'react-hook-form';
+import {
+    ContactInformationFormType,
+    useContactInformationFormMeta,
+} from 'components/Pages/Order/ContactInformation/formMeta';
+import { Controller, useFormContext, useWatch } from 'react-hook-form';
 import { contactInformationActions } from 'redux/slices/contactInformation';
 import { FC } from 'react';
 import FormColumn from 'components/Forms/Lib/FormColumn';
@@ -12,22 +16,25 @@ import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslatio
 const ContactInformationUser: FC = () => {
     const dispatch = useShopsysDispatch();
     const t = useTypedTranslationFunction();
-    const telephoneValue = useWatch({ name: 'telephone' });
-    const firstNameValue = useWatch({ name: 'firstName' });
-    const lastNameValue = useWatch({ name: 'lastName' });
+    const formProviderMethods = useFormContext<ContactInformationFormType>();
+    const formMeta = useContactInformationFormMeta(formProviderMethods);
+    const [telephoneValue, firstNameValue, lastNameValue] = useWatch({
+        name: [formMeta.fields.telephone.name, formMeta.fields.firstName.name, formMeta.fields.lastName.name],
+        control: formProviderMethods.control,
+    });
 
     return (
         <>
             <Heading type="h3">{t('Customer information')}</Heading>
             <FormLine bottomGap={true} lg="65%">
                 <Controller
-                    name="telephone"
+                    name={formMeta.fields.telephone.name}
                     render={({ fieldState: { isTouched, invalid, error }, field }) => (
                         <>
                             <TextInput
-                                id="contactInformation_form-telephone"
-                                name="telephone"
-                                label={t('Telephone')}
+                                id={formMeta.formName + '-' + formMeta.fields.telephone.name}
+                                name={formMeta.fields.telephone.name}
+                                label={formMeta.fields.telephone.label}
                                 required={true}
                                 type="text"
                                 isTouched={isTouched}
@@ -44,13 +51,13 @@ const ContactInformationUser: FC = () => {
             <FormColumn lg="65%">
                 <FormLine bottomGap={true} width="100%" lg="50%">
                     <Controller
-                        name="firstName"
+                        name={formMeta.fields.firstName.name}
                         render={({ fieldState: { isTouched, invalid, error }, field }) => (
                             <>
                                 <TextInput
-                                    id="contactInformation_form-firstName"
-                                    name="firstName"
-                                    label={t('First name')}
+                                    id={formMeta.formName + '-' + formMeta.fields.firstName.name}
+                                    name={formMeta.fields.firstName.name}
+                                    label={formMeta.fields.firstName.label}
                                     required={true}
                                     type="text"
                                     isTouched={isTouched}
@@ -67,13 +74,13 @@ const ContactInformationUser: FC = () => {
                 </FormLine>
                 <FormLine bottomGap={true} width="100%" lg="50%">
                     <Controller
-                        name="lastName"
+                        name={formMeta.fields.lastName.name}
                         render={({ fieldState: { isTouched, invalid, error }, field }) => (
                             <>
                                 <TextInput
-                                    id="contactInformation_form-lastName"
-                                    name="lastName"
-                                    label={t('Last name')}
+                                    id={formMeta.formName + '-' + formMeta.fields.lastName.name}
+                                    name={formMeta.fields.lastName.name}
+                                    label={formMeta.fields.lastName.label}
                                     required={true}
                                     type="text"
                                     isTouched={isTouched}

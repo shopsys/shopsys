@@ -1,29 +1,33 @@
-import { contactInformationActions, ContactInformationFormType } from 'redux/slices/contactInformation';
+import {
+    ContactInformationFormType,
+    useContactInformationFormMeta,
+} from 'components/Pages/Order/ContactInformation/formMeta';
 import { Control, useWatch } from 'react-hook-form';
+import { contactInformationActions } from 'redux/slices/contactInformation';
 import { useEffect } from 'react';
 import { useShopsysDispatch } from 'redux/main';
 
 export const useHandleContactInformationNonTextChanges = (
     control: Control<ContactInformationFormType>,
-    contactInformationValues: ContactInformationFormType,
+    formMeta: ReturnType<typeof useContactInformationFormMeta>,
 ): void => {
     const dispatch = useShopsysDispatch();
-    const registerValue = useWatch({ name: 'register', defaultValue: contactInformationValues.register, control });
-    const customerValue = useWatch({ name: 'customer', defaultValue: contactInformationValues.customer, control });
-    const countryValue = useWatch({ name: 'country', defaultValue: contactInformationValues.country, control });
-    const differentDeliveryAddressValue = useWatch({
-        name: 'differentDeliveryAddress',
-        defaultValue: contactInformationValues.differentDeliveryAddress,
-        control,
-    });
-    const deliveryCountryValue = useWatch({
-        name: 'deliveryCountry',
-        defaultValue: contactInformationValues.deliveryCountry,
-        control,
-    });
-    const newsletterSubscriptionValue = useWatch({
-        name: 'newsletterSubscription',
-        defaultValue: contactInformationValues.newsletterSubscription,
+    const [
+        registerValue,
+        customerValue,
+        countryValue,
+        differentDeliveryAddressValue,
+        deliveryCountryValue,
+        newsletterSubscriptionValue,
+    ] = useWatch({
+        name: [
+            formMeta.fields.register.name,
+            formMeta.fields.customer.name,
+            formMeta.fields.country.name,
+            formMeta.fields.differentDeliveryAddress.name,
+            formMeta.fields.deliveryCountry.name,
+            formMeta.fields.newsletterSubscription.name,
+        ],
         control,
     });
 

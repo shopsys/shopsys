@@ -1,5 +1,5 @@
 import { PickupPlacePopupWrapperStyled, PopupButtonWrapperStyled } from './PickupPlacePopup.style';
-import { useForm, useWatch } from 'react-hook-form';
+import { usePickupPlaceForm, usePickupPlaceFormMeta } from './formMeta';
 import Button from 'components/Forms/Button';
 import { FC } from 'react';
 import Heading from 'components/Basic/Heading';
@@ -8,6 +8,7 @@ import Popup from 'components/Layout/Popup';
 import StoreSelect from './PlaceSelect/StoreSelect';
 import { TransportType } from 'connectors/transports/types';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import { useWatch } from 'react-hook-form';
 
 type PickupPlacePopupProps = {
     isVisible: boolean;
@@ -18,19 +19,20 @@ type PickupPlacePopupProps = {
 
 const PickupPlacePopup: FC<PickupPlacePopupProps> = (props) => {
     const t = useTypedTranslationFunction();
-    const formProviderMethods = useForm({ defaultValues: { pickupPlace: null } });
-    const pickupPlaceValue = useWatch({ name: 'pickupPlace', control: formProviderMethods.control });
+    const [formProviderMethods] = usePickupPlaceForm();
+    const formMeta = usePickupPlaceFormMeta(formProviderMethods);
+    const pickupPlaceValue = useWatch({ name: formMeta.fields.pickupPlace.name, control: formProviderMethods.control });
 
     const onConfirmPickupPlaceHandler = () => {
         const selectedPickupPlace = props.transport.stores.find((store) => store.identifier === pickupPlaceValue);
 
         props.onChangePickupPlaceCallback(selectedPickupPlace === undefined ? null : selectedPickupPlace);
-        formProviderMethods.setValue('pickupPlace', null);
+        formProviderMethods.setValue(formMeta.fields.pickupPlace.name, '');
     };
 
     const onClosePickupPlacePopupHandler = () => {
         props.onClosePickupPlacePopupCallback();
-        formProviderMethods.setValue('pickupPlace', null);
+        formProviderMethods.setValue(formMeta.fields.pickupPlace.name, '');
     };
 
     return (
@@ -39,7 +41,7 @@ const PickupPlacePopup: FC<PickupPlacePopupProps> = (props) => {
             onCloseCallback={onClosePickupPlacePopupHandler}
             wrapperComponent={PickupPlacePopupWrapperStyled}
         >
-            <Heading type="h2">{t('Choose the store where you are going to pick up your order')}</Heading>
+            <Heading type="h2">{formMeta.fields.pickupPlace.label}</Heading>
             <StoreSelect
                 control={formProviderMethods.control}
                 transport={props.transport}
@@ -49,7 +51,7 @@ const PickupPlacePopup: FC<PickupPlacePopupProps> = (props) => {
                 <Button type="button" onClick={onClosePickupPlacePopupHandler}>
                     {t('Close')}
                 </Button>
-                <Button type="button" isDisabled={pickupPlaceValue === null} onClick={onConfirmPickupPlaceHandler}>
+                <Button type="button" isDisabled={pickupPlaceValue === ''} onClick={onConfirmPickupPlaceHandler}>
                     {t('Confirm')}
                 </Button>
             </PopupButtonWrapperStyled>

@@ -1,6 +1,11 @@
 import { Controller, FormProvider, SubmitHandler } from 'react-hook-form';
 import { FC, useEffect } from 'react';
 import {
+    RegistrationAfterOrderFormType,
+    useRegistrationAfterOrderForm,
+    useRegistrationAfterOrderFormMeta,
+} from './formMeta';
+import {
     RegistrationBenefitsListItem,
     RegistrationFormColumnStyled,
     RegistrationFormItemStyled,
@@ -18,7 +23,6 @@ import ErrorPopup from 'components/Forms/Lib/ErrorPopup';
 import Form from 'components/Forms/Form';
 import FormLine from 'components/Forms/Lib/FormLine';
 import FormLineError from 'components/Forms/Lib/FormLineError';
-import { getRegistrationAfterOrderFormResolver } from './RegistrationAfterOrderFormResolver';
 import { getUserFriendlyErrors } from 'connectors/lib/friendlyErrorMessageParser';
 import { showErrorMessage } from 'components/Helpers/Toasts';
 import TextInput from 'components/Forms/TextInput';
@@ -27,16 +31,8 @@ import { useHandleErrorPopupVisibility } from 'hooks/forms/UseHandleErrorPopupVi
 import { userActions } from 'redux/slices/user';
 import { useRegister } from 'connectors/registration/Registration';
 import { useRouter } from 'next/router';
-import { useShopsysForm } from 'hooks/forms/UseShopsysForm';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import Webline from 'components/Layout/Webline';
-
-const getRegistrationFormDefaultValues = () => {
-    return {
-        password: '',
-        privacyPolicy: false,
-    };
-};
 
 const Registration: FC = () => {
     const router = useRouter();
@@ -44,10 +40,8 @@ const Registration: FC = () => {
     const contactInformation = useShopsysSelector((state) => state.contactInformation);
     const [registerResult, register] = useRegister();
     const t = useTypedTranslationFunction();
-    const formProviderMethods = useShopsysForm<ReturnType<typeof getRegistrationFormDefaultValues>>(
-        getRegistrationAfterOrderFormResolver(t),
-        getRegistrationFormDefaultValues(),
-    );
+    const [formProviderMethods, defaultValues] = useRegistrationAfterOrderForm();
+    const formMeta = useRegistrationAfterOrderFormMeta(formProviderMethods);
     const [isErrorPopupVisible, setErrorPopupVisibility] = useHandleErrorPopupVisibility(formProviderMethods);
 
     useEffect(() => {
@@ -70,10 +64,7 @@ const Registration: FC = () => {
         }
     }, [registerResult.data, registerResult.error]);
 
-    const onRegistrationSubmitHandler: SubmitHandler<{
-        password: '';
-        privacyPolicy: false;
-    }> = async (data) => {
+    const onRegistrationSubmitHandler: SubmitHandler<RegistrationAfterOrderFormType> = async (data) => {
         await register({
             ...data,
             ...contactInformation,
@@ -115,13 +106,13 @@ const Registration: FC = () => {
                             <Form onSubmit={formProviderMethods.handleSubmit(onRegistrationSubmitHandler)} noValidate>
                                 <FormProvider {...formProviderMethods}>
                                     <Controller
-                                        name="password"
+                                        name={formMeta.fields.password.name}
                                         render={({ field, fieldState: { error, invalid, isTouched } }) => (
                                             <RegistrationFormItemStyled>
                                                 <FormLine>
                                                     <TextInput
-                                                        name={field.name}
-                                                        label={t('Password')}
+                                                        name={formMeta.fields.password.name}
+                                                        label={formMeta.fields.password.label}
                                                         type="password"
                                                         fieldRef={field}
                                                         required={true}
@@ -134,19 +125,13 @@ const Registration: FC = () => {
                                         )}
                                     />
                                     <Controller
-                                        name="privacyPolicy"
+                                        name={formMeta.fields.privacyPolicy.name}
                                         render={({ field, fieldState: { error } }) => (
                                             <RegistrationFormItemStyled>
                                                 <ChoiceFormLine>
                                                     <Checkbox
-                                                        name={field.name}
-                                                        label={
-                                                            <Trans i18nKey="I agree with terms and conditions and privacy policy">
-                                                                I agree with
-                                                                <a href="/">terms and conditions</a>
-                                                                and privacy policy
-                                                            </Trans>
-                                                        }
+                                                        name={formMeta.fields.privacyPolicy.name}
+                                                        label={formMeta.fields.privacyPolicy.label}
                                                         fieldRef={field}
                                                         required={true}
                                                     />
@@ -173,19 +158,7 @@ const Registration: FC = () => {
             <ErrorPopup
                 isVisible={isErrorPopupVisible}
                 onCloseCallback={() => setErrorPopupVisibility(false)}
-                errors={[
-                    { label: t('Password'), message: formProviderMethods.formState.errors.password?.message },
-                    {
-                        label: (
-                            <Trans i18nKey="I agree with terms and conditions and privacy policy">
-                                I agree with
-                                <a href="/">terms and conditions</a>
-                                and privacy policy
-                            </Trans>
-                        ),
-                        message: formProviderMethods.formState.errors.privacyPolicy?.message,
-                    },
-                ]}
+                fields={formMeta.fields}
             />
         </>
     );

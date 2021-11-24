@@ -16,7 +16,7 @@ type TextInputProps = NativeProps & {
     /**
      * Display Label of the HTML input element
      */
-    label: string;
+    label: string | JSX.Element;
     /**
      * A enumerator-like list of all available types of the custom TextInput element
      * @see https://www.w3schools.com/html/html_form_input_types.asp
@@ -86,7 +86,7 @@ const TextInput: FC<TextInputProps> = (props) => {
                 {...props}
                 inputState={inputState}
                 type={inputType}
-                placeholder={props.label}
+                placeholder={typeof props.label === 'string' ? props.label : ' '}
             />
             {props.type === 'password' && (
                 <PasswordVisibilityToggleStyled

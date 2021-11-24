@@ -1,4 +1,4 @@
-import { Controller, useForm, useWatch } from 'react-hook-form';
+import { Controller, FormProvider, SubmitHandler, useWatch } from 'react-hook-form';
 import { FC, useEffect, useRef, useState } from 'react';
 import {
     PromoCodeButtonIconStyled,
@@ -9,7 +9,9 @@ import {
     PromoCodeContentWrapperStyled,
     PromoCodeStyled,
 } from './PromoCode.style';
+import { PromoCodeFormType, usePromoCodeForm, usePromoCodeFormMeta } from './formMeta';
 import { CSSTransition } from 'react-transition-group';
+import Form from 'components/Forms/Form';
 import { loadCart } from 'connectors/cart/Cart';
 import PromoCodeInfo from './PromoCodeInfo';
 import { showSuccessMessage } from 'components/Helpers/Toasts';
@@ -25,15 +27,16 @@ const PromoCode: FC = () => {
     const [contentElementHeight, setContentElementHeight] = useState(0);
     const contentElement = useRef<HTMLDivElement>(null);
     const cssTransitionRef = useRef<HTMLDivElement>(null);
-    const formProviderMethods = useForm({ defaultValues: { promoCode: promoCode === null ? '' : promoCode } });
-    const promoCodeValue = useWatch({ name: 'promoCode', control: formProviderMethods.control });
+    const [formProviderMethods, defaultValues] = usePromoCodeForm();
+    const formMeta = usePromoCodeFormMeta(formProviderMethods);
+    const promoCodeValue = useWatch({ name: formMeta.fields.promoCode.name, control: formProviderMethods.control });
 
     useEffect(() => {
         if (result.data === undefined || updatedPromoCode === promoCode || updatedPromoCode === null) {
             return;
         }
         if (result.data.cart !== null && result.error === undefined) {
-            showSuccessMessage(t('Promo code was added to the order.'));
+            showSuccessMessage(formMeta.messages.success);
         }
     }, [result.data]);
 
@@ -43,12 +46,13 @@ const PromoCode: FC = () => {
         }
     };
 
-    const onApplyPromoCodeHandler = (promoCode: string) => {
-        updatePromoCode(promoCode);
+    const onApplyPromoCodeHandler: SubmitHandler<PromoCodeFormType> = (data, event) => {
+        event?.preventDefault();
+        updatePromoCode(data.promoCode);
     };
 
     const onRemovePromoCodeHandler = () => {
-        formProviderMethods.setValue('promoCode', '');
+        formProviderMethods.setValue(formMeta.fields.promoCode.name, defaultValues.promoCode);
         updatePromoCode(null);
     };
 
@@ -73,32 +77,39 @@ const PromoCode: FC = () => {
                     >
                         <PromoCodeContentWrapperStyled ref={cssTransitionRef}>
                             <PromoCodeContentStyled ref={contentElement}>
-                                <Controller
-                                    name="promoCode"
-                                    control={formProviderMethods.control}
-                                    render={({ field }) => (
-                                        <>
-                                            <PromoCodeContentInputStyled
-                                                type="text"
-                                                id={field.name}
-                                                label={t('Coupon')}
-                                                fieldRef={field}
-                                                style={{ width: '100%', marginBottom: '0' }}
-                                            />
-                                            <PromoCodeContentButtonStyled
-                                                type="submit"
-                                                isDisabled={
-                                                    (typeof field.value === 'string' && field.value.length === 0) ||
-                                                    result.fetching ||
-                                                    promoCodeValue === updatedPromoCode
-                                                }
-                                                onClick={() => onApplyPromoCodeHandler(field.value as string)}
-                                            >
-                                                {t('Apply')}
-                                            </PromoCodeContentButtonStyled>
-                                        </>
-                                    )}
-                                />
+                                <FormProvider {...formProviderMethods}>
+                                    <Form
+                                        onSubmit={formProviderMethods.handleSubmit(onApplyPromoCodeHandler)}
+                                        noValidate
+                                        style={{ display: 'flex' }}
+                                    >
+                                        <Controller
+                                            name={formMeta.fields.promoCode.name}
+                                            control={formProviderMethods.control}
+                                            render={({ field }) => (
+                                                <>
+                                                    <PromoCodeContentInputStyled
+                                                        type="text"
+                                                        id={formMeta.formName + '-' + formMeta.fields.promoCode.name}
+                                                        label={formMeta.fields.promoCode.label}
+                                                        fieldRef={field}
+                                                        style={{ width: '100%', marginBottom: '0' }}
+                                                    />
+                                                    <PromoCodeContentButtonStyled
+                                                        type="submit"
+                                                        isDisabled={
+                                                            !formProviderMethods.formState.isValid ||
+                                                            result.fetching ||
+                                                            promoCodeValue === updatedPromoCode
+                                                        }
+                                                    >
+                                                        {t('Apply')}
+                                                    </PromoCodeContentButtonStyled>
+                                                </>
+                                            )}
+                                        />
+                                    </Form>
+                                </FormProvider>
                             </PromoCodeContentStyled>
                         </PromoCodeContentWrapperStyled>
                     </CSSTransition>

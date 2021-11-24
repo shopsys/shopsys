@@ -1,4 +1,8 @@
-import { Controller, useWatch } from 'react-hook-form';
+import {
+    ContactInformationFormType,
+    useContactInformationFormMeta,
+} from 'components/Pages/Order/ContactInformation/formMeta';
+import { Controller, useFormContext, useWatch } from 'react-hook-form';
 import { contactInformationActions } from 'redux/slices/contactInformation';
 import { FC } from 'react';
 import FormLine from 'components/Forms/Lib/FormLine';
@@ -11,22 +15,29 @@ import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslatio
 const ContactInformationCompany: FC = () => {
     const dispatch = useShopsysDispatch();
     const t = useTypedTranslationFunction();
-    const companyNameValue = useWatch({ name: 'companyName' });
-    const companyNumberValue = useWatch({ name: 'companyNumber' });
-    const companyTaxNumberValue = useWatch({ name: 'companyTaxNumber' });
+    const formProviderMethods = useFormContext<ContactInformationFormType>();
+    const formMeta = useContactInformationFormMeta(formProviderMethods);
+    const [companyNameValue, companyNumberValue, companyTaxNumberValue] = useWatch({
+        name: [
+            formMeta.fields.companyName.name,
+            formMeta.fields.companyNumber.name,
+            formMeta.fields.companyTaxNumber.name,
+        ],
+        control: formProviderMethods.control,
+    });
 
     return (
         <>
             <Heading type="h3">{t('Company data')}</Heading>
             <FormLine bottomGap={true} lg="65%">
                 <Controller
-                    name="companyName"
+                    name={formMeta.fields.companyName.name}
                     render={({ fieldState: { isTouched, invalid, error }, field }) => (
                         <>
                             <TextInput
-                                id="contactInformation_form-companyName"
-                                name="companyName"
-                                label={t('Company name')}
+                                id={formMeta.formName + '-' + formMeta.fields.companyName.name}
+                                name={formMeta.fields.companyName.name}
+                                label={formMeta.fields.companyName.label}
                                 required={true}
                                 type="text"
                                 isTouched={isTouched}
@@ -44,13 +55,13 @@ const ContactInformationCompany: FC = () => {
 
             <FormLine bottomGap={true} lg="65%">
                 <Controller
-                    name="companyNumber"
+                    name={formMeta.fields.companyNumber.name}
                     render={({ fieldState: { isTouched, invalid, error }, field }) => (
                         <>
                             <TextInput
-                                id="contactInformation_form-companyNumber"
-                                name="companyNumber"
-                                label={t('Company number')}
+                                id={formMeta.formName + '-' + formMeta.fields.companyNumber.name}
+                                name={formMeta.fields.companyNumber.name}
+                                label={formMeta.fields.companyNumber.label}
                                 required={true}
                                 type="text"
                                 isTouched={isTouched}
@@ -68,13 +79,13 @@ const ContactInformationCompany: FC = () => {
 
             <FormLine bottomGap={true} lg="65%">
                 <Controller
-                    name="companyTaxNumber"
+                    name={formMeta.fields.companyTaxNumber.name}
                     render={({ fieldState: { isTouched, invalid, error }, field }) => (
                         <>
                             <TextInput
-                                id="contactInformation_form-companyTaxNumber"
-                                name="companyTaxNumber"
-                                label={t('Tax number')}
+                                id={formMeta.formName + '-' + formMeta.fields.companyTaxNumber.name}
+                                name={formMeta.fields.companyTaxNumber.name}
+                                label={formMeta.fields.companyTaxNumber.label}
                                 type="text"
                                 isTouched={isTouched}
                                 hasError={invalid}

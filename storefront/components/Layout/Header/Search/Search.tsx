@@ -7,6 +7,7 @@ import {
     SearchStyled,
     SearchTextInputStyled,
 } from './Search.style';
+import { SearchFormType, useSearchForm, useSearchFormMeta } from './formMeta';
 import Autocomplete from './Autocomplete';
 import { getSearch } from 'connectors/search/Search';
 import Icon from 'components/Basic/Icon';
@@ -14,15 +15,13 @@ import { SearchType } from 'connectors/search/types';
 import useDebounce from 'hooks/helpers/UseDebounce';
 import { useGetInternationalizedStaticUrls } from 'hooks/staticUrls/UseGetInternationalizedStaticUrls';
 import { useRouter } from 'next/router';
-import { useShopsysForm } from 'hooks/forms/UseShopsysForm';
 import { useShopsysSelector } from 'redux/main';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 
 const Search: FC = () => {
     const router = useRouter();
-    const t = useTypedTranslationFunction();
-    const formProviderMethods = useShopsysForm(undefined, { searchQuery: '' });
-    const searchQueryValue = useWatch({ name: 'searchQuery', control: formProviderMethods.control });
+    const [formProviderMethods] = useSearchForm();
+    const formMeta = useSearchFormMeta(formProviderMethods);
+    const searchQueryValue = useWatch({ name: formMeta.fields.searchQuery.name, control: formProviderMethods.control });
     const debouncedSearchQuery = useDebounce(searchQueryValue, 200);
     const [hasSearchFocus, setSearchFocus] = useState(false);
     const searchApiResults = getSearch(debouncedSearchQuery);
@@ -32,10 +31,10 @@ const Search: FC = () => {
     const [searchUrl] = useGetInternationalizedStaticUrls(['/search'], domainUrl);
 
     useEffect(() => {
-        if (searchQueryValue.length < 3) {
-            setSearchResults(undefined);
-        } else {
+        if (formProviderMethods.formState.isValid) {
             setSearchResults(searchApiResults);
+        } else {
+            setSearchResults(undefined);
         }
     }, [JSON.stringify(searchApiResults), searchQueryValue]);
 
@@ -63,7 +62,7 @@ const Search: FC = () => {
         }
     };
 
-    const onSearchSubmitHandler: SubmitHandler<{ searchQuery: string }> = (data, event) => {
+    const onSearchSubmitHandler: SubmitHandler<SearchFormType> = (_data, event) => {
         event?.preventDefault();
         router.push({ pathname: searchUrl, query: { q: searchQueryValue } });
     };
@@ -79,16 +78,16 @@ const Search: FC = () => {
                         <FormProvider {...formProviderMethods}>
                             <Controller
                                 control={formProviderMethods.control}
-                                name="searchQuery"
+                                name={formMeta.fields.searchQuery.name}
                                 render={({ field }) => (
                                     <SearchTextInputStyled
+                                        id={formMeta.formName + '-' + formMeta.fields.searchQuery.name}
+                                        name={formMeta.fields.searchQuery.name}
                                         type="search"
                                         placeholderType="static"
                                         inputSize="small"
-                                        id="search"
                                         variant="searchInHeader"
-                                        name="search"
-                                        label={t("Type what you're looking for")}
+                                        label={formMeta.fields.searchQuery.label}
                                         fieldRef={field}
                                         isSearchButtonDisabled={searchResults === undefined}
                                     />
@@ -96,7 +95,7 @@ const Search: FC = () => {
                             />
                             {hasSearchFocus && searchQueryValue.length > 0 && (
                                 <RemoveSearchButtonStyled
-                                    onClick={() => formProviderMethods.setValue('searchQuery', '')}
+                                    onClick={() => formProviderMethods.setValue(formMeta.fields.searchQuery.name, '')}
                                 >
                                     <Icon iconType="icon" icon="Remove" />
                                 </RemoveSearchButtonStyled>

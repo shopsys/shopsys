@@ -1,4 +1,3 @@
-import * as Yup from 'yup';
 import { Controller, FormProvider, SubmitHandler } from 'react-hook-form';
 import {
     NewsletterFormButtonWrapperStyled,
@@ -6,6 +5,7 @@ import {
     NewsletterFormInputWrapperStyled,
     NewsletterFormWrapperStyled,
 } from './NewsletterForm.style';
+import { NewsletterFormType, useNewsletterForm, useNewsletterFormMeta } from './formMeta';
 import Button from 'components/Forms/Button';
 import Checkbox from 'components/Forms/Checkbox';
 import ChoiceFormLine from 'components/Forms/Lib/ChoiceFormLine';
@@ -17,23 +17,11 @@ import FormLineError from 'components/Forms/Lib/FormLineError';
 import Heading from 'components/Basic/Heading';
 import { showSuccessMessage } from 'components/Helpers/Toasts';
 import TextInput from 'components/Forms/TextInput';
-import { TFunction } from 'next-i18next';
 import { useHandleErrorPopupVisibility } from 'hooks/forms/UseHandleErrorPopupVisibility';
 import { useHandleFormErrors } from 'hooks/forms/UseHandleFormErrors';
 import { useHandleFormSuccessfulSubmit } from 'hooks/forms/UseHandleFormSuccessfulSubmit';
 import { useNewsletterSubscribeMutationApi } from 'graphql/generated';
-import { useShopsysForm } from 'hooks/forms/UseShopsysForm';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
-import { yupResolver } from '@hookform/resolvers/yup';
-
-const getNewsletterFormResolver = (t: TFunction) => {
-    return yupResolver(
-        Yup.object().shape({
-            email: Yup.string().required(t('This field is required')).email(t('This value is not a valid email')),
-            privacyPolicy: Yup.bool().oneOf([true], t('You have to agree with our privacy policy')),
-        }),
-    );
-};
 
 /**
  * Newsletter form block, which is displayed in the Footer section and serves as
@@ -42,21 +30,19 @@ const getNewsletterFormResolver = (t: TFunction) => {
 const NewsletterForm: FC = () => {
     const t = useTypedTranslationFunction();
     const [subscribeToNewsletterResult, subscribeToNewsletter] = useNewsletterSubscribeMutationApi();
-    const formProviderMethods = useShopsysForm(getNewsletterFormResolver(t), { email: '', privacyPolicy: false });
+    const [formProviderMethods, defaultValues] = useNewsletterForm();
+    const formMeta = useNewsletterFormMeta(formProviderMethods);
     const [isErrorPopupVisible, setErrorPopupVisibility] = useHandleErrorPopupVisibility(formProviderMethods);
-    useHandleFormErrors(subscribeToNewsletterResult.error, formProviderMethods, t('Could not subscribe to newsletter'));
+    useHandleFormErrors(subscribeToNewsletterResult.error, formProviderMethods, formMeta.messages.error);
     useHandleFormSuccessfulSubmit(
         subscribeToNewsletterResult,
         formProviderMethods,
-        { email: '', privacyPolicy: false },
-        () => showSuccessMessage(t('You have successfully subscribed to our newsletter')),
+        defaultValues,
+        () => showSuccessMessage(formMeta.messages.success),
         { blur: true, reset: true },
     );
 
-    const onSubscribeToNewsletterHandler: SubmitHandler<{ email: string; privacyPolicy: boolean }> = async (
-        data,
-        event,
-    ) => {
+    const onSubscribeToNewsletterHandler: SubmitHandler<NewsletterFormType> = async (data, event) => {
         event?.preventDefault();
         await subscribeToNewsletter(data);
     };
@@ -71,13 +57,13 @@ const NewsletterForm: FC = () => {
                             <NewsletterFormInputWrapperStyled>
                                 <FormLine>
                                     <Controller
-                                        name="email"
+                                        name={formMeta.fields.email.name}
                                         render={({ fieldState: { isTouched, invalid, error }, field }) => (
                                             <>
                                                 <TextInput
-                                                    id="newsletter_form-email"
-                                                    name="email"
-                                                    label={t('email')}
+                                                    id={formMeta.formName + '-' + formMeta.fields.email.name}
+                                                    name={formMeta.fields.email.name}
+                                                    label={formMeta.fields.email.label}
                                                     required={true}
                                                     type="text"
                                                     inputSize="small"
@@ -106,13 +92,13 @@ const NewsletterForm: FC = () => {
                             </NewsletterFormInputWrapperStyled>
                             <ChoiceFormLine>
                                 <Controller
-                                    name="privacyPolicy"
+                                    name={formMeta.fields.privacyPolicy.name}
                                     render={({ fieldState: { isTouched, invalid, error }, field }) => (
                                         <>
                                             <Checkbox
-                                                id="newsletter_form-privacyPolicy"
-                                                name={field.name}
-                                                label={t('I take note of the processing of personal data')}
+                                                id={formMeta.formName + '-' + formMeta.fields.privacyPolicy.name}
+                                                name={formMeta.fields.privacyPolicy.name}
+                                                label={formMeta.fields.privacyPolicy.label}
                                                 required={true}
                                                 isTouched={isTouched}
                                                 hasError={invalid}
@@ -130,13 +116,7 @@ const NewsletterForm: FC = () => {
             <ErrorPopup
                 isVisible={isErrorPopupVisible}
                 onCloseCallback={() => setErrorPopupVisibility(false)}
-                errors={[
-                    { label: t('Your email'), message: formProviderMethods.formState.errors.email?.message },
-                    {
-                        label: t('I take note of the processing of personal data'),
-                        message: formProviderMethods.formState.errors.privacyPolicy?.message,
-                    },
-                ]}
+                fields={formMeta.fields}
             />
         </>
     );

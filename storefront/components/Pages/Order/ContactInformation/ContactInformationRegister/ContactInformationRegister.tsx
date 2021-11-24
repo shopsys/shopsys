@@ -1,4 +1,8 @@
-import { Controller, useWatch } from 'react-hook-form';
+import {
+    ContactInformationFormType,
+    useContactInformationFormMeta,
+} from 'components/Pages/Order/ContactInformation/formMeta';
+import { Controller, useFormContext, useWatch } from 'react-hook-form';
 import Checkbox from 'components/Forms/Checkbox';
 import ChoiceFormLine from 'components/Forms/Lib/ChoiceFormLine';
 import { contactInformationActions } from 'redux/slices/contactInformation';
@@ -14,21 +18,24 @@ import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslatio
 const ContactInformationRegister: FC = () => {
     const dispatch = useShopsysDispatch();
     const t = useTypedTranslationFunction();
-    const registerValue = useWatch({ name: 'register' });
-    const passwordFirstValue = useWatch({ name: 'passwordFirst' });
-    const passwordSecondValue = useWatch({ name: 'passwordSecond' });
+    const formProviderMethods = useFormContext<ContactInformationFormType>();
+    const formMeta = useContactInformationFormMeta(formProviderMethods);
+    const [registerValue, passwordFirstValue, passwordSecondValue] = useWatch({
+        name: [formMeta.fields.register.name, formMeta.fields.passwordFirst.name, formMeta.fields.passwordSecond.name],
+        control: formProviderMethods.control,
+    });
 
     return (
         <>
             <ChoiceFormLine>
                 <Controller
-                    name="register"
+                    name={formMeta.fields.register.name}
                     render={({ field }) => (
                         <Checkbox
-                            name={field.name}
+                            id={formMeta.formName + '-' + formMeta.fields.register.name}
+                            name={formMeta.fields.register.name}
                             fieldRef={field}
-                            id="contactInformation_form-register"
-                            label={t('I want to register with an order')}
+                            label={formMeta.fields.register.label}
                         />
                     )}
                 />
@@ -39,13 +46,13 @@ const ContactInformationRegister: FC = () => {
                     <FormColumn lg="65%">
                         <FormLine bottomGap={true} width="100%" lg="50%">
                             <Controller
-                                name="passwordFirst"
+                                name={formMeta.fields.passwordFirst.name}
                                 render={({ fieldState: { isTouched, invalid, error }, field }) => (
                                     <>
                                         <TextInput
-                                            id="contactInformation_form-passwordFirst"
-                                            name="passwordFirst"
-                                            label={t('Password')}
+                                            id={formMeta.formName + '-' + formMeta.fields.passwordFirst.name}
+                                            name={formMeta.fields.passwordFirst.name}
+                                            label={formMeta.fields.passwordFirst.label}
                                             required={true}
                                             type="password"
                                             isTouched={isTouched}
@@ -62,13 +69,13 @@ const ContactInformationRegister: FC = () => {
                         </FormLine>
                         <FormLine bottomGap={true} width="100%" lg="50%">
                             <Controller
-                                name="passwordSecond"
+                                name={formMeta.fields.passwordSecond.name}
                                 render={({ fieldState: { isTouched, invalid, error }, field }) => (
                                     <>
                                         <TextInput
-                                            id="contactInformation_form-passwordSecond"
-                                            name="passwordSecond"
-                                            label={t('Password again')}
+                                            id={formMeta.formName + '-' + formMeta.fields.passwordSecond.name}
+                                            name={formMeta.fields.passwordSecond.name}
+                                            label={formMeta.fields.passwordSecond.label}
                                             required={true}
                                             type="password"
                                             isTouched={isTouched}

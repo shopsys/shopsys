@@ -2,6 +2,10 @@ import {
     ContactInformationContentSectionStyled,
     ContactInformationContentStyled,
 } from './ContactInformationContent.style';
+import {
+    ContactInformationFormType,
+    useContactInformationFormMeta,
+} from 'components/Pages/Order/ContactInformation/formMeta';
 import { FC, useRef, useState } from 'react';
 import { useFormContext, useWatch } from 'react-hook-form';
 import ContactInformationAddress from 'components/Pages/Order/ContactInformation/ContactInformationAddress';
@@ -20,8 +24,9 @@ const ContactInformationContent: FC<ContactInformationContent> = (props) => {
     const contentElement = useRef<HTMLDivElement>(null);
     const cssTransitionRef = useRef<HTMLDivElement>(null);
     const [contentElementHeight, setContentElementHeight] = useState(0);
-    const { control } = useFormContext();
-    const customerValue = useWatch({ name: 'customer', control });
+    const formProviderMethods = useFormContext<ContactInformationFormType>();
+    const formMeta = useContactInformationFormMeta(formProviderMethods);
+    const customerValue = useWatch({ name: formMeta.fields.customer.name, control: formProviderMethods.control });
 
     const calcHeight = () => {
         if (contentElement.current) {
@@ -47,7 +52,7 @@ const ContactInformationContent: FC<ContactInformationContent> = (props) => {
                         </ContactInformationContentSectionStyled>
 
                         <ContactInformationContentSectionStyled>
-                            <ContactInformationCustomer currentValue={customerValue} />
+                            <ContactInformationCustomer />
                         </ContactInformationContentSectionStyled>
 
                         <ContactInformationContentSectionStyled>

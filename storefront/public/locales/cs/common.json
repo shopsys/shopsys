@@ -189,5 +189,8 @@
     "Successfully logged in": "Byli jste úspěšně přihlášeni",
     "Successfully logged out": "Byli jste úspěšně odhlášeni",
     "My account": "Můj účet",
-    "Products mentioned in this article": "V článku najdete tyto produkty"
+    "Products mentioned in this article": "V článku najdete tyto produkty",
+    "Please select transport": "Zvolte prosím způsob dopravy",
+    "Please select transport with a personal pickup place": "Zvolte prosím dopravu spolu s odběrným místem",
+    "Please select payment": "Zvolte prosím způsob platby"
 }
