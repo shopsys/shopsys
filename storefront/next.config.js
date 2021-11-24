@@ -53,6 +53,7 @@ module.exports = {
                 '/reset-password': '/zapomenute-heslo',
                 '/order-confirmation': '/potvrzeni-objednavky',
                 '/stores': '/obchodni-domy',
+                '/brands-overview': '/prehled-znacek',
             },
             ['http://' + process.env.ACCEPTANCE_DOMAIN_HOST + '/']: {
                 '/search': '/hledani',
@@ -71,6 +72,7 @@ module.exports = {
                 '/reset-password': '/zapomenute-heslo',
                 '/order-confirmation': '/potvrdenie-objednavky',
                 '/stores': '/obchodne-domy',
+                '/brands-overview': '/prehled-znacek',
             },
         },
     },
@@ -105,6 +107,10 @@ module.exports = {
                 source: '/obchodni-domy',
                 destination: '/stores',
             },
+            {
+                source: '/prehled-znacek',
+                destination: '/brands-overview',
+            },
             // Slovak URLs
             {
                 source: '/hladanie',
@@ -133,6 +139,10 @@ module.exports = {
             {
                 source: '/obchodne-domy',
                 destination: '/stores',
+            },
+            {
+                source: '/prehled-znacek',
+                destination: '/brands-overview',
             },
         ];
     },

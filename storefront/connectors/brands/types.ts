@@ -7,6 +7,7 @@ export type SimpleBrandType = {
 };
 
 export type ListedBrandType = {
+    uuid: string;
     name: string;
     slug: string;
     image: ImageType | null;

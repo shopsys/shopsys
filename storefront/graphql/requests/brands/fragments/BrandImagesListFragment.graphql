@@ -1,5 +1,5 @@
 fragment BrandImagesListFragment on Brand {
-    images {
+    images (sizes: ["default"]) {
         ...ImageSizesFragment
     }
 }
