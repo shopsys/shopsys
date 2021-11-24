@@ -6,9 +6,10 @@ namespace App\Model\Blog\Article\Elasticsearch;
 
 use App\Component\Breadcrumb\BreadcrumbFacade;
 use App\Model\Blog\Article\BlogArticle;
+use App\Model\Blog\Article\BlogArticleFacade;
 use App\Model\Blog\Article\BlogArticleRepository;
 use App\Model\Blog\Category\BlogCategory;
-use App\Model\Product\Product;
+use App\Model\Product\ProductFacade;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query\Expr\Join;
@@ -27,6 +28,11 @@ class BlogArticleExportRepository
     private BlogArticleRepository $blogArticleRepository;
 
     /**
+     * @var \App\Model\Blog\Article\BlogArticleFacade
+     */
+    private BlogArticleFacade $blogArticleFacade;
+
+    /**
      * @var \App\Component\Router\FriendlyUrl\FriendlyUrlFacade
      */
     private FriendlyUrlFacade $friendlyUrlFacade;
@@ -37,21 +43,32 @@ class BlogArticleExportRepository
     private BreadcrumbFacade $breadcrumbFacade;
 
     /**
+     * @var \App\Model\Product\ProductFacade
+     */
+    private ProductFacade $productFacade;
+
+    /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \App\Model\Blog\Article\BlogArticleRepository $blogArticleRepository
+     * @param \App\Model\Blog\Article\BlogArticleFacade $blogArticleFacade
      * @param \App\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
      * @param \App\Component\Breadcrumb\BreadcrumbFacade $breadcrumbFacade
+     * @param \App\Model\Product\ProductFacade $productFacade
      */
     public function __construct(
         EntityManagerInterface $em,
         BlogArticleRepository $blogArticleRepository,
+        BlogArticleFacade $blogArticleFacade,
         FriendlyUrlFacade $friendlyUrlFacade,
-        BreadcrumbFacade $breadcrumbFacade
+        BreadcrumbFacade $breadcrumbFacade,
+        ProductFacade $productFacade
     ) {
         $this->blogArticleRepository = $blogArticleRepository;
         $this->friendlyUrlFacade = $friendlyUrlFacade;
         $this->em = $em;
         $this->breadcrumbFacade = $breadcrumbFacade;
+        $this->productFacade = $productFacade;
+        $this->blogArticleFacade = $blogArticleFacade;
     }
 
     /**
@@ -141,8 +158,26 @@ class BlogArticleExportRepository
             'slug' => $this->friendlyUrlFacade->getAllSlugsByRouteNameAndEntityId($domainId, 'front_blogarticle_detail', $blogArticle->getId()),
             'categories' => array_map(fn (BlogCategory $blogCategory) => $blogCategory->getId(), $blogArticleCategories),
             'mainSlug' => $mainFriendlyUrl->getSlug(),
-            'products' => array_map(fn (Product $product) => $product->getId(), $blogArticle->getProducts()),
+            'products' => $this->extractProductsFromDescription($blogArticle->getDescription($locale)),
             'breadcrumb' => $this->breadcrumbFacade->getBreadcrumbOnDomain($blogArticle->getId(), 'front_blogarticle_detail', $domainId, $locale),
         ];
+    }
+
+    /**
+     * @param string|null $description
+     * @return int[]
+     */
+    private function extractProductsFromDescription(?string $description): array
+    {
+        $productCatnums = $this->blogArticleFacade->getProductCatnumsFromDescription($description);
+
+        $products = $this->productFacade->findAllByCatnums($productCatnums);
+
+        $productIds = [];
+        foreach ($products as $product) {
+            $productIds[] = $product->getId();
+        }
+
+        return $productIds;
     }
 }
