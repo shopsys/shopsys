@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from 'react';
+import { FC, useEffect } from 'react';
 import { FilterFormType, FilterOptionsType } from './types';
 import { FormProvider, useFieldArray, useWatch } from 'react-hook-form';
 import { useShopsysDispatch, useShopsysSelector } from 'redux/main';
@@ -7,11 +7,10 @@ import FilterGroupInStock from './FilterGroupInStock';
 import FilterGroupParameters from './FilterGroupParameters';
 import FilterGroupPrice from './FilterGroupPrice';
 import { FilterStyled } from './Filter.style';
-import { userActions } from 'redux/slices/user';
 import Form from 'components/Forms/Form';
-import { optionsFilterActions } from 'redux/slices/optionsFilter';
 import SelectedParameters from './SelectedParameters';
 import { useComponentUpdate } from 'hooks/helpers/UseComponentUpdate';
+import { userActions } from 'redux/slices/user';
 import { useRouter } from 'next/router';
 import { useShopsysForm } from 'hooks/forms/UseShopsysForm';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
@@ -25,7 +24,6 @@ const Filter: FC<FilterProps> = (props) => {
     const router = useRouter();
     const t = useTypedTranslationFunction();
     const dispatch = useShopsysDispatch();
-    const [isNotFirstRender, setIsNotFirstRender] = useState(false);
     const parametersFilterState = useShopsysSelector((state) => state.user.parametersFilter);
 
     const getBrandsValues =
@@ -79,64 +77,70 @@ const Filter: FC<FilterProps> = (props) => {
     const minimalPriceValue = useWatch({ name: 'minimalPrice', control: formProviderMethods.control });
     const maximalPriceValue = useWatch({ name: 'maximalPrice', control: formProviderMethods.control });
 
-    useEffect(() => {
-        if (isNotFirstRender) {
-            const parameters = parametersValue
-                .filter((item) => item.values.some((itemChild) => itemChild.checked === true))
-                .map((item) => ({
-                    parameter: item.parameterUuid,
-                    values: item.values.filter((item) => item.checked === true).map((item) => item.uuid),
-                }));
+    useComponentUpdate(() => {
+        const parameters = [];
 
-            dispatch(userActions.setParametersFilter(parameters));
-        } else {
-            setIsNotFirstRender(true);
+        for (const parameter of parametersValue) {
+            const checkedValues = [];
+
+            for (const value of parameter.values) {
+                if (value.checked) {
+                    checkedValues.push(value.uuid);
+                }
+            }
+
+            if (checkedValues.length === 0) {
+                continue;
+            }
+
+            parameters.push({ parameter: parameter.parameterUuid, values: checkedValues });
         }
+
+        dispatch(userActions.setParametersFilter(parameters));
     }, [parametersValue]);
 
-    useEffect(() => {
-        if (isNotFirstRender) {
-            const brands = brandsValue.filter((item) => item.checked === true).map((item) => item.uuid);
+    useComponentUpdate(() => {
+        const brands = brandsValue.reduce(function (result: string[], brand) {
+            if (brand.checked === true) {
+                result.push(brand.uuid);
+            }
+            return result;
+        }, []);
 
-            dispatch(userActions.setBrandsFilter(brands));
-        } else {
-            setIsNotFirstRender(true);
-        }
+        dispatch(userActions.setBrandsFilter(brands));
     }, [brandsValue]);
 
-    useEffect(() => {
-        if (isNotFirstRender) {
-            const flags = flagsValue.filter((item) => item.checked === true).map((item) => item.uuid);
+    useComponentUpdate(() => {
+        const flags = flagsValue.reduce(function (result: string[], flag) {
+            if (flag.checked === true) {
+                result.push(flag.uuid);
+            }
+            return result;
+        }, []);
 
-            dispatch(userActions.setFlagsFilter(flags));
-        } else {
-            setIsNotFirstRender(true);
-        }
+        dispatch(userActions.setFlagsFilter(flags));
     }, [flagsValue]);
 
-    useEffect(() => {
-        if (isNotFirstRender) {
-            dispatch(userActions.setOnlyInStockFilter(onlyInStockValue));
-        } else {
-            setIsNotFirstRender(true);
-        }
+    useComponentUpdate(() => {
+        dispatch(userActions.setOnlyInStockFilter(onlyInStockValue));
     }, [onlyInStockValue]);
 
-    useEffect(() => {
-        if (isNotFirstRender) {
-            dispatch(userActions.setMinimalPriceFilter(minimalPriceValue));
-        } else {
-            setIsNotFirstRender(true);
-        }
+    useComponentUpdate(() => {
+        dispatch(userActions.setMinimalPriceFilter(minimalPriceValue));
     }, [minimalPriceValue]);
 
-    useEffect(() => {
-        if (isNotFirstRender) {
-            dispatch(userActions.setMaximalPriceFilter(maximalPriceValue));
-        } else {
-            setIsNotFirstRender(true);
-        }
+    useComponentUpdate(() => {
+        dispatch(userActions.setMaximalPriceFilter(maximalPriceValue));
     }, [maximalPriceValue]);
+
+    useComponentUpdate(() => {
+        formProviderMethods.setValue(`brands`, getBrandsValues);
+        formProviderMethods.setValue(`flags`, getFlagsValues);
+        formProviderMethods.setValue(`parameters`, getParametersValues);
+        formProviderMethods.setValue(`onlyInStock`, false);
+        formProviderMethods.setValue(`minimalPrice`, props.productFilterOptions.minimalPrice);
+        formProviderMethods.setValue(`maximalPrice`, props.productFilterOptions.maximalPrice);
+    }, [props.slug]);
 
     useEffect(() => {
         const queryParams = router.query;
