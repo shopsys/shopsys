@@ -12,9 +12,10 @@ export const setTokensToCookie = (
     refreshToken: string,
     context?: GetServerSidePropsContext,
 ): void => {
-    setCookie(context, 'accessToken', accessToken);
+    setCookie(context, 'accessToken', accessToken, { path: '/' });
     setCookie(context, 'refreshToken', refreshToken, {
         maxAge: 3600 * 24 * 14,
+        path: '/',
     });
 };
 
