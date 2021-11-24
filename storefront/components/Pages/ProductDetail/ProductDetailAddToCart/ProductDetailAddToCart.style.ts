@@ -1,4 +1,4 @@
-import { ButtonPrimaryStyled } from 'components/Forms/Button/Button.style';
+import { ButtonStyled } from 'components/Forms/Button/Button.style';
 import { css } from 'styled-components';
 import { styled } from 'components/Theme/main';
 
@@ -54,7 +54,7 @@ export const AddToCartButtonWrapperStyled = styled.div`
     margin-left: 10px;
 `;
 
-export const AddToCartButtonStyled = styled(ButtonPrimaryStyled)`
+export const AddToCartButtonStyled = styled(ButtonStyled)`
     ${({ theme }) => css`
         width: 100%;
 

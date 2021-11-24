@@ -61,7 +61,9 @@ const ProductDetailAddToCart: FC<ProductDetailAddToCartProps> = (props) => {
                 <AddToCartButtonsWrapperStyled>
                     <Spinbox min={1} step={1} defaultValue={1} max={props.product.stockQuantity} ref={spinboxRef} />
                     <AddToCartButtonWrapperStyled>
-                        <AddToCartButtonStyled onClick={onAddToCartHandler}>{t('Add to cart')}</AddToCartButtonStyled>
+                        <AddToCartButtonStyled onClick={onAddToCartHandler} variant="primary">
+                            {t('Add to cart')}
+                        </AddToCartButtonStyled>
                     </AddToCartButtonWrapperStyled>
                 </AddToCartButtonsWrapperStyled>
             </AddToCartFormStyled>

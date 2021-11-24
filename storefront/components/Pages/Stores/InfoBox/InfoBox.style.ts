@@ -4,11 +4,6 @@ import Icon from 'components/Basic/Icon';
 import Link from 'components/Basic/Link';
 import { styled } from 'components/Theme/main';
 
-const localVariables = {
-    ButtonCloseColor: '#4c5bfd',
-    ButtonCloseHoverColor: '#dea700',
-};
-
 export const InfoBoxStyled = styled.div`
     ${({ theme }) => css`
         position: absolute;
@@ -50,10 +45,10 @@ export const ButtonCloseStyled = styled(Icon)`
         cursor: pointer;
         transition: ${theme.transition} color;
 
-        color: ${localVariables.ButtonCloseColor};
+        color: ${theme.color.primary};
 
         &:hover {
-            color: ${localVariables.ButtonCloseHoverColor};
+            color: ${theme.color.orangeDarker};
         }
     `}
 `;
