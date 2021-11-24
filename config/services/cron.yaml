@@ -32,6 +32,10 @@ services:
         tags:
             - { name: shopsys.cron, hours: '4', minutes: '0', instanceName: export, readableName: 'Generate Sitemap' }
 
+    App\Model\ImageSitemap\ImageSitemapCronModule:
+        tags:
+            - { name: shopsys.cron, hours: '4', minutes: '10', instanceName: export, readableName: 'Generate image sitemap' }
+
     Shopsys\FrameworkBundle\Component\FileUpload\DeleteOldUploadedFilesCronModule:
         tags:
             - { name: shopsys.cron, hours: '5', minutes: '0', instanceName: service, readableName: 'Delete old temporary uploaded files' }

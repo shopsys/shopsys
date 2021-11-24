@@ -173,4 +173,12 @@ class ImageCacheFacade
     {
         return sprintf('ImageUrl:imageId-%d_type-%s_size-%s_additionalIndex-%d', $imageId, $type, $sizeName, $additionalIndex);
     }
+
+    /**
+     * @return bool
+     */
+    public function invalidateAll(): bool
+    {
+        return $this->cacheProvider->deleteAll();
+    }
 }

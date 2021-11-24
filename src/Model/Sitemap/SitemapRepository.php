@@ -7,6 +7,7 @@ namespace App\Model\Sitemap;
 use App\Model\Blog\Article\BlogArticleRepository;
 use App\Model\CategorySeo\ReadyCategorySeoMix;
 use App\Model\Stock\ProductStock;
+use App\Model\Stock\StockDomain;
 use Doctrine\ORM\Query\Expr\Join;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrl;
@@ -74,7 +75,7 @@ class SitemapRepository extends BaseSitemapRepository
         $subquery = $queryBuilder->getEntityManager()->createQueryBuilder()
             ->select('1')
             ->from(ProductStock::class, 'ps')
-            ->join('ps.stock', 's', Join::WITH, 's.domainId = :domainId')
+            ->join(StockDomain::class, 'sd', Join::WITH, 'ps.stock = sd.stock AND sd.domainId = :domainId')
             ->where('ps.product = p')
             ->having('SUM(ps.productQuantity) > 0');
 
@@ -135,7 +136,7 @@ class SitemapRepository extends BaseSitemapRepository
         $subquery = $queryBuilder->getEntityManager()->createQueryBuilder()
             ->select('1')
             ->from(ProductStock::class, 'ps')
-            ->join('ps.stock', 's', Join::WITH, 's.domainId = :domainId')
+            ->join(StockDomain::class, 'sd', Join::WITH, 'ps.stock = sd.stock AND sd.domainId = :domainId')
             ->where('ps.product = p')
             ->having('SUM(ps.productQuantity) = 0');
 

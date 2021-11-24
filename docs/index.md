@@ -11,6 +11,9 @@
 ### PHPStorm
 - [PHPStorm settings](Configuration/phpstorm-settings.md)
 
+## SEO
+- [Image sitemap](Seo/image-sitemap.md)
+
 ## Transfers
 
 - [Disabling transferred fields](Transfers/disabling-transferred-fields.md)
