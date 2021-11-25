@@ -145,6 +145,7 @@ const RangeSlider: FC<RangeSliderProps> = (props) => {
                                 type="number"
                                 inputSize={'small'}
                                 fieldRef={field}
+                                value={minValue}
                             />
                         )}
                     />
@@ -159,6 +160,7 @@ const RangeSlider: FC<RangeSliderProps> = (props) => {
                                 type="number"
                                 inputSize={'small'}
                                 fieldRef={field}
+                                value={maxValue}
                             />
                         )}
                     />

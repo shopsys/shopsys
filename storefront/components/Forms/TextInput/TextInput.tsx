@@ -54,6 +54,10 @@ type TextInputProps = NativeProps & {
      * a prop to define if the search button should be disabled
      */
     isSearchButtonDisabled?: boolean;
+    /**
+     * A prop to define custom value
+     */
+    value?: number | string;
 };
 
 /**
