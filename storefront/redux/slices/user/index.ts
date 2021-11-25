@@ -15,6 +15,7 @@ export const enabledSortTypes = [
 export type PaginationType = {
     currentPage: number;
     paginationCursor: string;
+    pageSize: number;
 };
 
 type InitialState = {
@@ -36,6 +37,7 @@ export const initialState = {
     pagination: {
         currentPage: 1,
         paginationCursor: '',
+        pageSize: 9,
     },
     canAccessOrderConfirmation: false,
 } as InitialState;

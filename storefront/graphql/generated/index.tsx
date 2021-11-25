@@ -2456,6 +2456,7 @@ export type SlugQueryVariablesApi = Exact<{
   slug: Scalars['String'];
   sortingMode?: Maybe<ProductOrderingModeEnumApi>;
   endCursorForPagination?: Maybe<Scalars['String']>;
+  pageSize?: Maybe<Scalars['Int']>;
 }>;
 
 
@@ -2849,7 +2850,11 @@ export const CategoryDetailFragmentApi = gql`
   linkedCategories {
     ...CategoryPreviewFragment
   }
-  products(orderingMode: $sortingMode, after: $endCursorForPagination) {
+  products(
+    orderingMode: $sortingMode
+    after: $endCursorForPagination
+    first: $pageSize
+  ) {
     totalCount
     pageInfo {
       ...PageInfoFragment
@@ -3313,7 +3318,7 @@ export function useSliderItemsQueryApi(options: Omit<Urql.UseQueryArgs<SliderIte
   return Urql.useQuery<SliderItemsQueryApi>({ query: SliderItemsQueryDocumentApi, ...options });
 };
 export const SlugQueryDocumentApi = gql`
-    query SlugQuery($slug: String!, $sortingMode: ProductOrderingModeEnum, $endCursorForPagination: String) {
+    query SlugQuery($slug: String!, $sortingMode: ProductOrderingModeEnum, $endCursorForPagination: String, $pageSize: Int) {
   slug(slug: $slug) {
     __typename
     ... on Product {

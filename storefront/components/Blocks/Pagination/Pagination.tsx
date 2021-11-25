@@ -30,7 +30,12 @@ const Pagination: FC<PaginationProps> = (props): JSX.Element | null => {
         () => setMobilePaginationVisible(isElementVisible([{ min: 0, max: 480 }], width)),
     );
     const paginationState = useShopsysSelector((state) => state.user.pagination);
-    const paginationButtons = usePagination(props.totalCount, paginationState.currentPage, isMobilePaginationVisible);
+    const paginationButtons = usePagination(
+        props.totalCount,
+        paginationState.currentPage,
+        isMobilePaginationVisible,
+        initialState.pagination.pageSize,
+    );
 
     if (paginationButtons === undefined || paginationButtons === null) {
         return null;
@@ -85,7 +90,11 @@ const Pagination: FC<PaginationProps> = (props): JSX.Element | null => {
                             active={paginationState.currentPage === pageButton}
                             dotButton={false}
                             onClick={() => {
-                                dispatch(userActions.setPagination({ ...getNewPagination(pageButton) }));
+                                dispatch(
+                                    userActions.setPagination({
+                                        ...getNewPagination(pageButton, initialState.pagination.pageSize),
+                                    }),
+                                );
                             }}
                         >
                             {pageButton}
