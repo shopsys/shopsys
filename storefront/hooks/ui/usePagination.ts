@@ -12,7 +12,7 @@ export const usePagination = (
     totalCount: number,
     currentPage: number,
     isMobilePaginationVisible: boolean,
-    pageSize = 10,
+    pageSize: number,
 ): number[] | null => {
     const paginationButtons = useMemo(() => {
         const lastPage = Math.ceil(totalCount / pageSize);
@@ -63,7 +63,7 @@ export const usePagination = (
         }
 
         return null;
-    }, [totalCount, currentPage, isMobilePaginationVisible]);
+    }, [totalCount, currentPage, isMobilePaginationVisible, pageSize]);
 
     return paginationButtons;
 };

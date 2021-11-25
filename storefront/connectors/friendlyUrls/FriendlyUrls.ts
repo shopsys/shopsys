@@ -14,9 +14,14 @@ export function getFriendlyUrlResolvedData(
     slug: string,
 ): ProductDetailType | CategoryDetailType | StoreDetailType | ArticleDetailType | undefined | null {
     const categoryDetailSort = useShopsysSelector((state) => state.user.sort);
-    const endCursorForPagination = useShopsysSelector((state) => state.user.pagination.paginationCursor);
+    const pagination = useShopsysSelector((state) => state.user.pagination);
     const [{ data, error }] = useSlugQueryApi({
-        variables: { slug, sortingMode: categoryDetailSort, endCursorForPagination },
+        variables: {
+            slug,
+            sortingMode: categoryDetailSort,
+            endCursorForPagination: pagination.paginationCursor,
+            pageSize: pagination.pageSize,
+        },
     });
     useQueryError(error);
     const currentDomainConfig = useShopsysSelector((state) => state.domain);

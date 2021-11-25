@@ -1,4 +1,9 @@
-query SlugQuery ($slug: String!, $sortingMode: ProductOrderingModeEnum, $endCursorForPagination: String)  {
+query SlugQuery(
+    $slug: String!
+    $sortingMode: ProductOrderingModeEnum
+    $endCursorForPagination: String
+    $pageSize: Int
+) {
     slug(slug: $slug) {
         __typename
         ... on Product {

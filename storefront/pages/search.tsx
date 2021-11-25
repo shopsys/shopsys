@@ -1,5 +1,6 @@
 import { EnrichedSearchQueryDocumentApi, NavigationQueryDocumentApi } from 'graphql/generated';
 import { FC, useEffect } from 'react';
+import { initialState, userActions } from 'redux/slices/user';
 import { initServerSideProps, ServerSidePropsType } from 'helpers/InitServerSideProps';
 import { nextReduxWrapper, useShopsysDispatch, useShopsysSelector } from 'redux/main';
 import CommonLayout from 'components/Layout/CommonLayout';
@@ -11,7 +12,6 @@ import { parsePageNumberFromQuery } from 'utils/Pagination/parsePageNumberFromQu
 import { parseProductListSortFromQuery } from 'helpers/sorting/ParseProductListSortFromQuery';
 import SearchPage from 'components/Pages/Search';
 import StaticUrlGuard from 'components/Helpers/StaticUrlGuard';
-import { userActions } from 'redux/slices/user';
 import { useRouter } from 'next/router';
 
 const Search: FC<ServerSidePropsType> = () => {
@@ -27,7 +27,11 @@ const Search: FC<ServerSidePropsType> = () => {
     }, [router.query.sort]);
 
     useEffect(() => {
-        dispatch(userActions.setPagination(getNewPagination(parsePageNumberFromQuery(router.query.page))));
+        dispatch(
+            userActions.setPagination(
+                getNewPagination(parsePageNumberFromQuery(router.query.page), initialState.pagination.pageSize),
+            ),
+        );
     }, [router.query.page]);
 
     return (
@@ -42,7 +46,11 @@ const Search: FC<ServerSidePropsType> = () => {
 export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) => async (context) => {
     initDomainConfig(context, store);
     store.dispatch(userActions.setSort(getProductListSort(parseProductListSortFromQuery(context.query.sort))));
-    store.dispatch(userActions.setPagination(getNewPagination(parsePageNumberFromQuery(context.query.page))));
+    store.dispatch(
+        userActions.setPagination(
+            getNewPagination(parsePageNumberFromQuery(context.query.page), initialState.pagination.pageSize),
+        ),
+    );
 
     return initServerSideProps(context, store, [
         { query: NavigationQueryDocumentApi },

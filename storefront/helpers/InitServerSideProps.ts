@@ -18,7 +18,7 @@ export type ServerSidePropsType = {
 export async function initServerSideProps(
     context: GetServerSidePropsContext,
     store: AppStore,
-    prefetchedQueries: { query: string | DocumentNode; variables?: { [key: string]: string } }[] = [],
+    prefetchedQueries: { query: string | DocumentNode; variables?: { [key: string]: unknown } }[] = [],
 ): Promise<GetServerSidePropsResult<ServerSidePropsType>> {
     store.dispatch(cartInputActions.setCartInputData(getCartInputCookie(context)));
     const domainConfig = store.getState().domain;

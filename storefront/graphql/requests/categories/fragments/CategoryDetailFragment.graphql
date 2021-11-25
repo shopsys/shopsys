@@ -10,7 +10,7 @@ fragment CategoryDetailFragment on Category {
     linkedCategories {
         ...CategoryPreviewFragment
     }
-    products(orderingMode: $sortingMode, after: $endCursorForPagination){
+    products(orderingMode: $sortingMode, after: $endCursorForPagination, first: $pageSize) {
         totalCount
         pageInfo {
             ...PageInfoFragment

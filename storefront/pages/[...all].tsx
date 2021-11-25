@@ -1,4 +1,5 @@
 import { FC, useEffect } from 'react';
+import { initialState, userActions } from 'redux/slices/user';
 import { initServerSideProps, ServerSidePropsType } from 'helpers/InitServerSideProps';
 import { NavigationQueryDocumentApi, SlugQueryDocumentApi } from 'graphql/generated';
 import { nextReduxWrapper, useShopsysDispatch } from 'redux/main';
@@ -19,7 +20,6 @@ import ProductDetailPage from 'components/Pages/ProductDetail';
 import { ProductDetailType } from 'components/Pages/ProductDetail/types';
 import StoreDetailPage from 'components/Pages/StoreDetail';
 import { StoreDetailType } from 'connectors/stores/types';
-import { userActions } from 'redux/slices/user';
 import { useRouter } from 'next/router';
 import Webline from 'components/Layout/Webline';
 
@@ -32,7 +32,11 @@ const FriendlyUrlPage: FC<ServerSidePropsType> = () => {
     }, [router.query.sort]);
 
     useEffect(() => {
-        dispatch(userActions.setPagination(getNewPagination(parsePageNumberFromQuery(router.query.page))));
+        dispatch(
+            userActions.setPagination(
+                getNewPagination(parsePageNumberFromQuery(router.query.page), initialState.pagination.pageSize),
+            ),
+        );
     }, [router.query.page]);
 
     const data = getFriendlyUrlResolvedData(getUrlWithoutGetParameters(router.asPath));
@@ -67,8 +71,11 @@ function renderContent(data: ProductDetailType | CategoryDetailType | StoreDetai
 export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) => async (context) => {
     initDomainConfig(context, store);
     store.dispatch(userActions.setSort(getProductListSort(parseProductListSortFromQuery(context.query.sort))));
-    store.dispatch(userActions.setPagination(getNewPagination(parsePageNumberFromQuery(context.query.page))));
-
+    store.dispatch(
+        userActions.setPagination(
+            getNewPagination(parsePageNumberFromQuery(context.query.page), initialState.pagination.pageSize),
+        ),
+    );
     return initServerSideProps(context, store, [
         { query: NavigationQueryDocumentApi },
         {
@@ -77,6 +84,7 @@ export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) =>
                 slug: getUrlWithoutGetParameters(context.resolvedUrl),
                 sortingMode: store.getState().user.sort,
                 endCursorForPagination: store.getState().user.pagination.paginationCursor,
+                pageSize: initialState.pagination.pageSize,
             },
         },
     ]);
