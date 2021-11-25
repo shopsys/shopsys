@@ -12,6 +12,7 @@ import {
 } from './SelectedParameters.style';
 import { useFormContext, useWatch } from 'react-hook-form';
 import { formatPrice } from 'utils/formatting';
+import Parameters from './Parameters';
 import { useShopsysSelector } from 'redux/main';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 
@@ -45,15 +46,6 @@ const SelectedParameters: FC<SelectedParametersProps> = (props) => {
                 parametersFilterState.maximalPrice !== null,
         );
     }, [parametersFilterState.maximalPrice]);
-
-    const onUncheckParameter = (parameterUuid: string, parameterValueUuid: string) => {
-        const indexOfParameter = parametersValue.findIndex((item) => item.parameterUuid === parameterUuid);
-        const indexOfValue = parametersValue[indexOfParameter]?.values.findIndex(
-            (item) => item.uuid === parameterValueUuid,
-        );
-
-        formProviderMethods.setValue(`parameters.${indexOfParameter}.values.${indexOfValue}.checked`, false);
-    };
 
     const onUncheckFlag = (uuid: string) => {
         const indexOfValue = flagsValue.findIndex((item) => item.uuid === uuid);
@@ -118,31 +110,7 @@ const SelectedParameters: FC<SelectedParametersProps> = (props) => {
                                 </SelectedParametersListItemStyled>
                             ))}
 
-                            {parametersFilterState.parameters.length > 0 &&
-                                parametersFilterState.parameters.map((parameterItem, parameterItemIndex) => (
-                                    <Fragment key={parameterItemIndex}>
-                                        {parametersValue
-                                            .filter(
-                                                (parameter) => parameter.parameterUuid === parameterItem.parameter,
-                                            )[0]
-                                            ?.values.filter((parameterValue) => parameterValue.checked === true)
-                                            .map((parameterValue, index) => (
-                                                <SelectedParametersListItemStyled key={index}>
-                                                    {parameterValue.text}
-                                                    <SelectedParametersListItemRemoveStyled
-                                                        iconType="icon"
-                                                        icon="RemoveThin"
-                                                        onClick={() =>
-                                                            onUncheckParameter(
-                                                                parameterItem.parameter,
-                                                                parameterValue.uuid,
-                                                            )
-                                                        }
-                                                    />
-                                                </SelectedParametersListItemStyled>
-                                            ))}
-                                    </Fragment>
-                                ))}
+                            <Parameters />
 
                             {isOnlyInStock !== false && (
                                 <SelectedParametersListItemStyled>
