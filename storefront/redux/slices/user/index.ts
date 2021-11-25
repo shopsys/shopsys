@@ -1,9 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { StoreType, TransportType } from 'connectors/transports/types';
 import { CartType } from 'connectors/cart/types';
 import { HYDRATE } from 'next-redux-wrapper';
 import { PaymentType } from 'connectors/payments/types';
+import { PickupPlaceType } from 'connectors/transports/pickupPlace/types';
 import { ProductOrderingModeEnumApi } from 'graphql/generated';
+import { TransportType } from 'connectors/transports/types';
 
 export const enabledSortTypes = [
     ProductOrderingModeEnumApi.PriorityApi,
@@ -21,7 +22,7 @@ type InitialState = {
     cart: CartType | null;
     transport: TransportType | null;
     payment: PaymentType | null;
-    personalPickupStore: StoreType | null;
+    pickupPlace: PickupPlaceType | null;
     pagination: PaginationType;
     canAccessOrderConfirmation: boolean;
 };
@@ -31,7 +32,7 @@ export const initialState = {
     cart: null,
     transport: null,
     payment: null,
-    personalPickupStore: null,
+    pickupPlace: null,
     pagination: {
         currentPage: 1,
         paginationCursor: '',
@@ -52,8 +53,8 @@ export const userSlice = createSlice({
         setTransport(state, action: PayloadAction<TransportType | null>) {
             state.transport = action.payload;
         },
-        setPersonalPickupStore(state, action: PayloadAction<StoreType | null>) {
-            state.personalPickupStore = action.payload;
+        setPickupPlace(state, action: PayloadAction<PickupPlaceType | null>) {
+            state.pickupPlace = action.payload;
         },
         setPayment(state, action: PayloadAction<PaymentType | null>) {
             state.payment = action.payload;

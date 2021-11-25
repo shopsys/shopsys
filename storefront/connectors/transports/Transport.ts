@@ -1,7 +1,7 @@
 import { mapImageSizeApiData } from 'connectors/image/size/ImageSize';
 import { mapPayment } from 'connectors/payments/Payment';
+import { mapPickupPlacesApiData } from './pickupPlace/PickupPlace';
 import { mapPriceData } from './Transports';
-import { mapStoresListApiData } from 'connectors/stores/Stores';
 import { TransportType } from './types';
 import { TransportWithAvailablePaymentsAndStoresFragmentApi } from 'graphql/generated';
 
@@ -21,15 +21,13 @@ export const mapTransport = (
                 ? mapImageSizeApiData(apiData.images[0].sizes[0])
                 : null,
         price: mapPriceData(apiData.price, currencyCode),
-        hasPersonalPickup:
-            apiData.stores !== undefined &&
-            apiData.stores !== null &&
-            Array.isArray(apiData.stores?.edges) &&
-            apiData.stores.edges.length > 0,
+        isPersonalPickup:
+            (apiData.stores?.edges !== undefined && apiData.stores.edges !== null && apiData.stores.edges.length > 0) ||
+            apiData.transportType.code === 'packetery',
         payments: apiData.payments.map((payment) => mapPayment(payment, currencyCode)),
         stores:
             apiData.stores !== undefined && apiData.stores !== null && Array.isArray(apiData.stores?.edges)
-                ? mapStoresListApiData(apiData.stores)
+                ? mapPickupPlacesApiData(apiData.stores)
                 : [],
     };
 };

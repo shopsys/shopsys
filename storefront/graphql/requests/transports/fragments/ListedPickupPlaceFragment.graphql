@@ -1,0 +1,13 @@
+fragment ListedPickupPlaceFragment on Store {
+    slug
+    uuid
+    name
+    description
+    openingHoursHtml
+    locationLatitude
+    locationLongitude
+    street
+    postcode
+    city
+    country
+}

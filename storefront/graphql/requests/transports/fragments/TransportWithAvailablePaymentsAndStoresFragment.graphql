@@ -16,8 +16,11 @@ fragment TransportWithAvailablePaymentsAndStoresFragment on Transport {
     stores {
         edges {
             node {
-                ...ListedStoreFragment
+                ...ListedPickupPlaceFragment
             }
         }
+    }
+    transportType {
+        code
     }
 }

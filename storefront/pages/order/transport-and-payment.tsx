@@ -99,7 +99,7 @@ const getTransportAndPaymentValidity = (
     transport: TransportType | null,
     paymentInput: PaymentInputType | null,
 ) => {
-    if (transport?.hasPersonalPickup) {
+    if (transport?.isPersonalPickup === true) {
         return transportInput !== null && transportInput?.pickupPlaceIdentifier !== null && paymentInput !== null;
     }
     return transportInput !== null && paymentInput !== null;

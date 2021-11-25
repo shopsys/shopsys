@@ -3,7 +3,11 @@ import { FC } from 'react';
 import { Props } from 'react-select';
 import { SelectStyled } from './Select.style';
 
-type SelectProps = ExtractNativePropsFromDefault<Props, 'options' | 'onChange', 'defaultValue' | 'value'>;
+type SelectProps = ExtractNativePropsFromDefault<
+    Props,
+    'options' | 'onChange',
+    'defaultValue' | 'value' | 'isDisabled'
+>;
 
 export type SelectOptionType = {
     value: string;

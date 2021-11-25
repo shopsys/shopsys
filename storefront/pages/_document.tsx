@@ -1,4 +1,5 @@
-import Document, { DocumentContext } from 'next/document';
+import Document, { DocumentContext, Head, Html, Main, NextScript } from 'next/document';
+import { ReactElement } from 'react';
 import { ServerStyleSheet } from 'styled-components';
 
 /**
@@ -29,5 +30,19 @@ export default class MyDocument extends Document {
         } finally {
             sheet.seal();
         }
+    }
+
+    render(): ReactElement {
+        return (
+            <Html>
+                <Head>
+                    <script src="https://widget.packeta.com/v6/www/js/library.js" />
+                </Head>
+                <body>
+                    <Main />
+                    <NextScript />
+                </body>
+            </Html>
+        );
     }
 }

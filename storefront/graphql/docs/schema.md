@@ -5707,6 +5707,15 @@ Store opening hours
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong>openingHoursHtml</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Store opening hours, newlines are rendered as HTML breakline
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong>contactInfo</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td></td>

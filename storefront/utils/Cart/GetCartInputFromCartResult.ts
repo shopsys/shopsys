@@ -1,12 +1,13 @@
 import { CartInput, CartType } from 'connectors/cart/types';
 import { mapPaymentToPaymentInput, mapTransportToTransportInput } from 'connectors/cart/Cart';
-import { StoreType, TransportType } from 'connectors/transports/types';
 import { PaymentType } from 'connectors/payments/types';
+import { PickupPlaceType } from 'connectors/transports/pickupPlace/types';
+import { TransportType } from 'connectors/transports/types';
 
 export const getCartInputFromCartResult = (resultData: {
     cart: CartType | null;
     transport: TransportType | null;
-    personalPickupStore: StoreType | null;
+    pickupPlace: PickupPlaceType | null;
     payment: PaymentType | null;
     promoCode: string | null;
 }): CartInput => {
@@ -15,7 +16,7 @@ export const getCartInputFromCartResult = (resultData: {
         transport:
             resultData.transport === null
                 ? null
-                : mapTransportToTransportInput(resultData.transport, resultData.personalPickupStore),
+                : mapTransportToTransportInput(resultData.transport, resultData.pickupPlace),
         payment: resultData.payment === null ? null : mapPaymentToPaymentInput(resultData.payment),
         promoCode: resultData.promoCode,
     };

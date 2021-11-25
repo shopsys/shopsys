@@ -1,11 +1,12 @@
-import { StoreType, TransportType } from 'connectors/transports/types';
 import { CartFragmentApi } from 'graphql/generated';
 import { CartType } from 'connectors/cart/types';
-import { getSelectedPersonalPickupStore } from 'connectors/transports/PersonalPickupStore';
+import { getSelectedPickupPlace } from 'connectors/transports/pickupPlace/PickupPlace';
 import { mapCart } from 'connectors/cart/Cart';
 import { mapPayment } from 'connectors/payments/Payment';
 import { mapTransport } from 'connectors/transports/Transport';
 import { PaymentType } from 'connectors/payments/types';
+import { PickupPlaceType } from 'connectors/transports/pickupPlace/types';
+import { TransportType } from 'connectors/transports/types';
 
 export const getValuesFromCartResult = (
     resultData: CartFragmentApi,
@@ -15,13 +16,13 @@ export const getValuesFromCartResult = (
 ): {
     cart: CartType | null;
     transport: TransportType | null;
-    personalPickupStore: StoreType | null;
+    pickupPlace: PickupPlaceType | null;
     payment: PaymentType | null;
     promoCode: string | null;
 } => {
     let cart: CartType | null = null;
     let transport: TransportType | null = null;
-    let personalPickupStore: StoreType | null = null;
+    let pickupPlace: PickupPlaceType | null = null;
     let payment: PaymentType | null = null;
     let updatedPromoCode: string | null = null;
 
@@ -41,7 +42,7 @@ export const getValuesFromCartResult = (
             resultData.transport === null || resultData.transport === undefined
                 ? null
                 : mapTransport(resultData.transport, currencyCode);
-        personalPickupStore = getSelectedPersonalPickupStore(transport, pickupPlaceIdentifier);
+        pickupPlace = getSelectedPickupPlace(transport, pickupPlaceIdentifier);
         payment =
             resultData.payment === null || resultData.payment === undefined || transport === null
                 ? null
@@ -52,7 +53,7 @@ export const getValuesFromCartResult = (
     return {
         cart,
         transport,
-        personalPickupStore,
+        pickupPlace,
         payment,
         promoCode: updatedPromoCode,
     };

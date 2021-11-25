@@ -1,10 +1,5 @@
-import {
-    StoresQueryApi,
-    TransportWithAvailablePaymentsAndStoresFragmentApi,
-    useStoresQueryApi,
-} from 'graphql/generated';
+import { StoresQueryApi, useStoresQueryApi } from 'graphql/generated';
 import { StoreListType } from 'connectors/stores/types';
-import { StoreType } from 'connectors/transports/types';
 import { useQueryError } from 'hooks/graphQl/UseQueryError';
 
 export function getStores(): StoreListType[] {
@@ -46,31 +41,6 @@ const mapStoresApiData = (data: StoresQueryApi['stores']): StoreListType[] => {
         };
 
         mappedStores.push(mappedStore);
-    }
-
-    return mappedStores;
-};
-
-export const mapStoresListApiData = (
-    storesConnectionApi: TransportWithAvailablePaymentsAndStoresFragmentApi['stores'],
-): StoreType[] => {
-    if (storesConnectionApi?.edges === undefined || storesConnectionApi.edges === null) {
-        return [];
-    }
-
-    const mappedStores = [];
-    for (const edge of storesConnectionApi.edges) {
-        if (edge?.node !== undefined && edge.node !== null) {
-            mappedStores.push({
-                ...edge.node,
-                description:
-                    edge.node.description !== undefined && edge.node.description !== null ? edge.node.description : '',
-                openingHours:
-                    edge.node.openingHours !== undefined && edge.node.openingHours !== null
-                        ? edge.node.openingHours
-                        : '',
-            });
-        }
     }
 
     return mappedStores;

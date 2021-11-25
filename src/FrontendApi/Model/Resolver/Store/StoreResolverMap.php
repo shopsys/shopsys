@@ -44,6 +44,9 @@ class StoreResolverMap extends ResolverMap
                 'slug' => function (Store $store) {
                     return $this->getSlug($store);
                 },
+                'openingHoursHtml' => function (Store $store) {
+                    return $store->getOpeningHours() !== null ? nl2br($store->getOpeningHours()) : null;
+                },
             ],
         ];
     }
