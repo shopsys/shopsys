@@ -2,10 +2,12 @@ import { ArticleDetailType } from 'connectors/article/types';
 import { BlogArticleDetailType } from 'components/Pages/BlogArticle/types';
 import { BrandDetailType } from 'connectors/brands/types';
 import { CategoryDetailType } from 'components/Pages/CategoryDetail/types';
+import { FlagDetailType } from 'connectors/flags/types';
 import { mapArticleDetailApiData } from 'connectors/article/ArticleDetail';
 import { mapBlogArticleDetailApiData } from 'connectors/blogArticle/BlogArticle';
 import { mapBrandDetailApiData } from 'connectors/brands/Brands';
 import { mapCategoryDetailData } from 'connectors/categories/Categories';
+import { mapFlagDetailApiData } from 'connectors/flags/Flags';
 import { mapProductDetailApiData } from 'connectors/products/ProductDetail';
 import { mapStoreDetailApiData } from 'connectors/stores/StoreDetail';
 import { ProductDetailType } from 'components/Pages/ProductDetail/types';
@@ -23,6 +25,7 @@ export function getFriendlyUrlResolvedData(
     | ArticleDetailType
     | BlogArticleDetailType
     | BrandDetailType
+    | FlagDetailType
     | undefined
     | null {
     const categoryDetailSort = useShopsysSelector((state) => state.user.sort);
@@ -58,6 +61,8 @@ export function getFriendlyUrlResolvedData(
         return mapBlogArticleDetailApiData(data.slug, currentDomainConfig);
     } else if (data.slug.__typename === 'Brand') {
         return mapBrandDetailApiData(data.slug, currentDomainConfig.currencyCode);
+    } else if (data.slug.__typename === 'Flag') {
+        return mapFlagDetailApiData(data.slug, currentDomainConfig.currencyCode);
     }
 
     return undefined;

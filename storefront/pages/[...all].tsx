@@ -14,6 +14,8 @@ import CategoryDetailPage from 'components/Pages/CategoryDetail';
 import { CategoryDetailType } from 'components/Pages/CategoryDetail/types';
 import CommonLayout from 'components/Layout/CommonLayout';
 import DefaultErrorPage from 'next/error';
+import FlagDetailPage from 'components/Pages/FlagDetail';
+import { FlagDetailType } from 'connectors/flags/types';
 import { getFriendlyUrlResolvedData } from 'connectors/friendlyUrls/FriendlyUrls';
 import { getNewPagination } from 'utils/Pagination/getNewPagination';
 import { getProductListSort } from 'helpers/sorting/GetProductListSort';
@@ -65,7 +67,8 @@ function renderContent(
         | StoreDetailType
         | ArticleDetailType
         | BlogArticleDetailType
-        | BrandDetailType,
+        | BrandDetailType
+        | FlagDetailType,
 ) {
     if (data.__typename === 'RegularProduct' || data.__typename === 'MainVariant' || data.__typename === 'Variant') {
         return <ProductDetailPage product={data as ProductDetailType} />;
@@ -79,6 +82,8 @@ function renderContent(
         return <BlogArticlePage blogArticle={data as BlogArticleDetailType} />;
     } else if (data.__typename === 'Brand') {
         return <BrandDetailPage brand={data as BrandDetailType} />;
+    } else if (data.__typename === 'Flag') {
+        return <FlagDetailPage flag={data as FlagDetailType} />;
     }
 
     return <DefaultErrorPage statusCode={404} />;
