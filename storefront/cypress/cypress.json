@@ -5,6 +5,7 @@
     "baseUrl": "http://webserver:8080/",
     "defaultCommandTimeout": 20000,
     "integrationFolder": "integration",
+    "fixturesFolder": "fixtures",
     "pluginsFile": "plugins/index.js",
     "screenshotsFolder": "screenshots",
     "videosFolder": "videos",
