@@ -55,9 +55,9 @@ const ContactInformationDeliveryAddress: FC = () => {
 
     useEffect(() => {
         if (countrySelectOptions.length > 0 && differentDeliveryAddressValue === true && pickupPlace === null) {
-            formProviderMethods.setValue('deliveryCountry', countrySelectOptions[0].value);
+            formProviderMethods.setValue('deliveryCountry', countrySelectOptions[0]);
         }
-    }, [countrySelectOptions, differentDeliveryAddressValue]);
+    }, [JSON.stringify(countrySelectOptions), differentDeliveryAddressValue]);
 
     const calcHeight = () => {
         if (contentElement.current) {
