@@ -10,7 +10,7 @@ import {
     FilterGroupTitleStyled,
 } from 'components/Blocks/Product/Filter/FilterGroup/FilterGroup.style';
 import Checkbox from 'components/Forms/Checkbox';
-import CheckboxColor from 'components/Forms/CheckboxColor';
+import ColorPicker from './ColorPicker';
 
 type FilterGroupParametersProps = {
     /**
@@ -82,25 +82,14 @@ const FilterGroupParameters: FC<FilterGroupParametersProps> = (props) => {
                     : props.type === FilterOptionsParameterTypeEnum.ColorPicker && (
                           <FilterGroupColorStyled>
                               {fields.map((dataItem, index) => (
-                                  <Fragment key={dataItem.id}>
-                                      <Controller
-                                          name={`parameters.${props.parameterParentIndex}.values.${index}.checked`}
-                                          render={({ field }) => (
-                                              <CheckboxColor
-                                                  name={dataItem.uuid}
-                                                  id={dataItem.uuid + props.parameterParentUuid}
-                                                  isDisabled={
-                                                      props.data?.values?.[index] !== undefined
-                                                          ? props.data.values[index].count === 0
-                                                          : dataItem.count === 0
-                                                  }
-                                                  isActive={field.value}
-                                                  bgColor={dataItem.rgbHex as string}
-                                                  fieldRef={field}
-                                              />
-                                          )}
-                                      />
-                                  </Fragment>
+                                  <ColorPicker
+                                      key={dataItem.id}
+                                      parameterParentIndex={props.parameterParentIndex}
+                                      parameterParentUuid={props.parameterParentUuid}
+                                      dataItem={dataItem}
+                                      index={index}
+                                      isDisabled={props.data?.values?.[index]?.count === 0}
+                                  />
                               ))}
                           </FilterGroupColorStyled>
                       )}

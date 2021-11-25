@@ -7,7 +7,7 @@ export type ParametersValuesType = {
     uuid: string;
     text: string;
     count: number;
-    rgbHex?: string | null;
+    rgbHex?: string;
 };
 
 export type ParametersType = {
