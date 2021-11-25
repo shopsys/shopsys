@@ -8,9 +8,9 @@ import FilterGroupParameters from './FilterGroupParameters';
 import FilterGroupPrice from './FilterGroupPrice';
 import { FilterStyled } from './Filter.style';
 import Form from 'components/Forms/Form';
+import { optionsFilterActions } from 'redux/slices/optionsFilter';
 import SelectedParameters from './SelectedParameters';
 import { useComponentUpdate } from 'hooks/helpers/UseComponentUpdate';
-import { userActions } from 'redux/slices/user';
 import { useRouter } from 'next/router';
 import { useShopsysForm } from 'hooks/forms/UseShopsysForm';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
@@ -24,7 +24,7 @@ const Filter: FC<FilterProps> = (props) => {
     const router = useRouter();
     const t = useTypedTranslationFunction();
     const dispatch = useShopsysDispatch();
-    const parametersFilterState = useShopsysSelector((state) => state.user.parametersFilter);
+    const parametersFilterState = useShopsysSelector((state) => state.optionsFilter);
 
     const getBrandsValues =
         props.productFilterOptions.brands !== null && props.productFilterOptions.brands !== undefined
@@ -96,7 +96,7 @@ const Filter: FC<FilterProps> = (props) => {
             parameters.push({ parameter: parameter.parameterUuid, values: checkedValues });
         }
 
-        dispatch(userActions.setParametersFilter(parameters));
+        dispatch(optionsFilterActions.setParametersFilter(parameters));
     }, [parametersValue]);
 
     useComponentUpdate(() => {
@@ -107,7 +107,7 @@ const Filter: FC<FilterProps> = (props) => {
             return result;
         }, []);
 
-        dispatch(userActions.setBrandsFilter(brands));
+        dispatch(optionsFilterActions.setBrandsFilter(brands));
     }, [brandsValue]);
 
     useComponentUpdate(() => {
@@ -118,19 +118,19 @@ const Filter: FC<FilterProps> = (props) => {
             return result;
         }, []);
 
-        dispatch(userActions.setFlagsFilter(flags));
+        dispatch(optionsFilterActions.setFlagsFilter(flags));
     }, [flagsValue]);
 
     useComponentUpdate(() => {
-        dispatch(userActions.setOnlyInStockFilter(onlyInStockValue));
+        dispatch(optionsFilterActions.setOnlyInStockFilter(onlyInStockValue));
     }, [onlyInStockValue]);
 
     useComponentUpdate(() => {
-        dispatch(userActions.setMinimalPriceFilter(minimalPriceValue));
+        dispatch(optionsFilterActions.setMinimalPriceFilter(minimalPriceValue));
     }, [minimalPriceValue]);
 
     useComponentUpdate(() => {
-        dispatch(userActions.setMaximalPriceFilter(maximalPriceValue));
+        dispatch(optionsFilterActions.setMaximalPriceFilter(maximalPriceValue));
     }, [maximalPriceValue]);
 
     useComponentUpdate(() => {

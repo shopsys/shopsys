@@ -1,7 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { CartType } from 'connectors/cart/types';
 import { HYDRATE } from 'next-redux-wrapper';
-import { ParametersFilterStateType } from 'components/Blocks/Product/Filter/types';
 import { PaymentType } from 'connectors/payments/types';
 import { PickupPlaceType } from 'connectors/transports/pickupPlace/types';
 import { ProductOrderingModeEnumApi } from 'graphql/generated';
@@ -28,7 +27,6 @@ type InitialState = {
     pagination: PaginationType;
     canAccessOrderConfirmation: boolean;
     isUserLoggedIn: boolean;
-    parametersFilter: ParametersFilterStateType | null;
 };
 
 export const initialState = {
@@ -44,14 +42,6 @@ export const initialState = {
     },
     canAccessOrderConfirmation: false,
     isUserLoggedIn: false,
-    parametersFilter: {
-        brands: [],
-        flags: [],
-        parameters: [],
-        onlyInStock: false,
-        minimalPrice: null,
-        maximalPrice: null,
-    },
 } as InitialState;
 
 export const userSlice = createSlice({
@@ -81,27 +71,6 @@ export const userSlice = createSlice({
         },
         setIsUserLoggedIn(state, action: PayloadAction<boolean>) {
             state.isUserLoggedIn = action.payload;
-        },
-        setOptionsFilter(state, action) {
-            state.parametersFilter = action.payload;
-        },
-        setBrandsFilter(state, action) {
-            state.parametersFilter.brands = action.payload;
-        },
-        setFlagsFilter(state, action) {
-            state.parametersFilter.flags = action.payload;
-        },
-        setParametersFilter(state, action) {
-            state.parametersFilter.parameters = action.payload;
-        },
-        setOnlyInStockFilter(state, action) {
-            state.parametersFilter.onlyInStock = action.payload;
-        },
-        setMinimalPriceFilter(state, action) {
-            state.parametersFilter.minimalPrice = action.payload;
-        },
-        setMaximalPriceFilter(state, action) {
-            state.parametersFilter.maximalPrice = action.payload;
         },
     },
     extraReducers: {

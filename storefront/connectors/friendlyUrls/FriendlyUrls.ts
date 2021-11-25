@@ -32,6 +32,7 @@ export function getFriendlyUrlResolvedData(
     | null {
     const categoryDetailSort = useShopsysSelector((state) => state.user.sort);
     const pagination = useShopsysSelector((state) => state.user.pagination);
+    const categoryParametersFilter = useShopsysSelector((state) => state.optionsFilter);
     const [{ data, error }] = useSlugQueryApi({
         variables: {
             slug,
