@@ -1,6 +1,6 @@
 #!/bin/bash -e
 
-GENERATED_FILENAME=./storefront/schema.graphql
+GENERATED_FILENAME=./schema.graphql
 ORIGINAL_HASH=$(md5sum $GENERATED_FILENAME | awk '{ print $1 }')
 
 php phing frontend-api-generate-graphql-schema
