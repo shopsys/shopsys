@@ -36,21 +36,47 @@ const ContactInformationDeliveryAddress: FC = () => {
     const deliveryCountryValue = useWatch({ name: 'deliveryCountry' });
     const countrySelectOptions = getCountriesAsSelectOptions();
     useEffect(() => {
-        const selectedCountryOption = countrySelectOptions.find((option) => {
-            return option.value === pickupPlace?.country;
-        });
-        if (selectedCountryOption !== undefined && pickupPlace !== null) {
-            formProviderMethods.setValue('deliveryStreet', pickupPlace.street);
-            formProviderMethods.setValue('deliveryCity', pickupPlace.city);
-            formProviderMethods.setValue('deliveryPostcode', pickupPlace.postcode);
-            formProviderMethods.setValue('deliveryCountry', selectedCountryOption);
+        if (differentDeliveryAddressValue === true) {
+            const selectedCountryOption = countrySelectOptions.find((option) => {
+                return option.value === pickupPlace?.country;
+            });
+            if (selectedCountryOption !== undefined && pickupPlace !== null) {
+                const formValues = formProviderMethods.getValues();
+                formProviderMethods.setValue('deliveryFirstName', formValues.firstName);
+                formProviderMethods.setValue('deliveryLastName', formValues.lastName);
+                formProviderMethods.setValue('deliveryCompanyName', formValues.companyName);
+                formProviderMethods.setValue('deliveryTelephone', formValues.telephone);
+                formProviderMethods.setValue('deliveryStreet', pickupPlace.street);
+                formProviderMethods.setValue('deliveryCity', pickupPlace.city);
+                formProviderMethods.setValue('deliveryPostcode', pickupPlace.postcode);
+                formProviderMethods.setValue('deliveryCountry', selectedCountryOption);
+                dispatch(
+                    contactInformationActions.setDeliveryAddressFromPickupPlace({
+                        ...pickupPlace,
+                        country: selectedCountryOption,
+                    }),
+                );
+            }
+            return;
+        }
+        setTimeout(() => {
+            formProviderMethods.setValue('deliveryFirstName', '');
+            formProviderMethods.setValue('deliveryLastName', '');
+            formProviderMethods.setValue('deliveryCompanyName', '');
+            formProviderMethods.setValue('deliveryTelephone', '');
+            formProviderMethods.setValue('deliveryStreet', '');
+            formProviderMethods.setValue('deliveryCity', '');
+            formProviderMethods.setValue('deliveryPostcode', '');
+            formProviderMethods.setValue('deliveryCountry', countrySelectOptions[0]);
             dispatch(
                 contactInformationActions.setDeliveryAddressFromPickupPlace({
-                    ...pickupPlace,
-                    country: selectedCountryOption,
+                    city: '',
+                    postcode: '',
+                    street: '',
+                    country: countrySelectOptions[0],
                 }),
             );
-        }
+        }, 500);
     }, [pickupPlace, differentDeliveryAddressValue]);
 
     useEffect(() => {

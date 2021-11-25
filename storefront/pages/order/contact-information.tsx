@@ -36,6 +36,7 @@ const ContactInformation: FC<ServerSidePropsType> = () => {
         ['/order/transport-and-payment', '/order-confirmation'],
         domainUrl,
     );
+    const { pickupPlace } = useShopsysSelector((state) => state.user);
     const cartInput = useShopsysSelector((state) => state.cartInput);
     const t = useTypedTranslationFunction();
     const [createOrderResult, createOrder] = useCreateOrderMutationApi();
@@ -71,12 +72,52 @@ const ContactInformation: FC<ServerSidePropsType> = () => {
 
         dispatch(contactInformationActions.setContactInformation(formValues));
 
+        let deliveryInfo;
+
+        if (pickupPlace !== null) {
+            deliveryInfo = {
+                deliveryFirstName: formValues.differentDeliveryAddress
+                    ? formValues.deliveryFirstName
+                    : formValues.firstName,
+                deliveryLastName: formValues.differentDeliveryAddress
+                    ? formValues.deliveryLastName
+                    : formValues.lastName,
+                deliveryCompanyName: formValues.differentDeliveryAddress
+                    ? formValues.deliveryCompanyName
+                    : formValues.companyName,
+                deliveryTelephone: formValues.differentDeliveryAddress
+                    ? formValues.deliveryTelephone
+                    : formValues.telephone,
+                deliveryStreet: formValues.differentDeliveryAddress ? formValues.deliveryStreet : pickupPlace.street,
+                deliveryCity: formValues.differentDeliveryAddress ? formValues.deliveryCity : pickupPlace.city,
+                deliveryPostcode: formValues.differentDeliveryAddress
+                    ? formValues.deliveryPostcode
+                    : pickupPlace.postcode,
+                deliveryCountry: formValues.differentDeliveryAddress
+                    ? formValues.deliveryCountry.value
+                    : pickupPlace.country,
+                differentDeliveryAddress: true,
+            };
+        } else {
+            deliveryInfo = {
+                deliveryFirstName: formValues.differentDeliveryAddress ? formValues.deliveryFirstName : '',
+                deliveryLastName: formValues.differentDeliveryAddress ? formValues.deliveryLastName : '',
+                deliveryCompanyName: formValues.differentDeliveryAddress ? formValues.deliveryCompanyName : '',
+                deliveryTelephone: formValues.differentDeliveryAddress ? formValues.deliveryTelephone : '',
+                deliveryStreet: formValues.differentDeliveryAddress ? formValues.deliveryStreet : '',
+                deliveryCity: formValues.differentDeliveryAddress ? formValues.deliveryCity : '',
+                deliveryPostcode: formValues.differentDeliveryAddress ? formValues.deliveryPostcode : '',
+                deliveryCountry: formValues.differentDeliveryAddress ? formValues.deliveryCountry.value : '',
+                differentDeliveryAddress: formValues.differentDeliveryAddress,
+            };
+        }
+
         await createOrder({
             ...formValues,
+            ...deliveryInfo,
             ...{ ...cartInput, transport: cartInput.transport, payment: cartInput.payment },
             onCompanyBehalf: formValues.customer === 'companyCustomer',
             country: formValues.country.value,
-            deliveryCountry: formValues.deliveryCountry.value,
         });
     };
 
