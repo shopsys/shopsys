@@ -16,8 +16,8 @@ variables:
     STOREFRONT_TAG: ${CI_REGISTRY_IMAGE}/${CI_COMMIT_REF_SLUG}:${CI_COMMIT_SHA}-storefront
     STOREFRONT_STYLEGUIDE_TAG: ${CI_REGISTRY_IMAGE}/${CI_COMMIT_REF_SLUG}:${CI_COMMIT_SHA}-storefront-styleguide
     HOST: ${CI_COMMIT_REF_SLUG}.${CI_PROJECT_NAME}.${REVIEW_URL}
-    HOSTS: ${CI_COMMIT_REF_SLUG}.${CI_PROJECT_NAME}.${REVIEW_URL}, en.${CI_COMMIT_REF_SLUG}.${CI_PROJECT_NAME}.${REVIEW_URL}
-    STOREFRONT_STYLEGUIDE_HOSTS: sfs.${CI_COMMIT_REF_SLUG}.${CI_PROJECT_NAME}.${REVIEW_URL}, en.sfs.${CI_COMMIT_REF_SLUG}.${CI_PROJECT_NAME}.${REVIEW_URL}
+    HOSTS: ${HOST}, en.${HOST}
+    STOREFRONT_STYLEGUIDE_HOSTS: sfs.${HOST}, en.sfs.${HOST}
     COMPOSE_PROJECT_NAME: ${CI_PROJECT_NAME}__${CI_COMMIT_REF_SLUG}
 
 before_script:
@@ -246,10 +246,6 @@ deploy:devel:
     resource_group: deploy_devel
     needs:
         - build
-        - test:standards
-        - test:standards-storefront
-        - test:functional
-        - test:acceptance
     rules:
         -   if: '$CI_PIPELINE_SOURCE == "schedule"'
             when: never
