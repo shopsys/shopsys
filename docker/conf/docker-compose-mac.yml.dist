@@ -62,11 +62,10 @@ services:
     cypress:
         build:
             context: ./storefront
-            dockerfile: ./docker/cypress/Dockerfile
-            target: development
+            dockerfile: ./cypress/docker/Dockerfile
         container_name: shopsys-framework-cypress
         volumes:
-            - storefront:/app
+            - ./storefront/cypress:/app:delegated
         profiles:
             - storefront-acceptance-tests
 
