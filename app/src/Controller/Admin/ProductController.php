@@ -6,7 +6,9 @@ namespace App\Controller\Admin;
 
 use Shopsys\FrameworkBundle\Controller\Admin\ProductController as BaseProductController;
 use Shopsys\FrameworkBundle\Form\Admin\Product\ProductFormType;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -64,5 +66,24 @@ class ProductController extends BaseProductController
         ];
 
         return $this->render('@ShopsysFramework/Admin/Content/Product/edit.html.twig', $viewParameters);
+    }
+
+    /**
+     * @Route("/product/edit/catnum-exists")
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function catnumExistsAction(Request $request): Response
+    {
+        $catnum = $request->get('catnum');
+        $currentProductCatnum = $request->get('currentProductCatnum');
+
+        if ($catnum === null || $catnum === $currentProductCatnum) {
+            return new JsonResponse(false);
+        }
+
+        $productByCatnum = $this->productFacade->findByCatnum($catnum);
+
+        return new JsonResponse($productByCatnum !== null);
     }
 }

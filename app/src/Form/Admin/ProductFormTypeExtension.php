@@ -22,6 +22,7 @@ use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Validator\Constraints;
 
 class ProductFormTypeExtension extends AbstractTypeExtension
@@ -39,15 +40,23 @@ class ProductFormTypeExtension extends AbstractTypeExtension
     private FlagFacade $flagFacade;
 
     /**
+     * @var \Symfony\Component\Routing\Generator\UrlGeneratorInterface
+     */
+    private UrlGeneratorInterface $urlGenerator;
+
+    /**
      * @param \App\Component\Form\FormBuilderHelper $formBuilderHelper
      * @param \App\Model\Product\Flag\FlagFacade $flagFacade
+     * @param \Symfony\Component\Routing\Generator\UrlGeneratorInterface $urlGenerator
      */
     public function __construct(
         FormBuilderHelper $formBuilderHelper,
-        FlagFacade $flagFacade
+        FlagFacade $flagFacade,
+        UrlGeneratorInterface $urlGenerator
     ) {
         $this->formBuilderHelper = $formBuilderHelper;
         $this->flagFacade = $flagFacade;
+        $this->urlGenerator = $urlGenerator;
     }
 
     /**
@@ -55,6 +64,7 @@ class ProductFormTypeExtension extends AbstractTypeExtension
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+        /** @var \App\Model\Product\Product|null $product */
         $product = $options['product'];
 
         $builder->add('namePrefix', LocalizedFullWidthType::class, [
@@ -91,7 +101,13 @@ class ProductFormTypeExtension extends AbstractTypeExtension
                 new UniqueProductCatnum(['product' => $product]),
             ],
             'disabled' => $this->isProductMainVariant($product),
-            'attr' => $catnumAttributes,
+            'attr' => array_merge(
+                $catnumAttributes,
+                [
+                    'data-unique-catnum-url' => $this->urlGenerator->generate('admin_product_catnumexists'),
+                    'data-current-product-catnum' => $product !== null ? $product->getCatnum() : '',
+                ]
+            ),
             'label' => t('Catalog number'),
             'position' => ['before' => 'partno'],
         ]);
