@@ -4,6 +4,7 @@ import { HYDRATE } from 'next-redux-wrapper';
 
 export const initialState = {
     cartUuid: null,
+    isCartEmpty: true,
     transport: null,
     payment: null,
     promoCode: null,
@@ -15,6 +16,7 @@ export const cartInputSlice = createSlice({
     reducers: {
         setCartInputData(state, action: PayloadAction<CartInput>) {
             state.cartUuid = action.payload.cartUuid;
+            state.isCartEmpty = action.payload.isCartEmpty;
             state.transport = action.payload.transport;
             state.payment = action.payload.payment;
             state.promoCode = action.payload.promoCode;

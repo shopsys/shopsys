@@ -37,13 +37,14 @@ export const mapPaymentToPaymentInput = (payment: PaymentType): PaymentInputType
 
 export const loadCart = (
     cartUuid: CartInput['cartUuid'],
+    isCartEmpty: CartInput['isCartEmpty'],
     transport: CartInput['transport'],
     payment: CartInput['payment'],
     promoCode: CartInput['promoCode'],
 ): UseQueryResponse<CartQueryApi, CartQueryVariablesApi> => {
     const [result, refresh] = useCartQueryApi({
         variables: { cartUuid, transport, payment, promoCode },
-        pause: cartUuid === null,
+        pause: isCartEmpty,
         requestPolicy: 'network-only',
     });
 

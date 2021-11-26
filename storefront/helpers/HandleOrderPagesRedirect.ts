@@ -7,7 +7,7 @@ export const handleOrderPagesRedirect = (context: GetServerSidePropsContext): { 
     const domainConfig = getDomainConfig(context.req.headers.host);
     const cartInputCookie = getCartInputCookie(context);
 
-    if (cartInputCookie.cartUuid === null && context.resolvedUrl !== '/cart') {
+    if (cartInputCookie.isCartEmpty && context.resolvedUrl !== '/cart') {
         const [cartUrl] = useGetInternationalizedStaticUrls(['/cart'], domainConfig.url);
 
         return {

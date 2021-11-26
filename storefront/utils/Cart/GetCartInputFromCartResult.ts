@@ -13,6 +13,7 @@ export const getCartInputFromCartResult = (resultData: {
 }): CartInput => {
     return {
         cartUuid: resultData.cart?.uuid === undefined ? null : resultData.cart.uuid,
+        isCartEmpty: resultData.cart?.items.length === 0,
         transport:
             resultData.transport === null
                 ? null

@@ -5,6 +5,7 @@ import { PaymentInputType } from 'connectors/payments/types';
 
 export type CartInput = {
     cartUuid: string | null;
+    isCartEmpty: boolean;
     transport: TransportInputType | null;
     payment: PaymentInputType | null;
     promoCode: string | null;

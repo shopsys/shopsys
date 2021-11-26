@@ -23,7 +23,7 @@ export const useHandleCartErrors = (resultErrors: CombinedError | undefined, err
                 updateCartState(
                     dispatch,
                     { cart: null, payment: null, pickupPlace: null, transport: null },
-                    { cartUuid: null, transport: null, payment: null, promoCode: null },
+                    { cartUuid: null, isCartEmpty: true, transport: null, payment: null, promoCode: null },
                 );
                 updateCartInputCookie(initCartInputCookie());
                 break;

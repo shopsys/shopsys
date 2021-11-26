@@ -28,6 +28,7 @@ export const getCartInputCookie = (ssrContext?: GetServerSidePropsContext): Cart
 export const initCartInputCookie = (): CartInput => {
     return {
         cartUuid: null,
+        isCartEmpty: true,
         transport: null,
         payment: null,
         promoCode: null,
