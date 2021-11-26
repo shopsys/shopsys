@@ -13,9 +13,10 @@ import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslatio
 const CartPreview: FC = () => {
     const t = useTypedTranslationFunction();
     const { cart } = useShopsysSelector((state) => state.user);
+    const { isCartEmpty } = useShopsysSelector((state) => state.cartInput);
     const { currencyCode } = useShopsysSelector((state) => state.domain);
 
-    if (cart === null) {
+    if (cart === null || isCartEmpty) {
         return null;
     }
 
