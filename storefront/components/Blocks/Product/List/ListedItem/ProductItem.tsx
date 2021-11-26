@@ -22,7 +22,7 @@ const ProductItem: FC<ListedProductType> = (props) => {
     return (
         <ProductItemStyled>
             <ProductItemInStyled>
-                <NextLink href={props.detailSlug} passHref>
+                <NextLink href={props.slug} passHref>
                     <ProductItemLinkStyled>
                         <ProductItemImageStyled>
                             <Image image={props.image} alt={props.name} />

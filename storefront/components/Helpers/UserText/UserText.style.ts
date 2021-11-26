@@ -53,7 +53,7 @@ export const UserTextStyled = styled.section`
         }
 
         a {
-            color: ${theme.color.orangeLight};
+            color: ${theme.color.primary};
             text-decoration: underline;
 
             &:hover {

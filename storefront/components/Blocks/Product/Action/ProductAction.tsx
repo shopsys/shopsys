@@ -47,7 +47,7 @@ const ProductAction: FC<SliderProductItemType> = (props) => {
     if (props.isMainVariant) {
         return (
             <ProductActionStyled isButtonFullWidth={true}>
-                <Button type="button" onClick={() => router.push(props.detailSlug)} name="choose-variant">
+                <Button type="button" onClick={() => router.push(props.slug)} name="choose-variant">
                     {t('Choose variant')}
                 </Button>
             </ProductActionStyled>

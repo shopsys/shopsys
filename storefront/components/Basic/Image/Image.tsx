@@ -5,10 +5,9 @@ import NextImage from 'next/image';
 type ImageProps = { image: ImageType | null; alt: string };
 
 const Image: FC<ImageProps> = (props) => {
-    if (props.image === null) {
+    if (props.image === null || props.image === undefined) {
         return <img src={'/images/optimized-noimage.png'} alt={props.alt} />;
     }
-
     return (
         <NextImage
             src={{

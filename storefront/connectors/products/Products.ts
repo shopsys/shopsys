@@ -29,11 +29,12 @@ export const mapListedProductType = (apiData: ListedProductFragmentApi, currency
         ...apiData,
         flags: mapFlagsApiData(apiData.flags),
         isMainVariant: apiData.__typename === 'MainVariant',
-        detailSlug: apiData.slug,
+        slug: apiData.slug,
         availability: apiData.availability.name,
         name: apiData.name,
         price: mapProductPriceApiData(apiData.price, currencyCode),
         image: mapImageApiData(apiData.images),
+        catalogNumber: apiData.catalogNumber,
     };
 };
 
@@ -57,7 +58,6 @@ export const mapSliderProductApiData = (
     return apiData.map((apiProduct) => {
         return {
             ...apiProduct,
-            detailSlug: apiProduct.slug,
             name: apiProduct.name,
             image: mapImageApiData(apiProduct.images),
             price: mapProductPriceApiData(apiProduct.price, currencyCode),

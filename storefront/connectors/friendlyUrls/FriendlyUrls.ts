@@ -1,6 +1,8 @@
 import { ArticleDetailType } from 'connectors/article/types';
+import { BlogArticleDetailType } from 'components/Pages/BlogArticle/types';
 import { CategoryDetailType } from 'components/Pages/CategoryDetail/types';
 import { mapArticleDetailApiData } from 'connectors/article/ArticleDetail';
+import { mapBlogArticleDetailApiData } from 'connectors/blogArticle/BlogArticle';
 import { mapCategoryDetailData } from 'connectors/categories/Categories';
 import { mapProductDetailApiData } from 'connectors/products/ProductDetail';
 import { mapStoreDetailApiData } from 'connectors/stores/StoreDetail';
@@ -12,7 +14,14 @@ import { useSlugQueryApi } from 'graphql/generated';
 
 export function getFriendlyUrlResolvedData(
     slug: string,
-): ProductDetailType | CategoryDetailType | StoreDetailType | ArticleDetailType | undefined | null {
+):
+    | ProductDetailType
+    | CategoryDetailType
+    | StoreDetailType
+    | ArticleDetailType
+    | BlogArticleDetailType
+    | undefined
+    | null {
     const categoryDetailSort = useShopsysSelector((state) => state.user.sort);
     const pagination = useShopsysSelector((state) => state.user.pagination);
     const [{ data, error }] = useSlugQueryApi({
@@ -42,6 +51,8 @@ export function getFriendlyUrlResolvedData(
         return mapStoreDetailApiData(data.slug);
     } else if (data.slug.__typename === 'Article') {
         return mapArticleDetailApiData(data.slug);
+    } else if (data.slug.__typename === 'BlogArticle') {
+        return mapBlogArticleDetailApiData(data.slug, currentDomainConfig);
     }
 
     return undefined;

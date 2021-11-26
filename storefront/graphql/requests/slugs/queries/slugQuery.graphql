@@ -18,5 +18,8 @@ query SlugQuery(
         ... on Article {
             ...ArticleDetailFragment
         }
+        ... on BlogArticle {
+            ...BlogArticleDetailFragment
+        }
     }
 }
