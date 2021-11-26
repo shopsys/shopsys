@@ -15,6 +15,7 @@ module.exports = {
                 url: process.env.DOMAIN_HOSTNAME_1,
                 defaultLocale: 'cs',
                 currencyCode: 'CZK',
+                domainId: 1,
                 mapSetting: {
                     latitude: 49.8175,
                     longitude: 15.473,
@@ -26,6 +27,7 @@ module.exports = {
                 url: process.env.DOMAIN_HOSTNAME_2,
                 defaultLocale: 'sk',
                 currencyCode: 'EUR',
+                domainId: 2,
                 mapSetting: {
                     latitude: 48.669,
                     longitude: 19.699,
@@ -37,6 +39,7 @@ module.exports = {
                 url: 'http://' + process.env.ACCEPTANCE_DOMAIN_HOST + '/',
                 defaultLocale: 'cs',
                 currencyCode: 'CZK',
+                domainId: 1,
                 mapSetting: {
                     latitude: 49.8175,
                     longitude: 15.473,
