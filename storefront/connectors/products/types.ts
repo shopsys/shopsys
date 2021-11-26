@@ -11,7 +11,7 @@ export type SimpleProductType = {
 
 export type ListedProductType = {
     uuid: string;
-    detailSlug: string;
+    slug: string;
     name: string;
     stockQuantity: number;
     availableStoresCount: number;
@@ -21,4 +21,5 @@ export type ListedProductType = {
     image: ImageType | null;
     price: ProductPriceType;
     isMainVariant: boolean;
+    catalogNumber: string;
 };

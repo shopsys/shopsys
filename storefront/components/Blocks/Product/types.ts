@@ -22,7 +22,7 @@ export type PageInfoType = {
 
 export type SliderProductItemType = {
     uuid: string;
-    detailSlug: string;
+    slug: string;
     name: string;
     flags: FlagType[];
     image: ImageType | null;
@@ -32,11 +32,12 @@ export type SliderProductItemType = {
     availability: string;
     availableStoresCount: number;
     exposedStoresCount: number;
+    catalogNumber: string;
 };
 
 export type ListedProductItemType = {
     uuid: string;
-    detailSlug: string;
+    slug: string;
     name: string;
     flags: FlagType[];
     image: ImageType | null;
@@ -46,6 +47,7 @@ export type ListedProductItemType = {
     availability: string;
     availableStoresCount: number;
     exposedStoresCount: number;
+    catalogNumber: string;
 };
 
 export type ListedProductEdgesType = {

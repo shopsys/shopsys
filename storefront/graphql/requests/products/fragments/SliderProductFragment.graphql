@@ -3,6 +3,7 @@ fragment SliderProductFragment on Product {
     uuid
     slug
     name
+    catalogNumber
     stockQuantity
     flags {
         ...FlagLabelFragment

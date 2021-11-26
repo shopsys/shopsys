@@ -22,7 +22,7 @@ const ProductItem: FC<SliderProductItemType> = (props) => {
     return (
         <SliderProductItemStyled className="keen-slider__slide">
             <SliderProductItemInStyled>
-                <NextLink href={props.detailSlug} passHref>
+                <NextLink href={props.slug} passHref>
                     <SliderProductItemLinkStyled>
                         <SliderProductItemImageStyled>
                             <Image image={props.image} alt={props.name} />

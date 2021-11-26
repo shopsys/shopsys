@@ -13,4 +13,5 @@ fragment ListedProductFragment on Product {
     }
     availableStoresCount
     exposedStoresCount
+    catalogNumber
 }
