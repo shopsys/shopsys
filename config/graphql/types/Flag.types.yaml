@@ -6,6 +6,7 @@ Flag:
         interfaces:
             - 'Breadcrumb'
             - 'Slug'
+            - 'ProductListable'
         fields:
             name:
                 type: "String!"
