@@ -86,6 +86,7 @@
         "scheb/2fa-google-authenticator": "^5.7",
         "scheb/2fa-qr-code": "^5.7",
         "sensio/framework-extra-bundle": "^5.2",
+        "sentry/sentry-symfony": "3.5.4",
         "shopsys/cdn": "^1.0",
         "shopsys/doctrine-orm": "^2.7.2",
         "shopsys/form-types-bundle": "9.1.2",

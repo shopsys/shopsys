@@ -1,3 +1,5 @@
 sensio_framework_extra:
+    psr_message:
+        enabled: false
     router:
         annotations: false
