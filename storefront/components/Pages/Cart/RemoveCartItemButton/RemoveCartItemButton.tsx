@@ -10,7 +10,7 @@ type RemoveCartItemButtonProps = {
 };
 
 const RemoveCartItemButton: FC<RemoveCartItemButtonProps> = (props) => {
-    const { cartUuid, transport, payment, promoCode } = useShopsysSelector((state) => state.cartInput);
+    const { cartUuid, isCartEmpty, transport, payment, promoCode } = useShopsysSelector((state) => state.cartInput);
     const [removeItemFromCartResult, removeItemFromCart] = useRemoveFromCartMutationApi();
     useHandleRemoveFromCart(
         removeItemFromCartResult,
@@ -19,7 +19,7 @@ const RemoveCartItemButton: FC<RemoveCartItemButtonProps> = (props) => {
     );
 
     const onRemoveItemFromCartHandler = () => {
-        if (cartUuid === null) {
+        if (isCartEmpty) {
             return;
         }
 
