@@ -146,7 +146,7 @@ security:
             anonymous: true
             guard:
                 authenticators:
-                    - Shopsys\FrontendApiBundle\Model\Token\TokenAuthenticator
+                    - App\FrontendApi\Model\Token\TokenAuthenticator
         frontend:
             pattern: ^/
             anonymous: ~

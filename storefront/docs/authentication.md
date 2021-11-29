@@ -1,49 +1,57 @@
 ### Authentication
-First thing you should do for local development, is to generate private keys for Frontend. 
+
+#### Frontend API
+If you didn't do it previously, you have to generate private keys for Frontend API.
 ```plain
 php phing frontend-generate-new-keys
 ```
 
-For logging the user in/out we can use Auth hook. 
+#### Authentication mechanism
+Authentication is performed via [@urql/auth-exchange](https://formidable.com/open-source/urql/docs/advanced/authentication).
+Proper options for authExchange can be obtained with `getAuthExchangeOptions` from `urql/authExchange.ts` and it can be used for server-side rendering and client side requests.
+
+Following options are created for `authExchange`:
+
+`addAuthToOperation`
+Responsible for adding access token as `Authorization: Bearer xxx` header to each request made with urql.
+Authorization header is not added when no authState exists (no previously authenticated user) or when `RefreshTokens` mutation is performed.
+Because when `RefreshToken` mutation is performed, access token can be already invalid and FE API blocks every request with invalid access token.
+
+`didAuthError`
+Check whether error returned from API is an authentication error (e.g. HTTP response status code is 401).
+
+`getAuth`
+This option is created with factory `createGetAuth`, so it's possible to pass `GetServerSidePropsContext` which is necessary for properly authenticated requests in SSR.
+Initially, when no `authState` is stored in memory, tokens are loaded from persistent storage (cookies).
+When `refreshToken` does not exist in persistent storage, request is then handled as anonymous.
+When `accessToken` does not exist in persistent storage, a refresh token attempt is made immediately.
+`getAuth` function is also invoked after `didAuthError` function return `true` (after authentication error in any request).
+In that case `authState` is already present in memory and a refresh token attempt is made immediately.
+
+While the urql is refreshing tokens, all other calls are paused.
+After successful refresh, previously forbidden requests are re-executed with the new access token.
+
+For logging the user in/out we can use `useAuth` hook.
 ```plain
-/hooks/auth/UseAuth.js
+/hooks/auth/UseAuth.tsx
 ```
 
-For authorization, we use Bearer tokens, which are sent with every URQL request to the API.
-
-**AccessToken** 
-
-JWT - JSON Web Token assigned to user with time validation.
-
-**RefreshToken** 
-
-When accessToken is not valid anymore urql client calls API refreshTokens mutation, with refreshToken as a parameter. 
-
-In case the result is successful, we get a new accessToken and a new refreshToken, and the URQL client automatically re-executes all API requests with the new access token.
-While the URQL client is verifying the tokens, all other calls are paused.
-
-If error occurs auth.logout() function is called.
-
-For using auth functions you have to use:
-
-```plain
-import { AuthContext } from 'hooks/auth/UseAuth';
-const auth = useContext(AuthContext);
-```
-
-#### Prepared functions:
 User login
 ```plain
-auth.login(email: string, password: string);
-```
-This function calls the API with the provided email and password. If everything is OK, we get two tokens: an accessToken and a refreshToken. They are then stored in the localstorage and auth.isUserLoggedIn is set to true.
+const [[loginResult, login]] = useAuth();
 
-If user is logged then AccessToken is automatically added to header as Bearer token for every API Call and the results are filtered by the specified user.
+login(email: string, password: string);
+```
+
+This function calls the API mutation with the provided email and password.
+If everything is OK, user is logged in.
+`accessToken` and `refreshToken` are then stored in the cookie and redux state is updated with information the user is logged in.
 
 User logout
 ```plain
-auth.logout();
-```
-When you want to log the user out, call the auth.logout() function. Then auth.isUserLoggedIn is set to false and
-tokens are erased from localStorage.
+const [, [, logout]] = useAuth();
 
+logout();
+```
+
+Redux state is updated with information the user is no longer authenticated and tokens are deleted from cookie.

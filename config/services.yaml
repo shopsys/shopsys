@@ -974,3 +974,8 @@ services:
             - '%shopsys.sitemaps_url_prefix%'
 
     App\Model\ImageSitemap\ImageSitemapFilePrefixer: ~
+
+    App\FrontendApi\Model\Token\TokenAuthenticator: ~
+
+    Shopsys\FrontendApiBundle\Model\Token\TokenAuthenticator:
+        alias: App\FrontendApi\Model\Token\TokenAuthenticator
