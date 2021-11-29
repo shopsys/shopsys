@@ -20,8 +20,6 @@ use Shopsys\FrameworkBundle\Model\Product\ProductDomain as BaseProductDomain;
  */
 class ProductDomain extends BaseProductDomain
 {
-    public const FLAG_PRODUCT_SALE_AKENEO_CODE = 'flag__product_sale';
-
     /**
      * @var string|null
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -244,24 +242,6 @@ class ProductDomain extends BaseProductDomain
     public function getSaleExclusion(): bool
     {
         return $this->saleExclusion;
-    }
-
-    /**
-     * @param \App\Model\Product\Flag\Flag[] $flags
-     * @return bool
-     */
-    public function calcSaleExclusion($flags): bool
-    {
-        $exclusion = false;
-
-        foreach ($flags as $flag) {
-            if ($flag->getAkeneoCode() === self::FLAG_PRODUCT_SALE_AKENEO_CODE) {
-                $exclusion = true;
-                break;
-            }
-        }
-
-        return $exclusion;
     }
 
     /**

@@ -205,7 +205,7 @@ class Product extends BaseProduct
             $productDomain->setShortDescriptionUsp4($productData->shortDescriptionUsp4[$domainId]);
             $productDomain->setShortDescriptionUsp5($productData->shortDescriptionUsp5[$domainId]);
             $productDomain->setFlags($productData->flags[$domainId] ?? []);
-            $productDomain->setSaleExclusion($productDomain->calcSaleExclusion($productData->flags[$domainId] ?? []));
+            $productDomain->setSaleExclusion($productData->saleExclusion[$domainId]);
             $productDomain->setDomainHidden($productData->domainHidden[$domainId] ?? false);
             $productDomain->setDomainOrderingPriority((int)$productData->domainOrderingPriority[$domainId]);
         }
