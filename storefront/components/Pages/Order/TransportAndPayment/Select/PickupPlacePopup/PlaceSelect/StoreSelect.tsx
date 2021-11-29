@@ -1,16 +1,15 @@
 import { Control, Controller } from 'react-hook-form';
 import { FC } from 'react';
 import { ListItemStyled } from 'components/Pages/Order/TransportAndPayment/Select/Select.style';
+import { PickupPlaceFormType } from 'components/Pages/Order/TransportAndPayment/Select/PickupPlacePopup/formMeta';
 import Radiobutton from 'components/Forms/Radiobutton';
 import SelectItemLabel from 'components/Pages/Order/TransportAndPayment/Select/SelectItemLabel';
 import { TransportType } from 'connectors/transports/types';
 
 type StoreSelectProps = {
-    pickupPlaceValue: string | null;
+    pickupPlaceValue: string;
     transport: TransportType;
-    control: Control<{
-        pickupPlace: null;
-    }>;
+    control: Control<PickupPlaceFormType>;
 };
 
 const StoreSelect: FC<StoreSelectProps> = (props) => {

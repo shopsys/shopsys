@@ -1,3 +1,4 @@
+import { ContactInformationFormType, useContactInformationFormMeta } from './formMeta';
 import { ContactInformationTextStyled, ContactInformationTextWrapperStyled } from './ContactInformation.style';
 import { Controller, useFormContext, useWatch } from 'react-hook-form';
 import { FC, useEffect, useState } from 'react';
@@ -10,13 +11,12 @@ import FormLineError from 'components/Forms/Lib/FormLineError';
 import TextInput from 'components/Forms/TextInput';
 import { Trans } from 'react-i18next';
 import { useShopsysDispatch } from 'redux/main';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 
 const ContactInformation: FC = () => {
     const dispatch = useShopsysDispatch();
-    const t = useTypedTranslationFunction();
-    const formProviderMethods = useFormContext();
-    const emailValue = useWatch({ name: 'email' });
+    const formProviderMethods = useFormContext<ContactInformationFormType>();
+    const formMeta = useContactInformationFormMeta(formProviderMethods);
+    const emailValue = useWatch({ name: formMeta.fields.email.name, control: formProviderMethods.control });
     const [isEmailFilledCorrectly, setIsEmailFilledCorrectly] = useState(false);
 
     useEffect(() => {
@@ -36,13 +36,13 @@ const ContactInformation: FC = () => {
         <>
             <FormLine bottomGap={true} lg="65%">
                 <Controller
-                    name="email"
+                    name={formMeta.fields.email.name}
                     render={({ fieldState: { isTouched, invalid, error }, field }) => (
                         <>
                             <TextInput
-                                id="contactInformation_form-email"
-                                name="email"
-                                label={t('Your e-mail')}
+                                id={formMeta.formName + '-' + formMeta.fields.email.name}
+                                name={formMeta.fields.email.name}
+                                label={formMeta.fields.email.label}
                                 required={true}
                                 type="text"
                                 isTouched={isTouched}
@@ -65,12 +65,12 @@ const ContactInformation: FC = () => {
                 </ContactInformationTextStyled>
                 <ChoiceFormLine>
                     <Controller
-                        name="newsletterSubscription"
+                        name={formMeta.fields.newsletterSubscription.name}
                         render={({ field }) => (
                             <Checkbox
-                                id="contactInformation_form-newsletterSubscription"
-                                name={field.name}
-                                label={t('I want to subscribe to the newsletter')}
+                                id={formMeta.formName + '-' + formMeta.fields.newsletterSubscription.name}
+                                name={formMeta.fields.newsletterSubscription.name}
+                                label={formMeta.fields.newsletterSubscription.label}
                                 fieldRef={field}
                             />
                         )}

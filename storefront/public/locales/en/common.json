@@ -189,5 +189,8 @@
     "Successfully logged in": "Successfully logged in",
     "Successfully logged out": "Successfully logged out",
     "My account": "My account",
-    "Products mentioned in this article": "Products mentioned in this article"
+    "Products mentioned in this article": "Products mentioned in this article",
+    "Please select transport": "Please select transport",
+    "Please select transport with a personal pickup place": "Please select transport with a personal pickup place",
+    "Please select payment": "Please select payment"
 }

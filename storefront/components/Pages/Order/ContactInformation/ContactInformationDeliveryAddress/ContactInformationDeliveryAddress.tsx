@@ -2,6 +2,10 @@ import {
     ContactInformationDeliveryAddressContentStyled,
     ContactInformationDeliveryAddressStyled,
 } from './ContactInformationDeliveryAddress.style';
+import {
+    ContactInformationFormType,
+    useContactInformationFormMeta,
+} from 'components/Pages/Order/ContactInformation/formMeta';
 import { Controller, useFormContext, useWatch } from 'react-hook-form';
 import { FC, useEffect, useRef, useState } from 'react';
 import { useShopsysDispatch, useShopsysSelector } from 'redux/main';
@@ -15,26 +19,42 @@ import FormLineError from 'components/Forms/Lib/FormLineError';
 import { getCountriesAsSelectOptions } from 'connectors/country/Country';
 import Select from 'components/Forms/Select';
 import TextInput from 'components/Forms/TextInput';
-import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 
 const ContactInformationDeliveryAddress: FC = () => {
     const dispatch = useShopsysDispatch();
-    const t = useTypedTranslationFunction();
-    const { pickupPlace } = useShopsysSelector((state) => state.user);
     const contentElement = useRef<HTMLDivElement>(null);
     const cssTransitionRef = useRef<HTMLDivElement>(null);
+    const { pickupPlace } = useShopsysSelector((state) => state.user);
     const [contentElementHeight, setContentElementHeight] = useState(0);
-    const formProviderMethods = useFormContext();
-    const differentDeliveryAddressValue = useWatch({ name: 'differentDeliveryAddress' });
-    const deliveryFirstNameValue = useWatch({ name: 'deliveryFirstName' });
-    const deliveryLastNameValue = useWatch({ name: 'deliveryLastName' });
-    const deliveryCompanyNameValue = useWatch({ name: 'deliveryCompanyName' });
-    const deliveryTelephoneValue = useWatch({ name: 'deliveryTelephone' });
-    const deliveryStreetValue = useWatch({ name: 'deliveryStreet' });
-    const deliveryCityValue = useWatch({ name: 'deliveryCity' });
-    const deliveryPostcodeValue = useWatch({ name: 'deliveryPostcode' });
-    const deliveryCountryValue = useWatch({ name: 'deliveryCountry' });
+    const formProviderMethods = useFormContext<ContactInformationFormType>();
+    const formMeta = useContactInformationFormMeta(formProviderMethods);
+    const [
+        differentDeliveryAddressValue,
+        deliveryFirstNameValue,
+        deliveryLastNameValue,
+        deliveryCompanyNameValue,
+        deliveryTelephoneValue,
+        deliveryStreetValue,
+        deliveryCityValue,
+        deliveryPostcodeValue,
+        deliveryCountryValue,
+    ] = useWatch({
+        name: [
+            formMeta.fields.differentDeliveryAddress.name,
+            formMeta.fields.deliveryFirstName.name,
+            formMeta.fields.deliveryLastName.name,
+            formMeta.fields.deliveryCompanyName.name,
+            formMeta.fields.deliveryTelephone.name,
+            formMeta.fields.deliveryStreet.name,
+            formMeta.fields.deliveryCity.name,
+            formMeta.fields.deliveryPostcode.name,
+            formMeta.fields.deliveryCountry.name,
+        ],
+        control: formProviderMethods.control,
+    });
+
     const countrySelectOptions = getCountriesAsSelectOptions();
+
     useEffect(() => {
         if (differentDeliveryAddressValue === true) {
             const selectedCountryOption = countrySelectOptions.find((option) => {
@@ -42,14 +62,14 @@ const ContactInformationDeliveryAddress: FC = () => {
             });
             if (selectedCountryOption !== undefined && pickupPlace !== null) {
                 const formValues = formProviderMethods.getValues();
-                formProviderMethods.setValue('deliveryFirstName', formValues.firstName);
-                formProviderMethods.setValue('deliveryLastName', formValues.lastName);
-                formProviderMethods.setValue('deliveryCompanyName', formValues.companyName);
-                formProviderMethods.setValue('deliveryTelephone', formValues.telephone);
-                formProviderMethods.setValue('deliveryStreet', pickupPlace.street);
-                formProviderMethods.setValue('deliveryCity', pickupPlace.city);
-                formProviderMethods.setValue('deliveryPostcode', pickupPlace.postcode);
-                formProviderMethods.setValue('deliveryCountry', selectedCountryOption);
+                formProviderMethods.setValue(formMeta.fields.deliveryFirstName.name, formValues.firstName);
+                formProviderMethods.setValue(formMeta.fields.deliveryLastName.name, formValues.lastName);
+                formProviderMethods.setValue(formMeta.fields.deliveryCompanyName.name, formValues.companyName);
+                formProviderMethods.setValue(formMeta.fields.deliveryTelephone.name, formValues.telephone);
+                formProviderMethods.setValue(formMeta.fields.deliveryStreet.name, pickupPlace.street);
+                formProviderMethods.setValue(formMeta.fields.deliveryCity.name, pickupPlace.city);
+                formProviderMethods.setValue(formMeta.fields.deliveryPostcode.name, pickupPlace.postcode);
+                formProviderMethods.setValue(formMeta.fields.deliveryCountry.name, selectedCountryOption);
                 dispatch(
                     contactInformationActions.setDeliveryAddressFromPickupPlace({
                         ...pickupPlace,
@@ -60,14 +80,14 @@ const ContactInformationDeliveryAddress: FC = () => {
             return;
         }
         setTimeout(() => {
-            formProviderMethods.setValue('deliveryFirstName', '');
-            formProviderMethods.setValue('deliveryLastName', '');
-            formProviderMethods.setValue('deliveryCompanyName', '');
-            formProviderMethods.setValue('deliveryTelephone', '');
-            formProviderMethods.setValue('deliveryStreet', '');
-            formProviderMethods.setValue('deliveryCity', '');
-            formProviderMethods.setValue('deliveryPostcode', '');
-            formProviderMethods.setValue('deliveryCountry', countrySelectOptions[0]);
+            formProviderMethods.setValue(formMeta.fields.deliveryFirstName.name, '');
+            formProviderMethods.setValue(formMeta.fields.deliveryLastName.name, '');
+            formProviderMethods.setValue(formMeta.fields.deliveryCompanyName.name, '');
+            formProviderMethods.setValue(formMeta.fields.deliveryTelephone.name, '');
+            formProviderMethods.setValue(formMeta.fields.deliveryStreet.name, '');
+            formProviderMethods.setValue(formMeta.fields.deliveryCity.name, '');
+            formProviderMethods.setValue(formMeta.fields.deliveryPostcode.name, '');
+            formProviderMethods.setValue(formMeta.fields.deliveryCountry.name, countrySelectOptions[0]);
             dispatch(
                 contactInformationActions.setDeliveryAddressFromPickupPlace({
                     city: '',
@@ -81,7 +101,7 @@ const ContactInformationDeliveryAddress: FC = () => {
 
     useEffect(() => {
         if (countrySelectOptions.length > 0 && differentDeliveryAddressValue === true && pickupPlace === null) {
-            formProviderMethods.setValue('deliveryCountry', countrySelectOptions[0]);
+            formProviderMethods.setValue(formMeta.fields.deliveryCountry.name, countrySelectOptions[0]);
         }
     }, [JSON.stringify(countrySelectOptions), differentDeliveryAddressValue]);
 
@@ -100,13 +120,13 @@ const ContactInformationDeliveryAddress: FC = () => {
             <FormLine lg="65%">
                 <ChoiceFormLine>
                     <Controller
-                        name="differentDeliveryAddress"
+                        name={formMeta.fields.differentDeliveryAddress.name}
                         render={({ field }) => (
                             <Checkbox
-                                name={field.name}
+                                name={formMeta.fields.differentDeliveryAddress.name}
                                 fieldRef={field}
-                                id="contactInformation_form-deliveryAddress"
-                                label={t('Enter the delivery address')}
+                                id={formMeta.formName + '-' + formMeta.fields.differentDeliveryAddress.name}
+                                label={formMeta.fields.differentDeliveryAddress.label}
                             />
                         )}
                     />
@@ -128,13 +148,15 @@ const ContactInformationDeliveryAddress: FC = () => {
                             <FormColumn lg="65%">
                                 <FormLine bottomGap={true} width="100%" lg="50%">
                                     <Controller
-                                        name="deliveryFirstName"
+                                        name={formMeta.fields.deliveryFirstName.name}
                                         render={({ fieldState: { isTouched, invalid, error }, field }) => (
                                             <>
                                                 <TextInput
-                                                    id="contactInformation_form-deliveryFirstName"
-                                                    name="deliveryFirstName"
-                                                    label={t('First name')}
+                                                    id={
+                                                        formMeta.formName + '-' + formMeta.fields.deliveryFirstName.name
+                                                    }
+                                                    name={formMeta.fields.deliveryFirstName.name}
+                                                    label={formMeta.fields.deliveryFirstName.label}
                                                     required={true}
                                                     type="text"
                                                     isTouched={isTouched}
@@ -155,13 +177,13 @@ const ContactInformationDeliveryAddress: FC = () => {
                                 </FormLine>
                                 <FormLine bottomGap={true} width="100%" lg="50%">
                                     <Controller
-                                        name="deliveryLastName"
+                                        name={formMeta.fields.deliveryLastName.name}
                                         render={({ fieldState: { isTouched, invalid, error }, field }) => (
                                             <>
                                                 <TextInput
-                                                    id="contactInformation_form-deliveryLastName"
-                                                    name="deliveryLastName"
-                                                    label={t('Last name')}
+                                                    id={formMeta.formName + '-' + formMeta.fields.deliveryLastName.name}
+                                                    name={formMeta.fields.deliveryLastName.name}
+                                                    label={formMeta.fields.deliveryLastName.label}
                                                     required={true}
                                                     type="text"
                                                     isTouched={isTouched}
@@ -183,13 +205,13 @@ const ContactInformationDeliveryAddress: FC = () => {
                             </FormColumn>
                             <FormLine bottomGap={true} lg="65%">
                                 <Controller
-                                    name="deliveryCompanyName"
+                                    name={formMeta.fields.deliveryCompanyName.name}
                                     render={({ fieldState: { isTouched, invalid, error }, field }) => (
                                         <>
                                             <TextInput
-                                                id="contactInformation_form-deliveryCompanyName"
-                                                name="deliveryCompanyName"
-                                                label={t('Company')}
+                                                id={formMeta.formName + '-' + formMeta.fields.deliveryCompanyName.name}
+                                                name={formMeta.fields.deliveryCompanyName.name}
+                                                label={formMeta.fields.deliveryCompanyName.label}
                                                 type="text"
                                                 isTouched={isTouched}
                                                 hasError={invalid}
@@ -209,13 +231,13 @@ const ContactInformationDeliveryAddress: FC = () => {
                             </FormLine>
                             <FormLine bottomGap={true} lg="65%">
                                 <Controller
-                                    name="deliveryTelephone"
+                                    name={formMeta.fields.deliveryTelephone.name}
                                     render={({ fieldState: { isTouched, invalid, error }, field }) => (
                                         <>
                                             <TextInput
-                                                id="contactInformation_form-deliveryTelephone"
-                                                name="deliveryTelephone"
-                                                label={t('Telephone')}
+                                                id={formMeta.formName + '-' + formMeta.fields.deliveryTelephone.name}
+                                                name={formMeta.fields.deliveryTelephone.name}
+                                                label={formMeta.fields.deliveryTelephone.label}
                                                 type="text"
                                                 isTouched={isTouched}
                                                 hasError={invalid}
@@ -235,14 +257,14 @@ const ContactInformationDeliveryAddress: FC = () => {
                             </FormLine>
                             <FormLine bottomGap={true} lg="65%">
                                 <Controller
-                                    name="deliveryStreet"
+                                    name={formMeta.fields.deliveryStreet.name}
                                     defaultValue={pickupPlace?.street}
                                     render={({ fieldState: { isTouched, invalid, error }, field }) => (
                                         <>
                                             <TextInput
-                                                id="contactInformation_form-deliveryStreet"
-                                                name="deliveryStreet"
-                                                label={t('Street and house number')}
+                                                id={formMeta.formName + '-' + formMeta.fields.deliveryStreet.name}
+                                                name={formMeta.fields.deliveryStreet.name}
+                                                label={formMeta.fields.deliveryStreet.label}
                                                 type="text"
                                                 required={true}
                                                 isTouched={isTouched}
@@ -265,14 +287,14 @@ const ContactInformationDeliveryAddress: FC = () => {
                             <FormColumn lg="65%">
                                 <FormLine bottomGap={true}>
                                     <Controller
-                                        name="deliveryCity"
+                                        name={formMeta.fields.deliveryCity.name}
                                         defaultValue={pickupPlace?.city}
                                         render={({ fieldState: { isTouched, invalid, error }, field }) => (
                                             <>
                                                 <TextInput
-                                                    id="contactInformation_form-deliveryCity"
-                                                    name="deliveryCity"
-                                                    label={t('City')}
+                                                    id={formMeta.formName + '-' + formMeta.fields.deliveryCity.name}
+                                                    name={formMeta.fields.deliveryCity.name}
+                                                    label={formMeta.fields.deliveryCity.label}
                                                     required={true}
                                                     type="text"
                                                     isTouched={isTouched}
@@ -294,14 +316,14 @@ const ContactInformationDeliveryAddress: FC = () => {
                                 </FormLine>
                                 <FormLine bottomGap={true} width="100%" lg="142px">
                                     <Controller
-                                        name="deliveryPostcode"
+                                        name={formMeta.fields.deliveryPostcode.name}
                                         defaultValue={pickupPlace?.postcode}
                                         render={({ fieldState: { isTouched, invalid, error }, field }) => (
                                             <>
                                                 <TextInput
-                                                    id="contactInformation_form-deliveryPostcode"
-                                                    name="deliveryPostcode"
-                                                    label={t('Postcode')}
+                                                    id={formMeta.formName + '-' + formMeta.fields.deliveryPostcode.name}
+                                                    name={formMeta.fields.deliveryPostcode.name}
+                                                    label={formMeta.fields.deliveryPostcode.label}
                                                     required={true}
                                                     type="text"
                                                     isTouched={isTouched}
@@ -324,7 +346,7 @@ const ContactInformationDeliveryAddress: FC = () => {
                             </FormColumn>
                             <FormLine lg="65%">
                                 <Controller
-                                    name="deliveryCountry"
+                                    name={formMeta.fields.deliveryCountry.name}
                                     render={({ field }) => (
                                         <Select
                                             options={countrySelectOptions}

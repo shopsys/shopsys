@@ -7,7 +7,7 @@ import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslatio
 type ErrorPopupProps = {
     isVisible: boolean;
     onCloseCallback: () => void;
-    errors: { label: string | ReactElement; message: string | undefined }[];
+    fields: { [fieldName: string]: { name: string; label: string | ReactElement; errorMessage: string | undefined } };
 };
 
 const ErrorPopup: FC<ErrorPopupProps> = (props) => {
@@ -17,15 +17,23 @@ const ErrorPopup: FC<ErrorPopupProps> = (props) => {
         <Popup wrapperComponent={ErrorPopupStyled} isVisible={props.isVisible} onCloseCallback={props.onCloseCallback}>
             <Heading type="h2">{t('Please, check inserted details.')}</Heading>
             <ErrorListStyled>
-                {props.errors.map((error) =>
-                    error.message === undefined ? null : (
-                        <ErrorListItemStyled key={error.label.toString()}>
-                            {error.label}
-                            <br />
-                            <ErrorMessageStyled>{error.message}</ErrorMessageStyled>
-                        </ErrorListItemStyled>
-                    ),
-                )}
+                {(() => {
+                    const mappedErrors = [];
+                    for (const field in props.fields) {
+                        if (props.fields[field].errorMessage === undefined) {
+                            continue;
+                        }
+
+                        mappedErrors.push(
+                            <ErrorListItemStyled key={props.fields[field].name}>
+                                {props.fields[field].label}
+                                <br />
+                                <ErrorMessageStyled>{props.fields[field].errorMessage}</ErrorMessageStyled>
+                            </ErrorListItemStyled>,
+                        );
+                    }
+                    return mappedErrors;
+                })()}
             </ErrorListStyled>
         </Popup>
     );

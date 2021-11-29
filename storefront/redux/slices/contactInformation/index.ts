@@ -1,42 +1,13 @@
+import { ContactInformationFormType, CustomerTypeEnum } from 'components/Pages/Order/ContactInformation/formMeta';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { SelectOptionType } from 'components/Forms/Select/Select';
-
-export type CustomerType = 'commonCustomer' | 'companyCustomer';
-
-export type ContactInformationFormType = {
-    email: string;
-    register: boolean;
-    passwordFirst: string;
-    passwordSecond: string;
-    customer: CustomerType;
-    telephone: string;
-    firstName: string;
-    lastName: string;
-    street: string;
-    city: string;
-    postcode: string;
-    country: SelectOptionType;
-    companyName: string;
-    companyNumber: string;
-    companyTaxNumber: string;
-    differentDeliveryAddress: boolean;
-    deliveryFirstName: string;
-    deliveryLastName: string;
-    deliveryCompanyName: string;
-    deliveryTelephone: string;
-    deliveryStreet: string;
-    deliveryCity: string;
-    deliveryPostcode: string;
-    deliveryCountry: SelectOptionType;
-    newsletterSubscription: boolean;
-};
 
 export const initialState = {
     email: '',
     register: false,
     passwordFirst: '',
     passwordSecond: '',
-    customer: 'commonCustomer',
+    customer: CustomerTypeEnum.CommonCustomer,
     telephone: '',
     firstName: '',
     lastName: '',
@@ -105,7 +76,7 @@ export const contactInformationSlice = createSlice({
         setPasswordSecond(state, action: PayloadAction<string>) {
             state.passwordSecond = action.payload;
         },
-        setCustomer(state, action: PayloadAction<CustomerType>) {
+        setCustomer(state, action: PayloadAction<CustomerTypeEnum>) {
             state.customer = action.payload;
         },
         setTelephone(state, action: PayloadAction<string>) {

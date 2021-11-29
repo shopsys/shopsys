@@ -3,6 +3,10 @@ import { FC, useEffect, useState } from 'react';
 import { ListItemStyled, PaymentListWrapper, ResetButtonStyled } from './Select.style';
 import { loadCart, mapPaymentToPaymentInput, mapTransportToTransportInput } from 'connectors/cart/Cart';
 import { mapPacketeryExtendedPoint, packeteryPick, removePacketeryCookie, setPacketeryCookie } from 'helpers/packetery';
+import {
+    TransportAndPaymentFormType,
+    useTransportAndPaymentFormMeta,
+} from 'components/Pages/Order/TransportAndPayment/formMeta';
 import { TransportInputType, TransportType } from 'connectors/transports/types';
 import { getSelectedPickupPlace } from 'connectors/transports/pickupPlace/PickupPlace';
 import Heading from 'components/Basic/Heading';
@@ -24,10 +28,13 @@ type SelectProps = {
 
 const Select: FC<SelectProps> = (props) => {
     const t = useTypedTranslationFunction();
-    const formProviderMethods = useFormContext();
+    const formProviderMethods = useFormContext<TransportAndPaymentFormType>();
+    const formMeta = useTransportAndPaymentFormMeta(formProviderMethods);
     const { defaultLocale } = useShopsysSelector((state) => state.domain);
-    const transportValue = useWatch({ name: 'transport' });
-    const paymentValue = useWatch({ name: 'payment' });
+    const [transportValue, paymentValue] = useWatch({
+        name: [formMeta.fields.transport.name, formMeta.fields.payment.name],
+        control: formProviderMethods.control,
+    });
 
     const { payment, transport, pickupPlace } = useShopsysSelector((state) => state.user);
     const transportInput = useShopsysSelector((state) => state.cartInput.transport);
@@ -45,15 +52,21 @@ const Select: FC<SelectProps> = (props) => {
     loadCart(cartUuid, mappedTransportInput, mappedPaymentInput, promoCode);
 
     useEffect(() => {
-        formProviderMethods.setValue('transport', transport?.uuid === undefined ? null : transport.uuid);
-        formProviderMethods.setValue('payment', payment?.uuid === undefined ? null : payment.uuid);
+        formProviderMethods.setValue(
+            formMeta.fields.transport.name,
+            transport?.uuid === undefined ? null : transport.uuid,
+        );
+        formProviderMethods.setValue(formMeta.fields.payment.name, payment?.uuid === undefined ? null : payment.uuid);
         updateTransport(transport);
         updatePickupPlace(pickupPlace);
     }, [transport, pickupPlace, payment]);
 
     useComponentUpdate(() => {
         const newTransport = props.transports.find((transport) => transport.uuid === transportValue);
-        formProviderMethods.setValue('transport', newTransport?.uuid === undefined ? null : newTransport.uuid);
+        formProviderMethods.setValue(
+            formMeta.fields.transport.name,
+            newTransport?.uuid === undefined ? null : newTransport.uuid,
+        );
 
         if (newTransport?.isPersonalPickup === true) {
             onChangePersonalPickupTransportHandler(newTransport);
@@ -70,7 +83,10 @@ const Select: FC<SelectProps> = (props) => {
 
     useComponentUpdate(() => {
         const newPayment = updatedTransport?.payments.find((payment) => payment.uuid === paymentValue);
-        formProviderMethods.setValue('payment', newPayment?.uuid === undefined ? null : newPayment.uuid);
+        formProviderMethods.setValue(
+            formMeta.fields.payment.name,
+            newPayment?.uuid === undefined ? null : newPayment.uuid,
+        );
 
         if (newPayment === undefined) {
             setMappedPaymentInput(null);
@@ -103,8 +119,8 @@ const Select: FC<SelectProps> = (props) => {
     };
 
     const resetTransportAndPayment = () => {
-        formProviderMethods.setValue('transport', null);
-        formProviderMethods.setValue('payment', null);
+        formProviderMethods.setValue(formMeta.fields.transport.name, null);
+        formProviderMethods.setValue(formMeta.fields.payment.name, null);
         resetPickupPlace();
     };
 
@@ -142,7 +158,7 @@ const Select: FC<SelectProps> = (props) => {
             updatePickupPlace(mappedPacketeryPoint);
             setMappedTransportInput(mapTransportToTransportInput(packeteryTransport, mappedPacketeryPoint));
         } else {
-            formProviderMethods.setValue('transport', null);
+            formProviderMethods.setValue(formMeta.fields.transport.name, null);
         }
     };
 
@@ -151,9 +167,9 @@ const Select: FC<SelectProps> = (props) => {
             <PacketeryContainer />
             <div>
                 <div>
-                    <Heading type="h3">{t('Choose transport type')}</Heading>
+                    <Heading type="h3">{formMeta.fields.transport.label}</Heading>
                     <Controller
-                        name="transport"
+                        name={formMeta.fields.transport.name}
                         render={({ field }) => (
                             <ul>
                                 {props.transports.map((transportItem) => (
@@ -162,7 +178,7 @@ const Select: FC<SelectProps> = (props) => {
                                         isActive={transportValue === transportItem.uuid}
                                     >
                                         <Radiobutton
-                                            name={field.name}
+                                            name={formMeta.fields.transport.name}
                                             id={transportItem.uuid}
                                             value={transportItem.uuid}
                                             fieldRef={field}
@@ -207,9 +223,9 @@ const Select: FC<SelectProps> = (props) => {
                 </div>
                 {transport !== null && !isPreSelectingTransport && (
                     <PaymentListWrapper>
-                        <Heading type="h3">{t('Choose payment type')}</Heading>
+                        <Heading type="h3">{formMeta.fields.payment.label}</Heading>
                         <Controller
-                            name="payment"
+                            name={formMeta.fields.payment.name}
                             render={({ field }) => (
                                 <ul>
                                     {transport.payments.map((paymentItem) => (
@@ -218,14 +234,16 @@ const Select: FC<SelectProps> = (props) => {
                                             isActive={paymentValue === paymentItem.uuid}
                                         >
                                             <Radiobutton
-                                                name={field.name}
+                                                name={formMeta.fields.payment.name}
                                                 id={paymentItem.uuid}
                                                 value={paymentItem.uuid}
                                                 fieldRef={field}
                                                 image={paymentItem.image}
                                                 disabled={paymentValue !== null && paymentValue !== paymentItem.uuid}
                                                 checked={paymentValue === paymentItem.uuid}
-                                                uncheckCallback={() => formProviderMethods.setValue('payment', null)}
+                                                uncheckCallback={() =>
+                                                    formProviderMethods.setValue(formMeta.fields.payment.name, null)
+                                                }
                                                 label={
                                                     <SelectItemLabel
                                                         name={paymentItem.name}
@@ -242,7 +260,7 @@ const Select: FC<SelectProps> = (props) => {
                         {paymentValue !== null && (
                             <ResetButtonStyled
                                 type="button"
-                                onClick={() => formProviderMethods.setValue('payment', null)}
+                                onClick={() => formProviderMethods.setValue(formMeta.fields.payment.name, null)}
                             >
                                 {t('Change payment type')}
                                 <Icon iconType="icon" icon="Arrow" />

@@ -1,3 +1,7 @@
+import {
+    ContactInformationFormType,
+    useContactInformationFormMeta,
+} from 'components/Pages/Order/ContactInformation/formMeta';
 import { Controller, useFormContext, useWatch } from 'react-hook-form';
 import { FC, useEffect } from 'react';
 import { contactInformationActions } from 'redux/slices/contactInformation';
@@ -14,14 +18,17 @@ import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslatio
 const ContactInformationAddress: FC = () => {
     const dispatch = useShopsysDispatch();
     const t = useTypedTranslationFunction();
-    const formProviderMethods = useFormContext();
+    const formProviderMethods = useFormContext<ContactInformationFormType>();
+    const formMeta = useContactInformationFormMeta(formProviderMethods);
     const countrySelectOptions = getCountriesAsSelectOptions();
-    const streetValue = useWatch({ name: 'street' });
-    const cityValue = useWatch({ name: 'city' });
-    const postcodeValue = useWatch({ name: 'postcode' });
+    const [streetValue, cityValue, postcodeValue] = useWatch({
+        name: [formMeta.fields.street.name, formMeta.fields.city.name, formMeta.fields.postcode.name],
+        control: formProviderMethods.control,
+    });
+
     useEffect(() => {
         if (countrySelectOptions.length > 0) {
-            formProviderMethods.setValue('country', countrySelectOptions[0]);
+            formProviderMethods.setValue(formMeta.fields.country.name, countrySelectOptions[0]);
         }
     }, [JSON.stringify(countrySelectOptions)]);
 
@@ -34,13 +41,13 @@ const ContactInformationAddress: FC = () => {
             <Heading type="h3">{t('Billing address')}</Heading>
             <FormLine bottomGap={true} lg="65%">
                 <Controller
-                    name="street"
+                    name={formMeta.fields.street.name}
                     render={({ fieldState: { isTouched, invalid, error }, field }) => (
                         <>
                             <TextInput
-                                id="contactInformation_form-street"
-                                name="street"
-                                label={t('Street')}
+                                id={formMeta.formName + '-' + formMeta.fields.street.name}
+                                name={formMeta.fields.street.name}
+                                label={formMeta.fields.street.label}
                                 required={true}
                                 type="text"
                                 isTouched={isTouched}
@@ -57,13 +64,13 @@ const ContactInformationAddress: FC = () => {
             <FormColumn lg="65%">
                 <FormLine bottomGap={true}>
                     <Controller
-                        name="city"
+                        name={formMeta.fields.city.name}
                         render={({ fieldState: { isTouched, invalid, error }, field }) => (
                             <>
                                 <TextInput
-                                    id="contactInformation_form-city"
-                                    name="city"
-                                    label={t('City')}
+                                    id={formMeta.formName + '-' + formMeta.fields.city.name}
+                                    name={formMeta.fields.city.name}
+                                    label={formMeta.fields.city.label}
                                     required={true}
                                     type="text"
                                     isTouched={isTouched}
@@ -78,13 +85,13 @@ const ContactInformationAddress: FC = () => {
                 </FormLine>
                 <FormLine bottomGap={true} width="100%" lg="142px">
                     <Controller
-                        name="postcode"
+                        name={formMeta.fields.postcode.name}
                         render={({ fieldState: { isTouched, invalid, error }, field }) => (
                             <>
                                 <TextInput
-                                    id="contactInformation_form-postcode"
-                                    name="postcode"
-                                    label={t('Postcode')}
+                                    id={formMeta.formName + '-' + formMeta.fields.postcode.name}
+                                    name={formMeta.fields.postcode.name}
+                                    label={formMeta.fields.postcode.label}
                                     required={true}
                                     type="text"
                                     isTouched={isTouched}
@@ -100,7 +107,7 @@ const ContactInformationAddress: FC = () => {
             </FormColumn>
             <FormLine lg="65%">
                 <Controller
-                    name="country"
+                    name={formMeta.fields.country.name}
                     render={({ field }) => (
                         <Select
                             options={countrySelectOptions}
