@@ -1,30 +1,10 @@
-import { CategoryDetailFragmentApi, ListedCategoryFragmentApi, PageInfoApi } from 'graphql/generated';
+import { CategoryDetailFragmentApi, ListedCategoryFragmentApi } from 'graphql/generated';
 import { CategoryDetailType } from 'components/Pages/CategoryDetail/types';
 import { ListedCategoryType } from './types';
 import { ListedProductEdgesType } from 'components/Blocks/Product/types';
 import { mapImageApiData } from 'connectors/image/Image';
 import { mapListedProductType } from 'connectors/products/Products';
-
-const mapPageInfoApiData = (pageInfoApiData: PageInfoApi | undefined) => {
-    return {
-        startCursor:
-            pageInfoApiData?.startCursor !== undefined && pageInfoApiData.startCursor !== null
-                ? pageInfoApiData.startCursor
-                : '',
-        endCursor:
-            pageInfoApiData?.endCursor !== undefined && pageInfoApiData.endCursor !== null
-                ? pageInfoApiData.endCursor
-                : '',
-        hasNextPage:
-            pageInfoApiData?.hasNextPage !== undefined && pageInfoApiData.hasNextPage !== null
-                ? pageInfoApiData.hasNextPage
-                : false,
-        hasPreviousPage:
-            pageInfoApiData?.hasPreviousPage !== undefined && pageInfoApiData.hasPreviousPage !== null
-                ? pageInfoApiData.hasPreviousPage
-                : false,
-    };
-};
+import { mapPageInfoApiData } from 'connectors/pageInfo/PageInfo';
 
 export const mapCategoryDetailData = (
     apiCategoryDetailData: CategoryDetailFragmentApi,

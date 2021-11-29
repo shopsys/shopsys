@@ -21,5 +21,8 @@ query SlugQuery(
         ... on BlogArticle {
             ...BlogArticleDetailFragment
         }
+        ... on Brand {
+            ...BrandDetailFragment
+        }
     }
 }

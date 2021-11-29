@@ -1,5 +1,6 @@
 import {
     BlogArticleImageListFragmentApi,
+    BrandDetailFragmentApi,
     BrandImagesListFragmentApi,
     CategoryImagesDefaultFragmentApi,
     ProductImagesListFragmentApi,
@@ -12,7 +13,8 @@ export const mapImageApiData = (
         | BlogArticleImageListFragmentApi['image'][]
         | ProductImagesListFragmentApi['images']
         | BrandImagesListFragmentApi['images']
-        | CategoryImagesDefaultFragmentApi['images'],
+        | CategoryImagesDefaultFragmentApi['images']
+        | BrandDetailFragmentApi['brandImages'],
 ): ImageType | null => {
     if (
         apiData === null ||

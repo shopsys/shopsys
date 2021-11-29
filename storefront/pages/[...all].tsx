@@ -7,6 +7,8 @@ import ArticleDetailPage from 'components/Pages/Article';
 import { ArticleDetailType } from 'connectors/article/types';
 import { BlogArticleDetailType } from 'components/Pages/BlogArticle/types';
 import BlogArticlePage from 'components/Pages/BlogArticle';
+import BrandDetailPage from 'components/Pages/BrandDetail';
+import { BrandDetailType } from 'connectors/brands/types';
 import Breadcrumbs from 'components/Layout/Breadcrumbs';
 import CategoryDetailPage from 'components/Pages/CategoryDetail';
 import { CategoryDetailType } from 'components/Pages/CategoryDetail/types';
@@ -57,7 +59,13 @@ const FriendlyUrlPage: FC<ServerSidePropsType> = () => {
 };
 
 function renderContent(
-    data: ProductDetailType | CategoryDetailType | StoreDetailType | ArticleDetailType | BlogArticleDetailType,
+    data:
+        | ProductDetailType
+        | CategoryDetailType
+        | StoreDetailType
+        | ArticleDetailType
+        | BlogArticleDetailType
+        | BrandDetailType,
 ) {
     if (data.__typename === 'RegularProduct' || data.__typename === 'MainVariant' || data.__typename === 'Variant') {
         return <ProductDetailPage product={data as ProductDetailType} />;
@@ -69,6 +77,8 @@ function renderContent(
         return <ArticleDetailPage article={data as ArticleDetailType} />;
     } else if (data.__typename === 'BlogArticle') {
         return <BlogArticlePage blogArticle={data as BlogArticleDetailType} />;
+    } else if (data.__typename === 'Brand') {
+        return <BrandDetailPage brand={data as BrandDetailType} />;
     }
 
     return <DefaultErrorPage statusCode={404} />;

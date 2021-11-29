@@ -1,4 +1,6 @@
+import { BreadcrumbItemType } from 'connectors/breadcrumb/Breadcrumb';
 import { ImageType } from 'components/Basic/Image/types';
+import { ListedProductEdgesType } from 'components/Blocks/Product/types';
 
 export type SimpleBrandType = {
     __typename?: 'Brand';
@@ -11,4 +13,16 @@ export type ListedBrandType = {
     name: string;
     slug: string;
     image: ImageType | null;
+};
+
+export type BrandDetailType = {
+    __typename: 'Brand';
+    slug: string;
+    uuid: string;
+    breadcrumb: BreadcrumbItemType[];
+    name: string;
+    seoH1: string | null;
+    image: ImageType | null;
+    description: string | null;
+    products: ListedProductEdgesType;
 };

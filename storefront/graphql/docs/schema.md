@@ -2012,7 +2012,7 @@ Brand SEO H1
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>images</strong></td>
-<td valign="top">[<a href="#image">Image</a>]!</td>
+<td valign="top">[<a href="#image">Image</a>!]!</td>
 <td>
 
 Brand images
