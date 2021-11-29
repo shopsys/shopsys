@@ -24,5 +24,8 @@ query SlugQuery(
         ... on Brand {
             ...BrandDetailFragment
         }
+        ... on Flag {
+            ...FlagDetailFragment
+        }
     }
 }

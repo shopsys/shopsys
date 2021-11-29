@@ -1,0 +1,17 @@
+fragment FlagDetailFragment on Flag {
+    uuid
+    slug
+    ...BreadcrumbFragment
+    name
+    products(orderingMode: $sortingMode, after: $endCursorForPagination) {
+        totalCount
+        pageInfo {
+            ...PageInfoFragment
+        }
+        edges {
+            node {
+                ...ProductListFragment
+            }
+        }
+    }
+}
