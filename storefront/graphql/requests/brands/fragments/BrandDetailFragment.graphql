@@ -8,15 +8,5 @@ fragment BrandDetailFragment on Brand {
     brandImages: images (sizes: ["default"]) {
         ...ImageSizesFragment
     }
-    products(orderingMode: $sortingMode, after: $endCursorForPagination) {
-        totalCount
-        pageInfo {
-            ...PageInfoFragment
-        }
-        edges {
-            node {
-                ...ProductListFragment
-            }
-        }
-    }
+    ...ListedProductsFragment
 }

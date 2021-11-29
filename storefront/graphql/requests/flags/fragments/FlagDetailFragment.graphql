@@ -3,15 +3,5 @@ fragment FlagDetailFragment on Flag {
     slug
     ...BreadcrumbFragment
     name
-    products(orderingMode: $sortingMode, after: $endCursorForPagination) {
-        totalCount
-        pageInfo {
-            ...PageInfoFragment
-        }
-        edges {
-            node {
-                ...ProductListFragment
-            }
-        }
-    }
+    ...ListedProductsFragment
 }
