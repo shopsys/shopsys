@@ -6,6 +6,7 @@ Brand:
         interfaces:
             - 'Breadcrumb'
             - 'Slug'
+            - 'ProductListable'
         fields:
             images:
                 type: "[Image!]!"

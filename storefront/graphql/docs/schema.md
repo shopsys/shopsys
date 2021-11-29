@@ -111,6 +111,7 @@
     * [CartInterface](#cartinterface)
     * [CustomerUser](#customeruser)
     * [Product](#product)
+    * [ProductListable](#productlistable)
     * [Slug](#slug)
 
 </details>
@@ -8337,6 +8338,67 @@ Hierarchy of the current element in relation to the structure
 List of related products
 
 </td>
+</tr>
+</tbody>
+</table>
+
+### ProductListable
+
+Paginated and ordered products
+
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="right">Argument</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong>products</strong></td>
+<td valign="top"><a href="#productconnection">ProductConnection</a></td>
+<td>
+
+Paginated and ordered products
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">after</td>
+<td valign="top"><a href="#string">String</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">first</td>
+<td valign="top"><a href="#int">Int</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">before</td>
+<td valign="top"><a href="#string">String</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">last</td>
+<td valign="top"><a href="#int">Int</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">orderingMode</td>
+<td valign="top"><a href="#productorderingmodeenum">ProductOrderingModeEnum</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">filter</td>
+<td valign="top"><a href="#productfilter">ProductFilter</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">search</td>
+<td valign="top"><a href="#string">String</a></td>
+<td></td>
 </tr>
 </tbody>
 </table>

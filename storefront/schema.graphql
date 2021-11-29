@@ -295,7 +295,7 @@ type BlogCategory implements Breadcrumb & Slug {
 }
 
 """Represents a brand"""
-type Brand implements Breadcrumb & Slug {
+type Brand implements Breadcrumb & Slug & ProductListable {
   """UUID"""
   uuid: Uuid!
 
@@ -439,7 +439,7 @@ type CartTransportModificationsResult {
 }
 
 """Represents a category"""
-type Category implements Breadcrumb & Slug {
+type Category implements Breadcrumb & Slug & ProductListable {
   """UUID"""
   uuid: Uuid!
 
@@ -683,7 +683,7 @@ type File {
 }
 
 """Represents a flag"""
-type Flag implements Breadcrumb & Slug {
+type Flag implements Breadcrumb & Slug & ProductListable {
   """UUID"""
   uuid: Uuid!
 
@@ -1614,6 +1614,12 @@ type ProductFilterOptions {
 
   """Parameter filter options"""
   parameters: [ParameterFilterOption!]
+}
+
+"""Paginated and ordered products"""
+interface ProductListable {
+  """Paginated and ordered products"""
+  products(after: String, first: Int, before: String, last: Int, orderingMode: ProductOrderingModeEnum, filter: ProductFilter, search: String): ProductConnection
 }
 
 """One of possible ordering modes for product"""

@@ -10,17 +10,7 @@ fragment CategoryDetailFragment on Category {
     linkedCategories {
         ...CategoryPreviewFragment
     }
-    products(orderingMode: $sortingMode, after: $endCursorForPagination, first: $pageSize) {
-        totalCount
-        pageInfo {
-            ...PageInfoFragment
-        }
-        edges {
-            node {
-                ...ProductListFragment
-            }
-        }
-    }
+    ...ListedProductsFragment
     readyCategorySeoMixLinks {
         name
         slug
