@@ -25,6 +25,7 @@
         "@hookform/error-message": "^2.0.0",
         "@hookform/resolvers": "^2.6.1",
         "@reduxjs/toolkit": "^1.6.1",
+        "@sentry/nextjs": "^6.15.0",
         "@types/styled-components": "^5.1.11",
         "@types/tinycolor2": "^1.4.3",
         "@urql/exchange-auth": "^0.1.6",
