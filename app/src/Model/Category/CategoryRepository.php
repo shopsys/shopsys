@@ -10,6 +10,7 @@ use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Component\Paginator\PaginationResult;
 use Shopsys\FrameworkBundle\Component\Paginator\QueryPaginator;
+use Shopsys\FrameworkBundle\Model\Category\CategoryDomain;
 use Shopsys\FrameworkBundle\Model\Category\CategoryRepository as BaseCategoryRepository;
 use Shopsys\FrameworkBundle\Model\Category\Exception\CategoryNotFoundException;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
@@ -253,5 +254,24 @@ class CategoryRepository extends BaseCategoryRepository
         $queryPaginator = new QueryPaginator($queryBuilder);
 
         return $queryPaginator->getResult($page, $limit);
+    }
+
+    /**
+     * Thanks to joining "c.domains" instead of "CategoryDomain::class",
+     * the category domains can be eager loaded (by adding "cd" to "select" part), but are still excluded from the result array
+     *
+     * @param int $domainId
+     * @return \Doctrine\ORM\QueryBuilder
+     */
+    public function getAllVisibleByDomainIdQueryBuilder($domainId)
+    {
+        $queryBuilder = $this->getAllQueryBuilder()
+            ->join('c.domains', 'cd')
+            ->andWhere('cd.domainId = :domainId')
+            ->andWhere('cd.visible = TRUE');
+
+        $queryBuilder->setParameter('domainId', $domainId);
+
+        return $queryBuilder;
     }
 }
