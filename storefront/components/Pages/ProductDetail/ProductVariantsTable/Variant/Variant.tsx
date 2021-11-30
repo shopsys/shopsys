@@ -6,6 +6,7 @@ import {
     VariantImageWrapperStyled,
     VariantPriceCellStyled,
 } from './Variant.style';
+import AddToCart from 'components/Blocks/Product/AddToCart/AddToCart';
 import { FC } from 'react';
 import { formatPrice } from 'utils/formatting';
 import Image from 'components/Basic/Image';
@@ -34,7 +35,14 @@ const Variant: FC<VariantProps> = (props) => {
                     {formatPrice(props.variant.price.priceWithVat, currencyCode, t)}
                 </VariantPriceCellStyled>
                 <VariantActionCellStyled>
-                    <VariantActionStyled></VariantActionStyled>
+                    <VariantActionStyled>
+                        <AddToCart
+                            productUuid={props.variant.uuid}
+                            productName={props.variant.name}
+                            minQuantity={1}
+                            maxQuantity={props.variant.stockQuantity}
+                        />
+                    </VariantActionStyled>
                 </VariantActionCellStyled>
             </VariantsTableRowStyled>
         </>
