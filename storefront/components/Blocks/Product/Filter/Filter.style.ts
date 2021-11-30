@@ -6,7 +6,7 @@ export const FilterStyled = styled.div`
         position: relative;
         overflow: hidden;
         padding: 0 14px;
-        z-index: ${theme.zIndex.aboveOverlay}; // on mobile is menu above ovarlay
+        z-index: ${theme.zIndex.aboveOverlay};
 
         background-color: ${theme.color.blueLight};
         border-radius: ${theme.radius.big};

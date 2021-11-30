@@ -35,7 +35,7 @@ export const CategoryDetailPanelStyled = styled.div<PanelProps>`
         ${isOpen &&
         css`
             display: block;
-            z-index: ${theme.zIndex.menu};
+            z-index: ${theme.zIndex.overlay};
         `};
 
         @media ${theme.mediaQueries.queryVl} {
@@ -58,8 +58,8 @@ export const CategoryDetailContentStyled = styled.div`
     `}
 `;
 
-export const CategoryDetailPanelOpenerStyled = styled.div`
-    ${({ theme }) => css`
+export const CategoryDetailPanelOpenerStyled = styled.div<PanelProps>`
+    ${({ theme, isOpen }) => css`
         position: relative;
         display: flex;
         flex-direction: row;
@@ -69,7 +69,11 @@ export const CategoryDetailPanelOpenerStyled = styled.div`
         line-height: 27px;
         padding: 11px 32px 10px;
         margin-bottom: 10px;
-        z-index: ${theme.zIndex.aboveOverlay};
+
+        ${isOpen === true &&
+        css`
+            z-index: ${theme.zIndex.overlay};
+        `}
 
         cursor: pointer;
         color: ${theme.color.white};

@@ -78,6 +78,7 @@ const CategoryDetail: FC<CategoryDetailProps> = (props) => {
                         id="js-category-detail-panel"
                         ref={buttonRef}
                         onClick={handlePanelOpenerClick}
+                        isOpen={isPanelOpen}
                     >
                         <CategoryDetailPanelIconStyled iconType="icon" icon="Filter" />
                         {t('Filtrovat')}

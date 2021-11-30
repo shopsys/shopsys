@@ -1,3 +1,4 @@
+import { css } from 'styled-components';
 import { styled } from 'components/Theme/main';
 
 export const ChoiceFormLineStyled = styled.div`
@@ -7,14 +8,16 @@ export const ChoiceFormLineStyled = styled.div`
 `;
 
 export const CheckboxColorStyled = styled.input`
-    position: absolute;
-    height: 1px;
-    width: 1px;
-    margin: -1px;
-    padding: 0;
-    z-index: -1000;
-    overflow: hidden;
+    ${({ theme }) => css`
+        position: absolute;
+        height: 1px;
+        width: 1px;
+        margin: -1px;
+        padding: 0;
+        z-index: ${theme.zIndex.hidden};
+        overflow: hidden;
 
-    clip: rect(0 0 0 0);
-    border: 0;
+        clip: rect(0 0 0 0);
+        border: 0;
+    `}
 `;

@@ -115,7 +115,7 @@ export const CartDetailStyled = styled.div<CartDetailStyledProps>`
             position: absolute;
             top: 100%;
             right: 0;
-            z-index: 6000;
+            z-index: ${theme.zIndex.cart};
             padding: ${containsProducts ? '5px 20px 25px' : '15px 0 15px 15px'};
             min-width: ${containsProducts ? '510px' : '400px'};
             max-width: ${containsProducts ? '510px' : '400px'};

@@ -15,7 +15,7 @@ export const SelectStyled = styled(SelectReact)<SelectProps>`
             border-radius: ${theme.radius.big};
             box-shadow: none;
             cursor: pointer;
-            z-index: calc(${theme.zIndex.above} + 1);
+            z-index: ${theme.zIndex.above} + 1;
 
             &:hover {
                 border: 2px solid ${theme.color.border};

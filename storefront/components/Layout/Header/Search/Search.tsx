@@ -52,6 +52,7 @@ const Search: FC = () => {
 
     const onDocumentClickHandler: EventListener = (event) => {
         if (searchInRef.current === null || !(event.target instanceof HTMLElement)) {
+            setSearchFocus(false);
             return;
         }
 
