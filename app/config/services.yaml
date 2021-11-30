@@ -981,3 +981,9 @@ services:
         alias: App\FrontendApi\Model\Token\TokenAuthenticator
 
     App\FrontendApi\Error\ErrorCodeSubscriber: ~
+
+    Shopsys\FrameworkBundle\Model\Transport\Grid\TransportGridFactory:
+        alias: App\Model\Transport\Grid\TransportGridFactory
+
+    Shopsys\FrameworkBundle\Model\Payment\Grid\PaymentGridFactory:
+        alias: App\Model\Payment\Grid\PaymentGridFactory
