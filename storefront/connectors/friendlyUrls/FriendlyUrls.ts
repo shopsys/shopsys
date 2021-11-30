@@ -1,5 +1,5 @@
+import { mapCategoryDetailData, mapParametersFilter } from 'connectors/categories/Categories';
 import { mapMainVariantDetailApiData, mapProductDetailApiData } from 'connectors/products/ProductDetail';
-import { ProductFilterApi, useSlugQueryApi } from 'graphql/generated';
 import { ArticleDetailType } from 'connectors/article/types';
 import { BlogArticleDetailType } from 'components/Pages/BlogArticle/types';
 import { BrandDetailType } from 'connectors/brands/types';
@@ -9,13 +9,13 @@ import { MainVariantDetailType } from 'connectors/products/types';
 import { mapArticleDetailApiData } from 'connectors/article/ArticleDetail';
 import { mapBlogArticleDetailApiData } from 'connectors/blogArticle/BlogArticle';
 import { mapBrandDetailApiData } from 'connectors/brands/Brands';
-import { mapCategoryDetailData } from 'connectors/categories/Categories';
 import { mapFlagDetailApiData } from 'connectors/flags/Flags';
 import { mapStoreDetailApiData } from 'connectors/stores/StoreDetail';
 import { ProductDetailType } from 'components/Pages/ProductDetail/types';
 import { StoreDetailType } from 'connectors/stores/types';
 import { useQueryError } from 'hooks/graphQl/UseQueryError';
 import { useShopsysSelector } from 'redux/main';
+import { useSlugQueryApi } from 'graphql/generated';
 
 export function getFriendlyUrlResolvedData(
     slug: string,
@@ -39,7 +39,7 @@ export function getFriendlyUrlResolvedData(
             sortingMode: categoryDetailSort,
             endCursorForPagination: pagination.paginationCursor,
             pageSize: pagination.pageSize,
-            filter: categoryParametersFilter as ProductFilterApi,
+            filter: mapParametersFilter(categoryParametersFilter),
         },
     });
     useQueryError(error);

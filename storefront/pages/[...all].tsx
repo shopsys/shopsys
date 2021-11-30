@@ -16,13 +16,15 @@ import CommonLayout from 'components/Layout/CommonLayout';
 import DefaultErrorPage from 'next/error';
 import FlagDetailPage from 'components/Pages/FlagDetail';
 import { FlagDetailType } from 'connectors/flags/types';
-import { getCategoryDetailFilter } from 'helpers/GetCategoryDetailFilter';
+import { getFilterOptions } from 'helpers/filterOptions/GetFilterOptions';
 import { getFriendlyUrlResolvedData } from 'connectors/friendlyUrls/FriendlyUrls';
 import { getNewPagination } from 'utils/Pagination/getNewPagination';
 import { getProductListSort } from 'helpers/sorting/GetProductListSort';
 import { initDomainConfig } from 'helpers/InitDomainConfig';
 import { MainVariantDetailType } from 'connectors/products/types';
+import { mapParametersFilter } from 'connectors/categories/Categories';
 import { optionsFilterActions } from 'redux/slices/optionsFilter';
+import { parseFilterOptionsFromQuery } from 'helpers/filterOptions/ParseFilterOptionsFromQuery';
 import { parsePageNumberFromQuery } from 'utils/Pagination/parsePageNumberFromQuery';
 import { parseProductListSortFromQuery } from 'helpers/sorting/ParseProductListSortFromQuery';
 import ProductDetailMainVariantPage from 'components/Pages/ProductDetail/ProductDetailMainVariant';
@@ -104,7 +106,9 @@ export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) =>
             getNewPagination(parsePageNumberFromQuery(context.query.page), initialState.pagination.pageSize),
         ),
     );
-    store.dispatch(optionsFilterActions.setOptionsFilter(getCategoryDetailFilter(context.query.filter)));
+    store.dispatch(
+        optionsFilterActions.setOptionsFilter(getFilterOptions(parseFilterOptionsFromQuery(context.query.filter))),
+    );
 
     return initServerSideProps(context, store, [
         { query: NavigationQueryDocumentApi },
@@ -115,7 +119,7 @@ export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) =>
                 sortingMode: store.getState().user.sort,
                 endCursorForPagination: store.getState().user.pagination.paginationCursor,
                 pageSize: initialState.pagination.pageSize,
-                filter: store.getState().optionsFilter,
+                filter: mapParametersFilter(store.getState().optionsFilter),
             },
         },
     ]);

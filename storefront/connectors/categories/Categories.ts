@@ -1,6 +1,7 @@
-import { CategoryDetailFragmentApi, ListedCategoryFragmentApi } from 'graphql/generated';
+import { CategoryDetailFragmentApi, ListedCategoryFragmentApi, ProductFilterApi } from 'graphql/generated';
 import { CategoryDetailType } from 'components/Pages/CategoryDetail/types';
 import { FilterOptionsParameterTypeEnum } from 'components/Blocks/Product/Filter/types';
+import { FilterOptionsStateType } from 'components/Blocks/Product/Filter/types';
 import { ListedCategoryType } from './types';
 import { ListedProductEdgesType } from 'components/Blocks/Product/types';
 import { mapImageApiData } from 'connectors/image/Image';
@@ -78,5 +79,13 @@ export const mapListedCategoryApiData = (listedCategoryApiData: ListedCategoryFr
     return {
         ...listedCategoryApiData,
         image: mapImageApiData(listedCategoryApiData.images),
+    };
+};
+
+export const mapParametersFilter = (categoryParametersFilter: FilterOptionsStateType): ProductFilterApi => {
+    return {
+        ...categoryParametersFilter,
+        minimalPrice: categoryParametersFilter.minimalPrice?.toString(),
+        maximalPrice: categoryParametersFilter.maximalPrice?.toString(),
     };
 };
