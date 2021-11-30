@@ -1,4 +1,4 @@
-fragment ProductDetailFragment on Product {
+fragment MainVariantDetailFragment on MainVariant {
     uuid
     slug
     name
@@ -9,19 +9,14 @@ fragment ProductDetailFragment on Product {
     stockQuantity
     ...ProductPriceFragment
     ...ProductDetailImagesFragment
-    availability {
-        ...AvailabilityFragment
-    }
-    storeAvailabilities {
-        ...StoreAvailabilityFragment
-    }
-    ...BreadcrumbFragment
-    availableStoresCount
-    exposedStoresCount
     accessories {
         ...SliderProductFragment
     }
     parameters {
         ...ParameterFragment
+    }
+    ...BreadcrumbFragment
+    variants {
+        ...ListedVariantFragment
     }
 }

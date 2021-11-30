@@ -9,6 +9,9 @@ query SlugQuery(
         ... on Product {
             ...ProductDetailFragment
         }
+        ... on MainVariant {
+            ...MainVariantDetailFragment
+        }
         ... on Category {
             ...CategoryDetailFragment
         }

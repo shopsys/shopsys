@@ -1,0 +1,20 @@
+fragment ListedVariantFragment on Variant {
+    uuid
+    slug
+    name
+    stockQuantity
+    flags {
+        ...FlagLabelFragment
+    }
+    ...ProductImagesListFragment
+    ...ProductPriceFragment
+    availability {
+        ...AvailabilityFragment
+    }
+    availableStoresCount
+    exposedStoresCount
+    catalogNumber
+    storeAvailabilities {
+        ...StoreAvailabilityFragment
+    }
+}
