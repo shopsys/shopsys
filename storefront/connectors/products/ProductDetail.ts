@@ -1,6 +1,18 @@
-import { mapProductPriceData, mapSliderProductApiData } from './Products';
-import { ParameterFragmentApi, ProductDetailFragmentApi, ProductDetailImagesFragmentApi } from 'graphql/generated';
-import { ProductDetailImageType, ProductDetailType, ProductParameterType } from 'components/Pages/ProductDetail/types';
+import {
+    MainVariantDetailFragmentApi,
+    ParameterFragmentApi,
+    ProductDetailFragmentApi,
+    ProductDetailImagesFragmentApi,
+    StoreAvailabilityFragmentApi,
+} from 'graphql/generated';
+import { mapListedVariantType, mapProductPriceData, mapSliderProductApiData } from './Products';
+import {
+    ProductDetailImageType,
+    ProductDetailType,
+    ProductParameterType,
+    StoreAvailability,
+} from 'components/Pages/ProductDetail/types';
+import { MainVariantDetailType } from './types';
 
 export const mapProductDetailApiData = (
     productDetailApiData: ProductDetailFragmentApi,
@@ -16,13 +28,7 @@ export const mapProductDetailApiData = (
             name: productDetailApiData.availability.name,
             status: productDetailApiData.availability.status === 'in-stock' ? 'in-stock' : 'out-of-stock',
         },
-        storeAvailabilities: productDetailApiData.storeAvailabilities.map((storeAvailabilityApiData) => {
-            return {
-                ...storeAvailabilityApiData,
-                availabilityStatus:
-                    storeAvailabilityApiData.availabilityStatus === 'in-stock' ? 'in-stock' : 'out-of-stock',
-            };
-        }),
+        storeAvailabilities: mapStoreAvailabilities(productDetailApiData.storeAvailabilities),
         namePrefix:
             productDetailApiData.namePrefix !== undefined && productDetailApiData.namePrefix !== null
                 ? productDetailApiData.namePrefix
@@ -42,6 +48,34 @@ export const mapProductDetailApiData = (
                 : [],
         parameters: mapParametersApiData(productDetailApiData.parameters),
         images: mapProductDetailImages(productDetailApiData.images),
+    };
+};
+
+export const mapStoreAvailabilities = (apiData: StoreAvailabilityFragmentApi[]): StoreAvailability[] => {
+    return apiData.map((storeAvailabilityApiData) => ({
+        ...storeAvailabilityApiData,
+        availabilityStatus: storeAvailabilityApiData.availabilityStatus === 'in-stock' ? 'in-stock' : 'out-of-stock',
+    }));
+};
+
+export const mapMainVariantDetailApiData = (
+    apiData: MainVariantDetailFragmentApi,
+    currencyCode: string,
+): MainVariantDetailType => {
+    return {
+        ...apiData,
+        __typename: 'MainVariant',
+        namePrefix: apiData.namePrefix !== undefined && apiData.namePrefix !== null ? apiData.namePrefix : '',
+        nameSuffix: apiData.nameSuffix !== undefined && apiData.nameSuffix !== null ? apiData.nameSuffix : '',
+        description: apiData.description !== undefined && apiData.description !== null ? apiData.description : '',
+        price: mapProductPriceData(apiData.price, currencyCode),
+        accessories:
+            apiData.accessories !== undefined && apiData.accessories !== null
+                ? mapSliderProductApiData(apiData.accessories, currencyCode)
+                : [],
+        parameters: mapParametersApiData(apiData.parameters),
+        images: mapProductDetailImages(apiData.images),
+        variants: apiData.variants.map((variant) => mapListedVariantType(variant, currencyCode)),
     };
 };
 

@@ -1,9 +1,13 @@
 import { FC } from 'react';
 import { ProductAvailableStoreCountStyled } from './ProductAvailableStoresCount.style';
-import { SliderProductItemType } from 'components/Blocks/Product/types';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 
-const ProductAvailableStoresCount: FC<SliderProductItemType> = (props) => {
+type ProductAvailableStoresCountProps = {
+    isMainVariant: boolean;
+    availableStoresCount: number;
+};
+
+const ProductAvailableStoresCount: FC<ProductAvailableStoresCountProps> = (props) => {
     const t = useTypedTranslationFunction();
 
     if (props.isMainVariant || props.availableStoresCount === 0) {

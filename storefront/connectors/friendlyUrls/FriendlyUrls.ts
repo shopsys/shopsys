@@ -1,14 +1,15 @@
+import { mapMainVariantDetailApiData, mapProductDetailApiData } from 'connectors/products/ProductDetail';
 import { ArticleDetailType } from 'connectors/article/types';
 import { BlogArticleDetailType } from 'components/Pages/BlogArticle/types';
 import { BrandDetailType } from 'connectors/brands/types';
 import { CategoryDetailType } from 'components/Pages/CategoryDetail/types';
 import { FlagDetailType } from 'connectors/flags/types';
+import { MainVariantDetailType } from 'connectors/products/types';
 import { mapArticleDetailApiData } from 'connectors/article/ArticleDetail';
 import { mapBlogArticleDetailApiData } from 'connectors/blogArticle/BlogArticle';
 import { mapBrandDetailApiData } from 'connectors/brands/Brands';
 import { mapCategoryDetailData } from 'connectors/categories/Categories';
 import { mapFlagDetailApiData } from 'connectors/flags/Flags';
-import { mapProductDetailApiData } from 'connectors/products/ProductDetail';
 import { mapStoreDetailApiData } from 'connectors/stores/StoreDetail';
 import { ProductDetailType } from 'components/Pages/ProductDetail/types';
 import { StoreDetailType } from 'connectors/stores/types';
@@ -20,6 +21,7 @@ export function getFriendlyUrlResolvedData(
     slug: string,
 ):
     | ProductDetailType
+    | MainVariantDetailType
     | CategoryDetailType
     | StoreDetailType
     | ArticleDetailType
@@ -45,12 +47,10 @@ export function getFriendlyUrlResolvedData(
         return undefined;
     }
 
-    if (
-        data.slug.__typename === 'RegularProduct' ||
-        data.slug.__typename === 'MainVariant' ||
-        data.slug.__typename === 'Variant'
-    ) {
+    if (data.slug.__typename === 'RegularProduct' || data.slug.__typename === 'Variant') {
         return mapProductDetailApiData(data.slug, currentDomainConfig.currencyCode);
+    } else if (data.slug.__typename === 'MainVariant') {
+        return mapMainVariantDetailApiData(data.slug, currentDomainConfig.currencyCode);
     } else if (data.slug.__typename === 'Category') {
         return mapCategoryDetailData(data.slug, currentDomainConfig.currencyCode);
     } else if (data.slug.__typename === 'Store') {

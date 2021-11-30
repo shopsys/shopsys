@@ -1,0 +1,45 @@
+import {
+    TableHeaderActionCellStyled,
+    TableHeaderCellStyled,
+    TableHeaderImageCellStyled,
+    TableHeaderPriceCellStyled,
+    VariantsTableBodyStyled,
+    VariantsTableHeaderStyled,
+    VariantsTableRowStyled,
+    VariantsTableStyled,
+} from './ProductVariantsTable.style';
+import { FC } from 'react';
+import { ListedVariantType } from 'connectors/products/types';
+import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
+import Variant from './Variant';
+
+type ProductVariantsTableProps = {
+    variants: ListedVariantType[];
+};
+
+const ProductVariantsTable: FC<ProductVariantsTableProps> = (props) => {
+    const t = useTypedTranslationFunction();
+
+    return (
+        <>
+            <VariantsTableStyled>
+                <VariantsTableHeaderStyled>
+                    <VariantsTableRowStyled>
+                        <TableHeaderImageCellStyled></TableHeaderImageCellStyled>
+                        <TableHeaderCellStyled>{t('Name')}</TableHeaderCellStyled>
+                        <TableHeaderCellStyled>{t('Availability')}</TableHeaderCellStyled>
+                        <TableHeaderPriceCellStyled>{t('Price with VAT')}</TableHeaderPriceCellStyled>
+                        <TableHeaderActionCellStyled></TableHeaderActionCellStyled>
+                    </VariantsTableRowStyled>
+                </VariantsTableHeaderStyled>
+                <VariantsTableBodyStyled>
+                    {props.variants.map((variant) => (
+                        <Variant key={variant.uuid} variant={variant} />
+                    ))}
+                </VariantsTableBodyStyled>
+            </VariantsTableStyled>
+        </>
+    );
+};
+
+export default ProductVariantsTable;
