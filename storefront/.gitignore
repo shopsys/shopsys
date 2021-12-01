@@ -39,4 +39,4 @@ yarn-error.log*
 # vercel
 .vercel
 
-./schema.graphql
+/schema.graphql
