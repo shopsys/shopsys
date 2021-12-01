@@ -11,6 +11,9 @@ function deploy() {
         DOMAIN_HOSTNAME_2
     )
 
+    ENABLE_AUTOSCALING=true
+    USING_STOREFRONT=true
+
     declare -A PARAMETERS=(
         ["parameters.trusted_proxies[+]"]=10.0.0.0/8
     )
@@ -21,7 +24,7 @@ function deploy() {
         ["DATABASE_NAME"]=${PROJECT_NAME}
         ["DATABASE_USER"]=${PROJECT_NAME}
         ["DATABASE_PASSWORD"]=${POSTGRES_DATABASE_PASSWORD}
-        ["ELASTICSEARCH_HOST"]=${ELASTICSEARCH_URL}
+        ["ELASTICSEARCH_HOST"]=${ELASTICSEARCH_URLS}
         ["ELASTIC_SEARCH_INDEX_PREFIX"]=${PROJECT_NAME}
         ["REDIS_PREFIX"]=${PROJECT_NAME}
         ["MAILER_HOST"]='shopmail.shopsys.cz'
@@ -68,6 +71,10 @@ function deploy() {
         ["PACKETERY_SENDER"]=${PACKETERY_SENDER}
     )
 
+    declare -A STOREFRONT_ENVIRONMENT_VARIABLES=(
+    )
+
+
     declare -A CRON_INSTANCES=(
         ["cron"]='*/5 * * * *'
     )
@@ -82,7 +89,6 @@ function deploy() {
     source "${DEPLOY_TARGET_PATH}/functions.sh"
     source "${DEPLOY_TARGET_PATH}/parts/parameters.sh"
     source "${DEPLOY_TARGET_PATH}/parts/domains.sh"
-    source "${BASE_PATH}/deploy/parts/domains-storefront.sh"
     source "${BASE_PATH}/deploy/parts/whitelist-ip.sh"
     source "${DEPLOY_TARGET_PATH}/parts/environment-variables.sh"
     source "${DEPLOY_TARGET_PATH}/parts/kubernetes-variables.sh"

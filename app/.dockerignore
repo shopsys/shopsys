@@ -1,11 +1,3 @@
-# ignore .git (can be volume-mounted in development environment)
-.git
-
-# ignore directories with meta-data
-.ci
-.idea
-nbproject
-
 # ignore directories that should be created and filled during the image build
 node_modules
 var
@@ -26,6 +18,4 @@ docker
 !docker/php-fpm
 docker/php-fpm/Dockerfile
 
-# ignore storefront folder as storefront has own container
-storefront
-!storefront/schema.graphql
+!schema.graphql

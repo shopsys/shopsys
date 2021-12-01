@@ -5,7 +5,7 @@ services:
         container_name: shopsys-framework-postgres
         volumes:
             - postgres-data:/var/lib/postgresql/data:rw
-            - ./docker/postgres/postgres.conf:/var/lib/postgresql/data/postgresql.conf
+            - ./app/docker/postgres/postgres.conf:/var/lib/postgresql/data/postgresql.conf
         environment:
             - PGDATA=/var/lib/postgresql/data/pgdata
             - POSTGRES_USER=root
@@ -60,7 +60,7 @@ services:
 
     elasticsearch:
         build:
-            context: .
+            context: ./app
             dockerfile: docker/elasticsearch/Dockerfile
         container_name: shopsys-framework-elasticsearch
         privileged: false

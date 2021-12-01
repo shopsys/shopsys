@@ -235,7 +235,7 @@
             <arg value="${path.bin-console}"/>
             <arg value="graphql:dump-schema"/>
             <arg value="--file"/>
-            <arg value="${path.root}/storefront/schema.graphql"/>
+            <arg value="${path.root}/schema.graphql"/>
             <arg value="--format"/>
             <arg value="graphql"/>
             <arg value="--modern"/>

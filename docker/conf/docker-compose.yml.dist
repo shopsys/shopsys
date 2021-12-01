@@ -5,7 +5,7 @@ services:
         container_name: shopsys-framework-postgres
         volumes:
             - ./var/postgres-data:/var/lib/postgresql/data
-            - ./docker/postgres/postgres.conf:/var/lib/postgresql/data/postgresql.conf
+            - ./app/docker/postgres/postgres.conf:/var/lib/postgresql/data/postgresql.conf
         environment:
             - PGDATA=/var/lib/postgresql/data/pgdata
             - POSTGRES_USER=root
@@ -23,7 +23,7 @@ services:
             - php-fpm
             - storefront
         volumes:
-            - .:/var/www/html
+            - ./app/:/var/www/html
             - ./docker/nginx/nginx.conf:/etc/nginx/conf.d/default.conf
         ports:
             - "8000:8080"
@@ -36,6 +36,7 @@ services:
         container_name: shopsys-framework-storefront
         volumes:
             - ./storefront:/app
+            - ./schema.graphql:/app/schema.graphql
         ports:
             - "3000:3000"
         healthcheck:
@@ -70,7 +71,7 @@ services:
 
     php-fpm:
         build:
-            context: .
+            context: ./app
             dockerfile: docker/php-fpm/Dockerfile
             target: development
             args:
@@ -78,7 +79,8 @@ services:
                 www_data_gid: 1000
         container_name: shopsys-framework-php-fpm
         volumes:
-            - .:/var/www/html
+            - ./app/:/var/www/html
+            - ./schema.graphql:/var/www/html/schema.graphql
         ports:
             - "35729:35729"
 
@@ -115,7 +117,7 @@ services:
 
     elasticsearch:
         build:
-            context: .
+            context: ./app/
             dockerfile: docker/elasticsearch/Dockerfile
         container_name: shopsys-framework-elasticsearch
         ulimits:
