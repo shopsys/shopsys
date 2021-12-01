@@ -979,3 +979,5 @@ services:
 
     Shopsys\FrontendApiBundle\Model\Token\TokenAuthenticator:
         alias: App\FrontendApi\Model\Token\TokenAuthenticator
+
+    App\FrontendApi\Error\ErrorCodeSubscriber: ~
