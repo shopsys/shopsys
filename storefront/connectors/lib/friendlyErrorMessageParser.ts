@@ -6,8 +6,6 @@ export enum ApplicationErrors {
     CART_NOT_FOUND = 'CART_NOT_FOUND',
 }
 
-const UUID4_REGULAR_EXP = '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}';
-
 export type ParsedErrors = {
     networkError?: string;
     applicationError?: { type: ApplicationErrors; message: string };
@@ -38,17 +36,9 @@ export const getUserFriendlyErrors = (originalError: CombinedError, t: TFunction
                 continue;
             }
 
-            if (new RegExp('Cart "' + UUID4_REGULAR_EXP + '" is unavailable.').test(error.message)) {
+            if (error?.extensions?.code === 'cart-unavailable') {
                 errors.applicationError = { type: ApplicationErrors.CART_NOT_FOUND, message: t('Cart not found') };
                 continue;
-            }
-
-            if (
-                /Cart "\b[0-9a-f]{8}\b-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-\b[0-9a-f]{12}\b" is unavailable./.test(
-                    error.message,
-                )
-            ) {
-                errors.applicationError = { type: ApplicationErrors.CART_NOT_FOUND, message: t('Cart not found') };
             }
 
             errors.applicationError = { type: ApplicationErrors.DEFAULT, message: t('Unknown error.') };
