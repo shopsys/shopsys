@@ -8,6 +8,7 @@ import FilterGroupParameters from './FilterGroupParameters';
 import FilterGroupPrice from './FilterGroupPrice';
 import { FilterStyled } from './Filter.style';
 import Form from 'components/Forms/Form';
+import { isProductFilterWithoutChanges } from 'helpers/IsProductFilterWithoutChanges';
 import { optionsFilterActions } from 'redux/slices/optionsFilter';
 import SelectedParameters from './SelectedParameters';
 import { useComponentUpdate } from 'hooks/helpers/UseComponentUpdate';
@@ -145,16 +146,7 @@ const Filter: FC<FilterProps> = (props) => {
     useEffect(() => {
         const queryParams = router.query;
 
-        if (
-            parametersFilterState.brands.length === 0 &&
-            parametersFilterState.flags.length === 0 &&
-            parametersFilterState.parameters.length === 0 &&
-            parametersFilterState.onlyInStock === false &&
-            (parametersFilterState.minimalPrice === props.productFilterOptions.minimalPrice ||
-                parametersFilterState.minimalPrice === null) &&
-            (parametersFilterState.maximalPrice === props.productFilterOptions.maximalPrice ||
-                parametersFilterState.maximalPrice === null)
-        ) {
+        if (isProductFilterWithoutChanges(parametersFilterState, props.productFilterOptions)) {
             delete queryParams.filter;
         } else {
             queryParams.filter = JSON.stringify(parametersFilterState);
