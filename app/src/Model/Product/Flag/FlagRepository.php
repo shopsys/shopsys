@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\Model\Product\Flag;
 
 use App\Component\Doctrine\OrderByCollationHelper;
+use App\Model\CategorySeo\ReadyCategorySeoMix;
+use App\Model\Order\PromoCode\PromoCodeFlag\PromoCodeFlag;
 use Doctrine\ORM\Query\Expr\Join;
 use Shopsys\FrameworkBundle\Model\Product\Flag\Exception\FlagNotFoundException;
 use Shopsys\FrameworkBundle\Model\Product\Flag\FlagRepository as BaseFlagRepository;
@@ -121,5 +123,32 @@ class FlagRepository extends BaseFlagRepository
         }
 
         return $flag;
+    }
+
+    /**
+     * @param int $flagId
+     * @return \App\Model\Product\Flag\FlagDependenciesData
+     */
+    public function getFlagDependencies(int $flagId): FlagDependenciesData
+    {
+        $flagDependenciesData = new FlagDependenciesData();
+
+        $flagsQueryBuilder = $this->getFlagRepository()->createQueryBuilder('f')
+            ->select('1')
+            ->join(PromoCodeFlag::class, 'pcf', Join::WITH, 'pcf.flag = f')
+            ->groupBy('f.id')
+            ->andWhere('f.id = :flagId')
+            ->setParameter('flagId', $flagId);
+        $flagDependenciesData->hasPromoCodeDependency = (bool)$flagsQueryBuilder->getQuery()->getOneOrNullResult();
+
+        $flagsQueryBuilder = $this->getFlagRepository()->createQueryBuilder('f')
+            ->select('1')
+            ->join(ReadyCategorySeoMix::class, 'rcsm', Join::WITH, 'rcsm.flag = f')
+            ->groupBy('f.id')
+            ->andWhere('f.id = :flagId')
+            ->setParameter('flagId', $flagId);
+        $flagDependenciesData->hasSeoMixDependency = (bool)$flagsQueryBuilder->getQuery()->getOneOrNullResult();
+
+        return $flagDependenciesData;
     }
 }
