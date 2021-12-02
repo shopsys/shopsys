@@ -15,7 +15,9 @@ import Image from 'components/Basic/Image';
 import { ListedVariantType } from 'connectors/products/types';
 import Popup from 'components/Layout/Popup';
 import Portal from 'components/Basic/Portal';
+import ProductAvailableStoresCount from 'components/Blocks/Product/Availability/ProductAvailableStoresCount';
 import ProductDetailAvailabilityList from 'components/Pages/ProductDetail/ProductDetailStoresAvailability/ProductDetailAvailabilityList';
+import ProductExposedStoresCount from 'components/Blocks/Product/Availability/ProductExposedStoresCount';
 import { useShopsysSelector } from 'redux/main';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import { VariantsTableRowStyled } from 'components/Pages/ProductDetail/ProductVariantsTable/ProductVariantsTable.style';
@@ -40,6 +42,14 @@ const Variant: FC<VariantProps> = (props) => {
                 <VariantCellStyled>{props.variant.name}</VariantCellStyled>
                 <VariantAvailabilityCellStyled onClick={() => setAvailabilityPopupVisibility(true)}>
                     {props.variant.availability}
+                    <ProductAvailableStoresCount
+                        isMainVariant={false}
+                        availableStoresCount={props.variant.availableStoresCount}
+                    />
+                    <ProductExposedStoresCount
+                        isMainVariant={false}
+                        exposedStoresCount={props.variant.exposedStoresCount}
+                    />
                 </VariantAvailabilityCellStyled>
                 <VariantPriceCellStyled>
                     {formatPrice(props.variant.price.priceWithVat, currencyCode, t)}
