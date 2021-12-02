@@ -1,29 +1,21 @@
 import { CountryApiType, CountryType } from './types';
 import { SelectOptionType } from 'components/Forms/Select/Select';
-import { useFetchQuery } from 'hooks/graphQl/UseFetchQuery';
-
-const countriesQuery = `
-    query {
-        countries {
-            name
-            code
-        }
-    }
-    ` as const;
+import { useCountriesQueryApi } from 'graphql/generated';
+import { useQueryError } from 'hooks/graphQl/UseQueryError';
 
 const mapCountries = (apiData: CountryApiType[]): CountryType[] => {
     return apiData.map((country) => country);
 };
 
 export const getCountries = (): CountryType[] => {
-    const result = useFetchQuery({ query: countriesQuery });
-    const countryApiData = result?.data?.countries;
+    const [{ data, error }] = useCountriesQueryApi();
+    useQueryError(error);
 
-    if (countryApiData === undefined) {
+    if (data?.countries === undefined) {
         return [];
     }
 
-    return mapCountries(countryApiData);
+    return mapCountries(data.countries);
 };
 
 export const getCountriesAsSelectOptions = (): SelectOptionType[] => {
