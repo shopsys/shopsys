@@ -4,6 +4,7 @@ import {
     BrandDetailFragmentApi,
     BrandImagesListFragmentApi,
     CategoryImagesDefaultFragmentApi,
+    OrderDetailFragmentApi,
     ProductImagesListFragmentApi,
 } from 'graphql/generated';
 import { ImageType } from 'types/image';
@@ -16,7 +17,8 @@ export const mapImageApiData = (
         | BrandImagesListFragmentApi['images']
         | CategoryImagesDefaultFragmentApi['images']
         | BrandDetailFragmentApi['brandImages']
-        | BlogCategoryImageListFragmentApi['image'][],
+        | BlogCategoryImageListFragmentApi['image'][]
+        | OrderDetailFragmentApi['transport']['images'],
 ): ImageType | null => {
     if (
         apiData === null ||

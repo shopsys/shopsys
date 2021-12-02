@@ -61,6 +61,7 @@ const moduleExports = {
                 '/stores': '/obchodni-domy',
                 '/brands-overview': '/prehled-znacek',
                 '/login': '/prihlaseni',
+                '/customer/orders': '/zakaznik/objednavky',
             },
             ['http://' + process.env.ACCEPTANCE_DOMAIN_HOST + '/']: {
                 '/search': '/hledani',
@@ -71,6 +72,7 @@ const moduleExports = {
                 '/order-confirmation': '/potvrzeni-objednavky',
                 '/stores': '/obchodni-domy',
                 '/login': '/prihlaseni',
+                '/customer/orders': '/zakaznik/objednavky',
             },
             [process.env.DOMAIN_HOSTNAME_2]: {
                 '/search': '/hladanie',
@@ -82,6 +84,7 @@ const moduleExports = {
                 '/stores': '/obchodne-domy',
                 '/brands-overview': '/prehled-znacek',
                 '/login': '/prihlasenie',
+                '/customer/orders': '/zakaznik/objednavky',
             },
         },
     },
@@ -124,6 +127,10 @@ const moduleExports = {
                 source: '/prehled-znacek',
                 destination: '/brands-overview',
             },
+            {
+                source: '/zakaznik/objednavky',
+                destination: '/customer/orders',
+            },
             // Slovak URLs
             {
                 source: '/hladanie',
@@ -160,6 +167,10 @@ const moduleExports = {
             {
                 source: '/prehled-znacek',
                 destination: '/brands-overview',
+            },
+            {
+                source: '/zakaznik/objednavky',
+                destination: '/customer/orders',
             },
         ];
     },

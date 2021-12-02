@@ -24,7 +24,10 @@ const MenuIconic: FC = () => {
     const [, [, logout]] = useAuth();
     const isUserLoggedIn = useShopsysSelector((state) => state.user.isUserLoggedIn);
     const domainConfig = useShopsysSelector((state) => state.domain);
-    const [storesUrl] = useGetInternationalizedStaticUrls(['/stores'], domainConfig.url);
+    const [storesUrl, myOrdersUrl] = useGetInternationalizedStaticUrls(
+        ['/stores', '/customer/orders'],
+        domainConfig.url,
+    );
     const [isLoginPopupOpened, setIsLoginPopupOpened] = useState(false);
 
     const loginHandler = () => {
@@ -71,7 +74,9 @@ const MenuIconic: FC = () => {
                             {t('My account')}
                             <MenuIconicSubStyled>
                                 <MenuIconicSubItemStyled>
-                                    <MenuIconicSubItemLinkStyled>{t('My orders')}</MenuIconicSubItemLinkStyled>
+                                    <NextLink href={myOrdersUrl} passHref>
+                                        <MenuIconicSubItemLinkStyled>{t('My orders')}</MenuIconicSubItemLinkStyled>
+                                    </NextLink>
                                 </MenuIconicSubItemStyled>
                                 <MenuIconicSubItemStyled>
                                     <MenuIconicSubItemLinkStyled>{t('Edit profile')}</MenuIconicSubItemLinkStyled>

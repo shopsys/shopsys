@@ -211,5 +211,13 @@
     "ProductsNoResults": "Pre vaše presné vyhľadávanie momentálne nemáme žiadne výsledky. <1/> Skúste byť viac špecifický, alebo sa pozrite, či ste nevyfiltrovali neexistujúce údaje.",
     "My orders": "Moje objednávky",
     "Edit profile": "Upraviť údaje",
-    "Logout": "Odhlásiť"
+    "Logout": "Odhlásiť",
+    "Order number": "Číslo objednávky",
+    "Creation date": "Dátum objednávky",
+    "Number of items": "Počet položiek",
+    "Shipping": "Doprava",
+    "Payment": "Platba",
+    "Total price including VAT": "Celková cena s DPH",
+    "You have no orders": "Nemáte žiadne objednávky",
+    "Detail": "Detail"
 }

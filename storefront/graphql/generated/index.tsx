@@ -2385,6 +2385,10 @@ export type NewsletterSubscribeMutationVariablesApi = Exact<{
 
 export type NewsletterSubscribeMutationApi = { __typename?: 'Mutation', NewsletterSubscribe: boolean };
 
+export type OrderDetailFragmentApi = { __typename?: 'Order', uuid: string, number: string, creationDate: any, items: Array<{ __typename?: 'OrderItem', quantity: number }>, transport: { __typename?: 'Transport', name: string, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> } | null | undefined> }, payment: { __typename?: 'Payment', name: string }, totalPrice: { __typename?: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string } };
+
+export type OrderListFragmentApi = { __typename?: 'OrderConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null | undefined, endCursor?: string | null | undefined }, edges?: Array<{ __typename?: 'OrderEdge', cursor: string, node?: { __typename?: 'Order', uuid: string, number: string, creationDate: any, items: Array<{ __typename?: 'OrderItem', quantity: number }>, transport: { __typename?: 'Transport', name: string, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> } | null | undefined> }, payment: { __typename?: 'Payment', name: string }, totalPrice: { __typename?: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string } } | null | undefined } | null | undefined> | null | undefined };
+
 export type CreateOrderMutationVariablesApi = Exact<{
   firstName: Scalars['String'];
   lastName: Scalars['String'];
@@ -2416,6 +2420,14 @@ export type CreateOrderMutationVariablesApi = Exact<{
 
 
 export type CreateOrderMutationApi = { __typename?: 'Mutation', CreateOrder: { __typename?: 'Order', number: string } };
+
+export type OrdersQueryVariablesApi = Exact<{
+  after?: Maybe<Scalars['String']>;
+  first?: Maybe<Scalars['Int']>;
+}>;
+
+
+export type OrdersQueryApi = { __typename?: 'Query', orders?: { __typename?: 'OrderConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null | undefined, endCursor?: string | null | undefined }, edges?: Array<{ __typename?: 'OrderEdge', cursor: string, node?: { __typename?: 'Order', uuid: string, number: string, creationDate: any, items: Array<{ __typename?: 'OrderItem', quantity: number }>, transport: { __typename?: 'Transport', name: string, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> } | null | undefined> }, payment: { __typename?: 'Payment', name: string }, totalPrice: { __typename?: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string } } | null | undefined } | null | undefined> | null | undefined } | null | undefined };
 
 export type PageInfoFragmentApi = { __typename?: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null | undefined, endCursor?: string | null | undefined };
 
@@ -3192,6 +3204,44 @@ export const CategoriesByColumnFragmentApi = gql`
   }
 }
     ${ColumnCategoriesFragmentApi}`;
+export const OrderDetailFragmentApi = gql`
+    fragment OrderDetailFragment on Order {
+  uuid
+  number
+  creationDate
+  items {
+    quantity
+  }
+  transport {
+    name
+    images(sizes: ["default"]) {
+      ...ImageSizesFragment
+    }
+  }
+  payment {
+    name
+  }
+  totalPrice {
+    ...PriceFragment
+  }
+}
+    ${ImageSizesFragmentApi}
+${PriceFragmentApi}`;
+export const OrderListFragmentApi = gql`
+    fragment OrderListFragment on OrderConnection {
+  totalCount
+  pageInfo {
+    ...PageInfoFragment
+  }
+  edges {
+    node {
+      ...OrderDetailFragment
+    }
+    cursor
+  }
+}
+    ${PageInfoFragmentApi}
+${OrderDetailFragmentApi}`;
 export const ListedProductFragmentApi = gql`
     fragment ListedProductFragment on Product {
   uuid
@@ -3636,6 +3686,17 @@ export const CreateOrderMutationDocumentApi = gql`
 
 export function useCreateOrderMutationApi() {
   return Urql.useMutation<CreateOrderMutationApi, CreateOrderMutationVariablesApi>(CreateOrderMutationDocumentApi);
+};
+export const OrdersQueryDocumentApi = gql`
+    query OrdersQuery($after: String, $first: Int) {
+  orders(after: $after, first: $first) {
+    ...OrderListFragment
+  }
+}
+    ${OrderListFragmentApi}`;
+
+export function useOrdersQueryApi(options: Omit<Urql.UseQueryArgs<OrdersQueryVariablesApi>, 'query'> = {}) {
+  return Urql.useQuery<OrdersQueryApi>({ query: OrdersQueryDocumentApi, ...options });
 };
 export const PasswordRecoveryMutationDocumentApi = gql`
     mutation PasswordRecoveryMutation($email: String!) {

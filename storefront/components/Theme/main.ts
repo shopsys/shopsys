@@ -1,4 +1,5 @@
 import initialStyled, { ThemedStyledInterface } from 'styled-components';
+
 import mediaQueries from './mediaQueries';
 
 /* Main theme */
@@ -60,6 +61,7 @@ export const theme = {
 
     /* Default border radius value */
     radius: {
+        biggest: '13px',
         big: '11px',
         medium: '4px',
         small: '2px',
