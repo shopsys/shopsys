@@ -33,7 +33,7 @@ class ErrorController extends FrontBaseController
     private $exceptionListener;
 
     /**
-     * @var \App\Component\Error\ErrorPagesFacade
+     * @var \Shopsys\FrameworkBundle\Component\Error\ErrorPagesFacade
      */
     private $errorPagesFacade;
 
@@ -55,7 +55,7 @@ class ErrorController extends FrontBaseController
     /**
      * @param \Shopsys\FrameworkBundle\Component\Error\ExceptionController $exceptionController
      * @param \Shopsys\FrameworkBundle\Component\Error\ExceptionListener $exceptionListener
-     * @param \App\Component\Error\ErrorPagesFacade $errorPagesFacade
+     * @param \Shopsys\FrameworkBundle\Component\Error\ErrorPagesFacade $errorPagesFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param string $environment
      * @param \App\Model\Gtm\GtmFacade $gtmFacade

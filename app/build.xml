@@ -37,38 +37,6 @@
 
     <target name="test-db-demo" depends="production-protection,clean,test-clean-redis,test-db-wipe-public-schema,test-db-import-basic-structure,test-db-migrations,test-domains-data-create,test-db-fixtures-demo,test-friendly-urls-generate,friendly-url-entity-mapping-check,test-plugin-demo-data-load,test-domains-urls-replace" description="Drops all data in test database and creates a new one with demo data." hidden="true"/>
 
-    <target name="maintenance-off" description="Turns the maintenance page off.">
-        <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
-            <arg value="${path.bin-console}" />
-            <arg value="app:maintenance" />
-            <arg value="disable" />
-        </exec>
-    </target>
-
-    <target name="maintenance-on" description="Turns the maintenance page on.">
-        <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
-            <arg value="${path.bin-console}" />
-            <arg value="app:maintenance" />
-            <arg value="enable" />
-        </exec>
-    </target>
-
-    <target name="db-migrations-count-with-maintenance" description="Get count of database migrations to execute and enable maintenance mode if needed.">
-        <exec executable="${path.php.executable}" checkreturn="true" outputProperty="migrationCounts">
-            <arg value="${path.bin-console}"/>
-            <arg value="shopsys:migrations:count"/>
-        </exec>
-        <if>
-            <contains string="${migrationCounts}" substring="Count of migrations to execute: 0" />
-            <then>
-                <echo message="There is no need to enable maintenance mode" />
-            </then>
-            <else>
-                <phingcall target="maintenance-on" />
-            </else>
-        </if>
-    </target>
-
     <target name="assets" description="Installs web assets from external bundles into a public web directory.">
         <delete failonerror="false" includeemptydirs="true">
             <fileset dir="${path.root}/web/bundles/">
@@ -156,37 +124,6 @@
             <arg value="shopsys:cron" />
             <arg value="--instance-name=orders" />
         </exec>
-    </target>
-
-    <target name="cron-lock" description="This command will lock cron command so crons will not run until this command is terminated.">
-        <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
-            <arg value="${path.bin-console}" />
-            <arg value="devops:cron:lock" />
-        </exec>
-    </target>
-
-    <target name="cron-watch" description="Cron Watcher waits until all cron instances are finished.">
-        <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
-            <arg value="${path.bin-console}" />
-            <arg value="devops:cron:watch" />
-        </exec>
-    </target>
-
-
-    <target name="clean-opcache" description="Clear PHP Opcache.">
-        <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
-            <arg value="${path.bin-console}" />
-            <arg value="shopsys:clean-opcache" />
-        </exec>
-    </target>
-
-    <target name="clean-cache" depends="shopsys_framework.clean-cache,environment-load" description="Cleans up all application cache.">
-        <if>
-            <equals arg1="${environment}" arg2="prod"/>
-            <then>
-                <phingcall target="clean-opcache" />
-            </then>
-        </if>
     </target>
 
     <target name="environment-change" depends="production-protection" description="Change application environment and install composer dev-dependencies when development environment is selected.">
