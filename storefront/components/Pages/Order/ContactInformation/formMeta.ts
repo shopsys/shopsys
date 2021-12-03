@@ -99,6 +99,17 @@ export const useContactInformationForm = (): [
                     t('Zip code cannot be longer than 5 characters'),
                     (value) => value !== undefined && value.length <= 5,
                 ),
+            country: Yup.object()
+                .shape({
+                    label: Yup.string().required(),
+                    value: Yup.string().required(),
+                })
+                .required(t('Please enter country'))
+                .test(
+                    'non-null-or-empty-string',
+                    t('Please enter country'),
+                    (value: { label: string; value: string }) => value.value !== undefined && value.value !== '',
+                ),
             companyName: Yup.string().when('customer', {
                 is: (customer: string) => customer === 'companyCustomer',
                 then: Yup.string().required(t('Please enter company name')),
@@ -161,6 +172,22 @@ export const useContactInformationForm = (): [
                     ),
                 otherwise: Yup.string(),
             }),
+
+            deliveryCountry: Yup.object().when('differentDeliveryAddress', {
+                is: true,
+                then: Yup.object()
+                    .shape({
+                        label: Yup.string().required(),
+                        value: Yup.string().required(),
+                    })
+                    .required(t('Please enter country'))
+                    .test(
+                        'non-null-or-empty-string',
+                        t('Please enter country'),
+                        (value: { label: string; value: string }) => value.value !== undefined && value.value !== '',
+                    ),
+            }),
+
             newsletterSubscription: Yup.boolean(),
         }),
     );

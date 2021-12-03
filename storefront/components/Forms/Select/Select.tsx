@@ -1,3 +1,4 @@
+import { ControllerRenderProps } from 'react-hook-form';
 import { ExtractNativePropsFromDefault } from 'typeHelpers/ExtractNativePropsFromDefault';
 import { FC } from 'react';
 import { Props } from 'react-select';
@@ -7,7 +8,10 @@ type SelectProps = ExtractNativePropsFromDefault<
     Props,
     'options' | 'onChange',
     'defaultValue' | 'value' | 'isDisabled'
->;
+> & {
+    hasError: boolean;
+    fieldRef?: ControllerRenderProps;
+};
 
 export type SelectOptionType = {
     value: string;
@@ -19,7 +23,15 @@ const customStyles = {
 };
 
 const Select: FC<SelectProps> = (props) => {
-    return <SelectStyled classNamePrefix="select" styles={customStyles} {...props} />;
+    return (
+        <SelectStyled
+            {...props}
+            {...props.fieldRef}
+            classNamePrefix="select"
+            styles={customStyles}
+            inputStateError={props.hasError}
+        />
+    );
 };
 
 /* @component */

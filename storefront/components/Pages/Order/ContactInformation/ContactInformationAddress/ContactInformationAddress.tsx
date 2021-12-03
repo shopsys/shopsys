@@ -108,12 +108,17 @@ const ContactInformationAddress: FC = () => {
             <FormLine lg="65%">
                 <Controller
                     name={formMeta.fields.country.name}
-                    render={({ field }) => (
-                        <Select
-                            options={countrySelectOptions}
-                            onChange={field.onChange}
-                            value={countrySelectOptions.find((option) => option.value === field.value.value)}
-                        />
+                    render={({ fieldState: { invalid, error }, field }) => (
+                        <>
+                            <Select
+                                options={countrySelectOptions}
+                                onChange={field.onChange}
+                                value={countrySelectOptions.find((option) => option.value === field.value.value)}
+                                hasError={invalid}
+                                fieldRef={field}
+                            />
+                            <FormLineError error={error} inputType="select" />
+                        </>
                     )}
                 />
             </FormLine>
