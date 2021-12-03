@@ -139,8 +139,8 @@ class PlaceOrderFacade extends BasePlaceOrderFacade
     private function createDeliveryAddressForAmendingCustomerUserData(Order $order): ?DeliveryAddress
     {
         if (
-            $order->transport->isPersonalPickup() ||
-            $order->transport->isPacketery() ||
+            $order->getTransport()->isPersonalPickup() ||
+            $order->getTransport()->isPacketery() ||
             $order->isDeliveryAddressSameAsBillingAddress()
         ) {
             return null;

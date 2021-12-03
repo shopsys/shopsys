@@ -4,13 +4,14 @@ declare(strict_types=1);
 
 namespace App\FrontendApi\Model\Cart;
 
+use App\FrontendApi\Model\Cart\Exception\InvalidCartItemUserError;
+use App\FrontendApi\Model\Cart\Exception\UnavailableCartUserError;
 use App\FrontendApi\Model\Product\ProductFacade;
 use App\Model\Cart\AddProductResult;
 use App\Model\Cart\Cart;
 use App\Model\Cart\CartFacade as BaseCartFacade;
 use App\Model\Customer\User\CustomerUser;
 use App\Model\Customer\User\CustomerUserIdentifierFactory;
-use Overblog\GraphQLBundle\Error\UserError;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Cart\Exception\InvalidCartItemException;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
@@ -80,7 +81,7 @@ class CartFacade
                 $this->currentCustomerUser->getPricingGroup()
             );
         } catch (ProductNotFoundException $exception) {
-            throw new UserError(sprintf('Product with UUID "%s" is not available', $productUuid));
+            throw new InvalidCartItemUserError(sprintf('Product with UUID "%s" is not available', $productUuid));
         }
 
         return $this->cartFacade->addProductToExistingCart($product, $quantity, $cart, $isAbsoluteQuantity);
@@ -96,7 +97,7 @@ class CartFacade
         try {
             return $this->cartFacade->removeItemFromExistingCartByUuid($cartItemUuid, $cart);
         } catch (InvalidCartItemException $e) {
-            throw new UserError($e->getMessage());
+            throw new InvalidCartItemUserError($e->getMessage());
         }
     }
 
@@ -130,7 +131,7 @@ class CartFacade
         $cart = $this->findCart($customerUser, $cartUuid);
 
         if ($cart === null) {
-            throw new UserError('Cart is unavailable.');
+            throw new UnavailableCartUserError('Cart is unavailable.');
         }
 
         return $cart;
@@ -161,7 +162,7 @@ class CartFacade
     {
         $cart = $this->cartFacade->findCartByCartIdentifier($cartUuid);
         if ($cart === null) {
-            throw new UserError(sprintf('Cart "%s" is unavailable.', $cartUuid));
+            throw new UnavailableCartUserError(sprintf('Cart "%s" is unavailable.', $cartUuid));
         }
 
         return $cart;
@@ -174,7 +175,7 @@ class CartFacade
     private function assertFilledCustomerUserOrUuid(?CustomerUser $customerUser, ?string $cartUuid): void
     {
         if ($customerUser === null && $cartUuid === null) {
-            throw new UserError('Either cart UUID has to be provided, or the user has to be logged in.');
+            throw new UnavailableCartUserError('Either cart UUID has to be provided, or the user has to be logged in.');
         }
     }
 

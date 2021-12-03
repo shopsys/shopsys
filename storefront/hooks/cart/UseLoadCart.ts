@@ -5,8 +5,8 @@ import { useShopsysSelector } from 'redux/main';
 
 export const useLoadCart = (): void => {
     const router = useRouter();
-    const { cartUuid, transport, payment, promoCode } = useShopsysSelector((state) => state.cartInput);
-    const [, refreshCart] = loadCart(cartUuid, transport, payment, promoCode);
+    const { cartUuid, isCartEmpty, transport, payment, promoCode } = useShopsysSelector((state) => state.cartInput);
+    const [, refreshCart] = loadCart(cartUuid, isCartEmpty, transport, payment, promoCode);
     useEffect(() => {
         if (cartUuid !== null) {
             refreshCart();

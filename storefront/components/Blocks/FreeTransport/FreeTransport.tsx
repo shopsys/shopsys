@@ -7,11 +7,12 @@ import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslatio
 
 const FreeTransport: FC = () => {
     const { cart } = useShopsysSelector((state) => state.user);
+    const { isCartEmpty } = useShopsysSelector((state) => state.cartInput);
     const t = useTypedTranslationFunction();
     const domainConfig = useShopsysSelector((state) => state.domain);
     const amount = cart?.remainingAmountWithVatForFreeTransport;
 
-    if (amount === null || amount === undefined) {
+    if (isCartEmpty || amount === null || amount === undefined) {
         return null;
     }
 
