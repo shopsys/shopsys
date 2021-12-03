@@ -8,7 +8,7 @@ const localVariables = {
 } as const;
 
 type ErrorIconStyledProps = {
-    inputType: 'textarea' | 'text-input' | 'checkbox' | 'text-input-password';
+    inputType: 'textarea' | 'text-input' | 'checkbox' | 'text-input-password' | 'select';
     textInputSize?: 'small';
 };
 
@@ -71,6 +71,13 @@ export const ErrorIconStyled = styled(Icon)<ErrorIconStyledProps>`
         css`
             top: 2px;
             right: -19px;
+        `}
+
+         ${inputType === 'select' &&
+        css`
+            z-index: 2;
+            top: -40px;
+            right: 45px;
         `}
     `}
 `;

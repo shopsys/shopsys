@@ -2,8 +2,12 @@ import { css } from 'styled-components';
 import SelectReact from 'react-select';
 import { styled } from 'components/Theme/main';
 
-export const SelectStyled = styled(SelectReact)`
-    ${({ theme }) => css`
+type SelectProps = {
+    inputStateError: boolean;
+};
+
+export const SelectStyled = styled(SelectReact)<SelectProps>`
+    ${({ theme, inputStateError }) => css`
         .select__control {
             min-height: 54px;
 
@@ -16,6 +20,17 @@ export const SelectStyled = styled(SelectReact)`
             &:hover {
                 border: 2px solid ${theme.color.border};
             }
+
+            ${inputStateError === true &&
+            css`
+                box-shadow: none;
+                background-color: ${theme.color.white};
+                border-color: ${theme.color.red};
+
+                &:hover {
+                    border: 2px solid ${theme.color.red};
+                }
+            `}
         }
 
         .select__indicator {

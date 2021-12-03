@@ -7,7 +7,7 @@ type FormLineErrorProps = {
      * A prop based on which the CSS styling is applied, as there is a slightly different
      * styling for each of the elements below.
      */
-    inputType: 'textarea' | 'text-input' | 'checkbox' | 'text-input-password';
+    inputType: 'textarea' | 'text-input' | 'checkbox' | 'text-input-password' | 'select';
     /**
      * A prop which is automatically set based on the text input size.
      * This prop then sets the top indentation for the error icon.

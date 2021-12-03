@@ -54,7 +54,6 @@ const ContactInformationDeliveryAddress: FC = () => {
     });
 
     const countrySelectOptions = getCountriesAsSelectOptions();
-
     useEffect(() => {
         if (differentDeliveryAddressValue === true) {
             const selectedCountryOption = countrySelectOptions.find((option) => {
@@ -347,13 +346,21 @@ const ContactInformationDeliveryAddress: FC = () => {
                             <FormLine lg="65%">
                                 <Controller
                                     name={formMeta.fields.deliveryCountry.name}
-                                    render={({ field }) => (
-                                        <Select
-                                            options={countrySelectOptions}
-                                            onChange={field.onChange}
-                                            isDisabled={pickupPlace !== null}
-                                            value={deliveryCountryValue}
-                                        />
+                                    render={({ fieldState: { invalid, error }, field }) => (
+                                        <>
+                                            <Select
+                                                hasError={invalid}
+                                                options={countrySelectOptions}
+                                                onChange={field.onChange}
+                                                isDisabled={pickupPlace !== null}
+                                                value={countrySelectOptions.find(
+                                                    (option) => option.value === field.value.value,
+                                                )}
+                                                fieldRef={field}
+                                            />
+
+                                            <FormLineError error={error} inputType="select" />
+                                        </>
                                     )}
                                 />
                             </FormLine>
