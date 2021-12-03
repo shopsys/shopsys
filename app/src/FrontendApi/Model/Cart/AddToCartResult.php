@@ -73,9 +73,9 @@ class AddToCartResult
     }
 
     /**
-     * @return \Shopsys\FrameworkBundle\Component\Money\Money
+     * @return \Shopsys\FrameworkBundle\Component\Money\Money|null
      */
-    public function getRemainingAmountWithVatForFreeTransport(): Money
+    public function getRemainingAmountWithVatForFreeTransport(): ?Money
     {
         return $this->cartWithModifications->getRemainingAmountWithVatForFreeTransport();
     }
