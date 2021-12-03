@@ -11,6 +11,7 @@ import {
     TotalPriceCellStyled,
     TotalPriceStyled,
 } from './Item.style';
+import { addToCart } from 'connectors/cart/Cart';
 import { CartItemType } from 'types/cart';
 import { formatPrice } from 'utils/formatting';
 import Image from 'components/Basic/Image';
@@ -18,8 +19,6 @@ import ItemInfo from './ItemInfo';
 import NextLink from 'next/link';
 import RemoveCartItemButton from 'components/Pages/Cart/RemoveCartItemButton';
 import Spinbox from 'components/Forms/Spinbox';
-import { useAddToCartMutationApi } from 'graphql/generated';
-import { useHandleAddToCart } from 'hooks/cart/UseHandleAddToCart';
 import { useShopsysSelector } from 'redux/main';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 
@@ -32,12 +31,7 @@ const Item: FC<ItemProps> = (props) => {
     const spinboxRef = useRef<HTMLInputElement | null>(null);
     const t = useTypedTranslationFunction();
     const { cartUuid, transport, payment, promoCode } = useShopsysSelector((state) => state.cartInput);
-    const [changeCartItemQuantityResult, changeCartItemQuantity] = useAddToCartMutationApi();
-    useHandleAddToCart(
-        changeCartItemQuantityResult,
-        transport?.pickupPlaceIdentifier === undefined ? null : transport.pickupPlaceIdentifier,
-        promoCode,
-    );
+    const [, changeCartItemQuantity] = addToCart();
 
     const onChangeValueHandler = () => {
         if (timeoutRef.current === null) {

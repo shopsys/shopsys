@@ -1,13 +1,23 @@
-import { CartFragmentApi, CartQueryApi, CartQueryVariablesApi, useCartQueryApi } from 'graphql/generated';
+import {
+    AddToCartMutationApi,
+    AddToCartMutationVariablesApi,
+    CartFragmentApi,
+    CartQueryApi,
+    CartQueryVariablesApi,
+    useAddToCartMutationApi,
+    useCartQueryApi,
+} from 'graphql/generated';
 import { CartInput, CartType } from 'types/cart';
 import { PaymentInputType, PaymentType } from 'types/payment';
 import { TransportInputType, TransportType } from 'types/transport';
+import { UseMutationResponse, UseQueryResponse } from 'urql';
 import { mapImageSizeApiData } from 'connectors/image/size/ImageSize';
 import { mapPriceData } from 'connectors/transports/Transports';
 import { mapProductPriceData } from 'connectors/products/Products';
 import { PickupPlaceType } from 'types/pickupPlace';
+import { useHandleAddToCart } from 'hooks/cart/UseHandleAddToCart';
 import { useHandleCartUpdate } from 'hooks/cart/UseHandleCartUpdate';
-import { UseQueryResponse } from 'urql';
+import { useShopsysSelector } from 'redux/main';
 
 export const mapTransportToTransportInput = (
     transport: TransportType,
@@ -55,6 +65,19 @@ export const loadCart = (
     );
 
     return [result, refresh];
+};
+
+export const addToCart = (): UseMutationResponse<AddToCartMutationApi, AddToCartMutationVariablesApi> => {
+    const { transport, promoCode } = useShopsysSelector((state) => state.cartInput);
+    const [changeCartItemQuantityResult, changeCartItemQuantity] = useAddToCartMutationApi();
+
+    useHandleAddToCart(
+        changeCartItemQuantityResult,
+        transport?.pickupPlaceIdentifier === undefined ? null : transport.pickupPlaceIdentifier,
+        promoCode,
+    );
+
+    return [changeCartItemQuantityResult, changeCartItemQuantity];
 };
 
 export const mapCart = (apiData: CartFragmentApi, currencyCode: string): CartType => {

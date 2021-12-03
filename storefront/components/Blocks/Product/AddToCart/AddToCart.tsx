@@ -1,8 +1,8 @@
 import { FC, useRef } from 'react';
+import { addToCart } from 'connectors/cart/Cart';
 import AddToCartPopup from 'components/Blocks/Product/AddToCartPopup';
 import Button from 'components/Forms/Button';
 import Spinbox from 'components/Forms/Spinbox';
-import { useAddToCartMutationApi } from 'graphql/generated';
 import { useHandleAddToCart } from 'hooks/cart/UseHandleAddToCart';
 import { useHandleAddToCartMessage } from 'hooks/cart/useHandleAddToCartMessage';
 import { useShopsysSelector } from 'redux/main';
@@ -19,7 +19,7 @@ const AddToCart: FC<AddToCartProps> = (props) => {
     const spinboxRef = useRef<HTMLInputElement | null>(null);
     const t = useTypedTranslationFunction();
     const { cartUuid, transport, payment, promoCode } = useShopsysSelector((state) => state.cartInput);
-    const [changeCartItemQuantityResult, changeCartItemQuantity] = useAddToCartMutationApi();
+    const [changeCartItemQuantityResult, changeCartItemQuantity] = addToCart();
     const [popupData, setPopupData] = useHandleAddToCartMessage(changeCartItemQuantityResult, props.productUuid);
 
     useHandleAddToCart(
