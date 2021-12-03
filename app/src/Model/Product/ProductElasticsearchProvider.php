@@ -6,16 +6,23 @@ namespace App\Model\Product;
 
 use Shopsys\FrameworkBundle\Model\Product\ProductElasticsearchProvider as BaseProductElasticsearchProvider;
 
+/**
+ * @property \App\Model\Product\Search\ProductElasticsearchRepository $productElasticsearchRepository
+ * @property \App\Model\Product\Search\FilterQueryFactory $filterQueryFactory
+ */
 class ProductElasticsearchProvider extends BaseProductElasticsearchProvider
 {
     /**
-     * @param array $productIds
-     * @return int[]
+     * @param int[][] $productsIds
+     * @return array
      */
-    public function getVisibleProductsArrayByIds(array $productIds): array
+    public function getBatchedVisibleByProductIds(array $productsIds): array
     {
-        return $this->productElasticsearchRepository->getProductsByFilterQuery(
-            $this->filterQueryFactory->createVisibleProductsByProductIdsFilter($productIds)
-        );
+        $filterQueries = [];
+        foreach ($productsIds as $productIds) {
+            $filterQueries[] = $this->filterQueryFactory->createVisibleProductsByProductIdsFilter($productIds);
+        }
+
+        return $this->productElasticsearchRepository->getBatchedProductsByFilterQueries($filterQueries);
     }
 }

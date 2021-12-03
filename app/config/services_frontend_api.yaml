@@ -3,6 +3,8 @@ services:
         autowire: true
         autoconfigure: true
         public: false
+        bind:
+            Overblog\DataLoader\DataLoaderInterface $productsVisibleByIdsBatchLoader: '@products_visible_by_ids_batch_loader'
 
     resolverMaps:
         namespace: App\FrontendApi\

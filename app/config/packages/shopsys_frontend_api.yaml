@@ -22,3 +22,7 @@ overblog_graphql:
 overblog_dataloader:
     defaults:
         promise_adapter: "overblog_dataloader.webonyx_graphql_sync_promise_adapter"
+    loaders:
+        productsVisibleByIdsBatchLoader:
+            alias: "products_visible_by_ids_batch_loader"
+            batch_load_fn: "@App\\FrontendApi\\Model\\Product\\ProductsBatchLoader:loadVisibleByIds"

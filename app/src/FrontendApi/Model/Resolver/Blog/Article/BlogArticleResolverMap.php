@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace App\FrontendApi\Model\Resolver\Blog\Article;
 
 use App\Model\Blog\Category\BlogCategoryFacade;
-use App\Model\Product\ProductElasticsearchProvider;
 use DateTime;
+use Overblog\DataLoader\DataLoaderInterface;
 use Overblog\GraphQLBundle\Resolver\ResolverMap;
 
 class BlogArticleResolverMap extends ResolverMap
@@ -17,18 +17,20 @@ class BlogArticleResolverMap extends ResolverMap
     private BlogCategoryFacade $blogCategoryFacade;
 
     /**
-     * @var \App\Model\Product\ProductElasticsearchProvider
+     * @var \Overblog\DataLoader\DataLoaderInterface
      */
-    private ProductElasticsearchProvider $productElasticsearchProvider;
+    private DataLoaderInterface $productsVisibleByIdsBatchLoader;
 
     /**
      * @param \App\Model\Blog\Category\BlogCategoryFacade $blogCategoryFacade
-     * @param \App\Model\Product\ProductElasticsearchProvider $productElasticsearchProvider
+     * @param \Overblog\DataLoader\DataLoaderInterface $productsVisibleByIdsBatchLoader
      */
-    public function __construct(BlogCategoryFacade $blogCategoryFacade, ProductElasticsearchProvider $productElasticsearchProvider)
-    {
+    public function __construct(
+        BlogCategoryFacade $blogCategoryFacade,
+        DataLoaderInterface $productsVisibleByIdsBatchLoader
+    ) {
         $this->blogCategoryFacade = $blogCategoryFacade;
-        $this->productElasticsearchProvider = $productElasticsearchProvider;
+        $this->productsVisibleByIdsBatchLoader = $productsVisibleByIdsBatchLoader;
     }
 
     /**
@@ -54,7 +56,7 @@ class BlogArticleResolverMap extends ResolverMap
                     return $blogArticleData['url'];
                 },
                 'products' => function (array $blogArticleData) {
-                    return $this->productElasticsearchProvider->getVisibleProductsArrayByIds($blogArticleData['products']);
+                    return $this->productsVisibleByIdsBatchLoader->load($blogArticleData['products']);
                 },
             ],
         ];
