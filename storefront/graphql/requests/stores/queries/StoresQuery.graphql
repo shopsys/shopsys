@@ -1,9 +1,9 @@
 query StoresQuery {
-	stores {
-    edges {
-      node {
-        ...ListedStoreFragment
-      }
+    stores {
+        edges {
+            node {
+                ...ListedStoreFragment
+            }
+        }
     }
-  }
 }
