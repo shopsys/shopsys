@@ -2214,9 +2214,21 @@ export type AvailabilityFragmentApi = { __typename?: 'Availability', name: strin
 
 export type BlogArticleDetailFragmentApi = { __typename?: 'BlogArticle', uuid: string, name: string, text?: string | null | undefined, publishDate: any, link: string, slug: string, image?: { __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> } | null | undefined, blogArticleProducts: Array<{ __typename: 'MainVariant', uuid: string, slug: string, name: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, catalogNumber: string, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename: 'RegularProduct', uuid: string, slug: string, name: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, catalogNumber: string, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename: 'Variant', uuid: string, slug: string, name: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, catalogNumber: string, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } }>, breadcrumb: Array<{ __typename?: 'Link', name: string, slug: string }> };
 
+export type BlogListQueryVariablesApi = Exact<{
+  first?: Maybe<Scalars['Int']>;
+  onlyHomepageArticles?: Maybe<Scalars['Boolean']>;
+}>;
+
+
+export type BlogListQueryApi = { __typename?: 'Query', blogArticles?: { __typename?: 'BlogArticleConnection', edges?: Array<{ __typename?: 'BlogArticleEdge', node?: { __typename?: 'BlogArticle', name: string, link: string, perex?: string | null | undefined, blogCategories: Array<{ __typename?: 'BlogCategory', name: string, link: string, parent?: { __typename?: 'BlogCategory', name: string } | null | undefined }>, image?: { __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> } | null | undefined } | null | undefined } | null | undefined> | null | undefined } | null | undefined };
+
 export type SimpleBlogArticleFragmentApi = { __typename?: 'BlogArticle', name: string, slug: string };
 
 export type BlogArticleImageListFragmentApi = { __typename?: 'BlogArticle', image?: { __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> } | null | undefined };
+
+export type BlogArticleListFragmentApi = { __typename?: 'BlogArticle', name: string, link: string, perex?: string | null | undefined, blogCategories: Array<{ __typename?: 'BlogCategory', name: string, link: string, parent?: { __typename?: 'BlogCategory', name: string } | null | undefined }>, image?: { __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> } | null | undefined };
+
+export type BlogCategoryFragmentApi = { __typename?: 'BlogCategory', name: string, link: string, parent?: { __typename?: 'BlogCategory', name: string } | null | undefined };
 
 export type BrandDetailFragmentApi = { __typename?: 'Brand', uuid: string, slug: string, name: string, seoH1?: string | null | undefined, description?: string | null | undefined, brandImages: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, breadcrumb: Array<{ __typename?: 'Link', name: string, slug: string }>, products?: { __typename?: 'ProductConnection', totalCount: number, productFilterOptions: { __typename?: 'ProductFilterOptions', minimalPrice: string, maximalPrice: string, inStock: number, brands?: Array<{ __typename?: 'BrandFilterOption', count: number, brand: { __typename?: 'Brand', uuid: string, name: string } }> | null | undefined, flags?: Array<{ __typename?: 'FlagFilterOption', count: number, flag: { __typename?: 'Flag', uuid: string, name: string } }> | null | undefined, parameters?: Array<{ __typename?: 'ParameterFilterOption', name: string, uuid: string, type: string, values: Array<{ __typename?: 'ParameterValueFilterOption', uuid: string, text: string, count: number, rgbHex?: string | null | undefined }> }> | null | undefined }, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, startCursor?: string | null | undefined, endCursor?: string | null | undefined }, edges?: Array<{ __typename?: 'ProductEdge', node?: { __typename: 'MainVariant', uuid: string, slug: string, name: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, catalogNumber: string, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename: 'RegularProduct', uuid: string, slug: string, name: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, catalogNumber: string, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | { __typename: 'Variant', uuid: string, slug: string, name: string, stockQuantity: number, availableStoresCount: number, exposedStoresCount: number, catalogNumber: string, flags: Array<{ __typename?: 'Flag', name: string, rgbColor: string }>, availability: { __typename?: 'Availability', name: string, status: string }, images: Array<{ __typename?: 'Image', sizes: Array<{ __typename?: 'ImageSize', size: string, url: string, width?: number | null | undefined, height?: number | null | undefined }> }>, price: { __typename?: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean } } | null | undefined } | null | undefined> | null | undefined } | null | undefined };
 
@@ -2604,7 +2616,7 @@ export type TransportsQueryApi = { __typename?: 'Query', transports: Array<{ __t
   }
 };
       export default result;
-
+    
 export const BreadcrumbFragmentApi = gql`
     fragment BreadcrumbFragment on Breadcrumb {
   breadcrumb {
@@ -2730,6 +2742,27 @@ export const SimpleBlogArticleFragmentApi = gql`
   slug
 }
     `;
+export const BlogCategoryFragmentApi = gql`
+    fragment BlogCategoryFragment on BlogCategory {
+  name
+  link
+  parent {
+    name
+  }
+}
+    `;
+export const BlogArticleListFragmentApi = gql`
+    fragment BlogArticleListFragment on BlogArticle {
+  name
+  link
+  perex
+  ...BlogArticleImageListFragment
+  blogCategories {
+    ...BlogCategoryFragment
+  }
+}
+    ${BlogArticleImageListFragmentApi}
+${BlogCategoryFragmentApi}`;
 export const ProductFilterOptionsBrandsFragmentApi = gql`
     fragment ProductFilterOptionsBrandsFragment on BrandFilterOption {
   count
@@ -3369,6 +3402,21 @@ export const RefreshTokensDocumentApi = gql`
 
 export function useRefreshTokensApi() {
   return Urql.useMutation<RefreshTokensApi, RefreshTokensVariablesApi>(RefreshTokensDocumentApi);
+};
+export const BlogListQueryDocumentApi = gql`
+    query BlogListQuery($first: Int, $onlyHomepageArticles: Boolean) {
+  blogArticles(first: $first, onlyHomepageArticles: $onlyHomepageArticles) {
+    edges {
+      node {
+        ...BlogArticleListFragment
+      }
+    }
+  }
+}
+    ${BlogArticleListFragmentApi}`;
+
+export function useBlogListQueryApi(options: Omit<Urql.UseQueryArgs<BlogListQueryVariablesApi>, 'query'> = {}) {
+  return Urql.useQuery<BlogListQueryApi>({ query: BlogListQueryDocumentApi, ...options });
 };
 export const BrandsQueryDocumentApi = gql`
     query BrandsQuery {

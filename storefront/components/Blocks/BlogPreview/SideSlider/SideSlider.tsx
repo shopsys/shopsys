@@ -7,7 +7,7 @@ import {
     SideSliderItemStyled,
     SideSliderNameStyled,
 } from './SideSlider.style';
-import { BlogPreviewType } from 'connectors/blogPreview/blogPreview';
+import { BlogPreviewType } from 'connectors/blogPreview/types';
 import Flag from 'components/Basic/Flag';
 import Image from 'components/Basic/Image';
 import { theme } from 'components/Theme/main';

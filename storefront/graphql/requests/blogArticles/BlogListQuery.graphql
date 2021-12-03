@@ -1,0 +1,12 @@
+query BlogListQuery(
+    $first: Int,
+    $onlyHomepageArticles: Boolean
+) {
+    blogArticles(first: $first, onlyHomepageArticles: $onlyHomepageArticles) {
+        edges {
+            node {
+                ... BlogArticleListFragment
+            }
+        }
+    }
+}

@@ -1,13 +1,14 @@
-import { initServerSideProps, ServerSidePropsType } from 'helpers/InitServerSideProps';
 import {
+    BlogListQueryDocumentApi,
     NavigationQueryDocumentApi,
     PromotedCategoriesQueryDocumentApi,
     PromotedProductsQueryDocumentApi,
     SliderItemsQueryDocumentApi,
 } from 'graphql/generated';
+import { initServerSideProps, ServerSidePropsType } from 'helpers/InitServerSideProps';
 import Banners from 'components/Blocks/Banners';
 import BlogPreview from 'components/Blocks/BlogPreview';
-import { blogPreviewQuery } from 'connectors/blogPreview/blogPreview';
+import { blogPreviewVariables } from 'connectors/blogPreview/blogPreview';
 import CommonLayout from 'components/Layout/CommonLayout';
 import { FC } from 'react';
 import Heading from 'components/Basic/Heading';
@@ -49,7 +50,7 @@ export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) =>
         { query: SliderItemsQueryDocumentApi },
         { query: PromotedProductsQueryDocumentApi },
         { query: NavigationQueryDocumentApi },
-        { query: blogPreviewQuery },
+        { query: BlogListQueryDocumentApi, variables: blogPreviewVariables },
     ]);
 });
 

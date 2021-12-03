@@ -7,7 +7,7 @@ import {
     MainItemStyled,
     MainNameStyled,
 } from './Main.style';
-import { BlogPreviewType } from 'connectors/blogPreview/blogPreview';
+import { BlogPreviewType } from 'connectors/blogPreview/types';
 import { desktopFirstSizes } from 'components/Theme/mediaQueries';
 import Flag from 'components/Basic/Flag';
 import Image from 'components/Basic/Image';
@@ -44,11 +44,11 @@ const Main: FC<MainProps> = (props) => {
                                 </MainImageLinkStyled>
                             </MainImageStyled>
                             <MainContentStyled>
-                                {blogMainItem.blogCategories.map((blogPreviewCategorie, index) => (
+                                {blogMainItem.blogCategories.map((blogPreviewCategory, index) => (
                                     <Fragment key={index}>
-                                        {blogPreviewCategorie.parent !== null && (
-                                            <Flag color="#cdb3ff" href={blogPreviewCategorie.link}>
-                                                {blogPreviewCategorie.name}
+                                        {blogPreviewCategory.parent !== null && (
+                                            <Flag color="#cdb3ff" href={blogPreviewCategory.link}>
+                                                {blogPreviewCategory.name}
                                             </Flag>
                                         )}
                                     </Fragment>
