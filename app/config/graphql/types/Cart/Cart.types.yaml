@@ -16,6 +16,9 @@ Cart:
             payment:
                 type: "Payment"
                 description: "Selected payment if payment provided"
+            promoCode:
+                type: "String"
+                description: "Applied promo code if provided"
             modifications:
                 type: "CartModificationsResult!"
             totalPrice:

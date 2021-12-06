@@ -103,4 +103,12 @@ class AddToCartResult
     {
         return $this->cartWithModifications->getPayment();
     }
+
+    /**
+     * @return string|null
+     */
+    public function getPromoCode(): ?string
+    {
+        return $this->cartWithModifications->getPromoCode();
+    }
 }
