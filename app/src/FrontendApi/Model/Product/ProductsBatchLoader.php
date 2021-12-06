@@ -38,4 +38,13 @@ class ProductsBatchLoader
     {
         return $this->promiseAdapter->all($this->productElasticsearchProvider->getBatchedVisibleByProductIds($productsIds));
     }
+
+    /**
+     * @param \App\FrontendApi\Model\Product\BatchLoad\ProductBatchLoadByEntityData[] $productBatchLoadByEntitiesData
+     * @return \GraphQL\Executor\Promise\Promise
+     */
+    public function loadByEntities(array $productBatchLoadByEntitiesData): Promise
+    {
+        return $this->promiseAdapter->all($this->productElasticsearchProvider->getBatchedByEntities($productBatchLoadByEntitiesData));
+    }
 }

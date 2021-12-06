@@ -5,6 +5,7 @@ services:
         public: false
         bind:
             Overblog\DataLoader\DataLoaderInterface $productsVisibleByIdsBatchLoader: '@products_visible_by_ids_batch_loader'
+            Overblog\DataLoader\DataLoaderInterface $productsByEntitiesBatchLoader: '@products_by_entities_batch_loader'
 
     resolverMaps:
         namespace: App\FrontendApi\
