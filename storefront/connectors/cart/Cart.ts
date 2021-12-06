@@ -4,8 +4,11 @@ import {
     CartFragmentApi,
     CartQueryApi,
     CartQueryVariablesApi,
+    RemoveFromCartInputApi,
+    RemoveFromCartMutationApi,
     useAddToCartMutationApi,
     useCartQueryApi,
+    useRemoveFromCartMutationApi,
 } from 'graphql/generated';
 import { CartInput, CartType } from 'types/cart';
 import { PaymentInputType, PaymentType } from 'types/payment';
@@ -15,9 +18,9 @@ import { mapImageSizeApiData } from 'connectors/image/size/ImageSize';
 import { mapPriceData } from 'connectors/transports/Transports';
 import { mapProductPriceData } from 'connectors/products/Products';
 import { PickupPlaceType } from 'types/pickupPlace';
-import { useHandleAddToCart } from 'hooks/cart/UseHandleAddToCart';
+import { useHandleCartErrors } from 'hooks/cart/UseHandleCartErrors';
 import { useHandleCartUpdate } from 'hooks/cart/UseHandleCartUpdate';
-import { useShopsysSelector } from 'redux/main';
+import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 
 export const mapTransportToTransportInput = (
     transport: TransportType,
@@ -45,7 +48,7 @@ export const mapPaymentToPaymentInput = (payment: PaymentType): PaymentInputType
     };
 };
 
-export const loadCart = (
+export const useLoadCart = (
     cartUuid: CartInput['cartUuid'],
     isCartEmpty: CartInput['isCartEmpty'],
     transport: CartInput['transport'],
@@ -57,27 +60,32 @@ export const loadCart = (
         pause: isCartEmpty,
         requestPolicy: 'network-only',
     });
+    const t = useTypedTranslationFunction();
 
-    useHandleCartUpdate(
-        result,
-        transport?.pickupPlaceIdentifier === undefined ? null : transport.pickupPlaceIdentifier,
-        promoCode,
-    );
+    useHandleCartErrors(result.error, t('Could not load your cart'));
+    useHandleCartUpdate(result.data?.cart);
 
     return [result, refresh];
 };
 
-export const addToCart = (): UseMutationResponse<AddToCartMutationApi, AddToCartMutationVariablesApi> => {
-    const { transport, promoCode } = useShopsysSelector((state) => state.cartInput);
-    const [changeCartItemQuantityResult, changeCartItemQuantity] = useAddToCartMutationApi();
+export const useAddToCart = (): UseMutationResponse<AddToCartMutationApi, AddToCartMutationVariablesApi> => {
+    const [addToCartResult, addToCart] = useAddToCartMutationApi();
+    const t = useTypedTranslationFunction();
 
-    useHandleAddToCart(
-        changeCartItemQuantityResult,
-        transport?.pickupPlaceIdentifier === undefined ? null : transport.pickupPlaceIdentifier,
-        promoCode,
-    );
+    useHandleCartErrors(addToCartResult.error, t('Could not add the product to cart'));
+    useHandleCartUpdate(addToCartResult.data?.AddToCart);
 
-    return [changeCartItemQuantityResult, changeCartItemQuantity];
+    return [addToCartResult, addToCart];
+};
+
+export const useRemoveFromCart = (): UseMutationResponse<RemoveFromCartMutationApi, RemoveFromCartInputApi> => {
+    const [removeItemFromCartResult, removeItemFromCart] = useRemoveFromCartMutationApi();
+    const t = useTypedTranslationFunction();
+
+    useHandleCartErrors(removeItemFromCartResult.error, t('Could not remove the product from cart'));
+    useHandleCartUpdate(removeItemFromCartResult.data?.RemoveFromCart);
+
+    return [removeItemFromCartResult, removeItemFromCart];
 };
 
 export const mapCart = (apiData: CartFragmentApi, currencyCode: string): CartType => {

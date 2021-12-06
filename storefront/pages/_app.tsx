@@ -9,11 +9,11 @@ import { PortalContainer } from 'components/Basic/Portal/Portal.style';
 import { ReactElement } from 'react';
 import ShopsysGlobalProvider from 'context/ShopsysGlobalProvider';
 import { ToastContainer } from 'react-toastify';
-import { useLoadCart } from 'hooks/cart/UseLoadCart';
+import { useRefreshCartOnNavigation } from 'hooks/cart/UseRefreshCartOnNavigation';
 import { withUrqlClient } from 'next-urql';
 
 function MyApp({ Component, pageProps }: AppProps): ReactElement {
-    useLoadCart();
+    useRefreshCartOnNavigation();
 
     return (
         <ShopsysGlobalProvider>

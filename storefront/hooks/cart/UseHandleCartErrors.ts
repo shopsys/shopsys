@@ -30,8 +30,6 @@ export const useHandleCartErrors = (resultErrors: CombinedError | undefined, err
             case ApplicationErrors.DEFAULT:
                 showErrorMessage(errorMessage);
                 break;
-            default:
-                break;
         }
 
         if (userError?.validation !== undefined) {

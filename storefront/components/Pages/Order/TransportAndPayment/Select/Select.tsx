@@ -1,8 +1,8 @@
 import { Controller, useFormContext, useWatch } from 'react-hook-form';
 import { FC, useEffect, useState } from 'react';
 import { ListItemStyled, PaymentListWrapper, ResetButtonStyled } from './Select.style';
-import { loadCart, mapPaymentToPaymentInput, mapTransportToTransportInput } from 'connectors/cart/Cart';
 import { mapPacketeryExtendedPoint, packeteryPick, removePacketeryCookie, setPacketeryCookie } from 'helpers/packetery';
+import { mapPaymentToPaymentInput, mapTransportToTransportInput, useLoadCart } from 'connectors/cart/Cart';
 import { TransportInputType, TransportType } from 'types/transport';
 import { getSelectedPickupPlace } from 'connectors/transports/pickupPlace/PickupPlace';
 import Heading from 'components/Basic/Heading';
@@ -47,7 +47,7 @@ const Select: FC<SelectProps> = (props) => {
     const [updatedTransport, updateTransport] = useState<TransportType | null>(transport);
     const [updatedPickupPlace, updatePickupPlace] = useState<PickupPlaceType | null>(pickupPlace);
 
-    loadCart(cartUuid, isCartEmpty, mappedTransportInput, mappedPaymentInput, promoCode);
+    useLoadCart(cartUuid, isCartEmpty, mappedTransportInput, mappedPaymentInput, promoCode);
 
     useEffect(() => {
         formProviderMethods.setValue(

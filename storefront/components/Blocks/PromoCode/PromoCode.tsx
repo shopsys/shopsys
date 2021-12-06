@@ -12,17 +12,17 @@ import {
 import { usePromoCodeForm, usePromoCodeFormMeta } from './formMeta';
 import { CSSTransition } from 'react-transition-group';
 import Form from 'components/Forms/Form';
-import { loadCart } from 'connectors/cart/Cart';
 import { PromoCodeFormType } from 'types/form';
 import PromoCodeInfo from './PromoCodeInfo';
 import { showSuccessMessage } from 'components/Helpers/Toasts';
+import { useLoadCart } from 'connectors/cart/Cart';
 import { useShopsysSelector } from 'redux/main';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 
 const PromoCode: FC = () => {
     const { cartUuid, isCartEmpty, payment, transport, promoCode } = useShopsysSelector((state) => state.cartInput);
     const [updatedPromoCode, updatePromoCode] = useState(promoCode);
-    const [result] = loadCart(cartUuid, isCartEmpty, transport, payment, updatedPromoCode);
+    const [result] = useLoadCart(cartUuid, isCartEmpty, transport, payment, updatedPromoCode);
     const t = useTypedTranslationFunction();
     const [isContentVisible, setIsContentVisible] = useState(false);
     const [contentElementHeight, setContentElementHeight] = useState(0);

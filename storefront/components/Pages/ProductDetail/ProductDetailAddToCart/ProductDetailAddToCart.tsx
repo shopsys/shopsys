@@ -7,11 +7,11 @@ import {
     AddToCartWrapperStyled,
 } from './ProductDetailAddToCart.style';
 import { FC, useRef } from 'react';
-import { addToCart } from 'connectors/cart/Cart';
 import AddToCartPopup from 'components/Blocks/Product/AddToCartPopup';
 import { formatPrice } from 'utils/formatting';
 import { ProductDetailType } from 'types/product';
 import Spinbox from 'components/Forms/Spinbox';
+import { useAddToCart } from 'connectors/cart/Cart';
 import { useHandleAddToCartMessage } from 'hooks/cart/useHandleAddToCartMessage';
 import { useShopsysSelector } from 'redux/main';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
@@ -25,7 +25,7 @@ const ProductDetailAddToCart: FC<ProductDetailAddToCartProps> = (props) => {
     const t = useTypedTranslationFunction();
     const { cartUuid } = useShopsysSelector((state) => state.cartInput);
     const { transport, payment, promoCode } = useShopsysSelector((state) => state.cartInput);
-    const [changeCartItemQuantityResult, changeCartItemQuantity] = addToCart();
+    const [changeCartItemQuantityResult, changeCartItemQuantity] = useAddToCart();
     const [popupData, setPopupData] = useHandleAddToCartMessage(changeCartItemQuantityResult, props.product.uuid);
 
     const onAddToCartHandler = async () => {
