@@ -7,7 +7,6 @@ import {
     LoginProfileTextStyled,
 } from './Registration.style';
 import { Controller, FormProvider, SubmitHandler, useWatch } from 'react-hook-form';
-import { initCartInputCookie, updateCartInputCookie } from 'helpers/Cookies';
 import { RegistrationFormType, useRegistrationForm, useRegistrationFormMeta } from './formMeta';
 import { useShopsysDispatch, useShopsysSelector } from 'redux/main';
 import Address from './Address';
@@ -56,7 +55,6 @@ const Registration: FC = () => {
 
             if (accessToken !== undefined && refreshToken !== undefined) {
                 dispatch(userActions.setIsUserLoggedIn(true));
-                updateCartInputCookie(initCartInputCookie(true));
                 setTokensToCookie(accessToken, refreshToken);
                 showSuccessMessage(formMeta.messages.successAndLogged);
             } else {

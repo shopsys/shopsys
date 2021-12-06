@@ -1121,6 +1121,15 @@ Selected payment if payment provided
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong>promoCode</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Applied promo code if provided
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong>modifications</strong></td>
 <td valign="top"><a href="#cartmodificationsresult">CartModificationsResult</a>!</td>
 <td></td>
@@ -2245,6 +2254,15 @@ Selected transport if transport provided
 <td>
 
 Selected payment if payment provided
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>promoCode</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Applied promo code if provided
 
 </td>
 </tr>
@@ -7922,6 +7940,11 @@ Hierarchy of the current element in relation to the structure
 <tr>
 <td colspan="2" valign="top"><strong>payment</strong></td>
 <td valign="top"><a href="#payment">Payment</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>promoCode</strong></td>
+<td valign="top"><a href="#string">String</a></td>
 <td></td>
 </tr>
 <tr>

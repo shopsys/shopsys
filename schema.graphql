@@ -44,6 +44,9 @@ type AddToCartResult implements CartInterface {
 
   """Selected payment if payment provided"""
   payment: Payment
+
+  """Applied promo code if provided"""
+  promoCode: String
   modifications: CartModificationsResult!
   totalPrice: Price!
   totalDiscountPrice: Price!
@@ -381,6 +384,9 @@ type Cart implements CartInterface {
 
   """Selected payment if payment provided"""
   payment: Payment
+
+  """Applied promo code if provided"""
+  promoCode: String
   modifications: CartModificationsResult!
   totalPrice: Price!
   totalDiscountPrice: Price!
@@ -410,6 +416,7 @@ interface CartInterface {
   items: [CartItem!]!
   transport: Transport
   payment: Payment
+  promoCode: String
   modifications: CartModificationsResult!
   totalPrice: Price!
   totalDiscountPrice: Price!

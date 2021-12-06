@@ -1,5 +1,4 @@
 import { ApplicationErrors, getUserFriendlyErrors } from 'connectors/lib/friendlyErrorMessageParser';
-import { initCartInputCookie, updateCartInputCookie } from 'helpers/Cookies';
 import { cartInputActions } from 'redux/slices/cartInput';
 import { CombinedError } from '@urql/core';
 import { showErrorMessage } from 'components/Helpers/Toasts';
@@ -20,12 +19,7 @@ export const useHandleCartErrors = (resultErrors: CombinedError | undefined, err
 
         switch (applicationError?.type) {
             case ApplicationErrors.CART_NOT_FOUND:
-                updateCartState(
-                    dispatch,
-                    { cart: null, payment: null, pickupPlace: null, transport: null },
-                    { cartUuid: null, isCartEmpty: true, transport: null, payment: null, promoCode: null },
-                );
-                updateCartInputCookie(initCartInputCookie());
+                updateCartState(dispatch);
                 break;
             case ApplicationErrors.DEFAULT:
                 showErrorMessage(errorMessage);

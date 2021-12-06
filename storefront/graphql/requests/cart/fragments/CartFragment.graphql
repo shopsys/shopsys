@@ -17,4 +17,5 @@ fragment CartFragment on CartInterface {
     payment {
         ...SimplePaymentFragment
     }
+    promoCode
 }

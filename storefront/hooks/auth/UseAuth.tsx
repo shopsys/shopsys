@@ -1,5 +1,4 @@
 import { Exact, LoginApi, LogoutApi, useLoginApi, useLogoutApi } from 'graphql/generated';
-import { initCartInputCookie, updateCartInputCookie } from 'helpers/Cookies';
 import { removeTokensFromCookies, setTokensToCookie } from 'utils/Auth/TokensFromCookies';
 import { showErrorMessage, showSuccessMessage } from 'components/Helpers/Toasts';
 import { useEffect } from 'react';
@@ -37,7 +36,6 @@ export const useAuth = (): [
 
         if (accessToken !== undefined && refreshToken !== undefined) {
             dispatch(userActions.setIsUserLoggedIn(true));
-            updateCartInputCookie(initCartInputCookie(true));
             setTokensToCookie(accessToken, refreshToken);
             showSuccessMessage(t('Successfully logged in'));
             window.location.href = router.asPath;
@@ -54,7 +52,6 @@ export const useAuth = (): [
         if (logoutUseMutationResponse[0].data?.Logout === true) {
             dispatch(userActions.setIsUserLoggedIn(false));
             removeTokensFromCookies();
-            updateCartInputCookie(initCartInputCookie());
             showSuccessMessage(t('Successfully logged out'));
             window.location.href = router.asPath;
         }

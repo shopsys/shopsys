@@ -1,16 +1,19 @@
+import { CartQueryDocumentApi } from 'graphql/generated';
+import { useClient } from 'urql';
 import { useEffect } from 'react';
-import { useLoadCart } from 'connectors/cart/Cart';
 import { useRouter } from 'next/router';
 import { useShopsysSelector } from 'redux/main';
 
 export const useRefreshCartOnNavigation = (): void => {
     const router = useRouter();
     const { cartUuid, isCartEmpty, transport, payment, promoCode } = useShopsysSelector((state) => state.cartInput);
-    const [, refreshCart] = useLoadCart(cartUuid, isCartEmpty, transport, payment, promoCode);
+    const client = useClient();
 
     useEffect(() => {
         if (!isCartEmpty) {
-            refreshCart();
+            client.query(CartQueryDocumentApi, {
+                variables: { cartUuid, transport, payment, promoCode },
+            });
         }
     }, [router.asPath, isCartEmpty]);
 };

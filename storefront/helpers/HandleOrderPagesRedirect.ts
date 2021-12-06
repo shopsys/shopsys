@@ -1,13 +1,15 @@
 import { GetServerSidePropsContext, Redirect } from 'next';
-import { getCartInputCookie } from './Cookies';
+import { CartInput } from 'types/cart';
 import { getDomainConfig } from 'utils/Domain/Domain';
 import { useGetInternationalizedStaticUrls } from 'hooks/staticUrls/UseGetInternationalizedStaticUrls';
 
-export const handleOrderPagesRedirect = (context: GetServerSidePropsContext): { redirect: Redirect } | false => {
+export const handleOrderPagesRedirect = (
+    context: GetServerSidePropsContext,
+    cartInput: CartInput,
+): { redirect: Redirect } | false => {
     const domainConfig = getDomainConfig(context.req.headers.host);
-    const cartInputCookie = getCartInputCookie(context);
 
-    if (cartInputCookie.isCartEmpty && context.resolvedUrl !== '/cart') {
+    if (cartInput.isCartEmpty && context.resolvedUrl !== '/cart') {
         const [cartUrl] = useGetInternationalizedStaticUrls(['/cart'], domainConfig.url);
 
         return {
@@ -20,7 +22,7 @@ export const handleOrderPagesRedirect = (context: GetServerSidePropsContext): { 
 
     if (
         context.resolvedUrl !== '/order/transport-and-payment' &&
-        (cartInputCookie.transport === null || cartInputCookie.payment === null)
+        (cartInput.transport === null || cartInput.payment === null)
     ) {
         const [transportAndPaymentUrl] = useGetInternationalizedStaticUrls(
             ['/order/transport-and-payment'],

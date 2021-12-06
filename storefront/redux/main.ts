@@ -1,3 +1,4 @@
+import { nextReduxCookieMiddleware, wrapMakeStore } from 'next-redux-cookie-wrapper';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import { cartInputSlice } from './slices/cartInput';
 import { configureStore } from '@reduxjs/toolkit';
@@ -7,7 +8,7 @@ import { domainSlice } from './slices/domain';
 import { optionsFilterSlice } from './slices/optionsFilter';
 import { userSlice } from './slices/user';
 
-const makeStore = () =>
+const makeStore = wrapMakeStore(() =>
     configureStore({
         reducer: {
             domain: domainSlice.reducer,
@@ -16,7 +17,14 @@ const makeStore = () =>
             contactInformation: contactInformationSlice.reducer,
             optionsFilter: optionsFilterSlice.reducer,
         },
-    });
+        middleware: (getDefaultMiddleware) =>
+            getDefaultMiddleware().prepend(
+                nextReduxCookieMiddleware({
+                    subtrees: ['cartInput', 'user', 'domain'],
+                }),
+            ),
+    }),
+);
 
 /**
  * In the next couple of lines, we take the default useDispatch and useSelector hooks and type them

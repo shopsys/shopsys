@@ -1,5 +1,4 @@
 import { FormProvider, SubmitHandler } from 'react-hook-form';
-import { initCartInputCookie, updateCartInputCookie } from 'helpers/Cookies';
 import { initServerSideProps, ServerSidePropsType } from 'helpers/InitServerSideProps';
 import { NavigationQueryDocumentApi, useCreateOrderMutationApi } from 'graphql/generated';
 import { nextReduxWrapper, useShopsysDispatch, useShopsysSelector } from 'redux/main';
@@ -52,9 +51,7 @@ const ContactInformation: FC<ServerSidePropsType> = () => {
     useHandleContactInformationNonTextChanges(formProviderMethods.control, formMeta);
 
     const onSuccessfullyCreatedOrderHandler = () => {
-        const resetCartInput = initCartInputCookie();
-        updateCartState(dispatch, { cart: null, transport: null, pickupPlace: null, payment: null }, resetCartInput);
-        updateCartInputCookie(resetCartInput);
+        updateCartState(dispatch);
         dispatch(userActions.setOrderConfirmationAccess(true));
         router.push(orderConfirmationUrl);
     };
@@ -149,7 +146,7 @@ const ContactInformation: FC<ServerSidePropsType> = () => {
 
 export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) => async (context) => {
     initDomainConfig(context, store);
-    const redirect = handleOrderPagesRedirect(context);
+    const redirect = handleOrderPagesRedirect(context, store.getState().cartInput);
     return redirect === false ? initServerSideProps(context, store, [{ query: NavigationQueryDocumentApi }]) : redirect;
 });
 
