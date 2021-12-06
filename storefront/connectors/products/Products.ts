@@ -8,8 +8,8 @@ import {
 } from 'graphql/generated';
 import { FlagType, ProductPriceType, SliderProductItemType } from 'components/Blocks/Product/types';
 import { ListedProductType, ListedVariantType } from './types';
+import { mapProductDetailImages, mapStoreAvailabilities } from './ProductDetail';
 import { mapImageApiData } from 'connectors/image/Image';
-import { mapStoreAvailabilities } from './ProductDetail';
 import { useQueryError } from 'hooks/graphQl/UseQueryError';
 import { useShopsysSelector } from 'redux/main';
 
@@ -48,7 +48,7 @@ export const mapListedVariantType = (apiData: ListedVariantFragmentApi, currency
         availability: apiData.availability.name,
         name: apiData.name,
         price: mapProductPriceApiData(apiData.price, currencyCode),
-        image: mapImageApiData(apiData.images),
+        images: mapProductDetailImages(apiData.images),
         catalogNumber: apiData.catalogNumber,
         storeAvailabilities: mapStoreAvailabilities(apiData.storeAvailabilities),
     };

@@ -6,7 +6,7 @@ fragment ListedVariantFragment on Variant {
     flags {
         ...FlagLabelFragment
     }
-    ...ProductImagesListFragment
+    ...ProductDetailImagesFragment
     ...ProductPriceFragment
     availability {
         ...AvailabilityFragment

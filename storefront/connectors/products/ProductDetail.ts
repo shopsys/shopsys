@@ -1,4 +1,5 @@
 import {
+    ListedVariantFragmentApi,
     MainVariantDetailFragmentApi,
     ParameterFragmentApi,
     ProductDetailFragmentApi,
@@ -58,6 +59,14 @@ export const mapStoreAvailabilities = (apiData: StoreAvailabilityFragmentApi[]):
     }));
 };
 
+const mapVariantImages = (variants: ListedVariantFragmentApi[]): ProductDetailImagesFragmentApi['images'] => {
+    const mappedImages = [];
+    for (const variant of variants) {
+        mappedImages.push(...variant.images);
+    }
+    return mappedImages;
+};
+
 export const mapMainVariantDetailApiData = (
     apiData: MainVariantDetailFragmentApi,
     currencyCode: string,
@@ -74,7 +83,7 @@ export const mapMainVariantDetailApiData = (
                 ? mapSliderProductApiData(apiData.accessories, currencyCode)
                 : [],
         parameters: mapParametersApiData(apiData.parameters),
-        images: mapProductDetailImages(apiData.images),
+        images: mapProductDetailImages([...apiData.images, ...mapVariantImages(apiData.variants)]),
         variants: apiData.variants.map((variant) => mapListedVariantType(variant, currencyCode)),
     };
 };
@@ -90,7 +99,7 @@ const mapParametersApiData = (apiData: ParameterFragmentApi[]): ProductParameter
     return mappedParameters;
 };
 
-const mapProductDetailImages = (images: ProductDetailImagesFragmentApi['images']) => {
+export const mapProductDetailImages = (images: ProductDetailImagesFragmentApi['images']): ProductDetailImageType[] => {
     const mappedImages = [];
     for (const image of images) {
         const mappedImage: ProductDetailImageType = {};

@@ -35,7 +35,7 @@ export type ListedVariantType = {
     exposedStoresCount: number;
     flags: FlagType[];
     availability: string;
-    image: ImageType | null;
+    images: ProductDetailImageType[];
     price: ProductPriceType;
     catalogNumber: string;
     storeAvailabilities: StoreAvailability[];
