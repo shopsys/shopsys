@@ -1,11 +1,13 @@
-import { FC, useEffect, useRef } from 'react';
+import { FC, useRef } from 'react';
 import { ProductActionStyled, ProductActionWrapperStyled } from './ProductAction.style';
+import AddToCartPopup from 'components/Blocks/Product/AddToCartPopup';
 import Button from 'components/Forms/Button';
-import { showChangeCartItemQuantityMessages } from 'utils/Cart/ShowChangeCartItemQuantityMessages';
+import Portal from 'components/Basic/Portal';
 import { SliderProductItemType } from 'components/Blocks/Product/types';
 import Spinbox from 'components/Forms/Spinbox';
 import { useAddToCartMutationApi } from 'graphql/generated';
 import { useHandleAddToCart } from 'hooks/cart/UseHandleAddToCart';
+import { useHandleAddToCartMessage } from 'hooks/cart/useHandleAddToCartMessage';
 import { useRouter } from 'next/dist/client/router';
 import { useShopsysSelector } from 'redux/main';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
@@ -23,9 +25,7 @@ const ProductAction: FC<SliderProductItemType> = (props) => {
         promoCode,
     );
 
-    useEffect(() => {
-        showChangeCartItemQuantityMessages(changeCartItemQuantityResult, props.uuid, props.name, t);
-    }, [changeCartItemQuantityResult.fetching]);
+    const [popupData, setPopupData] = useHandleAddToCartMessage(changeCartItemQuantityResult, props.uuid);
 
     const onAddToCartHandler = async () => {
         if (spinboxRef.current === null) {
@@ -55,14 +55,32 @@ const ProductAction: FC<SliderProductItemType> = (props) => {
     }
 
     return (
-        <ProductActionWrapperStyled>
-            <ProductActionStyled isButtonFullWidth={false}>
-                <Spinbox size="small" step={1} min={1} max={props.stockQuantity} defaultValue={1} ref={spinboxRef} />
-                <Button type="button" size="small" name="add-to-cart" onClick={onAddToCartHandler}>
-                    {t('Add to cart')}
-                </Button>
-            </ProductActionStyled>
-        </ProductActionWrapperStyled>
+        <>
+            <ProductActionWrapperStyled>
+                <ProductActionStyled isButtonFullWidth={false}>
+                    <Spinbox
+                        size="small"
+                        step={1}
+                        min={1}
+                        max={props.stockQuantity}
+                        defaultValue={1}
+                        ref={spinboxRef}
+                    />
+                    <Button type="button" size="small" name="add-to-cart" onClick={onAddToCartHandler}>
+                        {t('Add to cart')}
+                    </Button>
+                </ProductActionStyled>
+            </ProductActionWrapperStyled>
+            {popupData !== null && (
+                <Portal>
+                    <AddToCartPopup
+                        isVisible={popupData !== null}
+                        onCloseCallback={() => setPopupData(null)}
+                        product={popupData}
+                    />
+                </Portal>
+            )}
+        </>
     );
 };
 

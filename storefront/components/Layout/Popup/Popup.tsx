@@ -13,6 +13,7 @@ type PopupProps = {
     isVisible: boolean;
     onCloseCallback: () => void;
     wrapperComponent?: AnyStyledComponent;
+    hideCloseButton?: boolean;
 };
 
 /**
@@ -44,11 +45,13 @@ const Popup: FC<PopupProps> = (props) => {
             <>
                 <Overlay onClick={onClickCloseActionHandler}></Overlay>
                 <PopupWrapper role="dialog" aria-modal={true}>
-                    <PopupHeaderStyled>
-                        <PopupButtonCloseStyled type="button" onClick={onClickCloseActionHandler}>
-                            <PopupButtonCloseIconStyled iconType="icon" icon="Remove" />
-                        </PopupButtonCloseStyled>
-                    </PopupHeaderStyled>
+                    {props.hideCloseButton === true && (
+                        <PopupHeaderStyled>
+                            <PopupButtonCloseStyled type="button" onClick={onClickCloseActionHandler}>
+                                <PopupButtonCloseIconStyled iconType="icon" icon="Remove" />
+                            </PopupButtonCloseStyled>
+                        </PopupHeaderStyled>
+                    )}
                     <PopupContentStyled>{props.children}</PopupContentStyled>
                 </PopupWrapper>
             </>

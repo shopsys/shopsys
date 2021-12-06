@@ -6,7 +6,7 @@ import NextLink from 'next/link';
 
 type NativePropsAnchor = ExtractNativePropsFromDefault<
     AnchorHTMLAttributes<HTMLAnchorElement>,
-    'children' | 'href',
+    'href',
     'rel' | 'target'
 >;
 
