@@ -101,9 +101,9 @@ class ProductsResolver extends BaseProductsResolver
     /**
      * @param \Overblog\GraphQLBundle\Definition\Argument $argument
      * @param \App\Model\Product\Flag\Flag $flag
-     * @return \Overblog\GraphQLBundle\Relay\Connection\ConnectionInterface|object
+     * @return \GraphQL\Executor\Promise\Promise
      */
-    public function resolveByFlag(Argument $argument, Flag $flag)
+    public function resolveByFlag(Argument $argument, Flag $flag): Promise
     {
         PageSizeValidator::checkMaxPageSize($argument);
         $search = $argument['search'] ?? '';
@@ -117,15 +117,19 @@ class ProductsResolver extends BaseProductsResolver
 
         $productFilterData->flags[] = $flag;
 
-        return $this->productConnectionFactory->createConnectionForFlag(
+        return $this->productConnectionFactory->createConnectionPromiseForFlag(
             $flag,
-            function ($offset, $limit) use ($argument, $productFilterData, $search) {
-                return $this->productFacade->getFilteredProductsOnCurrentDomain(
-                    $limit,
-                    $offset,
-                    $this->getOrderingModeFromArgument($argument),
-                    $productFilterData,
-                    $search
+            function ($offset, $limit) use ($argument, $productFilterData, $search, $flag) {
+                return $this->productsByEntitiesBatchLoader->load(
+                    new ProductBatchLoadByEntityData(
+                        $flag->getId(),
+                        Flag::class,
+                        $limit,
+                        $offset,
+                        $this->getOrderingModeFromArgument($argument),
+                        $productFilterData,
+                        $search
+                    )
                 );
             },
             $this->productFacade->getFilteredProductsCountOnCurrentDomain($productFilterData, $search),

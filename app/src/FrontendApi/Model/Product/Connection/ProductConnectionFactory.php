@@ -56,15 +56,15 @@ class ProductConnectionFactory extends BaseProductConnectionFactory
      * @param int $countOfProducts
      * @param \Overblog\GraphQLBundle\Definition\Argument $argument
      * @param \App\Model\Product\Filter\ProductFilterData $productFilterData
-     * @return \Shopsys\FrontendApiBundle\Model\Product\Connection\ProductConnection
+     * @return \GraphQL\Executor\Promise\Promise
      */
-    public function createConnectionForFlag(
+    public function createConnectionPromiseForFlag(
         Flag $flag,
         callable $retrieveProductClosure,
         int $countOfProducts,
         Argument $argument,
         ProductFilterData $productFilterData
-    ): ProductConnection {
+    ): Promise {
         $productFilterOptionsClosure = function () use ($flag, $productFilterData) {
             return $this->productFilterOptionsFactory->createProductFilterOptionsForFlag(
                 $flag,
@@ -73,12 +73,7 @@ class ProductConnectionFactory extends BaseProductConnectionFactory
             );
         };
 
-        return $this->createConnection(
-            $retrieveProductClosure,
-            $countOfProducts,
-            $argument,
-            $productFilterOptionsClosure
-        );
+        return $this->getConnectionPromise($retrieveProductClosure, $productFilterOptionsClosure, $countOfProducts, $argument);
     }
 
     /**

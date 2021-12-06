@@ -6,6 +6,7 @@ namespace App\Model\Product;
 
 use App\FrontendApi\Model\Product\BatchLoad\ProductBatchLoadByEntityData;
 use App\Model\Category\Category;
+use App\Model\Product\Flag\Flag;
 use App\Model\Product\Search\FilterQuery;
 use InvalidArgumentException;
 use Shopsys\FrameworkBundle\Model\Product\ProductElasticsearchProvider as BaseProductElasticsearchProvider;
@@ -55,6 +56,9 @@ class ProductElasticsearchProvider extends BaseProductElasticsearchProvider
             case Category::class:
                 $filterQuery = $this->getFilterQueryForCategory($productBatchLoadByEntityData);
                 break;
+            case Flag::class:
+                $filterQuery = $this->getFilterQueryForFilterData($productBatchLoadByEntityData);
+                break;
             default:
                 throw new InvalidArgumentException(sprintf('Entity class "%s" is not supported for creating filter query', $entityClass));
         }
@@ -79,6 +83,20 @@ class ProductElasticsearchProvider extends BaseProductElasticsearchProvider
             1,
             $productBatchLoadByEntityData->getLimit(),
             $productBatchLoadByEntityData->getEntityId()
+        );
+    }
+
+    /**
+     * @param \App\FrontendApi\Model\Product\BatchLoad\ProductBatchLoadByEntityData $productBatchLoadByEntityData
+     * @return \App\Model\Product\Search\FilterQuery
+     */
+    private function getFilterQueryForFilterData(ProductBatchLoadByEntityData $productBatchLoadByEntityData): FilterQuery
+    {
+        return $this->filterQueryFactory->createWithProductFilterData(
+            $productBatchLoadByEntityData->getProductFilterData(),
+            $productBatchLoadByEntityData->getOrderingModeId(),
+            1,
+            $productBatchLoadByEntityData->getLimit()
         );
     }
 }
