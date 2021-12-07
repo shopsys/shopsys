@@ -1,0 +1,113 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`test render list item 1`] = `
+.c0 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  padding: 10px 6px;
+  cursor: pointer;
+  background-color: #f5f5f6;
+  border-radius: 11px;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  -webkit-transition: 0.2s cubic-bezier(.8,.20,.48,1.0);
+  transition: 0.2s cubic-bezier(.8,.20,.48,1.0);
+}
+
+.c0:hover {
+  background-color: #e8e8ea;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+}
+
+.c1 {
+  position: relative;
+  width: 64px;
+  height: 48px;
+  margin-bottom: 6px;
+}
+
+.c1 img {
+  mix-blend-mode: multiply;
+  max-height: 100%;
+}
+
+.c2 {
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  margin: 0;
+  line-height: 18px;
+  max-width: 100%;
+}
+
+.c3 {
+  max-width: 100%;
+  word-wrap: break-word;
+  font-size: 14px;
+  word-break: break-all;
+  white-space: nowrap;
+  color: #0d0d0d;
+}
+
+@media (min-width:769px) {
+  .c0 {
+    -webkit-flex-direction: row;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    padding: 10px 12px;
+  }
+}
+
+@media (min-width:769px) {
+  .c1 {
+    margin-bottom: 0;
+  }
+}
+
+@media (min-width:769px) {
+  .c3 {
+    padding-left: 10px;
+  }
+}
+
+@media @query-lg {
+
+}
+
+<a
+  className="c0"
+  href="/item-slug"
+  onClick={[Function]}
+  onMouseEnter={[Function]}
+>
+  <div
+    className="c1"
+  >
+    <img
+      alt="Item name"
+      src="/images/optimized-noimage.png"
+    />
+  </div>
+  <div
+    className="c2"
+  >
+    <span
+      className="c3"
+    >
+      Item name
+    </span>
+  </div>
+</a>
+`;
