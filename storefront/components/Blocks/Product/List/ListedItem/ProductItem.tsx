@@ -35,8 +35,14 @@ const ProductItem: FC<ListedProductType> = (props) => {
                             <ProductPrice {...props.price} />
                             <ProductAvailabilityStyled>
                                 {props.availability}
-                                <ProductAvailableStoresCount {...props} />
-                                <ProductExposedStoresCount {...props} />
+                                <ProductAvailableStoresCount
+                                    isMainVariant={props.isMainVariant}
+                                    availableStoresCount={props.availableStoresCount}
+                                />
+                                <ProductExposedStoresCount
+                                    isMainVariant={props.isMainVariant}
+                                    exposedStoresCount={props.exposedStoresCount}
+                                />
                             </ProductAvailabilityStyled>
                         </ProductItemInfoStyled>
                     </ProductItemLinkStyled>

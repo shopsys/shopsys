@@ -20,8 +20,10 @@ import { getFriendlyUrlResolvedData } from 'connectors/friendlyUrls/FriendlyUrls
 import { getNewPagination } from 'utils/Pagination/getNewPagination';
 import { getProductListSort } from 'helpers/sorting/GetProductListSort';
 import { initDomainConfig } from 'helpers/InitDomainConfig';
+import { MainVariantDetailType } from 'connectors/products/types';
 import { parsePageNumberFromQuery } from 'utils/Pagination/parsePageNumberFromQuery';
 import { parseProductListSortFromQuery } from 'helpers/sorting/ParseProductListSortFromQuery';
+import ProductDetailMainVariantPage from 'components/Pages/ProductDetail/ProductDetailMainVariant';
 import ProductDetailPage from 'components/Pages/ProductDetail';
 import { ProductDetailType } from 'components/Pages/ProductDetail/types';
 import StoreDetailPage from 'components/Pages/StoreDetail';
@@ -63,6 +65,7 @@ const FriendlyUrlPage: FC<ServerSidePropsType> = () => {
 function renderContent(
     data:
         | ProductDetailType
+        | MainVariantDetailType
         | CategoryDetailType
         | StoreDetailType
         | ArticleDetailType
@@ -70,8 +73,10 @@ function renderContent(
         | BrandDetailType
         | FlagDetailType,
 ) {
-    if (data.__typename === 'RegularProduct' || data.__typename === 'MainVariant' || data.__typename === 'Variant') {
+    if (data.__typename === 'RegularProduct' || data.__typename === 'Variant') {
         return <ProductDetailPage product={data as ProductDetailType} />;
+    } else if (data.__typename === 'MainVariant') {
+        return <ProductDetailMainVariantPage product={data as MainVariantDetailType} />;
     } else if (data.__typename === 'Category') {
         return <CategoryDetailPage category={data as CategoryDetailType} />;
     } else if (data.__typename === 'Store') {

@@ -1,4 +1,3 @@
-import { FC, useRef } from 'react';
 import {
     ProductDetailCodeStyled,
     ProductDetailHeadingStyled,
@@ -7,26 +6,24 @@ import {
     ProductDetailPrefixStyled,
     ProductDetailStyled,
 } from './ProductDetail.style';
+import { FC } from 'react';
+import { MainVariantDetailType } from 'connectors/products/types';
 import ProductDetailAccessories from './ProductDetailAccessories';
-import ProductDetailAddToCart from './ProductDetailAddToCart';
-import ProductDetailAvailability from './ProductDetailStoresAvailability/ProductDetailAvailability';
-import ProductDetailAvailabilityList from './ProductDetailStoresAvailability/ProductDetailAvailabilityList';
 import ProductDetailGallery from './ProductDetailGallery';
 import ProductDetailTabs from './ProductDetailTabs';
-import { ProductDetailType } from './types';
+import ProductVariantsTable from './ProductVariantsTable';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import Webline from 'components/Layout/Webline';
 
-type ProductDetailProps = {
-    product: ProductDetailType;
+type ProductDetailMainVariantProps = {
+    product: MainVariantDetailType;
 };
 
 /**
- * Product Detail page component
+ * Main Product Variant Detail page component
  */
-const ProductDetail: FC<ProductDetailProps> = (props) => {
+const ProductDetailMainVariant: FC<ProductDetailMainVariantProps> = (props) => {
     const t = useTypedTranslationFunction();
-    const scrollTarget = useRef<HTMLUListElement>(null);
 
     return (
         <>
@@ -43,19 +40,14 @@ const ProductDetail: FC<ProductDetailProps> = (props) => {
                         <ProductDetailCodeStyled>
                             {t('Code')}: {props.product.catalogNumber}
                         </ProductDetailCodeStyled>
-                        <ProductDetailAddToCart {...props} />
-                        <ProductDetailAvailability scrollTarget={scrollTarget} {...props} />
                     </ProductDetailInfoStyled>
                 </ProductDetailStyled>
             </Webline>
             <Webline>
-                <ProductDetailTabs description={props.product.description} parameters={props.product.parameters} />
+                <ProductVariantsTable variants={props.product.variants} />
             </Webline>
             <Webline>
-                <ProductDetailAvailabilityList
-                    ref={scrollTarget}
-                    storeAvailabilities={props.product.storeAvailabilities}
-                />
+                <ProductDetailTabs description={props.product.description} parameters={props.product.parameters} />
             </Webline>
             <Webline>
                 <ProductDetailAccessories accessories={props.product.accessories} />
@@ -65,4 +57,4 @@ const ProductDetail: FC<ProductDetailProps> = (props) => {
 };
 
 /* @component */
-export default ProductDetail;
+export default ProductDetailMainVariant;

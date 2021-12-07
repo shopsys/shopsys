@@ -1,12 +1,14 @@
 import {
     FlagLabelFragmentApi,
     ListedProductFragmentApi,
+    ListedVariantFragmentApi,
     ProductPriceFragmentApi,
     SliderProductFragmentApi,
     usePromotedProductsQueryApi,
 } from 'graphql/generated';
 import { FlagType, ProductPriceType, SliderProductItemType } from 'components/Blocks/Product/types';
-import { ListedProductType } from './types';
+import { ListedProductType, ListedVariantType } from './types';
+import { mapProductDetailImages, mapStoreAvailabilities } from './ProductDetail';
 import { mapImageApiData } from 'connectors/image/Image';
 import { useQueryError } from 'hooks/graphQl/UseQueryError';
 import { useShopsysSelector } from 'redux/main';
@@ -38,6 +40,19 @@ export const mapListedProductType = (apiData: ListedProductFragmentApi, currency
     };
 };
 
+export const mapListedVariantType = (apiData: ListedVariantFragmentApi, currencyCode: string): ListedVariantType => {
+    return {
+        ...apiData,
+        flags: mapFlagsApiData(apiData.flags),
+        slug: apiData.slug,
+        availability: apiData.availability.name,
+        name: apiData.name,
+        price: mapProductPriceApiData(apiData.price, currencyCode),
+        images: mapProductDetailImages(apiData.images),
+        catalogNumber: apiData.catalogNumber,
+        storeAvailabilities: mapStoreAvailabilities(apiData.storeAvailabilities),
+    };
+};
 export const getPromotedProducts = (): SliderProductItemType[] | undefined => {
     const { currencyCode } = useShopsysSelector((state) => state.domain);
     const [{ data, error }] = usePromotedProductsQueryApi();
