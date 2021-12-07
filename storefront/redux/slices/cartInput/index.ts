@@ -21,6 +21,9 @@ export const cartInputSlice = createSlice({
             state.payment = action.payload.payment;
             state.promoCode = action.payload.promoCode;
         },
+        setCartUuid(state, action: PayloadAction<string | null>) {
+            state.cartUuid = action.payload;
+        },
         setPromoCode(state, action: PayloadAction<string | null>) {
             state.promoCode = action.payload;
         },
