@@ -16,6 +16,9 @@ Cart:
             payment:
                 type: "Payment"
                 description: "Selected payment if payment provided"
+            selectedPickupPlaceIdentifier:
+                type: "String"
+                description: "Selected pickup place identifier if provided"
             promoCode:
                 type: "String"
                 description: "Applied promo code if provided"

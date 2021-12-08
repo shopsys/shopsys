@@ -150,6 +150,8 @@ class TransportAndPaymentWatcherFacade
             if ($transport !== null && !$transport->isPacketery()) {
                 $this->checkPersonalPickupStoreAvailability($transportInputData);
             }
+
+            $this->cartWithModificationsResult->setSelectedPickupPlaceIdentifier($transportInputData->getPickupPlaceIdentifier());
         }
 
         if ($paymentInputData) {

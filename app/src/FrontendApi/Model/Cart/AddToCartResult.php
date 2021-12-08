@@ -111,4 +111,12 @@ class AddToCartResult
     {
         return $this->cartWithModifications->getPromoCode();
     }
+
+    /**
+     * @return string|null
+     */
+    public function getSelectedPickupPlaceIdentifier(): ?string
+    {
+        return $this->cartWithModifications->getSelectedPickupPlaceIdentifier();
+    }
 }

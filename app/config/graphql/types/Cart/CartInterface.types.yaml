@@ -10,6 +10,8 @@ CartInterface:
                 type: "Transport"
             payment:
                 type: "Payment"
+            selectedPickupPlaceIdentifier:
+                type: "String"
             promoCode:
                 type: "String"
             modifications:
