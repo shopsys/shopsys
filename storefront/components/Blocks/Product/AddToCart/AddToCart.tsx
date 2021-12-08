@@ -17,7 +17,7 @@ type AddToCartProps = {
 const AddToCart: FC<AddToCartProps> = (props) => {
     const spinboxRef = useRef<HTMLInputElement | null>(null);
     const t = useTypedTranslationFunction();
-    const { cartUuid, transport, payment, promoCode } = useShopsysSelector((state) => state.cartInput);
+    const { cartUuid, transport, payment, promoCode } = useShopsysSelector((state) => state.cart.cartInput);
     const [changeCartItemQuantityResult, changeCartItemQuantity] = useAddToCart();
     const [popupData, setPopupData] = useHandleAddToCartMessage(changeCartItemQuantityResult, props.productUuid);
 

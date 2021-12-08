@@ -6,7 +6,6 @@ import { TransportInputType } from 'types/transport';
 
 export type CartInput = {
     cartUuid: string | null;
-    isCartEmpty: boolean;
     transport: TransportInputType | null;
     payment: PaymentInputType | null;
     promoCode: string | null;
@@ -35,7 +34,6 @@ export type CartItemType = {
 };
 
 export type CartType = {
-    uuid: string | null;
     items: CartItemType[];
     totalPrice: PriceType;
     totalDiscountPrice: PriceType;

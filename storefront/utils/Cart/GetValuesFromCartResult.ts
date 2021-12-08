@@ -12,7 +12,9 @@ export const getValuesFromCartResult = (
     resultData: CartFragmentApi,
     pickupPlaceIdentifier: string | null,
     currencyCode: string,
+    isUserLoggedIn: boolean,
 ): {
+    cartUuid: string | null;
     cart: CartType;
     transport: TransportType | null;
     pickupPlace: PickupPlaceType | null;
@@ -21,7 +23,6 @@ export const getValuesFromCartResult = (
 } => {
     const cart = mapCart(
         {
-            uuid: resultData.uuid,
             items: resultData.items,
             modifications: resultData.modifications,
             totalPrice: resultData.totalPrice,
@@ -30,6 +31,7 @@ export const getValuesFromCartResult = (
         },
         currencyCode,
     );
+    const cartUuid = isUserLoggedIn || resultData.uuid === undefined ? null : resultData.uuid;
     const transport =
         resultData.transport === null || resultData.transport === undefined
             ? null
@@ -42,6 +44,7 @@ export const getValuesFromCartResult = (
     const updatedPromoCode = resultData.promoCode === undefined ? null : resultData.promoCode;
 
     return {
+        cartUuid,
         cart,
         transport,
         pickupPlace,

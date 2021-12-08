@@ -1,6 +1,6 @@
 import { nextReduxCookieMiddleware, wrapMakeStore } from 'next-redux-cookie-wrapper';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
-import { cartInputSlice } from './slices/cartInput';
+import { cartSlice } from './slices/cart';
 import { configureStore } from '@reduxjs/toolkit';
 import { contactInformationSlice } from './slices/contactInformation';
 import { createWrapper } from 'next-redux-wrapper';
@@ -13,14 +13,15 @@ const makeStore = wrapMakeStore(() =>
         reducer: {
             domain: domainSlice.reducer,
             user: userSlice.reducer,
-            cartInput: cartInputSlice.reducer,
+            cart: cartSlice.reducer,
             contactInformation: contactInformationSlice.reducer,
             optionsFilter: optionsFilterSlice.reducer,
         },
         middleware: (getDefaultMiddleware) =>
             getDefaultMiddleware().prepend(
                 nextReduxCookieMiddleware({
-                    subtrees: ['cartInput', 'user', 'domain'],
+                    compress: false,
+                    subtrees: ['cart.cartInput', 'cart.isCartEmpty', 'user', 'domain'],
                 }),
             ),
     }),

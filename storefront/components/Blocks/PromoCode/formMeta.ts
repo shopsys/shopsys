@@ -8,7 +8,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 
 export const usePromoCodeForm = (): [UseFormReturn<PromoCodeFormType>, PromoCodeFormType] => {
     const t = useTypedTranslationFunction();
-    const { promoCode } = useShopsysSelector((state) => state.cartInput);
+    const { promoCode } = useShopsysSelector((state) => state.cart.cartInput);
 
     const resolver = yupResolver(
         Yup.object().shape({

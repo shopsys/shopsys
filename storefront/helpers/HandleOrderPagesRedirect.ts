@@ -6,10 +6,11 @@ import { useGetInternationalizedStaticUrls } from 'hooks/staticUrls/UseGetIntern
 export const handleOrderPagesRedirect = (
     context: GetServerSidePropsContext,
     cartInput: CartInput,
+    isCartEmpty: boolean,
 ): { redirect: Redirect } | false => {
     const domainConfig = getDomainConfig(context.req.headers.host);
 
-    if (cartInput.isCartEmpty && context.resolvedUrl !== '/cart') {
+    if (isCartEmpty && context.resolvedUrl !== '/cart') {
         const [cartUrl] = useGetInternationalizedStaticUrls(['/cart'], domainConfig.url);
 
         return {

@@ -30,7 +30,7 @@ const Item: FC<ItemProps> = (props) => {
     const timeoutRef = useRef<NodeJS.Timeout | null>(null);
     const spinboxRef = useRef<HTMLInputElement | null>(null);
     const t = useTypedTranslationFunction();
-    const { cartUuid, transport, payment, promoCode } = useShopsysSelector((state) => state.cartInput);
+    const { cartUuid, transport, payment, promoCode } = useShopsysSelector((state) => state.cart.cartInput);
     const [, changeCartItemQuantity] = useAddToCart();
 
     const onChangeValueHandler = () => {

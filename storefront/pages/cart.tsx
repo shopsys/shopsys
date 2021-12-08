@@ -14,7 +14,7 @@ import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslatio
 import Webline from 'components/Layout/Webline';
 
 const Cart: FC<ServerSidePropsType> = () => {
-    const { cart } = useShopsysSelector((state) => state.user);
+    const { cart } = useShopsysSelector((state) => state.cart);
     const domainUrl = useShopsysSelector((state) => state.domain.url);
     const [transportAndPaymentUrl] = useGetInternationalizedStaticUrls(['/order/transport-and-payment'], domainUrl);
     const t = useTypedTranslationFunction();

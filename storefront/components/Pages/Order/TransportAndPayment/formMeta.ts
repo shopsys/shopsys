@@ -11,8 +11,8 @@ export const useTransportAndPaymentForm = (): [
     TransportAndPaymentFormType,
 ] => {
     const t = useTypedTranslationFunction();
-    const { transport, payment } = useShopsysSelector((state) => state.cartInput);
-    const transportObject = useShopsysSelector((state) => state.user.transport);
+    const { transport, payment } = useShopsysSelector((state) => state.cart.cartInput);
+    const transportObject = useShopsysSelector((state) => state.cart.transport);
 
     const resolver = yupResolver(
         Yup.object().shape({

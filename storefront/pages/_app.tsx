@@ -1,6 +1,7 @@
 import 'react-toastify/dist/ReactToastify.css';
 import { AppProps } from 'next/app';
 import { appWithTranslation } from 'next-i18next';
+import CartRefresher from 'components/Helpers/CartRefresher';
 import { getDomainConfig } from 'utils/Domain/Domain';
 import { getUrqlExchanges } from 'urql/exchanges';
 import nextI18NextConfig from 'next-i18next.config';
@@ -9,16 +10,14 @@ import { PortalContainer } from 'components/Basic/Portal/Portal.style';
 import { ReactElement } from 'react';
 import ShopsysGlobalProvider from 'context/ShopsysGlobalProvider';
 import { ToastContainer } from 'react-toastify';
-import { useRefreshCartOnNavigation } from 'hooks/cart/UseRefreshCartOnNavigation';
 import { withUrqlClient } from 'next-urql';
 
 function MyApp({ Component, pageProps }: AppProps): ReactElement {
-    useRefreshCartOnNavigation();
-
     return (
         <ShopsysGlobalProvider>
             <PortalContainer id="portal" />
             <ToastContainer autoClose={6000} position="top-center" theme="colored" />
+            <CartRefresher />
             <Component {...pageProps} />
         </ShopsysGlobalProvider>
     );

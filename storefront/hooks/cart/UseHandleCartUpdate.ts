@@ -5,7 +5,8 @@ import { updateCartState } from 'utils/Cart/UpdateCartState';
 import { useEffect } from 'react';
 
 export const useHandleCartUpdate = (result: Maybe<CartFragmentApi> | undefined): void => {
-    const { transport } = useShopsysSelector((state) => state.cartInput);
+    const { isUserLoggedIn } = useShopsysSelector((state) => state.user);
+    const { transport } = useShopsysSelector((state) => state.cart.cartInput);
     const { currencyCode } = useShopsysSelector((state) => state.domain);
     const dispatch = useShopsysDispatch();
 
@@ -19,6 +20,7 @@ export const useHandleCartUpdate = (result: Maybe<CartFragmentApi> | undefined):
             result,
             transport?.pickupPlaceIdentifier === undefined ? null : transport.pickupPlaceIdentifier,
             currencyCode,
+            isUserLoggedIn,
         );
 
         updateCartState(dispatch, cartResultValues);

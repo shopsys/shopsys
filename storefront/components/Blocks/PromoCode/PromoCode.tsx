@@ -20,7 +20,10 @@ import { useShopsysSelector } from 'redux/main';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 
 const PromoCode: FC = () => {
-    const { cartUuid, isCartEmpty, payment, transport, promoCode } = useShopsysSelector((state) => state.cartInput);
+    const {
+        isCartEmpty,
+        cartInput: { cartUuid, payment, transport, promoCode },
+    } = useShopsysSelector((state) => state.cart);
     const [updatedPromoCode, updatePromoCode] = useState(promoCode);
     const [result] = useLoadCart(cartUuid, isCartEmpty, transport, payment, updatedPromoCode);
     const t = useTypedTranslationFunction();

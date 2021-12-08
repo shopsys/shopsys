@@ -25,7 +25,7 @@ import Webline from 'components/Layout/Webline';
 
 const TransportAndPayment: FC<ServerSidePropsType> = () => {
     const router = useRouter();
-    const { cartUuid } = useShopsysSelector((state) => state.cartInput);
+    const { cartUuid } = useShopsysSelector((state) => state.cart.cartInput);
     const domainUrl = useShopsysSelector((state) => state.domain.url);
     const [cartUrl, contactInformationUrl] = useGetInternationalizedStaticUrls(
         ['/cart', '/order/contact-information'],
@@ -75,7 +75,8 @@ const TransportAndPayment: FC<ServerSidePropsType> = () => {
 
 export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) => async (context) => {
     initDomainConfig(context, store);
-    const redirect = handleOrderPagesRedirect(context, store.getState().cartInput);
+    const cartState = store.getState().cart;
+    const redirect = handleOrderPagesRedirect(context, cartState.cartInput, cartState.isCartEmpty);
     return redirect === false ? initServerSideProps(context, store, [{ query: NavigationQueryDocumentApi }]) : redirect;
 });
 

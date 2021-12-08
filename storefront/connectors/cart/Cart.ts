@@ -50,7 +50,7 @@ export const mapPaymentToPaymentInput = (payment: PaymentType): PaymentInputType
 
 export const useLoadCart = (
     cartUuid: CartInput['cartUuid'],
-    isCartEmpty: CartInput['isCartEmpty'],
+    isCartEmpty: boolean,
     transport: CartInput['transport'],
     payment: CartInput['payment'],
     promoCode: CartInput['promoCode'],
@@ -91,8 +91,6 @@ export const useRemoveFromCart = (): UseMutationResponse<RemoveFromCartMutationA
 export const mapCart = (apiData: CartFragmentApi, currencyCode: string): CartType => {
     const remainingFreeTransport = apiData.remainingAmountWithVatForFreeTransport;
     return {
-        ...apiData,
-        uuid: apiData.uuid !== undefined ? apiData.uuid : null,
         items: apiData.items.map((item) => {
             return {
                 ...item,

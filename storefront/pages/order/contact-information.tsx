@@ -37,8 +37,8 @@ const ContactInformation: FC<ServerSidePropsType> = () => {
         ['/order/transport-and-payment', '/order-confirmation'],
         domainUrl,
     );
-    const { pickupPlace } = useShopsysSelector((state) => state.user);
-    const cartInput = useShopsysSelector((state) => state.cartInput);
+    const { pickupPlace } = useShopsysSelector((state) => state.cart);
+    const cartInput = useShopsysSelector((state) => state.cart.cartInput);
     const t = useTypedTranslationFunction();
     const [createOrderResult, createOrder] = useCreateOrderMutationApi();
     const [formProviderMethods, defaultValues] = useContactInformationForm();
@@ -146,7 +146,8 @@ const ContactInformation: FC<ServerSidePropsType> = () => {
 
 export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) => async (context) => {
     initDomainConfig(context, store);
-    const redirect = handleOrderPagesRedirect(context, store.getState().cartInput);
+    const cartState = store.getState().cart;
+    const redirect = handleOrderPagesRedirect(context, cartState.cartInput, cartState.isCartEmpty);
     return redirect === false ? initServerSideProps(context, store, [{ query: NavigationQueryDocumentApi }]) : redirect;
 });
 
