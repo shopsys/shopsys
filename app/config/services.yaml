@@ -35,21 +35,6 @@ services:
     App\Component\FileUpload\FileUpload:
         arguments: ['var/cache/%kernel.environment%', '%shopsys.uploaded_file_dir%', '%shopsys.image_dir%']
 
-    shopsys.framework.cache_driver.annotations_cache:
-        class: Doctrine\Common\Cache\ChainCache
-        arguments:
-            -
-                - '@shopsys.framework.cache_driver.annotations_cache.array_cache'
-                - '@shopsys.framework.cache_driver.annotations_cache.permanent_php_file_cache'
-
-    shopsys.framework.cache_driver.annotations_cache.array_cache:
-        class: Doctrine\Common\Cache\ArrayCache
-
-    shopsys.framework.cache_driver.annotations_cache.permanent_php_file_cache:
-        class: Doctrine\Common\Cache\PhpFileCache
-        arguments:
-            - '%kernel.cache_dir%/annotations'
-
     Shopsys\FrameworkBundle\Component\FileUpload\FileUpload:
         alias: App\Component\FileUpload\FileUpload
 
@@ -650,32 +635,6 @@ services:
     Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository:
         alias: App\Model\Product\Parameter\ParameterRepository
 
-    app.maintenance_cache_provider:
-        class: Doctrine\Common\Cache\RedisCache
-        factory: 'Shopsys\FrameworkBundle\Component\Doctrine\Cache\FallbackCacheFactory:create'
-        arguments:
-            - '@snc_redis.global'
-
-    App\Component\Maintenance\MaintenanceModeSubscriber:
-        arguments:
-            - '@app.maintenance_cache_provider'
-        tags:
-            - { name: kernel.event_subscriber }
-
-    App\Command\MaintenanceModeCommand:
-        arguments:
-            - '@app.maintenance_cache_provider'
-
-    App\Component\FileSystem\FileSystemFactoryDecorator:
-        decorates: Shopsys\FrameworkBundle\Component\Filesystem\MainFilesystemFactory
-        decoration_inner_name: 'App\Component\FileSystem\FilesystemFactoryDecorator.inner'
-        arguments:
-            $inner: '@App\Component\FileSystem\FilesystemFactoryDecorator.inner'
-            $s3ApiHost: '%env(S3_API_HOST)%'
-            $s3ApiUsername: '%env(S3_API_USERNAME)%'
-            $s3ApiPassword: '%env(S3_API_PASSWORD)%'
-            $s3ApiBucketName: '%env(S3_API_BUCKET_NAME)%'
-
     App\Model\Svg\SvgProvider:
         arguments:
             $svgDirectoryPath: "%svg_icon_path%"
@@ -785,13 +744,6 @@ services:
         tags:
             - { name: shopsys.product_feed }
 
-    App\Component\Error\ErrorPagesFacade:
-        arguments:
-            - '/var/errorPages/'
-
-    Shopsys\FrameworkBundle\Component\Error\ErrorPagesFacade:
-        alias: App\Component\Error\ErrorPagesFacade
-
     Shopsys\FrameworkBundle\Component\Error\LogoutExceptionSubscriber:
         lazy: true
 
@@ -799,14 +751,6 @@ services:
         alias: fos_ck_editor.configuration
 
     App\Component\SeoHelper\SeoHelper: ~
-
-    App\Command\CleanOpcacheCommand: ~
-
-    App\Command\CronLockCommand: ~
-
-    App\Command\CronWatcherCommand: ~
-
-    App\Component\Cron\CronLockEventListener: ~
 
     App\Model\Gtm\GtmContainer:
         arguments:

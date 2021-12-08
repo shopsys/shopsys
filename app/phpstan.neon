@@ -23,10 +23,6 @@ parameters:
             message: '#^PHPDoc tag @throws with type .+ is not subtype of Throwable$#'
             path: %currentWorkingDirectory%/tests/App/Test/Codeception/_generated/AcceptanceTesterActions.php
         -
-            # Ignore CronLockCommand
-            message: '#^Unreachable statement - code above always terminates.$#'
-            path: %currentWorkingDirectory%/src/Command/CronLockCommand.php
-        -
             message: '#^Method Symfony\\Contracts\\EventDispatcher\\EventDispatcherInterface::dispatch\(\) invoked with 2 parameters, 1 required\.$#'
             path: %currentWorkingDirectory%/src/*
         -
@@ -46,10 +42,6 @@ parameters:
             # Annotations in Codeception are not well describing
             message: '#^Parameter \#(\d+) (\$cssOrXPath|\$cssOrXPathOrRegex|\$field|\$selector|\$element) of method (Tests\\(.*)\\Codeception\\(.*)|Codeception\\Module\\WebDriver::moveMouseOver\(\)) expects (.*)#'
             path: %currentWorkingDirectory%/tests/App/*
-        -
-            # CacheTool uses magic method __call()
-            message: '#^Call to an undefined method CacheTool\\CacheTool::opcache_reset\(\)#'
-            path: %currentWorkingDirectory%/src/Command/CleanOpcacheCommand.php
         -
             message: '#^Unreachable statement - code above always terminates\.#'
             path: %currentWorkingDirectory%/tests/App/Functional/Model/Order/OrderFacade*Test.php
