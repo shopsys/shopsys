@@ -10,7 +10,6 @@ import { TransportType } from 'types/transport';
 
 export const getValuesFromCartResult = (
     resultData: CartFragmentApi,
-    pickupPlaceIdentifier: string | null,
     currencyCode: string,
     isUserLoggedIn: boolean,
 ): {
@@ -36,7 +35,7 @@ export const getValuesFromCartResult = (
         resultData.transport === null || resultData.transport === undefined
             ? null
             : mapTransport(resultData.transport, currencyCode);
-    const pickupPlace = getSelectedPickupPlace(transport, pickupPlaceIdentifier);
+    const pickupPlace = getSelectedPickupPlace(transport, resultData.selectedPickupPlaceIdentifier);
     const payment =
         resultData.payment === null || resultData.payment === undefined || transport === null
             ? null

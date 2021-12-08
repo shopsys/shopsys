@@ -4,7 +4,6 @@ import { ListItemStyled, PaymentListWrapper, ResetButtonStyled } from './Select.
 import { mapPacketeryExtendedPoint, packeteryPick, removePacketeryCookie, setPacketeryCookie } from 'helpers/packetery';
 import { mapPaymentToPaymentInput, mapTransportToTransportInput, useLoadCart } from 'connectors/cart/Cart';
 import { TransportInputType, TransportType } from 'types/transport';
-import { getSelectedPickupPlace } from 'connectors/transports/pickupPlace/PickupPlace';
 import Heading from 'components/Basic/Heading';
 import Icon from 'components/Basic/Icon';
 import PacketeryContainer from 'components/Pages/Order/TransportAndPayment/PacketeryContainer';
@@ -193,12 +192,9 @@ const Select: FC<SelectProps> = (props) => {
                                                     daysUntilDelivery={transportItem.daysUntilDelivery}
                                                     price={transportItem.price}
                                                     description={transportItem.description}
-                                                    pickupPlaceDetail={getSelectedPickupPlace(
-                                                        transportItem,
-                                                        updatedPickupPlace?.identifier === undefined
-                                                            ? null
-                                                            : updatedPickupPlace.identifier,
-                                                    )}
+                                                    pickupPlaceDetail={
+                                                        transportValue === transportItem.uuid ? pickupPlace : null
+                                                    }
                                                 />
                                             }
                                         />
@@ -222,7 +218,7 @@ const Select: FC<SelectProps> = (props) => {
                         />
                     )}
                 </div>
-                {transport !== null && !isPreSelectingTransport && (
+                {transport !== null && transportValue !== null && !isPreSelectingTransport && (
                     <PaymentListWrapper>
                         <Heading type="h3">{formMeta.fields.payment.label}</Heading>
                         <Controller

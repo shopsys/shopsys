@@ -6,7 +6,6 @@ import { useEffect } from 'react';
 
 export const useHandleCartUpdate = (result: Maybe<CartFragmentApi> | undefined): void => {
     const { isUserLoggedIn } = useShopsysSelector((state) => state.user);
-    const { transport } = useShopsysSelector((state) => state.cart.cartInput);
     const { currencyCode } = useShopsysSelector((state) => state.domain);
     const dispatch = useShopsysDispatch();
 
@@ -16,13 +15,7 @@ export const useHandleCartUpdate = (result: Maybe<CartFragmentApi> | undefined):
         }
 
         // TODO handle modifications
-        const cartResultValues = getValuesFromCartResult(
-            result,
-            transport?.pickupPlaceIdentifier === undefined ? null : transport.pickupPlaceIdentifier,
-            currencyCode,
-            isUserLoggedIn,
-        );
-
+        const cartResultValues = getValuesFromCartResult(result, currencyCode, isUserLoggedIn);
         updateCartState(dispatch, cartResultValues);
     }, [result]);
 };
