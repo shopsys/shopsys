@@ -34,14 +34,12 @@ const Select: FC<SelectProps> = (props) => {
         control: formProviderMethods.control,
     });
 
-    const transportInput = useShopsysSelector((state) => state.cart.cartInput.transport);
-    const paymentInput = useShopsysSelector((state) => state.cart.cartInput.payment);
     const {
         payment,
         transport,
         pickupPlace,
         isCartEmpty,
-        cartInput: { cartUuid, promoCode },
+        cartInput: { cartUuid, promoCode, transport: transportInput, payment: paymentInput },
     } = useShopsysSelector((state) => state.cart);
 
     const [isPreSelectingTransport, setIsPreSelectingTransport] = useState(false);

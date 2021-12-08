@@ -37,8 +37,7 @@ const ContactInformation: FC<ServerSidePropsType> = () => {
         ['/order/transport-and-payment', '/order-confirmation'],
         domainUrl,
     );
-    const { pickupPlace } = useShopsysSelector((state) => state.cart);
-    const cartInput = useShopsysSelector((state) => state.cart.cartInput);
+    const { pickupPlace, cartInput } = useShopsysSelector((state) => state.cart);
     const t = useTypedTranslationFunction();
     const [createOrderResult, createOrder] = useCreateOrderMutationApi();
     const [formProviderMethods, defaultValues] = useContactInformationForm();

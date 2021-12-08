@@ -11,8 +11,10 @@ export const useTransportAndPaymentForm = (): [
     TransportAndPaymentFormType,
 ] => {
     const t = useTypedTranslationFunction();
-    const { transport, payment } = useShopsysSelector((state) => state.cart.cartInput);
-    const transportObject = useShopsysSelector((state) => state.cart.transport);
+    const {
+        transport,
+        cartInput: { transport: transportInput, payment: paymentInput },
+    } = useShopsysSelector((state) => state.cart);
 
     const resolver = yupResolver(
         Yup.object().shape({
@@ -22,14 +24,14 @@ export const useTransportAndPaymentForm = (): [
                     'is-transport-correctly-selected',
                     t('Please select transport with a personal pickup place'),
                     () =>
-                        transportObject?.isPersonalPickup === true ? transport?.pickupPlaceIdentifier !== null : true,
+                        transport?.isPersonalPickup === true ? transportInput?.pickupPlaceIdentifier !== null : true,
                 ),
             payment: Yup.string().required(t('Please select payment')),
         }),
     );
     const defaultValues = {
-        transport: transport === null ? null : transport.uuid,
-        payment: payment === null ? null : payment.uuid,
+        transport: transportInput === null ? null : transportInput.uuid,
+        payment: paymentInput === null ? null : paymentInput.uuid,
     };
 
     return [useShopsysForm(resolver, defaultValues), defaultValues];
