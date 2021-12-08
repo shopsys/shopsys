@@ -199,9 +199,9 @@ repository:clean:
     rules:
         -   if: '$CI_PIPELINE_SOURCE == "schedule"'
     before_script:
-        - chmod +x .gitlab/scripts/repository-clean.sh
+        - chmod +x ./gitlab/scripts/repository-clean.sh
     script:
-        - .gitlab/scripts/repository-clean.sh
+        - ./gitlab/scripts/repository-clean.sh
 
 security:check:
     stage: service
