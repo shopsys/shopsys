@@ -1,15 +1,15 @@
 import { FC, useEffect } from 'react';
+import { initServerSideProps, ServerSidePropsType } from 'helpers/InitServerSideProps';
+import { nextReduxWrapper, useShopsysSelector } from 'redux/main';
 import CommonLayout from 'components/Layout/CommonLayout';
+import { initDomainConfig } from 'helpers/InitDomainConfig';
+import { NavigationQueryDocumentApi } from 'graphql/generated';
 import OrderConfirmation from 'components/Pages/OrderConfirmation';
 import Registration from 'components/Pages/OrderConfirmation/Registration';
 import router from 'next/router';
-import { ServerSidePropsType } from 'helpers/InitServerSideProps';
 import { useGetInternationalizedStaticUrls } from 'hooks/staticUrls/UseGetInternationalizedStaticUrls';
-import { useInitDomainConfigOnClient } from 'helpers/InitDomainConfig';
-import { useShopsysSelector } from 'redux/main';
 
 const Index: FC<ServerSidePropsType> = () => {
-    useInitDomainConfigOnClient();
     const { canAccessOrderConfirmation } = useShopsysSelector((state) => state.user);
     const domainUrl = useShopsysSelector((state) => state.domain.url);
     const [cartUrl] = useGetInternationalizedStaticUrls(['/cart'], domainUrl);
@@ -30,5 +30,10 @@ const Index: FC<ServerSidePropsType> = () => {
 
     return null;
 };
+
+export const getServerSideProps = nextReduxWrapper.getServerSideProps((store) => async (context) => {
+    initDomainConfig(context, store);
+    return initServerSideProps(context, store, [{ query: NavigationQueryDocumentApi }]);
+});
 
 export default Index;
