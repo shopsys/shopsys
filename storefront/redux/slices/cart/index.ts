@@ -19,7 +19,7 @@ export const initialState = {
     transport: null,
     payment: null,
     pickupPlace: null,
-    isCartEmpty: true,
+    isCartEmpty: false,
     cartInput: {
         cartUuid: null,
         transport: null,
