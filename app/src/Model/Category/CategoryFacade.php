@@ -370,4 +370,14 @@ class CategoryFacade extends BaseCategoryFacade
 
         return $sortedCategories;
     }
+
+    /**
+     * @param \App\Model\Category\Category $category
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
+     * @return \App\Model\Category\Category[]
+     */
+    public function getAllVisibleChildrenByCategoryAndDomainConfig(Category $category, DomainConfig $domainConfig): array
+    {
+        return $this->categoryRepository->getAllVisibleChildrenByCategoryAndDomainConfig($category, $domainConfig);
+    }
 }

@@ -117,3 +117,7 @@ services:
     Shopsys\FrontendApiBundle\Model\Resolver\Brand\BrandsResolver:
         alias: App\FrontendApi\Model\Resolver\Brand\BrandsResolver
         public: true
+
+    Shopsys\FrontendApiBundle\Model\Resolver\Category\CategoriesResolver:
+        alias: App\FrontendApi\Model\Resolver\Category\CategoriesResolver
+        public: true

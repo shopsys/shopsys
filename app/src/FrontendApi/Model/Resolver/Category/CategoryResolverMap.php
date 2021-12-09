@@ -127,7 +127,7 @@ class CategoryResolverMap extends BaseCategoryResolverMap
             case 'name':
                 return $category->getName($this->domain->getLocale()) ?? '';
             case 'children':
-                return $this->categoryFacade->getAllVisibleChildrenByCategoryAndDomainId($category, $this->domain->getId());
+                return $this->categoryFacade->getAllVisibleChildrenByCategoryAndDomainConfig($category, $this->domain->getCurrentDomainConfig());
             case 'parent':
                 $parent = $category->getParent();
 
