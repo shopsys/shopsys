@@ -49,7 +49,7 @@ const List: FC<ListProps> = (props) => {
                             <ListItemContentTextStyled>{blogArticle.perex}</ListItemContentTextStyled>
                         )}
                         <ListItemContentDateStyled>
-                            {new Date(blogArticle.createdAt).toLocaleDateString(currentDomainConfig.defaultLocale)}
+                            {new Date(blogArticle.publishDate).toLocaleDateString(currentDomainConfig.defaultLocale)}
                         </ListItemContentDateStyled>
                     </ListItemContentStyled>
                 </ListItemStyled>

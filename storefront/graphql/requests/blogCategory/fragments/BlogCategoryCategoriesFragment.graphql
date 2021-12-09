@@ -1,0 +1,10 @@
+fragment BlogCategoryCategoriesFragment on BlogArticle {
+    blogCategories {
+        uuid
+        name
+        link
+        parent {
+            name
+        }
+    }
+}

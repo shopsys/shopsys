@@ -1,71 +1,40 @@
-import { BlogArticleItemApiData, BlogArticleType, BlogCategoryApiData, BlogCategoryType } from './types';
+import { BlogArticlesType, BlogCategoryType } from './types';
+import { BlogCategoryDetailFragmentApi } from 'graphql/generated';
+import { mapImageApiData } from 'connectors/image/Image';
+import { mapPageInfoApiData } from 'connectors/pageInfo/PageInfo';
 
-export function blogCategoryBody(blogPaginationEndCursor: string): string {
-    return `
-    uuid
-    blogCategoryName: name
-    blogArticles(after:"${blogPaginationEndCursor}") {
-        totalCount
-        pageInfo {
-            startCursor
-            endCursor
-            hasNextPage
-            hasPreviousPage
-        }
-        edges {
-            node {
-                uuid
-                name
-                createdAt
-                perex
-                link
-                image(sizes: "list") {
-                    sizes {
-                        size
-                        url
-                        width
-                        height
-                    }
-                }
-                blogCategories {
-                    uuid
-                    name
-                    link
-                    parent {
-                        name
-                    }
-                }
+export function mapBlogCategoryData(apiBlogCategoryData: BlogCategoryDetailFragmentApi): BlogCategoryType {
+    const blogArticles: BlogArticlesType = {
+        ...apiBlogCategoryData.blogArticles,
+        totalCount:
+            apiBlogCategoryData.blogArticles?.totalCount !== undefined
+                ? apiBlogCategoryData.blogArticles.totalCount
+                : 0,
+        pageInfo: mapPageInfoApiData(apiBlogCategoryData.blogArticles?.pageInfo),
+        edges: [],
+    };
+
+    if (apiBlogCategoryData?.blogArticles?.edges !== undefined && apiBlogCategoryData.blogArticles.edges !== null) {
+        for (const edge of apiBlogCategoryData.blogArticles.edges) {
+            if (edge?.node === undefined || edge.node === null) {
+                continue;
             }
+            blogArticles.edges.push({
+                ...edge.node,
+                perex: edge.node.perex !== null && edge.node.perex !== undefined ? edge.node.perex : undefined,
+                image: mapImageApiData([edge.node.image]),
+                blogCategories: edge.node.blogCategories.map((blogCategory) => ({
+                    ...blogCategory,
+                    parent:
+                        blogCategory.parent !== null && blogCategory.parent !== undefined ? blogCategory.parent : null,
+                })),
+            });
         }
     }
-    breadcrumb {
-        name
-        slug
-    }
-    `;
-}
 
-function mapBlogCategoryArticles(blogArticles: BlogArticleItemApiData[]): BlogArticleType[] {
-    const mappedBlogCategoryArticles = [];
-    for (const blogArticle of blogArticles) {
-        mappedBlogCategoryArticles.push({
-            ...blogArticle.node,
-            image: blogArticle.node.image !== null ? blogArticle.node.image.sizes[0] : null,
-        });
-    }
-
-    return mappedBlogCategoryArticles;
-}
-
-export function mapBlogCategoryData(apiBlogCategoryData: BlogCategoryApiData): BlogCategoryType {
     return {
         ...apiBlogCategoryData,
-        blogArticles: {
-            totalCount: apiBlogCategoryData.blogArticles.totalCount,
-            pageInfo: {
-                ...apiBlogCategoryData.blogArticles.pageInfo,
-            },
-            edges: mapBlogCategoryArticles(apiBlogCategoryData.blogArticles.edges),
-        },
+        __typename: 'BlogCategory',
+        blogArticles: blogArticles,
     };
 }

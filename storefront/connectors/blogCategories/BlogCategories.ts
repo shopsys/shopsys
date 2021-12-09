@@ -1,34 +1,20 @@
-import { useFetchQuery } from 'hooks/graphQl/UseFetchQuery';
+import { useBlogCategoriesApi } from 'graphql/generated';
+import { useQueryError } from 'hooks/graphQl/UseQueryError';
 
-export const blogCategoriesQuery = `
-    query blogCategories {    
-        blogCategories {
-            uuid
-            name
-            link
-            children {
-                uuid
-                name
-                link
-            }
-        }
-    }
-`;
+export const getBlogCategoriesItems = (): BlogCategoryItem[] | undefined => {
+    const [{ data, error }] = useBlogCategoriesApi();
+    useQueryError(error);
 
-type BlogCategoriesChildrenType = {
+    return data?.blogCategories;
+};
+
+export type BlogCategoryItem = {
     uuid: string;
     name: string;
     link: string;
+    children: {
+        uuid: string;
+        name: string;
+        link: string;
+    }[];
 };
-
-export type BlogCategoriesType = {
-    uuid: string;
-    name: string;
-    link: string;
-    children: BlogCategoriesChildrenType[];
-};
-
-export function getBlogCategoriesItems(): BlogCategoriesType[] {
-    const result = useFetchQuery({ query: blogCategoriesQuery });
-    return result?.data?.blogCategories;
-}

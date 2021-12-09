@@ -17,7 +17,7 @@ const BlogCategory: FC<BlogCategoryProps> = (props) => {
 
     return (
         <Webline>
-            <Heading type="h1">{props.blogCategory.blogCategoryName}</Heading>
+            <Heading type="h1">{props.blogCategory.name}</Heading>
             <BlogCategoryStyled>
                 <BlogCategoryListStyled>
                     <List blogArticles={props.blogCategory.blogArticles} />

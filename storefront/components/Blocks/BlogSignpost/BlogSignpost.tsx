@@ -5,11 +5,11 @@ import {
     BlogSignpostStyled,
 } from './BlogSignpost.style';
 import { FC, Fragment } from 'react';
-import { BlogCategoriesType } from 'connectors/blogCategories/BlogCategories';
+import { BlogCategoryItem } from 'connectors/blogCategories/BlogCategories';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 
 type BlogSingpostProps = {
-    blogCategoriesItems: BlogCategoriesType[];
+    blogCategoriesItems?: BlogCategoryItem[];
     activeItem: string;
 };
 
@@ -19,32 +19,37 @@ const BlogSignpost: FC<BlogSingpostProps> = (props) => {
     return (
         <BlogSignpostStyled>
             <BlogSignpostHeadingStyled type="h2">{t('Article categories')}</BlogSignpostHeadingStyled>
-            {props.blogCategoriesItems.map((blogCategorie) => (
-                <Fragment key={blogCategorie.uuid}>
-                    <BlogSignpostItemStyled
-                        href={blogCategorie.link}
-                        isActive={props.activeItem === blogCategorie.uuid}
-                    >
-                        <BlogSignpostItemIconStyled icon="Arrow" isActive={props.activeItem === blogCategorie.uuid} />
-                        {blogCategorie.name}
-                    </BlogSignpostItemStyled>
-                    {blogCategorie.children.map((blogCategorieChild) => (
-                        <Fragment key={blogCategorieChild.uuid}>
+            {props.blogCategoriesItems !== undefined &&
+                props.blogCategoriesItems.map((blogCategory) => (
+                    <Fragment key={blogCategory.uuid}>
+                        <BlogSignpostItemStyled
+                            href={blogCategory.link}
+                            isActive={props.activeItem === blogCategory.uuid}
+                        >
+                            <BlogSignpostItemIconStyled
+                                iconType="icon"
+                                icon="Arrow"
+                                isActive={props.activeItem === blogCategory.uuid}
+                            />
+                            {blogCategory.name}
+                        </BlogSignpostItemStyled>
+                        {blogCategory.children.map((blogCategoryChild) => (
                             <BlogSignpostItemStyled
-                                href={blogCategorieChild.link}
-                                isActive={props.activeItem === blogCategorieChild.uuid}
+                                key={blogCategoryChild.uuid}
+                                href={blogCategoryChild.link}
+                                isActive={props.activeItem === blogCategoryChild.uuid}
                                 isChild={true}
                             >
                                 <BlogSignpostItemIconStyled
+                                    iconType="icon"
                                     icon="Arrow"
-                                    isActive={props.activeItem === blogCategorieChild.uuid}
+                                    isActive={props.activeItem === blogCategoryChild.uuid}
                                 />
-                                {blogCategorieChild.name}
+                                {blogCategoryChild.name}
                             </BlogSignpostItemStyled>
-                        </Fragment>
-                    ))}
-                </Fragment>
-            ))}
+                        ))}
+                    </Fragment>
+                ))}
         </BlogSignpostStyled>
     );
 };

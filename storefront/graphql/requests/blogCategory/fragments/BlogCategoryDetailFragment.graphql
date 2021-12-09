@@ -1,0 +1,22 @@
+fragment BlogCategoryDetailFragment on BlogCategory {
+    uuid
+    name
+    blogArticles(after: $endCursorForPagination, first: $pageSize) {
+        totalCount
+        pageInfo {
+            ...PageInfoFragment
+        }
+        edges {
+            node {
+                uuid
+                name
+                publishDate
+                perex
+                link
+                ...BlogCategoryImageListFragment
+                ...BlogCategoryCategoriesFragment
+            }
+        }
+    }
+    ...BreadcrumbFragment
+}

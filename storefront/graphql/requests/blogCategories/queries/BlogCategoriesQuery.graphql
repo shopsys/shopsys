@@ -1,0 +1,12 @@
+query BlogCategories {
+    blogCategories {
+        uuid
+        name
+        link
+        children {
+            uuid
+            name
+            link
+        }
+    }
+}
