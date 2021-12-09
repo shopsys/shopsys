@@ -1,3 +1,4 @@
+import { FilterOptionsType } from 'components/Blocks/Product/Filter/types';
 import { ImageType } from 'components/Basic/Image/types';
 
 export type FlagType = {
@@ -54,6 +55,7 @@ export type ListedProductEdgesType = {
     edges: {
         node: ListedProductItemType;
     }[];
+    productFilterOptions: FilterOptionsType | null;
     totalCount: number;
     pageInfo: PageInfoType;
 };

@@ -198,5 +198,15 @@
     "Great choice! We have added your item to the cart": "Skvělá volba! Vaše zboží jsme přidali do košíku",
     "Name": "Název",
     "Availability": "Dostupnost",
-    "Price with VAT": "Cena s DPH"
+    "Price with VAT": "Cena s DPH",
+    "Price": "Cena",
+    "Flags": "Příznaky",
+    "Selected filters": "Vybrané filtry",
+    "Clear all": "Zrušit vše",
+    "Only goods in stock": "Jen zboží skladem",
+    "from": "od",
+    "to": "do",
+    "No results match the filter": "Filtru neodpovídají žádné výsledky",
+    "In stock": "Skladem",
+    "ProductsNoResults": "Pro vaše přesné vyhledávání momentálně nemáme žádné výsledky. <1/> Zkuste být více specifičtí, nebo se podívejte, jestli jste nevyfiltrovali neexistující údaje."
 }

@@ -17,6 +17,7 @@ export const IconsSvgMap = {
     Triangle: <Icons.Triangle />,
     Sort: <Icons.Sort />,
     RemoveBold: <Icons.RemoveBold />,
+    RemoveThin: <Icons.RemoveThin />,
     Plus: <Icons.Plus />,
     Filter: <Icons.Filter />,
     Phone: <Icons.Phone />,

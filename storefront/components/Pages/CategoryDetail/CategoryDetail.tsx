@@ -1,4 +1,5 @@
 import {
+    CategoryDetailContentMessageStyled,
     CategoryDetailContentStyled,
     CategoryDetailPanelIconStyled,
     CategoryDetailPanelOpenerStyled,
@@ -6,15 +7,17 @@ import {
     CategoryDetailStyled,
     SubcategoriesSimpleNavigationStyled,
 } from './CategoryDetail.style';
-import { FC, useRef, useState } from 'react';
+import { FC, useEffect, useRef, useState } from 'react';
 import CategoryDetailAdvancedSeoCategories from './CategoryDetailAdvancedSeoCategories';
 import { CategoryDetailType } from './types';
+import { FilterOptionsType } from 'components/Blocks/Product/Filter/types';
 import Heading from 'components/Basic/Heading';
 import Overlay from 'components/Basic/Overlay';
 import Pagination from 'components/Blocks/Pagination/Pagination';
 import ProductFilter from 'components/Blocks/Product/Filter';
 import ProductsList from 'components/Blocks/Product/List/ProductsList';
 import SortingBar from 'components/Blocks/SortingBar';
+import { Trans } from 'react-i18next';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import Webline from 'components/Layout/Webline';
 
@@ -27,6 +30,10 @@ const CategoryDetail: FC<CategoryDetailProps> = (props) => {
     const [isPanelOpen, setIsPanelOpen] = useState(false);
     const panelWrapRef = useRef<null | HTMLDivElement>(null);
     const buttonRef = useRef<null | HTMLDivElement>(null);
+    const [productFilterOptionsData, setProductFilterOptionsData] = useState<FilterOptionsType>(
+        props.category.products.productFilterOptions as FilterOptionsType,
+    );
+    const [categorySlug, setCategorySlug] = useState(props.category.slug);
 
     const handlePanelOpenerClick = () => {
         setIsPanelOpen(!isPanelOpen);
@@ -43,11 +50,18 @@ const CategoryDetail: FC<CategoryDetailProps> = (props) => {
         }
     };
 
+    useEffect(() => {
+        if (props.category.products.productFilterOptions !== null) {
+            setProductFilterOptionsData(props.category.products.productFilterOptions);
+            setCategorySlug(props.category.slug);
+        }
+    }, [props.category.products.productFilterOptions]);
+
     return (
         <Webline>
             <CategoryDetailStyled>
                 <CategoryDetailPanelStyled isOpen={isPanelOpen} ref={panelWrapRef}>
-                    <ProductFilter />
+                    <ProductFilter productFilterOptions={productFilterOptionsData} slug={categorySlug} />
                     <Overlay isHiddenOnDesktop={true} onClick={handlePanelOpenerClick} />
                 </CategoryDetailPanelStyled>
                 <CategoryDetailContentStyled>
@@ -69,8 +83,21 @@ const CategoryDetail: FC<CategoryDetailProps> = (props) => {
                         {t('Filtrovat')}
                     </CategoryDetailPanelOpenerStyled>
                     <SortingBar totalCount={props.category.products.totalCount} />
-                    {props.category.products.edges.length !== 0 && (
+                    {props.category.products.edges.length !== 0 ? (
                         <ProductsList products={props.category.products.edges.map((edge) => edge.node)} />
+                    ) : (
+                        <CategoryDetailContentMessageStyled>
+                            <div>
+                                <strong>{t('No results match the filter')}</strong>
+                            </div>
+                            <div>
+                                <Trans i18nKey="ProductsNoResults">
+                                    We currently have no results for your exact search.
+                                    <br />
+                                    Try to be more specific, or see if you have filtered out non-existent data.
+                                </Trans>
+                            </div>
+                        </CategoryDetailContentMessageStyled>
                     )}
                     <Pagination totalCount={props.category.products.totalCount} />
                 </CategoryDetailContentStyled>

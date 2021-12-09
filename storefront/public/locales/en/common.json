@@ -197,6 +197,16 @@
     "Back to shop": "Back to shop",
     "Great choice! We have added your item to the cart": "Great choice! We have added your item to the cart",
     "Name": "Name",
+    "Price with VAT": "Price with VAT",
+    "Price": "Price",
     "Availability": "Availability",
-    "Price with VAT": "Price with VAT"
+    "Flags": "Flags",
+    "Selected filters": "Selected filters",
+    "Clear all": "Cancel all",
+    "Only goods in stock": "Only goods in stock",
+    "from": "from",
+    "to": "to",
+    "No results match the filter": "No results match the filter",
+    "In stock": "In stock",
+    "ProductsNoResults": "We currently have no results for your exact search. <1/> Try to be more specific, or see if you have filtered out non-existent data."
 }

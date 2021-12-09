@@ -48,6 +48,7 @@ export const TextInputStyled = styled.input<TextInputStyledProps>`
 
         // iOS ugly appearance fix
         -webkit-appearance: none !important;
+        -moz-appearance: textfield !important;
 
         &::placeholder {
             ${placeholderType === 'static'

@@ -3,21 +3,26 @@ import Icon from 'components/Basic/Icon';
 import { styled } from 'components/Theme/main';
 
 const localVariables = {
-    productFilterGroupBorderWidth: '1px',
+    filterGroupBorderWidth: '1px',
 } as const;
 
-type ProductFilterGroupProps = {
+type FilterGroupProps = {
     isOpen?: boolean;
 };
 
-export const ProductFilterGroupStyled = styled.div`
+type FilterGroupContentItemStyledProps = {
+    isDisabled: boolean;
+    isActive: boolean;
+};
+
+export const FilterGroupStyled = styled.div`
     ${({ theme }) => css`
-        margin-bottom: -${localVariables.productFilterGroupBorderWidth};
-        border-bottom: ${localVariables.productFilterGroupBorderWidth} solid ${theme.color.border};
+        margin-bottom: -${localVariables.filterGroupBorderWidth};
+        border-bottom: ${localVariables.filterGroupBorderWidth} solid ${theme.color.border};
     `}
 `;
 
-export const ProductFilterGroupTitleStyled = styled.div`
+export const FilterGroupTitleStyled = styled.div`
     ${({ theme }) => css`
         display: block;
         position: relative;
@@ -32,7 +37,7 @@ export const ProductFilterGroupTitleStyled = styled.div`
     `}
 `;
 
-export const ProductFilterGroupContentStyled = styled.div<ProductFilterGroupProps>`
+export const FilterGroupContentStyled = styled.div<FilterGroupProps>`
     ${({ isOpen }) => css`
         flex-wrap: wrap;
         flex-direction: column;
@@ -48,19 +53,31 @@ export const ProductFilterGroupContentStyled = styled.div<ProductFilterGroupProp
     `}
 `;
 
-export const ProductFilterItemCheckboxStyled = styled.div`
+export const FilterGroupContentItemStyled = styled.div<FilterGroupContentItemStyledProps>`
+    ${({ isDisabled, isActive }) => css`
+        margin-bottom: 10px;
+        ${isDisabled &&
+        !isActive &&
+        css`
+            opacity: 0.3;
+            pointer-events: none;
+        `}
+    `}
+`;
+
+export const FilterItemCheckboxStyled = styled.div`
     position: relative;
     display: inline-block;
     width: 100%;
 `;
 
-export const ProductFilterGroupColorStyled = styled.div`
+export const FilterGroupColorStyled = styled.div`
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
 `;
 
-export const ProductFilterGroupArrowStyled = styled(Icon)<ProductFilterGroupProps>`
+export const FilterGroupArrowStyled = styled(Icon)<FilterGroupProps>`
     ${({ theme, isOpen }) => css`
         position: absolute;
         right: 0;
@@ -81,8 +98,4 @@ export const ProductFilterGroupArrowStyled = styled(Icon)<ProductFilterGroupProp
                   transition: ${theme.transition};
               `};
     `}
-`;
-
-export const ProductFilterGroupCheckboxStyled = styled.div`
-    margin-bottom: 10px;
 `;

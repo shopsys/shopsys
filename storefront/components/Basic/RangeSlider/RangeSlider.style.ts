@@ -34,6 +34,8 @@ const getThumbStyle = () => {
             pointer-events: all;
             height: ${localVariables.RangeSliderThumbSize};
             width: ${localVariables.RangeSliderThumbSize};
+            z-index: 3;
+            margin: -6px 0;
 
             border: ${localVariables.RangeSliderThumbBorder};
             border-radius: ${localVariables.RangeSliderThumbBorderRadius};
@@ -47,6 +49,8 @@ const getThumbStyle = () => {
             pointer-events: all;
             height: ${localVariables.RangeSliderThumbSize};
             width: ${localVariables.RangeSliderThumbSize};
+            z-index: 3;
+            margin: -6px 0;
 
             border: ${localVariables.RangeSliderThumbBorder};
             border-radius: ${localVariables.RangeSliderThumbBorderRadius};
@@ -59,9 +63,20 @@ const getThumbStyle = () => {
             border: ${localVariables.RangeSliderThumbBorder};
             height: ${localVariables.RangeSliderThumbSize};
             width: ${localVariables.RangeSliderThumbSize};
+            z-index: 3;
+            margin: -6px 0;
+
             border-radius: ${localVariables.RangeSliderThumbBorderRadius};
             background: ${localVariables.RangeSliderThumbColor};
             cursor: pointer;
+        }
+
+        &::-webkit-slider-runnable-track,
+        &::-moz-range-track,
+        &::-ms-track,
+        &::-ms-fill-lower,
+        &::-ms-fill-upper {
+            pointer-events: none;
         }
     `;
 };
@@ -103,20 +118,11 @@ export const RangeSliderRangeStyled = styled.div`
 `;
 
 export const RangeSliderLeftThumbStyled = styled.input<RangeSliderThumbPropsStyled>`
-    ${({ value, max }) => css`
-        ${getThumbStyle()};
-        z-index: 4;
-
-        ${value > max - 100 &&
-        css`
-            z-index: 5;
-        `}
-    `};
+    ${getThumbStyle()};
 `;
 
 export const RangeSliderRightThumbStyled = styled.input`
     ${getThumbStyle()};
-    z-index: 3;
 `;
 
 export const RangeSliderLeftValueStyled = styled.div`

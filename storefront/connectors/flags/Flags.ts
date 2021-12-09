@@ -10,6 +10,7 @@ export const mapFlagDetailApiData = (apiData: FlagDetailFragmentApi, currencyCod
         totalCount: apiData.products?.totalCount !== undefined ? apiData.products.totalCount : 0,
         pageInfo: mapPageInfoApiData(apiData.products?.pageInfo),
         edges: [],
+        productFilterOptions: null,
     };
 
     if (apiData?.products?.edges !== undefined && apiData.products.edges !== null) {

@@ -10,6 +10,10 @@ type LabelWrapperProps = NativeProps & {
      */
     label: string | ReactNode | ReactNode[];
     /**
+     * Display count of items. This is an optional prop primary from the parameters filter.
+     */
+    count?: number;
+    /**
      * A prop based on which the CSS stzling is applied, as there is a slightly different
      * styling for each of the elements below.
      */
@@ -22,6 +26,10 @@ type LabelWrapperProps = NativeProps & {
      * Type of placeholder for check if the placeholder is static or adaptive.
      */
     placeholderType?: 'static';
+    /**
+     * check if checkbox is checked
+     */
+    checked?: boolean;
 };
 
 const LabelWrapper: FC<LabelWrapperProps> = (props) => {
@@ -31,6 +39,10 @@ const LabelWrapper: FC<LabelWrapperProps> = (props) => {
             {props.placeholderType !== 'static' && (
                 <label htmlFor={props.htmlFor}>
                     {props.label}
+                    {props.count !== undefined &&
+                        props.checked === false &&
+                        props.count > 0 &&
+                        `\u00A0(${props.count})`}
                     {props.required && <RequiredSymbolStyled>*</RequiredSymbolStyled>}
                 </label>
             )}

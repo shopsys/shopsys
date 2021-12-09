@@ -3,6 +3,7 @@ import { CheckboxColorStyled } from './CheckboxColor.style';
 import ColorLabelWrapper from 'components/Forms/Lib/ColorLabelWrapper';
 import { ControllerRenderProps } from 'react-hook-form';
 import { ExtractNativePropsFromDefault } from 'typeHelpers/ExtractNativePropsFromDefault';
+import tinycolor from 'tinycolor2';
 
 type NativeProps = ExtractNativePropsFromDefault<
     InputHTMLAttributes<HTMLInputElement>,
@@ -16,10 +17,6 @@ type CheckboxColorProps = NativeProps & {
      */
     label?: string;
     /**
-     * When bg color is light - we have to show dark tick
-     */
-    isLightColor: boolean;
-    /**
      * Background color of color chooser
      */
     bgColor: string;
@@ -27,6 +24,14 @@ type CheckboxColorProps = NativeProps & {
      * a ref of the controlled field element used for hooking onto the field events/changes
      */
     fieldRef?: ControllerRenderProps;
+    /**
+     * Prop to check if checkbox is disabled
+     */
+    isDisabled: boolean;
+    /**
+     * Prop to check if checkbox is active
+     */
+    isActive: boolean;
 };
 
 /**
@@ -38,12 +43,15 @@ const CheckboxColor: FC<CheckboxColorProps> = (props) => {
             htmlFor={props.id === undefined ? props.name + 'checkbox_color-id' : props.id}
             label={props.label}
             bgColor={props.bgColor}
-            isLightColor={props.isLightColor}
+            isLightColor={tinycolor(props.bgColor).isLight()}
+            isDisabled={props.isDisabled}
+            isActive={props.isActive}
         >
             <CheckboxColorStyled
                 {...props}
                 {...props.fieldRef}
                 id={props.id === undefined ? props.name + 'checkbox_color-id' : props.id}
+                checked={props.fieldRef?.value}
                 type="checkbox"
             />
         </ColorLabelWrapper>

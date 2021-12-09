@@ -159,7 +159,6 @@
     "Could not remove the product from cart": "Nepodarilo sa odobrať produkt z košíka",
     "Go to cart": "Prejsť do košíka",
     "Could not find any results for the given query.": "Pre tento výraz sme, bohužiaľ, nenašli žiadne výsledky.",
-    "Brands": "Značky",
     "Categories": "Kategórie",
     "Articles": "Články",
     "View all results": "Zobrazit všetky výsledky",
@@ -197,6 +196,17 @@
     "Back to shop": "Späť do obchodu",
     "Great choice! We have added your item to the cart": "Skvelá voľba! Pridali sme váš tovar do košíka",
     "Name": "Názov",
+    "Price with VAT": "Cena s DPH",
+    "Price": "Cena",
     "Availability": "Dostupnosť",
-    "Price with VAT": "Cena s DPH"
+    "Flags": "Príznaky",
+    "Brands": "Značky",
+    "Selected filters": "Vybrané filtre",
+    "Clear all": "Zrušiť všetko",
+    "Only goods in stock": "Iba tovar na sklade",
+    "from": "od",
+    "to": "do",
+    "No results match the filter": "Filtru neodpovedajú žiadne výsledky",
+    "In stock": "Skladom",
+    "ProductsNoResults": "Pre vaše presné vyhľadávanie momentálne nemáme žiadne výsledky. <1/> Skúste byť viac špecifický, alebo sa pozrite, či ste nevyfiltrovali neexistujúce údaje."
 }

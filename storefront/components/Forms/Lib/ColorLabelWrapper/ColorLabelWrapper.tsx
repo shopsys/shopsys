@@ -17,11 +17,18 @@ type ColorLabelWrapperProps = NativeProps & {
      * Set background color for checkbox color
      */
     bgColor: string;
+    isDisabled: boolean;
+    isActive: boolean;
 };
 
 const ColorLabelWrapper: FC<ColorLabelWrapperProps> = (props) => {
     return (
-        <ColorLabelWrapperStyled isLightColor={props.isLightColor} bgColor={props.bgColor}>
+        <ColorLabelWrapperStyled
+            isLightColor={props.isLightColor}
+            bgColor={props.bgColor}
+            isDisabled={props.isDisabled}
+            isActive={props.isActive}
+        >
             {props.children}
             <label htmlFor={props.htmlFor} />
         </ColorLabelWrapperStyled>

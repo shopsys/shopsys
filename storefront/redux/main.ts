@@ -4,6 +4,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import { contactInformationSlice } from './slices/contactInformation';
 import { createWrapper } from 'next-redux-wrapper';
 import { domainSlice } from './slices/domain';
+import { optionsFilterSlice } from './slices/optionsFilter';
 import { userSlice } from './slices/user';
 
 const makeStore = () =>
@@ -13,6 +14,7 @@ const makeStore = () =>
             user: userSlice.reducer,
             cartInput: cartInputSlice.reducer,
             contactInformation: contactInformationSlice.reducer,
+            optionsFilter: optionsFilterSlice.reducer,
         },
     });
 
