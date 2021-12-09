@@ -8,6 +8,7 @@ use App\FrontendApi\Component\Validation\PageSizeValidator;
 use App\FrontendApi\Model\Product\BatchLoad\ProductBatchLoadByEntityData;
 use App\Model\Category\Category;
 use App\Model\CategorySeo\ReadyCategorySeoMix;
+use App\Model\Product\Brand\Brand;
 use App\Model\Product\Filter\ProductFilterData;
 use App\Model\Product\Filter\ProductFilterDataFactory;
 use App\Model\Product\Flag\Flag;
@@ -16,7 +17,7 @@ use InvalidArgumentException;
 use Overblog\DataLoader\DataLoaderInterface;
 use Overblog\GraphQLBundle\Definition\Argument;
 use Shopsys\FrameworkBundle\Model\Category\Category as BaseCategory;
-use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
+use Shopsys\FrameworkBundle\Model\Product\Brand\Brand as BaseBrand;
 use Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainFacadeInterface;
 use Shopsys\FrontendApiBundle\Model\Product\Connection\ProductConnectionFactory;
 use Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterFacade;
@@ -188,13 +189,42 @@ class ProductsResolver extends BaseProductsResolver
     }
 
     /**
-     * {@inheritdoc}
+     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
+     * @param \App\Model\Product\Brand\Brand $brand
+     * @return \GraphQL\Executor\Promise\Promise
      */
-    public function resolveByBrand(Argument $argument, Brand $brand)
+    public function resolveByBrand(Argument $argument, BaseBrand $brand)
     {
         PageSizeValidator::checkMaxPageSize($argument);
 
-        return parent::resolveByBrand($argument, $brand);
+        $search = $argument['search'] ?? '';
+
+        $this->setDefaultFirstOffsetIfNecessary($argument);
+
+        $productFilterData = $this->productFilterFacade->getValidatedProductFilterDataForBrand(
+            $argument,
+            $brand
+        );
+
+        return $this->productConnectionFactory->createConnectionPromiseForBrand(
+            $brand,
+            function ($offset, $limit) use ($argument, $productFilterData, $search, $brand) {
+                return $this->productsByEntitiesBatchLoader->load(
+                    new ProductBatchLoadByEntityData(
+                        $brand->getId(),
+                        Brand::class,
+                        $limit,
+                        $offset,
+                        $this->getOrderingModeFromArgument($argument),
+                        $productFilterData,
+                        $search
+                    )
+                );
+            },
+            $this->productFacade->getFilteredProductsByBrandCount($brand, $productFilterData, $search),
+            $argument,
+            $productFilterData
+        );
     }
 
     /**

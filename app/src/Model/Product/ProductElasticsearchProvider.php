@@ -6,6 +6,7 @@ namespace App\Model\Product;
 
 use App\FrontendApi\Model\Product\BatchLoad\ProductBatchLoadByEntityData;
 use App\Model\Category\Category;
+use App\Model\Product\Brand\Brand;
 use App\Model\Product\Flag\Flag;
 use App\Model\Product\Search\FilterQuery;
 use InvalidArgumentException;
@@ -59,6 +60,9 @@ class ProductElasticsearchProvider extends BaseProductElasticsearchProvider
             case Flag::class:
                 $filterQuery = $this->getFilterQueryForFilterData($productBatchLoadByEntityData);
                 break;
+            case Brand::class:
+                $filterQuery = $this->getFilterQueryForBrand($productBatchLoadByEntityData);
+                break;
             default:
                 throw new InvalidArgumentException(sprintf('Entity class "%s" is not supported for creating filter query', $entityClass));
         }
@@ -97,6 +101,21 @@ class ProductElasticsearchProvider extends BaseProductElasticsearchProvider
             $productBatchLoadByEntityData->getOrderingModeId(),
             1,
             $productBatchLoadByEntityData->getLimit()
+        );
+    }
+
+    /**
+     * @param \App\FrontendApi\Model\Product\BatchLoad\ProductBatchLoadByEntityData $productBatchLoadByEntityData
+     * @return \App\Model\Product\Search\FilterQuery
+     */
+    private function getFilterQueryForBrand(ProductBatchLoadByEntityData $productBatchLoadByEntityData): FilterQuery
+    {
+        return $this->filterQueryFactory->createListableProductsByBrandId(
+            $productBatchLoadByEntityData->getProductFilterData(),
+            $productBatchLoadByEntityData->getOrderingModeId(),
+            1,
+            $productBatchLoadByEntityData->getLimit(),
+            $productBatchLoadByEntityData->getEntityId()
         );
     }
 }

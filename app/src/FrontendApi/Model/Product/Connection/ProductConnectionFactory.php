@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\FrontendApi\Model\Product\Connection;
 
 use App\Model\Category\Category;
+use App\Model\Product\Brand\Brand;
 use App\Model\Product\Filter\ProductFilterData;
 use App\Model\Product\Flag\Flag;
 use GraphQL\Executor\Promise\Promise;
@@ -69,6 +70,32 @@ class ProductConnectionFactory extends BaseProductConnectionFactory
             return $this->productFilterOptionsFactory->createProductFilterOptionsForFlag(
                 $flag,
                 $this->productFilterFacade->getProductFilterConfigForFlag($flag),
+                $productFilterData
+            );
+        };
+
+        return $this->getConnectionPromise($retrieveProductClosure, $productFilterOptionsClosure, $countOfProducts, $argument);
+    }
+
+    /**
+     * @param \App\Model\Product\Brand\Brand $brand
+     * @param callable $retrieveProductClosure
+     * @param int $countOfProducts
+     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
+     * @param \App\Model\Product\Filter\ProductFilterData $productFilterData
+     * @return \GraphQL\Executor\Promise\Promise
+     */
+    public function createConnectionPromiseForBrand(
+        Brand $brand,
+        callable $retrieveProductClosure,
+        int $countOfProducts,
+        Argument $argument,
+        ProductFilterData $productFilterData
+    ): Promise {
+        $productFilterOptionsClosure = function () use ($brand, $productFilterData) {
+            return $this->productFilterOptionsFactory->createProductFilterOptionsForBrand(
+                $brand,
+                $this->productFilterFacade->getProductFilterConfigForBrand($brand),
                 $productFilterData
             );
         };
