@@ -9,7 +9,6 @@ import {
 import { FC, useRef } from 'react';
 import AddToCartPopup from 'components/Blocks/Product/AddToCartPopup';
 import { formatPrice } from 'utils/formatting';
-import Portal from 'components/Basic/Portal';
 import { ProductDetailType } from 'components/Pages/ProductDetail/types';
 import Spinbox from 'components/Forms/Spinbox';
 import { useAddToCartMutationApi } from 'graphql/generated';
@@ -72,13 +71,11 @@ const ProductDetailAddToCart: FC<ProductDetailAddToCartProps> = (props) => {
                 </AddToCartFormStyled>
             </AddToCartWrapperStyled>
             {popupData !== null && (
-                <Portal>
-                    <AddToCartPopup
-                        isVisible={popupData !== null}
-                        onCloseCallback={() => setPopupData(null)}
-                        product={popupData}
-                    />
-                </Portal>
+                <AddToCartPopup
+                    isVisible={popupData !== null}
+                    onCloseCallback={() => setPopupData(null)}
+                    product={popupData}
+                />
             )}
         </>
     );
