@@ -1,6 +1,7 @@
 import { Exact, LoginApi, LogoutApi, useLoginApi, useLogoutApi } from 'graphql/generated';
 import { removeTokensFromCookies, setTokensToCookie } from 'utils/Auth/TokensFromCookies';
 import { showErrorMessage, showSuccessMessage } from 'components/Helpers/Toasts';
+import { cartActions } from 'redux/slices/cart';
 import { useEffect } from 'react';
 import { useHandleCartDeletionOnLogout } from 'hooks/cart/UseHandleCartDeletionOnLogout';
 import { useHandleCartUuidDeletionOnLogin } from 'hooks/cart/UseHandleCartUuidDeletionOnLogin';
@@ -38,6 +39,7 @@ export const useAuth = (): [
 
         if (accessToken !== undefined && refreshToken !== undefined) {
             dispatch(userActions.setIsUserLoggedIn(true));
+            dispatch(cartActions.setIsCartEmpty(false));
             setTokensToCookie(accessToken, refreshToken);
             showSuccessMessage(t('Successfully logged in'));
             window.location.href = router.asPath;
