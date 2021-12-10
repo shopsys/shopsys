@@ -7,7 +7,7 @@ import {
     ListItemStyled,
     ListItemTitleStyled,
     ListStyled,
-} from './List.style';
+} from './BlogArticlesList.style';
 import { BlogArticlesType } from 'connectors/blogCategory/types';
 import Flag from 'components/Basic/Flag';
 import Heading from 'components/Basic/Heading';

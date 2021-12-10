@@ -1,10 +1,10 @@
 import { BlogCategoryListStyled, BlogCategoryPanelStyled, BlogCategoryStyled } from './BlogCategory.style';
+import BlogArticlesList from './BlogArticlesList';
 import { BlogCategoryType } from 'connectors/blogCategory/types';
 import BlogSignpost from 'components/Blocks/BlogSignpost';
 import { FC } from 'react';
 import { getBlogCategoriesItems } from 'connectors/blogCategories/BlogCategories';
 import Heading from 'components/Basic/Heading';
-import List from './List';
 import Pagination from 'components/Blocks/Pagination/Pagination';
 import Webline from 'components/Layout/Webline';
 
@@ -20,7 +20,7 @@ const BlogCategory: FC<BlogCategoryProps> = (props) => {
             <Heading type="h1">{props.blogCategory.name}</Heading>
             <BlogCategoryStyled>
                 <BlogCategoryListStyled>
-                    <List blogArticles={props.blogCategory.blogArticles} />
+                    <BlogArticlesList blogArticles={props.blogCategory.blogArticles} />
                     <Pagination totalCount={props.blogCategory.blogArticles.totalCount} />
                 </BlogCategoryListStyled>
                 <BlogCategoryPanelStyled>
