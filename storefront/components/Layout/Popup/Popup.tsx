@@ -8,6 +8,7 @@ import {
 } from './Popup.style';
 import { AnyStyledComponent } from 'styled-components';
 import Overlay from 'components/Basic/Overlay';
+import Portal from 'components/Basic/Portal';
 
 type PopupProps = {
     isVisible: boolean;
@@ -42,10 +43,10 @@ const Popup: FC<PopupProps> = (props) => {
 
     if (props.isVisible) {
         return (
-            <>
+            <Portal>
                 <Overlay onClick={onClickCloseActionHandler}></Overlay>
                 <PopupWrapper role="dialog" aria-modal={true}>
-                    {props.hideCloseButton === true && (
+                    {props.hideCloseButton !== true && (
                         <PopupHeaderStyled>
                             <PopupButtonCloseStyled type="button" onClick={onClickCloseActionHandler}>
                                 <PopupButtonCloseIconStyled iconType="icon" icon="Remove" />
@@ -54,7 +55,7 @@ const Popup: FC<PopupProps> = (props) => {
                     )}
                     <PopupContentStyled>{props.children}</PopupContentStyled>
                 </PopupWrapper>
-            </>
+            </Portal>
         );
     }
 

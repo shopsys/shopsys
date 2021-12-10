@@ -1,7 +1,6 @@
 import { FC, useRef } from 'react';
 import AddToCartPopup from 'components/Blocks/Product/AddToCartPopup';
 import Button from 'components/Forms/Button';
-import Portal from 'components/Basic/Portal';
 import Spinbox from 'components/Forms/Spinbox';
 import { useAddToCartMutationApi } from 'graphql/generated';
 import { useHandleAddToCart } from 'hooks/cart/UseHandleAddToCart';
@@ -60,13 +59,11 @@ const AddToCart: FC<AddToCartProps> = (props) => {
                 {t('Add to cart')}
             </Button>
             {popupData !== null && (
-                <Portal>
-                    <AddToCartPopup
-                        isVisible={popupData !== null}
-                        onCloseCallback={() => setPopupData(null)}
-                        product={popupData}
-                    />
-                </Portal>
+                <AddToCartPopup
+                    isVisible={popupData !== null}
+                    onCloseCallback={() => setPopupData(null)}
+                    product={popupData}
+                />
             )}
         </>
     );

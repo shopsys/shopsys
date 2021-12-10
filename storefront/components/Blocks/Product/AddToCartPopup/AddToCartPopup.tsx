@@ -38,7 +38,7 @@ const AddToCartPopup: FC<AddToCartPopupProps> = (props) => {
             isVisible={props.isVisible}
             onCloseCallback={props.onCloseCallback}
             wrapperComponent={AddToCartPopupWrapperStyled}
-            hideCloseButton={false}
+            hideCloseButton={true}
         >
             <HeadingStyled type="h2">
                 <Checkmark iconType="icon" icon="Checkmark" />
