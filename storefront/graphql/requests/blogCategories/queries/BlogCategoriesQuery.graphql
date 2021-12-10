@@ -1,12 +1,17 @@
 query BlogCategories {
     blogCategories {
-        uuid
-        name
-        link
+        ...SimpleBlogCategoryFragment
         children {
-            uuid
-            name
-            link
+            ...SimpleBlogCategoryFragment
+            children {
+                ...SimpleBlogCategoryFragment
+                children {
+                    ...SimpleBlogCategoryFragment
+                    children {
+                        ...SimpleBlogCategoryFragment
+                    }
+                }
+            }
         }
     }
 }

@@ -5,7 +5,7 @@ import { styled } from 'components/Theme/main';
 
 type BlogSignpostItemStyledProps = {
     isActive: boolean;
-    isChild?: boolean;
+    itemLevel?: number;
 };
 
 type BlogSignpostItemIconStyledProps = {
@@ -30,12 +30,12 @@ export const BlogSignpostHeadingStyled = styled(Heading)`
 `;
 
 export const BlogSignpostItemStyled = styled.a<BlogSignpostItemStyledProps>`
-    ${({ theme, isActive, isChild }) => css`
+    ${({ theme, isActive, itemLevel }) => css`
         position: relative;
         padding: 12px 35px;
-        ${isChild !== undefined &&
+        ${itemLevel !== undefined &&
         css`
-            margin-left: 6px;
+            margin-left: calc(6px * ${itemLevel});
         `}
 
         color: ${isActive === true

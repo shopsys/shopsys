@@ -6,6 +6,7 @@ import {
 } from './BlogSignpost.style';
 import { FC, Fragment } from 'react';
 import { BlogCategoryItem } from 'connectors/blogCategories/BlogCategories';
+import Children from './Children';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 
 type BlogSingpostProps = {
@@ -33,21 +34,10 @@ const BlogSignpost: FC<BlogSingpostProps> = (props) => {
                             />
                             {blogCategory.name}
                         </BlogSignpostItemStyled>
-                        {blogCategory.children.map((blogCategoryChild) => (
-                            <BlogSignpostItemStyled
-                                key={blogCategoryChild.uuid}
-                                href={blogCategoryChild.link}
-                                isActive={props.activeItem === blogCategoryChild.uuid}
-                                isChild={true}
-                            >
-                                <BlogSignpostItemIconStyled
-                                    iconType="icon"
-                                    icon="Arrow"
-                                    isActive={props.activeItem === blogCategoryChild.uuid}
-                                />
-                                {blogCategoryChild.name}
-                            </BlogSignpostItemStyled>
-                        ))}
+
+                        {blogCategory.children.length > 0 && (
+                            <Children blogCategory={blogCategory} activeItem={props.activeItem} itemLevel={1} />
+                        )}
                     </Fragment>
                 ))}
         </BlogSignpostStyled>

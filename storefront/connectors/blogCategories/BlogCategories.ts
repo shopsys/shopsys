@@ -12,9 +12,5 @@ export type BlogCategoryItem = {
     uuid: string;
     name: string;
     link: string;
-    children: {
-        uuid: string;
-        name: string;
-        link: string;
-    }[];
+    children: BlogCategoryItem[];
 };
