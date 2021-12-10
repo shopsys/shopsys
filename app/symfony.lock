@@ -32,6 +32,9 @@
     "behat/transliterator": {
         "version": "v1.2.0"
     },
+    "clue/stream-filter": {
+        "version": "v1.5.0"
+    },
     "codeception/codeception": {
         "version": "2.3",
         "recipe": {
@@ -488,6 +491,9 @@
     "php-cs-fixer/diff": {
         "version": "v1.3.0"
     },
+    "php-http/client-common": {
+        "version": "2.5.0"
+    },
     "php-http/discovery": {
         "version": "1.7.4"
     },
@@ -496,6 +502,9 @@
     },
     "php-http/httplug": {
         "version": "2.1.0"
+    },
+    "php-http/message": {
+        "version": "1.12.0"
     },
     "php-http/message-factory": {
         "version": "v1.0.2"
@@ -692,6 +701,24 @@
     },
     "sensio/framework-extra-bundle": {
         "version": "v3.0.29"
+    },
+    "sentry/sdk": {
+        "version": "2.2.0"
+    },
+    "sentry/sentry": {
+        "version": "2.5.2"
+    },
+    "sentry/sentry-symfony": {
+        "version": "3.5",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "master",
+            "version": "3.0",
+            "ref": "9746f0823302d7980e5273ef7a69ef3f5ac80914"
+        },
+        "files": [
+            "config/packages/sentry.yaml"
+        ]
     },
     "shopsys/cdn": {
         "version": "1.0.3"
@@ -990,6 +1017,9 @@
     },
     "symfony/polyfill-util": {
         "version": "v1.12.0"
+    },
+    "symfony/polyfill-uuid": {
+        "version": "v1.23.0"
     },
     "symfony/process": {
         "version": "v3.4.33"

@@ -8,3 +8,4 @@ package-lock.json
 generated/
 */dist/
 docs/styleguide/
+pages/_error.js

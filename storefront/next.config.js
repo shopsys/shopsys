@@ -1,7 +1,8 @@
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const { i18n } = require('./next-i18next.config');
+const { withSentryConfig } = require("@sentry/nextjs");
 
-module.exports = {
+const moduleExports = {
     i18n,
     reactStrictMode: true,
     serverRuntimeConfig: {
@@ -9,6 +10,8 @@ module.exports = {
     },
     publicRuntimeConfig: {
         googleMapApiKey: process.env.GOOGLE_MAP_API_KEY,
+        sentryEnvironment: process.env.NEXT_PUBLIC_SENTRY_ENVIRONMENT || '',
+        sentryDsn: process.env.NEXT_PUBLIC_SENTRY_DSN || '',
         domains: [
             {
                 publicGraphqlEndpoint: process.env.PUBLIC_GRAPHQL_ENDPOINT_HOSTNAME_1,
@@ -164,3 +167,7 @@ module.exports = {
         ignoreDuringBuilds: true,
     },
 };
+
+const SentryWebpackPluginOptions = {};
+
+module.exports = withSentryConfig(moduleExports, SentryWebpackPluginOptions);

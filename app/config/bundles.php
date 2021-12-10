@@ -43,4 +43,5 @@ return [
     Overblog\GraphiQLBundle\OverblogGraphiQLBundle::class => ['dev' => true],
     Shopsys\FrontendApiBundle\ShopsysFrontendApiBundle::class => ['all' => true],
     DAMA\DoctrineTestBundle\DAMADoctrineTestBundle::class => ['test' => true],
+    Sentry\SentryBundle\SentryBundle::class => ['all' => true],
 ];

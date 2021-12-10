@@ -4,6 +4,8 @@ BASE_PATH="$(realpath "$(dirname "$0")/..")"
 CONFIGURATION_TARGET_PATH="${BASE_PATH}/var/deployment/kubernetes"
 BASIC_AUTH_PATH="${BASE_PATH}/deploy/basicHttpAuth"
 DEPLOY_TARGET_PATH="${BASE_PATH}/var/deployment/deploy"
+CI_ENVIRONMENT_SLUG=${CI_ENVIRONMENT_SLUG}
+SENTRY_DSN=${SENTRY_DSN}
 
 function deploy() {
     DOMAINS=(
@@ -69,9 +71,15 @@ function deploy() {
         ["PACKETERY_REST_API_URL"]=${PACKETERY_REST_API_URL}
         ["PACKETERY_API_PASSWORD"]=${PACKETERY_API_PASSWORD}
         ["PACKETERY_SENDER"]=${PACKETERY_SENDER}
+
+        ["SENTRY_DSN"]=${SENTRY_DSN}
+        ["SENTRY_ENVIRONMENT"]=${CI_ENVIRONMENT_SLUG}
+        ["SENTRY_RELEASE"]=${CI_COMMIT_SHORT_SHA}
     )
 
     declare -A STOREFRONT_ENVIRONMENT_VARIABLES=(
+        ["NEXT_PUBLIC_SENTRY_DSN"]=${SENTRY_DSN}
+        ["NEXT_PUBLIC_SENTRY_ENVIRONMENT"]=${CI_ENVIRONMENT_SLUG}
     )
 
 
@@ -84,6 +92,8 @@ function deploy() {
         STOREFRONT_TAG
         PROJECT_NAME
         BASE_PATH
+        CI_ENVIRONMENT_SLUG
+        SENTRY_DSN
     )
 
     source "${DEPLOY_TARGET_PATH}/functions.sh"

@@ -1,10 +1,16 @@
 version: "3.4"
+
+x-variables:
+    common_build_args: &common_build_args
+        www_data_uid: 1000
+        www_data_gid: 1000
+
 services:
     postgres:
         image: postgres:12.1-alpine
         container_name: shopsys-framework-postgres
         volumes:
-            - ./var/postgres-data:/var/lib/postgresql/data
+            - ./app/var/postgres-data:/var/lib/postgresql/data
             - ./app/docker/postgres/postgres.conf:/var/lib/postgresql/data/postgresql.conf
         environment:
             - PGDATA=/var/lib/postgresql/data/pgdata
@@ -33,6 +39,8 @@ services:
             context: ./storefront
             dockerfile: ./docker/Dockerfile
             target: development
+            args:
+                <<: *common_build_args
         container_name: shopsys-framework-storefront
         volumes:
             - ./storefront:/app
@@ -41,9 +49,9 @@ services:
             - "3000:3000"
         healthcheck:
             test: ["CMD", "curl", "-f", "http://127.0.0.1:3000"]
-            interval: 5s
-            timeout: 5s
-            retries: 10
+            interval: 10s
+            timeout: 30s
+            retries: 20
 
     storefront-styleguide:
         build:
@@ -75,8 +83,7 @@ services:
             dockerfile: docker/php-fpm/Dockerfile
             target: development
             args:
-                www_data_uid: 1000
-                www_data_gid: 1000
+                <<: *common_build_args
         container_name: shopsys-framework-php-fpm
         volumes:
             - ./app/:/var/www/html
