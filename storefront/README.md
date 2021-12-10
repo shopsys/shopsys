@@ -78,8 +78,8 @@ After some changes to API you need to regenerate hooks and types, so it's in syn
 
 [Jest documentation](https://jestjs.io)
 
-Jest test are used for unit testing of function or callback and to test static render of components.
-The testing of components' functionality is better to use cypress tests in many scenarios.
+Jest tests are used for unit testing of function or callback and to test static render of components.
+For the testing of components' functionality, it is better to use cypress tests in many scenarios.
 
 Best practice of storing tests is to keep it as close to tested component as possible.
 
@@ -97,4 +97,7 @@ https://jestjs.io/docs/snapshot-testing
 
 In case you need to update snapshot because of changing the components' code you can update it by running `npm run tests-jest -- -u`.
 
+_Known issue:_
+
+In case the component is not the same as snapshot is expecting, there are reported unrelated (false negatives) lines too. The issue is described [here](https://github.com/styled-components/jest-styled-components/issues/355).
 
