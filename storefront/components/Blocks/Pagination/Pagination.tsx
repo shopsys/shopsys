@@ -1,4 +1,4 @@
-import { FC, Fragment, useState } from 'react';
+import { FC, Fragment, useMemo, useState } from 'react';
 import { initialState, userActions } from 'redux/slices/user';
 import { PaginationButtonStyled, PaginationWrapperStyled } from './Pagination.style';
 import { useShopsysDispatch, useShopsysSelector } from 'redux/main';
@@ -30,12 +30,15 @@ const Pagination: FC<PaginationProps> = (props): JSX.Element | null => {
         () => setMobilePaginationVisible(isElementVisible([{ min: 0, max: 480 }], width)),
     );
     const paginationState = useShopsysSelector((state) => state.user.pagination);
-    const paginationButtons = usePagination(
-        props.totalCount,
-        paginationState.currentPage,
-        isMobilePaginationVisible,
-        initialState.pagination.pageSize,
-    );
+
+    const paginationButtons = useMemo(() => {
+        return usePagination(
+            props.totalCount,
+            paginationState.currentPage,
+            isMobilePaginationVisible,
+            initialState.pagination.pageSize,
+        );
+    }, [props.totalCount, paginationState.currentPage, isMobilePaginationVisible, initialState.pagination.pageSize]);
 
     if (paginationButtons === undefined || paginationButtons === null) {
         return null;

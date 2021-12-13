@@ -71,3 +71,33 @@ After some changes to API you need to regenerate hooks and types, so it's in syn
 
 1. Run `php phing frontend-api-generate-graphql-schema` inside php-fpm container
 2. Run `npm run gql:codegen` in storefront container
+
+## Testing
+
+### Jest
+
+[Jest documentation](https://jestjs.io)
+
+Jest tests are used for unit testing of function or callback and to test static render of components.
+For the testing of components' functionality, it is better to use cypress tests in many scenarios.
+
+Best practice of storing tests is to keep it as close to tested component as possible.
+
+Run `npm run tests-jest` to run all jest tests.
+
+#### Types of tests
+
+##### Unit tests
+
+https://jestjs.io/docs/getting-started
+
+##### Snapshot tests
+
+https://jestjs.io/docs/snapshot-testing
+
+In case you need to update snapshot because of changing the components' code you can update it by running `npm run tests-jest -- -u`.
+
+_Known issue:_
+
+In case the component is not the same as snapshot is expecting, there are reported unrelated (false negatives) lines too. The issue is described [here](https://github.com/styled-components/jest-styled-components/issues/355).
+

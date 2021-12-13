@@ -78,6 +78,15 @@ test:standards-storefront:
         - docker run -i ${STOREFRONT_TAG} /bin/sh -c "npm run lint"
     interruptible: true
 
+test:jest-storefront:
+    stage: test
+    <<: *only-default
+    variables:
+        GIT_STRATEGY: none
+    script:
+        - docker run -i ${STOREFRONT_TAG} /bin/sh -c "npm run tests-jest"
+    interruptible: true
+
 test:storefront-codegen-check:
     stage: test
     <<: *only-default
