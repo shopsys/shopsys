@@ -55,6 +55,21 @@ type AddToCartResult implements CartInterface {
   addProductResult: AddProductResult!
 }
 
+"""Represents a singe additional image size"""
+type AdditionalSize {
+  """URL address of image"""
+  url: String!
+
+  """Width in pixels defined in images.yaml"""
+  width: Int
+
+  """Height in pixels defined in images.yaml"""
+  height: Int
+
+  """Recommended media query defined in images.yaml"""
+  media: String!
+}
+
 interface Advert {
   """UUID"""
   uuid: Uuid!
@@ -764,6 +779,9 @@ type ImageSize {
 
   """Height in pixels defined in images.yaml"""
   height: Int
+
+  """Additional sizes for different screen types"""
+  additionalSizes: [AdditionalSize!]!
 }
 
 """Represents an internal link"""

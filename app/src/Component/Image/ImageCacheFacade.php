@@ -171,7 +171,7 @@ class ImageCacheFacade
      */
     private function getCacheIdForImageUrl(int $imageId, ?string $type, ?string $sizeName, ?int $additionalIndex): string
     {
-        return sprintf('ImageUrl:imageId-%d_type-%s_size-%s_additionalIndex-%d', $imageId, $type, $sizeName, $additionalIndex);
+        return sprintf('ImageUrl:imageId-%d_type-%s_size-%s_additionalIndex-%s', $imageId, $type, $sizeName, $additionalIndex);
     }
 
     /**
