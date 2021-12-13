@@ -267,8 +267,15 @@ class ProductFacade extends BaseProductFacade
         $this->productVisibilityFacade->refreshProductsVisibilityForMarkedDelayed();
         $this->productPriceRecalculationScheduler->scheduleProductForImmediateRecalculation($product);
 
-        $productToExport = $product->isVariant() ? $product->getMainVariant() : $product;
-        $this->productExportScheduler->scheduleRowIdForImmediateExport($productToExport->getId());
+        $this->productExportScheduler->scheduleRowIdForImmediateExport($product->getId());
+
+        if ($product->isMainVariant()) {
+            foreach ($product->getVariants() as $variant) {
+                $this->productExportScheduler->scheduleRowIdForImmediateExport($variant->getId());
+            }
+        } elseif ($product->isVariant()) {
+            $this->productExportScheduler->scheduleRowIdForImmediateExport($product->getMainVariant()->getId());
+        }
 
         $this->editProductStockAndStoreRelation($productData, $product);
 
