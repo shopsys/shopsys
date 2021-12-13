@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\FrontendApi\Model\Product;
 
 use App\Model\Product\ProductElasticsearchProvider;
+use App\Model\Product\Search\ProductElasticsearchRepository;
 use GraphQL\Executor\Promise\Promise;
 use GraphQL\Executor\Promise\PromiseAdapter;
 
@@ -19,6 +20,11 @@ class ProductsBatchLoader
      * @var \App\Model\Product\ProductElasticsearchProvider
      */
     private ProductElasticsearchProvider $productElasticsearchProvider;
+
+    /**
+     * @var int[]
+     */
+    private static array $totalsIndexedByEntityId;
 
     /**
      * @param \GraphQL\Executor\Promise\PromiseAdapter $promiseAdapter
@@ -36,7 +42,7 @@ class ProductsBatchLoader
      */
     public function loadVisibleByIds(array $productsIds): Promise
     {
-        return $this->promiseAdapter->all($this->productElasticsearchProvider->getBatchedVisibleByProductIds($productsIds));
+        return $this->promiseAdapter->all($this->productElasticsearchProvider->getBatchedVisibleByProductIds($productsIds)[ProductElasticsearchRepository::PRODUCTS_KEY]);
     }
 
     /**
@@ -45,6 +51,18 @@ class ProductsBatchLoader
      */
     public function loadByEntities(array $productBatchLoadByEntitiesData): Promise
     {
-        return $this->promiseAdapter->all($this->productElasticsearchProvider->getBatchedByEntities($productBatchLoadByEntitiesData));
+        $batchedByEntities = $this->productElasticsearchProvider->getBatchedByEntities($productBatchLoadByEntitiesData);
+        self::$totalsIndexedByEntityId = $batchedByEntities[ProductElasticsearchRepository::TOTALS_KEY];
+
+        return $this->promiseAdapter->all($batchedByEntities[ProductElasticsearchRepository::PRODUCTS_KEY]);
+    }
+
+    /**
+     * @param int $entityId
+     * @return int
+     */
+    public static function getTotalByEntityId(int $entityId): int
+    {
+        return self::$totalsIndexedByEntityId[$entityId] ?? 0;
     }
 }

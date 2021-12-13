@@ -22,6 +22,10 @@ use Shopsys\FrameworkBundle\Model\Product\Search\ProductElasticsearchRepository 
  */
 class ProductElasticsearchRepository extends BaseProductElasticsearchRepository
 {
+    public const PRODUCTS_KEY = 'products';
+
+    public const TOTALS_KEY = 'totals';
+
     /**
      * @var \App\Component\Elasticsearch\MultipleSearchQueryFactory
      */
@@ -102,17 +106,22 @@ class ProductElasticsearchRepository extends BaseProductElasticsearchRepository
      * @param \App\Model\Product\Search\FilterQuery[] $filterQueries
      * @return array
      */
-    public function getBatchedProductsByFilterQueries(array $filterQueries): array
+    public function getBatchedProductsAndTotalsByFilterQueries(array $filterQueries): array
     {
         $mSearchQuery = $this->multipleSearchQueryFactory->create(ProductIndex::getName(), $filterQueries);
         $result = $this->client->msearch($mSearchQuery->getQuery());
 
         $keys = array_keys($filterQueries);
         $products = [];
+        $totals = [];
         foreach ($result['responses'] as $index => $response) {
-            $products[$keys[$index]] = $this->extractHits($response);
+            $products[] = $this->extractHits($response);
+            $totals[$keys[$index]] = $this->extractTotalCount($response);
         }
 
-        return $products;
+        return [
+            self::PRODUCTS_KEY => $products,
+            self::TOTALS_KEY => $totals,
+        ];
     }
 }

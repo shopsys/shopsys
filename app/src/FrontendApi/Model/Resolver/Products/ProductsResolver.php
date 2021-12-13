@@ -133,7 +133,6 @@ class ProductsResolver extends BaseProductsResolver
                     )
                 );
             },
-            $this->productFacade->getFilteredProductsCountOnCurrentDomain($productFilterData, $search),
             $argument,
             $productFilterData
         );
@@ -221,7 +220,6 @@ class ProductsResolver extends BaseProductsResolver
                     )
                 );
             },
-            $this->productFacade->getFilteredProductsByBrandCount($brand, $productFilterData, $search),
             $argument,
             $productFilterData
         );
@@ -271,7 +269,6 @@ class ProductsResolver extends BaseProductsResolver
                     )
                 );
             },
-            $this->productFacade->getFilteredProductsByCategoryCount($category, $productFilterData, $search),
             $argument,
             $productFilterData
         );

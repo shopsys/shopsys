@@ -29,7 +29,7 @@ class ProductElasticsearchProvider extends BaseProductElasticsearchProvider
             $filterQueries[] = $this->filterQueryFactory->createVisibleProductsByProductIdsFilter($productIds);
         }
 
-        return $this->productElasticsearchRepository->getBatchedProductsByFilterQueries($filterQueries);
+        return $this->productElasticsearchRepository->getBatchedProductsAndTotalsByFilterQueries($filterQueries);
     }
 
     /**
@@ -40,10 +40,10 @@ class ProductElasticsearchProvider extends BaseProductElasticsearchProvider
     {
         $filterQueries = [];
         foreach ($productBatchLoadByEntitiesData as $productBatchLoadByEntityData) {
-            $filterQueries[] = $this->getFilterQuery($productBatchLoadByEntityData);
+            $filterQueries[$productBatchLoadByEntityData->getEntityId()] = $this->getFilterQuery($productBatchLoadByEntityData);
         }
 
-        return $this->productElasticsearchRepository->getBatchedProductsByFilterQueries($filterQueries);
+        return $this->productElasticsearchRepository->getBatchedProductsAndTotalsByFilterQueries($filterQueries);
     }
 
     /**

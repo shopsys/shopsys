@@ -4,16 +4,17 @@ declare(strict_types=1);
 
 namespace App\FrontendApi\Model\Product\Connection;
 
+use App\FrontendApi\Model\Product\ProductsBatchLoader;
 use App\Model\Category\Category;
 use App\Model\Product\Brand\Brand;
 use App\Model\Product\Filter\ProductFilterData;
 use App\Model\Product\Flag\Flag;
 use GraphQL\Executor\Promise\Promise;
 use Overblog\GraphQLBundle\Definition\Argument;
-use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData as BaseProductFilterData;
 use Overblog\GraphQLBundle\Relay\Connection\ConnectionBuilder;
 use Overblog\GraphQLBundle\Relay\Connection\Paginator;
-use Shopsys\FrontendApiBundle\Model\Product\Connection\ProductConnection;
+use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData as BaseProductFilterData;
+use Shopsys\FrontendApiBundle\Model\Product\Connection\ProductConnection as BaseProductConnection;
 use Shopsys\FrontendApiBundle\Model\Product\Connection\ProductConnectionFactory as BaseProductConnectionFactory;
 
 /**
@@ -28,7 +29,6 @@ class ProductConnectionFactory extends BaseProductConnectionFactory
     /**
      * @param \App\Model\Category\Category $category
      * @param callable $retrieveProductClosure
-     * @param int $countOfProducts
      * @param \Overblog\GraphQLBundle\Definition\Argument $argument
      * @param \App\Model\Product\Filter\ProductFilterData $productFilterData
      * @return \GraphQL\Executor\Promise\Promise
@@ -36,7 +36,6 @@ class ProductConnectionFactory extends BaseProductConnectionFactory
     public function createConnectionPromiseForCategory(
         Category $category,
         callable $retrieveProductClosure,
-        int $countOfProducts,
         Argument $argument,
         ProductFilterData $productFilterData
     ): Promise {
@@ -48,13 +47,12 @@ class ProductConnectionFactory extends BaseProductConnectionFactory
             );
         };
 
-        return $this->getConnectionPromise($retrieveProductClosure, $productFilterOptionsClosure, $countOfProducts, $argument);
+        return $this->getConnectionPromise($retrieveProductClosure, $productFilterOptionsClosure, $argument, $category->getId());
     }
 
     /**
      * @param \App\Model\Product\Flag\Flag $flag
      * @param callable $retrieveProductClosure
-     * @param int $countOfProducts
      * @param \Overblog\GraphQLBundle\Definition\Argument $argument
      * @param \App\Model\Product\Filter\ProductFilterData $productFilterData
      * @return \GraphQL\Executor\Promise\Promise
@@ -62,7 +60,6 @@ class ProductConnectionFactory extends BaseProductConnectionFactory
     public function createConnectionPromiseForFlag(
         Flag $flag,
         callable $retrieveProductClosure,
-        int $countOfProducts,
         Argument $argument,
         ProductFilterData $productFilterData
     ): Promise {
@@ -74,13 +71,12 @@ class ProductConnectionFactory extends BaseProductConnectionFactory
             );
         };
 
-        return $this->getConnectionPromise($retrieveProductClosure, $productFilterOptionsClosure, $countOfProducts, $argument);
+        return $this->getConnectionPromise($retrieveProductClosure, $productFilterOptionsClosure, $argument, $flag->getId());
     }
 
     /**
      * @param \App\Model\Product\Brand\Brand $brand
      * @param callable $retrieveProductClosure
-     * @param int $countOfProducts
      * @param \Overblog\GraphQLBundle\Definition\Argument $argument
      * @param \App\Model\Product\Filter\ProductFilterData $productFilterData
      * @return \GraphQL\Executor\Promise\Promise
@@ -88,7 +84,6 @@ class ProductConnectionFactory extends BaseProductConnectionFactory
     public function createConnectionPromiseForBrand(
         Brand $brand,
         callable $retrieveProductClosure,
-        int $countOfProducts,
         Argument $argument,
         ProductFilterData $productFilterData
     ): Promise {
@@ -100,7 +95,7 @@ class ProductConnectionFactory extends BaseProductConnectionFactory
             );
         };
 
-        return $this->getConnectionPromise($retrieveProductClosure, $productFilterOptionsClosure, $countOfProducts, $argument);
+        return $this->getConnectionPromise($retrieveProductClosure, $productFilterOptionsClosure, $argument, $brand->getId());
     }
 
     /**
@@ -117,7 +112,7 @@ class ProductConnectionFactory extends BaseProductConnectionFactory
         Argument $argument,
         BaseProductFilterData $productFilterData,
         ?string $searchText = null
-    ): ProductConnection {
+    ): BaseProductConnection {
         $productFilterOptionsClosure = function () use ($productFilterData, $searchText) {
             if ($searchText === null) {
                 $productFilterConfig = $this->productFilterFacade->getProductFilterConfigForAll();
@@ -142,20 +137,24 @@ class ProductConnectionFactory extends BaseProductConnectionFactory
     /**
      * @param callable $retrieveProductClosure
      * @param callable $productFilterOptionsClosure
-     * @param int $countOfProducts
      * @param \Overblog\GraphQLBundle\Definition\Argument $argument
+     * @param int $entityId
      * @return \GraphQL\Executor\Promise\Promise
      */
     private function getConnectionPromise(
         callable $retrieveProductClosure,
         callable $productFilterOptionsClosure,
-        int $countOfProducts,
-        Argument $argument
+        Argument $argument,
+        int $entityId
     ): Promise {
-        $paginator = $this->createPaginator($retrieveProductClosure, $productFilterOptionsClosure, $countOfProducts);
+        $paginator = $this->createPaginator($retrieveProductClosure, $productFilterOptionsClosure);
 
         /** @var \GraphQL\Executor\Promise\Promise $promise */
-        $promise = $paginator->auto($argument, $countOfProducts);
+        $promise = $paginator->auto($argument, 0); // actual total count is set after the promise is fulfilled
+
+        $promise->then(function (ProductConnection $productConnection) use ($entityId) {
+            $productConnection->setTotalCount(ProductsBatchLoader::getTotalByEntityId($entityId));
+        });
 
         return $promise;
     }
@@ -163,22 +162,19 @@ class ProductConnectionFactory extends BaseProductConnectionFactory
     /**
      * @param callable $retrieveProductClosure
      * @param callable $productFilterOptionsClosure
-     * @param int $countOfProducts
      * @return \Overblog\GraphQLBundle\Relay\Connection\Paginator
      */
     private function createPaginator(
         callable $retrieveProductClosure,
-        callable $productFilterOptionsClosure,
-        int $countOfProducts
+        callable $productFilterOptionsClosure
     ): Paginator {
         return new Paginator(
             $retrieveProductClosure,
             Paginator::MODE_PROMISE,
-            new ConnectionBuilder(function ($edges, $pageInfo) use ($productFilterOptionsClosure, $countOfProducts) {
+            new ConnectionBuilder(function ($edges, $pageInfo) use ($productFilterOptionsClosure) {
                 return new ProductConnection(
                     $edges,
                     $pageInfo,
-                    $countOfProducts,
                     $productFilterOptionsClosure
                 );
             })
