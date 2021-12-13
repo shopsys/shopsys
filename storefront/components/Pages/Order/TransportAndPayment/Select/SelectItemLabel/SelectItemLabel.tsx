@@ -10,6 +10,7 @@ import { FC } from 'react';
 import { formatPrice } from 'utils/formatting';
 import { PickupPlaceType } from 'connectors/transports/pickupPlace/types';
 import { TFunction } from 'react-i18next';
+import { useShopsysSelector } from 'redux/main';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 
 type SelectItemLabelProps = {
@@ -22,6 +23,7 @@ type SelectItemLabelProps = {
 
 const SelectItemLabel: FC<SelectItemLabelProps> = (props) => {
     const t = useTypedTranslationFunction();
+    const { currencyCode } = useShopsysSelector((state) => state.domain);
 
     return (
         <SelectItemLabelStyled>
@@ -48,7 +50,9 @@ const SelectItemLabel: FC<SelectItemLabelProps> = (props) => {
                     {getDeliveryMessage(props.daysUntilDelivery, props.pickupPlaceDetail !== undefined, t)}
                 </TransportDaysUntilDeliveryStyled>
             )}
-            {props.price !== undefined && <PriceStyled>{formatPrice(props.price.priceWithVat, 'CZK', t)}</PriceStyled>}
+            {props.price !== undefined && (
+                <PriceStyled>{formatPrice(props.price.priceWithVat, currencyCode, t)}</PriceStyled>
+            )}
         </SelectItemLabelStyled>
     );
 };
