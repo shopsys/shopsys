@@ -1,66 +1,28 @@
-import { ImageApiType, ImageType } from 'components/Basic/Image/types';
-import { useFetchQuery } from 'hooks/graphQl/UseFetchQuery';
+import { BlogListQueryApi, useBlogListQueryApi } from 'graphql/generated';
+import { BlogPreviewType } from 'connectors/blogPreview/types';
+import { mapImageApiData } from 'connectors/image/Image';
+import { useQueryError } from 'hooks/graphQl/UseQueryError';
 
-export const blogPreviewQuery = `
-query blogArticles {
-    blogArticles(first: 6, onlyHomepageArticles: true) {
-        edges {
-            node {
-                name
-                link
-                perex
-                image(sizes: "list") {
-                    sizes {
-                        size
-                        url
-                        width
-                        height
-                    }
-                }
-                blogCategories {
-                    name
-                    link
-                    parent {
-                        name
-                    }
-                }
-            }
-        }
+export const blogPreviewVariables = { first: 6, onlyHomepageArticles: true };
+
+const mapBlogPreview = (blogArticles: BlogListQueryApi['blogArticles'] | undefined): BlogPreviewType[] => {
+    const blogArticleEdges = blogArticles?.edges;
+
+    if (blogArticleEdges === null || blogArticleEdges === undefined) {
+        return [];
     }
-} ` as const;
 
-type BlogPreviewCategory = {
-    name: string;
-    link: string;
-    parent: {
-        name: string;
-    };
-};
-
-export type BlogPreviewType = {
-    name: string;
-    link: string;
-    perex: string;
-    image: ImageType | null;
-    blogCategories: BlogPreviewCategory[];
-};
-
-type BlogPreviewApiData = {
-    node: {
-        name: string;
-        link: string;
-        perex: string;
-        image: ImageApiType;
-        blogCategories: BlogPreviewCategory[];
-    };
-};
-
-const mapBlogPreview = (blogArticles: BlogPreviewApiData[]): BlogPreviewType[] => {
     const mappedBlogPreviewArticles = [];
-    for (const blogArticle of blogArticles) {
+    for (const blogArticle of blogArticleEdges) {
+        if (blogArticle?.node === undefined || blogArticle?.node === null) {
+            continue;
+        }
+
         mappedBlogPreviewArticles.push({
             ...blogArticle.node,
-            image: blogArticle.node.image !== null ? blogArticle.node.image.sizes[0] : null,
+            perex:
+                blogArticle.node.perex !== undefined && blogArticle.node.perex !== null ? blogArticle.node.perex : '',
+            image: mapImageApiData([blogArticle.node?.image]),
         });
     }
 
@@ -68,10 +30,13 @@ const mapBlogPreview = (blogArticles: BlogPreviewApiData[]): BlogPreviewType[] =
 };
 
 export const getBlogPreviewArticles = (): BlogPreviewType[] => {
-    const result = useFetchQuery({ query: blogPreviewQuery });
-    const blogPreviewApiData = result?.data?.blogArticles.edges;
+    const [{ data, error }] = useBlogListQueryApi({ variables: blogPreviewVariables });
 
-    if (blogPreviewApiData === undefined) {
+    useQueryError(error);
+
+    const blogPreviewApiData = data?.blogArticles;
+
+    if (blogPreviewApiData === undefined || blogPreviewApiData === null) {
         return [];
     }
 

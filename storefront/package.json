@@ -10,6 +10,7 @@
         "lint--fix": "eslint '*/**/*.{js,ts,tsx}' --fix",
         "format": "prettier --ignore-path .eslintignore --write '*/**/*.{js,ts,tsx}'",
         "translate": "i18next --config config/i18next-parser.config.js",
+        "typecheck": "tsc --pretty --noEmit",
         "styleguide-server": "styleguidist server --config config/styleguide.config.js",
         "styleguide-build": "styleguidist build --config config/styleguide.config.js",
         "gql": "npm run gql:docs && npm run gql:codegen",

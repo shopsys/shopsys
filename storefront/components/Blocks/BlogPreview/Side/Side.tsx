@@ -1,6 +1,6 @@
 import { FC, Fragment } from 'react';
 import { SideContentStyled, SideImageLinkStyled, SideImageStyled, SideItemStyled, SideNameStyled } from './Side.style';
-import { BlogPreviewType } from 'connectors/blogPreview/blogPreview';
+import { BlogPreviewType } from 'connectors/blogPreview/types';
 import Flag from 'components/Basic/Flag';
 import Image from 'components/Basic/Image';
 
@@ -19,11 +19,11 @@ const Side: FC<SideProps> = (props) => {
                         </SideImageLinkStyled>
                     </SideImageStyled>
                     <SideContentStyled>
-                        {blogSideItem.blogCategories.map((blogPreviewCategorie, index) => (
+                        {blogSideItem.blogCategories.map((blogPreviewCategory, index) => (
                             <Fragment key={index}>
-                                {blogPreviewCategorie.parent !== null && (
-                                    <Flag color="#cdb3ff" href={blogPreviewCategorie.link}>
-                                        {blogPreviewCategorie.name}
+                                {blogPreviewCategory.parent !== null && (
+                                    <Flag color="#cdb3ff" href={blogPreviewCategory.link}>
+                                        {blogPreviewCategory.name}
                                     </Flag>
                                 )}
                             </Fragment>
