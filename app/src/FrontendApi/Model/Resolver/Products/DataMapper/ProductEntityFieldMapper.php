@@ -308,7 +308,7 @@ class ProductEntityFieldMapper extends BaseProductEntityFieldMapper
 
     /**
      * @param \App\Model\Product\Product $product
-     * @return array<int, array{store_name: string, availability_information: string, exposed: bool, availability_status: string}>
+     * @return array<int, array{store_name: string, store_id: int, availability_information: string, exposed: bool, availability_status: string}>
      */
     public function getStoreAvailabilities(Product $product): array
     {
@@ -321,6 +321,7 @@ class ProductEntityFieldMapper extends BaseProductEntityFieldMapper
         foreach ($storeAvailabilitiesInformation as $storeAvailabilityInformation) {
             $result[] = [
                 'store_name' => $storeAvailabilityInformation->getStoreName(),
+                'store_id' => $storeAvailabilityInformation->getStoreId(),
                 'availability_information' => $storeAvailabilityInformation->getAvailabilityInformation(),
                 'exposed' => $storeAvailabilityInformation->isExposedProduct(),
                 'availability_status' => $storeAvailabilityInformation->getAvailabilityStatus(),

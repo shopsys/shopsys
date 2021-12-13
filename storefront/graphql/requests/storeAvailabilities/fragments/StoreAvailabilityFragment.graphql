@@ -1,6 +1,8 @@
 fragment StoreAvailabilityFragment on StoreAvailability {
-    storeName
     exposed
     availabilityInformation
     availabilityStatus
+    store {
+        ...StoreDetailFragment
+    }
 }

@@ -26,12 +26,12 @@ const ProductDetailAvailabilityList = forwardRef<HTMLUListElement, ProductDetail
                 {props.storeAvailabilities.map((storeAvailability, index) => (
                     <AvailabilityListItemStyled key={index}>
                         <AvailabilityListItemStoreNameStyled>
-                            {storeAvailability.storeName}
+                            {storeAvailability.store.storeName}
                         </AvailabilityListItemStoreNameStyled>
                         <AvailabilityListItemStatusStyled availabilityStatus={storeAvailability.availabilityStatus}>
                             {storeAvailability.availabilityInformation}
                         </AvailabilityListItemStatusStyled>
-                        <NextLink href="/">
+                        <NextLink href={storeAvailability.store.slug} passHref>
                             <AvailabilityListItemStoreLinkStyled>
                                 {t('Store detail')}
                                 <Icon iconType="icon" icon="ArrowRight" />

@@ -9,6 +9,7 @@ import {
 import { mapListedVariantType, mapProductPriceData, mapSliderProductApiData } from './Products';
 import { ProductDetailImageType, ProductDetailType, ProductParameterType, StoreAvailability } from 'types/product';
 import { MainVariantDetailType } from 'types/product';
+import { mapStoreDetailApiData } from 'connectors/stores/StoreDetail';
 
 export const mapProductDetailApiData = (
     productDetailApiData: ProductDetailFragmentApi,
@@ -51,6 +52,7 @@ export const mapStoreAvailabilities = (apiData: StoreAvailabilityFragmentApi[]):
     return apiData.map((storeAvailabilityApiData) => ({
         ...storeAvailabilityApiData,
         availabilityStatus: storeAvailabilityApiData.availabilityStatus === 'in-stock' ? 'in-stock' : 'out-of-stock',
+        store: mapStoreDetailApiData(storeAvailabilityApiData.store),
     }));
 };
 

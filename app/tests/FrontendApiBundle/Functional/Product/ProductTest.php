@@ -122,7 +122,9 @@ class ProductTest extends GraphQlTestCase
                       url
                     }
                     storeAvailabilities {
-                        storeName
+                        store {
+                            name
+                        }
                         exposed
                         availabilityInformation
                         availabilityStatus
@@ -328,12 +330,16 @@ class ProductTest extends GraphQlTestCase
                     'files' => [],
                     'storeAvailabilities' => [
                         [
-                            'storeName' => 'Ostrava',
+                            'store' => [
+                                'name' => 'Ostrava',
+                            ],
                             'exposed' => true,
                             'availabilityInformation' => 'Ihned k odběru',
                             'availabilityStatus' => 'in-stock',
                         ], [
-                            'storeName' => 'Pardubice',
+                            'store' => [
+                                'name' => 'Pardubice',
+                            ],
                             'exposed' => false,
                             'availabilityInformation' => 'K dispozici za týden',
                             'availabilityStatus' => 'in-stock',

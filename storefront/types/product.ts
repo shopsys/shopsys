@@ -1,6 +1,7 @@
 import { BreadcrumbItemType } from 'types/breadcrumb';
 import { FilterOptionsType } from 'types/productFilter';
 import { ImageType } from 'types/image';
+import { StoreDetailType } from 'types/store';
 
 export type SimpleProductType = {
     __typename?: 'MainVariant' | 'RegularProduct' | 'Variant';
@@ -63,10 +64,10 @@ export type Availability = {
 };
 
 export type StoreAvailability = {
-    storeName: string;
     exposed: boolean;
     availabilityInformation: string;
     availabilityStatus: 'in-stock' | 'out-of-stock';
+    store: StoreDetailType;
 };
 
 export type ProductParameterType = {

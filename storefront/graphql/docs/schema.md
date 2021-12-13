@@ -5834,15 +5834,6 @@ Represents an availability in an individual store
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>storeName</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
-<td>
-
-Name of the store
-
-</td>
-</tr>
-<tr>
 <td colspan="2" valign="top"><strong>exposed</strong></td>
 <td valign="top"><a href="#boolean">Boolean</a>!</td>
 <td>
@@ -5866,6 +5857,15 @@ Detailed information about availability
 <td>
 
 Availability status in a format suitable for usage in the code
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>store</strong></td>
+<td valign="top"><a href="#store">Store</a>!</td>
+<td>
+
+Store
 
 </td>
 </tr>
