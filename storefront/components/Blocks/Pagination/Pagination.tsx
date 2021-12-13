@@ -1,4 +1,4 @@
-import { FC, Fragment, useMemo, useState } from 'react';
+import { FC, Fragment, useEffect, useMemo, useState } from 'react';
 import { initialState, userActions } from 'redux/slices/user';
 import { PaginationButtonStyled, PaginationWrapperStyled } from './Pagination.style';
 import { useShopsysDispatch, useShopsysSelector } from 'redux/main';
@@ -8,6 +8,7 @@ import { mobileFirstSizes } from 'components/Theme/mediaQueries';
 import { useGetWindowSize } from 'hooks/ui/UseGetWindowSize';
 import { usePagination } from 'hooks/ui/usePagination';
 import { useResizeWidthEffect } from 'hooks/ui/UseResizeWidthEffect';
+import { useRouter } from 'next/router';
 
 export type PaginationButtonActiveType = {
     active?: boolean;
@@ -19,6 +20,7 @@ export type PaginationProps = {
 };
 
 const Pagination: FC<PaginationProps> = (props): JSX.Element | null => {
+    const router = useRouter();
     const dispatch = useShopsysDispatch();
     const { width } = useGetWindowSize();
     const [isMobilePaginationVisible, setMobilePaginationVisible] = useState(false);
@@ -39,6 +41,9 @@ const Pagination: FC<PaginationProps> = (props): JSX.Element | null => {
             initialState.pagination.pageSize,
         );
     }, [props.totalCount, paginationState.currentPage, isMobilePaginationVisible, initialState.pagination.pageSize]);
+    useEffect(() => {
+        dispatch(userActions.setPagination({ ...initialState.pagination }));
+    }, [router.asPath]);
 
     if (paginationButtons === undefined || paginationButtons === null) {
         return null;
