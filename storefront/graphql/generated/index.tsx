@@ -68,6 +68,19 @@ export type AddToCartResultApi = CartInterfaceApi & {
   uuid?: Maybe<Scalars['Uuid']>;
 };
 
+/** Represents a singe additional image size */
+export type AdditionalSizeApi = {
+  __typename?: 'AdditionalSize';
+  /** Height in pixels defined in images.yaml */
+  height?: Maybe<Scalars['Int']>;
+  /** Recommended media query defined in images.yaml */
+  media: Scalars['String'];
+  /** URL address of image */
+  url: Scalars['String'];
+  /** Width in pixels defined in images.yaml */
+  width?: Maybe<Scalars['Int']>;
+};
+
 export type AdvertApi = {
   /** Name of advert */
   name: Scalars['String'];
@@ -715,6 +728,8 @@ export type ImageApi = {
 /** Represents a single image size */
 export type ImageSizeApi = {
   __typename?: 'ImageSize';
+  /** Additional sizes for different screen types */
+  additionalSizes: Array<AdditionalSizeApi>;
   /** Height in pixels defined in images.yaml */
   height?: Maybe<Scalars['Int']>;
   /** Image size defined in images.yaml */

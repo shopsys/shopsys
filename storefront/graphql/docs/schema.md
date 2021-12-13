@@ -8,6 +8,7 @@
   * [Objects](#objects)
     * [AddProductResult](#addproductresult)
     * [AddToCartResult](#addtocartresult)
+    * [AdditionalSize](#additionalsize)
     * [AdvertCode](#advertcode)
     * [AdvertImage](#advertimage)
     * [AdvertPosition](#advertposition)
@@ -1147,6 +1148,59 @@ Remaining amount for free transport and payment; null = transport cannot be free
 <td colspan="2" valign="top"><strong>addProductResult</strong></td>
 <td valign="top"><a href="#addproductresult">AddProductResult</a>!</td>
 <td></td>
+</tr>
+</tbody>
+</table>
+
+### AdditionalSize
+
+Represents a singe additional image size
+
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="right">Argument</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong>url</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+URL address of image
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>width</strong></td>
+<td valign="top"><a href="#int">Int</a></td>
+<td>
+
+Width in pixels defined in images.yaml
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>height</strong></td>
+<td valign="top"><a href="#int">Int</a></td>
+<td>
+
+Height in pixels defined in images.yaml
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>media</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Recommended media query defined in images.yaml
+
+</td>
 </tr>
 </tbody>
 </table>
@@ -3293,6 +3347,15 @@ Width in pixels defined in images.yaml
 <td>
 
 Height in pixels defined in images.yaml
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>additionalSizes</strong></td>
+<td valign="top">[<a href="#additionalsize">AdditionalSize</a>!]!</td>
+<td>
+
+Additional sizes for different screen types
 
 </td>
 </tr>

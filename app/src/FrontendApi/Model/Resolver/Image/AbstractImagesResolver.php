@@ -123,6 +123,12 @@ abstract class AbstractImagesResolver implements ResolverInterface
                 $sizeConfig->getName(),
                 $image->getType()
             ),
+            'additionalSizes' => $this->imageFacade->getAdditionalImagesData(
+                $this->domain->getCurrentDomainConfig(),
+                $image,
+                $sizeConfig->getName(),
+                $image->getType()
+            ),
         ];
     }
 

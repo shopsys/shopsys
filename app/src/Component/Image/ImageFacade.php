@@ -14,7 +14,6 @@ use League\Flysystem\MountManager;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\FileUpload\FileUpload;
 use Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadData;
-use Shopsys\FrameworkBundle\Component\Image\AdditionalImageData;
 use Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig;
 use Shopsys\FrameworkBundle\Component\Image\Exception\ImageNotFoundException;
 use Shopsys\FrameworkBundle\Component\Image\Image as BaseImage;
@@ -34,7 +33,6 @@ use Shopsys\FrameworkBundle\Component\String\TransformString;
  * @method \App\Component\Image\Image[] getImagesByEntityIdAndNameIndexedById(int $entityId, string $entityName, string|null $type)
  * @method \App\Component\Image\Image[] getAllImagesByEntity(object $entity)
  * @method deleteImageFiles(\App\Component\Image\Image $image)
- * @method \Shopsys\FrameworkBundle\Component\Image\AdditionalImageData[] getAdditionalImagesData(\Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig, \App\Component\Image\Image $imageOrEntity, string|null $sizeName, string|null $type)
  * @method \App\Component\Image\Image getImageByObject(\App\Component\Image\Image|object $imageOrEntity, string|null $type = null)
  * @method \App\Component\Image\Image getById(int $imageId)
  * @method \App\Component\Image\Image[] getImagesByEntitiesIndexedByEntityId(int[] $entityIds, string $entityClass)
@@ -197,12 +195,40 @@ class ImageFacade extends BaseImageFacade
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
+     * @param \App\Component\Image\Image $imageOrEntity
+     * @param string|null $sizeName
+     * @param string|null $type
+     * @return \App\Component\Image\AdditionalImageData[]
+     */
+    public function getAdditionalImagesData(DomainConfig $domainConfig, $imageOrEntity, ?string $sizeName, ?string $type): array
+    {
+        $image = $this->getImageByObject($imageOrEntity, $type);
+
+        $entityConfig = $this->imageConfig->getEntityConfigByEntityName($image->getEntityName());
+        $sizeConfig = $entityConfig->getSizeConfigByType($type, $sizeName);
+
+        $result = [];
+        foreach ($sizeConfig->getAdditionalSizes() as $additionalSizeIndex => $additionalSizeConfig) {
+            $url = $this->getAdditionalImageUrl($domainConfig, $additionalSizeIndex, $image, $sizeName);
+            $result[] = new AdditionalImageData(
+                $additionalSizeConfig->getMedia(),
+                $url,
+                $additionalSizeConfig->getWidth(),
+                $additionalSizeConfig->getHeight()
+            );
+        }
+
+        return $result;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @param int $id
      * @param string $extension
      * @param string $entityName
      * @param string|null $type
      * @param string|null $sizeName
-     * @return \Shopsys\FrameworkBundle\Component\Image\AdditionalImageData[]
+     * @return \App\Component\Image\AdditionalImageData[]
      */
     public function getAdditionalImagesDataFromAttributes(
         DomainConfig $domainConfig,
@@ -220,7 +246,12 @@ class ImageFacade extends BaseImageFacade
             $image = $this->imageRepository->getById($id);
             $imageUrl = $this->getAdditionalImageUrl($domainConfig, $additionalSizeIndex, $image, $sizeName);
 
-            $result[] = new AdditionalImageData($additionalSizeConfig->getMedia(), $imageUrl);
+            $result[] = new AdditionalImageData(
+                $additionalSizeConfig->getMedia(),
+                $imageUrl,
+                $additionalSizeConfig->getWidth(),
+                $additionalSizeConfig->getHeight()
+            );
         }
 
         return $result;

@@ -100,7 +100,7 @@ class ImageExtension extends BaseImageExtension
      * @deprecated Method will be moved to framework in the SSFW 10
      * @param array $attributes
      * @param string $entityName
-     * @param \Shopsys\FrameworkBundle\Component\Image\AdditionalImageData[] $additionalImagesData
+     * @param \App\Component\Image\AdditionalImageData[] $additionalImagesData
      * @return string
      */
     protected function getImageHtmlByEntityName(array $attributes, $entityName, $additionalImagesData = []): string

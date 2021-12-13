@@ -39,6 +39,12 @@ class ProductImagesTest extends GraphQlTestCase
                             size
                             width
                             height
+                            additionalSizes {
+                                url
+                                width
+                                height
+                                media
+                            }
                         }
                     }
                 }
@@ -58,55 +64,138 @@ class ProductImagesTest extends GraphQlTestCase
                             "url": "' . $this->getFullUrlPath('/content-test/images/product/default/22-sencor-sle-22f46dm4-hello-kitty_1.jpg') . '",
                             "size": "default",
                             "width": 605,
-                            "height": null
+                            "height": null,
+                            "additionalSizes": [
+                                {
+                                  "url": "' . $this->getFullUrlPath('/content-test/images/product/default/0--22-sencor-sle-22f46dm4-hello-kitty_1.jpg') . '",
+                                  "width": 710,
+                                  "height": null,
+                                  "media": "(min-width: 480px) and (max-width: 768px)"
+                                },
+                                {
+                                  "url": "' . $this->getFullUrlPath('/content-test/images/product/default/1--22-sencor-sle-22f46dm4-hello-kitty_1.jpg') . '",
+                                  "width": 1210,
+                                  "height": null,
+                                  "media": "only screen and (min-width: 769px) and (-webkit-min-device-pixel-ratio: 1.5)"
+                                }
+                            ]
                         },
                         {
                             "url": "' . $this->getFullUrlPath('/content-test/images/product/galleryThumbnail/22-sencor-sle-22f46dm4-hello-kitty_1.jpg') . '",
                             "size": "galleryThumbnail",
                             "width": 64,
-                            "height": 64
+                            "height": 64,
+                            "additionalSizes": [
+                                {
+                                  "url": "' . $this->getFullUrlPath('/content-test/images/product/galleryThumbnail/0--22-sencor-sle-22f46dm4-hello-kitty_1.jpg') . '",
+                                  "width": 128,
+                                  "height": 128,
+                                  "media": "only screen and (-webkit-min-device-pixel-ratio: 1.5)"
+                                },
+                                {
+                                  "url": "' . $this->getFullUrlPath('/content-test/images/product/galleryThumbnail/1--22-sencor-sle-22f46dm4-hello-kitty_1.jpg') . '",
+                                  "width": 1210,
+                                  "height": null,
+                                  "media": "only screen and (max-width: 768px) and (-webkit-min-device-pixel-ratio: 1.5)"
+                                },
+                                {
+                                  "url": "' . $this->getFullUrlPath('/content-test/images/product/galleryThumbnail/2--22-sencor-sle-22f46dm4-hello-kitty_1.jpg') . '",
+                                  "width": 605,
+                                  "height": null,
+                                  "media": "(max-width: 768px)"
+                                }
+                            ]
                         },
                         {
                             "url": "' . $this->getFullUrlPath('/content-test/images/product/modal/22-sencor-sle-22f46dm4-hello-kitty_1.jpg') . '",
                             "size": "modal",
                             "width": 96,
-                            "height": null
+                            "height": null,
+                            "additionalSizes": [
+                                {
+                                  "url": "' . $this->getFullUrlPath('/content-test/images/product/modal/0--22-sencor-sle-22f46dm4-hello-kitty_1.jpg') . '",
+                                  "width": 192,
+                                  "height": null,
+                                  "media": "only screen and (-webkit-min-device-pixel-ratio: 1.5)"
+                                }
+                            ]
                         },
                         {
                             "url": "' . $this->getFullUrlPath('/content-test/images/product/list/22-sencor-sle-22f46dm4-hello-kitty_1.jpg') . '",
                             "size": "list",
                             "width": 160,
-                            "height": 160
+                            "height": 160,
+                            "additionalSizes": [
+                                {
+                                  "url": "' . $this->getFullUrlPath('/content-test/images/product/list/0--22-sencor-sle-22f46dm4-hello-kitty_1.jpg') . '",
+                                  "width": 320,
+                                  "height": 320,
+                                  "media": "only screen and (-webkit-min-device-pixel-ratio: 1.5)"
+                                }
+                            ]
                         },
                         {
                             "url": "' . $this->getFullUrlPath('/content-test/images/product/thumbnail/22-sencor-sle-22f46dm4-hello-kitty_1.jpg') . '",
                             "size": "thumbnail",
                             "width": 90,
-                            "height": 63
+                            "height": 63,
+                            "additionalSizes": [
+                                {
+                                  "url": "' . $this->getFullUrlPath('/content-test/images/product/thumbnail/0--22-sencor-sle-22f46dm4-hello-kitty_1.jpg') . '",
+                                  "width": 180,
+                                  "height": 126,
+                                  "media": "only screen and (-webkit-min-device-pixel-ratio: 1.5)"
+                                }
+                            ]
                         },
                         {
                             "url": "' . $this->getFullUrlPath('/content-test/images/product/thumbnailSmall/22-sencor-sle-22f46dm4-hello-kitty_1.jpg') . '",
                             "size": "thumbnailSmall",
                             "width": 43,
-                            "height": 28
+                            "height": 28,
+                            "additionalSizes": [
+                                {
+                                  "url": "' . $this->getFullUrlPath('/content-test/images/product/thumbnailSmall/0--22-sencor-sle-22f46dm4-hello-kitty_1.jpg') . '",
+                                  "width": 86,
+                                  "height": 56,
+                                  "media": "only screen and (-webkit-min-device-pixel-ratio: 1.5)"
+                                }
+                            ]
                         },
                         {
                             "url": "' . $this->getFullUrlPath('/content-test/images/product/thumbnailExtraSmall/22-sencor-sle-22f46dm4-hello-kitty_1.jpg') . '",
                             "size": "thumbnailExtraSmall",
                             "width": 54,
-                            "height": 54
+                            "height": 54,
+                            "additionalSizes": [
+                                {
+                                  "url": "' . $this->getFullUrlPath('/content-test/images/product/thumbnailExtraSmall/0--22-sencor-sle-22f46dm4-hello-kitty_1.jpg') . '",
+                                  "width": 108,
+                                  "height": 108,
+                                  "media": "only screen and (-webkit-min-device-pixel-ratio: 1.5)"
+                                }
+                            ]
                         },
                         {
                             "url": "' . $this->getFullUrlPath('/content-test/images/product/thumbnailMedium/22-sencor-sle-22f46dm4-hello-kitty_1.jpg') . '",
                             "size": "thumbnailMedium",
                             "width": 72,
-                            "height": 48
+                            "height": 48,
+                            "additionalSizes": [
+                                {
+                                  "url": "' . $this->getFullUrlPath('/content-test/images/product/thumbnailMedium/0--22-sencor-sle-22f46dm4-hello-kitty_1.jpg') . '",
+                                  "width": 144,
+                                  "height": 96,
+                                  "media": "only screen and (-webkit-min-device-pixel-ratio: 1.5)"
+                                }
+                            ]
                         },
                         {
                             "url": "' . $this->getFullUrlPath('/content-test/images/product/original/22-sencor-sle-22f46dm4-hello-kitty_1.jpg') . '",
                             "size": "original",
                             "width": null,
-                            "height": null
+                            "height": null,
+                            "additionalSizes": []
                         }
                     ]
                 },
@@ -118,55 +207,138 @@ class ProductImagesTest extends GraphQlTestCase
                             "url": "' . $this->getFullUrlPath('/content-test/images/product/default/22-sencor-sle-22f46dm4-hello-kitty_64.jpg') . '",
                             "size": "default",
                             "width": 605,
-                            "height": null
+                            "height": null,
+                            "additionalSizes": [
+                                {
+                                  "url": "' . $this->getFullUrlPath('/content-test/images/product/default/0--22-sencor-sle-22f46dm4-hello-kitty_64.jpg') . '",
+                                  "width": 710,
+                                  "height": null,
+                                  "media": "(min-width: 480px) and (max-width: 768px)"
+                                },
+                                {
+                                  "url": "' . $this->getFullUrlPath('/content-test/images/product/default/1--22-sencor-sle-22f46dm4-hello-kitty_64.jpg') . '",
+                                  "width": 1210,
+                                  "height": null,
+                                  "media": "only screen and (min-width: 769px) and (-webkit-min-device-pixel-ratio: 1.5)"
+                                }
+                            ]
                         },
                         {
                             "url": "' . $this->getFullUrlPath('/content-test/images/product/galleryThumbnail/22-sencor-sle-22f46dm4-hello-kitty_64.jpg') . '",
                             "size": "galleryThumbnail",
                             "width": 64,
-                            "height": 64
+                            "height": 64,
+                            "additionalSizes": [
+                                {
+                                  "url": "' . $this->getFullUrlPath('/content-test/images/product/galleryThumbnail/0--22-sencor-sle-22f46dm4-hello-kitty_64.jpg') . '",
+                                  "width": 128,
+                                  "height": 128,
+                                  "media": "only screen and (-webkit-min-device-pixel-ratio: 1.5)"
+                                },
+                                {
+                                  "url": "' . $this->getFullUrlPath('/content-test/images/product/galleryThumbnail/1--22-sencor-sle-22f46dm4-hello-kitty_64.jpg') . '",
+                                  "width": 1210,
+                                  "height": null,
+                                  "media": "only screen and (max-width: 768px) and (-webkit-min-device-pixel-ratio: 1.5)"
+                                },
+                                {
+                                  "url": "' . $this->getFullUrlPath('/content-test/images/product/galleryThumbnail/2--22-sencor-sle-22f46dm4-hello-kitty_64.jpg') . '",
+                                  "width": 605,
+                                  "height": null,
+                                  "media": "(max-width: 768px)"
+                                }
+                            ]
                         },
                         {
                             "url": "' . $this->getFullUrlPath('/content-test/images/product/modal/22-sencor-sle-22f46dm4-hello-kitty_64.jpg') . '",
                             "size": "modal",
                             "width": 96,
-                            "height": null
+                            "height": null,
+                            "additionalSizes": [
+                                {
+                                  "url": "' . $this->getFullUrlPath('/content-test/images/product/modal/0--22-sencor-sle-22f46dm4-hello-kitty_64.jpg') . '",
+                                  "width": 192,
+                                  "height": null,
+                                  "media": "only screen and (-webkit-min-device-pixel-ratio: 1.5)"
+                                }
+                            ]
                         },
                         {
                             "url": "' . $this->getFullUrlPath('/content-test/images/product/list/22-sencor-sle-22f46dm4-hello-kitty_64.jpg') . '",
                             "size": "list",
                             "width": 160,
-                            "height": 160
+                            "height": 160,
+                            "additionalSizes": [
+                                {
+                                  "url": "' . $this->getFullUrlPath('/content-test/images/product/list/0--22-sencor-sle-22f46dm4-hello-kitty_64.jpg') . '",
+                                  "width": 320,
+                                  "height": 320,
+                                  "media": "only screen and (-webkit-min-device-pixel-ratio: 1.5)"
+                                }
+                            ]
                         },
                         {
                             "url": "' . $this->getFullUrlPath('/content-test/images/product/thumbnail/22-sencor-sle-22f46dm4-hello-kitty_64.jpg') . '",
                             "size": "thumbnail",
                             "width": 90,
-                            "height": 63
+                            "height": 63,
+                            "additionalSizes": [
+                                {
+                                  "url": "' . $this->getFullUrlPath('/content-test/images/product/thumbnail/0--22-sencor-sle-22f46dm4-hello-kitty_64.jpg') . '",
+                                  "width": 180,
+                                  "height": 126,
+                                  "media": "only screen and (-webkit-min-device-pixel-ratio: 1.5)"
+                                }
+                            ]
                         },
                         {
                             "url": "' . $this->getFullUrlPath('/content-test/images/product/thumbnailSmall/22-sencor-sle-22f46dm4-hello-kitty_64.jpg') . '",
                             "size": "thumbnailSmall",
                             "width": 43,
-                            "height": 28
+                            "height": 28,
+                            "additionalSizes": [
+                                {
+                                  "url": "' . $this->getFullUrlPath('/content-test/images/product/thumbnailSmall/0--22-sencor-sle-22f46dm4-hello-kitty_64.jpg') . '",
+                                  "width": 86,
+                                  "height": 56,
+                                  "media": "only screen and (-webkit-min-device-pixel-ratio: 1.5)"
+                                }
+                            ]
                         },
                         {
                             "url": "' . $this->getFullUrlPath('/content-test/images/product/thumbnailExtraSmall/22-sencor-sle-22f46dm4-hello-kitty_64.jpg') . '",
                             "size": "thumbnailExtraSmall",
                             "width": 54,
-                            "height": 54
+                            "height": 54,
+                            "additionalSizes": [
+                                {
+                                  "url": "' . $this->getFullUrlPath('/content-test/images/product/thumbnailExtraSmall/0--22-sencor-sle-22f46dm4-hello-kitty_64.jpg') . '",
+                                  "width": 108,
+                                  "height": 108,
+                                  "media": "only screen and (-webkit-min-device-pixel-ratio: 1.5)"
+                                }
+                            ]
                         },
                         {
                             "url": "' . $this->getFullUrlPath('/content-test/images/product/thumbnailMedium/22-sencor-sle-22f46dm4-hello-kitty_64.jpg') . '",
                             "size": "thumbnailMedium",
                             "width": 72,
-                            "height": 48
+                            "height": 48,
+                            "additionalSizes": [
+                                {
+                                  "url": "' . $this->getFullUrlPath('/content-test/images/product/thumbnailMedium/0--22-sencor-sle-22f46dm4-hello-kitty_64.jpg') . '",
+                                  "width": 144,
+                                  "height": 96,
+                                  "media": "only screen and (-webkit-min-device-pixel-ratio: 1.5)"
+                                }
+                            ]
                         },
                         {
                             "url": "' . $this->getFullUrlPath('/content-test/images/product/original/22-sencor-sle-22f46dm4-hello-kitty_64.jpg') . '",
                             "size": "original",
                             "width": null,
-                            "height": null
+                            "height": null,
+                            "additionalSizes": []
                         }
                     ]
                 }
