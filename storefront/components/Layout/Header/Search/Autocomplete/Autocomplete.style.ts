@@ -37,7 +37,7 @@ export const AutocompleteBodyStyled = styled.div<WithIsActiveStyledProps>`
         top: 0;
         left: 10px;
         right: 10px;
-        z-index: ${theme.zIndex.aboveOverlay + 1};
+        z-index: ${theme.zIndex.aboveMenu};
         padding: 0 30px 25px;
         background: ${theme.color.creamWhite};
         box-shadow: 0 5px 10px 0 rgba(164, 167, 193, 0.34);

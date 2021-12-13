@@ -66,11 +66,14 @@ export const theme = {
     },
 
     zIndex: {
+        hidden: -1000,
         above: 1,
         overlay: 500,
         menu: 501,
         aboveMenu: 750,
+        cart: 6000,
         aboveOverlay: 10001,
+        maximum: 10100,
     },
 
     boxShadow: {

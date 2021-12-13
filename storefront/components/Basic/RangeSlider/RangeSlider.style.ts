@@ -99,22 +99,26 @@ export const RangeSliderStyled = styled.div`
 `;
 
 export const RangeSliderTrackStyled = styled.div`
-    position: absolute;
-    height: 5px;
-    width: 100%;
-    z-index: 1;
+    ${({ theme }) => css`
+        position: absolute;
+        height: 5px;
+        width: 100%;
+        z-index: ${theme.zIndex.above};
 
-    background-color: ${localVariables.RangeSliderTrackBackground};
-    border-radius: 3px;
+        background-color: ${localVariables.RangeSliderTrackBackground};
+        border-radius: 3px;
+    `}
 `;
 
 export const RangeSliderRangeStyled = styled.div`
-    position: absolute;
-    height: 5px;
-    z-index: 2;
+    ${({ theme }) => css`
+        position: absolute;
+        height: 5px;
+        z-index: ${theme.zIndex.above} + 1;
 
-    border-radius: 3px;
-    background-color: ${localVariables.RangeSliderRangeBackground};
+        border-radius: 3px;
+        background-color: ${localVariables.RangeSliderRangeBackground};
+    `}
 `;
 
 export const RangeSliderLeftThumbStyled = styled.input<RangeSliderThumbPropsStyled>`

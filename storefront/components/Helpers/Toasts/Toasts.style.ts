@@ -66,7 +66,7 @@ export const ToastsStyle = createGlobalStyle`
             --toastify-toast-min-height: 48px;
             --toastify-toast-width: 700px;
             --toastify-font-family: sans-serif;
-            --toastify-z-index: 9999;
+            --toastify-z-index: ${theme.zIndex.maximum};
         }
     `}
 `;

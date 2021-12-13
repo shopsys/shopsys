@@ -12,7 +12,7 @@ const HamburgerMenu: FC<HamburgerMenuProps> = (props) => {
     const t = useTypedTranslationFunction();
 
     return (
-        <HamburgerMenuStyled onClick={props.onMenuToggleHandler}>
+        <HamburgerMenuStyled onClick={props.onMenuToggleHandler} isOpen={props.isMenuOpened}>
             <HamburgerMenuImageStyled>
                 <HamburgerIcon isMenuOpened={props.isMenuOpened} />
             </HamburgerMenuImageStyled>

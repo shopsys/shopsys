@@ -25,7 +25,7 @@ export const SearchInStyled = styled.div`
             position: absolute;
             left: 0;
             top: 0;
-            z-index: ${theme.zIndex.aboveOverlay + 1};
+            z-index: ${theme.zIndex.aboveMenu};
         }
     `}
 `;
@@ -39,7 +39,7 @@ export const SearchFormStyled = styled.form<WithIsActiveStyledProps>`
 
         ${isActive &&
         css`
-            z-index: ${theme.zIndex.aboveOverlay + 2};
+            z-index: ${theme.zIndex.aboveMenu + 1};
         `};
 
         & input {
