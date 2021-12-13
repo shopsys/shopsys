@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "70ad244a9a2f96660d368f0caec08bd8",
+    "content-hash": "545141220157b783b90ef10fd27764ca",
     "packages": [
         {
             "name": "adoy/fastcgi-client",
@@ -6469,6 +6469,128 @@
             "time": "2021-05-03T19:11:20+00:00"
         },
         {
+            "name": "overblog/dataloader-bundle",
+            "version": "v0.5.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/overblog/dataloader-bundle.git",
+                "reference": "37c56f04ed49ea52c7d2612fd70b887a9f9fd8ae"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/overblog/dataloader-bundle/zipball/37c56f04ed49ea52c7d2612fd70b887a9f9fd8ae",
+                "reference": "37c56f04ed49ea52c7d2612fd70b887a9f9fd8ae",
+                "shasum": ""
+            },
+            "require": {
+                "overblog/dataloader-php": "^0.5.0 || ^0.6.0",
+                "php": ">=7.2",
+                "symfony/dependency-injection": "^4.3 || ^5.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^4.1 || ^5.5 || ^6.5 || ^7.5 || ^8.5",
+                "react/promise": "^2.5",
+                "symfony/dependency-injection": "^4.3 || ^5.0",
+                "symfony/framework-bundle": "^4.3 || ^5.0",
+                "symfony/phpunit-bridge": "^4.3 || ^5.0",
+                "symfony/yaml": "^4.3 || ^5.0"
+            },
+            "type": "symfony-bundle",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "0.5-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Overblog\\DataLoaderBundle\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Overblog",
+                    "homepage": "http://www.over-blog.com"
+                }
+            ],
+            "description": "DataLoader Symfony bundle implementation.",
+            "keywords": [
+                "Batching",
+                "caching",
+                "dataLoader"
+            ],
+            "support": {
+                "issues": "https://github.com/overblog/dataloader-bundle/issues",
+                "source": "https://github.com/overblog/dataloader-bundle/tree/v0.5.2"
+            },
+            "time": "2021-04-07T08:16:07+00:00"
+        },
+        {
+            "name": "overblog/dataloader-php",
+            "version": "v0.6.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/overblog/dataloader-php.git",
+                "reference": "69ae4b7107231a95018c9039293a7fea9e800e09"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/overblog/dataloader-php/zipball/69ae4b7107231a95018c9039293a7fea9e800e09",
+                "reference": "69ae4b7107231a95018c9039293a7fea9e800e09",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.1|^8.0"
+            },
+            "replace": {
+                "overblog/promise-adapter": "self.version"
+            },
+            "require-dev": {
+                "guzzlehttp/promises": "^1.3.0",
+                "phpunit/phpunit": "^7.5|^8.5",
+                "react/promise": "^2.5.0",
+                "webonyx/graphql-php": "^14.0"
+            },
+            "suggest": {
+                "guzzlehttp/promises": "To use with Guzzle promise",
+                "react/promise": "To use with ReactPhp promise",
+                "webonyx/graphql-php": "To use with Webonyx GraphQL native promise"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "0.6-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Overblog\\DataLoader\\": "src/",
+                    "Overblog\\PromiseAdapter\\": "lib/promise-adapter/src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "DataLoaderPhp is a generic utility to be used as part of your application's data fetching layer to provide a simplified and consistent API over various remote data sources such as databases or web services via batching and caching.",
+            "keywords": [
+                "Batching",
+                "caching",
+                "dataLoader"
+            ],
+            "support": {
+                "issues": "https://github.com/overblog/dataloader-php/issues",
+                "source": "https://github.com/overblog/dataloader-php/tree/v0.6.0"
+            },
+            "time": "2021-01-13T11:41:29+00:00"
+        },
+        {
             "name": "overblog/graphiql-bundle",
             "version": "v0.2.1",
             "source": {
@@ -8340,6 +8462,16 @@
                 "source": "https://github.com/ramsey/uuid",
                 "wiki": "https://github.com/ramsey/uuid/wiki"
             },
+            "funding": [
+                {
+                    "url": "https://github.com/ramsey",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/ramsey/uuid",
+                    "type": "tidelift"
+                }
+            ],
             "time": "2020-02-21T04:36:14+00:00"
         },
         {
@@ -9400,6 +9532,9 @@
                 "Shopsys Framework",
                 "form"
             ],
+            "support": {
+                "source": "https://github.com/shopsys/form-types-bundle/tree/v9.1.2"
+            },
             "time": "2021-07-01T08:28:33+00:00"
         },
         {
@@ -9529,6 +9664,9 @@
                 "proprietary"
             ],
             "description": "Core of Shopsys Framework - open source framework for building large, scalable, fast-growing e-commerce projects based on Symfony",
+            "support": {
+                "source": "https://github.com/shopsys/framework/tree/v9.1.2"
+            },
             "time": "2021-07-01T08:28:33+00:00"
         },
         {
@@ -9587,6 +9725,9 @@
                 "api",
                 "graphql"
             ],
+            "support": {
+                "source": "https://github.com/shopsys/frontend-api/tree/v9.1.2"
+            },
             "time": "2021-07-01T08:28:33+00:00"
         },
         {
@@ -9642,6 +9783,10 @@
                 "Shopsys Framework",
                 "google cloud"
             ],
+            "support": {
+                "issues": "https://github.com/shopsys/google-cloud-bundle/issues",
+                "source": "https://github.com/shopsys/google-cloud-bundle/tree/v9.1.2"
+            },
             "time": "2021-07-01T08:28:33+00:00"
         },
         {
@@ -9705,6 +9850,9 @@
                 "orm",
                 "schema"
             ],
+            "support": {
+                "source": "https://github.com/shopsys/migrations/tree/v9.1.2"
+            },
             "time": "2021-07-01T08:28:33+00:00"
         },
         {
@@ -9801,6 +9949,9 @@
                 "Shopsys Framework",
                 "plugin"
             ],
+            "support": {
+                "source": "https://github.com/shopsys/plugin-interface/tree/v9.1.2"
+            },
             "time": "2021-07-01T08:28:33+00:00"
         },
         {
@@ -9915,6 +10066,9 @@
                 "plugin",
                 "product feed"
             ],
+            "support": {
+                "source": "https://github.com/shopsys/product-feed-google/tree/v9.1.2"
+            },
             "time": "2021-07-01T08:28:33+00:00"
         },
         {
@@ -9983,6 +10137,9 @@
                 "plugin",
                 "product feed"
             ],
+            "support": {
+                "source": "https://github.com/shopsys/product-feed-heureka/tree/v9.1.2"
+            },
             "time": "2021-07-01T08:28:33+00:00"
         },
         {
@@ -10042,6 +10199,9 @@
                 "plugin",
                 "product delivery feed"
             ],
+            "support": {
+                "source": "https://github.com/shopsys/product-feed-heureka-delivery/tree/v9.1.2"
+            },
             "time": "2021-07-01T08:28:33+00:00"
         },
         {
@@ -10107,6 +10267,9 @@
                 "product feed",
                 "zbozi"
             ],
+            "support": {
+                "source": "https://github.com/shopsys/product-feed-zbozi/tree/v9.1.2"
+            },
             "time": "2021-07-01T08:28:33+00:00"
         },
         {
@@ -10160,6 +10323,9 @@
                 "Shopsys Framework",
                 "read model"
             ],
+            "support": {
+                "source": "https://github.com/shopsys/read-model/tree/v9.1.2"
+            },
             "time": "2021-07-01T08:28:33+00:00"
         },
         {
@@ -10633,6 +10799,7 @@
                     "type": "tidelift"
                 }
             ],
+            "abandoned": "symfony/mailer",
             "time": "2021-03-09T12:30:35+00:00"
         },
         {
@@ -19307,6 +19474,9 @@
                 "code quality",
                 "coding standards"
             ],
+            "support": {
+                "source": "https://github.com/shopsys/coding-standards/tree/v9.1.2"
+            },
             "time": "2021-06-08T13:45:52+00:00"
         },
         {
@@ -19363,6 +19533,9 @@
                 "symfony",
                 "testing"
             ],
+            "support": {
+                "source": "https://github.com/shopsys/http-smoke-testing/tree/v9.1.2"
+            },
             "time": "2021-07-01T08:28:33+00:00"
         },
         {

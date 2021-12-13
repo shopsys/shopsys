@@ -44,4 +44,5 @@ return [
     Shopsys\FrontendApiBundle\ShopsysFrontendApiBundle::class => ['all' => true],
     DAMA\DoctrineTestBundle\DAMADoctrineTestBundle::class => ['test' => true],
     Sentry\SentryBundle\SentryBundle::class => ['all' => true],
+    Overblog\DataLoaderBundle\OverblogDataLoaderBundle::class => ['all' => true],
 ];

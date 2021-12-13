@@ -16,3 +16,9 @@ overblog_graphql:
     security:
         handle_cors: true
         query_max_complexity: 1000
+    services:
+        promise_adapter: "webonyx_graphql.sync_promise_adapter"
+
+overblog_dataloader:
+    defaults:
+        promise_adapter: "overblog_dataloader.webonyx_graphql_sync_promise_adapter"

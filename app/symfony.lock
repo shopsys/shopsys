@@ -444,6 +444,12 @@
     "ocramius/proxy-manager": {
         "version": "2.2.3"
     },
+    "overblog/dataloader-bundle": {
+        "version": "v0.5.2"
+    },
+    "overblog/dataloader-php": {
+        "version": "v0.6.0"
+    },
     "overblog/graphiql-bundle": {
         "version": "0.1",
         "recipe": {
