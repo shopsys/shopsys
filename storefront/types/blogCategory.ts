@@ -1,5 +1,5 @@
 import { BlogArticlesType } from './blogArticle';
-import { BreadcrumbItemType } from 'connectors/breadcrumb/Breadcrumb';
+import { BreadcrumbItemType } from 'types/breadcrumb';
 
 export type BlogCategoryItem = {
     uuid: string;

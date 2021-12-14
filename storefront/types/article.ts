@@ -1,4 +1,4 @@
-import { BreadcrumbItemType } from 'connectors/breadcrumb/Breadcrumb';
+import { BreadcrumbItemType } from 'types/breadcrumb';
 
 export type ArticleDetailType = {
     __typename: 'Article';

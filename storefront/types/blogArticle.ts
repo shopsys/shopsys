@@ -1,7 +1,7 @@
 import { PageInfoType, SliderProductItemType } from 'components/Blocks/Product/types';
 import { BlogArticleCategoryType } from './blogCategory';
 import { BlogCategoryFragmentApi } from 'graphql/generated';
-import { BreadcrumbItemType } from 'connectors/breadcrumb/Breadcrumb';
+import { BreadcrumbItemType } from 'types/breadcrumb';
 import { ImageType } from 'components/Basic/Image/types';
 
 export type SimpleBlogArticleType = {

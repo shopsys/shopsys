@@ -1,4 +1,4 @@
-import { BreadcrumbItemType } from 'connectors/breadcrumb/Breadcrumb';
+import { BreadcrumbItemType } from 'types/breadcrumb';
 import { ImageType } from 'components/Basic/Image/types';
 import { ListedProductEdgesType } from 'components/Blocks/Product/types';
 
