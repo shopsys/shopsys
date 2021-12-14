@@ -3,8 +3,9 @@ import {
     TransportWithAvailablePaymentsAndStoresFragmentApi,
     useTransportsQueryApi,
 } from 'graphql/generated';
-import { PriceType, TransportType } from 'types/transport';
 import { mapTransport } from './Transport';
+import { PriceType } from 'types/price';
+import { TransportType } from 'types/transport';
 import { useShopsysSelector } from 'redux/main';
 
 export const mapPriceData = (price: PriceFragmentApi, currencyCode: string): PriceType => {

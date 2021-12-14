@@ -1,4 +1,4 @@
-import { PriceApiType, PriceType } from 'types/transport';
+import { PriceApiType, PriceType } from 'types/price';
 import { ImageType } from 'components/Basic/Image/types';
 
 export type PaymentInputType = {
