@@ -1,6 +1,6 @@
 import { FC, Fragment } from 'react';
 import DropdownItem from 'components/Layout/Header/DropdownMenu/Item';
-import { DropdownListType } from 'components/Layout/Header/DropdownMenu/types';
+import { DropdownListType } from 'types/dropdown';
 import { SecondaryListTitleStyled } from './SecondaryList.style';
 
 const SecondaryList: FC<DropdownListType> = (props) => {
