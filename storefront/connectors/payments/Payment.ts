@@ -1,6 +1,6 @@
 import { mapImageSizeApiData } from 'connectors/image/size/ImageSize';
 import { mapPriceData } from 'connectors/transports/Transports';
-import { PaymentType } from './types';
+import { PaymentType } from 'types/payment';
 import { SimplePaymentFragmentApi } from 'graphql/generated';
 
 export const mapPayment = (apiData: SimplePaymentFragmentApi, currencyCode: string): PaymentType => {

@@ -1,7 +1,7 @@
 import { FlagType, ProductPriceType } from 'components/Blocks/Product/types';
 import { PriceType, TransportInputType } from 'connectors/transports/types';
 import { ImageType } from 'components/Basic/Image/types';
-import { PaymentInputType } from 'connectors/payments/types';
+import { PaymentInputType } from 'types/payment';
 
 export type CartInput = {
     cartUuid: string | null;

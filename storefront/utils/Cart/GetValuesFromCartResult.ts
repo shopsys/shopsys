@@ -4,7 +4,7 @@ import { getSelectedPickupPlace } from 'connectors/transports/pickupPlace/Pickup
 import { mapCart } from 'connectors/cart/Cart';
 import { mapPayment } from 'connectors/payments/Payment';
 import { mapTransport } from 'connectors/transports/Transport';
-import { PaymentType } from 'connectors/payments/types';
+import { PaymentType } from 'types/payment';
 import { PickupPlaceType } from 'connectors/transports/pickupPlace/types';
 import { TransportType } from 'connectors/transports/types';
 

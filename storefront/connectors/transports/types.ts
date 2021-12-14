@@ -1,5 +1,5 @@
 import { ImageType } from 'components/Basic/Image/types';
-import { PaymentType } from 'connectors/payments/types';
+import { PaymentType } from 'types/payment';
 import { PickupPlaceType } from './pickupPlace/types';
 
 export type PriceApiType = {

@@ -13,7 +13,7 @@ import Heading from 'components/Basic/Heading';
 import Icon from 'components/Basic/Icon';
 import PacketeryContainer from 'components/Pages/Order/TransportAndPayment/PacketeryContainer';
 import { PacketeryExtendedPoint } from 'helpers/packetery/types';
-import { PaymentInputType } from 'connectors/payments/types';
+import { PaymentInputType } from 'types/payment';
 import PickupPlacePopup from './PickupPlacePopup/PickupPlacePopup';
 import { PickupPlaceType } from 'connectors/transports/pickupPlace/types';
 import Radiobutton from 'components/Forms/Radiobutton';

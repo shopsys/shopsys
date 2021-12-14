@@ -1,7 +1,7 @@
 import { CartInput, CartType } from 'types/cart';
 import { AppStore } from 'redux/main';
 import { cartInputActions } from 'redux/slices/cartInput';
-import { PaymentType } from 'connectors/payments/types';
+import { PaymentType } from 'types/payment';
 import { PickupPlaceType } from 'connectors/transports/pickupPlace/types';
 import { TransportType } from 'connectors/transports/types';
 import { userActions } from 'redux/slices/user';
