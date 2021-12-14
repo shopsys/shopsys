@@ -1,16 +1,11 @@
 import { ContainerStyled, WeblineStyled } from './Webline.style';
 import { FC, HTMLAttributes } from 'react';
 import { ExtractNativePropsFromDefault } from 'typeHelpers/ExtractNativePropsFromDefault';
-import { WeblineType } from './types';
+import { WeblinePropType } from './propTypes';
 
 type NativeProps = ExtractNativePropsFromDefault<HTMLAttributes<HTMLDivElement>, 'children', 'style'>;
 
-type WeblineProps = NativeProps & {
-    /**
-     * Type for change type of webline. If you don't fill this prop then the webline will be without style.
-     */
-    type?: WeblineType;
-};
+type WeblineProps = NativeProps & WeblinePropType;
 
 const Webline: FC<WeblineProps> = (props) => {
     return (
