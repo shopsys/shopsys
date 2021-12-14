@@ -33,7 +33,7 @@ import ProductDetailMainVariantPage from 'components/Pages/ProductDetail/Product
 import ProductDetailPage from 'components/Pages/ProductDetail';
 import { ProductDetailType } from 'components/Pages/ProductDetail/types';
 import StoreDetailPage from 'components/Pages/StoreDetail';
-import { StoreDetailType } from 'connectors/stores/types';
+import { StoreDetailType } from 'types/store';
 import { useRouter } from 'next/router';
 import Webline from 'components/Layout/Webline';
 

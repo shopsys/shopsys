@@ -14,7 +14,7 @@ import {
 import { FC } from 'react';
 import GoogleMap from 'components/Basic/GoogleMap';
 import Heading from 'components/Basic/Heading';
-import { StoreDetailType } from 'connectors/stores/types';
+import { StoreDetailType } from 'types/store';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import Webline from 'components/Layout/Webline';
 

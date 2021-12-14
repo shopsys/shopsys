@@ -14,7 +14,7 @@ import { mapBrandDetailApiData } from 'connectors/brands/Brands';
 import { mapFlagDetailApiData } from 'connectors/flags/Flags';
 import { mapStoreDetailApiData } from 'connectors/stores/StoreDetail';
 import { ProductDetailType } from 'components/Pages/ProductDetail/types';
-import { StoreDetailType } from 'connectors/stores/types';
+import { StoreDetailType } from 'types/store';
 import { useQueryError } from 'hooks/graphQl/UseQueryError';
 import { useShopsysSelector } from 'redux/main';
 import { useSlugQueryApi } from 'graphql/generated';
