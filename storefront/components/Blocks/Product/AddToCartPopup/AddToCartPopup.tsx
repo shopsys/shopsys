@@ -12,7 +12,7 @@ import {
     PriceStyled,
     ProductStyled,
 } from './AddToCartPopup.style';
-import { AddToCartPopupDataType } from 'components/Blocks/Product/AddToCartPopup/types';
+import { AddToCartPopupDataType } from 'types/cart';
 import { FC } from 'react';
 import { formatPrice } from 'utils/formatting';
 import Image from 'components/Basic/Image';

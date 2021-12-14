@@ -41,3 +41,12 @@ export type CartType = {
     totalDiscountPrice: PriceType;
     remainingAmountWithVatForFreeTransport: number | null;
 };
+
+export type AddToCartPopupDataType = {
+    name: string;
+    slug: string;
+    image: ImageType | null;
+    quantity: number;
+    unitName: string;
+    price: ProductPriceType;
+};
