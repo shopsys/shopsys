@@ -40,7 +40,7 @@ const Registration: FC = () => {
     const contactInformation = useShopsysSelector((state) => state.contactInformation);
     const [registerResult, register] = useRegister();
     const t = useTypedTranslationFunction();
-    const [formProviderMethods, defaultValues] = useRegistrationAfterOrderForm();
+    const [formProviderMethods] = useRegistrationAfterOrderForm();
     const formMeta = useRegistrationAfterOrderFormMeta(formProviderMethods);
     const [isErrorPopupVisible, setErrorPopupVisibility] = useHandleErrorPopupVisibility(formProviderMethods);
 

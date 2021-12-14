@@ -37,7 +37,6 @@ const ContactInformationDeliveryAddress: FC = () => {
         deliveryStreetValue,
         deliveryCityValue,
         deliveryPostcodeValue,
-        deliveryCountryValue,
     ] = useWatch({
         name: [
             formMeta.fields.differentDeliveryAddress.name,

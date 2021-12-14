@@ -1,6 +1,6 @@
+import { ParsedErrors, ValidationErrors } from 'types/error';
 import { CombinedError } from 'urql';
 import { TFunction } from 'react-i18next';
-import { ParsedErrors, ValidationErrors } from 'types/error';
 
 export enum ApplicationErrors {
     DEFAULT = 'DEFAULT',

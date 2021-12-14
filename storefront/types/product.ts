@@ -1,6 +1,6 @@
 import { BreadcrumbItemType } from 'types/breadcrumb';
-import { ImageType } from 'types/image';
 import { FilterOptionsType } from 'types/productFilter';
+import { ImageType } from 'types/image';
 
 export type SimpleProductType = {
     __typename?: 'MainVariant' | 'RegularProduct' | 'Variant';

@@ -7,12 +7,7 @@ import {
     StoreAvailabilityFragmentApi,
 } from 'graphql/generated';
 import { mapListedVariantType, mapProductPriceData, mapSliderProductApiData } from './Products';
-import {
-    ProductDetailImageType,
-    ProductDetailType,
-    ProductParameterType,
-    StoreAvailability,
-} from 'types/product';
+import { ProductDetailImageType, ProductDetailType, ProductParameterType, StoreAvailability } from 'types/product';
 import { MainVariantDetailType } from 'types/product';
 
 export const mapProductDetailApiData = (
