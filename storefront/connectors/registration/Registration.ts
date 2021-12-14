@@ -1,5 +1,5 @@
 import { useMutation, UseMutationResponse } from 'urql';
-import { RegistrationInputType } from './types';
+import { RegistrationInputType } from 'types/registration';
 
 export const registerMutation = `mutation (
         $firstName: String!
