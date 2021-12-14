@@ -17,7 +17,7 @@ import { CategoryDetailType } from 'types/category';
 import CommonLayout from 'components/Layout/CommonLayout';
 import DefaultErrorPage from 'next/error';
 import FlagDetailPage from 'components/Pages/FlagDetail';
-import { FlagDetailType } from 'connectors/flags/types';
+import { FlagDetailType } from 'types/flag';
 import { getFilterOptions } from 'helpers/filterOptions/GetFilterOptions';
 import { getFriendlyUrlResolvedData } from 'connectors/friendlyUrls/FriendlyUrls';
 import { getNewPagination } from 'utils/Pagination/getNewPagination';

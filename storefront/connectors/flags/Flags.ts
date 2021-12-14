@@ -1,5 +1,5 @@
 import { FlagDetailFragmentApi } from 'graphql/generated';
-import { FlagDetailType } from './types';
+import { FlagDetailType } from 'types/flag';
 import { ListedProductEdgesType } from 'components/Blocks/Product/types';
 import { mapListedProductType } from 'connectors/products/Products';
 import { mapPageInfoApiData } from 'connectors/pageInfo/PageInfo';

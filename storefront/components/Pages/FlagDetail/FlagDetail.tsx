@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { FlagDetailType } from 'connectors/flags/types';
+import { FlagDetailType } from 'types/flag';
 import Heading from 'components/Basic/Heading';
 import Pagination from 'components/Blocks/Pagination';
 import ProductsList from 'components/Blocks/Product/List/ProductsList';
