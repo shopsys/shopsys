@@ -1,11 +1,12 @@
 import { FC, HTMLAttributes } from 'react';
 import { ExtractNativePropsFromDefault } from 'typeHelpers/ExtractNativePropsFromDefault';
+import { FormLinePropType } from './propTypes';
 import { FormLineStyled } from './FormLine.style';
-import { FormLineType } from './types';
 
 type NativeProps = ExtractNativePropsFromDefault<HTMLAttributes<HTMLDivElement>, never, 'style'>;
 
-type FormLineProps = NativeProps & FormLineType;
+type FormLineProps = NativeProps & FormLinePropType;
+
 /**
  * A form line element used for wrapping inputs
  */

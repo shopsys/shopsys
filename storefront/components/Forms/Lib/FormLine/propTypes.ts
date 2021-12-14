@@ -1,4 +1,4 @@
-export type FormLineType = {
+export type FormLinePropType = {
     width?: string;
     xs?: string;
     sm?: string;
