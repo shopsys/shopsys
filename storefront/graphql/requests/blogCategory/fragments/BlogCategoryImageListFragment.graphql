@@ -1,0 +1,5 @@
+fragment BlogCategoryImageListFragment on BlogArticle {
+    image (sizes: "list") {
+        ...ImageSizesFragment
+    }
+}

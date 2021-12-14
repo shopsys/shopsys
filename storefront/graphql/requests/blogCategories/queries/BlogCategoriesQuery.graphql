@@ -1,0 +1,17 @@
+query BlogCategories {
+    blogCategories {
+        ...SimpleBlogCategoryFragment
+        children {
+            ...SimpleBlogCategoryFragment
+            children {
+                ...SimpleBlogCategoryFragment
+                children {
+                    ...SimpleBlogCategoryFragment
+                    children {
+                        ...SimpleBlogCategoryFragment
+                    }
+                }
+            }
+        }
+    }
+}

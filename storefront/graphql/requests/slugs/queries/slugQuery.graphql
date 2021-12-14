@@ -31,5 +31,8 @@ query SlugQuery(
         ... on Flag {
             ...FlagDetailFragment
         }
+        ... on BlogCategory {
+            ...BlogCategoryDetailFragment
+        }
     }
 }

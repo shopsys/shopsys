@@ -2,12 +2,14 @@ import { mapCategoryDetailData, mapParametersFilter } from 'connectors/categorie
 import { mapMainVariantDetailApiData, mapProductDetailApiData } from 'connectors/products/ProductDetail';
 import { ArticleDetailType } from 'connectors/article/types';
 import { BlogArticleDetailType } from 'components/Pages/BlogArticle/types';
+import { BlogCategoryType } from 'connectors/blogCategory/types';
 import { BrandDetailType } from 'connectors/brands/types';
 import { CategoryDetailType } from 'components/Pages/CategoryDetail/types';
 import { FlagDetailType } from 'connectors/flags/types';
 import { MainVariantDetailType } from 'connectors/products/types';
 import { mapArticleDetailApiData } from 'connectors/article/ArticleDetail';
 import { mapBlogArticleDetailApiData } from 'connectors/blogArticle/BlogArticle';
+import { mapBlogCategoryData } from 'connectors/blogCategory/BlogCategory';
 import { mapBrandDetailApiData } from 'connectors/brands/Brands';
 import { mapFlagDetailApiData } from 'connectors/flags/Flags';
 import { mapStoreDetailApiData } from 'connectors/stores/StoreDetail';
@@ -26,6 +28,7 @@ export function getFriendlyUrlResolvedData(
     | StoreDetailType
     | ArticleDetailType
     | BlogArticleDetailType
+    | BlogCategoryType
     | BrandDetailType
     | FlagDetailType
     | undefined
@@ -65,6 +68,8 @@ export function getFriendlyUrlResolvedData(
         return mapBrandDetailApiData(data.slug, currentDomainConfig.currencyCode);
     } else if (data.slug.__typename === 'Flag') {
         return mapFlagDetailApiData(data.slug, currentDomainConfig.currencyCode);
+    } else if (data.slug.__typename === 'BlogCategory') {
+        return mapBlogCategoryData(data.slug);
     }
 
     return undefined;

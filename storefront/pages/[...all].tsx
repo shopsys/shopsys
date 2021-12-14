@@ -7,6 +7,8 @@ import ArticleDetailPage from 'components/Pages/Article';
 import { ArticleDetailType } from 'connectors/article/types';
 import { BlogArticleDetailType } from 'components/Pages/BlogArticle/types';
 import BlogArticlePage from 'components/Pages/BlogArticle';
+import BlogCategoryPage from 'components/Pages/BlogCategory';
+import { BlogCategoryType } from 'connectors/blogCategory/types';
 import BrandDetailPage from 'components/Pages/BrandDetail';
 import { BrandDetailType } from 'connectors/brands/types';
 import Breadcrumbs from 'components/Layout/Breadcrumbs';
@@ -74,6 +76,7 @@ function renderContent(
         | StoreDetailType
         | ArticleDetailType
         | BlogArticleDetailType
+        | BlogCategoryType
         | BrandDetailType
         | FlagDetailType,
 ) {
@@ -93,6 +96,8 @@ function renderContent(
         return <BrandDetailPage brand={data as BrandDetailType} />;
     } else if (data.__typename === 'Flag') {
         return <FlagDetailPage flag={data as FlagDetailType} />;
+    } else if (data.__typename === 'BlogCategory') {
+        return <BlogCategoryPage blogCategory={data as BlogCategoryType} />;
     }
 
     return <DefaultErrorPage statusCode={404} />;
