@@ -1,25 +1,15 @@
 import { CartFragmentApi } from 'graphql/generated';
-import { CartType } from 'types/cart';
+import { CartResultValues } from 'types/cart';
 import { getSelectedPickupPlace } from 'connectors/transports/pickupPlace/PickupPlace';
 import { mapCart } from 'connectors/cart/Cart';
 import { mapPayment } from 'connectors/payments/Payment';
 import { mapTransport } from 'connectors/transports/Transport';
-import { PaymentType } from 'types/payment';
-import { PickupPlaceType } from 'types/pickupPlace';
-import { TransportType } from 'types/transport';
 
 export const getValuesFromCartResult = (
     resultData: CartFragmentApi,
     currencyCode: string,
     isUserLoggedIn: boolean,
-): {
-    cartUuid: string | null;
-    cart: CartType;
-    transport: TransportType | null;
-    pickupPlace: PickupPlaceType | null;
-    payment: PaymentType | null;
-    promoCode: string | null;
-} => {
+): CartResultValues => {
     const cart = mapCart(
         {
             items: resultData.items,

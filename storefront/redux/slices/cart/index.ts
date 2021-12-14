@@ -1,5 +1,6 @@
-import { CartInput, CartType } from 'types/cart';
+import { CartInput, CartResultValues, CartType } from 'types/cart';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { getCartInputFromCartResult } from 'utils/Cart/GetCartInputFromCartResult';
 import { HYDRATE } from 'next-redux-wrapper';
 import { PaymentType } from 'types/payment';
 import { PickupPlaceType } from 'types/pickupPlace';
@@ -32,6 +33,27 @@ export const cartSlice = createSlice({
     name: 'cart',
     initialState,
     reducers: {
+        resetCart(state) {
+            state.cart = null;
+            state.transport = null;
+            state.pickupPlace = null;
+            state.payment = null;
+            state.cartInput = {
+                cartUuid: null,
+                transport: null,
+                payment: null,
+                promoCode: null,
+            };
+            state.isCartEmpty = true;
+        },
+        updateCart(state, action: PayloadAction<CartResultValues>) {
+            state.cart = action.payload.cart;
+            state.transport = action.payload.transport;
+            state.pickupPlace = action.payload.pickupPlace;
+            state.payment = action.payload.payment;
+            state.cartInput = getCartInputFromCartResult(action.payload);
+            state.isCartEmpty = action.payload.cart?.items.length === 0;
+        },
         setCart(state, action: PayloadAction<CartType | null>) {
             state.cart = action.payload;
         },
