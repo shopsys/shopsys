@@ -8,7 +8,7 @@ import {
     ListItemTitleStyled,
     ListStyled,
 } from './BlogArticlesList.style';
-import { BlogArticlesType } from 'connectors/blogCategory/types';
+import { BlogArticlesType } from 'types/blogArticle';
 import Flag from 'components/Basic/Flag';
 import Heading from 'components/Basic/Heading';
 import Image from 'components/Basic/Image';

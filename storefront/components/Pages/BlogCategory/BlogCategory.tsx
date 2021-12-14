@@ -1,6 +1,6 @@
 import { BlogCategoryListStyled, BlogCategoryPanelStyled, BlogCategoryStyled } from './BlogCategory.style';
 import BlogArticlesList from './BlogArticlesList';
-import { BlogCategoryType } from 'connectors/blogCategory/types';
+import { BlogCategoryType } from 'types/blogCategory';
 import BlogSignpost from 'components/Blocks/BlogSignpost';
 import { FC } from 'react';
 import { getBlogCategoriesItems } from 'connectors/blogCategories/BlogCategories';

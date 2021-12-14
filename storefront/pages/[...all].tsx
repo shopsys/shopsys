@@ -5,10 +5,10 @@ import { NavigationQueryDocumentApi, SlugQueryDocumentApi } from 'graphql/genera
 import { nextReduxWrapper, useShopsysDispatch } from 'redux/main';
 import ArticleDetailPage from 'components/Pages/Article';
 import { ArticleDetailType } from 'types/article';
-import { BlogArticleDetailType } from 'components/Pages/BlogArticle/types';
+import { BlogArticleDetailType } from 'types/blogArticle';
 import BlogArticlePage from 'components/Pages/BlogArticle';
 import BlogCategoryPage from 'components/Pages/BlogCategory';
-import { BlogCategoryType } from 'connectors/blogCategory/types';
+import { BlogCategoryType } from 'types/blogCategory';
 import BrandDetailPage from 'components/Pages/BrandDetail';
 import { BrandDetailType } from 'connectors/brands/types';
 import Breadcrumbs from 'components/Layout/Breadcrumbs';

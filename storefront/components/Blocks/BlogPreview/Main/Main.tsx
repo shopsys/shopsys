@@ -7,7 +7,7 @@ import {
     MainItemStyled,
     MainNameStyled,
 } from './Main.style';
-import { BlogPreviewType } from 'connectors/blogPreview/types';
+import { BlogPreviewType } from 'types/blogArticle';
 import { desktopFirstSizes } from 'components/Theme/mediaQueries';
 import Flag from 'components/Basic/Flag';
 import Image from 'components/Basic/Image';

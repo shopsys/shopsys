@@ -1,8 +1,8 @@
 import { mapCategoryDetailData, mapParametersFilter } from 'connectors/categories/Categories';
 import { mapMainVariantDetailApiData, mapProductDetailApiData } from 'connectors/products/ProductDetail';
 import { ArticleDetailType } from 'types/article';
-import { BlogArticleDetailType } from 'components/Pages/BlogArticle/types';
-import { BlogCategoryType } from 'connectors/blogCategory/types';
+import { BlogArticleDetailType } from 'types/blogArticle';
+import { BlogCategoryType } from 'types/blogCategory';
 import { BrandDetailType } from 'connectors/brands/types';
 import { CategoryDetailType } from 'components/Pages/CategoryDetail/types';
 import { FlagDetailType } from 'connectors/flags/types';

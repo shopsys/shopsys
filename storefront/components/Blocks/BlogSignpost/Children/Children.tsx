@@ -1,5 +1,5 @@
 import { BlogSignpostItemIconStyled, BlogSignpostItemStyled } from 'components/Blocks/BlogSignpost/BlogSignpost.style';
-import { BlogCategoryItem } from 'connectors/blogCategories/BlogCategories';
+import { BlogCategoryItem } from 'types/blogCategory';
 import { FC } from 'react';
 
 type ChildrenProps = {

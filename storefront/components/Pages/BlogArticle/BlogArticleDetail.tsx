@@ -7,7 +7,7 @@ import {
     ProductSectionWrapper,
 } from './BlogArticleDetail.style';
 import { ArticleTitle } from 'components/Pages/Article/ArticleDetail.style';
-import { BlogArticleDetailType } from 'components/Pages/BlogArticle/types';
+import { BlogArticleDetailType } from 'types/blogArticle';
 import { FC } from 'react';
 import Image from 'components/Basic/Image/Image';
 import ProductsSlider from 'components/Blocks/Product/ProductsSlider';

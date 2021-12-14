@@ -1,5 +1,6 @@
-import { BlogArticlesType, BlogCategoryType } from './types';
+import { BlogArticlesType } from 'types/blogArticle';
 import { BlogCategoryDetailFragmentApi } from 'graphql/generated';
+import { BlogCategoryType } from 'types/blogCategory';
 import { mapImageApiData } from 'connectors/image/Image';
 import { mapPageInfoApiData } from 'connectors/pageInfo/PageInfo';
 
