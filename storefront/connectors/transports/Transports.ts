@@ -3,7 +3,7 @@ import {
     TransportWithAvailablePaymentsAndStoresFragmentApi,
     useTransportsQueryApi,
 } from 'graphql/generated';
-import { PriceType, TransportType } from './types';
+import { PriceType, TransportType } from 'types/transport';
 import { mapTransport } from './Transport';
 import { useShopsysSelector } from 'redux/main';
 

@@ -6,7 +6,7 @@ import { mapPayment } from 'connectors/payments/Payment';
 import { mapTransport } from 'connectors/transports/Transport';
 import { PaymentType } from 'types/payment';
 import { PickupPlaceType } from 'types/pickupPlace';
-import { TransportType } from 'connectors/transports/types';
+import { TransportType } from 'types/transport';
 
 export const getValuesFromCartResult = (
     resultData: CartFragmentApi,

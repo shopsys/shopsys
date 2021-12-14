@@ -1,7 +1,7 @@
 import { CartFragmentApi, CartQueryApi, CartQueryVariablesApi, useCartQueryApi } from 'graphql/generated';
 import { CartInput, CartType } from 'types/cart';
 import { PaymentInputType, PaymentType } from 'types/payment';
-import { TransportInputType, TransportType } from 'connectors/transports/types';
+import { TransportInputType, TransportType } from 'types/transport';
 import { mapImageSizeApiData } from 'connectors/image/size/ImageSize';
 import { mapPriceData } from 'connectors/transports/Transports';
 import { mapProductPriceData } from 'connectors/products/Products';

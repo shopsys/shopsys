@@ -1,5 +1,5 @@
 import { FlagType, ProductPriceType } from 'components/Blocks/Product/types';
-import { PriceType, TransportInputType } from 'connectors/transports/types';
+import { PriceType, TransportInputType } from 'types/transport';
 import { ImageType } from 'components/Basic/Image/types';
 import { PaymentInputType } from 'types/payment';
 

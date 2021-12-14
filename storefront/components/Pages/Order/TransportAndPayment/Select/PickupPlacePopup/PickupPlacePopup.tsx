@@ -6,7 +6,7 @@ import Heading from 'components/Basic/Heading';
 import { PickupPlaceType } from 'types/pickupPlace';
 import Popup from 'components/Layout/Popup';
 import StoreSelect from './PlaceSelect/StoreSelect';
-import { TransportType } from 'connectors/transports/types';
+import { TransportType } from 'types/transport';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import { useWatch } from 'react-hook-form';
 

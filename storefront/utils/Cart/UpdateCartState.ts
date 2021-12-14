@@ -3,7 +3,7 @@ import { AppStore } from 'redux/main';
 import { cartInputActions } from 'redux/slices/cartInput';
 import { PaymentType } from 'types/payment';
 import { PickupPlaceType } from 'types/pickupPlace';
-import { TransportType } from 'connectors/transports/types';
+import { TransportType } from 'types/transport';
 import { userActions } from 'redux/slices/user';
 
 export const updateCartState = (

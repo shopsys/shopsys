@@ -4,7 +4,7 @@ import { ListItemStyled } from 'components/Pages/Order/TransportAndPayment/Selec
 import { PickupPlaceFormType } from 'components/Pages/Order/TransportAndPayment/Select/PickupPlacePopup/formMeta';
 import Radiobutton from 'components/Forms/Radiobutton';
 import SelectItemLabel from 'components/Pages/Order/TransportAndPayment/Select/SelectItemLabel';
-import { TransportType } from 'connectors/transports/types';
+import { TransportType } from 'types/transport';
 
 type StoreSelectProps = {
     pickupPlaceValue: string;

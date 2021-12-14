@@ -10,7 +10,7 @@ import { FC } from 'react';
 import { formatPrice } from 'utils/formatting';
 import Image from 'components/Basic/Image';
 import { PaymentType } from 'types/payment';
-import { TransportType } from 'connectors/transports/types';
+import { TransportType } from 'types/transport';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 
 type TransportAndPaymentProps = {

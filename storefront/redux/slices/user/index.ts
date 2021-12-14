@@ -4,7 +4,7 @@ import { HYDRATE } from 'next-redux-wrapper';
 import { PaymentType } from 'types/payment';
 import { PickupPlaceType } from 'types/pickupPlace';
 import { ProductOrderingModeEnumApi } from 'graphql/generated';
-import { TransportType } from 'connectors/transports/types';
+import { TransportType } from 'types/transport';
 
 export const enabledSortTypes = [
     ProductOrderingModeEnumApi.PriorityApi,

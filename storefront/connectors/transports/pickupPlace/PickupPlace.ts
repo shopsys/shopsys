@@ -1,6 +1,6 @@
 import { getPacketeryCookie } from 'helpers/packetery';
 import { PickupPlaceType } from 'types/pickupPlace';
-import { TransportType } from 'connectors/transports/types';
+import { TransportType } from 'types/transport';
 import { TransportWithAvailablePaymentsAndStoresFragmentApi } from 'graphql/generated';
 
 export const getSelectedPickupPlace = (

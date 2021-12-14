@@ -7,7 +7,7 @@ import {
     TransportAndPaymentFormType,
     useTransportAndPaymentFormMeta,
 } from 'components/Pages/Order/TransportAndPayment/formMeta';
-import { TransportInputType, TransportType } from 'connectors/transports/types';
+import { TransportInputType, TransportType } from 'types/transport';
 import { getSelectedPickupPlace } from 'connectors/transports/pickupPlace/PickupPlace';
 import Heading from 'components/Basic/Heading';
 import Icon from 'components/Basic/Icon';
