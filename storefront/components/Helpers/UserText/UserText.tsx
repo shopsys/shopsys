@@ -5,7 +5,7 @@ import { UserTextStyled } from './UserText.style';
  * Global component that serves as a wrapper
  * for rendering the text/HTML users can insert into the WYSIWYG editor
  */
-export type UserTextProps = {
+type UserTextProps = {
     /**
      * The actual content of the wrapper element,
      * can be both plain text and HTML content
