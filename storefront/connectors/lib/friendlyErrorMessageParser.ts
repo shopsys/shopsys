@@ -1,24 +1,11 @@
 import { CombinedError } from 'urql';
 import { TFunction } from 'react-i18next';
-type ValidationErrors = {
-    [fieldName: string]: {
-        message: string;
-        code: string;
-    };
-};
+import { ParsedErrors, ValidationErrors } from 'types/error';
 
 export enum ApplicationErrors {
     DEFAULT = 'DEFAULT',
     CART_NOT_FOUND = 'CART_NOT_FOUND',
 }
-
-export type ParsedErrors = {
-    networkError?: string;
-    applicationError?: { type: ApplicationErrors; message: string };
-    userError?: {
-        validation?: ValidationErrors;
-    };
-};
 
 export const getUserFriendlyErrors = (originalError: CombinedError, t: TFunction): ParsedErrors => {
     const errors: ParsedErrors = {};
