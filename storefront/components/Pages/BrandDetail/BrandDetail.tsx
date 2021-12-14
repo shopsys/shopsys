@@ -3,7 +3,7 @@ import {
     BrandDetailStyled,
     BrandDetailTextStyled,
 } from 'components/Pages/BrandDetail/BrandDetail.style';
-import { BrandDetailType } from 'connectors/brands/types';
+import { BrandDetailType } from 'types/brand';
 import { FC } from 'react';
 import Heading from 'components/Basic/Heading';
 import Image from 'components/Basic/Image';

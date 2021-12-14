@@ -3,7 +3,7 @@ import { mapMainVariantDetailApiData, mapProductDetailApiData } from 'connectors
 import { ArticleDetailType } from 'types/article';
 import { BlogArticleDetailType } from 'types/blogArticle';
 import { BlogCategoryType } from 'types/blogCategory';
-import { BrandDetailType } from 'connectors/brands/types';
+import { BrandDetailType } from 'types/brand';
 import { CategoryDetailType } from 'components/Pages/CategoryDetail/types';
 import { FlagDetailType } from 'connectors/flags/types';
 import { MainVariantDetailType } from 'connectors/products/types';

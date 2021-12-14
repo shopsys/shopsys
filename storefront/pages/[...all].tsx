@@ -10,7 +10,7 @@ import BlogArticlePage from 'components/Pages/BlogArticle';
 import BlogCategoryPage from 'components/Pages/BlogCategory';
 import { BlogCategoryType } from 'types/blogCategory';
 import BrandDetailPage from 'components/Pages/BrandDetail';
-import { BrandDetailType } from 'connectors/brands/types';
+import { BrandDetailType } from 'types/brand';
 import Breadcrumbs from 'components/Layout/Breadcrumbs';
 import CategoryDetailPage from 'components/Pages/CategoryDetail';
 import { CategoryDetailType } from 'components/Pages/CategoryDetail/types';

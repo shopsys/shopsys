@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { EnrichedSearchType } from './types';
 import { ListedArticleType } from 'types/article';
 import { ListedBlogArticleType } from 'types/blogArticle';
-import { ListedBrandType } from 'connectors/brands/types';
+import { ListedBrandType } from 'types/brand';
 import { ListedCategoryType } from 'connectors/categories/types';
 import { ListedProductType } from 'connectors/products/types';
 import { mapListedArticleApiData } from 'connectors/articles/Articles';
