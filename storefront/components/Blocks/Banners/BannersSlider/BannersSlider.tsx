@@ -8,7 +8,7 @@ import {
 } from './BannersSlider.style';
 import { FC, useEffect, useRef, useState } from 'react';
 import BannersSliderItem from 'components/Blocks/Banners/BannersSliderItem';
-import { SliderItem } from 'connectors/sliderItems/types';
+import { SliderItem } from 'types/sliderItem';
 import { theme } from 'components/Theme/main';
 import { useKeenSlider } from 'keen-slider/react';
 

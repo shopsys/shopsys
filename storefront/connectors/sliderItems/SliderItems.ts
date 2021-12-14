@@ -1,7 +1,7 @@
 import { SliderItemImagesWebDefaultFragmentApi, SliderItemsQueryApi, useSliderItemsQueryApi } from 'graphql/generated';
 import { ImageApiType } from 'components/Basic/Image/types';
 import { mapImageSizeApiData } from 'connectors/image/size/ImageSize';
-import { SliderItem } from './types';
+import { SliderItem } from 'types/sliderItem';
 import { useQueryError } from 'hooks/graphQl/UseQueryError';
 
 export const getSliderItems = (): SliderItem[] | undefined => {
