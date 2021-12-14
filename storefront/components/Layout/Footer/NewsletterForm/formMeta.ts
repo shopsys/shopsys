@@ -1,13 +1,9 @@
 import * as Yup from 'yup';
+import { NewsletterFormType } from 'types/form';
 import { UseFormReturn } from 'react-hook-form';
 import { useShopsysForm } from 'hooks/forms/UseShopsysForm';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import { yupResolver } from '@hookform/resolvers/yup';
-
-export type NewsletterFormType = {
-    email: string;
-    privacyPolicy: boolean;
-};
 
 export const useNewsletterForm = (): [UseFormReturn<NewsletterFormType>, NewsletterFormType] => {
     const t = useTypedTranslationFunction();

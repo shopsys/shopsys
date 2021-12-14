@@ -1,4 +1,3 @@
-import { ContactInformationFormType, useContactInformationFormMeta } from './formMeta';
 import { ContactInformationTextStyled, ContactInformationTextWrapperStyled } from './ContactInformation.style';
 import { Controller, useFormContext, useWatch } from 'react-hook-form';
 import { FC, useEffect, useState } from 'react';
@@ -6,10 +5,12 @@ import Checkbox from 'components/Forms/Checkbox';
 import ChoiceFormLine from 'components/Forms/Lib/ChoiceFormLine';
 import { contactInformationActions } from 'redux/slices/contactInformation';
 import ContactInformationContent from './ContactInformationContent';
+import { ContactInformationFormType } from 'types/form';
 import FormLine from 'components/Forms/Lib/FormLine';
 import FormLineError from 'components/Forms/Lib/FormLineError';
 import TextInput from 'components/Forms/TextInput';
 import { Trans } from 'react-i18next';
+import { useContactInformationFormMeta } from './formMeta';
 import { useShopsysDispatch } from 'redux/main';
 
 const ContactInformation: FC = () => {

@@ -1,5 +1,6 @@
-import { ContactInformationFormType, CustomerTypeEnum } from 'components/Pages/Order/ContactInformation/formMeta';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { ContactInformationFormType } from 'types/form';
+import { CustomerTypeEnum } from 'components/Pages/Order/ContactInformation/formMeta';
 import { SelectOptionType } from 'types/selectOptions';
 
 export const initialState = {

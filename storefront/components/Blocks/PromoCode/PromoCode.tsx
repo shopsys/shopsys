@@ -9,10 +9,11 @@ import {
     PromoCodeContentWrapperStyled,
     PromoCodeStyled,
 } from './PromoCode.style';
-import { PromoCodeFormType, usePromoCodeForm, usePromoCodeFormMeta } from './formMeta';
+import { usePromoCodeForm, usePromoCodeFormMeta } from './formMeta';
 import { CSSTransition } from 'react-transition-group';
 import Form from 'components/Forms/Form';
 import { loadCart } from 'connectors/cart/Cart';
+import { PromoCodeFormType } from 'types/form';
 import PromoCodeInfo from './PromoCodeInfo';
 import { showSuccessMessage } from 'components/Helpers/Toasts';
 import { useShopsysSelector } from 'redux/main';

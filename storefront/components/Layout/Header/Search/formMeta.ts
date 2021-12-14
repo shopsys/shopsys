@@ -1,12 +1,9 @@
 import * as Yup from 'yup';
+import { SearchFormType } from 'types/form';
 import { UseFormReturn } from 'react-hook-form';
 import { useShopsysForm } from 'hooks/forms/UseShopsysForm';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import { yupResolver } from '@hookform/resolvers/yup';
-
-export type SearchFormType = {
-    searchQuery: string;
-};
 
 export const useSearchForm = (): [UseFormReturn<SearchFormType>, SearchFormType] => {
     const resolver = yupResolver(

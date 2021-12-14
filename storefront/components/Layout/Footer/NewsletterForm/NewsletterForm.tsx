@@ -5,7 +5,7 @@ import {
     NewsletterFormInputWrapperStyled,
     NewsletterFormWrapperStyled,
 } from './NewsletterForm.style';
-import { NewsletterFormType, useNewsletterForm, useNewsletterFormMeta } from './formMeta';
+import { useNewsletterForm, useNewsletterFormMeta } from './formMeta';
 import Button from 'components/Forms/Button';
 import Checkbox from 'components/Forms/Checkbox';
 import ChoiceFormLine from 'components/Forms/Lib/ChoiceFormLine';
@@ -15,6 +15,7 @@ import Form from 'components/Forms/Form';
 import FormLine from 'components/Forms/Lib/FormLine';
 import FormLineError from 'components/Forms/Lib/FormLineError';
 import Heading from 'components/Basic/Heading';
+import { NewsletterFormType } from 'types/form';
 import { showSuccessMessage } from 'components/Helpers/Toasts';
 import TextInput from 'components/Forms/TextInput';
 import { useHandleErrorPopupVisibility } from 'hooks/forms/UseHandleErrorPopupVisibility';

@@ -2,16 +2,13 @@ import {
     ContactInformationDeliveryAddressContentStyled,
     ContactInformationDeliveryAddressStyled,
 } from './ContactInformationDeliveryAddress.style';
-import {
-    ContactInformationFormType,
-    useContactInformationFormMeta,
-} from 'components/Pages/Order/ContactInformation/formMeta';
 import { Controller, useFormContext, useWatch } from 'react-hook-form';
 import { FC, useEffect, useRef, useState } from 'react';
 import { useShopsysDispatch, useShopsysSelector } from 'redux/main';
 import Checkbox from 'components/Forms/Checkbox';
 import ChoiceFormLine from 'components/Forms/Lib/ChoiceFormLine';
 import { contactInformationActions } from 'redux/slices/contactInformation';
+import { ContactInformationFormType } from 'types/form';
 import { CSSTransition } from 'react-transition-group';
 import FormColumn from 'components/Forms/Lib/FormColumn';
 import FormLine from 'components/Forms/Lib/FormLine';
@@ -19,6 +16,7 @@ import FormLineError from 'components/Forms/Lib/FormLineError';
 import { getCountriesAsSelectOptions } from 'connectors/country/Country';
 import Select from 'components/Forms/Select';
 import TextInput from 'components/Forms/TextInput';
+import { useContactInformationFormMeta } from 'components/Pages/Order/ContactInformation/formMeta';
 
 const ContactInformationDeliveryAddress: FC = () => {
     const dispatch = useShopsysDispatch();

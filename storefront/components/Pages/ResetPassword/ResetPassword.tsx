@@ -1,5 +1,5 @@
 import { Controller, FormProvider, SubmitHandler } from 'react-hook-form';
-import { PasswordResetFormType, usePasswordResetForm, usePasswordResetFormMeta } from './formMeta';
+import { usePasswordResetForm, usePasswordResetFormMeta } from './formMeta';
 import Button from 'components/Forms/Button';
 import { ButtonWrapperStyled } from './ResetPassword.style';
 import ErrorPopup from 'components/Forms/Lib/ErrorPopup';
@@ -7,6 +7,7 @@ import { FC } from 'react';
 import Form from 'components/Forms/Form';
 import FormLine from 'components/Forms/Lib/FormLine';
 import FormLineError from 'components/Forms/Lib/FormLineError';
+import { PasswordResetFormType } from 'types/form';
 import { showSuccessMessage } from 'components/Helpers/Toasts';
 import SimpleLayout from 'components/Layout/SimpleLayout';
 import TextInput from 'components/Forms/TextInput';

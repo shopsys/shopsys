@@ -1,14 +1,10 @@
 import * as Yup from 'yup';
+import { RegistrationAfterOrderFormType } from 'types/form';
 import { Trans } from 'react-i18next';
 import { UseFormReturn } from 'react-hook-form';
 import { useShopsysForm } from 'hooks/forms/UseShopsysForm';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import { yupResolver } from '@hookform/resolvers/yup';
-
-export type RegistrationAfterOrderFormType = {
-    password: string;
-    privacyPolicy: boolean;
-};
 
 export const useRegistrationAfterOrderForm = (): [
     UseFormReturn<RegistrationAfterOrderFormType>,
