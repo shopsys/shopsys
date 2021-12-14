@@ -7,7 +7,7 @@ import {
     ProductDetailStyled,
 } from './ProductDetail.style';
 import { FC } from 'react';
-import { MainVariantDetailType } from 'connectors/products/types';
+import { MainVariantDetailType } from 'types/product';
 import ProductDetailAccessories from './ProductDetailAccessories';
 import ProductDetailGallery from './ProductDetailGallery';
 import ProductDetailTabs from './ProductDetailTabs';

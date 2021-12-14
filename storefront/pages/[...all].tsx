@@ -23,7 +23,7 @@ import { getFriendlyUrlResolvedData } from 'connectors/friendlyUrls/FriendlyUrls
 import { getNewPagination } from 'utils/Pagination/getNewPagination';
 import { getProductListSort } from 'helpers/sorting/GetProductListSort';
 import { initDomainConfig } from 'helpers/InitDomainConfig';
-import { MainVariantDetailType } from 'connectors/products/types';
+import { MainVariantDetailType } from 'types/product';
 import { mapParametersFilter } from 'connectors/categories/Categories';
 import { optionsFilterActions } from 'redux/slices/optionsFilter';
 import { parseFilterOptionsFromQuery } from 'helpers/filterOptions/ParseFilterOptionsFromQuery';

@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { ListedProductType } from 'connectors/products/types';
+import { ListedProductType } from 'types/product';
 import ProductItem from './ListedItem';
 import { ProductsListStyled } from './ProductsList.style';
 

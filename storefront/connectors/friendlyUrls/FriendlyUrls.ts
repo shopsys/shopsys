@@ -6,7 +6,7 @@ import { BlogCategoryType } from 'types/blogCategory';
 import { BrandDetailType } from 'types/brand';
 import { CategoryDetailType } from 'types/category';
 import { FlagDetailType } from 'types/flag';
-import { MainVariantDetailType } from 'connectors/products/types';
+import { MainVariantDetailType } from 'types/product';
 import { mapArticleDetailApiData } from 'connectors/article/ArticleDetail';
 import { mapBlogArticleDetailApiData } from 'connectors/blogArticle/BlogArticle';
 import { mapBlogCategoryData } from 'connectors/blogCategory/BlogCategory';

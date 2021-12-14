@@ -5,7 +5,7 @@ import { ListedArticleType } from 'types/article';
 import { ListedBlogArticleType } from 'types/blogArticle';
 import { ListedBrandType } from 'types/brand';
 import { ListedCategoryType } from 'types/category';
-import { ListedProductType } from 'connectors/products/types';
+import { ListedProductType } from 'types/product';
 import { mapListedArticleApiData } from 'connectors/articles/Articles';
 import { mapListedBrandApiData } from 'connectors/brands/Brands';
 import { mapListedCategoryApiData } from 'connectors/categories/Categories';

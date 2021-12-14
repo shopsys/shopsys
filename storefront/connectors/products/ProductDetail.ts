@@ -13,7 +13,7 @@ import {
     ProductParameterType,
     StoreAvailability,
 } from 'components/Pages/ProductDetail/types';
-import { MainVariantDetailType } from './types';
+import { MainVariantDetailType } from 'types/product';
 
 export const mapProductDetailApiData = (
     productDetailApiData: ProductDetailFragmentApi,
