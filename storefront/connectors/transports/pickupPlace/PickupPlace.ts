@@ -1,5 +1,5 @@
 import { getPacketeryCookie } from 'helpers/packetery';
-import { PickupPlaceType } from './types';
+import { PickupPlaceType } from 'types/pickupPlace';
 import { TransportType } from 'connectors/transports/types';
 import { TransportWithAvailablePaymentsAndStoresFragmentApi } from 'graphql/generated';
 

@@ -1,6 +1,6 @@
 import { ImageType } from 'components/Basic/Image/types';
 import { PaymentType } from 'types/payment';
-import { PickupPlaceType } from './pickupPlace/types';
+import { PickupPlaceType } from 'types/pickupPlace';
 
 export type PriceApiType = {
     priceWithVat: string;

@@ -15,7 +15,7 @@ import PacketeryContainer from 'components/Pages/Order/TransportAndPayment/Packe
 import { PacketeryExtendedPoint } from 'helpers/packetery/types';
 import { PaymentInputType } from 'types/payment';
 import PickupPlacePopup from './PickupPlacePopup/PickupPlacePopup';
-import { PickupPlaceType } from 'connectors/transports/pickupPlace/types';
+import { PickupPlaceType } from 'types/pickupPlace';
 import Radiobutton from 'components/Forms/Radiobutton';
 import SelectItemLabel from './SelectItemLabel';
 import { useComponentUpdate } from 'hooks/helpers/UseComponentUpdate';

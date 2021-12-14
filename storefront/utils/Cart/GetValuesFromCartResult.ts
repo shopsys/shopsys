@@ -5,7 +5,7 @@ import { mapCart } from 'connectors/cart/Cart';
 import { mapPayment } from 'connectors/payments/Payment';
 import { mapTransport } from 'connectors/transports/Transport';
 import { PaymentType } from 'types/payment';
-import { PickupPlaceType } from 'connectors/transports/pickupPlace/types';
+import { PickupPlaceType } from 'types/pickupPlace';
 import { TransportType } from 'connectors/transports/types';
 
 export const getValuesFromCartResult = (

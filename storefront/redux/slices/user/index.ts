@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { CartType } from 'types/cart';
 import { HYDRATE } from 'next-redux-wrapper';
 import { PaymentType } from 'types/payment';
-import { PickupPlaceType } from 'connectors/transports/pickupPlace/types';
+import { PickupPlaceType } from 'types/pickupPlace';
 import { ProductOrderingModeEnumApi } from 'graphql/generated';
 import { TransportType } from 'connectors/transports/types';
 

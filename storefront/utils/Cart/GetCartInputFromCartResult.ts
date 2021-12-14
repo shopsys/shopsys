@@ -1,7 +1,7 @@
 import { CartInput, CartType } from 'types/cart';
 import { mapPaymentToPaymentInput, mapTransportToTransportInput } from 'connectors/cart/Cart';
 import { PaymentType } from 'types/payment';
-import { PickupPlaceType } from 'connectors/transports/pickupPlace/types';
+import { PickupPlaceType } from 'types/pickupPlace';
 import { TransportType } from 'connectors/transports/types';
 
 export const getCartInputFromCartResult = (resultData: {

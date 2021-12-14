@@ -3,7 +3,7 @@ import { usePickupPlaceForm, usePickupPlaceFormMeta } from './formMeta';
 import Button from 'components/Forms/Button';
 import { FC } from 'react';
 import Heading from 'components/Basic/Heading';
-import { PickupPlaceType } from 'connectors/transports/pickupPlace/types';
+import { PickupPlaceType } from 'types/pickupPlace';
 import Popup from 'components/Layout/Popup';
 import StoreSelect from './PlaceSelect/StoreSelect';
 import { TransportType } from 'connectors/transports/types';
