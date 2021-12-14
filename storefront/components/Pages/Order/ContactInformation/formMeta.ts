@@ -1,6 +1,6 @@
 import * as Yup from 'yup';
 import { FieldError, UseFormReturn, useWatch } from 'react-hook-form';
-import { SelectOptionType } from 'components/Forms/Select/Select';
+import { SelectOptionType } from 'types/selectOptions';
 import { useShopsysForm } from 'hooks/forms/UseShopsysForm';
 import { useShopsysSelector } from 'redux/main';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';

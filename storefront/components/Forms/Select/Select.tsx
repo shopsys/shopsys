@@ -15,11 +15,6 @@ type SelectProps = NativeProps & {
     fieldRef?: ControllerRenderProps;
 };
 
-export type SelectOptionType = {
-    value: string;
-    label: string;
-};
-
 const customStyles = {
     indicatorSeparator: () => ({}),
 };
