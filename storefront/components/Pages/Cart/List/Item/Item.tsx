@@ -11,7 +11,7 @@ import {
     TotalPriceCellStyled,
     TotalPriceStyled,
 } from './Item.style';
-import { CartItemType } from 'connectors/cart/types';
+import { CartItemType } from 'types/cart';
 import { formatPrice } from 'utils/formatting';
 import Image from 'components/Basic/Image';
 import ItemInfo from './ItemInfo';

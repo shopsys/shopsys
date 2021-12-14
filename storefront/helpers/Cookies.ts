@@ -1,4 +1,4 @@
-import { CartInput } from 'connectors/cart/types';
+import { CartInput } from 'types/cart';
 import { GetServerSidePropsContext } from 'next';
 import { hasTokenInCookie } from 'utils/Auth/TokensFromCookies';
 import nookies from 'nookies';

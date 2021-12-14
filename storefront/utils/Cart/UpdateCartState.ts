@@ -1,4 +1,4 @@
-import { CartInput, CartType } from 'connectors/cart/types';
+import { CartInput, CartType } from 'types/cart';
 import { AppStore } from 'redux/main';
 import { cartInputActions } from 'redux/slices/cartInput';
 import { PaymentType } from 'connectors/payments/types';

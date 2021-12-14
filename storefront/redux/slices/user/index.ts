@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { CartType } from 'connectors/cart/types';
+import { CartType } from 'types/cart';
 import { HYDRATE } from 'next-redux-wrapper';
 import { PaymentType } from 'connectors/payments/types';
 import { PickupPlaceType } from 'connectors/transports/pickupPlace/types';

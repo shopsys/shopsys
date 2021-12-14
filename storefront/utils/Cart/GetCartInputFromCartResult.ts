@@ -1,4 +1,4 @@
-import { CartInput, CartType } from 'connectors/cart/types';
+import { CartInput, CartType } from 'types/cart';
 import { mapPaymentToPaymentInput, mapTransportToTransportInput } from 'connectors/cart/Cart';
 import { PaymentType } from 'connectors/payments/types';
 import { PickupPlaceType } from 'connectors/transports/pickupPlace/types';
