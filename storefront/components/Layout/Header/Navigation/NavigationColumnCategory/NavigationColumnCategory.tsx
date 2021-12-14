@@ -4,7 +4,7 @@ import {
     NavigationColumnCategoryStyled,
 } from './NavigationColumnCategory.style';
 import { FC } from 'react';
-import { NavigationCategory } from 'connectors/navigation/Navigation';
+import { NavigationCategory } from 'types/navigation';
 import NavigationSubList from 'components/Layout/Header/Navigation/NavigationSubList';
 import NextLink from 'next/link';
 

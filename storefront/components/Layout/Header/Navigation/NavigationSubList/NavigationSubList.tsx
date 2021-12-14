@@ -5,7 +5,7 @@ import {
     NavigationSubListStyled,
 } from './NavigationSubList.style';
 import { FC } from 'react';
-import { NavigationSubCategory } from 'connectors/navigation/Navigation';
+import { NavigationSubCategory } from 'types/navigation';
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
 import { useShopsysDispatch } from 'redux/main';
