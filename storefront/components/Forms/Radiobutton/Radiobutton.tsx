@@ -3,7 +3,7 @@ import { LabelImageWrapper, RadiobuttonStyled } from './Radiobutton.style';
 import { ControllerRenderProps } from 'react-hook-form';
 import { ExtractNativePropsFromDefault } from 'typeHelpers/ExtractNativePropsFromDefault';
 import Image from 'components/Basic/Image';
-import { ImageType } from 'components/Basic/Image/types';
+import { ImageType } from 'types/image';
 import LabelWrapper from 'components/Forms/Lib/LabelWrapper';
 
 type NativeProps = ExtractNativePropsFromDefault<

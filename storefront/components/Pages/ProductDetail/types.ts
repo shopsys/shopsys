@@ -1,6 +1,6 @@
 import { ProductPriceType, SliderProductItemType } from 'components/Blocks/Product/types';
 import { BreadcrumbItemType } from 'types/breadcrumb';
-import { ImageType } from 'components/Basic/Image/types';
+import { ImageType } from 'types/image';
 
 export type Availability = {
     name: string;

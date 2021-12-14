@@ -6,7 +6,7 @@ import {
     CategoryImagesDefaultFragmentApi,
     ProductImagesListFragmentApi,
 } from 'graphql/generated';
-import { ImageType } from 'components/Basic/Image/types';
+import { ImageType } from 'types/image';
 import { mapImageSizeApiData } from './size/ImageSize';
 
 export const mapImageApiData = (

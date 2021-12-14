@@ -1,5 +1,5 @@
 import { SliderItemImagesWebDefaultFragmentApi, SliderItemsQueryApi, useSliderItemsQueryApi } from 'graphql/generated';
-import { ImageApiType } from 'components/Basic/Image/types';
+import { ImageApiType } from 'types/image';
 import { mapImageSizeApiData } from 'connectors/image/size/ImageSize';
 import { SliderItem } from 'types/sliderItem';
 import { useQueryError } from 'hooks/graphQl/UseQueryError';

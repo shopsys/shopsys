@@ -1,6 +1,6 @@
 import { FlagType, ProductPriceType } from 'components/Blocks/Product/types';
 import { TransportInputType } from 'types/transport';
-import { ImageType } from 'components/Basic/Image/types';
+import { ImageType } from 'types/image';
 import { PaymentInputType } from 'types/payment';
 import { PriceType } from 'types/price';
 

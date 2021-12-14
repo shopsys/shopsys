@@ -1,4 +1,4 @@
-import { ImageType } from 'components/Basic/Image/types';
+import { ImageType } from 'types/image';
 
 export type ListedItemPropType =
     | {

@@ -1,4 +1,4 @@
-import { ImageType } from 'components/Basic/Image/types';
+import { ImageType } from 'types/image';
 import { PaymentType } from 'types/payment';
 import { PickupPlaceType } from 'types/pickupPlace';
 import { PriceApiType, PriceType } from 'types/price';

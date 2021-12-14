@@ -1,5 +1,5 @@
 import { BreadcrumbItemType } from 'types/breadcrumb';
-import { ImageType } from 'components/Basic/Image/types';
+import { ImageType } from 'types/image';
 import { ListedProductEdgesType } from 'components/Blocks/Product/types';
 
 export type SimpleCategoryType = {

@@ -1,7 +1,7 @@
 import { FlagType, ProductPriceType } from 'components/Blocks/Product/types';
 import { ProductDetailImageType, ProductParameterType, StoreAvailability } from 'components/Pages/ProductDetail/types';
 import { BreadcrumbItemType } from 'types/breadcrumb';
-import { ImageType } from 'components/Basic/Image/types';
+import { ImageType } from 'types/image';
 
 export type SimpleProductType = {
     __typename?: 'MainVariant' | 'RegularProduct' | 'Variant';
