@@ -9,7 +9,11 @@ type FlagProps = {
 };
 
 const Flag: FC<FlagProps & NativeProps> = (props) => {
-    return <FlagStyled color={props.color}>{props.children}</FlagStyled>;
+    return (
+        <FlagStyled href={props.href} color={props.color}>
+            {props.children}
+        </FlagStyled>
+    );
 };
 
 export default Flag;
