@@ -1,6 +1,6 @@
 import { EnrichedSearchQueryApi, ProductOrderingModeEnumApi, useEnrichedSearchQueryApi } from 'graphql/generated';
 import { useEffect, useState } from 'react';
-import { EnrichedSearchType } from './types';
+import { EnrichedSearchType } from 'types/search';
 import { ListedArticleType } from 'types/article';
 import { ListedBlogArticleType } from 'types/blogArticle';
 import { ListedBrandType } from 'types/brand';

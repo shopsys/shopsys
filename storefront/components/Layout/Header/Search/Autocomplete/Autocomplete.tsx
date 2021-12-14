@@ -20,7 +20,7 @@ import { formatPrice } from 'utils/formatting';
 import Icon from 'components/Basic/Icon';
 import Image from 'components/Basic/Image';
 import NextLink from 'next/link';
-import { SearchType } from 'connectors/search/types';
+import { SearchType } from 'types/search';
 import { useGetInternationalizedStaticUrls } from 'hooks/staticUrls/UseGetInternationalizedStaticUrls';
 import { useRouter } from 'next/router';
 import { useShopsysSelector } from 'redux/main';
