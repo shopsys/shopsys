@@ -1,8 +1,8 @@
 import { styled, Theme } from 'components/Theme/main';
-import { ButtonDefaultProps } from 'components/Forms/Button/types';
+import { ButtonDefaultPropType } from './propTypes';
 import { css } from 'styled-components';
 
-type ButtonStyledProps = ButtonDefaultProps & {
+type ButtonStyledProps = ButtonDefaultPropType & {
     isDisabled?: boolean;
     hasDisabledLook?: boolean;
     isLink?: boolean;
@@ -15,9 +15,9 @@ type ButtonAsLinkStyledProps = {
 
 export const buttonSettings = (
     theme: Theme,
-    size?: ButtonDefaultProps['size'],
-    variant?: ButtonDefaultProps['variant'],
-    borderRadius?: ButtonDefaultProps['borderRadius'],
+    size?: ButtonDefaultPropType['size'],
+    variant?: ButtonDefaultPropType['variant'],
+    borderRadius?: ButtonDefaultPropType['borderRadius'],
 ): any => {
     const buttonSize = size === undefined ? 'default' : size;
     const buttonVariant = variant === undefined ? 'default' : variant;

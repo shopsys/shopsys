@@ -1,6 +1,6 @@
 import { ButtonAsLinkStyled, ButtonStyled } from './Button.style';
 import { ButtonHTMLAttributes, FC } from 'react';
-import { ButtonDefaultProps } from './types';
+import { ButtonDefaultPropType } from './propTypes';
 import { ExtractNativePropsFromDefault } from 'typeHelpers/ExtractNativePropsFromDefault';
 import { useFormContext } from 'react-hook-form';
 
@@ -11,7 +11,7 @@ type NativeProps = ExtractNativePropsFromDefault<
 >;
 
 type ButtonProps = NativeProps &
-    ButtonDefaultProps & {
+    ButtonDefaultPropType & {
         isDisabled?: boolean;
         hasDisabledLook?: boolean;
         isLink?: boolean;
