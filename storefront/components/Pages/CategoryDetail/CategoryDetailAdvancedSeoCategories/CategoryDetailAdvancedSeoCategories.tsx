@@ -9,7 +9,7 @@ import { desktopFirstSizes } from 'components/Theme/mediaQueries';
 import Heading from 'components/Basic/Heading';
 import { isElementVisible } from 'components/Helpers/isElementVisible';
 import NextLink from 'next/link';
-import { ReadyCategorySeoMixLink } from 'components/Pages/CategoryDetail/types';
+import { ReadyCategorySeoMixLink } from 'types/category';
 import { useGetWindowSize } from 'hooks/ui/UseGetWindowSize';
 import { useResizeWidthEffect } from 'hooks/ui/UseResizeWidthEffect';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';

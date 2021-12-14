@@ -4,7 +4,7 @@ import { EnrichedSearchType } from './types';
 import { ListedArticleType } from 'types/article';
 import { ListedBlogArticleType } from 'types/blogArticle';
 import { ListedBrandType } from 'types/brand';
-import { ListedCategoryType } from 'connectors/categories/types';
+import { ListedCategoryType } from 'types/category';
 import { ListedProductType } from 'connectors/products/types';
 import { mapListedArticleApiData } from 'connectors/articles/Articles';
 import { mapListedBrandApiData } from 'connectors/brands/Brands';

@@ -4,7 +4,7 @@ import { ArticleDetailType } from 'types/article';
 import { BlogArticleDetailType } from 'types/blogArticle';
 import { BlogCategoryType } from 'types/blogCategory';
 import { BrandDetailType } from 'types/brand';
-import { CategoryDetailType } from 'components/Pages/CategoryDetail/types';
+import { CategoryDetailType } from 'types/category';
 import { FlagDetailType } from 'connectors/flags/types';
 import { MainVariantDetailType } from 'connectors/products/types';
 import { mapArticleDetailApiData } from 'connectors/article/ArticleDetail';

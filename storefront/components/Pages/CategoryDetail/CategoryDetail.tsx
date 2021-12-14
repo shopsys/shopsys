@@ -9,7 +9,7 @@ import {
 } from './CategoryDetail.style';
 import { FC, useEffect, useRef, useState } from 'react';
 import CategoryDetailAdvancedSeoCategories from './CategoryDetailAdvancedSeoCategories';
-import { CategoryDetailType } from './types';
+import { CategoryDetailType } from 'types/category';
 import { FilterOptionsType } from 'components/Blocks/Product/Filter/types';
 import Heading from 'components/Basic/Heading';
 import Overlay from 'components/Basic/Overlay';

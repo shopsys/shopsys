@@ -13,7 +13,7 @@ import BrandDetailPage from 'components/Pages/BrandDetail';
 import { BrandDetailType } from 'types/brand';
 import Breadcrumbs from 'components/Layout/Breadcrumbs';
 import CategoryDetailPage from 'components/Pages/CategoryDetail';
-import { CategoryDetailType } from 'components/Pages/CategoryDetail/types';
+import { CategoryDetailType } from 'types/category';
 import CommonLayout from 'components/Layout/CommonLayout';
 import DefaultErrorPage from 'next/error';
 import FlagDetailPage from 'components/Pages/FlagDetail';
