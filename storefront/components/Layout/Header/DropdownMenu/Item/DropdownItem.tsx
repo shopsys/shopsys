@@ -11,14 +11,14 @@ import { DropdownMenuContext } from 'components/Layout/Header/DropdownMenu//Drop
 import DropdownSlideRight from 'components/Layout/Header/DropdownMenu/SlideRight';
 import Link from 'next/link';
 
-type DropdownItemProps = {
+type DropdownItemProps = DropdownItemType & {
     variant?: 'small';
     navigationItem?: NavigationItemType;
     columnCategory?: NavigationCategoryType;
     columnCategoryChild?: NavigationSubCategoryType;
 };
 
-const DropdownItem: FC<DropdownItemProps & DropdownItemType> = (props) => {
+const DropdownItem: FC<DropdownItemProps> = (props) => {
     const context = useContext(DropdownMenuContext);
     const [hasChildren, setHasChildren] = useState(false);
     const [itemLink, setItemLink] = useState('');

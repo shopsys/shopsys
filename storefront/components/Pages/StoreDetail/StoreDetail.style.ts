@@ -3,18 +3,18 @@ import Heading from 'components/Basic/Heading';
 import Icon from 'components/Basic/Icon';
 import { styled } from 'components/Theme/main';
 
+type ButtonBottomNameStyledProps = {
+    type?: 'right';
+};
+
+type ButtonBottomIconStyledProps = {
+    type?: 'right';
+};
+
 export const StoreDetailMapSize = {
     small: '350px',
     bigger: '500px',
     big: '650px',
-};
-
-type ButtonBottomNameProps = {
-    type?: 'right';
-};
-
-type ButtonBottomIconProps = {
-    type?: 'right';
 };
 
 export const StoreDetailStyled = styled.div`
@@ -144,7 +144,7 @@ export const ButtonBottomItemStyled = styled.div`
     `}
 `;
 
-export const ButtonBottomNameStyled = styled.div<ButtonBottomNameProps>`
+export const ButtonBottomNameStyled = styled.div<ButtonBottomNameStyledProps>`
     ${({ theme, type }) => css`
         position: relative;
         flex-grow: 1;
@@ -169,7 +169,7 @@ export const ButtonBottomNameStyled = styled.div<ButtonBottomNameProps>`
     `}
 `;
 
-export const ButtonBottomIconStyled = styled(Icon)<ButtonBottomIconProps>`
+export const ButtonBottomIconStyled = styled(Icon)<ButtonBottomIconStyledProps>`
     ${({ theme, type }) => css`
         width: 24px;
         height: 24px;

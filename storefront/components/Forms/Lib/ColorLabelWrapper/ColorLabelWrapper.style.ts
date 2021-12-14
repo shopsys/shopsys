@@ -5,14 +5,14 @@ const localVariables = {
     labelColorSize: '25px',
 } as const;
 
-type ColorLabelWrapperProps = {
+type ColorLabelWrapperStyledProps = {
     isLightColor: boolean;
     bgColor: string;
     isDisabled: boolean;
     isActive: boolean;
 };
 
-export const ColorLabelWrapperStyled = styled.div<ColorLabelWrapperProps>`
+export const ColorLabelWrapperStyled = styled.div<ColorLabelWrapperStyledProps>`
     position: relative;
     display: flex;
     width: 25px;

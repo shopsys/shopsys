@@ -1,7 +1,7 @@
 import styled, { css } from 'styled-components';
 import { StoreAvailability } from 'components/Pages/ProductDetail/types';
 
-type ProductDetailAvailabilityListItemStatusStyled = Pick<StoreAvailability, 'availabilityStatus'>;
+type ProductDetailAvailabilityListItemStatusStyledProps = Pick<StoreAvailability, 'availabilityStatus'>;
 
 export const ProductDetailAvailabilityListWrapperStyled = styled.div`
     ${({ theme }) => css`
@@ -30,7 +30,7 @@ export const ProductDetailAvailabilityListItemStoreNameStyled = styled.strong`
     width: 148px;
 `;
 
-export const ProductDetailAvailabilityListItemStatusStyled = styled.span<ProductDetailAvailabilityListItemStatusStyled>`
+export const ProductDetailAvailabilityListItemStatusStyled = styled.span<ProductDetailAvailabilityListItemStatusStyledProps>`
     ${({ theme, availabilityStatus }) => css`
         flex: 1;
         padding-right: 10px;

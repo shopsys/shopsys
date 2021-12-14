@@ -4,11 +4,13 @@ import { FC } from 'react';
 import { Props } from 'react-select';
 import { SelectStyled } from './Select.style';
 
-type SelectProps = ExtractNativePropsFromDefault<
+type NativeProps = ExtractNativePropsFromDefault<
     Props,
     'options' | 'onChange',
     'defaultValue' | 'value' | 'isDisabled'
-> & {
+>;
+
+type SelectProps = NativeProps & {
     hasError: boolean;
     fieldRef?: ControllerRenderProps;
 };

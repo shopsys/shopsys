@@ -7,6 +7,7 @@ export type PriceApiType = {
     priceWithoutVat: string;
     vatAmount: string;
 };
+
 export type PriceType = {
     priceWithVat: number;
     priceWithoutVat: number;
@@ -14,7 +15,11 @@ export type PriceType = {
     currencyCode: string;
 };
 
-export type TransportInputType = { uuid: string; price: PriceApiType; pickupPlaceIdentifier: string | null };
+export type TransportInputType = {
+    uuid: string;
+    price: PriceApiType;
+    pickupPlaceIdentifier: string | null;
+};
 
 export type TransportType = {
     uuid: string;

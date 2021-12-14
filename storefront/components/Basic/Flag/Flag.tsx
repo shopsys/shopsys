@@ -4,11 +4,11 @@ import { FlagStyled } from './Flag.style';
 
 type NativeProps = ExtractNativePropsFromDefault<AnchorHTMLAttributes<HTMLAnchorElement>, 'href', never>;
 
-type FlagProps = {
+type FlagProps = NativeProps & {
     color?: string;
 };
 
-const Flag: FC<FlagProps & NativeProps> = (props) => {
+const Flag: FC<FlagProps> = (props) => {
     return (
         <FlagStyled href={props.href} color={props.color}>
             {props.children}

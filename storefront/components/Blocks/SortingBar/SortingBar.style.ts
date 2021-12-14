@@ -7,7 +7,7 @@ const localVariables = {
     SortOrderOptionsLeftMargin: '30px',
 };
 
-type SortItemLinkProps = {
+type SortingBarItemLinkStyledProps = {
     isActive: boolean;
 };
 
@@ -81,7 +81,7 @@ export const SortingBarItemLinkWrapStyled = styled.span`
     `}
 `;
 
-export const SortingBarItemLinkStyled = styled.a<SortItemLinkProps>`
+export const SortingBarItemLinkStyled = styled.a<SortingBarItemLinkStyledProps>`
     ${({ theme, isActive }) => css`
         display: block;
         padding: 16px 9px 17px;

@@ -11,7 +11,7 @@ const localVariables = {
     RangeSliderThumbBorderRadius: '50%',
 } as const;
 
-type RangeSliderThumbPropsStyled = {
+type RangeSliderThumbStyledProps = {
     value: number;
     max: number;
 };
@@ -121,7 +121,7 @@ export const RangeSliderRangeStyled = styled.div`
     `}
 `;
 
-export const RangeSliderLeftThumbStyled = styled.input<RangeSliderThumbPropsStyled>`
+export const RangeSliderLeftThumbStyled = styled.input<RangeSliderThumbStyledProps>`
     ${getThumbStyle()};
 `;
 

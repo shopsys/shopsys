@@ -1,11 +1,11 @@
 import { css } from 'styled-components';
 import { styled } from 'components/Theme/main';
 
-type ContactInformationDeliveryAddressProps = {
+type ContactInformationDeliveryAddressStyledProps = {
     contentElementHeight: number;
 };
 
-export const ContactInformationDeliveryAddressStyled = styled.div<ContactInformationDeliveryAddressProps>`
+export const ContactInformationDeliveryAddressStyled = styled.div<ContactInformationDeliveryAddressStyledProps>`
     ${({ contentElementHeight }) => css`
         .contactInformationDeliveryAddress-enter {
             height: 0;

@@ -2,7 +2,7 @@ import { styled, Theme } from 'components/Theme/main';
 import { css } from 'styled-components';
 import Icon from 'components/Basic/Icon';
 
-type NavigationProps = {
+type NavigationStyledProps = {
     isOpen?: boolean;
 };
 
@@ -35,7 +35,7 @@ const hoveredItem = (theme: Theme) => {
     `;
 };
 
-export const NavigationItemStyled = styled.li<NavigationProps>`
+export const NavigationItemStyled = styled.li<NavigationStyledProps>`
     ${({ theme }) => css`
         padding: 0;
         display: inline-block;
@@ -60,7 +60,7 @@ export const NavigationItemStyled = styled.li<NavigationProps>`
     `}
 `;
 
-export const NavigationItemLinkStyled = styled.a<NavigationProps>`
+export const NavigationItemLinkStyled = styled.a<NavigationStyledProps>`
     ${({ theme, isOpen }) => css`
         position: relative;
         display: block;
@@ -107,7 +107,7 @@ export const NavigationItemLinkStyled = styled.a<NavigationProps>`
     `}
 `;
 
-export const NavigationItemLinkIconStyled = styled(Icon)<NavigationProps>`
+export const NavigationItemLinkIconStyled = styled(Icon)<NavigationStyledProps>`
     ${({ theme, isOpen }) => css`
         margin-left: 8px;
 
@@ -121,7 +121,7 @@ export const NavigationItemLinkIconStyled = styled(Icon)<NavigationProps>`
     `};
 `;
 
-export const NavigationItemSubStyled = styled.div<NavigationProps>`
+export const NavigationItemSubStyled = styled.div<NavigationStyledProps>`
     ${({ theme, isOpen }) => css`
         display: block;
         position: absolute;

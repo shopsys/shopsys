@@ -4,7 +4,7 @@ import getConfig from 'next/config';
 import GoogleMapReact from 'google-map-react';
 import { useShopsysSelector } from 'redux/main';
 
-type GoogleMapMarkerProps = {
+type GoogleMapMarker = {
     locationLatitude: number | null;
     locationLongitude: number | null;
 };
@@ -13,7 +13,7 @@ type GoogleMapProps = {
     lat?: number | null;
     lng?: number | null;
     zoom?: number | null;
-    markers?: GoogleMapMarkerProps[] | undefined;
+    markers?: GoogleMapMarker[];
     activeMarker?: (index: number) => void;
     isDetail?: boolean;
     closeMarkers?: boolean;

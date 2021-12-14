@@ -1,7 +1,7 @@
 import { css } from 'styled-components';
 import { styled } from 'components/Theme/main';
 
-type CartPreviewCellProps = {
+type CartPreviewCellStyledProps = {
     textAlign?: 'right';
 };
 
@@ -13,7 +13,7 @@ export const CartPreviewRowStyled = styled.tr`
     width: 100%;
 `;
 
-export const CartPreviewCellStyled = styled.td<CartPreviewCellProps>`
+export const CartPreviewCellStyled = styled.td<CartPreviewCellStyledProps>`
     ${({ theme, textAlign }) => css`
         line-height: 18px;
         padding: 6px 0;

@@ -7,7 +7,7 @@ const localVariables = {
     categoryDetailPanelWidth: '304px',
 } as const;
 
-type PanelProps = {
+type PanelStyledProps = {
     isOpen?: boolean;
 };
 
@@ -26,7 +26,7 @@ export const CategoryDetailStyled = styled.div`
     `}
 `;
 
-export const CategoryDetailPanelStyled = styled.div<PanelProps>`
+export const CategoryDetailPanelStyled = styled.div<PanelStyledProps>`
     ${({ theme, isOpen }) => css`
         display: none;
         position: absolute;
@@ -58,7 +58,7 @@ export const CategoryDetailContentStyled = styled.div`
     `}
 `;
 
-export const CategoryDetailPanelOpenerStyled = styled.div<PanelProps>`
+export const CategoryDetailPanelOpenerStyled = styled.div<PanelStyledProps>`
     ${({ theme, isOpen }) => css`
         position: relative;
         display: flex;

@@ -8,11 +8,11 @@ const localVariables = {
     footerBoxInfoImageSizeSmall: '47px',
 };
 
-type FooterBoxInfoProps = {
+type FooterBoxInfoStyledProps = {
     orderStep?: boolean;
 };
 
-export const FooterBoxInfoStyled = styled.div<FooterBoxInfoProps>`
+export const FooterBoxInfoStyled = styled.div<FooterBoxInfoStyledProps>`
     ${({ theme, orderStep }) => css`
         position: relative;
         display: flex;
@@ -49,7 +49,7 @@ export const FooterBoxInfoImageStyled = styled.img`
     `}
 `;
 
-export const FooterBoxInfoContentStyled = styled.div<FooterBoxInfoProps>`
+export const FooterBoxInfoContentStyled = styled.div<FooterBoxInfoStyledProps>`
     ${({ theme, orderStep }) => css`
         position: relative;
         display: flex;
@@ -117,7 +117,7 @@ export const FooterBoxInfoTitleStyled = styled.div`
     `}
 `;
 
-export const FooterBoxInfoContactStyled = styled.div<FooterBoxInfoProps>`
+export const FooterBoxInfoContactStyled = styled.div<FooterBoxInfoStyledProps>`
     ${({ theme, orderStep }) => css`
         display: flex;
         flex-wrap: wrap;
@@ -150,7 +150,7 @@ export const FooterBoxInfoContactIconStyled = styled(Icon)`
     `}
 `;
 
-export const FooterBoxInfoContactPhoneStyled = styled.a<FooterBoxInfoProps>`
+export const FooterBoxInfoContactPhoneStyled = styled.a<FooterBoxInfoStyledProps>`
     ${({ theme, orderStep }) => css`
         margin-right: 16px;
 
@@ -178,7 +178,7 @@ export const FooterBoxInfoContactPhoneStyled = styled.a<FooterBoxInfoProps>`
     `}
 `;
 
-export const FooterBoxInfoContactHoursStyled = styled.p<FooterBoxInfoProps>`
+export const FooterBoxInfoContactHoursStyled = styled.p<FooterBoxInfoStyledProps>`
     ${({ theme, orderStep }) => css`
         margin: 0;
 

@@ -6,7 +6,7 @@ const localVariables = {
     searchResultsPanelWidth: '304px',
 };
 
-type PanelProps = {
+type SearchResultsPanelStyledProps = {
     isOpen?: boolean;
 };
 
@@ -30,7 +30,7 @@ export const SearchResultsStyled = styled.div`
         `}
 `;
 
-export const SearchResultsPanelStyled = styled.div<PanelProps>`
+export const SearchResultsPanelStyled = styled.div<SearchResultsPanelStyledProps>`
     ${({ theme, isOpen }) => css`
         display: none;
         position: absolute;

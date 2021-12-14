@@ -3,7 +3,4 @@ export type TokenType = {
     refreshToken: string;
 };
 
-export type OptionalTokenType = {
-    accessToken: string | undefined;
-    refreshToken: string | undefined;
-};
+export type OptionalTokenType = Partial<TokenType>;

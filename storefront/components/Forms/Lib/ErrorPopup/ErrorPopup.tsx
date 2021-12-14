@@ -7,7 +7,13 @@ import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslatio
 type ErrorPopupProps = {
     isVisible: boolean;
     onCloseCallback: () => void;
-    fields: { [fieldName: string]: { name: string; label: string | ReactElement; errorMessage: string | undefined } };
+    fields: {
+        [fieldName: string]: {
+            name: string;
+            label: string | ReactElement;
+            errorMessage: string | undefined;
+        };
+    };
 };
 
 const ErrorPopup: FC<ErrorPopupProps> = (props) => {

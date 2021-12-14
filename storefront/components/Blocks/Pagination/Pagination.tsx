@@ -10,11 +10,6 @@ import { usePagination } from 'hooks/ui/usePagination';
 import { useResizeWidthEffect } from 'hooks/ui/UseResizeWidthEffect';
 import { useRouter } from 'next/router';
 
-export type PaginationButtonActiveType = {
-    active?: boolean;
-    dotButton?: boolean;
-};
-
 export type PaginationProps = {
     totalCount: number;
 };

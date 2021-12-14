@@ -1,5 +1,8 @@
 import { css } from 'styled-components';
 import { styled } from 'components/Theme/main';
+type LabelWrapperStyledProps = {
+    inputType: 'text-input' | 'textarea' | 'checkbox' | 'radio';
+};
 
 const localVariables = {
     labelFontSizeSmall: '11px',
@@ -10,11 +13,7 @@ const localVariables = {
     choiceIconSize: '18px',
 } as const;
 
-type LabelWrapperPropsStyled = {
-    inputType: 'text-input' | 'textarea' | 'checkbox' | 'radio';
-};
-
-export const LabelWrapperStyled = styled.div<LabelWrapperPropsStyled>`
+export const LabelWrapperStyled = styled.div<LabelWrapperStyledProps>`
     ${({ theme, inputType }) => css`
         position: relative;
         width: 100%;

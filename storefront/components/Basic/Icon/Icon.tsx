@@ -9,20 +9,19 @@ import { IconSvg } from './IconSvg';
 
 type NativeProps = ExtractNativePropsFromDefault<HTMLAttributes<HTMLDivElement>, never, 'onClick'>;
 
-type IconProps = { iconType: 'icon' | 'image'; title?: string } & (
-    | {
-          iconType: 'icon';
-          icon: IconName;
-      }
-    | {
-          iconType: 'image';
-          icon: string;
-          width?: number;
-          height?: number;
-          alt: string;
-      }
-) &
-    NativeProps;
+type IconProps = NativeProps & { iconType: 'icon' | 'image'; title?: string } & (
+        | {
+              iconType: 'icon';
+              icon: IconName;
+          }
+        | {
+              iconType: 'image';
+              icon: string;
+              width?: number;
+              height?: number;
+              alt: string;
+          }
+    );
 
 const Icon: FC<IconProps> = (props) => {
     if (props.iconType === 'image') {

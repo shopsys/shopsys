@@ -1,11 +1,11 @@
 import { css } from 'styled-components';
 import { styled } from 'components/Theme/main';
 
-type ContactInformationTextWrapperProps = {
+type ContactInformationTextWrapperStyledProps = {
     isEmailEntered: boolean;
 };
 
-export const ContactInformationTextWrapperStyled = styled.div<ContactInformationTextWrapperProps>`
+export const ContactInformationTextWrapperStyled = styled.div<ContactInformationTextWrapperStyledProps>`
     ${({ isEmailEntered }) => css`
         ${!isEmailEntered &&
         css`

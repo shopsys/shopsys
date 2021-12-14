@@ -1,7 +1,7 @@
 import { css } from 'styled-components';
 import { styled } from 'components/Theme/main';
 
-type DropdownMenuProps = {
+type DropdownMenuStyledProps = {
     slideDirection: 'left' | 'right';
 };
 
@@ -22,7 +22,7 @@ export const DropdownMenuWrapperStyled = styled.div`
     }
 `;
 
-export const DropdownMenuStyled = styled.div<DropdownMenuProps>`
+export const DropdownMenuStyled = styled.div<DropdownMenuStyledProps>`
     ${({ theme, slideDirection }) => css`
         position: absolute;
         left: 10px;

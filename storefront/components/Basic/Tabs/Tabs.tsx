@@ -22,27 +22,26 @@ type TabsProps = {
     headingTextMobile: string;
 };
 
-type TabFunctionComponentType = FC & { tabsRole: string };
-type TabFunctionComponentContentType = FC<TabsProps> & { tabsRole: string };
+type TabFC<T = unknown> = FC<T> & { tabsRole: string };
 
 /*
  * TabsExtended element is wrap around all tabs and its content
  */
-const TabsExtended: TabFunctionComponentType = (props) => {
+const TabsExtended: TabFC = (props) => {
     return <TabsStyled {...props}>{props.children}</TabsStyled>;
 };
 
 /*
  * TabsListExtended element is wrap around all tabs
  */
-const TabsListExtended: TabFunctionComponentType = (props) => {
+const TabsListExtended: TabFC = (props) => {
     return <TabsListStyled {...props}>{props.children}</TabsListStyled>;
 };
 
 /*
  * TabsListItemExtended element creates link with tab functionality - shows contant according to ShopsysTabsContent index order
  */
-const TabsListItemExtended: TabFunctionComponentType = (props) => {
+const TabsListItemExtended: TabFC = (props) => {
     return (
         <TabsListItemStyled selectedClassName="active" {...props}>
             {props.children}
@@ -55,7 +54,7 @@ const TabsListItemExtended: TabFunctionComponentType = (props) => {
  * On mobile devices there is diplayed only TabsContentMobileHeading (special element with closing arrow icon)
  * and shows content on click event and you have to define headingTextMobile - you can use shorter text
  */
-const TabsContentExtended: TabFunctionComponentContentType = (props) => {
+const TabsContentExtended: TabFC<TabsProps> = (props) => {
     const [isActiveOnMobile, setIsActiveOnMobile] = useState<boolean | undefined>(false);
     const mobileTab = () => {
         setIsActiveOnMobile(!isActiveOnMobile);

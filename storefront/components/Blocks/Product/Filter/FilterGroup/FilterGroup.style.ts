@@ -6,7 +6,7 @@ const localVariables = {
     filterGroupBorderWidth: '1px',
 } as const;
 
-type FilterGroupProps = {
+type FilterGroupStyledProps = {
     isOpen?: boolean;
 };
 
@@ -37,7 +37,7 @@ export const FilterGroupTitleStyled = styled.div`
     `}
 `;
 
-export const FilterGroupContentStyled = styled.div<FilterGroupProps>`
+export const FilterGroupContentStyled = styled.div<FilterGroupStyledProps>`
     ${({ isOpen }) => css`
         flex-wrap: wrap;
         flex-direction: column;
@@ -77,7 +77,7 @@ export const FilterGroupColorStyled = styled.div`
     flex-wrap: wrap;
 `;
 
-export const FilterGroupArrowStyled = styled(Icon)<FilterGroupProps>`
+export const FilterGroupArrowStyled = styled(Icon)<FilterGroupStyledProps>`
     ${({ theme, isOpen }) => css`
         position: absolute;
         right: 0;

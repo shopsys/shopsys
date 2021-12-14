@@ -1,6 +1,12 @@
 import { CombinedError } from 'urql';
 import { TFunction } from 'react-i18next';
-type ValidationErrors = { [fieldName: string]: { message: string; code: string } };
+type ValidationErrors = {
+    [fieldName: string]: {
+        message: string;
+        code: string;
+    };
+};
+
 export enum ApplicationErrors {
     DEFAULT = 'DEFAULT',
     CART_NOT_FOUND = 'CART_NOT_FOUND',

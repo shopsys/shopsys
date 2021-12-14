@@ -5,7 +5,9 @@ import { SliderProductItemType } from './types';
 import { theme } from 'components/Theme/main';
 import { useKeenSlider } from 'keen-slider/react';
 
-type ProductsSliderProps = { products: SliderProductItemType[] };
+type ProductsSliderProps = {
+    products: SliderProductItemType[];
+};
 
 const ProductsSlider: FC<ProductsSliderProps> = (props) => {
     const [currentSlide, setCurrentSlide] = useState(0);
