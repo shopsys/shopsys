@@ -16,7 +16,7 @@ import ProductAvailableStoresCount from './Availability/ProductAvailableStoresCo
 import ProductExposedStoresCount from './Availability/ProductExposedStoresCount';
 import ProductFlags from './Flags/ProductFlags';
 import ProductPrice from './Price/ProductPrice';
-import { SliderProductItemType } from './types';
+import { SliderProductItemType } from 'types/product';
 
 const ProductItem: FC<SliderProductItemType> = (props) => {
     return (

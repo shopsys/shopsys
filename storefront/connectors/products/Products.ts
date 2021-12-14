@@ -6,7 +6,7 @@ import {
     SliderProductFragmentApi,
     usePromotedProductsQueryApi,
 } from 'graphql/generated';
-import { FlagType, ProductPriceType, SliderProductItemType } from 'components/Blocks/Product/types';
+import { FlagType, ProductPriceType, SliderProductItemType } from 'types/product';
 import { ListedProductType, ListedVariantType } from 'types/product';
 import { mapProductDetailImages, mapStoreAvailabilities } from './ProductDetail';
 import { mapImageApiData } from 'connectors/image/Image';

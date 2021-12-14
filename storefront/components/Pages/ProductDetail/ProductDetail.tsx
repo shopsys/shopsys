@@ -13,7 +13,7 @@ import ProductDetailAvailability from './ProductDetailStoresAvailability/Product
 import ProductDetailAvailabilityList from './ProductDetailStoresAvailability/ProductDetailAvailabilityList';
 import ProductDetailGallery from './ProductDetailGallery';
 import ProductDetailTabs from './ProductDetailTabs';
-import { ProductDetailType } from './types';
+import { ProductDetailType } from 'types/product';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import Webline from 'components/Layout/Webline';
 

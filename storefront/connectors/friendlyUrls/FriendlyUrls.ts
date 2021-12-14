@@ -13,7 +13,7 @@ import { mapBlogCategoryData } from 'connectors/blogCategory/BlogCategory';
 import { mapBrandDetailApiData } from 'connectors/brands/Brands';
 import { mapFlagDetailApiData } from 'connectors/flags/Flags';
 import { mapStoreDetailApiData } from 'connectors/stores/StoreDetail';
-import { ProductDetailType } from 'components/Pages/ProductDetail/types';
+import { ProductDetailType } from 'types/product';
 import { StoreDetailType } from 'types/store';
 import { useQueryError } from 'hooks/graphQl/UseQueryError';
 import { useShopsysSelector } from 'redux/main';

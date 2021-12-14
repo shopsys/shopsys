@@ -8,7 +8,7 @@ import SimpleReactLightbox, { SRLWrapper } from 'simple-react-lightbox';
 import { desktopFirstSizes } from 'components/Theme/mediaQueries';
 import { isElementVisible } from 'components/Helpers/isElementVisible';
 import ProductDetailImageSlider from './ProductDetailImageSlider';
-import { ProductDetailImageType } from './types';
+import { ProductDetailImageType } from 'types/product';
 import { useGetWindowSize } from 'hooks/ui/UseGetWindowSize';
 import { useResizeWidthEffect } from 'hooks/ui/UseResizeWidthEffect';
 

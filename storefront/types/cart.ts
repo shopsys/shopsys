@@ -1,4 +1,4 @@
-import { FlagType, ProductPriceType } from 'components/Blocks/Product/types';
+import { FlagType, ProductPriceType } from 'types/product';
 import { TransportInputType } from 'types/transport';
 import { ImageType } from 'types/image';
 import { PaymentInputType } from 'types/payment';

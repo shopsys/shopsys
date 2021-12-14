@@ -1,6 +1,6 @@
 import { BreadcrumbItemType } from 'types/breadcrumb';
 import { ImageType } from 'types/image';
-import { ListedProductEdgesType } from 'components/Blocks/Product/types';
+import { ListedProductEdgesType } from 'types/product';
 
 export type SimpleCategoryType = {
     __typename?: 'Category';

@@ -1,6 +1,6 @@
 import { Tabs, TabsContent, TabsList, TabsListItem } from 'components/Basic/Tabs';
 import { FC } from 'react';
-import { ProductParameterType } from './types';
+import { ProductParameterType } from 'types/product';
 import Table from 'components/Basic/Table';
 import UserText from 'components/Helpers/UserText';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';

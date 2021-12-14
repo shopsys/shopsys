@@ -1,4 +1,4 @@
-import { PageInfoType, SliderProductItemType } from 'components/Blocks/Product/types';
+import { PageInfoType, SliderProductItemType } from 'types/product';
 import { BlogArticleCategoryType } from './blogCategory';
 import { BlogCategoryFragmentApi } from 'graphql/generated';
 import { BreadcrumbItemType } from 'types/breadcrumb';

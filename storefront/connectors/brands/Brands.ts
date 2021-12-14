@@ -1,6 +1,6 @@
 import { BrandDetailFragmentApi, ListedBrandFragmentApi, useBrandsQueryApi } from 'graphql/generated';
 import { BrandDetailType, ListedBrandType } from '../../types/brand';
-import { ListedProductEdgesType } from 'components/Blocks/Product/types';
+import { ListedProductEdgesType } from 'types/product';
 import { mapImageApiData } from 'connectors/image/Image';
 import { mapListedProductType } from 'connectors/products/Products';
 import { mapPageInfoApiData } from 'connectors/pageInfo/PageInfo';

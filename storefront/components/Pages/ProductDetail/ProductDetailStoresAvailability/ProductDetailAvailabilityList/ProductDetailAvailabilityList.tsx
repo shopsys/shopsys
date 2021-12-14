@@ -9,7 +9,7 @@ import { forwardRef } from 'react';
 import Heading from 'components/Basic/Heading';
 import Icon from 'components/Basic/Icon';
 import NextLink from 'next/link';
-import { StoreAvailability } from 'components/Pages/ProductDetail/types';
+import { StoreAvailability } from 'types/product';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 
 type ProductDetailAvailabilityListProps = {

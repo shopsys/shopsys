@@ -31,7 +31,7 @@ import { parsePageNumberFromQuery } from 'utils/Pagination/parsePageNumberFromQu
 import { parseProductListSortFromQuery } from 'helpers/sorting/ParseProductListSortFromQuery';
 import ProductDetailMainVariantPage from 'components/Pages/ProductDetail/ProductDetailMainVariant';
 import ProductDetailPage from 'components/Pages/ProductDetail';
-import { ProductDetailType } from 'components/Pages/ProductDetail/types';
+import { ProductDetailType } from 'types/product';
 import StoreDetailPage from 'components/Pages/StoreDetail';
 import { StoreDetailType } from 'types/store';
 import { useRouter } from 'next/router';
