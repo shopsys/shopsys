@@ -1,4 +1,4 @@
-export type FormColumnProps = {
+export type FormColumnPropType = {
     width?: string;
     xs?: string;
     sm?: string;
