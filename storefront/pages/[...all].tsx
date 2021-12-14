@@ -4,7 +4,7 @@ import { initServerSideProps, ServerSidePropsType } from 'helpers/InitServerSide
 import { NavigationQueryDocumentApi, SlugQueryDocumentApi } from 'graphql/generated';
 import { nextReduxWrapper, useShopsysDispatch } from 'redux/main';
 import ArticleDetailPage from 'components/Pages/Article';
-import { ArticleDetailType } from 'connectors/article/types';
+import { ArticleDetailType } from 'types/article';
 import { BlogArticleDetailType } from 'components/Pages/BlogArticle/types';
 import BlogArticlePage from 'components/Pages/BlogArticle';
 import BlogCategoryPage from 'components/Pages/BlogCategory';

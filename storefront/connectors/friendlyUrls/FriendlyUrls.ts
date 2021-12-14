@@ -1,6 +1,6 @@
 import { mapCategoryDetailData, mapParametersFilter } from 'connectors/categories/Categories';
 import { mapMainVariantDetailApiData, mapProductDetailApiData } from 'connectors/products/ProductDetail';
-import { ArticleDetailType } from 'connectors/article/types';
+import { ArticleDetailType } from 'types/article';
 import { BlogArticleDetailType } from 'components/Pages/BlogArticle/types';
 import { BlogCategoryType } from 'connectors/blogCategory/types';
 import { BrandDetailType } from 'connectors/brands/types';

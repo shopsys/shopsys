@@ -1,5 +1,5 @@
 import { ArticleDetailFragmentApi } from 'graphql/generated';
-import { ArticleDetailType } from './types';
+import { ArticleDetailType } from 'types/article';
 
 export const mapArticleDetailApiData = (apiData: ArticleDetailFragmentApi): ArticleDetailType => {
     return {

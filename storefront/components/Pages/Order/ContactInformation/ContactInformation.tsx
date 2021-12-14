@@ -5,7 +5,7 @@ import { FC, useEffect, useState } from 'react';
 import Checkbox from 'components/Forms/Checkbox';
 import ChoiceFormLine from 'components/Forms/Lib/ChoiceFormLine';
 import { contactInformationActions } from 'redux/slices/contactInformation';
-import ContactInformationContentProps from './ContactInformationContent';
+import ContactInformationContent from './ContactInformationContent';
 import FormLine from 'components/Forms/Lib/FormLine';
 import FormLineError from 'components/Forms/Lib/FormLineError';
 import TextInput from 'components/Forms/TextInput';

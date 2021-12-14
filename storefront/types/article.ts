@@ -9,3 +9,15 @@ export type ArticleDetailType = {
     text: string | null;
     breadcrumb: BreadcrumbItemType[];
 };
+
+export type SimpleArticleType = {
+    __typename?: 'Article';
+    name: string;
+    slug: string;
+};
+
+export type ListedArticleType = {
+    name: string;
+    slug: string;
+    image: null;
+};

@@ -1,7 +1,8 @@
 import { EnrichedSearchQueryApi, ProductOrderingModeEnumApi, useEnrichedSearchQueryApi } from 'graphql/generated';
-import { ListedArticleType, ListedBlogArticleType } from 'connectors/articles/types';
 import { useEffect, useState } from 'react';
 import { EnrichedSearchType } from './types';
+import { ListedArticleType } from 'types/article';
+import { ListedBlogArticleType } from 'types/blogArticle';
 import { ListedBrandType } from 'connectors/brands/types';
 import { ListedCategoryType } from 'connectors/categories/types';
 import { ListedProductType } from 'connectors/products/types';
