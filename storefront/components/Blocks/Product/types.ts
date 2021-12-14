@@ -1,4 +1,4 @@
-import { FilterOptionsType } from 'components/Blocks/Product/Filter/types';
+import { FilterOptionsType } from 'types/productFilter';
 import { ImageType } from 'types/image';
 
 export type FlagType = {

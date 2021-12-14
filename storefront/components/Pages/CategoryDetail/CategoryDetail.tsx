@@ -10,7 +10,7 @@ import {
 import { FC, useEffect, useRef, useState } from 'react';
 import CategoryDetailAdvancedSeoCategories from './CategoryDetailAdvancedSeoCategories';
 import { CategoryDetailType } from 'types/category';
-import { FilterOptionsType } from 'components/Blocks/Product/Filter/types';
+import { FilterOptionsType } from 'types/productFilter';
 import Heading from 'components/Basic/Heading';
 import Overlay from 'components/Basic/Overlay';
 import Pagination from 'components/Blocks/Pagination/Pagination';

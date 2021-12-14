@@ -1,6 +1,6 @@
 import { Controller, useFieldArray, useFormContext } from 'react-hook-form';
 import { FC, useState } from 'react';
-import { FilterFormType, FilterOptionsParameterTypeEnum, ParametersType } from 'components/Blocks/Product/Filter/types';
+import { FilterFormType, FilterOptionsParameterTypeEnum, ParametersType } from 'types/productFilter';
 import {
     FilterGroupArrowStyled,
     FilterGroupColorStyled,

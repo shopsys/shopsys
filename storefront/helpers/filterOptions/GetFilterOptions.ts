@@ -1,4 +1,4 @@
-import { FilterOptionsStateType } from 'components/Blocks/Product/Filter/types';
+import { FilterOptionsStateType } from 'types/productFilter';
 import { initialState } from 'redux/slices/optionsFilter';
 
 export const getFilterOptions = (filterQuery: string | undefined): FilterOptionsStateType => {

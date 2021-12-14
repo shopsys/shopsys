@@ -1,5 +1,5 @@
 import { FC, Fragment, useEffect, useState } from 'react';
-import { FilterFormType, FilterOptionsType } from 'components/Blocks/Product/Filter/types';
+import { FilterFormType, FilterOptionsType } from 'types/productFilter';
 import {
     SelectedParametersListItemRemoveStyled,
     SelectedParametersListItemStyled,

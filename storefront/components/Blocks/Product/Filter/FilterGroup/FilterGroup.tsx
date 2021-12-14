@@ -1,4 +1,4 @@
-import { BrandsType, FilterFormType, FlagsType } from 'components/Blocks/Product/Filter/types';
+import { BrandsType, FilterFormType, FlagsType } from 'types/productFilter';
 import { Controller, useFieldArray, useFormContext } from 'react-hook-form';
 import { FC, Fragment, useState } from 'react';
 import {
