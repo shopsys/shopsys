@@ -813,6 +813,9 @@ input LoginInput {
 
   """The user password."""
   password: Password!
+
+  """Uuid of the cart that should be merged to the cart of the user"""
+  cartUuid: Uuid = null
 }
 
 """Represents a product"""
@@ -1905,6 +1908,11 @@ input RegistrationDataInput {
 
   """Whether customer user should receive newsletters or not"""
   newsletterSubscription: Boolean!
+
+  """
+  Uuid of the cart that should be merged to the cart of the newly registered user
+  """
+  cartUuid: Uuid = null
 }
 
 """Represents an currently logged customer user"""

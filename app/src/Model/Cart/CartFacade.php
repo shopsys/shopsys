@@ -11,6 +11,7 @@ use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\FlashMessage\FlashMessage;
+use Shopsys\FrameworkBundle\Model\Cart\Cart;
 use Shopsys\FrameworkBundle\Model\Cart\CartFacade as BaseCartFacade;
 use Shopsys\FrameworkBundle\Model\Cart\CartFactory;
 use Shopsys\FrameworkBundle\Model\Cart\CartRepository;
@@ -31,7 +32,6 @@ use Twig\Environment;
  * @property \App\Model\Order\PromoCode\CurrentPromoCodeFacade $currentPromoCodeFacade
  * @property \App\Model\Cart\Watcher\CartWatcherFacade $cartWatcherFacade
  * @property \App\Model\Customer\User\CustomerUserIdentifierFactory $customerUserIdentifierFactory
- * @method deleteCart(\App\Model\Cart\Cart $cart)
  * @method \App\Model\Product\Product getProductByCartItemId(int $cartItemId)
  * @method \App\Model\Cart\Cart|null findCartOfCurrentCustomerUser()
  * @method \App\Model\Cart\Cart getCartOfCurrentCustomerUserCreateIfNotExists()
@@ -334,5 +334,21 @@ class CartFacade extends BaseCartFacade
 
         $cart->changeQuantity($product, $quantity);
         $this->em->flush();
+    }
+
+    /**
+     * @param \App\Model\Cart\Cart $cart
+     */
+    public function deleteCart(Cart $cart)
+    {
+        foreach ($cart->getItems() as $item) {
+            $this->em->remove($item);
+        }
+
+        $cart->clean();
+        $this->em->remove($cart);
+        $this->em->flush();
+
+        $this->cleanAdditionalData();
     }
 }

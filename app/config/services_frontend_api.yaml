@@ -106,3 +106,7 @@ services:
 
     Shopsys\FrontendApiBundle\Model\Order\OrderRepository:
         alias: App\FrontendApi\Model\Order\OrderRepository
+
+    Shopsys\FrontendApiBundle\Model\Mutation\Login\LoginMutation:
+        alias: App\FrontendApi\Model\Mutation\Login\LoginMutation
+        public: true

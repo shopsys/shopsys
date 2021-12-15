@@ -29,7 +29,7 @@ class CustomerUserPasswordRecoveryMutation implements MutationInterface, Aliased
     private Domain $domain;
 
     /**
-     * @var \Shopsys\FrontendApiBundle\Model\Mutation\Login\LoginMutation
+     * @var \App\FrontendApi\Model\Mutation\Login\LoginMutation
      */
     private LoginMutation $loginMutation;
 
@@ -41,7 +41,7 @@ class CustomerUserPasswordRecoveryMutation implements MutationInterface, Aliased
     /**
      * @param \App\Model\Customer\User\CustomerUserPasswordFacade $customerUserPasswordFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrontendApiBundle\Model\Mutation\Login\LoginMutation $loginMutation
+     * @param \App\FrontendApi\Model\Mutation\Login\LoginMutation $loginMutation
      * @param \Overblog\GraphQLBundle\Definition\ArgumentFactory $argumentFactory
      */
     public function __construct(

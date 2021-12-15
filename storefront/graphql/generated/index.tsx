@@ -760,6 +760,8 @@ export type LinkApi = {
 };
 
 export type LoginInputApi = {
+  /** Uuid of the cart that should be merged to the cart of the user */
+  cartUuid?: Maybe<Scalars['Uuid']>;
   /** The user email. */
   email: Scalars['String'];
   /** The user password. */
@@ -1798,6 +1800,8 @@ export type RefreshTokenInputApi = {
 
 /** Represents the main input object to register customer user */
 export type RegistrationDataInputApi = {
+  /** Uuid of the cart that should be merged to the cart of the newly registered user */
+  cartUuid?: Maybe<Scalars['Uuid']>;
   /** Billing address city name (will be on the tax invoice) */
   city: Scalars['String'];
   /** Determines whether the registered customer is a company or not. */
