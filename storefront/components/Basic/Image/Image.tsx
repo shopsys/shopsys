@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { ImageType } from './types';
+import { ImageType } from 'types/image';
 import NextImage from 'next/image';
 
 type ImageProps = {

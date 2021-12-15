@@ -2,7 +2,7 @@ import { ProductImagesListFragmentApi, SearchQueryApi, useSearchQueryApi } from 
 import { useEffect, useState } from 'react';
 import { mapImageSizeApiData } from 'connectors/image/size/ImageSize';
 import { mapProductPriceApiData } from 'connectors/products/Products';
-import { SearchType } from './types';
+import { SearchType } from 'types/search';
 import { useQueryError } from 'hooks/graphQl/UseQueryError';
 import { useShopsysSelector } from 'redux/main';
 

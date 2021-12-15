@@ -1,6 +1,6 @@
 import { AnchorHTMLAttributes, FC, ImgHTMLAttributes } from 'react';
 import { ButtonStyled, LinkStyled } from './Link.style';
-import { ButtonDefaultProps } from 'components/Forms/Button/types';
+import { ButtonDefaultPropType } from 'components/Forms/Button/propTypes';
 import { ExtractNativePropsFromDefault } from 'typeHelpers/ExtractNativePropsFromDefault';
 import NextLink from 'next/link';
 
@@ -14,7 +14,7 @@ type NativePropsImage = ExtractNativePropsFromDefault<ImgHTMLAttributes<HTMLImag
 
 type LinkProps = NativePropsAnchor &
     NativePropsImage &
-    ButtonDefaultProps & {
+    ButtonDefaultPropType & {
         linkType?: 'external';
         isButton?: boolean;
     };

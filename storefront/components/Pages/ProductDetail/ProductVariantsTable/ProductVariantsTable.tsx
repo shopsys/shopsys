@@ -9,7 +9,7 @@ import {
     VariantsTableStyled,
 } from './ProductVariantsTable.style';
 import { FC } from 'react';
-import { ListedVariantType } from 'connectors/products/types';
+import { ListedVariantType } from 'types/product';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import Variant from './Variant';
 

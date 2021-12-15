@@ -1,6 +1,20 @@
-import { BreadcrumbItemType } from 'connectors/breadcrumb/Breadcrumb';
-import { ListedCategoryType } from 'connectors/categories/types';
-import { ListedProductEdgesType } from 'components/Blocks/Product/types';
+import { BreadcrumbItemType } from 'types/breadcrumb';
+import { ImageType } from 'types/image';
+import { ListedProductEdgesType } from 'types/product';
+
+export type SimpleCategoryType = {
+    __typename?: 'Category';
+    name: string;
+    slug: string;
+};
+
+export type ListedCategoryType = {
+    uuid: string;
+    name: string;
+    slug: string;
+    image: ImageType | null;
+    totalCount?: number;
+};
 
 export type ReadyCategorySeoMixLink = {
     name: string;

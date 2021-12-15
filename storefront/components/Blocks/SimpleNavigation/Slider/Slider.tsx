@@ -1,6 +1,6 @@
 import 'keen-slider/keen-slider.min.css';
 import { FC } from 'react';
-import { ListedItemPropType } from 'components/Blocks/SimpleNavigation/types';
+import { ListedItemPropType } from 'types/simpleNavigation';
 import ListItem from 'components/Blocks/SimpleNavigation/ListItem';
 import { ListItemStyled } from 'components/Blocks/SimpleNavigation/SimpleNavigation.style';
 import { theme } from 'components/Theme/main';

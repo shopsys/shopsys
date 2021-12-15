@@ -2,7 +2,6 @@ import { FormProvider, SubmitHandler } from 'react-hook-form';
 import { initServerSideProps, ServerSidePropsType } from 'helpers/InitServerSideProps';
 import { nextReduxWrapper, useShopsysSelector } from 'redux/main';
 import {
-    TransportAndPaymentFormType,
     useTransportAndPaymentForm,
     useTransportAndPaymentFormMeta,
 } from 'components/Pages/Order/TransportAndPayment/formMeta';
@@ -17,6 +16,7 @@ import OrderAction from 'components/Blocks/OrderAction';
 import OrderLayout from 'components/Layout/OrderLayout';
 import Select from 'components/Pages/Order/TransportAndPayment/Select';
 import StaticUrlGuard from 'components/Helpers/StaticUrlGuard';
+import { TransportAndPaymentFormType } from 'types/form';
 import { useGetInternationalizedStaticUrls } from 'hooks/staticUrls/UseGetInternationalizedStaticUrls';
 import { useHandleErrorPopupVisibility } from 'hooks/forms/UseHandleErrorPopupVisibility';
 import { useRouter } from 'next/router';

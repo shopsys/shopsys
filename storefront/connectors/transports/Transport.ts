@@ -2,7 +2,7 @@ import { mapImageSizeApiData } from 'connectors/image/size/ImageSize';
 import { mapPayment } from 'connectors/payments/Payment';
 import { mapPickupPlacesApiData } from './pickupPlace/PickupPlace';
 import { mapPriceData } from './Transports';
-import { TransportType } from './types';
+import { TransportType } from 'types/transport';
 import { TransportWithAvailablePaymentsAndStoresFragmentApi } from 'graphql/generated';
 
 export const mapTransport = (

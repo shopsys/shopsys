@@ -10,7 +10,7 @@ import {
     RangeSliderStyled,
     RangeSliderTrackStyled,
 } from './RangeSlider.style';
-import { FilterFormType } from 'components/Blocks/Product/Filter/types';
+import { FilterFormType } from 'types/productFilter';
 import TextInput from 'components/Forms/TextInput';
 import useDebounce from 'hooks/helpers/UseDebounce';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';

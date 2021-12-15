@@ -3,23 +3,21 @@ import { FC, useEffect, useState } from 'react';
 import { ListItemStyled, PaymentListWrapper, ResetButtonStyled } from './Select.style';
 import { loadCart, mapPaymentToPaymentInput, mapTransportToTransportInput } from 'connectors/cart/Cart';
 import { mapPacketeryExtendedPoint, packeteryPick, removePacketeryCookie, setPacketeryCookie } from 'helpers/packetery';
-import {
-    TransportAndPaymentFormType,
-    useTransportAndPaymentFormMeta,
-} from 'components/Pages/Order/TransportAndPayment/formMeta';
-import { TransportInputType, TransportType } from 'connectors/transports/types';
+import { TransportInputType, TransportType } from 'types/transport';
 import { getSelectedPickupPlace } from 'connectors/transports/pickupPlace/PickupPlace';
 import Heading from 'components/Basic/Heading';
 import Icon from 'components/Basic/Icon';
 import PacketeryContainer from 'components/Pages/Order/TransportAndPayment/PacketeryContainer';
 import { PacketeryExtendedPoint } from 'helpers/packetery/types';
-import { PaymentInputType } from 'connectors/payments/types';
+import { PaymentInputType } from 'types/payment';
 import PickupPlacePopup from './PickupPlacePopup/PickupPlacePopup';
-import { PickupPlaceType } from 'connectors/transports/pickupPlace/types';
+import { PickupPlaceType } from 'types/pickupPlace';
 import Radiobutton from 'components/Forms/Radiobutton';
 import SelectItemLabel from './SelectItemLabel';
+import { TransportAndPaymentFormType } from 'types/form';
 import { useComponentUpdate } from 'hooks/helpers/UseComponentUpdate';
 import { useShopsysSelector } from 'redux/main';
+import { useTransportAndPaymentFormMeta } from 'components/Pages/Order/TransportAndPayment/formMeta';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 
 type SelectProps = {

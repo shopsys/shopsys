@@ -1,5 +1,5 @@
 import { createContext, FC, useState } from 'react';
-import { DropdownItemType, DropdownListLevels } from './types';
+import { DropdownItemType, DropdownListLevels } from 'types/dropdown';
 import { DropdownMenuListStyled, DropdownMenuStyled, DropdownMenuWrapperStyled } from './DropdownMenu.style';
 import { CSSTransition } from 'react-transition-group';
 import DropdownSlideLeft from './SlideLeft';

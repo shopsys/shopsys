@@ -1,5 +1,5 @@
 import { FC, useEffect } from 'react';
-import { FilterFormType, FilterOptionsType } from './types';
+import { FilterFormType, FilterOptionsType } from 'types/productFilter';
 import { FormProvider, useFieldArray, useWatch } from 'react-hook-form';
 import { useShopsysDispatch, useShopsysSelector } from 'redux/main';
 import FilterGroup from './FilterGroup';

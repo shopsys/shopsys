@@ -1,4 +1,4 @@
-import { CartItemType } from 'connectors/cart/types';
+import { CartItemType } from 'types/cart';
 import { FC } from 'react';
 import Item from './Item';
 import { ListStyled } from './List.style';

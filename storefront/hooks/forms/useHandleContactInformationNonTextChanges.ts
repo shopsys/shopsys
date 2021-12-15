@@ -1,9 +1,7 @@
-import {
-    ContactInformationFormType,
-    useContactInformationFormMeta,
-} from 'components/Pages/Order/ContactInformation/formMeta';
 import { Control, useWatch } from 'react-hook-form';
 import { contactInformationActions } from 'redux/slices/contactInformation';
+import { ContactInformationFormType } from 'types/form';
+import { useContactInformationFormMeta } from 'components/Pages/Order/ContactInformation/formMeta';
 import { useEffect } from 'react';
 import { useShopsysDispatch } from 'redux/main';
 

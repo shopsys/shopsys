@@ -10,7 +10,7 @@ import { usePagination } from 'hooks/ui/usePagination';
 import { useResizeWidthEffect } from 'hooks/ui/UseResizeWidthEffect';
 import { useRouter } from 'next/router';
 
-export type PaginationProps = {
+type PaginationProps = {
     totalCount: number;
 };
 

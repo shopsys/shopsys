@@ -1,8 +1,8 @@
 import { css } from 'styled-components';
-import { FormLineType } from './types';
+import { FormLinePropType } from './propTypes';
 import { styled } from 'components/Theme/main';
 
-type FormLineStyledProps = FormLineType;
+type FormLineStyledProps = FormLinePropType;
 
 export const FormLineStyled = styled.div<FormLineStyledProps>`
     ${({ theme, bottomGap, width, xs, sm, md, lg, vl, xl }) => css`

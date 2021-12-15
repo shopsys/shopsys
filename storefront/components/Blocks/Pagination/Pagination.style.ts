@@ -1,7 +1,7 @@
 import { css } from 'styled-components';
 import { styled } from 'components/Theme/main';
 
-export type PaginationButtonStyledProps = {
+type PaginationButtonStyledProps = {
     active?: boolean;
     dotButton?: boolean;
 };

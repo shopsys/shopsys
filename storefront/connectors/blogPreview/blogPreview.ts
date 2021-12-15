@@ -1,5 +1,5 @@
 import { BlogListQueryApi, useBlogListQueryApi } from 'graphql/generated';
-import { BlogPreviewType } from 'connectors/blogPreview/types';
+import { BlogPreviewType } from 'types/blogArticle';
 import { mapImageApiData } from 'connectors/image/Image';
 import { useQueryError } from 'hooks/graphQl/UseQueryError';
 

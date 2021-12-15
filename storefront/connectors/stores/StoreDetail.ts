@@ -1,5 +1,5 @@
 import { StoreDetailFragmentApi } from 'graphql/generated';
-import { StoreDetailType } from 'connectors/stores/types';
+import { StoreDetailType } from 'types/store';
 
 export const mapStoreDetailApiData = (data: StoreDetailFragmentApi): StoreDetailType => {
     return {

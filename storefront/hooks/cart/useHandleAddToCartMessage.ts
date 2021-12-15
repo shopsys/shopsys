@@ -1,6 +1,6 @@
 import { AddToCartMutationApi, AddToCartMutationVariablesApi } from 'graphql/generated';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
-import { AddToCartPopupDataType } from 'components/Blocks/Product/AddToCartPopup/types';
+import { AddToCartPopupDataType } from 'types/cart';
 import { mapImageApiData } from 'connectors/image/Image';
 import { mapProductPriceApiData } from 'connectors/products/Products';
 import { showErrorMessage } from 'components/Helpers/Toasts';

@@ -1,5 +1,5 @@
 import { StoresQueryApi, useStoresQueryApi } from 'graphql/generated';
-import { StoreListType } from 'connectors/stores/types';
+import { StoreListType } from 'types/store';
 import { useQueryError } from 'hooks/graphQl/UseQueryError';
 
 export function getStores(): StoreListType[] {

@@ -1,12 +1,8 @@
-import {
-    ListedArticleType,
-    ListedBlogArticleType,
-    SimpleArticleType,
-    SimpleBlogArticleType,
-} from 'connectors/articles/types';
-import { ListedBrandType, SimpleBrandType } from 'connectors/brands/types';
-import { ListedCategoryType, SimpleCategoryType } from 'connectors/categories/types';
-import { ListedProductType, SimpleProductType } from 'connectors/products/types';
+import { ListedArticleType, SimpleArticleType } from 'types/article';
+import { ListedBlogArticleType, SimpleBlogArticleType } from 'types/blogArticle';
+import { ListedBrandType, SimpleBrandType } from 'types/brand';
+import { ListedCategoryType, SimpleCategoryType } from 'types/category';
+import { ListedProductType, SimpleProductType } from 'types/product';
 
 export type SearchType = {
     articlesSearch: (SimpleArticleType | SimpleBlogArticleType)[];

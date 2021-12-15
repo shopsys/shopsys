@@ -1,10 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { CartType } from 'connectors/cart/types';
+import { CartType } from 'types/cart';
 import { HYDRATE } from 'next-redux-wrapper';
-import { PaymentType } from 'connectors/payments/types';
-import { PickupPlaceType } from 'connectors/transports/pickupPlace/types';
+import { PaymentType } from 'types/payment';
+import { PickupPlaceType } from 'types/pickupPlace';
 import { ProductOrderingModeEnumApi } from 'graphql/generated';
-import { TransportType } from 'connectors/transports/types';
+import { TransportType } from 'types/transport';
 
 export const enabledSortTypes = [
     ProductOrderingModeEnumApi.PriorityApi,

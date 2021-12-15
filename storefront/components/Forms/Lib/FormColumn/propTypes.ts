@@ -1,4 +1,4 @@
-export type FormLineType = {
+export type FormColumnPropType = {
     width?: string;
     xs?: string;
     sm?: string;
@@ -6,5 +6,4 @@ export type FormLineType = {
     lg?: string;
     vl?: string;
     xl?: string;
-    bottomGap?: boolean;
 };

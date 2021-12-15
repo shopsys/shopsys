@@ -1,11 +1,6 @@
 import { Controller, FormProvider, SubmitHandler } from 'react-hook-form';
 import { FC, useEffect } from 'react';
 import {
-    RegistrationAfterOrderFormType,
-    useRegistrationAfterOrderForm,
-    useRegistrationAfterOrderFormMeta,
-} from './formMeta';
-import {
     RegistrationBenefitsListItem,
     RegistrationFormColumnStyled,
     RegistrationFormItemStyled,
@@ -14,6 +9,7 @@ import {
     RegistrationMessageColumnStyled,
     RegistrationStyled,
 } from './Registration.style';
+import { useRegistrationAfterOrderForm, useRegistrationAfterOrderFormMeta } from './formMeta';
 import { useShopsysDispatch, useShopsysSelector } from 'redux/main';
 import Button from 'components/Forms/Button';
 import Checkbox from 'components/Forms/Checkbox';
@@ -24,6 +20,7 @@ import Form from 'components/Forms/Form';
 import FormLine from 'components/Forms/Lib/FormLine';
 import FormLineError from 'components/Forms/Lib/FormLineError';
 import { getUserFriendlyErrors } from 'connectors/lib/friendlyErrorMessageParser';
+import { RegistrationAfterOrderFormType } from 'types/form';
 import { showErrorMessage } from 'components/Helpers/Toasts';
 import TextInput from 'components/Forms/TextInput';
 import { Trans } from 'react-i18next';
@@ -40,7 +37,7 @@ const Registration: FC = () => {
     const contactInformation = useShopsysSelector((state) => state.contactInformation);
     const [registerResult, register] = useRegister();
     const t = useTypedTranslationFunction();
-    const [formProviderMethods, defaultValues] = useRegistrationAfterOrderForm();
+    const [formProviderMethods] = useRegistrationAfterOrderForm();
     const formMeta = useRegistrationAfterOrderFormMeta(formProviderMethods);
     const [isErrorPopupVisible, setErrorPopupVisibility] = useHandleErrorPopupVisibility(formProviderMethods);
 

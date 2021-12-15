@@ -1,6 +1,6 @@
 import * as Yup from 'yup';
 import { FieldError, UseFormReturn, useWatch } from 'react-hook-form';
-import { SelectOptionType } from 'components/Forms/Select/Select';
+import { ContactInformationFormType } from 'types/form';
 import { useShopsysForm } from 'hooks/forms/UseShopsysForm';
 import { useShopsysSelector } from 'redux/main';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
@@ -10,34 +10,6 @@ export enum CustomerTypeEnum {
     CommonCustomer = 'commonCustomer',
     CompanyCustomer = 'companyCustomer',
 }
-
-export type ContactInformationFormType = {
-    email: string;
-    register: boolean;
-    passwordFirst: string;
-    passwordSecond: string;
-    customer: CustomerTypeEnum;
-    telephone: string;
-    firstName: string;
-    lastName: string;
-    street: string;
-    city: string;
-    postcode: string;
-    country: SelectOptionType;
-    companyName: string;
-    companyNumber: string;
-    companyTaxNumber: string;
-    differentDeliveryAddress: boolean;
-    deliveryFirstName: string;
-    deliveryLastName: string;
-    deliveryCompanyName: string;
-    deliveryTelephone: string;
-    deliveryStreet: string;
-    deliveryCity: string;
-    deliveryPostcode: string;
-    deliveryCountry: SelectOptionType;
-    newsletterSubscription: boolean;
-};
 
 export const useContactInformationForm = (): [
     UseFormReturn<ContactInformationFormType>,

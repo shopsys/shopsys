@@ -1,6 +1,6 @@
 import DropdownItem from 'components/Layout/Header/DropdownMenu/Item';
 import { FC } from 'react';
-import { NavigationItem as NavigationItemType } from 'connectors/navigation/Navigation';
+import { NavigationItem as NavigationItemType } from 'types/navigation';
 
 type PrimaryListType = {
     navigationItems: NavigationItemType[];

@@ -1,5 +1,5 @@
-import { BreadcrumbItemType } from 'connectors/breadcrumb/Breadcrumb';
-import { ListedProductEdgesType } from 'components/Blocks/Product/types';
+import { BreadcrumbItemType } from 'types/breadcrumb';
+import { ListedProductEdgesType } from 'types/product';
 
 export type FlagDetailType = {
     __typename: 'Flag';

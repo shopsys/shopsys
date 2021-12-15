@@ -1,3 +1,4 @@
+import { BlogCategoryItem } from 'types/blogCategory';
 import { useBlogCategoriesApi } from 'graphql/generated';
 import { useQueryError } from 'hooks/graphQl/UseQueryError';
 
@@ -6,11 +7,4 @@ export const getBlogCategoriesItems = (): BlogCategoryItem[] | undefined => {
     useQueryError(error);
 
     return data?.blogCategories;
-};
-
-export type BlogCategoryItem = {
-    uuid: string;
-    name: string;
-    link: string;
-    children: BlogCategoryItem[];
 };

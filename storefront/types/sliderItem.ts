@@ -1,4 +1,4 @@
-import { ImageApiType } from 'components/Basic/Image/types';
+import { ImageApiType } from 'types/image';
 
 export type SliderItem = {
     uuid: string;

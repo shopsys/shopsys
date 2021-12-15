@@ -1,5 +1,5 @@
-import { CountryApiType, CountryType } from './types';
-import { SelectOptionType } from 'components/Forms/Select/Select';
+import { CountryApiType, CountryType } from 'types/country';
+import { SelectOptionType } from 'types/selectOptions';
 import { useCountriesQueryApi } from 'graphql/generated';
 import { useQueryError } from 'hooks/graphQl/UseQueryError';
 

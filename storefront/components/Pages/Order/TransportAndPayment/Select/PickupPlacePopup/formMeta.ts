@@ -1,12 +1,9 @@
 import * as Yup from 'yup';
+import { PickupPlaceFormType } from 'types/form';
 import { UseFormReturn } from 'react-hook-form';
 import { useShopsysForm } from 'hooks/forms/UseShopsysForm';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import { yupResolver } from '@hookform/resolvers/yup';
-
-export type PickupPlaceFormType = {
-    pickupPlace: string;
-};
 
 export const usePickupPlaceForm = (): [UseFormReturn<PickupPlaceFormType>, PickupPlaceFormType] => {
     const resolver = yupResolver(

@@ -7,7 +7,7 @@ import {
 } from './OrderSummary.style';
 import { FC } from 'react';
 import { formatPrice } from 'utils/formatting';
-import { PriceType } from 'connectors/transports/types';
+import { PriceType } from 'types/price';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 
 type TotalPriceProps = {

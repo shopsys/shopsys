@@ -2,7 +2,7 @@ import { FC, useState } from 'react';
 import { ListItemStyled, SimpleNavigationStyled } from './SimpleNavigation.style';
 import { desktopFirstSizes } from 'components/Theme/mediaQueries';
 import { isElementVisible } from 'components/Helpers/isElementVisible';
-import { ListedItemPropType } from './types';
+import { ListedItemPropType } from 'types/simpleNavigation';
 import ListItem from './ListItem';
 import Slider from './Slider';
 import { useGetWindowSize } from 'hooks/ui/UseGetWindowSize';

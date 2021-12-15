@@ -1,5 +1,5 @@
 import { ImageSizesFragmentApi } from 'graphql/generated';
-import { ImageType } from 'components/Basic/Image/types';
+import { ImageType } from 'types/image';
 
 export const mapImageSizeApiData = (apiData: ImageSizesFragmentApi['sizes'][number]): ImageType | null => {
     if (

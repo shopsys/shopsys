@@ -6,7 +6,7 @@ import {
     LinkStyled,
 } from './InfoBox.style';
 import { FC } from 'react';
-import { StoreListType } from 'connectors/stores/types';
+import { StoreListType } from 'types/store';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 
 type InfoBoxProps = StoreListType & {

@@ -1,9 +1,6 @@
-import {
-    ContactInformationFormType,
-    CustomerTypeEnum,
-    useContactInformationFormMeta,
-} from 'components/Pages/Order/ContactInformation/formMeta';
 import { Controller, useFormContext, useWatch } from 'react-hook-form';
+import { CustomerTypeEnum, useContactInformationFormMeta } from 'components/Pages/Order/ContactInformation/formMeta';
+import { ContactInformationFormType } from 'types/form';
 import { FC } from 'react';
 import FormColumn from 'components/Forms/Lib/FormColumn';
 import FormLine from 'components/Forms/Lib/FormLine';

@@ -1,19 +1,7 @@
-import { ImageType } from 'components/Basic/Image/types';
-import { PaymentType } from 'connectors/payments/types';
-import { PickupPlaceType } from './pickupPlace/types';
-
-export type PriceApiType = {
-    priceWithVat: string;
-    priceWithoutVat: string;
-    vatAmount: string;
-};
-
-export type PriceType = {
-    priceWithVat: number;
-    priceWithoutVat: number;
-    vatAmount: number;
-    currencyCode: string;
-};
+import { PriceApiType, PriceType } from 'types/price';
+import { ImageType } from 'types/image';
+import { PaymentType } from 'types/payment';
+import { PickupPlaceType } from 'types/pickupPlace';
 
 export type TransportInputType = {
     uuid: string;

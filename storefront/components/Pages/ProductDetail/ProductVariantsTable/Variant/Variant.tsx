@@ -12,7 +12,7 @@ import { FC, useState } from 'react';
 import AddToCart from 'components/Blocks/Product/AddToCart/AddToCart';
 import { formatPrice } from 'utils/formatting';
 import Image from 'components/Basic/Image';
-import { ListedVariantType } from 'connectors/products/types';
+import { ListedVariantType } from 'types/product';
 import Popup from 'components/Layout/Popup';
 import ProductAvailableStoresCount from 'components/Blocks/Product/Availability/ProductAvailableStoresCount';
 import ProductDetailAvailabilityList from 'components/Pages/ProductDetail/ProductDetailStoresAvailability/ProductDetailAvailabilityList';

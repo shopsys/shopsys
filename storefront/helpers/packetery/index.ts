@@ -1,6 +1,6 @@
 import { PacketeryExtendedPoint, PacketeryPickFunction } from './types';
 import nookies from 'nookies';
-import { PickupPlaceType } from 'connectors/transports/pickupPlace/types';
+import { PickupPlaceType } from 'types/pickupPlace';
 
 /**
  * @see https://docs.packetery.com/01-pickup-point-selection/02-widget-v6.html

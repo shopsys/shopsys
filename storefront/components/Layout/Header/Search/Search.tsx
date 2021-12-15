@@ -7,11 +7,12 @@ import {
     SearchStyled,
     SearchTextInputStyled,
 } from './Search.style';
-import { SearchFormType, useSearchForm, useSearchFormMeta } from './formMeta';
+import { useSearchForm, useSearchFormMeta } from './formMeta';
 import Autocomplete from './Autocomplete';
 import { getSearch } from 'connectors/search/Search';
 import Icon from 'components/Basic/Icon';
-import { SearchType } from 'connectors/search/types';
+import { SearchFormType } from 'types/form';
+import { SearchType } from 'types/search';
 import useDebounce from 'hooks/helpers/UseDebounce';
 import { useGetInternationalizedStaticUrls } from 'hooks/staticUrls/UseGetInternationalizedStaticUrls';
 import { useRouter } from 'next/router';

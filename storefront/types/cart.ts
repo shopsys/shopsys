@@ -1,7 +1,8 @@
-import { FlagType, ProductPriceType } from 'components/Blocks/Product/types';
-import { PriceType, TransportInputType } from 'connectors/transports/types';
-import { ImageType } from 'components/Basic/Image/types';
-import { PaymentInputType } from 'connectors/payments/types';
+import { FlagType, ProductPriceType } from 'types/product';
+import { ImageType } from 'types/image';
+import { PaymentInputType } from 'types/payment';
+import { PriceType } from 'types/price';
+import { TransportInputType } from 'types/transport';
 
 export type CartInput = {
     cartUuid: string | null;
@@ -39,4 +40,13 @@ export type CartType = {
     totalPrice: PriceType;
     totalDiscountPrice: PriceType;
     remainingAmountWithVatForFreeTransport: number | null;
+};
+
+export type AddToCartPopupDataType = {
+    name: string;
+    slug: string;
+    image: ImageType | null;
+    quantity: number;
+    unitName: string;
+    price: ProductPriceType;
 };

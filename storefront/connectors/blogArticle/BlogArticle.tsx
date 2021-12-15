@@ -1,9 +1,9 @@
 import { BlogArticleDetailFragmentApi, SliderProductFragmentApi } from 'graphql/generated';
-import { BlogArticleDetailType } from 'components/Pages/BlogArticle/types';
+import { BlogArticleDetailType } from 'types/blogArticle';
 import { DomainConfigType } from 'utils/Domain/Domain';
 import { mapImageApiData } from 'connectors/image/Image';
 import { mapProductPriceApiData } from 'connectors/products/Products';
-import { SliderProductItemType } from 'components/Blocks/Product/types';
+import { SliderProductItemType } from 'types/product';
 
 export const mapBlogArticleDetailApiData = (
     apiData: BlogArticleDetailFragmentApi,

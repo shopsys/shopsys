@@ -1,6 +1,6 @@
-import { BreadcrumbItemType } from 'connectors/breadcrumb/Breadcrumb';
-import { ImageType } from 'components/Basic/Image/types';
-import { ListedProductEdgesType } from 'components/Blocks/Product/types';
+import { BreadcrumbItemType } from 'types/breadcrumb';
+import { ImageType } from 'types/image';
+import { ListedProductEdgesType } from 'types/product';
 
 export type SimpleBrandType = {
     __typename?: 'Brand';

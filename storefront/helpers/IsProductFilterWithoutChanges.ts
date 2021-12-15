@@ -1,4 +1,4 @@
-import { FilterOptionsStateType, FilterOptionsType } from 'components/Blocks/Product/Filter/types';
+import { FilterOptionsStateType, FilterOptionsType } from 'types/productFilter';
 
 export const isProductFilterWithoutChanges = (
     parametersFilterState: FilterOptionsStateType,

@@ -1,13 +1,15 @@
 import { css } from 'styled-components';
-import { FormColumnProps } from './types';
+import { FormColumnPropType } from './propTypes';
 import { FormLineStyled } from 'components/Forms/Lib/FormLine/FormLine.style';
 import { styled } from 'components/Theme/main';
+
+type FormColumnStyledProps = FormColumnPropType;
 
 const localVariables = {
     formColumnGap: '12px',
 };
 
-export const FormColumnStyled = styled.div<FormColumnProps>`
+export const FormColumnStyled = styled.div<FormColumnStyledProps>`
     ${({ theme, width, xs, sm, md, lg, vl, xl }) => css`
         display: flex;
         flex-wrap: wrap;

@@ -9,7 +9,7 @@ import {
 import { FC, useRef } from 'react';
 import AddToCartPopup from 'components/Blocks/Product/AddToCartPopup';
 import { formatPrice } from 'utils/formatting';
-import { ProductDetailType } from 'components/Pages/ProductDetail/types';
+import { ProductDetailType } from 'types/product';
 import Spinbox from 'components/Forms/Spinbox';
 import { useAddToCartMutationApi } from 'graphql/generated';
 import { useHandleAddToCart } from 'hooks/cart/UseHandleAddToCart';

@@ -5,7 +5,7 @@ import {
     BlogSignpostStyled,
 } from './BlogSignpost.style';
 import { FC, Fragment } from 'react';
-import { BlogCategoryItem } from 'connectors/blogCategories/BlogCategories';
+import { BlogCategoryItem } from 'types/blogCategory';
 import Children from './Children';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 

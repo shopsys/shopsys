@@ -1,5 +1,6 @@
-import { ListedArticleType, ListedBlogArticleType } from './types';
 import { ListedArticleFragmentApi } from 'graphql/generated';
+import { ListedArticleType } from 'types/article';
+import { ListedBlogArticleType } from 'types/blogArticle';
 import { mapImageApiData } from 'connectors/image/Image';
 
 export const mapListedArticleApiData = (

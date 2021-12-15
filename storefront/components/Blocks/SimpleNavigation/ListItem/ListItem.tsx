@@ -7,7 +7,7 @@ import {
 } from './ListItem.style';
 import { FC } from 'react';
 import Image from 'components/Basic/Image';
-import { ListedItemPropType } from 'components/Blocks/SimpleNavigation/types';
+import { ListedItemPropType } from 'types/simpleNavigation';
 import NextLink from 'next/link';
 
 type ListItemProps = {

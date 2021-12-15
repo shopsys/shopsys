@@ -9,7 +9,7 @@ import {
 } from './ProductItem.style';
 import { FC } from 'react';
 import Image from 'components/Basic/Image/Image';
-import { ListedProductType } from 'connectors/products/types';
+import { ListedProductType } from 'types/product';
 import NextLink from 'next/link';
 import ProductAction from 'components/Blocks/Product/Action/ProductAction';
 import { ProductAvailabilityStyled } from 'components/Blocks/Product/Availability/ProductAvailability.style';

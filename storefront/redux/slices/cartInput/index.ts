@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { CartInput } from 'connectors/cart/types';
+import { CartInput } from 'types/cart';
 import { HYDRATE } from 'next-redux-wrapper';
 
 export const initialState = {

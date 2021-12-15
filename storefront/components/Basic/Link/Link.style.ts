@@ -1,4 +1,4 @@
-import { ButtonDefaultProps } from 'components/Forms/Button/types';
+import { ButtonDefaultPropType } from 'components/Forms/Button/propTypes';
 import { buttonSettings } from 'components/Forms/Button/Button.style';
 import { css } from 'styled-components';
 import { styled } from 'components/Theme/main';
@@ -26,7 +26,7 @@ export const LinkStyled = styled.a`
     `}
 `;
 
-export const ButtonStyled = styled.a<ButtonDefaultProps>`
+export const ButtonStyled = styled.a<ButtonDefaultPropType>`
     ${({ theme, size, variant, borderRadius }) => css`
         ${buttonSettings(theme, size, variant, borderRadius)}
         display: inline-block;

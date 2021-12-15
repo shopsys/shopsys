@@ -1,5 +1,5 @@
 import { OrderSummaryListStyled, ProductsPreviewStyled } from './OrderSummary.style';
-import { CartItemType } from 'connectors/cart/types';
+import { CartItemType } from 'types/cart';
 import { FC } from 'react';
 import SingleProduct from './SingleProduct';
 

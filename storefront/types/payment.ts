@@ -1,5 +1,5 @@
-import { PriceApiType, PriceType } from 'connectors/transports/types';
-import { ImageType } from 'components/Basic/Image/types';
+import { PriceApiType, PriceType } from 'types/price';
+import { ImageType } from 'types/image';
 
 export type PaymentInputType = {
     uuid: string;

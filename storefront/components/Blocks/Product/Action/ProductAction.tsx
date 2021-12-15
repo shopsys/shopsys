@@ -2,7 +2,7 @@ import { ProductActionStyled, ProductActionWrapperStyled } from './ProductAction
 import AddToCart from 'components/Blocks/Product/AddToCart/AddToCart';
 import Button from 'components/Forms/Button';
 import { FC } from 'react';
-import { SliderProductItemType } from 'components/Blocks/Product/types';
+import { SliderProductItemType } from 'types/product';
 import { useRouter } from 'next/dist/client/router';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 

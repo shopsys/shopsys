@@ -1,12 +1,10 @@
 import { styled, Theme } from 'components/Theme/main';
 import { css } from 'styled-components';
-import { WeblineType } from './types';
+import { WeblinePropType } from './propTypes';
 
-type WeblineStyledProps = {
-    type?: WeblineType;
-};
+type WeblineStyledProps = WeblinePropType;
 
-const getWeblineType = (type: WeblineType | undefined, theme: Theme) => {
+const getWeblineType = (type: WeblinePropType['type'], theme: Theme) => {
     switch (type) {
         case 'colored':
             return css`

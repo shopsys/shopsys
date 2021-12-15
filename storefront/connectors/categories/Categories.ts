@@ -1,9 +1,9 @@
 import { CategoryDetailFragmentApi, ListedCategoryFragmentApi, ProductFilterApi } from 'graphql/generated';
-import { CategoryDetailType } from 'components/Pages/CategoryDetail/types';
-import { FilterOptionsParameterTypeEnum } from 'components/Blocks/Product/Filter/types';
-import { FilterOptionsStateType } from 'components/Blocks/Product/Filter/types';
-import { ListedCategoryType } from './types';
-import { ListedProductEdgesType } from 'components/Blocks/Product/types';
+import { CategoryDetailType } from 'types/category';
+import { FilterOptionsParameterTypeEnum } from 'types/productFilter';
+import { FilterOptionsStateType } from 'types/productFilter';
+import { ListedCategoryType } from 'types/category';
+import { ListedProductEdgesType } from 'types/product';
 import { mapImageApiData } from 'connectors/image/Image';
 import { mapListedProductType } from 'connectors/products/Products';
 import { mapPageInfoApiData } from 'connectors/pageInfo/PageInfo';
