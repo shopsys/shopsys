@@ -48,7 +48,7 @@ const StoreDetail: FC<StoreDetailProps> = (props) => {
                             <br />
                             {props.store.postcode}
                             <br />
-                            {props.store.country}
+                            {props.store.country.name}
                         </InfoItemStyled>
                         {props.store.openingHours !== null && (
                             <InfoItemStyled>
