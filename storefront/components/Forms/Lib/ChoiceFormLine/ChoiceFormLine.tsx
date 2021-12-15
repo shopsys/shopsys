@@ -4,10 +4,12 @@ import { ExtractNativePropsFromDefault } from 'typeHelpers/ExtractNativePropsFro
 
 type NativeProps = ExtractNativePropsFromDefault<HTMLAttributes<HTMLDivElement>, never, 'style'>;
 
+type ChoiceFormLineProps = NativeProps;
+
 /**
  * A form line element used for wrapping inputs
  */
-const ChoiceFormLine: FC<NativeProps> = (props) => {
+const ChoiceFormLine: FC<ChoiceFormLineProps> = (props) => {
     return <ChoiceFormLineStyled style={props.style}>{props.children}</ChoiceFormLineStyled>;
 };
 

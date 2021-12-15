@@ -1,11 +1,11 @@
 import { css } from 'styled-components';
 import { styled } from 'components/Theme/main';
 
-type DropdownItemProps = {
+type DropdownItemStyledProps = {
     variant?: 'small';
 };
 
-export const DropdownItemStyled = styled.div<DropdownItemProps>`
+export const DropdownItemStyled = styled.div<DropdownItemStyledProps>`
     ${({ theme, variant }) => css`
         display: flex;
         ${variant === 'small' && 'margin: 0 30px'};
@@ -18,7 +18,7 @@ export const DropdownItemStyled = styled.div<DropdownItemProps>`
     `}
 `;
 
-export const DropdownItemLinkStyled = styled.a<DropdownItemProps>`
+export const DropdownItemLinkStyled = styled.a<DropdownItemStyledProps>`
     ${({ theme, variant }) => css`
         padding: ${variant === 'small' ? '15px 0 14px 0' : '20px 45px 18px 30px'};
         flex: 1;

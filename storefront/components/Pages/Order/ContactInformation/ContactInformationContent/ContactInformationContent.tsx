@@ -16,11 +16,11 @@ import ContactInformationRegister from 'components/Pages/Order/ContactInformatio
 import ContactInformationUser from 'components/Pages/Order/ContactInformation/ContactInformationUser';
 import { CSSTransition } from 'react-transition-group';
 
-type ContactInformationContent = {
+type ContactInformationContentProps = {
     isEmailEntered: boolean;
 };
 
-const ContactInformationContent: FC<ContactInformationContent> = (props) => {
+const ContactInformationContent: FC<ContactInformationContentProps> = (props) => {
     const contentElement = useRef<HTMLDivElement>(null);
     const cssTransitionRef = useRef<HTMLDivElement>(null);
     const [contentElementHeight, setContentElementHeight] = useState(0);

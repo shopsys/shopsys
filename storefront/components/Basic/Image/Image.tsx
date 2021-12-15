@@ -2,7 +2,10 @@ import { FC } from 'react';
 import { ImageType } from './types';
 import NextImage from 'next/image';
 
-type ImageProps = { image: ImageType | null; alt: string };
+type ImageProps = {
+    image: ImageType | null;
+    alt: string;
+};
 
 const Image: FC<ImageProps> = (props) => {
     if (props.image === null || props.image === undefined) {

@@ -1,7 +1,9 @@
 import { FC, FormEvent, FormHTMLAttributes } from 'react';
 import { useFormContext } from 'react-hook-form';
 
-type FormProps = FormHTMLAttributes<HTMLFormElement>;
+type NativeProps = FormHTMLAttributes<HTMLFormElement>;
+
+type FormProps = NativeProps;
 
 const Form: FC<FormProps> = (props) => {
     const formProviderMethods = useFormContext();

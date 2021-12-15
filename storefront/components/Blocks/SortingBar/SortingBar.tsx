@@ -21,11 +21,6 @@ import { useGetWindowSize } from 'hooks/ui/UseGetWindowSize';
 import { useResizeWidthEffect } from 'hooks/ui/UseResizeWidthEffect';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 
-export interface SortValues {
-    stateValue: ProductOrderingModeEnumApi;
-    displayValue: string;
-}
-
 const SortingBar: FC<{ totalCount: number }> = (props) => {
     const t = useTypedTranslationFunction();
     const dispatch = useShopsysDispatch();
@@ -41,7 +36,7 @@ const SortingBar: FC<{ totalCount: number }> = (props) => {
     );
     const selectedSort = useShopsysSelector((state) => state.user.sort);
     const [toggleSortMenu, setToggleSortMenu] = useState(false);
-    const sortValues: SortValues[] = [
+    const sortValues = [
         { stateValue: ProductOrderingModeEnumApi.PriorityApi, displayValue: t('priority') },
         { stateValue: ProductOrderingModeEnumApi.PriceAscApi, displayValue: t('price ascending') },
         { stateValue: ProductOrderingModeEnumApi.PriceDescApi, displayValue: t('price descending') },

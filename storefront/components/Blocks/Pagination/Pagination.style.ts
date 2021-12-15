@@ -1,6 +1,10 @@
 import { css } from 'styled-components';
-import { PaginationButtonActiveType } from './Pagination';
 import { styled } from 'components/Theme/main';
+
+export type PaginationButtonStyledProps = {
+    active?: boolean;
+    dotButton?: boolean;
+};
 
 const localVariables = {
     paginationWidth: '335px',
@@ -28,7 +32,7 @@ export const PaginationWrapperStyled = styled.div`
     `}
 `;
 
-export const PaginationButtonStyled = styled.button<PaginationButtonActiveType>`
+export const PaginationButtonStyled = styled.button<PaginationButtonStyledProps>`
     ${({ theme, active, dotButton }) => css`
         width: ${localVariables.buttonHeightAndWidth};
         height: ${localVariables.buttonHeightAndWidth};

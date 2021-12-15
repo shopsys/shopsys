@@ -1,7 +1,7 @@
 import { css } from 'styled-components';
 import { styled } from 'components/Theme/main';
 
-type FooterBottomProps = {
+type FooterBottomStyledProps = {
     checkout?: boolean;
     orderStep?: boolean;
     cart?: boolean;
@@ -12,7 +12,7 @@ export const FooterStyled = styled.div`
     margin-top: auto;
 `;
 
-export const FooterBottomStyled = styled.div<FooterBottomProps>`
+export const FooterBottomStyled = styled.div<FooterBottomStyledProps>`
     ${({ theme, orderStep, checkout, cart }) => css`
         display: flex;
         flex-direction: column;

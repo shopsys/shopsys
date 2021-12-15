@@ -1,11 +1,11 @@
 import { css } from 'styled-components';
 import { styled } from 'components/Theme/main';
 
-type OverlayProps = {
+type OverlayStyledProps = {
     isHiddenOnDesktop?: boolean;
 };
 
-export const OverlayStyled = styled.div<OverlayProps>`
+export const OverlayStyled = styled.div<OverlayStyledProps>`
     ${({ theme, isHiddenOnDesktop }) => css`
         bottom: 0;
         left: 0;

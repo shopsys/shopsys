@@ -5,12 +5,16 @@ import {
     LeftArrowIconStyled,
 } from './Breadcrumbs.style';
 import { FC, Fragment } from 'react';
-import { BreadcrumbType } from 'connectors/breadcrumb/Breadcrumb';
+import { BreadcrumbItemType } from 'connectors/breadcrumb/Breadcrumb';
 import NextLink from 'next/link';
 import { useTypedTranslationFunction } from 'hooks/typescript/UseTypedTranslationFunction';
 import Webline from 'components/Layout/Webline';
 
-const Breadcrumbs: FC<BreadcrumbType> = (props) => {
+type BreadcrumbsProps = {
+    breadcrumb: BreadcrumbItemType[];
+};
+
+const Breadcrumbs: FC<BreadcrumbsProps> = (props) => {
     const t = useTypedTranslationFunction();
 
     if (

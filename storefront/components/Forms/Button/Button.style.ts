@@ -2,13 +2,13 @@ import { styled, Theme } from 'components/Theme/main';
 import { ButtonDefaultProps } from 'components/Forms/Button/types';
 import { css } from 'styled-components';
 
-type ButtonProps = ButtonDefaultProps & {
+type ButtonStyledProps = ButtonDefaultProps & {
     isDisabled?: boolean;
     hasDisabledLook?: boolean;
     isLink?: boolean;
 };
 
-type ButtonAsLinkProps = {
+type ButtonAsLinkStyledProps = {
     isDisabled?: boolean;
     hasDisabledLook?: boolean;
 };
@@ -40,7 +40,7 @@ export const buttonSettings = (
     `;
 };
 
-export const ButtonStyled = styled.button<ButtonProps>`
+export const ButtonStyled = styled.button<ButtonStyledProps>`
     ${({ theme, size, variant, borderRadius, isDisabled, hasDisabledLook }) => css`
         ${buttonSettings(theme, size, variant, borderRadius)}
         width: auto;
@@ -69,7 +69,7 @@ export const ButtonStyled = styled.button<ButtonProps>`
     `}
 `;
 
-export const ButtonAsLinkStyled = styled.button<ButtonAsLinkProps>`
+export const ButtonAsLinkStyled = styled.button<ButtonAsLinkStyledProps>`
     ${({ theme, isDisabled, hasDisabledLook }) => css`
         padding: 0;
         min-height: 0;

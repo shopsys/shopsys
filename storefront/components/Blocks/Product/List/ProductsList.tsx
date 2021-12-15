@@ -3,9 +3,11 @@ import { ListedProductType } from 'connectors/products/types';
 import ProductItem from './ListedItem';
 import { ProductsListStyled } from './ProductsList.style';
 
-type ListedProductsProps = { products: ListedProductType[] };
+type ProductsListProps = {
+    products: ListedProductType[];
+};
 
-const ProductsList: FC<ListedProductsProps> = (props) => {
+const ProductsList: FC<ProductsListProps> = (props) => {
     return (
         <ProductsListStyled>
             {props.products.map((listedProductItem, index) => (

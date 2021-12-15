@@ -3,11 +3,11 @@ import { css } from 'styled-components';
 import Icon from 'components/Basic/Icon';
 import { styled } from 'components/Theme/main';
 
-type TabsContentProps = {
+type TabsContentStyledProps = {
     isActiveOnMobile?: boolean;
 };
 
-type TabsIconProps = {
+type TabsIconStyledProps = {
     isActive?: boolean;
 };
 
@@ -98,7 +98,7 @@ export const TabsContentStyled = styled(TabPanel)`
     `}
 `;
 
-export const TabsContentInStyled = styled.div<TabsContentProps>`
+export const TabsContentInStyled = styled.div<TabsContentStyledProps>`
     ${({ theme, isActiveOnMobile }) => css`
         display: block;
 
@@ -138,7 +138,7 @@ export const TabsContentMobileHeadingStyled = styled.h3`
     `}
 `;
 
-export const TabsIconStyled = styled(Icon)<TabsIconProps>`
+export const TabsIconStyled = styled(Icon)<TabsIconStyledProps>`
     ${({ theme, isActive }) => css`
         height: 18px;
         width: 18px;

@@ -1,2 +1,2 @@
-import ContactInformationContent from './ContactInformationContent';
-export default ContactInformationContent;
+import ContactInformationContentProps from './ContactInformationContent';
+export default ContactInformationContentProps;

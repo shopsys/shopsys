@@ -4,7 +4,7 @@ import Icon from 'components/Basic/Icon';
 import { styled } from 'components/Theme/main';
 import TextInput from 'components/Forms/TextInput';
 
-type PromoCodeProps = {
+type PromoCodeStyledProps = {
     contentElementHeight: number;
 };
 
@@ -12,7 +12,7 @@ const localVariables = {
     promoCodeButtonBackgroundHover: '#ffeaaa',
 } as const;
 
-export const PromoCodeStyled = styled.div<PromoCodeProps>`
+export const PromoCodeStyled = styled.div<PromoCodeStyledProps>`
     ${({ theme, contentElementHeight }) => css`
         @media ${theme.mediaQueries.queryVl} {
             width: 300px;

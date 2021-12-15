@@ -2,11 +2,11 @@ import { css } from 'styled-components';
 import SelectReact from 'react-select';
 import { styled } from 'components/Theme/main';
 
-type SelectProps = {
+type SelectStyledProps = {
     inputStateError: boolean;
 };
 
-export const SelectStyled = styled(SelectReact)<SelectProps>`
+export const SelectStyled = styled(SelectReact)<SelectStyledProps>`
     ${({ theme, inputStateError }) => css`
         .select__control {
             min-height: 54px;

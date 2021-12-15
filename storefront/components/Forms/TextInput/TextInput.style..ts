@@ -1,15 +1,5 @@
 import { css } from 'styled-components';
 import { styled } from 'components/Theme/main';
-
-const localVariables = {
-    inputHeightDefault: '54px',
-    inputHeightSmall: '48px',
-    inputPaddingVertical: '20px',
-    inputPaddingHorizontal: '10px',
-    inputBorderWidth: '2px',
-    inputSearchIconSize: '20px',
-} as const;
-
 type TextInputStyledProps = {
     placeholderType?: 'static';
     inputState?: 'success' | 'error';
@@ -20,6 +10,15 @@ type TextInputStyledProps = {
 type PasswordVisibilityToggleStyledProps = {
     isVisible: boolean;
 };
+
+const localVariables = {
+    inputHeightDefault: '54px',
+    inputHeightSmall: '48px',
+    inputPaddingVertical: '20px',
+    inputPaddingHorizontal: '10px',
+    inputBorderWidth: '2px',
+    inputSearchIconSize: '20px',
+} as const;
 
 export const TextInputStyled = styled.input<TextInputStyledProps>`
     ${({ theme, inputState, placeholderType, inputSize, variant }) => css`

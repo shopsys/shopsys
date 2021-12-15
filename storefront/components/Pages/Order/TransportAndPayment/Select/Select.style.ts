@@ -1,13 +1,13 @@
 import { css } from 'styled-components';
 import { styled } from 'components/Theme/main';
 
-const localVariables = {
-    ResetButtonHoverBackgroundColor: '#d3d4e1',
-} as const;
-
 type ListItemStyledProps = {
     isActive: boolean;
 };
+
+const localVariables = {
+    ResetButtonHoverBackgroundColor: '#d3d4e1',
+} as const;
 
 export const ListItemStyled = styled.li<ListItemStyledProps>`
     ${({ theme, isActive }) => css`

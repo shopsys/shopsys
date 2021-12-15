@@ -1,10 +1,10 @@
-import { BreadcrumbType } from 'connectors/breadcrumb/Breadcrumb';
+import { BreadcrumbItemType } from 'connectors/breadcrumb/Breadcrumb';
 import { ImageType } from 'components/Basic/Image/types';
 import { SliderProductItemType } from 'components/Blocks/Product/types';
-import { SlugType } from 'connectors/slug/Slug';
 
-export interface BlogArticleDetailType extends SlugType, BreadcrumbType {
+export type BlogArticleDetailType = {
     __typename: string | undefined;
+    breadcrumb: BreadcrumbItemType[];
     uuid: string;
     name: string;
     text: string | null;
@@ -13,4 +13,4 @@ export interface BlogArticleDetailType extends SlugType, BreadcrumbType {
     link: string;
     image: ImageType | null;
     blogArticleProducts: SliderProductItemType[];
-}
+};

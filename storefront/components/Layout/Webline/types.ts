@@ -1,1 +1,1 @@
-export type WeblineTypeProps = 'colored' | 'dark' | 'light' | 'blog';
+export type WeblineType = 'colored' | 'dark' | 'light' | 'blog';

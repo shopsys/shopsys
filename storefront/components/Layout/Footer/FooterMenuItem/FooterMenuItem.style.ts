@@ -3,20 +3,20 @@ import Heading from 'components/Basic/Heading';
 import Icon from 'components/Basic/Icon';
 import { styled } from 'components/Theme/main';
 
+type FooterMenuItemStyledProps = {
+    contentElementHeight: number;
+};
+
+type FooterMenuHeadingStyledProps = {
+    isContentVisible: boolean;
+};
+
 const localVariables = {
     footerMenuitemBorderColor: '#606476',
     footerMenuItemGap: '20px',
 };
 
-type FooterMenuItemProps = {
-    contentElementHeight: number;
-};
-
-type FooterMenuHeadingProps = {
-    isContentVisible: boolean;
-};
-
-export const FooterMenuItemStyled = styled.div<FooterMenuItemProps>`
+export const FooterMenuItemStyled = styled.div<FooterMenuItemStyledProps>`
     ${({ theme, contentElementHeight }) => css`
         padding: 0 ${theme.layout.padding};
 
@@ -61,7 +61,7 @@ export const FooterMenuItemStyled = styled.div<FooterMenuItemProps>`
     `}
 `;
 
-export const FooterMenuHeadingStyled = styled(Heading)<FooterMenuHeadingProps>`
+export const FooterMenuHeadingStyled = styled(Heading)<FooterMenuHeadingStyledProps>`
     ${({ theme, isContentVisible }) => css`
         display: flex;
         align-items: center;
