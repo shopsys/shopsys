@@ -1,6 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const { i18n } = require('./next-i18next.config');
-const { withSentryConfig } = require("@sentry/nextjs");
+const { withSentryConfig } = require('@sentry/nextjs');
 
 const moduleExports = {
     i18n,
@@ -89,90 +89,18 @@ const moduleExports = {
         },
     },
     async rewrites() {
-        return [
-            // Czech URLs
-            {
-                source: '/hledani',
-                destination: '/search',
-            },
-            {
-                source: '/kosik',
-                destination: '/cart',
-            },
-            {
-                source: '/objednavka/kontaktni-udaje',
-                destination: '/order/contact-information',
-            },
-            {
-                source: '/objednavka/doprava-a-platba',
-                destination: '/order/transport-and-payment',
-            },
-            {
-                source: '/zapomenute-heslo',
-                destination: '/reset-password',
-            },
-            {
-                source: '/potvrzeni-objednavky',
-                destination: '/order-confirmation',
-            },
-            {
-                source: '/prihlaseni',
-                destination: '/login',
-            },
-            {
-                source: '/obchodni-domy',
-                destination: '/stores',
-            },
-            {
-                source: '/prehled-znacek',
-                destination: '/brands-overview',
-            },
-            {
-                source: '/zakaznik/objednavky',
-                destination: '/customer/orders',
-            },
-            // Slovak URLs
-            {
-                source: '/hladanie',
-                destination: '/search',
-            },
-            {
-                source: '/kosik',
-                destination: '/cart',
-            },
-            {
-                source: '/objednavka/kontaktne-udaje',
-                destination: '/order/contact-information',
-            },
-            {
-                source: '/objednavka/doprava-a-platba',
-                destination: '/order/transport-and-payment',
-            },
-            {
-                source: '/zapomenute-heslo',
-                destination: '/reset-password',
-            },
-            {
-                source: '/potvrdenie-objednavky',
-                destination: '/order-confirmation',
-            },
-            {
-                source: '/prihlasenie',
-                destination: '/login',
-            },
-            {
-                source: '/obchodne-domy',
-                destination: '/stores',
-            },
-            {
-                source: '/prehled-znacek',
-                destination: '/brands-overview',
-            },
-            {
-                source: '/zakaznik/objednavky',
-                destination: '/customer/orders',
-            },
-        ];
+        const mappedRewrites = [];
+
+        for (const domainHostName in this.publicRuntimeConfig.availableStaticUrls) {
+            for (const key of Object.keys(this.publicRuntimeConfig.availableStaticUrls[domainHostName])) {
+                mappedRewrites.push({
+                    source: this.publicRuntimeConfig.availableStaticUrls[domainHostName][key],
+                    destination: key,
+                });
+            }
+        }
+
+        return mappedRewrites;
     },
     eslint: {
         ignoreDuringBuilds: true,
